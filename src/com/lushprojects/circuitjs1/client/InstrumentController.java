@@ -13,6 +13,7 @@ class InstrumentController {
     private static final int PROBE_MARKER_RADIUS = 5;
 
     private final CirSim sim;
+    private final CircuitMeasurementAdapter measurementAdapter;
     private final Button dcVoltageButton;
     private final Label readingLabel;
     private int activeMode = MODE_NONE;
@@ -21,6 +22,7 @@ class InstrumentController {
 
     InstrumentController(final CirSim sim, VerticalPanel panel) {
         this.sim = sim;
+        measurementAdapter = new CircuitMeasurementAdapter(sim);
         dcVoltageButton = new Button("DC V");
         dcVoltageButton.addStyleName("chbut");
         readingLabel = new Label("--- V");
@@ -86,7 +88,8 @@ class InstrumentController {
             readingLabel.setText("--- V");
             return;
         }
-        readingLabel.setText(CircuitElm.getVoltageText(redProbe.getVoltage() - blackProbe.getVoltage()));
+        readingLabel.setText(CircuitElm.getVoltageText(
+            measurementAdapter.getDcVoltageDifference(redProbe, blackProbe)));
     }
 
     private void validateTargets() {

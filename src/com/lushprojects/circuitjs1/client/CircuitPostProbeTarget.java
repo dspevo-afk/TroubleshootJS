@@ -28,7 +28,7 @@ class CircuitPostProbeTarget implements ProbeTarget {
         return element.getPost(postIndex);
     }
 
-    public double getVoltage() {
-        return element.getPostVoltage(postIndex);
+    public CircuitMeasurementEndpoint getMeasurementEndpoint() {
+        return new CircuitPostMeasurementEndpoint(element, postIndex);
     }
 }
