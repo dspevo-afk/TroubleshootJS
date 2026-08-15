@@ -356,6 +356,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootReplacementVerification;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootReplacementVerificationComplete;
+		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
     
@@ -4108,6 +4109,10 @@ MouseOutHandler, MouseWheelHandler {
 	ActiveMeasurementStimulus lastActiveMeasurementStimulus;
 	boolean activeMeasurementSolverRestored;
 	String lastResistanceMeasurementDiagnostics;
+	double lastResistanceTestCurrent;
+	double lastResistanceReferenceCurrent;
+	int lastResistanceBlackProbeNode;
+	int lastResistanceReferenceGroundNode;
 	boolean generatedBoardVerificationPending;
 	boolean generatedBoardVerificationAnalyzed;
 	double generatedBoardVerificationStartTime;
@@ -4184,15 +4189,21 @@ MouseOutHandler, MouseWheelHandler {
 	    if (generatedChallengeController != null)
 		generatedChallengeController.afterGeneratedVerification();
 	    refreshChallengeInteractionState();
-	    if (troubleshootChallengeVerification && !troubleshootChallengeVerificationComplete &&
-		generatedChallengeController != null && generatedChallengeController.isReady()) {
-		troubleshootChallengeVerificationComplete = true;
-		ChallengeDeveloperVerifier.verify(this);
-	    }
-	    if (troubleshootReplacementVerification && !troubleshootReplacementVerificationComplete &&
-		generatedChallengeController != null && generatedChallengeController.isReady()) {
-		troubleshootReplacementVerificationComplete = true;
-		ReplacementDeveloperVerifier.verify(this);
+	    if (!developerVerifierRunning && generatedChallengeController != null &&
+		generatedChallengeController.isReady()) {
+		developerVerifierRunning = true;
+		try {
+		    if (troubleshootChallengeVerification && !troubleshootChallengeVerificationComplete) {
+			troubleshootChallengeVerificationComplete = true;
+			ChallengeDeveloperVerifier.verify(this);
+		    }
+		    if (troubleshootReplacementVerification && !troubleshootReplacementVerificationComplete) {
+			troubleshootReplacementVerificationComplete = true;
+			ReplacementDeveloperVerifier.verify(this);
+		    }
+		} finally {
+		    developerVerifierRunning = false;
+		}
 	    }
 	} catch (RuntimeException e) {
 	    throw new IllegalStateException("Generated board verification failed for " +
@@ -4313,6 +4324,10 @@ MouseOutHandler, MouseWheelHandler {
 		lastResistanceMeasurementDiagnostics = describeResistanceMeasurement(redEndpoint,
 		    blackEndpoint, stimulus);
 		double current = stimulus.getTestCurrent();
+		lastResistanceTestCurrent = current;
+		lastResistanceReferenceCurrent = stimulus.getReferenceResistor().getCurrent();
+		lastResistanceBlackProbeNode = blackEndpoint.getElement().nodes[blackEndpoint.getPostIndex()];
+		lastResistanceReferenceGroundNode = stimulus.getReferenceGround().nodes[0];
 		if (Double.isNaN(current) || Double.isInfinite(current) || Math.abs(current) < 1e-10)
 		    return Double.POSITIVE_INFINITY;
 		double resistance = Math.abs(ResistanceMeasurementStimulus.TEST_VOLTAGE / current) -
@@ -4327,15 +4342,26 @@ MouseOutHandler, MouseWheelHandler {
 	return lastResistanceMeasurementDiagnostics;
     }
 
+    boolean hasElectricallyNeutralResistanceReferenceForDeveloperVerification() {
+	return lastResistanceBlackProbeNode != lastResistanceReferenceGroundNode &&
+	    !Double.isNaN(lastResistanceTestCurrent) && !Double.isInfinite(lastResistanceTestCurrent) &&
+	    !Double.isNaN(lastResistanceReferenceCurrent) && !Double.isInfinite(lastResistanceReferenceCurrent) &&
+	    Math.abs(lastResistanceReferenceCurrent) <= 1e-9 &&
+	    (Math.abs(lastResistanceTestCurrent) < 1e-10 ||
+		Math.abs(lastResistanceReferenceCurrent) <= Math.abs(lastResistanceTestCurrent) * .001);
+    }
+
     private String describeResistanceMeasurement(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black, ResistanceMeasurementStimulus stimulus) {
 	return "red=" + describePost(red.getElement(), red.getPostIndex()) +
 	    " black=" + describePost(black.getElement(), black.getPostIndex()) +
 	    " source=" + describeElement(stimulus.getSource()) +
 	    " meter=" + describeElement(stimulus.getInternalResistor()) +
+	    " reference=" + describeElement(stimulus.getReferenceResistor()) +
 	    " ground=" + describeElement(stimulus.getReferenceGround()) +
 	    " sourceI=" + stimulus.getSource().getCurrent() +
-	    " meterI=" + stimulus.getInternalResistor().getCurrent();
+	    " meterI=" + stimulus.getInternalResistor().getCurrent() +
+	    " referenceI=" + stimulus.getReferenceResistor().getCurrent();
     }
 
     private String describeElement(CircuitElm element) {

@@ -33,7 +33,13 @@ elements are not board metadata, export content, or undo/redo history; they are
 removed and the original graph is synchronously reanalyzed and solved in
 `finally` before the transaction completes. The temporary intermediate point is
 allocated deterministically from occupied CircuitJS posts, so it cannot connect
-to either probe or an existing circuit endpoint.
+to either probe or an existing circuit endpoint. A temporary $1 TOhm$ resistor
+connects the black probe node to a separate remote ground point, giving the
+solver a numerical reference without directly grounding either DUT terminal.
+The reference is removed with the other temporary elements. Developer
+verification records its solver nodes and current: it requires the remote ground
+node to differ from the black-probe node, limits reference current to $0.1\%$ of
+a measurable test current, and limits open-circuit reference leakage to $1 nA$.
 
 Resistance results are demand-driven rather than calculated from a draw pass.
 They are invalidated whenever CircuitJS requests reanalysis, when either probe

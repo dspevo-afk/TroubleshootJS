@@ -42,7 +42,8 @@ class ChallengeDeveloperVerifier {
         CircuitPostProbeTarget r12 = getProbe(sim, instance, "R1.2");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
-            "Faulted R1 PCB pads did not measure OL");
+            "Faulted R1 PCB pads did not measure OL: " +
+            sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification());
         GeneratedComponentConnectionBindings connections = instance.getConnectionBindings();
         CircuitPostProbeTarget componentLead1 = getProbe(sim,
             connections.get("R1", "R1.1").getComponentEndpoint());
@@ -70,11 +71,13 @@ class ChallengeDeveloperVerifier {
         double forwardResistance = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
         require(!Double.isNaN(forwardResistance) && !Double.isInfinite(forwardResistance) &&
             forwardResistance < 10000000, "LED forward OHM was not finite: " + forwardResistance);
+		verifyNeutralResistanceReference(sim, "forward LED OHM");
         verifyMeasurementRestoration(sim, instance, elements, export, undo, redo, unsaved,
             "forward LED OHM");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(cathode, anode);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "LED reverse OHM was not OL");
+		verifyNeutralResistanceReference(sim, "reverse LED OHM");
         verifyMeasurementRestoration(sim, instance, elements, export, undo, redo, unsaved,
             "reverse LED OHM");
         sim.instrumentController.setContinuityProbesForDeveloperVerification(anode, cathode);
@@ -89,6 +92,7 @@ class ChallengeDeveloperVerifier {
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
             !sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
             "LED reverse CONT was not OL without continuity");
+		verifyNeutralResistanceReference(sim, "reverse LED CONT");
         verifyMeasurementRestoration(sim, instance, elements, export, undo, redo, unsaved,
             "reverse LED CONT");
         sim.instrumentController.setDiodeProbesForDeveloperVerification(anode, cathode);
@@ -111,6 +115,12 @@ class ChallengeDeveloperVerifier {
             redo == sim.redoStack.size() && unsaved == sim.unsavedChanges &&
             sim.getBoardPowerController().isElectricallyUnpowered() &&
             instance.getFaultBinding().isApplied(), "Measurement did not restore " + mode);
+    }
+
+    private static void verifyNeutralResistanceReference(CirSim sim, String mode) {
+        require(sim.hasElectricallyNeutralResistanceReferenceForDeveloperVerification(),
+            "Resistance reference was not neutral during " + mode + ": " +
+            sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification());
     }
 
     private static void verifyLifecycleEvidence(GeneratedChallengeController challenge) {

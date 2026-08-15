@@ -3,9 +3,12 @@ package com.lushprojects.circuitjs1.client;
 class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
     static final double TEST_VOLTAGE = 1;
     static final double INTERNAL_RESISTANCE = 1000;
+    // At 10 Mohm, this path contributes at most 0.001% conductance error.
+    static final double REFERENCE_RESISTANCE = 1e12;
 
     private final DCVoltageElm source;
     private final ResistorElm internalResistor;
+    private final ResistorElm referenceResistor;
     private final GroundElm referenceGround;
 
     ResistanceMeasurementStimulus(CirSim sim, CircuitPostMeasurementEndpoint red,
@@ -19,19 +22,25 @@ class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
         internalResistor = new ResistorElm(blackPoint.x, blackPoint.y);
         internalResistor.drag(midpoint.x, midpoint.y);
         internalResistor.setResistance(INTERNAL_RESISTANCE);
-        referenceGround = new GroundElm(blackPoint.x, blackPoint.y);
-        referenceGround.drag(blackPoint.x, blackPoint.y + 32);
+        Point referencePoint = findUnusedPoint(sim, midpoint, redPoint);
+        referenceResistor = new ResistorElm(blackPoint.x, blackPoint.y);
+        referenceResistor.drag(referencePoint.x, referencePoint.y);
+        referenceResistor.setResistance(REFERENCE_RESISTANCE);
+        referenceGround = new GroundElm(referencePoint.x, referencePoint.y);
+        referenceGround.drag(referencePoint.x, referencePoint.y + 32);
     }
 
     public void install(CirSim sim) {
         sim.elmList.add(source);
         sim.elmList.add(internalResistor);
+        sim.elmList.add(referenceResistor);
         sim.elmList.add(referenceGround);
     }
 
     public void remove(CirSim sim) {
         sim.elmList.remove(source);
         sim.elmList.remove(internalResistor);
+        sim.elmList.remove(referenceResistor);
         sim.elmList.remove(referenceGround);
     }
 
@@ -47,12 +56,16 @@ class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
         return internalResistor;
     }
 
+    CircuitElm getReferenceResistor() {
+        return referenceResistor;
+    }
+
     GroundElm getReferenceGround() {
         return referenceGround;
     }
 
     public CircuitElm[] getTemporaryElements() {
-        return new CircuitElm[] { source, internalResistor, referenceGround };
+        return new CircuitElm[] { source, internalResistor, referenceResistor, referenceGround };
     }
 
     static Point findUnusedPoint(CirSim sim, Point redPoint, Point blackPoint) {

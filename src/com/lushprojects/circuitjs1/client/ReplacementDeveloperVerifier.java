@@ -87,10 +87,12 @@ class ReplacementDeveloperVerifier {
         String forward = sim.instrumentController.getReadingForDeveloperVerification();
         double forwardValue = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
         String forwardDiagnostics = sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification();
+		verifyNeutralResistanceReference(sim, part.getId() + " forward");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(second, first);
         String reverse = sim.instrumentController.getReadingForDeveloperVerification();
         double reverseValue = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
         String reverseDiagnostics = sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification();
+		verifyNeutralResistanceReference(sim, part.getId() + " reverse");
         if (expectedOpen)
             require("OL".equals(forward) && "OL".equals(reverse), "Failed original was not OL");
         else {
@@ -117,6 +119,7 @@ class ReplacementDeveloperVerifier {
             instance.getSimulationBindings().getEndpoint("R1.2"));
         sim.instrumentController.setResistanceProbesForDeveloperVerification(first, second);
         double actual = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
+		verifyNeutralResistanceReference(sim, "installed R1");
         require(isWithinTolerance(expectedResistance, actual, expectedResistance * .05),
             "Installed R1 resistance disagrees with part: " + actual);
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
@@ -188,6 +191,12 @@ class ReplacementDeveloperVerifier {
     private static boolean isWithinTolerance(double expected, double actual, double tolerance) {
         return !Double.isNaN(actual) && !Double.isInfinite(actual) &&
             Math.abs(expected - actual) <= tolerance;
+    }
+
+    private static void verifyNeutralResistanceReference(CirSim sim, String measurement) {
+        require(sim.hasElectricallyNeutralResistanceReferenceForDeveloperVerification(),
+            "Resistance reference was not neutral for " + measurement + ": " +
+            sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification());
     }
 
     private static void verifyInventoryMetadata() {
