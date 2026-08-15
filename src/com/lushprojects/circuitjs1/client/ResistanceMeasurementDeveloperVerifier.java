@@ -50,6 +50,8 @@ class ResistanceMeasurementDeveloperVerifier {
         measure(sim, r11Probe, r12Probe, 680, 2);
         verifyLegacyCircuitIsBlocked(sim, instance, r11Probe, r12Probe);
 
+        verifyContinuity(sim, instance, j11Probe, r11Probe, r12Probe, led1kProbe);
+
         sim.requestPowerOnDuringActiveMeasurementForDeveloperVerification();
         verifyQueuedPowerOnFinalState(sim, instance, j11Probe, j12Probe, r11Probe, r12Probe);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
@@ -170,6 +172,158 @@ class ResistanceMeasurementDeveloperVerifier {
         sim.updateCircuit();
     }
 
+    private static void verifyContinuity(CirSim sim, GeneratedBoardInstance instance,
+            CircuitPostProbeTarget j11Probe, CircuitPostProbeTarget r11Probe,
+            CircuitPostProbeTarget r12Probe, CircuitPostProbeTarget led1kProbe) {
+        verifyContinuityResult(sim, j11Probe, r11Probe, 0, .001, true);
+        verifyContinuityResult(sim, r11Probe, r12Probe, 680, 2, false);
+        verifyContinuityResult(sim, r12Probe, r11Probe, 680, 2, false);
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(r11Probe, led1kProbe);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Open continuity path did not display OL");
+        requireContinuityInactive(sim, "Open continuity path left feedback active");
+
+        verifyInvalidContinuityProbeClearsFeedback(sim, j11Probe, r11Probe);
+        verifyContinuityThresholds(sim, instance, r11Probe, r12Probe);
+        verifyContinuityPowerTransition(sim, instance, j11Probe, r11Probe, r12Probe);
+        verifyContinuityLegacyBlock(sim, instance, j11Probe, r11Probe);
+        verifyContinuityModeSwitching(sim, j11Probe, r11Probe);
+        verifyContinuityRepaintBehavior(sim, j11Probe, r11Probe);
+    }
+
+    private static void verifyContinuityResult(CirSim sim, ProbeTarget red, ProbeTarget black,
+            double expected, double tolerance, boolean expectedContinuity) {
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+        double actual = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
+        requireApproximately(expected, actual, tolerance, "Unexpected continuity resistance");
+        require(expectedContinuity == sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
+            "Continuity threshold state did not match measured resistance");
+        require(expectedContinuity == sim.instrumentController.isContinuityIndicatorVisibleForDeveloperVerification(),
+            "Continuity indicator did not match measured resistance");
+        require(expectedContinuity == sim.instrumentController.isContinuityFeedbackRequestedForDeveloperVerification(),
+            "Continuity feedback request did not match measured resistance");
+    }
+
+    private static void verifyContinuityThresholds(CirSim sim, GeneratedBoardInstance instance,
+            CircuitPostProbeTarget red, CircuitPostProbeTarget black) {
+        ResistorElm resistor = (ResistorElm) instance.getComponentBindings().getSingleElement("R1");
+        double originalResistance = resistor.getResistance();
+        try {
+            sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+            resistor.setResistance(49);
+            verifyContinuityTopologyRefresh(sim, 49, .2, true);
+            resistor.setResistance(50);
+            verifyContinuityTopologyRefresh(sim, 50, .2, true);
+            resistor.setResistance(51);
+            verifyContinuityTopologyRefresh(sim, 51, .2, false);
+            resistor.setResistance(50);
+            verifyContinuityTopologyRefresh(sim, 50, .2, true);
+        } finally {
+            resistor.setResistance(originalResistance);
+            sim.needAnalyze();
+            sim.updateCircuit();
+        }
+    }
+
+    private static void verifyContinuityTopologyRefresh(CirSim sim, double expected,
+            double tolerance, boolean expectedContinuity) {
+        int measurementsBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        sim.needAnalyze();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Continuity topology change did not clear the cached result");
+        sim.updateCircuit();
+        require(measurementsBefore + 1 ==
+            sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
+            "Continuity topology change did not trigger exactly one refresh");
+        requireApproximately(expected, sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(),
+            tolerance, "Unexpected continuity threshold resistance");
+        require(expectedContinuity == sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
+            "Continuity threshold transition did not update feedback state");
+    }
+
+    private static void verifyContinuityPowerTransition(CirSim sim, GeneratedBoardInstance instance,
+            CircuitPostProbeTarget j11Probe, CircuitPostProbeTarget r11Probe,
+            CircuitPostProbeTarget r12Probe) {
+        verifyContinuityResult(sim, j11Probe, r11Probe, 0, .001, true);
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        requireContinuityInactive(sim, "Power transition did not stop continuity feedback immediately");
+        sim.updateCircuit();
+        require("POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Powered continuity readout was not blocked");
+        require(instance.getExternalPowerBindings().areAllConnected(),
+            "Powered continuity graph did not reconnect external isolation");
+        sim.verifyGeneratedBoard();
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        verifyContinuityResult(sim, r11Probe, r12Probe, 680, 2, false);
+    }
+
+    private static void verifyContinuityLegacyBlock(CirSim sim, GeneratedBoardInstance instance,
+            ProbeTarget red, ProbeTarget black) {
+        sim.getBoardPowerController().detach();
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+        require("POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Legacy graph was allowed to run active continuity");
+        requireContinuityInactive(sim, "Legacy graph left continuity feedback active");
+        sim.getBoardPowerController().attach(instance.getExternalPowerBindings());
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+    }
+
+    private static void verifyInvalidContinuityProbeClearsFeedback(CirSim sim,
+            CircuitPostProbeTarget red, CircuitPostProbeTarget black) {
+        verifyContinuityResult(sim, red, black, 0, .001, true);
+        int elementIndex = sim.elmList.indexOf(red.getElement());
+        sim.elmList.remove(red.getElement());
+        sim.needAnalyze();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Invalid CONT probe did not clear the cached resistance");
+        requireContinuityInactive(sim, "Invalid CONT probe did not stop feedback immediately");
+        sim.updateCircuit();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Invalid CONT probe retained a stale reading after analysis");
+        requireContinuityInactive(sim, "Invalid CONT probe restarted feedback after analysis");
+        sim.elmList.add(elementIndex, red.getElement());
+        sim.needAnalyze();
+        sim.updateCircuit();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Restoring an element silently restored a cleared CONT probe");
+    }
+
+    private static void verifyContinuityModeSwitching(CirSim sim, ProbeTarget red, ProbeTarget black) {
+        verifyContinuityResult(sim, red, black, 0, .001, true);
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+        requireContinuityInactive(sim, "Switching CONT to OHM did not stop feedback");
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+        sim.instrumentController.setDcVoltageProbesForDeveloperVerification(red, black);
+        requireContinuityInactive(sim, "Switching CONT to DC V did not stop feedback");
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        requireContinuityInactive(sim, "Exiting CONT did not stop feedback");
+        require(!sim.instrumentController.isHandlingPointerInput(),
+            "Instrument mode exit did not restore normal pointer handling");
+    }
+
+    private static void verifyContinuityRepaintBehavior(CirSim sim, ProbeTarget red, ProbeTarget black) {
+        verifyContinuityResult(sim, red, black, 0, .001, true);
+        int measurementsBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        int startsBefore = sim.instrumentController.getContinuityFeedbackStartCountForDeveloperVerification();
+        int stopsBefore = sim.instrumentController.getContinuityFeedbackStopCountForDeveloperVerification();
+        sim.updateCircuit();
+        sim.updateCircuit();
+        require(measurementsBefore == sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
+            "Repeated continuity repaint cycles started an active transaction");
+        require(startsBefore == sim.instrumentController.getContinuityFeedbackStartCountForDeveloperVerification() &&
+            stopsBefore == sim.instrumentController.getContinuityFeedbackStopCountForDeveloperVerification(),
+            "Repeated continuity repaint cycles changed feedback state");
+    }
+
+    private static void requireContinuityInactive(CirSim sim, String message) {
+        require(!sim.instrumentController.isContinuityDetectedForDeveloperVerification() &&
+            !sim.instrumentController.isContinuityIndicatorVisibleForDeveloperVerification() &&
+            !sim.instrumentController.isContinuityFeedbackRequestedForDeveloperVerification(), message);
+    }
+
     private static void verifyLiveDcVoltage(CirSim sim, ProbeTarget vin, ProbeTarget ground) {
         int resistanceMeasurementsBefore =
             sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
@@ -177,17 +331,17 @@ class ResistanceMeasurementDeveloperVerifier {
         sim.updateCircuit();
         requireApproximately(9, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(vin, ground),
             .1, "Powered DC reading was not approximately +9 V");
-        requireVoltageReadout(sim, 9, .1, "Powered DC readout was not visibly +9 V");
+        requireVoltageReadout(sim, "Powered DC readout was not visibly +9 V");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
         requireApproximately(0, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(vin, ground),
             .01, "Persistent DC probes did not update to 0 V with board power off");
-        requireVoltageReadout(sim, 0, .01, "Unpowered DC readout was not visibly 0 V");
+        requireVoltageReadout(sim, "Unpowered DC readout was not visibly 0 V");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         sim.updateCircuit();
         requireApproximately(9, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(vin, ground),
             .1, "Persistent DC probes did not update to +9 V after repower");
-        requireVoltageReadout(sim, 9, .1, "Repowered DC readout was not visibly +9 V");
+        requireVoltageReadout(sim, "Repowered DC readout was not visibly +9 V");
         sim.updateCircuit();
         sim.updateCircuit();
         require(resistanceMeasurementsBefore ==
@@ -218,8 +372,7 @@ class ResistanceMeasurementDeveloperVerifier {
             message + ": " + actual);
     }
 
-    private static void requireVoltageReadout(CirSim sim, double expected, double tolerance,
-            String message) {
+    private static void requireVoltageReadout(CirSim sim, String message) {
         String readout = sim.instrumentController.getReadingForDeveloperVerification();
         require(!"--- V".equals(readout) && readout.endsWith("V"), message + ": " + readout);
     }

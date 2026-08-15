@@ -53,6 +53,18 @@ returns; a queued power change discards the earlier unpowered resistance result,
 then restores and solves the final powered or unpowered graph before the
 transaction reports solver restoration or generated verification resumes.
 
+Continuity is a policy over the same simulated resistance transaction, not a
+separate connectivity shortcut or stimulus. CONT uses the temporary $1 V$ /
+$1 kOhm$ CircuitJS resistance measurement, shares its power-off gate and final
+state validation, and reports continuity only when the finite solved resistance
+is at most $50 Ohm$. A `ContinuityFeedback` abstraction owns browser-audio
+resources; the controller owns only the requested continuity state and visible
+`BEEP` indicator. Browser audio is prepared only by meter/probe user gestures,
+is idempotent, and may fail silently under autoplay restrictions. The visible
+indicator remains authoritative. Topology, probe, mode, board, and power
+invalidation clear continuity feedback immediately; normal post-analysis
+refreshes recompute it once without draw-time stimulation.
+
 `TroubleshootBoard` owns stable board identity. `BoardComponent`, `BoardPad`,
 and `BoardNet` use durable string IDs; a `BoardNet` is the TroubleshootJS
 electrical identity, not a CircuitJS analyzed node number. `BoardPad` connects
