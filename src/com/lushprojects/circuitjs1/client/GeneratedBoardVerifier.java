@@ -6,7 +6,8 @@ class GeneratedBoardVerifier {
     private static final double NET_TOLERANCE = .001;
 
     static void verify(GeneratedBoardInstance instance, BoardPowerState powerState,
-            BoardModificationController modifications, Vector<CircuitElm> activeElements) {
+            BoardModificationController modifications, Vector<CircuitElm> activeElements,
+            boolean verifyHealthyFamily) {
         TroubleshootBoard board = instance.getBoard();
         BoardSimulationBindings bindings = instance.getSimulationBindings();
         instance.getComponentBindings().validateElementsAreOwnedBy(instance.getSimulationElements());
@@ -26,7 +27,7 @@ class GeneratedBoardVerifier {
         }
         for (String netId : board.getNetIds())
             verifyNetVoltage(bindings.getEndpointsForNet(netId), netId);
-        if (instance.getFamilyValidator() != null &&
+        if (verifyHealthyFamily && instance.getFamilyValidator() != null &&
             (modifications == null || modifications.isFullyRestored()))
             instance.getFamilyValidator().verify(instance, powerState);
     }

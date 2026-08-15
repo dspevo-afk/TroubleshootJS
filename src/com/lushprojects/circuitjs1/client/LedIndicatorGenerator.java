@@ -36,7 +36,10 @@ class LedIndicatorGenerator {
         resistor.drag(480, 240);
         resistor.setResistance(resistorValue);
 
-        WireElm r1Lead2Link = new WireElm(480, 240);
+        SwitchElm r1FaultIsolation = new SwitchElm(480, 240);
+        r1FaultIsolation.drag(512, 240);
+
+        WireElm r1Lead2Link = new WireElm(512, 240);
         r1Lead2Link.drag(560, 160);
         WireElm ledNodeTrace = new WireElm(560, 160);
         ledNodeTrace.drag(640, 160);
@@ -57,6 +60,7 @@ class LedIndicatorGenerator {
         elements.add(vinTrace);
         elements.add(r1Lead1Link);
         elements.add(resistor);
+        elements.add(r1FaultIsolation);
         elements.add(r1Lead2Link);
         elements.add(ledNodeTrace);
         elements.add(led);
@@ -67,6 +71,12 @@ class LedIndicatorGenerator {
         GeneratedComponentBindings componentBindings = new GeneratedComponentBindings(board);
         componentBindings.bindComponent("R1", resistor);
         componentBindings.bindComponent("LED1", led);
+        GeneratedComponentOperationalStates operationalStates =
+            new GeneratedComponentOperationalStates();
+        operationalStates.bindLed("LED1", led);
+        GeneratedFault fault = new GeneratedFault("LED_R1_OPEN", GeneratedFaultType.COMPONENT_OPEN,
+            "R1", "LED_INDICATOR", seed);
+        GeneratedFaultBinding faultBinding = new GeneratedFaultBinding(fault, r1FaultIsolation);
         GeneratedExternalPowerBindings powerBindings = new GeneratedExternalPowerBindings(board);
         Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
         powerElements.add(supply);
@@ -87,14 +97,15 @@ class LedIndicatorGenerator {
         connectionBindings.bind("R1", "R1.1", bindings.getEndpoint("R1.1"),
             new CircuitPostMeasurementEndpoint(resistor, 0), r1Lead1Link);
         connectionBindings.bind("R1", "R1.2", bindings.getEndpoint("R1.2"),
-            new CircuitPostMeasurementEndpoint(resistor, 1), r1Lead2Link);
+            new CircuitPostMeasurementEndpoint(r1FaultIsolation, 1), r1Lead2Link);
 
         String description = "Generated LED indicator, seed " + seed + ", " + supplyVoltage +
             " V, " + resistorValue + " ohm";
         return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),
-            LedIndicatorPcbLayout.create(board), physicalSpecifications);
+            LedIndicatorPcbLayout.create(board), physicalSpecifications, faultBinding,
+            operationalStates);
     }
 
     private TroubleshootBoard createBoard() {

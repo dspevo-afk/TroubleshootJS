@@ -349,8 +349,11 @@ MouseOutHandler, MouseWheelHandler {
     String startCircuitText = null;
     String startCircuitLink = null;
 	String troubleshootFixture = null;
+		String troubleshootChallenge = null;
 	long troubleshootFixtureSeed = 1;
 	boolean troubleshootResistanceVerification;
+		boolean troubleshootChallengeVerification;
+	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
     
@@ -388,8 +391,10 @@ MouseOutHandler, MouseWheelHandler {
 	    startLabel   = qp.getValue("startLabel");
 	    startCircuitLink = qp.getValue("startCircuitLink");
 	    troubleshootFixture = qp.getValue("tsjFixture");
+			troubleshootChallenge = qp.getValue("tsjChallenge");
 	    troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
 	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
+	    troubleshootChallengeVerification = qp.getBooleanValue("tsjVerifyChallenge", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
@@ -466,7 +471,7 @@ MouseOutHandler, MouseWheelHandler {
 	    VERTICALPANELWIDTH = 166;
 	if (VERTICALPANELWIDTH < 128)
 	    VERTICALPANELWIDTH = 128;
-	if (troubleshootFixture != null && !troubleshootDebug)
+	if ((troubleshootFixture != null || troubleshootChallenge != null) && !troubleshootDebug)
 	    VERTICALPANELWIDTH = 250;
 
 	menuBar = new MenuBar();
@@ -726,7 +731,7 @@ MouseOutHandler, MouseWheelHandler {
 		    getSetupList(false);
 		    readSetupFile(startCircuit, startLabel);
 		}
-		else if (troubleshootFixture != null)
+		else if (troubleshootFixture != null || troubleshootChallenge != null)
 		    getSetupList(false);
 		else
 		    getSetupList(true);
@@ -768,6 +773,8 @@ MouseOutHandler, MouseWheelHandler {
 	
 	if ("led".equals(troubleshootFixture))
 	    installGeneratedBoard(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	else if ("led".equals(troubleshootChallenge))
+	    installGeneratedChallenge(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	if (troubleshootResistanceVerification)
 	    Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 		public void execute() {
@@ -4089,6 +4096,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     GeneratedBoardInstance generatedBoardInstance;
+		GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
 	boolean activeMeasurementOverlay;
 	BoardPowerState pendingBoardPowerState;
@@ -4114,6 +4122,7 @@ MouseOutHandler, MouseWheelHandler {
 	for (CircuitElm element : instance.getSimulationElements())
 	    elmList.add(element);
 	generatedBoardInstance = instance;
+	generatedChallengeController = null;
 	boardModificationController = new BoardModificationController(this, instance);
 	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
@@ -4129,6 +4138,13 @@ MouseOutHandler, MouseWheelHandler {
 	    centreCircuit();
 	setCircuitArea();
 	requestGeneratedBoardVerification();
+    }
+
+    void installGeneratedChallenge(GeneratedBoardInstance instance) {
+	installGeneratedBoard(instance);
+	generatedChallengeController = new GeneratedChallengeController(this, instance);
+	generatedChallengeController.begin();
+	refreshBoardModificationControls();
     }
 
     private long parseTroubleshootFixtureSeed(String fixtureSeed) {
@@ -4157,18 +4173,29 @@ MouseOutHandler, MouseWheelHandler {
 	    return;
 	try {
 	    verifyGeneratedBoard();
+	    generatedBoardVerificationPending = false;
+	    if (generatedChallengeController != null)
+		generatedChallengeController.afterGeneratedVerification();
+	    if (troubleshootChallengeVerification && !troubleshootChallengeVerificationComplete &&
+		generatedChallengeController != null && generatedChallengeController.isReady()) {
+		troubleshootChallengeVerificationComplete = true;
+		ChallengeDeveloperVerifier.verify(this);
+	    }
 	} catch (RuntimeException e) {
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
 		generatedBoardInstance.getTopologyVariantId() + ", seed " +
 		generatedBoardInstance.getSeed(), e);
 	}
-	generatedBoardVerificationPending = false;
     }
 
     GeneratedBoardInstance getGeneratedBoardInstance() {
 	return generatedBoardInstance;
     }
+
+	GeneratedChallengeController getGeneratedChallengeController() {
+	return generatedChallengeController;
+	}
 
 	BoardModificationController getBoardModificationController() {
 	return boardModificationController;
@@ -4183,7 +4210,8 @@ MouseOutHandler, MouseWheelHandler {
 		!boardPowerController.isElectricallyUnpowered())
 	    throw new IllegalStateException("Generated board is logically unpowered without electrical isolation");
 	GeneratedBoardVerifier.verify(generatedBoardInstance, boardPowerController.getState(),
-	    boardModificationController, elmList);
+		boardModificationController, elmList, generatedChallengeController == null ||
+		generatedChallengeController.isHealthyValidationExpected());
     }
 
     void setBoardPowerState(BoardPowerState state) {

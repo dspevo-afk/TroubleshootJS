@@ -14,6 +14,7 @@ class PcbWorkbenchController {
     private final BoardModificationController modifications;
     private final PcbWorkbenchRenderer renderer;
     private final VerticalPanel panel = new VerticalPanel();
+    private final VerticalPanel ticketPanel = new VerticalPanel();
     private final Label feedback = new Label();
 
     PcbWorkbenchController(CirSim sim, GeneratedBoardInstance instance,
@@ -23,6 +24,9 @@ class PcbWorkbenchController {
         this.instance = instance;
         this.modifications = modifications;
         renderer = new PcbWorkbenchRenderer(instance, modifications, layout);
+        ticketPanel.setStyleName("tsj-component-panel");
+        ticketPanel.setVisible(false);
+        sidebar.add(ticketPanel);
         panel.setStyleName("tsj-component-panel");
         panel.setVisible(false);
         sidebar.add(panel);
@@ -40,7 +44,10 @@ class PcbWorkbenchController {
         return componentId != null;
     }
 
-    void refresh() { rebuildPanel(); }
+    void refresh() {
+        rebuildTicket();
+        rebuildPanel();
+    }
 
     void hide() { panel.setVisible(false); }
 
@@ -78,6 +85,17 @@ class PcbWorkbenchController {
         if (powered)
             feedback.setText("Turn board power off before modifying components.");
         addActions(componentId, bindings, powered);
+    }
+
+    private void rebuildTicket() {
+        ticketPanel.clear();
+        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        ticketPanel.setVisible(challenge != null);
+        if (challenge == null)
+            return;
+        ticketPanel.add(styledLabel("Service Ticket", "tsj-component-title"));
+        ticketPanel.add(new Label(challenge.isReady() ? challenge.getComplaintText() :
+            "Preparing challenge..."));
     }
 
     private void addActions(final String componentId,

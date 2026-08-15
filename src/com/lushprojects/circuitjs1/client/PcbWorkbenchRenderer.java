@@ -157,6 +157,12 @@ class PcbWorkbenchRenderer {
         graphics.drawLine(cathode.x, cathode.y, centerX + scaleInt(10), centerY + scaleInt(15));
         graphics.setLineWidth(1);
         graphics.setColor("#b5232d");
+        if (instance.getOperationalStates().isIlluminated(placement.getComponentId())) {
+            graphics.setColor("#ffdc4f");
+            graphics.fillOval(centerX - radius - scaleInt(9), centerY - radius - scaleInt(9),
+                radius * 2 + scaleInt(18), radius * 2 + scaleInt(18));
+            graphics.setColor("#b5232d");
+        }
         graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
         graphics.setColor("#f36a6f");
         graphics.fillOval(centerX - radius / 2, centerY - radius / 2, radius / 2, radius / 2);

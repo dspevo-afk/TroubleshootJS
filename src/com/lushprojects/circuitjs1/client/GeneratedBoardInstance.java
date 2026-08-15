@@ -15,6 +15,8 @@ class GeneratedBoardInstance {
     private final GeneratedBoardValidator familyValidator;
     private final PcbBoardLayout pcbLayout;
     private final BoardPhysicalSpecifications physicalSpecifications;
+    private final GeneratedFaultBinding faultBinding;
+    private final GeneratedComponentOperationalStates operationalStates;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -22,7 +24,8 @@ class GeneratedBoardInstance {
             GeneratedExternalPowerBindings externalPowerBindings,
             GeneratedComponentConnectionBindings connectionBindings,
             GeneratedBoardValidator familyValidator, PcbBoardLayout pcbLayout,
-            BoardPhysicalSpecifications physicalSpecifications) {
+            BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
+            GeneratedComponentOperationalStates operationalStates) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -38,8 +41,10 @@ class GeneratedBoardInstance {
             throw new IllegalArgumentException("Missing generated physical specifications");
         this.physicalSpecifications = physicalSpecifications;
         physicalSpecifications.seal();
+        this.faultBinding = faultBinding;
+        this.operationalStates = operationalStates;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
-            externalPowerBindings);
+            externalPowerBindings, faultBinding);
     }
 
     TroubleshootBoard getBoard() {
@@ -89,6 +94,9 @@ class GeneratedBoardInstance {
     BoardPhysicalSpecifications getPhysicalSpecifications() {
         return physicalSpecifications;
     }
+
+    GeneratedFaultBinding getFaultBinding() { return faultBinding; }
+    GeneratedComponentOperationalStates getOperationalStates() { return operationalStates; }
 
     PcbBoardLayout getPcbLayout() {
         return pcbLayout;

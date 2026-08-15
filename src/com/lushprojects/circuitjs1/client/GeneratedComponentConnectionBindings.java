@@ -79,7 +79,7 @@ class GeneratedComponentConnectionBindings {
 
     void validateAgainst(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             GeneratedComponentBindings componentBindings,
-            GeneratedExternalPowerBindings externalPowerBindings) {
+            GeneratedExternalPowerBindings externalPowerBindings, GeneratedFaultBinding faultBinding) {
         HashMap<CircuitElm, Boolean> connectionElements = new HashMap<CircuitElm, Boolean>();
         for (GeneratedComponentConnectionBinding binding : bindings.values()) {
             if (board.getSimulationBindings().getEndpoint(binding.getPadId()) !=
@@ -90,8 +90,9 @@ class GeneratedComponentConnectionBindings {
                 simulationElements, binding.getPadId());
             CircuitPostMeasurementEndpoint componentPost = validateEndpoint(
                 binding.getComponentEndpoint(), simulationElements, binding.getPadId());
-            if (!componentBindings.isElementBoundToComponent(binding.getComponentId(),
-                    componentPost.getElement()))
+                if (!componentBindings.isElementBoundToComponent(binding.getComponentId(),
+                    componentPost.getElement()) && !isFaultEndpoint(binding, componentPost,
+                    faultBinding))
                 throw new IllegalStateException("Connection component endpoint is not owned by component: " +
                     binding.getPadId());
             if (boardPost.getElement() == binding.getConnectionElement() ||
@@ -118,6 +119,13 @@ class GeneratedComponentConnectionBindings {
                 throw new IllegalStateException("Invalid or shared detachable connection: " +
                     binding.getPadId());
         }
+    }
+
+    private boolean isFaultEndpoint(GeneratedComponentConnectionBinding connection,
+            CircuitPostMeasurementEndpoint endpoint, GeneratedFaultBinding faultBinding) {
+        return faultBinding != null && faultBinding.getFault().getTargetComponentId().equals(
+            connection.getComponentId()) && faultBinding.getIsolationElement() ==
+            endpoint.getElement();
     }
 
     private CircuitPostMeasurementEndpoint validateEndpoint(CircuitMeasurementEndpoint endpoint,

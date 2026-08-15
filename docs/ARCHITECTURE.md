@@ -190,3 +190,38 @@ installation boundary. Generated-board verification is requested after
 installation or reanalysis and runs once only after CircuitJS has analyzed the
 circuit and simulation time has advanced; paused simulation leaves the request
 pending rather than treating unsolved current values as a failure.
+
+The first faulted challenge is selected with `?tsjChallenge=led&seed=<seed>`;
+the corresponding `?tsjFixture=led&seed=<seed>` route remains a healthy
+fixture. `GeneratedChallengeController` advances only through solver-gated
+verification: `PREPARING_HEALTHY` validates the closed, powered generated
+board; it then applies its selected fault, requests another CircuitJS analysis
+and time advance, validates the resulting symptom in `PREPARING_FAULTED`, and
+only then enters `READY`. This is not a UI timer or an assumed settle delay.
+
+`GeneratedFault` is immutable challenge metadata (stable ID, type, target
+component, circuit family, and selection seed). `GeneratedFaultBinding` owns
+the private CircuitJS implementation, while `GeneratedFaultController` is the
+only code permitted to apply or developer-clear it. The first LED challenge
+uses a private series `SwitchElm` to model an internally open R1. That switch
+is not a `BoardComponent`, PCB pad, placement, nameplate, or external-power
+control. A declared binding may be the component-side endpoint of the target's
+detachable lead, preserving two valid outer terminals for in- and
+out-of-circuit measurement without giving the internal fault infrastructure a
+physical board identity.
+
+Faulted verification keeps generic ownership, topology, pad, net, and
+physical-modification checks active, but does not apply a healthy-current
+family assertion while the intentional fault is active. The fault-specific
+validator requires powered, installed R1, a bound open isolation switch, LED
+current below $1 uA$, and a non-illuminated LED state. Fault application never
+changes printed resistor markings, component physical state, stable IDs,
+external power bindings, undo/redo state, or board geometry.
+
+`GeneratedComponentOperationalStates` is a small runtime adapter from stable
+component ID to solved LED current. The PCB renderer uses it only to add a
+visible illumination halo to the existing LED body; the red plastic package
+and all printed/nameplate state remain unchanged. Normal players see only the
+ready service ticket text, `Indicator does not light.` Developer-only
+`tsjVerifyChallenge=true` exercises the fault lifecycle, measurements,
+physical removal/restoration, and clear/reapply path after `READY`.
