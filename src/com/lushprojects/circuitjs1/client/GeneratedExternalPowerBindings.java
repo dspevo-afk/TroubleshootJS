@@ -65,6 +65,14 @@ class GeneratedExternalPowerBindings {
     return true;
     }
 
+    boolean isBackingElement(CircuitElm element) {
+        for (ExternalPowerSimulationBinding binding : powerBindings.values()) {
+            if (binding.getBackingElements().contains(element))
+                return true;
+        }
+        return false;
+    }
+
     void validateElementsAreOwnedBy(Vector<CircuitElm> simulationElements) {
         for (String powerInputId : powerBindings.keySet()) {
             for (CircuitElm element : powerBindings.get(powerInputId).getBackingElements()) {

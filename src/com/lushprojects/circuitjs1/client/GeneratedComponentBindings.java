@@ -46,6 +46,11 @@ class GeneratedComponentBindings {
         return elements.firstElement();
     }
 
+    boolean isElementBoundToComponent(String componentId, CircuitElm element) {
+        Vector<CircuitElm> elements = componentElements.get(componentId);
+        return elements != null && elements.contains(element);
+    }
+
     void validateElementsAreOwnedBy(Vector<CircuitElm> simulationElements) {
         for (String componentId : componentElements.keySet()) {
             for (CircuitElm element : componentElements.get(componentId)) {

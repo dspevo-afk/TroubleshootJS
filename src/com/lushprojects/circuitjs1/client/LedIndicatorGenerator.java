@@ -89,7 +89,8 @@ class LedIndicatorGenerator {
             " V, " + resistorValue + " ohm";
         return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
-            connectionBindings, new LedIndicatorGeneratedBoardValidator());
+            connectionBindings, new LedIndicatorGeneratedBoardValidator(),
+            LedIndicatorPcbLayout.create(board));
     }
 
     private TroubleshootBoard createBoard() {

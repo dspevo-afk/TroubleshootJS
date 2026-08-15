@@ -104,7 +104,6 @@ MouseOutHandler, MouseWheelHandler {
     Random random;
     Button resetButton;
 	Button boardPowerButton;
-	Button r1Lead1Button, r1InstallButton;
     Button runStopButton;
     Button dumpMatrixButton;
     MenuItem aboutItem;
@@ -128,6 +127,9 @@ MouseOutHandler, MouseWheelHandler {
     CheckboxMenuItem noEditCheckItem;
     private Label powerLabel;
     private Label titleLabel;
+	private Label simulationSpeedLabel;
+	private Label currentSpeedLabel;
+	private Label currentCircuitLabel;
     private Scrollbar speedBar;
     private Scrollbar currentBar;
     private Scrollbar powerBar;
@@ -223,6 +225,7 @@ MouseOutHandler, MouseWheelHandler {
     private CircuitElm mouseElm=null;
 	InstrumentController instrumentController;
 	final BoardPowerController boardPowerController = new BoardPowerController();
+	PcbWorkbenchController pcbWorkbenchController;
     boolean didSwitch = false;
     int mousePost = -1;
     CircuitElm plotXElm, plotYElm;
@@ -322,7 +325,7 @@ MouseOutHandler, MouseWheelHandler {
     void setCircuitArea() {
     	int height = cv.getCanvasElement().getHeight();
     	int width = cv.getCanvasElement().getWidth();
-		int h = (int) ((double)height * scopeHeightFraction);
+		int h = isPcbWorkbenchVisible() ? 0 : (int) ((double)height * scopeHeightFraction);
 		/*if (h < 128 && winSize.height > 300)
 		  h = 128;*/
 		circuitArea = new Rectangle(0, 0, width, height-h);
@@ -348,6 +351,7 @@ MouseOutHandler, MouseWheelHandler {
 	String troubleshootFixture = null;
 	long troubleshootFixtureSeed = 1;
 	boolean troubleshootResistanceVerification;
+	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
     
     public void init() {
@@ -386,6 +390,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootFixture = qp.getValue("tsjFixture");
 	    troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
 	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
+	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
 	    running = qp.getBooleanValue("running", true);
@@ -461,6 +466,8 @@ MouseOutHandler, MouseWheelHandler {
 	    VERTICALPANELWIDTH = 166;
 	if (VERTICALPANELWIDTH < 128)
 	    VERTICALPANELWIDTH = 128;
+	if (troubleshootFixture != null && !troubleshootDebug)
+	    VERTICALPANELWIDTH = 250;
 
 	menuBar = new MenuBar();
 	menuBar.addItem(LS("File"), fileMenuBar);
@@ -618,6 +625,7 @@ MouseOutHandler, MouseWheelHandler {
 	});
 	instrumentController = new InstrumentController(this, verticalPanel);
 	verticalPanel.add(boardPowerButton = new Button("Board Power: ON"));
+	boardPowerButton.setStyleName("tsj-power-button");
 	boardPowerButton.setVisible(false);
 	boardPowerButton.addClickHandler(new ClickHandler() {
 	    public void onClick(ClickEvent event) {
@@ -625,21 +633,6 @@ MouseOutHandler, MouseWheelHandler {
 		    BoardPowerState.UNPOWERED : BoardPowerState.POWERED);
 	    }
 	});
-	verticalPanel.add(r1Lead1Button = new Button());
-	r1Lead1Button.setVisible(false);
-	r1Lead1Button.addClickHandler(new ClickHandler() {
-	    public void onClick(ClickEvent event) {
-		modifyGeneratedR1Lead();
-	    }
-	});
-	verticalPanel.add(r1InstallButton = new Button());
-	r1InstallButton.setVisible(false);
-	r1InstallButton.addClickHandler(new ClickHandler() {
-	    public void onClick(ClickEvent event) {
-		modifyGeneratedR1Installation();
-	    }
-	});
-
 	/*
 	dumpMatrixButton = new Button("Dump Matrix");
 	dumpMatrixButton.addClickHandler(new ClickHandler() {
@@ -651,13 +644,13 @@ MouseOutHandler, MouseWheelHandler {
 	    verticalPanel.add(loadFileInput = new LoadFile(this));
 
 	Label l;
-	verticalPanel.add(l = new Label(LS("Simulation Speed")));
+	verticalPanel.add(l = simulationSpeedLabel = new Label(LS("Simulation Speed")));
 	l.addStyleName("topSpace");
 
 	// was max of 140
 	verticalPanel.add( speedBar = new Scrollbar(Scrollbar.HORIZONTAL, 3, 1, 0, 260));
 
-	verticalPanel.add( l = new Label(LS("Current Speed")));
+	verticalPanel.add( l = currentSpeedLabel = new Label(LS("Current Speed")));
 	l.addStyleName("topSpace");
 	currentBar = new Scrollbar(Scrollbar.HORIZONTAL, 50, 1, 1, 100);
 	verticalPanel.add(currentBar);
@@ -669,7 +662,7 @@ MouseOutHandler, MouseWheelHandler {
 
 	//	verticalPanel.add(new Label(""));
 	//        Font f = new Font("SansSerif", 0, 10);
-	l = new Label(LS("Current Circuit:"));
+	l = currentCircuitLabel = new Label(LS("Current Circuit:"));
 	l.addStyleName("topSpace");
 	//        l.setFont(f);
 	titleLabel = new Label("Label");
@@ -1352,6 +1345,14 @@ MouseOutHandler, MouseWheelHandler {
 			secTime = sysTime;
 		}
 	   CircuitElm.powerMult = Math.exp(powerBar.getValue()/4.762-7);
+	if (isPcbWorkbenchVisible()) {
+	    backcontext.setTransform(1, 0, 0, 1, 0, 0);
+	    pcbWorkbenchController.draw(g, circuitArea);
+	    instrumentController.draw(g);
+	    cvcontext.drawImage(backcontext.getCanvas(), 0.0, 0.0);
+	    frames++;
+	    return;
+	}
 	   
 	
 	int i;
@@ -3556,8 +3557,12 @@ MouseOutHandler, MouseWheelHandler {
 	if ((flags & RC_RETAIN) == 0) {
 	    generatedBoardInstance = null;
 	    boardModificationController = null;
+	    if (pcbWorkbenchController != null)
+		pcbWorkbenchController.hide();
+	    pcbWorkbenchController = null;
 	    boardPowerController.detach();
 	    updateBoardPowerButton();
+	    updateGeneratedView();
 	   generatedBoardVerificationPending = false;
 	   generatedBoardVerificationAnalyzed = false;
 	    instrumentController.clearTargets();
@@ -4052,6 +4057,8 @@ MouseOutHandler, MouseWheelHandler {
     	e.preventDefault();
     	mouseCursorX=e.getX();
     	mouseCursorY=e.getY();
+	if (isPcbWorkbenchVisible())
+	    return;
     	if (mouseDragging) {
     		mouseDragged(e);
     		return;
@@ -4108,14 +4115,19 @@ MouseOutHandler, MouseWheelHandler {
 	    elmList.add(element);
 	generatedBoardInstance = instance;
 	boardModificationController = new BoardModificationController(this, instance);
+	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
+	    new PcbWorkbenchController(this, instance, boardModificationController,
+		instance.getPcbLayout(), verticalPanel) : null;
 	boardPowerController.attach(instance.getExternalPowerBindings());
 	updateBoardPowerButton();
-	updateGeneratedModificationButtons();
+	updateGeneratedView();
 	setCircuitTitle(instance.getDescription());
 	unsavedChanges = false;
 	enableUndoRedo();
 	needAnalyze();
-	centreCircuit();
+	if (!isPcbWorkbenchVisible())
+	    centreCircuit();
+	setCircuitArea();
 	requestGeneratedBoardVerification();
     }
 
@@ -4184,7 +4196,7 @@ MouseOutHandler, MouseWheelHandler {
 	if (!boardPowerController.setState(state))
 	    return;
 	updateBoardPowerButton();
-	updateGeneratedModificationButtons();
+	refreshBoardModificationControls();
 	instrumentController.refreshActiveMeasurement();
 	requestGeneratedBoardVerification();
     }
@@ -4197,52 +4209,34 @@ MouseOutHandler, MouseWheelHandler {
 	if (generatedBoardActive)
 	    boardPowerButton.setText(boardPowerController.getState() == BoardPowerState.POWERED ?
 		"Board Power: ON" : "Board Power: OFF");
+	if (pcbWorkbenchController != null)
+	    pcbWorkbenchController.refresh();
     }
 
-    private void modifyGeneratedR1Lead() {
-	if (boardModificationController == null)
-	    return;
-	try {
-	    if (boardModificationController.isLeadConnected("R1", "R1.1"))
-		boardModificationController.liftLead("R1", "R1.1");
-	    else
-		boardModificationController.reconnectLead("R1", "R1.1");
-	} catch (IllegalStateException e) {
-	    Window.alert(e.getMessage());
-	}
-	updateGeneratedModificationButtons();
+    private boolean isPcbWorkbenchVisible() {
+	return generatedBoardInstance != null && pcbWorkbenchController != null;
     }
 
-    private void modifyGeneratedR1Installation() {
-	if (boardModificationController == null)
-	    return;
-	try {
-	    if (boardModificationController.isComponentInstalled("R1"))
-		boardModificationController.removeComponent("R1");
-	    else
-		boardModificationController.restoreComponent("R1");
-	} catch (IllegalStateException e) {
-	    Window.alert(e.getMessage());
-	}
-	updateGeneratedModificationButtons();
-    }
-
-    private void updateGeneratedModificationButtons() {
-	if (r1Lead1Button == null || r1InstallButton == null)
-	    return;
-	boolean available = boardModificationController != null;
-	r1Lead1Button.setVisible(available);
-	r1InstallButton.setVisible(available);
-	if (!available)
-	    return;
-	r1Lead1Button.setText(boardModificationController.isLeadConnected("R1", "R1.1") ?
-	    "R1 Lead 1: CONNECTED" : "R1 Lead 1: LIFTED");
-	r1InstallButton.setText(boardModificationController.isComponentInstalled("R1") ?
-	    "R1: INSTALLED" : "R1: REMOVED");
+    private void updateGeneratedView() {
+	boolean pcbVisible = isPcbWorkbenchVisible();
+	menuBar.setVisible(!pcbVisible);
+	buttonPanel.setVisible(!pcbVisible);
+	if (loadFileInput != null)
+	    loadFileInput.setVisible(!pcbVisible);
+	simulationSpeedLabel.setVisible(!pcbVisible);
+	speedBar.setVisible(!pcbVisible);
+	currentSpeedLabel.setVisible(!pcbVisible);
+	currentBar.setVisible(!pcbVisible);
+	powerLabel.setVisible(!pcbVisible);
+	powerBar.setVisible(!pcbVisible);
+	currentCircuitLabel.setVisible(!pcbVisible);
+	titleLabel.setVisible(!pcbVisible);
+	iFrame.setVisible(!pcbVisible);
     }
 
     void refreshBoardModificationControls() {
-	updateGeneratedModificationButtons();
+	if (pcbWorkbenchController != null)
+	    pcbWorkbenchController.refresh();
     }
 
     double measureResistance(CircuitPostMeasurementEndpoint red,
@@ -4597,6 +4591,8 @@ MouseOutHandler, MouseWheelHandler {
 //    public void mouseClicked(MouseEvent e) {
     public void onClick(ClickEvent e) {
     	e.preventDefault();
+	if (isPcbWorkbenchVisible())
+	    return;
 	if (instrumentController.isHandlingPointerInput())
 	    return;
 //    	//IES - remove inteaction
@@ -4612,6 +4608,8 @@ MouseOutHandler, MouseWheelHandler {
     
     public void onDoubleClick(DoubleClickEvent e){
     	e.preventDefault();
+	if (isPcbWorkbenchVisible())
+	    return;
 	if (instrumentController.isHandlingPointerInput())
 	    return;
  //   	if (!didSwitch && mouseElm != null)
@@ -4640,7 +4638,15 @@ MouseOutHandler, MouseWheelHandler {
     	e.preventDefault();
 	// An active instrument owns the whole gesture so CircuitJS editing never sees probe clicks.
 	if (instrumentController.isHandlingPointerInput()) {
-	    instrumentController.handlePointerInput(e.getNativeButton(), e.getX(), e.getY());
+	    ProbeTarget target = isPcbWorkbenchVisible() ?
+		pcbWorkbenchController.findProbeTarget(e.getX(), e.getY()) :
+		findPostTarget(e.getX(), e.getY());
+	    instrumentController.handlePointerInput(e.getNativeButton(), target);
+	    return;
+	}
+	if (isPcbWorkbenchVisible()) {
+	    if (e.getNativeButton() == NativeEvent.BUTTON_LEFT)
+		pcbWorkbenchController.selectComponentAt(e.getX(), e.getY());
 	    return;
 	}
     	

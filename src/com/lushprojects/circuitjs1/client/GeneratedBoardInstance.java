@@ -13,13 +13,14 @@ class GeneratedBoardInstance {
     private final GeneratedExternalPowerBindings externalPowerBindings;
     private final GeneratedComponentConnectionBindings connectionBindings;
     private final GeneratedBoardValidator familyValidator;
+    private final PcbBoardLayout pcbLayout;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
             GeneratedComponentBindings componentBindings,
             GeneratedExternalPowerBindings externalPowerBindings,
             GeneratedComponentConnectionBindings connectionBindings,
-            GeneratedBoardValidator familyValidator) {
+            GeneratedBoardValidator familyValidator, PcbBoardLayout pcbLayout) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -30,7 +31,9 @@ class GeneratedBoardInstance {
         this.externalPowerBindings = externalPowerBindings;
         this.connectionBindings = connectionBindings;
         this.familyValidator = familyValidator;
-        connectionBindings.validateAgainst(board, this.simulationElements);
+        this.pcbLayout = pcbLayout;
+        connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
+            externalPowerBindings);
     }
 
     TroubleshootBoard getBoard() {
@@ -75,5 +78,9 @@ class GeneratedBoardInstance {
 
     GeneratedBoardValidator getFamilyValidator() {
         return familyValidator;
+    }
+
+    PcbBoardLayout getPcbLayout() {
+        return pcbLayout;
     }
 }

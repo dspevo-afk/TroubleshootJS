@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -43,23 +44,34 @@ class InstrumentController {
     InstrumentController(final CirSim sim, VerticalPanel panel) {
         this.sim = sim;
         measurementAdapter = new CircuitMeasurementAdapter(sim);
+        VerticalPanel meterPanel = new VerticalPanel();
+        meterPanel.setStyleName("tsj-meter-panel");
+        Label meterTitle = new Label("MULTIMETER");
+        meterTitle.setStyleName("tsj-section-title");
+        meterPanel.add(meterTitle);
+        Grid modeGrid = new Grid(2, 2);
+        modeGrid.setStyleName("tsj-meter-modes");
         dcVoltageButton = new Button("DC V");
         dcVoltageButton.addStyleName("chbut");
         readingLabel = new Label("--- V");
-        panel.add(dcVoltageButton);
+        readingLabel.setStyleName("tsj-meter-display");
+        modeGrid.setWidget(0, 0, dcVoltageButton);
         resistanceButton = new Button("OHM");
         resistanceButton.addStyleName("chbut");
-        panel.add(resistanceButton);
+        modeGrid.setWidget(0, 1, resistanceButton);
         continuityButton = new Button("CONT");
         continuityButton.addStyleName("chbut");
-        panel.add(continuityButton);
+        modeGrid.setWidget(1, 0, continuityButton);
         diodeButton = new Button("DIODE");
         diodeButton.addStyleName("chbut");
-        panel.add(diodeButton);
+        modeGrid.setWidget(1, 1, diodeButton);
         continuityLabel = new Label("BEEP");
+        continuityLabel.setStyleName("tsj-continuity-indicator");
         continuityLabel.setVisible(false);
-        panel.add(continuityLabel);
-        panel.add(readingLabel);
+        meterPanel.add(modeGrid);
+        meterPanel.add(readingLabel);
+        meterPanel.add(continuityLabel);
+        panel.add(meterPanel);
         continuityFeedback = new BrowserContinuityFeedback();
 
         dcVoltageButton.addClickHandler(new ClickHandler() {
@@ -97,7 +109,10 @@ class InstrumentController {
     }
 
     void handlePointerInput(int button, int screenX, int screenY) {
-        CircuitPostProbeTarget target = sim.findPostTarget(screenX, screenY);
+        handlePointerInput(button, sim.findPostTarget(screenX, screenY));
+    }
+
+    void handlePointerInput(int button, ProbeTarget target) {
         boolean changed = false;
         if (target != null) {
             if (button == NativeEvent.BUTTON_LEFT)

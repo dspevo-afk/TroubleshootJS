@@ -94,12 +94,24 @@ electrical identity, not a CircuitJS analyzed node number. `BoardPad` connects
 physical component/pad identity to a board net. Generated-board metadata
 declares its external power inputs explicitly.
 
+PCB geometry is a separate rendering layer. `PcbBoardLayout` contains the board
+outline, component placements, pad placements, traces, and parts-tray geometry,
+and references only stable `BoardComponent`, `BoardPad`, and `BoardNet` IDs.
+It does not contain CircuitJS elements or analyzed node numbers. The initial
+`LedIndicatorPcbLayout` is manually authored; it is intentionally not an
+autorouter, manufacturing model, or source of electrical behavior.
+
 `BoardSimulationBindings` maps stable pad IDs to resolvable
 `CircuitMeasurementEndpoint` instances. CircuitJS element/post references are
 valid current schematic bindings, and resolve dynamically after reanalysis.
-Current schematic probes continue to use `CircuitPostProbeTarget`; a PCB probe
-target will use a board pad ID after the renderer provides marker geometry. Both
-paths converge through `CircuitMeasurementAdapter`.
+Current schematic probes continue to use `CircuitPostProbeTarget`.
+`BoardPadProbeTarget` identifies the active generated-board instance and stable
+pad ID, resolves electrically through `BoardSimulationBindings`, and asks the
+current PCB renderer for marker geometry. `ComponentLeadProbeTarget` similarly
+uses generated-board, component, and pad IDs but resolves through the declared
+component-side endpoint. Neither target persists analyzed node numbers. Both
+PCB and schematic hit testers feed the same generic probe-selection path in
+`InstrumentController` and converge through `CircuitMeasurementAdapter`.
 
 `GeneratedComponentConnectionBindings` adds the mutable physical-workbench
 boundary without changing a `BoardPad` or `BoardNet` identity. Each detachable
@@ -118,6 +130,25 @@ analysis, so active instruments invalidate and refresh through their existing
 path. Generated verification always checks graph/connection structural state;
 it runs family healthy-behavior checks only once every detachable lead is
 restored.
+
+Component physical state is derived explicitly from all declared lead
+connections: `INSTALLED`, `LEAD_LIFTED`, or `REMOVED`. Reconnection inserts a
+detachable element according to the canonical generated-element vector rather
+than appending it, while structural verification counts occurrences and checks
+relative order. Connection validation requires a detachable element to bridge
+distinct persistent-board and component-owned endpoints, rejects removable
+board-side endpoints, shared pads/elements, and external-power infrastructure.
+
+`PcbWorkbenchController` owns view-specific hit testing, component selection,
+and a generic contextual action panel. Actions are derived from declared
+connection bindings and are disabled while board power is on. Normal rejection
+uses inline feedback and never mutates the graph. `PcbWorkbenchRenderer`
+renders logical state without modifying copper geometry: pads and traces remain
+fixed, a lifted lead gains a visible air gap and component-side target, and a
+removed component moves to the parts tray with probeable leads. CircuitJS keeps
+running and solving behind this view. Generated boards use the PCB workbench by
+default; `?tsjDebug=true` and all legacy circuits retain the schematic renderer
+and upstream controls.
 
 Generators are seeded so a seed reproduces a board's topology, values, and
 simulation placement. `GeneratedBoardInstance` is family-agnostic: it couples

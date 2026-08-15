@@ -46,11 +46,23 @@ class BoardModificationController {
         return connected.get(binding.getPadId()).booleanValue();
     }
 
+    ComponentPhysicalState getComponentState(String componentId) {
+        Vector<GeneratedComponentConnectionBinding> bindings =
+            instance.getConnectionBindings().getForComponent(componentId);
+        int connectedCount = 0;
+        for (GeneratedComponentConnectionBinding binding : bindings) {
+            if (connected.get(binding.getPadId()).booleanValue())
+                connectedCount++;
+        }
+        if (connectedCount == bindings.size())
+            return ComponentPhysicalState.INSTALLED;
+        if (connectedCount == 0)
+            return ComponentPhysicalState.REMOVED;
+        return ComponentPhysicalState.LEAD_LIFTED;
+    }
+
     boolean isComponentInstalled(String componentId) {
-        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId))
-            if (!connected.get(binding.getPadId()).booleanValue())
-                return false;
-        return true;
+        return getComponentState(componentId) == ComponentPhysicalState.INSTALLED;
     }
 
     boolean isFullyRestored() {
@@ -62,10 +74,12 @@ class BoardModificationController {
 
     void verifyStructuralState() {
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getAll()) {
-            boolean present = sim.elmList.contains(binding.getConnectionElement());
-            if (present != connected.get(binding.getPadId()).booleanValue())
+            int occurrences = countOccurrences(binding.getConnectionElement());
+            int expected = connected.get(binding.getPadId()).booleanValue() ? 1 : 0;
+            if (occurrences != expected)
                 throw new IllegalStateException("Connection state disagrees with graph: " + binding.getPadId());
         }
+        verifyCanonicalGeneratedElementOrder();
     }
 
     private boolean setLeadConnection(String componentId, String padId, boolean shouldConnect) {
@@ -80,11 +94,51 @@ class BoardModificationController {
         if (isConnected == shouldConnect)
             return false;
         if (shouldConnect)
-            sim.elmList.add(binding.getConnectionElement());
+            insertInCanonicalOrder(binding.getConnectionElement());
         else
-            sim.elmList.remove(binding.getConnectionElement());
+            removeAllOccurrences(binding.getConnectionElement());
         connected.put(binding.getPadId(), Boolean.valueOf(shouldConnect));
         return true;
+    }
+
+    private void insertInCanonicalOrder(CircuitElm element) {
+        removeAllOccurrences(element);
+        Vector<CircuitElm> canonical = instance.getSimulationElements();
+        int canonicalIndex = canonical.indexOf(element);
+        for (int i = canonicalIndex + 1; i < canonical.size(); i++) {
+            int activeIndex = sim.elmList.indexOf(canonical.get(i));
+            if (activeIndex >= 0) {
+                sim.elmList.add(activeIndex, element);
+                return;
+            }
+        }
+        sim.elmList.add(element);
+    }
+
+    private void removeAllOccurrences(CircuitElm element) {
+        while (sim.elmList.remove(element)) {
+        }
+    }
+
+    private int countOccurrences(CircuitElm element) {
+        int count = 0;
+        for (CircuitElm active : sim.elmList) {
+            if (active == element)
+                count++;
+        }
+        return count;
+    }
+
+    private void verifyCanonicalGeneratedElementOrder() {
+        int priorIndex = -1;
+        for (CircuitElm element : instance.getSimulationElements()) {
+            int activeIndex = sim.elmList.indexOf(element);
+            if (activeIndex < 0)
+                continue;
+            if (activeIndex <= priorIndex)
+                throw new IllegalStateException("Generated element order differs from canonical order");
+            priorIndex = activeIndex;
+        }
     }
 
     private void requireSafeMutation() {

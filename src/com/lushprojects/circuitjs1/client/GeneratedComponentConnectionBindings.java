@@ -34,16 +34,40 @@ class GeneratedComponentConnectionBindings {
 
     Vector<GeneratedComponentConnectionBinding> getForComponent(String componentId) {
         Vector<GeneratedComponentConnectionBinding> result = new Vector<GeneratedComponentConnectionBinding>();
-        for (GeneratedComponentConnectionBinding binding : bindings.values())
-            if (componentId.equals(binding.getComponentId()))
-                result.add(binding);
+        BoardComponent component = board.getComponent(componentId);
+        if (component != null) {
+            for (String padId : component.getPadIds()) {
+                GeneratedComponentConnectionBinding binding = bindings.get(padId);
+                if (binding != null)
+                    result.add(binding);
+            }
+        }
         if (result.isEmpty())
             throw new IllegalArgumentException("Component has no detachable connections: " + componentId);
         return result;
     }
 
+    Vector<GeneratedComponentConnectionBinding> getForComponentOrEmpty(String componentId) {
+        Vector<GeneratedComponentConnectionBinding> result = new Vector<GeneratedComponentConnectionBinding>();
+        BoardComponent component = board.getComponent(componentId);
+        if (component == null)
+            return result;
+        for (String padId : component.getPadIds()) {
+            GeneratedComponentConnectionBinding binding = bindings.get(padId);
+            if (binding != null)
+                result.add(binding);
+        }
+        return result;
+    }
+
     Vector<GeneratedComponentConnectionBinding> getAll() {
-        return new Vector<GeneratedComponentConnectionBinding>(bindings.values());
+        Vector<GeneratedComponentConnectionBinding> result = new Vector<GeneratedComponentConnectionBinding>();
+        for (String padId : board.getPadIds()) {
+            GeneratedComponentConnectionBinding binding = bindings.get(padId);
+            if (binding != null)
+                result.add(binding);
+        }
+        return result;
     }
 
     boolean isConnectionElement(CircuitElm element) {
@@ -53,15 +77,42 @@ class GeneratedComponentConnectionBindings {
         return false;
     }
 
-    void validateAgainst(TroubleshootBoard board, Vector<CircuitElm> simulationElements) {
+    void validateAgainst(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
+            GeneratedComponentBindings componentBindings,
+            GeneratedExternalPowerBindings externalPowerBindings) {
         HashMap<CircuitElm, Boolean> connectionElements = new HashMap<CircuitElm, Boolean>();
         for (GeneratedComponentConnectionBinding binding : bindings.values()) {
             if (board.getSimulationBindings().getEndpoint(binding.getPadId()) !=
                     binding.getBoardEndpoint())
                 throw new IllegalStateException("Connection board endpoint does not match pad: " +
                     binding.getPadId());
-            validateEndpoint(binding.getBoardEndpoint(), simulationElements, binding.getPadId());
-            validateEndpoint(binding.getComponentEndpoint(), simulationElements, binding.getPadId());
+            CircuitPostMeasurementEndpoint boardPost = validateEndpoint(binding.getBoardEndpoint(),
+                simulationElements, binding.getPadId());
+            CircuitPostMeasurementEndpoint componentPost = validateEndpoint(
+                binding.getComponentEndpoint(), simulationElements, binding.getPadId());
+            if (!componentBindings.isElementBoundToComponent(binding.getComponentId(),
+                    componentPost.getElement()))
+                throw new IllegalStateException("Connection component endpoint is not owned by component: " +
+                    binding.getPadId());
+            if (boardPost.getElement() == binding.getConnectionElement() ||
+                    componentBindings.isElementBoundToComponent(binding.getComponentId(),
+                        boardPost.getElement()))
+                throw new IllegalStateException("Connection board endpoint is not persistent: " +
+                    binding.getPadId());
+            if (externalPowerBindings.isBackingElement(binding.getConnectionElement()))
+                throw new IllegalStateException("Detachable connection is external power infrastructure: " +
+                    binding.getPadId());
+            if (boardPost.getElement() == componentPost.getElement() &&
+                    boardPost.getPostIndex() == componentPost.getPostIndex())
+                throw new IllegalStateException("Connection endpoints are not separable: " +
+                    binding.getPadId());
+            Point boardPoint = boardPost.getElement().getPost(boardPost.getPostIndex());
+            Point componentPoint = componentPost.getElement().getPost(componentPost.getPostIndex());
+            if (boardPoint.equals(componentPoint) ||
+                    !touchesPoint(binding.getConnectionElement(), boardPoint) ||
+                    !touchesPoint(binding.getConnectionElement(), componentPoint))
+                throw new IllegalStateException("Detachable connection does not separate its endpoints: " +
+                    binding.getPadId());
             if (!simulationElements.contains(binding.getConnectionElement()) ||
                     connectionElements.put(binding.getConnectionElement(), Boolean.TRUE) != null)
                 throw new IllegalStateException("Invalid or shared detachable connection: " +
@@ -69,7 +120,7 @@ class GeneratedComponentConnectionBindings {
         }
     }
 
-    private void validateEndpoint(CircuitMeasurementEndpoint endpoint,
+    private CircuitPostMeasurementEndpoint validateEndpoint(CircuitMeasurementEndpoint endpoint,
             Vector<CircuitElm> simulationElements, String padId) {
         if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
             throw new IllegalStateException("Unsupported detachable endpoint: " + padId);
@@ -77,5 +128,14 @@ class GeneratedComponentConnectionBindings {
         if (!simulationElements.contains(post.getElement()) || post.getPostIndex() < 0 ||
                 post.getPostIndex() >= post.getElement().getPostCount())
             throw new IllegalStateException("Invalid detachable endpoint: " + padId);
+        return post;
+    }
+
+    private boolean touchesPoint(CircuitElm element, Point point) {
+        for (int postIndex = 0; postIndex < element.getPostCount(); postIndex++) {
+            if (point.equals(element.getPost(postIndex)))
+                return true;
+        }
+        return false;
     }
 }

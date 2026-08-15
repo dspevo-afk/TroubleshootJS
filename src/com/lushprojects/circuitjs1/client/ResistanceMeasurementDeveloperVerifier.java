@@ -7,6 +7,7 @@ import com.google.gwt.dom.client.NativeEvent;
 /** URL-gated regression check for the production active-resistance transaction. */
 class ResistanceMeasurementDeveloperVerifier {
     private static String diodeForwardSummary;
+    private static double healthyLedCurrent;
 
     static void verify(CirSim sim) {
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
@@ -84,8 +85,10 @@ class ResistanceMeasurementDeveloperVerifier {
         sim.runCircuit(true);
         sim.verifyGeneratedBoard();
         measure(sim, r11Probe, r12Probe, 680, 2);
-    verifyComponentIsolation(sim, instance, r11Probe, r12Probe);
-        sim.setCircuitTitle("Resistance verification passed; diode " + diodeForwardSummary);
+        verifyComponentIsolation(sim, instance, r11Probe, r12Probe);
+        verifyPcbWorkbench(sim, instance);
+        sim.setCircuitTitle("Resistance verification passed; diode " + diodeForwardSummary +
+            "; LED " + healthyLedCurrent + " A");
     }
 
     private static void verifyComponentIsolation(CirSim sim, GeneratedBoardInstance instance,
@@ -96,35 +99,206 @@ class ResistanceMeasurementDeveloperVerifier {
     GeneratedComponentConnectionBinding r12 = connections.get("R1", "R1.2");
     CircuitPostProbeTarget componentLead1 = getProbe(sim, r11.getComponentEndpoint());
     CircuitPostProbeTarget componentLead2 = getProbe(sim, r12.getComponentEndpoint());
+    Vector<CircuitElm> canonicalElements = instance.getSimulationElements();
+    String canonicalExport = sim.dumpCircuit();
+    verifyModificationLookupRejections(sim, modifications);
+    require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED,
+        "R1 did not begin installed");
     measure(sim, componentLead1, componentLead2, 680, 2);
-    modifications.liftLead("R1", "R1.1");
+    require(modifications.liftLead("R1", "R1.1"), "Initial R1 lead lift was ignored");
+    require(!modifications.liftLead("R1", "R1.1"), "Repeated R1 lead lift was not idempotent");
+    require(modifications.getComponentState("R1") == ComponentPhysicalState.LEAD_LIFTED,
+        "One lifted R1 lead was treated as removal");
     sim.updateCircuit();
     sim.instrumentController.setResistanceProbesForDeveloperVerification(r11Probe, componentLead1);
     require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
         "Lifted R1 lead did not isolate the persistent board pad");
     measure(sim, componentLead1, componentLead2, 680, 2);
-    modifications.reconnectLead("R1", "R1.1");
+    require(modifications.reconnectLead("R1", "R1.1"), "R1 lead reconnect was ignored");
+    require(!modifications.reconnectLead("R1", "R1.1"),
+        "Repeated R1 reconnect was not idempotent");
     sim.updateCircuit();
+    require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED,
+        "Reconnecting R1 did not restore installed state");
+    require(sim.elmList.equals(canonicalElements),
+        "R1 reconnect did not restore canonical generated-element order");
+    require(canonicalExport.equals(sim.dumpCircuit()),
+        "R1 reconnect did not restore the exact circuit export");
     measure(sim, r11Probe, r12Probe, 680, 2);
+
+    sim.elmList.add(r11.getConnectionElement());
+    boolean duplicateRejected = false;
+    try {
+        modifications.verifyStructuralState();
+    } catch (IllegalStateException expected) {
+        duplicateRejected = true;
+    }
+    require(duplicateRejected, "Structural verification accepted a duplicate detachable element");
+    sim.elmList.removeElementAt(sim.elmList.lastIndexOf(r11.getConnectionElement()));
+    modifications.verifyStructuralState();
+
+    modifications.liftLead("R1", "R1.1");
     modifications.removeComponent("R1");
+    require(modifications.getComponentState("R1") == ComponentPhysicalState.REMOVED,
+        "Removing lead-lifted R1 did not disconnect every lead");
+    require(!modifications.removeComponent("R1"), "Repeated R1 removal was not idempotent");
     require(!sim.elmList.contains(r11.getConnectionElement()) &&
         !sim.elmList.contains(r12.getConnectionElement()),
         "Removing R1 left a detachable lead in the graph");
     measure(sim, componentLead1, componentLead2, 680, 2);
     sim.setBoardPowerState(BoardPowerState.POWERED);
+    sim.updateCircuit();
+    requireApproximately(9,
+        sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(r11Probe,
+            getProbe(sim, instance, "J1.2")), .1,
+        "Powered removed board did not retain VIN");
+    LEDElm led = (LEDElm) instance.getComponentBindings().getSingleElement("LED1");
+    require(Math.abs(led.getCurrent()) < .000001,
+        "Removed R1 allowed unexpected LED current: " + led.getCurrent());
+    sim.verifyGeneratedBoard();
     boolean poweredRejected = false;
     try {
         modifications.restoreComponent("R1");
     } catch (IllegalStateException e) {
         poweredRejected = true;
     }
-    require(poweredRejected && !modifications.isComponentInstalled("R1"),
+    require(poweredRejected && modifications.getComponentState("R1") ==
+            ComponentPhysicalState.REMOVED,
         "Powered component restoration changed the board");
     sim.setBoardPowerState(BoardPowerState.UNPOWERED);
     modifications.restoreComponent("R1");
+    require(!modifications.restoreComponent("R1"), "Repeated R1 restore was not idempotent");
     sim.updateCircuit();
+    require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED,
+        "Restoring R1 did not reconnect every lead");
+    require(sim.elmList.equals(canonicalElements),
+        "R1 restore did not reproduce canonical generated-element order");
+    require(canonicalExport.equals(sim.dumpCircuit()),
+        "R1 restore did not reproduce the exact circuit export");
     sim.verifyGeneratedBoard();
     measure(sim, r11Probe, r12Probe, 680, 2);
+    sim.setBoardPowerState(BoardPowerState.POWERED);
+    sim.updateCircuit();
+    healthyLedCurrent = ((LEDElm) instance.getComponentBindings().getSingleElement("LED1"))
+        .getCurrent();
+    require(healthyLedCurrent >= .005 && healthyLedCurrent <= .015,
+        "Restored R1 did not return LED current to the healthy range: " + healthyLedCurrent);
+    sim.verifyGeneratedBoard();
+    sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+    sim.updateCircuit();
+    measure(sim, r11Probe, r12Probe, 680, 2);
+    }
+
+    private static void verifyModificationLookupRejections(CirSim sim,
+            BoardModificationController modifications) {
+        Vector<CircuitElm> graphBefore = new Vector<CircuitElm>(sim.elmList);
+        boolean unknownComponentRejected = false;
+        boolean unknownPadRejected = false;
+        boolean noConnectionsRejected = false;
+        try {
+            modifications.liftLead("UNKNOWN", "R1.1");
+        } catch (IllegalArgumentException expected) {
+            unknownComponentRejected = true;
+        }
+        try {
+            modifications.liftLead("R1", "UNKNOWN");
+        } catch (IllegalArgumentException expected) {
+            unknownPadRejected = true;
+        }
+        try {
+            modifications.removeComponent("LED1");
+        } catch (IllegalArgumentException expected) {
+            noConnectionsRejected = true;
+        }
+        require(unknownComponentRejected && unknownPadRejected && noConnectionsRejected,
+            "Modification lookup accepted an unknown ID or component without connections");
+        require(sim.elmList.equals(graphBefore),
+            "Rejected modification lookup changed the simulation graph");
+    }
+
+    private static void verifyPcbWorkbench(CirSim sim, GeneratedBoardInstance instance) {
+        if (sim.pcbWorkbenchController == null)
+            return;
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        ProbeTarget r11 = hitPcbPad(sim, renderer, "R1.1");
+        ProbeTarget r12 = hitPcbPad(sim, renderer, "R1.2");
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
+        requireApproximately(680,
+            sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,
+            "PCB R1 pad measurement was not approximately 680 Ohm");
+        int measurementCount =
+            sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        clickPcbTarget(sim, NativeEvent.BUTTON_LEFT, renderer.getPadPoint("R1.1"));
+        clickPcbTarget(sim, NativeEvent.BUTTON_RIGHT, renderer.getPadPoint("R1.2"));
+        require(measurementCount ==
+            sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
+            "Same physical PCB pad clicks remeasured");
+
+        BoardModificationController modifications = sim.getBoardModificationController();
+        modifications.liftLead("R1", "R1.1");
+        sim.updateCircuit();
+        require(r11.isValid() && r12.isValid(),
+            "PCB pad targets did not survive lead lift and reanalysis");
+        ProbeTarget componentLead1 = hitPcbLead(sim, renderer, "R1", "R1.1");
+        GeneratedComponentConnectionBinding r12Binding =
+            instance.getConnectionBindings().get("R1", "R1.2");
+        ProbeTarget componentLead2 = new ComponentLeadProbeTarget(sim, instance, "R1", "R1.2",
+            renderer);
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, componentLead1);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Lifted PCB lead did not open the board-to-component path");
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(r11, r12);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                !sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
+            "Open PCB board path produced continuity");
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(componentLead1,
+            componentLead2);
+        requireApproximately(680,
+            sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,
+            "Lifted PCB component lead measurement was not approximately 680 Ohm");
+        require(r12Binding.getComponentEndpoint() == componentLead2.getMeasurementEndpoint(),
+            "Component-side PCB target did not resolve through its declared binding");
+
+        modifications.removeComponent("R1");
+        sim.updateCircuit();
+        require(r11.isValid() && r12.isValid(),
+            "PCB pad targets did not survive component removal and reanalysis");
+        componentLead1 = hitPcbLead(sim, renderer, "R1", "R1.1");
+        componentLead2 = hitPcbLead(sim, renderer, "R1", "R1.2");
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(componentLead1,
+            componentLead2);
+        requireApproximately(680,
+            sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,
+            "Removed tray resistor did not measure approximately 680 Ohm");
+
+        modifications.restoreComponent("R1");
+        sim.updateCircuit();
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
+        requireApproximately(680,
+            sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,
+            "Restored PCB pad measurement was not approximately 680 Ohm");
+    }
+
+    private static ProbeTarget hitPcbPad(CirSim sim, PcbWorkbenchRenderer renderer, String padId) {
+        Point point = renderer.getPadPoint(padId);
+        ProbeTarget target = sim.pcbWorkbenchController.findProbeTarget(point.x, point.y);
+        require(target instanceof BoardPadProbeTarget,
+            "PCB pad hit test did not produce a board-pad target: " + padId);
+        return target;
+    }
+
+    private static ProbeTarget hitPcbLead(CirSim sim, PcbWorkbenchRenderer renderer,
+            String componentId, String padId) {
+        Point point = renderer.getComponentLeadPoint(componentId, padId);
+        ProbeTarget target = sim.pcbWorkbenchController.findProbeTarget(point.x, point.y);
+        require(target instanceof ComponentLeadProbeTarget,
+            "PCB component lead hit test did not produce a lead target: " + padId);
+        return target;
+    }
+
+    private static void clickPcbTarget(CirSim sim, int button, Point point) {
+        sim.instrumentController.handlePointerInput(button,
+            sim.pcbWorkbenchController.findProbeTarget(point.x, point.y));
     }
 
     private static CircuitPostProbeTarget getProbe(CirSim sim, GeneratedBoardInstance instance,
