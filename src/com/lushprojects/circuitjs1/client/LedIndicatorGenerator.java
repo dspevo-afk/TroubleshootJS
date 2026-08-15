@@ -87,7 +87,8 @@ class LedIndicatorGenerator {
         resistorInventory.add(originalR1);
         addReplacementParts(resistorInventory, resistorValue, seed, elements);
         ReplaceableComponentSlot r1Slot = new ReplaceableComponentSlot("R1",
-            physicalSpecifications.getResistorNameplate("R1"), originalR1);
+            physicalSpecifications.getResistorNameplate("R1"), originalR1, r1Lead1Link,
+            r1Lead2Link);
         GeneratedChallengeCatalog challengeCatalog = new GeneratedChallengeCatalog();
         challengeCatalog.addCandidate(new GeneratedChallengeDefinition("LED_INDICATOR_NO_LIGHT",
             "LED_INDICATOR", DIRECT_SERIES_VARIANT, seed, "INDICATOR_DOES_NOT_LIGHT",
@@ -154,8 +155,9 @@ class LedIndicatorGenerator {
             long seed, Vector<CircuitElm> elements) {
         double[] choices = getReplacementValues(intendedValue);
         for (int index = 0; index < choices.length; index++) {
-            ResistorElm replacement = new ResistorElm(900, 440 + index * 24);
-            replacement.drag(960, 440 + index * 24);
+            int looseY = 432 + index * 48;
+            ResistorElm replacement = new ResistorElm(896, looseY);
+            replacement.drag(960, looseY);
             replacement.setResistance(choices[index]);
             PhysicalResistorPart part = new PhysicalResistorPart("R1_REPLACEMENT_" + index,
                 new ResistorNameplate("R1_REPLACEMENT_" + index, choices[index], 5), replacement,

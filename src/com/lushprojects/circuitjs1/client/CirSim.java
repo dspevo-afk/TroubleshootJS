@@ -4107,6 +4107,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
 	ActiveMeasurementStimulus lastActiveMeasurementStimulus;
 	boolean activeMeasurementSolverRestored;
+	String lastResistanceMeasurementDiagnostics;
 	boolean generatedBoardVerificationPending;
 	boolean generatedBoardVerificationAnalyzed;
 	double generatedBoardVerificationStartTime;
@@ -4197,7 +4198,7 @@ MouseOutHandler, MouseWheelHandler {
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
 		generatedBoardInstance.getTopologyVariantId() + ", seed " +
-		generatedBoardInstance.getSeed(), e);
+		generatedBoardInstance.getSeed() + ": " + e.getMessage(), e);
 	}
     }
 
@@ -4303,9 +4304,14 @@ MouseOutHandler, MouseWheelHandler {
 	if (!boardPowerController.isElectricallyUnpowered() ||
 		!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return Double.NaN;
-	final ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(this, red, black);
+	final CircuitPostMeasurementEndpoint redEndpoint = red;
+	final CircuitPostMeasurementEndpoint blackEndpoint = black;
+	final ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(this,
+	    redEndpoint, blackEndpoint);
 	return runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
 	    public double readResult() {
+		lastResistanceMeasurementDiagnostics = describeResistanceMeasurement(redEndpoint,
+		    blackEndpoint, stimulus);
 		double current = stimulus.getTestCurrent();
 		if (Double.isNaN(current) || Double.isInfinite(current) || Math.abs(current) < 1e-10)
 		    return Double.POSITIVE_INFINITY;
@@ -4315,6 +4321,37 @@ MouseOutHandler, MouseWheelHandler {
 		    Double.POSITIVE_INFINITY : (resistance < .001 ? 0 : resistance);
 	    }
 	});
+    }
+
+    String getLastResistanceMeasurementDiagnosticsForDeveloperVerification() {
+	return lastResistanceMeasurementDiagnostics;
+    }
+
+    private String describeResistanceMeasurement(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black, ResistanceMeasurementStimulus stimulus) {
+	return "red=" + describePost(red.getElement(), red.getPostIndex()) +
+	    " black=" + describePost(black.getElement(), black.getPostIndex()) +
+	    " source=" + describeElement(stimulus.getSource()) +
+	    " meter=" + describeElement(stimulus.getInternalResistor()) +
+	    " ground=" + describeElement(stimulus.getReferenceGround()) +
+	    " sourceI=" + stimulus.getSource().getCurrent() +
+	    " meterI=" + stimulus.getInternalResistor().getCurrent();
+    }
+
+    private String describeElement(CircuitElm element) {
+	String result = element.getClass().getName() + "[";
+	for (int post = 0; post < element.getPostCount(); post++) {
+	    if (post > 0)
+		result += ",";
+	    result += describePost(element, post);
+	}
+	return result + "]";
+    }
+
+    private String describePost(CircuitElm element, int post) {
+	Point point = element.getPost(post);
+	return Integer.toHexString(System.identityHashCode(element)) + ":" + post + "@" +
+	    point.x + "," + point.y + "#" + element.nodes[post];
     }
 
     DiodeMeasurementResult measureDiode(CircuitPostMeasurementEndpoint red,

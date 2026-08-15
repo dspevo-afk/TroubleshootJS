@@ -1,11 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
 class ResistorSlotController {
-    private static final int R1_X1 = 400;
-    private static final int R1_Y1 = 240;
-    private static final int R1_X2 = 512;
-    private static final int R1_Y2 = 240;
-
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
@@ -38,7 +33,6 @@ class ResistorSlotController {
         PhysicalResistorPart part = instance.getResistorInventory().get(partId);
         if (part.getLocation() != ResistorPartLocation.LOOSE)
             return false;
-        part.moveTo(R1_X1, R1_Y1, R1_X2, R1_Y2);
         instance.getComponentBindings().replaceSingleElement("R1", part.getElement());
         part.setLocation(ResistorPartLocation.INSTALLED);
         slot.install(part);

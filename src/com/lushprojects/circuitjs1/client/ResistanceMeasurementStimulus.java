@@ -6,6 +6,7 @@ class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
 
     private final DCVoltageElm source;
     private final ResistorElm internalResistor;
+    private final GroundElm referenceGround;
 
     ResistanceMeasurementStimulus(CirSim sim, CircuitPostMeasurementEndpoint red,
             CircuitPostMeasurementEndpoint black) {
@@ -18,16 +19,20 @@ class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
         internalResistor = new ResistorElm(blackPoint.x, blackPoint.y);
         internalResistor.drag(midpoint.x, midpoint.y);
         internalResistor.setResistance(INTERNAL_RESISTANCE);
+        referenceGround = new GroundElm(blackPoint.x, blackPoint.y);
+        referenceGround.drag(blackPoint.x, blackPoint.y + 32);
     }
 
     public void install(CirSim sim) {
         sim.elmList.add(source);
         sim.elmList.add(internalResistor);
+        sim.elmList.add(referenceGround);
     }
 
     public void remove(CirSim sim) {
         sim.elmList.remove(source);
         sim.elmList.remove(internalResistor);
+        sim.elmList.remove(referenceGround);
     }
 
     double getTestCurrent() {
@@ -42,8 +47,12 @@ class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
         return internalResistor;
     }
 
+    GroundElm getReferenceGround() {
+        return referenceGround;
+    }
+
     public CircuitElm[] getTemporaryElements() {
-        return new CircuitElm[] { source, internalResistor };
+        return new CircuitElm[] { source, internalResistor, referenceGround };
     }
 
     static Point findUnusedPoint(CirSim sim, Point redPoint, Point blackPoint) {
@@ -57,7 +66,8 @@ class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
             }
         }
         for (int offset = 64; ; offset += 64) {
-            Point candidate = new Point(maximumX + offset, maximumY + offset);
+            Point candidate = new Point(sim.snapGrid(maximumX + offset),
+                sim.snapGrid(maximumY + offset));
             if (!samePoint(candidate, redPoint) && !samePoint(candidate, blackPoint) &&
                     !isOccupied(sim, candidate))
                 return candidate;

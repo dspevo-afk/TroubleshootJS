@@ -1,13 +1,11 @@
 # Latest Codex Task Report
 
 ## Task
-Task #15: electrically real resistor replacement and repair completion.
+Task #15 corrective pass: electrically honest resistor replacement isolation.
 
 ## Summary
-The open-R1 LED challenge now supports removal of the failed original resistor,
-measurement in the tray, deterministic healthy replacement choices, real
-CircuitJS slot installation, wrong repair attempts, and solver-backed repair
-completion.
+Fixed ghost replacement paths and made every physical resistor part a complete,
+individually measurable CircuitJS backing with explicit R1 slot attachments.
 
 ## Architecture Decisions
 - `GeneratedFault` is immutable typed metadata; its private `SwitchElm` is
@@ -23,13 +21,14 @@ completion.
 - `GeneratedComponentOperationalStates` maps the stable LED ID to solved LED
   current. The renderer uses it only for illumination; printed identity remains
   immutable.
-- `ReplaceableComponentSlot` is the stable R1 board location; each
-  `PhysicalResistorPart` has its own immutable ID, nameplate, CircuitJS resistor
-  backing, and loose/installed state. The failed original remains a distinct
-  faulted part and never becomes a replacement.
-- `ResistorSlotController` solely owns power-off removal/install swaps through
-  the existing detachable R1 electrical boundary. PCB pads, nets, traces,
-  designator, and layout are not rebuilt.
+- Each `PhysicalResistorPart` has immutable identity/nameplate, complete backing,
+  public terminals, and location. The original's open switch stays in its public
+  electrical path.
+- R1 attachment wires, not part coordinates, are retargeted during swaps. All
+  loose backings remain active exactly once at unique grid-aligned solver points.
+- The resistance overlay temporarily grounds exactly its black-probe node. Its
+  midpoint is grid-snapped, preventing the source and meter resistor from landing
+  on adjacent but electrically distinct coordinates.
 - `GeneratedRepairValidator` evaluates solved electrical function, not selected
   part identity. Completion is latched after 5-15 mA LED current, matching R1
   current, and illuminated solved operational state.
@@ -42,30 +41,31 @@ completion.
 - Deterministic inventory: seed 0 `100/330/4700 Ohm`; seed 2
   `220/680/10000 Ohm`; seed 3 `330/1000/15000 Ohm`, all `+/-5%` exact
   four-band nameplates. Inventory order and IDs are stable.
-- Manual browser validation on seed 2 removed the original, showed it loose,
-  installed low and high wrong values without completion, then installed the
-  680 Ohm replacement. CircuitJS measured 9 V at R1 and the ticket became
-  `Repair verified. Indicator operating normally.`
-- For the 9 V seed, the 220 Ohm low choice drives approximately 31 mA and the
-  10000 Ohm high choice approximately 0.7 mA, both outside the 5-15 mA
-  functional acceptance range; the 680 Ohm replacement returns the existing
-  healthy approximately 10 mA operating point.
-- Browser checks of challenge seeds `0`, `2`, and `3` reached the ready ticket
-  with Board Power ON and no page or console errors. The healthy fixture for
-  seed `2` stayed ticket-free and error-free.
+- `tsjVerifyReplacement=true` passed with no page/console errors:
+  `http://localhost:8901/circuitjs.html?tsjChallenge=led&seed=0&tsjVerifyReplacement=true&run=final`,
+  `http://localhost:8901/circuitjs.html?tsjChallenge=led&seed=2&tsjVerifyReplacement=true&run=final`,
+  and `http://localhost:8901/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyReplacement=true&run=final`.
+- Seed 2 numeric sequence: 220 Ohm reads 220 Ohm both orientations and drives
+  31 mA uncompleted; 10000 Ohm reads 10000 Ohm both orientations and drives
+  approximately 0.7 mA without LED illumination; 680 Ohm reads 680 Ohm installed,
+  drives approximately 10 mA matching LED current, illuminates, and completes.
+- Original loose R1 reads OL in both orientations before and after reinstall;
+  reinstallation remains below 1 uA and does not complete.
 - JDK 8 production build compiled and linked all five GWT permutations:
   `$java8Home = Join-Path $env:TEMP 'TroubleshootJS-build-probe\temurin8'; & .\scripts\build.ps1 -JavaHome $java8Home`.
-- Browser evidence: `docs/screenshots/task-15/initial-faulted-challenge.png`,
-  `empty-slot-original-tray.png`, `low-wrong-installed.png`,
-  `high-wrong-installed.png`, and `completed-correct-replacement.png`.
+- Browser evidence was exercised on the three URL-gated production pages above.
+  The existing `docs/screenshots/task-15` images predate this corrective pass and
+  are not asserted as evidence for the corrected electrical behavior.
 
 ## Known Limitations
 Only resistor replacement for the LED challenge is implemented. There are no
 replacement LEDs, polarized parts, jumpers, damage, scoring, or repair hints.
 
 ## Recommended Next Step
-Add replacement support for another component family while preserving the same
-slot/part and solver-backed functional-validation boundaries.
+Replace predefined replacement choices with an effectively unlimited on-demand
+resistor catalog; removed parts alone remain in the tray. Preserve solved
+functional acceptance, stable realized tolerance values, and later introduce
+persistent damage only from modeled electrical/thermal stress.
 
 ## Intended Commit Message
-`Add electrically real resistor replacement`
+`Fix replacement part electrical isolation`

@@ -1,10 +1,14 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 class PhysicalResistorPart {
     private final String id;
     private final ResistorNameplate nameplate;
     private final ResistorElm element;
     private final GeneratedFaultBinding faultBinding;
+    private final CircuitMeasurementEndpoint firstTerminal;
+    private final CircuitMeasurementEndpoint secondTerminal;
     private ResistorPartLocation location;
 
     PhysicalResistorPart(String id, ResistorNameplate nameplate, ResistorElm element,
@@ -16,6 +20,10 @@ class PhysicalResistorPart {
         this.nameplate = nameplate;
         this.element = element;
         this.faultBinding = faultBinding;
+        this.firstTerminal = new CircuitPostMeasurementEndpoint(element, 0);
+        this.secondTerminal = faultBinding == null
+            ? new CircuitPostMeasurementEndpoint(element, 1)
+            : new CircuitPostMeasurementEndpoint(faultBinding.getIsolationElement(), 1);
         this.location = location;
     }
 
@@ -26,13 +34,21 @@ class PhysicalResistorPart {
     ResistorPartLocation getLocation() { return location; }
     boolean isFaulted() { return faultBinding != null && faultBinding.isApplied(); }
 
-    void setLocation(ResistorPartLocation location) { this.location = location; }
-
-    void moveTo(int x1, int y1, int x2, int y2) {
-        element.x = x1;
-        element.y = y1;
-        element.x2 = x2;
-        element.y2 = y2;
-        element.setPoints();
+    CircuitMeasurementEndpoint getPublicTerminal(int terminal) {
+        if (terminal == 0)
+            return firstTerminal;
+        if (terminal == 1)
+            return secondTerminal;
+        throw new IllegalArgumentException("Invalid resistor part terminal: " + terminal);
     }
+
+    Vector<CircuitElm> getBackingElements() {
+        Vector<CircuitElm> elements = new Vector<CircuitElm>();
+        elements.add(element);
+        if (faultBinding != null)
+            elements.add(faultBinding.getIsolationElement());
+        return elements;
+    }
+
+    void setLocation(ResistorPartLocation location) { this.location = location; }
 }

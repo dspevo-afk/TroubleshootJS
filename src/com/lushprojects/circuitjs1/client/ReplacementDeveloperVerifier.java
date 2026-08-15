@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 class ReplacementDeveloperVerifier {
     static void verify(CirSim sim) {
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
@@ -11,45 +13,68 @@ class ReplacementDeveloperVerifier {
         PhysicalResistorPart original = instance.getResistorInventory().get("R1_ORIGINAL");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
+        verifyPartTopology(sim, instance);
         require(slots.removeInstalledPart() && instance.getR1Slot().isEmpty() &&
             original.getLocation() == ResistorPartLocation.LOOSE && original.isFaulted(),
             "Removing original failed R1 did not empty slot and preserve fault");
         verifyResistance(sim, instance, original, true);
+        verifyPartTopology(sim, instance);
         require(slots.install(original.getId()), "Original failed R1 did not reinstall");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
-        require(!challenge.isCompleted() && !instance.getOperationalStates().isIlluminated("LED1"),
+        require(Math.abs(getLedCurrent(instance)) < .000001 && !challenge.isCompleted() &&
+            !instance.getOperationalStates().isIlluminated("LED1"),
             "Reinstalled failed R1 unexpectedly repaired challenge");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        slots.removeInstalledPart();
-        verifyReplacement(sim, instance, challenge, slots, "R1_REPLACEMENT_0", false);
-        verifyReplacement(sim, instance, challenge, slots, "R1_REPLACEMENT_2", false);
+        require(slots.removeInstalledPart(), "Reinstalled failed R1 did not remove");
+        verifyResistance(sim, instance, original, true);
+        verifyPartTopology(sim, instance);
+        verifyReplacement(sim, instance, challenge, slots, "R1_REPLACEMENT_0", .025, .035, true,
+            false);
+        verifyReplacement(sim, instance, challenge, slots, "R1_REPLACEMENT_2", .0005, .001, false,
+            false);
         require(slots.install("R1_REPLACEMENT_1"), "Correct replacement did not install");
+        double correctResistance = instance.getResistorInventory().get("R1_REPLACEMENT_1")
+            .getNameplate().getNominalResistanceOhms();
+        verifyInstalledResistance(sim, instance, correctResistance);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
-        require(challenge.isCompleted() && instance.getOperationalStates().isIlluminated("LED1"),
+        require(getLedCurrent(instance) >= .005 && getLedCurrent(instance) <= .015 &&
+            Math.abs(getLedCurrent(instance) - getInstalledResistorCurrent(instance)) <= .0001 &&
+            challenge.isCompleted() && instance.getOperationalStates().isIlluminated("LED1"),
             "Correct replacement did not complete solved repair");
         require(original.getLocation() == ResistorPartLocation.LOOSE && original.isFaulted(),
             "Completion altered original failed part");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        verifyResistance(sim, instance, original, true);
+        verifyResistance(sim, instance, instance.getResistorInventory().get("R1_REPLACEMENT_0"), false);
+        verifyResistance(sim, instance, instance.getResistorInventory().get("R1_REPLACEMENT_2"), false);
+        verifyInstalledResistance(sim, instance, correctResistance);
+        verifyPartTopology(sim, instance);
         sim.setCircuitTitle("Replacement verification passed");
     }
 
     private static void verifyReplacement(CirSim sim, GeneratedBoardInstance instance,
             GeneratedChallengeController challenge, ResistorSlotController slots, String partId,
+            double minimumCurrent, double maximumCurrent, boolean expectedIllumination,
             boolean expectedCompletion) {
         PhysicalResistorPart part = instance.getResistorInventory().get(partId);
         verifyResistance(sim, instance, part, false);
         require(slots.install(partId), "Replacement did not install: " + partId);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
-        double current = Math.abs(((LEDElm) instance.getComponentBindings().getSingleElement("LED1"))
-            .getCurrent());
-        require((current >= .005 && current <= .015) == expectedCompletion,
+        verifyPartTopology(sim, instance);
+        double current = getLedCurrent(instance);
+        require(current >= minimumCurrent && current <= maximumCurrent,
             "Unexpected functional current for " + partId + ": " + current);
+        require(instance.getOperationalStates().isIlluminated("LED1") == expectedIllumination,
+            "Unexpected LED state for " + partId);
         require(challenge.isCompleted() == expectedCompletion,
             "Unexpected completion state for " + partId);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(slots.removeInstalledPart(), "Replacement did not remove: " + partId);
+        verifyResistance(sim, instance, part, false);
+        verifyPartTopology(sim, instance);
     }
 
     private static void verifyResistance(CirSim sim, GeneratedBoardInstance instance,
@@ -60,14 +85,109 @@ class ReplacementDeveloperVerifier {
             sim.pcbWorkbenchController.getRenderer());
         sim.instrumentController.setResistanceProbesForDeveloperVerification(first, second);
         String forward = sim.instrumentController.getReadingForDeveloperVerification();
+        double forwardValue = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
+        String forwardDiagnostics = sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification();
         sim.instrumentController.setResistanceProbesForDeveloperVerification(second, first);
         String reverse = sim.instrumentController.getReadingForDeveloperVerification();
+        double reverseValue = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
+        String reverseDiagnostics = sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification();
         if (expectedOpen)
             require("OL".equals(forward) && "OL".equals(reverse), "Failed original was not OL");
-        else
-            require(!"OL".equals(forward) && !"OL".equals(reverse),
-                "Healthy replacement was not measurable: " + part.getId());
+        else {
+            double expected = part.getNameplate().getNominalResistanceOhms();
+            double tolerance = expected * part.getNameplate().getTolerancePercent() / 100.0;
+            require(!"OL".equals(forward) && !"OL".equals(reverse) &&
+                isWithinTolerance(expected, forwardValue, tolerance) &&
+                isWithinTolerance(expected, reverseValue, tolerance),
+                "Healthy replacement reading disagrees with nameplate: " + part.getId() +
+                " forward=" + forwardValue + " reverse=" + reverseValue + " " +
+                "forwardDiagnostics=" + forwardDiagnostics + " reverseDiagnostics=" +
+                reverseDiagnostics);
+        }
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        require(!sim.activeMeasurementOverlay && sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+            "Meter overlay did not tear down for " + part.getId());
+    }
+
+    private static void verifyInstalledResistance(CirSim sim, GeneratedBoardInstance instance,
+            double expectedResistance) {
+        CircuitPostProbeTarget first = getProbe(sim,
+            instance.getSimulationBindings().getEndpoint("R1.1"));
+        CircuitPostProbeTarget second = getProbe(sim,
+            instance.getSimulationBindings().getEndpoint("R1.2"));
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(first, second);
+        double actual = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
+        require(isWithinTolerance(expectedResistance, actual, expectedResistance * .05),
+            "Installed R1 resistance disagrees with part: " + actual);
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyPartTopology(CirSim sim, GeneratedBoardInstance instance) {
+        ReplaceableComponentSlot slot = instance.getR1Slot();
+        int installedCount = 0;
+        for (PhysicalResistorPart part : instance.getResistorInventory().getAll()) {
+            if (part.getLocation() == ResistorPartLocation.INSTALLED)
+                installedCount++;
+            for (CircuitElm element : part.getBackingElements())
+                require(countOccurrences(sim.elmList, element) == 1,
+                    "Part backing is missing or duplicated: " + part.getId());
+        }
+        require((slot.isEmpty() && installedCount == 0) || (!slot.isEmpty() && installedCount == 1 &&
+            slot.getInstalledPart().getLocation() == ResistorPartLocation.INSTALLED),
+            "Part locations disagree with slot occupancy");
+        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent("R1")) {
+            boolean attached = !slot.isEmpty();
+            require(countOccurrences(sim.elmList, binding.getConnectionElement()) == (attached ? 1 : 0),
+                "R1 attachment occurrence disagrees with slot occupancy");
+            if (attached) {
+                int terminal = "R1.1".equals(binding.getPadId()) ? 0 : 1;
+                int attachmentPartPost = terminal == 0 ? 1 : 0;
+                require(getNode(binding.getConnectionElement(), attachmentPartPost) == getNode(
+                    slot.getInstalledPart().getPublicTerminal(terminal)),
+                    "R1 attachment does not reach installed part");
+                for (PhysicalResistorPart part : instance.getResistorInventory().getAll())
+                    if (part != slot.getInstalledPart())
+                        require(getNode(binding.getConnectionElement(), attachmentPartPost) != getNode(
+                            part.getPublicTerminal(terminal)),
+                            "Loose part remains attached to R1: " + part.getId());
+            }
+        }
+    }
+
+    private static int getNode(CircuitMeasurementEndpoint endpoint) {
+        if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
+            throw new IllegalStateException("Unsupported resistor part endpoint");
+        CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint) endpoint;
+        return getNode(post.getElement(), post.getPostIndex());
+    }
+
+    private static CircuitPostProbeTarget getProbe(CirSim sim, CircuitMeasurementEndpoint endpoint) {
+        if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
+            throw new IllegalStateException("Unsupported board pad endpoint");
+        CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint) endpoint;
+        return new CircuitPostProbeTarget(sim, post.getElement(), post.getPostIndex());
+    }
+
+    private static int getNode(CircuitElm element, int post) { return element.nodes[post]; }
+    private static int countOccurrences(Vector<CircuitElm> elements, CircuitElm target) {
+        int count = 0;
+        for (CircuitElm element : elements)
+            if (element == target)
+                count++;
+        return count;
+    }
+
+    private static double getLedCurrent(GeneratedBoardInstance instance) {
+        return Math.abs(((LEDElm) instance.getComponentBindings().getSingleElement("LED1")).getCurrent());
+    }
+
+    private static double getInstalledResistorCurrent(GeneratedBoardInstance instance) {
+        return Math.abs(((ResistorElm) instance.getComponentBindings().getSingleElement("R1")).getCurrent());
+    }
+
+    private static boolean isWithinTolerance(double expected, double actual, double tolerance) {
+        return !Double.isNaN(actual) && !Double.isInfinite(actual) &&
+            Math.abs(expected - actual) <= tolerance;
     }
 
     private static void verifyInventoryMetadata() {

@@ -31,6 +31,6 @@ class PhysicalResistorPartProbeTarget implements ProbeTarget {
     public Point getMarkerPoint() { return renderer.getLoosePartLeadPoint(partId, terminal); }
     public CircuitMeasurementEndpoint getMeasurementEndpoint() {
         PhysicalResistorPart part = instance.getResistorInventory().get(partId);
-        return new CircuitPostMeasurementEndpoint(part.getElement(), terminal);
+        return part.getPublicTerminal(terminal);
     }
 }

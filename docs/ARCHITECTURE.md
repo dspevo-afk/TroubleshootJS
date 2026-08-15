@@ -258,18 +258,20 @@ Replaceable hardware distinguishes the stable logical board slot from the
 physical part. `ReplaceableComponentSlot` owns the fixed R1 designator,
 intended immutable board specification, pads/nets, and current occupancy;
 `PhysicalResistorPart` owns a stable part-instance ID, immutable nameplate,
-CircuitJS resistor backing, optional internal fault binding, and loose/installed
-location. `ResistorReplacementInventory` is deterministic per seed and retains
+complete CircuitJS backing, two public terminals, optional internal fault binding,
+and loose/installed location. A fault switch is inside the failed original's
+public two-terminal path, so the removed physical part measures electrically open
+instead of merely carrying fault metadata. `ResistorReplacementInventory` is deterministic per seed and retains
 the original failed resistor alongside healthy replacement choices. Changing a
 part never mutates a nameplate or closes the original fault switch.
 
 `ResistorSlotController` is the only owner of R1 install/remove graph changes.
 It requires genuine board power isolation, no meter overlay, and a ready
-challenge. The existing detachable R1 links remain the stable board-side
-boundary: removing a part disconnects those links, while a selected part's
-own CircuitJS backing is moved into that boundary and rebound as the active R1
-element. Loose parts remain isolated yet probeable; no part may occupy the slot
-and tray simultaneously. The PCB layout, pads, traces, and R1 designator stay
+challenge. Each part keeps its fixed, unique hidden solver coordinates while the
+two detachable R1 attachment wires are retargeted to the installed part's public
+terminals. Removing the wires isolates the complete backing without removing it
+from the active solver, so loose parts are individually probeable and cannot be
+reconnected by a later install. The PCB layout, pads, traces, and R1 designator stay
 stable while the renderer displays the installed physical part's bands.
 
 Family-specific `GeneratedRepairValidator` implementations decide functional
