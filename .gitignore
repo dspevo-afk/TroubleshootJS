@@ -1,4 +1,5 @@
 #GWT cache
+.tools/
 gwt-unitCache/
 war/circuitjs1/
 war/circuitjs1/circuits/
