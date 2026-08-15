@@ -343,6 +343,8 @@ MouseOutHandler, MouseWheelHandler {
     String startLabel = null;
     String startCircuitText = null;
     String startCircuitLink = null;
+	String troubleshootFixture = null;
+	long troubleshootFixtureSeed = 1;
 //    String baseURL = "http://www.falstad.com/circuit/";
     
     public void init() {
@@ -378,6 +380,10 @@ MouseOutHandler, MouseWheelHandler {
 	    startCircuit = qp.getValue("startCircuit");
 	    startLabel   = qp.getValue("startLabel");
 	    startCircuitLink = qp.getValue("startCircuitLink");
+	    troubleshootFixture = qp.getValue("tsjFixture");
+	    String fixtureSeed = qp.getValue("seed");
+	    if (fixtureSeed != null)
+		troubleshootFixtureSeed = Long.parseLong(fixtureSeed);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
 	    running = qp.getBooleanValue("running", true);
@@ -703,6 +709,8 @@ MouseOutHandler, MouseWheelHandler {
 		    getSetupList(false);
 		    readSetupFile(startCircuit, startLabel);
 		}
+		else if (troubleshootFixture != null)
+		    getSetupList(false);
 		else
 		    getSetupList(true);
 	    }
@@ -741,6 +749,9 @@ MouseOutHandler, MouseWheelHandler {
 
 	
 	
+	if ("led".equals(troubleshootFixture))
+	    installGeneratedBoard(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
+
 	setSimRunning(running);
     }
 
@@ -2815,6 +2826,8 @@ MouseOutHandler, MouseWheelHandler {
 		getElm(i).reset();
 	for (i = 0; i != scopeCount; i++)
 		scopes[i].resetGraph(true);
+	if (generatedBoardInstance != null)
+	    scheduleGeneratedBoardVerification();
     	repaint();
     }
     
@@ -3505,6 +3518,7 @@ MouseOutHandler, MouseWheelHandler {
 	int i;
 	int len = b.length;
 	if ((flags & RC_RETAIN) == 0) {
+	    generatedBoardInstance = null;
 	    instrumentController.clearTargets();
 	    clearMouseElm();
 	    for (i = 0; i != elmList.size(); i++) {
@@ -4024,6 +4038,49 @@ MouseOutHandler, MouseWheelHandler {
 
     boolean containsElement(CircuitElm element) {
 	return elmList.contains(element);
+    }
+
+    GeneratedBoardInstance generatedBoardInstance;
+
+    void installGeneratedBoard(GeneratedBoardInstance instance) {
+	instrumentController.clearTargets();
+	clearMouseElm();
+	clearSelection();
+	for (int i = 0; i != elmList.size(); i++)
+	    getElm(i).delete();
+	elmList.removeAllElements();
+	adjustables.removeAllElements();
+	scopeCount = 0;
+	t = timeStepAccum = 0;
+	undoStack.removeAllElements();
+	redoStack.removeAllElements();
+	for (CircuitElm element : instance.getSimulationElements())
+	    elmList.add(element);
+	generatedBoardInstance = instance;
+	setCircuitTitle("Generated LED indicator, seed " + instance.getSeed() +
+	    ", " + instance.getSupplyVoltage() + " V, " + instance.getResistorValue() + " ohm");
+	unsavedChanges = false;
+	enableUndoRedo();
+	needAnalyze();
+	centreCircuit();
+	scheduleGeneratedBoardVerification();
+    }
+
+    private void scheduleGeneratedBoardVerification() {
+	new Timer() {
+	    public void run() {
+		verifyGeneratedBoard();
+	    }
+	}.schedule(250);
+    }
+
+    GeneratedBoardInstance getGeneratedBoardInstance() {
+	return generatedBoardInstance;
+    }
+
+    void verifyGeneratedBoard() {
+	if (generatedBoardInstance != null)
+	    GeneratedBoardVerifier.verify(generatedBoardInstance);
     }
 
 	BoardPowerController getBoardPowerController() {

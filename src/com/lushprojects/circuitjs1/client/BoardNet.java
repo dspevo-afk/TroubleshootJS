@@ -15,7 +15,7 @@ class BoardNet {
     }
 
     Vector<String> getPadIds() {
-        return padIds;
+        return new Vector<String>(padIds);
     }
 
     void addPadId(String padId) {

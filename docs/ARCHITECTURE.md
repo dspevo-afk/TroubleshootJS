@@ -35,3 +35,11 @@ valid current schematic bindings, and resolve dynamically after reanalysis.
 Current schematic probes continue to use `CircuitPostProbeTarget`; a PCB probe
 target will use a board pad ID after the renderer provides marker geometry. Both
 paths converge through `CircuitMeasurementAdapter`.
+
+Generators are seeded so a seed reproduces a board's topology, values, and
+simulation placement. `GeneratedBoardInstance` couples board metadata to the
+CircuitJS elements it owns while keeping generation, simulation, and rendering
+separate. External board-power metadata identifies the specific simulation
+supply backing that power input. Generated pad bindings use CircuitElm/post
+endpoints, never analyzed node IDs. Generated circuits are installed only
+through the controlled `CirSim` installation boundary.

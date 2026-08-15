@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 class TroubleshootBoard {
     private final String id;
@@ -66,8 +67,22 @@ class TroubleshootBoard {
         return pads.get(padId);
     }
 
+    Vector<String> getPadIds() {
+        Vector<String> padIds = new Vector<String>();
+        for (BoardPad pad : pads.values())
+            padIds.add(pad.getId());
+        return padIds;
+    }
+
     BoardNet getNet(String netId) {
         return nets.get(netId);
+    }
+
+    Vector<String> getNetIds() {
+        Vector<String> netIds = new Vector<String>();
+        for (BoardNet net : nets.values())
+            netIds.add(net.getId());
+        return netIds;
     }
 
     ExternalBoardPowerInput getPowerInput(String powerInputId) {
