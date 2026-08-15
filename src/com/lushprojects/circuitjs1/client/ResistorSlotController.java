@@ -34,6 +34,7 @@ class ResistorSlotController {
         if (part.getLocation() != ResistorPartLocation.LOOSE)
             return false;
         instance.getComponentBindings().replaceSingleElement("R1", part.getElement());
+	retargetComponentLeadBindings(part);
         part.setLocation(ResistorPartLocation.INSTALLED);
         slot.install(part);
         modifications.restoreComponent("R1");
@@ -53,5 +54,13 @@ class ResistorSlotController {
         sim.needAnalyze();
         sim.requestGeneratedBoardVerification();
         sim.refreshBoardModificationControls();
+    }
+
+    private void retargetComponentLeadBindings(PhysicalResistorPart part) {
+    for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
+        .getForComponent("R1")) {
+        int terminal = "R1.1".equals(binding.getPadId()) ? 0 : 1;
+        binding.setComponentEndpoint(part.getPublicTerminal(terminal));
+    }
     }
 }

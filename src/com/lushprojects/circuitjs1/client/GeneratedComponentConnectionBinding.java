@@ -4,7 +4,7 @@ class GeneratedComponentConnectionBinding {
     private final String componentId;
     private final String padId;
     private final CircuitMeasurementEndpoint boardEndpoint;
-    private final CircuitMeasurementEndpoint componentEndpoint;
+    private CircuitMeasurementEndpoint componentEndpoint;
     private final CircuitElm connectionElement;
 
     GeneratedComponentConnectionBinding(String componentId, String padId,
@@ -21,5 +21,10 @@ class GeneratedComponentConnectionBinding {
     String getPadId() { return padId; }
     CircuitMeasurementEndpoint getBoardEndpoint() { return boardEndpoint; }
     CircuitMeasurementEndpoint getComponentEndpoint() { return componentEndpoint; }
+    void setComponentEndpoint(CircuitMeasurementEndpoint endpoint) {
+	if (endpoint == null)
+	    throw new IllegalArgumentException("Missing component endpoint");
+	componentEndpoint = endpoint;
+    }
     CircuitElm getConnectionElement() { return connectionElement; }
 }

@@ -54,14 +54,22 @@ as part of invalidation and show the mode-specific OHM placeholder. A power
 request during an active measurement is queued until the temporary overlay is
 removed and the normal solver state is restored.
 
-Passive DC voltage is separate from active measurement. After each normal
-CircuitJS simulation step, `InstrumentController` refreshes a valid retained
-DC probe pair from the current solved post voltages. This callback never
-installs test elements or consumes an OHM refresh. The OHM transaction
-revalidates its probes and electrical-power permission after the adapter
-returns; a queued power change discards the earlier unpowered resistance result,
-then restores and solves the final powered or unpowered graph before the
-transaction reports solver restoration or generated verification resumes.
+DC voltage uses a temporary passive `$10 MOhm$` `ResistorElm` between the red
+and black probe endpoints. `InstrumentController` requests one DC refresh for a
+probe, topology, part-location, or power change; `CirSim` installs the resistor,
+solves the actual circuit, samples `$V_{red} - V_{black}$`, and synchronously
+restores the canonical graph. This lets a floating lifted lead acquire its real
+meter-loaded voltage without deriving anything from board metadata or expected
+topology. The input resistor is never board metadata, export content, or undo
+history. Active overlays suppress their own simulation-step callbacks, so a DC
+refresh cannot recursively reinsert a meter during its transaction.
+
+Component-side detachable bindings resolve to the physical part currently
+installed in a slot. `ResistorSlotController` retargets those measurement
+endpoints together with the attachment wires during installation. Board-side
+pad endpoints remain fixed. This preserves semantic probe identity while making
+a lifted installed lead probe resolve to the installed replacement's electrical
+terminal rather than a removed original part.
 
 Continuity is a policy over the same simulated resistance transaction, not a
 separate connectivity shortcut or stimulus. CONT uses the temporary $1 V$ /

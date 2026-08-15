@@ -159,6 +159,7 @@ class ChallengeDeveloperVerifier {
 
     private static void verifyPhysicalPersistence(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, GeneratedFaultController faults) {
+		verifyFailedOriginalLiftedLeadVoltage(sim, instance, modifications, faults);
         modifications.liftLead("R1", "R1.1");
         require(modifications.getComponentState("R1") == ComponentPhysicalState.LEAD_LIFTED &&
             faults.isApplied(), "Lead lift cleared the internal fault");
@@ -177,6 +178,46 @@ class ChallengeDeveloperVerifier {
         require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED &&
             faults.isApplied(), "Restoration cleared the internal fault");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyFailedOriginalLiftedLeadVoltage(CirSim sim,
+            GeneratedBoardInstance instance, BoardModificationController modifications,
+            GeneratedFaultController faults) {
+        GeneratedComponentConnectionBinding lead2 = instance.getConnectionBindings().get("R1", "R1.2");
+        CircuitPostProbeTarget liftedLead2 = getProbe(sim, lead2.getComponentEndpoint());
+        CircuitPostProbeTarget boardPad2 = getProbe(sim, instance, "R1.2");
+        CircuitPostProbeTarget ground = getProbe(sim, instance, "J1.2");
+        require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED &&
+            faults.isApplied(), "Failed original was not installed before lifted-lead voltage check");
+        require(modifications.liftLead("R1", "R1.2"), "Failed original lead 2 did not lift");
+        require(!sim.elmList.contains(lead2.getConnectionElement()),
+            "Lifted failed-original lead 2 remained attached to its PCB pad");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        requireApproximately(0, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(
+            liftedLead2, ground), .01,
+            "Failed original lifted public lead 2 incorrectly measured VIN");
+        requireApproximately(0, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(
+            boardPad2, ground), .01, "Failed-original R1.2 board pad was not isolated");
+        require(Math.abs(((LEDElm) instance.getComponentBindings().getSingleElement("LED1")).getCurrent()) < .000001 &&
+            !instance.getOperationalStates().isIlluminated("LED1"),
+            "Lifted failed original allowed LED current");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(
+            getProbe(sim, instance.getConnectionBindings().get("R1", "R1.1").getComponentEndpoint()),
+            liftedLead2);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Lifted failed original did not remain OL across public leads");
+        require(modifications.reconnectLead("R1", "R1.2"),
+            "Failed original lead 2 did not reconnect");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        instance.getChallengeDefinition().getFaultValidator().verify(instance, modifications,
+            BoardPowerState.POWERED);
+        require(faults.isApplied(), "Reconnecting failed original lead 2 bypassed its internal fault");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
     }
 
     private static void verifyDeveloperClearAndReapply(CirSim sim, GeneratedBoardInstance instance,

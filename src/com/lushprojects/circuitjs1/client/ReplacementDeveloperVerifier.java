@@ -43,15 +43,106 @@ class ReplacementDeveloperVerifier {
             Math.abs(getLedCurrent(instance) - getInstalledResistorCurrent(instance)) <= .0001 &&
             challenge.isCompleted() && instance.getOperationalStates().isIlluminated("LED1"),
             "Correct replacement did not complete solved repair");
+        verifyPassiveDcVoltageCases(sim, instance, correctResistance);
+        verifyHealthyReplacementLiftedLeadVoltage(sim, instance, slots, "R1_REPLACEMENT_1",
+            correctResistance);
         require(original.getLocation() == ResistorPartLocation.LOOSE && original.isFaulted(),
             "Completion altered original failed part");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+		verifyUnpoweredDcVoltageCases(sim, instance, original, "R1_REPLACEMENT_0");
         verifyResistance(sim, instance, original, true);
         verifyResistance(sim, instance, instance.getResistorInventory().get("R1_REPLACEMENT_0"), false);
         verifyResistance(sim, instance, instance.getResistorInventory().get("R1_REPLACEMENT_2"), false);
         verifyInstalledResistance(sim, instance, correctResistance);
         verifyPartTopology(sim, instance);
         sim.setCircuitTitle("Replacement verification passed");
+    }
+
+    private static void verifyPassiveDcVoltageCases(CirSim sim, GeneratedBoardInstance instance,
+            double resistance) {
+        CircuitPostProbeTarget vin = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.1"));
+        CircuitPostProbeTarget ground = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.2"));
+        CircuitPostProbeTarget r11 = getProbe(sim, instance.getSimulationBindings().getEndpoint("R1.1"));
+        CircuitPostProbeTarget r12 = getProbe(sim, instance.getSimulationBindings().getEndpoint("R1.2"));
+        CircuitPostProbeTarget ledAnode = getProbe(sim, instance.getSimulationBindings().getEndpoint("LED1.A"));
+        CircuitPostProbeTarget ledCathode = getProbe(sim, instance.getSimulationBindings().getEndpoint("LED1.K"));
+        double nominalVin = instance.getPhysicalSpecifications().getPowerInputNameplate("VIN_INPUT")
+            .getNominalVoltage();
+        requireApproximately(nominalVin, measureDc(sim, vin, ground), .02, "VIN DC measurement");
+        requireApproximately(-nominalVin, measureDc(sim, ground, vin), .02, "Reverse VIN DC measurement");
+        requireApproximately(0, measureDc(sim, vin, vin), .0001, "Same-target DC measurement");
+        double r1Input = measureDc(sim, r11, ground);
+        double r1Output = measureDc(sim, r12, ground);
+        double r1Drop = measureDc(sim, r11, r12);
+        double ledDrop = measureDc(sim, ledAnode, ledCathode);
+        requireApproximately(nominalVin, r1Input, .02, "Installed R1 lead 1 DC measurement");
+        requireApproximately(r1Input - r1Output, r1Drop, .02,
+            "Installed R1 DC drop did not match solved lead voltages");
+        requireApproximately(r1Output, ledDrop, .02,
+            "LED DC drop did not match solved LED-node voltage");
+        require(r1Drop > 0 && ledDrop > 0 && resistance > 0,
+            "Installed R1 or LED did not have a positive solved voltage drop");
+    }
+
+    private static void verifyHealthyReplacementLiftedLeadVoltage(CirSim sim,
+            GeneratedBoardInstance instance, ResistorSlotController slots, String partId,
+            double resistance) {
+        PhysicalResistorPart part = instance.getResistorInventory().get(partId);
+        CircuitPostProbeTarget ground = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.2"));
+        CircuitPostProbeTarget boardPad2 = getProbe(sim, instance.getSimulationBindings().getEndpoint("R1.2"));
+        ProbeTarget liftedLead2 = new ComponentLeadProbeTarget(sim, instance, "R1", "R1.2",
+            sim.pcbWorkbenchController.getRenderer());
+        require(!instance.getR1Slot().isEmpty() && instance.getR1Slot().getInstalledPart() == part,
+            "Correct replacement was not installed before lifted-lead voltage check");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        require(sim.getBoardModificationController().liftLead("R1", "R1.2"),
+            "Healthy replacement lead 2 did not lift");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        double nominalVin = instance.getPhysicalSpecifications().getPowerInputNameplate("VIN_INPUT")
+            .getNominalVoltage();
+        double expectedLiftedVoltage = nominalVin * DcVoltageMeasurementStimulus.INPUT_RESISTANCE /
+            (DcVoltageMeasurementStimulus.INPUT_RESISTANCE + resistance);
+        double liftedVoltage = measureDc(sim, liftedLead2, ground);
+        double boardPadVoltage = measureDc(sim, boardPad2, ground);
+        requireApproximately(expectedLiftedVoltage, liftedVoltage, .02,
+            "Healthy lifted R1 lead 2 did not measure the 10 Mohm divider voltage");
+        require(Math.abs(liftedVoltage - boardPadVoltage) > nominalVin * .5,
+            "Lifted R1 lead 2 was confused with its separate board-side pad");
+        require(Math.abs(getLedCurrent(instance)) < .000001 &&
+            !instance.getOperationalStates().isIlluminated("LED1"),
+            "Lifted healthy replacement allowed LED current");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        require(sim.getBoardModificationController().reconnectLead("R1", "R1.2"),
+            "Healthy replacement lead 2 did not reconnect");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim);
+        require(getLedCurrent(instance) >= .005 && instance.getOperationalStates().isIlluminated("LED1"),
+            "Reconnecting healthy replacement did not restore LED operation");
+    }
+
+    private static void verifyUnpoweredDcVoltageCases(CirSim sim, GeneratedBoardInstance instance,
+            PhysicalResistorPart original, String healthyPartId) {
+        CircuitPostProbeTarget vin = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.1"));
+        CircuitPostProbeTarget ground = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.2"));
+        requireApproximately(0, measureDc(sim, vin, ground), .001, "Unpowered VIN DC measurement");
+        ProbeTarget healthyLead1 = new PhysicalResistorPartProbeTarget(sim, instance, healthyPartId, 0,
+            sim.pcbWorkbenchController.getRenderer());
+        ProbeTarget healthyLead2 = new PhysicalResistorPartProbeTarget(sim, instance, healthyPartId, 1,
+            sim.pcbWorkbenchController.getRenderer());
+        ProbeTarget failedLead1 = new PhysicalResistorPartProbeTarget(sim, instance, original.getId(), 0,
+            sim.pcbWorkbenchController.getRenderer());
+        ProbeTarget failedLead2 = new PhysicalResistorPartProbeTarget(sim, instance, original.getId(), 1,
+            sim.pcbWorkbenchController.getRenderer());
+        requireApproximately(0, measureDc(sim, healthyLead1, healthyLead2), .001,
+            "Loose healthy resistor DC measurement");
+        requireApproximately(0, measureDc(sim, failedLead1, failedLead2), .001,
+            "Loose failed resistor DC measurement");
+    }
+
+    private static double measureDc(CirSim sim, ProbeTarget red, ProbeTarget black) {
+        return sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(red, black);
     }
 
     private static void verifyReplacement(CirSim sim, GeneratedBoardInstance instance,
@@ -192,6 +283,12 @@ class ReplacementDeveloperVerifier {
         return !Double.isNaN(actual) && !Double.isInfinite(actual) &&
             Math.abs(expected - actual) <= tolerance;
     }
+
+    private static void requireApproximately(double expected, double actual, double tolerance,
+            String message) {
+		require(!Double.isNaN(actual) && !Double.isInfinite(actual) &&
+		    Math.abs(expected - actual) <= tolerance, message + ": " + actual);
+	}
 
     private static void verifyNeutralResistanceReference(CirSim sim, String measurement) {
         require(sim.hasElectricallyNeutralResistanceReferenceForDeveloperVerification(),

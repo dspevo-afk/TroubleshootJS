@@ -4338,6 +4338,18 @@ MouseOutHandler, MouseWheelHandler {
 	});
     }
 
+    double measureDcVoltage(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black) {
+	if (!containsElement(red.getElement()) || !containsElement(black.getElement()))
+	    return Double.NaN;
+	final DcVoltageMeasurementStimulus stimulus = new DcVoltageMeasurementStimulus(red, black);
+	return runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
+	    public double readResult() {
+		return stimulus.getVoltage();
+	    }
+	});
+    }
+
     String getLastResistanceMeasurementDiagnosticsForDeveloperVerification() {
 	return lastResistanceMeasurementDiagnostics;
     }

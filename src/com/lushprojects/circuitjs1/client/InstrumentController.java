@@ -33,6 +33,9 @@ class InstrumentController {
     private int activeMode = MODE_NONE;
     private ProbeTarget redProbe;
     private ProbeTarget blackProbe;
+    private boolean dcVoltageRefreshPending;
+    private double latestDcVoltage = Double.NaN;
+    private int dcVoltageMeasurementCount;
     private boolean resistanceRefreshPending;
     private double latestResistanceReading = Double.NaN;
     private int resistanceMeasurementCount;
@@ -140,6 +143,7 @@ class InstrumentController {
                 blackProbe = target;
         }
         if (changed) {
+            requestDcVoltageRefresh();
             requestResistanceRefresh();
             requestDiodeRefresh();
             updateReading();
@@ -150,25 +154,32 @@ class InstrumentController {
     void clearTargets() {
         redProbe = null;
         blackProbe = null;
+        requestDcVoltageRefresh();
         requestResistanceRefresh();
         requestDiodeRefresh();
         updateReading();
     }
 
     void refreshActiveMeasurement() {
+        requestDcVoltageRefresh();
         requestResistanceRefresh();
         requestDiodeRefresh();
     }
 
     void onCircuitTopologyChanged() {
         validateTargets();
+        requestDcVoltageRefresh();
         requestResistanceRefresh();
         requestDiodeRefresh();
     }
 
     void onSimulationStepComplete(boolean didAnalyze) {
-        if (activeMode == MODE_DC_VOLTAGE)
+        if (sim.activeMeasurementOverlay)
+            return;
+        if (didAnalyze && activeMode == MODE_DC_VOLTAGE && dcVoltageRefreshPending) {
+            dcVoltageRefreshPending = false;
             updateReading();
+        }
         if (didAnalyze && isDiodeMode() && diodeRefreshPending) {
             validateTargets();
             if (redProbe == null || blackProbe == null) {
@@ -211,8 +222,11 @@ class InstrumentController {
     }
 
     double getDcVoltageDifferenceForDeveloperVerification(ProbeTarget red, ProbeTarget black) {
-        return measurementAdapter.getDcVoltageDifference(red, black);
+        return measurementAdapter.measureDcVoltage(red, black);
     }
+
+    double getLatestDcVoltageForDeveloperVerification() { return latestDcVoltage; }
+    int getDcVoltageMeasurementCountForDeveloperVerification() { return dcVoltageMeasurementCount; }
 
     int getResistanceMeasurementCountForDeveloperVerification() {
         return resistanceMeasurementCount;
@@ -276,6 +290,7 @@ class InstrumentController {
         if (activeMode == MODE_CONTINUITY && mode != MODE_CONTINUITY)
             setContinuityDetected(false);
         activeMode = mode;
+        requestDcVoltageRefresh();
         requestResistanceRefresh();
         requestDiodeRefresh();
         dcVoltageButton.setStyleName("chsel", activeMode == MODE_DC_VOLTAGE);
@@ -298,7 +313,12 @@ class InstrumentController {
 
     private void updateReading() {
         validateTargets();
+        if (activeMode == MODE_NONE) {
+            readingLabel.setText("--- V");
+            return;
+        }
         if (redProbe == null || blackProbe == null) {
+            latestDcVoltage = Double.NaN;
             latestResistanceReading = Double.NaN;
             latestDiodeVoltage = Double.NaN;
             latestDiodeCurrent = Double.NaN;
@@ -319,7 +339,13 @@ class InstrumentController {
             }
             return;
         }
-        double voltage = measurementAdapter.getDcVoltageDifference(redProbe, blackProbe);
+        if (dcVoltageRefreshPending) {
+            dcVoltageRefreshPending = false;
+            latestDcVoltage = measurementAdapter.measureDcVoltage(redProbe, blackProbe);
+            dcVoltageMeasurementCount++;
+            validateTargets();
+        }
+        double voltage = latestDcVoltage;
         if (Double.isNaN(voltage)) {
             readingLabel.setText("--- V");
             return;
@@ -408,6 +434,14 @@ class InstrumentController {
         resistanceRefreshPending = true;
         setContinuityDetected(false);
         readingLabel.setText("--- Ohm");
+    }
+
+    private void requestDcVoltageRefresh() {
+        latestDcVoltage = Double.NaN;
+        if (activeMode != MODE_DC_VOLTAGE)
+            return;
+        dcVoltageRefreshPending = true;
+        readingLabel.setText("--- V");
     }
 
     private void requestDiodeRefresh() {

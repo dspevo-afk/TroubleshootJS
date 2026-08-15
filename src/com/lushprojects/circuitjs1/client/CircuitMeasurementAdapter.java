@@ -9,18 +9,16 @@ class CircuitMeasurementAdapter {
         boardPowerController = sim.getBoardPowerController();
     }
 
-    double getDcVoltageDifference(ProbeTarget redProbe, ProbeTarget blackProbe) {
-        return getDcPotential(redProbe) - getDcPotential(blackProbe);
-    }
-
-    private double getDcPotential(ProbeTarget probe) {
-        CircuitMeasurementEndpoint endpoint = probe.getMeasurementEndpoint();
-        if (endpoint instanceof CircuitPostMeasurementEndpoint) {
-            CircuitPostMeasurementEndpoint circuitPost =
-                (CircuitPostMeasurementEndpoint) endpoint;
-            return circuitPost.getElement().getPostVoltage(circuitPost.getPostIndex());
-        }
-        return Double.NaN;
+    double measureDcVoltage(ProbeTarget redProbe, ProbeTarget blackProbe) {
+        if (redProbe == null || blackProbe == null || !redProbe.isValid() || !blackProbe.isValid())
+            return Double.NaN;
+        CircuitMeasurementEndpoint red = redProbe.getMeasurementEndpoint();
+        CircuitMeasurementEndpoint black = blackProbe.getMeasurementEndpoint();
+        if (!(red instanceof CircuitPostMeasurementEndpoint) ||
+                !(black instanceof CircuitPostMeasurementEndpoint))
+            return Double.NaN;
+        return sim.measureDcVoltage((CircuitPostMeasurementEndpoint) red,
+            (CircuitPostMeasurementEndpoint) black);
     }
 
     boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe) {
