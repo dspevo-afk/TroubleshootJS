@@ -4,25 +4,22 @@ import java.util.Vector;
 
 class GeneratedBoardVerifier {
     private static final double NET_TOLERANCE = .001;
-    private static final double MIN_LED_CURRENT = .005;
-    private static final double MAX_LED_CURRENT = .015;
 
     static void verify(GeneratedBoardInstance instance) {
         TroubleshootBoard board = instance.getBoard();
         BoardSimulationBindings bindings = instance.getSimulationBindings();
+        instance.getComponentBindings().validateElementsAreOwnedBy(instance.getSimulationElements());
+        instance.getExternalPowerBindings().validateElementsAreOwnedBy(instance.getSimulationElements());
         for (String padId : board.getPadIds()) {
-            if (bindings.getEndpoint(padId) == null)
+            CircuitMeasurementEndpoint endpoint = bindings.getEndpoint(padId);
+            if (endpoint == null)
                 throw new IllegalStateException("Missing simulation binding for board pad: " + padId);
+	    verifyEndpointIsOwned(endpoint, instance.getSimulationElements(), padId);
         }
         for (String netId : board.getNetIds())
             verifyNetVoltage(bindings.getEndpointsForNet(netId), netId);
-
-        double ledCurrent = instance.getLed().getCurrent();
-        double resistorCurrent = instance.getResistor().getCurrent();
-        if (ledCurrent < MIN_LED_CURRENT || ledCurrent > MAX_LED_CURRENT)
-            throw new IllegalStateException("LED current outside generated range: " + ledCurrent);
-        if (Math.abs(ledCurrent - resistorCurrent) > .0001)
-            throw new IllegalStateException("Resistor and LED currents do not match");
+        if (instance.getFamilyValidator() != null)
+            instance.getFamilyValidator().verify(instance);
     }
 
     private static void verifyNetVoltage(Vector<CircuitMeasurementEndpoint> endpoints,
@@ -42,5 +39,18 @@ class GeneratedBoardVerifier {
         CircuitPostMeasurementEndpoint circuitPost =
             (CircuitPostMeasurementEndpoint) endpoint;
         return circuitPost.getElement().getPostVoltage(circuitPost.getPostIndex());
+    }
+
+    private static void verifyEndpointIsOwned(CircuitMeasurementEndpoint endpoint,
+            Vector<CircuitElm> simulationElements, String padId) {
+    if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
+        throw new IllegalStateException("Unsupported generated measurement endpoint: " + padId);
+    CircuitPostMeasurementEndpoint circuitPost =
+        (CircuitPostMeasurementEndpoint) endpoint;
+    CircuitElm element = circuitPost.getElement();
+    if (!simulationElements.contains(element))
+        throw new IllegalStateException("Pad binding is not owned by generated board: " + padId);
+    if (circuitPost.getPostIndex() < 0 || circuitPost.getPostIndex() >= element.getPostCount())
+        throw new IllegalStateException("Pad binding has an invalid post index: " + padId);
     }
 }

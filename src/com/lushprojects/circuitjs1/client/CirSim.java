@@ -381,9 +381,7 @@ MouseOutHandler, MouseWheelHandler {
 	    startLabel   = qp.getValue("startLabel");
 	    startCircuitLink = qp.getValue("startCircuitLink");
 	    troubleshootFixture = qp.getValue("tsjFixture");
-	    String fixtureSeed = qp.getValue("seed");
-	    if (fixtureSeed != null)
-		troubleshootFixtureSeed = Long.parseLong(fixtureSeed);
+		   troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
 	    running = qp.getBooleanValue("running", true);
@@ -1263,6 +1261,8 @@ MouseOutHandler, MouseWheelHandler {
 	    analyzeCircuit();
 	    analyzeFlag = false;
 	}
+	if (generatedBoardVerificationPending && didAnalyze)
+	    generatedBoardVerificationAnalyzed = true;
 //	if (editDialog != null && editDialog.elm instanceof CircuitElm)
 //	    mouseElm = (CircuitElm) (editDialog.elm);
 	if (stopElm != null && stopElm != mouseElm)
@@ -1286,6 +1286,7 @@ MouseOutHandler, MouseWheelHandler {
 	if (simRunning) {
 	    try {
 		runCircuit(didAnalyze);
+		runGeneratedBoardVerificationIfReady(didAnalyze);
 	    } catch (Exception e) {
 		debugger();
 		console("exception in runCircuit " + e);
@@ -2827,7 +2828,7 @@ MouseOutHandler, MouseWheelHandler {
 	for (i = 0; i != scopeCount; i++)
 		scopes[i].resetGraph(true);
 	if (generatedBoardInstance != null)
-	    scheduleGeneratedBoardVerification();
+	    requestGeneratedBoardVerification();
     	repaint();
     }
     
@@ -3519,6 +3520,8 @@ MouseOutHandler, MouseWheelHandler {
 	int len = b.length;
 	if ((flags & RC_RETAIN) == 0) {
 	    generatedBoardInstance = null;
+	   generatedBoardVerificationPending = false;
+	   generatedBoardVerificationAnalyzed = false;
 	    instrumentController.clearTargets();
 	    clearMouseElm();
 	    for (i = 0; i != elmList.size(); i++) {
@@ -4041,6 +4044,9 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     GeneratedBoardInstance generatedBoardInstance;
+	boolean generatedBoardVerificationPending;
+	boolean generatedBoardVerificationAnalyzed;
+	double generatedBoardVerificationStartTime;
 
     void installGeneratedBoard(GeneratedBoardInstance instance) {
 	instrumentController.clearTargets();
@@ -4057,21 +4063,47 @@ MouseOutHandler, MouseWheelHandler {
 	for (CircuitElm element : instance.getSimulationElements())
 	    elmList.add(element);
 	generatedBoardInstance = instance;
-	setCircuitTitle("Generated LED indicator, seed " + instance.getSeed() +
-	    ", " + instance.getSupplyVoltage() + " V, " + instance.getResistorValue() + " ohm");
+	setCircuitTitle(instance.getDescription());
 	unsavedChanges = false;
 	enableUndoRedo();
 	needAnalyze();
 	centreCircuit();
-	scheduleGeneratedBoardVerification();
+	requestGeneratedBoardVerification();
     }
 
-    private void scheduleGeneratedBoardVerification() {
-	new Timer() {
-	    public void run() {
-		verifyGeneratedBoard();
-	    }
-	}.schedule(250);
+    private long parseTroubleshootFixtureSeed(String fixtureSeed) {
+	if (fixtureSeed == null)
+	    return 1;
+	try {
+	    return Long.parseLong(fixtureSeed);
+	} catch (NumberFormatException e) {
+	    return 1;
+	}
+    }
+
+    void requestGeneratedBoardVerification() {
+	if (generatedBoardInstance == null)
+	    return;
+	generatedBoardVerificationPending = true;
+	generatedBoardVerificationAnalyzed = false;
+	generatedBoardVerificationStartTime = t;
+	needAnalyze();
+    }
+
+    private void runGeneratedBoardVerificationIfReady(boolean didAnalyze) {
+	if (!generatedBoardVerificationPending)
+	    return;
+	if (!generatedBoardVerificationAnalyzed || t <= generatedBoardVerificationStartTime)
+	    return;
+	try {
+	    verifyGeneratedBoard();
+	} catch (RuntimeException e) {
+	    throw new IllegalStateException("Generated board verification failed for " +
+		generatedBoardInstance.getCircuitFamilyId() + "/" +
+		generatedBoardInstance.getTopologyVariantId() + ", seed " +
+		generatedBoardInstance.getSeed(), e);
+	}
+	generatedBoardVerificationPending = false;
     }
 
     GeneratedBoardInstance getGeneratedBoardInstance() {

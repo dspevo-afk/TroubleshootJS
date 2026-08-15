@@ -44,6 +44,12 @@ class LedIndicatorGenerator {
         elements.add(supplyReturn);
         elements.add(groundReturn);
 
+        GeneratedComponentBindings componentBindings = new GeneratedComponentBindings(board);
+        componentBindings.bindComponent("R1", resistor);
+        componentBindings.bindComponent("LED1", led);
+        GeneratedExternalPowerBindings powerBindings = new GeneratedExternalPowerBindings(board);
+        powerBindings.bindPowerInput("VIN_INPUT", new ExternalPowerSimulationBinding(supply));
+
         BoardSimulationBindings bindings = board.getSimulationBindings();
         bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(supply, 1));
         bindings.bindPad("R1.1", new CircuitPostMeasurementEndpoint(resistor, 0));
@@ -52,8 +58,11 @@ class LedIndicatorGenerator {
         bindings.bindPad("LED1.K", new CircuitPostMeasurementEndpoint(led, 1));
         bindings.bindPad("J1.2", new CircuitPostMeasurementEndpoint(ground, 0));
 
-        return new GeneratedBoardInstance(board, elements, seed, DIRECT_SERIES_VARIANT,
-            supply, resistor, led, supplyVoltage, resistorValue);
+        String description = "Generated LED indicator, seed " + seed + ", " + supplyVoltage +
+            " V, " + resistorValue + " ohm";
+        return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
+            DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
+            new LedIndicatorGeneratedBoardValidator());
     }
 
     private TroubleshootBoard createBoard() {

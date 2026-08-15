@@ -953,3 +953,24 @@ TroubleshootJS succeeds when a player can be handed an unfamiliar generated PCB 
 "Did my repair actually fix the customer's problem?"
 
 The simulator should teach troubleshooting judgment, not memorization.
+
+---
+
+# Task Completion Protocol
+
+For normal TroubleshootJS implementation tasks, unless the task explicitly says
+otherwise:
+
+1. Perform the requested work.
+2. Run the required build and tests.
+3. Inspect `git diff` and `git status`.
+4. Update `docs/CODEX_TASK_REPORT.md` with the latest completed task report.
+5. Stage only intended source and documentation changes.
+6. Run `git diff --cached --check`.
+7. Commit with a concise descriptive message.
+8. Do not push.
+
+If required validation fails, do not commit. Leave the changes in the working
+tree and clearly report the failure. Do not auto-commit when explicitly told
+not to. `docs/CODEX_TASK_REPORT.md` is intentionally overwritten after each
+successful task; Git history preserves prior reports.

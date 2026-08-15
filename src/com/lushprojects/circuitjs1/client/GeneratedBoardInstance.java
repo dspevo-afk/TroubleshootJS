@@ -6,25 +6,27 @@ class GeneratedBoardInstance {
     private final TroubleshootBoard board;
     private final Vector<CircuitElm> simulationElements;
     private final long seed;
-    private final String topologyVariant;
-    private final VoltageElm externalPowerSource;
-    private final ResistorElm resistor;
-    private final LEDElm led;
-    private final double supplyVoltage;
-    private final double resistorValue;
+    private final String circuitFamilyId;
+    private final String topologyVariantId;
+    private final String description;
+    private final GeneratedComponentBindings componentBindings;
+    private final GeneratedExternalPowerBindings externalPowerBindings;
+    private final GeneratedBoardValidator familyValidator;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
-            long seed, String topologyVariant, VoltageElm externalPowerSource,
-            ResistorElm resistor, LEDElm led, double supplyVoltage, double resistorValue) {
+            long seed, String circuitFamilyId, String topologyVariantId, String description,
+            GeneratedComponentBindings componentBindings,
+            GeneratedExternalPowerBindings externalPowerBindings,
+            GeneratedBoardValidator familyValidator) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
-        this.topologyVariant = topologyVariant;
-        this.externalPowerSource = externalPowerSource;
-        this.resistor = resistor;
-        this.led = led;
-        this.supplyVoltage = supplyVoltage;
-        this.resistorValue = resistorValue;
+        this.circuitFamilyId = circuitFamilyId;
+        this.topologyVariantId = topologyVariantId;
+        this.description = description;
+        this.componentBindings = componentBindings;
+        this.externalPowerBindings = externalPowerBindings;
+        this.familyValidator = familyValidator;
     }
 
     TroubleshootBoard getBoard() {
@@ -43,29 +45,27 @@ class GeneratedBoardInstance {
         return seed;
     }
 
-    String getTopologyVariant() {
-        return topologyVariant;
+    String getCircuitFamilyId() {
+        return circuitFamilyId;
     }
 
-    VoltageElm getExternalPowerSource(String powerInputId) {
-        if (!"VIN_INPUT".equals(powerInputId))
-            throw new IllegalArgumentException("Unknown generated board power input: " + powerInputId);
-        return externalPowerSource;
+    String getTopologyVariantId() {
+        return topologyVariantId;
     }
 
-    ResistorElm getResistor() {
-        return resistor;
+    String getDescription() {
+        return description;
     }
 
-    LEDElm getLed() {
-        return led;
+    GeneratedComponentBindings getComponentBindings() {
+        return componentBindings;
     }
 
-    double getSupplyVoltage() {
-        return supplyVoltage;
+    GeneratedExternalPowerBindings getExternalPowerBindings() {
+        return externalPowerBindings;
     }
 
-    double getResistorValue() {
-        return resistorValue;
+    GeneratedBoardValidator getFamilyValidator() {
+        return familyValidator;
     }
 }

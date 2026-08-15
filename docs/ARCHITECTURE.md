@@ -37,9 +37,19 @@ target will use a board pad ID after the renderer provides marker geometry. Both
 paths converge through `CircuitMeasurementAdapter`.
 
 Generators are seeded so a seed reproduces a board's topology, values, and
-simulation placement. `GeneratedBoardInstance` couples board metadata to the
-CircuitJS elements it owns while keeping generation, simulation, and rendering
-separate. External board-power metadata identifies the specific simulation
-supply backing that power input. Generated pad bindings use CircuitElm/post
-endpoints, never analyzed node IDs. Generated circuits are installed only
-through the controlled `CirSim` installation boundary.
+simulation placement. `GeneratedBoardInstance` is family-agnostic: it couples
+board metadata, owned CircuitJS elements, stable family/topology IDs, generic
+component bindings, external-power bindings, and an optional family validator
+without exposing a topology-specific API. Component bindings map logical
+`BoardComponent` IDs to one or more live `CircuitElm` references. External
+power bindings map logical `ExternalBoardPowerInput` IDs to one or more backing
+elements, leaving room for a future source-isolation control without assuming a
+`VoltageElm`. Generated pad bindings use CircuitElm/post endpoints, never
+analyzed node IDs. Family-specific electrical expectations stay with the
+generator family rather than the generic verifier.
+
+Generated circuits are installed only through the controlled `CirSim`
+installation boundary. Generated-board verification is requested after
+installation or reanalysis and runs once only after CircuitJS has analyzed the
+circuit and simulation time has advanced; paused simulation leaves the request
+pending rather than treating unsolved current values as a failure.
