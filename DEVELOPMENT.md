@@ -90,7 +90,7 @@ The host page is `war/circuitjs.html`, and the generated module bootstrap is
 assets and are not deleted by the build. Generated output and compiler caches
 are ignored by Git.
 
-## Development server
+## Visible local preview
 
 For the reliable visible player preview, first run a production build and then:
 
@@ -116,9 +116,9 @@ Then open:
 http://127.0.0.1:8888/circuitjs.html
 ```
 
-The web server listens only on localhost. Super Dev Mode uses port 9876 for its
-code server and recompiles the active browser permutation on first load. Both
-ports must be available. To use another web port:
+The web server listens only on localhost. This legacy compiler-development path
+also uses port 9876 and is not the recommended player preview. To use another
+web port:
 
 ```powershell
 .\scripts\dev.ps1 -Port 8890
@@ -126,7 +126,33 @@ ports must be available. To use another web port:
 
 Stop the development server with `Ctrl+C` in its terminal.
 
-## Verifying the application
+## Automated browser regression verification
+
+With the production preview running, execute the complete 15-route matrix in an
+installed Microsoft Edge browser:
+
+```powershell
+.\scripts\verify-browser.ps1
+```
+
+The runner covers resistance, meter, challenge, replacement, and combined
+challenge-plus-replacement verification for seeds 0, 2, and 3. It uses a fresh
+headless browser profile per route, waits for the existing electrical verifiers,
+captures JavaScript exceptions and failure-class console messages, applies a
+finite timeout, prints one PASS/FAIL line per route, and exits nonzero on failure.
+
+Run the normal-player UI regression separately with:
+
+```powershell
+.\scripts\verify-browser.ps1 -NormalPlayer
+```
+
+That flow uses browser mouse and keyboard input against live DOM/canvas geometry
+to replace R1, verify solver-backed repair, remove the replacement, and measure
+the two loose physical parts. Browser verification is separate from the JDK 8
+production build and adds no dependency to the simulator.
+
+## Manual application verification
 
 After a production build, confirm that the GWT bootstrap exists:
 
@@ -134,7 +160,7 @@ After a production build, confirm that the GWT bootstrap exists:
 Test-Path .\war\circuitjs1\circuitjs1.nocache.js
 ```
 
-The result should be `True`. Start the development server, open the URL above,
+The result should be `True`. Start the production preview, open the URL above,
 and verify that the default LRC circuit, menu bar, simulation controls, and
 animated circuit canvas appear. During setup validation, the production build
 completed all five permutations, and the development page rendered in Chromium

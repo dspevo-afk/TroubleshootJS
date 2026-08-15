@@ -4200,6 +4200,7 @@ MouseOutHandler, MouseWheelHandler {
 			    troubleshootResistanceVerifierState = VERIFIER_RUNNING;
 			    ResistanceMeasurementDeveloperVerifier.verify(this);
 			    troubleshootResistanceVerifierState = VERIFIER_PASSED;
+			    publishBrowserVerificationResult("PASS:resistance");
 			} catch (RuntimeException e) {
 			    troubleshootResistanceVerifierState = VERIFIER_FAILED;
 			    console("Resistance verification failed: " + e.getMessage());
@@ -4209,26 +4210,36 @@ MouseOutHandler, MouseWheelHandler {
 		    if (troubleshootChallengeVerification && !troubleshootChallengeVerificationComplete) {
 			troubleshootChallengeVerificationComplete = true;
 			ChallengeDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:challenge");
 		    }
 		    if (troubleshootReplacementVerification && !troubleshootReplacementVerificationComplete) {
 			troubleshootReplacementVerificationComplete = true;
 			ReplacementDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:replacement");
 		    }
 		    if (troubleshootMeterVerification && !troubleshootMeterVerificationComplete) {
 			troubleshootMeterVerificationComplete = true;
 			MeterLifecycleDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:meter");
 		    }
 		} finally {
 		    developerVerifierRunning = false;
 		}
 	    }
 	} catch (RuntimeException e) {
+	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
+		    troubleshootReplacementVerification || troubleshootMeterVerification)
+		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
 		generatedBoardInstance.getTopologyVariantId() + ", seed " +
 		generatedBoardInstance.getSeed() + ": " + e.getMessage(), e);
 	}
     }
+
+    private static native void publishBrowserVerificationResult(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-verification", result);
+    }-*/;
 
     GeneratedBoardInstance getGeneratedBoardInstance() {
 	return generatedBoardInstance;

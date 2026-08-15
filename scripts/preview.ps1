@@ -7,6 +7,24 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+function getContentType([string]$file) {
+    switch ([IO.Path]::GetExtension($file).ToLowerInvariant()) {
+        '.html' { return 'text/html; charset=utf-8' }
+        '.js' { return 'application/javascript; charset=utf-8' }
+        '.css' { return 'text/css; charset=utf-8' }
+        '.json' { return 'application/json; charset=utf-8' }
+        '.png' { return 'image/png' }
+        '.jpg' { return 'image/jpeg' }
+        '.jpeg' { return 'image/jpeg' }
+        '.svg' { return 'image/svg+xml' }
+        '.woff' { return 'font/woff' }
+        '.woff2' { return 'font/woff2' }
+        '.ttf' { return 'font/ttf' }
+        '.ico' { return 'image/x-icon' }
+        default { return 'application/octet-stream' }
+    }
+}
+
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 $webRoot = [IO.Path]::GetFullPath((Join-Path $repositoryRoot 'war'))
 if (-not (Test-Path (Join-Path $webRoot 'circuitjs1\circuitjs1.nocache.js') -PathType Leaf)) {
@@ -40,27 +58,11 @@ try {
         } catch {
             if ($context -ne $null) { $context.Response.StatusCode = 400 }
         } finally {
-            if ($context -ne $null) { $context.Response.Close() }
+            if ($context -ne $null) {
+                try { $context.Response.Close() } catch { }
+            }
         }
     }
 } finally {
     $listener.Close()
-}
-
-function getContentType([string]$file) {
-    switch ([IO.Path]::GetExtension($file).ToLowerInvariant()) {
-        '.html' { return 'text/html; charset=utf-8' }
-        '.js' { return 'application/javascript; charset=utf-8' }
-        '.css' { return 'text/css; charset=utf-8' }
-        '.json' { return 'application/json; charset=utf-8' }
-        '.png' { return 'image/png' }
-        '.jpg' { return 'image/jpeg' }
-        '.jpeg' { return 'image/jpeg' }
-        '.svg' { return 'image/svg+xml' }
-        '.woff' { return 'font/woff' }
-        '.woff2' { return 'font/woff2' }
-        '.ttf' { return 'font/ttf' }
-        '.ico' { return 'image/x-icon' }
-        default { return 'application/octet-stream' }
-    }
 }
