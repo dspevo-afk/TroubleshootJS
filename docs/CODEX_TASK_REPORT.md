@@ -1,50 +1,55 @@
 # Latest Codex Task Report
 
 ## Task
-Task #7: Harden the generated-board architecture before adding another circuit family.
+Task #8: Make generated-board POWERED and UNPOWERED state electrically real.
 
 ## Summary
-Refactored `GeneratedBoardInstance` into a family-agnostic generated-board container. Added generic logical-component and external-power simulation binding registries, moved LED operating checks into an LED-only validator, and replaced the fixed 250 ms verification timer with a pending request that waits for analysis and simulation-time progress.
+Added SwitchElm-backed external positive-supply isolation to the generated LED board. Board power now changes the CircuitJS graph through a generic external-power control, reanalyzes the circuit, and verifies the new electrical state without rebuilding the board.
 
 ## Architectural Decisions
-- Logical component IDs map to one or more owned `CircuitElm` references through `GeneratedComponentBindings`.
-- Logical external-power input IDs map to `ExternalPowerSimulationBinding` instances, which can contain multiple backing elements for future source isolation/control.
-- `GeneratedBoardVerifier` now checks common binding ownership, pad coverage, and net consistency; `LedIndicatorGeneratedBoardValidator` owns LED current checks.
-- Verification remains pending while paused. It executes once only after CircuitJS has analyzed the current graph and `t` advances.
-- Invalid `seed` query values fall back to seed `1` without disrupting other initialization.
+- `ExternalPowerControl` separates BoardPowerController from the current SwitchElm implementation.
+- `ExternalPowerSimulationBinding` can own an optional control and multiple backing elements. The LED binding owns its DC source and external isolation switch.
+- The isolation switch is external simulation infrastructure, not a logical PCB component. `J1.1` binds to the board side of the switch.
+- BoardPowerController treats UNPOWERED as electrically safe only with an attached, controllable generated-board binding whose controls are open. Legacy circuits remain unsafe for active measurements.
+- Generated verification rejects non-finite voltages and passes BoardPowerState to the family validator. LED current is healthy only when powered and approximately zero when isolated.
 
 ## Files Changed
-- `AGENTS.md`
 - `docs/ARCHITECTURE.md`
 - `docs/CODEX_TASK_REPORT.md`
+- `src/com/lushprojects/circuitjs1/client/BoardPowerController.java`
+- `src/com/lushprojects/circuitjs1/client/CircuitMeasurementAdapter.java`
 - `src/com/lushprojects/circuitjs1/client/CirSim.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedBoardVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedBoardValidator.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedComponentBindings.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedExternalPowerBindings.java`
+- `src/com/lushprojects/circuitjs1/client/ExternalPowerControl.java`
 - `src/com/lushprojects/circuitjs1/client/ExternalPowerSimulationBinding.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedBoardValidator.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedBoardVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedExternalPowerBindings.java`
 - `src/com/lushprojects/circuitjs1/client/LedIndicatorGeneratedBoardValidator.java`
 - `src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java`
+- `src/com/lushprojects/circuitjs1/client/SwitchExternalPowerControl.java`
+- `src/com/lushprojects/circuitjs1/client/TroubleshootBoard.java`
 
 ## Validation
 - Production GWT build: passed all five permutations before and after implementation.
-- Source diagnostics: no errors in changed Java sources.
-- Generated boards: all logical pads remained bound; generic net and LED-family verification completed after simulation progress with no errors.
-- Browser: generated running, paused/resumed, Reset/reanalysis, malformed-seed, DC-voltmeter, and normal LRC-circuit regressions passed with no page or console errors.
-- `git diff --check`: passed before staging.
+- Generated verification: pad ownership, net consistency, finite-voltage checks, and powered/unpowered LED-family behavior passed after each state transition.
+- Browser: initial ON, OFF, repower, five alternating toggles, paused OFF/resume, malformed seed, normal LRC startup, and Edit menu regression completed with no page or console errors.
+- DC meter with one persistent board-side VIN probe: `+9 V` powered, `0 V` unpowered, and `+9 V` after repowering.
 
 ## Test Data
-- Seed `1`: `5 V`, `330 ohm`, approximately `9.7 mA`; repeated after seed `12345` and reproduced exactly.
-- Seed `12345`: `9 V`, `680 ohm`, LED node measured `1.79 V`, approximately `10.6 mA`; VIN-to-GND DC meter measured `+9 V`.
-- Paused seed `12345`: remained pending without errors for six seconds; after resume, verification completed and the DC meter read `+9 V`.
-- Malformed `seed=banana`: safely fell back to seed `1` (`5 V`, `330 ohm`) without errors.
+- Seed `12345`: `9 V`, `680 ohm`.
+- Powered: VIN-to-GND `+9 V`; isolation switch closed; switch current `10.603 mA`.
+- Unpowered: VIN-to-GND `0 V`; isolation switch open; branch current `0 A`; LED and resistor validators required approximately zero current.
+- Repowered: VIN-to-GND returned to `+9 V`; healthy current range validation passed.
+- Repeated toggle: five alternating states completed as OFF, ON, OFF, ON, OFF with stable bindings and no errors.
+- Paused toggle: OFF was requested while `running=false`, produced no stale-value failure while paused, and completed verification after simulation resumed.
+- Active-measurement gating: generated POWERED is blocked, generated electrically UNPOWERED is allowed, and legacy circuits are blocked because the adapter now requires `isElectricallyUnpowered()`.
+- Malformed `seed=banana`: safely fell back to seed `1` (`5 V`, `330 ohm`) with no errors.
 
 ## Known Limitations / Concerns
-No board-power switching is implemented yet. External-power bindings only establish the future control seam; they do not currently disconnect a source.
+Power control currently switches all declared generated-board inputs together. Independent power-domain controls and bench supply UI are intentionally deferred.
 
 ## Recommended Next Step
-Implement board power application/removal through the generic external-power simulation bindings, including an electrically real isolation/control element suitable for powered and unpowered measurements.
+Implement active resistance/continuity measurement using the electrically enforced UNPOWERED gate and the existing ActiveMeasurementSession boundary.
 
 ## Commit
-Harden generated board verification
+Add real generated board power control

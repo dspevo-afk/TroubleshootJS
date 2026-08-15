@@ -5,7 +5,7 @@ import java.util.Vector;
 class GeneratedBoardVerifier {
     private static final double NET_TOLERANCE = .001;
 
-    static void verify(GeneratedBoardInstance instance) {
+    static void verify(GeneratedBoardInstance instance, BoardPowerState powerState) {
         TroubleshootBoard board = instance.getBoard();
         BoardSimulationBindings bindings = instance.getSimulationBindings();
         instance.getComponentBindings().validateElementsAreOwnedBy(instance.getSimulationElements());
@@ -19,7 +19,7 @@ class GeneratedBoardVerifier {
         for (String netId : board.getNetIds())
             verifyNetVoltage(bindings.getEndpointsForNet(netId), netId);
         if (instance.getFamilyValidator() != null)
-            instance.getFamilyValidator().verify(instance);
+            instance.getFamilyValidator().verify(instance, powerState);
     }
 
     private static void verifyNetVoltage(Vector<CircuitMeasurementEndpoint> endpoints,
@@ -27,8 +27,13 @@ class GeneratedBoardVerifier {
         if (endpoints.isEmpty())
             throw new IllegalStateException("Missing endpoints for board net: " + netId);
         double referenceVoltage = getVoltage(endpoints.firstElement());
+    if (!isFinite(referenceVoltage))
+        throw new IllegalStateException("Non-finite voltage on board net: " + netId);
         for (CircuitMeasurementEndpoint endpoint : endpoints) {
-            if (Math.abs(getVoltage(endpoint) - referenceVoltage) > NET_TOLERANCE)
+        double voltage = getVoltage(endpoint);
+        if (!isFinite(voltage))
+        throw new IllegalStateException("Non-finite voltage on board net: " + netId);
+        if (Math.abs(voltage - referenceVoltage) > NET_TOLERANCE)
                 throw new IllegalStateException("Inconsistent voltage on board net: " + netId);
         }
     }
@@ -39,6 +44,10 @@ class GeneratedBoardVerifier {
         CircuitPostMeasurementEndpoint circuitPost =
             (CircuitPostMeasurementEndpoint) endpoint;
         return circuitPost.getElement().getPostVoltage(circuitPost.getPostIndex());
+    }
+
+    private static boolean isFinite(double value) {
+	return !Double.isNaN(value) && !Double.isInfinite(value);
     }
 
     private static void verifyEndpointIsOwned(CircuitMeasurementEndpoint endpoint,

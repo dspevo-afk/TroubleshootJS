@@ -21,7 +21,10 @@ class LedIndicatorGenerator {
         supply.drag(160, 160);
         supply.maxVoltage = supplyVoltage;
 
-        ResistorElm resistor = new ResistorElm(160, 160);
+        SwitchElm isolationSwitch = new SwitchElm(160, 160);
+        isolationSwitch.drag(240, 160);
+
+        ResistorElm resistor = new ResistorElm(240, 160);
         resistor.drag(320, 160);
         resistor.setResistance(resistorValue);
 
@@ -38,6 +41,7 @@ class LedIndicatorGenerator {
 
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         elements.add(supply);
+        elements.add(isolationSwitch);
         elements.add(resistor);
         elements.add(led);
         elements.add(ground);
@@ -48,10 +52,14 @@ class LedIndicatorGenerator {
         componentBindings.bindComponent("R1", resistor);
         componentBindings.bindComponent("LED1", led);
         GeneratedExternalPowerBindings powerBindings = new GeneratedExternalPowerBindings(board);
-        powerBindings.bindPowerInput("VIN_INPUT", new ExternalPowerSimulationBinding(supply));
+        Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
+        powerElements.add(supply);
+        powerElements.add(isolationSwitch);
+        powerBindings.bindPowerInput("VIN_INPUT", new ExternalPowerSimulationBinding(powerElements,
+            new SwitchExternalPowerControl(isolationSwitch)));
 
         BoardSimulationBindings bindings = board.getSimulationBindings();
-        bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(supply, 1));
+        bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(isolationSwitch, 1));
         bindings.bindPad("R1.1", new CircuitPostMeasurementEndpoint(resistor, 0));
         bindings.bindPad("R1.2", new CircuitPostMeasurementEndpoint(resistor, 1));
         bindings.bindPad("LED1.A", new CircuitPostMeasurementEndpoint(led, 0));

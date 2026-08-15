@@ -29,6 +29,32 @@ class GeneratedExternalPowerBindings {
         return binding;
     }
 
+    boolean hasControlsForAllInputs() {
+    for (String powerInputId : board.getPowerInputIds()) {
+        ExternalPowerSimulationBinding binding = powerBindings.get(powerInputId);
+        if (binding == null || !binding.hasControl())
+        return false;
+    }
+    return !board.getPowerInputIds().isEmpty();
+    }
+
+    void setConnected(boolean connected) {
+    if (!hasControlsForAllInputs())
+        throw new IllegalStateException("Generated board power inputs are not fully controllable");
+    for (String powerInputId : board.getPowerInputIds())
+        powerBindings.get(powerInputId).setConnected(connected);
+    }
+
+    boolean areAllConnected() {
+    if (!hasControlsForAllInputs())
+        return false;
+    for (String powerInputId : board.getPowerInputIds()) {
+        if (!powerBindings.get(powerInputId).isConnected())
+        return false;
+    }
+    return true;
+    }
+
     void validateElementsAreOwnedBy(Vector<CircuitElm> simulationElements) {
         for (String powerInputId : powerBindings.keySet()) {
             for (CircuitElm element : powerBindings.get(powerInputId).getBackingElements()) {

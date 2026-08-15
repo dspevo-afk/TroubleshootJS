@@ -24,7 +24,7 @@ class CircuitMeasurementAdapter {
     }
 
     boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe) {
-        return boardPowerController.isUnpowered() &&
+    return boardPowerController.isElectricallyUnpowered() &&
             redProbe != null && blackProbe != null &&
             redProbe.isValid() && blackProbe.isValid();
     }

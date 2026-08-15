@@ -89,6 +89,13 @@ class TroubleshootBoard {
         return powerInputs.get(powerInputId);
     }
 
+    Vector<String> getPowerInputIds() {
+	Vector<String> powerInputIds = new Vector<String>();
+	for (ExternalBoardPowerInput powerInput : powerInputs.values())
+	    powerInputIds.add(powerInput.getId());
+	return powerInputIds;
+    }
+
     BoardSimulationBindings getSimulationBindings() {
         return simulationBindings;
     }

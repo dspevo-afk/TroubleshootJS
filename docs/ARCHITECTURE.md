@@ -11,10 +11,14 @@ endpoint, while `CircuitMeasurementAdapter` owns measurement behavior and the
 translation to CircuitJS.
 
 Board electrical power is represented independently from CircuitJS simulation
-execution. `BoardPowerController` currently records whether a board is powered
-or unpowered without changing arbitrary CircuitJS voltage sources. Future
-generated-board metadata will identify the external power connector, rails, and
-power domains that the controller may operate.
+execution. Generated-board power is enforced through explicit external-power
+controls, not by changing arbitrary CircuitJS voltage sources. Power OFF means
+electrically isolating the external supply connection; it is not equivalent to
+setting a voltage source to zero. `BoardPowerController` only reports a board
+as electrically unpowered when an attached generated-board control actually
+enforces the open state. External isolation infrastructure belongs to the
+simulation backing, not to the logical PCB component model. Future active meter
+modes require this electrically enforced UNPOWERED state.
 
 Active measurements run through an `ActiveMeasurementSession`. The adapter
 validates probe targets and board-power requirements, then closes the session

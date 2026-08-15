@@ -103,6 +103,7 @@ MouseOutHandler, MouseWheelHandler {
     
     Random random;
     Button resetButton;
+	Button boardPowerButton;
     Button runStopButton;
     Button dumpMatrixButton;
     MenuItem aboutItem;
@@ -613,6 +614,14 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	});
 	instrumentController = new InstrumentController(this, verticalPanel);
+	verticalPanel.add(boardPowerButton = new Button("Board Power: ON"));
+	boardPowerButton.setVisible(false);
+	boardPowerButton.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent event) {
+		setBoardPowerState(boardPowerController.getState() == BoardPowerState.POWERED ?
+		    BoardPowerState.UNPOWERED : BoardPowerState.POWERED);
+	    }
+	});
 
 	/*
 	dumpMatrixButton = new Button("Dump Matrix");
@@ -3520,6 +3529,8 @@ MouseOutHandler, MouseWheelHandler {
 	int len = b.length;
 	if ((flags & RC_RETAIN) == 0) {
 	    generatedBoardInstance = null;
+	    boardPowerController.detach();
+	    updateBoardPowerButton();
 	   generatedBoardVerificationPending = false;
 	   generatedBoardVerificationAnalyzed = false;
 	    instrumentController.clearTargets();
@@ -4063,6 +4074,8 @@ MouseOutHandler, MouseWheelHandler {
 	for (CircuitElm element : instance.getSimulationElements())
 	    elmList.add(element);
 	generatedBoardInstance = instance;
+	boardPowerController.attach(instance.getExternalPowerBindings());
+	updateBoardPowerButton();
 	setCircuitTitle(instance.getDescription());
 	unsavedChanges = false;
 	enableUndoRedo();
@@ -4111,8 +4124,31 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     void verifyGeneratedBoard() {
-	if (generatedBoardInstance != null)
-	    GeneratedBoardVerifier.verify(generatedBoardInstance);
+	if (generatedBoardInstance == null)
+	    return;
+	if (boardPowerController.getState() == BoardPowerState.UNPOWERED &&
+		!boardPowerController.isElectricallyUnpowered())
+	    throw new IllegalStateException("Generated board is logically unpowered without electrical isolation");
+	GeneratedBoardVerifier.verify(generatedBoardInstance, boardPowerController.getState());
+    }
+
+    void setBoardPowerState(BoardPowerState state) {
+	if (generatedBoardInstance == null)
+	    return;
+	if (!boardPowerController.setState(state))
+	    return;
+	updateBoardPowerButton();
+	requestGeneratedBoardVerification();
+    }
+
+    private void updateBoardPowerButton() {
+	if (boardPowerButton == null)
+	    return;
+	boolean generatedBoardActive = generatedBoardInstance != null;
+	boardPowerButton.setVisible(generatedBoardActive);
+	if (generatedBoardActive)
+	    boardPowerButton.setText(boardPowerController.getState() == BoardPowerState.POWERED ?
+		"Board Power: ON" : "Board Power: OFF");
     }
 
 	BoardPowerController getBoardPowerController() {

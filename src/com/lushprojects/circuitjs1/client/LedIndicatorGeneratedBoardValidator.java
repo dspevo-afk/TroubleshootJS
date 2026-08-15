@@ -4,7 +4,7 @@ class LedIndicatorGeneratedBoardValidator implements GeneratedBoardValidator {
     private static final double MIN_LED_CURRENT = .005;
     private static final double MAX_LED_CURRENT = .015;
 
-    public void verify(GeneratedBoardInstance instance) {
+    public void verify(GeneratedBoardInstance instance, BoardPowerState powerState) {
         CircuitElm resistorElement = instance.getComponentBindings().getSingleElement("R1");
         CircuitElm ledElement = instance.getComponentBindings().getSingleElement("LED1");
         if (!(resistorElement instanceof ResistorElm) || !(ledElement instanceof LEDElm))
@@ -12,6 +12,11 @@ class LedIndicatorGeneratedBoardValidator implements GeneratedBoardValidator {
                 instance.getTopologyVariantId());
         double ledCurrent = ((LEDElm) ledElement).getCurrent();
         double resistorCurrent = ((ResistorElm) resistorElement).getCurrent();
+    if (powerState == BoardPowerState.UNPOWERED) {
+        if (Math.abs(ledCurrent) > .000001 || Math.abs(resistorCurrent) > .000001)
+        throw new IllegalStateException("Unpowered LED indicator current is not zero");
+        return;
+    }
         if (ledCurrent < MIN_LED_CURRENT || ledCurrent > MAX_LED_CURRENT)
             throw new IllegalStateException("LED current outside generated range: " + ledCurrent);
         if (Math.abs(ledCurrent - resistorCurrent) > .0001)
