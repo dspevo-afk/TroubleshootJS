@@ -2,9 +2,11 @@ package com.lushprojects.circuitjs1.client;
 
 class CircuitMeasurementAdapter {
     private final CirSim sim;
+    private final BoardPowerController boardPowerController;
 
     CircuitMeasurementAdapter(CirSim sim) {
         this.sim = sim;
+        boardPowerController = sim.getBoardPowerController();
     }
 
     double getDcVoltageDifference(ProbeTarget redProbe, ProbeTarget blackProbe) {
@@ -21,5 +23,30 @@ class CircuitMeasurementAdapter {
         return 0;
     }
 
-    // Future active measurements will temporarily modify and restore the simulation graph here.
+    boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe) {
+        return boardPowerController.isUnpowered() &&
+            redProbe != null && blackProbe != null &&
+            redProbe.isValid() && blackProbe.isValid();
+    }
+
+    double runActiveMeasurement(ProbeTarget redProbe, ProbeTarget blackProbe,
+            ActiveMeasurementOperation operation) {
+        if (!isActiveMeasurementAllowed(redProbe, blackProbe))
+            return Double.NaN;
+
+        ActiveMeasurementSession session = new ActiveMeasurementSession(redProbe, blackProbe);
+        try {
+            if (!session.hasValidTargets())
+                return Double.NaN;
+            return operation.measure(session);
+        } finally {
+            session.close();
+        }
+    }
+
+    // Future test sources must be owned, reanalyzed, and removed by this adapter/session boundary.
+}
+
+interface ActiveMeasurementOperation {
+    double measure(ActiveMeasurementSession session);
 }

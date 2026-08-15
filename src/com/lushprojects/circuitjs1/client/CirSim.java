@@ -220,6 +220,7 @@ MouseOutHandler, MouseWheelHandler {
     CircuitElm dragElm, menuElm, stopElm;
     private CircuitElm mouseElm=null;
 	InstrumentController instrumentController;
+	final BoardPowerController boardPowerController = new BoardPowerController();
     boolean didSwitch = false;
     int mousePost = -1;
     CircuitElm plotXElm, plotYElm;
@@ -4024,6 +4025,10 @@ MouseOutHandler, MouseWheelHandler {
     boolean containsElement(CircuitElm element) {
 	return elmList.contains(element);
     }
+
+	BoardPowerController getBoardPowerController() {
+	return boardPowerController;
+	}
 
     CircuitPostProbeTarget findPostTarget(int screenX, int screenY) {
 	return findPostTarget(screenX, screenY, null);
