@@ -9,7 +9,9 @@ class GeneratedFault {
 
     GeneratedFault(String id, GeneratedFaultType type, String targetComponentId,
             String circuitFamilyId, long selectionSeed) {
-        if (id == null || type == null || targetComponentId == null || circuitFamilyId == null)
+        if (id == null || id.length() == 0 || type == null || targetComponentId == null ||
+            targetComponentId.length() == 0 || circuitFamilyId == null ||
+            circuitFamilyId.length() == 0)
             throw new IllegalArgumentException("Generated fault requires stable identity");
         this.id = id;
         this.type = type;

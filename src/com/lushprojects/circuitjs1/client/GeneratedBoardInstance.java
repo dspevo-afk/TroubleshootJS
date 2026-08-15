@@ -17,6 +17,7 @@ class GeneratedBoardInstance {
     private final BoardPhysicalSpecifications physicalSpecifications;
     private final GeneratedFaultBinding faultBinding;
     private final GeneratedComponentOperationalStates operationalStates;
+    private final GeneratedChallengeDefinition challengeDefinition;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -25,7 +26,8 @@ class GeneratedBoardInstance {
             GeneratedComponentConnectionBindings connectionBindings,
             GeneratedBoardValidator familyValidator, PcbBoardLayout pcbLayout,
             BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
-            GeneratedComponentOperationalStates operationalStates) {
+            GeneratedComponentOperationalStates operationalStates,
+            GeneratedChallengeDefinition challengeDefinition) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -43,6 +45,7 @@ class GeneratedBoardInstance {
         physicalSpecifications.seal();
         this.faultBinding = faultBinding;
         this.operationalStates = operationalStates;
+        this.challengeDefinition = challengeDefinition;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
     }
@@ -97,6 +100,7 @@ class GeneratedBoardInstance {
 
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }
     GeneratedComponentOperationalStates getOperationalStates() { return operationalStates; }
+    GeneratedChallengeDefinition getChallengeDefinition() { return challengeDefinition; }
 
     PcbBoardLayout getPcbLayout() {
         return pcbLayout;

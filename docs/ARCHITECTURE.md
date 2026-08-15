@@ -225,3 +225,31 @@ and all printed/nameplate state remain unchanged. Normal players see only the
 ready service ticket text, `Indicator does not light.` Developer-only
 `tsjVerifyChallenge=true` exercises the fault lifecycle, measurements,
 physical removal/restoration, and clear/reapply path after `READY`.
+
+All active meter modes use the same physical polarity convention: the red
+probe is the electrically positive test terminal and the black probe is the
+electrically negative terminal. OHM and CONT share a $1 V$ / $1 kOhm$
+CircuitJS stimulus wired with the same source orientation as the diode test;
+the resistance formula still uses current magnitude only when deriving a
+magnitude. DIODE is a distinct $3 V$ finite-compliance meter function, so a
+forward-biased diode may yield a high finite OHM/CONT resistance without
+meeting the $50 Ohm$ continuity threshold.
+
+Generated challenge orchestration is family-agnostic. Family generation owns a
+small `GeneratedChallengeCatalog` of compatible immutable
+`GeneratedChallengeDefinition` candidates. A definition contains stable
+challenge and complaint IDs/text, family/topology compatibility, selection
+seed, selected fault/binding, and a `GeneratedFaultValidator` strategy. The
+generic controller only records the solver-gated healthy/faulted stages,
+applies the selected binding, invokes the strategy, and transitions to READY.
+It validates that private fault infrastructure is simulation-owned but not a
+logical component, external-power element, or detachable connection.
+
+During either preparation stage, `CirSim` disables board power, the meter,
+PCB probe placement, component selection, and component actions at their
+actual event/mutation boundaries. READY restores normal interaction; healthy
+fixtures and legacy circuits remain ungated. After READY, generic board checks
+continue and the selected fault must remain applied. With powered, restored
+target hardware the selected strategy rechecks the symptom; unpowered or
+intentionally isolated hardware is allowed while fault binding integrity still
+holds. Developer-only clear/reapply uses an explicit scoped exception.

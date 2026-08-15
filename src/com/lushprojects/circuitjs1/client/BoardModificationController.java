@@ -143,6 +143,7 @@ class BoardModificationController {
 
     private void requireSafeMutation() {
         if (sim.getGeneratedBoardInstance() != instance || sim.activeMeasurementOverlay ||
+		!sim.isChallengeInteractionEnabled() ||
                 !sim.getBoardPowerController().isElectricallyUnpowered())
             throw new BoardModificationRejectedException(
                 "Board modification requires electrically unpowered generated board");

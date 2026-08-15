@@ -1,10 +1,14 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 class ChallengeDeveloperVerifier {
     static void verify(CirSim sim) {
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
         require(challenge != null && challenge.isReady(), "Challenge did not become ready");
+        verifyLifecycleEvidence(challenge);
+        verifyDeterministicMetadata(instance, challenge.getDefinition());
         GeneratedFaultController faults = challenge.getFaultController();
         BoardModificationController modifications = sim.getBoardModificationController();
         require(faults.isApplied(), "Challenge fault was not applied");
@@ -29,7 +33,7 @@ class ChallengeDeveloperVerifier {
         requireApproximately(expected, sim.instrumentController
             .getDcVoltageDifferenceForDeveloperVerification(vin, ground), .1,
             "Faulted VIN differs from nameplate");
-        LedIndicatorFaultValidator.verifyOpenResistor(instance,
+        sim.getGeneratedChallengeController().getDefinition().getFaultValidator().verify(instance,
             sim.getBoardModificationController(), BoardPowerState.POWERED);
     }
 
@@ -49,6 +53,98 @@ class ChallengeDeveloperVerifier {
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Faulted R1 component leads did not measure OL");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        verifyLedPolarity(sim, instance);
+    }
+
+    private static void verifyLedPolarity(CirSim sim, GeneratedBoardInstance instance) {
+        CircuitPostProbeTarget anode = getProbe(sim, instance, "LED1.A");
+        CircuitPostProbeTarget cathode = getProbe(sim, instance, "LED1.K");
+        CircuitPostProbeTarget vin = getProbe(sim, instance, "J1.1");
+        CircuitPostProbeTarget r11 = getProbe(sim, instance, "R1.1");
+        Vector<CircuitElm> elements = new Vector<CircuitElm>(sim.elmList);
+        String export = sim.dumpCircuit();
+        int undo = sim.undoStack.size();
+        int redo = sim.redoStack.size();
+        boolean unsaved = sim.unsavedChanges;
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(anode, cathode);
+        double forwardResistance = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
+        require(!Double.isNaN(forwardResistance) && !Double.isInfinite(forwardResistance) &&
+            forwardResistance < 10000000, "LED forward OHM was not finite: " + forwardResistance);
+        verifyMeasurementRestoration(sim, instance, elements, export, undo, redo, unsaved,
+            "forward LED OHM");
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(cathode, anode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "LED reverse OHM was not OL");
+        verifyMeasurementRestoration(sim, instance, elements, export, undo, redo, unsaved,
+            "reverse LED OHM");
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(anode, cathode);
+        require(!Double.isNaN(sim.instrumentController.getLatestResistanceReadingForDeveloperVerification()) &&
+            !sim.instrumentController.isContinuityDetectedForDeveloperVerification() &&
+            !sim.instrumentController.isContinuityIndicatorVisibleForDeveloperVerification() &&
+            !sim.instrumentController.isContinuityFeedbackRequestedForDeveloperVerification(),
+            "LED forward CONT produced false continuity");
+        verifyMeasurementRestoration(sim, instance, elements, export, undo, redo, unsaved,
+            "forward LED CONT");
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(cathode, anode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+            !sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
+            "LED reverse CONT was not OL without continuity");
+        verifyMeasurementRestoration(sim, instance, elements, export, undo, redo, unsaved,
+            "reverse LED CONT");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(anode, cathode);
+        require(!"OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "LED forward diode reading was OL");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(cathode, anode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "LED reverse diode reading was not OL");
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(vin, r11);
+        require(sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
+            "Same-net continuity did not activate");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyMeasurementRestoration(CirSim sim, GeneratedBoardInstance instance,
+            Vector<CircuitElm> elements, String export, int undo, int redo, boolean unsaved,
+            String mode) {
+        require(!sim.activeMeasurementOverlay && sim.elmList.equals(elements) &&
+            export.equals(sim.dumpCircuit()) && undo == sim.undoStack.size() &&
+            redo == sim.redoStack.size() && unsaved == sim.unsavedChanges &&
+            sim.getBoardPowerController().isElectricallyUnpowered() &&
+            instance.getFaultBinding().isApplied(), "Measurement did not restore " + mode);
+    }
+
+    private static void verifyLifecycleEvidence(GeneratedChallengeController challenge) {
+        GeneratedChallengeLifecycleEvidence evidence = challenge.getLifecycleEvidence();
+        require(evidence.healthyGenerationInstalled && evidence.healthyGraphAnalyzedAfterTimeAdvance &&
+            evidence.healthyFamilyValidated && evidence.selectedFaultApplied &&
+            evidence.faultedGraphAnalyzedAfterTimeAdvance && evidence.selectedFaultValidated &&
+            evidence.readyAfterValidation, "Challenge lifecycle evidence is incomplete");
+    }
+
+    private static void verifyDeterministicMetadata(GeneratedBoardInstance instance,
+            GeneratedChallengeDefinition definition) {
+        require("LED_INDICATOR_NO_LIGHT".equals(definition.getId()) &&
+            "INDICATOR_DOES_NOT_LIGHT".equals(definition.getComplaintId()) &&
+            "Indicator does not light.".equals(definition.getComplaintText()) &&
+            definition.getFault() == instance.getFaultBinding().getFault(),
+            "Selected challenge metadata disagrees with binding");
+        verifySeed(0, 5, 330);
+        verifySeed(2, 9, 680);
+        verifySeed(3, 12, 1000);
+    }
+
+    private static void verifySeed(long seed, double voltage, double resistance) {
+        GeneratedBoardInstance variant = new LedIndicatorGenerator().generate(seed);
+        GeneratedChallengeDefinition definition = variant.getChallengeDefinition();
+        requireApproximately(voltage, variant.getPhysicalSpecifications()
+            .getPowerInputNameplate("VIN_INPUT").getNominalVoltage(), .001,
+            "Unexpected deterministic VIN for seed " + seed);
+        requireApproximately(resistance, variant.getPhysicalSpecifications()
+            .getResistorNameplate("R1").getNominalResistanceOhms(), .001,
+            "Unexpected deterministic R1 for seed " + seed);
+        require("LED_R1_OPEN".equals(definition.getFault().getId()) &&
+            "R1".equals(definition.getFault().getTargetComponentId()) &&
+            definition.getSelectionSeed() == seed, "Unexpected deterministic challenge metadata");
     }
 
     private static void verifyPhysicalPersistence(CirSim sim, GeneratedBoardInstance instance,
@@ -70,24 +166,33 @@ class ChallengeDeveloperVerifier {
         modifications.restoreComponent("R1");
         require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED &&
             faults.isApplied(), "Restoration cleared the internal fault");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
     }
 
     private static void verifyDeveloperClearAndReapply(CirSim sim, GeneratedBoardInstance instance,
             GeneratedFaultController faults) {
-        require(faults.clearForDeveloperVerification(), "Developer fault clear was ignored");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
-        instance.getFamilyValidator().verify(instance, BoardPowerState.POWERED);
-        require(instance.getOperationalStates().isIlluminated("LED1"),
-            "Developer-cleared LED did not illuminate");
-        require(faults.apply(), "Developer fault reapply was ignored");
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
-        LedIndicatorFaultValidator.verifyOpenResistor(instance,
-            sim.getBoardModificationController(), BoardPowerState.POWERED);
+        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        challenge.beginDeveloperVerificationScope();
+        try {
+            require(faults.clearForDeveloperVerification(), "Developer fault clear was ignored");
+            sim.setBoardPowerState(BoardPowerState.POWERED);
+            sim.analyzeCircuit();
+            sim.runCircuit(true);
+            sim.runCircuit(true);
+            instance.getFamilyValidator().verify(instance, BoardPowerState.POWERED);
+            require(instance.getOperationalStates().isIlluminated("LED1"),
+                "Developer-cleared LED did not illuminate");
+            require(!faults.clearForDeveloperVerification(), "Repeated developer clear was not idempotent");
+            require(faults.apply(), "Developer fault reapply was ignored");
+            require(!faults.apply(), "Repeated fault apply was not idempotent");
+            sim.analyzeCircuit();
+            sim.runCircuit(true);
+            sim.runCircuit(true);
+            challenge.getDefinition().getFaultValidator().verify(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED);
+        } finally {
+            challenge.endDeveloperVerificationScope();
+        }
     }
 
     private static CircuitPostProbeTarget getProbe(CirSim sim, GeneratedBoardInstance instance,

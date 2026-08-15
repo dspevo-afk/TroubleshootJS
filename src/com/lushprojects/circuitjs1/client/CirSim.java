@@ -349,10 +349,10 @@ MouseOutHandler, MouseWheelHandler {
     String startCircuitText = null;
     String startCircuitLink = null;
 	String troubleshootFixture = null;
-		String troubleshootChallenge = null;
+	String troubleshootChallenge = null;
 	long troubleshootFixtureSeed = 1;
 	boolean troubleshootResistanceVerification;
-		boolean troubleshootChallengeVerification;
+	boolean troubleshootChallengeVerification;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
@@ -4144,7 +4144,7 @@ MouseOutHandler, MouseWheelHandler {
 	installGeneratedBoard(instance);
 	generatedChallengeController = new GeneratedChallengeController(this, instance);
 	generatedChallengeController.begin();
-	refreshBoardModificationControls();
+	refreshChallengeInteractionState();
     }
 
     private long parseTroubleshootFixtureSeed(String fixtureSeed) {
@@ -4176,6 +4176,7 @@ MouseOutHandler, MouseWheelHandler {
 	    generatedBoardVerificationPending = false;
 	    if (generatedChallengeController != null)
 		generatedChallengeController.afterGeneratedVerification();
+	    refreshChallengeInteractionState();
 	    if (troubleshootChallengeVerification && !troubleshootChallengeVerificationComplete &&
 		generatedChallengeController != null && generatedChallengeController.isReady()) {
 		troubleshootChallengeVerificationComplete = true;
@@ -4197,6 +4198,18 @@ MouseOutHandler, MouseWheelHandler {
 	return generatedChallengeController;
 	}
 
+	boolean isChallengeInteractionEnabled() {
+	return generatedChallengeController == null || generatedChallengeController.isReady();
+	}
+
+	void refreshChallengeInteractionState() {
+	boolean enabled = isChallengeInteractionEnabled();
+	instrumentController.setInteractionEnabled(enabled);
+	if (boardPowerButton != null)
+	    boardPowerButton.setEnabled(enabled);
+	refreshBoardModificationControls();
+	}
+
 	BoardModificationController getBoardModificationController() {
 	return boardModificationController;
 	}
@@ -4212,10 +4225,14 @@ MouseOutHandler, MouseWheelHandler {
 	GeneratedBoardVerifier.verify(generatedBoardInstance, boardPowerController.getState(),
 		boardModificationController, elmList, generatedChallengeController == null ||
 		generatedChallengeController.isHealthyValidationExpected());
+	if (generatedChallengeController != null)
+	    generatedChallengeController.verifyReadyState();
     }
 
     void setBoardPowerState(BoardPowerState state) {
 	if (generatedBoardInstance == null)
+	    return;
+	if (!isChallengeInteractionEnabled())
 	    return;
 	if (activeMeasurementOverlay) {
 	    pendingBoardPowerState = state;
@@ -4234,6 +4251,7 @@ MouseOutHandler, MouseWheelHandler {
 	    return;
 	boolean generatedBoardActive = generatedBoardInstance != null;
 	boardPowerButton.setVisible(generatedBoardActive);
+	boardPowerButton.setEnabled(isChallengeInteractionEnabled());
 	if (generatedBoardActive)
 	    boardPowerButton.setText(boardPowerController.getState() == BoardPowerState.POWERED ?
 		"Board Power: ON" : "Board Power: OFF");
@@ -4664,6 +4682,8 @@ MouseOutHandler, MouseWheelHandler {
     public void onMouseDown(MouseDownEvent e) {
 //    public void mousePressed(MouseEvent e) {
     	e.preventDefault();
+		if (isPcbWorkbenchVisible() && !isChallengeInteractionEnabled())
+		    return;
 	// An active instrument owns the whole gesture so CircuitJS editing never sees probe clicks.
 	if (instrumentController.isHandlingPointerInput()) {
 	    ProbeTarget target = isPcbWorkbenchVisible() ?

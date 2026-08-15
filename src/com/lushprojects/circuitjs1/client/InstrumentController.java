@@ -29,6 +29,7 @@ class InstrumentController {
     private final Label readingLabel;
     private final Label continuityLabel;
     private final ContinuityFeedback continuityFeedback;
+    private boolean interactionEnabled = true;
     private int activeMode = MODE_NONE;
     private ProbeTarget redProbe;
     private ProbeTarget blackProbe;
@@ -105,7 +106,17 @@ class InstrumentController {
     }
 
     boolean isHandlingPointerInput() {
-        return activeMode != MODE_NONE;
+        return interactionEnabled && activeMode != MODE_NONE;
+    }
+
+    void setInteractionEnabled(boolean enabled) {
+        interactionEnabled = enabled;
+        dcVoltageButton.setEnabled(enabled);
+        resistanceButton.setEnabled(enabled);
+        continuityButton.setEnabled(enabled);
+        diodeButton.setEnabled(enabled);
+        if (!enabled)
+            exitInstrumentModeForDeveloperVerification();
     }
 
     void handlePointerInput(int button, int screenX, int screenY) {
@@ -113,6 +124,8 @@ class InstrumentController {
     }
 
     void handlePointerInput(int button, ProbeTarget target) {
+        if (!interactionEnabled)
+            return;
         boolean changed = false;
         if (target != null) {
             if (button == NativeEvent.BUTTON_LEFT)

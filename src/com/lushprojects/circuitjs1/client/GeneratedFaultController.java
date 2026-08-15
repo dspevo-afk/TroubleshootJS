@@ -22,6 +22,10 @@ class GeneratedFaultController {
             throw new IllegalStateException("Fault control is detached from generated board");
         if (sim.activeMeasurementOverlay)
             throw new IllegalStateException("Fault control cannot run during active measurement");
+        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        if (!applied && challenge != null && challenge.isReady() &&
+                !challenge.isDeveloperVerificationScopeActive())
+            throw new IllegalStateException("Fault clearing requires developer verification scope");
         if (binding.isApplied() == applied)
             return false;
         binding.setApplied(applied);

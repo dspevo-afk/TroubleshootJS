@@ -1,9 +1,9 @@
 package com.lushprojects.circuitjs1.client;
 
-class LedIndicatorFaultValidator {
+class LedIndicatorFaultValidator implements GeneratedFaultValidator {
     private static final double MAX_FAULTED_LED_CURRENT = .000001;
 
-    static void verifyOpenResistor(GeneratedBoardInstance instance,
+    public void verify(GeneratedBoardInstance instance,
             BoardModificationController modifications, BoardPowerState powerState) {
         if (powerState != BoardPowerState.POWERED)
             throw new IllegalStateException("Faulted LED challenge must validate while powered");

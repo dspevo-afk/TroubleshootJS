@@ -12,11 +12,11 @@ class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
         Point redPoint = red.getElement().getPost(red.getPostIndex());
         Point blackPoint = black.getElement().getPost(black.getPostIndex());
         Point midpoint = findUnusedPoint(sim, redPoint, blackPoint);
-        source = new DCVoltageElm(redPoint.x, redPoint.y);
-        source.drag(midpoint.x, midpoint.y);
+        source = new DCVoltageElm(midpoint.x, midpoint.y);
+        source.drag(redPoint.x, redPoint.y);
         source.maxVoltage = TEST_VOLTAGE;
-        internalResistor = new ResistorElm(midpoint.x, midpoint.y);
-        internalResistor.drag(blackPoint.x, blackPoint.y);
+        internalResistor = new ResistorElm(blackPoint.x, blackPoint.y);
+        internalResistor.drag(midpoint.x, midpoint.y);
         internalResistor.setResistance(INTERNAL_RESISTANCE);
     }
 

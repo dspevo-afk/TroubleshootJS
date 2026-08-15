@@ -37,6 +37,8 @@ class PcbWorkbenchController {
     ProbeTarget findProbeTarget(int x, int y) { return renderer.findProbeTarget(sim, x, y); }
 
     boolean selectComponentAt(int x, int y) {
+        if (!sim.isChallengeInteractionEnabled())
+            return false;
         String componentId = renderer.findComponentId(x, y);
         renderer.setSelectedComponentId(componentId);
         rebuildPanel();
@@ -82,9 +84,10 @@ class PcbWorkbenchController {
         if (bindings.isEmpty())
             return;
         boolean powered = !sim.getBoardPowerController().isElectricallyUnpowered();
+        boolean preparationDisabled = !sim.isChallengeInteractionEnabled();
         if (powered)
             feedback.setText("Turn board power off before modifying components.");
-        addActions(componentId, bindings, powered);
+        addActions(componentId, bindings, powered || preparationDisabled);
     }
 
     private void rebuildTicket() {

@@ -77,6 +77,10 @@ class LedIndicatorGenerator {
         GeneratedFault fault = new GeneratedFault("LED_R1_OPEN", GeneratedFaultType.COMPONENT_OPEN,
             "R1", "LED_INDICATOR", seed);
         GeneratedFaultBinding faultBinding = new GeneratedFaultBinding(fault, r1FaultIsolation);
+        GeneratedChallengeCatalog challengeCatalog = new GeneratedChallengeCatalog();
+        challengeCatalog.addCandidate(new GeneratedChallengeDefinition("LED_INDICATOR_NO_LIGHT",
+            "LED_INDICATOR", DIRECT_SERIES_VARIANT, seed, "INDICATOR_DOES_NOT_LIGHT",
+            "Indicator does not light.", fault, faultBinding, new LedIndicatorFaultValidator()));
         GeneratedExternalPowerBindings powerBindings = new GeneratedExternalPowerBindings(board);
         Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
         powerElements.add(supply);
@@ -105,7 +109,7 @@ class LedIndicatorGenerator {
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),
             LedIndicatorPcbLayout.create(board), physicalSpecifications, faultBinding,
-            operationalStates);
+            operationalStates, challengeCatalog.select(seed));
     }
 
     private TroubleshootBoard createBoard() {
