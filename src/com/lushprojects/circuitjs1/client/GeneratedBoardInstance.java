@@ -20,6 +20,8 @@ class GeneratedBoardInstance {
     private final GeneratedChallengeDefinition challengeDefinition;
     private final ReplaceableComponentSlot r1Slot;
     private final ResistorReplacementInventory resistorInventory;
+    private final ResistorReplacementCatalog resistorCatalog;
+    private int nextCatalogPartSerial;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -30,7 +32,7 @@ class GeneratedBoardInstance {
             BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
             GeneratedComponentOperationalStates operationalStates,
             GeneratedChallengeDefinition challengeDefinition, ReplaceableComponentSlot r1Slot,
-            ResistorReplacementInventory resistorInventory) {
+            ResistorReplacementInventory resistorInventory, ResistorReplacementCatalog resistorCatalog) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -51,6 +53,7 @@ class GeneratedBoardInstance {
         this.challengeDefinition = challengeDefinition;
         this.r1Slot = r1Slot;
         this.resistorInventory = resistorInventory;
+        this.resistorCatalog = resistorCatalog;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
     }
@@ -61,6 +64,12 @@ class GeneratedBoardInstance {
 
     Vector<CircuitElm> getSimulationElements() {
         return new Vector<CircuitElm>(simulationElements);
+    }
+
+    void registerRuntimeSimulationElement(CircuitElm element) {
+        if (element == null || simulationElements.contains(element))
+            throw new IllegalArgumentException("Invalid runtime generated element");
+        simulationElements.add(element);
     }
 
     BoardSimulationBindings getSimulationBindings() {
@@ -108,6 +117,11 @@ class GeneratedBoardInstance {
     GeneratedChallengeDefinition getChallengeDefinition() { return challengeDefinition; }
     ReplaceableComponentSlot getR1Slot() { return r1Slot; }
     ResistorReplacementInventory getResistorInventory() { return resistorInventory; }
+    ResistorReplacementCatalog getResistorCatalog() { return resistorCatalog; }
+
+    String allocateCatalogPartId() {
+        return "R1_CATALOG_PART_" + nextCatalogPartSerial++;
+    }
 
     PcbBoardLayout getPcbLayout() {
         return pcbLayout;

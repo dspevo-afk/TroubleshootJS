@@ -16,6 +16,8 @@ class PcbWorkbenchRenderer {
     private int offsetY;
     private String selectedComponentId;
     private String selectedPartId;
+    private int trayPage;
+    private static final int PARTS_PER_TRAY_PAGE = 3;
 
     PcbWorkbenchRenderer(GeneratedBoardInstance instance,
             BoardModificationController modifications, PcbBoardLayout layout) {
@@ -197,9 +199,19 @@ class PcbWorkbenchRenderer {
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
         graphics.setColor("#3d484c");
         graphics.drawString("PARTS TRAY", tray.x + scaleInt(20), tray.y + scaleInt(30));
+        Vector<PhysicalResistorPart> visible = getVisibleLooseParts();
+        if (visible.isEmpty()) {
+            graphics.setFont(new Font("sans-serif", 0, Math.max(11, scaleInt(12))));
+            graphics.drawString("No removed parts", tray.x + scaleInt(20), tray.y + scaleInt(70));
+        }
         int index = 0;
-        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts())
+        for (PhysicalResistorPart part : visible)
             drawTrayResistor(graphics, part, index++);
+        if (getTrayPageCount() > 1) {
+            graphics.setFont(new Font("sans-serif", 0, Math.max(10, scaleInt(11))));
+            graphics.drawString("Page " + (trayPage + 1) + " of " + getTrayPageCount(),
+                tray.x + scaleInt(20), tray.y + tray.height - scaleInt(15));
+        }
     }
 
     private void drawTrayResistor(Graphics graphics, PhysicalResistorPart part, int index) {
@@ -223,7 +235,7 @@ class PcbWorkbenchRenderer {
     }
 
     ProbeTarget findProbeTarget(CirSim sim, int screenX, int screenY) {
-        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts()) {
+        for (PhysicalResistorPart part : getVisibleLooseParts()) {
             for (int terminal = 0; terminal < 2; terminal++) {
                 Point point = getLoosePartLeadPoint(part.getId(), terminal);
                 if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
@@ -280,7 +292,7 @@ class PcbWorkbenchRenderer {
     }
 
     String findPartId(int screenX, int screenY) {
-        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts()) {
+        for (PhysicalResistorPart part : getVisibleLooseParts()) {
             Point lead1 = getLoosePartLeadPoint(part.getId(), 0);
             Rectangle trayPart = new Rectangle(lead1.x - scaleInt(8), lead1.y - scaleInt(35),
                 scaleInt(145), scaleInt(70));
@@ -316,7 +328,7 @@ class PcbWorkbenchRenderer {
     boolean hasPad(String padId) { return layout.getPad(padId) != null; }
     Point getLoosePartLeadPoint(String partId, int terminal) {
         int index = 0;
-        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts()) {
+        for (PhysicalResistorPart part : getVisibleLooseParts()) {
             if (part.getId().equals(partId)) {
                 Rectangle tray = layout.getPartsTray();
                 int y = tray.y + 70 + index * 48;
@@ -325,6 +337,32 @@ class PcbWorkbenchRenderer {
             index++;
         }
         return null;
+    }
+
+    int getTrayPage() { return trayPage; }
+    int getTrayPageCount() {
+        int count = instance.getResistorInventory().getLooseParts().size();
+        return Math.max(1, (count + PARTS_PER_TRAY_PAGE - 1) / PARTS_PER_TRAY_PAGE);
+    }
+    void setTrayPage(int page) {
+        trayPage = clampTrayPageValue(page);
+        if (selectedPartId != null && getLoosePartLeadPoint(selectedPartId, 0) == null)
+            selectedPartId = null;
+    }
+    void clampTrayPage() { trayPage = clampTrayPageValue(trayPage); }
+
+    private Vector<PhysicalResistorPart> getVisibleLooseParts() {
+        Vector<PhysicalResistorPart> loose = instance.getResistorInventory().getLooseParts();
+        clampTrayPage();
+        Vector<PhysicalResistorPart> result = new Vector<PhysicalResistorPart>();
+        int start = trayPage * PARTS_PER_TRAY_PAGE;
+        for (int index = start; index < loose.size() && index < start + PARTS_PER_TRAY_PAGE; index++)
+            result.add(loose.get(index));
+        return result;
+    }
+
+    private int clampTrayPageValue(int page) {
+        return Math.max(0, Math.min(page, getTrayPageCount() - 1));
     }
 
     ResistorColorBand[] getResistorBands(String componentId) {

@@ -35,4 +35,6 @@ class ResistorReplacementInventory {
                 result.add(part);
         return result;
     }
+
+    int size() { return order.size(); }
 }

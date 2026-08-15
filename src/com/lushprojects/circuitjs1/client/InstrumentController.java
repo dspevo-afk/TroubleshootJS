@@ -317,6 +317,8 @@ class InstrumentController {
         if (target == null)
             return;
         Point point = target.getMarkerPoint();
+        if (point == null)
+            return;
         graphics.setColor(Color.white);
         graphics.fillOval(point.x - PROBE_MARKER_RADIUS, point.y - PROBE_MARKER_RADIUS,
             PROBE_MARKER_RADIUS * 2 + 1, PROBE_MARKER_RADIUS * 2 + 1);

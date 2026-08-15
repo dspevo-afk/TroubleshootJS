@@ -26,8 +26,9 @@ class BoardModificationController {
     boolean removeComponent(String componentId) {
         requireSafeMutation();
         boolean changed = false;
-        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId))
+        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId)) {
             changed |= setConnection(binding, false);
+        }
         finishMutation(changed);
         return changed;
     }

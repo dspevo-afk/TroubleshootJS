@@ -98,6 +98,40 @@ queued power application, generated-board verification resumption, and solver
 cleanliness checks. This keeps resistance and diode electrical behavior
 separate while preserving one cleanup and final-state path.
 
+## Unlimited Resistor Catalog
+
+`ResistorReplacementCatalog` contains immutable, non-physical E12 resistor
+specifications. Its 73 ordered `+/-5%` entries span $10 Ohm$ through $10 MOhm$;
+catalog entries own no CircuitJS element, physical ID, location, or probe
+target. Catalog selection alone cannot mutate the electrical graph or appear in
+the physical tray.
+
+`PhysicalResistorPart` remains the electrical and measurement identity. Only
+the faulted `R1_ORIGINAL` exists at generated-board initialization. A successful
+`installNewFromCatalog` allocates a monotonically numbered physical ID, distinct
+`ResistorElm`, independent terminals, and a new nameplate. The fresh element is
+allocated from unoccupied simulation post coordinates, registered once in the
+generated instance's canonical ownership vector, then inserted once into the
+active graph before the R1 attachment bindings are retargeted. Rejected catalog
+installations happen before allocation and therefore leave serials, inventory,
+the graph, and slot state unchanged.
+
+The Replacement Catalog UI creates new physical parts while the Parts Tray UI
+only presents loose parts that have been removed from R1. Installed parts are
+not tray targets. The tray pages loose parts three at a time; drawing,
+hit-testing, selection, and loose-lead geometry share the same current-page
+slice. Changing a page clears an invisible part selection. A retained probe on
+a hidden loose part remains electrically bound to its physical ID, but its
+marker point becomes absent rather than moving to another equal-value part.
+
+R1 removal remains an electrical mutation transaction: both detachable
+connection bindings are removed while board power is electrically isolated,
+then the installed part is marked loose and the slot clears. A fresh-browser
+native event trace confirmed one `Remove component` click targets only its
+handler, removes both R1 bindings, and creates one loose original part; the
+earlier lead-lift observation came from a stale post-initialization browser
+interaction context rather than a partial removal transaction.
+
 Diode test is an independent active measurement rather than a continuity or
 resistance policy. Its temporary CircuitJS overlay is a $3 V$ finite-compliance
 source and $1 kOhm$ series resistance, limiting a short to approximately

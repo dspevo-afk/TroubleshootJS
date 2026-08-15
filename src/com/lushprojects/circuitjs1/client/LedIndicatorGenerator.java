@@ -40,6 +40,7 @@ class LedIndicatorGenerator {
         r1FaultIsolation.drag(512, 240);
 
         ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory();
+        ResistorReplacementCatalog resistorCatalog = new ResistorReplacementCatalog();
         PhysicalResistorPart originalR1 = new PhysicalResistorPart("R1_ORIGINAL",
             new ResistorNameplate("R1_ORIGINAL", resistorValue, 5), resistor, null,
             ResistorPartLocation.INSTALLED);
@@ -85,7 +86,6 @@ class LedIndicatorGenerator {
         originalR1 = new PhysicalResistorPart("R1_ORIGINAL", originalR1.getNameplate(), resistor,
             faultBinding, ResistorPartLocation.INSTALLED);
         resistorInventory.add(originalR1);
-        addReplacementParts(resistorInventory, resistorValue, seed, elements);
         ReplaceableComponentSlot r1Slot = new ReplaceableComponentSlot("R1",
             physicalSpecifications.getResistorNameplate("R1"), originalR1, r1Lead1Link,
             r1Lead2Link);
@@ -122,7 +122,7 @@ class LedIndicatorGenerator {
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),
             LedIndicatorPcbLayout.create(board), physicalSpecifications, faultBinding,
-            operationalStates, challengeCatalog.select(seed), r1Slot, resistorInventory);
+            operationalStates, challengeCatalog.select(seed), r1Slot, resistorInventory, resistorCatalog);
     }
 
     private TroubleshootBoard createBoard() {
@@ -151,29 +151,4 @@ class LedIndicatorGenerator {
         return (supplyVoltage - LED_FORWARD_VOLTAGE) / resistorValue;
     }
 
-    private void addReplacementParts(ResistorReplacementInventory inventory, double intendedValue,
-            long seed, Vector<CircuitElm> elements) {
-        double[] choices = getReplacementValues(intendedValue);
-        for (int index = 0; index < choices.length; index++) {
-            int looseY = 432 + index * 48;
-            ResistorElm replacement = new ResistorElm(896, looseY);
-            replacement.drag(960, looseY);
-            replacement.setResistance(choices[index]);
-            PhysicalResistorPart part = new PhysicalResistorPart("R1_REPLACEMENT_" + index,
-                new ResistorNameplate("R1_REPLACEMENT_" + index, choices[index], 5), replacement,
-                null, ResistorPartLocation.LOOSE);
-            inventory.add(part);
-            elements.add(replacement);
-        }
-    }
-
-    private double[] getReplacementValues(double intendedValue) {
-        if (intendedValue == 330)
-            return new double[] { 100, 330, 4700 };
-        if (intendedValue == 680)
-            return new double[] { 220, 680, 10000 };
-        if (intendedValue == 1000)
-            return new double[] { 330, 1000, 15000 };
-        throw new IllegalArgumentException("Unsupported LED replacement value: " + intendedValue);
-    }
 }

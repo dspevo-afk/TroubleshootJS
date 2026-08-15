@@ -42,6 +42,28 @@ class ResistorSlotController {
         return true;
     }
 
+    boolean installNewFromCatalog(String catalogEntryId) {
+        requireSafeMutation();
+        ReplaceableComponentSlot slot = instance.getR1Slot();
+        if (!slot.isEmpty())
+            return false;
+        ResistorCatalogEntry entry = instance.getResistorCatalog().get(catalogEntryId);
+        ResistorElm element = DynamicResistorBackingAllocator.create(instance.getSimulationElements(),
+            entry.getNameplate().getNominalResistanceOhms());
+        PhysicalResistorPart part = new PhysicalResistorPart(instance.allocateCatalogPartId(),
+            new ResistorNameplate("R1", entry.getNameplate().getNominalResistanceOhms(), 5), element,
+            null, ResistorPartLocation.INSTALLED);
+        instance.registerRuntimeSimulationElement(element);
+        instance.getResistorInventory().add(part);
+        sim.elmList.add(element);
+        instance.getComponentBindings().replaceSingleElement("R1", element);
+        retargetComponentLeadBindings(part);
+        slot.install(part);
+        modifications.restoreComponent("R1");
+        finishMutation();
+        return true;
+    }
+
     private void requireSafeMutation() {
         if (sim.getGeneratedBoardInstance() != instance || sim.activeMeasurementOverlay ||
                 !sim.isChallengeInteractionEnabled() ||

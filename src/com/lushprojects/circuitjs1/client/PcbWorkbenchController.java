@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 class PcbWorkbenchController {
@@ -109,8 +110,43 @@ class PcbWorkbenchController {
 
     private void rebuildPartsPanel() {
         partsPanel.clear();
-        partsPanel.add(styledLabel("Parts Inventory", "tsj-component-title"));
-        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts()) {
+        renderer.clampTrayPage();
+        partsPanel.add(styledLabel("Replacement Catalog", "tsj-component-title"));
+        final ListBox catalog = new ListBox();
+        for (ResistorCatalogEntry entry : instance.getResistorCatalog().getEntries())
+            catalog.addItem(entry.getNameplate().getDisplayValue(), entry.getId());
+        boolean canInstallNew = sim.isChallengeInteractionEnabled() &&
+            sim.getBoardPowerController().isElectricallyUnpowered() && instance.getR1Slot().isEmpty();
+        catalog.setEnabled(canInstallNew);
+        partsPanel.add(catalog);
+        Button installNew = new Button("Install new resistor");
+        installNew.setStyleName("tsj-action-button");
+        installNew.setEnabled(canInstallNew);
+        installNew.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                try {
+                    sim.getResistorSlotController().installNewFromCatalog(
+                        catalog.getValue(catalog.getSelectedIndex()));
+                    renderer.setSelectedPartId(null);
+                } catch (BoardModificationRejectedException exception) {
+                    feedback.setText("Turn board power off.");
+                }
+                refresh();
+                sim.repaint();
+            }
+        });
+        partsPanel.add(installNew);
+        if (!sim.getBoardPowerController().isElectricallyUnpowered())
+            partsPanel.add(new Label("Turn board power off."));
+        else if (!instance.getR1Slot().isEmpty())
+            partsPanel.add(new Label("Remove R1 before installing a replacement."));
+        partsPanel.add(styledLabel("Parts Tray", "tsj-component-title"));
+        Vector<PhysicalResistorPart> loose = instance.getResistorInventory().getLooseParts();
+        if (loose.isEmpty())
+            partsPanel.add(new Label("No removed parts."));
+        int start = renderer.getTrayPage() * 3;
+        for (int index = start; index < loose.size() && index < start + 3; index++) {
+            PhysicalResistorPart part = loose.get(index);
             Button select = new Button(part.getNameplate().getDisplayValue());
             select.setStyleName("tsj-action-button");
             select.setEnabled(sim.isChallengeInteractionEnabled());
@@ -125,6 +161,22 @@ class PcbWorkbenchController {
                 }
             });
             partsPanel.add(select);
+        }
+        if (renderer.getTrayPageCount() > 1) {
+            partsPanel.add(new Label("Page " + (renderer.getTrayPage() + 1) + " of " +
+                renderer.getTrayPageCount()));
+            Button previous = new Button("Previous");
+            previous.setEnabled(renderer.getTrayPage() > 0);
+            previous.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) { renderer.setTrayPage(renderer.getTrayPage() - 1); refresh(); sim.repaint(); }
+            });
+            Button next = new Button("Next");
+            next.setEnabled(renderer.getTrayPage() + 1 < renderer.getTrayPageCount());
+            next.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) { renderer.setTrayPage(renderer.getTrayPage() + 1); refresh(); sim.repaint(); }
+            });
+            partsPanel.add(previous);
+            partsPanel.add(next);
         }
         final String selectedPartId = renderer.getSelectedPartId();
         if (selectedPartId == null)
@@ -222,7 +274,7 @@ class PcbWorkbenchController {
         });
     }
 
-    private void addAction(String text, boolean disabled, final ComponentAction action) {
+    private void addAction(final String text, boolean disabled, final ComponentAction action) {
         Button button = new Button(text);
         button.setStyleName("tsj-action-button");
         button.setEnabled(!disabled);
@@ -234,7 +286,7 @@ class PcbWorkbenchController {
                 } catch (BoardModificationRejectedException exception) {
                     feedback.setText("Turn board power off before modifying components.");
                 }
-                rebuildPanel();
+                refresh();
                 sim.repaint();
             }
         });

@@ -958,6 +958,46 @@ The simulator should teach troubleshooting judgment, not memorization.
 
 # Task Completion Protocol
 
+## Persistence and Retry Protocol
+
+A task is not incomplete merely because work remains after one implementation or
+validation pass. Continue through implementation, validation, screenshots,
+documentation, staging, and commit in the same task whenever safely possible.
+Do not return an unfinished task after a first failed command, browser
+interaction, screenshot attempt, verifier failure, timeout, stale layout, or
+automation mistake.
+
+For a recoverable failure, diagnose it and make at least three materially
+distinct attempts before declaring it blocking. A materially distinct attempt
+changes a relevant execution method, browser context, viewport initialization,
+event coordinates, route isolation, diagnostic instrumentation, source fix,
+server process, or validation strategy; repeating the same command does not
+count. Preserve the working tree between attempts and continue the remaining
+checklist after a fix.
+
+Do not weaken assertions, remove validation, fabricate screenshots, bypass
+normal UI interaction, or directly mutate verifier/controller state merely to
+obtain a pass. An unfinished return is permitted only for unavailable required
+permissions or credentials, a required user decision that materially changes
+the implementation, an environment that repeatedly cannot perform the work,
+behavior that contradicts the electrical model or repository architecture, or
+a reproducible build/browser/source failure remaining after three diagnostic or
+fix attempts. Such a return must list the exact blocking requirement, every
+materially distinct attempt and diagnostic, why further autonomous work is
+unsafe or nonproductive, and the current worktree state. Time, task length, or
+an incomplete checklist is not itself a blocker.
+
+Three alternate ways of invoking the same failing interaction do not
+automatically count as three materially distinct attempts to resolve the
+underlying defect. Once a reproducible product or integration defect is
+identified, trace, fix, and validate it. A minimum retry count does not permit
+stopping while useful diagnostic and repair paths remain. Materially distinct
+attempts test different root-cause hypotheses or apply different repairs. A
+defect in code currently being implemented is not a hard blocker merely
+because it prevents later validation; a hard blocker requires an external
+constraint or technically demonstrated contradiction that cannot be safely
+corrected within task scope.
+
 For normal TroubleshootJS implementation tasks, unless the task explicitly says
 otherwise:
 

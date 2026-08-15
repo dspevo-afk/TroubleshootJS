@@ -21,7 +21,7 @@ class MeterLifecycleDeveloperVerifier {
         ResistorSlotController slots = sim.getResistorSlotController();
         if (!instance.getR1Slot().isEmpty())
             require(slots.removeInstalledPart(), "Could not remove original R1");
-        require(slots.install("R1_REPLACEMENT_1"), "Could not install correct R1 replacement");
+        require(slots.installNewFromCatalog(catalogId(instance)), "Could not install correct R1 replacement");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(instance.getOperationalStates().isIlluminated("LED1"),
@@ -147,7 +147,7 @@ class MeterLifecycleDeveloperVerifier {
         require(sim.getResistorSlotController().removeInstalledPart(),
             "Could not remove selected physical resistor");
         require(!previousPartLead.isValid(), "Removed physical part retained an installed-lead probe target");
-        require(sim.getResistorSlotController().install("R1_REPLACEMENT_0"),
+        require(sim.getResistorSlotController().installNewFromCatalog(catalogId(instance)),
             "Could not install alternate physical resistor");
         require(sim.getBoardModificationController().liftLead("R1", "R1.2"),
             "Could not lift alternate physical resistor");
@@ -162,7 +162,7 @@ class MeterLifecycleDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(sim.getResistorSlotController().removeInstalledPart(),
             "Could not remove alternate physical resistor");
-        require(sim.getResistorSlotController().install("R1_REPLACEMENT_1"),
+        require(sim.getResistorSlotController().installNewFromCatalog(catalogId(instance)),
             "Could not reinstall correct physical resistor");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
@@ -256,6 +256,11 @@ class MeterLifecycleDeveloperVerifier {
 			((CircuitPostMeasurementEndpoint) first).getElement() == element) ||
 			(second instanceof CircuitPostMeasurementEndpoint &&
 			((CircuitPostMeasurementEndpoint) second).getElement() == element);
+    }
+
+    private static String catalogId(GeneratedBoardInstance instance) {
+        return "R_CATALOG_" + (long) instance.getPhysicalSpecifications().getResistorNameplate("R1")
+            .getNominalResistanceOhms();
     }
 
     private static void settle(CirSim sim) {
