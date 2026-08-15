@@ -88,8 +88,12 @@ class InstrumentController {
             readingLabel.setText("--- V");
             return;
         }
-        readingLabel.setText(CircuitElm.getVoltageText(
-            measurementAdapter.getDcVoltageDifference(redProbe, blackProbe)));
+        double voltage = measurementAdapter.getDcVoltageDifference(redProbe, blackProbe);
+        if (Double.isNaN(voltage)) {
+            readingLabel.setText("--- V");
+            return;
+        }
+        readingLabel.setText(CircuitElm.getVoltageText(voltage));
     }
 
     private void validateTargets() {

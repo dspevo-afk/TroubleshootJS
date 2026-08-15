@@ -20,7 +20,7 @@ class CircuitMeasurementAdapter {
                 (CircuitPostMeasurementEndpoint) endpoint;
             return circuitPost.getElement().getPostVoltage(circuitPost.getPostIndex());
         }
-        return 0;
+        return Double.NaN;
     }
 
     boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe) {
