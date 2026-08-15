@@ -177,6 +177,22 @@ separate loose physical parts. Every route uses a unique temporary Edge profile;
 cleanup closes Edge through DevTools and removes that profile with bounded
 retries.
 
+The seeded procedural PCB verifier compares deterministic geometry for both
+generated families across seeds 0, 2, and 3:
+
+```powershell
+.\scripts\verify-browser.ps1 -Layout
+```
+
+Normal-player flows accept `-PlayerSeed <seed>` for generated-geometry checks;
+their canvas clicks use the explicit developer-only geometry bridge rather than
+fixed board coordinates:
+
+```powershell
+.\scripts\verify-browser.ps1 -LedNormalPlayer -PlayerSeed 3
+.\scripts\verify-browser.ps1 -DiodeNormalPlayer -PlayerSeed 3
+```
+
 ## Manual application verification
 
 After a production build, confirm that the GWT bootstrap exists:

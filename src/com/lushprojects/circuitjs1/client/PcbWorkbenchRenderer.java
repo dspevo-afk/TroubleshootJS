@@ -38,6 +38,8 @@ class PcbWorkbenchRenderer {
 
         drawBoard(graphics);
         drawTray(graphics);
+        if (CirSim.theSim != null && CirSim.theSim.isGeometryVerificationEnabled())
+            publishDeveloperGeometry();
     }
 
     private void drawBoard(Graphics graphics) {
@@ -67,10 +69,9 @@ class PcbWorkbenchRenderer {
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
         graphics.setColor("#d9f1e3");
         graphics.drawString(isDiodeFamily() ? "TSJ DIODE INDICATOR" : "TSJ LED INDICATOR",
-            screenX(75), screenY(100));
+            outline.x + scaleInt(25), outline.y + scaleInt(45));
         graphics.setFont(new Font("sans-serif", 0, Math.max(10, scaleInt(12))));
-        graphics.drawString(getPowerInputLabel(), screenX(90), screenY(175));
-        graphics.drawString("GND", screenX(90), screenY(345));
+        drawConnectorNetLabels(graphics);
     }
 
     private void drawPad(Graphics graphics, PcbPadPlacement pad) {
@@ -144,7 +145,8 @@ class PcbWorkbenchRenderer {
 
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
         graphics.setColor("#f2f5e9");
-        graphics.drawString(placement.getComponentId(), screenX(placement.getX() + 92),
+        graphics.drawString(placement.getComponentId(), screenX(placement.getX() +
+            placement.getWidth() / 2 - 15),
             screenY(placement.getY() - 14));
     }
 
@@ -178,7 +180,8 @@ class PcbWorkbenchRenderer {
             bodyY, bodyHeight, part.isReversedInstallation());
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
         graphics.setColor("#f2f5e9");
-        graphics.drawString("D1", screenX(placement.getX() + 90), screenY(placement.getY() - 14));
+        graphics.drawString("D1", screenX(placement.getX() + placement.getWidth() / 2 - 15),
+            screenY(placement.getY() - 14));
         graphics.drawString("K", part.isReversedInstallation() ? leftPad.x - scaleInt(5) :
             rightPad.x - scaleInt(5), rightPad.y + scaleInt(28));
     }
@@ -251,6 +254,20 @@ class PcbWorkbenchRenderer {
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
         graphics.drawString(placement.getComponentId(), bounds.x + scaleInt(38),
             bounds.y - scaleInt(12));
+    }
+
+    private void drawConnectorNetLabels(Graphics graphics) {
+        Point positive = getPadPoint("J1.1");
+        Point ground = getPadPoint("J1.2");
+        if (positive == null || ground == null)
+            return;
+        PcbComponentPlacement connector = layout.getComponent("J1");
+        boolean left = connector == null || connector.getX() < layout.getBoardOutline().x +
+            layout.getBoardOutline().width / 2;
+        int labelX = left ? positive.x + scaleInt(28) : positive.x - scaleInt(92);
+        graphics.drawString(getPowerInputLabel(), labelX, positive.y + scaleInt(5));
+        labelX = left ? ground.x + scaleInt(28) : ground.x - scaleInt(48);
+        graphics.drawString("GND", labelX, ground.y + scaleInt(5));
     }
 
     private void drawTray(Graphics graphics) {
@@ -596,6 +613,55 @@ class PcbWorkbenchRenderer {
     String getSelectedComponentId() { return selectedComponentId; }
     void setSelectedPartId(String partId) { selectedPartId = partId; }
     String getSelectedPartId() { return selectedPartId; }
+
+    private void publishDeveloperGeometry() {
+        StringBuilder json = new StringBuilder("{\"points\":{");
+        boolean first = true;
+        for (PcbComponentPlacement component : layout.getComponents()) {
+            Rectangle bounds = screenRect(component);
+            first = appendDeveloperPoint(json, first, "component:" + component.getComponentId(),
+                bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+        }
+        for (PcbPadPlacement pad : layout.getPads()) {
+            Point point = getPadPoint(pad.getPadId());
+            first = appendDeveloperPoint(json, first, "pad:" + pad.getPadId(), point.x, point.y);
+        }
+        for (PhysicalResistorPart part : getVisibleLooseParts()) {
+            for (int terminal = 0; terminal < 2; terminal++) {
+                Point point = getLoosePartLeadPoint(part.getId(), terminal);
+                first = appendDeveloperPoint(json, first, "loose:" + part.getId() + ":" + terminal,
+                    point.x, point.y);
+            }
+        }
+        for (PhysicalDiodePart part : getVisibleLooseDiodeParts()) {
+            for (int terminal = 0; terminal < 2; terminal++) {
+                Point point = getLooseDiodeLeadPoint(part.getId(), terminal);
+                first = appendDeveloperPoint(json, first, "loose:" + part.getId() + ":" + terminal,
+                    point.x, point.y);
+            }
+        }
+        for (PhysicalLedPart part : getVisibleLooseLedParts()) {
+            for (int terminal = 0; terminal < 2; terminal++) {
+                Point point = getLooseLedLeadPoint(part.getId(), terminal);
+                first = appendDeveloperPoint(json, first, "loose:" + part.getId() + ":" + terminal,
+                    point.x, point.y);
+            }
+        }
+        json.append("}}");
+        setDeveloperGeometry(json.toString());
+    }
+
+    private boolean appendDeveloperPoint(StringBuilder json, boolean first, String key, int x, int y) {
+        if (!first)
+            json.append(',');
+        json.append('"').append(key).append("\":{\"x\":").append(x).append(",\"y\":")
+            .append(y).append('}');
+        return false;
+    }
+
+    private static native void setDeveloperGeometry(String json) /*-{
+        $wnd.__tsjPcbGeometry = JSON.parse(json);
+    }-*/;
 
     private PhysicalResistorPart getInstalledResistorPart(String componentId) {
         if (!isDiodeFamily() && "R1".equals(componentId))

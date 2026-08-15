@@ -5,6 +5,8 @@ import java.util.Vector;
 
 class LedIndicatorGenerator {
     static final String DIRECT_SERIES_VARIANT = "DIRECT_SERIES";
+    private static final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR =
+        new SeededPcbLayoutGenerator();
     private static final double LED_FORWARD_VOLTAGE = 2.1;
     private static final double TARGET_CURRENT = .010;
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
@@ -146,7 +148,7 @@ class LedIndicatorGenerator {
         return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),
-            LedIndicatorPcbLayout.create(board), physicalSpecifications, faultBinding,
+            PCB_LAYOUT_GENERATOR.generate(board, seed), physicalSpecifications, faultBinding,
             operationalStates, challengeCatalog.select(seed), new LedIndicatorFamilyState(r1Slot,
                 resistorInventory, resistorCatalog, led1Slot, ledInventory, ledCatalog));
     }

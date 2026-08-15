@@ -16,7 +16,7 @@ class LedIndicatorFamilyState implements GeneratedBoardFamilyState {
             LedReplacementInventory ledInventory, LedReplacementCatalog ledCatalog) {
         if (r1Slot == null || resistorInventory == null || resistorCatalog == null ||
                 led1Slot == null || ledInventory == null || ledCatalog == null)
-            throw new IllegalArgumentException("Missing LED indicator family replacement state");
+            throw new IllegalArgumentException("Missing LED indicator family state");
         this.r1Slot = r1Slot;
         this.resistorInventory = resistorInventory;
         this.resistorCatalog = resistorCatalog;
@@ -27,7 +27,7 @@ class LedIndicatorFamilyState implements GeneratedBoardFamilyState {
 
     static LedIndicatorFamilyState require(GeneratedBoardInstance instance) {
         if (instance == null || !(instance.getFamilyState() instanceof LedIndicatorFamilyState))
-            throw new IllegalStateException("LED resistor replacement requires LED indicator family state");
+            throw new IllegalStateException("LED indicator family state is required");
         return (LedIndicatorFamilyState) instance.getFamilyState();
     }
 

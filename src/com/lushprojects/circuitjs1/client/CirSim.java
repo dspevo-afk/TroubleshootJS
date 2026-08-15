@@ -363,6 +363,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootMeterVerification;
 	boolean troubleshootDiodeVerification;
 	boolean troubleshootLedPhysicalVerification;
+	boolean troubleshootGeometryVerification;
+	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootReplacementVerificationComplete;
 	boolean troubleshootMeterVerificationComplete;
@@ -414,6 +416,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootMeterVerification = qp.getBooleanValue("tsjVerifyMeter", false);
 	    troubleshootDiodeVerification = qp.getBooleanValue("tsjVerifyDiode", false);
 	    troubleshootLedPhysicalVerification = qp.getBooleanValue("tsjVerifyLedParts", false);
+	    troubleshootGeometryVerification = qp.getBooleanValue("tsjVerifyGeometry", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
@@ -4254,6 +4257,11 @@ MouseOutHandler, MouseWheelHandler {
 			LedPhysicalDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:led-parts");
 		    }
+		    if (troubleshootGeometryVerification && !troubleshootGeometryVerificationComplete) {
+			troubleshootGeometryVerificationComplete = true;
+			PcbLayoutDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:layout");
+		    }
 		} finally {
 		    developerVerifierRunning = false;
 		}
@@ -4261,7 +4269,8 @@ MouseOutHandler, MouseWheelHandler {
 	} catch (RuntimeException e) {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootMeterVerification ||
-		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification)
+		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification ||
+		    troubleshootGeometryVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4277,6 +4286,8 @@ MouseOutHandler, MouseWheelHandler {
     GeneratedBoardInstance getGeneratedBoardInstance() {
 	return generatedBoardInstance;
     }
+
+    boolean isGeometryVerificationEnabled() { return troubleshootGeometryVerification; }
 
 	GeneratedChallengeController getGeneratedChallengeController() {
 	return generatedChallengeController;

@@ -74,6 +74,13 @@ class TroubleshootBoard {
         return padIds;
     }
 
+    Vector<String> getComponentIds() {
+        Vector<String> componentIds = new Vector<String>();
+        for (BoardComponent component : components.values())
+            componentIds.add(component.getId());
+        return componentIds;
+    }
+
     BoardNet getNet(String netId) {
         return nets.get(netId);
     }

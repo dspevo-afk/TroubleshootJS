@@ -171,9 +171,38 @@ otherwise be rounded or truncated to a different printed resistance.
 PCB geometry is a separate rendering layer. `PcbBoardLayout` contains the board
 outline, component placements, pad placements, traces, and parts-tray geometry,
 and references only stable `BoardComponent`, `BoardPad`, and `BoardNet` IDs.
-It does not contain CircuitJS elements or analyzed node numbers. The initial
-`LedIndicatorPcbLayout` is manually authored; it is intentionally not an
-autorouter, manufacturing model, or source of electrical behavior.
+It does not contain CircuitJS elements or analyzed node numbers. The
+`SeededPcbLayoutGenerator` consumes that logical board after electrical
+validation and produces a simple one-sided layout for the LED indicator and
+diode-protected indicator families. It does not choose components, nets,
+faults, meter readings, or repair outcomes.
+
+The generator uses a deterministic seed stream. Each attempt derives a
+rectangular board outline and component candidates from the family seed, then
+applies reusable type-based footprint rules for connectors, axial resistors,
+ordinary diodes, and through-hole LEDs. Stable IDs such as `R1.1`, `LED1.K`,
+and `D1.A` are copied into the resulting placements regardless of their
+coordinates. The connector is kept near a board edge; component bounds are
+spaced before pads and body keep-outs are accepted. Orientation is deliberately
+deferred, so this first procedural layer keeps the existing recognizable
+horizontal component presentation.
+
+Routing is a modest coarse-grid Manhattan BFS. It connects the already-defined
+pads belonging to each logical net, blocks unrelated component keep-outs,
+other pads, and previously routed copper, and records explicit start/end pad
+IDs on each trace. It is not a manufacturing DRC or a general PCB CAD
+autorouter. The parts tray remains a separate workbench rectangle outside the
+board copper area.
+
+Every generated layout runs geometry validation independently of CircuitJS
+electrical validation. Validation checks component/pad coverage, stable net
+and endpoint identity, board bounds, keep-outs, body/pad overlap, Manhattan
+segments, and unrelated trace crossings. Placement and routing are retried
+with a bounded deterministic attempt derived from the same seed. A generation
+failure is surfaced rather than replaced with a disconnected decorative trace.
+`PcbLayoutDeveloperVerifier` proves repeated seeds 0, 2, and 3 have identical
+fingerprints and that each pair has at least two meaningful differences across
+outline, component placement, and routed copper.
 
 `BoardSimulationBindings` maps stable pad IDs to resolvable
 `CircuitMeasurementEndpoint` instances. CircuitJS element/post references are

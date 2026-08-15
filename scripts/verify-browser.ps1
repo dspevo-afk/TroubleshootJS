@@ -11,6 +11,8 @@ param(
     [switch]$DiodeNormalPlayer,
     [switch]$LedParts,
     [switch]$LedNormalPlayer,
+    [switch]$Layout,
+    [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
 )
@@ -66,11 +68,15 @@ function receiveCdp($socket, [int]$wantedId, [ref]$failures) {
         $message = [Text.Encoding]::UTF8.GetString($stream.ToArray()) | ConvertFrom-Json
         $method = if ($message.PSObject.Properties['method']) { $message.method } else { $null }
         if ($method -eq 'Runtime.exceptionThrown') {
-            $failures.Value += 'JavaScript exception: ' + $message.params.exceptionDetails.text
+            $details = $message.params.exceptionDetails
+            $description = if ($details.exception -and $details.exception.description) {
+                $details.exception.description
+            } else { $details.text }
+            $failures.Value += 'JavaScript exception: ' + $description
         }
         if ($method -eq 'Runtime.consoleAPICalled') {
             $text = ($message.params.args | ForEach-Object { $_.value }) -join ' '
-            if ($text -match '(?i)verification failed|generated board verification failed|uncaught|exception') {
+            if ($text -match '(?i)verification failed|generated board verification failed|pcb_generator_failure|uncaught|exception') {
                 $failures.Value += 'Console failure: ' + $text
             }
         }
@@ -120,7 +126,12 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             if ($verificationResult -eq $expected) { break }
             Start-Sleep -Milliseconds 250
         } while ([DateTime]::UtcNow -lt $deadline)
-        if ($verificationResult -ne $expected) { throw "timed out waiting for '$expected'" }
+        if ($verificationResult -ne $expected) {
+            $diagnostic = evaluateCdp $socket ([ref]$nextId) "({status:document.documentElement.getAttribute('data-tsj-verification')||'',body:(document.body&&document.body.innerText||'').slice(-900)})" ([ref]$failures)
+            Write-Host ("VERIFIER DIAGNOSTIC status=$($diagnostic.status) body=$($diagnostic.body.Replace("`n", ' | '))")
+            if ($failures.Count -gt 0) { Write-Host ("VERIFIER CDP FAILURES: " + ($failures -join '; ')) }
+            throw "timed out waiting for '$expected'"
+        }
         Start-Sleep -Milliseconds 100
         [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures))
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
@@ -180,9 +191,9 @@ function clickButton($socket, [ref]$nextId, [string]$text, [ref]$failures) {
     clickPoint $socket $nextId $point 'left' $failures
 }
 
-function getCanvasPoint($socket, [ref]$nextId, [double]$logicalX, [double]$logicalY,
-        [ref]$failures) {
-    return evaluateCdp $socket $nextId "(()=>{const c=[...document.querySelectorAll('canvas')].find(x=>{const r=x.getBoundingClientRect();return r.width>100&&r.height>100});if(!c)return null;const r=c.getBoundingClientRect();const s=Math.min(1.35,Math.min((c.width-30)/1040,(c.height-30)/520));const ox=(c.width-s*1040)/2;const oy=(c.height-s*520)/2;return {x:r.left+(ox+s*$logicalX)*r.width/c.width,y:r.top+(oy+s*$logicalY)*r.height/c.height};})()" $failures
+function getCanvasPoint($socket, [ref]$nextId, [string]$targetKey, [ref]$failures) {
+    $escaped = $targetKey.Replace("'", "\\'")
+    return evaluateCdp $socket $nextId "(()=>{const c=[...document.querySelectorAll('canvas')].find(x=>{const r=x.getBoundingClientRect();return r.width>100&&r.height>100});const g=window.__tsjPcbGeometry;if(!c||!g||!g.points||!g.points['$escaped'])return null;const r=c.getBoundingClientRect(),p=g.points['$escaped'];return {x:r.left+p.x*r.width/c.width,y:r.top+p.y*r.height/c.height};})()" $failures
 }
 
 function sendKey($socket, [ref]$nextId, [string]$key, [int]$code, [ref]$failures) {
@@ -275,12 +286,13 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
         [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
         waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Indicator does not light.')" $deadline ([ref]$failures) 'ready seed-3 challenge'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points" $deadline ([ref]$failures) 'procedural PCB geometry bridge'
         Write-Host 'PLAYER ready'
         $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),meter:!!document.querySelector('.tsj-meter-panel'),power:[...document.querySelectorAll('button')].some(x=>x.innerText.includes('Board Power')),catalog:document.body.innerText.includes('Replacement Catalog'),empty:document.body.innerText.includes('No removed parts')})" ([ref]$failures)
         if (-not ($initial.canvas -and $initial.meter -and $initial.power -and $initial.catalog -and $initial.empty)) {
             throw 'initial PCB, meter, power, catalog, or empty tray UI was missing'
         }
-        $r1 = getCanvasPoint $socket ([ref]$nextId) 445 220 ([ref]$failures)
+        $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'R1 component controls'
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
@@ -310,13 +322,15 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         Write-Host 'PLAYER repair verified'
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'healthy replacement component controls'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].filter(x=>x.innerText.trim()==='1000 Ohm +/-5%').length===2" $deadline ([ref]$failures) 'two distinct loose 1 kOhm parts'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:R1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:R1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'loose resistor geometry'
         Write-Host 'PLAYER healthy replacement removed'
         clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
 
-        $healthyLeft = getCanvasPoint $socket ([ref]$nextId) 868 243 ([ref]$failures)
-        $healthyRight = getCanvasPoint $socket ([ref]$nextId) 982 243 ([ref]$failures)
+        $healthyLeft = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_CATALOG_PART_0:0' ([ref]$failures)
+        $healthyRight = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_CATALOG_PART_0:1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $healthyLeft 'left' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $healthyRight 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'healthy forward resistance'
@@ -329,8 +343,8 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         if ($forward -ne $reverse -or $forward -notmatch '(?i)1(\.0+)?\s*kOhm') {
             throw "healthy resistance mismatch: forward=$forward reverse=$reverse"
         }
-        $originalLeft = getCanvasPoint $socket ([ref]$nextId) 868 195 ([ref]$failures)
-        $originalRight = getCanvasPoint $socket ([ref]$nextId) 982 195 ([ref]$failures)
+        $originalLeft = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_ORIGINAL:0' ([ref]$failures)
+        $originalRight = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_ORIGINAL:1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalLeft 'left' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalRight 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'faulted original OL'
@@ -339,6 +353,13 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         return $true
     } catch {
         Write-Host "FAIL normal-player seed=3 - $($_.Exception.Message)"
+        if ($null -ne $socket) {
+            try {
+                $snapshot = evaluateCdp $socket ([ref]$nextId) "document.body.innerText" ([ref]$failures)
+                $start = [Math]::Max(0, $snapshot.Length - 1400)
+                Write-Host ("NORMAL PLAYER UI SNAPSHOT: " + $snapshot.Substring($start).Replace("`n", ' | '))
+            } catch { }
+        }
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
@@ -370,23 +391,35 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
         [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
         [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
         waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Indicator does not light.')" $deadline ([ref]$failures) 'ready diode challenge'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points" $deadline ([ref]$failures) 'procedural diode PCB geometry bridge'
         $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),catalog:document.body.innerText.includes('Replacement Catalog'),empty:document.body.innerText.includes('No removed parts'),disclosed:/D1 failed|diode is open/i.test(document.body.innerText)})" ([ref]$failures)
         if (-not ($initial.canvas -and $initial.catalog -and $initial.empty) -or $initial.disclosed) {
             throw 'initial diode workbench, catalog, tray, or vague complaint was incorrect'
         }
-        $pixels = evaluateCdp $socket ([ref]$nextId) "(()=>{const c=[...document.querySelectorAll('canvas')].find(x=>{const r=x.getBoundingClientRect();return r.width>100&&r.height>100});const g=c.getContext('2d');const s=Math.min(1.35,Math.min((c.width-30)/1040,(c.height-30)/520));const ox=(c.width-s*1040)/2,oy=(c.height-s*520)/2;const p=(x,y)=>[...g.getImageData(Math.round(ox+s*x),Math.round(oy+s*y),1,1).data].slice(0,3).join(',');return {body:p(330,220),band:p(367,220),led:p(710,187)};})()" ([ref]$failures)
+        if ($EvidenceDirectory) {
+            [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
+            $initialEvidenceName = if ($PersistentPreviewEvidence) {
+                'persistent-preview-fresh-load.png'
+            } else { 'initial-board.png' }
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory $initialEvidenceName) ([ref]$failures)
+        }
+        if ($PersistentPreviewEvidence) {
+            Write-Host 'PASS persistent-preview fresh diode normal-player load'
+            return $true
+        }
+        $pixels = evaluateCdp $socket ([ref]$nextId) "(()=>{const c=[...document.querySelectorAll('canvas')].find(x=>{const r=x.getBoundingClientRect();return r.width>100&&r.height>100}),r=c.getBoundingClientRect(),g=c.getContext('2d'),p=window.__tsjPcbGeometry.points,at=(x,y)=>[...g.getImageData(Math.round(x*c.width/r.width),Math.round(y*c.height/r.height),1,1).data].slice(0,3).join(','),a=p['pad:D1.A'],k=p['pad:D1.K'],la=p['pad:LED1.A'],lk=p['pad:LED1.K'];return {body:at((a.x+k.x)/2,a.y),band:at(k.x-45,k.y),led:at((la.x+lk.x)/2,la.y-33)};})()" ([ref]$failures)
         if ($pixels.body -eq $pixels.led -or $pixels.band -eq $pixels.body) {
             throw "D1 body, cathode band, and LED1 were not visibly distinct: $($pixels | ConvertTo-Json -Compress)"
         }
         Write-Host "DIODE PLAYER rendered body=$($pixels.body) band=$($pixels.band) led=$($pixels.led)"
 
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
-        $d1 = getCanvasPoint $socket ([ref]$nextId) 330 220 ([ref]$failures)
+        $d1 = getCanvasPoint $socket ([ref]$nextId) 'component:D1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $d1 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'D1 component controls'
         clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
-        $d1Anode = getCanvasPoint $socket ([ref]$nextId) 250 220 ([ref]$failures)
-        $d1Cathode = getCanvasPoint $socket ([ref]$nextId) 410 220 ([ref]$failures)
+        $d1Anode = getCanvasPoint $socket ([ref]$nextId) 'pad:D1.A' ([ref]$failures)
+        $d1Cathode = getCanvasPoint $socket ([ref]$nextId) 'pad:D1.K' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $d1Anode 'left' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $d1Cathode 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'installed open D1 forward OL'
@@ -397,10 +430,11 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
         clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('D1_ORIGINAL - Generic silicon diode')" $deadline ([ref]$failures) 'loose original diode'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:D1_ORIGINAL:0']&&!!window.__tsjPcbGeometry.points['loose:D1_ORIGINAL:1']" $deadline ([ref]$failures) 'loose original diode geometry'
 
         clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
-        $originalAnode = getCanvasPoint $socket ([ref]$nextId) 868 195 ([ref]$failures)
-        $originalCathode = getCanvasPoint $socket ([ref]$nextId) 982 195 ([ref]$failures)
+        $originalAnode = getCanvasPoint $socket ([ref]$nextId) 'loose:D1_ORIGINAL:0' ([ref]$failures)
+        $originalCathode = getCanvasPoint $socket ([ref]$nextId) 'loose:D1_ORIGINAL:1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalAnode 'left' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalCathode 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'loose original forward OL'
@@ -417,11 +451,13 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
 
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $d1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'healthy D1 component controls'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('D1_CATALOG_PART_0 - Generic silicon diode')&&document.body.innerText.includes('D1_ORIGINAL - Generic silicon diode')" $deadline ([ref]$failures) 'separate loose diode identities'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:D1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:D1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'healthy loose diode geometry'
         clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
-        $healthyAnode = getCanvasPoint $socket ([ref]$nextId) 868 243 ([ref]$failures)
-        $healthyCathode = getCanvasPoint $socket ([ref]$nextId) 982 243 ([ref]$failures)
+        $healthyAnode = getCanvasPoint $socket ([ref]$nextId) 'loose:D1_CATALOG_PART_0:0' ([ref]$failures)
+        $healthyCathode = getCanvasPoint $socket ([ref]$nextId) 'loose:D1_CATALOG_PART_0:1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $healthyAnode 'left' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $healthyCathode 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- V';})()" $deadline ([ref]$failures) 'healthy diode forward drop'
@@ -476,6 +512,7 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
         [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
         waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Indicator does not light.')" $deadline ([ref]$failures) 'ready LED challenge'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points" $deadline ([ref]$failures) 'procedural LED PCB geometry bridge'
         $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),ledCatalog:document.body.innerText.includes('LED Replacement Catalog'),empty:document.body.innerText.includes('No removed parts')})" ([ref]$failures)
         if (-not ($initial.canvas -and $initial.ledCatalog -and $initial.empty)) {
             throw 'initial LED workbench, catalog, or empty tray was missing'
@@ -491,7 +528,7 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
             Write-Host 'PASS persistent-preview fresh normal-player load'
             return $true
         }
-        $led = getCanvasPoint $socket ([ref]$nextId) 710 187 ([ref]$failures)
+        $led = getCanvasPoint $socket ([ref]$nextId) 'component:LED1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $led 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('LED1')&&document.body.innerText.includes('Lead A: LED1.A')&&document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'LED1 component controls'
         if ($EvidenceDirectory) {
@@ -500,12 +537,13 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')" $deadline ([ref]$failures) 'loose original LED'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:LED1_ORIGINAL:0']&&!!window.__tsjPcbGeometry.points['loose:LED1_ORIGINAL:1']" $deadline ([ref]$failures) 'loose original LED geometry'
         if ($EvidenceDirectory) {
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'led-removed-parts-tray.png') ([ref]$failures)
         }
         clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
-        $originalAnode = getCanvasPoint $socket ([ref]$nextId) 868 195 ([ref]$failures)
-        $originalCathode = getCanvasPoint $socket ([ref]$nextId) 982 195 ([ref]$failures)
+        $originalAnode = getCanvasPoint $socket ([ref]$nextId) 'loose:LED1_ORIGINAL:0' ([ref]$failures)
+        $originalCathode = getCanvasPoint $socket ([ref]$nextId) 'loose:LED1_ORIGINAL:1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalAnode 'left' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalCathode 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- V';})()" $deadline ([ref]$failures) 'loose original LED forward drop'
@@ -523,14 +561,14 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         if (-not $stillFaulted) { throw 'healthy LED incorrectly bypassed the original R1 fault' }
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
         waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
-        $led = getCanvasPoint $socket ([ref]$nextId) 710 200 ([ref]$failures)
+        $led = getCanvasPoint $socket ([ref]$nextId) 'component:LED1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $led 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'healthy LED component controls'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
 
         selectOptionWithKeyboard $socket ([ref]$nextId) 1 'Generic red LED (reversed)' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install new LED' ([ref]$failures)
-        $r1 = getCanvasPoint $socket ([ref]$nextId) 445 220 ([ref]$failures)
+        $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
@@ -542,11 +580,12 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         Write-Host 'LED PLAYER reversed installation remained nonfunctional'
 
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
-        $led = getCanvasPoint $socket ([ref]$nextId) 710 200 ([ref]$failures)
+        $led = getCanvasPoint $socket ([ref]$nextId) 'component:LED1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $led 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'reversed LED component controls'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')" $deadline ([ref]$failures) 'healthy loose LED identity'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:LED1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:LED1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'healthy loose LED geometry'
         clickButton $socket ([ref]$nextId) 'LED1_CATALOG_PART_0 - Generic red LED' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install as LED1' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
@@ -558,7 +597,7 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         Write-Host 'LED PLAYER repair verified'
 
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
-        $led = getCanvasPoint $socket ([ref]$nextId) 710 200 ([ref]$failures)
+        $led = getCanvasPoint $socket ([ref]$nextId) 'component:LED1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $led 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'repaired LED component controls'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
@@ -582,16 +621,20 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
 }
 
 if (-not (Test-Path $BrowserPath -PathType Leaf)) { throw "Browser not found: $BrowserPath" }
+if ($Layout) {
+    if (-not (verifyRoute "procedural-layout" "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyLayout=true&tsjVerifyGeometry=true" 'PASS:layout' 9440)) { exit 1 }
+    exit 0
+}
 if ($NormalPlayer) {
-    if (-not (verifyNormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3" 9450)) { exit 1 }
+    if (-not (verifyNormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyGeometry=true" 9450)) { exit 1 }
     exit 0
 }
 if ($DiodeNormalPlayer) {
-    if (-not (verifyNormalDiodePlayer "$BaseUrl/circuitjs.html?tsjChallenge=diode&seed=3" 9460)) { exit 1 }
+    if (-not (verifyNormalDiodePlayer "$BaseUrl/circuitjs.html?tsjChallenge=diode&seed=$PlayerSeed&tsjVerifyGeometry=true" 9460)) { exit 1 }
     exit 0
 }
 if ($LedNormalPlayer) {
-    if (-not (verifyNormalLedPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3" 9470)) { exit 1 }
+    if (-not (verifyNormalLedPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyGeometry=true" 9470)) { exit 1 }
     exit 0
 }
 $family = 'led'
