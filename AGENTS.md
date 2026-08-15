@@ -1,0 +1,955 @@
+# AGENTS.md — TroubleshootJS
+
+## Project Mission
+
+TroubleshootJS is an interactive electronics troubleshooting simulator built around CircuitJS.
+
+The goal is NOT merely to teach schematic reading.
+
+The goal is to recreate the reasoning process of troubleshooting a real PCB on a workbench:
+
+1. Receive an incomplete customer complaint.
+2. Inspect an unfamiliar PCB.
+3. Determine what the board and its subsystems do.
+4. Decide what measurements are useful.
+5. Probe the actual board rather than a neat schematic.
+6. Isolate the failed subsystem/component.
+7. Remove or isolate components when appropriate.
+8. Replace components or repair traces.
+9. Power the board back up and verify the repair.
+
+The simulator should reward electrical reasoning and discourage brute-force probing.
+
+---
+
+# Core Design Principle
+
+CircuitJS is the electrical simulation backbone.
+
+TroubleshootJS adds additional layers around CircuitJS:
+
+- procedural circuit generation
+- procedural PCB rendering
+- PCB-to-simulation node mapping
+- customer complaints
+- hidden faults
+- multimeter/scope interaction
+- component removal/replacement
+- jumper wires and trace cutting
+- component stress and secondary failures
+- scoring and troubleshooting workflow
+
+Do NOT replace CircuitJS electrical behavior with hard-coded fake meter readings unless absolutely necessary.
+
+Whenever practical:
+
+USER ACTION
+    ↓
+MODIFY ELECTRICAL GRAPH
+    ↓
+CIRCUITJS SIMULATES RESULT
+    ↓
+MEASUREMENT/BEHAVIOR CHANGES NATURALLY
+
+The simulation state should be the source of electrical truth.
+
+---
+
+# Important Non-Goal
+
+Do NOT turn TroubleshootJS into KiCad, Altium, or a general-purpose PCB design package.
+
+Generated PCBs only need to be:
+
+- electrically representative
+- visually believable
+- easy enough for the software to generate
+- difficult enough for a human to visually trace
+- interactive
+
+They do NOT initially need to:
+
+- satisfy manufacturing design rules
+- support arbitrary layer stacks
+- model electromagnetic fields
+- produce Gerber files
+- perform professional autorouting
+- reproduce GHz signal integrity
+
+Prefer a useful training simulator over technically perfect PCB CAD.
+
+---
+
+# Architecture
+
+Keep major systems separated.
+
+Prefer modules/services roughly corresponding to:
+
+1. Simulation Adapter
+2. Circuit Generator
+3. Circuit Validator
+4. Fault Engine
+5. PCB Generator
+6. PCB Router
+7. PCB Renderer
+8. Probe/Instrument System
+9. Board Modification System
+10. Component Stress/Damage System
+11. Challenge/Scenario Generator
+12. Scoring/History System
+
+Do not create unnecessary coupling between these systems.
+
+The PCB renderer must not itself determine electrical behavior.
+
+The generator must produce a logical circuit/netlist first.
+
+The PCB is generated FROM the circuit.
+
+---
+
+# Procedural Circuit Generator
+
+Do NOT attempt unrestricted random electronic circuit generation.
+
+Use constrained functional families and reusable topology modules.
+
+Examples of functional families:
+
+- LED indicator/control
+- transistor switch
+- MOSFET switch
+- relay driver
+- regulator
+- sensor input
+- comparator
+- amplifier
+- oscillator
+- timer
+- motor/fan driver
+- logic circuit
+- power supply
+- buck converter
+- memory/data interface
+
+A functional family describes WHAT the circuit accomplishes.
+
+Each family may contain multiple valid implementations.
+
+Example: "controlled LED"
+
+Possible topologies include:
+
+- direct switch
+- NPN low-side driver
+- PNP high-side driver
+- NMOS low-side driver
+- PMOS high-side driver
+- relay-controlled LED
+- logic/comparator-controlled LED
+
+The player should not know which topology was selected.
+
+---
+
+# Circuit Randomization
+
+Randomization should occur at multiple levels.
+
+## Functional topology
+
+Different valid implementations of the same customer-visible function.
+
+## Parameters
+
+Examples:
+
+- supply voltage
+- resistor values
+- capacitor values
+- transistor types
+- MOSFET types
+- pull-up/pull-down values
+- component packages
+- timing constants
+
+Values must remain electrically sensible unless an intentionally incorrect value is the injected fault.
+
+## Auxiliary circuitry
+
+Generated boards should frequently include healthy circuitry unrelated or only indirectly related to the reported problem.
+
+Examples:
+
+- status LEDs
+- buzzers
+- reverse-polarity protection
+- decoupling
+- unused headers
+- secondary outputs
+- sensor inputs
+- power indicators
+- additional regulated rails
+- filtering
+- protection networks
+
+These circuits are NOT automatically faults.
+
+Their purpose is to make boards realistic and force users to determine which subsystem matters.
+
+## Layout
+
+Randomize:
+
+- component placement
+- component rotation
+- reference designators where practical
+- trace routing
+- board dimensions/shape within reasonable limits
+- connector placement
+- test point placement
+
+A user should not be able to memorize a board layout and immediately know where to probe.
+
+---
+
+# Generation Pipeline
+
+Prefer this pipeline:
+
+1. Select functional family.
+2. Select valid topology.
+3. Generate required components.
+4. Calculate valid component values.
+5. Add optional supporting/auxiliary circuits.
+6. Build electrical netlist.
+7. Validate healthy circuit through simulation.
+8. Select a compatible fault.
+9. Inject fault.
+10. Simulate faulty circuit.
+11. Verify that the fault produces a meaningful symptom.
+12. Reject invalid/uninteresting generations.
+13. Generate PCB footprints.
+14. Place PCB components.
+15. Route PCB traces.
+16. Map every pad/trace/test point to simulation nodes.
+17. Generate customer complaint.
+18. Present challenge.
+
+Do not render a board until the underlying electrical circuit has been validated.
+
+---
+
+# Validation
+
+Generated circuits must be tested automatically.
+
+A healthy generated circuit should satisfy its intended behavior.
+
+A faulty generated circuit should differ meaningfully from healthy behavior.
+
+If validation fails:
+
+DO NOT patch the displayed result with fake behavior.
+
+Reject the generation and try another valid generation.
+
+Where feasible, use CircuitJS itself as the validation engine.
+
+---
+
+# PCB Generation
+
+Initial PCB generation should target simple believable ONE-SIDED boards.
+
+Start with through-hole components where useful because they are educational and visually recognizable.
+
+Later SMD footprints may be added.
+
+PCB generation should include:
+
+- board outline
+- component footprints
+- component bodies
+- pads
+- visible copper traces
+- silkscreen/reference labels
+- connectors
+- optional test pads
+
+Possible component representations include:
+
+- axial resistors
+- axial diodes
+- radial ceramic capacitors
+- radial electrolytics
+- LEDs
+- TO-92
+- TO-220
+- DIP ICs
+- relays
+- terminal blocks
+- simple SMD packages later
+
+Each conductive feature must know which electrical net/node it represents.
+
+Do not use a flat decorative PCB image as the source of connectivity.
+
+The board geometry must be interactive.
+
+---
+
+# PCB Routing
+
+The router does not need industrial-quality PCB routing.
+
+For initial implementations use simple deterministic/heuristic routing such as:
+
+- grid routing
+- Manhattan routing
+- A* pathfinding
+- obstacle avoidance
+
+If a one-sided route cannot reasonably be completed, allow realistic jumper wires / zero-ohm links.
+
+Routing must preserve correct electrical connectivity.
+
+Visual complexity is desirable, but electrical correctness has priority.
+
+---
+
+# Customer Complaint System
+
+The user should normally receive an incomplete real-world-style complaint rather than the answer.
+
+Examples:
+
+"The pump won't start. The power light still comes on."
+
+"This controller turns on but the fan never runs."
+
+"The machine shuts down after a few seconds."
+
+"The indicator stays on all the time."
+
+Do NOT reveal:
+
+- failed subsystem
+- failed component
+- fault type
+- intended troubleshooting path
+
+Internally the scenario may know these facts.
+
+The player must infer them.
+
+---
+
+# Fault Engine
+
+Faults must be electrically meaningful.
+
+Initial fault types may include:
+
+- resistor open
+- resistor incorrect value
+- capacitor short
+- capacitor open
+- excessive capacitor leakage
+- diode open
+- diode short
+- transistor open
+- transistor short
+- MOSFET D-S short
+- failed gate/base path
+- relay coil open
+- relay contacts failed
+- connector open
+- trace open
+- rail short
+- missing ground
+- failed regulator
+- stuck logic state
+
+Only choose faults compatible with the generated topology.
+
+Never silently create physically nonsensical faults merely for difficulty.
+
+---
+
+# Measurement / Multimeter UI
+
+Implement meter modes as selectable buttons.
+
+Initial modes:
+
+- DC voltage
+- AC voltage when supported
+- resistance
+- continuity
+- diode test
+
+Future modes:
+
+- capacitance
+- frequency
+
+While a meter mode is active:
+
+LEFT CLICK = place/move red probe
+RIGHT CLICK = place/move black probe
+
+The normal right-click/context behavior should be suppressed only while an instrument mode requiring probes is active.
+
+Clicking the currently selected meter mode again should exit that mode and restore normal mouse behavior.
+
+Probe locations should be allowed on electrically exposed:
+
+- component leads
+- pads
+- test points
+- connectors
+- exposed copper where appropriate
+
+Measurements must come from the simulation whenever possible.
+
+---
+
+# Powered vs Unpowered Measurements
+
+Respect realistic troubleshooting behavior.
+
+Examples:
+
+- resistance/continuity measurements should normally be performed with power off
+- diode mode should interact with the simulated component/network appropriately
+- voltage requires the relevant circuit to be powered
+- parallel circuit paths may affect in-circuit resistance/diode measurements
+
+Do not automatically reveal that a misleading in-circuit measurement is misleading.
+
+The player may need to isolate the component.
+
+---
+
+# Component Manipulation
+
+The PCB is an interactive electrical workbench.
+
+Users should eventually be able to:
+
+## Remove Component
+
+Disconnect all component terminals from the board.
+
+The removed component should remain available for out-of-circuit measurement when practical.
+
+## Lift Lead
+
+For components where appropriate, allow one terminal to be disconnected while the remainder stays installed.
+
+Examples:
+
+- resistor
+- capacitor
+- diode
+
+This is important for isolating parallel measurement paths.
+
+## Replace Component
+
+Allow installation of a replacement component/value.
+
+The replacement must actually modify the simulated circuit.
+
+Incorrect replacements must produce their real electrical consequences.
+
+Do not automatically prevent bad choices.
+
+## Jumper Wire
+
+Allow the user to select two accessible electrical points and connect them.
+
+The jumper becomes part of the electrical graph.
+
+The user may:
+
+- repair an open trace
+- bypass a connector
+- temporarily force a signal
+- intentionally bypass a component
+- accidentally create a short
+
+Do not protect the user from electrically bad jumper choices.
+
+## Cut Trace
+
+Allow selected copper paths to be electrically opened.
+
+This can be used to isolate sections of a circuit.
+
+Later allow trace repair/restoration.
+
+---
+
+# Board State Must Be Mutable
+
+All physical troubleshooting actions must modify the active board state.
+
+Maintain a clear distinction between:
+
+ORIGINAL GENERATED BOARD
+
+and
+
+CURRENT USER-MODIFIED BOARD
+
+Possible modifications include:
+
+- removed components
+- lifted leads
+- replacements
+- jumpers
+- cut traces
+- repaired traces
+- secondary component damage
+
+The simulator should support undo/reset where practical, but should not silently undo user mistakes.
+
+---
+
+# Component Damage / Secondary Failure System
+
+TroubleshootJS should eventually allow the user to damage previously healthy components.
+
+Example:
+
+The user installs a jumper that shorts a rail.
+
+CircuitJS calculates excessive current/power.
+
+The damage system observes that stress.
+
+A component may then fail.
+
+Do NOT immediately tell the player that they damaged it.
+
+The changed circuit behavior should be their indication.
+
+Secondary failures must result from defensible electrical stress, never arbitrary RNG.
+
+Useful hidden component limits include:
+
+- maximum voltage
+- maximum reverse voltage
+- maximum current
+- maximum power
+- approximate thermal limit
+- overload duration
+
+Model accumulated damage approximately rather than attempting perfect semiconductor physics.
+
+Example conceptual model:
+
+stressRatio = actualStress / ratedStress
+
+if stressRatio > safeThreshold:
+    damage += f(stressRatio, elapsedTime)
+
+if damage >= failureThreshold:
+    transition component to a plausible failed state
+
+Possible failure states:
+
+- open
+- short
+- leakage
+- changed resistance
+- degraded behavior
+
+Failure mode may contain limited randomness when multiple outcomes are physically plausible.
+
+The CAUSE of failure must not be random.
+
+---
+
+# Power Supply / Current Limiting
+
+Future bench-power functionality should support:
+
+- adjustable supply voltage
+- current limit
+- voltage readout
+- current readout
+
+Current limiting should matter electrically.
+
+A sensible current limit may prevent component destruction.
+
+An excessively high current limit may permit cascading failures.
+
+---
+
+# Thermal Behavior
+
+Do not build full thermal simulation initially.
+
+Approximate heating from electrical power/stress.
+
+Possible future UI:
+
+- component temperature indication
+- virtual thermal camera
+- hot-component detection during short hunting
+
+Thermal behavior should remain derived from simulated electrical conditions.
+
+---
+
+# Oscilloscope
+
+Plan architecture so scope support is possible without redesign.
+
+Eventually support:
+
+- one or more channels
+- probes mapped to PCB nodes
+- voltage/time scale
+- triggering
+- digital signals
+- PWM
+- switching waveforms
+- clocks
+- intermittent events
+
+CircuitJS should remain responsible for waveform behavior whenever feasible.
+
+---
+
+# Scoring / Anti-Brute-Force Design
+
+Do not make random probing impossible.
+
+Make thoughtful troubleshooting more rewarding.
+
+Possible scoring factors:
+
+- number of measurements
+- unnecessary component removals
+- unnecessary replacements
+- incorrect repairs
+- caused secondary damage
+- time
+- successful verification
+- diagnostic efficiency
+
+Do NOT make scoring rules interfere with electrical realism.
+
+A player should be free to probe every component if they want; it should simply be inefficient.
+
+---
+
+# Repair Completion
+
+Finding the bad part is not enough.
+
+Prefer challenges where the player must:
+
+1. diagnose the fault
+2. repair/replace/isolate it
+3. power the board
+4. operate relevant inputs
+5. verify that the customer's reported symptom is resolved
+
+A repaired board is considered complete based on FUNCTIONAL BEHAVIOR, not merely whether the player clicked the originally faulted component.
+
+This allows alternate valid repairs such as a properly installed jumper around a broken trace.
+
+---
+
+# Difficulty Scaling
+
+Difficulty should increase primarily through circuit complexity and information ambiguity, not cheating.
+
+Beginner:
+
+- few components
+- simple rails
+- one obvious functional path
+- one fault
+
+Intermediate:
+
+- topology variation
+- auxiliary circuits
+- more components
+- misleading parallel meter paths
+- several possible suspects
+
+Advanced:
+
+- multiple rails
+- dependent subsystems
+- enable/PGOOD chains
+- analog/digital interaction
+- scope requirements
+- intermittent behavior
+- faults that cause secondary symptoms
+
+Expert:
+
+- large boards
+- multiple interacting subsystems
+- subtle timing/signal faults
+- user-caused secondary failures
+- minimal hints
+
+---
+
+# UI Philosophy
+
+The PCB should be the primary troubleshooting view.
+
+Do NOT reveal the neat CircuitJS schematic by default during a normal challenge.
+
+The schematic may exist internally and may later be available in special teaching/debug modes.
+
+The normal player experience should require understanding the circuit from:
+
+- PCB traces
+- component identification
+- meter readings
+- scope readings
+- board behavior
+
+This is deliberate.
+
+---
+
+# Development Rules
+
+Before implementing a feature:
+
+1. Inspect the existing architecture.
+2. Identify the smallest clean integration point.
+3. Avoid rewriting working CircuitJS code unnecessarily.
+4. Prefer adapters/wrappers around upstream CircuitJS functionality.
+5. Preserve the ability to update/merge upstream CircuitJS when practical.
+6. Keep generated-circuit data separate from rendered-board geometry.
+7. Keep electrical node IDs stable and explicit.
+8. Add tests for any generation or mutation logic.
+9. Do not hide failures with hard-coded UI behavior.
+10. Prefer deterministic seeded randomness during development/testing.
+
+---
+
+# Seeded Randomness
+
+Procedural generation should support a reproducible seed.
+
+Given the same:
+
+- generator version
+- challenge settings
+- random seed
+
+the same challenge should be reproducible whenever practical.
+
+This is required for:
+
+- debugging
+- automated tests
+- sharing challenges
+- bug reports
+
+Expose the seed in developer/debug mode.
+
+---
+
+# Testing Requirements
+
+Every meaningful generator feature should have automated validation.
+
+Test categories should eventually include:
+
+- valid netlist generation
+- healthy circuit functional validation
+- fault compatibility
+- faulty symptom validation
+- no impossible component overlaps
+- PCB route connectivity
+- pad-to-node mapping
+- probe measurement correctness
+- component removal behavior
+- lifted-lead behavior
+- jumper behavior
+- trace-cut behavior
+- replacement behavior
+- secondary damage behavior
+- deterministic generation from seeds
+
+For generator tests, prefer running hundreds/thousands of seeded generations where practical to identify edge cases.
+
+---
+
+# Debug Mode
+
+Maintain a developer/debug mode capable of exposing information hidden from normal users.
+
+Useful debug information:
+
+- random seed
+- selected functional family
+- selected topology
+- generated netlist
+- node names
+- PCB net highlights
+- injected original fault
+- expected symptom
+- component stress
+- secondary failures
+- CircuitJS values
+- generator rejection reason
+
+Never expose these automatically in normal challenge mode.
+
+---
+
+# Implementation Strategy
+
+Build incrementally.
+
+DO NOT attempt every planned feature at once.
+
+Preferred early milestone order:
+
+1. Preserve/fork working CircuitJS.
+2. Implement improved probe controls.
+3. Define stable board/net/component data model.
+4. Render one manually defined interactive PCB.
+5. Map PCB pads/traces to CircuitJS nodes.
+6. Implement removal/lift/replace/jumper primitives.
+7. Implement one simple procedural functional family.
+8. Add PCB placement/routing for that family.
+9. Add fault injection and validation.
+10. Add auxiliary/red-herring circuits.
+11. Expand functional-family library.
+12. Add damage/thermal/bench-power systems.
+13. Add advanced scope/digital systems.
+
+Do not build an enormous general generator before one complete end-to-end challenge works.
+
+---
+
+# First-Proof Challenge
+
+A good first end-to-end procedural family is an LED/control board.
+
+It should eventually be capable of generating multiple healthy implementations such as:
+
+- direct switch
+- NPN driver
+- NMOS driver
+
+Then:
+
+- randomize values within valid ranges
+- optionally add one harmless auxiliary circuit
+- inject one compatible fault
+- validate the symptom
+- generate a simple one-sided PCB
+- allow probing
+- allow repair
+- verify restored LED operation
+
+This is the minimum proof that the architecture works.
+
+---
+
+# Code Quality
+
+Prefer:
+
+- clear names
+- small focused modules
+- explicit types/interfaces where supported
+- comments explaining WHY rather than narrating obvious code
+- testable pure logic for generation algorithms
+- separation between model/state/rendering
+- minimal hidden global state
+
+Avoid:
+
+- giant god classes
+- duplicated electrical state
+- hard-coded scenario-specific hacks
+- UI code deciding circuit physics
+- undocumented magic numbers
+- unnecessary framework churn
+- premature optimization
+
+When encountering existing project conventions, follow them unless there is a strong technical reason not to.
+
+---
+
+# Working With Existing Code
+
+Before editing unfamiliar code:
+
+- search the repository
+- understand relevant call paths
+- inspect related tests
+- determine whether functionality already exists
+- reuse existing abstractions where appropriate
+
+Do not create parallel systems when the repository already contains an adequate one.
+
+When a requested change requires significant architecture work, explain the intended architecture before performing a large rewrite.
+
+---
+
+# Preserve Upstream CircuitJS Behavior
+
+CircuitJS is a mature simulation engine.
+
+Avoid modifying simulation internals unless required.
+
+Prefer:
+
+TroubleshootJS feature
+    ↓
+adapter/interface
+    ↓
+CircuitJS
+
+rather than scattering TroubleshootJS-specific behavior throughout CircuitJS core classes.
+
+Any unavoidable upstream modifications should be:
+
+- small
+- documented
+- isolated
+- easy to identify during future upstream merges
+
+---
+
+# Definition of Success
+
+TroubleshootJS succeeds when a player can be handed an unfamiliar generated PCB and a vague complaint and must reason through:
+
+"What does this section do?"
+
+"Where should voltage be present?"
+
+"Why is this node wrong?"
+
+"Is this component actually bad, or is another path affecting my reading?"
+
+"Should I isolate it?"
+
+"What happens if I jumper this?"
+
+"Did my repair actually fix the customer's problem?"
+
+The simulator should teach troubleshooting judgment, not memorization.
