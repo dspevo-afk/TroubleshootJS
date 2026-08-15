@@ -60,11 +60,18 @@ class ComponentLeadProbeTarget implements ProbeTarget {
 
     private boolean isSelectedPhysicalPartStillInstalled() {
         if (instance.getFamilyState() instanceof LedIndicatorFamilyState) {
-            if (!"R1".equals(componentId) || LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
-                return false;
-            PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart();
-            return physicalPartId.equals(part.getId()) && part.getLocation() ==
-                ResistorPartLocation.INSTALLED;
+            LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
+            if ("R1".equals(componentId) && !state.getR1Slot().isEmpty()) {
+                PhysicalResistorPart part = state.getR1Slot().getInstalledPart();
+                return physicalPartId.equals(part.getId()) && part.getLocation() ==
+                    ResistorPartLocation.INSTALLED;
+            }
+            if ("LED1".equals(componentId) && !state.getLed1Slot().isEmpty()) {
+                PhysicalLedPart part = state.getLed1Slot().getInstalledPart();
+                return physicalPartId.equals(part.getId()) && part.getLocation() ==
+                    LedPartLocation.INSTALLED;
+            }
+            return false;
         }
         if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState) {
             DiodeComponentSlot slot = DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot();
@@ -79,6 +86,9 @@ class ComponentLeadProbeTarget implements ProbeTarget {
         if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "R1".equals(componentId) &&
                 !LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
             return LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getId();
+        if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "LED1".equals(componentId) &&
+                !LedIndicatorFamilyState.require(instance).getLed1Slot().isEmpty())
+            return LedIndicatorFamilyState.require(instance).getLed1Slot().getInstalledPart().getId();
         if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState && "D1".equals(componentId) &&
                 !DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty())
             return DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().getInstalledPart().getId();

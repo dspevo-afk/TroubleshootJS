@@ -1014,3 +1014,30 @@ If required validation fails, do not commit. Leave the changes in the working
 tree and clearly report the failure. Do not auto-commit when explicitly told
 not to. `docs/CODEX_TASK_REPORT.md` is intentionally overwritten after each
 successful task; Git history preserves prior reports.
+
+## Visual Evidence Protocol
+
+For every successful task that changes or exercises visible player behavior:
+
+1. Capture a small curated set of final production-browser screenshots after
+   the final production build, using the actual production preview rather than
+   mockups.
+2. Use normal-player mode unless a developer view is specifically relevant.
+3. Prefer two to five screenshots that meaningfully show the initial state, new
+   feature or UI, important interaction state, repaired or final state, and any
+   visually important regression evidence.
+4. Do not commit large numbers of debugging or intermediate screenshots.
+5. Store screenshots under `docs/task-evidence/task-XX/`, where `XX` is the task
+   number, and use descriptive filenames such as `initial-board.png`,
+   `led-selected.png`, `led-removed-parts-tray.png`, and `repaired-board.png`.
+6. Pixel-inspect or otherwise verify every screenshot is nonblank, is not an
+   error page, shows the intended application state, and uses a useful viewport
+   size.
+7. List every committed screenshot in `docs/CODEX_TASK_REPORT.md` and briefly
+   state what it proves.
+8. Stage the curated screenshots with the intended source and documentation
+   changes.
+
+Screenshots supplement and never weaken or replace existing electrical,
+automated, or browser validation. Screenshots are optional when a task has no
+visible player or UI effect.

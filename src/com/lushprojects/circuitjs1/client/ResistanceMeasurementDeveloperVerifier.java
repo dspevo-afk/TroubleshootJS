@@ -320,7 +320,7 @@ class ResistanceMeasurementDeveloperVerifier {
             unknownPadRejected = true;
         }
         try {
-            modifications.removeComponent("LED1");
+            modifications.removeComponent("J1");
         } catch (IllegalArgumentException expected) {
             noConnectionsRejected = true;
         }

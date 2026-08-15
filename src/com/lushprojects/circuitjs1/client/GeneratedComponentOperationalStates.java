@@ -12,6 +12,12 @@ class GeneratedComponentOperationalStates {
         leds.put(componentId, led);
     }
 
+    void replaceLed(String componentId, LEDElm led) {
+        if (componentId == null || led == null || !leds.containsKey(componentId))
+            throw new IllegalArgumentException("Invalid LED operational state replacement");
+        leds.put(componentId, led);
+    }
+
     boolean isIlluminated(String componentId) {
         LEDElm led = leds.get(componentId);
         return led != null && led.getCurrent() >= LED_ILLUMINATED_CURRENT;

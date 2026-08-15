@@ -1,170 +1,184 @@
-# Task 23: Replaceable silicon-diode challenge family
+# Task 24: Persistent preview and replaceable LED1
 
-## Delivered family
+## Result
 
-Task 23 adds the `DIODE_PROTECTED_INDICATOR` family with the generated series
-topology VIN -> D1 -> R1 -> LED1 -> GND. Seeds 0, 2, and 3 deterministically use
-5 V/330 Ohm, 9 V/680 Ohm, and 12 V/1 kOhm operating points. The service ticket
-states only `Indicator does not light.`
+Task 24 is complete on baseline `5850b9a`. The existing LED-indicator family
+retains its original R1-open challenge, while LED1 is now an independently
+removable, measurable, replaceable physical part backed by a real CircuitJS
+`LEDElm`. The Task 23 diode family and all earlier resistor workflows remain
+green.
 
-D1 is a real CircuitJS `DiodeElm` using the built-in `default` silicon model and
-normal nonlinear solving. The implementation deliberately calls the catalog
-part a generic silicon diode rather than claiming exact manufacturer behavior.
-The original physical D1 owns a private series isolation switch; the selected
-`D1 OPEN` fault therefore remains electrically open after the part is removed.
+## Persistent production preview
 
-## State and physical identity
+The recurring blank preview was caused by using the blocking `preview.ps1`
+server as a child of short-lived automation shells. When its launcher exited,
+the child server was not guaranteed to survive, leaving an already-open browser
+pointed at a dead localhost endpoint.
 
-`DiodeProtectedIndicatorFamilyState` owns the D1 slot, physical inventory,
-non-depleting catalog, and serial allocator. `GeneratedBoardInstance` remains
-unchanged and family-agnostic, containing only its `GeneratedBoardFamilyState`
-reference.
+`start-preview.ps1` now starts that same dependency-free `HttpListener` server
+in an independent hidden PowerShell process, records repository path, exact
+preview script path, PID, process start ticks, and port under ignored
+`.tools/preview`, and waits for both the host page and GWT bootstrap to return
+HTTP 200. Existing healthy owned previews are idempotently reused; stale state
+is removed, while ambiguous or unrelated listeners are never killed.
+`stop-preview.ps1` revalidates the repository, script command line, PID, and
+start time before stopping anything, then removes its state.
 
-Each `PhysicalDiodePart` owns a stable physical ID, immutable nameplate, unique
-CircuitJS backing diode, public anode/cathode endpoints, installed/loose state,
-installation orientation, and optional internal fault binding. Catalog rows are
-specifications only. Repeated correct/reversed acquisition produced distinct
-`D1_CATALOG_PART_0` and `D1_CATALOG_PART_1` identities while retaining
-`D1_ORIGINAL` separately.
+Cross-process proof used a short-lived launcher PID 27348, which exited. A
+different PowerShell process then reached both
+`circuitjs.html?tsjChallenge=led&seed=3` and
+`circuitjs1/circuitjs1.nocache.js` with HTTP 200 from detached server PID 20308.
+The final server remains live at:
 
-The catalog offers a normal generic-silicon installation and a reversed
-orientation of the same defensible model. The reversed part changed the actual
-attachment polarity, carried effectively zero branch current, left LED1 dark,
-and did not complete the challenge.
+`http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=3`
 
-## PCB and interaction
+The production sidebar is now hosted in a normal scroll container. This fixes a
+related visible integration defect where the fixed-height page and disabled body
+scrolling made lower catalog/tray actions unreachable after the sidebar grew.
 
-The one-sided PCB includes stable `D1.A` and `D1.K` pads. D1 is rendered as a
-separate axial black diode with two leads, a contrasting cathode band, `D1`
-reference, and a `K` marking aligned with electrical polarity. Production-canvas
-pixel inspection returned these representative RGB values:
+## LED physical and electrical model
 
-- diode body: `40,44,49`
-- cathode band: `216,221,224`
-- LED1 body: `181,35,45`
+`LedIndicatorFamilyState` owns both families of repair state: the existing R1
+slot/inventory/catalog and the new LED1 slot/inventory/catalog/serial allocator.
+No LED-specific state was added to family-agnostic `GeneratedBoardInstance`.
 
-The distinct colors and separated geometry confirm D1, its band, and LED1 are
-visibly distinguishable. Removed parts render in the existing paginated Parts
-Tray and remain electrically probeable. D1 supports anode/cathode lead lifting,
-isolated diode testing, and reconnection through the shared detachable-lead
-architecture.
+`PhysicalLedPart` owns a stable physical ID, immutable LED nameplate, unique
+`LEDElm`, distinct anode/cathode endpoints, installed/loose location, and
+installation orientation. The initial healthy `LED1_ORIGINAL` is installed and
+the loose inventory is empty. Removal preserves that same identity. Repeated
+catalog acquisitions allocate separate IDs, separate collision-free hidden
+backing elements, and distinct endpoints. Catalog entries remain immutable,
+nonphysical, and non-depleting.
 
-## Automated diode evidence
+The catalog deliberately exposes one honest generic-red LED specification plus
+a reversed installation of that same specification; CircuitJS color alone is
+not represented as a different electrical model. Correct installation maps the
+backing anode/cathode to `LED1.A`/`LED1.K`; reversed installation swaps the real
+terminal attachments. Removal and installation retarget the actual detachable
+connection graph and operational LED binding. The existing generic lead actions
+also support lifting/reconnecting LED1 anode or cathode while power is off.
 
-The dedicated verifier ran on seeds 0, 2, and 3 and proved:
+Installed and tray LED rendering retain a recognizable through-hole body and
+cathode/flat polarity cue. Loose LED probe targets resolve to the physical
+part's endpoints, while an installed part is absent from loose tray targeting.
 
-- healthy generated supply, forward orientation, 5-15 mA matched branch current,
-  plausible silicon forward drop, and illuminated LED operation;
-- powered `D1 OPEN` behavior with effectively zero D1/LED current and LED off;
-- installed and loose faulted-original diode mode reads OL in both orientations;
-- a healthy loose diode gives a solver-derived forward voltage and reverse OL;
-- a lifted healthy D1 retains forward/reverse diode behavior;
-- removal/reinstallation preserves backing ownership and separate identities;
-- a reversed replacement does not repair the board;
-- a correctly oriented healthy replacement restores matched solved current,
-  LED operation, and functional challenge completion.
+## Automated electrical evidence
 
-All three routes passed:
+The dedicated LED physical verifier passed seeds 0, 2, and 3. It proved initial
+single-part occupancy, identity-preserving removal, canonical one-time backing
+ownership, unique acquired IDs and `LEDElm` instances, geometrically distinct
+terminals, unchanged catalog entries, installed-versus-loose target exclusion,
+and coherent slot/inventory bindings. It also proved:
 
-| Seed | Diode family verifier |
-|---:|---|
-| 0 | PASS |
-| 2 | PASS |
-| 3 | PASS |
+- installed and loose healthy LED diode tests are solver-derived;
+- forward voltage is within the LED/compliance range and reverse is `OL`;
+- repairing R1 while LED1 is missing does not complete the challenge;
+- a physically reversed LED carries effectively zero branch current, stays
+  dark, and does not complete repair;
+- a correctly oriented replacement restores 5-15 mA solved branch current,
+  illumination, and functional completion.
 
-No route timed out, published a verifier failure, or produced a captured page or
-failure-class console error.
+## Normal-player browser evidence
 
-## Normal-player diode regression
+A fresh seed-3 production route used browser mouse input on the visible canvas
+and controls plus browser keyboard input on visible catalog selectors. It did
+not use verifier flags, synthetic DOM events, controller calls, or direct state
+mutation. The observed LED sequence was:
 
-The fresh seed-3 production route used browser mouse input against visible
-buttons and canvas geometry; it did not call controllers or dispatch DOM events.
-The flow observed the vague complaint, powered off, diode-tested installed D1 in
-both orientations, removed it, and diode-tested the loose original in both
-orientations. All four faulted readings were `OL`.
+- initial installed LED1, empty Parts Tray, and separate non-depleting LED
+  Replacement Catalog;
+- `LED1_ORIGINAL` removed while electrically unpowered;
+- loose original forward diode reading: **1.595 V**;
+- loose original reverse reading: **OL**;
+- a healthy new LED alone did not bypass the original R1-open fault;
+- a reversed installed LED remained dark and did not complete the repair after
+  R1 was replaced;
+- the measured correctly oriented replacement plus correct 1 kOhm R1 completed
+  the challenge and illuminated LED1;
+- after removal, `LED1_ORIGINAL` and `LED1_CATALOG_PART_0` remained separate
+  physical identities.
 
-It then installed the default healthy catalog diode and powered on. CircuitJS
-restored LED operation and the UI reported `Repair verified. Indicator operating
-normally.` After powering off and removing the replacement, the tray retained
-both `D1_ORIGINAL` and `D1_CATALOG_PART_0` as separate physical identities. The
-healthy loose diode measured exactly `496.051 mV` forward and `OL` reverse; the
-original still measured `OL`. The normal-player diode route passed with no page
-or relevant console errors.
+The final UI harness also uses real wheel scrolling before off-screen sidebar
+clicks and deterministic keyboard tab traversal to catalog selectors. This
+validates the same interactions a player can now reach through the scrolling
+sidebar.
 
-## Task 22 harness cleanup
+## Regression and build results
 
-The resistor normal-player reversal now waits for an observable intermediate
-measurement and then a completed reverse measurement, preventing acceptance of
-the stale forward display. Browser cleanup sends a DevTools `Browser.close`,
-waits for Edge, retries exact-profile deletion, and only warns on cleanup failure
-without masking the verifier result. A before/after profile-count audit around
-the complete matrix remained unchanged, proving that the run created no
-persistent profile.
+- Explicit Temurin JDK 8u502 production build: PASS.
+- GWT permutations 0 through 4: all compiled successfully.
+- Production linking: PASS.
+- Existing 15-route LED/resistor matrix for seeds 0, 2, and 3: **15/15 PASS**.
+- Existing resistor normal-player flow: **1 kOhm** forward, **1 kOhm** reverse,
+  faulted original **OL**.
+- Existing diode verifier routes for seeds 0, 2, and 3: **3/3 PASS**.
+- Existing diode normal-player flow: **496.051 mV** forward, reverse **OL**,
+  faulted original **OL**; body/band/LED pixels remained visibly distinct.
+- New LED physical verifier routes for seeds 0, 2, and 3: **3/3 PASS**.
+- New LED normal-player flow: PASS with **1.595 V** forward and reverse **OL**.
+- Fresh detached-preview normal-player load: PASS.
+- No required route timed out in the final runs, and no page error or
+  failure-class console message was captured.
+- `git diff --check`: PASS.
 
-## Production build and regressions
+## Committed visual evidence
 
-The explicit Temurin JDK 8u502 production build compiled all five GWT
-permutations and linked successfully into `war/circuitjs1`.
+All images are final-build production-browser captures at 1416x908 and were
+pixel-inspected as nonblank, non-error application views:
 
-The complete pre-existing Task 22 matrix remained green:
-
-| Seed | Resistance | Meter | Challenge | Replacement | Challenge + replacement |
-|---:|---|---|---|---|---|
-| 0 | PASS | PASS | PASS | PASS | PASS |
-| 2 | PASS | PASS | PASS | PASS | PASS |
-| 3 | PASS | PASS | PASS | PASS | PASS |
-
-The existing resistor normal-player flow also passed with `1 kOhm` forward,
-`1 kOhm` reverse, and the faulted original at `OL`. Across the old 15-route
-matrix, three new diode routes, and both normal-player flows there were no route
-timeouts, unhandled JavaScript errors, or failure-class console messages.
+- `docs/task-evidence/task-24/initial-board.png` — fresh LED challenge with
+  installed LED1, empty physical tray, and separate catalogs.
+- `docs/task-evidence/task-24/led-selected.png` — LED1 selection outline plus
+  visible anode/cathode lift and Remove component controls.
+- `docs/task-evidence/task-24/led-removed-parts-tray.png` — empty LED1 footprint
+  and the original physical LED visible in both canvas and sidebar Parts Tray.
+- `docs/task-evidence/task-24/repaired-board.png` — illuminated LED1, solver-
+  backed repair ticket, and separate loose physical parts retained in the tray.
+- `docs/task-evidence/task-24/persistent-preview-fresh-load.png` — fresh normal-
+  player browser load served after the detached launcher's process exited.
 
 ## Files changed
 
+- `AGENTS.md`
 - `DEVELOPMENT.md`
 - `docs/ARCHITECTURE.md`
 - `docs/CODEX_TASK_REPORT.md`
+- five PNG files under `docs/task-evidence/task-24/`
+- `scripts/preview.ps1`
+- `scripts/start-preview.ps1`
+- `scripts/stop-preview.ps1`
 - `scripts/verify-browser.ps1`
 - `BoardPhysicalSpecifications.java`
 - `CirSim.java`
 - `ComponentLeadProbeTarget.java`
-- `GeneratedBoardFamilyState.java`
-- `GeneratedBoardVerifier.java`
-- `GeneratedChallengeController.java`
+- `DynamicLedBackingAllocator.java`
+- `GeneratedComponentOperationalStates.java`
+- `LedCatalogEntry.java`
+- `LedComponentSlot.java`
 - `LedIndicatorFamilyState.java`
+- `LedIndicatorGenerator.java`
+- `LedIndicatorRepairValidator.java`
+- `LedNameplate.java`
+- `LedPartLocation.java`
+- `LedPhysicalDeveloperVerifier.java`
+- `LedReplacementCatalog.java`
+- `LedReplacementInventory.java`
+- `LedSlotController.java`
 - `PcbWorkbenchController.java`
 - `PcbWorkbenchRenderer.java`
-- `DiodeCatalogEntry.java`
-- `DiodeComponentSlot.java`
-- `DiodeFamilyDeveloperVerifier.java`
-- `DiodeNameplate.java`
-- `DiodePartLocation.java`
-- `DiodeProtectedIndicatorFamilyState.java`
-- `DiodeProtectedIndicatorFaultValidator.java`
-- `DiodeProtectedIndicatorGeneratedBoardValidator.java`
-- `DiodeProtectedIndicatorGenerator.java`
-- `DiodeProtectedIndicatorPcbLayout.java`
-- `DiodeProtectedIndicatorRepairValidator.java`
-- `DiodeReplacementCatalog.java`
-- `DiodeReplacementInventory.java`
-- `DiodeSlotController.java`
-- `DynamicDiodeBackingAllocator.java`
-- `PhysicalDiodePart.java`
-- `PhysicalDiodePartProbeTarget.java`
+- `PhysicalLedPart.java`
+- `PhysicalLedPartProbeTarget.java`
+- `ResistanceMeasurementDeveloperVerifier.java`
 
-## Preview, limitations, and next feature
+## Remaining limitations and recommendation
 
-Run `./scripts/preview.ps1` and open:
+The LED family intentionally still injects only the original R1-open fault; no
+LED-specific failure mode was added. The LED catalog uses one defensible
+electrical LED model with orientation choices rather than pretending cosmetic
+colors have distinct electrical behavior. The localhost preview serves the most
+recent production output and therefore still requires an explicit build after
+source changes.
 
-`http://127.0.0.1:8899/circuitjs.html?tsjChallenge=diode&seed=3`
-
-The initial catalog intentionally models one generic silicon diode with two
-installation orientations; it does not model manufacturer-specific switching,
-recovery, power, or thermal limits. Players select the reversed orientation as a
-catalog installation choice rather than freely rotating any loose diode during
-installation. These are genuine scope limitations, not meter or solver
-shortcuts.
-
-A suitable next feature is a second diode-compatible fault or topology (for
-example reverse-polarity protection behavior under a controlled reversed input),
-while retaining the same physical-part and family-state boundaries.
+The recommended next feature is a separately scoped LED-open or LED-short fault
+strategy that reuses this physical-part architecture and adds its own generated
+fault validation without changing the existing R1 challenge.

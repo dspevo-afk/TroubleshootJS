@@ -34,7 +34,7 @@ if (-not (Test-Path (Join-Path $webRoot 'circuitjs1\circuitjs1.nocache.js') -Pat
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://127.0.0.1:$Port/")
 $listener.Start()
-Write-Host "TroubleshootJS preview: http://127.0.0.1:$Port/circuitjs.html?tsjChallenge=led&seed=3"
+Write-Host "TroubleshootJS production preview listening on http://127.0.0.1:$Port/"
 try {
     while ($listener.IsListening) {
         $context = $null

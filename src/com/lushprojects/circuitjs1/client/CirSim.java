@@ -42,6 +42,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.Context2d.LineCap;
@@ -361,10 +362,12 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootReplacementVerification;
 	boolean troubleshootMeterVerification;
 	boolean troubleshootDiodeVerification;
+	boolean troubleshootLedPhysicalVerification;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootReplacementVerificationComplete;
 	boolean troubleshootMeterVerificationComplete;
 	boolean troubleshootDiodeVerificationComplete;
+	boolean troubleshootLedPhysicalVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
@@ -410,6 +413,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
 	    troubleshootMeterVerification = qp.getBooleanValue("tsjVerifyMeter", false);
 	    troubleshootDiodeVerification = qp.getBooleanValue("tsjVerifyDiode", false);
+	    troubleshootLedPhysicalVerification = qp.getBooleanValue("tsjVerifyLedParts", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
@@ -612,8 +616,12 @@ MouseOutHandler, MouseWheelHandler {
 
 	if (hideSidebar)
 	    VERTICALPANELWIDTH = 0;
-	else
-	    layoutPanel.addEast(verticalPanel, VERTICALPANELWIDTH);
+	else {
+	    verticalPanel.setWidth("100%");
+	    ScrollPanel sidebarScroll = new ScrollPanel(verticalPanel);
+	    sidebarScroll.setSize("100%", "100%");
+	    layoutPanel.addEast(sidebarScroll, VERTICALPANELWIDTH);
+	}
 	RootLayoutPanel.get().add(layoutPanel);
 
 	cv =Canvas.createIfSupported();
@@ -4112,6 +4120,7 @@ MouseOutHandler, MouseWheelHandler {
 	BoardModificationController boardModificationController;
 		ResistorSlotController resistorSlotController;
 	DiodeSlotController diodeSlotController;
+	LedSlotController ledSlotController;
 	boolean activeMeasurementOverlay;
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
@@ -4147,6 +4156,8 @@ MouseOutHandler, MouseWheelHandler {
 	    new ResistorSlotController(this, instance, boardModificationController) : null;
 	diodeSlotController = instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState ?
 	    new DiodeSlotController(this, instance, boardModificationController) : null;
+	ledSlotController = instance.getFamilyState() instanceof LedIndicatorFamilyState ?
+	    new LedSlotController(this, instance, boardModificationController) : null;
 	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
 		instance.getPcbLayout(), verticalPanel) : null;
@@ -4237,6 +4248,12 @@ MouseOutHandler, MouseWheelHandler {
 			DiodeFamilyDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:diode");
 		    }
+		    if (troubleshootLedPhysicalVerification &&
+			    !troubleshootLedPhysicalVerificationComplete) {
+			troubleshootLedPhysicalVerificationComplete = true;
+			LedPhysicalDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:led-parts");
+		    }
 		} finally {
 		    developerVerifierRunning = false;
 		}
@@ -4244,7 +4261,7 @@ MouseOutHandler, MouseWheelHandler {
 	} catch (RuntimeException e) {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootMeterVerification ||
-		    troubleshootDiodeVerification)
+		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4283,6 +4300,7 @@ MouseOutHandler, MouseWheelHandler {
 
 	ResistorSlotController getResistorSlotController() { return resistorSlotController; }
 	DiodeSlotController getDiodeSlotController() { return diodeSlotController; }
+	LedSlotController getLedSlotController() { return ledSlotController; }
 
     void verifyGeneratedBoard() {
 	if (generatedBoardInstance == null)

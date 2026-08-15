@@ -343,10 +343,11 @@ reconnected by a later install. The PCB layout, pads, traces, and R1 designator 
 stable while the renderer displays the installed physical part's bands.
 
 Family-specific `GeneratedRepairValidator` implementations decide functional
-completion from solved behavior. The LED validator requires a healthy installed
-physical resistor, powered board, no active meter overlay, 5-15 mA LED current,
-matching resistor current, and illuminated operational state. Incorrect but
-electrically valid replacements simply remain READY. `COMPLETED` is latched
+completion from solved behavior. The LED validator requires healthy installed
+physical R1 and LED1 parts, powered board, no active meter overlay, 5-15 mA LED
+current, matching resistor current, and illuminated operational state. A missing
+or reversed LED therefore cannot complete an otherwise repaired R1 challenge.
+Incorrect but electrically valid replacements simply remain READY. `COMPLETED` is latched
 after a solver-backed successful repair; later board changes still affect the
 electrical simulation honestly but do not retract the first verified repair.
 
@@ -357,10 +358,25 @@ without embedding testing behavior in normal drawing.
 
 `GeneratedBoardInstance` is family-agnostic. Mutable repair and catalog state is
 held by its optional `GeneratedBoardFamilyState`; the LED family provides
-`LedIndicatorFamilyState` for the R1 slot and resistor inventory/catalog. Generic
+`LedIndicatorFamilyState` for the R1 and LED1 slots, their separate inventories
+and non-depleting catalogs, and their physical-part serial allocation. Generic
 runtime simulation-element ownership remains on the instance. Future component
 families must add their own family state rather than component-specific instance
 fields or getters.
+
+`PhysicalLedPart` is intentionally distinct from `PhysicalDiodePart`. It owns a
+stable acquired identity, immutable LED nameplate, one actual CircuitJS
+`LEDElm`, distinct anode/cathode measurement endpoints, installed/loose state,
+and installation orientation. LED catalog rows are specifications only and do
+not own solver elements or become probe targets. Acquisition allocates a new
+physical ID and collision-free hidden backing element without depleting the
+catalog. `LedSlotController` retargets the existing LED1 attachment wires and
+component/operational bindings to the installed part. Correct orientation maps
+anode to `LED1.A` and cathode to `LED1.K`; reversed installation swaps the real
+backing terminals. Forward diode readings, reverse blocking, illumination, and
+repair completion remain consequences of the `LEDElm` and CircuitJS solver, not
+renderer or meter overrides. Installed and loose LED drawings retain cathode
+polarity cues, while loose parts use the existing paginated tray architecture.
 
 The second generated family is `DIODE_PROTECTED_INDICATOR`, with the series
 topology VIN -> D1 -> R1 -> LED1 -> GND. `DiodeProtectedIndicatorFamilyState`

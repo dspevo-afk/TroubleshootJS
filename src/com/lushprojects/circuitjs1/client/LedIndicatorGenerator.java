@@ -20,6 +20,9 @@ class LedIndicatorGenerator {
         physicalSpecifications.addResistorNameplate(new ResistorNameplate("R1", resistorValue, 5));
         physicalSpecifications.addPowerInputNameplate(new PowerInputNameplate("VIN_INPUT",
             supplyVoltage));
+        LedNameplate ledNameplate = new LedNameplate("LED1", "Generic red LED", "default-led",
+            1, 0, 0);
+        physicalSpecifications.addLedNameplate(ledNameplate);
 
         DCVoltageElm supply = new DCVoltageElm(160, 320);
         supply.drag(160, 160);
@@ -49,8 +52,17 @@ class LedIndicatorGenerator {
         r1Lead2Link.drag(560, 160);
         WireElm ledNodeTrace = new WireElm(560, 160);
         ledNodeTrace.drag(640, 160);
-        LEDElm led = new LEDElm(640, 160);
-        led.drag(800, 160);
+        WireElm ledAnodeLink = new WireElm(640, 160);
+        ledAnodeLink.drag(720, 240);
+        LEDElm led = new LEDElm(720, 240);
+        led.drag(800, 240);
+        led.modelName = ledNameplate.getModelName();
+        led.setup();
+        led.colorR = ledNameplate.getRed();
+        led.colorG = ledNameplate.getGreen();
+        led.colorB = ledNameplate.getBlue();
+        WireElm ledCathodeLink = new WireElm(800, 240);
+        ledCathodeLink.drag(800, 160);
 
         GroundElm ground = new GroundElm(800, 160);
         ground.drag(800, 192);
@@ -69,7 +81,9 @@ class LedIndicatorGenerator {
         elements.add(r1FaultIsolation);
         elements.add(r1Lead2Link);
         elements.add(ledNodeTrace);
+        elements.add(ledAnodeLink);
         elements.add(led);
+        elements.add(ledCathodeLink);
         elements.add(ground);
         elements.add(supplyReturn);
         elements.add(groundReturn);
@@ -80,6 +94,13 @@ class LedIndicatorGenerator {
         GeneratedComponentOperationalStates operationalStates =
             new GeneratedComponentOperationalStates();
         operationalStates.bindLed("LED1", led);
+        LedReplacementInventory ledInventory = new LedReplacementInventory();
+        LedReplacementCatalog ledCatalog = new LedReplacementCatalog();
+        PhysicalLedPart originalLed = new PhysicalLedPart("LED1_ORIGINAL", ledNameplate, led,
+            false, LedPartLocation.INSTALLED);
+        ledInventory.add(originalLed);
+        LedComponentSlot led1Slot = new LedComponentSlot("LED1", ledNameplate, originalLed,
+            ledAnodeLink, ledCathodeLink);
         GeneratedFault fault = new GeneratedFault("LED_R1_OPEN", GeneratedFaultType.COMPONENT_OPEN,
             "R1", "LED_INDICATOR", seed);
         GeneratedFaultBinding faultBinding = new GeneratedFaultBinding(fault, r1FaultIsolation);
@@ -108,13 +129,17 @@ class LedIndicatorGenerator {
         bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(isolationSwitch, 1));
         bindings.bindPad("R1.1", new CircuitPostMeasurementEndpoint(vinTrace, 1));
         bindings.bindPad("R1.2", new CircuitPostMeasurementEndpoint(ledNodeTrace, 0));
-        bindings.bindPad("LED1.A", new CircuitPostMeasurementEndpoint(led, 0));
-        bindings.bindPad("LED1.K", new CircuitPostMeasurementEndpoint(led, 1));
+        bindings.bindPad("LED1.A", new CircuitPostMeasurementEndpoint(ledNodeTrace, 1));
+        bindings.bindPad("LED1.K", new CircuitPostMeasurementEndpoint(ground, 0));
         bindings.bindPad("J1.2", new CircuitPostMeasurementEndpoint(ground, 0));
         connectionBindings.bind("R1", "R1.1", bindings.getEndpoint("R1.1"),
             new CircuitPostMeasurementEndpoint(resistor, 0), r1Lead1Link);
         connectionBindings.bind("R1", "R1.2", bindings.getEndpoint("R1.2"),
             new CircuitPostMeasurementEndpoint(r1FaultIsolation, 1), r1Lead2Link);
+        connectionBindings.bind("LED1", "LED1.A", bindings.getEndpoint("LED1.A"),
+            originalLed.getTerminalForBoardPad("LED1.A"), ledAnodeLink);
+        connectionBindings.bind("LED1", "LED1.K", bindings.getEndpoint("LED1.K"),
+            originalLed.getTerminalForBoardPad("LED1.K"), ledCathodeLink);
 
         String description = "Generated LED indicator, seed " + seed + ", " + supplyVoltage +
             " V, " + resistorValue + " ohm";
@@ -123,7 +148,7 @@ class LedIndicatorGenerator {
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),
             LedIndicatorPcbLayout.create(board), physicalSpecifications, faultBinding,
             operationalStates, challengeCatalog.select(seed), new LedIndicatorFamilyState(r1Slot,
-                resistorInventory, resistorCatalog));
+                resistorInventory, resistorCatalog, led1Slot, ledInventory, ledCatalog));
     }
 
     private TroubleshootBoard createBoard() {

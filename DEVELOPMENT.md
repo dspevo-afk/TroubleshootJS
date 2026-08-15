@@ -92,15 +92,26 @@ are ignored by Git.
 
 ## Visible local preview
 
-For the reliable visible player preview, first run a production build and then:
+For the reliable visible player preview, first run a production build and then
+start the detached server:
 
 ```powershell
-.\scripts\preview.ps1
+.\scripts\start-preview.ps1 -Challenge led -Seed 3
 ```
 
-Open `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=3`. This serves
-the compiled production output and is the recommended command when you simply
-want to see and interact with the current application.
+The launcher waits for both the host page and compiled bootstrap, prints the
+complete URL, and exits while the preview remains available. It is safe to run
+again when the repository preview is already healthy. Stop only that recorded
+preview with:
+
+```powershell
+.\scripts\stop-preview.ps1
+```
+
+`scripts/preview.ps1` remains the blocking server implementation. The detached
+launcher stores validated process identity under the ignored `.tools/preview`
+directory and defaults to port 8899. Use `-Challenge diode -Seed 3` for the diode
+family.
 
 ## Legacy GWT development server
 
