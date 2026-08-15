@@ -18,6 +18,8 @@ class GeneratedBoardInstance {
     private final GeneratedFaultBinding faultBinding;
     private final GeneratedComponentOperationalStates operationalStates;
     private final GeneratedChallengeDefinition challengeDefinition;
+    private final ReplaceableComponentSlot r1Slot;
+    private final ResistorReplacementInventory resistorInventory;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -27,7 +29,8 @@ class GeneratedBoardInstance {
             GeneratedBoardValidator familyValidator, PcbBoardLayout pcbLayout,
             BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
             GeneratedComponentOperationalStates operationalStates,
-            GeneratedChallengeDefinition challengeDefinition) {
+            GeneratedChallengeDefinition challengeDefinition, ReplaceableComponentSlot r1Slot,
+            ResistorReplacementInventory resistorInventory) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -46,6 +49,8 @@ class GeneratedBoardInstance {
         this.faultBinding = faultBinding;
         this.operationalStates = operationalStates;
         this.challengeDefinition = challengeDefinition;
+        this.r1Slot = r1Slot;
+        this.resistorInventory = resistorInventory;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
     }
@@ -101,6 +106,8 @@ class GeneratedBoardInstance {
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }
     GeneratedComponentOperationalStates getOperationalStates() { return operationalStates; }
     GeneratedChallengeDefinition getChallengeDefinition() { return challengeDefinition; }
+    ReplaceableComponentSlot getR1Slot() { return r1Slot; }
+    ResistorReplacementInventory getResistorInventory() { return resistorInventory; }
 
     PcbBoardLayout getPcbLayout() {
         return pcbLayout;

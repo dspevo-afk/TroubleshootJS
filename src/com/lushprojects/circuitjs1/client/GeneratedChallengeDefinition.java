@@ -10,16 +10,18 @@ class GeneratedChallengeDefinition {
     private final GeneratedFault fault;
     private final GeneratedFaultBinding faultBinding;
     private final GeneratedFaultValidator faultValidator;
+    private final GeneratedRepairValidator repairValidator;
 
     GeneratedChallengeDefinition(String id, String circuitFamilyId, String topologyVariantId,
             long selectionSeed, String complaintId, String complaintText, GeneratedFault fault,
-            GeneratedFaultBinding faultBinding, GeneratedFaultValidator faultValidator) {
+            GeneratedFaultBinding faultBinding, GeneratedFaultValidator faultValidator,
+            GeneratedRepairValidator repairValidator) {
         requireText(id, "challenge ID");
         requireText(circuitFamilyId, "circuit family ID");
         requireText(topologyVariantId, "topology variant ID");
         requireText(complaintId, "complaint ID");
         requireText(complaintText, "complaint text");
-        if (fault == null || faultBinding == null || faultValidator == null)
+        if (fault == null || faultBinding == null || faultValidator == null || repairValidator == null)
             throw new IllegalArgumentException("Generated challenge requires fault metadata");
         if (faultBinding.getFault() != fault)
             throw new IllegalArgumentException("Challenge fault binding identity disagrees");
@@ -32,6 +34,7 @@ class GeneratedChallengeDefinition {
         this.fault = fault;
         this.faultBinding = faultBinding;
         this.faultValidator = faultValidator;
+        this.repairValidator = repairValidator;
     }
 
     String getId() { return id; }
@@ -43,6 +46,7 @@ class GeneratedChallengeDefinition {
     GeneratedFault getFault() { return fault; }
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }
     GeneratedFaultValidator getFaultValidator() { return faultValidator; }
+    GeneratedRepairValidator getRepairValidator() { return repairValidator; }
 
     private static void requireText(String value, String name) {
         if (value == null || value.length() == 0)

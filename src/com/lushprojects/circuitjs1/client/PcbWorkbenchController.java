@@ -15,6 +15,7 @@ class PcbWorkbenchController {
     private final PcbWorkbenchRenderer renderer;
     private final VerticalPanel panel = new VerticalPanel();
     private final VerticalPanel ticketPanel = new VerticalPanel();
+    private final VerticalPanel partsPanel = new VerticalPanel();
     private final Label feedback = new Label();
 
     PcbWorkbenchController(CirSim sim, GeneratedBoardInstance instance,
@@ -30,6 +31,8 @@ class PcbWorkbenchController {
         panel.setStyleName("tsj-component-panel");
         panel.setVisible(false);
         sidebar.add(panel);
+        partsPanel.setStyleName("tsj-component-panel");
+        sidebar.add(partsPanel);
     }
 
     void draw(Graphics graphics, Rectangle area) { renderer.draw(graphics, area); }
@@ -39,7 +42,17 @@ class PcbWorkbenchController {
     boolean selectComponentAt(int x, int y) {
         if (!sim.isChallengeInteractionEnabled())
             return false;
+        String partId = renderer.findPartId(x, y);
+        if (partId != null) {
+            renderer.setSelectedPartId(partId);
+            renderer.setSelectedComponentId(null);
+            rebuildPanel();
+            rebuildPartsPanel();
+            sim.repaint();
+            return true;
+        }
         String componentId = renderer.findComponentId(x, y);
+        renderer.setSelectedPartId(null);
         renderer.setSelectedComponentId(componentId);
         rebuildPanel();
         sim.repaint();
@@ -49,6 +62,7 @@ class PcbWorkbenchController {
     void refresh() {
         rebuildTicket();
         rebuildPanel();
+        rebuildPartsPanel();
     }
 
     void hide() { panel.setVisible(false); }
@@ -66,13 +80,16 @@ class PcbWorkbenchController {
         BoardComponent component = instance.getBoard().getComponent(componentId);
         panel.add(styledLabel(component.getId(), "tsj-component-title"));
         panel.add(new Label("Type: " + component.getType().toLowerCase()));
-        ResistorNameplate nameplate = instance.getPhysicalSpecifications()
-            .getResistorNameplate(componentId);
+        ResistorNameplate nameplate = "R1".equals(componentId) && !instance.getR1Slot().isEmpty() ?
+            instance.getR1Slot().getInstalledPart().getNameplate() : instance.getPhysicalSpecifications()
+                .getResistorNameplate(componentId);
         if (nameplate != null)
             panel.add(new Label("Value: " + nameplate.getDisplayValue()));
         Vector<GeneratedComponentConnectionBinding> bindings =
             instance.getConnectionBindings().getForComponentOrEmpty(componentId);
-        if (!bindings.isEmpty())
+        if ("R1".equals(componentId) && instance.getR1Slot().isEmpty())
+            panel.add(new Label("State: R1 slot empty"));
+        else if (!bindings.isEmpty())
             panel.add(new Label("State: " + formatState(modifications.getComponentState(componentId))));
         for (String padId : component.getPadIds()) {
             BoardPad pad = instance.getBoard().getPad(padId);
@@ -90,6 +107,50 @@ class PcbWorkbenchController {
         addActions(componentId, bindings, powered || preparationDisabled);
     }
 
+    private void rebuildPartsPanel() {
+        partsPanel.clear();
+        partsPanel.add(styledLabel("Parts Inventory", "tsj-component-title"));
+        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts()) {
+            Button select = new Button(part.getNameplate().getDisplayValue());
+            select.setStyleName("tsj-action-button");
+            select.setEnabled(sim.isChallengeInteractionEnabled());
+            final String partId = part.getId();
+            select.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    renderer.setSelectedPartId(partId);
+                    renderer.setSelectedComponentId(null);
+                    rebuildPanel();
+                    rebuildPartsPanel();
+                    sim.repaint();
+                }
+            });
+            partsPanel.add(select);
+        }
+        final String selectedPartId = renderer.getSelectedPartId();
+        if (selectedPartId == null)
+            return;
+        PhysicalResistorPart part = instance.getResistorInventory().get(selectedPartId);
+        partsPanel.add(new Label("Selected: " + part.getNameplate().getDisplayValue()));
+        partsPanel.add(new Label("State: Loose"));
+        Button install = new Button("Install as R1");
+        install.setStyleName("tsj-action-button");
+        install.setEnabled(sim.isChallengeInteractionEnabled() &&
+            sim.getBoardPowerController().isElectricallyUnpowered() && instance.getR1Slot().isEmpty());
+        install.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                try {
+                    if (sim.getResistorSlotController().install(selectedPartId))
+                        renderer.setSelectedPartId(null);
+                } catch (BoardModificationRejectedException exception) {
+                    feedback.setText("Turn board power off before modifying components.");
+                }
+                refresh();
+                sim.repaint();
+            }
+        });
+        partsPanel.add(install);
+    }
+
     private void rebuildTicket() {
         ticketPanel.clear();
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
@@ -103,6 +164,8 @@ class PcbWorkbenchController {
 
     private void addActions(final String componentId,
             Vector<GeneratedComponentConnectionBinding> bindings, boolean disabled) {
+        if ("R1".equals(componentId) && instance.getR1Slot().isEmpty())
+            return;
         ComponentPhysicalState state = modifications.getComponentState(componentId);
         if (state == ComponentPhysicalState.INSTALLED) {
             for (final GeneratedComponentConnectionBinding binding : bindings) {
@@ -141,13 +204,21 @@ class PcbWorkbenchController {
 
     private void addRemoveAction(final String componentId, boolean disabled) {
         addAction("Remove component", disabled, new ComponentAction() {
-            public void execute() { modifications.removeComponent(componentId); }
+            public void execute() {
+                if ("R1".equals(componentId))
+                    sim.getResistorSlotController().removeInstalledPart();
+                else
+                    modifications.removeComponent(componentId);
+            }
         });
     }
 
     private void addRestoreAction(final String componentId, boolean disabled) {
         addAction("Restore component", disabled, new ComponentAction() {
-            public void execute() { modifications.restoreComponent(componentId); }
+            public void execute() {
+                if (!"R1".equals(componentId))
+                    modifications.restoreComponent(componentId);
+            }
         });
     }
 

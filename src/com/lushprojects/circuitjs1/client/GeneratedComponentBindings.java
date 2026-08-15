@@ -51,6 +51,14 @@ class GeneratedComponentBindings {
         return elements != null && elements.contains(element);
     }
 
+    void replaceSingleElement(String componentId, CircuitElm element) {
+        if (element == null || !componentElements.containsKey(componentId))
+            throw new IllegalArgumentException("Invalid component replacement binding: " + componentId);
+        Vector<CircuitElm> elements = new Vector<CircuitElm>();
+        elements.add(element);
+        componentElements.put(componentId, elements);
+    }
+
     void validateElementsAreOwnedBy(Vector<CircuitElm> simulationElements) {
         for (String componentId : componentElements.keySet()) {
             for (CircuitElm element : componentElements.get(componentId)) {

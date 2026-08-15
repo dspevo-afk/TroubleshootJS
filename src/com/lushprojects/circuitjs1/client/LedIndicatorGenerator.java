@@ -39,6 +39,11 @@ class LedIndicatorGenerator {
         SwitchElm r1FaultIsolation = new SwitchElm(480, 240);
         r1FaultIsolation.drag(512, 240);
 
+        ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory();
+        PhysicalResistorPart originalR1 = new PhysicalResistorPart("R1_ORIGINAL",
+            new ResistorNameplate("R1_ORIGINAL", resistorValue, 5), resistor, null,
+            ResistorPartLocation.INSTALLED);
+
         WireElm r1Lead2Link = new WireElm(512, 240);
         r1Lead2Link.drag(560, 160);
         WireElm ledNodeTrace = new WireElm(560, 160);
@@ -77,10 +82,17 @@ class LedIndicatorGenerator {
         GeneratedFault fault = new GeneratedFault("LED_R1_OPEN", GeneratedFaultType.COMPONENT_OPEN,
             "R1", "LED_INDICATOR", seed);
         GeneratedFaultBinding faultBinding = new GeneratedFaultBinding(fault, r1FaultIsolation);
+        originalR1 = new PhysicalResistorPart("R1_ORIGINAL", originalR1.getNameplate(), resistor,
+            faultBinding, ResistorPartLocation.INSTALLED);
+        resistorInventory.add(originalR1);
+        addReplacementParts(resistorInventory, resistorValue, seed, elements);
+        ReplaceableComponentSlot r1Slot = new ReplaceableComponentSlot("R1",
+            physicalSpecifications.getResistorNameplate("R1"), originalR1);
         GeneratedChallengeCatalog challengeCatalog = new GeneratedChallengeCatalog();
         challengeCatalog.addCandidate(new GeneratedChallengeDefinition("LED_INDICATOR_NO_LIGHT",
             "LED_INDICATOR", DIRECT_SERIES_VARIANT, seed, "INDICATOR_DOES_NOT_LIGHT",
-            "Indicator does not light.", fault, faultBinding, new LedIndicatorFaultValidator()));
+            "Indicator does not light.", fault, faultBinding, new LedIndicatorFaultValidator(),
+            new LedIndicatorRepairValidator()));
         GeneratedExternalPowerBindings powerBindings = new GeneratedExternalPowerBindings(board);
         Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
         powerElements.add(supply);
@@ -109,7 +121,7 @@ class LedIndicatorGenerator {
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),
             LedIndicatorPcbLayout.create(board), physicalSpecifications, faultBinding,
-            operationalStates, challengeCatalog.select(seed));
+            operationalStates, challengeCatalog.select(seed), r1Slot, resistorInventory);
     }
 
     private TroubleshootBoard createBoard() {
@@ -136,5 +148,30 @@ class LedIndicatorGenerator {
 
     double getExpectedCurrent(double supplyVoltage, double resistorValue) {
         return (supplyVoltage - LED_FORWARD_VOLTAGE) / resistorValue;
+    }
+
+    private void addReplacementParts(ResistorReplacementInventory inventory, double intendedValue,
+            long seed, Vector<CircuitElm> elements) {
+        double[] choices = getReplacementValues(intendedValue);
+        for (int index = 0; index < choices.length; index++) {
+            ResistorElm replacement = new ResistorElm(900, 440 + index * 24);
+            replacement.drag(960, 440 + index * 24);
+            replacement.setResistance(choices[index]);
+            PhysicalResistorPart part = new PhysicalResistorPart("R1_REPLACEMENT_" + index,
+                new ResistorNameplate("R1_REPLACEMENT_" + index, choices[index], 5), replacement,
+                null, ResistorPartLocation.LOOSE);
+            inventory.add(part);
+            elements.add(replacement);
+        }
+    }
+
+    private double[] getReplacementValues(double intendedValue) {
+        if (intendedValue == 330)
+            return new double[] { 100, 330, 4700 };
+        if (intendedValue == 680)
+            return new double[] { 220, 680, 10000 };
+        if (intendedValue == 1000)
+            return new double[] { 330, 1000, 15000 };
+        throw new IllegalArgumentException("Unsupported LED replacement value: " + intendedValue);
     }
 }

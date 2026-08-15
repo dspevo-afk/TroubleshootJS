@@ -50,23 +50,35 @@ class GeneratedChallengeController {
         return state == GeneratedChallengeState.PREPARING_HEALTHY;
     }
 
-    boolean isReady() { return state == GeneratedChallengeState.READY; }
+    boolean isReady() { return state == GeneratedChallengeState.READY ||
+        state == GeneratedChallengeState.COMPLETED; }
+    boolean isCompleted() { return state == GeneratedChallengeState.COMPLETED; }
     GeneratedChallengeState getState() { return state; }
     GeneratedFaultController getFaultController() { return faults; }
     GeneratedChallengeDefinition getDefinition() { return definition; }
     GeneratedChallengeLifecycleEvidence getLifecycleEvidence() { return lifecycleEvidence; }
-    String getComplaintText() { return definition.getComplaintText(); }
+    String getComplaintText() { return isCompleted() ?
+        "Repair verified. Indicator operating normally." : definition.getComplaintText(); }
 
     void verifyReadyState() {
         if (!isReady() || developerVerificationScope)
             return;
         if (!faults.isApplied())
             throw new IllegalStateException("Selected challenge fault was cleared outside developer scope");
-        if (sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
+        ReplaceableComponentSlot slot = instance.getR1Slot();
+        if (!slot.isEmpty() && slot.getInstalledPart().isFaulted() &&
+            sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
                 sim.getBoardModificationController().isComponentInstalled(
                     definition.getFault().getTargetComponentId()))
             definition.getFaultValidator().verify(instance, sim.getBoardModificationController(),
                 BoardPowerState.POWERED);
+        if (definition.getRepairValidator().isFunctionallyRepaired(instance,
+                sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
+                sim.activeMeasurementOverlay)) {
+            state = GeneratedChallengeState.COMPLETED;
+            sim.refreshBoardModificationControls();
+            sim.repaint();
+        }
     }
 
     void beginDeveloperVerificationScope() { developerVerificationScope = true; }

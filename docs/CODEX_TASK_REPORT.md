@@ -1,14 +1,13 @@
 # Latest Codex Task Report
 
 ## Task
-Task #14 corrective pass: meter polarity, generic challenge lifecycle,
-preparation gating, and verification evidence.
+Task #15: electrically real resistor replacement and repair completion.
 
 ## Summary
-OHM/CONT now use a CircuitJS-positive red probe, matching the existing diode
-test orientation. Challenge selection is owned by a deterministic family
-catalog/definition rather than the generic controller, and normal player input
-is blocked until solver-gated validation reaches READY.
+The open-R1 LED challenge now supports removal of the failed original resistor,
+measurement in the tray, deterministic healthy replacement choices, real
+CircuitJS slot installation, wrong repair attempts, and solver-backed repair
+completion.
 
 ## Architecture Decisions
 - `GeneratedFault` is immutable typed metadata; its private `SwitchElm` is
@@ -24,46 +23,49 @@ is blocked until solver-gated validation reaches READY.
 - `GeneratedComponentOperationalStates` maps the stable LED ID to solved LED
   current. The renderer uses it only for illumination; printed identity remains
   immutable.
-- `GeneratedChallengeDefinition` carries IDs, complaint text, selected binding,
-  selection seed, and a `GeneratedFaultValidator` strategy. The generic
-  controller contains no LED, R1, fault-type, or complaint-text knowledge.
-- READY-state validation retains the selected fault and reconfirms the symptom
-  after restored/repowered hardware; clear/reapply is developer-scoped.
+- `ReplaceableComponentSlot` is the stable R1 board location; each
+  `PhysicalResistorPart` has its own immutable ID, nameplate, CircuitJS resistor
+  backing, and loose/installed state. The failed original remains a distinct
+  faulted part and never becomes a replacement.
+- `ResistorSlotController` solely owns power-off removal/install swaps through
+  the existing detachable R1 electrical boundary. PCB pads, nets, traces,
+  designator, and layout are not rebuilt.
+- `GeneratedRepairValidator` evaluates solved electrical function, not selected
+  part identity. Completion is latched after 5-15 mA LED current, matching R1
+  current, and illuminated solved operational state.
 
 ## Validation
 - The healthy family validator remains unchanged: powered LED current must be
   5-15 mA and match resistor current.
 - Faulted validation requires powered, installed R1, a bound open fault switch,
   LED current below 1 uA, and a non-illuminated LED operational state.
-- `tsjVerifyChallenge=true` runs after `READY` and checks VIN, faulted PCB and
-  component-lead OL readings, lifecycle evidence, deterministic metadata,
-  LED OHM/CONT/DIODE polarity, meter transaction restoration,
-  lift/remove/tray/restore fault persistence, and developer clear/reapply.
-- LED OHM and CONT are finite with red on anode/black on cathode and OL when
-  reversed. CONT remains below no false continuity/BEEP; DIODE stays forward
-  finite/reverse OL. The test voltage is 1 V for OHM/CONT and 3 V for DIODE.
-- Deterministic metadata remains seed 0: 5 V/330 Ohm; seed 2: 9 V/680 Ohm;
-  seed 3: 12 V/1000 Ohm. The selected IDs are `LED_INDICATOR_NO_LIGHT`,
-  `INDICATOR_DOES_NOT_LIGHT`, and `LED_R1_OPEN` targeting `R1`.
+- Deterministic inventory: seed 0 `100/330/4700 Ohm`; seed 2
+  `220/680/10000 Ohm`; seed 3 `330/1000/15000 Ohm`, all `+/-5%` exact
+  four-band nameplates. Inventory order and IDs are stable.
+- Manual browser validation on seed 2 removed the original, showed it loose,
+  installed low and high wrong values without completion, then installed the
+  680 Ohm replacement. CircuitJS measured 9 V at R1 and the ticket became
+  `Repair verified. Indicator operating normally.`
+- For the 9 V seed, the 220 Ohm low choice drives approximately 31 mA and the
+  10000 Ohm high choice approximately 0.7 mA, both outside the 5-15 mA
+  functional acceptance range; the 680 Ohm replacement returns the existing
+  healthy approximately 10 mA operating point.
 - Browser checks of challenge seeds `0`, `2`, and `3` reached the ready ticket
   with Board Power ON and no page or console errors. The healthy fixture for
   seed `2` stayed ticket-free and error-free.
 - JDK 8 production build compiled and linked all five GWT permutations:
   `$java8Home = Join-Path $env:TEMP 'TroubleshootJS-build-probe\temurin8'; & .\scripts\build.ps1 -JavaHome $java8Home`.
-- Browser evidence: `docs/screenshots/task-14/preparing-disabled-controls.png`,
-  `docs/screenshots/task-14/ready-faulted-challenge.png`, and
-  `docs/screenshots/task-14/healthy-powered-led.png`. The paused
-  `running=false` preparation route showed Board Power and all meter buttons
-  disabled; READY re-enabled them with no browser errors.
+- Browser evidence: `docs/screenshots/task-15/initial-faulted-challenge.png`,
+  `empty-slot-original-tray.png`, `low-wrong-installed.png`,
+  `high-wrong-installed.png`, and `completed-correct-replacement.png`.
 
 ## Known Limitations
-This is one fixed fault family: an internally open R1 on the manually authored
-LED board. It intentionally does not add replacement parts, scoring,
-procedural routing, or player-visible fault controls.
+Only resistor replacement for the LED challenge is implemented. There are no
+replacement LEDs, polarized parts, jumpers, damage, scoring, or repair hints.
 
 ## Recommended Next Step
-Add a repair primitive that mutates the electrical graph, then verify repaired
-functional behavior without disclosing the original fault.
+Add replacement support for another component family while preserving the same
+slot/part and solver-backed functional-validation boundaries.
 
 ## Intended Commit Message
-`Correct challenge lifecycle and meter polarity`
+`Add electrically real resistor replacement`

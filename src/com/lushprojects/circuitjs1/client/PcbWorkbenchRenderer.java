@@ -15,6 +15,7 @@ class PcbWorkbenchRenderer {
     private int offsetX;
     private int offsetY;
     private String selectedComponentId;
+    private String selectedPartId;
 
     PcbWorkbenchRenderer(GeneratedBoardInstance instance,
             BoardModificationController modifications, PcbBoardLayout layout) {
@@ -124,24 +125,13 @@ class PcbWorkbenchRenderer {
         graphics.fillRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
         graphics.setColor("#302a22");
         graphics.drawRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
-        drawResistorBands(graphics, placement.getComponentId(), bodyLeft, bodyRight, bodyY,
+        drawResistorBands(graphics, getInstalledResistorPart(placement.getComponentId()), bodyLeft, bodyRight, bodyY,
             bodyHeight);
 
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
         graphics.setColor("#f2f5e9");
         graphics.drawString(placement.getComponentId(), screenX(placement.getX() + 92),
             screenY(placement.getY() - 14));
-    }
-
-    private void drawResistorBands(Graphics graphics, String componentId, int left, int right,
-            int y, int height) {
-        ResistorColorBand[] bands = getResistorBands(componentId);
-        for (int index = 0; index < bands.length; index++) {
-            int x = left + (right - left) * (index + 1) / 5;
-            graphics.setColor(getBandColor(bands[index]));
-            graphics.fillRect(x - Math.max(2, scaleInt(3)), y - height / 2,
-                Math.max(4, scaleInt(6)), height);
-        }
     }
 
     private void drawLed(Graphics graphics, PcbComponentPlacement placement) {
@@ -207,19 +197,14 @@ class PcbWorkbenchRenderer {
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
         graphics.setColor("#3d484c");
         graphics.drawString("PARTS TRAY", tray.x + scaleInt(20), tray.y + scaleInt(30));
-        for (PcbComponentPlacement placement : layout.getComponents()) {
-            BoardComponent component = instance.getBoard().getComponent(placement.getComponentId());
-            if (component != null && "RESISTOR".equals(component.getType()) &&
-                    modifications.getComponentState(placement.getComponentId()) ==
-                        ComponentPhysicalState.REMOVED)
-                drawTrayResistor(graphics, placement.getComponentId());
-        }
+        int index = 0;
+        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts())
+            drawTrayResistor(graphics, part, index++);
     }
 
-    private void drawTrayResistor(Graphics graphics, String componentId) {
-        Vector<String> padIds = instance.getBoard().getComponent(componentId).getPadIds();
-        Point lead1 = getComponentLeadPoint(componentId, padIds.get(0));
-        Point lead2 = getComponentLeadPoint(componentId, padIds.get(1));
+    private void drawTrayResistor(Graphics graphics, PhysicalResistorPart part, int index) {
+        Point lead1 = getLoosePartLeadPoint(part.getId(), 0);
+        Point lead2 = getLoosePartLeadPoint(part.getId(), 1);
         int bodyLeft = lead1.x + scaleInt(24);
         int bodyRight = lead2.x - scaleInt(24);
         graphics.setColor("#a8adb0");
@@ -231,12 +216,20 @@ class PcbWorkbenchRenderer {
         graphics.fillRect(bodyLeft, lead1.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
         graphics.setColor("#302a22");
         graphics.drawRect(bodyLeft, lead1.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
-        drawResistorBands(graphics, componentId, bodyLeft, bodyRight, lead1.y, scaleInt(28));
+        drawResistorBands(graphics, part, bodyLeft, bodyRight, lead1.y, scaleInt(28));
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
-        graphics.drawString(componentId, lead1.x + scaleInt(43), lead1.y - scaleInt(26));
+        graphics.drawString(part.getId().equals(selectedPartId) ? "SELECTED" : "RESISTOR",
+            lead1.x + scaleInt(20), lead1.y - scaleInt(26));
     }
 
     ProbeTarget findProbeTarget(CirSim sim, int screenX, int screenY) {
+        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts()) {
+            for (int terminal = 0; terminal < 2; terminal++) {
+                Point point = getLoosePartLeadPoint(part.getId(), terminal);
+                if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
+                    return new PhysicalResistorPartProbeTarget(sim, instance, part.getId(), terminal, this);
+            }
+        }
         for (PcbComponentPlacement component : layout.getComponents()) {
             Vector<GeneratedComponentConnectionBinding> bindings =
                 instance.getConnectionBindings().getForComponentOrEmpty(component.getComponentId());
@@ -261,6 +254,8 @@ class PcbWorkbenchRenderer {
 
     String findComponentId(int screenX, int screenY) {
         for (PcbComponentPlacement component : layout.getComponents()) {
+            if ("R1".equals(component.getComponentId()) && instance.getR1Slot().isEmpty())
+                continue;
             Vector<GeneratedComponentConnectionBinding> bindings =
                 instance.getConnectionBindings().getForComponentOrEmpty(component.getComponentId());
             if (!bindings.isEmpty() && modifications.getComponentState(component.getComponentId()) ==
@@ -276,6 +271,17 @@ class PcbWorkbenchRenderer {
             } else if (screenRect(component).contains(screenX, screenY)) {
                 return component.getComponentId();
             }
+        }
+        return null;
+    }
+
+    String findPartId(int screenX, int screenY) {
+        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts()) {
+            Point lead1 = getLoosePartLeadPoint(part.getId(), 0);
+            Rectangle trayPart = new Rectangle(lead1.x - scaleInt(8), lead1.y - scaleInt(35),
+                scaleInt(145), scaleInt(70));
+            if (trayPart.contains(screenX, screenY))
+                return part.getId();
         }
         return null;
     }
@@ -304,7 +310,23 @@ class PcbWorkbenchRenderer {
     }
 
     boolean hasPad(String padId) { return layout.getPad(padId) != null; }
+    Point getLoosePartLeadPoint(String partId, int terminal) {
+        int index = 0;
+        for (PhysicalResistorPart part : instance.getResistorInventory().getLooseParts()) {
+            if (part.getId().equals(partId)) {
+                Rectangle tray = layout.getPartsTray();
+                int y = tray.y + 70 + index * 48;
+                return new Point(screenX(tray.x + (terminal == 0 ? 18 : tray.width - 18)), screenY(y));
+            }
+            index++;
+        }
+        return null;
+    }
+
     ResistorColorBand[] getResistorBands(String componentId) {
+        PhysicalResistorPart installed = getInstalledResistorPart(componentId);
+        if (installed != null)
+            return ResistorColorCode.getFourBandCode(installed.getNameplate());
         ResistorNameplate nameplate = instance.getPhysicalSpecifications()
             .getResistorNameplate(componentId);
         if (nameplate == null)
@@ -314,6 +336,27 @@ class PcbWorkbenchRenderer {
     String getPowerInputLabelForDeveloperVerification() { return getPowerInputLabel(); }
     void setSelectedComponentId(String componentId) { selectedComponentId = componentId; }
     String getSelectedComponentId() { return selectedComponentId; }
+    void setSelectedPartId(String partId) { selectedPartId = partId; }
+    String getSelectedPartId() { return selectedPartId; }
+
+    private PhysicalResistorPart getInstalledResistorPart(String componentId) {
+        if ("R1".equals(componentId))
+            return instance.getR1Slot().getInstalledPart();
+        return null;
+    }
+
+    private void drawResistorBands(Graphics graphics, PhysicalResistorPart part, int left, int right,
+            int y, int height) {
+        if (part == null)
+            return;
+        ResistorColorBand[] bands = ResistorColorCode.getFourBandCode(part.getNameplate());
+        for (int index = 0; index < bands.length; index++) {
+            int x = left + (right - left) * (index + 1) / 5;
+            graphics.setColor(getBandColor(bands[index]));
+            graphics.fillRect(x - Math.max(2, scaleInt(3)), y - height / 2,
+                Math.max(4, scaleInt(6)), height);
+        }
+    }
 
     private void updateTransform(Rectangle area) {
         canvasArea = area;

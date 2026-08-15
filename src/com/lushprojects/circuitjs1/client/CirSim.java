@@ -353,7 +353,9 @@ MouseOutHandler, MouseWheelHandler {
 	long troubleshootFixtureSeed = 1;
 	boolean troubleshootResistanceVerification;
 	boolean troubleshootChallengeVerification;
+	boolean troubleshootReplacementVerification;
 	boolean troubleshootChallengeVerificationComplete;
+	boolean troubleshootReplacementVerificationComplete;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
     
@@ -395,6 +397,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
 	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
 	    troubleshootChallengeVerification = qp.getBooleanValue("tsjVerifyChallenge", false);
+	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
@@ -4098,6 +4101,7 @@ MouseOutHandler, MouseWheelHandler {
     GeneratedBoardInstance generatedBoardInstance;
 		GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
+		ResistorSlotController resistorSlotController;
 	boolean activeMeasurementOverlay;
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
@@ -4124,6 +4128,8 @@ MouseOutHandler, MouseWheelHandler {
 	generatedBoardInstance = instance;
 	generatedChallengeController = null;
 	boardModificationController = new BoardModificationController(this, instance);
+	resistorSlotController = instance.getR1Slot() == null ? null : new ResistorSlotController(this,
+	    instance, boardModificationController);
 	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
 		instance.getPcbLayout(), verticalPanel) : null;
@@ -4182,6 +4188,11 @@ MouseOutHandler, MouseWheelHandler {
 		troubleshootChallengeVerificationComplete = true;
 		ChallengeDeveloperVerifier.verify(this);
 	    }
+	    if (troubleshootReplacementVerification && !troubleshootReplacementVerificationComplete &&
+		generatedChallengeController != null && generatedChallengeController.isReady()) {
+		troubleshootReplacementVerificationComplete = true;
+		ReplacementDeveloperVerifier.verify(this);
+	    }
 	} catch (RuntimeException e) {
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4213,6 +4224,8 @@ MouseOutHandler, MouseWheelHandler {
 	BoardModificationController getBoardModificationController() {
 	return boardModificationController;
 	}
+
+	ResistorSlotController getResistorSlotController() { return resistorSlotController; }
 
     void verifyGeneratedBoard() {
 	if (generatedBoardInstance == null)

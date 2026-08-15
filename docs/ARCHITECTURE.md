@@ -253,3 +253,29 @@ continue and the selected fault must remain applied. With powered, restored
 target hardware the selected strategy rechecks the symptom; unpowered or
 intentionally isolated hardware is allowed while fault binding integrity still
 holds. Developer-only clear/reapply uses an explicit scoped exception.
+
+Replaceable hardware distinguishes the stable logical board slot from the
+physical part. `ReplaceableComponentSlot` owns the fixed R1 designator,
+intended immutable board specification, pads/nets, and current occupancy;
+`PhysicalResistorPart` owns a stable part-instance ID, immutable nameplate,
+CircuitJS resistor backing, optional internal fault binding, and loose/installed
+location. `ResistorReplacementInventory` is deterministic per seed and retains
+the original failed resistor alongside healthy replacement choices. Changing a
+part never mutates a nameplate or closes the original fault switch.
+
+`ResistorSlotController` is the only owner of R1 install/remove graph changes.
+It requires genuine board power isolation, no meter overlay, and a ready
+challenge. The existing detachable R1 links remain the stable board-side
+boundary: removing a part disconnects those links, while a selected part's
+own CircuitJS backing is moved into that boundary and rebound as the active R1
+element. Loose parts remain isolated yet probeable; no part may occupy the slot
+and tray simultaneously. The PCB layout, pads, traces, and R1 designator stay
+stable while the renderer displays the installed physical part's bands.
+
+Family-specific `GeneratedRepairValidator` implementations decide functional
+completion from solved behavior. The LED validator requires a healthy installed
+physical resistor, powered board, no active meter overlay, 5-15 mA LED current,
+matching resistor current, and illuminated operational state. Incorrect but
+electrically valid replacements simply remain READY. `COMPLETED` is latched
+after a solver-backed successful repair; later board changes still affect the
+electrical simulation honestly but do not retract the first verified repair.
