@@ -57,10 +57,10 @@ class PcbWorkbenchController {
         BoardComponent component = instance.getBoard().getComponent(componentId);
         panel.add(styledLabel(component.getId(), "tsj-component-title"));
         panel.add(new Label("Type: " + component.getType().toLowerCase()));
-            ResistorNameplate nameplate = instance.getPhysicalSpecifications()
-                .getResistorNameplate(componentId);
-            if (nameplate != null)
-                panel.add(new Label("Value: " + nameplate.getDisplayValue()));
+        ResistorNameplate nameplate = instance.getPhysicalSpecifications()
+            .getResistorNameplate(componentId);
+        if (nameplate != null)
+            panel.add(new Label("Value: " + nameplate.getDisplayValue()));
         Vector<GeneratedComponentConnectionBinding> bindings =
             instance.getConnectionBindings().getForComponentOrEmpty(componentId);
         if (!bindings.isEmpty())

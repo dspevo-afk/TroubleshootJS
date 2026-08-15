@@ -105,6 +105,13 @@ stable when a user lifts/removes a component or a future fault changes effective
 simulation behavior, while CircuitJS remains the source of truth for actual
 electrical behavior and measurements.
 
+Resistor-band rendering follows the stable component ID from each
+`PcbComponentPlacement` (including a tray component) to its
+`ResistorNameplate`, then through `ResistorColorCode` semantic tokens to local
+renderer CSS colors. Four-band encoding supports only finite, positive,
+integral, exactly representable `+/-5%` values; it rejects values that would
+otherwise be rounded or truncated to a different printed resistance.
+
 PCB geometry is a separate rendering layer. `PcbBoardLayout` contains the board
 outline, component placements, pad placements, traces, and parts-tray geometry,
 and references only stable `BoardComponent`, `BoardPad`, and `BoardNet` IDs.

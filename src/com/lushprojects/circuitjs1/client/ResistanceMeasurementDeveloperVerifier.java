@@ -162,7 +162,7 @@ class ResistanceMeasurementDeveloperVerifier {
     boolean poweredRejected = false;
     try {
         modifications.restoreComponent("R1");
-    } catch (IllegalStateException e) {
+    } catch (BoardModificationRejectedException e) {
         poweredRejected = true;
     }
     require(poweredRejected && modifications.getComponentState("R1") ==
@@ -193,6 +193,7 @@ class ResistanceMeasurementDeveloperVerifier {
     }
 
     private static void verifyGeneratedPhysicalSpecifications() {
+        verifyPhysicalSpecificationRejections();
         verifyGeneratedPhysicalSpecification(0, 5, 330, new ResistorColorBand[] {
             ResistorColorBand.ORANGE, ResistorColorBand.ORANGE, ResistorColorBand.BROWN,
             ResistorColorBand.GOLD });
@@ -202,6 +203,65 @@ class ResistanceMeasurementDeveloperVerifier {
         verifyGeneratedPhysicalSpecification(3, 12, 1000, new ResistorColorBand[] {
             ResistorColorBand.BROWN, ResistorColorBand.BLACK, ResistorColorBand.RED,
             ResistorColorBand.GOLD });
+    }
+
+    private static void verifyPhysicalSpecificationRejections() {
+        BoardPhysicalSpecifications specifications = new BoardPhysicalSpecifications();
+        specifications.addResistorNameplate(new ResistorNameplate("R1", 330, 5));
+        specifications.addResistorNameplate(new ResistorNameplate("R2", 680, 5));
+        requireBands(new ResistorColorBand[] { ResistorColorBand.ORANGE,
+            ResistorColorBand.ORANGE, ResistorColorBand.BROWN, ResistorColorBand.GOLD },
+            ResistorColorCode.getFourBandCode(specifications.getResistorNameplate("R1")), -1);
+        requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD },
+            ResistorColorCode.getFourBandCode(specifications.getResistorNameplate("R2")), -2);
+        requireColorCodeRejected(332);
+        requireColorCodeRejected(101);
+        requireInvalidResistorNameplate(Double.NaN, 5);
+        requireInvalidResistorNameplate(Double.POSITIVE_INFINITY, 5);
+        requireInvalidResistorNameplate(Double.NEGATIVE_INFINITY, 5);
+        requireInvalidResistorNameplate(0, 5);
+        requireInvalidResistorNameplate(-1, 5);
+        requireInvalidResistorNameplate(330, Double.NaN);
+        requireInvalidResistorNameplate(330, Double.POSITIVE_INFINITY);
+        requireInvalidResistorNameplate(330, Double.NEGATIVE_INFINITY);
+        requireInvalidResistorNameplate(330, 0);
+        requireInvalidResistorNameplate(330, -1);
+        requireInvalidPowerInputNameplate(Double.NaN);
+        requireInvalidPowerInputNameplate(Double.POSITIVE_INFINITY);
+        requireInvalidPowerInputNameplate(Double.NEGATIVE_INFINITY);
+        requireInvalidPowerInputNameplate(0);
+        requireInvalidPowerInputNameplate(-1);
+    }
+
+    private static void requireColorCodeRejected(double resistance) {
+        boolean rejected = false;
+        try {
+            ResistorColorCode.getFourBandCode(new ResistorNameplate("R1", resistance, 5));
+        } catch (IllegalArgumentException expected) {
+            rejected = true;
+        }
+        require(rejected, "Non-representable four-band resistance was encoded: " + resistance);
+    }
+
+    private static void requireInvalidResistorNameplate(double resistance, double tolerance) {
+        boolean rejected = false;
+        try {
+            new ResistorNameplate("R1", resistance, tolerance);
+        } catch (IllegalArgumentException expected) {
+            rejected = true;
+        }
+        require(rejected, "Invalid resistor nameplate was accepted");
+    }
+
+    private static void requireInvalidPowerInputNameplate(double voltage) {
+        boolean rejected = false;
+        try {
+            new PowerInputNameplate("VIN_INPUT", voltage);
+        } catch (IllegalArgumentException expected) {
+            rejected = true;
+        }
+        require(rejected, "Invalid power input nameplate was accepted");
     }
 
     private static void verifyGeneratedPhysicalSpecification(long seed, double voltage,

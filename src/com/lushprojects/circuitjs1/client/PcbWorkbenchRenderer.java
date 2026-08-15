@@ -124,7 +124,8 @@ class PcbWorkbenchRenderer {
         graphics.fillRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
         graphics.setColor("#302a22");
         graphics.drawRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
-        drawResistorBands(graphics, bodyLeft, bodyRight, bodyY, bodyHeight);
+        drawResistorBands(graphics, placement.getComponentId(), bodyLeft, bodyRight, bodyY,
+            bodyHeight);
 
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
         graphics.setColor("#f2f5e9");
@@ -132,8 +133,9 @@ class PcbWorkbenchRenderer {
             screenY(placement.getY() - 14));
     }
 
-    private void drawResistorBands(Graphics graphics, int left, int right, int y, int height) {
-        ResistorColorBand[] bands = getResistorBands("R1");
+    private void drawResistorBands(Graphics graphics, String componentId, int left, int right,
+            int y, int height) {
+        ResistorColorBand[] bands = getResistorBands(componentId);
         for (int index = 0; index < bands.length; index++) {
             int x = left + (right - left) * (index + 1) / 5;
             graphics.setColor(getBandColor(bands[index]));
@@ -223,7 +225,7 @@ class PcbWorkbenchRenderer {
         graphics.fillRect(bodyLeft, lead1.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
         graphics.setColor("#302a22");
         graphics.drawRect(bodyLeft, lead1.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
-        drawResistorBands(graphics, bodyLeft, bodyRight, lead1.y, scaleInt(28));
+        drawResistorBands(graphics, componentId, bodyLeft, bodyRight, lead1.y, scaleInt(28));
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
         graphics.drawString(componentId, lead1.x + scaleInt(43), lead1.y - scaleInt(26));
     }

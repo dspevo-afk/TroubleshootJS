@@ -6,8 +6,8 @@ class ResistorNameplate {
     private final double tolerancePercent;
 
     ResistorNameplate(String componentId, double nominalResistanceOhms, double tolerancePercent) {
-        if (componentId == null || componentId.length() == 0 || nominalResistanceOhms <= 0 ||
-                tolerancePercent <= 0)
+        if (componentId == null || componentId.length() == 0 ||
+            !isFinitePositive(nominalResistanceOhms) || !isFinitePositive(tolerancePercent))
             throw new IllegalArgumentException("Invalid resistor nameplate");
         this.componentId = componentId;
         this.nominalResistanceOhms = nominalResistanceOhms;
@@ -26,5 +26,9 @@ class ResistorNameplate {
         if (value == Math.rint(value))
             return String.valueOf((long) value);
         return String.valueOf(value);
+    }
+
+    private static boolean isFinitePositive(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value) && value > 0;
     }
 }

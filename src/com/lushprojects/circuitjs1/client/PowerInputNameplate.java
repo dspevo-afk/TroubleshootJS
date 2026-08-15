@@ -5,7 +5,9 @@ class PowerInputNameplate {
     private final double nominalVoltage;
 
     PowerInputNameplate(String powerInputId, double nominalVoltage) {
-        if (powerInputId == null || powerInputId.length() == 0 || nominalVoltage <= 0)
+        if (powerInputId == null || powerInputId.length() == 0 ||
+            Double.isNaN(nominalVoltage) || Double.isInfinite(nominalVoltage) ||
+            nominalVoltage <= 0)
             throw new IllegalArgumentException("Invalid power input nameplate");
         this.powerInputId = powerInputId;
         this.nominalVoltage = nominalVoltage;
