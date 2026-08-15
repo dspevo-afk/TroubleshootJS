@@ -1278,8 +1278,6 @@ MouseOutHandler, MouseWheelHandler {
 	    analyzeCircuit();
 	    analyzeFlag = false;
 	}
-	if (didAnalyze)
-	    instrumentController.onCircuitAnalysisComplete();
 	if (generatedBoardVerificationPending && didAnalyze)
 	    generatedBoardVerificationAnalyzed = true;
 //	if (editDialog != null && editDialog.elm instanceof CircuitElm)
@@ -1305,6 +1303,7 @@ MouseOutHandler, MouseWheelHandler {
 	if (simRunning) {
 	    try {
 		runCircuit(didAnalyze);
+			instrumentController.onSimulationStepComplete(didAnalyze);
 		runGeneratedBoardVerificationIfReady(didAnalyze);
 	    } catch (Exception e) {
 		debugger();
@@ -4205,17 +4204,21 @@ MouseOutHandler, MouseWheelHandler {
 	    stimulus.remove(this);
 	    analyzeCircuit();
 	    runCircuit(true);
-	    runCircuit(true);
-	    resistanceSolverRestored = isStimulusAbsentFromSolver(stimulus);
 	    if (pendingBoardPowerState != null) {
 		BoardPowerState requestedState = pendingBoardPowerState;
 		pendingBoardPowerState = null;
 		activeMeasurementOverlay = false;
 		setBoardPowerState(requestedState);
+		analyzeCircuit();
+		runCircuit(true);
+		analyzeFlag = false;
+		generatedBoardVerificationAnalyzed = true;
+		runGeneratedBoardVerificationIfReady(true);
 	    } else {
 		requestGeneratedBoardVerification();
 		activeMeasurementOverlay = false;
 	    }
+	    resistanceSolverRestored = isStimulusAbsentFromSolver(stimulus);
 	}
     }
 

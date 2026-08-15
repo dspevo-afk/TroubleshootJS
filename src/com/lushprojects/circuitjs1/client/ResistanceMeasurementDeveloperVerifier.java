@@ -20,7 +20,9 @@ class ResistanceMeasurementDeveloperVerifier {
         CircuitPostProbeTarget r11Probe = getProbe(sim, instance, "R1.1");
         CircuitPostProbeTarget r12Probe = getProbe(sim, instance, "R1.2");
         CircuitPostProbeTarget led1kProbe = getProbe(sim, instance, "LED1.K");
+        CircuitPostProbeTarget j12Probe = getProbe(sim, instance, "J1.2");
         sim.setBoardPowerState(BoardPowerState.POWERED);
+        verifyLiveDcVoltage(sim, j11Probe, j12Probe);
         sim.instrumentController.setResistanceProbesForDeveloperVerification(r11Probe, r12Probe);
         require("POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Powered resistance readout was not blocked");
@@ -49,10 +51,10 @@ class ResistanceMeasurementDeveloperVerifier {
         verifyLegacyCircuitIsBlocked(sim, instance, r11Probe, r12Probe);
 
         sim.requestPowerOnDuringActiveMeasurementForDeveloperVerification();
-        measure(sim, r11Probe, r12Probe, 680, 2);
-        require(sim.getBoardPowerController().getState() == BoardPowerState.POWERED,
-            "Queued power-on request was not applied after measurement cleanup");
+        verifyQueuedPowerOnFinalState(sim, instance, j11Probe, j12Probe, r11Probe, r12Probe);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        measure(sim, r11Probe, r12Probe, 680, 2);
 
         require(sim.elmList.equals(elementsBefore), "Temporary stimulus elements remained installed");
         require(exportBefore.equals(sim.dumpCircuit()), "Circuit export changed after measurement");
@@ -166,6 +168,60 @@ class ResistanceMeasurementDeveloperVerifier {
         sim.getBoardPowerController().attach(instance.getExternalPowerBindings());
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
+    }
+
+    private static void verifyLiveDcVoltage(CirSim sim, ProbeTarget vin, ProbeTarget ground) {
+        int resistanceMeasurementsBefore =
+            sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        sim.instrumentController.setDcVoltageProbesForDeveloperVerification(vin, ground);
+        sim.updateCircuit();
+        requireApproximately(9, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(vin, ground),
+            .1, "Powered DC reading was not approximately +9 V");
+        requireVoltageReadout(sim, 9, .1, "Powered DC readout was not visibly +9 V");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        requireApproximately(0, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(vin, ground),
+            .01, "Persistent DC probes did not update to 0 V with board power off");
+        requireVoltageReadout(sim, 0, .01, "Unpowered DC readout was not visibly 0 V");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.updateCircuit();
+        requireApproximately(9, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(vin, ground),
+            .1, "Persistent DC probes did not update to +9 V after repower");
+        requireVoltageReadout(sim, 9, .1, "Repowered DC readout was not visibly +9 V");
+        sim.updateCircuit();
+        sim.updateCircuit();
+        require(resistanceMeasurementsBefore ==
+            sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
+            "Passive DC refresh executed a resistance transaction");
+    }
+
+    private static void verifyQueuedPowerOnFinalState(CirSim sim, GeneratedBoardInstance instance,
+            ProbeTarget vin, ProbeTarget ground, ProbeTarget red, ProbeTarget black) {
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+        require("POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Queued power-on published a stale resistance reading");
+        require(sim.getBoardPowerController().getState() == BoardPowerState.POWERED,
+            "Queued power-on request was not applied after measurement cleanup");
+        require(instance.getExternalPowerBindings().areAllConnected(),
+            "External isolation control was not connected after queued power-on");
+        require(sim.isResistanceSolverRestoredForDeveloperVerification(),
+            "Powered final graph did not restore the solver without temporary elements");
+        requireApproximately(9,
+            sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(vin, ground), .1,
+            "Powered final solver graph did not restore board-side VIN");
+        sim.verifyGeneratedBoard();
+    }
+
+    private static void requireApproximately(double expected, double actual, double tolerance,
+            String message) {
+        require(Math.abs(actual - expected) <= tolerance,
+            message + ": " + actual);
+    }
+
+    private static void requireVoltageReadout(CirSim sim, double expected, double tolerance,
+            String message) {
+        String readout = sim.instrumentController.getReadingForDeveloperVerification();
+        require(!"--- V".equals(readout) && readout.endsWith("V"), message + ": " + readout);
     }
 
     private static void require(boolean condition, String message) {

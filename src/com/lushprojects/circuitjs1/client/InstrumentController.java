@@ -86,8 +86,10 @@ class InstrumentController {
         requestResistanceRefresh();
     }
 
-    void onCircuitAnalysisComplete() {
-        if (activeMode != MODE_RESISTANCE || !resistanceRefreshPending)
+    void onSimulationStepComplete(boolean didAnalyze) {
+        if (activeMode == MODE_DC_VOLTAGE)
+            updateReading();
+        if (!didAnalyze || activeMode != MODE_RESISTANCE || !resistanceRefreshPending)
             return;
         validateTargets();
         if (redProbe == null || blackProbe == null) {
@@ -114,6 +116,10 @@ class InstrumentController {
 
     double getLatestResistanceReadingForDeveloperVerification() {
         return latestResistanceReading;
+    }
+
+    double getDcVoltageDifferenceForDeveloperVerification(ProbeTarget red, ProbeTarget black) {
+        return measurementAdapter.getDcVoltageDifference(red, black);
     }
 
     int getResistanceMeasurementCountForDeveloperVerification() {
@@ -174,6 +180,12 @@ class InstrumentController {
         }
         double resistance = measurementAdapter.measureResistance(redProbe, blackProbe);
         resistanceMeasurementCount++;
+        validateTargets();
+        if (!measurementAdapter.isActiveMeasurementAllowed(redProbe, blackProbe)) {
+            latestResistanceReading = Double.NaN;
+            readingLabel.setText(redProbe == null || blackProbe == null ? "--- Ohm" : "POWER OFF");
+            return;
+        }
         latestResistanceReading = resistance;
         if (Double.isNaN(resistance) || Double.isInfinite(resistance) ||
             resistance > MAX_RESISTANCE) {
@@ -181,6 +193,13 @@ class InstrumentController {
             return;
         }
         readingLabel.setText(CircuitElm.getUnitText(resistance, "Ohm"));
+    }
+
+    void setDcVoltageProbesForDeveloperVerification(ProbeTarget red, ProbeTarget black) {
+        setActiveMode(MODE_DC_VOLTAGE);
+        redProbe = red;
+        blackProbe = black;
+        updateReading();
     }
 
     private void validateTargets() {

@@ -1,28 +1,28 @@
 # Latest Codex Task Report
 
 ## Task
-Task #9 corrective follow-up: Harden the resistance-measurement lifecycle.
+Task #9 second corrective follow-up: Preserve live DC voltage and finalize
+active-measurement state correctly.
 
 ## Summary
-Hardened the active OHM transaction so retained valid probes refresh exactly
-once after normal CircuitJS reanalysis, while `InstrumentController.draw()`
-only renders cached state. Each temporary-stimulus transaction now restores and
-solves the normal graph synchronously before it returns.
+Restored live passive DC meter updates after every normal CircuitJS solve while
+keeping OHM strictly transactional and demand-driven. A resistance result is
+now revalidated after its transaction returns, so a queued power-on discards an
+earlier unpowered reading and publishes `POWER OFF` only after the final
+powered graph has been solved.
 
 ## Architectural Decisions
-- `needAnalyze()` invalidates OHM state through a single controller lifecycle
-	method. `updateCircuit()` consumes a pending refresh after normal graph
-	analysis, not during drawing.
-- Internal temporary-overlay cleanup performs direct normal-graph analysis and
-	solve without requeuing the meter, preventing recursive analysis/measurement
-	cycles.
-- A pending board-power request remains deferred until the overlay is removed
-	and normal solver structures are restored.
-- Temporary-source geometry is allocated from live CircuitJS post occupancy at
-	a deterministic unused off-board coordinate. It cannot coincide with either
-	probe or an existing element post.
-- The URL-gated verifier checks production controller/adapter/session behavior
-	through stable board pad bindings. It adds no normal-user UI.
+- `InstrumentController.draw()` remains visual-only. A post-simulation-step
+  callback refreshes passive DC V from solved post voltages.
+- The post-step callback consumes at most one pending OHM refresh only after a
+  normal analysis. Passive DC refreshes never install temporary elements.
+- After a queued power request, the resistance transaction removes its overlay,
+  applies the requested control state, synchronously analyzes and solves the
+  final graph, and only then marks solver restoration complete.
+- The controller revalidates active-measurement permission after adapter return
+  before publishing resistance. A newly powered board displays `POWER OFF`.
+- URL-gated verification remains outside normal UI and drives production
+  controller/adapter/session paths through stable generated board pads.
 
 ## Files Changed
 - `docs/ARCHITECTURE.md`
@@ -30,48 +30,44 @@ solves the normal graph synchronously before it returns.
 - `src/com/lushprojects/circuitjs1/client/CirSim.java`
 - `src/com/lushprojects/circuitjs1/client/InstrumentController.java`
 - `src/com/lushprojects/circuitjs1/client/ResistanceMeasurementDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/ResistanceMeasurementStimulus.java`
 
 ## Validation
-- Focused and production GWT builds passed all five permutations after the
-	lifecycle changes.
+- Focused and production GWT builds passed all five permutations.
 - Browser developer verifier:
-	`?tsjFixture=led&seed=12345&tsjVerifyResistance=true&lifecycle=5` completed
-	with `Resistance verification passed`, `Board Power: OFF`, and visible
-	`680 Ohm` without page errors.
-- Repeated `updateCircuit()` draw/repaint cycles did not add a transaction.
-- A retained valid probe pair invalidated by `needAnalyze()` displayed
-	`--- Ohm`, then refreshed exactly once to `680 Ohm` after analysis.
-- Removing a probed element immediately cleared the cached OHM readout; after
-	restoring the element, the cleared probe was not silently restored.
-- An occupied former midpoint coordinate did not change the reading or create
-	a temporary solver connection.
-- Each transaction asserted that temporary source/resistor references were
-	absent from `elmList`, voltage-source ownership, and circuit-node links after
-	synchronous restoration. Export, history, unsaved state, BoardPad/BoardNet
-	identities, valid retained probes, and board power remained intact.
+  `?tsjFixture=led&seed=12345&tsjVerifyResistance=true&stateFix=2` completed
+  with `Resistance verification passed`, `Board Power: OFF`, and `680 Ohm`.
+- Persistent board-side VIN/GND DC probes displayed `9 V` powered, `0 V` after
+  power-off, and `9 V` after repower without moving probes. Repeated normal
+  update cycles did not increment the resistance transaction count.
+- Forced power-on during the overlay left the final board POWERED, all external
+  isolation controls connected, VIN at approximately `+9 V`, solver restored
+  without temporary elements, generated-board verification passing, and OHM
+  visibly `POWER OFF` rather than a stale resistance.
+- Restoring power OFF returned the board to electrically unpowered state; a
+  subsequent ordinary measurement returned `680 Ohm`.
+- Retained checks passed: forward/reverse `680 Ohm`, same-net `0 Ohm`, open
+  LED path `OL`, powered and legacy blocking, one topology refresh, no
+  draw/repaint refresh, invalid-probe clearing, collision-free geometry,
+  synchronous cleanup, stable board identities, and unchanged export/history/
+  unsaved state.
 
 ## Exact Observed Test Data
 - Seed `12345`: `9 V`, `680 Ohm` R1.
-- `R1.1 -> R1.2`: `680 Ohm`.
-- `R1.2 -> R1.1`: approximately `680 Ohm`.
-- `J1.1 -> R1.1`: `0 Ohm`.
-- Reverse/open LED path: `OL`.
-- Powered generated board and detached legacy-power binding: `POWER OFF` with
-	no active measurement transaction.
-- A power-on request made during the overlay applied only after cleanup, then
-	the verifier restored the board to electrically OFF and passed generated
-	verification.
+- DC VIN-to-GND: `+9 V` powered, `0 V` unpowered, `+9 V` repowered.
+- `R1.1 -> R1.2`: `680 Ohm`; reverse: approximately `680 Ohm`.
+- `J1.1 -> R1.1`: `0 Ohm`; reverse/open LED path: `OL`.
+- Queued final power-on: `Board Power: ON`, VIN approximately `+9 V`, OHM
+  `POWER OFF`.
 
-## Known Limitations / Concerns
-Resistance mode is DC-only. It reports `OL` above `10 MOhm` or for non-finite
-source current. Nonlinear, capacitive, inductive, and transient networks use
-the current CircuitJS solve state; continuity and diode modes are intentionally
+## Known Limitations
+Resistance mode remains DC-only and reports `OL` above `10 MOhm` or for
+non-finite source current. Nonlinear, capacitive, inductive, and transient
+networks use CircuitJS's current solve state. Continuity and diode modes remain
 out of scope.
 
 ## Recommended Next Step
-Add continuity mode by reusing the hardened active-measurement transaction,
-with its own user-visible threshold and no changes to resistance semantics.
+Add continuity mode as a separate user-facing policy over the hardened active
+measurement transaction, without changing DC or resistance lifecycle behavior.
 
 ## Intended Commit Message
-Harden resistance measurement lifecycle
+Fix meter state transitions

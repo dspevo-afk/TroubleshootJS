@@ -44,6 +44,15 @@ as part of invalidation and show the mode-specific OHM placeholder. A power
 request during an active measurement is queued until the temporary overlay is
 removed and the normal solver state is restored.
 
+Passive DC voltage is separate from active measurement. After each normal
+CircuitJS simulation step, `InstrumentController` refreshes a valid retained
+DC probe pair from the current solved post voltages. This callback never
+installs test elements or consumes an OHM refresh. The OHM transaction
+revalidates its probes and electrical-power permission after the adapter
+returns; a queued power change discards the earlier unpowered resistance result,
+then restores and solves the final powered or unpowered graph before the
+transaction reports solver restoration or generated verification resumes.
+
 `TroubleshootBoard` owns stable board identity. `BoardComponent`, `BoardPad`,
 and `BoardNet` use durable string IDs; a `BoardNet` is the TroubleshootJS
 electrical identity, not a CircuitJS analyzed node number. `BoardPad` connects
