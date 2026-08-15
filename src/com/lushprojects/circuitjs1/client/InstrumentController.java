@@ -22,8 +22,9 @@ class InstrumentController {
     private int activeMode = MODE_NONE;
     private ProbeTarget redProbe;
     private ProbeTarget blackProbe;
-    private boolean resistanceReadingDirty;
+    private boolean resistanceRefreshPending;
     private double latestResistanceReading = Double.NaN;
+    private int resistanceMeasurementCount;
 
     InstrumentController(final CirSim sim, VerticalPanel panel) {
         this.sim = sim;
@@ -40,6 +41,7 @@ class InstrumentController {
         dcVoltageButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 setActiveMode(activeMode == MODE_DC_VOLTAGE ? MODE_NONE : MODE_DC_VOLTAGE);
+                updateReading();
             }
         });
 
@@ -63,7 +65,7 @@ class InstrumentController {
             else if (button == NativeEvent.BUTTON_RIGHT)
                 blackProbe = target;
         }
-        resistanceReadingDirty = true;
+        requestResistanceRefresh();
         updateReading();
         sim.repaint();
     }
@@ -71,28 +73,38 @@ class InstrumentController {
     void clearTargets() {
         redProbe = null;
         blackProbe = null;
-    resistanceReadingDirty = true;
+        requestResistanceRefresh();
         updateReading();
     }
 
     void refreshActiveMeasurement() {
-        resistanceReadingDirty = true;
-        updateReading();
+        requestResistanceRefresh();
     }
 
-    void invalidateActiveMeasurement() {
-        resistanceReadingDirty = true;
-        if (activeMode == MODE_RESISTANCE) {
+    void onCircuitTopologyChanged() {
+        validateTargets();
+        requestResistanceRefresh();
+    }
+
+    void onCircuitAnalysisComplete() {
+        if (activeMode != MODE_RESISTANCE || !resistanceRefreshPending)
+            return;
+        validateTargets();
+        if (redProbe == null || blackProbe == null) {
+            resistanceRefreshPending = false;
             latestResistanceReading = Double.NaN;
             readingLabel.setText("--- Ohm");
+            return;
         }
+        resistanceRefreshPending = false;
+        updateResistanceReading();
     }
 
     void setResistanceProbesForDeveloperVerification(ProbeTarget red, ProbeTarget black) {
         setActiveMode(MODE_RESISTANCE);
         redProbe = red;
         blackProbe = black;
-        resistanceReadingDirty = true;
+        requestResistanceRefresh();
         updateReading();
     }
 
@@ -104,19 +116,20 @@ class InstrumentController {
         return latestResistanceReading;
     }
 
+    int getResistanceMeasurementCountForDeveloperVerification() {
+        return resistanceMeasurementCount;
+    }
+
     void draw(Graphics graphics) {
-        validateTargets();
         drawProbe(graphics, redProbe, Color.red);
         drawProbe(graphics, blackProbe, Color.black);
-        if (activeMode == MODE_DC_VOLTAGE)
-            updateReading();
     }
 
     private void setActiveMode(int mode) {
         activeMode = mode;
-        resistanceReadingDirty = true;
+        requestResistanceRefresh();
         dcVoltageButton.setStyleName("chsel", activeMode == MODE_DC_VOLTAGE);
-    resistanceButton.setStyleName("chsel", activeMode == MODE_RESISTANCE);
+        resistanceButton.setStyleName("chsel", activeMode == MODE_RESISTANCE);
         sim.repaint();
     }
 
@@ -135,12 +148,14 @@ class InstrumentController {
         validateTargets();
         if (redProbe == null || blackProbe == null) {
             latestResistanceReading = Double.NaN;
-            readingLabel.setText("--- V");
+            readingLabel.setText(activeMode == MODE_RESISTANCE ? "--- Ohm" : "--- V");
             return;
         }
         if (activeMode == MODE_RESISTANCE) {
-            if (resistanceReadingDirty)
+            if (resistanceRefreshPending) {
+                resistanceRefreshPending = false;
                 updateResistanceReading();
+            }
             return;
         }
         double voltage = measurementAdapter.getDcVoltageDifference(redProbe, blackProbe);
@@ -152,13 +167,13 @@ class InstrumentController {
     }
 
     private void updateResistanceReading() {
-        resistanceReadingDirty = false;
         if (!measurementAdapter.isActiveMeasurementAllowed(redProbe, blackProbe)) {
             latestResistanceReading = Double.NaN;
             readingLabel.setText("POWER OFF");
             return;
         }
         double resistance = measurementAdapter.measureResistance(redProbe, blackProbe);
+        resistanceMeasurementCount++;
         latestResistanceReading = resistance;
         if (Double.isNaN(resistance) || Double.isInfinite(resistance) ||
             resistance > MAX_RESISTANCE) {
@@ -173,5 +188,13 @@ class InstrumentController {
             redProbe = null;
         if (blackProbe != null && !blackProbe.isValid())
             blackProbe = null;
+    }
+
+    private void requestResistanceRefresh() {
+        latestResistanceReading = Double.NaN;
+        if (activeMode != MODE_RESISTANCE)
+            return;
+        resistanceRefreshPending = true;
+        readingLabel.setText("--- Ohm");
     }
 }

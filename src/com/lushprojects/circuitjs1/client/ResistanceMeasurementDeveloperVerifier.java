@@ -26,17 +26,27 @@ class ResistanceMeasurementDeveloperVerifier {
             "Powered resistance readout was not blocked");
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-    Vector<CircuitElm> elementsBefore = new Vector<CircuitElm>(sim.elmList);
-    String exportBefore = sim.dumpCircuit();
-    int undoBefore = sim.undoStack.size();
-    int redoBefore = sim.redoStack.size();
-    boolean unsavedBefore = sim.unsavedChanges;
+        Vector<CircuitElm> elementsBefore = new Vector<CircuitElm>(sim.elmList);
+        String exportBefore = sim.dumpCircuit();
+        int undoBefore = sim.undoStack.size();
+        int redoBefore = sim.redoStack.size();
+        boolean unsavedBefore = sim.unsavedChanges;
         measure(sim, r11Probe, r12Probe, 680, 2);
         measure(sim, r12Probe, r11Probe, 680, 2);
         measure(sim, j11Probe, r11Probe, 0, .001);
         sim.instrumentController.setResistanceProbesForDeveloperVerification(r11Probe, led1kProbe);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Open resistance path did not display OL");
+
+        verifyNoRefreshFromDrawCycle(sim);
+        verifyAutomaticRefreshAfterAnalysis(sim, r11Probe, r12Probe);
+        verifyOccupiedFormerMidpoint(sim, r11Probe, r12Probe);
+        verifyInvalidProbeClearsReading(sim, r11Probe, r12Probe);
+        sim.instrumentController.clearTargets();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Missing OHM probes did not display the OHM placeholder");
+        measure(sim, r11Probe, r12Probe, 680, 2);
+        verifyLegacyCircuitIsBlocked(sim, instance, r11Probe, r12Probe);
 
         sim.requestPowerOnDuringActiveMeasurementForDeveloperVerification();
         measure(sim, r11Probe, r12Probe, 680, 2);
@@ -83,6 +93,79 @@ class ResistanceMeasurementDeveloperVerifier {
         double actual = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
         require(Math.abs(actual - expected) <= tolerance,
             "Expected " + expected + " Ohm, got " + actual + " Ohm");
+        require(sim.isResistanceSolverRestoredForDeveloperVerification(),
+            "Resistance transaction did not restore the normal analyzed solver graph");
+    }
+
+    private static void verifyNoRefreshFromDrawCycle(CirSim sim) {
+        int measurementsBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        sim.updateCircuit();
+        sim.updateCircuit();
+        require(measurementsBefore == sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
+            "Repeated update/draw cycles started another resistance transaction");
+    }
+
+    private static void verifyAutomaticRefreshAfterAnalysis(CirSim sim, ProbeTarget red,
+            ProbeTarget black) {
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+        int measurementsBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        sim.needAnalyze();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Topology invalidation did not clear the cached OHM reading");
+        sim.updateCircuit();
+        int measurementsAfter = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        require(measurementsBefore + 1 == measurementsAfter,
+            "Post-analysis OHM refresh count was " + measurementsAfter +
+            " after " + measurementsBefore + " prior transactions");
+        require("680 Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Post-analysis OHM refresh did not restore the expected reading");
+    }
+
+    private static void verifyOccupiedFormerMidpoint(CirSim sim, CircuitPostProbeTarget red,
+            CircuitPostProbeTarget black) {
+        Point redPoint = red.getMarkerPoint();
+        GroundElm occupiedFormerMidpoint = new GroundElm(redPoint.x, redPoint.y + 64);
+        occupiedFormerMidpoint.drag(redPoint.x, redPoint.y + 96);
+        occupiedFormerMidpoint.setBbox(redPoint.x, redPoint.y + 64,
+            redPoint.x, redPoint.y + 96);
+        sim.elmList.add(occupiedFormerMidpoint);
+        sim.needAnalyze();
+        sim.updateCircuit();
+        require("680 Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Occupied former midpoint altered the resistance reading");
+        require(sim.isResistanceSolverRestoredForDeveloperVerification(),
+            "Collision test left temporary elements in the solver graph");
+        sim.elmList.remove(occupiedFormerMidpoint);
+        sim.needAnalyze();
+        sim.updateCircuit();
+    }
+
+    private static void verifyInvalidProbeClearsReading(CirSim sim, CircuitPostProbeTarget red,
+            CircuitPostProbeTarget black) {
+        int elementIndex = sim.elmList.indexOf(red.getElement());
+        sim.elmList.remove(red.getElement());
+        sim.needAnalyze();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Removing a probed element did not clear the cached OHM reading");
+        sim.updateCircuit();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Invalid probe retained a stale OHM reading after analysis");
+        sim.elmList.add(elementIndex, red.getElement());
+        sim.needAnalyze();
+        sim.updateCircuit();
+        require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Restoring an element silently restored a cleared probe or stale OHM reading");
+    }
+
+    private static void verifyLegacyCircuitIsBlocked(CirSim sim, GeneratedBoardInstance instance,
+            ProbeTarget red, ProbeTarget black) {
+        sim.getBoardPowerController().detach();
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+        require("POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Legacy CircuitJS graph was allowed to install an active measurement");
+        sim.getBoardPowerController().attach(instance.getExternalPowerBindings());
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
     }
 
     private static void require(boolean condition, String message) {

@@ -26,15 +26,23 @@ through `finally`. Resistance measurement uses a temporary $1 V$ DC source in
 series with a $1 kOhm$ internal resistor. CircuitJS solves the resulting
 current, and the meter derives $|V/I| - 1 kOhm$ from that solve. The temporary
 elements are not board metadata, export content, or undo/redo history; they are
-removed and the original graph is reanalyzed in `finally`.
+removed and the original graph is synchronously reanalyzed and solved in
+`finally` before the transaction completes. The temporary intermediate point is
+allocated deterministically from occupied CircuitJS posts, so it cannot connect
+to either probe or an existing circuit endpoint.
 
 Resistance results are demand-driven rather than calculated from a draw pass.
 They are invalidated whenever CircuitJS requests reanalysis, when either probe
 changes, when OHM mode is entered, or when board power changes. This makes board
 replacement and future topology mutations such as removals, replacements,
 lifted leads, jumpers, and trace changes invalidate the cached result through
-the shared reanalysis path. A power request during an active measurement is
-queued until the temporary overlay is removed.
+the shared reanalysis path. After normal graph analysis completes,
+`InstrumentController` consumes one pending resistance refresh only when OHM
+mode still has two valid probes. Internal measurement cleanup does not enqueue
+another refresh, preventing an analyze/measure loop. Invalid probes are cleared
+as part of invalidation and show the mode-specific OHM placeholder. A power
+request during an active measurement is queued until the temporary overlay is
+removed and the normal solver state is restored.
 
 `TroubleshootBoard` owns stable board identity. `BoardComponent`, `BoardPad`,
 and `BoardNet` use durable string IDs; a `BoardNet` is the TroubleshootJS

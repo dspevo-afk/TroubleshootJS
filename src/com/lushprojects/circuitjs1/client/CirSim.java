@@ -1278,6 +1278,8 @@ MouseOutHandler, MouseWheelHandler {
 	    analyzeCircuit();
 	    analyzeFlag = false;
 	}
+	if (didAnalyze)
+	    instrumentController.onCircuitAnalysisComplete();
 	if (generatedBoardVerificationPending && didAnalyze)
 	    generatedBoardVerificationAnalyzed = true;
 //	if (editDialog != null && editDialog.elm instanceof CircuitElm)
@@ -1669,7 +1671,7 @@ MouseOutHandler, MouseWheelHandler {
     void needAnalyze() {
 	analyzeFlag = true;
 	if (instrumentController != null && !activeMeasurementOverlay)
-	    instrumentController.invalidateActiveMeasurement();
+	    instrumentController.onCircuitTopologyChanged();
     	repaint();
     }
     
@@ -4068,6 +4070,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean activeMeasurementOverlay;
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
+	ResistanceMeasurementStimulus lastResistanceMeasurementStimulus;
+	boolean resistanceSolverRestored;
 	boolean generatedBoardVerificationPending;
 	boolean generatedBoardVerificationAnalyzed;
 	double generatedBoardVerificationStartTime;
@@ -4176,7 +4180,9 @@ MouseOutHandler, MouseWheelHandler {
 	if (!boardPowerController.isElectricallyUnpowered() ||
 		!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return Double.NaN;
-	ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(red, black);
+	ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(this, red, black);
+	lastResistanceMeasurementStimulus = stimulus;
+	resistanceSolverRestored = false;
 	activeMeasurementOverlay = true;
 	try {
 	    stimulus.install(this);
@@ -4197,7 +4203,10 @@ MouseOutHandler, MouseWheelHandler {
 	    return resistance < .001 ? 0 : resistance;
 	} finally {
 	    stimulus.remove(this);
-	    needAnalyze();
+	    analyzeCircuit();
+	    runCircuit(true);
+	    runCircuit(true);
+	    resistanceSolverRestored = isStimulusAbsentFromSolver(stimulus);
 	    if (pendingBoardPowerState != null) {
 		BoardPowerState requestedState = pendingBoardPowerState;
 		pendingBoardPowerState = null;
@@ -4208,6 +4217,29 @@ MouseOutHandler, MouseWheelHandler {
 		activeMeasurementOverlay = false;
 	    }
 	}
+    }
+
+    boolean isResistanceSolverRestoredForDeveloperVerification() {
+	return resistanceSolverRestored && lastResistanceMeasurementStimulus != null &&
+	    isStimulusAbsentFromSolver(lastResistanceMeasurementStimulus);
+    }
+
+    private boolean isStimulusAbsentFromSolver(ResistanceMeasurementStimulus stimulus) {
+	CircuitElm source = stimulus.getSource();
+	CircuitElm resistor = stimulus.getInternalResistor();
+	if (elmList.contains(source) || elmList.contains(resistor))
+	    return false;
+	for (CircuitElm voltageSource : voltageSources) {
+	    if (voltageSource == source || voltageSource == resistor)
+		return false;
+	}
+	for (CircuitNode node : nodeList) {
+	    for (CircuitNodeLink link : node.links) {
+		if (link.elm == source || link.elm == resistor)
+		    return false;
+	    }
+	}
+	return circuitMatrix != null;
     }
 
 	void requestPowerOnDuringActiveMeasurementForDeveloperVerification() {
