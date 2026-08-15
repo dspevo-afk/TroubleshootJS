@@ -4,10 +4,10 @@ class LedIndicatorRepairValidator implements GeneratedRepairValidator {
     public boolean isFunctionallyRepaired(GeneratedBoardInstance instance,
             BoardModificationController modifications, BoardPowerState powerState,
             boolean activeMeasurementOverlay) {
-        ReplaceableComponentSlot slot = instance.getR1Slot();
+        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
         if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay || slot.isEmpty() ||
                 !modifications.isComponentInstalled("R1") || slot.getInstalledPart().isFaulted() ||
-                instance.getResistorInventory().get("R1_ORIGINAL").getLocation() ==
+                LedIndicatorFamilyState.require(instance).getResistorInventory().get("R1_ORIGINAL").getLocation() ==
                     ResistorPartLocation.INSTALLED)
             return false;
         CircuitElm resistorElement = instance.getComponentBindings().getSingleElement("R1");

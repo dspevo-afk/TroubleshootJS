@@ -270,7 +270,7 @@ class PcbWorkbenchRenderer {
 
     String findComponentId(int screenX, int screenY) {
         for (PcbComponentPlacement component : layout.getComponents()) {
-            if ("R1".equals(component.getComponentId()) && instance.getR1Slot().isEmpty())
+            if ("R1".equals(component.getComponentId()) && LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
                 continue;
             Vector<GeneratedComponentConnectionBinding> bindings =
                 instance.getConnectionBindings().getForComponentOrEmpty(component.getComponentId());
@@ -341,7 +341,7 @@ class PcbWorkbenchRenderer {
 
     int getTrayPage() { return trayPage; }
     int getTrayPageCount() {
-        int count = instance.getResistorInventory().getLooseParts().size();
+        int count = LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts().size();
         return Math.max(1, (count + PARTS_PER_TRAY_PAGE - 1) / PARTS_PER_TRAY_PAGE);
     }
     void setTrayPage(int page) {
@@ -352,7 +352,7 @@ class PcbWorkbenchRenderer {
     void clampTrayPage() { trayPage = clampTrayPageValue(trayPage); }
 
     Vector<PhysicalResistorPart> getVisibleLooseParts() {
-        Vector<PhysicalResistorPart> loose = instance.getResistorInventory().getLooseParts();
+        Vector<PhysicalResistorPart> loose = LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts();
         clampTrayPage();
         Vector<PhysicalResistorPart> result = new Vector<PhysicalResistorPart>();
         int start = trayPage * PARTS_PER_TRAY_PAGE;
@@ -383,7 +383,7 @@ class PcbWorkbenchRenderer {
 
     private PhysicalResistorPart getInstalledResistorPart(String componentId) {
         if ("R1".equals(componentId))
-            return instance.getR1Slot().getInstalledPart();
+            return LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart();
         return null;
     }
 

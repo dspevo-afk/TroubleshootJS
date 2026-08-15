@@ -65,7 +65,7 @@ class GeneratedChallengeController {
             return;
         if (!faults.isApplied())
             throw new IllegalStateException("Selected challenge fault was cleared outside developer scope");
-        ReplaceableComponentSlot slot = instance.getR1Slot();
+        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
         if (!slot.isEmpty() && slot.getInstalledPart().isFaulted() &&
             sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
                 sim.getBoardModificationController().isComponentInstalled(

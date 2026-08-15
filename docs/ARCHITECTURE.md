@@ -354,3 +354,10 @@ The package-visible PCB tray-slice accessor is verifier-only integration access.
 It exposes the same paginated loose-part slice used by rendering and hit testing,
 so developer verification can compare physical marker geometry and page state
 without embedding testing behavior in normal drawing.
+
+`GeneratedBoardInstance` is family-agnostic. Mutable repair and catalog state is
+held by its optional `GeneratedBoardFamilyState`; the LED family provides
+`LedIndicatorFamilyState` for the R1 slot and resistor inventory/catalog. Generic
+runtime simulation-element ownership remains on the instance. Future component
+families must add their own family state rather than component-specific instance
+fields or getters.

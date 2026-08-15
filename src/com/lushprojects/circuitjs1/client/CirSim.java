@@ -4135,8 +4135,8 @@ MouseOutHandler, MouseWheelHandler {
 	generatedBoardInstance = instance;
 	generatedChallengeController = null;
 	boardModificationController = new BoardModificationController(this, instance);
-	resistorSlotController = instance.getR1Slot() == null ? null : new ResistorSlotController(this,
-	    instance, boardModificationController);
+	resistorSlotController = instance.getFamilyState() instanceof LedIndicatorFamilyState ?
+	    new ResistorSlotController(this, instance, boardModificationController) : null;
 	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
 		instance.getPcbLayout(), verticalPanel) : null;

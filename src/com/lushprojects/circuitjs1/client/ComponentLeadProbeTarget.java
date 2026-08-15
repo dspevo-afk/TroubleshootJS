@@ -59,16 +59,16 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     String getPadIdForDeveloperVerification() { return padId; }
 
     private boolean isSelectedPhysicalPartStillInstalled() {
-        if (!"R1".equals(componentId) || instance.getR1Slot().isEmpty())
+        if (!"R1".equals(componentId) || LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
             return false;
-        PhysicalResistorPart part = instance.getR1Slot().getInstalledPart();
+        PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart();
         return physicalPartId.equals(part.getId()) && part.getLocation() ==
             ResistorPartLocation.INSTALLED;
     }
 
     private static String getInstalledPartId(GeneratedBoardInstance instance, String componentId) {
-        if (!"R1".equals(componentId) || instance.getR1Slot().isEmpty())
+        if (!"R1".equals(componentId) || LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
             throw new IllegalArgumentException("Component lead is not installed: " + componentId);
-        return instance.getR1Slot().getInstalledPart().getId();
+        return LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getId();
     }
 }

@@ -122,7 +122,8 @@ class LedIndicatorGenerator {
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),
             LedIndicatorPcbLayout.create(board), physicalSpecifications, faultBinding,
-            operationalStates, challengeCatalog.select(seed), r1Slot, resistorInventory, resistorCatalog);
+            operationalStates, challengeCatalog.select(seed), new LedIndicatorFamilyState(r1Slot,
+                resistorInventory, resistorCatalog));
     }
 
     private TroubleshootBoard createBoard() {

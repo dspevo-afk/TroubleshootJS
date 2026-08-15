@@ -18,10 +18,7 @@ class GeneratedBoardInstance {
     private final GeneratedFaultBinding faultBinding;
     private final GeneratedComponentOperationalStates operationalStates;
     private final GeneratedChallengeDefinition challengeDefinition;
-    private final ReplaceableComponentSlot r1Slot;
-    private final ResistorReplacementInventory resistorInventory;
-    private final ResistorReplacementCatalog resistorCatalog;
-    private int nextCatalogPartSerial;
+    private final GeneratedBoardFamilyState familyState;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -31,8 +28,7 @@ class GeneratedBoardInstance {
             GeneratedBoardValidator familyValidator, PcbBoardLayout pcbLayout,
             BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
             GeneratedComponentOperationalStates operationalStates,
-            GeneratedChallengeDefinition challengeDefinition, ReplaceableComponentSlot r1Slot,
-            ResistorReplacementInventory resistorInventory, ResistorReplacementCatalog resistorCatalog) {
+            GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -51,9 +47,7 @@ class GeneratedBoardInstance {
         this.faultBinding = faultBinding;
         this.operationalStates = operationalStates;
         this.challengeDefinition = challengeDefinition;
-        this.r1Slot = r1Slot;
-        this.resistorInventory = resistorInventory;
-        this.resistorCatalog = resistorCatalog;
+        this.familyState = familyState;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
     }
@@ -115,13 +109,7 @@ class GeneratedBoardInstance {
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }
     GeneratedComponentOperationalStates getOperationalStates() { return operationalStates; }
     GeneratedChallengeDefinition getChallengeDefinition() { return challengeDefinition; }
-    ReplaceableComponentSlot getR1Slot() { return r1Slot; }
-    ResistorReplacementInventory getResistorInventory() { return resistorInventory; }
-    ResistorReplacementCatalog getResistorCatalog() { return resistorCatalog; }
-
-    String allocateCatalogPartId() {
-        return "R1_CATALOG_PART_" + nextCatalogPartSerial++;
-    }
+    GeneratedBoardFamilyState getFamilyState() { return familyState; }
 
     PcbBoardLayout getPcbLayout() {
         return pcbLayout;

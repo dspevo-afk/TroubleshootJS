@@ -14,7 +14,7 @@ class ResistorSlotController {
 
     boolean removeInstalledPart() {
         requireSafeMutation();
-        ReplaceableComponentSlot slot = instance.getR1Slot();
+        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
         if (slot.isEmpty())
             return false;
         PhysicalResistorPart part = slot.getInstalledPart();
@@ -27,10 +27,10 @@ class ResistorSlotController {
 
     boolean install(String partId) {
         requireSafeMutation();
-        ReplaceableComponentSlot slot = instance.getR1Slot();
+        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
         if (!slot.isEmpty())
             return false;
-        PhysicalResistorPart part = instance.getResistorInventory().get(partId);
+        PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getResistorInventory().get(partId);
         if (part.getLocation() != ResistorPartLocation.LOOSE)
             return false;
         instance.getComponentBindings().replaceSingleElement("R1", part.getElement());
@@ -44,17 +44,17 @@ class ResistorSlotController {
 
     boolean installNewFromCatalog(String catalogEntryId) {
         requireSafeMutation();
-        ReplaceableComponentSlot slot = instance.getR1Slot();
+        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
         if (!slot.isEmpty())
             return false;
-        ResistorCatalogEntry entry = instance.getResistorCatalog().get(catalogEntryId);
+        ResistorCatalogEntry entry = LedIndicatorFamilyState.require(instance).getResistorCatalog().get(catalogEntryId);
         ResistorElm element = DynamicResistorBackingAllocator.create(instance.getSimulationElements(),
             entry.getNameplate().getNominalResistanceOhms());
-        PhysicalResistorPart part = new PhysicalResistorPart(instance.allocateCatalogPartId(),
+        PhysicalResistorPart part = new PhysicalResistorPart(LedIndicatorFamilyState.require(instance).allocateCatalogPartId(),
             new ResistorNameplate("R1", entry.getNameplate().getNominalResistanceOhms(), 5), element,
             null, ResistorPartLocation.INSTALLED);
         instance.registerRuntimeSimulationElement(element);
-        instance.getResistorInventory().add(part);
+        LedIndicatorFamilyState.require(instance).getResistorInventory().add(part);
         sim.elmList.add(element);
         instance.getComponentBindings().replaceSingleElement("R1", element);
         retargetComponentLeadBindings(part);
