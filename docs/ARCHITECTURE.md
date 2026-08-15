@@ -65,6 +65,25 @@ indicator remains authoritative. Topology, probe, mode, board, and power
 invalidation clear continuity feedback immediately; normal post-analysis
 refreshes recompute it once without draw-time stimulation.
 
+Active stimuli share a narrow `ActiveMeasurementStimulus` transaction in
+`CirSim`. The transaction owns temporary-element installation, overlay state,
+analysis/solve, result sampling, `finally` removal, normal graph restoration,
+queued power application, generated-board verification resumption, and solver
+cleanliness checks. This keeps resistance and diode electrical behavior
+separate while preserving one cleanup and final-state path.
+
+Diode test is an independent active measurement rather than a continuity or
+resistance policy. Its temporary CircuitJS overlay is a $3 V$ finite-compliance
+source and $1 kOhm$ series resistance, limiting a short to approximately
+$3 mA$. The source is oriented so the red probe is electrically positive
+relative to the black probe. After CircuitJS solves the unpowered graph, the
+meter samples $V_{red} - V_{black}$ and source current. It displays a finite
+voltage only for finite results with at least $10 uA$ current and a diode
+voltage below the $2.95 V$ compliance threshold; otherwise it displays `OL`.
+Direct shorts remain valid approximately-$0 V$ results. DIODE shares the same
+power gate, invalidation, post-analysis one-shot refresh, and queued-power
+cleanup as other active modes, but never prepares or enables continuity audio.
+
 `TroubleshootBoard` owns stable board identity. `BoardComponent`, `BoardPad`,
 and `BoardNet` use durable string IDs; a `BoardNet` is the TroubleshootJS
 electrical identity, not a CircuitJS analyzed node number. `BoardPad` connects

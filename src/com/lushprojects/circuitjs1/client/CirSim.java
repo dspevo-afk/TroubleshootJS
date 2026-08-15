@@ -4070,6 +4070,7 @@ MouseOutHandler, MouseWheelHandler {
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
 	ResistanceMeasurementStimulus lastResistanceMeasurementStimulus;
+	ActiveMeasurementStimulus lastActiveMeasurementStimulus;
 	boolean resistanceSolverRestored;
 	boolean generatedBoardVerificationPending;
 	boolean generatedBoardVerificationAnalyzed;
@@ -4179,8 +4180,40 @@ MouseOutHandler, MouseWheelHandler {
 	if (!boardPowerController.isElectricallyUnpowered() ||
 		!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return Double.NaN;
-	ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(this, red, black);
+	final ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(this, red, black);
 	lastResistanceMeasurementStimulus = stimulus;
+	return runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
+	    public double readResult() {
+		double current = stimulus.getTestCurrent();
+		if (Double.isNaN(current) || Double.isInfinite(current) || Math.abs(current) < 1e-10)
+		    return Double.POSITIVE_INFINITY;
+		double resistance = Math.abs(ResistanceMeasurementStimulus.TEST_VOLTAGE / current) -
+		    ResistanceMeasurementStimulus.INTERNAL_RESISTANCE;
+		return (Double.isNaN(resistance) || Double.isInfinite(resistance)) ?
+		    Double.POSITIVE_INFINITY : (resistance < .001 ? 0 : resistance);
+	    }
+	});
+    }
+
+    DiodeMeasurementResult measureDiode(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black) {
+	if (!boardPowerController.isElectricallyUnpowered() ||
+		!containsElement(red.getElement()) || !containsElement(black.getElement()))
+	    return null;
+	final DiodeTestStimulus stimulus = new DiodeTestStimulus(this, red, black);
+	final DiodeMeasurementResult result[] = new DiodeMeasurementResult[1];
+	runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
+	    public double readResult() {
+		result[0] = stimulus.getResult();
+		return result[0].voltage;
+	    }
+	});
+	return result[0];
+    }
+
+    private double runTemporaryActiveMeasurement(ActiveMeasurementStimulus stimulus,
+	    ActiveMeasurementResultReader reader) {
+	lastActiveMeasurementStimulus = stimulus;
 	resistanceSolverRestored = false;
 	activeMeasurementOverlay = true;
 	try {
@@ -4192,14 +4225,7 @@ MouseOutHandler, MouseWheelHandler {
 	    analyzeCircuit();
 	    runCircuit(true);
 	    runCircuit(true);
-	    double current = stimulus.getTestCurrent();
-	    if (Double.isNaN(current) || Double.isInfinite(current) || Math.abs(current) < 1e-10)
-		return Double.POSITIVE_INFINITY;
-	    double resistance = Math.abs(ResistanceMeasurementStimulus.TEST_VOLTAGE / current) -
-		ResistanceMeasurementStimulus.INTERNAL_RESISTANCE;
-	    if (Double.isNaN(resistance) || Double.isInfinite(resistance))
-		return Double.POSITIVE_INFINITY;
-	    return resistance < .001 ? 0 : resistance;
+	    return reader.readResult();
 	} finally {
 	    stimulus.remove(this);
 	    analyzeCircuit();
@@ -4228,18 +4254,24 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private boolean isStimulusAbsentFromSolver(ResistanceMeasurementStimulus stimulus) {
-	CircuitElm source = stimulus.getSource();
-	CircuitElm resistor = stimulus.getInternalResistor();
-	if (elmList.contains(source) || elmList.contains(resistor))
-	    return false;
-	for (CircuitElm voltageSource : voltageSources) {
-	    if (voltageSource == source || voltageSource == resistor)
+	return isStimulusAbsentFromSolver((ActiveMeasurementStimulus) stimulus);
+    }
+
+    private boolean isStimulusAbsentFromSolver(ActiveMeasurementStimulus stimulus) {
+	CircuitElm elements[] = stimulus.getTemporaryElements();
+	for (CircuitElm element : elements)
+	    if (elmList.contains(element))
 		return false;
+	for (CircuitElm voltageSource : voltageSources) {
+	    for (CircuitElm element : elements)
+		if (voltageSource == element)
+		    return false;
 	}
 	for (CircuitNode node : nodeList) {
 	    for (CircuitNodeLink link : node.links) {
-		if (link.elm == source || link.elm == resistor)
-		    return false;
+		for (CircuitElm element : elements)
+		    if (link.elm == element)
+			return false;
 	    }
 	}
 	return circuitMatrix != null;

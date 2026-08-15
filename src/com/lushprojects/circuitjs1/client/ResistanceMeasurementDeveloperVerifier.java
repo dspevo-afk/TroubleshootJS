@@ -4,6 +4,8 @@ import java.util.Vector;
 
 /** URL-gated regression check for the production active-resistance transaction. */
 class ResistanceMeasurementDeveloperVerifier {
+    private static String diodeForwardSummary;
+
     static void verify(CirSim sim) {
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
         if (instance == null)
@@ -19,6 +21,7 @@ class ResistanceMeasurementDeveloperVerifier {
         CircuitPostProbeTarget j11Probe = getProbe(sim, instance, "J1.1");
         CircuitPostProbeTarget r11Probe = getProbe(sim, instance, "R1.1");
         CircuitPostProbeTarget r12Probe = getProbe(sim, instance, "R1.2");
+        CircuitPostProbeTarget led1aProbe = getProbe(sim, instance, "LED1.A");
         CircuitPostProbeTarget led1kProbe = getProbe(sim, instance, "LED1.K");
         CircuitPostProbeTarget j12Probe = getProbe(sim, instance, "J1.2");
         sim.setBoardPowerState(BoardPowerState.POWERED);
@@ -51,6 +54,8 @@ class ResistanceMeasurementDeveloperVerifier {
         verifyLegacyCircuitIsBlocked(sim, instance, r11Probe, r12Probe);
 
         verifyContinuity(sim, instance, j11Probe, r11Probe, r12Probe, led1kProbe);
+        verifyDiode(sim, instance, j11Probe, r11Probe, r12Probe, led1aProbe, led1kProbe,
+            j12Probe);
 
         sim.requestPowerOnDuringActiveMeasurementForDeveloperVerification();
         verifyQueuedPowerOnFinalState(sim, instance, j11Probe, j12Probe, r11Probe, r12Probe);
@@ -76,7 +81,7 @@ class ResistanceMeasurementDeveloperVerifier {
         sim.runCircuit(true);
         sim.verifyGeneratedBoard();
         measure(sim, r11Probe, r12Probe, 680, 2);
-        sim.setCircuitTitle("Resistance verification passed");
+        sim.setCircuitTitle("Resistance verification passed; diode " + diodeForwardSummary);
     }
 
     private static CircuitPostProbeTarget getProbe(CirSim sim, GeneratedBoardInstance instance,
@@ -189,6 +194,142 @@ class ResistanceMeasurementDeveloperVerifier {
         verifyContinuityLegacyBlock(sim, instance, j11Probe, r11Probe);
         verifyContinuityModeSwitching(sim, j11Probe, r11Probe);
         verifyContinuityRepaintBehavior(sim, j11Probe, r11Probe);
+    }
+
+    private static void verifyDiode(CirSim sim, GeneratedBoardInstance instance,
+            CircuitPostProbeTarget j11Probe, CircuitPostProbeTarget r11Probe,
+            CircuitPostProbeTarget r12Probe, CircuitPostProbeTarget led1aProbe,
+            CircuitPostProbeTarget led1kProbe, CircuitPostProbeTarget j12Probe) {
+        verifyDiodeForwardLed(sim, led1aProbe, led1kProbe);
+        verifyDiodeReverseAndShort(sim, led1aProbe, led1kProbe, j11Probe, r11Probe);
+        verifyDiodeInvalidProbe(sim, led1aProbe, led1kProbe);
+        verifyDiodeTopologyAndRepaint(sim, led1aProbe, led1kProbe);
+        verifyDiodePowerAndLegacy(sim, instance, led1aProbe, led1kProbe);
+        verifyDiodeModeSwitching(sim, j11Probe, r11Probe, j12Probe);
+        verifyDiodeQueuedPower(sim, instance, led1aProbe, led1kProbe, j11Probe, j12Probe);
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+    }
+
+    private static void verifyDiodeForwardLed(CirSim sim, ProbeTarget red, ProbeTarget black) {
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(red, black);
+        double voltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
+        double current = sim.instrumentController.getLatestDiodeCurrentForDeveloperVerification();
+        require(!"OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Forward LED diode test displayed OL");
+        require(voltage > .5 && voltage < InstrumentController.DIODE_COMPLIANCE_THRESHOLD,
+            "Forward LED diode voltage was not defensible: " + voltage);
+        require(current >= InstrumentController.DIODE_MINIMUM_CURRENT,
+            "Forward LED diode current was not meaningful: " + current);
+        diodeForwardSummary = voltage + " V at " + current + " A";
+        require(sim.isResistanceSolverRestoredForDeveloperVerification(),
+            "Forward diode transaction did not restore the normal solver graph");
+    }
+
+    private static void verifyDiodeReverseAndShort(CirSim sim, ProbeTarget ledAnode,
+            ProbeTarget ledCathode, ProbeTarget sameNetA, ProbeTarget sameNetB) {
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(ledCathode, ledAnode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Reverse LED diode test was not OL");
+        double reverseVoltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
+        double reverseCurrent = sim.instrumentController.getLatestDiodeCurrentForDeveloperVerification();
+        require(Double.isNaN(reverseVoltage) &&
+            (reverseCurrent < InstrumentController.DIODE_MINIMUM_CURRENT ||
+             reverseCurrent >= InstrumentController.DIODE_COMPLIANCE_THRESHOLD),
+            "Reverse diode solve did not meet OL conditions");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(sameNetA, sameNetB);
+        requireApproximately(0, sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification(), .001,
+            "Same-node diode test was not approximately 0 V");
+        require(!"OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Same-node diode test displayed OL");
+    }
+
+    private static void verifyDiodeInvalidProbe(CirSim sim, CircuitPostProbeTarget red,
+            CircuitPostProbeTarget black) {
+        verifyDiodeForwardLed(sim, red, black);
+        int elementIndex = sim.elmList.indexOf(red.getElement());
+        sim.elmList.remove(red.getElement());
+        sim.needAnalyze();
+        require("--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Invalid diode probe did not clear cached reading");
+        sim.updateCircuit();
+        sim.elmList.add(elementIndex, red.getElement());
+        sim.needAnalyze();
+        sim.updateCircuit();
+        require("--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Restoring an element silently restored a diode probe");
+    }
+
+    private static void verifyDiodeTopologyAndRepaint(CirSim sim, ProbeTarget red, ProbeTarget black) {
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(red, black);
+        int before = sim.instrumentController.getDiodeMeasurementCountForDeveloperVerification();
+        sim.needAnalyze();
+        require("--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Diode topology invalidation did not clear cached reading");
+        sim.updateCircuit();
+        require(before + 1 == sim.instrumentController.getDiodeMeasurementCountForDeveloperVerification(),
+            "Diode topology change did not refresh exactly once");
+        sim.updateCircuit();
+        sim.updateCircuit();
+        require(before + 1 == sim.instrumentController.getDiodeMeasurementCountForDeveloperVerification(),
+            "Diode repaint cycle reran the active transaction");
+    }
+
+    private static void verifyDiodePowerAndLegacy(CirSim sim, GeneratedBoardInstance instance,
+            ProbeTarget red, ProbeTarget black) {
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(red, black);
+        require("POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Powered diode measurement was not blocked");
+        requireContinuityInactive(sim, "Diode mode activated continuity feedback");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.getBoardPowerController().detach();
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(red, black);
+        require("POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Legacy graph was allowed to run diode measurement");
+        sim.getBoardPowerController().attach(instance.getExternalPowerBindings());
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+    }
+
+    private static void verifyDiodeModeSwitching(CirSim sim, ProbeTarget sameNetA,
+            ProbeTarget sameNetB, ProbeTarget ground) {
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(sameNetA, sameNetB);
+        require(sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
+            "CONT setup for diode switching did not activate BEEP");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(sameNetA, sameNetB);
+        requireContinuityInactive(sim, "DIODE did not stop BEEP immediately");
+        int continuityBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(sameNetA, sameNetB);
+        require(continuityBefore + 1 == sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
+            "DIODE to CONT did not run one continuity measurement");
+        int resistanceBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(sameNetA, sameNetB);
+        require(resistanceBefore + 1 == sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
+            "DIODE to OHM did not run one resistance measurement");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(sameNetA, sameNetB);
+        sim.instrumentController.setDcVoltageProbesForDeveloperVerification(sameNetA, ground);
+        requireVoltageReadout(sim, "DIODE to DC V did not restore live DC display");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(sameNetA, sameNetB);
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        require(!sim.instrumentController.isHandlingPointerInput(),
+            "Exiting diode mode did not restore normal pointer handling");
+    }
+
+    private static void verifyDiodeQueuedPower(CirSim sim, GeneratedBoardInstance instance,
+            ProbeTarget red, ProbeTarget black, ProbeTarget vin, ProbeTarget ground) {
+        sim.requestPowerOnDuringActiveMeasurementForDeveloperVerification();
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(red, black);
+        require("POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Queued power-on published a diode result");
+        require(sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
+            instance.getExternalPowerBindings().areAllConnected(),
+            "Queued diode power-on did not restore the final powered graph");
+        requireApproximately(9, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(vin, ground), .1,
+            "Queued diode power-on did not restore VIN");
+        require(sim.isResistanceSolverRestoredForDeveloperVerification(),
+            "Queued diode power-on left a temporary overlay in the solver");
+        sim.verifyGeneratedBoard();
     }
 
     private static void verifyContinuityResult(CirSim sim, ProbeTarget red, ProbeTarget black,
@@ -316,6 +457,11 @@ class ResistanceMeasurementDeveloperVerifier {
         require(startsBefore == sim.instrumentController.getContinuityFeedbackStartCountForDeveloperVerification() &&
             stopsBefore == sim.instrumentController.getContinuityFeedbackStopCountForDeveloperVerification(),
             "Repeated continuity repaint cycles changed feedback state");
+        sim.instrumentController.handlePointerInput(0, -1, -1);
+        require(measurementsBefore == sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification() &&
+            startsBefore == sim.instrumentController.getContinuityFeedbackStartCountForDeveloperVerification() &&
+            stopsBefore == sim.instrumentController.getContinuityFeedbackStopCountForDeveloperVerification(),
+            "Empty continuity click changed active measurement or feedback state");
     }
 
     private static void requireContinuityInactive(CirSim sim, String message) {

@@ -1,6 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
-class ResistanceMeasurementStimulus {
+class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
     static final double TEST_VOLTAGE = 1;
     static final double INTERNAL_RESISTANCE = 1000;
 
@@ -20,12 +20,12 @@ class ResistanceMeasurementStimulus {
         internalResistor.setResistance(INTERNAL_RESISTANCE);
     }
 
-    void install(CirSim sim) {
+    public void install(CirSim sim) {
         sim.elmList.add(source);
         sim.elmList.add(internalResistor);
     }
 
-    void remove(CirSim sim) {
+    public void remove(CirSim sim) {
         sim.elmList.remove(source);
         sim.elmList.remove(internalResistor);
     }
@@ -42,7 +42,11 @@ class ResistanceMeasurementStimulus {
         return internalResistor;
     }
 
-    private static Point findUnusedPoint(CirSim sim, Point redPoint, Point blackPoint) {
+    public CircuitElm[] getTemporaryElements() {
+        return new CircuitElm[] { source, internalResistor };
+    }
+
+    static Point findUnusedPoint(CirSim sim, Point redPoint, Point blackPoint) {
         int maximumX = Math.max(redPoint.x, blackPoint.x);
         int maximumY = Math.max(redPoint.y, blackPoint.y);
         for (CircuitElm element : sim.elmList) {

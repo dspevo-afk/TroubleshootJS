@@ -12,8 +12,11 @@ class InstrumentController {
     private static final int MODE_DC_VOLTAGE = 1;
     private static final int MODE_RESISTANCE = 2;
     private static final int MODE_CONTINUITY = 3;
+    private static final int MODE_DIODE = 4;
     private static final double MAX_RESISTANCE = 10000000;
     static final double CONTINUITY_THRESHOLD_OHMS = 50;
+    static final double DIODE_MINIMUM_CURRENT = .00001;
+    static final double DIODE_COMPLIANCE_THRESHOLD = 2.95;
     private static final int PROBE_MARKER_RADIUS = 5;
 
     private final CirSim sim;
@@ -21,6 +24,7 @@ class InstrumentController {
     private final Button dcVoltageButton;
     private final Button resistanceButton;
     private final Button continuityButton;
+    private final Button diodeButton;
     private final Label readingLabel;
     private final Label continuityLabel;
     private final ContinuityFeedback continuityFeedback;
@@ -31,6 +35,10 @@ class InstrumentController {
     private double latestResistanceReading = Double.NaN;
     private int resistanceMeasurementCount;
     private boolean continuityDetected;
+    private boolean diodeRefreshPending;
+    private double latestDiodeVoltage = Double.NaN;
+    private double latestDiodeCurrent = Double.NaN;
+    private int diodeMeasurementCount;
 
     InstrumentController(final CirSim sim, VerticalPanel panel) {
         this.sim = sim;
@@ -45,6 +53,9 @@ class InstrumentController {
         continuityButton = new Button("CONT");
         continuityButton.addStyleName("chbut");
         panel.add(continuityButton);
+        diodeButton = new Button("DIODE");
+        diodeButton.addStyleName("chbut");
+        panel.add(diodeButton);
         continuityLabel = new Label("BEEP");
         continuityLabel.setVisible(false);
         panel.add(continuityLabel);
@@ -72,6 +83,13 @@ class InstrumentController {
                 updateReading();
             }
         });
+
+        diodeButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                setActiveMode(activeMode == MODE_DIODE ? MODE_NONE : MODE_DIODE);
+                updateReading();
+            }
+        });
     }
 
     boolean isHandlingPointerInput() {
@@ -79,16 +97,25 @@ class InstrumentController {
     }
 
     void handlePointerInput(int button, int screenX, int screenY) {
-        continuityFeedback.prepare();
         CircuitPostProbeTarget target = sim.findPostTarget(screenX, screenY);
+        boolean changed = false;
         if (target != null) {
+            if (button == NativeEvent.BUTTON_LEFT)
+                changed = redProbe != target;
+            else if (button == NativeEvent.BUTTON_RIGHT)
+                changed = blackProbe != target;
+            if (activeMode == MODE_CONTINUITY && changed)
+                continuityFeedback.prepare();
             if (button == NativeEvent.BUTTON_LEFT)
                 redProbe = target;
             else if (button == NativeEvent.BUTTON_RIGHT)
                 blackProbe = target;
         }
-        requestResistanceRefresh();
-        updateReading();
+        if (changed) {
+            requestResistanceRefresh();
+            requestDiodeRefresh();
+            updateReading();
+        }
         sim.repaint();
     }
 
@@ -96,21 +123,36 @@ class InstrumentController {
         redProbe = null;
         blackProbe = null;
         requestResistanceRefresh();
+        requestDiodeRefresh();
         updateReading();
     }
 
     void refreshActiveMeasurement() {
         requestResistanceRefresh();
+        requestDiodeRefresh();
     }
 
     void onCircuitTopologyChanged() {
         validateTargets();
         requestResistanceRefresh();
+        requestDiodeRefresh();
     }
 
     void onSimulationStepComplete(boolean didAnalyze) {
         if (activeMode == MODE_DC_VOLTAGE)
             updateReading();
+        if (didAnalyze && isDiodeMode() && diodeRefreshPending) {
+            validateTargets();
+            if (redProbe == null || blackProbe == null) {
+                diodeRefreshPending = false;
+                latestDiodeVoltage = Double.NaN;
+                latestDiodeCurrent = Double.NaN;
+                readingLabel.setText("--- V");
+            } else {
+                diodeRefreshPending = false;
+                updateDiodeReading();
+            }
+        }
         if (!didAnalyze || !isActiveResistanceMode() || !resistanceRefreshPending)
             return;
         validateTargets();
@@ -156,6 +198,18 @@ class InstrumentController {
         updateReading();
     }
 
+    void setDiodeProbesForDeveloperVerification(ProbeTarget red, ProbeTarget black) {
+        setActiveMode(MODE_DIODE);
+        redProbe = red;
+        blackProbe = black;
+        requestDiodeRefresh();
+        updateReading();
+    }
+
+    double getLatestDiodeVoltageForDeveloperVerification() { return latestDiodeVoltage; }
+    double getLatestDiodeCurrentForDeveloperVerification() { return latestDiodeCurrent; }
+    int getDiodeMeasurementCountForDeveloperVerification() { return diodeMeasurementCount; }
+
     boolean isContinuityDetectedForDeveloperVerification() {
         return continuityDetected;
     }
@@ -191,9 +245,11 @@ class InstrumentController {
             setContinuityDetected(false);
         activeMode = mode;
         requestResistanceRefresh();
+        requestDiodeRefresh();
         dcVoltageButton.setStyleName("chsel", activeMode == MODE_DC_VOLTAGE);
         resistanceButton.setStyleName("chsel", activeMode == MODE_RESISTANCE);
         continuityButton.setStyleName("chsel", activeMode == MODE_CONTINUITY);
+        diodeButton.setStyleName("chsel", activeMode == MODE_DIODE);
         sim.repaint();
     }
 
@@ -212,7 +268,16 @@ class InstrumentController {
         validateTargets();
         if (redProbe == null || blackProbe == null) {
             latestResistanceReading = Double.NaN;
+            latestDiodeVoltage = Double.NaN;
+            latestDiodeCurrent = Double.NaN;
             readingLabel.setText(isActiveResistanceMode() ? "--- Ohm" : "--- V");
+            return;
+        }
+        if (isDiodeMode()) {
+            if (diodeRefreshPending) {
+                diodeRefreshPending = false;
+                updateDiodeReading();
+            }
             return;
         }
         if (isActiveResistanceMode()) {
@@ -265,6 +330,36 @@ class InstrumentController {
         updateReading();
     }
 
+    private void updateDiodeReading() {
+        if (!measurementAdapter.isActiveMeasurementAllowed(redProbe, blackProbe)) {
+            latestDiodeVoltage = Double.NaN;
+            latestDiodeCurrent = Double.NaN;
+            readingLabel.setText("POWER OFF");
+            return;
+        }
+        DiodeMeasurementResult result = measurementAdapter.measureDiode(redProbe, blackProbe);
+        diodeMeasurementCount++;
+        validateTargets();
+        if (!measurementAdapter.isActiveMeasurementAllowed(redProbe, blackProbe)) {
+            latestDiodeVoltage = Double.NaN;
+            latestDiodeCurrent = Double.NaN;
+            readingLabel.setText(redProbe == null || blackProbe == null ? "--- V" : "POWER OFF");
+            return;
+        }
+        if (result == null || Double.isNaN(result.voltage) || Double.isInfinite(result.voltage) ||
+                Double.isNaN(result.current) || Double.isInfinite(result.current) ||
+                result.current < DIODE_MINIMUM_CURRENT ||
+                result.voltage >= DIODE_COMPLIANCE_THRESHOLD) {
+            latestDiodeVoltage = Double.NaN;
+            latestDiodeCurrent = result == null ? Double.NaN : result.current;
+            readingLabel.setText("OL");
+            return;
+        }
+        latestDiodeVoltage = result.voltage;
+        latestDiodeCurrent = result.current;
+        readingLabel.setText(CircuitElm.getVoltageText(result.voltage));
+    }
+
     private void validateTargets() {
         if (redProbe != null && !redProbe.isValid())
             redProbe = null;
@@ -283,9 +378,20 @@ class InstrumentController {
         readingLabel.setText("--- Ohm");
     }
 
+    private void requestDiodeRefresh() {
+        latestDiodeVoltage = Double.NaN;
+        latestDiodeCurrent = Double.NaN;
+        if (!isDiodeMode())
+            return;
+        diodeRefreshPending = true;
+        readingLabel.setText("--- V");
+    }
+
     private boolean isActiveResistanceMode() {
         return activeMode == MODE_RESISTANCE || activeMode == MODE_CONTINUITY;
     }
+
+    private boolean isDiodeMode() { return activeMode == MODE_DIODE; }
 
     private void setContinuityDetected(boolean detected) {
         continuityDetected = detected;

@@ -61,6 +61,22 @@ class CircuitMeasurementAdapter {
         }
     }
 
+    DiodeMeasurementResult measureDiode(ProbeTarget redProbe, ProbeTarget blackProbe) {
+        if (!isActiveMeasurementAllowed(redProbe, blackProbe))
+            return null;
+        ActiveMeasurementSession session = new ActiveMeasurementSession(redProbe, blackProbe);
+        try {
+            if (!session.hasValidTargets() ||
+                    !(session.getRedEndpoint() instanceof CircuitPostMeasurementEndpoint) ||
+                    !(session.getBlackEndpoint() instanceof CircuitPostMeasurementEndpoint))
+                return null;
+            return sim.measureDiode((CircuitPostMeasurementEndpoint) session.getRedEndpoint(),
+                (CircuitPostMeasurementEndpoint) session.getBlackEndpoint());
+        } finally {
+            session.close();
+        }
+    }
+
     // Future test sources must be owned, reanalyzed, and removed by this adapter/session boundary.
 }
 
