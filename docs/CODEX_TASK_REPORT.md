@@ -1,47 +1,43 @@
-# Task 20: Visible preview repair
+# Task 21: Post-refactor validation and preview hardening
 
-## Root cause
+## Preview hardening
 
-The port-8888 process was the legacy GWT 2.7 `DevMode` launcher. Its generated
-bootstrap includes the obsolete hosted-mode plugin path (`circuitjs1.devmode.js`)
-and is not a reliable modern browser preview. The host request returned 200 and
-port 9876 was reachable, but those facts did not establish that a browser could
-initialize the application.
+`scripts/preview.ps1` now uses canonical root-prefix containment, rejects encoded
+traversal with 404, ignores query strings for resolution, returns 404 for absent
+files, handles malformed requests without terminating the listener, and closes
+the listener in `finally`. It supplies content types for HTML, JavaScript, CSS,
+JSON, image, SVG, font, and ICO assets, with octet-stream fallback.
 
-## Fix
+Verified on port 8900: HTML returned `text/html`, the GWT bootstrap returned
+`text/javascript`, and `..%2fDEVELOPMENT.md` returned 404.
 
-Added `scripts/preview.ps1`, a dependency-free localhost static server for the
-already compiled `war` output. It validates the production bootstrap before
-listening and prints the normal player URL. `DEVELOPMENT.md` now distinguishes
-this reliable preview from legacy GWT development mode.
+## Build
 
-Use:
+The explicit JDK 8 production build completed all five GWT permutations and
+linked the output successfully.
 
-```powershell
-.\scripts\preview.ps1
-```
+## Architecture and replacement regression
 
-Visible player URL:
+`GeneratedBoardInstance` contains only generic family state; LED-specific R1
+slot, inventory, catalog, and serial allocation remain in
+`LedIndicatorFamilyState`. Its `require` method explicitly rejects unrelated
+family state. Task 18 replacement assertions remain unchanged.
+
+## Visible application
+
+Run `.\scripts\preview.ps1` and open:
 
 `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=3`
 
-The preview server was started and verified to return both the player host page
-and `circuitjs1/circuitjs1.nocache.js` with HTTP 200.
-
-## Architecture regression
-
-Task 19 remains intact: `GeneratedBoardInstance` holds generic family state
-only; `LedIndicatorFamilyState` owns the R1 slot, resistor inventory/catalog,
-and serial allocation, and rejects the wrong family state.
+The production preview remains running on that URL.
 
 ## Files changed
 
 - `scripts/preview.ps1`
-- `DEVELOPMENT.md`
 - `docs/CODEX_TASK_REPORT.md`
 
 ## Remaining limitation
 
-Legacy GWT 2.7 DevMode remains available for compiler development but is not the
-recommended visible-player workflow. The static preview should be used for
-normal interactive inspection.
+The project retains legacy GWT tooling for compilation; the production preview
+is the supported visible-player workflow. The recommended next task is to resume
+feature work only after the browser verifier automation environment is available.
