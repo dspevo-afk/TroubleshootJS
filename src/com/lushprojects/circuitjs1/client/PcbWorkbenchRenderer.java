@@ -65,7 +65,7 @@ class PcbWorkbenchRenderer {
         graphics.setColor("#d9f1e3");
         graphics.drawString("TSJ LED INDICATOR", screenX(75), screenY(100));
         graphics.setFont(new Font("sans-serif", 0, Math.max(10, scaleInt(12))));
-        graphics.drawString("+9V", screenX(90), screenY(175));
+        graphics.drawString(getPowerInputLabel(), screenX(90), screenY(175));
         graphics.drawString("GND", screenX(90), screenY(345));
     }
 
@@ -133,10 +133,10 @@ class PcbWorkbenchRenderer {
     }
 
     private void drawResistorBands(Graphics graphics, int left, int right, int y, int height) {
-        String[] colors = { "#355caa", "#7d4a2d", "#7d4a2d", "#c7a33b" };
-        for (int index = 0; index < colors.length; index++) {
+        ResistorColorBand[] bands = getResistorBands("R1");
+        for (int index = 0; index < bands.length; index++) {
             int x = left + (right - left) * (index + 1) / 5;
-            graphics.setColor(colors[index]);
+            graphics.setColor(getBandColor(bands[index]));
             graphics.fillRect(x - Math.max(2, scaleInt(3)), y - height / 2,
                 Math.max(4, scaleInt(6)), height);
         }
@@ -223,6 +223,7 @@ class PcbWorkbenchRenderer {
         graphics.fillRect(bodyLeft, lead1.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
         graphics.setColor("#302a22");
         graphics.drawRect(bodyLeft, lead1.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
+        drawResistorBands(graphics, bodyLeft, bodyRight, lead1.y, scaleInt(28));
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
         graphics.drawString(componentId, lead1.x + scaleInt(43), lead1.y - scaleInt(26));
     }
@@ -295,6 +296,14 @@ class PcbWorkbenchRenderer {
     }
 
     boolean hasPad(String padId) { return layout.getPad(padId) != null; }
+    ResistorColorBand[] getResistorBands(String componentId) {
+        ResistorNameplate nameplate = instance.getPhysicalSpecifications()
+            .getResistorNameplate(componentId);
+        if (nameplate == null)
+            throw new IllegalStateException("Missing resistor nameplate: " + componentId);
+        return ResistorColorCode.getFourBandCode(nameplate);
+    }
+    String getPowerInputLabelForDeveloperVerification() { return getPowerInputLabel(); }
     void setSelectedComponentId(String componentId) { selectedComponentId = componentId; }
     String getSelectedComponentId() { return selectedComponentId; }
 
@@ -318,5 +327,40 @@ class PcbWorkbenchRenderer {
     private Rectangle screenRect(PcbComponentPlacement component) {
         return new Rectangle(screenX(component.getX()), screenY(component.getY()),
             scaleInt(component.getWidth()), scaleInt(component.getHeight()));
+    }
+
+    private String getPowerInputLabel() {
+        Vector<String> powerInputIds = instance.getBoard().getPowerInputIds();
+        if (powerInputIds.size() != 1)
+            return "VIN";
+        PowerInputNameplate nameplate = instance.getPhysicalSpecifications()
+            .getPowerInputNameplate(powerInputIds.get(0));
+        return nameplate == null ? "VIN" : nameplate.getDisplayLabel();
+    }
+
+    private String getBandColor(ResistorColorBand band) {
+        if (band == ResistorColorBand.BLACK)
+            return "#222222";
+        if (band == ResistorColorBand.BROWN)
+            return "#7d4a2d";
+        if (band == ResistorColorBand.RED)
+            return "#b5232d";
+        if (band == ResistorColorBand.ORANGE)
+            return "#cc6c2b";
+        if (band == ResistorColorBand.YELLOW)
+            return "#e0ba36";
+        if (band == ResistorColorBand.GREEN)
+            return "#278456";
+        if (band == ResistorColorBand.BLUE)
+            return "#355caa";
+        if (band == ResistorColorBand.VIOLET)
+            return "#7754a1";
+        if (band == ResistorColorBand.GRAY)
+            return "#73777b";
+        if (band == ResistorColorBand.WHITE)
+            return "#e8e8e4";
+        if (band == ResistorColorBand.GOLD)
+            return "#c7a33b";
+        throw new IllegalArgumentException("Unsupported resistor band: " + band);
     }
 }

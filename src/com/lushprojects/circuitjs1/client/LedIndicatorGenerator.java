@@ -16,6 +16,10 @@ class LedIndicatorGenerator {
         double supplyVoltage = SUPPLY_VOLTAGES[valueIndex];
         double resistorValue = RESISTOR_VALUES[valueIndex];
         TroubleshootBoard board = createBoard();
+        BoardPhysicalSpecifications physicalSpecifications = new BoardPhysicalSpecifications();
+        physicalSpecifications.addResistorNameplate(new ResistorNameplate("R1", resistorValue, 5));
+        physicalSpecifications.addPowerInputNameplate(new PowerInputNameplate("VIN_INPUT",
+            supplyVoltage));
 
         DCVoltageElm supply = new DCVoltageElm(160, 320);
         supply.drag(160, 160);
@@ -90,7 +94,7 @@ class LedIndicatorGenerator {
         return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),
-            LedIndicatorPcbLayout.create(board));
+            LedIndicatorPcbLayout.create(board), physicalSpecifications);
     }
 
     private TroubleshootBoard createBoard() {

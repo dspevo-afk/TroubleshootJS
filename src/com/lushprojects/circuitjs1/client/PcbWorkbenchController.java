@@ -44,6 +44,8 @@ class PcbWorkbenchController {
 
     void hide() { panel.setVisible(false); }
 
+    String getPanelTextForDeveloperVerification() { return panel.getElement().getInnerText(); }
+
     PcbWorkbenchRenderer getRenderer() { return renderer; }
 
     private void rebuildPanel() {
@@ -55,6 +57,10 @@ class PcbWorkbenchController {
         BoardComponent component = instance.getBoard().getComponent(componentId);
         panel.add(styledLabel(component.getId(), "tsj-component-title"));
         panel.add(new Label("Type: " + component.getType().toLowerCase()));
+            ResistorNameplate nameplate = instance.getPhysicalSpecifications()
+                .getResistorNameplate(componentId);
+            if (nameplate != null)
+                panel.add(new Label("Value: " + nameplate.getDisplayValue()));
         Vector<GeneratedComponentConnectionBinding> bindings =
             instance.getConnectionBindings().getForComponentOrEmpty(componentId);
         if (!bindings.isEmpty())
@@ -133,7 +139,7 @@ class PcbWorkbenchController {
                 try {
                     action.execute();
                     feedback.setText("");
-                } catch (IllegalStateException exception) {
+                } catch (BoardModificationRejectedException exception) {
                     feedback.setText("Turn board power off before modifying components.");
                 }
                 rebuildPanel();

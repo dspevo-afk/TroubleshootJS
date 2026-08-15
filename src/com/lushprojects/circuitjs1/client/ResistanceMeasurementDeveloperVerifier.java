@@ -14,6 +14,8 @@ class ResistanceMeasurementDeveloperVerifier {
         if (instance == null)
             throw new IllegalStateException("Resistance verification requires a generated board");
 
+        verifyGeneratedPhysicalSpecifications();
+
         TroubleshootBoard board = instance.getBoard();
         BoardPad j11 = board.getPad("J1.1");
         BoardPad r11 = board.getPad("R1.1");
@@ -133,6 +135,7 @@ class ResistanceMeasurementDeveloperVerifier {
     } catch (IllegalStateException expected) {
         duplicateRejected = true;
     }
+
     require(duplicateRejected, "Structural verification accepted a duplicate detachable element");
     sim.elmList.removeElementAt(sim.elmList.lastIndexOf(r11.getConnectionElement()));
     modifications.verifyStructuralState();
@@ -189,6 +192,53 @@ class ResistanceMeasurementDeveloperVerifier {
     measure(sim, r11Probe, r12Probe, 680, 2);
     }
 
+    private static void verifyGeneratedPhysicalSpecifications() {
+        verifyGeneratedPhysicalSpecification(0, 5, 330, new ResistorColorBand[] {
+            ResistorColorBand.ORANGE, ResistorColorBand.ORANGE, ResistorColorBand.BROWN,
+            ResistorColorBand.GOLD });
+        verifyGeneratedPhysicalSpecification(2, 9, 680, new ResistorColorBand[] {
+            ResistorColorBand.BLUE, ResistorColorBand.GRAY, ResistorColorBand.BROWN,
+            ResistorColorBand.GOLD });
+        verifyGeneratedPhysicalSpecification(3, 12, 1000, new ResistorColorBand[] {
+            ResistorColorBand.BROWN, ResistorColorBand.BLACK, ResistorColorBand.RED,
+            ResistorColorBand.GOLD });
+    }
+
+    private static void verifyGeneratedPhysicalSpecification(long seed, double voltage,
+            double resistance, ResistorColorBand[] expectedBands) {
+        GeneratedBoardInstance instance = new LedIndicatorGenerator().generate(seed);
+        ResistorNameplate resistorNameplate = instance.getPhysicalSpecifications()
+            .getResistorNameplate("R1");
+        PowerInputNameplate inputNameplate = instance.getPhysicalSpecifications()
+            .getPowerInputNameplate("VIN_INPUT");
+        require(resistorNameplate != null && inputNameplate != null,
+            "Generated physical specifications are incomplete for seed " + seed);
+        requireApproximately(resistance, resistorNameplate.getNominalResistanceOhms(), 0,
+            "Resistor nameplate differs from generated value for seed " + seed);
+        requireApproximately(voltage, inputNameplate.getNominalVoltage(), 0,
+            "Input nameplate differs from generated value for seed " + seed);
+        require(("+" + (long) voltage + "V").equals(inputNameplate.getDisplayLabel()),
+            "Input label differs from generated value for seed " + seed);
+        requireBands(expectedBands, ResistorColorCode.getFourBandCode(resistorNameplate), seed);
+        CircuitElm resistor = instance.getComponentBindings().getSingleElement("R1");
+        require(resistor instanceof ResistorElm &&
+            ((ResistorElm) resistor).getResistance() == resistance,
+            "CircuitJS resistor differs from nameplate for seed " + seed);
+        boolean sourceMatches = false;
+        for (CircuitElm element : instance.getSimulationElements()) {
+            if (element instanceof DCVoltageElm && ((DCVoltageElm) element).maxVoltage == voltage)
+                sourceMatches = true;
+        }
+        require(sourceMatches, "CircuitJS supply differs from nameplate for seed " + seed);
+    }
+
+    private static void requireBands(ResistorColorBand[] expected, ResistorColorBand[] actual,
+            long seed) {
+        require(expected.length == actual.length, "Band count differs for seed " + seed);
+        for (int index = 0; index < expected.length; index++)
+            require(expected[index] == actual[index], "Band " + index + " differs for seed " + seed);
+    }
+
     private static void verifyModificationLookupRejections(CirSim sim,
             BoardModificationController modifications) {
         Vector<CircuitElm> graphBefore = new Vector<CircuitElm>(sim.elmList);
@@ -220,6 +270,15 @@ class ResistanceMeasurementDeveloperVerifier {
         if (sim.pcbWorkbenchController == null)
             return;
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        require("+9V".equals(renderer.getPowerInputLabelForDeveloperVerification()),
+            "PCB input marking did not use its nameplate");
+        requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, renderer.getResistorBands("R1"),
+            instance.getSeed());
+        renderer.setSelectedComponentId("R1");
+        sim.pcbWorkbenchController.refresh();
+        require(sim.pcbWorkbenchController.getPanelTextForDeveloperVerification().contains(
+            "Value: 680 Ohm +/-5%"), "PCB component panel omitted the resistor nameplate");
         ProbeTarget r11 = hitPcbPad(sim, renderer, "R1.1");
         ProbeTarget r12 = hitPcbPad(sim, renderer, "R1.2");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
@@ -237,6 +296,9 @@ class ResistanceMeasurementDeveloperVerifier {
         BoardModificationController modifications = sim.getBoardModificationController();
         modifications.liftLead("R1", "R1.1");
         sim.updateCircuit();
+        requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, renderer.getResistorBands("R1"),
+            instance.getSeed());
         require(r11.isValid() && r12.isValid(),
             "PCB pad targets did not survive lead lift and reanalysis");
         ProbeTarget componentLead1 = hitPcbLead(sim, renderer, "R1", "R1.1");
@@ -261,6 +323,9 @@ class ResistanceMeasurementDeveloperVerifier {
 
         modifications.removeComponent("R1");
         sim.updateCircuit();
+        requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, renderer.getResistorBands("R1"),
+            instance.getSeed());
         require(r11.isValid() && r12.isValid(),
             "PCB pad targets did not survive component removal and reanalysis");
         componentLead1 = hitPcbLead(sim, renderer, "R1", "R1.1");
@@ -273,6 +338,9 @@ class ResistanceMeasurementDeveloperVerifier {
 
         modifications.restoreComponent("R1");
         sim.updateCircuit();
+        requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, renderer.getResistorBands("R1"),
+            instance.getSeed());
         sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
         requireApproximately(680,
             sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,

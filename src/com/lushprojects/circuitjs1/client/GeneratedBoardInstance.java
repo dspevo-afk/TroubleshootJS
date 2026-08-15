@@ -14,13 +14,15 @@ class GeneratedBoardInstance {
     private final GeneratedComponentConnectionBindings connectionBindings;
     private final GeneratedBoardValidator familyValidator;
     private final PcbBoardLayout pcbLayout;
+    private final BoardPhysicalSpecifications physicalSpecifications;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
             GeneratedComponentBindings componentBindings,
             GeneratedExternalPowerBindings externalPowerBindings,
             GeneratedComponentConnectionBindings connectionBindings,
-            GeneratedBoardValidator familyValidator, PcbBoardLayout pcbLayout) {
+            GeneratedBoardValidator familyValidator, PcbBoardLayout pcbLayout,
+            BoardPhysicalSpecifications physicalSpecifications) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -32,6 +34,10 @@ class GeneratedBoardInstance {
         this.connectionBindings = connectionBindings;
         this.familyValidator = familyValidator;
         this.pcbLayout = pcbLayout;
+        if (physicalSpecifications == null)
+            throw new IllegalArgumentException("Missing generated physical specifications");
+        this.physicalSpecifications = physicalSpecifications;
+        physicalSpecifications.seal();
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings);
     }
@@ -78,6 +84,10 @@ class GeneratedBoardInstance {
 
     GeneratedBoardValidator getFamilyValidator() {
         return familyValidator;
+    }
+
+    BoardPhysicalSpecifications getPhysicalSpecifications() {
+        return physicalSpecifications;
     }
 
     PcbBoardLayout getPcbLayout() {

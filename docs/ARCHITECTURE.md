@@ -94,6 +94,17 @@ electrical identity, not a CircuitJS analyzed node number. `BoardPad` connects
 physical component/pad identity to a board net. Generated-board metadata
 declares its external power inputs explicitly.
 
+`GeneratedBoardInstance` also owns immutable physical/nameplate specifications
+for the generated board. A `ResistorNameplate` records a component's nominal
+resistance and tolerance, and a `PowerInputNameplate` records a nominal input
+voltage. Generators derive these values from the same selection used to build
+the initial CircuitJS elements. Renderers and contextual panels read only this
+metadata for printed labels, values, and resistor color bands; they never
+inspect a live CircuitJS element to infer a marking. The nameplate is therefore
+stable when a user lifts/removes a component or a future fault changes effective
+simulation behavior, while CircuitJS remains the source of truth for actual
+electrical behavior and measurements.
+
 PCB geometry is a separate rendering layer. `PcbBoardLayout` contains the board
 outline, component placements, pad placements, traces, and parts-tray geometry,
 and references only stable `BoardComponent`, `BoardPad`, and `BoardNet` IDs.
@@ -130,6 +141,11 @@ analysis, so active instruments invalidate and refresh through their existing
 path. Generated verification always checks graph/connection structural state;
 it runs family healthy-behavior checks only once every detachable lead is
 restored.
+
+Expected user-safety rejections use `BoardModificationRejectedException`.
+`PcbWorkbenchController` turns only that typed rejection into the inline
+power-off guidance; structural and other unexpected mutation errors are not
+misrepresented as user-safety failures.
 
 Component physical state is derived explicitly from all declared lead
 connections: `INSTALLED`, `LEAD_LIFTED`, or `REMOVED`. Reconnection inserts a

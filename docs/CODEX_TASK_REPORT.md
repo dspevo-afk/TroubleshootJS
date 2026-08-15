@@ -1,99 +1,93 @@
 # Latest Codex Task Report
 
 ## Task
-Task #13: build the first interactive PCB workbench for the generated LED
-indicator fixture.
+Corrective follow-up to Task #13: make generated PCB markings electrically
+honest before introducing the first faulted challenge.
 
 ## Summary
-The generated LED board now opens as a one-sided interactive PCB while
-CircuitJS continues to solve the hidden electrical graph. The workbench has
-stable PCB pad probes, contextual component selection/actions, visible lifted
-and removed resistor states, a parts tray, power-safe controls, and a compact
-multimeter. `?tsjDebug=true` retains the backing schematic; arbitrary legacy
-CircuitJS circuits retain their original schematic experience.
+The LED indicator PCB no longer hardcodes a `+9V` marking or a single resistor
+color pattern. Each generated board now carries immutable physical/nameplate
+metadata, built from the same value selection as its initial CircuitJS source
+and resistor. PCB labels, installed/lifted/tray resistor bands, and the
+component panel read that metadata instead of live solver elements.
 
 ## Architecture Decisions
-- `PcbBoardLayout`, component/pad placements, and trace geometry reference only
-  stable board IDs and remain separate from CircuitJS elements and node numbers.
-- `BoardPadProbeTarget` resolves through `BoardSimulationBindings`;
-  `ComponentLeadProbeTarget` resolves through the declared component-side
-  endpoint. Both use current renderer geometry and semantic generated-instance
-  identity.
-- `InstrumentController` accepts a generic hit-tested `ProbeTarget`; schematic
-  and PCB pointer paths share selection, suppression, measurement, and cleanup.
-- Physical component state is `INSTALLED`, `LEAD_LIFTED`, or `REMOVED` based on
-  all declared connections. Canonical reconnect order and occurrence-count
-  checks restore exact generated structure/export without disturbing power
-  infrastructure or meter overlays.
-- Contextual actions derive from generic connection bindings. Powered actions
-  are disabled with inline guidance; normal interaction uses no alert.
-- The renderer keeps pads and copper persistent while moving only component
-  bodies/leads according to logical modification state.
+- `BoardPhysicalSpecifications` belongs to `GeneratedBoardInstance` and holds
+typed `ResistorNameplate` and `PowerInputNameplate` records keyed by stable
+logical IDs.
+- The generator selects the supply/resistor pair once, then uses those values
+for both nameplate metadata and the initial CircuitJS construction.
+- `ResistorColorCode` returns semantic `ResistorColorBand` tokens. The PCB
+renderer owns the local token-to-CSS mapping, so display colors are not part
+of the logical physical specification.
+- Nameplates are immutable physical markings, deliberately distinct from
+mutable CircuitJS behavior and future injected-fault state. A lifted or
+removed part retains its original marking and value in the tray.
+- `BoardModificationRejectedException` is the only exception translated into
+the user-facing power-off message. Unexpected structural/mutation failures
+remain visible rather than being mislabeled as safety rejections.
 
 ## Files Changed
-- Board modification/binding model and verifier classes under
-  `src/com/lushprojects/circuitjs1/client/`.
-- New PCB layout, placement, trace, renderer, controller, and probe-target
-  classes under `src/com/lushprojects/circuitjs1/client/`.
-- `CirSim.java`, `InstrumentController.java`, `LedIndicatorGenerator.java`, and
-  `war/circuitjs.html` for workbench lifecycle, input, controls, and styling.
-- `docs/ARCHITECTURE.md`, this report, and visual captures in
-  `docs/screenshots/task13/`.
+- Added immutable nameplate and color-code model classes under
+`src/com/lushprojects/circuitjs1/client/`.
+- Updated `LedIndicatorGenerator`, `GeneratedBoardInstance`, PCB renderer,
+controller, modification controller, and URL-gated developer verifier.
+- Updated `docs/ARCHITECTURE.md`, this report, and screenshots in
+`docs/screenshots/task13/`.
 
-## Build And Browser Verification
-- Exact build command:
-  `$java8Home = Join-Path $env:TEMP 'TroubleshootJS-build-probe\temurin8'; & .\scripts\build.ps1 -JavaHome $java8Home`
-- Result: all five GWT permutations compiled and linked successfully with JDK 8.
-- Exact complete verifier URL:
-  `http://127.0.0.1:8888/circuitjs.html?tsjFixture=led&seed=12345&tsjVerifyResistance=true&reviewfix=13final`
-- Debug verifier URL:
-  `http://127.0.0.1:8888/circuitjs.html?tsjFixture=led&seed=12345&tsjDebug=true&tsjVerifyResistance=true&reviewfix=13report`
-- Normal PCB and debug schematic verifier runs completed with no page or console
-  errors. A no-fixture URL retained the legacy LRC schematic and controls.
+## Deterministic Validation Data
+| Seed | Input Marking | R1 Nameplate | Four-Band Code |
+| --- | --- | --- | --- |
+| `0` | `+5V` | `330 Ohm +/-5%` | orange, orange, brown, gold |
+| `2` | `+9V` | `680 Ohm +/-5%` | blue, gray, brown, gold |
+| `3` | `+12V` | `1000 Ohm +/-5%` | brown, black, red, gold |
 
-## Numerical Results
-- Installed/restored R1 pad-to-pad resistance: `680 Ohm` within `2 Ohm`.
-- Lifted and removed board path: `OL`; continuity remained inactive.
-- Lifted and tray resistor lead-to-lead resistance: `680 Ohm` within `2 Ohm`.
-- Powered removed-board VIN: approximately `9 V`; LED current below `1 uA`.
-- Restored powered LED current: `0.010607265446555162 A` (`10.607 mA`).
-- Forward LED diode mode: `1.594696569036657 V` at
-  `0.0014053034309633428 A` (`1.405 mA`).
-- Same PCB pad clicks did not start another measurement transaction.
+The URL-gated verifier creates all three fixtures directly and confirms their
+immutable values equal the initial CircuitJS resistor/source values and their
+semantic color-band tokens. It retains the existing full seed-2 electrical
+regression: measurement, power isolation, lead lift, removal, tray probing,
+restoration, canonical export/order, and healthy LED-current validation.
 
-## State And Interaction Results
-- `INSTALLED -> LEAD_LIFTED -> INSTALLED` restored exact element order/export.
-- `LEAD_LIFTED -> REMOVED -> INSTALLED` disconnected/restored every lead.
-- Repeated lift, reconnect, remove, and restore requests were idempotent.
-- Unknown component/pad IDs and components without connections were rejected
-  without graph mutation; duplicate detachable occurrences were detected.
-- Stable board-pad targets survived lift, removal, and reanalysis. Detached lead
-  targets remained available in lifted/tray states and expired after restore.
-- Powered modification buttons were disabled with inline safety text and no
-  alert; powering an already modified board remained valid.
-- DC V, OHM, CONT, DIODE, queued-power, semantic-target, cleanup, identity,
-  undo/redo, export, and component-isolation regressions passed.
+## Build And Browser Validation
+- Recovered JDK 8 home:
+`C:\Users\david\AppData\Local\Temp\TroubleshootJS-build-probe\temurin8`.
+- Explicit verification:
+`& "$jdk8Home\bin\java.exe" -version` reported
+`openjdk version "1.8.0_502"`.
+- Exact production build command:
+`$java8Home = Join-Path $env:TEMP 'TroubleshootJS-build-probe\temurin8'; & .\scripts\build.ps1 -JavaHome $java8Home`
+- Result: all five GWT permutations compiled and linked successfully.
+- Existing local server at `http://127.0.0.1:8888` served the current build;
+a second JDK-8 `dev.ps1 -JavaHome $jdk8Home` launch correctly deferred because
+the port was already occupied.
+- URL-gated verifier:
+`http://127.0.0.1:8888/circuitjs.html?tsjFixture=led&seed=2&tsjVerifyResistance=true&reviewfix=honest`
+completed with no browser console or page errors.
+- Normal PCB views for seeds `0`, `2`, and `3` visibly showed their matching
+`+5V`, `+9V`, and `+12V` labels and correct installed color bands. Selecting
+R1 showed the corresponding value/tolerance in the component panel.
+- Browser interaction on seed `2` powered the board off, lifted a lead,
+removed R1, confirmed its tray bands and exposed endpoint cues, then restored
+it. The panel retained `680 Ohm +/-5%` in every state; browser console/page
+errors remained empty.
 
-## Visual Verification
-- `1600 x 900`: installed and lifted states fit without clipping; labels, pads,
-  traces, highlight, air gap, probes, meter, and sidebar remained legible.
-- `1366 x 768`: removed board and parts tray fit without clipping; both board
-  pads and tray resistor remained visually clear.
-- Normal mode showed no fixed R1 controls, schematic, scopes, simulation-speed,
-  current-speed, or upstream editing controls.
-- Captures: `installed-1600x900.png`, `lifted-1600x900.png`, and
-  `removed-1366x768.png` in `docs/screenshots/task13/`.
+## Visual Captures
+- `markings-seed-0-installed.png`, `markings-seed-2-installed.png`, and
+`markings-seed-3-installed.png`: normal installed boards for every value
+variant.
+- `markings-seed-0-panel.png`, `markings-seed-2-panel.png`, and
+`markings-seed-3-panel.png`: selected R1 panel values for every variant.
+- `markings-seed-2-lifted.png`, `markings-seed-2-removed-tray.png`, and
+`markings-seed-2-restored.png`: the physical state transition with the
+marking invariant.
 
 ## Known Limitations
-The layout is manually authored for the LED indicator family. It is not a PCB
-router or manufacturing model. Only declared lift/remove/restore operations are
-available; replacement parts, faults, jumpers, trace cuts, damage, and
-procedural PCB placement/routing remain out of scope.
+The initial metadata model covers resistor and input nameplates only. It does
+not yet model replacement part markings, fault-specific markings, capacitor
+values, or arbitrary package labeling. The PCB layout remains manually authored
+for the LED indicator family.
 
 ## Recommended Next Step
-Use this workbench boundary for the first validated faulted LED challenge, then
-add replacement-component interaction without coupling PCB geometry to solver
-state.
-
-## Intended Commit Message
-Build interactive PCB workbench
+Introduce the first validated faulted LED challenge using this immutable
+nameplate boundary, then add replacement-component metadata without allowing
+the PCB renderer to infer markings from mutable solver elements.
