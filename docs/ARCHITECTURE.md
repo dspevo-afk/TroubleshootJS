@@ -22,10 +22,19 @@ modes require this electrically enforced UNPOWERED state.
 
 Active measurements run through an `ActiveMeasurementSession`. The adapter
 validates probe targets and board-power requirements, then closes the session
-through `finally`. The current session deliberately has no graph-mutation API.
-A future test source must be applied, analyzed, measured, removed, and restored
-inside this adapter/session boundary without entering user history or permanent
-board state.
+through `finally`. Resistance measurement uses a temporary $1 V$ DC source in
+series with a $1 kOhm$ internal resistor. CircuitJS solves the resulting
+current, and the meter derives $|V/I| - 1 kOhm$ from that solve. The temporary
+elements are not board metadata, export content, or undo/redo history; they are
+removed and the original graph is reanalyzed in `finally`.
+
+Resistance results are demand-driven rather than calculated from a draw pass.
+They are invalidated whenever CircuitJS requests reanalysis, when either probe
+changes, when OHM mode is entered, or when board power changes. This makes board
+replacement and future topology mutations such as removals, replacements,
+lifted leads, jumpers, and trace changes invalidate the cached result through
+the shared reanalysis path. A power request during an active measurement is
+queued until the temporary overlay is removed.
 
 `TroubleshootBoard` owns stable board identity. `BoardComponent`, `BoardPad`,
 and `BoardNet` use durable string IDs; a `BoardNet` is the TroubleshootJS

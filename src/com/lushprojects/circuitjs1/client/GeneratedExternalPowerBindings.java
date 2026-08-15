@@ -55,6 +55,16 @@ class GeneratedExternalPowerBindings {
     return true;
     }
 
+    boolean areAllDisconnected() {
+    if (!hasControlsForAllInputs())
+        return false;
+    for (String powerInputId : board.getPowerInputIds()) {
+        if (powerBindings.get(powerInputId).isConnected())
+        return false;
+    }
+    return true;
+    }
+
     void validateElementsAreOwnedBy(Vector<CircuitElm> simulationElements) {
         for (String powerInputId : powerBindings.keySet()) {
             for (CircuitElm element : powerBindings.get(powerInputId).getBackingElements()) {

@@ -44,6 +44,23 @@ class CircuitMeasurementAdapter {
         }
     }
 
+    double measureResistance(ProbeTarget redProbe, ProbeTarget blackProbe) {
+        if (!isActiveMeasurementAllowed(redProbe, blackProbe))
+            return Double.NaN;
+        ActiveMeasurementSession session = new ActiveMeasurementSession(redProbe, blackProbe);
+        try {
+            if (!session.hasValidTargets())
+                return Double.NaN;
+            if (!(session.getRedEndpoint() instanceof CircuitPostMeasurementEndpoint) ||
+                    !(session.getBlackEndpoint() instanceof CircuitPostMeasurementEndpoint))
+                return Double.NaN;
+            return sim.measureResistance((CircuitPostMeasurementEndpoint) session.getRedEndpoint(),
+                (CircuitPostMeasurementEndpoint) session.getBlackEndpoint());
+        } finally {
+            session.close();
+        }
+    }
+
     // Future test sources must be owned, reanalyzed, and removed by this adapter/session boundary.
 }
 

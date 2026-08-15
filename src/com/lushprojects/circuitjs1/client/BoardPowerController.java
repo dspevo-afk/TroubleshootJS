@@ -33,13 +33,13 @@ class BoardPowerController {
 
     boolean isElectricallyUnpowered() {
     return state == BoardPowerState.UNPOWERED && powerBindings != null &&
-        powerBindings.hasControlsForAllInputs() && !powerBindings.areAllConnected();
+        powerBindings.hasControlsForAllInputs() && powerBindings.areAllDisconnected();
     }
 
     private boolean isStateEnforced(BoardPowerState state) {
     if (powerBindings == null || !powerBindings.hasControlsForAllInputs())
         return false;
     return state == BoardPowerState.POWERED ? powerBindings.areAllConnected() :
-        !powerBindings.areAllConnected();
+        powerBindings.areAllDisconnected();
     }
 }

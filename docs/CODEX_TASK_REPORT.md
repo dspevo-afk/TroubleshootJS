@@ -1,55 +1,47 @@
 # Latest Codex Task Report
 
 ## Task
-Task #8: Make generated-board POWERED and UNPOWERED state electrically real.
+Task #9: Implement active resistance / OHMS measurement.
 
 ## Summary
-Added SwitchElm-backed external positive-supply isolation to the generated LED board. Board power now changes the CircuitJS graph through a generic external-power control, reanalyzes the circuit, and verifies the new electrical state without rebuilding the board.
+Added a demand-driven OHM mode backed by a temporary CircuitJS $1 V$ source and
+$1 kOhm$ series resistor. The displayed resistance is derived from CircuitJS
+source current, never from board metadata or component values.
 
-## Architectural Decisions
-- `ExternalPowerControl` separates BoardPowerController from the current SwitchElm implementation.
-- `ExternalPowerSimulationBinding` can own an optional control and multiple backing elements. The LED binding owns its DC source and external isolation switch.
-- The isolation switch is external simulation infrastructure, not a logical PCB component. `J1.1` binds to the board side of the switch.
-- BoardPowerController treats UNPOWERED as electrically safe only with an attached, controllable generated-board binding whose controls are open. Legacy circuits remain unsafe for active measurements.
-- Generated verification rejects non-finite voltages and passes BoardPowerState to the family validator. LED current is healthy only when powered and approximately zero when isolated.
-
-## Files Changed
-- `docs/ARCHITECTURE.md`
-- `docs/CODEX_TASK_REPORT.md`
-- `src/com/lushprojects/circuitjs1/client/BoardPowerController.java`
-- `src/com/lushprojects/circuitjs1/client/CircuitMeasurementAdapter.java`
-- `src/com/lushprojects/circuitjs1/client/CirSim.java`
-- `src/com/lushprojects/circuitjs1/client/ExternalPowerControl.java`
-- `src/com/lushprojects/circuitjs1/client/ExternalPowerSimulationBinding.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedBoardValidator.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedBoardVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedExternalPowerBindings.java`
-- `src/com/lushprojects/circuitjs1/client/LedIndicatorGeneratedBoardValidator.java`
-- `src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java`
-- `src/com/lushprojects/circuitjs1/client/SwitchExternalPowerControl.java`
-- `src/com/lushprojects/circuitjs1/client/TroubleshootBoard.java`
+## Behavior
+- Active measurement requires every declared external input to be disconnected.
+- A powered generated board displays `POWER OFF` and installs no stimulus.
+- Legacy arbitrary CircuitJS circuits remain blocked because they have no
+	attached, electrically enforced board-power binding.
+- Temporary elements are removed in `finally`; reanalysis, generated
+	verification, and pending board-power requests are restored afterward.
+- Cached OHM readings are invalidated on probe changes, OHM-mode entry,
+	reanalysis/topology changes, board replacement, and board-power changes.
 
 ## Validation
-- Production GWT build: passed all five permutations before and after implementation.
-- Generated verification: pad ownership, net consistency, finite-voltage checks, and powered/unpowered LED-family behavior passed after each state transition.
-- Browser: initial ON, OFF, repower, five alternating toggles, paused OFF/resume, malformed seed, normal LRC startup, and Edit menu regression completed with no page or console errors.
-- DC meter with one persistent board-side VIN probe: `+9 V` powered, `0 V` unpowered, and `+9 V` after repowering.
+- Production GWT build passed all five permutations after the final changes.
+- Browser developer verification:
+	`?tsjFixture=led&seed=12345&tsjVerifyResistance=true` completed with
+	`Resistance verification passed`, `Board Power: OFF`, and a visible `680 Ohm`
+	reading.
+- Seed `12345` results: `R1.1 -> R1.2 = 680 Ohm`; reverse direction also
+	measured approximately `680 Ohm`; `J1.1 -> R1.1 = 0 Ohm`; the LED reverse
+	path displayed `OL`; powered measurement displayed `POWER OFF`.
+- The verifier repeated transactions and asserted temporary-element cleanup,
+	export equality, unchanged undo/redo and unsaved state, stable BoardPad and
+	BoardNet identities, valid retained probes, electrical power-off state, and
+	resumed generated-board verification.
+- The verifier requests power ON while its overlay is installed and confirms
+	that reconnection occurs only after the overlay is removed, then restores
+	power OFF.
+- Browser UI test: the OHM button toggled off to DC readout and back on to
+	`680 Ohm`.
 
-## Test Data
-- Seed `12345`: `9 V`, `680 ohm`.
-- Powered: VIN-to-GND `+9 V`; isolation switch closed; switch current `10.603 mA`.
-- Unpowered: VIN-to-GND `0 V`; isolation switch open; branch current `0 A`; LED and resistor validators required approximately zero current.
-- Repowered: VIN-to-GND returned to `+9 V`; healthy current range validation passed.
-- Repeated toggle: five alternating states completed as OFF, ON, OFF, ON, OFF with stable bindings and no errors.
-- Paused toggle: OFF was requested while `running=false`, produced no stale-value failure while paused, and completed verification after simulation resumed.
-- Active-measurement gating: generated POWERED is blocked, generated electrically UNPOWERED is allowed, and legacy circuits are blocked because the adapter now requires `isElectricallyUnpowered()`.
-- Malformed `seed=banana`: safely fell back to seed `1` (`5 V`, `330 ohm`) with no errors.
-
-## Known Limitations / Concerns
-Power control currently switches all declared generated-board inputs together. Independent power-domain controls and bench supply UI are intentionally deferred.
-
-## Recommended Next Step
-Implement active resistance/continuity measurement using the electrically enforced UNPOWERED gate and the existing ActiveMeasurementSession boundary.
+## Limitations
+The initial mode is DC resistance only. It treats a response above `10 MOhm` or
+non-finite source current as `OL`. Nonlinear, capacitive, inductive, and
+transient networks depend on CircuitJS's present solve state; continuity and
+diode modes remain future work.
 
 ## Commit
-Add real generated board power control
+Pending final staged review.

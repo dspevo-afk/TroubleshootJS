@@ -346,6 +346,7 @@ MouseOutHandler, MouseWheelHandler {
     String startCircuitLink = null;
 	String troubleshootFixture = null;
 	long troubleshootFixtureSeed = 1;
+	boolean troubleshootResistanceVerification;
 //    String baseURL = "http://www.falstad.com/circuit/";
     
     public void init() {
@@ -382,7 +383,8 @@ MouseOutHandler, MouseWheelHandler {
 	    startLabel   = qp.getValue("startLabel");
 	    startCircuitLink = qp.getValue("startCircuitLink");
 	    troubleshootFixture = qp.getValue("tsjFixture");
-		   troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
+	    troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
+	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
 	    running = qp.getBooleanValue("running", true);
@@ -758,6 +760,12 @@ MouseOutHandler, MouseWheelHandler {
 	
 	if ("led".equals(troubleshootFixture))
 	    installGeneratedBoard(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	if (troubleshootResistanceVerification)
+	    Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+		public void execute() {
+		    ResistanceMeasurementDeveloperVerifier.verify(CirSim.this);
+		}
+	    });
 
 	setSimRunning(running);
     }
@@ -1660,6 +1668,8 @@ MouseOutHandler, MouseWheelHandler {
     
     void needAnalyze() {
 	analyzeFlag = true;
+	if (instrumentController != null && !activeMeasurementOverlay)
+	    instrumentController.invalidateActiveMeasurement();
     	repaint();
     }
     
@@ -4055,6 +4065,9 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     GeneratedBoardInstance generatedBoardInstance;
+	boolean activeMeasurementOverlay;
+	BoardPowerState pendingBoardPowerState;
+	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
 	boolean generatedBoardVerificationPending;
 	boolean generatedBoardVerificationAnalyzed;
 	double generatedBoardVerificationStartTime;
@@ -4126,6 +4139,8 @@ MouseOutHandler, MouseWheelHandler {
     void verifyGeneratedBoard() {
 	if (generatedBoardInstance == null)
 	    return;
+	if (activeMeasurementOverlay)
+	    return;
 	if (boardPowerController.getState() == BoardPowerState.UNPOWERED &&
 		!boardPowerController.isElectricallyUnpowered())
 	    throw new IllegalStateException("Generated board is logically unpowered without electrical isolation");
@@ -4135,9 +4150,14 @@ MouseOutHandler, MouseWheelHandler {
     void setBoardPowerState(BoardPowerState state) {
 	if (generatedBoardInstance == null)
 	    return;
+	if (activeMeasurementOverlay) {
+	    pendingBoardPowerState = state;
+	    return;
+	}
 	if (!boardPowerController.setState(state))
 	    return;
 	updateBoardPowerButton();
+	instrumentController.refreshActiveMeasurement();
 	requestGeneratedBoardVerification();
     }
 
@@ -4150,6 +4170,49 @@ MouseOutHandler, MouseWheelHandler {
 	    boardPowerButton.setText(boardPowerController.getState() == BoardPowerState.POWERED ?
 		"Board Power: ON" : "Board Power: OFF");
     }
+
+    double measureResistance(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black) {
+	if (!boardPowerController.isElectricallyUnpowered() ||
+		!containsElement(red.getElement()) || !containsElement(black.getElement()))
+	    return Double.NaN;
+	ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(red, black);
+	activeMeasurementOverlay = true;
+	try {
+	    stimulus.install(this);
+	    if (requestPowerOnDuringActiveMeasurementForDeveloperVerification) {
+		requestPowerOnDuringActiveMeasurementForDeveloperVerification = false;
+		setBoardPowerState(BoardPowerState.POWERED);
+	    }
+	    analyzeCircuit();
+	    runCircuit(true);
+	    runCircuit(true);
+	    double current = stimulus.getTestCurrent();
+	    if (Double.isNaN(current) || Double.isInfinite(current) || Math.abs(current) < 1e-10)
+		return Double.POSITIVE_INFINITY;
+	    double resistance = Math.abs(ResistanceMeasurementStimulus.TEST_VOLTAGE / current) -
+		ResistanceMeasurementStimulus.INTERNAL_RESISTANCE;
+	    if (Double.isNaN(resistance) || Double.isInfinite(resistance))
+		return Double.POSITIVE_INFINITY;
+	    return resistance < .001 ? 0 : resistance;
+	} finally {
+	    stimulus.remove(this);
+	    needAnalyze();
+	    if (pendingBoardPowerState != null) {
+		BoardPowerState requestedState = pendingBoardPowerState;
+		pendingBoardPowerState = null;
+		activeMeasurementOverlay = false;
+		setBoardPowerState(requestedState);
+	    } else {
+		requestGeneratedBoardVerification();
+		activeMeasurementOverlay = false;
+	    }
+	}
+    }
+
+	void requestPowerOnDuringActiveMeasurementForDeveloperVerification() {
+	requestPowerOnDuringActiveMeasurementForDeveloperVerification = true;
+	}
 
 	BoardPowerController getBoardPowerController() {
 	return boardPowerController;
