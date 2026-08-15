@@ -7,6 +7,8 @@ class BoardPhysicalSpecifications {
         new HashMap<String, ResistorNameplate>();
     private final HashMap<String, PowerInputNameplate> powerInputNameplates =
         new HashMap<String, PowerInputNameplate>();
+    private final HashMap<String, DiodeNameplate> diodeNameplates =
+        new HashMap<String, DiodeNameplate>();
     private boolean sealed;
 
     void addResistorNameplate(ResistorNameplate nameplate) {
@@ -20,6 +22,11 @@ class BoardPhysicalSpecifications {
             "power input nameplate");
     }
 
+    void addDiodeNameplate(DiodeNameplate nameplate) {
+        requireNotSealed();
+        add(diodeNameplates, nameplate.getComponentId(), nameplate, "diode nameplate");
+    }
+
     void seal() { sealed = true; }
 
     ResistorNameplate getResistorNameplate(String componentId) {
@@ -29,6 +36,8 @@ class BoardPhysicalSpecifications {
     PowerInputNameplate getPowerInputNameplate(String powerInputId) {
         return powerInputNameplates.get(powerInputId);
     }
+
+    DiodeNameplate getDiodeNameplate(String componentId) { return diodeNameplates.get(componentId); }
 
     private static <T> void add(HashMap<String, T> values, String id, T value, String type) {
         if (id == null || id.length() == 0)

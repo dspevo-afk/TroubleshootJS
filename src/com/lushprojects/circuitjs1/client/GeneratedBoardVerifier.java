@@ -44,7 +44,8 @@ class GeneratedBoardVerifier {
         if (!isFinite(voltage))
         throw new IllegalStateException("Non-finite voltage on board net: " + netId);
         if (Math.abs(voltage - referenceVoltage) > NET_TOLERANCE)
-                throw new IllegalStateException("Inconsistent voltage on board net: " + netId);
+                throw new IllegalStateException("Inconsistent voltage on board net: " + netId +
+                    " reference=" + referenceVoltage + " actual=" + voltage);
         }
     }
 

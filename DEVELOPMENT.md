@@ -152,6 +152,20 @@ to replace R1, verify solver-backed repair, remove the replacement, and measure
 the two loose physical parts. Browser verification is separate from the JDK 8
 production build and adds no dependency to the simulator.
 
+The diode-family electrical verifier and real-input normal-player flow are:
+
+```powershell
+.\scripts\verify-browser.ps1 -Diode
+.\scripts\verify-browser.ps1 -DiodeNormalPlayer
+```
+
+The first command covers seeds 0, 2, and 3. The second uses visible workbench
+controls and canvas probe geometry to remove the open original D1, install a
+healthy diode, verify functional repair, and confirm forward/OL polarity on the
+separate loose physical parts. Every route uses a unique temporary Edge profile;
+cleanup closes Edge through DevTools and removes that profile with bounded
+retries.
+
 ## Manual application verification
 
 After a production build, confirm that the GWT bootstrap exists:

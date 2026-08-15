@@ -66,7 +66,8 @@ class PcbWorkbenchRenderer {
 
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
         graphics.setColor("#d9f1e3");
-        graphics.drawString("TSJ LED INDICATOR", screenX(75), screenY(100));
+        graphics.drawString(isDiodeFamily() ? "TSJ DIODE INDICATOR" : "TSJ LED INDICATOR",
+            screenX(75), screenY(100));
         graphics.setFont(new Font("sans-serif", 0, Math.max(10, scaleInt(12))));
         graphics.drawString(getPowerInputLabel(), screenX(90), screenY(175));
         graphics.drawString("GND", screenX(90), screenY(345));
@@ -95,6 +96,8 @@ class PcbWorkbenchRenderer {
         }
         if ("RESISTOR".equals(component.getType()))
             drawResistor(graphics, placement);
+        else if ("DIODE".equals(component.getType()))
+            drawDiode(graphics, placement);
         else if ("LED".equals(component.getType()))
             drawLed(graphics, placement);
         else if ("CONNECTOR".equals(component.getType()))
@@ -102,14 +105,19 @@ class PcbWorkbenchRenderer {
     }
 
     private void drawResistor(Graphics graphics, PcbComponentPlacement placement) {
-        ComponentPhysicalState state = modifications.getComponentState(placement.getComponentId());
+        boolean detachable = !instance.getConnectionBindings()
+            .getForComponentOrEmpty(placement.getComponentId()).isEmpty();
+        ComponentPhysicalState state = detachable ?
+            modifications.getComponentState(placement.getComponentId()) : ComponentPhysicalState.INSTALLED;
         if (state == ComponentPhysicalState.REMOVED)
             return;
         Vector<String> padIds = instance.getBoard().getComponent(placement.getComponentId()).getPadIds();
         Point pad1 = getPadPoint(padIds.get(0));
         Point pad2 = getPadPoint(padIds.get(1));
-        boolean lead1Connected = modifications.isLeadConnected(placement.getComponentId(), padIds.get(0));
-        boolean lead2Connected = modifications.isLeadConnected(placement.getComponentId(), padIds.get(1));
+        boolean lead1Connected = !detachable ||
+            modifications.isLeadConnected(placement.getComponentId(), padIds.get(0));
+        boolean lead2Connected = !detachable ||
+            modifications.isLeadConnected(placement.getComponentId(), padIds.get(1));
         int bodyY = pad1.y - (state == ComponentPhysicalState.LEAD_LIFTED ? scaleInt(28) : 0);
         int bodyLeft = pad1.x + scaleInt(45);
         int bodyRight = pad2.x - scaleInt(45);
@@ -127,13 +135,52 @@ class PcbWorkbenchRenderer {
         graphics.fillRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
         graphics.setColor("#302a22");
         graphics.drawRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
-        drawResistorBands(graphics, getInstalledResistorPart(placement.getComponentId()), bodyLeft, bodyRight, bodyY,
-            bodyHeight);
+        PhysicalResistorPart installed = getInstalledResistorPart(placement.getComponentId());
+        if (installed != null)
+            drawResistorBands(graphics, installed, bodyLeft, bodyRight, bodyY, bodyHeight);
+        else
+            drawResistorBands(graphics, getResistorBands(placement.getComponentId()), bodyLeft,
+                bodyRight, bodyY, bodyHeight);
 
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
         graphics.setColor("#f2f5e9");
         graphics.drawString(placement.getComponentId(), screenX(placement.getX() + 92),
             screenY(placement.getY() - 14));
+    }
+
+    private void drawDiode(Graphics graphics, PcbComponentPlacement placement) {
+        ComponentPhysicalState state = modifications.getComponentState("D1");
+        DiodeComponentSlot slot = DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot();
+        if (state == ComponentPhysicalState.REMOVED || slot.isEmpty())
+            return;
+        PhysicalDiodePart part = slot.getInstalledPart();
+        Vector<String> padIds = instance.getBoard().getComponent("D1").getPadIds();
+        Point leftPad = getPadPoint(padIds.get(0));
+        Point rightPad = getPadPoint(padIds.get(1));
+        boolean leftConnected = modifications.isLeadConnected("D1", padIds.get(0));
+        boolean rightConnected = modifications.isLeadConnected("D1", padIds.get(1));
+        int bodyY = leftPad.y - (state == ComponentPhysicalState.LEAD_LIFTED ? scaleInt(28) : 0);
+        int bodyLeft = leftPad.x + scaleInt(42);
+        int bodyRight = rightPad.x - scaleInt(42);
+        Point leftEnd = leftConnected ? leftPad : getComponentLeadPoint("D1", padIds.get(0));
+        Point rightEnd = rightConnected ? rightPad : getComponentLeadPoint("D1", padIds.get(1));
+        graphics.setColor("#a8adb0");
+        graphics.setLineWidth(Math.max(3, scaleInt(4)));
+        graphics.drawLine(bodyLeft, bodyY, leftEnd.x, leftEnd.y);
+        graphics.drawLine(bodyRight, bodyY, rightEnd.x, rightEnd.y);
+        graphics.setLineWidth(1);
+        int bodyHeight = Math.max(22, scaleInt(32));
+        graphics.setColor("#282c31");
+        graphics.fillRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
+        graphics.setColor("#111315");
+        graphics.drawRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
+        drawCathodeBand(graphics, part.isReversedInstallation() ? bodyLeft : bodyRight,
+            bodyY, bodyHeight, part.isReversedInstallation());
+        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
+        graphics.setColor("#f2f5e9");
+        graphics.drawString("D1", screenX(placement.getX() + 90), screenY(placement.getY() - 14));
+        graphics.drawString("K", part.isReversedInstallation() ? leftPad.x - scaleInt(5) :
+            rightPad.x - scaleInt(5), rightPad.y + scaleInt(28));
     }
 
     private void drawLed(Graphics graphics, PcbComponentPlacement placement) {
@@ -199,19 +246,49 @@ class PcbWorkbenchRenderer {
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
         graphics.setColor("#3d484c");
         graphics.drawString("PARTS TRAY", tray.x + scaleInt(20), tray.y + scaleInt(30));
-        Vector<PhysicalResistorPart> visible = getVisibleLooseParts();
-        if (visible.isEmpty()) {
+        boolean empty = isDiodeFamily() ? getVisibleLooseDiodeParts().isEmpty() :
+            getVisibleLooseParts().isEmpty();
+        if (empty) {
             graphics.setFont(new Font("sans-serif", 0, Math.max(11, scaleInt(12))));
             graphics.drawString("No removed parts", tray.x + scaleInt(20), tray.y + scaleInt(70));
         }
         int index = 0;
-        for (PhysicalResistorPart part : visible)
-            drawTrayResistor(graphics, part, index++);
+        if (isDiodeFamily()) {
+            for (PhysicalDiodePart part : getVisibleLooseDiodeParts())
+                drawTrayDiode(graphics, part, index++);
+        } else {
+            for (PhysicalResistorPart part : getVisibleLooseParts())
+                drawTrayResistor(graphics, part, index++);
+        }
         if (getTrayPageCount() > 1) {
             graphics.setFont(new Font("sans-serif", 0, Math.max(10, scaleInt(11))));
             graphics.drawString("Page " + (trayPage + 1) + " of " + getTrayPageCount(),
                 tray.x + scaleInt(20), tray.y + tray.height - scaleInt(15));
         }
+    }
+
+    private void drawTrayDiode(Graphics graphics, PhysicalDiodePart part, int index) {
+        Point anode = getLooseDiodeLeadPoint(part.getId(), 0);
+        Point cathode = getLooseDiodeLeadPoint(part.getId(), 1);
+        Point left = anode.x < cathode.x ? anode : cathode;
+        Point right = anode.x < cathode.x ? cathode : anode;
+        int bodyLeft = left.x + scaleInt(24);
+        int bodyRight = right.x - scaleInt(24);
+        graphics.setColor("#a8adb0");
+        graphics.setLineWidth(3);
+        graphics.drawLine(left.x, left.y, bodyLeft, left.y);
+        graphics.drawLine(bodyRight, right.y, right.x, right.y);
+        graphics.setLineWidth(1);
+        graphics.setColor("#282c31");
+        graphics.fillRect(bodyLeft, left.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
+        graphics.setColor("#111315");
+        graphics.drawRect(bodyLeft, left.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
+        drawCathodeBand(graphics, cathode.x < anode.x ? bodyLeft : bodyRight, left.y,
+            scaleInt(28), cathode.x < anode.x);
+        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
+        graphics.setColor("#3d484c");
+        graphics.drawString(part.getId().equals(selectedPartId) ? "SELECTED" : "DIODE",
+            left.x + scaleInt(20), left.y - scaleInt(26));
     }
 
     private void drawTrayResistor(Graphics graphics, PhysicalResistorPart part, int index) {
@@ -235,6 +312,16 @@ class PcbWorkbenchRenderer {
     }
 
     ProbeTarget findProbeTarget(CirSim sim, int screenX, int screenY) {
+        if (isDiodeFamily()) {
+            for (PhysicalDiodePart part : getVisibleLooseDiodeParts()) {
+                for (int terminal = 0; terminal < 2; terminal++) {
+                    Point point = getLooseDiodeLeadPoint(part.getId(), terminal);
+                    if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
+                        return new PhysicalDiodePartProbeTarget(sim, instance, part.getId(),
+                            terminal, this);
+                }
+            }
+        }
         for (PhysicalResistorPart part : getVisibleLooseParts()) {
             for (int terminal = 0; terminal < 2; terminal++) {
                 Point point = getLoosePartLeadPoint(part.getId(), terminal);
@@ -252,11 +339,11 @@ class PcbWorkbenchRenderer {
                 Point point = getComponentLeadPoint(binding.getComponentId(), binding.getPadId());
                 if (point != null && Graphics.distanceSq(point.x, point.y, screenX, screenY) <=
                         HIT_RADIUS_SQ) {
-                    PhysicalResistorPart part = getInstalledResistorPart(binding.getComponentId());
-                    if (part == null)
+                    String partId = getInstalledPhysicalPartId(binding.getComponentId());
+                    if (partId == null)
                         continue;
                     return new ComponentLeadProbeTarget(sim, instance, binding.getComponentId(),
-                        binding.getPadId(), this, part.getId(), binding.getComponentEndpoint());
+                        binding.getPadId(), this, partId, binding.getComponentEndpoint());
                 }
             }
         }
@@ -270,7 +357,7 @@ class PcbWorkbenchRenderer {
 
     String findComponentId(int screenX, int screenY) {
         for (PcbComponentPlacement component : layout.getComponents()) {
-            if ("R1".equals(component.getComponentId()) && LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
+            if (isReplaceableSlotEmpty(component.getComponentId()))
                 continue;
             Vector<GeneratedComponentConnectionBinding> bindings =
                 instance.getConnectionBindings().getForComponentOrEmpty(component.getComponentId());
@@ -292,6 +379,17 @@ class PcbWorkbenchRenderer {
     }
 
     String findPartId(int screenX, int screenY) {
+        if (isDiodeFamily()) {
+            for (PhysicalDiodePart part : getVisibleLooseDiodeParts()) {
+                Point anode = getLooseDiodeLeadPoint(part.getId(), 0);
+                Point cathode = getLooseDiodeLeadPoint(part.getId(), 1);
+                int left = Math.min(anode.x, cathode.x);
+                Rectangle trayPart = new Rectangle(left - scaleInt(8), anode.y - scaleInt(35),
+                    scaleInt(145), scaleInt(70));
+                if (trayPart.contains(screenX, screenY))
+                    return part.getId();
+            }
+        }
         for (PhysicalResistorPart part : getVisibleLooseParts()) {
             Point lead1 = getLoosePartLeadPoint(part.getId(), 0);
             Rectangle trayPart = new Rectangle(lead1.x - scaleInt(8), lead1.y - scaleInt(35),
@@ -339,9 +437,25 @@ class PcbWorkbenchRenderer {
         return null;
     }
 
+    Point getLooseDiodeLeadPoint(String partId, int terminal) {
+        int index = 0;
+        for (PhysicalDiodePart part : getVisibleLooseDiodeParts()) {
+            if (part.getId().equals(partId)) {
+                Rectangle tray = layout.getPartsTray();
+                int y = tray.y + 70 + index * 48;
+                boolean left = (terminal == 0) != part.isReversedInstallation();
+                return new Point(screenX(tray.x + (left ? 18 : tray.width - 18)), screenY(y));
+            }
+            index++;
+        }
+        return null;
+    }
+
     int getTrayPage() { return trayPage; }
     int getTrayPageCount() {
-        int count = LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts().size();
+        int count = isDiodeFamily() ?
+            DiodeProtectedIndicatorFamilyState.require(instance).getInventory().getLooseParts().size() :
+            LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts().size();
         return Math.max(1, (count + PARTS_PER_TRAY_PAGE - 1) / PARTS_PER_TRAY_PAGE);
     }
     void setTrayPage(int page) {
@@ -352,9 +466,24 @@ class PcbWorkbenchRenderer {
     void clampTrayPage() { trayPage = clampTrayPageValue(trayPage); }
 
     Vector<PhysicalResistorPart> getVisibleLooseParts() {
+        if (isDiodeFamily())
+            return new Vector<PhysicalResistorPart>();
         Vector<PhysicalResistorPart> loose = LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts();
         clampTrayPage();
         Vector<PhysicalResistorPart> result = new Vector<PhysicalResistorPart>();
+        int start = trayPage * PARTS_PER_TRAY_PAGE;
+        for (int index = start; index < loose.size() && index < start + PARTS_PER_TRAY_PAGE; index++)
+            result.add(loose.get(index));
+        return result;
+    }
+
+    Vector<PhysicalDiodePart> getVisibleLooseDiodeParts() {
+        if (!isDiodeFamily())
+            return new Vector<PhysicalDiodePart>();
+        Vector<PhysicalDiodePart> loose = DiodeProtectedIndicatorFamilyState.require(instance)
+            .getInventory().getLooseParts();
+        clampTrayPage();
+        Vector<PhysicalDiodePart> result = new Vector<PhysicalDiodePart>();
         int start = trayPage * PARTS_PER_TRAY_PAGE;
         for (int index = start; index < loose.size() && index < start + PARTS_PER_TRAY_PAGE; index++)
             result.add(loose.get(index));
@@ -382,9 +511,31 @@ class PcbWorkbenchRenderer {
     String getSelectedPartId() { return selectedPartId; }
 
     private PhysicalResistorPart getInstalledResistorPart(String componentId) {
-        if ("R1".equals(componentId))
+        if (!isDiodeFamily() && "R1".equals(componentId))
             return LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart();
         return null;
+    }
+
+    private String getInstalledPhysicalPartId(String componentId) {
+        PhysicalResistorPart resistor = getInstalledResistorPart(componentId);
+        if (resistor != null)
+            return resistor.getId();
+        if (isDiodeFamily() && "D1".equals(componentId)) {
+            DiodeComponentSlot slot = DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot();
+            return slot.isEmpty() ? null : slot.getInstalledPart().getId();
+        }
+        return null;
+    }
+
+    private boolean isReplaceableSlotEmpty(String componentId) {
+        if (isDiodeFamily())
+            return "D1".equals(componentId) &&
+                DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty();
+        return "R1".equals(componentId) && LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty();
+    }
+
+    private boolean isDiodeFamily() {
+        return instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState;
     }
 
     private void drawResistorBands(Graphics graphics, PhysicalResistorPart part, int left, int right,
@@ -398,6 +549,22 @@ class PcbWorkbenchRenderer {
             graphics.fillRect(x - Math.max(2, scaleInt(3)), y - height / 2,
                 Math.max(4, scaleInt(6)), height);
         }
+    }
+
+    private void drawResistorBands(Graphics graphics, ResistorColorBand[] bands, int left, int right,
+            int y, int height) {
+        for (int index = 0; index < bands.length; index++) {
+            int x = left + (right - left) * (index + 1) / 5;
+            graphics.setColor(getBandColor(bands[index]));
+            graphics.fillRect(x - Math.max(2, scaleInt(3)), y - height / 2,
+                Math.max(4, scaleInt(6)), height);
+        }
+    }
+
+    private void drawCathodeBand(Graphics graphics, int edge, int y, int height, boolean left) {
+        int width = Math.max(5, scaleInt(8));
+        graphics.setColor("#d8dde0");
+        graphics.fillRect(left ? edge : edge - width, y - height / 2, width, height);
     }
 
     private void updateTransform(Rectangle area) {

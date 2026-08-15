@@ -360,9 +360,11 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootChallengeVerification;
 	boolean troubleshootReplacementVerification;
 	boolean troubleshootMeterVerification;
+	boolean troubleshootDiodeVerification;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootReplacementVerificationComplete;
 	boolean troubleshootMeterVerificationComplete;
+	boolean troubleshootDiodeVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
@@ -407,6 +409,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootChallengeVerification = qp.getBooleanValue("tsjVerifyChallenge", false);
 	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
 	    troubleshootMeterVerification = qp.getBooleanValue("tsjVerifyMeter", false);
+	    troubleshootDiodeVerification = qp.getBooleanValue("tsjVerifyDiode", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
@@ -785,8 +788,12 @@ MouseOutHandler, MouseWheelHandler {
 	
 	if ("led".equals(troubleshootFixture))
 	    installGeneratedBoard(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	else if ("diode".equals(troubleshootFixture))
+	    installGeneratedBoard(new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("led".equals(troubleshootChallenge))
 	    installGeneratedChallenge(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	else if ("diode".equals(troubleshootChallenge))
+	    installGeneratedChallenge(new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	setSimRunning(running);
     }
 
@@ -4104,6 +4111,7 @@ MouseOutHandler, MouseWheelHandler {
 		GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
 		ResistorSlotController resistorSlotController;
+	DiodeSlotController diodeSlotController;
 	boolean activeMeasurementOverlay;
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
@@ -4137,6 +4145,8 @@ MouseOutHandler, MouseWheelHandler {
 	boardModificationController = new BoardModificationController(this, instance);
 	resistorSlotController = instance.getFamilyState() instanceof LedIndicatorFamilyState ?
 	    new ResistorSlotController(this, instance, boardModificationController) : null;
+	diodeSlotController = instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState ?
+	    new DiodeSlotController(this, instance, boardModificationController) : null;
 	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
 		instance.getPcbLayout(), verticalPanel) : null;
@@ -4222,13 +4232,19 @@ MouseOutHandler, MouseWheelHandler {
 			MeterLifecycleDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:meter");
 		    }
+		    if (troubleshootDiodeVerification && !troubleshootDiodeVerificationComplete) {
+			troubleshootDiodeVerificationComplete = true;
+			DiodeFamilyDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:diode");
+		    }
 		} finally {
 		    developerVerifierRunning = false;
 		}
 	    }
 	} catch (RuntimeException e) {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
-		    troubleshootReplacementVerification || troubleshootMeterVerification)
+		    troubleshootReplacementVerification || troubleshootMeterVerification ||
+		    troubleshootDiodeVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4266,6 +4282,7 @@ MouseOutHandler, MouseWheelHandler {
 	}
 
 	ResistorSlotController getResistorSlotController() { return resistorSlotController; }
+	DiodeSlotController getDiodeSlotController() { return diodeSlotController; }
 
     void verifyGeneratedBoard() {
 	if (generatedBoardInstance == null)

@@ -6,7 +6,9 @@ param(
     [string]$BrowserPath = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe',
     [int[]]$Seeds = @(0, 2, 3),
     [string]$Route,
-    [switch]$NormalPlayer
+    [switch]$NormalPlayer,
+    [switch]$Diode,
+    [switch]$DiodeNormalPlayer
 )
 
 Set-StrictMode -Version Latest
@@ -17,6 +19,30 @@ function sendCdp($socket, [int]$id, [string]$method, $parameters) {
     $bytes = [Text.Encoding]::UTF8.GetBytes($message)
     $socket.SendAsync((New-Object ArraySegment[byte] -ArgumentList (,$bytes)),
         [Net.WebSockets.WebSocketMessageType]::Text, $true, [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+}
+
+function cleanupBrowser($browser, $socket, [string]$profile) {
+    if ($null -ne $socket) {
+        try { [void](sendCdp $socket 2147483000 'Browser.close' @{}) } catch { }
+        $socket.Dispose()
+    }
+    if (-not $browser.WaitForExit(5000)) {
+        Stop-Process -Id $browser.Id -Force -ErrorAction SilentlyContinue
+        [void]$browser.WaitForExit(5000)
+    }
+    $cleanupError = $null
+    for ($attempt = 0; $attempt -lt 10 -and (Test-Path -LiteralPath $profile); $attempt++) {
+        try {
+            Remove-Item -LiteralPath $profile -Recurse -Force -ErrorAction Stop
+            $cleanupError = $null
+        } catch {
+            $cleanupError = $_.Exception.Message
+            Start-Sleep -Milliseconds 200
+        }
+    }
+    if (Test-Path -LiteralPath $profile) {
+        Write-Warning "Could not remove temporary browser profile '$profile': $cleanupError"
+    }
 }
 
 function receiveCdp($socket, [int]$wantedId, [ref]$failures) {
@@ -99,8 +125,7 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
     } catch {
         Write-Host "FAIL $name - $($_.Exception.Message)"
     } finally {
-        if ($null -ne $socket) { $socket.Dispose() }
-        if (-not $browser.HasExited) { Stop-Process -Id $browser.Id -Force }
+        cleanupBrowser $browser $socket $profile
     }
     return $success
 }
@@ -232,7 +257,9 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'healthy forward resistance'
         $forward = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $healthyRight 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!=='$forward'" $deadline ([ref]$failures) 'intermediate reversed-probe measurement'
         clickPoint $socket ([ref]$nextId) $healthyLeft 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'healthy reverse resistance'
         $reverse = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
         if ($forward -ne $reverse -or $forward -notmatch '(?i)1(\.0+)?\s*kOhm') {
             throw "healthy resistance mismatch: forward=$forward reverse=$reverse"
@@ -249,8 +276,105 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         Write-Host "FAIL normal-player seed=3 - $($_.Exception.Message)"
         return $false
     } finally {
-        if ($null -ne $socket) { $socket.Dispose() }
-        if (-not $browser.HasExited) { Stop-Process -Id $browser.Id -Force }
+        cleanupBrowser $browser $socket $profile
+    }
+}
+
+function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
+    $profile = Join-Path $env:TEMP ("tsj-diode-player-" + [Guid]::NewGuid().ToString('N'))
+    $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+        '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
+    $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $socket = $null
+    try {
+        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        do {
+            Start-Sleep -Milliseconds 200
+            try {
+                $targets = Invoke-RestMethod "http://127.0.0.1:$debugPort/json/list" -TimeoutSec 2
+                $target = $targets | Where-Object { $_.type -eq 'page' } | Select-Object -First 1
+            } catch { $target = $null }
+        } while ($null -eq $target -and [DateTime]::UtcNow -lt $deadline)
+        if ($null -eq $target) { throw 'browser target did not become available' }
+        $socket = New-Object Net.WebSockets.ClientWebSocket
+        $socket.ConnectAsync([Uri]$target.webSocketDebuggerUrl,
+            [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+        $nextId = 1
+        $failures = @()
+        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Indicator does not light.')" $deadline ([ref]$failures) 'ready diode challenge'
+        $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),catalog:document.body.innerText.includes('Replacement Catalog'),empty:document.body.innerText.includes('No removed parts'),disclosed:/D1 failed|diode is open/i.test(document.body.innerText)})" ([ref]$failures)
+        if (-not ($initial.canvas -and $initial.catalog -and $initial.empty) -or $initial.disclosed) {
+            throw 'initial diode workbench, catalog, tray, or vague complaint was incorrect'
+        }
+        $pixels = evaluateCdp $socket ([ref]$nextId) "(()=>{const c=[...document.querySelectorAll('canvas')].find(x=>{const r=x.getBoundingClientRect();return r.width>100&&r.height>100});const g=c.getContext('2d');const s=Math.min(1.35,Math.min((c.width-30)/1040,(c.height-30)/520));const ox=(c.width-s*1040)/2,oy=(c.height-s*520)/2;const p=(x,y)=>[...g.getImageData(Math.round(ox+s*x),Math.round(oy+s*y),1,1).data].slice(0,3).join(',');return {body:p(330,220),band:p(367,220),led:p(710,187)};})()" ([ref]$failures)
+        if ($pixels.body -eq $pixels.led -or $pixels.band -eq $pixels.body) {
+            throw "D1 body, cathode band, and LED1 were not visibly distinct: $($pixels | ConvertTo-Json -Compress)"
+        }
+        Write-Host "DIODE PLAYER rendered body=$($pixels.body) band=$($pixels.band) led=$($pixels.led)"
+
+        clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
+        $d1 = getCanvasPoint $socket ([ref]$nextId) 330 220 ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $d1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'D1 component controls'
+        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+        $d1Anode = getCanvasPoint $socket ([ref]$nextId) 250 220 ([ref]$failures)
+        $d1Cathode = getCanvasPoint $socket ([ref]$nextId) 410 220 ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $d1Anode 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $d1Cathode 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'installed open D1 forward OL'
+        clickPoint $socket ([ref]$nextId) $d1Cathode 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!=='OL'" $deadline ([ref]$failures) 'installed D1 intermediate measurement'
+        clickPoint $socket ([ref]$nextId) $d1Anode 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'installed open D1 reverse OL'
+        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('D1_ORIGINAL - Generic silicon diode')" $deadline ([ref]$failures) 'loose original diode'
+
+        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+        $originalAnode = getCanvasPoint $socket ([ref]$nextId) 868 195 ([ref]$failures)
+        $originalCathode = getCanvasPoint $socket ([ref]$nextId) 982 195 ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $originalAnode 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $originalCathode 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'loose original forward OL'
+        clickPoint $socket ([ref]$nextId) $originalCathode 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!=='OL'" $deadline ([ref]$failures) 'loose original intermediate measurement'
+        clickPoint $socket ([ref]$nextId) $originalAnode 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'loose original reverse OL'
+        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'Install new diode' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'diode functional repair'
+        Write-Host 'DIODE PLAYER repair verified'
+
+        clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $d1 'left' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('D1_CATALOG_PART_0 - Generic silicon diode')&&document.body.innerText.includes('D1_ORIGINAL - Generic silicon diode')" $deadline ([ref]$failures) 'separate loose diode identities'
+        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+        $healthyAnode = getCanvasPoint $socket ([ref]$nextId) 868 243 ([ref]$failures)
+        $healthyCathode = getCanvasPoint $socket ([ref]$nextId) 982 243 ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $healthyAnode 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $healthyCathode 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- V';})()" $deadline ([ref]$failures) 'healthy diode forward drop'
+        $forward = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $healthyCathode 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!== '$forward'" $deadline ([ref]$failures) 'healthy diode intermediate measurement'
+        clickPoint $socket ([ref]$nextId) $healthyAnode 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'healthy diode reverse OL'
+        clickPoint $socket ([ref]$nextId) $originalAnode 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $originalCathode 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'original remains OL'
+        if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        Write-Host "PASS diode-normal-player seed=3 healthy-forward=$forward reverse=OL original=OL"
+        return $true
+    } catch {
+        Write-Host "FAIL diode-normal-player seed=3 - $($_.Exception.Message)"
+        return $false
+    } finally {
+        cleanupBrowser $browser $socket $profile
     }
 }
 
@@ -259,6 +383,11 @@ if ($NormalPlayer) {
     if (-not (verifyNormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3" 9450)) { exit 1 }
     exit 0
 }
+if ($DiodeNormalPlayer) {
+    if (-not (verifyNormalDiodePlayer "$BaseUrl/circuitjs.html?tsjChallenge=diode&seed=3" 9460)) { exit 1 }
+    exit 0
+}
+$family = 'led'
 $routes = @(
     @{ Name = 'resistance'; Query = 'tsjVerifyResistance=true'; Expected = 'PASS:resistance' },
     @{ Name = 'meter'; Query = 'tsjVerifyMeter=true'; Expected = 'PASS:meter' },
@@ -266,13 +395,18 @@ $routes = @(
     @{ Name = 'replacement'; Query = 'tsjVerifyReplacement=true'; Expected = 'PASS:replacement' },
     @{ Name = 'challenge+replacement'; Query = 'tsjVerifyChallenge=true&tsjVerifyReplacement=true'; Expected = 'PASS:replacement' }
 )
+if ($Diode) {
+    $family = 'diode'
+    $routes = @(@{ Name = 'diode'; Query = 'tsjVerifyDiode=true'; Expected = 'PASS:diode' })
+}
 $passed = $true
 $index = 0
 if ($Route) { $routes = @($routes | Where-Object { $_.Name -eq $Route }) }
 if ($routes.Count -eq 0) { throw "Unknown route: $Route" }
+$expectedCount = $Seeds.Count * $routes.Count
 foreach ($seed in $Seeds) {
     foreach ($routeDefinition in $routes) {
-        $url = "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$seed&$($routeDefinition.Query)"
+        $url = "$BaseUrl/circuitjs.html?tsjChallenge=$family&seed=$seed&$($routeDefinition.Query)"
         $routePassed = verifyRoute "seed=$seed $($routeDefinition.Name)" $url $routeDefinition.Expected (9350 + $index) |
             Select-Object -Last 1
         if (-not $routePassed) { $passed = $false }
@@ -280,4 +414,4 @@ foreach ($seed in $Seeds) {
     }
 }
 if (-not $passed) { exit 1 }
-Write-Host "All $($Seeds.Count * $routes.Count) browser verifier routes passed."
+Write-Host "All $expectedCount browser verifier routes passed."

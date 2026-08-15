@@ -361,3 +361,36 @@ held by its optional `GeneratedBoardFamilyState`; the LED family provides
 runtime simulation-element ownership remains on the instance. Future component
 families must add their own family state rather than component-specific instance
 fields or getters.
+
+The second generated family is `DIODE_PROTECTED_INDICATOR`, with the series
+topology VIN -> D1 -> R1 -> LED1 -> GND. `DiodeProtectedIndicatorFamilyState`
+owns the D1 slot, diode inventory, non-depleting catalog, and physical-part serial
+allocator. None of those diode concepts are fields or getters on
+`GeneratedBoardInstance`. The only family-state behavior used by generic
+challenge orchestration is a target-agnostic predicate that reports whether the
+faulted target remains installed.
+
+`DiodeNameplate` is immutable catalog/physical specification metadata for the
+generic silicon model. `PhysicalDiodePart` separately owns acquired identity,
+its `DiodeElm`, public anode/cathode endpoints, location, installation orientation,
+and optional internal fault binding. Repeated catalog acquisition allocates new
+hidden backing coordinates and physical IDs; catalog rows never become probe
+targets or deplete. The correct and reversed installation choices use the same
+electrical diode specification, with orientation changing which public terminal
+the fixed `D1.A` and `D1.K` board pads reach.
+
+The original D1 carries a private series isolation switch inside its public
+two-terminal path. Applying `D1 OPEN` therefore stops solved branch current and
+keeps the LED dark both installed and removed, while diode mode measures the
+physical original as OL in either direction. A healthy `DiodeElm` replacement
+uses CircuitJS's built-in default silicon model and nonlinear solver. Its forward
+drop, reverse blocking, branch current, LED operation, and challenge completion
+all come from the solved graph; neither the workbench renderer nor the instrument
+controller contains a D1 reading override.
+
+The PCB renders D1 as a separate axial through-hole black body with metal leads,
+a contrasting cathode band, a D1 reference, and a K marking aligned to the actual
+installed polarity. Removed diodes retain probeable anode/cathode identity in the
+parts tray. Diode leads use the same detachable-connection boundary as resistor
+leads, so either D1 lead can be lifted, measured in isolation, and reconnected
+without changing stable pad or net identity.

@@ -26,4 +26,9 @@ class LedIndicatorFamilyState implements GeneratedBoardFamilyState {
     ResistorReplacementInventory getResistorInventory() { return resistorInventory; }
     ResistorReplacementCatalog getResistorCatalog() { return resistorCatalog; }
     String allocateCatalogPartId() { return "R1_CATALOG_PART_" + nextCatalogPartSerial++; }
+
+    public boolean isFaultedTargetInstalled(String componentId) {
+        return "R1".equals(componentId) && !r1Slot.isEmpty() &&
+            r1Slot.getInstalledPart().isFaulted();
+    }
 }
