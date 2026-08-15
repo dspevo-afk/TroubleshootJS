@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
+import java.util.HashSet;
 
 class ReplacementDeveloperVerifier {
     static void verify(CirSim sim) {
@@ -51,7 +52,8 @@ class ReplacementDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         verifyResistance(sim, instance, original, true);
         verifyInstalledResistance(sim, instance, correctResistance);
-        verifyUnlimitedAcquisition(sim, instance, slots);
+        String looseHealthyPartId = verifyUnlimitedAcquisition(sim, instance, slots);
+        verifyUnpoweredDcVoltageCases(sim, instance, original, looseHealthyPartId);
         verifyPartTopology(sim, instance);
         sim.setCircuitTitle("Replacement verification passed");
     }
@@ -328,14 +330,19 @@ class ReplacementDeveloperVerifier {
             "Invalid catalog state for seed " + seed);
     }
 
-    private static void verifyUnlimitedAcquisition(CirSim sim, GeneratedBoardInstance instance,
+    private static String verifyUnlimitedAcquisition(CirSim sim, GeneratedBoardInstance instance,
             ResistorSlotController slots) {
         int initialCount = instance.getResistorInventory().size();
         int catalogSize = instance.getResistorCatalog().size();
+        Vector<ResistorCatalogEntry> catalogEntries = instance.getResistorCatalog().getEntries();
         Vector<String> ids = new Vector<String>();
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         Vector<CircuitMeasurementEndpoint> firstEndpoints = new Vector<CircuitMeasurementEndpoint>();
         Vector<CircuitMeasurementEndpoint> secondEndpoints = new Vector<CircuitMeasurementEndpoint>();
+        HashSet<String> canonicalCoordinates = collectCoordinates(instance.getSimulationElements());
+        HashSet<String> acquiredCoordinates = new HashSet<String>();
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        String lastAcquiredPartId = null;
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(slots.removeInstalledPart(), "Could not remove correct replacement before acquisition loop");
         for (int index = 0; index < 12; index++) {
@@ -351,16 +358,112 @@ class ReplacementDeveloperVerifier {
             elements.add(part.getElement());
             firstEndpoints.add(part.getPublicTerminal(0));
             secondEndpoints.add(part.getPublicTerminal(1));
+            verifyNewBackingCoordinates(part, canonicalCoordinates, acquiredCoordinates);
             require(slots.removeInstalledPart(), "Could not remove acquired catalog part");
+            lastAcquiredPartId = part.getId();
         }
         require(instance.getResistorInventory().size() == initialCount + 12 &&
             instance.getResistorInventory().getLooseParts().size() >= 12 &&
-            instance.getResistorCatalog().size() == catalogSize,
+            instance.getResistorCatalog().size() == catalogSize &&
+            sameCatalogEntries(catalogEntries, instance.getResistorCatalog().getEntries()),
             "Repeated catalog acquisition did not retain physical tray parts or depleted catalog");
+        verifyTrayPaginationAndProbeGeometry(sim, instance, renderer, lastAcquiredPartId);
+        require(lastAcquiredPartId != null, "No healthy catalog part was acquired");
         require(slots.installNewFromCatalog(catalogId(instance.getPhysicalSpecifications()
             .getResistorNameplate("R1").getNominalResistanceOhms())), "Could not restore correct catalog part");
         sim.analyzeCircuit();
         sim.runCircuit(true);
+        return lastAcquiredPartId;
+    }
+
+    private static void verifyNewBackingCoordinates(PhysicalResistorPart part,
+            HashSet<String> canonicalCoordinates, HashSet<String> acquiredCoordinates) {
+        for (CircuitElm backing : part.getBackingElements()) {
+            String first = coordinate(backing.x, backing.y);
+            String second = coordinate(backing.x2, backing.y2);
+            require(!first.equals(second) && !canonicalCoordinates.contains(first) &&
+                !canonicalCoordinates.contains(second) && !acquiredCoordinates.contains(first) &&
+                !acquiredCoordinates.contains(second),
+                "Catalog backing coordinate overlaps canonical or acquired graph: " + part.getId());
+            acquiredCoordinates.add(first);
+            acquiredCoordinates.add(second);
+        }
+    }
+
+    private static void verifyTrayPaginationAndProbeGeometry(CirSim sim,
+            GeneratedBoardInstance instance, PcbWorkbenchRenderer renderer, String retainedPartId) {
+        Vector<PhysicalResistorPart> loose = instance.getResistorInventory().getLooseParts();
+        int expectedPages = Math.max(1, (loose.size() + 2) / 3);
+        require(renderer.getTrayPageCount() == expectedPages && expectedPages >= 2,
+            "Tray page count did not match loose inventory");
+        renderer.setTrayPage(0);
+        require(renderer.getVisibleLooseParts().size() <= 3,
+            "Tray page exposes more than three physical parts");
+        PhysicalResistorPart firstPagePart = renderer.getVisibleLooseParts().get(0);
+        verifyVisiblePartProbeTarget(sim, renderer, firstPagePart);
+        renderer.setSelectedPartId(firstPagePart.getId());
+        renderer.setTrayPage(1);
+        require(renderer.getSelectedPartId() == null,
+            "Changing tray page did not clear selection for hidden part");
+        require(renderer.getLoosePartLeadPoint(firstPagePart.getId(), 0) == null &&
+            renderer.getLoosePartLeadPoint(firstPagePart.getId(), 1) == null,
+            "Hidden tray part still has a marker point");
+        PhysicalResistorPart retainedPart = instance.getResistorInventory().get(retainedPartId);
+        int retainedPage = loose.indexOf(retainedPart) / 3;
+        renderer.setTrayPage(retainedPage);
+        PhysicalResistorPartProbeTarget retainedTarget = new PhysicalResistorPartProbeTarget(sim,
+            instance, retainedPartId, 0, renderer);
+        Point retainedMarker = retainedTarget.getMarkerPoint();
+        require(retainedMarker != null, "Retained loose part was not visible on its own tray page");
+        renderer.setTrayPage(retainedPage == 0 ? 1 : 0);
+        require(retainedTarget.getMarkerPoint() == null,
+            "Retained loose probe marker moved onto another tray page");
+        renderer.setTrayPage(retainedPage);
+        Point restoredMarker = retainedTarget.getMarkerPoint();
+        require(restoredMarker != null && restoredMarker.x == retainedMarker.x &&
+            restoredMarker.y == retainedMarker.y,
+            "Returning to tray page did not restore marker for the same physical part");
+        for (int page = 0; page < renderer.getTrayPageCount(); page++) {
+            renderer.setTrayPage(page);
+            require(renderer.getVisibleLooseParts().size() <= 3,
+                "Tray page exposes more than three physical parts");
+            for (PhysicalResistorPart part : renderer.getVisibleLooseParts())
+                verifyVisiblePartProbeTarget(sim, renderer, part);
+        }
+        renderer.setTrayPage(0);
+    }
+
+    private static void verifyVisiblePartProbeTarget(CirSim sim, PcbWorkbenchRenderer renderer,
+            PhysicalResistorPart part) {
+        for (int terminal = 0; terminal < 2; terminal++) {
+            Point point = renderer.getLoosePartLeadPoint(part.getId(), terminal);
+            ProbeTarget target = renderer.findProbeTarget(sim, point.x, point.y);
+            require(target instanceof PhysicalResistorPartProbeTarget &&
+                target.isSameTarget(new PhysicalResistorPartProbeTarget(sim,
+                    sim.getGeneratedBoardInstance(), part.getId(), terminal, renderer)),
+                "Visible tray lead did not resolve to its physical probe target: " + part.getId());
+        }
+    }
+
+    private static HashSet<String> collectCoordinates(Vector<CircuitElm> elements) {
+        HashSet<String> coordinates = new HashSet<String>();
+        for (CircuitElm element : elements) {
+            coordinates.add(coordinate(element.x, element.y));
+            coordinates.add(coordinate(element.x2, element.y2));
+        }
+        return coordinates;
+    }
+
+    private static String coordinate(int x, int y) { return x + ":" + y; }
+
+    private static boolean sameCatalogEntries(Vector<ResistorCatalogEntry> expected,
+            Vector<ResistorCatalogEntry> actual) {
+        if (expected.size() != actual.size())
+            return false;
+        for (int index = 0; index < expected.size(); index++)
+            if (expected.get(index) != actual.get(index))
+                return false;
+        return true;
     }
 
     private static String catalogId(double resistance) { return "R_CATALOG_" + (long) resistance; }

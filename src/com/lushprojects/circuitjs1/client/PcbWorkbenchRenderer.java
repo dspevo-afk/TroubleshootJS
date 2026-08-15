@@ -351,7 +351,7 @@ class PcbWorkbenchRenderer {
     }
     void clampTrayPage() { trayPage = clampTrayPageValue(trayPage); }
 
-    private Vector<PhysicalResistorPart> getVisibleLooseParts() {
+    Vector<PhysicalResistorPart> getVisibleLooseParts() {
         Vector<PhysicalResistorPart> loose = instance.getResistorInventory().getLooseParts();
         clampTrayPage();
         Vector<PhysicalResistorPart> result = new Vector<PhysicalResistorPart>();

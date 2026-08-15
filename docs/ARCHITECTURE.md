@@ -349,3 +349,8 @@ matching resistor current, and illuminated operational state. Incorrect but
 electrically valid replacements simply remain READY. `COMPLETED` is latched
 after a solver-backed successful repair; later board changes still affect the
 electrical simulation honestly but do not retract the first verified repair.
+
+The package-visible PCB tray-slice accessor is verifier-only integration access.
+It exposes the same paginated loose-part slice used by rendering and hit testing,
+so developer verification can compare physical marker geometry and page state
+without embedding testing behavior in normal drawing.
