@@ -104,6 +104,7 @@ MouseOutHandler, MouseWheelHandler {
     Random random;
     Button resetButton;
 	Button boardPowerButton;
+	Button r1Lead1Button, r1InstallButton;
     Button runStopButton;
     Button dumpMatrixButton;
     MenuItem aboutItem;
@@ -622,6 +623,20 @@ MouseOutHandler, MouseWheelHandler {
 	    public void onClick(ClickEvent event) {
 		setBoardPowerState(boardPowerController.getState() == BoardPowerState.POWERED ?
 		    BoardPowerState.UNPOWERED : BoardPowerState.POWERED);
+	    }
+	});
+	verticalPanel.add(r1Lead1Button = new Button());
+	r1Lead1Button.setVisible(false);
+	r1Lead1Button.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent event) {
+		modifyGeneratedR1Lead();
+	    }
+	});
+	verticalPanel.add(r1InstallButton = new Button());
+	r1InstallButton.setVisible(false);
+	r1InstallButton.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent event) {
+		modifyGeneratedR1Installation();
 	    }
 	});
 
@@ -3540,6 +3555,7 @@ MouseOutHandler, MouseWheelHandler {
 	int len = b.length;
 	if ((flags & RC_RETAIN) == 0) {
 	    generatedBoardInstance = null;
+	    boardModificationController = null;
 	    boardPowerController.detach();
 	    updateBoardPowerButton();
 	   generatedBoardVerificationPending = false;
@@ -4066,6 +4082,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     GeneratedBoardInstance generatedBoardInstance;
+	BoardModificationController boardModificationController;
 	boolean activeMeasurementOverlay;
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
@@ -4090,8 +4107,10 @@ MouseOutHandler, MouseWheelHandler {
 	for (CircuitElm element : instance.getSimulationElements())
 	    elmList.add(element);
 	generatedBoardInstance = instance;
+	boardModificationController = new BoardModificationController(this, instance);
 	boardPowerController.attach(instance.getExternalPowerBindings());
 	updateBoardPowerButton();
+	updateGeneratedModificationButtons();
 	setCircuitTitle(instance.getDescription());
 	unsavedChanges = false;
 	enableUndoRedo();
@@ -4139,6 +4158,10 @@ MouseOutHandler, MouseWheelHandler {
 	return generatedBoardInstance;
     }
 
+	BoardModificationController getBoardModificationController() {
+	return boardModificationController;
+	}
+
     void verifyGeneratedBoard() {
 	if (generatedBoardInstance == null)
 	    return;
@@ -4147,7 +4170,8 @@ MouseOutHandler, MouseWheelHandler {
 	if (boardPowerController.getState() == BoardPowerState.UNPOWERED &&
 		!boardPowerController.isElectricallyUnpowered())
 	    throw new IllegalStateException("Generated board is logically unpowered without electrical isolation");
-	GeneratedBoardVerifier.verify(generatedBoardInstance, boardPowerController.getState());
+	GeneratedBoardVerifier.verify(generatedBoardInstance, boardPowerController.getState(),
+	    boardModificationController, elmList);
     }
 
     void setBoardPowerState(BoardPowerState state) {
@@ -4160,6 +4184,7 @@ MouseOutHandler, MouseWheelHandler {
 	if (!boardPowerController.setState(state))
 	    return;
 	updateBoardPowerButton();
+	updateGeneratedModificationButtons();
 	instrumentController.refreshActiveMeasurement();
 	requestGeneratedBoardVerification();
     }
@@ -4172,6 +4197,52 @@ MouseOutHandler, MouseWheelHandler {
 	if (generatedBoardActive)
 	    boardPowerButton.setText(boardPowerController.getState() == BoardPowerState.POWERED ?
 		"Board Power: ON" : "Board Power: OFF");
+    }
+
+    private void modifyGeneratedR1Lead() {
+	if (boardModificationController == null)
+	    return;
+	try {
+	    if (boardModificationController.isLeadConnected("R1", "R1.1"))
+		boardModificationController.liftLead("R1", "R1.1");
+	    else
+		boardModificationController.reconnectLead("R1", "R1.1");
+	} catch (IllegalStateException e) {
+	    Window.alert(e.getMessage());
+	}
+	updateGeneratedModificationButtons();
+    }
+
+    private void modifyGeneratedR1Installation() {
+	if (boardModificationController == null)
+	    return;
+	try {
+	    if (boardModificationController.isComponentInstalled("R1"))
+		boardModificationController.removeComponent("R1");
+	    else
+		boardModificationController.restoreComponent("R1");
+	} catch (IllegalStateException e) {
+	    Window.alert(e.getMessage());
+	}
+	updateGeneratedModificationButtons();
+    }
+
+    private void updateGeneratedModificationButtons() {
+	if (r1Lead1Button == null || r1InstallButton == null)
+	    return;
+	boolean available = boardModificationController != null;
+	r1Lead1Button.setVisible(available);
+	r1InstallButton.setVisible(available);
+	if (!available)
+	    return;
+	r1Lead1Button.setText(boardModificationController.isLeadConnected("R1", "R1.1") ?
+	    "R1 Lead 1: CONNECTED" : "R1 Lead 1: LIFTED");
+	r1InstallButton.setText(boardModificationController.isComponentInstalled("R1") ?
+	    "R1: INSTALLED" : "R1: REMOVED");
+    }
+
+    void refreshBoardModificationControls() {
+	updateGeneratedModificationButtons();
     }
 
     double measureResistance(CircuitPostMeasurementEndpoint red,

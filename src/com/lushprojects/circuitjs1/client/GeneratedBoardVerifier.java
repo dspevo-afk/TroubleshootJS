@@ -5,20 +5,29 @@ import java.util.Vector;
 class GeneratedBoardVerifier {
     private static final double NET_TOLERANCE = .001;
 
-    static void verify(GeneratedBoardInstance instance, BoardPowerState powerState) {
+    static void verify(GeneratedBoardInstance instance, BoardPowerState powerState,
+            BoardModificationController modifications, Vector<CircuitElm> activeElements) {
         TroubleshootBoard board = instance.getBoard();
         BoardSimulationBindings bindings = instance.getSimulationBindings();
         instance.getComponentBindings().validateElementsAreOwnedBy(instance.getSimulationElements());
         instance.getExternalPowerBindings().validateElementsAreOwnedBy(instance.getSimulationElements());
+        if (modifications != null)
+            modifications.verifyStructuralState();
+        for (CircuitElm element : instance.getSimulationElements()) {
+            if (!activeElements.contains(element) &&
+                    !instance.getConnectionBindings().isConnectionElement(element))
+                throw new IllegalStateException("Undeclared generated element missing from graph");
+        }
         for (String padId : board.getPadIds()) {
             CircuitMeasurementEndpoint endpoint = bindings.getEndpoint(padId);
             if (endpoint == null)
                 throw new IllegalStateException("Missing simulation binding for board pad: " + padId);
-	    verifyEndpointIsOwned(endpoint, instance.getSimulationElements(), padId);
+        verifyEndpointIsOwned(endpoint, activeElements, padId);
         }
         for (String netId : board.getNetIds())
             verifyNetVoltage(bindings.getEndpointsForNet(netId), netId);
-        if (instance.getFamilyValidator() != null)
+        if (instance.getFamilyValidator() != null &&
+            (modifications == null || modifications.isFullyRestored()))
             instance.getFamilyValidator().verify(instance, powerState);
     }
 

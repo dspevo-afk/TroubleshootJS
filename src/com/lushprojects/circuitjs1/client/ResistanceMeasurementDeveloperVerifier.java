@@ -84,14 +84,57 @@ class ResistanceMeasurementDeveloperVerifier {
         sim.runCircuit(true);
         sim.verifyGeneratedBoard();
         measure(sim, r11Probe, r12Probe, 680, 2);
+    verifyComponentIsolation(sim, instance, r11Probe, r12Probe);
         sim.setCircuitTitle("Resistance verification passed; diode " + diodeForwardSummary);
+    }
+
+    private static void verifyComponentIsolation(CirSim sim, GeneratedBoardInstance instance,
+            CircuitPostProbeTarget r11Probe, CircuitPostProbeTarget r12Probe) {
+    BoardModificationController modifications = sim.getBoardModificationController();
+    GeneratedComponentConnectionBindings connections = instance.getConnectionBindings();
+    GeneratedComponentConnectionBinding r11 = connections.get("R1", "R1.1");
+    GeneratedComponentConnectionBinding r12 = connections.get("R1", "R1.2");
+    CircuitPostProbeTarget componentLead1 = getProbe(sim, r11.getComponentEndpoint());
+    CircuitPostProbeTarget componentLead2 = getProbe(sim, r12.getComponentEndpoint());
+    measure(sim, componentLead1, componentLead2, 680, 2);
+    modifications.liftLead("R1", "R1.1");
+    sim.updateCircuit();
+    sim.instrumentController.setResistanceProbesForDeveloperVerification(r11Probe, componentLead1);
+    require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+        "Lifted R1 lead did not isolate the persistent board pad");
+    measure(sim, componentLead1, componentLead2, 680, 2);
+    modifications.reconnectLead("R1", "R1.1");
+    sim.updateCircuit();
+    measure(sim, r11Probe, r12Probe, 680, 2);
+    modifications.removeComponent("R1");
+    require(!sim.elmList.contains(r11.getConnectionElement()) &&
+        !sim.elmList.contains(r12.getConnectionElement()),
+        "Removing R1 left a detachable lead in the graph");
+    measure(sim, componentLead1, componentLead2, 680, 2);
+    sim.setBoardPowerState(BoardPowerState.POWERED);
+    boolean poweredRejected = false;
+    try {
+        modifications.restoreComponent("R1");
+    } catch (IllegalStateException e) {
+        poweredRejected = true;
+    }
+    require(poweredRejected && !modifications.isComponentInstalled("R1"),
+        "Powered component restoration changed the board");
+    sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+    modifications.restoreComponent("R1");
+    sim.updateCircuit();
+    sim.verifyGeneratedBoard();
+    measure(sim, r11Probe, r12Probe, 680, 2);
     }
 
     private static CircuitPostProbeTarget getProbe(CirSim sim, GeneratedBoardInstance instance,
             String padId) {
-        CircuitMeasurementEndpoint endpoint = instance.getSimulationBindings().getEndpoint(padId);
+	return getProbe(sim, instance.getSimulationBindings().getEndpoint(padId));
+    }
+
+    private static CircuitPostProbeTarget getProbe(CirSim sim, CircuitMeasurementEndpoint endpoint) {
         if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
-            throw new IllegalStateException("Missing circuit post binding for " + padId);
+            throw new IllegalStateException("Missing circuit post measurement binding");
         CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint) endpoint;
         return new CircuitPostProbeTarget(sim, post.getElement(), post.getPostIndex());
     }

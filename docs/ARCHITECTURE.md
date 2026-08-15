@@ -101,6 +101,24 @@ Current schematic probes continue to use `CircuitPostProbeTarget`; a PCB probe
 target will use a board pad ID after the renderer provides marker geometry. Both
 paths converge through `CircuitMeasurementAdapter`.
 
+`GeneratedComponentConnectionBindings` adds the mutable physical-workbench
+boundary without changing a `BoardPad` or `BoardNet` identity. Each detachable
+lead records a persistent board-side endpoint, a distinct component-side
+endpoint, and one owned CircuitJS connection element. The board side remains
+probeable when the lead is lifted or the component is removed; the component
+side remains available for out-of-circuit measurement. Bindings reject shared
+connection elements and endpoints not owned by the generated graph.
+
+`BoardModificationController` is the sole graph-mutation owner. It can lift or
+reconnect one declared lead, remove every declared lead for a component, or
+restore them. It mutates only the declared connection elements, is idempotent,
+requires the exact installed generated board with no active meter overlay, and
+requires actual electrical power isolation. A mutation requests normal CircuitJS
+analysis, so active instruments invalidate and refresh through their existing
+path. Generated verification always checks graph/connection structural state;
+it runs family healthy-behavior checks only once every detachable lead is
+restored.
+
 Generators are seeded so a seed reproduces a board's topology, values, and
 simulation placement. `GeneratedBoardInstance` is family-agnostic: it couples
 board metadata, owned CircuitJS elements, stable family/topology IDs, generic
