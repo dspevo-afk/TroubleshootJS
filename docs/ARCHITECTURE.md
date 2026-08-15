@@ -4,11 +4,15 @@ CircuitJS remains the electrical simulation engine. TroubleshootJS layers its
 challenge, board, and instrument behavior around that engine rather than
 replacing its electrical results.
 
-`ProbeTarget` describes where a user placed a probe: validity, marker position,
-and resolution to a `CircuitMeasurementEndpoint`. It does not perform a
-measurement. `CircuitMeasurementEndpoint` represents a resolvable electrical
-endpoint, while `CircuitMeasurementAdapter` owns measurement behavior and the
-translation to CircuitJS.
+`ProbeTarget` describes where a user placed a probe: validity, semantic target
+identity, marker position, and resolution to a `CircuitMeasurementEndpoint`.
+It does not perform a measurement. `CircuitPostProbeTarget` identifies a
+physical target by its owning simulation, live element, and post index rather
+than wrapper allocation identity. This lets hit-testing return a new target
+wrapper without invalidating an unchanged probe, and leaves PCB pad targets
+free to define their own identity later. `CircuitMeasurementEndpoint`
+represents a resolvable electrical endpoint, while `CircuitMeasurementAdapter`
+owns measurement behavior and the translation to CircuitJS.
 
 Board electrical power is represented independently from CircuitJS simulation
 execution. Generated-board power is enforced through explicit external-power

@@ -24,6 +24,14 @@ class CircuitPostProbeTarget implements ProbeTarget {
             sim.containsElement(element);
     }
 
+    public boolean isSameTarget(ProbeTarget other) {
+        if (!(other instanceof CircuitPostProbeTarget))
+            return false;
+        CircuitPostProbeTarget circuitPost = (CircuitPostProbeTarget) other;
+        return sim == circuitPost.sim && element == circuitPost.element &&
+            postIndex == circuitPost.postIndex;
+    }
+
     public Point getMarkerPoint() {
         return element.getPost(postIndex);
     }

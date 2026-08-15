@@ -1,34 +1,38 @@
 # Latest Codex Task Report
 
 ## Task
-Task #11: Add simulated diode-test mode.
+Focused corrective follow-up to Task #11: semantic probe identity, diode
+reverse verification, and generic active-measurement cleanup validation.
 
 ## Summary
-Added `DIODE`, a real active CircuitJS diode tester. It drives the unpowered
-circuit with a finite-compliance source, displays solved red-minus-black DUT
-voltage, and identifies open/reverse/compliance conditions as `OL`.
+Fixed active-instrument pointer handling so repeated clicks on the same
+physical CircuitJS post do not remeasure or prepare continuity audio. Cleanup
+verification now validates the most recently executed generic stimulus rather
+than retaining a resistance-only state reference.
 
 ## Architectural Decisions
-- `ActiveMeasurementStimulus` and the shared CirSim transaction centralize
-  install/solve/sample/remove/final-restore behavior for both OHM and DIODE.
-- `DiodeTestStimulus` is distinct from resistance: it samples solved DUT
-  voltage/current rather than deriving resistance or inspecting diode metadata.
-- DIODE uses the existing active-measurement power gate and validates it again
-  after transaction cleanup, discarding readings when queued power changes the
-  final board state.
-- Continuity audio preparation now occurs only for a changed CONT probe or its
-  button. Empty canvas clicks leave active measurements and feedback unchanged.
+- `ProbeTarget.isSameTarget()` is an extensible semantic equality contract.
+  Circuit post targets compare simulation, element, and post index.
+- The controller only invalidates/remeasures after a semantic probe change.
+  Empty or same-target canvas hits retain the active result; CONT prepares
+  audio only for a genuinely changed probe or the CONT button gesture.
+- `lastActiveMeasurementStimulus` and
+  `isActiveMeasurementSolverRestoredForDeveloperVerification()` cover either
+  resistance or diode overlays and check all temporary elements against the
+  element list, voltage source table, node links, and final solver matrix.
+- Reverse diode verification now requires an OL readout, published NaN voltage,
+  and finite reverse current below the `10 uA` current threshold; it no longer
+  compares amperes to a voltage constant.
 
 ## Files Changed
 - `docs/ARCHITECTURE.md`
 - `docs/CODEX_TASK_REPORT.md`
-- `src/com/lushprojects/circuitjs1/client/ActiveMeasurementStimulus.java`
 - `src/com/lushprojects/circuitjs1/client/CirSim.java`
-- `src/com/lushprojects/circuitjs1/client/CircuitMeasurementAdapter.java`
-- `src/com/lushprojects/circuitjs1/client/DiodeMeasurementResult.java`
-- `src/com/lushprojects/circuitjs1/client/DiodeTestStimulus.java`
+- `src/com/lushprojects/circuitjs1/client/CircuitPostProbeTarget.java`
+- `src/com/lushprojects/circuitjs1/client/ProbeTarget.java`
+- `src/com/lushprojects/circuitjs1/client/ContinuityFeedback.java`
+- `src/com/lushprojects/circuitjs1/client/BrowserContinuityFeedback.java`
 - `src/com/lushprojects/circuitjs1/client/InstrumentController.java`
-- `src/com/lushprojects/circuitjs1/client/ResistanceMeasurementStimulus.java`
 - `src/com/lushprojects/circuitjs1/client/ResistanceMeasurementDeveloperVerifier.java`
 
 ## Stimulus Constants
@@ -41,32 +45,32 @@ voltage, and identifies open/reverse/compliance conditions as `OL`.
   relative to black through the DUT.
 
 ## Validation
-- Production GWT build passed all five permutations after implementation.
-- Browser verifier at
-  `?tsjFixture=led&seed=12345&tsjVerifyResistance=true&diode=final` passed and
-  displayed the DIODE control.
-- Forward LED (`LED1.A -> LED1.K`) solved to exactly observed
-  `1.594696569036657 V` at `0.0014053034309633428 A`; it was finite and not OL.
-- Reverse LED displayed `OL`; same-net `J1.1 -> R1.1` was approximately `0 V`,
-  not OL. Forward/reverse order therefore produced distinct behavior.
-- Powered and detached legacy graphs displayed `POWER OFF` without a diode
-  overlay. Invalid probes cleared to `--- V`; reinstallation did not revive
-  cleared probes.
-- Retained diode probes refreshed exactly once after `needAnalyze()`; normal
-  repaint cycles added no transaction. DIODE-to-CONT/OHM/DC and exit behavior
-  passed, including immediate BEEP shutdown and restored pointer handling.
-- A queued power-on during diode overlay removed the temporary elements, showed
-  `POWER OFF`, restored final POWERED state with connected external controls,
-  approximately `+9 V` VIN, and passed generated-board verification.
-- OHM, CONT (including `49/50/51 Ohm`), DC `+9/0/+9 V`, export, undo/redo,
-  unsaved state, board identities, collision-free geometry, solver cleanup,
-  and queued-power resistance regressions all remained covered by the verifier.
+- Production build command:
+  `$java8Home = Join-Path $env:TEMP 'TroubleshootJS-build-probe\temurin8'; & .\scripts\build.ps1 -JavaHome $java8Home`
+  completed all five GWT permutations and linked successfully.
+- Browser verifier:
+  `http://127.0.0.1:8888/circuitjs.html?tsjFixture=led&seed=12345&tsjVerifyResistance=true&reviewfix=3`
+  completed with `Resistance verification passed` and final `680 Ohm`.
+- Persistent canvas hit-tests confirm same CONT red and black physical-post
+  clicks added zero resistance transactions and zero `prepare()` calls.
+  A different CONT post added exactly one resistance transaction and one
+  prepare call. Empty canvas added neither.
+- Same DIODE red and black physical-post clicks added zero diode transactions
+  and zero continuity prepares. A different DIODE post added exactly one diode
+  transaction.
+- Forward LED still solved to `1.594696569036657 V` at
+  `0.0014053034309633428 A`; reverse was OL with NaN published voltage and a
+  finite current below `10 uA`; same-node remained approximately `0 V`.
+- Powered/legacy blocking, invalid probes, topology one-shot refresh, mode
+  switching, queued power, generic solver cleanup, export/history/identity,
+  OHM, CONT `49/50/51 Ohm`, and DC `+9/0/+9 V` regressions passed.
+- `git diff --check` and `git diff --cached --check` passed.
 
 ## Audio Validation
-The verifier confirms continuity feedback was requested and BEEP state changed
-only when appropriate. It cannot prove speaker output. Browser automation does
-not observe oscillator construction or actual audible sound; visible BEEP is
-the deterministic fallback.
+The new prepare counter proves whether a gesture requests browser-audio
+initialization. Same/empty/DIODE canvas clicks leave it unchanged; a changed
+CONT probe increments it once. Actual audible output remains unobservable to
+browser automation, and visible BEEP remains the deterministic fallback.
 
 ## Known Limitations
 Diode classification is DC and intentionally conservative around compliance;
@@ -78,4 +82,4 @@ Add component removal/lift primitives so users can isolate misleading parallel
 paths before active measurements.
 
 ## Intended Commit Message
-Add simulated diode test
+Fix semantic probe measurement refresh

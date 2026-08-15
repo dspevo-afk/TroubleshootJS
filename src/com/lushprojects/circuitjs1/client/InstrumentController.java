@@ -101,9 +101,9 @@ class InstrumentController {
         boolean changed = false;
         if (target != null) {
             if (button == NativeEvent.BUTTON_LEFT)
-                changed = redProbe != target;
+                changed = redProbe == null || !redProbe.isSameTarget(target);
             else if (button == NativeEvent.BUTTON_RIGHT)
-                changed = blackProbe != target;
+                changed = blackProbe == null || !blackProbe.isSameTarget(target);
             if (activeMode == MODE_CONTINUITY && changed)
                 continuityFeedback.prepare();
             if (button == NativeEvent.BUTTON_LEFT)
@@ -224,6 +224,10 @@ class InstrumentController {
 
     int getContinuityFeedbackStartCountForDeveloperVerification() {
         return continuityFeedback.getStartCount();
+    }
+
+    int getContinuityFeedbackPrepareCountForDeveloperVerification() {
+        return continuityFeedback.getPrepareCount();
     }
 
     int getContinuityFeedbackStopCountForDeveloperVerification() {

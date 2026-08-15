@@ -2,11 +2,17 @@ package com.lushprojects.circuitjs1.client;
 
 class BrowserContinuityFeedback implements ContinuityFeedback {
     private boolean requestedActive;
+        private int prepareCount;
     private int startCount;
     private int stopCount;
 
     public void prepare() {
+        prepareCount++;
         prepareAudio();
+    }
+
+    public int getPrepareCount() {
+        return prepareCount;
     }
 
     public void setActive(boolean active) {

@@ -4069,9 +4069,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean activeMeasurementOverlay;
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
-	ResistanceMeasurementStimulus lastResistanceMeasurementStimulus;
 	ActiveMeasurementStimulus lastActiveMeasurementStimulus;
-	boolean resistanceSolverRestored;
+	boolean activeMeasurementSolverRestored;
 	boolean generatedBoardVerificationPending;
 	boolean generatedBoardVerificationAnalyzed;
 	double generatedBoardVerificationStartTime;
@@ -4181,7 +4180,6 @@ MouseOutHandler, MouseWheelHandler {
 		!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return Double.NaN;
 	final ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(this, red, black);
-	lastResistanceMeasurementStimulus = stimulus;
 	return runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
 	    public double readResult() {
 		double current = stimulus.getTestCurrent();
@@ -4214,7 +4212,7 @@ MouseOutHandler, MouseWheelHandler {
     private double runTemporaryActiveMeasurement(ActiveMeasurementStimulus stimulus,
 	    ActiveMeasurementResultReader reader) {
 	lastActiveMeasurementStimulus = stimulus;
-	resistanceSolverRestored = false;
+		activeMeasurementSolverRestored = false;
 	activeMeasurementOverlay = true;
 	try {
 	    stimulus.install(this);
@@ -4244,17 +4242,13 @@ MouseOutHandler, MouseWheelHandler {
 		requestGeneratedBoardVerification();
 		activeMeasurementOverlay = false;
 	    }
-	    resistanceSolverRestored = isStimulusAbsentFromSolver(stimulus);
+	    activeMeasurementSolverRestored = isStimulusAbsentFromSolver(stimulus);
 	}
     }
 
-    boolean isResistanceSolverRestoredForDeveloperVerification() {
-	return resistanceSolverRestored && lastResistanceMeasurementStimulus != null &&
-	    isStimulusAbsentFromSolver(lastResistanceMeasurementStimulus);
-    }
-
-    private boolean isStimulusAbsentFromSolver(ResistanceMeasurementStimulus stimulus) {
-	return isStimulusAbsentFromSolver((ActiveMeasurementStimulus) stimulus);
+    boolean isActiveMeasurementSolverRestoredForDeveloperVerification() {
+	return activeMeasurementSolverRestored && lastActiveMeasurementStimulus != null &&
+	    isStimulusAbsentFromSolver(lastActiveMeasurementStimulus);
     }
 
     private boolean isStimulusAbsentFromSolver(ActiveMeasurementStimulus stimulus) {
