@@ -92,7 +92,19 @@ are ignored by Git.
 
 ## Development server
 
-Start GWT Super Dev Mode and its embedded web server with:
+For the reliable visible player preview, first run a production build and then:
+
+```powershell
+.\scripts\preview.ps1
+```
+
+Open `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=3`. This serves
+the compiled production output and is the recommended command when you simply
+want to see and interact with the current application.
+
+## Legacy GWT development server
+
+The legacy GWT 2.7 DevMode workflow is retained for compiler development only:
 
 ```powershell
 .\scripts\dev.ps1
