@@ -219,6 +219,7 @@ MouseOutHandler, MouseWheelHandler {
 //    Vector setupList;
     CircuitElm dragElm, menuElm, stopElm;
     private CircuitElm mouseElm=null;
+	InstrumentController instrumentController;
     boolean didSwitch = false;
     int mousePost = -1;
     CircuitElm plotXElm, plotYElm;
@@ -606,6 +607,7 @@ MouseOutHandler, MouseWheelHandler {
 		setSimRunning(!simIsRunning());
 	    }
 	});
+	instrumentController = new InstrumentController(this, verticalPanel);
 
 	/*
 	dumpMatrixButton = new Button("Dump Matrix");
@@ -1388,6 +1390,7 @@ MouseOutHandler, MouseWheelHandler {
 	    g.drawLine(x, inverseTransformY(0), x, inverseTransformY(circuitArea.height));
 	    g.drawLine(inverseTransformX(0), y, inverseTransformX(circuitArea.width), y);
 	}
+	instrumentController.draw(g);
 
 	
 	backcontext.setTransform(1, 0, 0, 1, 0, 0);
@@ -3501,6 +3504,7 @@ MouseOutHandler, MouseWheelHandler {
 	int i;
 	int len = b.length;
 	if ((flags & RC_RETAIN) == 0) {
+	    instrumentController.clearTargets();
 	    clearMouseElm();
 	    for (i = 0; i != elmList.size(); i++) {
 		CircuitElm ce = getElm(i);
@@ -4016,6 +4020,36 @@ MouseOutHandler, MouseWheelHandler {
     int transformY(double y) {
 	return (int) ((y*transform[3]) + transform[5]);
     }
+
+    boolean containsElement(CircuitElm element) {
+	return elmList.contains(element);
+    }
+
+    CircuitPostProbeTarget findPostTarget(int screenX, int screenY) {
+	return findPostTarget(screenX, screenY, null);
+    }
+
+    CircuitPostProbeTarget findPostTarget(int screenX, int screenY, CircuitElm preferredElement) {
+	if (!circuitArea.contains(screenX, screenY))
+	    return null;
+	int gridX = inverseTransformX(screenX);
+	int gridY = inverseTransformY(screenY);
+	CircuitPostProbeTarget target = null;
+	for (int i = 0; i != elmList.size(); i++) {
+	    CircuitElm element = getElm(i);
+	    if (preferredElement != null && element != preferredElement)
+		continue;
+	    for (int postIndex = 0; postIndex != element.getPostCount(); postIndex++) {
+		Point post = element.getPost(postIndex);
+		if (post == null)
+		    continue;
+		int distance = Graphics.distanceSq(post.x, post.y, gridX, gridY);
+		if (distance < 26)
+		    target = new CircuitPostProbeTarget(this, element, postIndex);
+	    }
+	}
+	return target;
+    }
     
     
 
@@ -4098,37 +4132,29 @@ MouseOutHandler, MouseWheelHandler {
     				scopeSelected = i;
     			}
     		}
-    		//	    // the mouse pointer was not in any of the bounding boxes, but we
-    		//	    // might still be close to a post
-    		for (i = 0; i != elmList.size(); i++) {
-    			CircuitElm ce = getElm(i);
-    			if (mouseMode==MODE_DRAG_POST ) {
-    				if (ce.getHandleGrabbedClose(gx, gy, POSTGRABSQ, 0)> 0)
-    				{
-    					newMouseElm = ce;
-    					break;
-    				}
-    			}
-    			int j;
-    			int jn = ce.getPostCount();
-    			for (j = 0; j != jn; j++) {
-    				Point pt = ce.getPost(j);
-    				//   int dist = Graphics.distanceSq(x, y, pt.x, pt.y);
-    				if (Graphics.distanceSq(pt.x, pt.y, gx, gy) < 26) {
-    					newMouseElm = ce;
-    					mousePost = j;
-    					break;
-    				}
-    			}
-    		}
+		boolean foundDragHandle = false;
+		if (mouseMode == MODE_DRAG_POST) {
+		    for (i = 0; i != elmList.size(); i++) {
+			CircuitElm element = getElm(i);
+			if (element.getHandleGrabbedClose(gx, gy, POSTGRABSQ, 0) > 0) {
+			    newMouseElm = element;
+			    foundDragHandle = true;
+			    break;
+			}
+		    }
+		}
+		if (!foundDragHandle) {
+		    CircuitPostProbeTarget postTarget = findPostTarget(sx, sy);
+		    if (postTarget != null) {
+			newMouseElm = postTarget.getElement();
+			mousePost = postTarget.getPostIndex();
+		    }
+		}
     	} else {
     		mousePost = -1;
-    		// look for post close to the mouse pointer
-    		for (i = 0; i != newMouseElm.getPostCount(); i++) {
-    			Point pt = newMouseElm.getPost(i);
-    			if (Graphics.distanceSq(pt.x, pt.y, gx, gy) < 26)
-    				mousePost = i;
-    		}
+		CircuitPostProbeTarget postTarget = findPostTarget(sx, sy, newMouseElm);
+		if (postTarget != null)
+		    mousePost = postTarget.getPostIndex();
     	}
     	repaint();
     	setMouseElm(newMouseElm);
@@ -4138,6 +4164,8 @@ MouseOutHandler, MouseWheelHandler {
 
     public void onContextMenu(ContextMenuEvent e) {
     	e.preventDefault();
+	if (instrumentController.isHandlingPointerInput())
+	    return;
     	if (!dialogIsShowing()) {
         	menuClientX = e.getNativeEvent().getClientX();
         	menuClientY = e.getNativeEvent().getClientY();
@@ -4237,12 +4265,15 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     void longPress() {
-	doPopupMenu();
+	if (!instrumentController.isHandlingPointerInput())
+	    doPopupMenu();
     }
     
 //    public void mouseClicked(MouseEvent e) {
     public void onClick(ClickEvent e) {
     	e.preventDefault();
+	if (instrumentController.isHandlingPointerInput())
+	    return;
 //    	//IES - remove inteaction
 ////	if ( e.getClickCount() == 2 && !didSwitch )
 ////	    doEditMenu(e);
@@ -4256,6 +4287,8 @@ MouseOutHandler, MouseWheelHandler {
     
     public void onDoubleClick(DoubleClickEvent e){
     	e.preventDefault();
+	if (instrumentController.isHandlingPointerInput())
+	    return;
  //   	if (!didSwitch && mouseElm != null)
     	if (mouseElm != null && !(mouseElm instanceof SwitchElm) && !noEditCheckItem.getState())
     		doEdit(mouseElm);
@@ -4280,6 +4313,11 @@ MouseOutHandler, MouseWheelHandler {
     public void onMouseDown(MouseDownEvent e) {
 //    public void mousePressed(MouseEvent e) {
     	e.preventDefault();
+	// An active instrument owns the whole gesture so CircuitJS editing never sees probe clicks.
+	if (instrumentController.isHandlingPointerInput()) {
+	    instrumentController.handlePointerInput(e.getNativeButton(), e.getX(), e.getY());
+	    return;
+	}
     	
 	stopElm = null; // if stopped, allow user to select other elements to fix circuit 
     	menuX = menuClientX = e.getX();
@@ -4400,6 +4438,8 @@ MouseOutHandler, MouseWheelHandler {
     public void onMouseUp(MouseUpEvent e) {
     	e.preventDefault();
     	mouseDragging=false;
+	if (instrumentController.isHandlingPointerInput())
+	    return;
     	
     	// click to clear selection
     	if (tempMouseMode == MODE_SELECT && selectedArea == null)
