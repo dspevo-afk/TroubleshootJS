@@ -176,10 +176,8 @@ class InstrumentController {
     void onSimulationStepComplete(boolean didAnalyze) {
         if (sim.activeMeasurementOverlay)
             return;
-        if (didAnalyze && activeMode == MODE_DC_VOLTAGE && dcVoltageRefreshPending) {
-            dcVoltageRefreshPending = false;
+        if (didAnalyze && activeMode == MODE_DC_VOLTAGE && dcVoltageRefreshPending)
             updateReading();
-        }
         if (didAnalyze && isDiodeMode() && diodeRefreshPending) {
             validateTargets();
             if (redProbe == null || blackProbe == null) {
@@ -213,6 +211,16 @@ class InstrumentController {
         updateReading();
     }
 
+    void activateResistanceModeForDeveloperVerification() {
+        setActiveMode(MODE_RESISTANCE);
+        updateReading();
+    }
+
+    void activateDcVoltageModeForDeveloperVerification() {
+        setActiveMode(MODE_DC_VOLTAGE);
+        updateReading();
+    }
+
     String getReadingForDeveloperVerification() {
         return readingLabel.getText();
     }
@@ -227,6 +235,11 @@ class InstrumentController {
 
     double getLatestDcVoltageForDeveloperVerification() { return latestDcVoltage; }
     int getDcVoltageMeasurementCountForDeveloperVerification() { return dcVoltageMeasurementCount; }
+    boolean isResistanceRefreshPendingForDeveloperVerification() {
+        return resistanceRefreshPending;
+    }
+
+    int getActiveModeForDeveloperVerification() { return activeMode; }
 
     int getResistanceMeasurementCountForDeveloperVerification() {
         return resistanceMeasurementCount;
@@ -383,9 +396,9 @@ class InstrumentController {
 
     void setDcVoltageProbesForDeveloperVerification(ProbeTarget red, ProbeTarget black) {
         setActiveMode(MODE_DC_VOLTAGE);
-        redProbe = red;
-        blackProbe = black;
-        updateReading();
+		clearTargets();
+		handlePointerInput(NativeEvent.BUTTON_LEFT, red);
+		handlePointerInput(NativeEvent.BUTTON_RIGHT, black);
     }
 
     private void updateDiodeReading() {

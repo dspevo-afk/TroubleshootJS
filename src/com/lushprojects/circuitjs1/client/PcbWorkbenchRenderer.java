@@ -239,9 +239,13 @@ class PcbWorkbenchRenderer {
             for (GeneratedComponentConnectionBinding binding : bindings) {
                 Point point = getComponentLeadPoint(binding.getComponentId(), binding.getPadId());
                 if (point != null && Graphics.distanceSq(point.x, point.y, screenX, screenY) <=
-                        HIT_RADIUS_SQ)
+                        HIT_RADIUS_SQ) {
+                    PhysicalResistorPart part = getInstalledResistorPart(binding.getComponentId());
+                    if (part == null)
+                        continue;
                     return new ComponentLeadProbeTarget(sim, instance, binding.getComponentId(),
-                        binding.getPadId(), this);
+                        binding.getPadId(), this, part.getId(), binding.getComponentEndpoint());
+                }
             }
         }
         for (PcbPadPlacement pad : layout.getPads()) {

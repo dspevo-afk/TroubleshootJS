@@ -352,10 +352,17 @@ MouseOutHandler, MouseWheelHandler {
 	String troubleshootChallenge = null;
 	long troubleshootFixtureSeed = 1;
 	boolean troubleshootResistanceVerification;
+	private static final int VERIFIER_NOT_STARTED = 0;
+	private static final int VERIFIER_RUNNING = 1;
+	private static final int VERIFIER_PASSED = 2;
+	private static final int VERIFIER_FAILED = 3;
+	int troubleshootResistanceVerifierState = VERIFIER_NOT_STARTED;
 	boolean troubleshootChallengeVerification;
 	boolean troubleshootReplacementVerification;
+	boolean troubleshootMeterVerification;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootReplacementVerificationComplete;
+	boolean troubleshootMeterVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
@@ -399,6 +406,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
 	    troubleshootChallengeVerification = qp.getBooleanValue("tsjVerifyChallenge", false);
 	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
+	    troubleshootMeterVerification = qp.getBooleanValue("tsjVerifyMeter", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
@@ -779,13 +787,6 @@ MouseOutHandler, MouseWheelHandler {
 	    installGeneratedBoard(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("led".equals(troubleshootChallenge))
 	    installGeneratedChallenge(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
-	if (troubleshootResistanceVerification)
-	    Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-		public void execute() {
-		    ResistanceMeasurementDeveloperVerifier.verify(CirSim.this);
-		}
-	    });
-
 	setSimRunning(running);
     }
 
@@ -4193,6 +4194,18 @@ MouseOutHandler, MouseWheelHandler {
 		generatedChallengeController.isReady()) {
 		developerVerifierRunning = true;
 		try {
+		    if (troubleshootResistanceVerification &&
+			troubleshootResistanceVerifierState == VERIFIER_NOT_STARTED) {
+			try {
+			    troubleshootResistanceVerifierState = VERIFIER_RUNNING;
+			    ResistanceMeasurementDeveloperVerifier.verify(this);
+			    troubleshootResistanceVerifierState = VERIFIER_PASSED;
+			} catch (RuntimeException e) {
+			    troubleshootResistanceVerifierState = VERIFIER_FAILED;
+			    console("Resistance verification failed: " + e.getMessage());
+			    throw e;
+			}
+		    }
 		    if (troubleshootChallengeVerification && !troubleshootChallengeVerificationComplete) {
 			troubleshootChallengeVerificationComplete = true;
 			ChallengeDeveloperVerifier.verify(this);
@@ -4200,6 +4213,10 @@ MouseOutHandler, MouseWheelHandler {
 		    if (troubleshootReplacementVerification && !troubleshootReplacementVerificationComplete) {
 			troubleshootReplacementVerificationComplete = true;
 			ReplacementDeveloperVerifier.verify(this);
+		    }
+		    if (troubleshootMeterVerification && !troubleshootMeterVerificationComplete) {
+			troubleshootMeterVerificationComplete = true;
+			MeterLifecycleDeveloperVerifier.verify(this);
 		    }
 		} finally {
 		    developerVerifierRunning = false;

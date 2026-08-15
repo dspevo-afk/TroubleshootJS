@@ -62,14 +62,22 @@ restores the canonical graph. This lets a floating lifted lead acquire its real
 meter-loaded voltage without deriving anything from board metadata or expected
 topology. The input resistor is never board metadata, export content, or undo
 history. Active overlays suppress their own simulation-step callbacks, so a DC
-refresh cannot recursively reinsert a meter during its transaction.
+refresh cannot recursively reinsert a meter during its transaction. The pending
+refresh remains owned by `InstrumentController.updateReading()` until that method
+starts the actual measurement transaction; a post-analysis callback requests the
+update without consuming it first. Retained probes therefore get exactly one
+fresh loaded solve after a topology or power analysis, while ordinary repaints do
+not create recurring DC transactions.
 
-Component-side detachable bindings resolve to the physical part currently
-installed in a slot. `ResistorSlotController` retargets those measurement
-endpoints together with the attachment wires during installation. Board-side
-pad endpoints remain fixed. This preserves semantic probe identity while making
-a lifted installed lead probe resolve to the installed replacement's electrical
-terminal rather than a removed original part.
+Component-side detachable bindings continue to resolve to the physical part
+currently installed in a slot. `ResistorSlotController` retargets those
+measurement endpoints together with the attachment wires during installation.
+A `ComponentLeadProbeTarget`, however, captures the installed physical-part ID
+and component-side endpoint at hit-test time. It remains valid only while that
+same part is installed and the lead remains physically exposed, and target
+identity includes the physical-part ID. Removing or replacing the part therefore
+clears the old probe instead of silently migrating it to another resistor in the
+same R1 slot. Board-side pad endpoints remain fixed and physically distinct.
 
 Continuity is a policy over the same simulated resistance transaction, not a
 separate connectivity shortcut or stimulus. CONT uses the temporary $1 V$ /
@@ -139,10 +147,11 @@ valid current schematic bindings, and resolve dynamically after reanalysis.
 Current schematic probes continue to use `CircuitPostProbeTarget`.
 `BoardPadProbeTarget` identifies the active generated-board instance and stable
 pad ID, resolves electrically through `BoardSimulationBindings`, and asks the
-current PCB renderer for marker geometry. `ComponentLeadProbeTarget` similarly
-uses generated-board, component, and pad IDs but resolves through the declared
-component-side endpoint. Neither target persists analyzed node numbers. Both
-PCB and schematic hit testers feed the same generic probe-selection path in
+current PCB renderer for marker geometry. `ComponentLeadProbeTarget` also keeps
+the generated-board, component, and pad IDs, but captures the exposed physical
+part and its declared component-side endpoint. It does not follow later slot
+retargeting. Neither target persists analyzed node numbers. Both PCB and
+schematic hit testers feed the same generic probe-selection path in
 `InstrumentController` and converge through `CircuitMeasurementAdapter`.
 
 `GeneratedComponentConnectionBindings` adds the mutable physical-workbench
@@ -204,6 +213,17 @@ installation boundary. Generated-board verification is requested after
 installation or reanalysis and runs once only after CircuitJS has analyzed the
 circuit and simulation time has advanced; paused simulation leaves the request
 pending rather than treating unsolved current values as a failure.
+
+URL-gated meter lifecycle verification also waits for a generated challenge to
+reach `READY`. `?tsjVerifyMeter=true` exercises the normal PCB hit-testing and
+left/right probe path. On challenge routes, `?tsjVerifyResistance=true`
+delegates to the same physical-board lifecycle checks. Resistance verification
+has explicit not-started, running, passed, and failed terminal states, so a
+deterministic pass or failure is not retried by later generated-board
+verification cycles. The lifecycle verifier covers both lifted-lead directions,
+component-lead versus board-pad isolation, retained DC readings and power
+transitions, one-shot refresh counts, repaint stability, physical-part target
+invalidation, and final solver restoration.
 
 The first faulted challenge is selected with `?tsjChallenge=led&seed=<seed>`;
 the corresponding `?tsjFixture=led&seed=<seed>` route remains a healthy

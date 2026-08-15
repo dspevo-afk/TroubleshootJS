@@ -6,24 +6,36 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     private final String componentId;
     private final String padId;
     private final PcbWorkbenchRenderer renderer;
+    private final String physicalPartId;
+    private final CircuitMeasurementEndpoint endpoint;
 
     ComponentLeadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String componentId,
             String padId, PcbWorkbenchRenderer renderer) {
+        this(sim, instance, componentId, padId, renderer, getInstalledPartId(instance, componentId),
+            instance.getConnectionBindings().get(componentId, padId).getComponentEndpoint());
+    }
+
+    ComponentLeadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String componentId,
+            String padId, PcbWorkbenchRenderer renderer, String physicalPartId,
+            CircuitMeasurementEndpoint endpoint) {
         this.sim = sim;
         this.instance = instance;
         this.componentId = componentId;
         this.padId = padId;
         this.renderer = renderer;
+        this.physicalPartId = physicalPartId;
+        this.endpoint = endpoint;
     }
 
     public boolean isValid() {
         if (sim.getGeneratedBoardInstance() != instance)
             return false;
         try {
-            return sim.getBoardModificationController().getComponentState(componentId) !=
+            return isSelectedPhysicalPartStillInstalled() &&
+                sim.getBoardModificationController().getComponentState(componentId) !=
                     ComponentPhysicalState.INSTALLED &&
                 renderer.getComponentLeadPoint(componentId, padId) != null &&
-                instance.getConnectionBindings().get(componentId, padId).getComponentEndpoint() != null;
+                endpoint != null;
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -34,11 +46,29 @@ class ComponentLeadProbeTarget implements ProbeTarget {
             return false;
         ComponentLeadProbeTarget target = (ComponentLeadProbeTarget) other;
         return instance == target.instance && componentId.equals(target.componentId) &&
-            padId.equals(target.padId);
+            padId.equals(target.padId) && physicalPartId.equals(target.physicalPartId);
     }
 
     public Point getMarkerPoint() { return renderer.getComponentLeadPoint(componentId, padId); }
     public CircuitMeasurementEndpoint getMeasurementEndpoint() {
-        return instance.getConnectionBindings().get(componentId, padId).getComponentEndpoint();
+        return endpoint;
+    }
+
+    String getPhysicalPartIdForDeveloperVerification() { return physicalPartId; }
+    String getComponentIdForDeveloperVerification() { return componentId; }
+    String getPadIdForDeveloperVerification() { return padId; }
+
+    private boolean isSelectedPhysicalPartStillInstalled() {
+        if (!"R1".equals(componentId) || instance.getR1Slot().isEmpty())
+            return false;
+        PhysicalResistorPart part = instance.getR1Slot().getInstalledPart();
+        return physicalPartId.equals(part.getId()) && part.getLocation() ==
+            ResistorPartLocation.INSTALLED;
+    }
+
+    private static String getInstalledPartId(GeneratedBoardInstance instance, String componentId) {
+        if (!"R1".equals(componentId) || instance.getR1Slot().isEmpty())
+            throw new IllegalArgumentException("Component lead is not installed: " + componentId);
+        return instance.getR1Slot().getInstalledPart().getId();
     }
 }

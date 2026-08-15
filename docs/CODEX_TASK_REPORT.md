@@ -1,50 +1,61 @@
 # Latest Codex Task Report
 
 ## Task
-Task #16: model realistic DC voltmeter input impedance and lifted-lead voltages.
+Task #17: fix lifted-lead meter refresh and physical probe identity.
 
 ## Summary
-DC V now performs a CircuitJS-backed passive measurement using a temporary
-`$10 MOhm$` input resistor between the red and black probes. The displayed
-voltage is sampled from the loaded solve, then the temporary resistor is
-removed and the original graph is synchronously restored.
+Retained DC probes now consume each requested refresh only when the loaded
+CircuitJS measurement actually starts. Component-lead probes capture one
+physical resistor and cannot silently migrate to a later part installed in the
+same logical R1 slot.
 
 ## Implementation
-- `DcVoltageMeasurementStimulus` owns the temporary `$10 MOhm$` `ResistorElm`.
-  It is installed only during a DC measurement transaction and never enters
-  generated-board metadata, export output, or undo/redo history.
-- DC refresh is demand-driven by probe, topology, board-power, and part-location
-  changes. Active measurement overlays suppress their nested simulation-step
-  callbacks, preventing a DC reading from recursively installing itself.
-- `GeneratedComponentConnectionBinding` now permits its component-side endpoint
-  to follow the physical R1 part installed in `ReplaceableComponentSlot`.
-  Board-side R1 pads remain stable; lifted installed-lead probes therefore stay
-  semantic and resolve to the real installed terminal.
-- Challenge verification proves a failed original R1 with lifted public lead 2
-  remains approximately `0 V`, stays `OL` in OHM mode, keeps LED current below
-  `1 uA`, and remains internally open after reconnecting the lead.
-- Replacement verification proves seeds `0`, `2`, and `3` produce the expected
-  healthy lifted-lead divider voltages: approximately `4.999835 V`,
-  `8.999388 V`, and `11.99880012 V`. It also covers powered VIN polarity,
-  same-target voltage, installed R1/LED drops, LED isolation while lifted,
-  restoration after reconnect, and unpowered loose/failed-part DC readings.
+- `InstrumentController.updateReading()` is the sole consumer of a pending DC
+  refresh. Post-analysis handling no longer clears the flag before entering the
+  measurement path, so retained probes update once after power or topology
+  changes and canvas repaints do not create recurring transactions.
+- Developer DC probe setup now uses the normal left/right pointer path. This
+  verifies the same target comparison, invalidation, and refresh behavior used
+  by a player.
+- `ComponentLeadProbeTarget` captures the installed physical-part ID and
+  component-side endpoint. It becomes invalid when that part is removed or no
+  longer has an exposed lead; equality includes the physical-part ID.
+- `PcbWorkbenchRenderer` supplies that captured identity during physical-lead
+  hit-testing. PCB pad targets remain separate, stable board-side targets.
+- `MeterLifecycleDeveloperVerifier` covers symmetric lifted-lead resistance,
+  lifted lead versus PCB pad isolation, retained loaded DC voltage, exact
+  refresh counts through power transitions, repaint stability, physical-part
+  invalidation after replacement, and canonical solver restoration.
+- `?tsjVerifyMeter=true` runs only after a generated challenge reaches `READY`.
+  Challenge resistance verification delegates to the same lifecycle suite, and
+  terminal verifier state prevents deterministic retry spam after pass/failure.
 
 ## Validation
 - JDK 8 production build compiled and linked all five GWT permutations:
   `$java8Home = Join-Path $env:TEMP 'TroubleshootJS-build-probe\temurin8'; & .\scripts\build.ps1 -JavaHome $java8Home`.
-- Browser verification on `http://localhost:8909` completed with no CircuitJS
-  console exceptions for every route below, for seeds `0`, `2`, and `3`:
+- Browser verification on `http://localhost:8926` completed for seeds `0`, `2`,
+  and `3` with zero page errors and zero failure-class console messages across
+  all 15 routes:
+  - `?tsjChallenge=led&seed=<seed>&tsjVerifyResistance=true`
+  - `?tsjChallenge=led&seed=<seed>&tsjVerifyMeter=true`
   - `?tsjChallenge=led&seed=<seed>&tsjVerifyChallenge=true`
   - `?tsjChallenge=led&seed=<seed>&tsjVerifyReplacement=true`
   - `?tsjChallenge=led&seed=<seed>&tsjVerifyChallenge=true&tsjVerifyReplacement=true`
-- Existing `tsjVerifyResistance=true` completed its URL-gated flow for seed 2
-  with no CircuitJS console exception. The browser automation emitted an opaque
-  minified `v$` page-error event with no associated application diagnostic.
+- A real player-input flow replaced R1, lifted lead 2, and used the rendered PCB
+  targets. It measured `1 kOhm` across the physical resistor while unpowered,
+  `11.999 V` from the powered lifted lead to GND, and `0 V` from the separate
+  isolated R1.2 PCB pad to GND.
+- Pixel inspection passed for
+  [lifted-resistor-ohm.png](screenshots/task-17/lifted-resistor-ohm.png),
+  [lifted-lead-dc.png](screenshots/task-17/lifted-lead-dc.png), and
+  [isolated-board-pad-dc.png](screenshots/task-17/isolated-board-pad-dc.png).
+  Each image is a final-build player canvas with visible probes and no clipping,
+  blank rendering, or incoherent overlap.
 
 ## Known Limitations
-Only resistor replacement for the LED challenge is implemented. The unlimited
-parts catalog and persistent component-damage system remain intentionally out
-of scope and are still the recommended next features.
+Physical component-lead identity currently applies to the replaceable R1 path in
+the first LED challenge. General replacement families, an unlimited parts
+catalog, and persistent component damage remain out of scope.
 
 ## Intended Commit Message
-`Model DC voltmeter input impedance`
+`Fix lifted-lead meter refresh`
