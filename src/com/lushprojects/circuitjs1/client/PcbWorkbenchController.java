@@ -82,10 +82,12 @@ class PcbWorkbenchController {
         panel.add(styledLabel(component.getId(), "tsj-component-title"));
         panel.add(new Label("Type: " + component.getType().toLowerCase()));
         ResistorNameplate nameplate = instance.getPhysicalSpecifications().getResistorNameplate(componentId);
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "R1".equals(componentId) &&
-                !LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
-            nameplate = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getNameplate();
-        if (nameplate != null)
+        ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
+        if (resistorFamily != null && resistorFamily.getReplaceableResistorSlot().getComponentId()
+                .equals(componentId) && !resistorFamily.getReplaceableResistorSlot().isEmpty())
+            nameplate = resistorFamily.getReplaceableResistorSlot().getInstalledPart().getNameplate();
+        if (nameplate != null && !(instance.getFamilyState() instanceof
+                ParallelDualIndicatorFamilyState && "R1".equals(componentId)))
             panel.add(new Label("Value: " + nameplate.getDisplayValue()));
         if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState && "D1".equals(componentId) &&
                 !DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty())
@@ -124,12 +126,16 @@ class PcbWorkbenchController {
             rebuildDiodePartsPanel();
             return;
         }
+        final ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
+        if (resistorFamily == null)
+            return;
         partsPanel.add(styledLabel("Resistor Replacement Catalog", "tsj-component-title"));
         final ListBox catalog = new ListBox();
-        for (ResistorCatalogEntry entry : LedIndicatorFamilyState.require(instance).getResistorCatalog().getEntries())
+        for (ResistorCatalogEntry entry : resistorFamily.getResistorCatalog().getEntries())
             catalog.addItem(entry.getNameplate().getDisplayValue(), entry.getId());
         boolean canInstallNew = sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered() && LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty();
+            sim.getBoardPowerController().isElectricallyUnpowered() &&
+            resistorFamily.getReplaceableResistorSlot().isEmpty();
         catalog.setEnabled(canInstallNew);
         partsPanel.add(catalog);
         Button installNew = new Button("Install new resistor");
@@ -151,16 +157,23 @@ class PcbWorkbenchController {
         partsPanel.add(installNew);
         if (!sim.getBoardPowerController().isElectricallyUnpowered())
             partsPanel.add(new Label("Turn board power off."));
-        else if (!LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
-            partsPanel.add(new Label("Remove R1 before installing a replacement."));
-        addLedCatalog();
+        else if (!resistorFamily.getReplaceableResistorSlot().isEmpty())
+            partsPanel.add(new Label("Remove " + resistorFamily.getReplaceableResistorSlot()
+                .getComponentId() + " before installing a replacement."));
+        if (instance.getFamilyState() instanceof LedIndicatorFamilyState)
+            addLedCatalog();
         partsPanel.add(styledLabel("Parts Tray", "tsj-component-title"));
-        LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
-        if (state.getResistorInventory().getLooseParts().isEmpty() &&
-                state.getLedInventory().getLooseParts().isEmpty())
+        if (resistorFamily.getResistorInventory().getLooseParts().isEmpty() &&
+                (!(instance.getFamilyState() instanceof LedIndicatorFamilyState) ||
+                ((LedIndicatorFamilyState) instance.getFamilyState()).getLedInventory()
+                    .getLooseParts().isEmpty()))
             partsPanel.add(new Label("No removed parts."));
         for (PhysicalResistorPart part : renderer.getVisibleLooseParts()) {
-            Button select = new Button(part.getNameplate().getDisplayValue());
+            String label = part.getNameplate().getDisplayValue();
+            if (instance.getFamilyState() instanceof ParallelDualIndicatorFamilyState &&
+                    "R1_ORIGINAL".equals(part.getId()))
+                label = "R1_ORIGINAL - Removed resistor";
+            Button select = new Button(label);
             select.setStyleName("tsj-action-button");
             select.setEnabled(sim.isChallengeInteractionEnabled());
             final String partId = part.getId();
@@ -195,17 +208,22 @@ class PcbWorkbenchController {
         final String selectedPartId = renderer.getSelectedPartId();
         if (selectedPartId == null)
             return;
-        if (state.getLedInventory().contains(selectedPartId)) {
+        if (instance.getFamilyState() instanceof LedIndicatorFamilyState &&
+                ((LedIndicatorFamilyState) instance.getFamilyState()).getLedInventory()
+                .contains(selectedPartId)) {
+            LedIndicatorFamilyState state = (LedIndicatorFamilyState) instance.getFamilyState();
             addSelectedLedControls(state, selectedPartId);
             return;
         }
-        PhysicalResistorPart part = state.getResistorInventory().get(selectedPartId);
+        PhysicalResistorPart part = resistorFamily.getResistorInventory().get(selectedPartId);
         partsPanel.add(new Label("Selected: " + part.getNameplate().getDisplayValue()));
         partsPanel.add(new Label("State: Loose"));
-        Button install = new Button("Install as R1");
+        final String resistorComponentId = resistorFamily.getReplaceableResistorSlot().getComponentId();
+        Button install = new Button("Install as " + resistorComponentId);
         install.setStyleName("tsj-action-button");
         install.setEnabled(sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered() && LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty());
+            sim.getBoardPowerController().isElectricallyUnpowered() &&
+            resistorFamily.getReplaceableResistorSlot().isEmpty());
         install.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 try {
@@ -396,6 +414,9 @@ class PcbWorkbenchController {
             Vector<GeneratedComponentConnectionBinding> bindings, boolean disabled) {
         if (isReplaceableSlotEmpty(componentId))
             return;
+        if (instance.getFamilyState() instanceof ParallelDualIndicatorFamilyState &&
+                !"R1".equals(componentId))
+            return;
         ComponentPhysicalState state = modifications.getComponentState(componentId);
         if (state == ComponentPhysicalState.INSTALLED) {
             for (final GeneratedComponentConnectionBinding binding : bindings) {
@@ -435,7 +456,9 @@ class PcbWorkbenchController {
     private void addRemoveAction(final String componentId, boolean disabled) {
         addAction("Remove component", disabled, new ComponentAction() {
             public void execute() {
-                if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "R1".equals(componentId))
+                ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
+                if (resistorFamily != null && resistorFamily.getReplaceableResistorSlot()
+                        .getComponentId().equals(componentId))
                     sim.getResistorSlotController().removeInstalledPart();
                 else if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "LED1".equals(componentId))
                     sim.getLedSlotController().removeInstalledPart();
@@ -450,8 +473,11 @@ class PcbWorkbenchController {
     private void addRestoreAction(final String componentId, boolean disabled) {
         addAction("Restore component", disabled, new ComponentAction() {
             public void execute() {
-                if (!(instance.getFamilyState() instanceof LedIndicatorFamilyState &&
-                        ("R1".equals(componentId) || "LED1".equals(componentId))) &&
+                ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
+                if (!((resistorFamily != null && resistorFamily.getReplaceableResistorSlot()
+                        .getComponentId().equals(componentId)) ||
+                        (instance.getFamilyState() instanceof LedIndicatorFamilyState &&
+                        "LED1".equals(componentId))) &&
                         !(instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState && "D1".equals(componentId)))
                     modifications.restoreComponent(componentId);
             }
@@ -495,9 +521,17 @@ class PcbWorkbenchController {
         if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState)
             return "D1".equals(componentId) &&
                 DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty();
-        LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
-        return ("R1".equals(componentId) && state.getR1Slot().isEmpty()) ||
-            ("LED1".equals(componentId) && state.getLed1Slot().isEmpty());
+        ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
+        boolean resistorEmpty = resistorFamily != null && resistorFamily.getReplaceableResistorSlot()
+            .getComponentId().equals(componentId) && resistorFamily.getReplaceableResistorSlot().isEmpty();
+        boolean ledEmpty = instance.getFamilyState() instanceof LedIndicatorFamilyState &&
+            "LED1".equals(componentId) && LedIndicatorFamilyState.require(instance).getLed1Slot().isEmpty();
+        return resistorEmpty || ledEmpty;
+    }
+
+    private ReplaceableResistorFamilyState getReplaceableResistorFamily() {
+        return instance.getFamilyState() instanceof ReplaceableResistorFamilyState ?
+            (ReplaceableResistorFamilyState) instance.getFamilyState() : null;
     }
 
     private interface ComponentAction { void execute(); }

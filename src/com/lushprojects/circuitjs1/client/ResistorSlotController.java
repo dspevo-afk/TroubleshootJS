@@ -14,7 +14,8 @@ class ResistorSlotController {
 
     boolean removeInstalledPart() {
         requireSafeMutation();
-        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
+        ReplaceableResistorFamilyState family = requireFamily();
+        ReplaceableComponentSlot slot = family.getReplaceableResistorSlot();
         if (slot.isEmpty())
             return false;
         PhysicalResistorPart part = slot.getInstalledPart();
@@ -27,39 +28,41 @@ class ResistorSlotController {
 
     boolean install(String partId) {
         requireSafeMutation();
-        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
+        ReplaceableResistorFamilyState family = requireFamily();
+        ReplaceableComponentSlot slot = family.getReplaceableResistorSlot();
         if (!slot.isEmpty())
             return false;
-        PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getResistorInventory().get(partId);
+        PhysicalResistorPart part = family.getResistorInventory().get(partId);
         if (part.getLocation() != ResistorPartLocation.LOOSE)
             return false;
-        instance.getComponentBindings().replaceSingleElement("R1", part.getElement());
+        instance.getComponentBindings().replaceSingleElement(slot.getComponentId(), part.getElement());
 	retargetComponentLeadBindings(part);
         part.setLocation(ResistorPartLocation.INSTALLED);
         slot.install(part);
-        modifications.restoreComponent("R1");
+        modifications.restoreComponent(slot.getComponentId());
         finishMutation();
         return true;
     }
 
     boolean installNewFromCatalog(String catalogEntryId) {
         requireSafeMutation();
-        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
+        ReplaceableResistorFamilyState family = requireFamily();
+        ReplaceableComponentSlot slot = family.getReplaceableResistorSlot();
         if (!slot.isEmpty())
             return false;
-        ResistorCatalogEntry entry = LedIndicatorFamilyState.require(instance).getResistorCatalog().get(catalogEntryId);
+        ResistorCatalogEntry entry = family.getResistorCatalog().get(catalogEntryId);
         ResistorElm element = DynamicResistorBackingAllocator.create(instance.getSimulationElements(),
             entry.getNameplate().getNominalResistanceOhms());
-        PhysicalResistorPart part = new PhysicalResistorPart(LedIndicatorFamilyState.require(instance).allocateCatalogPartId(),
-            new ResistorNameplate("R1", entry.getNameplate().getNominalResistanceOhms(), 5), element,
+        PhysicalResistorPart part = new PhysicalResistorPart(family.allocateCatalogPartId(),
+            new ResistorNameplate(slot.getComponentId(), entry.getNameplate().getNominalResistanceOhms(), 5), element,
             null, ResistorPartLocation.INSTALLED);
         instance.registerRuntimeSimulationElement(element);
-        LedIndicatorFamilyState.require(instance).getResistorInventory().add(part);
+        family.getResistorInventory().add(part);
         sim.elmList.add(element);
-        instance.getComponentBindings().replaceSingleElement("R1", element);
+        instance.getComponentBindings().replaceSingleElement(slot.getComponentId(), element);
         retargetComponentLeadBindings(part);
         slot.install(part);
-        modifications.restoreComponent("R1");
+        modifications.restoreComponent(slot.getComponentId());
         finishMutation();
         return true;
     }
@@ -79,10 +82,25 @@ class ResistorSlotController {
     }
 
     private void retargetComponentLeadBindings(PhysicalResistorPart part) {
-    for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
-        .getForComponent("R1")) {
-        int terminal = "R1.1".equals(binding.getPadId()) ? 0 : 1;
-        binding.setComponentEndpoint(part.getPublicTerminal(terminal));
+        String componentId = requireFamily().getReplaceableResistorSlot().getComponentId();
+        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
+                .getForComponent(componentId)) {
+            BoardPad pad = instance.getBoard().getPad(binding.getPadId());
+            int terminal;
+            if ("1".equals(pad.getTerminalId()))
+                terminal = 0;
+            else if ("2".equals(pad.getTerminalId()))
+                terminal = 1;
+            else
+                throw new IllegalStateException("Replaceable resistor pad is not terminal 1 or 2: " +
+                    binding.getPadId());
+            binding.setComponentEndpoint(part.getPublicTerminal(terminal));
+        }
     }
+
+    private ReplaceableResistorFamilyState requireFamily() {
+        if (!(instance.getFamilyState() instanceof ReplaceableResistorFamilyState))
+            throw new IllegalStateException("Generated family has no replaceable resistor contract");
+        return (ReplaceableResistorFamilyState) instance.getFamilyState();
     }
 }

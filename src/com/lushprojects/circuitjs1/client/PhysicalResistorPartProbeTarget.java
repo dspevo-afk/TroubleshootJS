@@ -17,7 +17,10 @@ class PhysicalResistorPartProbeTarget implements ProbeTarget {
     }
 
     public boolean isValid() {
-        return sim.getGeneratedBoardInstance() == instance && LedIndicatorFamilyState.require(instance).getResistorInventory()
+        if (sim.getGeneratedBoardInstance() != instance ||
+                !(instance.getFamilyState() instanceof ReplaceableResistorFamilyState))
+            return false;
+        return ((ReplaceableResistorFamilyState) instance.getFamilyState()).getResistorInventory()
             .get(partId).getLocation() == ResistorPartLocation.LOOSE;
     }
 
@@ -30,7 +33,8 @@ class PhysicalResistorPartProbeTarget implements ProbeTarget {
 
     public Point getMarkerPoint() { return renderer.getLoosePartLeadPoint(partId, terminal); }
     public CircuitMeasurementEndpoint getMeasurementEndpoint() {
-        PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getResistorInventory().get(partId);
+        PhysicalResistorPart part = ((ReplaceableResistorFamilyState) instance.getFamilyState())
+            .getResistorInventory().get(partId);
         return part.getPublicTerminal(terminal);
     }
 }

@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
-class LedIndicatorFamilyState implements GeneratedBoardFamilyState {
+class LedIndicatorFamilyState implements GeneratedBoardFamilyState,
+        ReplaceableResistorFamilyState {
     private final ReplaceableComponentSlot r1Slot;
     private final ResistorReplacementInventory resistorInventory;
     private final ResistorReplacementCatalog resistorCatalog;
@@ -32,9 +33,10 @@ class LedIndicatorFamilyState implements GeneratedBoardFamilyState {
     }
 
     ReplaceableComponentSlot getR1Slot() { return r1Slot; }
-    ResistorReplacementInventory getResistorInventory() { return resistorInventory; }
-    ResistorReplacementCatalog getResistorCatalog() { return resistorCatalog; }
-    String allocateCatalogPartId() { return "R1_CATALOG_PART_" + nextCatalogPartSerial++; }
+    public ReplaceableComponentSlot getReplaceableResistorSlot() { return r1Slot; }
+    public ResistorReplacementInventory getResistorInventory() { return resistorInventory; }
+    public ResistorReplacementCatalog getResistorCatalog() { return resistorCatalog; }
+    public String allocateCatalogPartId() { return "R1_CATALOG_PART_" + nextCatalogPartSerial++; }
     LedComponentSlot getLed1Slot() { return led1Slot; }
     LedReplacementInventory getLedInventory() { return ledInventory; }
     LedReplacementCatalog getLedCatalog() { return ledCatalog; }

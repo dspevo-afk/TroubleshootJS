@@ -59,6 +59,16 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     String getPadIdForDeveloperVerification() { return padId; }
 
     private boolean isSelectedPhysicalPartStillInstalled() {
+        if (instance.getFamilyState() instanceof ReplaceableResistorFamilyState) {
+            ReplaceableResistorFamilyState state =
+                (ReplaceableResistorFamilyState) instance.getFamilyState();
+            ReplaceableComponentSlot slot = state.getReplaceableResistorSlot();
+            if (slot.getComponentId().equals(componentId) && !slot.isEmpty()) {
+                PhysicalResistorPart part = slot.getInstalledPart();
+                return physicalPartId.equals(part.getId()) && part.getLocation() ==
+                    ResistorPartLocation.INSTALLED;
+            }
+        }
         if (instance.getFamilyState() instanceof LedIndicatorFamilyState) {
             LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
             if ("R1".equals(componentId) && !state.getR1Slot().isEmpty()) {
@@ -83,6 +93,13 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     }
 
     private static String getInstalledPartId(GeneratedBoardInstance instance, String componentId) {
+        if (instance.getFamilyState() instanceof ReplaceableResistorFamilyState) {
+            ReplaceableResistorFamilyState state =
+                (ReplaceableResistorFamilyState) instance.getFamilyState();
+            ReplaceableComponentSlot slot = state.getReplaceableResistorSlot();
+            if (slot.getComponentId().equals(componentId) && !slot.isEmpty())
+                return slot.getInstalledPart().getId();
+        }
         if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "R1".equals(componentId) &&
                 !LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
             return LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getId();

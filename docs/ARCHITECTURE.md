@@ -173,9 +173,9 @@ outline, component placements, pad placements, traces, and parts-tray geometry,
 and references only stable `BoardComponent`, `BoardPad`, and `BoardNet` IDs.
 It does not contain CircuitJS elements or analyzed node numbers. The
 `SeededPcbLayoutGenerator` consumes that logical board after electrical
-validation and produces a simple one-sided layout for the LED indicator and
-diode-protected indicator families. It does not choose components, nets,
-faults, meter readings, or repair outcomes.
+validation and produces a simple one-sided layout for the LED indicator,
+diode-protected indicator, and dual-parallel-indicator families. It does not
+choose components, nets, faults, meter readings, or repair outcomes.
 
 The generator uses a deterministic seed stream. Each attempt derives a
 rectangular board outline and component candidates from the family seed, then
@@ -211,10 +211,12 @@ Each candidate is validated for component/pad coverage, stable net and
 endpoint identity, board bounds, keep-outs, legal escape edges, body/pad
 overlap, Manhattan segments, route detour/bend limits, silkscreen collisions,
 unrelated crossings, and minimum copper clearance. Placement and routing are
-retried with a bounded deterministic attempt derived from the same seed;
-repeated deterministic keep-out or clearance contradictions fail early with a
-diagnostic rather than consuming every retry. A failed candidate is never
-replaced with disconnected decorative copper. `PcbLayoutDeveloperVerifier`
+retried with a bounded deterministic attempt derived from the same seed. The
+generator no longer treats three broad keep-out or clearance failures from
+different attempts as a contradiction; only the bounded attempt limit can
+reject a generation, preserving useful last-failure diagnostics. A failed
+candidate is never replaced with disconnected decorative copper.
+`PcbLayoutDeveloperVerifier`
 proves repeated seeds 0, 2, and 3 have identical fingerprints and that each
 pair has at least two meaningful differences across outline, component
 placement, and routed copper. It also directly regresses the seed-3 LED
@@ -465,3 +467,62 @@ installed polarity. Removed diodes retain probeable anode/cathode identity in th
 parts tray. Diode leads use the same detachable-connection boundary as resistor
 leads, so either D1 lead can be lifted, measured in isolation, and reconnected
 without changing stable pad or net identity.
+
+## Task 27 parallel dual-indicator family
+
+`PARALLEL_DUAL_INDICATOR` is the first player-facing family with two real
+parallel CircuitJS branches:
+
+```text
+VIN -> R1 -> LED1 -> GND
+VIN -> R2 -> LED2 -> GND
+```
+
+Its stable logical board has four nets (`VIN`, `BRANCH1_NODE`,
+`BRANCH2_NODE`, `GND`) and five components (`J1`, `R1`, `LED1`, `R2`,
+`LED2`). `VIN` intentionally has pads `J1.1`, `R1.1`, and `R2.1`; `GND`
+intentionally has `J1.2`, `LED1.K`, and `LED2.K`. Those stable pad/net IDs
+remain the PCB identity. The verifier may inspect transient CircuitJS node
+numbers after analysis to prove the three-pad networks are joined, but those
+numbers are never stored as board identity.
+
+Seeds 0, 2, and 3 select the validated 5 V / 330 Ohm + 680 Ohm, 9 V / 680
+Ohm + 1.5 kOhm, and 12 V / 1 kOhm + 2.2 kOhm configurations. The generated
+CircuitJS source, resistors, and LEDs supply all solved currents, voltages,
+illumination, and meter readings. The initial `PARALLEL_R1_OPEN` fault is a
+real series isolation switch in branch 1, so LED1 goes dark while the ideal
+source leaves branch 2 operating.
+
+`ParallelDualIndicatorGeneratedBoardValidator` checks healthy branch currents,
+branch current equality through each resistor/LED pair, branch voltage sums,
+shared VIN/GND voltage, and KCL using the CircuitJS source current normalized
+to the source-delivery direction:
+
+```text
+I_source_delivery = I_R1 + I_R2
+```
+
+The dedicated parallel verifier records branch-2 current before opening R1 and
+requires it to remain within solver-safe tolerance afterward. It also drives
+the existing DC voltmeter across VIN, R2, and LED2. The separate
+`ParallelResistanceMeasurementFixture` uses two real `ResistorElm` instances
+in a 1 kOhm || 10 kOhm network, verifies approximately 909.09 Ohm in both
+probe orientations, then isolates each path and verifies the remaining 1 kOhm
+or 10 kOhm result through the active meter stimulus.
+
+Generic resistor repair now depends on the small
+`ReplaceableResistorFamilyState` contract rather than `LedIndicatorFamilyState`
+or hard-coded R1 pad strings. Both LED and parallel families provide the slot,
+inventory, catalog, and physical-part ID allocator. The slot supplies the
+component ID and pad terminal order, so R1 removal/replacement retargets the
+actual declared bindings. The parallel workbench exposes only the R1 resistor
+workflow; R2 and both LEDs remain fixed but their PCB pads and probes remain
+available.
+
+The existing one-sided router now accepts the parallel family's two three-pad
+nets. It emits root-to-each-pad same-net copper, permits same-net merging,
+continues to enforce unrelated-net clearance and component keep-outs, and
+validates every endpoint. The broad Task 26 three-consecutive-failure abort was
+removed; attempts remain bounded and retain the last failure for diagnostics.
+Board sizing and placement are intentionally still the oversized simple
+generator; compact topology-aware placement is deferred to Task 28.

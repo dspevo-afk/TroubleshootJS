@@ -57,8 +57,11 @@ class GeneratedChallengeController {
     GeneratedFaultController getFaultController() { return faults; }
     GeneratedChallengeDefinition getDefinition() { return definition; }
     GeneratedChallengeLifecycleEvidence getLifecycleEvidence() { return lifecycleEvidence; }
-    String getComplaintText() { return isCompleted() ?
-        "Repair verified. Indicator operating normally." : definition.getComplaintText(); }
+    String getComplaintText() {
+        if (!isCompleted())
+            return definition.getComplaintText();
+        return definition.getCompletionText();
+    }
 
     void verifyReadyState() {
         if (!isReady() || developerVerificationScope)

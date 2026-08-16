@@ -1,9 +1,12 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 class PcbLayoutDeveloperVerifier {
     static void verify(CirSim sim) {
         verifyFamily("LED_INDICATOR");
         verifyFamily("DIODE_PROTECTED_INDICATOR");
+        verifyFamily("PARALLEL_DUAL_INDICATOR");
         GeneratedBoardInstance current = sim.getGeneratedBoardInstance();
         PcbBoardLayout regenerated = generate(current.getCircuitFamilyId(), current.getSeed())
             .getPcbLayout();
@@ -30,6 +33,11 @@ class PcbLayoutDeveloperVerifier {
         verifyLabels(seed0, seed0Board.getBoard());
         verifyLabels(seed2, seed2Board.getBoard());
         verifyLabels(seed3, seed3Board.getBoard());
+        if ("PARALLEL_DUAL_INDICATOR".equals(familyId)) {
+            verifyMultiPadNets(seed0, seed0Board.getBoard());
+            verifyMultiPadNets(seed2, seed2Board.getBoard());
+            verifyMultiPadNets(seed3, seed3Board.getBoard());
+        }
         if ("LED_INDICATOR".equals(familyId))
             verifySeedThreeLedEndpointRegression(seed3);
         require(seed0.geometryFingerprint().equals(seed0Repeat.geometryFingerprint()),
@@ -131,6 +139,32 @@ class PcbLayoutDeveloperVerifier {
             "seed 3 GND trace approaches LED1.K through the component body");
     }
 
+    private static void verifyMultiPadNets(PcbBoardLayout layout, TroubleshootBoard board) {
+        verifyMultiPadNet(layout, board, "VIN", new String[] { "J1.1", "R1.1", "R2.1" });
+        verifyMultiPadNet(layout, board, "GND", new String[] { "J1.2", "LED1.K", "LED2.K" });
+    }
+
+    private static void verifyMultiPadNet(PcbBoardLayout layout, TroubleshootBoard board,
+            String netId, String[] padIds) {
+        int traceCount = 0;
+        Vector<String> reached = new Vector<String>();
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            if (!netId.equals(trace.getNetId()))
+                continue;
+            traceCount++;
+            require(padIds[0].equals(trace.getStartPadId()),
+                "Multi-pad net did not route from its stable root: " + netId);
+            require(!reached.contains(trace.getEndPadId()),
+                "Multi-pad net has duplicate route endpoint: " + trace.getEndPadId());
+            reached.add(trace.getEndPadId());
+        }
+        require(traceCount == padIds.length - 1 && reached.size() == padIds.length - 1,
+            "Multi-pad net has a disconnected or decorative branch: " + netId);
+        for (int index = 1; index < padIds.length; index++)
+            require(reached.contains(padIds[index]) && board.getPad(padIds[index]) != null,
+                "Multi-pad net is missing pad copper: " + padIds[index]);
+    }
+
     private static boolean containsInclusive(Rectangle rectangle, int x, int y) {
         return x >= rectangle.x && y >= rectangle.y &&
             x <= rectangle.x + rectangle.width && y <= rectangle.y + rectangle.height;
@@ -152,6 +186,8 @@ class PcbLayoutDeveloperVerifier {
             return new LedIndicatorGenerator().generate(seed);
         if ("DIODE_PROTECTED_INDICATOR".equals(familyId))
             return new DiodeProtectedIndicatorGenerator().generate(seed);
+        if ("PARALLEL_DUAL_INDICATOR".equals(familyId))
+            return new ParallelDualIndicatorGenerator().generate(seed);
         throw new IllegalArgumentException("Unsupported PCB verifier family: " + familyId);
     }
 

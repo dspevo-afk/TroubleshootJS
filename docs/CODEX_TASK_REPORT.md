@@ -1,164 +1,121 @@
-# Task 26 — Harden Procedural PCB Routing and Visual Believability
+# Task 27 — First Genuine Parallel Circuit, KCL, and Parallel Measurement Validation
 
 Status: complete
 
-Approved baseline: `44805d074c5a7ffcaf679081fd3ab1eb3e437c09` (Task 25).
+Approved baseline: `c4180400855906f418bf2a8138e643f73cd5a526` (Task 26).
 
 ## Result
 
-Task 26 keeps the logical board/netlist as the electrical source of truth and
-hardened the physical stage shared by `LED_INDICATOR` and
-`DIODE_PROTECTED_INDICATOR`:
+Added the first player-facing `PARALLEL_DUAL_INDICATOR` family with topology
+`DUAL_PARALLEL_BRANCHES`. It is a real CircuitJS network, not a parallel-reading
+facade:
 
 ```text
-logical circuit/netlist
-    -> electrical validation
-    -> seeded PCB layout generation
-    -> renderer and interaction system
+VIN -> R1 -> LED1 -> GND
+VIN -> R2 -> LED2 -> GND
 ```
 
-The PCB generator does not create connectivity, faults, meter readings,
-simulation nodes, or repair decisions. Stable identities including `R1.1`,
-`LED1.A`, `LED1.K`, `D1.A`, and `D1.K` remain unchanged when placement changes.
+The stable board model contains `J1`, `R1`, `LED1`, `R2`, and `LED2`, with four
+nets. `VIN` has `J1.1`, `R1.1`, and `R2.1`; `GND` has `J1.2`, `LED1.K`, and
+`LED2.K`. Seeds 0, 2, and 3 select 5 V / 330 Ohm + 680 Ohm, 9 V / 680 Ohm +
+1.5 kOhm, and 12 V / 1 kOhm + 2.2 kOhm configurations.
 
-## Procedural layout architecture
+## Electrical validation
 
-- `SeededPcbLayoutGenerator` uses reusable footprint rules for the connector,
-  axial resistor, axial ordinary diode, and through-hole LED.
-- Seeded attempts vary board outline, component coordinates, pad locations, and
-  routed paths while retaining an accessible connector near an edge.
-- Components and pads are placed with body/pad spacing checks and remain inside
-  the board margin. Orientation remains horizontal for this first hardened
-  version; rotation was deferred to avoid a renderer rewrite.
-- The external parts tray remains separate workbench geometry, never copper.
+`ParallelDualIndicatorDeveloperVerifier` validates, for seeds 0, 2, and 3:
 
-## Placement, pad access, and routing
+- both real LEDs illuminate in the healthy circuit;
+- both branches carry positive solved current and branch 1 carries more;
+- KCL uses the normalized CircuitJS source current:
+  `I_source_delivery = I_R1 + I_R2`;
+- both branch voltage sums equal the solver-derived supply voltage;
+- transient solver-node identity joins the required three-pad VIN and GND nets;
+- `R1 OPEN` collapses only branch 1 while branch 2 current remains unchanged;
+- solver-backed DC readings cover VIN, R2, and LED2;
+- repair with the correct replacement restores both branches and KCL.
 
-Each pad carries an explicit escape direction and bounded corridor. Horizontal
-axial footprints escape left/right, connector terminals escape inward, and the
-LED anode/cathode pads escape vertically downward from the rendered LED body.
-The router and `PcbBoardLayout.validateGeometry` use the same corridor rule:
-the exact connected pad may occupy its lead corridor, but unrelated copper may
-not use it and the corridor must terminate outside the component keep-out.
+`ParallelResistanceMeasurementFixture` uses real `ResistorElm` elements in a
+1 kOhm || 10 kOhm network. Existing active OHM measurement reports
+approximately 909.09 Ohm in both orientations, then approximately 1 kOhm and
+10 kOhm when each alternate branch is isolated. No meter result is calculated
+from a displayed answer.
 
-Routing uses deterministic coarse-grid A* with Manhattan movement and a bend
-penalty. It routes existing `BoardNet` pad relationships only. Component body
-keep-outs, other pads, routed copper, and inflated unrelated-net clearance are
-obstacles. Route points are retained at the routing-grid resolution so a later
-polyline simplification cannot cut across an obstacle. A bounded retry loop
-derives every candidate from `(seed, attempt)` and returns the best validated
-candidate by route-quality score; it never fabricates a disconnected trace.
+## Repair architecture
 
-The exact seed-3 regression is covered directly: the GND trace from `J1.2` to
-`LED1.K` must approach the cathode through the downward escape corridor, while
-the corridor tip must be outside the LED keep-out. This prevents the original
-`370,200 -> 370,190` body-entry failure.
+Added the reusable `ReplaceableResistorFamilyState` contract. Both the existing
+LED family and the new parallel family provide the resistor slot, inventory,
+catalog, and physical-part ID allocator. `ResistorSlotController` now uses the
+slot's component ID and declared terminal order instead of assuming
+`LedIndicatorFamilyState`, `R1`, `R1.1`, or `R1.2`.
 
-## Minimum copper clearance
+The parallel workbench shows the resistor catalog, supports normal-player R1
+removal/replacement, retains the faulted original as a distinct loose physical
+part without exposing its numeric value, and does not expose replacement
+workflows for fixed R2/LED1/LED2. Their PCB pads remain probeable.
 
-`PcbTraceRules` defines the reusable rendered trace contract:
+## PCB and routing
 
-- trace width: `9` pixels;
-- minimum visible unrelated-net soldermask: `6` pixels;
-- minimum unrelated centerline distance: `15` pixels;
-- coarse routing occupancy inflation: one grid cell in every direction.
+The seeded one-sided PCB generator now handles the parallel family's multi-pad
+VIN/GND nets with root-to-each-pad same-net copper. Layout validation checks all
+endpoints, same-net merging, component keep-outs, unrelated-net clearance,
+escape corridors, route quality, determinism, and cross-seed variation.
 
-The router marks centerline cells and their clearance neighborhood. Different
-nets cannot occupy, touch, overlap, share, or enter adjacent/diagonal inflated
-cells; same-net copper may intentionally join. `PcbBoardLayout.validateGeometry`
-also computes exact axis-aligned segment distances for every unrelated-net
-pair, covering parallel segments, bends, corners, and perpendicular near
-misses. Thus the rule accounts for actual rendered width and preserves a
-visible green soldermask gap rather than making copper artificially thin.
-
-## Geometry validation and determinism
-
-Validation checks component and pad coverage, board bounds, stable endpoint/net
-identity, Manhattan coordinates, legal endpoint escapes, component keep-outs,
-body/pad overlap, required-net representation, trace crossings, route detour
-and bend limits, silkscreen collisions, finite geometry, and the minimum
-unrelated-net clearance. Repeated deterministic keep-out/clearance
-contradictions fail early with a useful diagnostic instead of consuming all
-80 candidate attempts.
-
-`PcbLayoutDeveloperVerifier` generated both families for seeds 0, 2, and 3.
-It proved:
-
-- seed 0 repeated twice: identical geometry;
-- seed 2 repeated twice: identical geometry;
-- seed 3 repeated twice: identical geometry;
-- each seed pair differed in at least two meaningful properties among outline,
-  component geometry, and routed paths;
-- all layouts passed route-quality, escape-corridor, label, and copper-clearance
-  validation;
-- the installed layout matched deterministic regeneration.
-
-The browser verifier no longer uses fixed component canvas coordinates. With
-the explicit `tsjVerifyGeometry=true` query flag, the renderer publishes a
-read-only bridge containing current component, pad, and loose-part hit
-locations. Verification still dispatches real CDP mouse input at those
-locations; the bridge does not mutate state or expose electrical answers.
-
-The stale `LedIndicatorFamilyState.require(...)` messages were also changed
-to family-neutral wording.
+The unsound Task 26 early abort after three broad keep-out/clearance failures
+was removed. Generation remains bounded by `MAX_ATTEMPTS` and preserves the
+last failure diagnostic. Compact topology-aware placement remains deferred to
+Task 28.
 
 ## Validation results
 
-- JDK 8 production build: PASS; all five GWT permutations compiled and
-  linking succeeded.
-- Existing LED/resistor browser verifier: PASS, 15/15 routes.
+- JDK 8 production build: PASS; all five GWT permutations compiled and linked.
+- Existing LED/resistor verifier: PASS, 15/15 routes.
+- Existing resistor normal-player flow: PASS.
 - Existing diode verifier: PASS, 3/3 routes.
+- Existing diode normal-player flow: PASS.
 - Existing LED physical verifier: PASS, 3/3 routes.
+- Existing LED normal-player flow: PASS.
 - Procedural layout verifier: PASS.
-- Resistor normal-player flow on generated geometry: PASS.
-- Diode normal-player flow on generated geometry: PASS.
-- LED normal-player flow on generated geometry: PASS.
-- No route timeouts, unhandled JavaScript errors, or failure-class console
-  messages were reported by the final browser runs.
+- Parallel electrical verifier: PASS, seeds 0/2/3.
+- Parallel normal-player flow: PASS, solver-backed DC measurement and repair.
+- No final browser route reported a JavaScript exception, failure-class console
+  message, or timeout.
+
+Measured wall-clock runtimes from the final production preview:
+
+- `.\scripts\verify-browser.ps1 -Layout`: 24.62 seconds.
+- `.\scripts\verify-browser.ps1 -Parallel`: 38.83 seconds for 3 routes.
+- Full existing 15-route matrix: 27.07 seconds.
 
 ## Visual evidence
 
-All six final screenshots were captured from the final detached production
-preview and pixel-inspected. Every image is a nonblank application view with a
-fully visible board, recognizable parts, readable labels, no visible body
-overlap, no obvious disconnected copper, and visible green soldermask between
-unrelated parallel/nearby copper:
+Final production-browser screenshots are under
+[`docs/task-evidence/task-27/`](task-evidence/task-27/). Pixel inspection found
+all six images nonblank and showing the intended application view:
 
-- [led-seed-0.png](task-evidence/task-26/led-seed-0.png) — LED family seed 0.
-- [led-seed-2.png](task-evidence/task-26/led-seed-2.png) — materially different
-  LED outline, placement, and routing for seed 2.
-- [led-seed-3.png](task-evidence/task-26/led-seed-3.png) — LED family seed 3
-  with a different board arrangement and +12V/GND connector cues.
-- [diode-seed-0.png](task-evidence/task-26/diode-seed-0.png) — diode family
-  seed 0 with D1 body and cathode band visible.
-- [diode-seed-3.png](task-evidence/task-26/diode-seed-3.png) — diode family
-  seed 3 with different placement/routing and readable D1 polarity marking.
-- [component-selected.png](task-evidence/task-26/component-selected.png) —
-  live LED1 selection state on generated geometry with contextual details.
+- [`parallel-seed-0.png`](task-evidence/task-27/parallel-seed-0.png) — seeded
+  5 V layout with both branches and verified repair state.
+- [`parallel-seed-2.png`](task-evidence/task-27/parallel-seed-2.png) — seeded
+  9 V layout with materially different placement/routing.
+- [`parallel-seed-3.png`](task-evidence/task-27/parallel-seed-3.png) — 12 V
+  initial faulted board; LED1 is dark and LED2 operates.
+- [`parallel-faulted.png`](task-evidence/task-27/parallel-faulted.png) —
+  powered faulted state with the same branch-specific symptom.
+- [`parallel-measurement.png`](task-evidence/task-27/parallel-measurement.png)
+  — live DC V mode reading 12 V across J1.
+- [`parallel-repaired.png`](task-evidence/task-27/parallel-repaired.png) —
+  R1 installed, both indicators illuminated, and the ticket reports verified
+  repair.
 
-## Persistent preview
+## Persistent preview and limitations
 
-The detached production preview remains running after launcher exit:
+The detached production preview remains running:
 
-- LED seed 0: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=0`
-- LED seed 2: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=2`
-- LED seed 3: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=3`
-- diode seed 0: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=diode&seed=0`
-- diode seed 3: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=diode&seed=3`
+- parallel seed 0: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=parallel&seed=0`
+- parallel seed 2: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=parallel&seed=2`
+- parallel seed 3: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=parallel&seed=3`
 
-The final seed-0 and seed-3 LED boards were loaded through the persistent
-preview workflow and visibly differ in board dimensions, component placement,
-and trace routing.
-
-## Known limitations and recommended next task
-
-Footprints remain horizontal; useful orientation randomization is deferred.
-The router is intentionally modest, one-sided, coarse-grid, and not a
-manufacturing DRC. It does not insert automatic jumpers, although the
-architecture now has explicit pad corridors and clearance occupancy that can
-support real jumper geometry later. The generator currently targets the two
-simple existing families and adds no electrical component or fault.
-
-Recommended next task: add procedural coverage for the next existing family or
-introduce explicit real one-sided jumper representation only where a validated
-route cannot be completed without it.
+This task validates one constrained dual-branch family, not arbitrary parallel
+PCB synthesis. The board is intentionally oversized, footprints remain in the
+existing simple one-sided style, R2 and both LEDs are fixed, and compact
+topology-aware placement is deferred to Task 28. No capacitors, transistor
+circuits, thermal damage, trace cutting, jumpers, or UI redesign were added.

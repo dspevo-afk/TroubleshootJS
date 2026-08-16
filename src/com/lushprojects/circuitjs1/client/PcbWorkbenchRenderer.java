@@ -533,7 +533,10 @@ class PcbWorkbenchRenderer {
     Vector<PhysicalResistorPart> getVisibleLooseParts() {
         if (isDiodeFamily())
             return new Vector<PhysicalResistorPart>();
-        Vector<PhysicalResistorPart> loose = LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts();
+        if (!(instance.getFamilyState() instanceof ReplaceableResistorFamilyState))
+            return new Vector<PhysicalResistorPart>();
+        Vector<PhysicalResistorPart> loose = ((ReplaceableResistorFamilyState) instance.getFamilyState())
+            .getResistorInventory().getLooseParts();
         clampTrayPage();
         Vector<PhysicalResistorPart> result = new Vector<PhysicalResistorPart>();
         int start = trayPage * PARTS_PER_TRAY_PAGE;
@@ -643,8 +646,12 @@ class PcbWorkbenchRenderer {
     }-*/;
 
     private PhysicalResistorPart getInstalledResistorPart(String componentId) {
-        if (!isDiodeFamily() && "R1".equals(componentId))
-            return LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart();
+        if (!isDiodeFamily() && instance.getFamilyState() instanceof ReplaceableResistorFamilyState) {
+            ReplaceableComponentSlot slot = ((ReplaceableResistorFamilyState)
+                instance.getFamilyState()).getReplaceableResistorSlot();
+            if (slot.getComponentId().equals(componentId))
+                return slot.getInstalledPart();
+        }
         return null;
     }
 
@@ -666,9 +673,16 @@ class PcbWorkbenchRenderer {
         if (isDiodeFamily())
             return "D1".equals(componentId) &&
                 DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty();
-        LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
-        return ("R1".equals(componentId) && state.getR1Slot().isEmpty()) ||
-            ("LED1".equals(componentId) && state.getLed1Slot().isEmpty());
+        boolean empty = false;
+        if (instance.getFamilyState() instanceof ReplaceableResistorFamilyState) {
+            ReplaceableComponentSlot slot = ((ReplaceableResistorFamilyState)
+                instance.getFamilyState()).getReplaceableResistorSlot();
+            empty = slot.getComponentId().equals(componentId) && slot.isEmpty();
+        }
+        if (instance.getFamilyState() instanceof LedIndicatorFamilyState)
+            empty |= "LED1".equals(componentId) &&
+                LedIndicatorFamilyState.require(instance).getLed1Slot().isEmpty();
+        return empty;
     }
 
     private boolean isDiodeFamily() {
@@ -687,9 +701,15 @@ class PcbWorkbenchRenderer {
         if (isDiodeFamily())
             return DiodeProtectedIndicatorFamilyState.require(instance).getInventory()
                 .getLooseParts().size();
-        LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
-        return state.getResistorInventory().getLooseParts().size() +
-            state.getLedInventory().getLooseParts().size();
+        if (!(instance.getFamilyState() instanceof ReplaceableResistorFamilyState))
+            return 0;
+        ReplaceableResistorFamilyState state =
+            (ReplaceableResistorFamilyState) instance.getFamilyState();
+        int count = state.getResistorInventory().getLooseParts().size();
+        if (instance.getFamilyState() instanceof LedIndicatorFamilyState)
+            count += ((LedIndicatorFamilyState) instance.getFamilyState()).getLedInventory()
+                .getLooseParts().size();
+        return count;
     }
 
     private Point getLoosePartMarkerPoint(String partId) {

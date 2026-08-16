@@ -24,8 +24,8 @@ class SeededPcbLayoutGenerator {
         PcbBoardLayout bestLayout = null;
         double bestScore = Double.POSITIVE_INFINITY;
         int viableCandidates = 0;
-        String repeatedFailureClass = null;
-        int repeatedFailureCount = 0;
+        int targetViableCandidates = board.getId().equals("PARALLEL_DUAL_INDICATOR") ? 2 :
+            TARGET_VIABLE_CANDIDATES;
         for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
             try {
                 PcbBoardLayout candidate = generateAttempt(board, attemptRandom(seed, attempt));
@@ -35,23 +35,10 @@ class SeededPcbLayoutGenerator {
                     bestScore = score;
                 }
                 viableCandidates++;
-                if (viableCandidates >= TARGET_VIABLE_CANDIDATES)
+                if (viableCandidates >= targetViableCandidates)
                     break;
             } catch (RuntimeException failure) {
                 lastFailure = failure;
-                String failureClass = classifyFailure(failure.getMessage());
-                if (failureClass.equals(repeatedFailureClass))
-                    repeatedFailureCount++;
-                else {
-                    repeatedFailureClass = failureClass;
-                    repeatedFailureCount = 1;
-                }
-                if (repeatedFailureCount >= 3 &&
-                        (failureClass.equals("keep-out") || failureClass.equals("clearance"))) {
-                    throw new IllegalStateException("Deterministic PCB " + failureClass +
-                        " contradiction after " + repeatedFailureCount + " attempts for seed " +
-                        seed + ": " + failure.getMessage());
-                }
             }
         }
         if (bestLayout != null)
@@ -65,8 +52,10 @@ class SeededPcbLayoutGenerator {
     private PcbBoardLayout generateAttempt(TroubleshootBoard board, Random random) {
         int boardX = 40 + random.nextInt(3) * 10;
         int boardY = 40 + random.nextInt(3) * 10;
-        int boardWidth = 700 + random.nextInt(7) * 10;
-        int boardHeight = 350 + random.nextInt(6) * 10;
+        int boardWidth = board.getId().equals("PARALLEL_DUAL_INDICATOR") ?
+            780 + random.nextInt(3) * 10 : 700 + random.nextInt(7) * 10;
+        int boardHeight = board.getId().equals("PARALLEL_DUAL_INDICATOR") ?
+            440 + random.nextInt(4) * 10 : 350 + random.nextInt(6) * 10;
         Rectangle outline = new Rectangle(boardX, boardY, boardWidth, boardHeight);
         PcbBoardLayout layout = new PcbBoardLayout(CANVAS_WIDTH, CANVAS_HEIGHT, outline,
             new Rectangle(850, 125, 150, 255));
@@ -94,20 +83,6 @@ class SeededPcbLayoutGenerator {
         placeSilkscreen(layout, board, outline);
         layout.validateGeometry(board);
         return layout;
-    }
-
-    private static String classifyFailure(String message) {
-        if (message == null)
-            return "unknown";
-        if (message.indexOf("traces violate copper clearance") >= 0)
-            return "clearance";
-        if (message.indexOf("passes through component keep-out") >= 0)
-            return "keep-out";
-        if (message.indexOf("Unable to route net") >= 0)
-            return "route-search";
-        if (message.indexOf("place") >= 0 || message.indexOf("placement") >= 0)
-            return "placement";
-        return "validation";
     }
 
     private Footprint placeConnector(TroubleshootBoard board, Rectangle outline, Random random,
@@ -209,8 +184,13 @@ class SeededPcbLayoutGenerator {
 
     private void placeSilkscreen(PcbBoardLayout layout, TroubleshootBoard board,
             Rectangle outline) {
-        String title = board.getId().equals("DIODE_PROTECTED_INDICATOR") ?
-            "TSJ DIODE INDICATOR" : "TSJ LED INDICATOR";
+        String title;
+        if (board.getId().equals("DIODE_PROTECTED_INDICATOR"))
+            title = "TSJ DIODE INDICATOR";
+        else if (board.getId().equals("PARALLEL_DUAL_INDICATOR"))
+            title = "TSJ PARALLEL INDICATORS";
+        else
+            title = "TSJ LED INDICATOR";
         addLabel(layout, board, outline, "board-title", title,
             new Rectangle(outline.x + 20, outline.y + 15, textWidth(title, 14), 18),
             14, true, null);

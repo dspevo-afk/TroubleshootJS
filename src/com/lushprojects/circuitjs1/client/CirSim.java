@@ -363,6 +363,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootMeterVerification;
 	boolean troubleshootDiodeVerification;
 	boolean troubleshootLedPhysicalVerification;
+	boolean troubleshootParallelVerification;
 	boolean troubleshootGeometryVerification;
 	boolean troubleshootLayoutVerification;
 	boolean troubleshootGeometryVerificationComplete;
@@ -371,6 +372,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootMeterVerificationComplete;
 	boolean troubleshootDiodeVerificationComplete;
 	boolean troubleshootLedPhysicalVerificationComplete;
+	boolean troubleshootParallelVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
@@ -417,6 +419,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootMeterVerification = qp.getBooleanValue("tsjVerifyMeter", false);
 	    troubleshootDiodeVerification = qp.getBooleanValue("tsjVerifyDiode", false);
 	    troubleshootLedPhysicalVerification = qp.getBooleanValue("tsjVerifyLedParts", false);
+	    troubleshootParallelVerification = qp.getBooleanValue("tsjVerifyParallel", false);
 	    troubleshootGeometryVerification = qp.getBooleanValue("tsjVerifyGeometry", false);
 	    troubleshootLayoutVerification = qp.getBooleanValue("tsjVerifyLayout", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
@@ -807,7 +810,20 @@ MouseOutHandler, MouseWheelHandler {
 	    installGeneratedChallenge(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("diode".equals(troubleshootChallenge))
 	    installGeneratedChallenge(new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	else if ("parallel".equals(troubleshootFixture))
+	    installGeneratedBoard(generateParallelBoard(troubleshootFixtureSeed));
+	else if ("parallel".equals(troubleshootChallenge))
+	    installGeneratedChallenge(generateParallelBoard(troubleshootFixtureSeed));
 	setSimRunning(running);
+    }
+
+    private GeneratedBoardInstance generateParallelBoard(long seed) {
+	try {
+	    return new ParallelDualIndicatorGenerator().generate(seed);
+	} catch (RuntimeException failure) {
+	    console("parallel_generator_failure: " + failure.getMessage());
+	    throw failure;
+	}
     }
 
     void setColors(String positiveColor, String negativeColor) {
@@ -4157,7 +4173,7 @@ MouseOutHandler, MouseWheelHandler {
 	generatedBoardInstance = instance;
 	generatedChallengeController = null;
 	boardModificationController = new BoardModificationController(this, instance);
-	resistorSlotController = instance.getFamilyState() instanceof LedIndicatorFamilyState ?
+	resistorSlotController = instance.getFamilyState() instanceof ReplaceableResistorFamilyState ?
 	    new ResistorSlotController(this, instance, boardModificationController) : null;
 	diodeSlotController = instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState ?
 	    new DiodeSlotController(this, instance, boardModificationController) : null;
@@ -4253,12 +4269,17 @@ MouseOutHandler, MouseWheelHandler {
 			DiodeFamilyDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:diode");
 		    }
-		    if (troubleshootLedPhysicalVerification &&
+			if (troubleshootLedPhysicalVerification &&
 			    !troubleshootLedPhysicalVerificationComplete) {
 			troubleshootLedPhysicalVerificationComplete = true;
 			LedPhysicalDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:led-parts");
-		    }
+			    publishBrowserVerificationResult("PASS:led-parts");
+			}
+			if (troubleshootParallelVerification && !troubleshootParallelVerificationComplete) {
+			    troubleshootParallelVerificationComplete = true;
+			    ParallelDualIndicatorDeveloperVerifier.verify(this);
+			    publishBrowserVerificationResult("PASS:parallel");
+			}
 		    if (troubleshootLayoutVerification && !troubleshootGeometryVerificationComplete) {
 			troubleshootGeometryVerificationComplete = true;
 			PcbLayoutDeveloperVerifier.verify(this);
@@ -4272,7 +4293,8 @@ MouseOutHandler, MouseWheelHandler {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootMeterVerification ||
 		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification ||
-		    troubleshootGeometryVerification || troubleshootLayoutVerification)
+		    troubleshootGeometryVerification || troubleshootLayoutVerification ||
+		    troubleshootParallelVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +

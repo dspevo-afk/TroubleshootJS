@@ -9,6 +9,8 @@ param(
     [switch]$NormalPlayer,
     [switch]$Diode,
     [switch]$DiodeNormalPlayer,
+    [switch]$Parallel,
+    [switch]$ParallelNormalPlayer,
     [switch]$LedParts,
     [switch]$LedNormalPlayer,
     [switch]$Layout,
@@ -77,7 +79,7 @@ function receiveCdp($socket, [int]$wantedId, [ref]$failures) {
         }
         if ($method -eq 'Runtime.consoleAPICalled') {
             $text = ($message.params.args | ForEach-Object { $_.value }) -join ' '
-            if ($text -match '(?i)verification failed|generated board verification failed|pcb_generator_failure|uncaught|exception') {
+            if ($text -match '(?i)verification failed|generated board verification failed|pcb_generator_failure|parallel_generator_failure|uncaught|exception') {
                 $failures.Value += 'Console failure: ' + $text
             }
         }
@@ -135,6 +137,10 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
         }
         Start-Sleep -Milliseconds 100
         [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures))
+        if ($EvidenceDirectory -and $name -match '^seed=(0|2) parallel$') {
+            [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory ("parallel-seed-" + $Matches[1] + ".png")) ([ref]$failures)
+        }
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
         Write-Host "PASS $name"
         $success = $true
@@ -359,6 +365,86 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
                 $snapshot = evaluateCdp $socket ([ref]$nextId) "document.body.innerText" ([ref]$failures)
                 $start = [Math]::Max(0, $snapshot.Length - 1400)
                 Write-Host ("NORMAL PLAYER UI SNAPSHOT: " + $snapshot.Substring($start).Replace("`n", ' | '))
+            } catch { }
+        }
+        return $false
+    } finally {
+        cleanupBrowser $browser $socket $profile
+    }
+}
+
+function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
+    $profile = Join-Path $env:TEMP ("tsj-parallel-player-" + [Guid]::NewGuid().ToString('N'))
+    $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+        '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
+    $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $socket = $null
+    try {
+        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        do {
+            Start-Sleep -Milliseconds 200
+            try {
+                $targets = Invoke-RestMethod "http://127.0.0.1:$debugPort/json/list" -TimeoutSec 2
+                $target = $targets | Where-Object { $_.type -eq 'page' } | Select-Object -First 1
+            } catch { $target = $null }
+        } while ($null -eq $target -and [DateTime]::UtcNow -lt $deadline)
+        if ($null -eq $target) { throw 'browser target did not become available' }
+        $socket = New-Object Net.WebSockets.ClientWebSocket
+        $socket.ConnectAsync([Uri]$target.webSocketDebuggerUrl,
+            [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+        $nextId = 1
+        $failures = @()
+        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('One indicator does not light.')" $deadline ([ref]$failures) 'ready parallel challenge'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points" $deadline ([ref]$failures) 'parallel PCB geometry bridge'
+        $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),catalog:document.body.innerText.includes('Resistor Replacement Catalog'),noLedCatalog:!document.body.innerText.includes('LED Replacement Catalog'),empty:document.body.innerText.includes('No removed parts'),complaint:document.body.innerText.includes('One indicator does not light.')})" ([ref]$failures)
+        if (-not ($initial.canvas -and $initial.catalog -and $initial.noLedCatalog -and $initial.empty -and $initial.complaint)) {
+            throw 'initial parallel PCB, resistor catalog, tray, or complaint UI was incorrect'
+        }
+        if ($EvidenceDirectory) {
+            [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'parallel-seed-3.png') ([ref]$failures)
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'parallel-faulted.png') ([ref]$failures)
+        }
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        $vin = getCanvasPoint $socket ([ref]$nextId) 'pad:J1.1' ([ref]$failures)
+        $ground = getCanvasPoint $socket ([ref]$nextId) 'pad:J1.2' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $vin 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $ground 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText.includes('V')" $deadline ([ref]$failures) 'parallel supply voltage reading'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'parallel-measurement.png') ([ref]$failures)
+        }
+        Write-Host 'PARALLEL PLAYER supply measurement complete'
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        Write-Host 'PARALLEL PLAYER DC mode exited'
+        clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
+        Write-Host 'PARALLEL PLAYER power off'
+        $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'parallel R1 component controls'
+        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')" $deadline ([ref]$failures) 'parallel faulted original tray part'
+        selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Both indicators operating normally.')" $deadline ([ref]$failures) 'parallel functional repair'
+        if ($EvidenceDirectory) {
+            waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'parallel-repaired.png') ([ref]$failures)
+        }
+        if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        Write-Host 'PASS parallel-normal-player seed=3 supply=solver-backed repair=verified'
+        return $true
+    } catch {
+        Write-Host "FAIL parallel-normal-player seed=3 - $($_.Exception.Message)"
+        if ($null -ne $socket) {
+            try {
+                $snapshot = evaluateCdp $socket ([ref]$nextId) "document.body.innerText" ([ref]$failures)
+                $start = [Math]::Max(0, $snapshot.Length - 1800)
+                Write-Host ("PARALLEL PLAYER UI SNAPSHOT: " + $snapshot.Substring($start).Replace([Environment]::NewLine, ' | '))
             } catch { }
         }
         return $false
@@ -634,6 +720,10 @@ if ($DiodeNormalPlayer) {
     if (-not (verifyNormalDiodePlayer "$BaseUrl/circuitjs.html?tsjChallenge=diode&seed=$PlayerSeed&tsjVerifyGeometry=true" 9460)) { exit 1 }
     exit 0
 }
+if ($ParallelNormalPlayer) {
+    if (-not (verifyNormalParallelPlayer "$BaseUrl/circuitjs.html?tsjChallenge=parallel&seed=3&tsjVerifyGeometry=true" 9480)) { exit 1 }
+    exit 0
+}
 if ($LedNormalPlayer) {
     if (-not (verifyNormalLedPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyGeometry=true" 9470)) { exit 1 }
     exit 0
@@ -649,6 +739,10 @@ $routes = @(
 if ($Diode) {
     $family = 'diode'
     $routes = @(@{ Name = 'diode'; Query = 'tsjVerifyDiode=true'; Expected = 'PASS:diode' })
+}
+if ($Parallel) {
+    $family = 'parallel'
+    $routes = @(@{ Name = 'parallel'; Query = 'tsjVerifyParallel=true'; Expected = 'PASS:parallel' })
 }
 if ($LedParts) {
     $family = 'led'

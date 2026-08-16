@@ -113,6 +113,18 @@ launcher stores validated process identity under the ignored `.tools/preview`
 directory and defaults to port 8899. Use `-Challenge diode -Seed 3` for the diode
 family.
 
+Task 27's parallel family uses the same production preview lifecycle:
+
+```powershell
+.\scripts\start-preview.ps1 -Challenge parallel -Seed 3
+```
+
+The generated board is `PARALLEL_DUAL_INDICATOR` /
+`DUAL_PARALLEL_BRANCHES`: two real VIN-to-GND branches (`R1` + `LED1` and
+`R2` + `LED2`) share stable three-pad VIN and GND nets. The normal challenge
+starts with a real `R1 OPEN` fault and the complaint `One indicator does not
+light.`.
+
 ## Legacy GWT development server
 
 The legacy GWT 2.7 DevMode workflow is retained for compiler development only:
@@ -177,7 +189,22 @@ separate loose physical parts. Every route uses a unique temporary Edge profile;
 cleanup closes Edge through DevTools and removes that profile with bounded
 retries.
 
-The seeded procedural PCB verifier compares deterministic geometry for both
+Run the Task 27 electrical and normal-player paths with:
+
+```powershell
+.\scripts\verify-browser.ps1 -Parallel
+.\scripts\verify-browser.ps1 -ParallelNormalPlayer -EvidenceDirectory docs/task-evidence/task-27
+```
+
+The parallel verifier uses solved CircuitJS currents for branch plausibility,
+source KCL, branch voltage sums, shared-node identity, and R1 fault isolation.
+It also drives the existing DC meter and a developer-only real-resistor
+`1 kOhm || 10 kOhm` active-resistance fixture. The normal-player flow uses
+browser input to read VIN, turn power off, remove R1, install a 1 kOhm catalog
+part, repower, and verify both indicators. R2 and both LEDs are fixed physical
+components in this family, though their pads remain probeable.
+
+The seeded procedural PCB verifier compares deterministic geometry for all
 generated families across seeds 0, 2, and 3:
 
 ```powershell
@@ -199,13 +226,18 @@ Task 26's procedural-layout verifier is:
 .\scripts\verify-browser.ps1 -Layout
 ```
 
-It regenerates both simple PCB families for seeds 0, 2, and 3, checks
+It regenerates the three simple PCB families for seeds 0, 2, and 3, checks
 same-seed fingerprints and cross-seed variation, validates pad escape
 corridors, route quality, and the shared 9-pixel trace / 15-pixel centerline
 minimum-clearance rule, and exercises the seed-3 LED cathode endpoint
-regression. The verifier also checks generated silkscreen labels. The
+regression. For the parallel family it additionally validates root-to-each-pad
+VIN/GND routing for the two three-pad nets. The verifier also checks generated
+silkscreen labels. The
 production browser runner uses a separate bounded CDP receive window so these
 deterministic checks finish in seconds without changing the route timeout.
+The old broad three-consecutive keep-out/clearance early abort was removed;
+layout generation remains bounded by its maximum attempt count and retains the
+last candidate failure for diagnostics.
 
 ## Manual application verification
 
