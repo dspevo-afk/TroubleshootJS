@@ -1,24 +1,42 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 class GeneratedFaultBinding {
     private final GeneratedFault fault;
-    private final SwitchElm isolationElement;
+    private final GeneratedFaultEffect effect;
 
-    GeneratedFaultBinding(GeneratedFault fault, SwitchElm isolationElement) {
-        if (fault == null || isolationElement == null)
+    GeneratedFaultBinding(GeneratedFault fault, GeneratedFaultEffect effect) {
+        if (fault == null || effect == null)
             throw new IllegalArgumentException("Missing generated fault binding");
         this.fault = fault;
-        this.isolationElement = isolationElement;
+        this.effect = effect;
     }
 
     GeneratedFault getFault() { return fault; }
-    SwitchElm getIsolationElement() { return isolationElement; }
+    GeneratedFaultEffect getEffect() { return effect; }
 
-    void setApplied(boolean applied) {
-        boolean open = isolationElement.position == 1;
-        if (open != applied)
-            isolationElement.toggle();
+    Vector<CircuitElm> getPrivateSimulationElements() {
+        return effect.getPrivateSimulationElements();
     }
 
-    boolean isApplied() { return isolationElement.position == 1; }
+    CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        return effect.getPublicTerminal(backingElement, terminal);
+    }
+
+    boolean isPublicTerminal(CircuitElm backingElement, CircuitPostMeasurementEndpoint endpoint,
+            int terminal) {
+        CircuitMeasurementEndpoint publicTerminal = getPublicTerminal(backingElement, terminal);
+        if (!(publicTerminal instanceof CircuitPostMeasurementEndpoint))
+            return false;
+        CircuitPostMeasurementEndpoint expected = (CircuitPostMeasurementEndpoint) publicTerminal;
+        return expected.getElement() == endpoint.getElement() &&
+            expected.getPostIndex() == endpoint.getPostIndex();
+    }
+
+    void setApplied(boolean applied) {
+        effect.setApplied(applied);
+    }
+
+    boolean isApplied() { return effect.isApplied(); }
 }

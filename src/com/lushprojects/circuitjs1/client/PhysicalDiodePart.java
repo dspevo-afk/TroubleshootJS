@@ -24,7 +24,7 @@ class PhysicalDiodePart {
         this.reversedInstallation = reversedInstallation;
         anode = new CircuitPostMeasurementEndpoint(element, 0);
         cathode = faultBinding == null ? new CircuitPostMeasurementEndpoint(element, 1) :
-            new CircuitPostMeasurementEndpoint(faultBinding.getIsolationElement(), 1);
+            faultBinding.getPublicTerminal(element, 1);
         this.location = location;
     }
 
@@ -54,7 +54,7 @@ class PhysicalDiodePart {
         Vector<CircuitElm> result = new Vector<CircuitElm>();
         result.add(element);
         if (faultBinding != null)
-            result.add(faultBinding.getIsolationElement());
+            result.addAll(faultBinding.getPrivateSimulationElements());
         return result;
     }
 }

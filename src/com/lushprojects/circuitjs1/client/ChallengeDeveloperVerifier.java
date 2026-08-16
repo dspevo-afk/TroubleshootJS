@@ -38,21 +38,15 @@ class ChallengeDeveloperVerifier {
     }
 
     private static void verifyFaultedUnpowered(CirSim sim, GeneratedBoardInstance instance) {
-        CircuitPostProbeTarget r11 = getProbe(sim, instance, "R1.1");
-        CircuitPostProbeTarget r12 = getProbe(sim, instance, "R1.2");
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
-        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
-            "Faulted R1 PCB pads did not measure OL: " +
-            sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification());
-        GeneratedComponentConnectionBindings connections = instance.getConnectionBindings();
-        CircuitPostProbeTarget componentLead1 = getProbe(sim,
-            connections.get("R1", "R1.1").getComponentEndpoint());
-        CircuitPostProbeTarget componentLead2 = getProbe(sim,
-            connections.get("R1", "R1.2").getComponentEndpoint());
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(componentLead1,
-            componentLead2);
-        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
-            "Faulted R1 component leads did not measure OL");
+        GeneratedFaultType type = instance.getFaultBinding().getFault().getType();
+        if (type == GeneratedFaultType.RESISTOR_OPEN) {
+            CircuitPostProbeTarget r11 = getProbe(sim, instance, "R1.1");
+            CircuitPostProbeTarget r12 = getProbe(sim, instance, "R1.2");
+            sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
+            require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+                "Faulted R1 PCB pads did not measure OL: " +
+                sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification());
+        }
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         verifyLedPolarity(sim, instance);
     }
@@ -138,12 +132,17 @@ class ChallengeDeveloperVerifier {
             "Indicator does not light.".equals(definition.getComplaintText()) &&
             definition.getFault() == instance.getFaultBinding().getFault(),
             "Selected challenge metadata disagrees with binding");
-        verifySeed(0, 5, 330);
-        verifySeed(2, 9, 680);
-        verifySeed(3, 12, 1000);
+        verifySeed(0, 5, 330, GeneratedFaultType.RESISTOR_OPEN, "LED_R1_OPEN");
+        verifySeed(2, 9, 680, GeneratedFaultType.RESISTOR_OPEN, "LED_R1_OPEN");
+        verifySeed(3, 12, 1000, GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
+            "LED_R1_INCORRECT_VALUE");
+        require(new LedIndicatorGenerator().generate(0).getChallengeDefinition().getFault().getType() !=
+            new LedIndicatorGenerator().generate(3).getChallengeDefinition().getFault().getType(),
+            "LED fault selection did not produce multiple deterministic fault types");
     }
 
-    private static void verifySeed(long seed, double voltage, double resistance) {
+    private static void verifySeed(long seed, double voltage, double resistance,
+            GeneratedFaultType expectedType, String expectedId) {
         GeneratedBoardInstance variant = new LedIndicatorGenerator().generate(seed);
         GeneratedChallengeDefinition definition = variant.getChallengeDefinition();
         requireApproximately(voltage, variant.getPhysicalSpecifications()
@@ -152,14 +151,25 @@ class ChallengeDeveloperVerifier {
         requireApproximately(resistance, variant.getPhysicalSpecifications()
             .getResistorNameplate("R1").getNominalResistanceOhms(), .001,
             "Unexpected deterministic R1 for seed " + seed);
-        require("LED_R1_OPEN".equals(definition.getFault().getId()) &&
+        require(expectedId.equals(definition.getFault().getId()) &&
+            expectedType == definition.getFault().getType() &&
             "R1".equals(definition.getFault().getTargetComponentId()) &&
             definition.getSelectionSeed() == seed, "Unexpected deterministic challenge metadata");
+        GeneratedBoardInstance repeat = new LedIndicatorGenerator().generate(seed);
+        require(definition.getFault().getType() == repeat.getChallengeDefinition().getFault().getType() &&
+            definition.getFault().getId().equals(repeat.getChallengeDefinition().getFault().getId()),
+            "LED fault selection was not reproducible for seed " + seed);
+        if (expectedType == GeneratedFaultType.RESISTOR_INCORRECT_VALUE)
+            require(definition.getFault().getEffectiveValue() == resistance * 100,
+                "Incorrect resistor fault metadata lost its effective value");
     }
 
     private static void verifyPhysicalPersistence(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, GeneratedFaultController faults) {
-		verifyFailedOriginalLiftedLeadVoltage(sim, instance, modifications, faults);
+        if (instance.getFaultBinding().getFault().getType() == GeneratedFaultType.RESISTOR_OPEN)
+            verifyFailedOriginalLiftedLeadVoltage(sim, instance, modifications, faults);
+        else
+            verifyIncorrectOriginalLiftedLead(sim, instance, modifications, faults);
         modifications.liftLead("R1", "R1.1");
         require(modifications.getComponentState("R1") == ComponentPhysicalState.LEAD_LIFTED &&
             faults.isApplied(), "Lead lift cleared the internal fault");
@@ -172,12 +182,47 @@ class ChallengeDeveloperVerifier {
             instance.getConnectionBindings().get("R1", "R1.2").getComponentEndpoint());
         sim.instrumentController.setResistanceProbesForDeveloperVerification(componentLead1,
             componentLead2);
-        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
-            "Removed failed R1 did not measure OL in tray");
+        String reading = sim.instrumentController.getReadingForDeveloperVerification();
+        if (instance.getFaultBinding().getFault().getType() == GeneratedFaultType.RESISTOR_OPEN)
+            require("OL".equals(reading), "Removed failed R1 did not measure OL in tray");
+        else {
+            double actual = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
+            double expected = instance.getFaultBinding().getFault().getEffectiveValue();
+            require(!"OL".equals(reading) && Math.abs(actual - expected) <= expected * .05,
+                "Removed incorrect-value R1 did not measure its effective faulty value: " + actual);
+        }
         modifications.restoreComponent("R1");
         require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED &&
             faults.isApplied(), "Restoration cleared the internal fault");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyIncorrectOriginalLiftedLead(CirSim sim,
+            GeneratedBoardInstance instance, BoardModificationController modifications,
+            GeneratedFaultController faults) {
+        require(instance.getFaultBinding().getFault().getType() ==
+            GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
+            "Unexpected non-open fault in incorrect-value persistence path");
+        require(modifications.liftLead("R1", "R1.2") && faults.isApplied(),
+            "Incorrect-value R1 lead lift changed fault state");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        require(Math.abs(((LEDElm) instance.getComponentBindings().getSingleElement("LED1"))
+            .getCurrent()) < .000001 &&
+            !instance.getOperationalStates().isIlluminated("LED1"),
+            "Lifted incorrect-value R1 still drove the LED");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        require(modifications.reconnectLead("R1", "R1.2"),
+            "Incorrect-value R1 lead did not reconnect");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        sim.runCircuit(true);
+        instance.getChallengeDefinition().getBehaviorContract().verifyFaulted(instance,
+            modifications, BoardPowerState.POWERED);
+        require(faults.isApplied(), "Reconnecting incorrect-value R1 cleared the fault");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
     }
 
     private static void verifyFailedOriginalLiftedLeadVoltage(CirSim sim,
@@ -233,9 +278,18 @@ class ChallengeDeveloperVerifier {
             instance.getBehaviorContract().verifyHealthy(instance, BoardPowerState.POWERED);
             require(instance.getOperationalStates().isIlluminated("LED1"),
                 "Developer-cleared LED did not illuminate");
+            if (faults.getFault().getType() == GeneratedFaultType.RESISTOR_INCORRECT_VALUE)
+                require(((ResistorElm) instance.getComponentBindings().getSingleElement("R1"))
+                    .getResistance() == instance.getPhysicalSpecifications()
+                    .getResistorNameplate("R1").getNominalResistanceOhms(),
+                    "Clearing incorrect resistor fault did not restore nominal resistance");
             require(!faults.clearForDeveloperVerification(), "Repeated developer clear was not idempotent");
             require(faults.apply(), "Developer fault reapply was ignored");
             require(!faults.apply(), "Repeated fault apply was not idempotent");
+            if (faults.getFault().getType() == GeneratedFaultType.RESISTOR_INCORRECT_VALUE)
+                require(((ResistorElm) instance.getComponentBindings().getSingleElement("R1"))
+                    .getResistance() == faults.getFault().getEffectiveValue(),
+                    "Reapplying incorrect resistor fault did not restore effective resistance");
             sim.analyzeCircuit();
             sim.runCircuit(true);
             sim.runCircuit(true);

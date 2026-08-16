@@ -25,9 +25,13 @@ class DiodeProtectedIndicatorGenerator {
         DCVoltageElm supply = new DCVoltageElm(160, 320); supply.drag(160, 160);
         supply.maxVoltage = supplyVoltage;
         SwitchElm powerSwitch = new SwitchElm(160, 160); powerSwitch.drag(240, 160);
-        WireElm vinTrace = new WireElm(240, 160); vinTrace.drag(320, 160);
+        SwitchElm connectorFaultSwitch = new SwitchElm(240, 160);
+        connectorFaultSwitch.drag(272, 160);
+        WireElm vinTrace = new WireElm(272, 160); vinTrace.drag(320, 160);
         WireElm d1AnodeLink = new WireElm(320, 160); d1AnodeLink.drag(400, 240);
         DiodeElm diode = createDefaultDiode(400, 240, 480, 240);
+        SwitchElm diodeShortSwitch = new SwitchElm(400, 240);
+        diodeShortSwitch.drag(480, 240);
         SwitchElm faultSwitch = new SwitchElm(480, 240); faultSwitch.drag(512, 240);
         WireElm d1CathodeLink = new WireElm(512, 240); d1CathodeLink.drag(560, 160);
         WireElm diodeOutTrace = new WireElm(560, 160); diodeOutTrace.drag(608, 160);
@@ -40,8 +44,8 @@ class DiodeProtectedIndicatorGenerator {
         WireElm groundReturn = new WireElm(800, 320); groundReturn.drag(800, 160);
 
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
-        elements.add(supply); elements.add(powerSwitch); elements.add(vinTrace);
-        elements.add(d1AnodeLink); elements.add(diode); elements.add(faultSwitch);
+        elements.add(supply); elements.add(powerSwitch); elements.add(connectorFaultSwitch);
+        elements.add(vinTrace); elements.add(d1AnodeLink); elements.add(diode);
         elements.add(d1CathodeLink); elements.add(diodeOutTrace); elements.add(resistor);
         elements.add(ledNodeTrace); elements.add(led); elements.add(ground);
         elements.add(supplyReturn); elements.add(groundReturn);
@@ -52,12 +56,27 @@ class DiodeProtectedIndicatorGenerator {
         components.bindComponent("LED1", led);
         GeneratedComponentOperationalStates operational = new GeneratedComponentOperationalStates();
         operational.bindLed("LED1", led);
-        GeneratedFault fault = new GeneratedFault("DIODE_D1_OPEN", GeneratedFaultType.COMPONENT_OPEN,
-            "D1", FAMILY_ID, seed);
-        GeneratedFaultBinding faultBinding = new GeneratedFaultBinding(fault, faultSwitch);
+        Vector<GeneratedFaultCandidate> faultCandidates =
+            new Vector<GeneratedFaultCandidate>();
+        faultCandidates.add(GeneratedFaultEngine.diodeShort("DIODE_D1_SHORT", FAMILY_ID,
+            seed, "D1", diodeShortSwitch));
+        faultCandidates.add(GeneratedFaultEngine.diodeOpen("DIODE_D1_OPEN", FAMILY_ID,
+            seed, "D1", faultSwitch));
+        faultCandidates.add(GeneratedFaultEngine.connectorOpenPath("DIODE_J1_OPEN_PATH",
+            FAMILY_ID, seed, "J1", connectorFaultSwitch, false));
+        GeneratedFaultEngine.clearAll(faultCandidates);
+        GeneratedFaultCandidate selectedFault = GeneratedFaultEngine.select(seed, faultCandidates);
+        for (GeneratedFaultCandidate candidate : faultCandidates)
+            for (CircuitElm privateElement : candidate.getPrivateSimulationElements())
+                if (!elements.contains(privateElement))
+                    elements.add(privateElement);
+        GeneratedFault fault = selectedFault.getFault();
+        GeneratedFaultBinding faultBinding = selectedFault.getBinding();
+        GeneratedFaultBinding diodeFaultBinding = "D1".equals(
+            fault.getTargetComponentId()) ? faultBinding : null;
         PhysicalDiodePart original = new PhysicalDiodePart("D1_ORIGINAL",
             new DiodeNameplate("D1_ORIGINAL", "Generic silicon diode", "default"), diode,
-            faultBinding, false, DiodePartLocation.INSTALLED);
+            diodeFaultBinding, false, DiodePartLocation.INSTALLED);
         DiodeReplacementInventory inventory = new DiodeReplacementInventory();
         inventory.add(original);
         DiodeReplacementCatalog catalog = new DiodeReplacementCatalog();
@@ -80,7 +99,7 @@ class DiodeProtectedIndicatorGenerator {
             new SwitchExternalPowerControl(powerSwitch)));
 
         BoardSimulationBindings bindings = board.getSimulationBindings();
-        bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(powerSwitch, 1));
+        bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(connectorFaultSwitch, 1));
         bindings.bindPad("J1.2", new CircuitPostMeasurementEndpoint(ground, 0));
         bindings.bindPad("D1.A", new CircuitPostMeasurementEndpoint(vinTrace, 1));
         bindings.bindPad("D1.K", new CircuitPostMeasurementEndpoint(diodeOutTrace, 0));

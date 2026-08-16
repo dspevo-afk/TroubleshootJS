@@ -367,23 +367,37 @@ and time advance, validates the resulting symptom in `PREPARING_FAULTED`, and
 only then enters `READY`. This is not a UI timer or an assumed settle delay.
 
 `GeneratedFault` is immutable challenge metadata (stable ID, type, target
-component, circuit family, and selection seed). `GeneratedFaultBinding` owns
-the private CircuitJS implementation, while `GeneratedFaultController` is the
-only code permitted to apply or developer-clear it. The first LED challenge
-uses a private series `SwitchElm` to model an internally open R1. That switch
-is not a `BoardComponent`, PCB pad, placement, nameplate, or external-power
-control. A declared binding may be the component-side endpoint of the target's
-detachable lead, preserving two valid outer terminals for in- and
-out-of-circuit measurement without giving the internal fault infrastructure a
-physical board identity.
+component, circuit family, selection seed, and—when applicable—healthy and
+effective values). `GeneratedFaultEngine` builds explicit compatible candidate
+bindings instead of leaving fault setup inside a family-specific validator. Its
+CircuitJS-backed effects model a series open path, an incorrect resistor value,
+or a parallel diode short; connector/open-path effects are represented and
+filtered out when the current family has no compatible repair primitive. Each
+generator clears every candidate, selects deterministically from compatible
+candidates using the challenge seed, retains every candidate's private
+simulation element in the canonical generated-element ownership, and applies
+only the selected effect. LED and parallel families currently select seeded
+resistor-open or resistor-incorrect-value challenges; the diode family selects
+seeded diode-open or diode-short challenges.
+
+`GeneratedFaultBinding` owns the private CircuitJS implementation, while
+`GeneratedFaultController` is the only code permitted to apply or
+developer-clear it. Private switches are not `BoardComponent`s, PCB pads,
+placements, nameplates, or external-power controls. A declared binding may be
+the component-side endpoint of the target's detachable lead, preserving two
+valid outer terminals for in- and out-of-circuit measurement without giving
+internal fault infrastructure a physical board identity. Incorrect-value
+effects mutate the real `ResistorElm` value and restore the healthy value when
+cleared; short/open effects alter the real solved graph.
 
 Faulted verification keeps generic ownership, topology, pad, net, and
 physical-modification checks active, but does not apply a healthy-current
-family assertion while the intentional fault is active. The fault-specific
-validator requires powered, installed R1, a bound open isolation switch, LED
-current below $1 uA$, and a non-illuminated LED state. Fault application never
-changes printed resistor markings, component physical state, stable IDs,
-external power bindings, undo/redo state, or board geometry.
+family assertion while the intentional fault is active. Family fault
+validators now verify the selected meaningful symptom for open, incorrect,
+and short effects, while repair completion remains the shared solver-backed
+functional predicate. Fault application never changes printed resistor
+markings, physical part identity, stable IDs, external power bindings,
+undo/redo state, or board geometry.
 
 `GeneratedComponentOperationalStates` is a small runtime adapter from stable
 component ID to solved LED current. The PCB renderer uses it only to add a

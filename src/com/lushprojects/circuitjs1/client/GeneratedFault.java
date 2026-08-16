@@ -6,9 +6,18 @@ class GeneratedFault {
     private final String targetComponentId;
     private final String circuitFamilyId;
     private final long selectionSeed;
+    private final double healthyValue;
+    private final double effectiveValue;
 
     GeneratedFault(String id, GeneratedFaultType type, String targetComponentId,
             String circuitFamilyId, long selectionSeed) {
+        this(id, type, targetComponentId, circuitFamilyId, selectionSeed,
+            Double.NaN, Double.NaN);
+    }
+
+    GeneratedFault(String id, GeneratedFaultType type, String targetComponentId,
+            String circuitFamilyId, long selectionSeed, double healthyValue,
+            double effectiveValue) {
         if (id == null || id.length() == 0 || type == null || targetComponentId == null ||
             targetComponentId.length() == 0 || circuitFamilyId == null ||
             circuitFamilyId.length() == 0)
@@ -18,6 +27,8 @@ class GeneratedFault {
         this.targetComponentId = targetComponentId;
         this.circuitFamilyId = circuitFamilyId;
         this.selectionSeed = selectionSeed;
+        this.healthyValue = healthyValue;
+        this.effectiveValue = effectiveValue;
     }
 
     String getId() { return id; }
@@ -25,4 +36,6 @@ class GeneratedFault {
     String getTargetComponentId() { return targetComponentId; }
     String getCircuitFamilyId() { return circuitFamilyId; }
     long getSelectionSeed() { return selectionSeed; }
+    double getHealthyValue() { return healthyValue; }
+    double getEffectiveValue() { return effectiveValue; }
 }

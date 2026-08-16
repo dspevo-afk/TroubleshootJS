@@ -38,7 +38,9 @@ class ParallelDualIndicatorGenerator {
         supply.maxVoltage = supplyVoltage;
         SwitchElm isolationSwitch = new SwitchElm(128, 128);
         isolationSwitch.drag(224, 128);
-        WireElm vinTrace = new WireElm(224, 128);
+        SwitchElm connectorFaultSwitch = new SwitchElm(224, 128);
+        connectorFaultSwitch.drag(256, 128);
+        WireElm vinTrace = new WireElm(256, 128);
         vinTrace.drag(320, 128);
 
         WireElm r1Lead1Link = new WireElm(320, 128);
@@ -83,10 +85,10 @@ class ParallelDualIndicatorGenerator {
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         elements.add(supply);
         elements.add(isolationSwitch);
+        elements.add(connectorFaultSwitch);
         elements.add(vinTrace);
         elements.add(r1Lead1Link);
         elements.add(r1);
-        elements.add(r1FaultIsolation);
         elements.add(r1Lead2Link);
         elements.add(branch1Trace);
         elements.add(branch1AnodeLink);
@@ -113,13 +115,29 @@ class ParallelDualIndicatorGenerator {
         operationalStates.bindLed("LED1", led1);
         operationalStates.bindLed("LED2", led2);
 
-        GeneratedFault fault = new GeneratedFault("PARALLEL_R1_OPEN", GeneratedFaultType.COMPONENT_OPEN,
-            "R1", FAMILY_ID, seed);
-        GeneratedFaultBinding faultBinding = new GeneratedFaultBinding(fault, r1FaultIsolation);
+        Vector<GeneratedFaultCandidate> faultCandidates =
+            new Vector<GeneratedFaultCandidate>();
+        faultCandidates.add(GeneratedFaultEngine.resistorOpen("PARALLEL_R1_OPEN", FAMILY_ID,
+            seed, "R1", r1FaultIsolation));
+        faultCandidates.add(GeneratedFaultEngine.resistorIncorrectValue(
+            "PARALLEL_R1_INCORRECT_VALUE", FAMILY_ID, seed, "R1", r1, r1Value,
+            r1Value * 100));
+        faultCandidates.add(GeneratedFaultEngine.connectorOpenPath("PARALLEL_J1_OPEN_PATH",
+            FAMILY_ID, seed, "J1", connectorFaultSwitch, false));
+        GeneratedFaultEngine.clearAll(faultCandidates);
+        GeneratedFaultCandidate selectedFault = GeneratedFaultEngine.select(seed, faultCandidates);
+        for (GeneratedFaultCandidate candidate : faultCandidates)
+            for (CircuitElm privateElement : candidate.getPrivateSimulationElements())
+                if (!elements.contains(privateElement))
+                    elements.add(privateElement);
+        GeneratedFault fault = selectedFault.getFault();
+        GeneratedFaultBinding faultBinding = selectedFault.getBinding();
+        GeneratedFaultBinding resistorFaultBinding = "R1".equals(
+            fault.getTargetComponentId()) ? faultBinding : null;
         ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory();
         ResistorReplacementCatalog resistorCatalog = new ResistorReplacementCatalog();
         PhysicalResistorPart originalR1 = new PhysicalResistorPart("R1_ORIGINAL",
-            new ResistorNameplate("R1_ORIGINAL", r1Value, 5), r1, faultBinding,
+            new ResistorNameplate("R1_ORIGINAL", r1Value, 5), r1, resistorFaultBinding,
             ResistorPartLocation.INSTALLED);
         resistorInventory.add(originalR1);
         ReplaceableComponentSlot r1Slot = new ReplaceableComponentSlot("R1",
@@ -148,7 +166,7 @@ class ParallelDualIndicatorGenerator {
         GeneratedComponentConnectionBindings connectionBindings =
             new GeneratedComponentConnectionBindings(board);
         BoardSimulationBindings bindings = board.getSimulationBindings();
-        bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(vinTrace, 1));
+        bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(connectorFaultSwitch, 1));
         bindings.bindPad("J1.2", new CircuitPostMeasurementEndpoint(groundTrace, 1));
         bindings.bindPad("R1.1", new CircuitPostMeasurementEndpoint(vinTrace, 1));
         bindings.bindPad("R1.2", new CircuitPostMeasurementEndpoint(branch1Trace, 0));
@@ -162,7 +180,7 @@ class ParallelDualIndicatorGenerator {
         connectionBindings.bind("R1", "R1.1", bindings.getEndpoint("R1.1"),
             new CircuitPostMeasurementEndpoint(r1, 0), r1Lead1Link);
         connectionBindings.bind("R1", "R1.2", bindings.getEndpoint("R1.2"),
-            new CircuitPostMeasurementEndpoint(r1FaultIsolation, 1), r1Lead2Link);
+            originalR1.getPublicTerminal(1), r1Lead2Link);
         connectionBindings.bind("LED1", "LED1.A", bindings.getEndpoint("LED1.A"),
             new CircuitPostMeasurementEndpoint(led1, 0), branch1AnodeLink);
         connectionBindings.bind("LED1", "LED1.K", bindings.getEndpoint("LED1.K"),

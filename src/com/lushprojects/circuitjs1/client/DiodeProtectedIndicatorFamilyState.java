@@ -27,7 +27,7 @@ class DiodeProtectedIndicatorFamilyState implements GeneratedBoardFamilyState {
     String allocatePartId() { return "D1_CATALOG_PART_" + nextPartSerial++; }
 
     public boolean isFaultedTargetInstalled(String componentId) {
-        return "D1".equals(componentId) && !d1Slot.isEmpty() &&
-            d1Slot.getInstalledPart().isFaulted();
+        return "J1".equals(componentId) || ("D1".equals(componentId) &&
+            !d1Slot.isEmpty() && d1Slot.getInstalledPart().isFaulted());
     }
 }

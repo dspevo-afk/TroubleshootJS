@@ -398,6 +398,7 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')&&[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_CATALOG_PART_0 - 1000 Ohm +/-5%')" $deadline ([ref]$failures) 'original and replacement loose resistor identities'
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:R1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:R1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'loose resistor geometry'
         Write-Host 'PLAYER healthy replacement removed'
+        clickButton $socket ([ref]$nextId) 'R1_ORIGINAL - Removed resistor' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
 
         $healthyLeft = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_CATALOG_PART_0:0' ([ref]$failures)
@@ -407,7 +408,7 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'healthy forward resistance'
         $forward = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $healthyRight 'left' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!=='$forward'" $deadline ([ref]$failures) 'intermediate reversed-probe measurement'
+        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'intermediate reversed-probe measurement'
         clickPoint $socket ([ref]$nextId) $healthyLeft 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'healthy reverse resistance'
         $reverse = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
@@ -418,9 +419,13 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         $originalRight = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_ORIGINAL:1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalLeft 'left' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalRight 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'faulted original OL'
+        waitForCdp $socket ([ref]$nextId) "(()=>/^100(?:\.0+)?\s*kOhm$/i.test(document.querySelector('.tsj-meter-display').innerText))()" $deadline ([ref]$failures) 'faulted original effective resistance'
+        $originalReading = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
+        if ($originalReading -notmatch '(?i)^100(\.0+)?\s*kOhm$') {
+            throw "faulted original effective resistance was unexpected: $originalReading"
+        }
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
-        Write-Host "PASS normal-player seed=3 forward=$forward reverse=$reverse original=OL"
+        Write-Host "PASS normal-player seed=3 forward=$forward reverse=$reverse original=$originalReading"
         return $true
     } catch {
         Write-Host "FAIL normal-player seed=3 - $($_.Exception.Message)"

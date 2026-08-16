@@ -1,187 +1,142 @@
-# Task 30 — Generic Functional Challenge Completion Contract
+# Task 31 — Fault Engine v1
 
-Status: complete
+## Status
 
-## Milestone and acceptance
+Complete. The implementation, documentation, browser evidence, independent
+review, and final validation are complete. The requested commit is:
 
-Implemented the first eligible roadmap milestone, Task 30, for the existing
-`LED_INDICATOR`, `DIODE_PROTECTED_INDICATOR`, and
-`PARALLEL_DUAL_INDICATOR` families.
+Prevent premature subagent takeover
 
-The bounded acceptance criteria were:
+No push was performed.
 
-- provide one reusable healthy/faulted/repaired behavior-contract boundary for
-  generated boards and challenge definitions;
-- keep the existing family-specific CircuitJS validators behind that boundary;
-- make common challenge completion depend on a solver-backed functional
-  predicate, not on a replacement gesture or an original-part ID;
-- remove family repair checks whose only purpose was requiring the original
-  faulted object to be replaced, while retaining real electrical and physical
-  validity checks;
-- preserve hidden fault metadata, stable board/component/pad/net identity,
-  graph ownership, power and measurement safety, and the existing lifecycle;
-- prove healthy, faulted, nonfunctional/reversed-repair, and repaired paths
-  through the common contract for the existing simple, diode, and parallel
-  families; and
-- do not add scoring, new fault families, new circuit families, or adjacent
-  roadmap work.
+## Scope and acceptance
 
-## Result
+Task 31 makes generated faults explicit data and CircuitJS-backed effects
+rather than family-specific setup accidents. The bounded implementation
+covers:
 
-`GeneratedChallengeBehaviorContract` is now the generic boundary with
-`verifyHealthy`, `verifyFaulted`, and `isFunctionallyRepaired` operations.
-`GeneratedChallengeBehaviorAdapter` preserves the current family validators as
-the implementation behind that boundary. `GeneratedBoardInstance` owns the
-contract, `GeneratedChallengeDefinition` references the same contract, and
-`GeneratedChallengeController` rejects mismatched ownership before using it
-for lifecycle verification and completion.
+- resistor open;
+- resistor incorrect value;
+- diode open;
+- diode short; and
+- connector/open-path candidates represented in the engine and rejected as
+  incompatible until the current workbench has a compatible connector/trace
+  repair primitive.
 
-Healthy verification now goes through the contract, faulted verification stays
-solver-backed, and repaired completion is accepted only when the family’s
-functional electrical predicate is true under the existing power and
-measurement safety rules. The common controller no longer checks for
-`R1`, `R1_ORIGINAL`, or a catalog-part identity. LED, diode, and parallel repair
-validators no longer reject a repair solely because the original part is not
-the installed object; an original faulted part still fails naturally through
-its electrical state, while an alternate valid repair can complete where its
-predicate permits it.
+The generated families remain seeded and reproducible. Fault metadata and
+effective values stay internal; normal player UI exposes only the board,
+measurements, complaint, and repair workflow.
 
-The parallel developer verifier now proves both the solver-backed functional
-predicate and the common controller’s `COMPLETED` lifecycle state, closing the
-generic completion-path gap found during review.
+## Implementation
 
-The browser-evidence paragraphs previously requested by the user remain
-restored in `AGENTS.md` and `.codex/agents/coder.toml`; those files were not
-changed in this milestone.
+GeneratedFaultEngine now creates explicit GeneratedFaultCandidate values and
+CircuitJS-backed GeneratedFaultEffect implementations. Series switch effects
+represent open paths, resistor effects change the real ResistorElm resistance,
+and diode-short effects close a real parallel SwitchElm. Every candidate's
+private simulation elements are retained in the canonical generated-element
+ownership, inactive candidates are cleared, and the selected effect is chosen
+deterministically from compatible candidates.
 
-## Architecture decisions
+The seeded production mappings are:
 
-- The behavior contract is a small lifecycle boundary, not a second source of
-  electrical truth.
-- Family validators continue to read CircuitJS-backed board state and remain
-  responsible for family-specific electrical behavior.
-- Board and definition contract identity is checked explicitly so a challenge
-  cannot silently verify against a different family implementation.
-- Functional completion remains separate from diagnosis and physical mutation;
-  a board can be diagnosed or physically modified without being complete until
-  restored behavior is verified.
-- No scoring, new fault engine, new topology, or new player hint was added.
+- LED and parallel families: seeds 0 and 2 select resistor-open; seed 3
+  selects resistor-incorrect-value.
+- Diode-protected family: seeds 0 and 2 select diode-short; seed 3 selects
+  diode-open.
 
-## Delegation and review
+Family fault validators now verify the actual solved symptom for each selected
+fault. The existing generic challenge controller still gates READY and
+functional completion on CircuitJS-backed validation; no fake meter readings
+or UI-only completion answers were added.
 
-- Coder subagent `Halley` (`gpt-5.6-luna`, XHIGH, workspace-write) implemented
-  the bounded candidate, ran the JDK 8 build and targeted routes, and reported
-  the changed files and validation evidence.
-- Reviewer subagent `Mendel` (`gpt-5.6-luna`, XHIGH, read-only) initially
-  returned `FAIL` with two valid findings: the parallel developer verifier did
-  not assert common-controller completion, and `docs/ARCHITECTURE.md` still
-  described the removed separate-validator wiring.
-- The coder made one narrow correction pass. The reviewer independently
-  reran the review and returned exactly `PASS`.
-- Luna MAX performed one independent final-review round of the actual diff and
-  implementation and returned `FINAL PASS`.
-- Sol escalation was not required.
+The player verifier now checks the seed-3 failed original resistor for the
+expected 100 kOhm effective value, not merely any numeric reading.
 
-## Files changed
+## Files and evidence
 
-- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeBehaviorContract.java`
-  — generic healthy/faulted/repaired behavior boundary.
-- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeBehaviorAdapter.java`
-  — adapter preserving existing family validators.
-- `src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java` —
-  board-owned behavior contract.
-- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeDefinition.java` —
-  one contract instead of separate family validator fields.
-- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeController.java` —
-  contract identity, lifecycle, and functional completion path.
-- `src/com/lushprojects/circuitjs1/client/GeneratedBoardVerifier.java` —
-  healthy verification through the contract.
-- `src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java` —
-  shared LED behavior adapter wiring.
-- `src/com/lushprojects/circuitjs1/client/DiodeProtectedIndicatorGenerator.java`
-  — shared diode behavior adapter wiring.
-- `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorGenerator.java`
-  — shared parallel behavior adapter wiring.
-- `src/com/lushprojects/circuitjs1/client/LedIndicatorRepairValidator.java` —
-  removed original-only completion rejection.
-- `src/com/lushprojects/circuitjs1/client/DiodeProtectedIndicatorRepairValidator.java`
-  — removed original-only completion rejection.
-- `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorRepairValidator.java`
-  — removed original-only completion rejection.
-- `src/com/lushprojects/circuitjs1/client/ChallengeDeveloperVerifier.java` —
-  common contract route assertions.
-- `src/com/lushprojects/circuitjs1/client/DiodeFamilyDeveloperVerifier.java`
-  — diode contract route assertions.
-- `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorDeveloperVerifier.java`
-  — common completion assertion for the parallel family.
-- `src/com/lushprojects/circuitjs1/client/ReplacementDeveloperVerifier.java`
-  — replacement lifecycle assertions through the generic path.
-- `docs/ARCHITECTURE.md` — current contract and adapter boundary.
-- `docs/ROADMAP.md` — Task 30 marked complete and Task 31 identified as next.
-- `docs/task-evidence/task-30/` — four curated production-browser screenshots.
-- `docs/CODEX_TASK_REPORT.md` — this handoff evidence.
+Product implementation changed the generated-fault boundary, the three
+functional-family generators/validators, physical resistor/diode terminal
+mapping, challenge ownership/lifecycle validation, and developer verifiers.
+New product files are:
 
-## Validation evidence
+- src/com/lushprojects/circuitjs1/client/GeneratedFaultCandidate.java
+- src/com/lushprojects/circuitjs1/client/GeneratedFaultEffect.java
+- src/com/lushprojects/circuitjs1/client/GeneratedFaultEngine.java
 
-Build and static checks:
+Documentation and validation changes are:
 
-- `./scripts/build.ps1 -JavaHome ./.tools/jdk8-download/jdk8u502-b07` — PASS;
-  all five GWT permutations compiled and linked.
-- PowerShell parser check for `scripts/verify-browser.ps1` — PASS.
-- `git diff --check` — PASS; only existing LF/CRLF conversion warnings were
-  reported.
+- AGENTS.md — added the permanent Delegation Ownership and Patience
+  Protocol. This policy-only correction did not modify product source.
+- docs/ARCHITECTURE.md — documented the fault candidate/effect boundary.
+- docs/ROADMAP.md — marked Task 31 complete and Task 32 as next.
+- scripts/verify-browser.ps1 — strengthened the seed-3 effective-value
+  assertion and corrected the resistance-flow expectation.
 
-Production-browser player flows against the final build:
+Production browser evidence was captured and pixel-inspected:
 
-- `./scripts/verify-browser.ps1 -NormalPlayer -PlayerSeed 3` — PASS;
-  original removal, replacement, and solver-backed repair completion.
-- `./scripts/verify-browser.ps1 -DiodeNormalPlayer -PlayerSeed 3` — PASS;
-  diode functional repair completion.
-- `./scripts/verify-browser.ps1 -ParallelNormalPlayer` — PASS on the final
-  run; supply measurement, power safety, replacement, and common completion.
-- `./scripts/verify-browser.ps1 -LedNormalPlayer -PlayerSeed 3
-  -EvidenceDirectory docs/task-evidence/task-30` — PASS; reversed physical
-  installation remained nonfunctional before the valid repair, then the
-  repaired board completed functionally.
+- docs/task-evidence/task-31/initial-board.png
+- docs/task-evidence/task-31/led-selected.png
+- docs/task-evidence/task-31/led-removed-parts-tray.png
+- docs/task-evidence/task-31/repaired-board.png
 
-Seeded developer/browser matrices:
+## Validation
 
-- `./scripts/verify-browser.ps1 -Seeds 0,2,3` — PASS, all 15 LED routes.
-- `./scripts/verify-browser.ps1 -Diode -Seeds 0,2,3` — PASS, all 3 diode
+All final checks below passed:
+
+- ./scripts/build.ps1 -JavaHome ./.tools/jdk8-download/jdk8u502-b07
+  — all five GWT permutations compiled and linked.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 120 -Seeds 0,2,3
+  — all LED routes passed on final rerun; the first run had one transient
+  seed-2 resistance exception, and the isolated seed-2 rerun passed all five
   routes.
-- `./scripts/verify-browser.ps1 -Parallel -Seeds 0,2,3` — PASS, all 3
-  parallel routes.
-- `./scripts/verify-browser.ps1 -LedParts -Seeds 0,2,3` — PASS, all 3
-  physical-part routes.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -Diode -Seeds 0,2,3
+  — all diode routes passed.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -Parallel -Seeds 0,2,3
+  — all parallel routes passed.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -NormalPlayer -PlayerSeed 3
+  — solver-backed repair passed; original measured 100 kOhm.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -LedNormalPlayer -PlayerSeed 3
+  — reversed replacement remained nonfunctional and correct repair passed.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -DiodeNormalPlayer -PlayerSeed 3
+  — forward/reverse diode behavior and repair passed.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -ParallelNormalPlayer -PlayerSeed 3
+  — solver-backed supply measurement and repair passed.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -LedParts -Seeds 0,2,3
+  — all physical LED-part routes passed.
+- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -Layout -PlayerSeed 3
+  — procedural layout verification passed.
+- git diff --check — passed; Git emitted only expected LF/CRLF conversion
+  warnings.
 
-The Codex built-in browser was used against the final production preview to
-inspect the rendered parallel and LED boards and the player-facing repair
-states. The four evidence images were pixel-inspected and are nonblank,
-legible, and representative of the completion contract:
+## Multi-agent review
 
-- [`initial-board.png`](task-evidence/task-30/initial-board.png) — initial
-  LED challenge with the complaint and unmodified board.
-- [`led-selected.png`](task-evidence/task-30/led-selected.png) — selected
-  physical LED with removable-component controls visible.
-- [`led-removed-parts-tray.png`](task-evidence/task-30/led-removed-parts-tray.png)
-  — powered-off board after removal with the loose original LED in the tray.
-- [`repaired-board.png`](task-evidence/task-30/repaired-board.png) — powered
-  repaired board with the solver-backed completion message and loose-part
-  identities preserved.
+The initial coder produced the bounded Task 31 candidate. After the coder
+became unusable, its valid work was preserved; the coder was later resumed for
+the verifier-only correction and returned PASS without changing files.
 
-## Remaining bounded limitations
+The independent reviewer first returned FAIL for the weak browser assertion
+and identified two medium hardening concerns. The assertion was tightened
+without touching product source. On re-review, the reviewer confirmed the
+assertion and returned exactly PASS; the two source concerns were judged
+non-blocking for the current package-private, generated-only v1 scope because
+all production call sites pass the target R1 element, all production
+incorrect-value effects use nominal ×100, and fault validation blocks READY.
 
-The adapter is intentionally package-private and currently wraps the three
-existing family validator interfaces; it is not a new generic circuit
-simulation engine. Alternate repairs are accepted only when the family’s real
-electrical predicate permits them. Fault selection remains family-specific and
-is intentionally deferred to Task 31. This milestone adds no scoring, stress,
-new fault types, new families, jumpers, or trace cutting.
+Primary architect final disposition: FINAL PASS.
 
-## Roadmap handoff
+The new AGENTS.md protocol preserves the existing two coder/reviewer correction
+passes, three Luna final-review rounds, and Sol escalation rules. It clarifies
+that active coders and reviewers own their phases until disposition and must be
+allowed to complete naturally.
 
-Task 30 is complete, validated, reviewed, and committed. The next eligible
-milestone is Task 31 — Fault Engine v1. It is identified only and was not
-started in this task/run.
+## Limitations and handoff
 
-Commit message: `Task 30: unify functional challenge completion contract`
+Connector/open-path effects are modeled as explicit incompatible candidates
+until a connector, jumper, or trace-repair primitive can provide a valid
+player repair path. Complaint text remains the existing generic indicator
+symptom; Task 32 owns complaint selection that varies with the actual fault.
+An unrelated diode seed-1 layout-generation failure remains outside this
+milestone and was not changed.
+
+The next eligible roadmap milestone is Task 32 — Scenario and Customer
+Complaint Foundation. It is identified only; it was not started.

@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 class GeneratedChallengeController {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
@@ -68,11 +70,15 @@ class GeneratedChallengeController {
             return;
         if (!faults.isApplied())
             throw new IllegalStateException("Selected challenge fault was cleared outside developer scope");
-        if (instance.getFamilyState().isFaultedTargetInstalled(
-                definition.getFault().getTargetComponentId()) &&
-            sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
-                sim.getBoardModificationController().isComponentInstalled(
-                    definition.getFault().getTargetComponentId()))
+        String targetComponentId = definition.getFault().getTargetComponentId();
+        Vector<GeneratedComponentConnectionBinding> targetConnections =
+            instance.getConnectionBindings().getForComponentOrEmpty(targetComponentId);
+        boolean targetInstalled = targetConnections.isEmpty() ||
+            sim.getBoardModificationController().isComponentInstalled(targetComponentId);
+        if (instance.getFamilyState().isFaultedTargetInstalled(targetComponentId) &&
+            targetInstalled &&
+            sim.getBoardModificationController().isFullyRestored() &&
+            sim.getBoardPowerController().getState() == BoardPowerState.POWERED)
             definition.getBehaviorContract().verifyFaulted(instance,
                 sim.getBoardModificationController(),
                 BoardPowerState.POWERED);
@@ -97,17 +103,19 @@ class GeneratedChallengeController {
             throw new IllegalArgumentException("Challenge behavior contract is not owned by board");
         if (instance.getBoard().getComponent(definition.getFault().getTargetComponentId()) == null)
             throw new IllegalArgumentException("Challenge target component is missing");
-        if (definition.getFaultBinding() != instance.getFaultBinding() ||
-                !instance.getSimulationElements().contains(
-                    definition.getFaultBinding().getIsolationElement()))
+        if (definition.getFaultBinding() != instance.getFaultBinding())
             throw new IllegalArgumentException("Challenge fault binding is not owned by board");
-        if (instance.getComponentBindings().isElementBoundToComponent(
-                definition.getFault().getTargetComponentId(),
-                definition.getFaultBinding().getIsolationElement()) ||
-                instance.getExternalPowerBindings().isBackingElement(
-                    definition.getFaultBinding().getIsolationElement()) ||
-                instance.getConnectionBindings().isConnectionElement(
-                    definition.getFaultBinding().getIsolationElement()))
-            throw new IllegalArgumentException("Challenge isolation element is not private infrastructure");
+        Vector<CircuitElm> privateElements = definition.getFaultBinding()
+            .getPrivateSimulationElements();
+        Vector<CircuitElm> ownedElements = instance.getSimulationElements();
+        for (CircuitElm element : privateElements) {
+            if (!ownedElements.contains(element))
+                throw new IllegalArgumentException("Challenge fault effect is not owned by board");
+            if (instance.getComponentBindings().isElementBoundToComponent(
+                    definition.getFault().getTargetComponentId(), element) ||
+                    instance.getExternalPowerBindings().isBackingElement(element) ||
+                    instance.getConnectionBindings().isConnectionElement(element))
+                throw new IllegalArgumentException("Challenge fault effect is not private infrastructure");
+        }
     }
 }

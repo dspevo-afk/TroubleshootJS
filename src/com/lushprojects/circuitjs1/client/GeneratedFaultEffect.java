@@ -1,0 +1,112 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.Vector;
+
+/**
+ * CircuitJS-backed implementation of one generated fault.  The effect owns
+ * only private simulation infrastructure and never owns board identity.
+ */
+interface GeneratedFaultEffect {
+    void setApplied(boolean applied);
+    boolean isApplied();
+    CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal);
+    Vector<CircuitElm> getPrivateSimulationElements();
+}
+
+class SwitchOpenFaultEffect implements GeneratedFaultEffect {
+    private final SwitchElm switchElement;
+
+    SwitchOpenFaultEffect(SwitchElm switchElement) {
+        if (switchElement == null)
+            throw new IllegalArgumentException("Missing fault switch");
+        this.switchElement = switchElement;
+    }
+
+    public void setApplied(boolean applied) {
+        boolean open = switchElement.position == 1;
+        if (open != applied)
+            switchElement.toggle();
+    }
+
+    public boolean isApplied() { return switchElement.position == 1; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (backingElement == null || terminal < 0 || terminal > 1)
+            throw new IllegalArgumentException("Invalid faulted component terminal");
+        if (terminal == 0)
+            return new CircuitPostMeasurementEndpoint(backingElement, 0);
+        return new CircuitPostMeasurementEndpoint(switchElement, 1);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(switchElement);
+        return result;
+    }
+}
+
+class ResistorIncorrectValueFaultEffect implements GeneratedFaultEffect {
+    private final ResistorElm resistor;
+    private final double healthyValue;
+    private final double effectiveValue;
+    private boolean applied;
+
+    ResistorIncorrectValueFaultEffect(ResistorElm resistor, double healthyValue,
+            double effectiveValue) {
+        if (resistor == null || healthyValue <= 0 || effectiveValue <= 0)
+            throw new IllegalArgumentException("Invalid resistor fault value");
+        this.resistor = resistor;
+        this.healthyValue = healthyValue;
+        this.effectiveValue = effectiveValue;
+    }
+
+    public void setApplied(boolean applied) {
+        if (this.applied == applied)
+            return;
+        resistor.setResistance(applied ? effectiveValue : healthyValue);
+        this.applied = applied;
+    }
+
+    public boolean isApplied() { return applied; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (backingElement != resistor || terminal < 0 || terminal > 1)
+            throw new IllegalArgumentException("Resistor fault backing mismatch");
+        return new CircuitPostMeasurementEndpoint(resistor, terminal);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        return new Vector<CircuitElm>();
+    }
+}
+
+class SwitchParallelShortFaultEffect implements GeneratedFaultEffect {
+    private final SwitchElm bypassSwitch;
+
+    SwitchParallelShortFaultEffect(SwitchElm bypassSwitch) {
+        if (bypassSwitch == null)
+            throw new IllegalArgumentException("Missing short fault bypass");
+        this.bypassSwitch = bypassSwitch;
+        setApplied(false);
+    }
+
+    public void setApplied(boolean applied) {
+        boolean closed = bypassSwitch.position == 0;
+        if (closed != applied)
+            bypassSwitch.toggle();
+    }
+
+    public boolean isApplied() { return bypassSwitch.position == 0; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (backingElement == null || terminal < 0 || terminal > 1)
+            throw new IllegalArgumentException("Invalid shorted component terminal");
+        return new CircuitPostMeasurementEndpoint(backingElement, terminal);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(bypassSwitch);
+        return result;
+    }
+}

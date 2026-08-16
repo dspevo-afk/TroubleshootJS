@@ -17,18 +17,27 @@ class DiodeFamilyDeveloperVerifier {
             "D1 logical identity or nameplate is missing");
         require(state.getCatalog().getEntries().size() == 2,
             "Diode catalog choices changed unexpectedly");
+        verifyDeterministicFaultMetadata();
         PhysicalDiodePart original = state.getInventory().get("D1_ORIGINAL");
         require(original.isFaulted() && original.getLocation() == DiodePartLocation.INSTALLED,
             "Faulted original D1 is not installed");
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
-        verifyOpen(sim, boardProbe(sim, instance, "D1.A"), boardProbe(sim, instance, "D1.K"),
-            "installed faulted D1");
+        if (isOpen(instance))
+            verifyOpen(sim, boardProbe(sim, instance, "D1.A"), boardProbe(sim, instance, "D1.K"),
+                "installed faulted D1");
+        else
+            verifyShort(sim, boardProbe(sim, instance, "D1.A"), boardProbe(sim, instance, "D1.K"),
+                "installed faulted D1");
         require(sim.getDiodeSlotController().removeInstalledPart(), "Could not remove original D1");
         verifyTopology(sim, instance);
-        verifyOpen(sim, looseProbe(sim, instance, original, 0),
-            looseProbe(sim, instance, original, 1), "loose faulted original D1");
+        if (isOpen(instance))
+            verifyOpen(sim, looseProbe(sim, instance, original, 0),
+                looseProbe(sim, instance, original, 1), "loose faulted original D1");
+        else
+            verifyShort(sim, looseProbe(sim, instance, original, 0),
+                looseProbe(sim, instance, original, 1), "loose faulted original D1");
 
         require(sim.getDiodeSlotController().installNewFromCatalog(DiodeReplacementCatalog.REVERSED),
             "Could not install reversed diode");
@@ -55,8 +64,12 @@ class DiodeFamilyDeveloperVerifier {
         require(sim.getDiodeSlotController().removeInstalledPart(),
             "Could not isolate healthy diode for meter test");
         verifyHealthy(sim, instance, healthy);
-        verifyOpen(sim, looseProbe(sim, instance, original, 0),
-            looseProbe(sim, instance, original, 1), "original after healthy acquisition");
+        if (isOpen(instance))
+            verifyOpen(sim, looseProbe(sim, instance, original, 0),
+                looseProbe(sim, instance, original, 1), "original after healthy acquisition");
+        else
+            verifyShort(sim, looseProbe(sim, instance, original, 0),
+                looseProbe(sim, instance, original, 1), "original after healthy acquisition");
         require(sim.getDiodeSlotController().install(healthy.getId()),
             "Could not reinstall measured healthy diode");
         sim.setBoardPowerState(BoardPowerState.POWERED);
@@ -122,6 +135,45 @@ class DiodeFamilyDeveloperVerifier {
         String reverse = sim.instrumentController.getReadingForDeveloperVerification();
         require("OL".equals(forward) && "OL".equals(reverse), label + " was not OL both ways");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyShort(CirSim sim, ProbeTarget first, ProbeTarget second, String label) {
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(first, second);
+        String forward = sim.instrumentController.getReadingForDeveloperVerification();
+        double forwardVoltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(second, first);
+        String reverse = sim.instrumentController.getReadingForDeveloperVerification();
+        double reverseVoltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
+        require(!"OL".equals(forward) && !"OL".equals(reverse) &&
+            forwardVoltage <= .05 && reverseVoltage <= .05,
+            label + " was not a solver-backed short in both directions");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static boolean isOpen(GeneratedBoardInstance instance) {
+        return instance.getFaultBinding().getFault().getType() == GeneratedFaultType.DIODE_OPEN;
+    }
+
+    private static void verifyDeterministicFaultMetadata() {
+        verifyFaultSeed(0, GeneratedFaultType.DIODE_SHORT, "DIODE_D1_SHORT");
+        verifyFaultSeed(2, GeneratedFaultType.DIODE_SHORT, "DIODE_D1_SHORT");
+        verifyFaultSeed(3, GeneratedFaultType.DIODE_OPEN, "DIODE_D1_OPEN");
+        require(new DiodeProtectedIndicatorGenerator().generate(0).getChallengeDefinition().getFault()
+            .getType() != new DiodeProtectedIndicatorGenerator().generate(3)
+            .getChallengeDefinition().getFault().getType(),
+            "Diode fault selection did not produce multiple deterministic fault types");
+    }
+
+    private static void verifyFaultSeed(long seed, GeneratedFaultType type, String id) {
+        GeneratedChallengeDefinition definition = new DiodeProtectedIndicatorGenerator().generate(seed)
+            .getChallengeDefinition();
+        require(type == definition.getFault().getType() && id.equals(definition.getFault().getId()) &&
+            definition.getFault().getSelectionSeed() == seed,
+            "Unexpected deterministic diode fault metadata for seed " + seed);
+        GeneratedChallengeDefinition repeat = new DiodeProtectedIndicatorGenerator().generate(seed)
+            .getChallengeDefinition();
+        require(type == repeat.getFault().getType() && id.equals(repeat.getFault().getId()),
+            "Diode fault selection was not reproducible for seed " + seed);
     }
 
     private static ProbeTarget looseProbe(CirSim sim, GeneratedBoardInstance instance,

@@ -268,7 +268,7 @@ and nonfunctional or still-faulted repairs remain incomplete.
 
 ## Task 31 — Fault Engine v1
 
-**Status:** `[>] NEXT`
+**Status:** `[x] Complete`
 
 ### Goal
 
@@ -307,11 +307,24 @@ healthy board
 
 The same functional family can produce multiple reproducible faulted challenges without special-case UI answers.
 
+### Completed implementation
+
+Task 31 introduced the seeded `GeneratedFaultEngine` candidate/effect boundary.
+LED and parallel indicator families now generate resistor-open and
+resistor-incorrect-value challenges, while the diode-protected family generates
+diode-open and diode-short challenges. Fault effects mutate CircuitJS-backed
+switches or component values, retain healthy/effective metadata, and expose
+private simulation ownership without leaking fault identity to normal player
+UI. Family validators reject meaningless symptoms before a challenge reaches
+READY, and the shared functional repair contract remains the completion gate.
+Connector/open-path candidates are represented but marked incompatible until a
+compatible connector/trace repair primitive exists.
+
 ---
 
 ## Task 32 — Scenario and Customer Complaint Foundation
 
-**Status:** `[ ]`
+**Status:** `[>] NEXT`
 
 ### Goal
 
@@ -1170,7 +1183,7 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 31 — Fault Engine v1**
+**Task 32 — Scenario and Customer Complaint Foundation**
 
-Task 30 passed final review, production validation, and was committed in this
-run. Task 31 is identified as the next eligible milestone but was not started.
+Task 31 passed final review, production validation, and was completed in this
+run. Task 32 is identified as the next eligible milestone but was not started.

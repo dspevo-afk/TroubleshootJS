@@ -1035,8 +1035,45 @@ The primary architect must:
 - run the completion protocol after success; and
 - stop after the task.
 
-The primary architect should avoid routine implementation itself unless that is
-necessary to diagnose or unblock a failed final attempt.
+The primary architect must not implement delegated work while the coder owns
+the implementation phase. Outside that phase, a narrow diagnostic or unblock
+change is permitted only through the defined correction or escalation workflow.
+
+## Delegation Ownership and Patience Protocol
+
+Once implementation is delegated, the Luna XHIGH coder owns that phase until
+it returns a result, explicitly reports `BLOCKED` or `FAILURE`, or the user
+explicitly cancels the delegation.
+
+While the coder is active, the primary architect must not tell it to hurry,
+repeatedly request progress, send unnecessary follow-ups, interrupt or
+terminate it merely because work is taking longer than expected, implement the
+delegated task, edit its delegated product source files, or spawn a replacement
+coder for the same work.
+
+The architect should wait for natural completion and use passive wait/status
+mechanisms when available. Silence, elapsed time, and long-running builds,
+browser checks, dependency setup, or debugging are not evidence of failure.
+The architect may contact an active coder only for clarification, materially
+new user information, a confirmed blocking condition, an explicit `BLOCKED` or
+`FAILURE` report, or intervention required to prevent confirmed destructive or
+out-of-scope work.
+
+If the coder genuinely fails or becomes unusable, preserve valid work, inspect
+and diagnose the state, then resume or redelegate through the defined correction
+workflow or report the blocker. Do not silently become the implementation
+agent. Architect ownership remains task definition, acceptance criteria,
+clarification, evidence and reviewer evaluation, failed-round diagnosis,
+final review, and escalation; implementation remains the coder's
+responsibility.
+
+The same ownership and patience rules apply during correction rounds and Sol
+escalation: after a repair is delegated, let the Luna coder complete it before
+reviewer or architect action begins. Let reviewer work complete naturally as
+well; do not pressure, interrupt, or replace a reviewer merely because
+independent review takes time. No phase advances until its assigned agent has
+returned the required disposition or report. Existing bounded retry limits and
+escalation rules remain unchanged.
 
 ## Coder Subagent
 

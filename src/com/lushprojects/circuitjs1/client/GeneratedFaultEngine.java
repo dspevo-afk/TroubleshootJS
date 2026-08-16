@@ -1,0 +1,78 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.Vector;
+
+/** Package-private v1 boundary for seeded, solver-backed generated faults. */
+class GeneratedFaultEngine {
+    private GeneratedFaultEngine() {
+    }
+
+    static GeneratedFaultCandidate resistorOpen(String id, String familyId, long seed,
+            String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.RESISTOR_OPEN,
+            componentId, familyId, seed), new SwitchOpenFaultEffect(switchElement));
+    }
+
+    static GeneratedFaultCandidate resistorIncorrectValue(String id, String familyId,
+            long seed, String componentId, ResistorElm resistor, double healthyValue,
+            double effectiveValue) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
+            componentId, familyId, seed, healthyValue, effectiveValue),
+            new ResistorIncorrectValueFaultEffect(resistor, healthyValue, effectiveValue));
+    }
+
+    static GeneratedFaultCandidate diodeOpen(String id, String familyId, long seed,
+            String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.DIODE_OPEN,
+            componentId, familyId, seed), new SwitchOpenFaultEffect(switchElement));
+    }
+
+    static GeneratedFaultCandidate diodeShort(String id, String familyId, long seed,
+            String componentId, SwitchElm bypassSwitch) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.DIODE_SHORT,
+            componentId, familyId, seed), new SwitchParallelShortFaultEffect(bypassSwitch));
+    }
+
+    static GeneratedFaultCandidate connectorOpenPath(String id, String familyId, long seed,
+            String componentId, SwitchElm switchElement) {
+        return connectorOpenPath(id, familyId, seed, componentId, switchElement, true);
+    }
+
+    static GeneratedFaultCandidate connectorOpenPath(String id, String familyId, long seed,
+            String componentId, SwitchElm switchElement, boolean compatible) {
+        GeneratedFault fault = new GeneratedFault(id, GeneratedFaultType.CONNECTOR_OPEN_PATH,
+            componentId, familyId, seed);
+        GeneratedFaultBinding binding = new GeneratedFaultBinding(fault,
+            new SwitchOpenFaultEffect(switchElement));
+        return new GeneratedFaultCandidate(binding, compatible);
+    }
+
+    static GeneratedFaultCandidate incompatible(GeneratedFault fault,
+            GeneratedFaultEffect effect) {
+        return new GeneratedFaultCandidate(new GeneratedFaultBinding(fault, effect), false);
+    }
+
+    static GeneratedFaultCandidate select(long seed, Vector<GeneratedFaultCandidate> candidates) {
+        Vector<GeneratedFaultCandidate> compatible = new Vector<GeneratedFaultCandidate>();
+        for (GeneratedFaultCandidate candidate : candidates)
+            if (candidate != null && candidate.isCompatible())
+                compatible.add(candidate);
+        if (compatible.isEmpty())
+            throw new IllegalStateException("No compatible generated fault candidates");
+        int index = (int) (seed % compatible.size());
+        if (index < 0)
+            index += compatible.size();
+        return compatible.elementAt(index);
+    }
+
+    static void clearAll(Vector<GeneratedFaultCandidate> candidates) {
+        for (GeneratedFaultCandidate candidate : candidates)
+            if (candidate != null)
+                candidate.getBinding().setApplied(false);
+    }
+
+    private static GeneratedFaultCandidate candidate(GeneratedFault fault,
+            GeneratedFaultEffect effect) {
+        return new GeneratedFaultCandidate(new GeneratedFaultBinding(fault, effect), true);
+    }
+}

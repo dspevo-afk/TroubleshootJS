@@ -23,7 +23,11 @@ class ReplacementDeveloperVerifier {
         require(slots.install(original.getId()), "Original failed R1 did not reinstall");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
-        require(Math.abs(getLedCurrent(instance)) < .000001 && !challenge.isCompleted() &&
+        boolean originalOpen = instance.getFaultBinding().getFault().getType() ==
+            GeneratedFaultType.RESISTOR_OPEN;
+        require((originalOpen ? Math.abs(getLedCurrent(instance)) < .000001 :
+                getLedCurrent(instance) > .000001 && getLedCurrent(instance) < .001) &&
+            !challenge.isCompleted() &&
             !instance.getOperationalStates().isIlluminated("LED1") &&
             !challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
                 sim.getBoardModificationController(), BoardPowerState.POWERED, false),
@@ -194,8 +198,20 @@ class ReplacementDeveloperVerifier {
         double reverseValue = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
         String reverseDiagnostics = sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification();
 		verifyNeutralResistanceReference(sim, part.getId() + " reverse");
-        if (expectedOpen)
+        boolean originalFaultOpen = part.isOriginal() && instance.getFaultBinding().isApplied() &&
+            instance.getFaultBinding().getFault().getType() == GeneratedFaultType.RESISTOR_OPEN;
+        if (expectedOpen && originalFaultOpen)
             require("OL".equals(forward) && "OL".equals(reverse), "Failed original was not OL");
+        else if (expectedOpen && part.isOriginal() && instance.getFaultBinding().isApplied() &&
+                instance.getFaultBinding().getFault().getType() == GeneratedFaultType.RESISTOR_INCORRECT_VALUE) {
+            double expected = instance.getFaultBinding().getFault().getEffectiveValue();
+            double tolerance = expected * .05;
+            require(!"OL".equals(forward) && !"OL".equals(reverse) &&
+                isWithinTolerance(expected, forwardValue, tolerance) &&
+                isWithinTolerance(expected, reverseValue, tolerance),
+                "Faulted original resistor did not measure its effective value: " + part.getId() +
+                " forward=" + forwardValue + " reverse=" + reverseValue);
+        }
         else {
             double expected = part.getNameplate().getNominalResistanceOhms();
             double tolerance = expected * part.getNameplate().getTolerancePercent() / 100.0;

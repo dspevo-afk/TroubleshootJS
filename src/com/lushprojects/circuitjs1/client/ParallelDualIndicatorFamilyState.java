@@ -31,7 +31,7 @@ class ParallelDualIndicatorFamilyState implements GeneratedBoardFamilyState,
     public String allocateCatalogPartId() { return "R1_CATALOG_PART_" + nextCatalogPartSerial++; }
 
     public boolean isFaultedTargetInstalled(String componentId) {
-        return r1Slot.getComponentId().equals(componentId) && !r1Slot.isEmpty() &&
-            r1Slot.getInstalledPart().isFaulted();
+        return "J1".equals(componentId) || (r1Slot.getComponentId().equals(componentId) &&
+            !r1Slot.isEmpty() && r1Slot.getInstalledPart().isFaulted());
     }
 }

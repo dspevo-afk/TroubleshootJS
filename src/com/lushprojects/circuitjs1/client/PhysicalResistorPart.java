@@ -23,7 +23,7 @@ class PhysicalResistorPart {
         this.firstTerminal = new CircuitPostMeasurementEndpoint(element, 0);
         this.secondTerminal = faultBinding == null
             ? new CircuitPostMeasurementEndpoint(element, 1)
-            : new CircuitPostMeasurementEndpoint(faultBinding.getIsolationElement(), 1);
+            : faultBinding.getPublicTerminal(element, 1);
         this.location = location;
     }
 
@@ -47,7 +47,7 @@ class PhysicalResistorPart {
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         elements.add(element);
         if (faultBinding != null)
-            elements.add(faultBinding.getIsolationElement());
+            elements.addAll(faultBinding.getPrivateSimulationElements());
         return elements;
     }
 

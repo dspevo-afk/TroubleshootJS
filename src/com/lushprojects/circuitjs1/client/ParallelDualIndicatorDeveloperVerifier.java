@@ -27,10 +27,20 @@ class ParallelDualIndicatorDeveloperVerifier {
             GeneratedBoardInstance board = new ParallelDualIndicatorGenerator().generate(seed);
             require("DUAL_PARALLEL_BRANCHES".equals(board.getTopologyVariantId()),
                 "Unexpected parallel topology variant for seed " + seed);
-            require("PARALLEL_R1_OPEN".equals(board.getChallengeDefinition().getFault().getId()) &&
+            String expectedFaultId = seed == 3 ? "PARALLEL_R1_INCORRECT_VALUE" :
+                "PARALLEL_R1_OPEN";
+            GeneratedFaultType expectedFaultType = seed == 3 ?
+                GeneratedFaultType.RESISTOR_INCORRECT_VALUE : GeneratedFaultType.RESISTOR_OPEN;
+            require(expectedFaultId.equals(board.getChallengeDefinition().getFault().getId()) &&
+                expectedFaultType == board.getChallengeDefinition().getFault().getType() &&
                 "R1".equals(board.getChallengeDefinition().getFault().getTargetComponentId()) &&
                 board.getChallengeDefinition().getSelectionSeed() == seed,
                 "Unexpected parallel fault metadata for seed " + seed);
+            GeneratedChallengeDefinition repeat = new ParallelDualIndicatorGenerator().generate(seed)
+                .getChallengeDefinition();
+            require(expectedFaultId.equals(repeat.getFault().getId()) &&
+                expectedFaultType == repeat.getFault().getType(),
+                "Parallel fault selection was not reproducible for seed " + seed);
             double expectedR1 = seed == 0 ? 330 : seed == 2 ? 680 : 1000;
             double expectedR2 = seed == 0 ? 680 : seed == 2 ? 1500 : 2200;
             requireApproximately(expectedR1, board.getPhysicalSpecifications()
@@ -40,6 +50,10 @@ class ParallelDualIndicatorDeveloperVerifier {
                 .getResistorNameplate("R2").getNominalResistanceOhms(), .001,
                 "Unexpected parallel R2 value for seed " + seed);
         }
+        require(new ParallelDualIndicatorGenerator().generate(0).getChallengeDefinition().getFault()
+            .getType() != new ParallelDualIndicatorGenerator().generate(3).getChallengeDefinition()
+            .getFault().getType(),
+            "Parallel fault selection did not produce multiple deterministic fault types");
     }
 
     private static void verifyLogicalTopology(GeneratedBoardInstance instance) {

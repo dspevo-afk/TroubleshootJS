@@ -88,11 +88,11 @@ class GeneratedComponentConnectionBindings {
                     binding.getPadId());
             CircuitPostMeasurementEndpoint boardPost = validateEndpoint(binding.getBoardEndpoint(),
                 simulationElements, binding.getPadId());
-            CircuitPostMeasurementEndpoint componentPost = validateEndpoint(
-                binding.getComponentEndpoint(), simulationElements, binding.getPadId());
+                CircuitPostMeasurementEndpoint componentPost = validateEndpoint(
+                    binding.getComponentEndpoint(), simulationElements, binding.getPadId());
                 if (!componentBindings.isElementBoundToComponent(binding.getComponentId(),
                     componentPost.getElement()) && !isFaultEndpoint(binding, componentPost,
-                    faultBinding))
+                    componentBindings, faultBinding))
                 throw new IllegalStateException("Connection component endpoint is not owned by component: " +
                     binding.getPadId());
             if (boardPost.getElement() == binding.getConnectionElement() ||
@@ -122,10 +122,17 @@ class GeneratedComponentConnectionBindings {
     }
 
     private boolean isFaultEndpoint(GeneratedComponentConnectionBinding connection,
-            CircuitPostMeasurementEndpoint endpoint, GeneratedFaultBinding faultBinding) {
-        return faultBinding != null && faultBinding.getFault().getTargetComponentId().equals(
-            connection.getComponentId()) && faultBinding.getIsolationElement() ==
-            endpoint.getElement();
+            CircuitPostMeasurementEndpoint endpoint, GeneratedComponentBindings componentBindings,
+            GeneratedFaultBinding faultBinding) {
+        if (faultBinding == null || !faultBinding.getFault().getTargetComponentId().equals(
+                connection.getComponentId()))
+            return false;
+        try {
+            CircuitElm backing = componentBindings.getSingleElement(connection.getComponentId());
+            return faultBinding.isPublicTerminal(backing, endpoint, 1);
+        } catch (RuntimeException ignored) {
+            return false;
+        }
     }
 
     private CircuitPostMeasurementEndpoint validateEndpoint(CircuitMeasurementEndpoint endpoint,

@@ -43,7 +43,7 @@ class LedIndicatorFamilyState implements GeneratedBoardFamilyState,
     String allocateLedPartId() { return "LED1_CATALOG_PART_" + nextLedPartSerial++; }
 
     public boolean isFaultedTargetInstalled(String componentId) {
-        return "R1".equals(componentId) && !r1Slot.isEmpty() &&
-            r1Slot.getInstalledPart().isFaulted();
+        return ("J1".equals(componentId) || ("R1".equals(componentId) &&
+            !r1Slot.isEmpty() && r1Slot.getInstalledPart().isFaulted()));
     }
 }
