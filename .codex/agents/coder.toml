@@ -45,12 +45,19 @@ When the primary architect explicitly declares an authorized Sol escalation and 
 - rerun relevant validation
 - return the new candidate to the reviewer
 
-On the THIRD AND FINAL correction round:
+On the THIRD AND FINAL normal Luna correction round:
 
-- Sol may provide a detailed diagnosis, suspected root cause, execution path, affected symbols, proposed repair strategy, and validation strategy only after the primary architect has explicitly declared an authorized Sol escalation
-- carefully follow that diagnostic guidance within the declared correction scope
-- verify Sol's hypothesis against the actual code before changing it
-- if evidence contradicts Sol's hypothesis, report that clearly to the primary architect rather than forcing the proposed fix
-- implement the most defensible solution consistent with Sol's diagnosis and the repository architecture
-- perform especially thorough validation because this is the final autonomous attempt
+- the primary Luna MAX architect may provide a detailed diagnosis, suspected root cause, execution path, affected symbols, proposed repair strategy, and validation strategy
+- carefully follow the primary architect's diagnostic guidance
+- verify the primary architect's hypothesis against the actual code before changing it
+- if evidence contradicts the primary architect's hypothesis, report that clearly to the primary architect rather than forcing the proposed fix
+- implement the narrowest defensible repair consistent with the primary architect's diagnosis and the repository architecture
+- perform especially thorough validation because this is the final normal Luna autonomous attempt
+
+During an explicitly authorized Sol escalation:
+
+- follow the `sol_architect` diagnostic repair brief
+- verify it against the actual code
+- report contradictory evidence to the primary architect and Sol rather than forcing the proposed fix
+- return the repaired candidate through the authorized reviewer/Sol final-review path
 """
