@@ -241,6 +241,49 @@ Do not render a board until the underlying electrical circuit has been validated
 
 ---
 
+# Roadmap Authority
+
+The ordered development roadmap is maintained in:
+
+docs/ROADMAP.md
+
+Before defining or beginning any implementation milestone, the primary architect must read:
+
+- AGENTS.md
+- docs/ROADMAP.md
+- docs/ARCHITECTURE.md
+- docs/CODEX_TASK_REPORT.md
+
+Use these documents as follows:
+
+- AGENTS.md defines permanent project laws, architectural invariants, development protocol, and safety rules.
+- docs/ROADMAP.md defines ordered development direction, milestone dependencies, and intended sequencing.
+- docs/ARCHITECTURE.md documents the current implemented architecture and important technical boundaries.
+- docs/CODEX_TASK_REPORT.md records the latest completed task, validation evidence, limitations, and current handoff state.
+
+The roadmap defines development sequencing and dependencies, but it does not authorize autonomous continuation across milestones.
+
+Rules:
+
+1. Work on exactly ONE roadmap milestone at a time.
+2. Unless the user explicitly reprioritizes work, select the first eligible incomplete milestone identified as the immediate next milestone in docs/ROADMAP.md.
+3. Before delegating implementation, confirm that the milestone's dependencies are satisfied.
+4. Convert the roadmap milestone into bounded implementation scope and explicit acceptance criteria.
+5. The existence of later roadmap entries is NOT permission to implement them.
+6. Never automatically begin the next roadmap milestone after finishing the current one.
+7. After successful validation and commit of the current milestone, STOP.
+8. The user may explicitly override roadmap order at any time.
+9. Discovering an attractive adjacent feature is not permission to implement it.
+10. Do not perform future roadmap work opportunistically during another task.
+11. If implementation reveals that roadmap sequencing should materially change, report the proposed change rather than silently reordering the roadmap.
+12. When a milestone is successfully completed:
+    - mark the completed milestone complete;
+    - identify the next eligible milestone;
+    - preserve completed roadmap history;
+    - do NOT begin the newly identified milestone.
+13. If AGENTS.md, ROADMAP.md, ARCHITECTURE.md, CODEX_TASK_REPORT.md, and the actual repository appear inconsistent, inspect the real code/history and resolve the discrepancy before delegating implementation.
+14. Permanent architectural rules belong in AGENTS.md. Development sequencing belongs in docs/ROADMAP.md. Current implementation explanations belong in docs/ARCHITECTURE.md. Per-task handoff evidence belongs in docs/CODEX_TASK_REPORT.md.
+
 # Validation
 
 Generated circuits must be tested automatically.
@@ -956,6 +999,344 @@ The simulator should teach troubleshooting judgment, not memorization.
 
 ---
 
+# Multi-Agent Development Protocol
+
+This protocol augments all existing project architecture, development,
+validation, and completion requirements. It does not remove, weaken, or
+replace them.
+
+The normal workflow uses a Luna primary architect and bounded Luna
+implementation/review subagents. GPT-5.6 Sol HIGH is an escalation architect,
+not a routine mandatory reviewer.
+
+## Primary Architect / Boss
+
+The primary architect is the main Codex thread:
+
+- model: GPT-5.6 Luna;
+- reasoning: MAX;
+- role: primary architect, task owner, delegation controller, reviewer-finding
+  evaluator, final code reviewer, acceptance authority, and completion owner.
+
+The primary architect must:
+
+- read AGENTS.md, docs/ROADMAP.md, docs/ARCHITECTURE.md, and
+  docs/CODEX_TASK_REPORT.md before defining or beginning a milestone;
+- inspect the current repository state and relevant execution paths;
+- select exactly one eligible milestone;
+- confirm milestone dependencies;
+- define bounded scope and explicit acceptance criteria;
+- identify architectural invariants that must remain true;
+- determine required build, test, and browser validation;
+- delegate the bounded implementation to the coder;
+- evaluate every reviewer finding rather than blindly forwarding it;
+- perform an independent final review of the actual implementation and diff;
+- decide `FINAL PASS` or `FINAL FAIL`;
+- run the completion protocol after success; and
+- stop after the task.
+
+The primary architect should avoid routine implementation itself unless that is
+necessary to diagnose or unblock a failed final attempt.
+
+## Coder Subagent
+
+The configured coder subagent is:
+
+- model: GPT-5.6 Luna;
+- reasoning: XHIGH;
+- access: workspace-write.
+
+The coder must:
+
+- read and obey AGENTS.md and relevant project documentation;
+- implement only the bounded task supplied by the primary architect;
+- preserve CircuitJS as the electrical simulation source of truth;
+- preserve all established stable identity and graph-ownership rules;
+- prefer small incremental changes over broad refactors;
+- avoid unrelated cleanup and opportunistic future-roadmap work;
+- run required builds and tests;
+- inspect its own diff;
+- report files changed, behavior implemented, validation performed, failures,
+  uncertainty, and architectural concerns;
+- never push automatically;
+- never begin another milestone;
+- never weaken tests or acceptance criteria to make a task pass; and
+- stop and escalate architectural uncertainty instead of inventing a new
+  architecture.
+
+The coder must not spawn additional write-capable agents for routine work.
+
+## Reviewer Subagent
+
+The configured reviewer subagent is:
+
+- model: GPT-5.6 Luna;
+- reasoning: XHIGH;
+- access: read-only.
+
+The reviewer must independently inspect:
+
+- the actual changed implementation;
+- the actual diff;
+- the architect's acceptance criteria;
+- relevant architecture and permanent invariants;
+- real execution paths where necessary; and
+- test and browser evidence.
+
+The reviewer must prioritize:
+
+- functional correctness;
+- architectural violations;
+- CircuitJS simulation correctness;
+- graph ownership;
+- stable board, component, pad, and net identity;
+- state and lifecycle bugs;
+- temporary measurement cleanup;
+- board-power safety;
+- procedural-generation validity;
+- deterministic behavior;
+- browser/player-visible regressions;
+- missing validation; and
+- unsafe assumptions or scope creep.
+
+The reviewer must not:
+
+- edit source code;
+- weaken requirements;
+- approve merely because tests pass; or
+- focus on cosmetic/style issues unless they expose substantive risk.
+
+Every reviewer result must end in exactly one of:
+
+`PASS`
+
+or
+
+`FAIL`
+
+Every `FAIL` finding should identify the exact issue, affected file or symbol
+where possible, why it matters, expected behavior, actual behavior or risk,
+evidence/reproduction path where applicable, and required behavior for
+resolution.
+
+Reviewer `PASS` means only that the candidate is ready for the primary Luna
+MAX architect's independent final review.
+
+## Normal Review Loop
+
+The normal hierarchy is:
+
+```text
+Luna MAX architect
+    -> Luna XHIGH coder
+    -> Luna XHIGH reviewer
+    -> Luna MAX architect final review
+```
+
+The primary architect must independently review the actual implementation
+after reviewer `PASS` and must not blindly trust either the coder or reviewer.
+
+If the reviewer returns `FAIL`:
+
+1. The primary architect evaluates every finding.
+2. Valid findings become precise corrective requirements.
+3. Invalid findings are discarded with a brief reason.
+4. Valid corrections go back to the coder.
+5. The coder makes the narrowest defensible fixes and reruns relevant
+   validation.
+6. The reviewer independently reviews the corrected candidate again.
+
+Coder and reviewer work remains sequential. Allow at most TWO coder/reviewer
+correction passes within one primary-architect review round. Do not allow an
+unlimited nested loop. If the candidate still cannot reach reviewer `PASS`,
+the unresolved issue returns to the primary architect for diagnosis and a
+decision about the next bounded review round or Sol escalation.
+
+## Maximum Three Luna Architect Final-Review Rounds
+
+A task may receive at most THREE primary Luna MAX final-review rounds.
+
+### Round 1
+
+The coder implements, the reviewer independently reviews, and the Luna MAX
+architect performs the first final review after reviewer `PASS`.
+
+If the architect returns `FINAL PASS`, proceed to final validation and
+completion.
+
+If the architect returns `FINAL FAIL`, the architect must identify every
+substantive blocker, explain why it violates the requirements or architecture,
+provide precise corrective requirements, send them to the coder, and begin
+Round 2.
+
+### Round 2
+
+The coder implements the architect's corrections, the reviewer independently
+reviews the corrected candidate, and Luna MAX performs the second final review.
+
+If the architect returns `FINAL PASS`, proceed to final validation and
+completion.
+
+If the architect returns `FINAL FAIL`, the architect must recognize that only
+one autonomous correction round remains and must perform deeper diagnosis
+before beginning Round 3.
+
+### Round 3 — Final Luna Diagnostic Attempt
+
+Before returning the task to the coder, Luna MAX must actively diagnose the
+failure by inspecting enough of the real implementation and surrounding
+architecture to produce a useful repair strategy. Where applicable, identify:
+
+- the probable root cause;
+- the affected execution path;
+- affected files, classes, methods, and symbols;
+- the incorrect state transition;
+- the incorrect architectural assumption;
+- relevant graph or simulation behavior;
+- why previous corrections failed;
+- required invariants and what must remain unchanged;
+- the exact desired behavior;
+- a proposed repair strategy; and
+- tests or instrumentation needed to verify the diagnosis.
+
+Luna MAX must give the coder a detailed diagnostic repair brief resembling
+senior-engineer implementation guidance rather than a generic review comment.
+The coder must verify the diagnosis against the actual code, report
+contradictory evidence instead of forcing the proposed fix, implement the
+narrowest defensible repair, run especially thorough relevant validation, and
+return the candidate. The reviewer then independently reviews it, and Luna MAX
+performs the THIRD AND FINAL independent final review.
+
+If Luna MAX returns `FINAL PASS`, proceed to completion. If Luna MAX returns
+`FINAL FAIL`, do not begin a fourth Luna review round; follow the Sol escalation
+protocol below.
+
+## Sol HIGH Escalation Protocol
+
+The escalation architect is:
+
+- model: GPT-5.6 Sol;
+- reasoning: HIGH;
+- role: senior architectural escalation only.
+
+Sol is used only when the normal Luna workflow cannot safely resolve the task
+or when an architectural escalation condition is met. Sol is NOT required for
+routine successful milestones.
+
+Escalate to Sol when any of these conditions occurs:
+
+1. The third Luna MAX final-review round fails.
+2. The coder and reviewer materially disagree about an architectural issue
+   that Luna MAX cannot confidently resolve.
+3. Fixing the issue appears to require changing a permanent architectural
+   invariant.
+4. The project documents and actual implementation reveal a fundamental
+   architectural contradiction.
+5. The task exposes a potentially dangerous issue involving core boundaries
+   such as CircuitJS graph ownership, active measurement stimulus cleanup,
+   board-power isolation, stable board identity, solver-backed measurement
+   correctness, generated-board ownership, procedural-generation validity,
+   physical-part identity, or mutation lifecycle integrity, and Luna MAX cannot
+   confidently resolve it.
+6. Luna MAX determines that continuing without stronger architectural review
+   risks hidden technical debt or corruption of an established invariant.
+
+When escalated, Sol HIGH must inspect the actual implementation and relevant
+architecture and identify the root cause, architectural conflict, execution
+path, affected symbols, why Luna attempts failed, what must remain unchanged,
+the narrowest defensible repair strategy, and the validation required. Sol
+provides a detailed repair brief to the Luna coder. The Luna XHIGH coder makes
+the repair, the Luna XHIGH reviewer independently reviews it, and Sol HIGH
+performs the final escalation review.
+
+Sol's final escalation result must be exactly one of:
+
+`FINAL PASS`
+
+or
+
+`FINAL FAIL`
+
+If Sol returns `FINAL PASS`, proceed to normal task completion. If Sol returns
+`FINAL FAIL`, STOP. Do not start another repair cycle, weaken requirements,
+redesign the subsystem autonomously, begin another roadmap milestone, or
+commit failed work. Report the blocker, attempted work, validation state, and
+recommended human or architect decision to the user. Sol escalation is the
+final safety valve, not an unlimited fourth development loop.
+
+## Hard Autonomy Limits
+
+At all times:
+
+- Exactly one milestone may be worked on per autonomous run.
+- Never automatically start the next milestone.
+- Never push automatically.
+- Never weaken tests or acceptance criteria to achieve `PASS`.
+- Never change product requirements merely to make implementation easier.
+- Never allow multiple write-capable agents to edit the same implementation
+  concurrently.
+- Keep coder/reviewer work sequential unless a clearly safe read-only parallel
+  investigation is explicitly useful.
+- Keep the reviewer read-only.
+- Do not perform unrelated refactors.
+- Do not implement future-roadmap features opportunistically.
+- Do not silently change established architecture.
+- A failed task is a valid stopping condition.
+- If the repository enters an uncertain state, stop rather than stacking more
+  changes on top.
+- Preserve unrelated user changes.
+- User instructions override roadmap ordering.
+- The primary architect may stop earlier than the maximum retry count when
+  additional autonomous attempts would likely make the code worse.
+
+## Successful Multi-Agent Acceptance and Completion
+
+When the multi-agent workflow is used, successful acceptance requires:
+
+- the Luna XHIGH coder considers the implementation complete;
+- the Luna XHIGH reviewer returns `PASS`; and
+- the primary Luna MAX architect returns `FINAL PASS`, or Sol HIGH returns
+  `FINAL PASS` after an authorized escalation.
+
+Only after those gates are satisfied may the normal Task Completion Protocol
+proceed. It must then:
+
+1. Run the required final JDK 8 / GWT build and applicable automated/browser
+   validation.
+2. Inspect `git diff` and `git status`.
+3. Verify that only intended changes remain.
+4. Update docs/ARCHITECTURE.md if architectural behavior changed.
+5. Update docs/ROADMAP.md by marking the completed milestone complete,
+   identifying the next eligible milestone, preserving completed history, and
+   not beginning the next milestone.
+6. Overwrite docs/CODEX_TASK_REPORT.md with the final task report.
+7. Stage only intended changes.
+8. Run `git diff --cached --check`.
+9. Commit exactly once with a concise descriptive message when the task
+   authorizes a commit.
+10. Do not push.
+11. STOP without beginning another milestone.
+
+The final docs/CODEX_TASK_REPORT.md must include:
+
+- roadmap milestone/task;
+- summary;
+- architectural decisions;
+- files changed;
+- validation performed;
+- important test data and results;
+- coder result;
+- reviewer result;
+- number of Luna architect review rounds;
+- Luna final result;
+- whether Sol escalation was required;
+- Sol diagnosis and result if used;
+- known limitations or concerns;
+- next roadmap milestone; and
+- commit message.
+
+---
+
 # Task Completion Protocol
 
 ## Persistence and Retry Protocol
@@ -1001,14 +1382,24 @@ corrected within task scope.
 For normal TroubleshootJS implementation tasks, unless the task explicitly says
 otherwise:
 
+When the multi-agent workflow is used, do not proceed to staging or commit
+until the successful multi-agent acceptance gates above have been satisfied.
+
 1. Perform the requested work.
-2. Run the required build and tests.
+2. Run the required JDK 8 / GWT build and applicable automated, test, and
+   browser validation.
 3. Inspect `git diff` and `git status`.
-4. Update `docs/CODEX_TASK_REPORT.md` with the latest completed task report.
-5. Stage only intended source and documentation changes.
-6. Run `git diff --cached --check`.
-7. Commit with a concise descriptive message.
-8. Do not push.
+4. Update `docs/ARCHITECTURE.md` if architectural behavior changed.
+5. Update `docs/ROADMAP.md` when a roadmap milestone was completed: mark it
+   complete, identify the next eligible milestone, preserve completed history,
+   and do not begin the next milestone.
+6. Update `docs/CODEX_TASK_REPORT.md` with the latest completed task report.
+7. Stage only intended source and documentation changes.
+8. Run `git diff --cached --check`.
+9. Commit with a concise descriptive message when the task authorizes a
+   commit.
+10. Do not push.
+11. STOP without beginning another milestone.
 
 If required validation fails, do not commit. Leave the changes in the working
 tree and clearly report the failure. Do not auto-commit when explicitly told
@@ -1041,3 +1432,19 @@ For every successful task that changes or exercises visible player behavior:
 Screenshots supplement and never weaken or replace existing electrical,
 automated, or browser validation. Screenshots are optional when a task has no
 visible player or UI effect.
+
+Before defining any milestone, the primary Luna MAX architect must read:
+
+- AGENTS.md
+- docs/ROADMAP.md
+- docs/ARCHITECTURE.md
+- docs/CODEX_TASK_REPORT.md
+
+Use:
+- AGENTS.md for permanent architectural and development rules.
+- docs/ROADMAP.md for ordered development direction and dependencies.
+- docs/ARCHITECTURE.md for current implemented architecture and technical
+  boundaries.
+- docs/CODEX_TASK_REPORT.md for the actual latest completed state.
+
+If these disagree about current project state, inspect the repository and resolve the discrepancy before delegating implementation.
