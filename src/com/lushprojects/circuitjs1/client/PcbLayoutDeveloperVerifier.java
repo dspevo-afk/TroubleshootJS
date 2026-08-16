@@ -67,6 +67,12 @@ class PcbLayoutDeveloperVerifier {
         }
         require(layout.getRouteQualityScore(board) >= 0,
             "route quality score is invalid");
+        require(layout.getCompactnessMetric() >= .40,
+            "PCB content is too sparse for its derived outline: " +
+                layout.getCompactnessMetric());
+        require(layout.getLargestEdgeMargin() <= 34,
+            "PCB has an excessive unused edge margin: " + layout.getLargestEdgeMargin());
+        verifyRoutingCourtyards(layout, board);
         require(PcbTraceRules.MIN_CENTERLINE_CLEARANCE ==
                 PcbTraceRules.TRACE_WIDTH + PcbTraceRules.MIN_VISIBLE_CLEARANCE,
             "trace clearance rule is inconsistent with rendered width");
@@ -137,6 +143,66 @@ class PcbLayoutDeveloperVerifier {
                 x[x.length - 1] == cathode.getX() &&
                 y[x.length - 1] == cathode.getY(),
             "seed 3 GND trace approaches LED1.K through the component body");
+    }
+
+    private static void verifyRoutingCourtyards(PcbBoardLayout layout, TroubleshootBoard board) {
+        for (String componentId : board.getComponentIds()) {
+            PcbComponentPlacement component = layout.getComponent(componentId);
+            Rectangle body = component.getKeepOut();
+            Rectangle courtyard = component.getRoutingCourtyard();
+            require(courtyard.intersects(body), "routing courtyard misses component body: " +
+                componentId);
+            if ("RESISTOR".equals(board.getComponent(componentId).getType()) ||
+                    "DIODE".equals(board.getComponent(componentId).getType()))
+                require(courtyard.width > body.width || courtyard.height > body.height,
+                    "component courtyard regression lacks lead-span margin: " + componentId);
+            for (PcbTraceGeometry trace : layout.getTraces()) {
+                int[] x = trace.getXPoints();
+                int[] y = trace.getYPoints();
+                for (int index = 1; index < x.length; index++) {
+                    if (!segmentIntersects(courtyard, x[index - 1], y[index - 1], x[index],
+                            y[index]))
+                        continue;
+                    boolean endpoint = traceTouchesComponentEndpoint(layout, board, component,
+                        trace, x[index - 1], y[index - 1], x[index], y[index]);
+                    require(endpoint, "trace passes beneath component routing courtyard: " +
+                        componentId + " / " + trace.getNetId());
+                }
+            }
+        }
+    }
+
+    private static boolean traceTouchesComponentEndpoint(PcbBoardLayout layout,
+            TroubleshootBoard board, PcbComponentPlacement component, PcbTraceGeometry trace,
+            int x1, int y1, int x2, int y2) {
+        String[] endpointIds = { trace.getStartPadId(), trace.getEndPadId() };
+        for (String endpointId : endpointIds) {
+            BoardPad boardPad = board.getPad(endpointId);
+            if (!component.getComponentId().equals(boardPad.getComponentId()))
+                continue;
+            PcbPadPlacement pad = layout.getPad(endpointId);
+            int left = Math.min(x1, x2);
+            int right = Math.max(x1, x2);
+            int top = Math.min(y1, y2);
+            int bottom = Math.max(y1, y2);
+            if (y1 == y2)
+                return pad.isInEscapeCorridor(Math.max(left, component.getRoutingCourtyard().x), y1) &&
+                    pad.isInEscapeCorridor(Math.min(right,
+                        component.getRoutingCourtyard().x + component.getRoutingCourtyard().width), y1);
+            if (x1 == x2)
+                return pad.isInEscapeCorridor(x1, Math.max(top, component.getRoutingCourtyard().y)) &&
+                    pad.isInEscapeCorridor(x1, Math.min(bottom,
+                        component.getRoutingCourtyard().y + component.getRoutingCourtyard().height));
+        }
+        return false;
+    }
+
+    private static boolean segmentIntersects(Rectangle rectangle, int x1, int y1,
+            int x2, int y2) {
+        return Math.max(Math.min(x1, x2), rectangle.x) <=
+                Math.min(Math.max(x1, x2), rectangle.x + rectangle.width) &&
+            Math.max(Math.min(y1, y2), rectangle.y) <=
+                Math.min(Math.max(y1, y2), rectangle.y + rectangle.height);
     }
 
     private static void verifyMultiPadNets(PcbBoardLayout layout, TroubleshootBoard board) {

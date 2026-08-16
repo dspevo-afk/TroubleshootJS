@@ -7,14 +7,23 @@ class PcbComponentPlacement {
     private final int width;
     private final int height;
     private final Rectangle keepOut;
+    private final Rectangle routingCourtyard;
 
     PcbComponentPlacement(String componentId, int x, int y, int width, int height) {
-        this(componentId, x, y, width, height, new Rectangle(x, y, width, height));
+        this(componentId, x, y, width, height, new Rectangle(x, y, width, height),
+            new Rectangle(x, y, width, height));
     }
 
     PcbComponentPlacement(String componentId, int x, int y, int width, int height,
             Rectangle keepOut) {
-        if (keepOut == null || keepOut.width <= 0 || keepOut.height <= 0)
+        this(componentId, x, y, width, height, keepOut, keepOut);
+    }
+
+    PcbComponentPlacement(String componentId, int x, int y, int width, int height,
+            Rectangle keepOut, Rectangle routingCourtyard) {
+        if (keepOut == null || keepOut.width <= 0 || keepOut.height <= 0 ||
+                routingCourtyard == null || routingCourtyard.width <= 0 ||
+                routingCourtyard.height <= 0)
             throw new IllegalArgumentException("Invalid PCB component keep-out: " + componentId);
         this.componentId = componentId;
         this.x = x;
@@ -22,6 +31,7 @@ class PcbComponentPlacement {
         this.width = width;
         this.height = height;
         this.keepOut = new Rectangle(keepOut);
+        this.routingCourtyard = new Rectangle(routingCourtyard);
     }
 
     String getComponentId() { return componentId; }
@@ -31,4 +41,5 @@ class PcbComponentPlacement {
     int getHeight() { return height; }
     Rectangle getBounds() { return new Rectangle(x, y, width, height); }
     Rectangle getKeepOut() { return new Rectangle(keepOut); }
+    Rectangle getRoutingCourtyard() { return new Rectangle(routingCourtyard); }
 }

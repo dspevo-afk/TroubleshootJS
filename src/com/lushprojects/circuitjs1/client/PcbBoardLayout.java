@@ -8,7 +8,7 @@ import java.util.Vector;
 class PcbBoardLayout {
     private final int width;
     private final int height;
-    private final Rectangle boardOutline;
+    private Rectangle boardOutline;
     private final Rectangle partsTray;
     private final HashMap<String, PcbPadPlacement> pads =
         new HashMap<String, PcbPadPlacement>();
@@ -80,9 +80,16 @@ class PcbBoardLayout {
                 "component " + firstPlacement.getComponentId());
             requireInside(firstPlacement.getKeepOut(), boardOutline,
                 "component keep-out " + firstPlacement.getComponentId());
+            requireInside(firstPlacement.getRoutingCourtyard(), boardOutline,
+                "component routing courtyard " + firstPlacement.getComponentId());
             for (int second = first + 1; second < componentList.size(); second++) {
                 if (firstPlacement.getBounds().intersects(componentList.get(second).getBounds()))
                     throw new IllegalStateException("PCB component bodies overlap: " +
+                        firstPlacement.getComponentId() + " and " +
+                        componentList.get(second).getComponentId());
+                if (firstPlacement.getRoutingCourtyard().intersects(
+                        componentList.get(second).getRoutingCourtyard()))
+                    throw new IllegalStateException("PCB component routing courtyards overlap: " +
                         firstPlacement.getComponentId() + " and " +
                         componentList.get(second).getComponentId());
             }
@@ -133,7 +140,7 @@ class PcbBoardLayout {
                     throw new IllegalStateException("PCB trace is not Manhattan routed: " +
                         trace.getNetId());
             }
-            validateTraceKeepOuts(board, trace, startPad, endPad);
+            validateTraceCourtyards(board, trace, startPad, endPad);
         }
         for (String netId : board.getNetIds()) {
             if (!representedNets.containsKey(netId))
@@ -152,10 +159,10 @@ class PcbBoardLayout {
         validateRouteQuality();
     }
 
-    private void validateTraceKeepOuts(TroubleshootBoard board, PcbTraceGeometry trace,
+    private void validateTraceCourtyards(TroubleshootBoard board, PcbTraceGeometry trace,
             BoardPad startPad, BoardPad endPad) {
         for (PcbComponentPlacement component : components.values()) {
-            Rectangle keepOut = component.getKeepOut();
+            Rectangle keepOut = component.getRoutingCourtyard();
             PcbPadPlacement traceStartPlacement = pads.get(trace.getStartPadId());
             PcbPadPlacement traceEndPlacement = pads.get(trace.getEndPadId());
             int[] xPoints = trace.getXPoints();
@@ -166,7 +173,7 @@ class PcbBoardLayout {
                         !isLegalEndpointEscape(component, trace, startPad, endPad,
                             xPoints[index - 1], yPoints[index - 1], xPoints[index],
                             yPoints[index]))
-                    throw new IllegalStateException("PCB trace passes through component keep-out: " +
+                throw new IllegalStateException("PCB trace passes through component routing courtyard: " +
                         trace.getNetId() + " / " + component.getComponentId() + " segment " +
                         xPoints[index - 1] + "," + yPoints[index - 1] + " -> " +
                         xPoints[index] + "," + yPoints[index] + " keepOut=" + keepOut +
@@ -187,7 +194,7 @@ class PcbBoardLayout {
             escapePad = pads.get(trace.getEndPadId());
         if (escapePad == null)
             return false;
-        Rectangle keepOut = component.getKeepOut();
+        Rectangle keepOut = component.getRoutingCourtyard();
         int left = Math.min(x1, x2);
         int right = Math.max(x1, x2);
         int top = Math.min(y1, y2);
@@ -391,10 +398,190 @@ class PcbBoardLayout {
             for (int index = 1; index < padIds.size(); index++) {
                 PcbPadPlacement other = pads.get(padIds.get(index));
                 score += (Math.abs(first.getX() - other.getX()) +
-                    Math.abs(first.getY() - other.getY())) * .15;
+                    Math.abs(first.getY() - other.getY())) * .40;
             }
         }
+        Rectangle occupied = getOccupiedContentBounds();
+        long boardArea = (long) boardOutline.width * boardOutline.height;
+        long occupiedArea = (long) occupied.width * occupied.height;
+        score += boardArea * .012;
+        score += Math.max(0, boardArea - occupiedArea) * .025;
+        score += getRoutingCourtyardArea() / (double) Math.max(1, boardArea) * 120;
+        score += getLargestEdgeMargin() * .25;
+        Vector<PcbComponentPlacement> componentList = getComponents();
+        for (int first = 0; first < componentList.size(); first++) {
+            for (int second = first + 1; second < componentList.size(); second++) {
+                int gap = rectangleGap(componentList.get(first).getRoutingCourtyard(),
+                    componentList.get(second).getRoutingCourtyard());
+                score += Math.max(0, gap - 55) * .08;
+            }
+        }
+        score -= getSameNetReuseLength() * .35;
         return score;
+    }
+
+    /**
+     * Translates the generated geometry into a compact, stable canvas location.
+     * The parts tray is deliberately excluded: it is workbench chrome, not PCB
+     * content.  This is a simulator readability rule, not a manufacturing rule.
+     */
+    void compactToContent(int boardX, int boardY, int edgeMargin) {
+        Rectangle content = getOccupiedContentBounds();
+        int dx = boardX + edgeMargin - content.x;
+        int dy = boardY + edgeMargin - content.y;
+        HashMap<String, PcbComponentPlacement> translatedComponents =
+            new HashMap<String, PcbComponentPlacement>();
+        for (String componentId : components.keySet()) {
+            PcbComponentPlacement placement = components.get(componentId);
+            translatedComponents.put(componentId, new PcbComponentPlacement(componentId,
+                placement.getX() + dx, placement.getY() + dy, placement.getWidth(),
+                placement.getHeight(), translate(placement.getKeepOut(), dx, dy),
+                translate(placement.getRoutingCourtyard(), dx, dy)));
+        }
+        components.clear();
+        components.putAll(translatedComponents);
+
+        HashMap<String, PcbPadPlacement> translatedPads =
+            new HashMap<String, PcbPadPlacement>();
+        for (String padId : pads.keySet()) {
+            PcbPadPlacement pad = pads.get(padId);
+            translatedPads.put(padId, new PcbPadPlacement(padId, pad.getX() + dx,
+                pad.getY() + dy, pad.getEscapeDx(), pad.getEscapeDy(),
+                pad.getEscapeLength()));
+        }
+        pads.clear();
+        pads.putAll(translatedPads);
+
+        Vector<PcbTraceGeometry> translatedTraces = new Vector<PcbTraceGeometry>();
+        for (PcbTraceGeometry trace : traces) {
+            int[] xPoints = trace.getXPoints();
+            int[] yPoints = trace.getYPoints();
+            int[] translatedX = new int[xPoints.length];
+            int[] translatedY = new int[yPoints.length];
+            for (int index = 0; index < xPoints.length; index++) {
+                translatedX[index] = xPoints[index] + dx;
+                translatedY[index] = yPoints[index] + dy;
+            }
+            translatedTraces.add(new PcbTraceGeometry(trace.getNetId(), trace.getStartPadId(),
+                trace.getEndPadId(), translatedX, translatedY));
+        }
+        traces.clear();
+        traces.addAll(translatedTraces);
+
+        HashMap<String, PcbSilkscreenLabel> translatedLabels =
+            new HashMap<String, PcbSilkscreenLabel>();
+        for (String labelId : silkscreenLabels.keySet()) {
+            PcbSilkscreenLabel label = silkscreenLabels.get(labelId);
+            translatedLabels.put(labelId, new PcbSilkscreenLabel(labelId, label.getText(),
+                translate(label.getBounds(), dx, dy), label.getFontSize(), label.isBold(),
+                label.getTargetPadId()));
+        }
+        silkscreenLabels.clear();
+        silkscreenLabels.putAll(translatedLabels);
+        boardOutline = new Rectangle(boardX, boardY,
+            content.width + edgeMargin * 2, content.height + edgeMargin * 2);
+    }
+
+    Rectangle getOccupiedContentBounds() {
+        Rectangle result = null;
+        for (PcbComponentPlacement component : components.values())
+            result = union(result, component.getRoutingCourtyard());
+        for (PcbPadPlacement pad : pads.values())
+            result = union(result, new Rectangle(pad.getX() - 16, pad.getY() - 16, 32, 32));
+        for (PcbTraceGeometry trace : traces) {
+            int[] xPoints = trace.getXPoints();
+            int[] yPoints = trace.getYPoints();
+            for (int index = 0; index < xPoints.length; index++)
+                result = union(result, new Rectangle(xPoints[index] - PcbTraceRules.TRACE_WIDTH / 2,
+                    yPoints[index] - PcbTraceRules.TRACE_WIDTH / 2,
+                    PcbTraceRules.TRACE_WIDTH, PcbTraceRules.TRACE_WIDTH));
+        }
+        for (PcbSilkscreenLabel label : silkscreenLabels.values())
+            result = union(result, label.getBounds());
+        if (result == null)
+            throw new IllegalStateException("PCB layout has no occupied geometry");
+        return result;
+    }
+
+    double getBoardUtilization() {
+        Rectangle content = getOccupiedContentBounds();
+        return (content.width * (double) content.height) /
+            Math.max(1, boardOutline.width * (double) boardOutline.height);
+    }
+
+    double getCompactnessMetric() {
+        return Math.max(0, Math.min(1, getBoardUtilization()));
+    }
+
+    int getLargestEdgeMargin() {
+        Rectangle content = getOccupiedContentBounds();
+        return Math.max(Math.max(content.x - boardOutline.x,
+                content.y - boardOutline.y),
+            Math.max(boardOutline.x + boardOutline.width - content.x - content.width,
+                boardOutline.y + boardOutline.height - content.y - content.height));
+    }
+
+    long getRoutingCourtyardArea() {
+        long area = 0;
+        for (PcbComponentPlacement component : components.values()) {
+            Rectangle courtyard = component.getRoutingCourtyard();
+            area += (long) courtyard.width * courtyard.height;
+        }
+        return area;
+    }
+
+    int getSameNetReuseLength() {
+        int reused = 0;
+        for (int first = 0; first < traces.size(); first++) {
+            for (int second = first + 1; second < traces.size(); second++) {
+                if (traces.get(first).getNetId().equals(traces.get(second).getNetId()))
+                    reused += sharedCenterlineLength(traces.get(first), traces.get(second));
+            }
+        }
+        return reused;
+    }
+
+    private static int sharedCenterlineLength(PcbTraceGeometry first, PcbTraceGeometry second) {
+        int shared = 0;
+        int[] firstX = first.getXPoints();
+        int[] firstY = first.getYPoints();
+        int[] secondX = second.getXPoints();
+        int[] secondY = second.getYPoints();
+        for (int firstIndex = 1; firstIndex < firstX.length; firstIndex++) {
+            for (int secondIndex = 1; secondIndex < secondX.length; secondIndex++)
+                shared += collinearOverlap(firstX[firstIndex - 1], firstY[firstIndex - 1],
+                    firstX[firstIndex], firstY[firstIndex], secondX[secondIndex - 1],
+                    secondY[secondIndex - 1], secondX[secondIndex], secondY[secondIndex]);
+        }
+        return shared;
+    }
+
+    private static int collinearOverlap(int ax1, int ay1, int ax2, int ay2,
+            int bx1, int by1, int bx2, int by2) {
+        if (ay1 == ay2 && by1 == by2 && ay1 == by1)
+            return Math.max(0, Math.min(Math.max(ax1, ax2), Math.max(bx1, bx2)) -
+                Math.max(Math.min(ax1, ax2), Math.min(bx1, bx2)));
+        if (ax1 == ax2 && bx1 == bx2 && ax1 == bx1)
+            return Math.max(0, Math.min(Math.max(ay1, ay2), Math.max(by1, by2)) -
+                Math.max(Math.min(ay1, ay2), Math.min(by1, by2)));
+        return 0;
+    }
+
+    private static int rectangleGap(Rectangle first, Rectangle second) {
+        int dx = first.x + first.width < second.x ? second.x - first.x - first.width :
+            second.x + second.width < first.x ? first.x - second.x - second.width : 0;
+        int dy = first.y + first.height < second.y ? second.y - first.y - first.height :
+            second.y + second.height < first.y ? first.y - second.y - second.height : 0;
+        return Math.max(dx, dy);
+    }
+
+    private static Rectangle union(Rectangle first, Rectangle second) {
+        return first == null ? new Rectangle(second) : first.union(second);
+    }
+
+    private static Rectangle translate(Rectangle rectangle, int dx, int dy) {
+        return new Rectangle(rectangle.x + dx, rectangle.y + dy, rectangle.width,
+            rectangle.height);
     }
 
     private static void requireInside(Rectangle rectangle, Rectangle outer, String description) {
@@ -470,7 +657,11 @@ class PcbBoardLayout {
                 .append(placement.getHeight()).append('!')
                 .append(placement.getKeepOut().x).append(',').append(placement.getKeepOut().y)
                 .append(',').append(placement.getKeepOut().width).append(',')
-                .append(placement.getKeepOut().height).append(';');
+                .append(placement.getKeepOut().height).append('~')
+                .append(placement.getRoutingCourtyard().x).append(',')
+                .append(placement.getRoutingCourtyard().y).append(',')
+                .append(placement.getRoutingCourtyard().width).append(',')
+                .append(placement.getRoutingCourtyard().height).append(';');
         }
         Vector<String> padIds = new Vector<String>(pads.keySet());
         Collections.sort(padIds);

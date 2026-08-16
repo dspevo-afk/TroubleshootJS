@@ -239,6 +239,36 @@ The old broad three-consecutive keep-out/clearance early abort was removed;
 layout generation remains bounded by its maximum attempt count and retains the
 last candidate failure for diagnostics.
 
+Task 28 adds topology-aware compact placement for all three generated families.
+`TopologyPlacementGraph` consumes stable board components, pads, and nets before
+any coordinates are chosen. Direct two-pad connections receive a strong
+attraction, while multi-pad VIN/GND nets encourage a compact shared region.
+Candidates are bounded, seeded, and scored using connected-pad distance, routed
+length, bends, spacing, congestion, board area, unused area, silkscreen fit,
+and same-net trunk reuse.
+
+Every footprint now exposes a routing courtyard in addition to its body
+keep-out. Unrelated copper is intentionally forbidden beneath the practical
+mounted footprint because this simulator prioritizes visible, probeable copper
+and topology readability over the fact that some real through-hole boards route
+under components. The installed component's own trace may cross its courtyard
+only through the exact pad's legal escape corridor. Courtyard and escape rules
+are enforced by both A* pathfinding and `PcbBoardLayout.validateGeometry`, with
+direct resistor and diode regressions.
+
+The generator routes inside a virtual working area, places silkscreen, then
+derives the final outline from courtyards, pads, copper, and labels. A 26-pixel
+edge margin gives modest breathing room; the external parts tray is excluded.
+`getCompactnessMetric()` and the largest-edge-margin check reject obviously
+sparse layouts. Same-net A* steps prefer joining existing copper without merging
+the physical pad targets.
+
+Task 28 evidence is under `docs/task-evidence/task-28/` and includes LED seeds 0
+and 3, diode seeds 0 and 3, and parallel seeds 0, 2, and 3. Pixel inspection
+confirmed that the boards are content-bounded, direct branches are readable,
+shared rails form coherent trunks, labels remain clear, and no copper appears
+to disappear beneath a resistor, diode, LED, or connector courtyard.
+
 ## Manual application verification
 
 After a production build, confirm that the GWT bootstrap exists:

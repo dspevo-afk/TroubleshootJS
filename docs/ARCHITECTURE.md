@@ -177,15 +177,30 @@ validation and produces a simple one-sided layout for the LED indicator,
 diode-protected indicator, and dual-parallel-indicator families. It does not
 choose components, nets, faults, meter readings, or repair outcomes.
 
-The generator uses a deterministic seed stream. Each attempt derives a
-rectangular board outline and component candidates from the family seed, then
-applies reusable type-based footprint rules for connectors, axial resistors,
-ordinary diodes, and through-hole LEDs. Stable IDs such as `R1.1`, `LED1.K`,
-and `D1.A` are copied into the resulting placements regardless of their
-coordinates. The connector is kept near a board edge; component bounds are
-spaced before pads and body keep-outs are accepted. Orientation is deliberately
+The generator uses a deterministic seed stream. Each attempt starts in a
+bounded virtual working area, builds a `TopologyPlacementGraph` from stable
+`BoardComponent`, `BoardPad`, and `BoardNet` relationships, and places connected
+pad targets before routing. Two-pad nets receive a stronger attraction than
+shared rails; connector links remain useful anchors but do not overwhelm
+component-to-component functional links. A bounded set of grid candidates is
+scored for topology distance, component spacing, seeded variation, and fit.
+Stable IDs such as `R1.1`, `LED1.K`, and `D1.A` are copied into the resulting
+placements regardless of their coordinates. The connector remains an inward-
+escaping board-edge anchor; component candidates are accepted only when their
+practical routing courtyards do not overlap. Orientation is deliberately
 deferred, so this first procedural layer keeps the existing recognizable
 horizontal component presentation.
+
+`PcbComponentPlacement` now keeps both a body keep-out and a larger routing
+courtyard. The courtyard covers the mounted body, lead span, pad neighborhood,
+and readability margin. The A* router and `PcbBoardLayout` validator block all
+copper from that courtyard except the exact endpoint pad's explicit escape
+corridor. This is intentionally stricter than universal through-hole PCB
+manufacturing practice: TroubleshootJS keeps unrelated copper visible and
+probeable so the player can understand the topology instead of losing a trace
+under a component. Same-net copper may still merge, but a same-net branch that
+does not terminate on a component cannot use that component's courtyard as a
+shortcut.
 
 Task 26 hardens this stage with a deterministic coarse-grid A* Manhattan
 router. It connects only the already-defined pad relationships, applies a
@@ -202,25 +217,38 @@ wide, unrelated nets require 6 pixels of visible soldermask, and their
 centerlines therefore must be at least 15 pixels apart. The router inflates
 existing copper occupancy by one coarse grid cell in every direction, blocking
 different-net adjacent or diagonal cells during pathfinding. Same-net copper
-may intentionally re-use its own clearance cells. Validation independently
+may intentionally re-use its own clearance cells, and its A* step cost is
+lowered when it joins an existing same-net trunk. Validation independently
 measures every unrelated horizontal, vertical, corner, and perpendicular
 segment pair against the 15-pixel minimum, so the rule is not inferred from
 the drawing alone.
 
 Each candidate is validated for component/pad coverage, stable net and
-endpoint identity, board bounds, keep-outs, legal escape edges, body/pad
-overlap, Manhattan segments, route detour/bend limits, silkscreen collisions,
-unrelated crossings, and minimum copper clearance. Placement and routing are
-retried with a bounded deterministic attempt derived from the same seed. The
-generator no longer treats three broad keep-out or clearance failures from
-different attempts as a contradiction; only the bounded attempt limit can
-reject a generation, preserving useful last-failure diagnostics. A failed
-candidate is never replaced with disconnected decorative copper.
+endpoint identity, board bounds, body keep-outs, routing courtyards, legal
+escape edges, body/pad overlap, Manhattan segments, route detour/bend limits,
+silkscreen collisions, unrelated crossings, and minimum copper clearance.
+After routing and silkscreen placement, `PcbBoardLayout.compactToContent` finds
+the bounding rectangle of courtyards, pads, copper, and labels, translates the
+geometry consistently, and derives the final outline with a reusable 26-pixel
+edge margin. The parts tray is excluded from this calculation. Candidate
+quality includes routed length, bends, detour, connected-pad distance,
+component spacing, board area, unused area, courtyard utilization, silkscreen
+fit, and same-net reuse. `getCompactnessMetric()` is an explicit procedural
+quality signal; the verifier rejects obviously sparse boards without pretending
+to be an IPC design-rule check.
+
+Placement and routing are retried with a bounded deterministic attempt derived
+from the same seed. Seeds choose among good topology-aware alternatives rather
+than deciding whether a layout is valid. A failed candidate is never replaced
+with disconnected decorative copper.
 `PcbLayoutDeveloperVerifier`
 proves repeated seeds 0, 2, and 3 have identical fingerprints and that each
 pair has at least two meaningful differences across outline, component
 placement, and routed copper. It also directly regresses the seed-3 LED
-cathode endpoint case that previously entered the LED body.
+cathode endpoint case that previously entered the LED body. It additionally
+checks courtyard coverage for resistor and diode footprints, compactness and
+edge margins, the parallel multi-pad nets, and the absence of copper
+intersections with courtyards except legal endpoint escapes.
 
 Silkscreen reference and connector-net labels are generated as collision-aware
 layout objects rather than fixed renderer pixels. `J1.1` and `J1.2` retain
@@ -520,9 +548,9 @@ workflow; R2 and both LEDs remain fixed but their PCB pads and probes remain
 available.
 
 The existing one-sided router now accepts the parallel family's two three-pad
-nets. It emits root-to-each-pad same-net copper, permits same-net merging,
-continues to enforce unrelated-net clearance and component keep-outs, and
-validates every endpoint. The broad Task 26 three-consecutive-failure abort was
-removed; attempts remain bounded and retain the last failure for diagnostics.
-Board sizing and placement are intentionally still the oversized simple
-generator; compact topology-aware placement is deferred to Task 28.
+nets. It emits root-to-each-pad same-net copper, prefers reusing a compact
+same-net trunk, continues to enforce unrelated-net clearance and routing
+courtyards, and validates every endpoint. The broad Task 26 three-consecutive-
+failure abort was removed; attempts remain bounded and retain the last failure
+for diagnostics. Task 28 replaces the oversized simple placement with generic
+topology-aware grouping and derives the final outline from occupied PCB content.
