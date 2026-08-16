@@ -16,6 +16,12 @@ class GeneratedFaultEngine {
     static GeneratedFaultCandidate resistorIncorrectValue(String id, String familyId,
             long seed, String componentId, ResistorElm resistor, double healthyValue,
             double effectiveValue) {
+        if (healthyValue <= 0 || effectiveValue <= 0 ||
+                Double.isNaN(healthyValue) || Double.isInfinite(healthyValue) ||
+                Double.isNaN(effectiveValue) || Double.isInfinite(effectiveValue) ||
+                Math.abs(effectiveValue - healthyValue) <= Math.max(1e-9,
+                    Math.abs(healthyValue) * 1e-9))
+            throw new IllegalArgumentException("Invalid resistor fault value");
         return candidate(new GeneratedFault(id, GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
             componentId, familyId, seed, healthyValue, effectiveValue),
             new ResistorIncorrectValueFaultEffect(resistor, healthyValue, effectiveValue));
@@ -29,8 +35,13 @@ class GeneratedFaultEngine {
 
     static GeneratedFaultCandidate diodeShort(String id, String familyId, long seed,
             String componentId, SwitchElm bypassSwitch) {
+        return diodeShort(id, familyId, seed, componentId, bypassSwitch, true);
+    }
+
+    static GeneratedFaultCandidate diodeShort(String id, String familyId, long seed,
+            String componentId, SwitchElm bypassSwitch, boolean compatible) {
         return candidate(new GeneratedFault(id, GeneratedFaultType.DIODE_SHORT,
-            componentId, familyId, seed), new SwitchParallelShortFaultEffect(bypassSwitch));
+            componentId, familyId, seed), new SwitchParallelShortFaultEffect(bypassSwitch), compatible);
     }
 
     static GeneratedFaultCandidate connectorOpenPath(String id, String familyId, long seed,
@@ -65,6 +76,16 @@ class GeneratedFaultEngine {
         return compatible.elementAt(index);
     }
 
+    static GeneratedFaultCandidate select(GeneratedFaultType requiredType,
+            Vector<GeneratedFaultCandidate> candidates) {
+        for (GeneratedFaultCandidate candidate : candidates)
+            if (candidate != null && candidate.isCompatible() &&
+                candidate.getFault().getType() == requiredType)
+                return candidate;
+        throw new IllegalStateException("No compatible generated fault candidate for type: " +
+            requiredType);
+    }
+
     static void clearAll(Vector<GeneratedFaultCandidate> candidates) {
         for (GeneratedFaultCandidate candidate : candidates)
             if (candidate != null)
@@ -73,6 +94,11 @@ class GeneratedFaultEngine {
 
     private static GeneratedFaultCandidate candidate(GeneratedFault fault,
             GeneratedFaultEffect effect) {
-        return new GeneratedFaultCandidate(new GeneratedFaultBinding(fault, effect), true);
+        return candidate(fault, effect, true);
+    }
+
+    private static GeneratedFaultCandidate candidate(GeneratedFault fault,
+            GeneratedFaultEffect effect, boolean compatible) {
+        return new GeneratedFaultCandidate(new GeneratedFaultBinding(fault, effect), compatible);
     }
 }

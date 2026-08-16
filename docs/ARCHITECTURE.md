@@ -377,8 +377,10 @@ generator clears every candidate, selects deterministically from compatible
 candidates using the challenge seed, retains every candidate's private
 simulation element in the canonical generated-element ownership, and applies
 only the selected effect. LED and parallel families currently select seeded
-resistor-open or resistor-incorrect-value challenges; the diode family selects
-seeded diode-open or diode-short challenges.
+resistor-open or resistor-incorrect-value challenges. Normal diode challenges
+deterministically reject the diode-short candidate and select diode-open;
+`generateForDeveloperVerification` plus `tsjDiodeShort=true` intentionally
+retains the solver-backed short route for developer verification.
 
 `GeneratedFaultBinding` owns the private CircuitJS implementation, while
 `GeneratedFaultController` is the only code permitted to apply or
@@ -402,10 +404,31 @@ undo/redo state, or board geometry.
 `GeneratedComponentOperationalStates` is a small runtime adapter from stable
 component ID to solved LED current. The PCB renderer uses it only to add a
 visible illumination halo to the existing LED body; the red plastic package
-and all printed/nameplate state remain unchanged. Normal players see only the
-ready service ticket text, `Indicator does not light.` Developer-only
-`tsjVerifyChallenge=true` exercises the fault lifecycle, measurements,
-physical removal/restoration, and clear/reapply path after `READY`.
+and all printed/nameplate state remain unchanged.
+
+Task 32 adds the immutable generic `GeneratedScenario<T>` representation and
+`GeneratedScenarioCatalog<T>`. A scenario owns stable scenario and complaint
+IDs, the player-facing complaint text, an internal `GeneratedObservedBehavior`
+semantic, and a compatibility predicate. The predicate reads the live solved
+CircuitJS elements; it does not map a `GeneratedFaultType` to a string and does
+not create a second simulator. Family generators contribute scenario catalogs
+through `GeneratedScenarioLibrary`, while `GeneratedChallengeDefinition` owns
+the catalog rather than loose complaint strings. `GeneratedChallengeController`
+selects a compatible scenario only after healthy validation, fault injection,
+and solver-backed faulted validation. A failed compatibility selection leaves
+the controller out of `READY`, so the normal service ticket cannot race ahead
+of electrical truth. The parallel scenario describes unequal branch behavior;
+diode-open describes a dark indicator; the developer-only diode-short scenario
+describes the solved higher-current/bright behavior and is not part of normal
+player generation. Scenario selection uses an independent stable seed stream
+and therefore cannot perturb topology, values, or PCB layout.
+
+Normal players see only the selected validated service-ticket complaint. Fault
+identity, target IDs, values, observed semantics, and expected measurements
+remain outside the player UI. Developer-only `tsjVerifyChallenge=true`,
+`tsjVerifyParallel=true`, and `tsjVerifyDiode=true` verify the lifecycle and
+scenario/solver agreement; `tsjDiodeShort=true` enables the explicit diode
+short route.
 
 All active meter modes use the same physical polarity convention: the red
 probe is the electrically positive test terminal and the black probe is the
@@ -417,18 +440,22 @@ forward-biased diode may yield a high finite OHM/CONT resistance without
 meeting the $50 Ohm$ continuity threshold.
 
 Generated challenge orchestration is family-agnostic. Family generation owns a
-small `GeneratedChallengeCatalog` of compatible immutable
-`GeneratedChallengeDefinition` candidates. A definition contains stable
-challenge and complaint IDs/text, family/topology compatibility, selection
-seed, selected fault/binding, and its `GeneratedChallengeBehaviorContract`.
+small scenario catalog and an immutable `GeneratedChallengeDefinition`.
+A definition contains stable challenge identity, family/topology compatibility,
+selection seed, selected fault/binding, the scenario catalog, and its
+`GeneratedChallengeBehaviorContract`; the selected scenario is runtime state on
+the challenge controller until solver-gated faulted validation completes.
 `GeneratedBoardInstance` owns that contract and the definition references the
 same object identity. `GeneratedChallengeController` uses the shared contract
 for faulted validation and functional completion, while
 `GeneratedBoardVerifier` uses it for healthy validation. The generic
-controller only records the solver-gated healthy/faulted stages, applies the
-selected binding, invokes the contract, and transitions to READY. It validates
-that private fault infrastructure is simulation-owned but not a logical
-component, external-power element, or detachable connection.
+controller records the solver-gated healthy/faulted stages, applies the
+selected binding, invokes the contract, selects the compatible scenario, and
+only then transitions to READY. It validates that private fault infrastructure
+is simulation-owned but not a logical component, external-power element, or
+detachable connection. Value-mutating effects also expose their real
+`ResistorElm` target so ownership validation rejects a fault that claims one
+component while mutating another even when its private-element list is empty.
 
 During either preparation stage, `CirSim` disables board power, the meter,
 PCB probe placement, component selection, and component actions at their

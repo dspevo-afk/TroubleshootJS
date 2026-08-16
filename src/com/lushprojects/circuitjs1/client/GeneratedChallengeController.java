@@ -11,6 +11,7 @@ class GeneratedChallengeController {
         new GeneratedChallengeLifecycleEvidence();
     private boolean developerVerificationScope;
     private GeneratedChallengeState state = GeneratedChallengeState.PREPARING_HEALTHY;
+    private GeneratedScenario<GeneratedObservedBehavior> scenario;
 
     GeneratedChallengeController(CirSim sim, GeneratedBoardInstance instance) {
         if (instance.getChallengeDefinition() == null)
@@ -41,6 +42,9 @@ class GeneratedChallengeController {
             definition.getBehaviorContract().verifyFaulted(instance,
                 sim.getBoardModificationController(), sim.getBoardPowerController().getState());
             lifecycleEvidence.selectedFaultValidated = true;
+            scenario = definition.getScenarioCatalog().select(definition.getSelectionSeed(), instance,
+                sim.getBoardModificationController(), sim.getBoardPowerController().getState());
+            lifecycleEvidence.scenarioCompatibilityValidated = true;
             state = GeneratedChallengeState.READY;
             lifecycleEvidence.readyAfterValidation = true;
             sim.refreshBoardModificationControls();
@@ -59,9 +63,12 @@ class GeneratedChallengeController {
     GeneratedFaultController getFaultController() { return faults; }
     GeneratedChallengeDefinition getDefinition() { return definition; }
     GeneratedChallengeLifecycleEvidence getLifecycleEvidence() { return lifecycleEvidence; }
+    GeneratedScenario<GeneratedObservedBehavior> getScenario() { return scenario; }
     String getComplaintText() {
+        if (scenario == null)
+            return "Preparing challenge...";
         if (!isCompleted())
-            return definition.getComplaintText();
+            return scenario.getComplaintText();
         return definition.getCompletionText();
     }
 
@@ -105,17 +112,25 @@ class GeneratedChallengeController {
             throw new IllegalArgumentException("Challenge target component is missing");
         if (definition.getFaultBinding() != instance.getFaultBinding())
             throw new IllegalArgumentException("Challenge fault binding is not owned by board");
-        Vector<CircuitElm> privateElements = definition.getFaultBinding()
-            .getPrivateSimulationElements();
+        validateFaultEffectOwnership(instance, definition.getFault(), definition.getFaultBinding());
+    }
+
+    static void validateFaultEffectOwnership(GeneratedBoardInstance instance,
+            GeneratedFault fault, GeneratedFaultBinding binding) {
+        Vector<CircuitElm> privateElements = binding.getPrivateSimulationElements();
         Vector<CircuitElm> ownedElements = instance.getSimulationElements();
         for (CircuitElm element : privateElements) {
             if (!ownedElements.contains(element))
                 throw new IllegalArgumentException("Challenge fault effect is not owned by board");
             if (instance.getComponentBindings().isElementBoundToComponent(
-                    definition.getFault().getTargetComponentId(), element) ||
+                    fault.getTargetComponentId(), element) ||
                     instance.getExternalPowerBindings().isBackingElement(element) ||
                     instance.getConnectionBindings().isConnectionElement(element))
                 throw new IllegalArgumentException("Challenge fault effect is not private infrastructure");
         }
+        CircuitElm valueMutationTarget = binding.getEffect().getValueMutationTarget();
+        if (valueMutationTarget != null && !instance.getComponentBindings()
+                .isElementBoundToComponent(fault.getTargetComponentId(), valueMutationTarget))
+            throw new IllegalArgumentException("Challenge value fault mutates an unrelated component");
     }
 }

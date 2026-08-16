@@ -133,10 +133,8 @@ class LedIndicatorGenerator {
         GeneratedChallengeBehaviorContract behaviorContract =
             new GeneratedChallengeBehaviorAdapter(new LedIndicatorGeneratedBoardValidator(),
                 new LedIndicatorFaultValidator(), new LedIndicatorRepairValidator());
-        GeneratedChallengeCatalog challengeCatalog = new GeneratedChallengeCatalog();
-        challengeCatalog.addCandidate(new GeneratedChallengeDefinition("LED_INDICATOR_NO_LIGHT",
-            "LED_INDICATOR", DIRECT_SERIES_VARIANT, seed, "INDICATOR_DOES_NOT_LIGHT",
-            "Indicator does not light.", fault, faultBinding, behaviorContract));
+        GeneratedScenarioCatalog<GeneratedObservedBehavior> scenarios =
+            GeneratedScenarioLibrary.ledIndicator();
         GeneratedExternalPowerBindings powerBindings = new GeneratedExternalPowerBindings(board);
         Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
         powerElements.add(supply);
@@ -169,7 +167,9 @@ class LedIndicatorGenerator {
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, behaviorContract,
             PCB_LAYOUT_GENERATOR.generate(board, seed), physicalSpecifications, faultBinding,
-            operationalStates, challengeCatalog.select(seed), new LedIndicatorFamilyState(r1Slot,
+            operationalStates, new GeneratedChallengeDefinition("LED_INDICATOR_NO_LIGHT",
+                "LED_INDICATOR", DIRECT_SERIES_VARIANT, seed, scenarios, fault,
+                faultBinding, behaviorContract), new LedIndicatorFamilyState(r1Slot,
                 resistorInventory, resistorCatalog, led1Slot, ledInventory, ledCatalog));
     }
 

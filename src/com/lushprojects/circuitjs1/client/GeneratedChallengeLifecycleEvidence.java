@@ -7,5 +7,6 @@ class GeneratedChallengeLifecycleEvidence {
     boolean selectedFaultApplied;
     boolean faultedGraphAnalyzedAfterTimeAdvance;
     boolean selectedFaultValidated;
+    boolean scenarioCompatibilityValidated;
     boolean readyAfterValidation;
 }

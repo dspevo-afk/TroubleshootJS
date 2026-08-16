@@ -9,6 +9,7 @@ class DiodeFamilyDeveloperVerifier {
         require(instance != null && DiodeProtectedIndicatorGenerator.FAMILY_ID.equals(
             instance.getCircuitFamilyId()) && challenge != null && challenge.isReady(),
             "Diode verification requires a ready diode challenge");
+        verifyScenario(sim, instance, challenge);
         DiodeProtectedIndicatorFamilyState state =
             DiodeProtectedIndicatorFamilyState.require(instance);
         require(instance.getBoard().getPad("D1.A") != null &&
@@ -17,7 +18,7 @@ class DiodeFamilyDeveloperVerifier {
             "D1 logical identity or nameplate is missing");
         require(state.getCatalog().getEntries().size() == 2,
             "Diode catalog choices changed unexpectedly");
-        verifyDeterministicFaultMetadata();
+        verifyDeterministicFaultMetadata(sim);
         PhysicalDiodePart original = state.getInventory().get("D1_ORIGINAL");
         require(original.isFaulted() && original.getLocation() == DiodePartLocation.INSTALLED,
             "Faulted original D1 is not installed");
@@ -154,26 +155,62 @@ class DiodeFamilyDeveloperVerifier {
         return instance.getFaultBinding().getFault().getType() == GeneratedFaultType.DIODE_OPEN;
     }
 
-    private static void verifyDeterministicFaultMetadata() {
-        verifyFaultSeed(0, GeneratedFaultType.DIODE_SHORT, "DIODE_D1_SHORT");
-        verifyFaultSeed(2, GeneratedFaultType.DIODE_SHORT, "DIODE_D1_SHORT");
-        verifyFaultSeed(3, GeneratedFaultType.DIODE_OPEN, "DIODE_D1_OPEN");
+    private static void verifyDeterministicFaultMetadata(CirSim sim) {
+        verifyFaultSeed(0, GeneratedFaultType.DIODE_OPEN, "DIODE_D1_OPEN", false);
+        verifyFaultSeed(2, GeneratedFaultType.DIODE_OPEN, "DIODE_D1_OPEN", false);
+        verifyFaultSeed(3, GeneratedFaultType.DIODE_OPEN, "DIODE_D1_OPEN", false);
+        verifyFaultSeed(0, GeneratedFaultType.DIODE_SHORT, "DIODE_D1_SHORT", true);
+        verifyFaultSeed(2, GeneratedFaultType.DIODE_SHORT, "DIODE_D1_SHORT", true);
+        verifyFaultSeed(3, GeneratedFaultType.DIODE_SHORT, "DIODE_D1_SHORT", true);
         require(new DiodeProtectedIndicatorGenerator().generate(0).getChallengeDefinition().getFault()
-            .getType() != new DiodeProtectedIndicatorGenerator().generate(3)
-            .getChallengeDefinition().getFault().getType(),
-            "Diode fault selection did not produce multiple deterministic fault types");
+            .getType() == GeneratedFaultType.DIODE_OPEN &&
+            new DiodeProtectedIndicatorGenerator().generateForDeveloperVerification(0)
+                .getChallengeDefinition().getFault().getType() == GeneratedFaultType.DIODE_SHORT,
+            "Diode short was not isolated to the explicit developer route");
+        require(sim.troubleshootDiodeShort ==
+            (sim.getGeneratedBoardInstance().getFaultBinding().getFault().getType() ==
+                GeneratedFaultType.DIODE_SHORT),
+            "Diode short route selection disagrees with the selected fault");
     }
 
-    private static void verifyFaultSeed(long seed, GeneratedFaultType type, String id) {
-        GeneratedChallengeDefinition definition = new DiodeProtectedIndicatorGenerator().generate(seed)
-            .getChallengeDefinition();
+    private static void verifyFaultSeed(long seed, GeneratedFaultType type, String id,
+            boolean developerShort) {
+        GeneratedBoardInstance board = developerShort ?
+            new DiodeProtectedIndicatorGenerator().generateForDeveloperVerification(seed) :
+            new DiodeProtectedIndicatorGenerator().generate(seed);
+        GeneratedChallengeDefinition definition = board.getChallengeDefinition();
         require(type == definition.getFault().getType() && id.equals(definition.getFault().getId()) &&
             definition.getFault().getSelectionSeed() == seed,
             "Unexpected deterministic diode fault metadata for seed " + seed);
-        GeneratedChallengeDefinition repeat = new DiodeProtectedIndicatorGenerator().generate(seed)
-            .getChallengeDefinition();
+        GeneratedChallengeDefinition repeat = (developerShort ?
+            new DiodeProtectedIndicatorGenerator().generateForDeveloperVerification(seed) :
+            new DiodeProtectedIndicatorGenerator().generate(seed)).getChallengeDefinition();
         require(type == repeat.getFault().getType() && id.equals(repeat.getFault().getId()),
             "Diode fault selection was not reproducible for seed " + seed);
+    }
+
+    private static void verifyScenario(CirSim sim, GeneratedBoardInstance instance,
+            GeneratedChallengeController challenge) {
+        GeneratedScenario<GeneratedObservedBehavior> scenario = challenge.getScenario();
+        boolean shortRoute = instance.getFaultBinding().getFault().getType() ==
+            GeneratedFaultType.DIODE_SHORT;
+        require(scenario != null && scenario.getObservedBehavior() == (shortRoute ?
+            GeneratedObservedBehavior.DIODE_SHORT_HIGH_CURRENT : GeneratedObservedBehavior.DARK_INDICATOR) &&
+            scenario.isCompatible(instance, null, BoardPowerState.POWERED),
+            "Diode complaint does not match the solved behavior");
+        if (shortRoute)
+            require("The indicator is brighter than expected.".equals(scenario.getComplaintText()) &&
+                !scenario.getComplaintText().contains("does not light"),
+                "Diode short exposed the dark-indicator complaint");
+        else
+            require("Indicator does not light.".equals(scenario.getComplaintText()),
+                "Diode open did not expose the dark-indicator complaint");
+        GeneratedScenario<GeneratedObservedBehavior> repeat =
+            GeneratedScenarioLibrary.diodeIndicator(sim.troubleshootDiodeShort).select(
+                instance.getSeed(), instance, null, BoardPowerState.POWERED);
+        require(scenario.getScenarioId().equals(repeat.getScenarioId()) &&
+            scenario.getComplaintText().equals(repeat.getComplaintText()),
+            "Diode scenario selection was not reproducible");
     }
 
     private static ProbeTarget looseProbe(CirSim sim, GeneratedBoardInstance instance,

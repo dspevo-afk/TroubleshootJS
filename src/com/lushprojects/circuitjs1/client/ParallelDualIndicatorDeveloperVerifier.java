@@ -11,6 +11,7 @@ class ParallelDualIndicatorDeveloperVerifier {
         require(instance != null && "PARALLEL_DUAL_INDICATOR".equals(instance.getCircuitFamilyId()),
             "Parallel verifier is not running on the parallel family");
         require(challenge != null && challenge.isReady(), "Parallel challenge did not become ready");
+        verifyScenario(instance, challenge);
         verifyGeneratedMetadata();
         verifyLogicalTopology(instance);
         verifyPhysicalBindings(instance);
@@ -54,6 +55,28 @@ class ParallelDualIndicatorDeveloperVerifier {
             .getType() != new ParallelDualIndicatorGenerator().generate(3).getChallengeDefinition()
             .getFault().getType(),
             "Parallel fault selection did not produce multiple deterministic fault types");
+    }
+
+    private static void verifyScenario(GeneratedBoardInstance instance,
+            GeneratedChallengeController challenge) {
+        GeneratedScenario<GeneratedObservedBehavior> scenario = challenge.getScenario();
+        require(scenario != null && scenario.getObservedBehavior() ==
+            GeneratedObservedBehavior.ASYMMETRIC_INDICATORS &&
+            "INDICATORS_DO_NOT_MATCH".equals(scenario.getComplaintId()) &&
+            "The two indicators do not behave the same.".equals(scenario.getComplaintText()),
+            "Parallel scenario identity or complaint is incorrect");
+        require(!scenario.getComplaintText().contains("R1") &&
+            !scenario.getComplaintText().contains("D1") &&
+            !scenario.getComplaintText().toLowerCase().contains("fault"),
+            "Parallel complaint leaked diagnosis metadata");
+        require(scenario.isCompatible(instance, null, BoardPowerState.POWERED),
+            "Parallel complaint does not match solved asymmetric behavior");
+        GeneratedScenario<GeneratedObservedBehavior> repeat =
+            GeneratedScenarioLibrary.parallelIndicators().select(instance.getSeed(), instance,
+                null, BoardPowerState.POWERED);
+        require(scenario.getScenarioId().equals(repeat.getScenarioId()) &&
+            scenario.getComplaintText().equals(repeat.getComplaintText()),
+            "Parallel scenario selection was not reproducible");
     }
 
     private static void verifyLogicalTopology(GeneratedBoardInstance instance) {

@@ -1,142 +1,143 @@
-# Task 31 — Fault Engine v1
+# Task 32 — Scenario and Customer Complaint Foundation
 
 ## Status
 
-Complete. The implementation, documentation, browser evidence, independent
-review, and final validation are complete. The requested commit is:
-
-Prevent premature subagent takeover
-
-No push was performed.
+Complete. Primary architect disposition: `FINAL PASS`. The requested local
+commit is `Task 32: add scenario and complaint foundation`. No push was
+performed. Task 33 is identified as the next roadmap milestone and was not
+started.
 
 ## Scope and acceptance
 
-Task 31 makes generated faults explicit data and CircuitJS-backed effects
-rather than family-specific setup accidents. The bounded implementation
-covers:
+Task 32 adds a generic immutable scenario and customer-complaint foundation
+for the generated TroubleshootJS challenges. The selected scenario is only
+made visible after the actual faulted CircuitJS solve has passed the family
+validator and the scenario compatibility predicate. The implementation
+covers the LED indicator, diode-protected indicator, and parallel dual
+indicator families; preserves seeded generation; and keeps hidden fault and
+expected-behavior metadata out of the normal player UI.
 
-- resistor open;
-- resistor incorrect value;
-- diode open;
-- diode short; and
-- connector/open-path candidates represented in the engine and rejected as
-  incompatible until the current workbench has a compatible connector/trace
-  repair primitive.
+The normal diode route excludes diode-short from player-eligible scenario
+selection because this topology has no suitable normal complaint. The
+explicit `tsjDiodeShort=true` developer route type-selects the real
+diode-short effect and validates the solver-backed bright/high-current
+complaint, including seed 3.
 
-The generated families remain seeded and reproducible. Fault metadata and
-effective values stay internal; normal player UI exposes only the board,
-measurements, complaint, and repair workflow.
+## Architecture decisions
 
-## Implementation
+- `GeneratedScenario<T>`, `GeneratedScenarioCompatibility<T>`, and
+  `GeneratedScenarioCatalog<T>` form the reusable immutable scenario boundary.
+- Scenario compatibility reads live CircuitJS element and operational-state
+  results. No hard-coded meter behavior or direct fault-type-to-complaint
+  mapping was added.
+- Scenario selection uses a separate deterministic stream so complaint choice
+  cannot perturb topology, value, fault, or PCB-layout randomness.
+- The lifecycle is healthy validation → fault application → faulted solve →
+  fault validation → scenario compatibility validation → `READY`.
+- Incorrect-value faults reject healthy/effectively equal values, and fault
+  ownership validation also checks the element mutated by a value fault.
+- The browser verifier uses genuine CDP mouse/keyboard input and identity/state
+  predicates for the player-facing flows. No DOM `.click()` or controller
+  state mutation is used.
 
-GeneratedFaultEngine now creates explicit GeneratedFaultCandidate values and
-CircuitJS-backed GeneratedFaultEffect implementations. Series switch effects
-represent open paths, resistor effects change the real ResistorElm resistance,
-and diode-short effects close a real parallel SwitchElm. Every candidate's
-private simulation elements are retained in the canonical generated-element
-ownership, inactive candidates are cleared, and the selected effect is chosen
-deterministically from compatible candidates.
+## Implementation and evidence
 
-The seeded production mappings are:
+Product changes include:
 
-- LED and parallel families: seeds 0 and 2 select resistor-open; seed 3
-  selects resistor-incorrect-value.
-- Diode-protected family: seeds 0 and 2 select diode-short; seed 3 selects
-  diode-open.
+- `src/com/lushprojects/circuitjs1/client/GeneratedScenario.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedObservedBehavior.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedScenarioLibrary.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeDefinition.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeController.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeLifecycleEvidence.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedFaultEffect.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedFaultEngine.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeProtectedIndicatorGenerator.java`
+- `src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java`
+- `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorGenerator.java`
+- `src/com/lushprojects/circuitjs1/client/ChallengeDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeFamilyDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/CirSim.java`
 
-Family fault validators now verify the actual solved symptom for each selected
-fault. The existing generic challenge controller still gates READY and
-functional completion on CircuitJS-backed validation; no fake meter readings
-or UI-only completion answers were added.
+Validation/documentation changes include:
 
-The player verifier now checks the seed-3 failed original resistor for the
-expected 100 kOhm effective value, not merely any numeric reading.
+- `scripts/verify-browser.ps1`
+- `docs/ARCHITECTURE.md`
+- `docs/ROADMAP.md`
+- the 13 PNG captures under `docs/task-evidence/task-32/` listed below.
 
-## Files and evidence
+Committed evidence captures:
 
-Product implementation changed the generated-fault boundary, the three
-functional-family generators/validators, physical resistor/diode terminal
-mapping, challenge ownership/lifecycle validation, and developer verifiers.
-New product files are:
+- `diode-open-ready-complaint.png`
+- `diode-open-seed-3-correction.png`
+- `diode-short-developer-complaint.png`
+- `diode-short-seed-3-correction.png`
+- `led-after-removal.png`
+- `led-before-repair-power-off.png`
+- `led-player-initial.png`
+- `led-r1-selected.png`
+- `led-ready-complaint.png`
+- `led-repair-complete.png`
+- `parallel-ready-complaint.png`
+- `parallel-seed-3-correction.png`
+- `parallel-selected-original-r1-correction.png`
 
-- src/com/lushprojects/circuitjs1/client/GeneratedFaultCandidate.java
-- src/com/lushprojects/circuitjs1/client/GeneratedFaultEffect.java
-- src/com/lushprojects/circuitjs1/client/GeneratedFaultEngine.java
-
-Documentation and validation changes are:
-
-- AGENTS.md — added the permanent Delegation Ownership and Patience
-  Protocol. This policy-only correction did not modify product source.
-- docs/ARCHITECTURE.md — documented the fault candidate/effect boundary.
-- docs/ROADMAP.md — marked Task 31 complete and Task 32 as next.
-- scripts/verify-browser.ps1 — strengthened the seed-3 effective-value
-  assertion and corrected the resistance-flow expectation.
-
-Production browser evidence was captured and pixel-inspected:
-
-- docs/task-evidence/task-31/initial-board.png
-- docs/task-evidence/task-31/led-selected.png
-- docs/task-evidence/task-31/led-removed-parts-tray.png
-- docs/task-evidence/task-31/repaired-board.png
+These captures show the initial LED workbench, solver-backed complaints for
+LED, parallel, diode-open, and developer diode-short cases, selected/removed
+parts, and a repaired LED with the completion ticket.
 
 ## Validation
 
-All final checks below passed:
+Completed required checks:
 
-- ./scripts/build.ps1 -JavaHome ./.tools/jdk8-download/jdk8u502-b07
-  — all five GWT permutations compiled and linked.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 120 -Seeds 0,2,3
-  — all LED routes passed on final rerun; the first run had one transient
-  seed-2 resistance exception, and the isolated seed-2 rerun passed all five
-  routes.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -Diode -Seeds 0,2,3
-  — all diode routes passed.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -Parallel -Seeds 0,2,3
-  — all parallel routes passed.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -NormalPlayer -PlayerSeed 3
-  — solver-backed repair passed; original measured 100 kOhm.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -LedNormalPlayer -PlayerSeed 3
-  — reversed replacement remained nonfunctional and correct repair passed.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -DiodeNormalPlayer -PlayerSeed 3
-  — forward/reverse diode behavior and repair passed.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -ParallelNormalPlayer -PlayerSeed 3
-  — solver-backed supply measurement and repair passed.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -LedParts -Seeds 0,2,3
-  — all physical LED-part routes passed.
-- ./scripts/verify-browser.ps1 -TimeoutSeconds 180 -Layout -PlayerSeed 3
-  — procedural layout verification passed.
-- git diff --check — passed; Git emitted only expected LF/CRLF conversion
-  warnings.
+- `./scripts/build.ps1 -JavaHome ./.tools/jdk8-download/jdk8u502-b07` — PASS;
+  all five GWT permutations compiled and linked.
+- PowerShell parser validation for `scripts/verify-browser.ps1` — PASS.
+- `git diff --check` — PASS.
+- LED baseline `-Seeds 0,2,3` — PASS for all 15 routes, including complaint
+  and solver markers.
+- `-Parallel -Seeds 0,2,3` — PASS for all 3 routes, including the exact
+  asymmetric complaint.
+- `-Diode -Seeds 0,2,3` — PASS for all 3 diode-open routes.
+- `-DiodeShort -Seeds 0,2,3` — PASS for all 3 developer diode-short routes,
+  including the exact bright-indicator complaint.
+- `-LedParts -Seeds 0,2,3` — PASS for all 3 physical-part routes.
+- `-Layout -PlayerSeed 3` — PASS.
+- Generic `-NormalPlayer -PlayerSeed 3` — PASS in five independent final
+  runs, with solver-backed repair and expected 100 kOhm original fault value.
+- `-ParallelNormalPlayer -PlayerSeed 3` — PASS in five independent final
+  runs, with solver-backed repair.
+- `-DiodeNormalPlayer -PlayerSeed 3` — PASS, including forward/reverse
+  measurement behavior and repair.
 
-## Multi-agent review
+## Review and disposition
 
-The initial coder produced the bounded Task 31 candidate. After the coder
-became unusable, its valid work was preserved; the coder was later resumed for
-the verifier-only correction and returned PASS without changing files.
+The Luna coder implemented the bounded Task 32 change and completed the
+required correction work. Bacon independently confirmed the scenario
+architecture, solver-backed lifecycle and predicates, deterministic behavior,
+diode-short developer handling, fault hardening, stable identity, power
+safety, privacy-safe UI, and evidence.
 
-The independent reviewer first returned FAIL for the weak browser assertion
-and identified two medium hardening concerns. The assertion was tightened
-without touching product source. On re-review, the reviewer confirmed the
-assertion and returned exactly PASS; the two source concerns were judged
-non-blocking for the current package-private, generated-only v1 scope because
-all production call sites pass the target R1 element, all production
-incorrect-value effects use nominal ×100, and fault validation blocks READY.
+Bacon's final re-review reported one remaining 1-in-5 failure in the legacy
+`-LedNormalPlayer` developer verifier: a one-shot CDP click on `Install as
+LED1` can be lost during a GWT rerender. This is a test-harness interaction
+race, not evidence of incorrect player-facing product behavior; the generic
+and parallel normal-player acceptance flows and the diode normal-player flow
+passed. It is recorded as a FOLLOW-UP and does not block Task 32 completion
+under the closed acceptance set. No additional coder pass was opened.
 
-Primary architect final disposition: FINAL PASS.
-
-The new AGENTS.md protocol preserves the existing two coder/reviewer correction
-passes, three Luna final-review rounds, and Sol escalation rules. It clarifies
-that active coders and reviewers own their phases until disposition and must be
-allowed to complete naturally.
+Primary architect final disposition: `FINAL PASS`. Sol escalation was not
+required.
 
 ## Limitations and handoff
 
-Connector/open-path effects are modeled as explicit incompatible candidates
-until a connector, jumper, or trace-repair primitive can provide a valid
-player repair path. Complaint text remains the existing generic indicator
-symptom; Task 32 owns complaint selection that varies with the actual fault.
-An unrelated diode seed-1 layout-generation failure remains outside this
-milestone and was not changed.
+The scenario catalog currently provides the first validated scenario for each
+family while retaining a generic catalog boundary for future variation.
+Connector/trace repair scenarios and advanced scope, damage, and thermal
+systems remain future work. The LED-specific legacy verifier's rerender-safe
+installation retry is a follow-up test-harness improvement; it does not alter
+the Task 32 product result.
 
-The next eligible roadmap milestone is Task 32 — Scenario and Customer
-Complaint Foundation. It is identified only; it was not started.
+The next eligible roadmap milestone is Task 33. It is identified only and was
+not started.

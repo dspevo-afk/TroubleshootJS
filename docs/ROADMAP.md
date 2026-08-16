@@ -151,7 +151,7 @@ TroubleshootJS has already moved well beyond a stock CircuitJS fork.
 - [x] KCL and branch-specific fault validation through the solver.
 - [x] Real parallel resistance measurement behavior.
 
-The current baseline is **Task 30: Generic Functional Challenge Completion Contract**.
+The current baseline is **Task 32: Scenario and Customer Complaint Foundation**.
 
 ---
 
@@ -311,12 +311,14 @@ The same functional family can produce multiple reproducible faulted challenges 
 
 Task 31 introduced the seeded `GeneratedFaultEngine` candidate/effect boundary.
 LED and parallel indicator families now generate resistor-open and
-resistor-incorrect-value challenges, while the diode-protected family generates
-diode-open and diode-short challenges. Fault effects mutate CircuitJS-backed
+resistor-incorrect-value challenges, while the diode-protected family models
+both diode-open and diode-short effects. Fault effects mutate CircuitJS-backed
 switches or component values, retain healthy/effective metadata, and expose
 private simulation ownership without leaking fault identity to normal player
 UI. Family validators reject meaningless symptoms before a challenge reaches
 READY, and the shared functional repair contract remains the completion gate.
+Task 32 applies the normal-player scenario eligibility filter to diode-short
+while retaining the developer route.
 Connector/open-path candidates are represented but marked incompatible until a
 compatible connector/trace repair primitive exists.
 
@@ -324,7 +326,7 @@ compatible connector/trace repair primitive exists.
 
 ## Task 32 — Scenario and Customer Complaint Foundation
 
-**Status:** `[>] NEXT`
+**Status:** `[x] Complete`
 
 ### Goal
 
@@ -347,11 +349,34 @@ Give the player a reason to troubleshoot rather than merely presenting “find t
 
 Normal-player challenges begin with a believable symptom statement that is consistent with what the solver actually produces.
 
+### Completed implementation
+
+Task 32 introduced immutable generic `GeneratedScenario<T>` and
+`GeneratedScenarioCatalog<T>` values. Scenarios own stable scenario/complaint
+identity, player complaint text, internal observed-behavior semantics, and a
+CircuitJS-backed compatibility predicate. The challenge lifecycle now reaches
+`READY` only after healthy validation, fault injection, solver-backed faulted
+validation, and compatible scenario selection in that order.
+
+LED and diode-open challenges use a truthful dark-indicator complaint. The
+parallel family uses a truthful asymmetric-indicator complaint based on the
+solved branch currents/illumination. Normal diode generation deterministically
+rejects diode-short as scenario-ineligible; the explicit developer
+`tsjDiodeShort=true` route exercises the real short fault with a solver-verified
+higher-current/bright scenario. Complaint selection is isolated from topology,
+value, fault, and layout randomness, and normal UI keeps internal fault and
+expected-behavior metadata hidden.
+
+The requested incorrect-value equality and value-mutation ownership checks are
+enforced and covered by the developer verifier. Browser routes cover scenario
+and solver agreement for LED, parallel, diode-open, and developer diode-short
+seeds, along with normal-player repair completion.
+
 ---
 
 ## Task 33 — Wrong Repair Semantics and Post-Repair Validation
 
-**Status:** `[ ]`
+**Status:** `[>] NEXT`
 
 ### Goal
 
@@ -1183,7 +1208,7 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 32 — Scenario and Customer Complaint Foundation**
+**Task 33 — Wrong Repair Semantics and Post-Repair Validation**
 
-Task 31 passed final review, production validation, and was completed in this
-run. Task 32 is identified as the next eligible milestone but was not started.
+Task 32 passed implementation validation in this run and is complete. Task 33
+is identified as the next eligible milestone but was not started.

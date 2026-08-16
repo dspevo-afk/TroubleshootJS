@@ -12,6 +12,14 @@ class DiodeProtectedIndicatorGenerator {
     private static final double[] RESISTOR_VALUES = { 330, 680, 1000 };
 
     GeneratedBoardInstance generate(long seed) {
+        return generate(seed, false);
+    }
+
+    GeneratedBoardInstance generateForDeveloperVerification(long seed) {
+        return generate(seed, true);
+    }
+
+    private GeneratedBoardInstance generate(long seed, boolean includeDeveloperShort) {
         Random random = new Random(seed);
         int valueIndex = random.nextInt(SUPPLY_VOLTAGES.length);
         double supplyVoltage = SUPPLY_VOLTAGES[valueIndex];
@@ -59,13 +67,15 @@ class DiodeProtectedIndicatorGenerator {
         Vector<GeneratedFaultCandidate> faultCandidates =
             new Vector<GeneratedFaultCandidate>();
         faultCandidates.add(GeneratedFaultEngine.diodeShort("DIODE_D1_SHORT", FAMILY_ID,
-            seed, "D1", diodeShortSwitch));
+            seed, "D1", diodeShortSwitch, includeDeveloperShort));
         faultCandidates.add(GeneratedFaultEngine.diodeOpen("DIODE_D1_OPEN", FAMILY_ID,
             seed, "D1", faultSwitch));
         faultCandidates.add(GeneratedFaultEngine.connectorOpenPath("DIODE_J1_OPEN_PATH",
             FAMILY_ID, seed, "J1", connectorFaultSwitch, false));
         GeneratedFaultEngine.clearAll(faultCandidates);
-        GeneratedFaultCandidate selectedFault = GeneratedFaultEngine.select(seed, faultCandidates);
+        GeneratedFaultCandidate selectedFault = includeDeveloperShort ?
+            GeneratedFaultEngine.select(GeneratedFaultType.DIODE_SHORT, faultCandidates) :
+            GeneratedFaultEngine.select(seed, faultCandidates);
         for (GeneratedFaultCandidate candidate : faultCandidates)
             for (CircuitElm privateElement : candidate.getPrivateSimulationElements())
                 if (!elements.contains(privateElement))
@@ -88,10 +98,8 @@ class DiodeProtectedIndicatorGenerator {
                 new DiodeProtectedIndicatorGeneratedBoardValidator(),
                 new DiodeProtectedIndicatorFaultValidator(),
                 new DiodeProtectedIndicatorRepairValidator());
-        GeneratedChallengeCatalog challenges = new GeneratedChallengeCatalog();
-        challenges.addCandidate(new GeneratedChallengeDefinition("DIODE_INDICATOR_NO_LIGHT",
-            FAMILY_ID, DIRECT_SERIES_VARIANT, seed, "INDICATOR_DOES_NOT_LIGHT",
-            "Indicator does not light.", fault, faultBinding, behaviorContract));
+        GeneratedScenarioCatalog<GeneratedObservedBehavior> scenarios =
+            GeneratedScenarioLibrary.diodeIndicator(includeDeveloperShort);
         GeneratedExternalPowerBindings power = new GeneratedExternalPowerBindings(board);
         Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
         powerElements.add(supply); powerElements.add(powerSwitch);
@@ -119,7 +127,9 @@ class DiodeProtectedIndicatorGenerator {
             DIRECT_SERIES_VARIANT, description, components, power, connections,
             behaviorContract,
             PCB_LAYOUT_GENERATOR.generate(board, seed), specs, faultBinding, operational,
-            challenges.select(seed), new DiodeProtectedIndicatorFamilyState(slot, inventory, catalog));
+            new GeneratedChallengeDefinition("DIODE_INDICATOR_NO_LIGHT", FAMILY_ID,
+                DIRECT_SERIES_VARIANT, seed, scenarios, fault, faultBinding, behaviorContract),
+            new DiodeProtectedIndicatorFamilyState(slot, inventory, catalog));
     }
 
     private DiodeElm createDefaultDiode(int x, int y, int x2, int y2) {

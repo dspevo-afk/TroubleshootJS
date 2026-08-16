@@ -362,6 +362,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootReplacementVerification;
 	boolean troubleshootMeterVerification;
 	boolean troubleshootDiodeVerification;
+	boolean troubleshootDiodeShort;
 	boolean troubleshootLedPhysicalVerification;
 	boolean troubleshootParallelVerification;
 	boolean troubleshootGeometryVerification;
@@ -418,6 +419,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
 	    troubleshootMeterVerification = qp.getBooleanValue("tsjVerifyMeter", false);
 	    troubleshootDiodeVerification = qp.getBooleanValue("tsjVerifyDiode", false);
+	    troubleshootDiodeShort = qp.getBooleanValue("tsjDiodeShort", false);
 	    troubleshootLedPhysicalVerification = qp.getBooleanValue("tsjVerifyLedParts", false);
 	    troubleshootParallelVerification = qp.getBooleanValue("tsjVerifyParallel", false);
 	    troubleshootGeometryVerification = qp.getBooleanValue("tsjVerifyGeometry", false);
@@ -809,7 +811,9 @@ MouseOutHandler, MouseWheelHandler {
 	else if ("led".equals(troubleshootChallenge))
 	    installGeneratedChallenge(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("diode".equals(troubleshootChallenge))
-	    installGeneratedChallenge(new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	    installGeneratedChallenge(troubleshootDiodeShort ?
+		new DiodeProtectedIndicatorGenerator().generateForDeveloperVerification(troubleshootFixtureSeed) :
+		new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("parallel".equals(troubleshootFixture))
 	    installGeneratedBoard(generateParallelBoard(troubleshootFixtureSeed));
 	else if ("parallel".equals(troubleshootChallenge))

@@ -11,6 +11,7 @@ interface GeneratedFaultEffect {
     boolean isApplied();
     CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal);
     Vector<CircuitElm> getPrivateSimulationElements();
+    CircuitElm getValueMutationTarget();
 }
 
 class SwitchOpenFaultEffect implements GeneratedFaultEffect {
@@ -43,6 +44,8 @@ class SwitchOpenFaultEffect implements GeneratedFaultEffect {
         result.add(switchElement);
         return result;
     }
+
+    public CircuitElm getValueMutationTarget() { return null; }
 }
 
 class ResistorIncorrectValueFaultEffect implements GeneratedFaultEffect {
@@ -53,7 +56,11 @@ class ResistorIncorrectValueFaultEffect implements GeneratedFaultEffect {
 
     ResistorIncorrectValueFaultEffect(ResistorElm resistor, double healthyValue,
             double effectiveValue) {
-        if (resistor == null || healthyValue <= 0 || effectiveValue <= 0)
+        if (resistor == null || healthyValue <= 0 || effectiveValue <= 0 ||
+                Double.isNaN(healthyValue) || Double.isInfinite(healthyValue) ||
+                Double.isNaN(effectiveValue) || Double.isInfinite(effectiveValue) ||
+                Math.abs(effectiveValue - healthyValue) <= Math.max(1e-9,
+                    Math.abs(healthyValue) * 1e-9))
             throw new IllegalArgumentException("Invalid resistor fault value");
         this.resistor = resistor;
         this.healthyValue = healthyValue;
@@ -78,6 +85,8 @@ class ResistorIncorrectValueFaultEffect implements GeneratedFaultEffect {
     public Vector<CircuitElm> getPrivateSimulationElements() {
         return new Vector<CircuitElm>();
     }
+
+    public CircuitElm getValueMutationTarget() { return resistor; }
 }
 
 class SwitchParallelShortFaultEffect implements GeneratedFaultEffect {
@@ -109,4 +118,6 @@ class SwitchParallelShortFaultEffect implements GeneratedFaultEffect {
         result.add(bypassSwitch);
         return result;
     }
+
+    public CircuitElm getValueMutationTarget() { return null; }
 }

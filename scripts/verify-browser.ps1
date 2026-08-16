@@ -8,6 +8,7 @@ param(
     [string]$Route,
     [switch]$NormalPlayer,
     [switch]$Diode,
+    [switch]$DiodeShort,
     [switch]$DiodeNormalPlayer,
     [switch]$Parallel,
     [switch]$ParallelNormalPlayer,
@@ -94,7 +95,8 @@ function invokeCdp($socket, [ref]$nextId, [string]$method, $parameters, [ref]$fa
     return receiveCdp $socket $id $failures
 }
 
-function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debugPort) {
+function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debugPort,
+        [string]$expectedComplaint = '') {
     $profile = Join-Path $env:TEMP ("tsj-browser-" + [Guid]::NewGuid().ToString('N'))
     $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
         '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
@@ -120,6 +122,11 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
         [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
         [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
         [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
+        if ($expectedComplaint) {
+            $escapedComplaint = $expectedComplaint.Replace("'", "\\'")
+            $ticketExpression = "(()=>{const title=[...document.querySelectorAll('.tsj-component-title')].find(e=>e.textContent.trim()==='Service Ticket');if(!title||!title.parentElement)return false;const lines=title.parentElement.innerText.split(/\r?\n+/).map(x=>x.trim()).filter(Boolean);return lines.length===2&&lines[0]==='Service Ticket'&&lines[1]==='$escapedComplaint';})()"
+            waitForCdp $socket ([ref]$nextId) $ticketExpression $deadline ([ref]$failures) 'solver-validated Service Ticket complaint'
+        }
         do {
             $response = invokeCdp $socket ([ref]$nextId) 'Runtime.evaluate' @{
                 expression = "document.documentElement.getAttribute('data-tsj-verification') || ''"; returnByValue = $true
@@ -198,6 +205,91 @@ function clickButton($socket, [ref]$nextId, [string]$text, [ref]$failures) {
     clickPoint $socket $nextId $point 'left' $failures
 }
 
+function clickButtonAndWaitForPredicate($socket, [ref]$nextId, [string]$text,
+        [string]$successExpression, [DateTime]$deadline, [ref]$failures,
+        [string]$description) {
+    $escaped = $text.Replace("'", "\'")
+    $lastDiagnostic = ''
+    for ($clickAttempt = 0; $clickAttempt -lt 5; $clickAttempt++) {
+        try {
+            $point = $null
+            for ($visibilityAttempt = 0; $visibilityAttempt -lt 5; $visibilityAttempt++) {
+                $point = evaluateCdp $socket $nextId "(()=>{const e=[...document.querySelectorAll('button')].find(x=>x.innerText.trim()==='$escaped');if(!e)return null;const r=e.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,visible:r.top>=0&&r.bottom<=innerHeight,enabled:!e.disabled};})()" $failures
+                if ($null -eq $point) { break }
+                if ($point.visible -and $point.enabled) { break }
+                if (-not $point.visible) {
+                    $wheelY = if ([double]$point.y -gt 0) { 640 } else { -640 }
+                    [void](invokeCdp $socket $nextId 'Input.dispatchMouseEvent' @{
+                        type = 'mouseWheel'; x = [Math]::Max(1, [Math]::Min(1439, [double]$point.x));
+                        y = 500; deltaX = 0; deltaY = $wheelY
+                    } $failures)
+                }
+                Start-Sleep -Milliseconds 80
+            }
+            if ($null -eq $point) { throw "button not found: $text" }
+            if (-not $point.visible) { throw "button did not scroll into view: $text" }
+            if (-not $point.enabled) { throw "button is disabled: $text" }
+
+            clickPoint $socket $nextId $point 'left' $failures
+            $settleDeadline = [DateTime]::UtcNow.AddSeconds(3)
+            if ($settleDeadline -gt $deadline) { $settleDeadline = $deadline }
+            waitForCdp $socket $nextId $successExpression $settleDeadline ([ref]$failures) $description
+            return
+        } catch {
+            $lastDiagnostic = $_.Exception.Message
+            try {
+                $state = evaluateCdp $socket $nextId "(()=>{const button=[...document.querySelectorAll('button')].find(x=>x.innerText.trim()==='$escaped');return {button:button?{visible:(()=>{const r=button.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;})(),enabled:!button.disabled}:null,body:(document.body.innerText||'').slice(-900)};})()" $failures
+                $lastDiagnostic = $lastDiagnostic + ' state=' + ($state | ConvertTo-Json -Compress)
+            } catch {
+                $lastDiagnostic = $lastDiagnostic + ' state-diagnostic-failed=' + $_.Exception.Message
+            }
+            if ([DateTime]::UtcNow -ge $deadline) { break }
+            Start-Sleep -Milliseconds 120
+        }
+    }
+    throw "button interaction did not settle for $text after 5 mouse-click attempts: $lastDiagnostic"
+}
+
+function clickTrayPartAndWaitForSelection($socket, [ref]$nextId, [string]$buttonText,
+        [DateTime]$deadline, [ref]$failures) {
+    $escapedButtonText = $buttonText.Replace("'", "\'")
+    $escapedSelectedText = ("Selected: " + $buttonText).Replace("'", "\'")
+    $lastDiagnostic = ''
+    for ($selectionAttempt = 0; $selectionAttempt -lt 5; $selectionAttempt++) {
+        try {
+            $button = $null
+            for ($visibilityAttempt = 0; $visibilityAttempt -lt 5; $visibilityAttempt++) {
+                $button = evaluateCdp $socket $nextId "(()=>{const e=[...document.querySelectorAll('button')].find(x=>x.innerText.trim()==='$escapedButtonText');if(!e)return null;const r=e.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,visible:r.top>=0&&r.bottom<=innerHeight,enabled:!e.disabled};})()" $failures
+                if ($null -eq $button) { break }
+                if ($button.visible -and $button.enabled) { break }
+                if (-not $button.visible) {
+                    $wheelY = if ([double]$button.y -gt 0) { 640 } else { -640 }
+                    [void](invokeCdp $socket $nextId 'Input.dispatchMouseEvent' @{
+                        type = 'mouseWheel'; x = [Math]::Max(1, [Math]::Min(1439, [double]$button.x));
+                        y = 500; deltaX = 0; deltaY = $wheelY
+                    } $failures)
+                }
+                Start-Sleep -Milliseconds 80
+            }
+            if ($null -eq $button) { throw "tray button not found: $buttonText" }
+            if (-not $button.visible) { throw "tray button did not scroll into view: $buttonText" }
+            if (-not $button.enabled) { throw "tray button is disabled: $buttonText" }
+            clickPoint $socket $nextId $button 'left' $failures
+            $selectionDeadline = [DateTime]::UtcNow.AddSeconds(3)
+            if ($selectionDeadline -gt $deadline) { $selectionDeadline = $deadline }
+            waitForCdp $socket $nextId "[...document.querySelectorAll('.tsj-component-panel')].some(p=>p.innerText.includes('$escapedSelectedText')&&p.innerText.includes('State: Loose'))" $selectionDeadline ([ref]$failures) 'selected loose tray part panel'
+            return evaluateCdp $socket $nextId "(()=>{const panel=[...document.querySelectorAll('.tsj-component-panel')].find(p=>p.innerText.includes('$escapedSelectedText')&&p.innerText.includes('State: Loose'));return panel?panel.innerText:'';})()" $failures
+        } catch {
+            $lastDiagnostic = $_.Exception.Message
+            $state = evaluateCdp $socket $nextId "(()=>{const button=[...document.querySelectorAll('button')].find(x=>x.innerText.trim()==='$escapedButtonText');return {button:button?{visible:(()=>{const r=button.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;})(),enabled:!button.disabled}:null,panels:[...document.querySelectorAll('.tsj-component-panel')].map(p=>p.innerText).slice(-4)};})()" $failures
+            $lastDiagnostic = $lastDiagnostic + ' state=' + ($state | ConvertTo-Json -Compress)
+            if ([DateTime]::UtcNow -ge $deadline) { break }
+            Start-Sleep -Milliseconds 120
+        }
+    }
+    throw "tray part selection did not settle for $buttonText after 5 mouse-click attempts: $lastDiagnostic"
+}
+
 function getCanvasPoint($socket, [ref]$nextId, [string]$targetKey, [ref]$failures) {
     $escaped = $targetKey.Replace("'", "\\'")
     return evaluateCdp $socket $nextId "(()=>{const c=[...document.querySelectorAll('canvas')].find(x=>{const r=x.getBoundingClientRect();return r.width>100&&r.height>100});const g=window.__tsjPcbGeometry;if(!c||!g||!g.points||!g.points['$escaped'])return null;const r=c.getBoundingClientRect(),p=g.points['$escaped'];return {x:r.left+p.x*r.width/c.width,y:r.top+p.y*r.height/c.height};})()" $failures
@@ -260,24 +352,41 @@ function selectOptionWithKeyboard($socket, [ref]$nextId, [int]$selectIndex,
     if ($null -eq $info -or [int]$info.index -lt 0) { throw "catalog option not found: $optionText" }
     if (-not $info.visible) { throw "catalog did not scroll into view: $optionText" }
     $actual = ''
+    $lastSelectionFailure = ''
     for ($selectionAttempt = 0; $selectionAttempt -lt 3 -and $actual -ne $optionText;
             $selectionAttempt++) {
-        $focusPlan = evaluateCdp $socket $nextId "(()=>{const target=document.querySelectorAll('select')[$selectIndex];const focusable=[...document.querySelectorAll('*')].filter(x=>x.tabIndex>=0&&!x.disabled&&x.getClientRects().length);const targetIndex=focusable.indexOf(target),currentIndex=focusable.indexOf(document.activeElement);return {found:targetIndex>=0,tabs:currentIndex<0?targetIndex+1:(targetIndex-currentIndex+focusable.length)%focusable.length};})()" $failures
-        if (-not $focusPlan.found) { throw "catalog is not keyboard reachable: $optionText" }
-        for ($tabIndex = 0; $tabIndex -lt [int]$focusPlan.tabs; $tabIndex++) {
-            sendKey $socket $nextId 'Tab' 9 $failures
+        try {
+            $attemptInfo = evaluateCdp $socket $nextId "(()=>{const e=document.querySelectorAll('select')[$selectIndex];if(!e)return null;const r=e.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,index:[...e.options].findIndex(o=>o.text==='$escaped'),visible:r.top>=0&&r.bottom<=innerHeight};})()" $failures
+            if ($null -eq $attemptInfo -or [int]$attemptInfo.index -lt 0) {
+                throw "catalog option not found: $optionText"
+            }
+            if (-not $attemptInfo.visible) { throw "catalog did not scroll into view: $optionText" }
+            $focusPlan = evaluateCdp $socket $nextId "(()=>{const target=document.querySelectorAll('select')[$selectIndex];return {found:!!target&&!target.disabled&&target.getClientRects().length>0};})()" $failures
+            if (-not $focusPlan.found) { throw "catalog is not keyboard reachable: $optionText" }
+            clickPoint $socket $nextId $attemptInfo 'left' ([ref]$failures)
+            $selectionDeadline = [DateTime]::UtcNow.AddSeconds(5)
+            waitForCdp $socket $nextId "document.activeElement===document.querySelectorAll('select')[$selectIndex]" $selectionDeadline ([ref]$failures) 'catalog select focus'
+            sendKey $socket $nextId 'Escape' 27 $failures
+            waitForCdp $socket $nextId "document.activeElement===document.querySelectorAll('select')[$selectIndex]" $selectionDeadline ([ref]$failures) 'catalog select focus after closing popup'
+            sendKey $socket $nextId 'Home' 36 $failures
+            waitForCdp $socket $nextId "(()=>{const e=document.querySelectorAll('select')[$selectIndex];return document.activeElement===e&&e.selectedIndex===0&&e.selectedOptions[0].text===e.options[0].text;})()" $selectionDeadline ([ref]$failures) 'catalog first option after Home'
+            for ($index = 1; $index -le [int]$attemptInfo.index; $index++) {
+                sendKey $socket $nextId 'ArrowDown' 40 $failures
+                $stepIndex = $index
+                waitForCdp $socket $nextId "(()=>{const e=document.querySelectorAll('select')[$selectIndex],i=$stepIndex;return document.activeElement===e&&e.selectedIndex===i&&e.selectedOptions[0].text===e.options[i].text;})()" $selectionDeadline ([ref]$failures) "catalog option $stepIndex after ArrowDown"
+            }
+            $actual = evaluateCdp $socket $nextId "document.querySelectorAll('select')[$selectIndex].selectedOptions[0].text" $failures
+            if ($actual -ne $optionText) {
+                throw "catalog keyboard selection chose $actual instead of $optionText"
+            }
+        } catch {
+            $lastSelectionFailure = $_.Exception.Message
+            $actual = ''
         }
-        $focused = evaluateCdp $socket $nextId "document.activeElement===document.querySelectorAll('select')[$selectIndex]" $failures
-        if (-not $focused) { continue }
-        sendKey $socket $nextId 'Home' 36 $failures
-        for ($index = 0; $index -lt [int]$info.index; $index++) {
-            sendKey $socket $nextId 'ArrowDown' 40 $failures
-        }
-        $actual = evaluateCdp $socket $nextId "document.querySelectorAll('select')[$selectIndex].selectedOptions[0].text" $failures
     }
     if ($actual -ne $optionText) {
         $focus = evaluateCdp $socket $nextId "(()=>{const e=document.querySelectorAll('select')[$selectIndex];return {active:document.activeElement===e,tag:document.activeElement&&document.activeElement.tagName,y:e.getBoundingClientRect().top};})()" $failures
-        throw "catalog keyboard selection chose $actual instead of $optionText (active=$($focus.active), tag=$($focus.tag), y=$($focus.y))"
+        throw "catalog keyboard selection chose $actual instead of $optionText (active=$($focus.active), tag=$($focus.tag), y=$($focus.y), lastFailure=$lastSelectionFailure)"
     }
 }
 
@@ -360,9 +469,9 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
                 throw "removed R1 color band was not visible: $($originalBands | ConvertTo-Json -Compress)"
             }
         }
-        clickButton $socket ([ref]$nextId) 'R1_ORIGINAL - Removed resistor' ([ref]$failures)
-        $selectedOriginal = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[2].innerText" ([ref]$failures)
-        if ($selectedOriginal -notmatch 'Selected: R1_ORIGINAL - Removed resistor') {
+        $selectedOriginal = clickTrayPartAndWaitForSelection $socket ([ref]$nextId) 'R1_ORIGINAL - Removed resistor' $deadline ([ref]$failures)
+        if ($selectedOriginal -notmatch 'Selected: R1_ORIGINAL - Removed resistor' -or
+                $selectedOriginal -notmatch 'State: Loose') {
             throw "selected original R1 lost its privacy-safe identity: $selectedOriginal"
         }
         $selectedOriginalLeak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
@@ -371,21 +480,7 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         }
         Write-Host 'PLAYER original removed'
 
-        $selectInfo = evaluateCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('select');const r=e.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,index:[...e.options].findIndex(o=>o.text==='1000 Ohm +/-5%')};})()" ([ref]$failures)
-        $selectedText = ''
-        for ($selectionAttempt = 0; $selectionAttempt -lt 3 -and
-                $selectedText -ne '1000 Ohm +/-5%'; $selectionAttempt++) {
-            clickPoint $socket ([ref]$nextId) $selectInfo 'left' ([ref]$failures)
-            Start-Sleep -Milliseconds 100
-            sendKey $socket ([ref]$nextId) 'Escape' 27 ([ref]$failures)
-            sendKey $socket ([ref]$nextId) 'Home' 36 ([ref]$failures)
-            for ($keyIndex = 0; $keyIndex -lt [int]$selectInfo.index; $keyIndex++) {
-                sendKey $socket ([ref]$nextId) 'ArrowDown' 40 ([ref]$failures)
-            }
-            sendKey $socket ([ref]$nextId) 'Enter' 13 ([ref]$failures)
-            $selectedText = evaluateCdp $socket ([ref]$nextId) "document.querySelector('select').selectedOptions[0].text" ([ref]$failures)
-        }
-        if ($selectedText -ne '1000 Ohm +/-5%') { throw "catalog keyboard selection chose $selectedText" }
+        selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')&&[...document.querySelectorAll('select option')].some(x=>x.text==='1000 Ohm +/-5%')" $deadline ([ref]$failures) 'installed replacement excluded from tray while catalog value remains available'
         clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
@@ -466,9 +561,9 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
         [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
         [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
         [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
-        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('One indicator does not light.')" $deadline ([ref]$failures) 'ready parallel challenge'
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('The two indicators do not behave the same.')" $deadline ([ref]$failures) 'ready parallel challenge'
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points" $deadline ([ref]$failures) 'parallel PCB geometry bridge'
-        $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),catalog:document.body.innerText.includes('Resistor Replacement Catalog'),noLedCatalog:!document.body.innerText.includes('LED Replacement Catalog'),empty:document.body.innerText.includes('No removed parts'),complaint:document.body.innerText.includes('One indicator does not light.')})" ([ref]$failures)
+        $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),catalog:document.body.innerText.includes('Resistor Replacement Catalog'),noLedCatalog:!document.body.innerText.includes('LED Replacement Catalog'),empty:document.body.innerText.includes('No removed parts'),complaint:document.body.innerText.includes('The two indicators do not behave the same.')})" ([ref]$failures)
         if (-not ($initial.canvas -and $initial.catalog -and $initial.noLedCatalog -and $initial.empty -and $initial.complaint)) {
             throw 'initial parallel PCB, resistor catalog, tray, or complaint UI was incorrect'
         }
@@ -532,9 +627,9 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
         if (-not $parallelRemovedLeak.safe) {
             throw "parallel removed original R1 value leaked into ordinary UI: $($parallelRemovedLeak | ConvertTo-Json -Compress)"
         }
-        clickButton $socket ([ref]$nextId) 'R1_ORIGINAL - Removed resistor' ([ref]$failures)
-        $parallelSelectedOriginal = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[2].innerText" ([ref]$failures)
-        if ($parallelSelectedOriginal -notmatch 'Selected: R1_ORIGINAL - Removed resistor') {
+        $parallelSelectedOriginal = clickTrayPartAndWaitForSelection $socket ([ref]$nextId) 'R1_ORIGINAL - Removed resistor' $deadline ([ref]$failures)
+        if ($parallelSelectedOriginal -notmatch 'Selected: R1_ORIGINAL - Removed resistor' -or
+                $parallelSelectedOriginal -notmatch 'State: Loose') {
             throw "parallel selected original R1 lost its privacy-safe identity: $parallelSelectedOriginal"
         }
         $parallelSelectedOriginalLeak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
@@ -754,7 +849,7 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'led-selected.png') ([ref]$failures)
         }
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')&&!document.body.innerText.includes('No removed parts')" $deadline ([ref]$failures) 'loose original LED state'
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')" $deadline ([ref]$failures) 'loose original LED'
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:LED1_ORIGINAL:0']&&!!window.__tsjPcbGeometry.points['loose:LED1_ORIGINAL:1']" $deadline ([ref]$failures) 'loose original LED geometry'
         if ($EvidenceDirectory) {
@@ -783,13 +878,13 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         $led = getCanvasPoint $socket ([ref]$nextId) 'component:LED1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $led 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'healthy LED component controls'
-        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')&&!document.body.innerText.includes('No removed parts')" $deadline ([ref]$failures) 'healthy loose LED state'
 
         selectOptionWithKeyboard $socket ([ref]$nextId) 1 'Generic red LED (reversed)' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install new LED' ([ref]$failures)
         $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('R1_ORIGINAL - Removed resistor')&&!document.body.innerText.includes('No removed parts')" $deadline ([ref]$failures) 'loose original R1 state'
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
@@ -802,7 +897,7 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         $led = getCanvasPoint $socket ([ref]$nextId) 'component:LED1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $led 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'reversed LED component controls'
-        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')&&!document.body.innerText.includes('No removed parts')" $deadline ([ref]$failures) 'reversed LED loose state'
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')" $deadline ([ref]$failures) 'healthy loose LED identity'
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:LED1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:LED1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'healthy loose LED geometry'
         clickButton $socket ([ref]$nextId) 'LED1_CATALOG_PART_0 - Generic red LED' ([ref]$failures)
@@ -819,7 +914,7 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         $led = getCanvasPoint $socket ([ref]$nextId) 'component:LED1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $led 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'repaired LED component controls'
-        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')&&document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')&&!document.body.innerText.includes('No removed parts')" $deadline ([ref]$failures) 'separate original and replacement LED state'
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')&&document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')" $deadline ([ref]$failures) 'separate original and replacement LEDs'
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
         Write-Host "PASS led-normal-player seed=3 forward=$forward reverse=OL identities=separate"
@@ -862,23 +957,26 @@ if ($LedNormalPlayer) {
 }
 $family = 'led'
 $routes = @(
-    @{ Name = 'resistance'; Query = 'tsjVerifyResistance=true'; Expected = 'PASS:resistance' },
-    @{ Name = 'meter'; Query = 'tsjVerifyMeter=true'; Expected = 'PASS:meter' },
-    @{ Name = 'challenge'; Query = 'tsjVerifyChallenge=true'; Expected = 'PASS:challenge' },
-    @{ Name = 'replacement'; Query = 'tsjVerifyReplacement=true'; Expected = 'PASS:replacement' },
-    @{ Name = 'challenge+replacement'; Query = 'tsjVerifyChallenge=true&tsjVerifyReplacement=true'; Expected = 'PASS:replacement' }
+    @{ Name = 'resistance'; Query = 'tsjVerifyResistance=true'; Expected = 'PASS:resistance'; Complaint = 'Indicator does not light.' },
+    @{ Name = 'meter'; Query = 'tsjVerifyMeter=true'; Expected = 'PASS:meter'; Complaint = 'Indicator does not light.' },
+    @{ Name = 'challenge'; Query = 'tsjVerifyChallenge=true'; Expected = 'PASS:challenge'; Complaint = 'Indicator does not light.' },
+    @{ Name = 'replacement'; Query = 'tsjVerifyReplacement=true'; Expected = 'PASS:replacement'; Complaint = 'Indicator does not light.' },
+    @{ Name = 'challenge+replacement'; Query = 'tsjVerifyChallenge=true&tsjVerifyReplacement=true'; Expected = 'PASS:replacement'; Complaint = 'Indicator does not light.' }
 )
-if ($Diode) {
+if ($DiodeShort) {
     $family = 'diode'
-    $routes = @(@{ Name = 'diode'; Query = 'tsjVerifyDiode=true'; Expected = 'PASS:diode' })
+    $routes = @(@{ Name = 'diode-short'; Query = 'tsjVerifyDiode=true&tsjDiodeShort=true'; Expected = 'PASS:diode'; Complaint = 'The indicator is brighter than expected.' })
+} elseif ($Diode) {
+    $family = 'diode'
+    $routes = @(@{ Name = 'diode'; Query = 'tsjVerifyDiode=true'; Expected = 'PASS:diode'; Complaint = 'Indicator does not light.' })
 }
 if ($Parallel) {
     $family = 'parallel'
-    $routes = @(@{ Name = 'parallel'; Query = 'tsjVerifyParallel=true'; Expected = 'PASS:parallel' })
+    $routes = @(@{ Name = 'parallel'; Query = 'tsjVerifyParallel=true'; Expected = 'PASS:parallel'; Complaint = 'The two indicators do not behave the same.' })
 }
 if ($LedParts) {
     $family = 'led'
-    $routes = @(@{ Name = 'led-parts'; Query = 'tsjVerifyLedParts=true'; Expected = 'PASS:led-parts' })
+    $routes = @(@{ Name = 'led-parts'; Query = 'tsjVerifyLedParts=true'; Expected = 'PASS:led-parts'; Complaint = 'Indicator does not light.' })
 }
 $passed = $true
 $index = 0
@@ -888,7 +986,10 @@ $expectedCount = $Seeds.Count * $routes.Count
 foreach ($seed in $Seeds) {
     foreach ($routeDefinition in $routes) {
         $url = "$BaseUrl/circuitjs.html?tsjChallenge=$family&seed=$seed&$($routeDefinition.Query)"
-        $routePassed = verifyRoute "seed=$seed $($routeDefinition.Name)" $url $routeDefinition.Expected (9350 + $index) |
+        $complaint = if ($routeDefinition.PSObject.Properties['Complaint']) {
+            [string]$routeDefinition.Complaint
+        } else { '' }
+        $routePassed = verifyRoute "seed=$seed $($routeDefinition.Name)" $url $routeDefinition.Expected (9350 + $index) $complaint |
             Select-Object -Last 1
         if (-not $routePassed) { $passed = $false }
         $index++

@@ -8,7 +8,8 @@ class ChallengeDeveloperVerifier {
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
         require(challenge != null && challenge.isReady(), "Challenge did not become ready");
         verifyLifecycleEvidence(challenge);
-        verifyDeterministicMetadata(instance, challenge.getDefinition());
+        verifyDeterministicMetadata(instance, challenge);
+        verifyFaultConstructionInvariants(instance);
         GeneratedFaultController faults = challenge.getFaultController();
         BoardModificationController modifications = sim.getBoardModificationController();
         require(faults.isApplied(), "Challenge fault was not applied");
@@ -122,16 +123,26 @@ class ChallengeDeveloperVerifier {
         require(evidence.healthyGenerationInstalled && evidence.healthyGraphAnalyzedAfterTimeAdvance &&
             evidence.healthyFamilyValidated && evidence.selectedFaultApplied &&
             evidence.faultedGraphAnalyzedAfterTimeAdvance && evidence.selectedFaultValidated &&
+            evidence.scenarioCompatibilityValidated && challenge.getScenario() != null &&
             evidence.readyAfterValidation, "Challenge lifecycle evidence is incomplete");
     }
 
     private static void verifyDeterministicMetadata(GeneratedBoardInstance instance,
-            GeneratedChallengeDefinition definition) {
+            GeneratedChallengeController challenge) {
+        GeneratedChallengeDefinition definition = challenge.getDefinition();
+        GeneratedScenario<GeneratedObservedBehavior> scenario = challenge.getScenario();
         require("LED_INDICATOR_NO_LIGHT".equals(definition.getId()) &&
-            "INDICATOR_DOES_NOT_LIGHT".equals(definition.getComplaintId()) &&
-            "Indicator does not light.".equals(definition.getComplaintText()) &&
+            "INDICATOR_DOES_NOT_LIGHT".equals(scenario.getComplaintId()) &&
+            "Indicator does not light.".equals(scenario.getComplaintText()) &&
+            scenario.getObservedBehavior() == GeneratedObservedBehavior.DARK_INDICATOR &&
+            scenario.isCompatible(instance, null, BoardPowerState.POWERED) &&
             definition.getFault() == instance.getFaultBinding().getFault(),
             "Selected challenge metadata disagrees with binding");
+        GeneratedScenario<GeneratedObservedBehavior> repeat = GeneratedScenarioLibrary.ledIndicator()
+            .select(definition.getSelectionSeed(), instance, null, BoardPowerState.POWERED);
+        require(scenario.getScenarioId().equals(repeat.getScenarioId()) &&
+            scenario.getComplaintText().equals(repeat.getComplaintText()),
+            "Scenario selection was not reproducible for the seed");
         verifySeed(0, 5, 330, GeneratedFaultType.RESISTOR_OPEN, "LED_R1_OPEN");
         verifySeed(2, 9, 680, GeneratedFaultType.RESISTOR_OPEN, "LED_R1_OPEN");
         verifySeed(3, 12, 1000, GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
@@ -139,6 +150,33 @@ class ChallengeDeveloperVerifier {
         require(new LedIndicatorGenerator().generate(0).getChallengeDefinition().getFault().getType() !=
             new LedIndicatorGenerator().generate(3).getChallengeDefinition().getFault().getType(),
             "LED fault selection did not produce multiple deterministic fault types");
+    }
+
+    private static void verifyFaultConstructionInvariants(GeneratedBoardInstance instance) {
+        ResistorElm resistor = (ResistorElm) instance.getComponentBindings()
+            .getSingleElement("R1");
+        double healthy = resistor.getResistance();
+        try {
+            GeneratedFaultEngine.resistorIncorrectValue("TEST_EQUAL_VALUE", "LED_INDICATOR", 0,
+                "R1", resistor, healthy, healthy);
+            throw new IllegalStateException("Equal healthy/effective resistor values were accepted");
+        } catch (IllegalArgumentException expected) {
+            // Defensive effective-value rejection is intentional.
+        }
+
+        GeneratedFault unrelatedFault = new GeneratedFault("TEST_UNRELATED_VALUE",
+            GeneratedFaultType.RESISTOR_INCORRECT_VALUE, "LED1", "LED_INDICATOR", 0,
+            healthy, healthy * 100);
+        GeneratedFaultBinding unrelatedBinding = new GeneratedFaultBinding(unrelatedFault,
+            new ResistorIncorrectValueFaultEffect(resistor, healthy, healthy * 100));
+        try {
+            GeneratedChallengeController.validateFaultEffectOwnership(instance, unrelatedFault,
+                unrelatedBinding);
+            throw new IllegalStateException("Unrelated value-mutating fault ownership was accepted");
+        } catch (IllegalArgumentException expected) {
+            // The private-element list is empty, so this specifically covers
+            // the real value mutation target ownership check.
+        }
     }
 
     private static void verifySeed(long seed, double voltage, double resistance,
