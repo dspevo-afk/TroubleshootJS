@@ -89,9 +89,9 @@ class GeneratedChallengeController {
             definition.getBehaviorContract().verifyFaulted(instance,
                 sim.getBoardModificationController(),
                 BoardPowerState.POWERED);
-        if (definition.getBehaviorContract().isFunctionallyRepaired(instance,
-                sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
-                sim.activeMeasurementOverlay)) {
+        if (definition.getBehaviorContract().getRepairStatus(instance,
+            sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
+                sim.activeMeasurementOverlay) == GeneratedRepairStatus.CORRECTLY_RESTORED) {
             state = GeneratedChallengeState.COMPLETED;
             sim.refreshBoardModificationControls();
             sim.repaint();

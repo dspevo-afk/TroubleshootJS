@@ -1,143 +1,154 @@
-# Task 32 — Scenario and Customer Complaint Foundation
+# Task 33 — Wrong Repair Semantics and Post-Repair Validation
 
 ## Status
 
-Complete. Primary architect disposition: `FINAL PASS`. The requested local
-commit is `Task 32: add scenario and complaint foundation`. No push was
-performed. Task 33 is identified as the next roadmap milestone and was not
-started.
+Complete. Primary architect disposition: `FINAL PASS`. Commit message:
+`Task 33: validate wrong resistor repairs`. No push was performed. Task 34 is
+identified as the next eligible milestone and was not started.
 
 ## Scope and acceptance
 
-Task 32 adds a generic immutable scenario and customer-complaint foundation
-for the generated TroubleshootJS challenges. The selected scenario is only
-made visible after the actual faulted CircuitJS solve has passed the family
-validator and the scenario compatibility predicate. The implementation
-covers the LED indicator, diode-protected indicator, and parallel dual
-indicator families; preserves seeded generation; and keeps hidden fault and
-expected-behavior metadata out of the normal player UI.
+Task 33 lets a player install a physically compatible but electrically wrong
+resistor. The installed physical part remains legal, its catalog value becomes
+the actual CircuitJS resistor value, and the challenge completes only when the
+generic solver-backed functional contract reports restored behavior.
 
-The normal diode route excludes diode-short from player-eligible scenario
-selection because this topology has no suitable normal complaint. The
-explicit `tsjDiodeShort=true` developer route type-selects the real
-diode-short effect and validates the solver-backed bright/high-current
-complaint, including seed 3.
+The closed proof uses the existing LED challenge at seed 3. The board begins
+with the original customer complaint, `Indicator does not light.` The player
+removes R1, installs a 2.2 kOhm catalog resistor, powers the board, observes a
+working but out-of-contract indicator, then removes it and installs a 1 kOhm
+resistor. The final state completes through the same generic challenge path.
 
-## Architecture decisions
+## Architectural decisions
 
-- `GeneratedScenario<T>`, `GeneratedScenarioCompatibility<T>`, and
-  `GeneratedScenarioCatalog<T>` form the reusable immutable scenario boundary.
-- Scenario compatibility reads live CircuitJS element and operational-state
-  results. No hard-coded meter behavior or direct fault-type-to-complaint
-  mapping was added.
-- Scenario selection uses a separate deterministic stream so complaint choice
-  cannot perturb topology, value, fault, or PCB-layout randomness.
-- The lifecycle is healthy validation → fault application → faulted solve →
-  fault validation → scenario compatibility validation → `READY`.
-- Incorrect-value faults reject healthy/effectively equal values, and fault
-  ownership validation also checks the element mutated by a value fault.
-- The browser verifier uses genuine CDP mouse/keyboard input and identity/state
-  predicates for the player-facing flows. No DOM `.click()` or controller
-  state mutation is used.
+- Added `GeneratedRepairStatus` to the existing
+  `GeneratedChallengeBehaviorContract` / `GeneratedRepairValidator` boundary.
+  Validators classify live solved behavior as
+  `STILL_FAULTED_OR_NONFUNCTIONAL`, `DEGRADED_BUT_OPERATING`, or
+  `CORRECTLY_RESTORED`.
+- `GeneratedChallengeController` latches completion only for
+  `CORRECTLY_RESTORED`; no installed resistance, catalog ID, or hidden
+  expected-part comparison decides completion.
+- The existing physical mutation ownership remains in
+  `ResistorSlotController`. Catalog specifications, acquired physical part
+  instances, installed state, and CircuitJS `ResistorElm` backing remain
+  distinct.
+- Normal UI retains the original complaint and does not reveal “wrong
+  resistor,” fault identity, or hidden original values. Status values are
+  internal verifier state only.
+- No resistor ratings, stress, thermal, delayed-failure, or secondary-damage
+  systems were added; those remain Task 34 work.
 
-## Implementation and evidence
+## Deterministic wrong-repair evidence
 
-Product changes include:
+Seed 3 selects a 12 V LED board with a generated 1 kOhm R1 requirement. The
+developer verifier used the real slot controller and CircuitJS graph:
 
-- `src/com/lushprojects/circuitjs1/client/GeneratedScenario.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedObservedBehavior.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedScenarioLibrary.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeDefinition.java`
+- Removed/open R1: status remained
+  `STILL_FAULTED_OR_NONFUNCTIONAL`; completion remained false.
+- Installed wrong catalog part: a distinct physical instance with a 2.2 kOhm
+  immutable nameplate and actual `ResistorElm` resistance of 2200 Ohm. Solved
+  LED and resistor current was nonzero and matched; the LED was illuminated,
+  but current was above 1 mA and below the healthy 5-15 mA contract. Status was
+  `DEGRADED_BUT_OPERATING`; completion remained false.
+- Removed the wrong instance and installed a distinct 1 kOhm catalog instance.
+  The solved current returned to the healthy range, status became
+  `CORRECTLY_RESTORED`, and the generic challenge controller completed the
+  challenge.
+- The original faulted physical resistor remained loose and faulted throughout;
+  inventory identity, slot occupancy, actual element binding, attachment
+  reachability, and no-duplicate backing checks passed.
+
+The normal-player route used genuine CDP mouse/keyboard input to perform the
+same removal, catalog selection, installation, power, and subsequent repair
+flow. In the wrong-powered screenshot, the 2.2 kOhm resistor is visibly
+installed, the board is powered and operating, the original complaint remains,
+and no completion or wrong-resistor diagnostic is shown.
+
+## Files changed
+
+Product and verifier changes:
+
+- `src/com/lushprojects/circuitjs1/client/GeneratedRepairStatus.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedRepairValidator.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeBehaviorContract.java`
+- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeBehaviorAdapter.java`
 - `src/com/lushprojects/circuitjs1/client/GeneratedChallengeController.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedChallengeLifecycleEvidence.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedFaultEffect.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedFaultEngine.java`
-- `src/com/lushprojects/circuitjs1/client/DiodeProtectedIndicatorGenerator.java`
-- `src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java`
-- `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorGenerator.java`
-- `src/com/lushprojects/circuitjs1/client/ChallengeDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/DiodeFamilyDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/LedIndicatorRepairValidator.java`
+- `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorRepairValidator.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeProtectedIndicatorRepairValidator.java`
+- `src/com/lushprojects/circuitjs1/client/ReplacementDeveloperVerifier.java`
 - `src/com/lushprojects/circuitjs1/client/CirSim.java`
-
-Validation/documentation changes include:
-
 - `scripts/verify-browser.ps1`
+
+Documentation and visual evidence:
+
 - `docs/ARCHITECTURE.md`
 - `docs/ROADMAP.md`
-- the 13 PNG captures under `docs/task-evidence/task-32/` listed below.
-
-Committed evidence captures:
-
-- `diode-open-ready-complaint.png`
-- `diode-open-seed-3-correction.png`
-- `diode-short-developer-complaint.png`
-- `diode-short-seed-3-correction.png`
-- `led-after-removal.png`
-- `led-before-repair-power-off.png`
-- `led-player-initial.png`
-- `led-r1-selected.png`
-- `led-ready-complaint.png`
-- `led-repair-complete.png`
-- `parallel-ready-complaint.png`
-- `parallel-seed-3-correction.png`
-- `parallel-selected-original-r1-correction.png`
-
-These captures show the initial LED workbench, solver-backed complaints for
-LED, parallel, diode-open, and developer diode-short cases, selected/removed
-parts, and a repaired LED with the completion ticket.
+- `docs/task-evidence/task-33/initial-board.png`
+- `docs/task-evidence/task-33/r1-selected.png`
+- `docs/task-evidence/task-33/wrong-repair-powered.png`
+- `docs/task-evidence/task-33/completed.png`
+- `docs/CODEX_TASK_REPORT.md`
 
 ## Validation
 
-Completed required checks:
+The coder and independent reviewer completed the Task 33 closed validation
+set. The primary architect inspected the final implementation, diff, and all
+four PNGs; each screenshot is nonblank and shows the intended production
+player state.
 
-- `./scripts/build.ps1 -JavaHome ./.tools/jdk8-download/jdk8u502-b07` — PASS;
-  all five GWT permutations compiled and linked.
-- PowerShell parser validation for `scripts/verify-browser.ps1` — PASS.
-- `git diff --check` — PASS.
-- LED baseline `-Seeds 0,2,3` — PASS for all 15 routes, including complaint
-  and solver markers.
-- `-Parallel -Seeds 0,2,3` — PASS for all 3 routes, including the exact
-  asymmetric complaint.
-- `-Diode -Seeds 0,2,3` — PASS for all 3 diode-open routes.
-- `-DiodeShort -Seeds 0,2,3` — PASS for all 3 developer diode-short routes,
-  including the exact bright-indicator complaint.
-- `-LedParts -Seeds 0,2,3` — PASS for all 3 physical-part routes.
-- `-Layout -PlayerSeed 3` — PASS.
-- Generic `-NormalPlayer -PlayerSeed 3` — PASS in five independent final
-  runs, with solver-backed repair and expected 100 kOhm original fault value.
-- `-ParallelNormalPlayer -PlayerSeed 3` — PASS in five independent final
-  runs, with solver-backed repair.
-- `-DiodeNormalPlayer -PlayerSeed 3` — PASS, including forward/reverse
-  measurement behavior and repair.
+- JDK 8 / GWT production build: PASS; all five permutations compiled and
+  linked.
+- PowerShell parser validation for `scripts/verify-browser.ps1`: PASS.
+- `git diff --check`: PASS before documentation completion.
+- `-WrongRepair -PlayerSeed 3`: PASS; solver-backed 2.2 kOhm degraded state,
+  incomplete challenge, and subsequent 1 kOhm restored completion.
+- `-WrongRepairNormalPlayer -PlayerSeed 3` with the Task 33 evidence directory:
+  PASS using genuine CDP mouse/keyboard input.
+- LED baseline `-Seeds 0,2,3`: PASS for all 15 existing routes.
+- Parallel, diode-open, diode-short, and LED-parts seed routes: PASS for
+  seeds 0, 2, and 3.
+- Existing generic LED, parallel, diode, and legacy LED normal-player routes:
+  PASS in serialized runs.
+- Physical replacement, generated-fault, scenario/complaint, power,
+  measurement, identity, and attachment regression checks: PASS.
+- Final completion checks after this report update: production build PASS and
+  staged-diff whitespace validation (`git diff --cached --check`) PASS.
+
+The Codex built-in browser initialization timed out during this task; the
+repository's established headless CDP verifier was used successfully as the
+accepted browser-validation fallback. Concurrent legacy CDP runs exposed a
+test-harness/WebSocket race, classified as a non-blocking FOLLOW-UP; serialized
+runs passed and no player-facing defect was demonstrated.
 
 ## Review and disposition
 
-The Luna coder implemented the bounded Task 32 change and completed the
-required correction work. Bacon independently confirmed the scenario
-architecture, solver-backed lifecycle and predicates, deterministic behavior,
-diode-short developer handling, fault hardening, stable identity, power
-safety, privacy-safe UI, and evidence.
+The coder reported `COMPLETE`, with no staging, commit, or push. The
+independent read-only reviewer returned `PASS` and found no substantive
+blockers. The reviewer confirmed solver-backed status classification, physical
+identity and actual resistor backing, normal-player CDP interaction, privacy,
+and nonblank screenshots.
 
-Bacon's final re-review reported one remaining 1-in-5 failure in the legacy
-`-LedNormalPlayer` developer verifier: a one-shot CDP click on `Install as
-LED1` can be lost during a GWT rerender. This is a test-harness interaction
-race, not evidence of incorrect player-facing product behavior; the generic
-and parallel normal-player acceptance flows and the diode normal-player flow
-passed. It is recorded as a FOLLOW-UP and does not block Task 32 completion
-under the closed acceptance set. No additional coder pass was opened.
+Reviewer follow-up classification:
 
-Primary architect final disposition: `FINAL PASS`. Sol escalation was not
-required.
+- `FOLLOW-UP`: concurrent legacy browser/CDP runs can race; serialized runs
+  pass and the issue does not demonstrate incorrect player-facing behavior.
+- No `BLOCKER` or `BACKLOG` findings remained.
 
-## Limitations and handoff
+Primary architect review: Round 1, `FINAL PASS`. The primary architect
+independently reviewed the implementation and diff, verified the seed-3
+electrical proof and screenshots, and confirmed that completion is gated by
+the status contract rather than a hidden expected resistor value. Escalation
+architect review was not required.
 
-The scenario catalog currently provides the first validated scenario for each
-family while retaining a generic catalog boundary for future variation.
-Connector/trace repair scenarios and advanced scope, damage, and thermal
-systems remain future work. The LED-specific legacy verifier's rerender-safe
-installation retry is a follow-up test-harness improvement; it does not alter
-the Task 32 product result.
+## Known limitations and handoff
 
-The next eligible roadmap milestone is Task 33. It is identified only and was
-not started.
+The scenario catalog and complaint remain unchanged; incorrect repair does not
+rewrite the service ticket. Task 34 component ratings, stress accumulation,
+thermal behavior, delayed failures, and secondary damage remain future work.
+The legacy concurrent CDP race is recorded as a follow-up and does not block
+Task 33.
+
+The next eligible roadmap milestone is Task 34 — Component Ratings and
+Stress/Damage v1. It is identified only; implementation did not begin.

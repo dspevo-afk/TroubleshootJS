@@ -360,6 +360,7 @@ MouseOutHandler, MouseWheelHandler {
 	int troubleshootResistanceVerifierState = VERIFIER_NOT_STARTED;
 	boolean troubleshootChallengeVerification;
 	boolean troubleshootReplacementVerification;
+	boolean troubleshootWrongRepairVerification;
 	boolean troubleshootMeterVerification;
 	boolean troubleshootDiodeVerification;
 	boolean troubleshootDiodeShort;
@@ -370,6 +371,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootReplacementVerificationComplete;
+	boolean troubleshootWrongRepairVerificationComplete;
 	boolean troubleshootMeterVerificationComplete;
 	boolean troubleshootDiodeVerificationComplete;
 	boolean troubleshootLedPhysicalVerificationComplete;
@@ -417,6 +419,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
 	    troubleshootChallengeVerification = qp.getBooleanValue("tsjVerifyChallenge", false);
 	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
+	    troubleshootWrongRepairVerification = qp.getBooleanValue("tsjVerifyWrongRepair", false);
 	    troubleshootMeterVerification = qp.getBooleanValue("tsjVerifyMeter", false);
 	    troubleshootDiodeVerification = qp.getBooleanValue("tsjVerifyDiode", false);
 	    troubleshootDiodeShort = qp.getBooleanValue("tsjDiodeShort", false);
@@ -4263,6 +4266,11 @@ MouseOutHandler, MouseWheelHandler {
 			ReplacementDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:replacement");
 		    }
+		    if (troubleshootWrongRepairVerification && !troubleshootWrongRepairVerificationComplete) {
+			troubleshootWrongRepairVerificationComplete = true;
+			ReplacementDeveloperVerifier.verifyWrongRepair(this);
+			publishBrowserVerificationResult("PASS:wrong-repair");
+		    }
 		    if (troubleshootMeterVerification && !troubleshootMeterVerificationComplete) {
 			troubleshootMeterVerificationComplete = true;
 			MeterLifecycleDeveloperVerifier.verify(this);
@@ -4295,7 +4303,8 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	} catch (RuntimeException e) {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
-		    troubleshootReplacementVerification || troubleshootMeterVerification ||
+		    troubleshootReplacementVerification || troubleshootWrongRepairVerification ||
+		    troubleshootMeterVerification ||
 		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification ||
 		    troubleshootGeometryVerification || troubleshootLayoutVerification ||
 		    troubleshootParallelVerification)

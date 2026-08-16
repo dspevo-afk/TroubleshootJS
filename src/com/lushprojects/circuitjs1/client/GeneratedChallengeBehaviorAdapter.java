@@ -27,10 +27,17 @@ class GeneratedChallengeBehaviorAdapter implements GeneratedChallengeBehaviorCon
         faultedValidator.verify(instance, modifications, powerState);
     }
 
+    public GeneratedRepairStatus getRepairStatus(GeneratedBoardInstance instance,
+            BoardModificationController modifications, BoardPowerState powerState,
+            boolean activeMeasurementOverlay) {
+        return repairedValidator.getRepairStatus(instance, modifications, powerState,
+            activeMeasurementOverlay);
+    }
+
     public boolean isFunctionallyRepaired(GeneratedBoardInstance instance,
             BoardModificationController modifications, BoardPowerState powerState,
             boolean activeMeasurementOverlay) {
-        return repairedValidator.isFunctionallyRepaired(instance, modifications, powerState,
-            activeMeasurementOverlay);
+        return getRepairStatus(instance, modifications, powerState, activeMeasurementOverlay) ==
+            GeneratedRepairStatus.CORRECTLY_RESTORED;
     }
 }

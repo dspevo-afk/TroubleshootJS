@@ -614,3 +614,41 @@ courtyards, and validates every endpoint. The broad Task 26 three-consecutive-
 failure abort was removed; attempts remain bounded and retain the last failure
 for diagnostics. Task 28 replaces the oversized simple placement with generic
 topology-aware grouping and derives the final outline from occupied PCB content.
+
+## Task 33 wrong-repair semantics and post-repair validation
+
+Post-repair behavior is represented by the generic `GeneratedRepairStatus`
+contract boundary. Family repair validators classify a solved board as
+`STILL_FAULTED_OR_NONFUNCTIONAL`, `DEGRADED_BUT_OPERATING`, or
+`CORRECTLY_RESTORED` using live CircuitJS currents, component relationships,
+and operational state. The status is developer/verifier-facing state and is
+not rendered in the normal player UI. The existing boolean
+`isFunctionallyRepaired` contract remains available and is true only for
+`CORRECTLY_RESTORED`.
+
+`GeneratedChallengeController` completes a challenge only after the behavior
+contract reports `CORRECTLY_RESTORED`; it does not compare an installed
+catalog value, part ID, or nameplate with a hidden expected resistor. This
+preserves Task 30's alternate-repair principle while allowing the solver to
+reject a physically installed resistor whose electrical result is outside the
+family's healthy contract. Missing/open or dark behavior remains
+`STILL_FAULTED_OR_NONFUNCTIONAL`, while nonzero operating behavior outside the
+healthy current range is `DEGRADED_BUT_OPERATING`.
+
+The deterministic LED seed-3 proof uses a 12 V board with a generated 1 kOhm
+R1 requirement. Removing the original faulted part and installing the
+physically compatible 2.2 kOhm catalog part creates a distinct physical
+resistor instance whose actual `ResistorElm` is 2200 Ohm. CircuitJS then
+solves nonzero LED/resistor current above the illumination threshold but below
+the 5-15 mA healthy contract, so the board operates in a degraded state and
+the ticket remains incomplete. Removing it and installing a distinct 1 kOhm
+instance restores the healthy solved current and completes the same generic
+contract. The original fault binding remains on the loose original part.
+
+`ReplacementDeveloperVerifier.verifyWrongRepair` covers the electrical,
+physical-identity, inventory, attachment, and still-faulted assertions. The
+`-WrongRepairNormalPlayer` browser route covers the genuine CDP mouse/keyboard
+flow and captures the wrong-installed powered state and the completed state.
+These developer-only checks do not add diagnosis metadata or wrong-part
+messages to normal UI. Resistor ratings, stress accumulation, and secondary
+damage remain outside this boundary for Task 34.

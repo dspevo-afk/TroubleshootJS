@@ -376,7 +376,7 @@ seeds, along with normal-player repair completion.
 
 ## Task 33 — Wrong Repair Semantics and Post-Repair Validation
 
-**Status:** `[>] NEXT`
+**Status:** `[x] Complete`
 
 ### Goal
 
@@ -399,11 +399,24 @@ Allow the player to make a plausible but electrically wrong repair and let the c
 
 At least one challenge can be “repaired” with an incorrect resistor that powers up but fails the functional completion criteria for a genuine electrical reason.
 
+### Completed implementation
+
+Task 33 adds a generic solver-backed repair status boundary with explicit
+still-faulted/nonfunctional, degraded-but-operating, and correctly-restored
+results. Challenge completion now requires the correctly-restored result from
+the existing functional behavior contract; it does not compare a replacement
+catalog value or physical part ID with hidden expected metadata. The LED seed-3
+normal-player and developer routes prove that a legal 2.2 kOhm replacement
+produces nonzero illuminated but out-of-contract behavior, while a subsequent
+1 kOhm replacement restores the solved functional contract. Physical part,
+inventory, attachment, original-fault, complaint, and privacy invariants remain
+intact. Task 34 stress/damage behavior was not started.
+
 ---
 
 ## Task 34 — Component Ratings and Stress/Damage v1
 
-**Status:** `[ ]`
+**Status:** `[>] NEXT`
 
 ### Goal
 

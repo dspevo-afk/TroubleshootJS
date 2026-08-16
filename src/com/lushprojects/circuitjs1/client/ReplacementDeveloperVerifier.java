@@ -67,6 +67,101 @@ class ReplacementDeveloperVerifier {
         sim.setCircuitTitle("Replacement verification passed");
     }
 
+    static void verifyWrongRepair(CirSim sim) {
+        GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
+        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        require(instance != null && challenge != null && challenge.isReady(),
+            "Wrong-repair verification requires a ready challenge");
+        require(instance.getCircuitFamilyId().equals("LED_INDICATOR") && instance.getSeed() == 3,
+            "Wrong-repair verification requires LED seed 3");
+        require("R1".equals(instance.getFaultBinding().getFault().getTargetComponentId()) &&
+            "Indicator does not light.".equals(challenge.getComplaintText()),
+            "Wrong-repair route did not retain the original R1 challenge");
+
+        LedIndicatorFamilyState family = LedIndicatorFamilyState.require(instance);
+        ResistorSlotController slots = sim.getResistorSlotController();
+        PhysicalResistorPart original = family.getResistorInventory().get("R1_ORIGINAL");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        require(slots.removeInstalledPart(), "Faulted R1 did not remove through slot controller");
+        require(family.getR1Slot().isEmpty() && original.getLocation() == ResistorPartLocation.LOOSE &&
+            original.isFaulted(), "Removing R1 changed original physical fault ownership");
+        verifyPartTopology(sim, instance);
+        require(challenge.getDefinition().getBehaviorContract().getRepairStatus(instance,
+            sim.getBoardModificationController(), BoardPowerState.UNPOWERED, false) ==
+            GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL && !challenge.isCompleted(),
+            "Open or removed R1 did not remain incomplete");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim);
+        require(challenge.getDefinition().getBehaviorContract().getRepairStatus(instance,
+            sim.getBoardModificationController(), BoardPowerState.POWERED, false) ==
+            GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL && !challenge.isCompleted(),
+            "Open or removed R1 did not remain nonfunctional after a solved powered check");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+
+        ResistorCatalogEntry wrongCatalog = family.getResistorCatalog().get(catalogId(2200));
+        require(wrongCatalog.getNameplate().getNominalResistanceOhms() == 2200,
+            "2.2 kOhm catalog entry has the wrong nameplate");
+        require(slots.installNewFromCatalog(wrongCatalog.getId()),
+            "2.2 kOhm catalog replacement was not accepted");
+        PhysicalResistorPart wrong = family.getR1Slot().getInstalledPart();
+        require(wrong != null && wrong != original && wrong.getLocation() == ResistorPartLocation.INSTALLED &&
+            family.getResistorInventory().get(wrong.getId()) == wrong &&
+            wrong.getNameplate().getNominalResistanceOhms() == wrongCatalog.getNameplate()
+                .getNominalResistanceOhms() &&
+            instance.getComponentBindings().getSingleElement("R1") == wrong.getElement() &&
+            wrong.getElement().getResistance() == 2200,
+            "2.2 kOhm catalog -> physical part -> ResistorElm identity chain was not preserved");
+        settle(sim);
+        verifyPartTopology(sim, instance);
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim);
+        double wrongLedCurrent = getLedCurrent(instance);
+        require(wrongLedCurrent > .001 && wrongLedCurrent < .005 &&
+            Math.abs(wrongLedCurrent - getInstalledResistorCurrent(instance)) <= .0001 &&
+            instance.getOperationalStates().isIlluminated("LED1") && !challenge.isCompleted() &&
+            challenge.getDefinition().getBehaviorContract().getRepairStatus(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false) ==
+                GeneratedRepairStatus.DEGRADED_BUT_OPERATING &&
+            !challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false),
+            "2.2 kOhm replacement did not produce degraded solved LED operation");
+
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        require(slots.removeInstalledPart() && wrong.getLocation() == ResistorPartLocation.LOOSE,
+            "2.2 kOhm replacement did not remove through slot controller");
+        verifyPartTopology(sim, instance);
+        ResistorCatalogEntry correctCatalog = family.getResistorCatalog().get(catalogId(1000));
+        require(correctCatalog.getNameplate().getNominalResistanceOhms() == 1000,
+            "1 kOhm catalog entry has the wrong nameplate");
+        require(slots.installNewFromCatalog(correctCatalog.getId()),
+            "1 kOhm catalog replacement was not accepted");
+        PhysicalResistorPart correct = family.getR1Slot().getInstalledPart();
+        require(correct != wrong && correct != original &&
+            correct.getLocation() == ResistorPartLocation.INSTALLED &&
+            family.getResistorInventory().get(correct.getId()) == correct &&
+            correct.getNameplate().getNominalResistanceOhms() == 1000 &&
+            instance.getComponentBindings().getSingleElement("R1") == correct.getElement() &&
+            correct.getElement().getResistance() == 1000,
+            "1 kOhm catalog -> physical part -> ResistorElm identity chain was not preserved");
+        settle(sim);
+        verifyPartTopology(sim, instance);
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim);
+        double correctLedCurrent = getLedCurrent(instance);
+        require(correctLedCurrent > .005 && correctLedCurrent < .015 &&
+            Math.abs(correctLedCurrent - getInstalledResistorCurrent(instance)) <= .0001 &&
+            instance.getOperationalStates().isIlluminated("LED1") && challenge.isCompleted() &&
+            challenge.getDefinition().getBehaviorContract().getRepairStatus(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false) ==
+                GeneratedRepairStatus.CORRECTLY_RESTORED &&
+            challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false),
+            "1 kOhm replacement did not restore solved LED operation");
+        require(original.getLocation() == ResistorPartLocation.LOOSE && original.isFaulted(),
+            "Repair changed the original part's fault binding");
+        sim.setCircuitTitle("Wrong repair verification passed");
+    }
+
     private static void verifyPassiveDcVoltageCases(CirSim sim, GeneratedBoardInstance instance,
             double resistance) {
         CircuitPostProbeTarget vin = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.1"));

@@ -14,6 +14,8 @@ param(
     [switch]$ParallelNormalPlayer,
     [switch]$LedParts,
     [switch]$LedNormalPlayer,
+    [switch]$WrongRepair,
+    [switch]$WrongRepairNormalPlayer,
     [switch]$Layout,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
@@ -801,6 +803,103 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
     }
 }
 
+function verifyWrongRepairNormalPlayer([string]$url, [int]$debugPort) {
+    $profile = Join-Path $env:TEMP ("tsj-wrong-repair-player-" + [Guid]::NewGuid().ToString('N'))
+    $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+        '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
+    $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $socket = $null
+    try {
+        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        do {
+            Start-Sleep -Milliseconds 200
+            try {
+                $targets = Invoke-RestMethod "http://127.0.0.1:$debugPort/json/list" -TimeoutSec 2
+                $target = $targets | Where-Object { $_.type -eq 'page' } | Select-Object -First 1
+            } catch { $target = $null }
+        } while ($null -eq $target -and [DateTime]::UtcNow -lt $deadline)
+        if ($null -eq $target) { throw 'browser target did not become available' }
+        $socket = New-Object Net.WebSockets.ClientWebSocket
+        $socket.ConnectAsync([Uri]$target.webSocketDebuggerUrl,
+            [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+        $nextId = 1
+        $failures = @()
+        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Indicator does not light.')" $deadline ([ref]$failures) 'ready LED seed-3 wrong-repair challenge'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points" $deadline ([ref]$failures) 'procedural LED PCB geometry bridge'
+        $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),catalog:document.body.innerText.includes('Resistor Replacement Catalog'),empty:document.body.innerText.includes('No removed parts'),complaint:document.body.innerText.includes('Indicator does not light.')})" ([ref]$failures)
+        if (-not ($initial.canvas -and $initial.catalog -and $initial.empty -and $initial.complaint)) {
+            throw 'initial LED workbench or original complaint was missing'
+        }
+        if ($EvidenceDirectory) {
+            [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'initial-board.png') ([ref]$failures)
+        }
+
+        $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('R1')&&document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'R1 component controls'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'r1-selected.png') ([ref]$failures)
+        }
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'board power off before R1 removal'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('R1_ORIGINAL - Removed resistor')" $deadline ([ref]$failures) 'faulted original R1 removal'
+        selectOptionWithKeyboard $socket ([ref]$nextId) 0 '2200 Ohm +/-5%' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new resistor' "document.body.innerText.includes('Value: 2200 Ohm +/-5%')" $deadline ([ref]$failures) '2.2 kOhm physical resistor installation'
+        waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+        $wrongBands = getResistorBandColors $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures)
+        $wrongBandNames = if ($null -eq $wrongBands) { @() } else { @($wrongBands.PSObject.Properties | ForEach-Object { $_.Name }) }
+        foreach ($band in @('red', 'gold')) {
+            if (-not ($wrongBandNames -contains $band)) {
+                throw "2.2 kOhm installed resistor markings were not visible: $($wrongBands | ConvertTo-Json -Compress)"
+            }
+        }
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'power on wrong replacement'
+        $wrongUi = evaluateCdp $socket ([ref]$nextId) "(()=>{const body=document.body.innerText||'',lower=body.toLowerCase();return {complaint:body.includes('Indicator does not light.'),power:body.includes('Board Power: ON'),value:body.includes('Value: 2200 Ohm +/-5%'),completed:body.includes('Repair verified. Indicator operating normally.'),diagnostic:lower.includes('wrong resistor')||lower.includes('incorrect resistor')||lower.includes('diagnos')};})()" ([ref]$failures)
+        if (-not ($wrongUi.complaint -and $wrongUi.power -and $wrongUi.value) -or $wrongUi.completed -or $wrongUi.diagnostic) {
+            throw "wrong powered repair UI did not preserve complaint without a diagnostic: $($wrongUi | ConvertTo-Json -Compress)"
+        }
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'wrong-repair-powered.png') ([ref]$failures)
+        }
+
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'board power off before wrong replacement removal'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('R1_CATALOG_PART_0 - 2200 Ohm +/-5%')" $deadline ([ref]$failures) '2.2 kOhm replacement removal'
+        selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new resistor' "document.body.innerText.includes('Value: 1000 Ohm +/-5%')" $deadline ([ref]$failures) '1 kOhm physical resistor installation'
+        waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+        $correctBands = getResistorBandColors $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures)
+        $correctBandNames = if ($null -eq $correctBands) { @() } else { @($correctBands.PSObject.Properties | ForEach-Object { $_.Name }) }
+        foreach ($band in @('brown', 'black', 'red', 'gold')) {
+            if (-not ($correctBandNames -contains $band)) {
+                throw "1 kOhm installed resistor markings were not visible: $($correctBands | ConvertTo-Json -Compress)"
+            }
+        }
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'power on correct replacement'
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'generic functional completion text'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'completed.png') ([ref]$failures)
+        }
+        if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        Write-Host 'PASS wrong-repair-normal-player seed=3 2200-ohm-degraded 1000-ohm-restored'
+        return $true
+    } catch {
+        Write-Host "FAIL wrong-repair-normal-player seed=3 - $($_.Exception.Message)"
+        if ($null -ne $socket) {
+            try {
+                $snapshot = evaluateCdp $socket ([ref]$nextId) "document.body.innerText" ([ref]$failures)
+                $start = [Math]::Max(0, $snapshot.Length - 1800)
+                Write-Host ("WRONG REPAIR PLAYER UI SNAPSHOT: " + $snapshot.Substring($start).Replace("`n", ' | '))
+            } catch { }
+        }
+        return $false
+    } finally {
+        cleanupBrowser $browser $socket $profile
+    }
+}
+
 function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
     $profile = Join-Path $env:TEMP ("tsj-led-player-" + [Guid]::NewGuid().ToString('N'))
     $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
@@ -939,8 +1038,16 @@ if ($Layout) {
     if (-not (verifyRoute "procedural-layout" "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyLayout=true&tsjVerifyGeometry=true" 'PASS:layout' 9440)) { exit 1 }
     exit 0
 }
+if ($WrongRepair) {
+    if (-not (verifyRoute 'seed=3 wrong-repair' "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyWrongRepair=true" 'PASS:wrong-repair' 9491)) { exit 1 }
+    exit 0
+}
 if ($NormalPlayer) {
     if (-not (verifyNormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyGeometry=true" 9450)) { exit 1 }
+    exit 0
+}
+if ($WrongRepairNormalPlayer) {
+    if (-not (verifyWrongRepairNormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyGeometry=true" 9490)) { exit 1 }
     exit 0
 }
 if ($DiodeNormalPlayer) {
