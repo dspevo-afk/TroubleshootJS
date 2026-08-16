@@ -364,6 +364,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootDiodeVerification;
 	boolean troubleshootLedPhysicalVerification;
 	boolean troubleshootGeometryVerification;
+	boolean troubleshootLayoutVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootReplacementVerificationComplete;
@@ -417,6 +418,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootDiodeVerification = qp.getBooleanValue("tsjVerifyDiode", false);
 	    troubleshootLedPhysicalVerification = qp.getBooleanValue("tsjVerifyLedParts", false);
 	    troubleshootGeometryVerification = qp.getBooleanValue("tsjVerifyGeometry", false);
+	    troubleshootLayoutVerification = qp.getBooleanValue("tsjVerifyLayout", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
@@ -4257,7 +4259,7 @@ MouseOutHandler, MouseWheelHandler {
 			LedPhysicalDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:led-parts");
 		    }
-		    if (troubleshootGeometryVerification && !troubleshootGeometryVerificationComplete) {
+		    if (troubleshootLayoutVerification && !troubleshootGeometryVerificationComplete) {
 			troubleshootGeometryVerificationComplete = true;
 			PcbLayoutDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:layout");
@@ -4270,7 +4272,7 @@ MouseOutHandler, MouseWheelHandler {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootMeterVerification ||
 		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification ||
-		    troubleshootGeometryVerification)
+		    troubleshootGeometryVerification || troubleshootLayoutVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +

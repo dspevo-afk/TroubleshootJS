@@ -187,22 +187,48 @@ spaced before pads and body keep-outs are accepted. Orientation is deliberately
 deferred, so this first procedural layer keeps the existing recognizable
 horizontal component presentation.
 
-Routing is a modest coarse-grid Manhattan BFS. It connects the already-defined
-pads belonging to each logical net, blocks unrelated component keep-outs,
-other pads, and previously routed copper, and records explicit start/end pad
-IDs on each trace. It is not a manufacturing DRC or a general PCB CAD
-autorouter. The parts tray remains a separate workbench rectangle outside the
-board copper area.
+Task 26 hardens this stage with a deterministic coarse-grid A* Manhattan
+router. It connects only the already-defined pad relationships, applies a
+small bend penalty, blocks component body keep-outs, and records explicit
+start/end pad IDs on every trace. Pads carry narrow escape corridors: the
+router and `PcbBoardLayout.validateGeometry` use the same corridor semantics,
+so copper may leave an exact pad through its legal lead direction while the
+component body remains forbidden. The LED pads escape downward from the body;
+axial pads escape horizontally, and connector pads escape inward from the
+edge.
 
-Every generated layout runs geometry validation independently of CircuitJS
-electrical validation. Validation checks component/pad coverage, stable net
-and endpoint identity, board bounds, keep-outs, body/pad overlap, Manhattan
-segments, and unrelated trace crossings. Placement and routing are retried
-with a bounded deterministic attempt derived from the same seed. A generation
-failure is surfaced rather than replaced with a disconnected decorative trace.
-`PcbLayoutDeveloperVerifier` proves repeated seeds 0, 2, and 3 have identical
-fingerprints and that each pair has at least two meaningful differences across
-outline, component placement, and routed copper.
+Copper uses the shared `PcbTraceRules` contract: rendered traces are 9 pixels
+wide, unrelated nets require 6 pixels of visible soldermask, and their
+centerlines therefore must be at least 15 pixels apart. The router inflates
+existing copper occupancy by one coarse grid cell in every direction, blocking
+different-net adjacent or diagonal cells during pathfinding. Same-net copper
+may intentionally re-use its own clearance cells. Validation independently
+measures every unrelated horizontal, vertical, corner, and perpendicular
+segment pair against the 15-pixel minimum, so the rule is not inferred from
+the drawing alone.
+
+Each candidate is validated for component/pad coverage, stable net and
+endpoint identity, board bounds, keep-outs, legal escape edges, body/pad
+overlap, Manhattan segments, route detour/bend limits, silkscreen collisions,
+unrelated crossings, and minimum copper clearance. Placement and routing are
+retried with a bounded deterministic attempt derived from the same seed;
+repeated deterministic keep-out or clearance contradictions fail early with a
+diagnostic rather than consuming every retry. A failed candidate is never
+replaced with disconnected decorative copper. `PcbLayoutDeveloperVerifier`
+proves repeated seeds 0, 2, and 3 have identical fingerprints and that each
+pair has at least two meaningful differences across outline, component
+placement, and routed copper. It also directly regresses the seed-3 LED
+cathode endpoint case that previously entered the LED body.
+
+Silkscreen reference and connector-net labels are generated as collision-aware
+layout objects rather than fixed renderer pixels. `J1.1` and `J1.2` retain
+stable pad identity while rendering a positive/negative connector cue and
+seed-dependent voltage text. The parts tray remains a separate workbench
+rectangle outside the board copper area. The browser verifier's geometry bridge
+is read-only and only enabled by an explicit developer query; normal input is
+still dispatched through real CDP mouse events. Its CDP receive window is
+bounded independently from the route timeout so a slow diagnostic response
+cannot masquerade as a routing algorithm.
 
 `BoardSimulationBindings` maps stable pad IDs to resolvable
 `CircuitMeasurementEndpoint` instances. CircuitJS element/post references are

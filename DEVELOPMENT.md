@@ -193,6 +193,20 @@ fixed board coordinates:
 .\scripts\verify-browser.ps1 -DiodeNormalPlayer -PlayerSeed 3
 ```
 
+Task 26's procedural-layout verifier is:
+
+```powershell
+.\scripts\verify-browser.ps1 -Layout
+```
+
+It regenerates both simple PCB families for seeds 0, 2, and 3, checks
+same-seed fingerprints and cross-seed variation, validates pad escape
+corridors, route quality, and the shared 9-pixel trace / 15-pixel centerline
+minimum-clearance rule, and exercises the seed-3 LED cathode endpoint
+regression. The verifier also checks generated silkscreen labels. The
+production browser runner uses a separate bounded CDP receive window so these
+deterministic checks finish in seconds without changing the route timeout.
+
 ## Manual application verification
 
 After a production build, confirm that the GWT bootstrap exists:

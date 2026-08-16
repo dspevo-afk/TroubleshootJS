@@ -12,12 +12,26 @@ class PcbLayoutDeveloperVerifier {
     }
 
     private static void verifyFamily(String familyId) {
-        PcbBoardLayout seed0 = generate(familyId, 0).getPcbLayout();
-        PcbBoardLayout seed0Repeat = generate(familyId, 0).getPcbLayout();
-        PcbBoardLayout seed2 = generate(familyId, 2).getPcbLayout();
-        PcbBoardLayout seed2Repeat = generate(familyId, 2).getPcbLayout();
-        PcbBoardLayout seed3 = generate(familyId, 3).getPcbLayout();
-        PcbBoardLayout seed3Repeat = generate(familyId, 3).getPcbLayout();
+        GeneratedBoardInstance seed0Board = generate(familyId, 0);
+        GeneratedBoardInstance seed0RepeatBoard = generate(familyId, 0);
+        GeneratedBoardInstance seed2Board = generate(familyId, 2);
+        GeneratedBoardInstance seed2RepeatBoard = generate(familyId, 2);
+        GeneratedBoardInstance seed3Board = generate(familyId, 3);
+        GeneratedBoardInstance seed3RepeatBoard = generate(familyId, 3);
+        PcbBoardLayout seed0 = seed0Board.getPcbLayout();
+        PcbBoardLayout seed0Repeat = seed0RepeatBoard.getPcbLayout();
+        PcbBoardLayout seed2 = seed2Board.getPcbLayout();
+        PcbBoardLayout seed2Repeat = seed2RepeatBoard.getPcbLayout();
+        PcbBoardLayout seed3 = seed3Board.getPcbLayout();
+        PcbBoardLayout seed3Repeat = seed3RepeatBoard.getPcbLayout();
+        verifyRouteQuality(seed0, seed0Board.getBoard());
+        verifyRouteQuality(seed2, seed2Board.getBoard());
+        verifyRouteQuality(seed3, seed3Board.getBoard());
+        verifyLabels(seed0, seed0Board.getBoard());
+        verifyLabels(seed2, seed2Board.getBoard());
+        verifyLabels(seed3, seed3Board.getBoard());
+        if ("LED_INDICATOR".equals(familyId))
+            verifySeedThreeLedEndpointRegression(seed3);
         require(seed0.geometryFingerprint().equals(seed0Repeat.geometryFingerprint()),
             familyId + " seed 0 is not reproducible");
         require(seed2.geometryFingerprint().equals(seed2Repeat.geometryFingerprint()),
@@ -30,6 +44,96 @@ class PcbLayoutDeveloperVerifier {
             familyId + " seeds 0 and 3 lack meaningful geometry variation");
         require(meaningfulDifferences(seed2, seed3) >= 2,
             familyId + " seeds 2 and 3 lack meaningful geometry variation");
+    }
+
+    private static void verifyRouteQuality(PcbBoardLayout layout, TroubleshootBoard board) {
+        layout.validateRouteQuality();
+        verifyCopperClearance(layout);
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            require(layout.getTraceBendCount(trace) <= 16,
+                "route has too many bends: " + trace.getNetId());
+            require(layout.getTraceDetourRatio(trace) <= 3.0,
+                "route detour is too large: " + trace.getNetId());
+            verifyEndpointEscape(layout, trace, true);
+            verifyEndpointEscape(layout, trace, false);
+        }
+        require(layout.getRouteQualityScore(board) >= 0,
+            "route quality score is invalid");
+        require(PcbTraceRules.MIN_CENTERLINE_CLEARANCE ==
+                PcbTraceRules.TRACE_WIDTH + PcbTraceRules.MIN_VISIBLE_CLEARANCE,
+            "trace clearance rule is inconsistent with rendered width");
+    }
+
+    private static void verifyCopperClearance(PcbBoardLayout layout) {
+        require(PcbTraceRules.TRACE_WIDTH > 0 &&
+                PcbTraceRules.MIN_VISIBLE_CLEARANCE > 0 &&
+                PcbTraceRules.ROUTING_GRID_CLEARANCE_CELLS > 0,
+            "trace clearance rule is not positive");
+        layout.validateTraceClearance();
+    }
+
+    private static void verifyEndpointEscape(PcbBoardLayout layout, PcbTraceGeometry trace,
+            boolean start) {
+        String padId = start ? trace.getStartPadId() : trace.getEndPadId();
+        PcbPadPlacement pad = layout.getPad(padId);
+        if (pad.getEscapeLength() == 0)
+            return;
+        int[] x = trace.getXPoints();
+        int[] y = trace.getYPoints();
+        int index = start ? 1 : x.length - 2;
+        int dx = start ? x[index] - x[0] : x[x.length - 1] - x[index];
+        int dy = start ? y[index] - y[0] : y[y.length - 1] - y[index];
+        int signX = dx == 0 ? 0 : dx < 0 ? -1 : 1;
+        int signY = dy == 0 ? 0 : dy < 0 ? -1 : 1;
+        int expectedX = start ? pad.getEscapeDx() : -pad.getEscapeDx();
+        int expectedY = start ? pad.getEscapeDy() : -pad.getEscapeDy();
+        require(signX == expectedX && signY == expectedY,
+            "trace does not use pad escape direction: " + trace.getNetId() + " / " + padId);
+    }
+
+    private static void verifyLabels(PcbBoardLayout layout, TroubleshootBoard board) {
+        require(layout.getSilkscreenLabel("board-title") != null,
+            "board title label is missing");
+        for (String componentId : board.getComponentIds())
+            require(layout.getSilkscreenLabel("component:" + componentId) != null,
+                "component label is missing: " + componentId);
+        require(layout.getSilkscreenLabel("net:J1.1").getTargetPadId().equals("J1.1"),
+            "positive connector label is not tied to J1.1");
+        require(layout.getSilkscreenLabel("net:J1.2").getTargetPadId().equals("J1.2"),
+            "ground connector label is not tied to J1.2");
+    }
+
+    private static void verifySeedThreeLedEndpointRegression(PcbBoardLayout layout) {
+        PcbComponentPlacement led = layout.getComponent("LED1");
+        PcbPadPlacement anode = layout.getPad("LED1.A");
+        PcbPadPlacement cathode = layout.getPad("LED1.K");
+        require(anode.getEscapeDx() == 0 && anode.getEscapeDy() == 1 &&
+                cathode.getEscapeDx() == 0 && cathode.getEscapeDy() == 1,
+            "seed 3 LED pads do not use downward escape corridors");
+        require(!containsInclusive(led.getKeepOut(), cathode.getX(),
+                cathode.getY() + cathode.getEscapeLength()),
+            "seed 3 LED cathode escape corridor does not leave its keep-out");
+        PcbTraceGeometry groundTrace = null;
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            if ("GND".equals(trace.getNetId()) && "J1.2".equals(trace.getStartPadId()) &&
+                    "LED1.K".equals(trace.getEndPadId())) {
+                groundTrace = trace;
+                break;
+            }
+        }
+        require(groundTrace != null, "seed 3 GND-to-LED cathode trace is missing");
+        int[] x = groundTrace.getXPoints();
+        int[] y = groundTrace.getYPoints();
+        require(x[x.length - 2] == cathode.getX() &&
+                y[x.length - 2] > cathode.getY() &&
+                x[x.length - 1] == cathode.getX() &&
+                y[x.length - 1] == cathode.getY(),
+            "seed 3 GND trace approaches LED1.K through the component body");
+    }
+
+    private static boolean containsInclusive(Rectangle rectangle, int x, int y) {
+        return x >= rectangle.x && y >= rectangle.y &&
+            x <= rectangle.x + rectangle.width && y <= rectangle.y + rectangle.height;
     }
 
     private static int meaningfulDifferences(PcbBoardLayout first, PcbBoardLayout second) {
