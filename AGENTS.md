@@ -302,18 +302,21 @@ Where feasible, use CircuitJS itself as the validation engine.
 
 ## Player-Facing Validation
 
-When a task requires manual validation of player-facing TroubleshootJS behavior, use Computer Use on the active Windows desktop so the interaction is visible to the user.
+When a task requires normal-player validation of player-facing TroubleshootJS behavior, the built-in `@Browser` is the default and required interaction method. Verify that the development server is running (starting it when necessary), open the actual local application in `@Browser`, and keep the built-in browser visible during validation.
 
-For player-facing validation:
+For normal-player validation:
 
-- Interact with the running application through normal visible mouse and keyboard input.
-- Test the workflow as a normal player would.
-- Do not treat headless browser automation, CDP actions, DOM manipulation, JavaScript-triggered clicks, screenshots alone, verifier routes, or internal state inspection as substitutes for required player-facing validation.
-- Automated tests, verifier routes, CDP, Playwright, DOM inspection, and source-level diagnostics may still be used as supporting evidence and for non-player-facing validation.
-- Clearly distinguish behavior directly observed through Computer Use from automated-test results or source-code reasoning.
-- If Computer Use is unavailable or cannot complete the required interaction, report the player-facing validation as incomplete rather than silently substituting hidden automation.
+- Interact with the running local application through real visible browser input: visible clicks, left/right clicks where the UI requires them, typing, rendered navigation, and observation of rendered state changes.
+- Exercise the workflow as a normal player would, including final inspection of the rendered state after the important interactions. Capture screenshots when useful, including important UI states and interaction results, and preserve them as evidence where appropriate.
+- Do not use DOM manipulation, JavaScript-triggered clicks, synthetic events, direct method calls, internal state mutation, or other shortcuts as substitutes for required player interaction. These techniques are allowed only for explicitly requested developer-level checks, not as evidence of normal-player behavior.
+- Browser/CDP/DOM/console/network inspection may be used as supplemental diagnostics, but it must not replace the required visible `@Browser` interaction.
+- Do not hide or replace the visible built-in browser with Windows desktop automation. Do not use `@Computer`/Windows desktop Computer Use by default; keeping the desktop usable is the default.
+- If a required test cannot be performed through `@Browser` and would require `@Computer`, do not switch silently. Explain and record the specific limitation, continue all feasible `@Browser` validation, and use `@Computer` only when explicitly authorized or when no reasonable browser alternative exists.
+- Clearly distinguish behavior directly observed through visible `@Browser` interaction from supplemental browser diagnostics, automated-test results, verifier results, or source-level reasoning.
 
-Use Computer Use only where actual player-facing/manual interaction is relevant. Do not require it for builds, unit tests, deterministic verifier routes, simulation invariants, or other purely automated checks.
+The validation hierarchy is: `@Browser` real visible interaction -> browser/CDP diagnostics -> CLI/verifier tests -> `@Computer` only for genuinely non-browser GUI requirements.
+
+Automated tests, verifiers, CDP, DOM inspection, and source-level diagnostics remain valid for non-player-facing checks. Do not require visible browser interaction for builds, unit tests, deterministic verifier routes, simulation invariants, or other purely automated checks unless the task explicitly requires player-facing validation.
 
 ---
 
@@ -1633,7 +1636,7 @@ For every successful task that changes or exercises visible player behavior:
 
 For all browser-based player-flow validation:
 
-- Use the Codex built-in browser when possible.
+- Use the Codex built-in `@Browser` for all browser-based normal-player interaction, as required by the Player-Facing Validation protocol; browser/CDP diagnostics are supplemental only.
 - Capture and surface screenshots at every important UI state, including after
   reaching newly implemented UI and before and after important interactions.
 - Do not merely report that a browser test passed; make the visual evidence
