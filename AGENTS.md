@@ -300,6 +300,21 @@ Reject the generation and try another valid generation.
 
 Where feasible, use CircuitJS itself as the validation engine.
 
+## Player-Facing Validation
+
+When a task requires manual validation of player-facing TroubleshootJS behavior, use Computer Use on the active Windows desktop so the interaction is visible to the user.
+
+For player-facing validation:
+
+- Interact with the running application through normal visible mouse and keyboard input.
+- Test the workflow as a normal player would.
+- Do not treat headless browser automation, CDP actions, DOM manipulation, JavaScript-triggered clicks, screenshots alone, verifier routes, or internal state inspection as substitutes for required player-facing validation.
+- Automated tests, verifier routes, CDP, Playwright, DOM inspection, and source-level diagnostics may still be used as supporting evidence and for non-player-facing validation.
+- Clearly distinguish behavior directly observed through Computer Use from automated-test results or source-code reasoning.
+- If Computer Use is unavailable or cannot complete the required interaction, report the player-facing validation as incomplete rather than silently substituting hidden automation.
+
+Use Computer Use only where actual player-facing/manual interaction is relevant. Do not require it for builds, unit tests, deterministic verifier routes, simulation invariants, or other purely automated checks.
+
 ---
 
 # PCB Generation

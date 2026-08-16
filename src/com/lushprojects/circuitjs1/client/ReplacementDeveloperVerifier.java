@@ -497,15 +497,21 @@ class ReplacementDeveloperVerifier {
 
     private static void verifyNewBackingCoordinates(PhysicalResistorPart part,
             HashSet<String> canonicalCoordinates, HashSet<String> acquiredCoordinates) {
+        HashSet<String> partCoordinates = new HashSet<String>();
         for (CircuitElm backing : part.getBackingElements()) {
             String first = coordinate(backing.x, backing.y);
             String second = coordinate(backing.x2, backing.y2);
-            require(!first.equals(second) && !canonicalCoordinates.contains(first) &&
-                !canonicalCoordinates.contains(second) && !acquiredCoordinates.contains(first) &&
-                !acquiredCoordinates.contains(second),
-                "Catalog backing coordinate overlaps canonical or acquired graph: " + part.getId());
-            acquiredCoordinates.add(first);
-            acquiredCoordinates.add(second);
+            require(!first.equals(second) &&
+                (partCoordinates.contains(first) || (!canonicalCoordinates.contains(first) &&
+                !acquiredCoordinates.contains(first))) &&
+                (partCoordinates.contains(second) || (!canonicalCoordinates.contains(second) &&
+                !acquiredCoordinates.contains(second))),
+                "Catalog backing coordinate overlaps canonical or acquired graph: " + part.getId() +
+                " first=" + first + " second=" + second);
+            if (partCoordinates.add(first))
+                acquiredCoordinates.add(first);
+            if (partCoordinates.add(second))
+                acquiredCoordinates.add(second);
         }
     }
 

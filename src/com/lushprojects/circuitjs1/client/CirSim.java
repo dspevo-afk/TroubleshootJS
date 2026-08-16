@@ -366,6 +366,9 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootDiodeShort;
 	boolean troubleshootLedPhysicalVerification;
 	boolean troubleshootParallelVerification;
+	boolean troubleshootStressVerification;
+	boolean troubleshootStressVerificationDeferred;
+	boolean troubleshootStressVerificationRequested;
 	boolean troubleshootGeometryVerification;
 	boolean troubleshootLayoutVerification;
 	boolean troubleshootGeometryVerificationComplete;
@@ -376,6 +379,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootDiodeVerificationComplete;
 	boolean troubleshootLedPhysicalVerificationComplete;
 	boolean troubleshootParallelVerificationComplete;
+	boolean troubleshootStressVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
@@ -425,6 +429,8 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootDiodeShort = qp.getBooleanValue("tsjDiodeShort", false);
 	    troubleshootLedPhysicalVerification = qp.getBooleanValue("tsjVerifyLedParts", false);
 	    troubleshootParallelVerification = qp.getBooleanValue("tsjVerifyParallel", false);
+	    troubleshootStressVerification = qp.getBooleanValue("tsjVerifyStress", false);
+	    troubleshootStressVerificationDeferred = qp.getBooleanValue("tsjStressDeferred", false);
 	    troubleshootGeometryVerification = qp.getBooleanValue("tsjVerifyGeometry", false);
 	    troubleshootLayoutVerification = qp.getBooleanValue("tsjVerifyLayout", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
@@ -821,6 +827,8 @@ MouseOutHandler, MouseWheelHandler {
 	    installGeneratedBoard(generateParallelBoard(troubleshootFixtureSeed));
 	else if ("parallel".equals(troubleshootChallenge))
 	    installGeneratedChallenge(generateParallelBoard(troubleshootFixtureSeed));
+	if (troubleshootStressVerification)
+	    installStressDeveloperBridge();
 	setSimRunning(running);
     }
 
@@ -1367,15 +1375,17 @@ MouseOutHandler, MouseWheelHandler {
 	    try {
 		runCircuit(didAnalyze);
 			instrumentController.onSimulationStepComplete(didAnalyze);
-		runGeneratedBoardVerificationIfReady(didAnalyze);
+			if (resistorStressDamageSystem != null)
+			    resistorStressDamageSystem.observeSimulationTime(t);
+			runGeneratedBoardVerificationIfReady(didAnalyze);
 	    } catch (Exception e) {
 		debugger();
 		console("exception in runCircuit " + e);
 		e.printStackTrace();
 		return;
 	    }
-	 myruntime+=System.currentTimeMillis()-myrunstarttime;
-}
+	    myruntime+=System.currentTimeMillis()-myrunstarttime;
+	}
 	long sysTime = System.currentTimeMillis();
 		if (simRunning) {
 			
@@ -2918,6 +2928,8 @@ MouseOutHandler, MouseWheelHandler {
 		getElm(i).reset();
 	for (i = 0; i != scopeCount; i++)
 		scopes[i].resetGraph(true);
+	if (resistorStressDamageSystem != null)
+	    resistorStressDamageSystem.resetForBoardReset();
 	if (generatedBoardInstance != null)
 	    requestGeneratedBoardVerification();
     	repaint();
@@ -3611,6 +3623,7 @@ MouseOutHandler, MouseWheelHandler {
 	int len = b.length;
 	if ((flags & RC_RETAIN) == 0) {
 	    generatedBoardInstance = null;
+	    resistorStressDamageSystem = null;
 	    boardModificationController = null;
 	    if (pcbWorkbenchController != null)
 		pcbWorkbenchController.hide();
@@ -4144,9 +4157,10 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     GeneratedBoardInstance generatedBoardInstance;
-		GeneratedChallengeController generatedChallengeController;
+	GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
 		ResistorSlotController resistorSlotController;
+	ResistorStressDamageSystem resistorStressDamageSystem;
 	DiodeSlotController diodeSlotController;
 	LedSlotController ledSlotController;
 	boolean activeMeasurementOverlay;
@@ -4178,6 +4192,8 @@ MouseOutHandler, MouseWheelHandler {
 	for (CircuitElm element : instance.getSimulationElements())
 	    elmList.add(element);
 	generatedBoardInstance = instance;
+	resistorStressDamageSystem = instance.getFamilyState() instanceof ReplaceableResistorFamilyState ?
+	    new ResistorStressDamageSystem(this, (ReplaceableResistorFamilyState) instance.getFamilyState(), t) : null;
 	generatedChallengeController = null;
 	boardModificationController = new BoardModificationController(this, instance);
 	resistorSlotController = instance.getFamilyState() instanceof ReplaceableResistorFamilyState ?
@@ -4292,6 +4308,12 @@ MouseOutHandler, MouseWheelHandler {
 			    ParallelDualIndicatorDeveloperVerifier.verify(this);
 			    publishBrowserVerificationResult("PASS:parallel");
 			}
+		    if (troubleshootStressVerification && !troubleshootStressVerificationComplete &&
+				(!troubleshootStressVerificationDeferred || troubleshootStressVerificationRequested)) {
+				troubleshootStressVerificationComplete = true;
+				ResistorStressDamageDeveloperVerifier.verify(this);
+				publishBrowserVerificationResult("PASS:stress");
+			}
 		    if (troubleshootLayoutVerification && !troubleshootGeometryVerificationComplete) {
 			troubleshootGeometryVerificationComplete = true;
 			PcbLayoutDeveloperVerifier.verify(this);
@@ -4307,7 +4329,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootMeterVerification ||
 		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification ||
 		    troubleshootGeometryVerification || troubleshootLayoutVerification ||
-		    troubleshootParallelVerification)
+		    troubleshootParallelVerification || troubleshootStressVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4318,6 +4340,14 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishBrowserVerificationResult(String result) /*-{
 	$doc.documentElement.setAttribute("data-tsj-verification", result);
+    }-*/;
+
+    void publishStressReportForDeveloperVerification(String result) {
+	publishBrowserStressReport(result);
+    }
+
+    private static native void publishBrowserStressReport(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-stress-report", result);
     }-*/;
 
     GeneratedBoardInstance getGeneratedBoardInstance() {
@@ -4553,6 +4583,8 @@ MouseOutHandler, MouseWheelHandler {
 		activeMeasurementOverlay = false;
 	    }
 	    activeMeasurementSolverRestored = isStimulusAbsentFromSolver(stimulus);
+	    if (resistorStressDamageSystem != null)
+		resistorStressDamageSystem.synchronizeSimulationTime(t);
 	}
     }
 
@@ -4584,6 +4616,62 @@ MouseOutHandler, MouseWheelHandler {
 	void requestPowerOnDuringActiveMeasurementForDeveloperVerification() {
 	requestPowerOnDuringActiveMeasurementForDeveloperVerification = true;
 	}
+
+	ResistorStressDamageSystem getResistorStressDamageSystem() {
+	    if (resistorStressDamageSystem == null)
+		throw new IllegalStateException("Generated board has no resistor stress system");
+	    return resistorStressDamageSystem;
+	}
+
+	void advanceResistorServiceTimeForDeveloperVerification(double seconds) {
+	    if (activeMeasurementOverlay)
+		throw new IllegalStateException("Resistor service time cannot advance during meter overlay");
+	    analyzeCircuit();
+	    runCircuit(true);
+	    runCircuit(true);
+	    getResistorStressDamageSystem().refreshSolvedMeasurements();
+	    getResistorStressDamageSystem().advanceServiceTimeForDeveloperVerification(seconds);
+	    analyzeCircuit();
+	    runCircuit(true);
+	    runCircuit(true);
+	    getResistorStressDamageSystem().refreshSolvedMeasurements();
+	    getResistorStressDamageSystem().synchronizeSimulationTime(t);
+	    repaint();
+	}
+
+	void requestStressVerificationForDeveloper() {
+	    if (!troubleshootStressVerification)
+		throw new IllegalStateException("Stress verification route is not enabled");
+	    troubleshootStressVerificationRequested = true;
+	    requestGeneratedBoardVerification();
+	}
+
+	String getResistorStressStateForDeveloperVerification() {
+	    ResistorStressDamageSystem system = getResistorStressDamageSystem();
+	    ReplaceableResistorFamilyState family =
+		(ReplaceableResistorFamilyState) generatedBoardInstance.getFamilyState();
+	    if (family.getReplaceableResistorSlot().isEmpty())
+		return "empty";
+	    PhysicalResistorPart part = family.getReplaceableResistorSlot().getInstalledPart();
+	    ResistorStressState state = system.getState(part.getId());
+	return "id=" + part.getId() + ",failed=" + state.isFailed() + ",open=" +
+		part.getSecondaryOpenPath().isOpen() + ",power=" + state.getActualPower() +
+		",ratio=" + state.getStressRatio() + ",damage=" + state.getAccumulatedDamage() +
+		",current=" + Math.abs(part.getElement().getCurrent()) + ",service=" + state.getServiceTime();
+	}
+
+	private native void installStressDeveloperBridge() /*-{
+	    var sim = this;
+	    $wnd.__tsjAdvanceResistorServiceTime = $entry(function(seconds) {
+		sim.@com.lushprojects.circuitjs1.client.CirSim::advanceResistorServiceTimeForDeveloperVerification(D)(seconds);
+	    });
+	    $wnd.__tsjRequestStressVerification = $entry(function() {
+		sim.@com.lushprojects.circuitjs1.client.CirSim::requestStressVerificationForDeveloper()();
+	    });
+	    $wnd.__tsjGetResistorStressState = $entry(function() {
+		return sim.@com.lushprojects.circuitjs1.client.CirSim::getResistorStressStateForDeveloperVerification()();
+	    });
+	}-*/;
 
 	BoardPowerController getBoardPowerController() {
 	return boardPowerController;

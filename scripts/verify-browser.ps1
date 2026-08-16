@@ -16,6 +16,8 @@ param(
     [switch]$LedNormalPlayer,
     [switch]$WrongRepair,
     [switch]$WrongRepairNormalPlayer,
+    [switch]$StressDamage,
+    [switch]$StressDamageNormalPlayer,
     [switch]$Layout,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
@@ -143,6 +145,11 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             Write-Host ("VERIFIER DIAGNOSTIC status=$($diagnostic.status) body=$($diagnostic.body.Replace("`n", ' | '))")
             if ($failures.Count -gt 0) { Write-Host ("VERIFIER CDP FAILURES: " + ($failures -join '; ')) }
             throw "timed out waiting for '$expected'"
+        }
+        if ($name -eq 'seed=3 stress-damage') {
+            $stressReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-stress-report') || ''" ([ref]$failures)
+            if (-not $stressReport) { throw 'stress verifier did not publish its developer electrical report' }
+            Write-Host "TASK34 ELECTRICAL REPORT: $stressReport"
         }
         Start-Sleep -Milliseconds 100
         [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures))
@@ -900,6 +907,96 @@ function verifyWrongRepairNormalPlayer([string]$url, [int]$debugPort) {
     }
 }
 
+function verifyStressDamageNormalPlayer([string]$url, [int]$debugPort) {
+    $profile = Join-Path $env:TEMP ("tsj-stress-player-" + [Guid]::NewGuid().ToString('N'))
+    $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+        '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
+    $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $socket = $null
+    try {
+        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        do {
+            Start-Sleep -Milliseconds 200
+            try {
+                $targets = Invoke-RestMethod "http://127.0.0.1:$debugPort/json/list" -TimeoutSec 2
+                $target = $targets | Where-Object { $_.type -eq 'page' } | Select-Object -First 1
+            } catch { $target = $null }
+        } while ($null -eq $target -and [DateTime]::UtcNow -lt $deadline)
+        if ($null -eq $target) { throw 'browser target did not become available' }
+        $socket = New-Object Net.WebSockets.ClientWebSocket
+        $socket.ConnectAsync([Uri]$target.webSocketDebuggerUrl,
+            [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+        $nextId = 1
+        $failures = @()
+        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Indicator does not light.')" $deadline ([ref]$failures) 'ready LED stress challenge'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points" $deadline ([ref]$failures) 'stress PCB geometry bridge'
+        $evidence = if ($EvidenceDirectory) { $EvidenceDirectory } else { 'docs/task-evidence/task-34' }
+        [IO.Directory]::CreateDirectory($evidence) | Out-Null
+        captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $evidence 'initial-board.png') ([ref]$failures)
+
+        $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('R1')&&document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'stress R1 component controls'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'stress initial board power-off'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('R1_ORIGINAL - Removed resistor')" $deadline ([ref]$failures) 'stress original R1 removal'
+        selectOptionWithKeyboard $socket ([ref]$nextId) 0 '220 Ohm +/-5%' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new resistor' "document.body.innerText.includes('Value: 220 Ohm +/-5%')" $deadline ([ref]$failures) 'stress severe replacement installation'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'stress severe replacement power-on'
+        $initialUi = evaluateCdp $socket ([ref]$nextId) "(()=>{const b=(document.body.innerText||''),l=b.toLowerCase();return {complaint:b.includes('Indicator does not light.'),value:b.includes('Value: 220 Ohm +/-5%'),power:b.includes('Board Power: ON'),diagnostic:/watt|stress|damage|overheat/.test(l),complete:b.includes('Repair verified. Indicator operating normally.')}})()" ([ref]$failures)
+        if (-not ($initialUi.complaint -and $initialUi.value -and $initialUi.power) -or $initialUi.diagnostic -or $initialUi.complete) {
+            throw "severe-overload player UI leaked diagnostics or completed unexpectedly: $($initialUi | ConvertTo-Json -Compress)"
+        }
+        captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $evidence 'severe-overload-powered.png') ([ref]$failures)
+
+        $advance = evaluateCdp $socket ([ref]$nextId) "(()=>{if(typeof window.__tsjAdvanceResistorServiceTime!=='function')return false;window.__tsjAdvanceResistorServiceTime(0.5);return true;})()" ([ref]$failures)
+        if (-not $advance) { throw 'developer service-time bridge was unavailable' }
+        Write-Host ("TASK34 PLAYER AFTER POWERED ADVANCE: " + (evaluateCdp $socket ([ref]$nextId) "typeof window.__tsjGetResistorStressState==='function'?window.__tsjGetResistorStressState():''" ([ref]$failures)))
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'stress power-off pause'
+        $paused = evaluateCdp $socket ([ref]$nextId) "(()=>{window.__tsjAdvanceResistorServiceTime(5);return true;})()" ([ref]$failures)
+        if (-not $paused) { throw 'powered-off service-time pause did not run' }
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'stress resume power-on'
+        [void](evaluateCdp $socket ([ref]$nextId) "window.__tsjAdvanceResistorServiceTime(3);true" ([ref]$failures))
+        Write-Host ("TASK34 PLAYER AFTER RESUME ADVANCE: " + (evaluateCdp $socket ([ref]$nextId) "typeof window.__tsjGetResistorStressState==='function'?window.__tsjGetResistorStressState():''" ([ref]$failures)))
+        waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+        $failureState = evaluateCdp $socket ([ref]$nextId) "typeof window.__tsjGetResistorStressState==='function'?window.__tsjGetResistorStressState():''" ([ref]$failures)
+        Write-Host "TASK34 PLAYER SECONDARY STATE: $failureState"
+        if ([string]$failureState -notmatch 'failed=true' -or [string]$failureState -notmatch 'open=true') {
+            throw "developer service-time advance did not reach the owned secondary-open state: $failureState"
+        }
+        $failureUi = evaluateCdp $socket ([ref]$nextId) "(()=>{const b=(document.body.innerText||''),l=b.toLowerCase();return {complaint:b.includes('Indicator does not light.'),value:b.includes('Value: 220 Ohm +/-5%'),power:b.includes('Board Power: ON'),diagnostic:/watt|stress|damage|overheat/.test(l),complete:b.includes('Repair verified. Indicator operating normally.')}})()" ([ref]$failures)
+        if (-not ($failureUi.complaint -and $failureUi.value -and $failureUi.power) -or $failureUi.diagnostic -or $failureUi.complete) {
+            throw "secondary-failure player UI leaked diagnostics or completed unexpectedly: $($failureUi | ConvertTo-Json -Compress)"
+        }
+        captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $evidence 'secondary-failure.png') ([ref]$failures)
+
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'stress power-off before repair'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('R1_CATALOG_PART_0 - 220 Ohm +/-5%')" $deadline ([ref]$failures) 'stress severe replacement removal'
+        selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new resistor' "document.body.innerText.includes('Value: 1000 Ohm +/-5%')" $deadline ([ref]$failures) 'stress correct replacement installation'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'stress correct replacement power-on'
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'stress natural solver-backed repair completion'
+        captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $evidence 'correct-restored.png') ([ref]$failures)
+        if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        Write-Host 'PASS stress-damage-normal-player seed=3 severe-open natural-behavior no-diagnostic-ui'
+        return $true
+    } catch {
+        Write-Host "FAIL stress-damage-normal-player seed=3 - $($_.Exception.Message)"
+        if ($null -ne $socket) {
+            try {
+                $snapshot = evaluateCdp $socket ([ref]$nextId) "document.body.innerText" ([ref]$failures)
+                $start = [Math]::Max(0, $snapshot.Length - 1800)
+                Write-Host ("STRESS PLAYER UI SNAPSHOT: " + $snapshot.Substring($start).Replace("`n", ' | '))
+            } catch { }
+        }
+        return $false
+    } finally {
+        cleanupBrowser $browser $socket $profile
+    }
+}
+
 function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
     $profile = Join-Path $env:TEMP ("tsj-led-player-" + [Guid]::NewGuid().ToString('N'))
     $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
@@ -1048,6 +1145,14 @@ if ($NormalPlayer) {
 }
 if ($WrongRepairNormalPlayer) {
     if (-not (verifyWrongRepairNormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyGeometry=true" 9490)) { exit 1 }
+    exit 0
+}
+if ($StressDamage) {
+    if (-not (verifyRoute 'seed=3 stress-damage' "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyStress=true" 'PASS:stress' 9492)) { exit 1 }
+    exit 0
+}
+if ($StressDamageNormalPlayer) {
+    if (-not (verifyStressDamageNormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyStress=true&tsjStressDeferred=true&tsjVerifyGeometry=true" 9493)) { exit 1 }
     exit 0
 }
 if ($DiodeNormalPlayer) {

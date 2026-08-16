@@ -21,10 +21,13 @@ class ResistorReplacementCatalog {
     }
 
     private void add(double resistanceOhms) {
+        double ratedWattage = ResistorNameplate.DEFAULT_RATED_WATTAGE;
+        if (resistanceOhms == 330)
+            ratedWattage = .22;
         String id = "R_CATALOG_" + (long) resistanceOhms;
         if (entries.containsKey(id))
             throw new IllegalArgumentException("Duplicate catalog value: " + resistanceOhms);
-        entries.put(id, new ResistorCatalogEntry(id, resistanceOhms));
+        entries.put(id, new ResistorCatalogEntry(id, resistanceOhms, ratedWattage));
         order.add(id);
     }
 

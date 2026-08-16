@@ -7,6 +7,8 @@ class GeneratedComponentBindings {
     private final TroubleshootBoard board;
     private final HashMap<String, Vector<CircuitElm>> componentElements =
         new HashMap<String, Vector<CircuitElm>>();
+    private final HashMap<String, Vector<CircuitElm>> auxiliaryComponentElements =
+        new HashMap<String, Vector<CircuitElm>>();
 
     GeneratedComponentBindings(TroubleshootBoard board) {
         this.board = board;
@@ -48,7 +50,24 @@ class GeneratedComponentBindings {
 
     boolean isElementBoundToComponent(String componentId, CircuitElm element) {
         Vector<CircuitElm> elements = componentElements.get(componentId);
+        if (elements != null && elements.contains(element))
+            return true;
+        elements = auxiliaryComponentElements.get(componentId);
         return elements != null && elements.contains(element);
+    }
+
+    void bindAuxiliaryComponentElement(String componentId, CircuitElm element) {
+        if (board.getComponent(componentId) == null || element == null)
+            throw new IllegalArgumentException("Invalid auxiliary component binding: " + componentId);
+        Vector<CircuitElm> elements = new Vector<CircuitElm>();
+        elements.add(element);
+        auxiliaryComponentElements.put(componentId, elements);
+    }
+
+    void replaceAuxiliaryComponentElement(String componentId, CircuitElm element) {
+        if (!componentElements.containsKey(componentId) || element == null)
+            throw new IllegalArgumentException("Invalid auxiliary component replacement: " + componentId);
+        bindAuxiliaryComponentElement(componentId, element);
     }
 
     void replaceSingleElement(String componentId, CircuitElm element) {
@@ -64,6 +83,12 @@ class GeneratedComponentBindings {
             for (CircuitElm element : componentElements.get(componentId)) {
                 if (!simulationElements.contains(element))
                     throw new IllegalStateException("Component binding is not owned by generated board: " + componentId);
+            }
+        }
+        for (String componentId : auxiliaryComponentElements.keySet()) {
+            for (CircuitElm element : auxiliaryComponentElements.get(componentId)) {
+                if (!simulationElements.contains(element))
+                    throw new IllegalStateException("Auxiliary component binding is not owned by generated board: " + componentId);
             }
         }
     }

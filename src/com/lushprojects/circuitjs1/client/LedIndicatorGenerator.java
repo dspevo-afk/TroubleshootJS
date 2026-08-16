@@ -48,10 +48,6 @@ class LedIndicatorGenerator {
 
         ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory();
         ResistorReplacementCatalog resistorCatalog = new ResistorReplacementCatalog();
-        PhysicalResistorPart originalR1 = new PhysicalResistorPart("R1_ORIGINAL",
-            new ResistorNameplate("R1_ORIGINAL", resistorValue, 5), resistor, null,
-            ResistorPartLocation.INSTALLED);
-
         WireElm r1Lead2Link = new WireElm(512, 240);
         r1Lead2Link.drag(560, 160);
         WireElm ledNodeTrace = new WireElm(560, 160);
@@ -117,6 +113,20 @@ class LedIndicatorGenerator {
         GeneratedFaultBinding faultBinding = selectedFault.getBinding();
         GeneratedFaultBinding resistorFaultBinding = "R1".equals(
             fault.getTargetComponentId()) ? faultBinding : null;
+        CircuitPostMeasurementEndpoint resistorOpenPathUpstream = null;
+        if (resistorFaultBinding != null && fault.getType() == GeneratedFaultType.RESISTOR_OPEN)
+            resistorOpenPathUpstream = (CircuitPostMeasurementEndpoint)
+                resistorFaultBinding.getPublicTerminal(resistor, 1);
+        if (resistorOpenPathUpstream == null)
+            resistorOpenPathUpstream = new CircuitPostMeasurementEndpoint(r1FaultIsolation, 1);
+        ResistorSecondaryOpenPath originalOpenPath = ResistorSecondaryOpenPath.create(
+            resistorOpenPathUpstream);
+        elements.add(originalOpenPath.getSimulationElement());
+        PhysicalResistorPart originalR1 = new PhysicalResistorPart("R1_ORIGINAL",
+            new ResistorNameplate("R1_ORIGINAL", resistorValue, 5), resistor,
+            resistorFaultBinding, originalOpenPath, ResistorPartLocation.INSTALLED);
+        componentBindings.bindAuxiliaryComponentElement("R1",
+            originalOpenPath.getSimulationElement());
         LedReplacementInventory ledInventory = new LedReplacementInventory();
         LedReplacementCatalog ledCatalog = new LedReplacementCatalog();
         PhysicalLedPart originalLed = new PhysicalLedPart("LED1_ORIGINAL", ledNameplate, led,
@@ -124,8 +134,6 @@ class LedIndicatorGenerator {
         ledInventory.add(originalLed);
         LedComponentSlot led1Slot = new LedComponentSlot("LED1", ledNameplate, originalLed,
             ledAnodeLink, ledCathodeLink);
-        originalR1 = new PhysicalResistorPart("R1_ORIGINAL", originalR1.getNameplate(), resistor,
-            resistorFaultBinding, ResistorPartLocation.INSTALLED);
         resistorInventory.add(originalR1);
         ReplaceableComponentSlot r1Slot = new ReplaceableComponentSlot("R1",
             physicalSpecifications.getResistorNameplate("R1"), originalR1, r1Lead1Link,

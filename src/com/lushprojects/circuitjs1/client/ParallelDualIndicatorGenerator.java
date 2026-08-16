@@ -136,9 +136,20 @@ class ParallelDualIndicatorGenerator {
             fault.getTargetComponentId()) ? faultBinding : null;
         ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory();
         ResistorReplacementCatalog resistorCatalog = new ResistorReplacementCatalog();
+        CircuitPostMeasurementEndpoint resistorOpenPathUpstream = null;
+        if (resistorFaultBinding != null && fault.getType() == GeneratedFaultType.RESISTOR_OPEN)
+            resistorOpenPathUpstream = (CircuitPostMeasurementEndpoint)
+                resistorFaultBinding.getPublicTerminal(r1, 1);
+        if (resistorOpenPathUpstream == null)
+            resistorOpenPathUpstream = new CircuitPostMeasurementEndpoint(r1FaultIsolation, 1);
+        ResistorSecondaryOpenPath originalOpenPath = ResistorSecondaryOpenPath.create(
+            resistorOpenPathUpstream);
+        elements.add(originalOpenPath.getSimulationElement());
         PhysicalResistorPart originalR1 = new PhysicalResistorPart("R1_ORIGINAL",
             new ResistorNameplate("R1_ORIGINAL", r1Value, 5), r1, resistorFaultBinding,
-            ResistorPartLocation.INSTALLED);
+            originalOpenPath, ResistorPartLocation.INSTALLED);
+        componentBindings.bindAuxiliaryComponentElement("R1",
+            originalOpenPath.getSimulationElement());
         resistorInventory.add(originalR1);
         ReplaceableComponentSlot r1Slot = new ReplaceableComponentSlot("R1",
             physicalSpecifications.getResistorNameplate("R1"), originalR1, r1Lead1Link,

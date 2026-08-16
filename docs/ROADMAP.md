@@ -410,13 +410,14 @@ normal-player and developer routes prove that a legal 2.2 kOhm replacement
 produces nonzero illuminated but out-of-contract behavior, while a subsequent
 1 kOhm replacement restores the solved functional contract. Physical part,
 inventory, attachment, original-fault, complaint, and privacy invariants remain
-intact. Task 34 stress/damage behavior was not started.
+intact. At the Task 33 completion point, Task 34 stress/damage behavior had
+not started.
 
 ---
 
 ## Task 34 — Component Ratings and Stress/Damage v1
 
-**Status:** `[>] NEXT`
+**Status:** `[x] Complete`
 
 ### Goal
 
@@ -455,6 +456,40 @@ Do **not** require real-time multi-minute waiting.
 ### Completion gate
 
 An electrically overstressed resistor can genuinely fail because of solver-derived stress, while a correctly rated replacement survives the same validation window.
+
+### Completed implementation
+
+Task 34 adds an immutable hidden rated wattage to each physical resistor
+nameplate. Original and catalog-acquired resistors retain that rating for the
+life of the physical part, while each catalog acquisition receives its own
+stable identity. `ResistorStressDamageSystem` is a narrow family-state service
+that samples live solved `ResistorElm` power, integrates deterministic
+service-time damage only for the installed powered part, pauses while powered
+off or under temporary measurement stimulus, and opens the part through its
+owned `ResistorSecondaryOpenPath` when severe damage reaches the threshold.
+The secondary path is separate from `GeneratedFaultBinding`, so generated
+fault ownership and loose original parts remain unchanged; removal and
+reinstallation of a failed physical part preserve its open state.
+
+The seed-3 developer proof covers a 220 Ohm severe replacement, a 330 Ohm
+modest-overload replacement, and a 1 kOhm correctly rated replacement. It
+reports live resistance, solved watts, rating, stress ratio, damage, service
+time, failure time, physical IDs, original-fault ownership, meter/power pause
+behavior, reset behavior, and post-failure current/illumination. The primary
+player-facing manual gate was completed through Computer Use on the active
+Windows Edge desktop with normal mouse/keyboard input: seed 3 original R1 was
+selected, powered off, removed, replaced with the acquired 220 Ohm part,
+powered on, observed operating without a wattage/stress/damage diagnostic,
+advanced only through the permitted developer service-time seam, and observed
+again after secondary open with the LED dark and no diagnostic UI. The primary
+screenshots are `computer-use-severe-overload-powered.png` and
+`computer-use-secondary-failure.png` under `docs/task-evidence/task-34/`.
+
+Headless/CDP routes and their distinct screenshots—`initial-board.png`,
+`severe-overload-powered.png`, `secondary-failure.png`, and
+`correct-restored.png`—are supporting evidence for solver, identity, graph,
+and deterministic checks only. Normal UI contains no wattage, stress, or
+damage diagnostics.
 
 ---
 
@@ -1221,7 +1256,8 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 33 — Wrong Repair Semantics and Post-Repair Validation**
+**Task 35 — Generalized Physical Part Specifications**
 
-Task 32 passed implementation validation in this run and is complete. Task 33
-is identified as the next eligible milestone but was not started.
+Task 34 passed implementation and direct Computer Use player-facing
+validation. Task 35 is the next eligible milestone and is identified only; it
+was not started.

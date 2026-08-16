@@ -650,5 +650,43 @@ physical-identity, inventory, attachment, and still-faulted assertions. The
 `-WrongRepairNormalPlayer` browser route covers the genuine CDP mouse/keyboard
 flow and captures the wrong-installed powered state and the completed state.
 These developer-only checks do not add diagnosis metadata or wrong-part
-messages to normal UI. Resistor ratings, stress accumulation, and secondary
-damage remain outside this boundary for Task 34.
+messages to normal UI.
+
+Task 34 adds the first component-specific stress boundary without generalizing
+ratings to other part families. `ResistorNameplate` carries an immutable hidden
+rated wattage, and `ResistorCatalogEntry` carries the catalog specification
+used when a distinct physical acquisition is created. `PhysicalResistorPart`
+retains that rating, its stable identity, and a private
+`ResistorSecondaryOpenPath`; the latter is a real CircuitJS `SwitchElm` in the
+part's public second-terminal path and is intentionally independent of
+`GeneratedFaultBinding`. `ResistorSlotController` continues to own physical
+R1 replacement graph changes, while `ResistorStressDamageSystem` alone owns
+resistor stress state and secondary-open transitions.
+
+The stress system samples the live solved `ResistorElm.getPower()` value and
+uses the ratio of actual power to the immutable rating for deterministic
+service-time accumulation. A powered-off board, loose part, active temporary
+meter stimulus, or DC meter loading cannot advance persistent damage. At the
+failure threshold the owned path opens, causing CircuitJS current and board
+behavior to change naturally; the same failed part remains open after removal
+and reinstallation. Explicit board reset clears secondary stress state and
+closes only the secondary path, preserving the generated fault. Developer
+verification is available only through the stress route and reports electrical
+proof; the normal player UI never displays rating, stress, damage, thermal, or
+failure diagnostics.
+
+Task 34's player-facing manual gate was completed through Computer Use on the
+active Windows desktop in Edge. The primary architect used normal visible
+mouse/keyboard interaction on seed 3 to select and remove original R1, acquire
+and install the 220 Ohm replacement, power the board, observe initial LED
+operation with the original complaint and no stress diagnostic, advance only
+the permitted developer service-time seam, and observe the same installed part
+after secondary open with the LED dark and no diagnostic UI. The primary
+Computer Use screenshots are `computer-use-severe-overload-powered.png` and
+`computer-use-secondary-failure.png` under `docs/task-evidence/task-34/`.
+
+Headless/CDP routes remain supporting evidence only. Their distinct supporting
+screenshots are `initial-board.png`, `severe-overload-powered.png`,
+`secondary-failure.png`, and `correct-restored.png`. Failed-part identity,
+graph ownership, and solver measurements are supported by the developer/CDP
+verifier rather than treated as substitutes for the direct player-facing gate.

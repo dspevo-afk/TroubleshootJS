@@ -36,6 +36,8 @@ class ResistorSlotController {
         if (part.getLocation() != ResistorPartLocation.LOOSE)
             return false;
         instance.getComponentBindings().replaceSingleElement(slot.getComponentId(), part.getElement());
+	instance.getComponentBindings().replaceAuxiliaryComponentElement(slot.getComponentId(),
+	    part.getSecondaryOpenPath().getSimulationElement());
 	retargetComponentLeadBindings(part);
         part.setLocation(ResistorPartLocation.INSTALLED);
         slot.install(part);
@@ -53,13 +55,21 @@ class ResistorSlotController {
         ResistorCatalogEntry entry = family.getResistorCatalog().get(catalogEntryId);
         ResistorElm element = DynamicResistorBackingAllocator.create(instance.getSimulationElements(),
             entry.getNameplate().getNominalResistanceOhms());
+        ResistorSecondaryOpenPath openPath = ResistorSecondaryOpenPath.create(
+            new CircuitPostMeasurementEndpoint(element, 1));
         PhysicalResistorPart part = new PhysicalResistorPart(family.allocateCatalogPartId(),
-            new ResistorNameplate(slot.getComponentId(), entry.getNameplate().getNominalResistanceOhms(), 5), element,
-            null, ResistorPartLocation.INSTALLED);
+            new ResistorNameplate(slot.getComponentId(), entry.getNameplate().getNominalResistanceOhms(), 5,
+                entry.getNameplate().getRatedWattage()), element, null, openPath,
+            ResistorPartLocation.INSTALLED);
         instance.registerRuntimeSimulationElement(element);
+        instance.registerRuntimeSimulationElement(openPath.getSimulationElement());
         family.getResistorInventory().add(part);
+        sim.getResistorStressDamageSystem().register(part);
         sim.elmList.add(element);
+        sim.elmList.add(openPath.getSimulationElement());
         instance.getComponentBindings().replaceSingleElement(slot.getComponentId(), element);
+        instance.getComponentBindings().replaceAuxiliaryComponentElement(slot.getComponentId(),
+            openPath.getSimulationElement());
         retargetComponentLeadBindings(part);
         slot.install(part);
         modifications.restoreComponent(slot.getComponentId());
