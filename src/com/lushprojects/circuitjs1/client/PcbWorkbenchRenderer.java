@@ -51,7 +51,7 @@ class PcbWorkbenchRenderer {
         graphics.drawRect(outline.x, outline.y, outline.width, outline.height);
 
         graphics.setColor("#b56c2f");
-        graphics.setLineWidth(Math.max(5, scaleInt(9)));
+        graphics.setLineWidth(Math.max(5, scaleInt(PcbTraceRules.TRACE_WIDTH)));
         for (PcbTraceGeometry trace : layout.getTraces()) {
             int[] sourceX = trace.getXPoints();
             int[] sourceY = trace.getYPoints();
@@ -66,12 +66,7 @@ class PcbWorkbenchRenderer {
         for (PcbComponentPlacement component : layout.getComponents())
             drawComponent(graphics, component);
 
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
-        graphics.setColor("#d9f1e3");
-        graphics.drawString(isDiodeFamily() ? "TSJ DIODE INDICATOR" : "TSJ LED INDICATOR",
-            outline.x + scaleInt(25), outline.y + scaleInt(45));
-        graphics.setFont(new Font("sans-serif", 0, Math.max(10, scaleInt(12))));
-        drawConnectorNetLabels(graphics);
+        drawSilkscreenLabels(graphics);
     }
 
     private void drawPad(Graphics graphics, PcbPadPlacement pad) {
@@ -143,11 +138,6 @@ class PcbWorkbenchRenderer {
             drawResistorBands(graphics, getResistorBands(placement.getComponentId()), bodyLeft,
                 bodyRight, bodyY, bodyHeight);
 
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
-        graphics.setColor("#f2f5e9");
-        graphics.drawString(placement.getComponentId(), screenX(placement.getX() +
-            placement.getWidth() / 2 - 15),
-            screenY(placement.getY() - 14));
     }
 
     private void drawDiode(Graphics graphics, PcbComponentPlacement placement) {
@@ -178,10 +168,6 @@ class PcbWorkbenchRenderer {
         graphics.drawRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
         drawCathodeBand(graphics, part.isReversedInstallation() ? bodyLeft : bodyRight,
             bodyY, bodyHeight, part.isReversedInstallation());
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
-        graphics.setColor("#f2f5e9");
-        graphics.drawString("D1", screenX(placement.getX() + placement.getWidth() / 2 - 15),
-            screenY(placement.getY() - 14));
         graphics.drawString("K", part.isReversedInstallation() ? leftPad.x - scaleInt(5) :
             rightPad.x - scaleInt(5), rightPad.y + scaleInt(28));
     }
@@ -226,9 +212,6 @@ class PcbWorkbenchRenderer {
         graphics.fillRect(reversed ? centerX - radius : centerX + radius - scaleInt(6),
             centerY - radius / 2,
             Math.max(3, scaleInt(5)), radius);
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
-        graphics.drawString(placement.getComponentId(), screenX(placement.getX() + 10),
-            screenY(placement.getY() - 18));
         graphics.drawString("K", (reversed ? anode : cathode).x - scaleInt(4),
             cathode.y + scaleInt(27));
     }
@@ -248,26 +231,22 @@ class PcbWorkbenchRenderer {
             graphics.setColor("#4d5b57");
             graphics.setLineWidth(3);
             graphics.drawLine(pad.x - radius / 2, pad.y, pad.x + radius / 2, pad.y);
+            if ("J1.1".equals(padId))
+                graphics.drawLine(pad.x, pad.y - radius / 2, pad.x, pad.y + radius / 2);
             graphics.setLineWidth(1);
         }
-        graphics.setColor("#f2f5e9");
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(14))));
-        graphics.drawString(placement.getComponentId(), bounds.x + scaleInt(38),
-            bounds.y - scaleInt(12));
     }
 
-    private void drawConnectorNetLabels(Graphics graphics) {
-        Point positive = getPadPoint("J1.1");
-        Point ground = getPadPoint("J1.2");
-        if (positive == null || ground == null)
-            return;
-        PcbComponentPlacement connector = layout.getComponent("J1");
-        boolean left = connector == null || connector.getX() < layout.getBoardOutline().x +
-            layout.getBoardOutline().width / 2;
-        int labelX = left ? positive.x + scaleInt(28) : positive.x - scaleInt(92);
-        graphics.drawString(getPowerInputLabel(), labelX, positive.y + scaleInt(5));
-        labelX = left ? ground.x + scaleInt(28) : ground.x - scaleInt(48);
-        graphics.drawString("GND", labelX, ground.y + scaleInt(5));
+    private void drawSilkscreenLabels(Graphics graphics) {
+        for (PcbSilkscreenLabel label : layout.getSilkscreenLabels()) {
+            graphics.setFont(new Font("sans-serif", label.isBold() ? Font.BOLD : 0,
+                Math.max(10, scaleInt(label.getFontSize()))));
+            graphics.setColor(label.getId().startsWith("net:") ? "#f2f5e9" : "#d9f1e3");
+            String text = "net:J1.1".equals(label.getId()) ? getPowerInputLabel() :
+                label.getText();
+            graphics.drawString(text, screenX(label.getBaselineX()),
+                screenY(label.getBaselineY()));
+        }
     }
 
     private void drawTray(Graphics graphics) {

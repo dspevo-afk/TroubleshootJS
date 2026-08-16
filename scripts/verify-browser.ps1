@@ -19,6 +19,7 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+$CdpReceiveTimeoutMilliseconds = 30000
 
 function sendCdp($socket, [int]$id, [string]$method, $parameters) {
     $message = @{ id = $id; method = $method; params = $parameters } | ConvertTo-Json -Compress -Depth 8
@@ -56,7 +57,7 @@ function receiveCdp($socket, [int]$wantedId, [ref]$failures) {
         $stream = New-Object IO.MemoryStream
         do {
             $buffer = New-Object byte[] 65536
-            $receiveTimeout = New-Object Threading.CancellationTokenSource 5000
+            $receiveTimeout = New-Object Threading.CancellationTokenSource $CdpReceiveTimeoutMilliseconds
             try {
                 $result = $socket.ReceiveAsync((New-Object ArraySegment[byte] -ArgumentList (,$buffer)),
                     $receiveTimeout.Token).GetAwaiter().GetResult()

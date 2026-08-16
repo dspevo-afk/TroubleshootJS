@@ -14,6 +14,8 @@ class PcbBoardLayout {
         new HashMap<String, PcbPadPlacement>();
     private final HashMap<String, PcbComponentPlacement> components =
         new HashMap<String, PcbComponentPlacement>();
+    private final HashMap<String, PcbSilkscreenLabel> silkscreenLabels =
+        new HashMap<String, PcbSilkscreenLabel>();
     private final Vector<PcbTraceGeometry> traces = new Vector<PcbTraceGeometry>();
 
     PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray) {
@@ -32,6 +34,11 @@ class PcbBoardLayout {
         if (components.put(component.getComponentId(), component) != null)
             throw new IllegalArgumentException("Duplicate PCB component placement: " +
                 component.getComponentId());
+    }
+
+    void addSilkscreenLabel(PcbSilkscreenLabel label) {
+        if (silkscreenLabels.put(label.getId(), label) != null)
+            throw new IllegalArgumentException("Duplicate PCB silkscreen label: " + label.getId());
     }
 
     void addTrace(PcbTraceGeometry trace) { traces.add(trace); }
@@ -134,29 +141,260 @@ class PcbBoardLayout {
         }
         for (int first = 0; first < traces.size(); first++) {
             for (int second = first + 1; second < traces.size(); second++) {
-                if (tracesCross(traces.get(first), traces.get(second)))
+                if (!traces.get(first).getNetId().equals(traces.get(second).getNetId()) &&
+                        tracesCross(traces.get(first), traces.get(second)))
                     throw new IllegalStateException("Unrelated PCB traces cross: " +
                         traces.get(first).getNetId() + " and " + traces.get(second).getNetId());
             }
         }
+        validateTraceClearance();
+        validateSilkscreen(board);
+        validateRouteQuality();
     }
 
     private void validateTraceKeepOuts(TroubleshootBoard board, PcbTraceGeometry trace,
             BoardPad startPad, BoardPad endPad) {
         for (PcbComponentPlacement component : components.values()) {
-            if (component.getComponentId().equals(startPad.getComponentId()) ||
-                    component.getComponentId().equals(endPad.getComponentId()))
-                continue;
             Rectangle keepOut = component.getKeepOut();
+            PcbPadPlacement traceStartPlacement = pads.get(trace.getStartPadId());
+            PcbPadPlacement traceEndPlacement = pads.get(trace.getEndPadId());
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 1; index < xPoints.length; index++) {
-                if (segmentIntersects(keepOut, xPoints[index - 1], yPoints[index - 1],
-                        xPoints[index], yPoints[index]))
+                    if (segmentIntersects(keepOut, xPoints[index - 1], yPoints[index - 1],
+                        xPoints[index], yPoints[index]) &&
+                        !isLegalEndpointEscape(component, trace, startPad, endPad,
+                            xPoints[index - 1], yPoints[index - 1], xPoints[index],
+                            yPoints[index]))
                     throw new IllegalStateException("PCB trace passes through component keep-out: " +
-                        trace.getNetId() + " / " + component.getComponentId());
+                        trace.getNetId() + " / " + component.getComponentId() + " segment " +
+                        xPoints[index - 1] + "," + yPoints[index - 1] + " -> " +
+                        xPoints[index] + "," + yPoints[index] + " keepOut=" + keepOut +
+                        " startPad=" + trace.getStartPadId() + "@" + traceStartPlacement.getX() +
+                        "," + traceStartPlacement.getY() + " endPad=" + trace.getEndPadId() +
+                        "@" + traceEndPlacement.getX() + "," + traceEndPlacement.getY());
             }
         }
+    }
+
+    private boolean isLegalEndpointEscape(PcbComponentPlacement component,
+            PcbTraceGeometry trace, BoardPad startPad, BoardPad endPad, int x1, int y1,
+            int x2, int y2) {
+        PcbPadPlacement escapePad = null;
+        if (component.getComponentId().equals(startPad.getComponentId()))
+            escapePad = pads.get(trace.getStartPadId());
+        else if (component.getComponentId().equals(endPad.getComponentId()))
+            escapePad = pads.get(trace.getEndPadId());
+        if (escapePad == null)
+            return false;
+        Rectangle keepOut = component.getKeepOut();
+        int left = Math.min(x1, x2);
+        int right = Math.max(x1, x2);
+        int top = Math.min(y1, y2);
+        int bottom = Math.max(y1, y2);
+        if (y1 == y2) {
+            int overlapLeft = Math.max(left, keepOut.x);
+            int overlapRight = Math.min(right, keepOut.x + keepOut.width);
+            return overlapLeft <= overlapRight &&
+                escapePad.isInEscapeCorridor(overlapLeft, y1) &&
+                escapePad.isInEscapeCorridor(overlapRight, y1);
+        }
+        if (x1 == x2) {
+            int overlapTop = Math.max(top, keepOut.y);
+            int overlapBottom = Math.min(bottom, keepOut.y + keepOut.height);
+            return overlapTop <= overlapBottom &&
+                escapePad.isInEscapeCorridor(x1, overlapTop) &&
+                escapePad.isInEscapeCorridor(x1, overlapBottom);
+        }
+        return false;
+    }
+
+    private void validateSilkscreen(TroubleshootBoard board) {
+        for (String componentId : board.getComponentIds()) {
+            if (!silkscreenLabels.containsKey("component:" + componentId))
+                throw new IllegalStateException("PCB component has no reference label: " +
+                    componentId);
+        }
+        for (PcbSilkscreenLabel label : silkscreenLabels.values()) {
+            Rectangle bounds = label.getBounds();
+            requireInside(bounds, boardOutline, "silkscreen label " + label.getId());
+            if (label.getTargetPadId() != null && pads.get(label.getTargetPadId()) == null)
+                throw new IllegalStateException("Silkscreen label references unknown pad: " +
+                    label.getTargetPadId());
+            for (PcbComponentPlacement component : components.values()) {
+                if (bounds.intersects(component.getBounds()))
+                    throw new IllegalStateException("Silkscreen label overlaps component: " +
+                        label.getId() + " / " + component.getComponentId());
+            }
+            for (PcbPadPlacement pad : pads.values()) {
+                Rectangle padBounds = new Rectangle(pad.getX() - 16, pad.getY() - 16, 32, 32);
+                if (bounds.intersects(padBounds))
+                    throw new IllegalStateException("Silkscreen label overlaps pad: " +
+                        label.getId() + " / " + pad.getPadId());
+            }
+            for (PcbTraceGeometry trace : traces) {
+                int[] xPoints = trace.getXPoints();
+                int[] yPoints = trace.getYPoints();
+                for (int index = 1; index < xPoints.length; index++) {
+                    if (segmentIntersects(bounds, xPoints[index - 1], yPoints[index - 1],
+                            xPoints[index], yPoints[index]))
+                        throw new IllegalStateException("Silkscreen label overlaps copper: " +
+                            label.getId() + " / " + trace.getNetId());
+                }
+            }
+        }
+        Vector<PcbSilkscreenLabel> labels = new Vector<PcbSilkscreenLabel>(
+            silkscreenLabels.values());
+        for (int first = 0; first < labels.size(); first++) {
+            for (int second = first + 1; second < labels.size(); second++) {
+                if (labels.get(first).getBounds().intersects(labels.get(second).getBounds()))
+                    throw new IllegalStateException("PCB silkscreen labels overlap: " +
+                        labels.get(first).getId() + " / " + labels.get(second).getId());
+            }
+        }
+    }
+
+    void validateRouteQuality() {
+        for (PcbTraceGeometry trace : traces) {
+            int length = getTraceLength(trace);
+            int direct = getDirectManhattanDistance(trace);
+            int bends = getTraceBendCount(trace);
+            if (length <= 0 || direct <= 0)
+                throw new IllegalStateException("PCB trace has invalid route length: " +
+                    trace.getNetId());
+            if (bends > 16)
+                throw new IllegalStateException("PCB trace has excessive bends: " +
+                    trace.getNetId());
+            if (length > direct * 3)
+                throw new IllegalStateException("PCB trace has excessive detour: " +
+                    trace.getNetId());
+            int[] xPoints = trace.getXPoints();
+            int[] yPoints = trace.getYPoints();
+            for (int first = 0; first < xPoints.length; first++) {
+                for (int second = first + 1; second < xPoints.length; second++) {
+                    if (xPoints[first] == xPoints[second] && yPoints[first] == yPoints[second])
+                        throw new IllegalStateException("PCB trace backtracks: " +
+                            trace.getNetId());
+                }
+            }
+        }
+    }
+
+    void validateTraceClearance() {
+        long minimumSquared = (long) PcbTraceRules.MIN_CENTERLINE_CLEARANCE *
+            PcbTraceRules.MIN_CENTERLINE_CLEARANCE;
+        for (int first = 0; first < traces.size(); first++) {
+            for (int second = first + 1; second < traces.size(); second++) {
+                PcbTraceGeometry firstTrace = traces.get(first);
+                PcbTraceGeometry secondTrace = traces.get(second);
+                if (firstTrace.getNetId().equals(secondTrace.getNetId()))
+                    continue;
+                int[] firstX = firstTrace.getXPoints();
+                int[] firstY = firstTrace.getYPoints();
+                int[] secondX = secondTrace.getXPoints();
+                int[] secondY = secondTrace.getYPoints();
+                for (int firstIndex = 1; firstIndex < firstX.length; firstIndex++) {
+                    for (int secondIndex = 1; secondIndex < secondX.length; secondIndex++) {
+                        long distanceSquared = segmentDistanceSquared(
+                            firstX[firstIndex - 1], firstY[firstIndex - 1], firstX[firstIndex],
+                            firstY[firstIndex], secondX[secondIndex - 1],
+                            secondY[secondIndex - 1], secondX[secondIndex],
+                            secondY[secondIndex]);
+                        if (distanceSquared < minimumSquared)
+                            throw new IllegalStateException("PCB traces violate copper clearance: " +
+                                firstTrace.getNetId() + " / " + secondTrace.getNetId() +
+                                " distanceSquared=" + distanceSquared + " minimumSquared=" +
+                                minimumSquared + " firstSegment=" +
+                                firstX[firstIndex - 1] + "," + firstY[firstIndex - 1] + " -> " +
+                                firstX[firstIndex] + "," + firstY[firstIndex] +
+                                " secondSegment=" + secondX[secondIndex - 1] + "," +
+                                secondY[secondIndex - 1] + " -> " + secondX[secondIndex] + "," +
+                                secondY[secondIndex]);
+                    }
+                }
+            }
+        }
+    }
+
+    private static long segmentDistanceSquared(int ax1, int ay1, int ax2, int ay2,
+            int bx1, int by1, int bx2, int by2) {
+        if (segmentsIntersect(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2))
+            return 0;
+        long result = pointSegmentDistanceSquared(ax1, ay1, bx1, by1, bx2, by2);
+        result = Math.min(result, pointSegmentDistanceSquared(ax2, ay2, bx1, by1, bx2, by2));
+        result = Math.min(result, pointSegmentDistanceSquared(bx1, by1, ax1, ay1, ax2, ay2));
+        return Math.min(result, pointSegmentDistanceSquared(bx2, by2, ax1, ay1, ax2, ay2));
+    }
+
+    private static long pointSegmentDistanceSquared(int px, int py, int x1, int y1,
+            int x2, int y2) {
+        int nearestX = px;
+        int nearestY = py;
+        if (x1 == x2) {
+            nearestX = x1;
+            nearestY = Math.max(Math.min(py, Math.max(y1, y2)), Math.min(y1, y2));
+        } else if (y1 == y2) {
+            nearestY = y1;
+            nearestX = Math.max(Math.min(px, Math.max(x1, x2)), Math.min(x1, x2));
+        }
+        long dx = px - nearestX;
+        long dy = py - nearestY;
+        return dx * dx + dy * dy;
+    }
+
+    int getTraceLength(PcbTraceGeometry trace) {
+        int length = 0;
+        int[] xPoints = trace.getXPoints();
+        int[] yPoints = trace.getYPoints();
+        for (int index = 1; index < xPoints.length; index++)
+            length += Math.abs(xPoints[index] - xPoints[index - 1]) +
+                Math.abs(yPoints[index] - yPoints[index - 1]);
+        return length;
+    }
+
+    int getDirectManhattanDistance(PcbTraceGeometry trace) {
+        int[] xPoints = trace.getXPoints();
+        int[] yPoints = trace.getYPoints();
+        return Math.abs(xPoints[xPoints.length - 1] - xPoints[0]) +
+            Math.abs(yPoints[yPoints.length - 1] - yPoints[0]);
+    }
+
+    int getTraceBendCount(PcbTraceGeometry trace) {
+        int bends = 0;
+        int[] xPoints = trace.getXPoints();
+        int[] yPoints = trace.getYPoints();
+        for (int index = 2; index < xPoints.length; index++) {
+            int firstDx = xPoints[index - 1] - xPoints[index - 2];
+            int firstDy = yPoints[index - 1] - yPoints[index - 2];
+            int secondDx = xPoints[index] - xPoints[index - 1];
+            int secondDy = yPoints[index] - yPoints[index - 1];
+            if (firstDx != secondDx || firstDy != secondDy)
+                bends++;
+        }
+        return bends;
+    }
+
+    double getTraceDetourRatio(PcbTraceGeometry trace) {
+        return getTraceLength(trace) / (double) Math.max(1, getDirectManhattanDistance(trace));
+    }
+
+    double getRouteQualityScore(TroubleshootBoard board) {
+        double score = 0;
+        for (PcbTraceGeometry trace : traces)
+            score += getTraceLength(trace) + getTraceBendCount(trace) * 35 +
+                getTraceDetourRatio(trace) * 60;
+        for (String netId : board.getNetIds()) {
+            Vector<String> padIds = board.getNet(netId).getPadIds();
+            if (padIds.size() < 2)
+                continue;
+            PcbPadPlacement first = pads.get(padIds.get(0));
+            for (int index = 1; index < padIds.size(); index++) {
+                PcbPadPlacement other = pads.get(padIds.get(index));
+                score += (Math.abs(first.getX() - other.getX()) +
+                    Math.abs(first.getY() - other.getY())) * .15;
+            }
+        }
+        return score;
     }
 
     private static void requireInside(Rectangle rectangle, Rectangle outer, String description) {
@@ -239,7 +477,17 @@ class PcbBoardLayout {
         for (String id : padIds) {
             PcbPadPlacement pad = pads.get(id);
             result.append("P:").append(id).append('@').append(pad.getX()).append(',')
-                .append(pad.getY()).append(';');
+                .append(pad.getY()).append('!').append(pad.getEscapeDx()).append(',')
+                .append(pad.getEscapeDy()).append(',').append(pad.getEscapeLength()).append(';');
+        }
+        Vector<String> labelIds = new Vector<String>(silkscreenLabels.keySet());
+        Collections.sort(labelIds);
+        for (String id : labelIds) {
+            PcbSilkscreenLabel label = silkscreenLabels.get(id);
+            Rectangle bounds = label.getBounds();
+            result.append("L:").append(id).append('@').append(label.getText()).append(':')
+                .append(bounds.x).append(',').append(bounds.y).append(',').append(bounds.width)
+                .append(',').append(bounds.height).append(';');
         }
         Vector<PcbTraceGeometry> orderedTraces = new Vector<PcbTraceGeometry>(traces);
         Collections.sort(orderedTraces, new Comparator<PcbTraceGeometry>() {
@@ -300,15 +548,32 @@ class PcbBoardLayout {
         return result.toString();
     }
 
+    String silkscreenGeometryFingerprint() {
+        StringBuilder result = new StringBuilder();
+        Vector<String> labelIds = new Vector<String>(silkscreenLabels.keySet());
+        Collections.sort(labelIds);
+        for (String id : labelIds) {
+            PcbSilkscreenLabel label = silkscreenLabels.get(id);
+            Rectangle bounds = label.getBounds();
+            result.append(id).append('@').append(bounds.x).append(',').append(bounds.y).append(',')
+                .append(bounds.width).append(',').append(bounds.height).append(';');
+        }
+        return result.toString();
+    }
+
     int getWidth() { return width; }
     int getHeight() { return height; }
     Rectangle getBoardOutline() { return boardOutline; }
     Rectangle getPartsTray() { return partsTray; }
     PcbPadPlacement getPad(String padId) { return pads.get(padId); }
     PcbComponentPlacement getComponent(String componentId) { return components.get(componentId); }
+    PcbSilkscreenLabel getSilkscreenLabel(String labelId) { return silkscreenLabels.get(labelId); }
     Vector<PcbPadPlacement> getPads() { return new Vector<PcbPadPlacement>(pads.values()); }
     Vector<PcbComponentPlacement> getComponents() {
         return new Vector<PcbComponentPlacement>(components.values());
+    }
+    Vector<PcbSilkscreenLabel> getSilkscreenLabels() {
+        return new Vector<PcbSilkscreenLabel>(silkscreenLabels.values());
     }
     Vector<PcbTraceGeometry> getTraces() { return new Vector<PcbTraceGeometry>(traces); }
 }
