@@ -1005,18 +1005,15 @@ This protocol augments all existing project architecture, development,
 validation, and completion requirements. It does not remove, weaken, or
 replace them.
 
-The normal workflow uses a Luna primary architect and bounded Luna
-implementation/review subagents. GPT-5.6 Sol HIGH is an escalation architect,
-not a routine mandatory reviewer.
+The normal workflow uses a primary architect and bounded coder/reviewer
+implementation and review roles. A separate escalation architect is available
+when the normal bounded process cannot safely resolve a substantive issue.
 
-## Primary Architect / Boss
+## Primary Architect
 
-The primary architect is the main Codex thread:
-
-- model: GPT-5.6 Luna;
-- reasoning: MAX;
-- role: primary architect, task owner, delegation controller, reviewer-finding
-  evaluator, final code reviewer, acceptance authority, and completion owner.
+The primary architect is the main task thread and is the task owner,
+delegation controller, reviewer-finding evaluator, final code reviewer,
+acceptance authority, completion owner, and escalation coordinator.
 
 The primary architect must:
 
@@ -1041,7 +1038,7 @@ change is permitted only through the defined correction or escalation workflow.
 
 ## Delegation Ownership and Patience Protocol
 
-Once implementation is delegated, the Luna XHIGH coder owns that phase until
+Once implementation is delegated, the coder owns that phase until
 it returns a result, explicitly reports `BLOCKED` or `FAILURE`, or the user
 explicitly cancels the delegation.
 
@@ -1067,21 +1064,17 @@ clarification, evidence and reviewer evaluation, failed-round diagnosis,
 final review, and escalation; implementation remains the coder's
 responsibility.
 
-The same ownership and patience rules apply during correction rounds and Sol
-escalation: after a repair is delegated, let the Luna coder complete it before
-reviewer or architect action begins. Let reviewer work complete naturally as
-well; do not pressure, interrupt, or replace a reviewer merely because
-independent review takes time. No phase advances until its assigned agent has
-returned the required disposition or report. Existing bounded retry limits and
-escalation rules remain unchanged.
+The same ownership and patience rules apply during correction rounds and
+escalation-architect work: after a repair is delegated, let the coder complete
+it before reviewer or architect action begins. Let reviewer work complete
+naturally as well; do not pressure, interrupt, or replace a reviewer merely
+because independent review takes time. No phase advances until its assigned
+role has returned the required disposition or report. Existing bounded retry
+limits and escalation rules remain unchanged.
 
 ## Coder Subagent
 
-The configured coder subagent is:
-
-- model: GPT-5.6 Luna;
-- reasoning: XHIGH;
-- access: workspace-write.
+The coder has workspace-write access.
 
 The coder must:
 
@@ -1105,11 +1098,7 @@ The coder must not spawn additional write-capable agents for routine work.
 
 ## Reviewer Subagent
 
-The configured reviewer subagent is:
-
-- model: GPT-5.6 Luna;
-- reasoning: XHIGH;
-- access: read-only.
+The reviewer has read-only access.
 
 The reviewer must independently inspect:
 
@@ -1156,18 +1145,18 @@ where possible, why it matters, expected behavior, actual behavior or risk,
 evidence/reproduction path where applicable, and required behavior for
 resolution.
 
-Reviewer `PASS` means only that the candidate is ready for the primary Luna
-MAX architect's independent final review.
+Reviewer `PASS` means only that the candidate is ready for the primary
+architect's independent final review.
 
 ## Normal Review Loop
 
 The normal hierarchy is:
 
 ```text
-Luna MAX architect
-    -> Luna XHIGH coder
-    -> Luna XHIGH reviewer
-    -> Luna MAX architect final review
+Primary architect
+    -> coder
+    -> reviewer
+    -> primary architect final review
 ```
 
 The primary architect must independently review the actual implementation
@@ -1176,27 +1165,33 @@ after reviewer `PASS` and must not blindly trust either the coder or reviewer.
 If the reviewer returns `FAIL`:
 
 1. The primary architect evaluates every finding.
-2. Valid findings become precise corrective requirements.
-3. Invalid findings are discarded with a brief reason.
-4. Valid corrections go back to the coder.
+2. The primary architect classifies every finding as `BLOCKER`, `FOLLOW-UP`,
+   or `BACKLOG`.
+3. Invalid findings are discarded with a brief reason; non-blocking findings
+   are recorded without reopening implementation.
+4. Only `BLOCKER` findings become precise corrective requirements and go back
+   to the coder.
 5. The coder makes the narrowest defensible fixes and reruns relevant
    validation.
-6. The reviewer independently reviews the corrected candidate again.
+6. The reviewer independently reviews the corrected candidate again when a
+   `BLOCKER` correction requires independent review.
 
 Coder and reviewer work remains sequential. Allow at most TWO coder/reviewer
 correction passes within one primary-architect review round. Do not allow an
-unlimited nested loop. If the candidate still cannot reach reviewer `PASS`,
-the unresolved issue returns to the primary architect for diagnosis and a
-decision about the next bounded review round or Sol escalation.
+unlimited nested loop. If the candidate still cannot reach reviewer `PASS`
+because of a `BLOCKER`, the unresolved issue returns to the primary architect
+for diagnosis and a decision about the next bounded review round or
+escalation-architect review. If only `FOLLOW-UP` or `BACKLOG` findings remain,
+the architect records them and continues toward completion.
 
-## Maximum Three Luna Architect Final-Review Rounds
+## Maximum Three Architect Final-Review Rounds
 
-A task may receive at most THREE primary Luna MAX final-review rounds.
+A task may receive at most THREE primary architect final-review rounds.
 
 ### Round 1
 
-The coder implements, the reviewer independently reviews, and the Luna MAX
-architect performs the first final review after reviewer `PASS`.
+The coder implements, the reviewer independently reviews, and the primary
+architect performs the first final review after the review phase.
 
 If the architect returns `FINAL PASS`, proceed to final validation and
 completion.
@@ -1209,7 +1204,8 @@ Round 2.
 ### Round 2
 
 The coder implements the architect's corrections, the reviewer independently
-reviews the corrected candidate, and Luna MAX performs the second final review.
+reviews the corrected candidate, and the primary architect performs the second
+final review.
 
 If the architect returns `FINAL PASS`, proceed to final validation and
 completion.
@@ -1218,9 +1214,9 @@ If the architect returns `FINAL FAIL`, the architect must recognize that only
 one autonomous correction round remains and must perform deeper diagnosis
 before beginning Round 3.
 
-### Round 3 — Final Luna Diagnostic Attempt
+### Round 3 — Final Architect Diagnostic Attempt
 
-Before returning the task to the coder, Luna MAX must actively diagnose the
+Before returning the task to the coder, the primary architect must actively diagnose the
 failure by inspecting enough of the real implementation and surrounding
 architecture to produce a useful repair strategy. Where applicable, identify:
 
@@ -1236,39 +1232,34 @@ architecture to produce a useful repair strategy. Where applicable, identify:
 - a proposed repair strategy; and
 - tests or instrumentation needed to verify the diagnosis.
 
-Luna MAX must give the coder a detailed diagnostic repair brief resembling
+The primary architect must give the coder a detailed diagnostic repair brief resembling
 senior-engineer implementation guidance rather than a generic review comment.
 The coder must verify the diagnosis against the actual code, report
 contradictory evidence instead of forcing the proposed fix, implement the
 narrowest defensible repair, run especially thorough relevant validation, and
-return the candidate. The reviewer then independently reviews it, and Luna MAX
-performs the THIRD AND FINAL independent final review.
+return the candidate. The reviewer then independently reviews it, and the
+primary architect performs the THIRD AND FINAL independent final review.
 
-If Luna MAX returns `FINAL PASS`, proceed to completion. If Luna MAX returns
-`FINAL FAIL`, do not begin a fourth Luna review round; follow the Sol escalation
-protocol below.
+If the primary architect returns `FINAL PASS`, proceed to completion. If the
+primary architect returns `FINAL FAIL`, do not begin a fourth architect review
+round; follow the escalation-architect protocol below.
 
-## Sol HIGH Escalation Protocol
+## Escalation Architect Protocol
 
-The escalation architect is:
+The escalation architect provides senior architectural escalation only.
 
-- model: GPT-5.6 Sol;
-- reasoning: HIGH;
-- role: senior architectural escalation only.
+An authorized escalation uses the configured escalation-architect role. The
+primary architect remains the owner of orchestration.
 
-An authorized escalation uses the configured `sol_architect` custom agent from
-`.codex/agents/sol-architect.toml`. The primary Luna MAX thread remains the
-owner of orchestration.
+The escalation architect is used only when the normal workflow cannot safely
+resolve the task or when an architectural escalation condition is met. It is
+NOT required for routine successful milestones.
 
-Sol is used only when the normal Luna workflow cannot safely resolve the task
-or when an architectural escalation condition is met. Sol is NOT required for
-routine successful milestones.
+Escalate to the escalation architect when any of these conditions occurs:
 
-Escalate to Sol when any of these conditions occurs:
-
-1. The third Luna MAX final-review round fails.
+1. The third primary architect final-review round fails.
 2. The coder and reviewer materially disagree about an architectural issue
-   that Luna MAX cannot confidently resolve.
+   that the primary architect cannot confidently resolve.
 3. Fixing the issue appears to require changing a permanent architectural
    invariant.
 4. The project documents and actual implementation reveal a fundamental
@@ -1277,20 +1268,22 @@ Escalate to Sol when any of these conditions occurs:
    such as CircuitJS graph ownership, active measurement stimulus cleanup,
    board-power isolation, stable board identity, solver-backed measurement
    correctness, generated-board ownership, procedural-generation validity,
-   physical-part identity, or mutation lifecycle integrity, and Luna MAX cannot
-   confidently resolve it.
-6. Luna MAX determines that continuing without stronger architectural review
-   risks hidden technical debt or corruption of an established invariant.
+   physical-part identity, or mutation lifecycle integrity, and the primary
+   architect cannot confidently resolve it.
+6. The primary architect determines that continuing without stronger
+   architectural review risks hidden technical debt or corruption of an
+   established invariant.
 
-When escalated, Sol HIGH must inspect the actual implementation and relevant
-architecture and identify the root cause, architectural conflict, execution
-path, affected symbols, why Luna attempts failed, what must remain unchanged,
-the narrowest defensible repair strategy, and the validation required. Sol
-provides a detailed repair brief to the Luna coder. The Luna XHIGH coder makes
-the repair, the Luna XHIGH reviewer independently reviews it, and Sol HIGH
-performs the final escalation review.
+When escalated, the escalation architect must inspect the actual
+implementation and relevant architecture and identify the root cause,
+architectural conflict, execution path, affected symbols, why prior attempts
+failed, what must remain unchanged, the narrowest defensible repair strategy,
+and the validation required. The escalation architect provides a detailed
+repair brief to the coder. The coder makes the repair, the reviewer
+independently reviews it, and the escalation architect performs the final
+escalation review.
 
-Sol's final escalation result must be exactly one of:
+The escalation architect's final result must be exactly one of:
 
 `FINAL PASS`
 
@@ -1298,12 +1291,13 @@ or
 
 `FINAL FAIL`
 
-If Sol returns `FINAL PASS`, proceed to normal task completion. If Sol returns
-`FINAL FAIL`, STOP. Do not start another repair cycle, weaken requirements,
-redesign the subsystem autonomously, begin another roadmap milestone, or
-commit failed work. Report the blocker, attempted work, validation state, and
-recommended human or architect decision to the user. Sol escalation is the
-final safety valve, not an unlimited fourth development loop.
+If the escalation architect returns `FINAL PASS`, proceed to normal task
+completion. If it returns `FINAL FAIL`, STOP. Do not start another repair
+cycle, weaken requirements, redesign the subsystem autonomously, begin another
+roadmap milestone, or commit failed work. Report the blocker, attempted work,
+validation state, and recommended human or architect decision to the user. The
+escalation architect is the final safety valve, not an unlimited fourth
+development loop.
 
 ## Hard Autonomy Limits
 
@@ -1334,10 +1328,12 @@ At all times:
 
 When the multi-agent workflow is used, successful acceptance requires:
 
-- the Luna XHIGH coder considers the implementation complete;
-- the Luna XHIGH reviewer returns `PASS`; and
-- the primary Luna MAX architect returns `FINAL PASS`, or Sol HIGH returns
-  `FINAL PASS` after an authorized escalation.
+- the coder considers the implementation complete;
+- the reviewer returns `PASS`, or the primary architect independently
+  classifies every remaining reviewer finding as `FOLLOW-UP` or `BACKLOG`
+  under the severity protocol below; and
+- the primary architect returns `FINAL PASS`, or the escalation architect
+  returns `FINAL PASS` after an authorized escalation.
 
 Only after those gates are satisfied may the normal Task Completion Protocol
 proceed. It must then:
@@ -1368,13 +1364,177 @@ The final docs/CODEX_TASK_REPORT.md must include:
 - important test data and results;
 - coder result;
 - reviewer result;
-- number of Luna architect review rounds;
-- Luna final result;
-- whether Sol escalation was required;
-- Sol diagnosis and result if used;
+- number of primary architect review rounds;
+- primary architect final result;
+- whether escalation-architect review was required;
+- escalation-architect diagnosis and result if used;
 - known limitations or concerns;
 - next roadmap milestone; and
 - commit message.
+
+---
+
+# Review Severity, Closed Validation Set, and Task Stop Conditions
+
+This protocol supplements the existing architecture, safety, testing,
+review, persistence, and Task Completion Protocol requirements. It defines
+when a finding may reopen implementation and when a task must stop.
+
+## Finding Severity
+
+Every issue discovered during coder review, reviewer review, architect review,
+or final validation must be classified as exactly one of the following:
+
+### BLOCKER
+
+A `BLOCKER` materially prevents the current task from being considered
+correct. Examples include:
+
+- product behavior is functionally incorrect;
+- an explicit acceptance criterion for the current task fails;
+- a core architectural invariant is violated;
+- simulation or electrical truth is violated;
+- state can be corrupted or persisted incorrectly;
+- determinism required by the task is broken;
+- safety, power, or measurement invariants are broken;
+- an existing required user-facing behavior has regressed;
+- the implementation could expose false or invalid player-facing information;
+  or
+- the task cannot perform its intended gameplay or functionality reliably.
+
+Only `BLOCKER` findings may return the task to the coder.
+
+### FOLLOW-UP
+
+A `FOLLOW-UP` is a real issue that should be fixed but does not invalidate the
+current milestone. Examples include:
+
+- test or browser automation flakiness that does not demonstrate incorrect
+  product behavior;
+- intermittent CDP or UI interaction timing failures in verifier
+  infrastructure;
+- additional defensive validation;
+- non-critical UI races;
+- minor developer-tooling problems;
+- documentation cleanup that does not materially misrepresent current
+  behavior; or
+- non-critical edge cases and robustness improvements outside the explicit
+  acceptance criteria.
+
+`FOLLOW-UP` findings must be documented for a later task and must not prevent
+completion of the current task.
+
+### BACKLOG
+
+`BACKLOG` is a worthwhile improvement that is not currently required.
+Examples include naming cleanup, refactoring, maintainability improvements,
+better diagnostics, additional optional tests, architecture polish, and
+developer-experience improvements. `BACKLOG` findings must not prevent task
+completion.
+
+## Only BLOCKER Findings Reopen Implementation
+
+The architect must independently evaluate reviewer findings instead of
+blindly treating every reviewer `FAIL` as a reason to return work to the
+coder. If a reviewer returns `FAIL` but the underlying finding qualifies only
+as `FOLLOW-UP` or `BACKLOG`, the architect must record the finding, explain
+the classification, and continue toward completion without opening another
+coder correction pass for that finding. A reviewer disposition is evidence
+for the architect, not an automatic command to reopen implementation.
+
+## Closed Validation Set
+
+Every task has a closed validation set consisting of:
+
+- the acceptance criteria explicitly defined when the task began;
+- required repository-wide build and test checks established by AGENTS.md;
+- regression checks directly necessary to prove that functionality touched by
+  the task was not broken; and
+- specific checks added to reproduce and verify a previously discovered
+  `BLOCKER`.
+
+Once the closed validation set passes and all substantive `BLOCKER` findings
+are resolved, the task is eligible for completion. During final review, the
+architect must not continually expand the blocking validation set by
+inventing additional spot checks, extra legacy routes, supplemental stress
+tests, optional browser matrices, “just to be safe” checks, unrelated edge
+cases, or new acceptance requirements.
+
+The architect may perform exploratory checks when useful. A failure found
+exclusively by an exploratory check is `FOLLOW-UP` by default unless it
+provides concrete evidence of a genuine `BLOCKER` in the product or an
+original acceptance criterion. The finish line must not move indefinitely.
+
+## Test-Harness Failures Versus Product Failures
+
+A test or verifier failure does not automatically mean that the product is
+incorrect. The architect and reviewer must distinguish evidence that actual
+product behavior is broken from evidence that automation failed to interact
+with or observe otherwise-correct product behavior.
+
+Lost synthetic CDP clicks, transient focus loss, GWT re-render timing, delayed
+panel appearance, and automation-selector races are normally `FOLLOW-UP`
+unless investigation demonstrates a corresponding player-facing defect. Do
+not repeatedly reopen a completed feature solely to make optional automation
+theoretically perfect. Required automated checks must still be reliable
+enough to establish their acceptance criteria; this rule is not permission to
+ignore a verifier that cannot prove required behavior.
+
+## Bounded Correction Loops
+
+Correction loops resolve substantive `BLOCKER`s, not unlimited polish. When a
+correction is requested, give the coder the exact finding, identify expected
+versus actual behavior, constrain the correction to the affected scope, and
+rerun only the necessary affected validation plus required regression checks.
+Send the corrected candidate back to the reviewer when independent review is
+required. Do not restart a broad review cycle for every minor issue.
+
+If repeated failures within the same subsystem indicate that the test
+infrastructure itself is flaky, classify that infrastructure problem
+separately rather than repeatedly treating each manifestation as a new
+product `BLOCKER`.
+
+## Architect Stop Condition
+
+Once all of the following are true, the architect must stop searching for
+additional reasons to delay completion:
+
+- the coder has completed the requested implementation;
+- the original acceptance criteria pass;
+- required repository build and test checks pass;
+- substantive `BLOCKER` findings are resolved;
+- the reviewer has passed the implementation, or all remaining reviewer
+  findings have been independently classified as `FOLLOW-UP` or `BACKLOG`;
+  and
+- the architect has completed the predefined final validation.
+
+At that point, document `FOLLOW-UP` and `BACKLOG` findings, update the task
+handoff/report, inspect git diff and status, stage only intended files, run the
+repository's required staged-diff checks, commit according to the existing
+Task Completion Protocol when the task authorizes a commit, and stop. Do not
+begin the next task unless instructed by the established workflow. “Could be
+improved” is not equivalent to “the current task is incorrect.”
+
+## Incremental Development Principle
+
+TroubleshootJS is developed incrementally. Non-game-breaking defects and
+infrastructure improvements may be carried into the next task or backlog
+rather than forcing the current milestone into an unlimited correction loop.
+Quality remains important, but the objective is high confidence in the defined
+milestone, not theoretical perfection across every adjacent subsystem. Core
+correctness, simulation truth, architectural invariants, player-facing
+validity, state integrity, and regressions remain blocking.
+
+## Preservation of Existing Project Rules
+
+This protocol does not remove or relax the Task Completion Protocol,
+persistence and retry rules, build requirements, reviewer independence,
+architectural invariants, CircuitJS-as-source-of-truth requirement,
+normal-player privacy requirements, deterministic-generation requirements, or
+power and measurement safety requirements. Where a generic retry instruction
+overlaps with this section, classify the issue first: the retry loop applies
+to a suspected `BLOCKER` or failed check in the closed validation set; it does
+not turn a `FOLLOW-UP` or `BACKLOG` into a blocker.
 
 ---
 
@@ -1387,15 +1547,19 @@ validation pass. Continue through implementation, validation, screenshots,
 documentation, staging, and commit in the same task whenever safely possible.
 Do not return an unfinished task after a first failed command, browser
 interaction, screenshot attempt, verifier failure, timeout, stale layout, or
-automation mistake.
+automation mistake while a suspected `BLOCKER` or closed-validation failure
+remains unresolved.
 
-For a recoverable failure, diagnose it and make at least three materially
-distinct attempts before declaring it blocking. A materially distinct attempt
-changes a relevant execution method, browser context, viewport initialization,
-event coordinates, route isolation, diagnostic instrumentation, source fix,
-server process, or validation strategy; repeating the same command does not
-count. Preserve the working tree between attempts and continue the remaining
-checklist after a fix.
+For a recoverable failure that may be a `BLOCKER` or affects the closed
+validation set, diagnose it and make at least three materially distinct
+attempts before declaring it externally blocking. A materially distinct
+attempt changes a relevant execution method, browser context, viewport
+initialization, event coordinates, route isolation, diagnostic instrumentation,
+source fix, server process, or validation strategy; repeating the same command
+does not count. Preserve the working tree between attempts and continue the
+remaining checklist after a fix. This retry requirement does not apply to an
+issue already classified as `FOLLOW-UP` or `BACKLOG` unless new evidence shows
+that it is a `BLOCKER`.
 
 Do not weaken assertions, remove validation, fabricate screenshots, bypass
 normal UI interaction, or directly mutate verifier/controller state merely to
@@ -1442,10 +1606,11 @@ until the successful multi-agent acceptance gates above have been satisfied.
 10. Do not push.
 11. STOP without beginning another milestone.
 
-If required validation fails, do not commit. Leave the changes in the working
-tree and clearly report the failure. Do not auto-commit when explicitly told
-not to. `docs/CODEX_TASK_REPORT.md` is intentionally overwritten after each
-successful task; Git history preserves prior reports.
+If a required check in the closed validation set fails because of an
+unresolved `BLOCKER`, do not commit. Leave the changes in the working tree and
+clearly report the failure. Do not auto-commit when explicitly told not to.
+`docs/CODEX_TASK_REPORT.md` is intentionally overwritten after each successful
+task; Git history preserves prior reports.
 
 ## Visual Evidence Protocol
 
@@ -1487,7 +1652,7 @@ Screenshots supplement and never weaken or replace existing electrical,
 automated, or browser validation. Screenshots are optional when a task has no
 visible player or UI effect.
 
-Before defining any milestone, the primary Luna MAX architect must read:
+Before defining any milestone, the primary architect must read:
 
 - AGENTS.md
 - docs/ROADMAP.md
