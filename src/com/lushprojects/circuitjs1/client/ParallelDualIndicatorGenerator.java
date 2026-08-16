@@ -126,12 +126,17 @@ class ParallelDualIndicatorGenerator {
             physicalSpecifications.getResistorNameplate("R1"), originalR1, r1Lead1Link,
             r1Lead2Link);
 
+        GeneratedChallengeBehaviorContract behaviorContract =
+            new GeneratedChallengeBehaviorAdapter(
+                new ParallelDualIndicatorGeneratedBoardValidator(),
+                new ParallelDualIndicatorFaultValidator(),
+                new ParallelDualIndicatorRepairValidator());
         GeneratedChallengeCatalog challengeCatalog = new GeneratedChallengeCatalog();
         challengeCatalog.addCandidate(new GeneratedChallengeDefinition("PARALLEL_ONE_DARK",
             FAMILY_ID, DUAL_PARALLEL_BRANCHES_VARIANT, seed, "ONE_INDICATOR_DARK",
             "One indicator does not light.",
             "Repair verified. Both indicators operating normally.", fault, faultBinding,
-            new ParallelDualIndicatorFaultValidator(), new ParallelDualIndicatorRepairValidator()));
+            behaviorContract));
 
         GeneratedExternalPowerBindings powerBindings = new GeneratedExternalPowerBindings(board);
         Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
@@ -175,7 +180,7 @@ class ParallelDualIndicatorGenerator {
             DUAL_PARALLEL_BRANCHES_VARIANT,
             "Generated dual parallel indicator board, seed " + seed,
             componentBindings, powerBindings, connectionBindings,
-            new ParallelDualIndicatorGeneratedBoardValidator(),
+            behaviorContract,
             PCB_LAYOUT_GENERATOR.generate(board, seed), physicalSpecifications, faultBinding,
             operationalStates, challengeCatalog.select(seed),
             new ParallelDualIndicatorFamilyState(r1Slot, resistorInventory, resistorCatalog));

@@ -27,9 +27,9 @@ class GeneratedBoardVerifier {
         }
         for (String netId : board.getNetIds())
             verifyNetVoltage(bindings.getEndpointsForNet(netId), netId);
-        if (verifyHealthyFamily && instance.getFamilyValidator() != null &&
+        if (verifyHealthyFamily && instance.getBehaviorContract() != null &&
             (modifications == null || modifications.isFullyRestored()))
-            instance.getFamilyValidator().verify(instance, powerState);
+            instance.getBehaviorContract().verifyHealthy(instance, powerState);
     }
 
     private static void verifyNetVoltage(Vector<CircuitMeasurementEndpoint> endpoints,

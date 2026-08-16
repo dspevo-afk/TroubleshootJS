@@ -24,7 +24,9 @@ class ReplacementDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(Math.abs(getLedCurrent(instance)) < .000001 && !challenge.isCompleted() &&
-            !instance.getOperationalStates().isIlluminated("LED1"),
+            !instance.getOperationalStates().isIlluminated("LED1") &&
+            !challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false),
             "Reinstalled failed R1 unexpectedly repaired challenge");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(slots.removeInstalledPart(), "Reinstalled failed R1 did not remove");
@@ -42,7 +44,10 @@ class ReplacementDeveloperVerifier {
         settle(sim);
         require(getLedCurrent(instance) >= .005 && getLedCurrent(instance) <= .015 &&
             Math.abs(getLedCurrent(instance) - getInstalledResistorCurrent(instance)) <= .0001 &&
-            challenge.isCompleted() && instance.getOperationalStates().isIlluminated("LED1"),
+            challenge.isCompleted() &&
+            challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false) &&
+            instance.getOperationalStates().isIlluminated("LED1"),
             "Correct replacement did not complete solved repair");
         verifyPassiveDcVoltageCases(sim, instance, correctResistance);
         verifyHealthyReplacementLiftedLeadVoltage(sim, instance, slots, correctPartId,
@@ -162,6 +167,9 @@ class ReplacementDeveloperVerifier {
             "Unexpected functional current for " + part.getId() + ": " + current);
         require(instance.getOperationalStates().isIlluminated("LED1") == expectedIllumination,
             "Unexpected LED state for " + part.getId());
+        require(challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
+            sim.getBoardModificationController(), BoardPowerState.POWERED, false) == expectedCompletion,
+            "Functional behavior contract disagreed for " + part.getId());
         require(challenge.isCompleted() == expectedCompletion,
             "Unexpected completion state for " + part.getId());
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);

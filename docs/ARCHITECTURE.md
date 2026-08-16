@@ -328,14 +328,18 @@ and upstream controls.
 Generators are seeded so a seed reproduces a board's topology, values, and
 simulation placement. `GeneratedBoardInstance` is family-agnostic: it couples
 board metadata, owned CircuitJS elements, stable family/topology IDs, generic
-component bindings, external-power bindings, and an optional family validator
-without exposing a topology-specific API. Component bindings map logical
+component bindings, external-power bindings, and its
+`GeneratedChallengeBehaviorContract` without exposing a topology-specific API.
+The contract represents the healthy, faulted, and functionally repaired phases;
+`GeneratedChallengeBehaviorAdapter` delegates those phases to the existing
+family-specific `GeneratedBoardValidator`, `GeneratedFaultValidator`, and
+`GeneratedRepairValidator` implementations. Component bindings map logical
 `BoardComponent` IDs to one or more live `CircuitElm` references. External
 power bindings map logical `ExternalBoardPowerInput` IDs to one or more backing
 elements, leaving room for a future source-isolation control without assuming a
 `VoltageElm`. Generated pad bindings use CircuitElm/post endpoints, never
-analyzed node IDs. Family-specific electrical expectations stay with the
-generator family rather than the generic verifier.
+analyzed node IDs. Family-specific electrical expectations therefore remain in
+their validators while the generic board verifier consumes the shared contract.
 
 Generated circuits are installed only through the controlled `CirSim`
 installation boundary. Generated-board verification is requested after
@@ -402,11 +406,15 @@ Generated challenge orchestration is family-agnostic. Family generation owns a
 small `GeneratedChallengeCatalog` of compatible immutable
 `GeneratedChallengeDefinition` candidates. A definition contains stable
 challenge and complaint IDs/text, family/topology compatibility, selection
-seed, selected fault/binding, and a `GeneratedFaultValidator` strategy. The
-generic controller only records the solver-gated healthy/faulted stages,
-applies the selected binding, invokes the strategy, and transitions to READY.
-It validates that private fault infrastructure is simulation-owned but not a
-logical component, external-power element, or detachable connection.
+seed, selected fault/binding, and its `GeneratedChallengeBehaviorContract`.
+`GeneratedBoardInstance` owns that contract and the definition references the
+same object identity. `GeneratedChallengeController` uses the shared contract
+for faulted validation and functional completion, while
+`GeneratedBoardVerifier` uses it for healthy validation. The generic
+controller only records the solver-gated healthy/faulted stages, applies the
+selected binding, invokes the contract, and transitions to READY. It validates
+that private fault infrastructure is simulation-owned but not a logical
+component, external-power element, or detachable connection.
 
 During either preparation stage, `CirSim` disables board power, the meter,
 PCB probe placement, component selection, and component actions at their
@@ -437,8 +445,9 @@ from the active solver, so loose parts are individually probeable and cannot be
 reconnected by a later install. The PCB layout, pads, traces, and R1 designator stay
 stable while the renderer displays the installed physical part's bands.
 
-Family-specific `GeneratedRepairValidator` implementations decide functional
-completion from solved behavior. The LED validator requires healthy installed
+Family-specific `GeneratedRepairValidator` implementations, reached through
+the shared `GeneratedChallengeBehaviorContract`, decide functional completion
+from solved behavior. The LED validator requires healthy installed
 physical R1 and LED1 parts, powered board, no active meter overlay, 5-15 mA LED
 current, matching resistor current, and illuminated operational state. A missing
 or reversed LED therefore cannot complete an otherwise repaired R1 challenge.

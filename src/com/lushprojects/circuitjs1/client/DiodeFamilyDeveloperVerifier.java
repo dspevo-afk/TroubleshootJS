@@ -37,7 +37,9 @@ class DiodeFamilyDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(Math.abs(current(instance, "D1")) < .000001 &&
-            !instance.getOperationalStates().isIlluminated("LED1") && !challenge.isCompleted(),
+            !instance.getOperationalStates().isIlluminated("LED1") && !challenge.isCompleted() &&
+            !challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false),
             "Reversed diode conducted or completed the challenge");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(sim.getDiodeSlotController().removeInstalledPart(), "Could not remove reversed diode");
@@ -65,7 +67,9 @@ class DiodeFamilyDeveloperVerifier {
         require(diodeCurrent >= .005 && diodeCurrent <= .015 &&
             Math.abs(diodeCurrent - resistorCurrent) <= .0001 &&
             Math.abs(diodeCurrent - ledCurrent) <= .0001 &&
-            instance.getOperationalStates().isIlluminated("LED1") && challenge.isCompleted(),
+            instance.getOperationalStates().isIlluminated("LED1") && challenge.isCompleted() &&
+            challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false),
             "Healthy diode did not produce solver-backed functional completion");
         require(original.getLocation() == DiodePartLocation.LOOSE && original.isFaulted() &&
             reversed.getLocation() == DiodePartLocation.LOOSE,

@@ -64,12 +64,15 @@ class DiodeProtectedIndicatorGenerator {
         DiodeComponentSlot slot = new DiodeComponentSlot("D1", specs.getDiodeNameplate("D1"),
             original, d1AnodeLink, d1CathodeLink);
 
+        GeneratedChallengeBehaviorContract behaviorContract =
+            new GeneratedChallengeBehaviorAdapter(
+                new DiodeProtectedIndicatorGeneratedBoardValidator(),
+                new DiodeProtectedIndicatorFaultValidator(),
+                new DiodeProtectedIndicatorRepairValidator());
         GeneratedChallengeCatalog challenges = new GeneratedChallengeCatalog();
         challenges.addCandidate(new GeneratedChallengeDefinition("DIODE_INDICATOR_NO_LIGHT",
             FAMILY_ID, DIRECT_SERIES_VARIANT, seed, "INDICATOR_DOES_NOT_LIGHT",
-            "Indicator does not light.", fault, faultBinding,
-            new DiodeProtectedIndicatorFaultValidator(),
-            new DiodeProtectedIndicatorRepairValidator()));
+            "Indicator does not light.", fault, faultBinding, behaviorContract));
         GeneratedExternalPowerBindings power = new GeneratedExternalPowerBindings(board);
         Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
         powerElements.add(supply); powerElements.add(powerSwitch);
@@ -95,7 +98,7 @@ class DiodeProtectedIndicatorGenerator {
             supplyVoltage + " V";
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID,
             DIRECT_SERIES_VARIANT, description, components, power, connections,
-            new DiodeProtectedIndicatorGeneratedBoardValidator(),
+            behaviorContract,
             PCB_LAYOUT_GENERATOR.generate(board, seed), specs, faultBinding, operational,
             challenges.select(seed), new DiodeProtectedIndicatorFamilyState(slot, inventory, catalog));
     }

@@ -10,29 +10,27 @@ class GeneratedChallengeDefinition {
     private final String completionText;
     private final GeneratedFault fault;
     private final GeneratedFaultBinding faultBinding;
-    private final GeneratedFaultValidator faultValidator;
-    private final GeneratedRepairValidator repairValidator;
+    private final GeneratedChallengeBehaviorContract behaviorContract;
 
     GeneratedChallengeDefinition(String id, String circuitFamilyId, String topologyVariantId,
             long selectionSeed, String complaintId, String complaintText, GeneratedFault fault,
-            GeneratedFaultBinding faultBinding, GeneratedFaultValidator faultValidator,
-            GeneratedRepairValidator repairValidator) {
+            GeneratedFaultBinding faultBinding, GeneratedChallengeBehaviorContract behaviorContract) {
         this(id, circuitFamilyId, topologyVariantId, selectionSeed, complaintId, complaintText,
             "Repair verified. Indicator operating normally.", fault, faultBinding,
-            faultValidator, repairValidator);
+            behaviorContract);
     }
 
     GeneratedChallengeDefinition(String id, String circuitFamilyId, String topologyVariantId,
             long selectionSeed, String complaintId, String complaintText, String completionText,
             GeneratedFault fault, GeneratedFaultBinding faultBinding,
-            GeneratedFaultValidator faultValidator, GeneratedRepairValidator repairValidator) {
+            GeneratedChallengeBehaviorContract behaviorContract) {
         requireText(id, "challenge ID");
         requireText(circuitFamilyId, "circuit family ID");
         requireText(topologyVariantId, "topology variant ID");
         requireText(complaintId, "complaint ID");
         requireText(complaintText, "complaint text");
         requireText(completionText, "completion text");
-        if (fault == null || faultBinding == null || faultValidator == null || repairValidator == null)
+        if (fault == null || faultBinding == null || behaviorContract == null)
             throw new IllegalArgumentException("Generated challenge requires fault metadata");
         if (faultBinding.getFault() != fault)
             throw new IllegalArgumentException("Challenge fault binding identity disagrees");
@@ -45,8 +43,7 @@ class GeneratedChallengeDefinition {
         this.completionText = completionText;
         this.fault = fault;
         this.faultBinding = faultBinding;
-        this.faultValidator = faultValidator;
-        this.repairValidator = repairValidator;
+        this.behaviorContract = behaviorContract;
     }
 
     String getId() { return id; }
@@ -58,8 +55,7 @@ class GeneratedChallengeDefinition {
     String getCompletionText() { return completionText; }
     GeneratedFault getFault() { return fault; }
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }
-    GeneratedFaultValidator getFaultValidator() { return faultValidator; }
-    GeneratedRepairValidator getRepairValidator() { return repairValidator; }
+    GeneratedChallengeBehaviorContract getBehaviorContract() { return behaviorContract; }
 
     private static void requireText(String value, String name) {
         if (value == null || value.length() == 0)

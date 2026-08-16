@@ -97,7 +97,7 @@ class ParallelDualIndicatorDeveloperVerifier {
             require(faults.clearForDeveloperVerification(), "Parallel fault did not clear in developer scope");
             sim.setBoardPowerState(BoardPowerState.POWERED);
             settle(sim);
-            instance.getFamilyValidator().verify(instance, BoardPowerState.POWERED);
+            instance.getBehaviorContract().verifyHealthy(instance, BoardPowerState.POWERED);
             ResistorElm r2 = ParallelDualIndicatorGeneratedBoardValidator.resistor(instance, "R2");
             healthyBranch2 = r2.getCurrent();
             require(instance.getOperationalStates().isIlluminated("LED1") &&
@@ -105,8 +105,11 @@ class ParallelDualIndicatorDeveloperVerifier {
                 "Healthy parallel branches are not both illuminated");
             require(faults.apply(), "Parallel fault did not reapply");
             settle(sim);
-            challenge.getDefinition().getFaultValidator().verify(instance,
+            challenge.getDefinition().getBehaviorContract().verifyFaulted(instance,
                 sim.getBoardModificationController(), BoardPowerState.POWERED);
+            require(!challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED, false),
+                "Faulted parallel board incorrectly satisfied functional completion");
             require(Math.abs(r2.getCurrent() - healthyBranch2) <= .00001,
                 "Healthy parallel branch changed after R1 open fault");
         } finally {
@@ -182,9 +185,12 @@ class ParallelDualIndicatorDeveloperVerifier {
             "Parallel R1 correct catalog replacement did not install");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
-        require(challenge.getDefinition().getRepairValidator().isFunctionallyRepaired(instance,
+        require(challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
             sim.getBoardModificationController(), BoardPowerState.POWERED, false),
             "Parallel correct replacement did not pass functional repair validation");
+        sim.verifyGeneratedBoard();
+        require(challenge.isCompleted(),
+            "Parallel correct replacement did not transition the controller to COMPLETED");
         require(instance.getOperationalStates().isIlluminated("LED1") &&
             instance.getOperationalStates().isIlluminated("LED2"),
             "Parallel repair did not restore both indicators");

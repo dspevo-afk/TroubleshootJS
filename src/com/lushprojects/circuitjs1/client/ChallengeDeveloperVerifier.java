@@ -33,7 +33,7 @@ class ChallengeDeveloperVerifier {
         requireApproximately(expected, sim.instrumentController
             .getDcVoltageDifferenceForDeveloperVerification(vin, ground), .1,
             "Faulted VIN differs from nameplate");
-        sim.getGeneratedChallengeController().getDefinition().getFaultValidator().verify(instance,
+        sim.getGeneratedChallengeController().getDefinition().getBehaviorContract().verifyFaulted(instance,
             sim.getBoardModificationController(), BoardPowerState.POWERED);
     }
 
@@ -214,7 +214,7 @@ class ChallengeDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.POWERED);
         sim.analyzeCircuit();
         sim.runCircuit(true);
-        instance.getChallengeDefinition().getFaultValidator().verify(instance, modifications,
+        instance.getChallengeDefinition().getBehaviorContract().verifyFaulted(instance, modifications,
             BoardPowerState.POWERED);
         require(faults.isApplied(), "Reconnecting failed original lead 2 bypassed its internal fault");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
@@ -230,7 +230,7 @@ class ChallengeDeveloperVerifier {
             sim.analyzeCircuit();
             sim.runCircuit(true);
             sim.runCircuit(true);
-            instance.getFamilyValidator().verify(instance, BoardPowerState.POWERED);
+            instance.getBehaviorContract().verifyHealthy(instance, BoardPowerState.POWERED);
             require(instance.getOperationalStates().isIlluminated("LED1"),
                 "Developer-cleared LED did not illuminate");
             require(!faults.clearForDeveloperVerification(), "Repeated developer clear was not idempotent");
@@ -239,7 +239,7 @@ class ChallengeDeveloperVerifier {
             sim.analyzeCircuit();
             sim.runCircuit(true);
             sim.runCircuit(true);
-            challenge.getDefinition().getFaultValidator().verify(instance,
+            challenge.getDefinition().getBehaviorContract().verifyFaulted(instance,
                 sim.getBoardModificationController(), BoardPowerState.POWERED);
         } finally {
             challenge.endDeveloperVerificationScope();

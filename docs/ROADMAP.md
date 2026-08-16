@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-15_
+_Last updated: 2026-08-16_
 
 ## Purpose
 
@@ -151,7 +151,7 @@ TroubleshootJS has already moved well beyond a stock CircuitJS fork.
 - [x] KCL and branch-specific fault validation through the solver.
 - [x] Real parallel resistance measurement behavior.
 
-The current baseline is **Task 29: Player-Facing Component Identification Fidelity**.
+The current baseline is **Task 30: Generic Functional Challenge Completion Contract**.
 
 ---
 
@@ -233,7 +233,7 @@ routes and production-browser evidence passed.
 
 ## Task 30 — Generic Functional Challenge Completion Contract
 
-**Status:** `[>] NEXT`
+**Status:** `[x] Complete`
 
 ### Goal
 
@@ -253,11 +253,22 @@ Move from family-specific “the repair looks right” behavior toward a reusabl
 
 At least the existing simple and parallel families use a common completion/verification path without hard-coding “R1 was replaced correctly” as the universal success condition.
 
+### Completed implementation
+
+Task 30 introduced one generic healthy/faulted/repaired behavior contract and
+adapter boundary shared by generated board instances and challenge
+definitions. The challenge controller now uses the contract for lifecycle
+verification and solver-backed functional completion, while the existing LED,
+diode, and parallel family validators remain behind that boundary. Original
+part identity is no longer a universal completion requirement; electrically
+valid alternate repairs are accepted where the family predicate permits them,
+and nonfunctional or still-faulted repairs remain incomplete.
+
 ---
 
 ## Task 31 — Fault Engine v1
 
-**Status:** `[ ]`
+**Status:** `[>] NEXT`
 
 ### Goal
 
@@ -1159,7 +1170,7 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 30 — Generic Functional Challenge Completion Contract**
+**Task 31 — Fault Engine v1**
 
-Task 29 passed final review and is committed in this run. Task 30 is identified
-as the next eligible milestone but is not started in this task/run.
+Task 30 passed final review, production validation, and was committed in this
+run. Task 31 is identified as the next eligible milestone but was not started.

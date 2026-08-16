@@ -12,7 +12,7 @@ class GeneratedBoardInstance {
     private final GeneratedComponentBindings componentBindings;
     private final GeneratedExternalPowerBindings externalPowerBindings;
     private final GeneratedComponentConnectionBindings connectionBindings;
-    private final GeneratedBoardValidator familyValidator;
+    private final GeneratedChallengeBehaviorContract behaviorContract;
     private final PcbBoardLayout pcbLayout;
     private final BoardPhysicalSpecifications physicalSpecifications;
     private final GeneratedFaultBinding faultBinding;
@@ -25,7 +25,7 @@ class GeneratedBoardInstance {
             GeneratedComponentBindings componentBindings,
             GeneratedExternalPowerBindings externalPowerBindings,
             GeneratedComponentConnectionBindings connectionBindings,
-            GeneratedBoardValidator familyValidator, PcbBoardLayout pcbLayout,
+            GeneratedChallengeBehaviorContract behaviorContract, PcbBoardLayout pcbLayout,
             BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
             GeneratedComponentOperationalStates operationalStates,
             GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState) {
@@ -38,7 +38,9 @@ class GeneratedBoardInstance {
         this.componentBindings = componentBindings;
         this.externalPowerBindings = externalPowerBindings;
         this.connectionBindings = connectionBindings;
-        this.familyValidator = familyValidator;
+        if (behaviorContract == null)
+            throw new IllegalArgumentException("Missing generated challenge behavior contract");
+        this.behaviorContract = behaviorContract;
         this.pcbLayout = pcbLayout;
         if (physicalSpecifications == null)
             throw new IllegalArgumentException("Missing generated physical specifications");
@@ -98,8 +100,8 @@ class GeneratedBoardInstance {
         return connectionBindings;
     }
 
-    GeneratedBoardValidator getFamilyValidator() {
-        return familyValidator;
+    GeneratedChallengeBehaviorContract getBehaviorContract() {
+        return behaviorContract;
     }
 
     BoardPhysicalSpecifications getPhysicalSpecifications() {

@@ -8,8 +8,7 @@ class DiodeProtectedIndicatorRepairValidator implements GeneratedRepairValidator
             DiodeProtectedIndicatorFamilyState.require(instance);
         if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay ||
                 state.getD1Slot().isEmpty() || !modifications.isComponentInstalled("D1") ||
-                state.getD1Slot().getInstalledPart().isFaulted() ||
-                state.getInventory().get("D1_ORIGINAL").getLocation() == DiodePartLocation.INSTALLED)
+                state.getD1Slot().getInstalledPart().isFaulted())
             return false;
         double diodeCurrent = Math.abs(instance.getComponentBindings().getSingleElement("D1").getCurrent());
         double resistorCurrent = Math.abs(instance.getComponentBindings().getSingleElement("R1").getCurrent());

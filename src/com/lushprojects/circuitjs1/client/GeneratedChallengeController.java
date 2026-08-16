@@ -36,7 +36,7 @@ class GeneratedChallengeController {
         }
         if (state == GeneratedChallengeState.PREPARING_FAULTED) {
             lifecycleEvidence.faultedGraphAnalyzedAfterTimeAdvance = true;
-            definition.getFaultValidator().verify(instance,
+            definition.getBehaviorContract().verifyFaulted(instance,
                 sim.getBoardModificationController(), sim.getBoardPowerController().getState());
             lifecycleEvidence.selectedFaultValidated = true;
             state = GeneratedChallengeState.READY;
@@ -73,9 +73,10 @@ class GeneratedChallengeController {
             sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
                 sim.getBoardModificationController().isComponentInstalled(
                     definition.getFault().getTargetComponentId()))
-            definition.getFaultValidator().verify(instance, sim.getBoardModificationController(),
+            definition.getBehaviorContract().verifyFaulted(instance,
+                sim.getBoardModificationController(),
                 BoardPowerState.POWERED);
-        if (definition.getRepairValidator().isFunctionallyRepaired(instance,
+        if (definition.getBehaviorContract().isFunctionallyRepaired(instance,
                 sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
                 sim.activeMeasurementOverlay)) {
             state = GeneratedChallengeState.COMPLETED;
@@ -92,6 +93,8 @@ class GeneratedChallengeController {
         if (!definition.getCircuitFamilyId().equals(instance.getCircuitFamilyId()) ||
                 !definition.getTopologyVariantId().equals(instance.getTopologyVariantId()))
             throw new IllegalArgumentException("Challenge definition is incompatible with board");
+        if (definition.getBehaviorContract() != instance.getBehaviorContract())
+            throw new IllegalArgumentException("Challenge behavior contract is not owned by board");
         if (instance.getBoard().getComponent(definition.getFault().getTargetComponentId()) == null)
             throw new IllegalArgumentException("Challenge target component is missing");
         if (definition.getFaultBinding() != instance.getFaultBinding() ||
