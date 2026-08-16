@@ -93,35 +93,28 @@ It proved:
   validation;
 - the installed layout matched deterministic regeneration.
 
-The browser geometry bridge remains read-only and developer-query-gated. Normal
-player verification obtains current generated hit locations and still performs
-real `Input.dispatchMouseEvent` input; no normal flow relies on stale board
-coordinates or controller shortcuts.
+The browser verifier no longer uses fixed component canvas coordinates. With
+the explicit `tsjVerifyGeometry=true` query flag, the renderer publishes a
+read-only bridge containing current component, pad, and loose-part hit
+locations. Verification still dispatches real CDP mouse input at those
+locations; the bridge does not mutate state or expose electrical answers.
 
-## Verification results
+The stale `LedIndicatorFamilyState.require(...)` messages were also changed
+to family-neutral wording.
 
-Final production verification after the JDK 8 build:
+## Validation results
 
-- JDK 8 GWT production build, PRETTY: all five permutations compiled and
-  linked;
-- JDK 8 GWT production build, OBF: all five permutations compiled and linked;
-- JDK 8 GWT production build, DETAILED: all five permutations compiled and
-  linked;
-- existing LED/resistor matrix: 15/15 PASS;
-- diode electrical verifier: 3/3 PASS;
-- LED physical verifier: 3/3 PASS;
-- resistor normal-player flow on generated seed 3 geometry: PASS;
-- diode normal-player flow on generated seed 3 geometry: PASS;
-- LED normal-player flow on generated seed 3 geometry: PASS;
-- procedural layout verifier, including copper-clearance regression: PASS;
-- no route timeout, unhandled JavaScript error, or failure-class console
-  message in the clean final runs.
-
-The focused timing investigation showed the former long layout run was not an
-A* performance problem: route attempts were generally below 90 ms. It exposed
-and fixed an exact-distance validator error for vertical segments, after which
-the latest complete clean `-Layout` verification finished in 6.9 seconds
-wall-clock.
+- JDK 8 production build: PASS; all five GWT permutations compiled and
+  linking succeeded.
+- Existing LED/resistor browser verifier: PASS, 15/15 routes.
+- Existing diode verifier: PASS, 3/3 routes.
+- Existing LED physical verifier: PASS, 3/3 routes.
+- Procedural layout verifier: PASS.
+- Resistor normal-player flow on generated geometry: PASS.
+- Diode normal-player flow on generated geometry: PASS.
+- LED normal-player flow on generated geometry: PASS.
+- No route timeouts, unhandled JavaScript errors, or failure-class console
+  messages were reported by the final browser runs.
 
 ## Visual evidence
 
