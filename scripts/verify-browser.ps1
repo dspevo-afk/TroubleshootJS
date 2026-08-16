@@ -203,6 +203,34 @@ function getCanvasPoint($socket, [ref]$nextId, [string]$targetKey, [ref]$failure
     return evaluateCdp $socket $nextId "(()=>{const c=[...document.querySelectorAll('canvas')].find(x=>{const r=x.getBoundingClientRect();return r.width>100&&r.height>100});const g=window.__tsjPcbGeometry;if(!c||!g||!g.points||!g.points['$escaped'])return null;const r=c.getBoundingClientRect(),p=g.points['$escaped'];return {x:r.left+p.x*r.width/c.width,y:r.top+p.y*r.height/c.height};})()" $failures
 }
 
+function getPlayerValueLeakDiagnostics($socket, [ref]$nextId, [string]$originalValue,
+        [ref]$failures) {
+    $escaped = $originalValue.Replace('\', '\\').Replace('"', '\"')
+    $expression = '(()=>{const pattern=new RegExp("' + $escaped + '\\s*ohm","i");' +
+        'const outside=e=>e&&!e.closest("select");let text=[],walker=document.createTreeWalker(' +
+        'document.body,NodeFilter.SHOW_TEXT),node;while((node=walker.nextNode())!==null)' +
+        'if(outside(node.parentElement)&&pattern.test(node.nodeValue))text.push(node.nodeValue.trim());' +
+        'let attributes=[];for(const e of document.querySelectorAll("*"))if(outside(e))' +
+        'for(const a of e.attributes)if(pattern.test(a.value))attributes.push(a.name+":"+a.value);' +
+        'return {safe:text.length===0&&attributes.length===0,text:text,attributes:attributes};})()'
+    return evaluateCdp $socket $nextId $expression $failures
+}
+
+function getResistorBandColors($socket, [ref]$nextId, [string]$firstPad,
+        [string]$secondPad, [ref]$failures) {
+    $first = $firstPad.Replace('"', '\"')
+    $second = $secondPad.Replace('"', '\"')
+    $expression = '(()=>{const c=[...document.querySelectorAll("canvas")].find(x=>{const r=x.getBoundingClientRect();' +
+        'return r.width>100&&r.height>100}),r=c.getBoundingClientRect(),g=c.getContext("2d"),' +
+        'points=window.__tsjPcbGeometry.points,a=points["' + $first + '"],b=points["' + $second + '"],' +
+        'x1=Math.min(a.x,b.x),x2=Math.max(a.x,b.x),y=(a.y+b.y)/2,colors={brown:"125,74,45",' +
+        'black:"34,34,34",red:"181,35,45",gold:"199,163,59"},found={};' +
+        'for(let x=x1;x<=x2;x++){const p=[...g.getImageData(Math.round(x*c.width/r.width),' +
+        'Math.round(y*c.height/r.height),1,1).data].slice(0,3).join(",");for(const name in colors)' +
+        'if(p===colors[name])found[name]=true;}return found;})()'
+    return evaluateCdp $socket $nextId $expression $failures
+}
+
 function sendKey($socket, [ref]$nextId, [string]$key, [int]$code, [ref]$failures) {
     [void](invokeCdp $socket $nextId 'Input.dispatchKeyEvent' @{
         type = 'keyDown'; key = $key; code = $key; windowsVirtualKeyCode = $code;
@@ -299,12 +327,48 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         if (-not ($initial.canvas -and $initial.meter -and $initial.power -and $initial.catalog -and $initial.empty)) {
             throw 'initial PCB, meter, power, catalog, or empty tray UI was missing'
         }
+        $installedBands = getResistorBandColors $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures)
+        foreach ($band in @('brown', 'black', 'red', 'gold')) {
+            if (-not ($installedBands.PSObject.Properties.Name -contains $band)) {
+                throw "installed R1 color band was not visible: $($installedBands | ConvertTo-Json -Compress)"
+            }
+        }
         $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'R1 component controls'
+        $r1Panel = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[1].innerText" ([ref]$failures)
+        if (-not ($r1Panel -match 'R1' -and $r1Panel -match 'Type: resistor' -and
+                $r1Panel -match 'State: Installed' -and $r1Panel -match 'Markings: Color bands' -and
+                $r1Panel -notmatch 'Value: 1000 Ohm')) {
+            throw "original R1 panel did not preserve physical identity without its numeric value: $r1Panel"
+        }
+        $r1Leak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
+        if (-not $r1Leak.safe) {
+            throw "original R1 value leaked into ordinary UI: $($r1Leak | ConvertTo-Json -Compress)"
+        }
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].filter(x=>x.innerText.trim()==='1000 Ohm +/-5%').length===1" $deadline ([ref]$failures) 'faulted original in tray'
+        waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')" $deadline ([ref]$failures) 'faulted original in tray'
+        waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+        $removedLeak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
+        if (-not $removedLeak.safe) {
+            throw "removed original R1 value leaked into ordinary UI: $($removedLeak | ConvertTo-Json -Compress)"
+        }
+        $originalBands = getResistorBandColors $socket ([ref]$nextId) 'loose:R1_ORIGINAL:0' 'loose:R1_ORIGINAL:1' ([ref]$failures)
+        foreach ($band in @('brown', 'black', 'red', 'gold')) {
+            if (-not ($originalBands.PSObject.Properties.Name -contains $band)) {
+                throw "removed R1 color band was not visible: $($originalBands | ConvertTo-Json -Compress)"
+            }
+        }
+        clickButton $socket ([ref]$nextId) 'R1_ORIGINAL - Removed resistor' ([ref]$failures)
+        $selectedOriginal = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[2].innerText" ([ref]$failures)
+        if ($selectedOriginal -notmatch 'Selected: R1_ORIGINAL - Removed resistor') {
+            throw "selected original R1 lost its privacy-safe identity: $selectedOriginal"
+        }
+        $selectedOriginalLeak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
+        if (-not $selectedOriginalLeak.safe) {
+            throw "selected original R1 exposed its numeric value: $($selectedOriginalLeak | ConvertTo-Json -Compress)"
+        }
         Write-Host 'PLAYER original removed'
 
         $selectInfo = evaluateCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('select');const r=e.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,index:[...e.options].findIndex(o=>o.text==='1000 Ohm +/-5%')};})()" ([ref]$failures)
@@ -323,7 +387,7 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         }
         if ($selectedText -ne '1000 Ohm +/-5%') { throw "catalog keyboard selection chose $selectedText" }
         clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].filter(x=>x.innerText.trim()==='1000 Ohm +/-5%').length===1" $deadline ([ref]$failures) 'installed replacement excluded from tray'
+        waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')&&[...document.querySelectorAll('select option')].some(x=>x.text==='1000 Ohm +/-5%')" $deadline ([ref]$failures) 'installed replacement excluded from tray while catalog value remains available'
         clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'solver-backed repair completion'
         Write-Host 'PLAYER repair verified'
@@ -331,7 +395,7 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'healthy replacement component controls'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].filter(x=>x.innerText.trim()==='1000 Ohm +/-5%').length===2" $deadline ([ref]$failures) 'two distinct loose 1 kOhm parts'
+        waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')&&[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_CATALOG_PART_0 - 1000 Ohm +/-5%')" $deadline ([ref]$failures) 'original and replacement loose resistor identities'
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:R1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:R1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'loose resistor geometry'
         Write-Host 'PLAYER healthy replacement removed'
         clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
@@ -403,6 +467,39 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
         if (-not ($initial.canvas -and $initial.catalog -and $initial.noLedCatalog -and $initial.empty -and $initial.complaint)) {
             throw 'initial parallel PCB, resistor catalog, tray, or complaint UI was incorrect'
         }
+        $parallelR1Bands = getResistorBandColors $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures)
+        foreach ($band in @('brown', 'black', 'red', 'gold')) {
+            if (-not ($parallelR1Bands.PSObject.Properties.Name -contains $band)) {
+                throw "parallel R1 color band was not visible: $($parallelR1Bands | ConvertTo-Json -Compress)"
+            }
+        }
+        $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Markings: Color bands')" $deadline ([ref]$failures) 'parallel original R1 markings'
+        $parallelR1Panel = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[1].innerText" ([ref]$failures)
+        if ($parallelR1Panel -match 'Value: 1000 Ohm') { throw "parallel original R1 value leaked: $parallelR1Panel" }
+        $parallelR1Leak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
+        if (-not $parallelR1Leak.safe) {
+            throw "parallel original R1 value leaked into ordinary UI: $($parallelR1Leak | ConvertTo-Json -Compress)"
+        }
+        $r2 = getCanvasPoint $socket ([ref]$nextId) 'component:R2' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $r2 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Markings: Color bands')" $deadline ([ref]$failures) 'parallel original R2 markings'
+        $parallelR2Panel = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[1].innerText" ([ref]$failures)
+        if (-not ($parallelR2Panel -match 'R2' -and $parallelR2Panel -match 'Type: resistor' -and
+                $parallelR2Panel -match 'State: Installed' -and $parallelR2Panel -notmatch 'Value: 2200 Ohm')) {
+            throw "parallel original R2 panel did not preserve identity without its numeric value: $parallelR2Panel"
+        }
+        $parallelR2Leak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '2200' ([ref]$failures)
+        if (-not $parallelR2Leak.safe) {
+            throw "parallel original R2 value leaked into ordinary UI: $($parallelR2Leak | ConvertTo-Json -Compress)"
+        }
+        $parallelR2Bands = getResistorBandColors $socket ([ref]$nextId) 'pad:R2.1' 'pad:R2.2' ([ref]$failures)
+        foreach ($band in @('red', 'gold')) {
+            if (-not ($parallelR2Bands.PSObject.Properties.Name -contains $band)) {
+                throw "parallel R2 color band was not visible: $($parallelR2Bands | ConvertTo-Json -Compress)"
+            }
+        }
         if ($EvidenceDirectory) {
             [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'parallel-seed-3.png') ([ref]$failures)
@@ -422,11 +519,23 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
         Write-Host 'PARALLEL PLAYER DC mode exited'
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
         Write-Host 'PARALLEL PLAYER power off'
-        $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'parallel R1 component controls'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')" $deadline ([ref]$failures) 'parallel faulted original tray part'
+        $parallelRemovedLeak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
+        if (-not $parallelRemovedLeak.safe) {
+            throw "parallel removed original R1 value leaked into ordinary UI: $($parallelRemovedLeak | ConvertTo-Json -Compress)"
+        }
+        clickButton $socket ([ref]$nextId) 'R1_ORIGINAL - Removed resistor' ([ref]$failures)
+        $parallelSelectedOriginal = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[2].innerText" ([ref]$failures)
+        if ($parallelSelectedOriginal -notmatch 'Selected: R1_ORIGINAL - Removed resistor') {
+            throw "parallel selected original R1 lost its privacy-safe identity: $parallelSelectedOriginal"
+        }
+        $parallelSelectedOriginalLeak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
+        if (-not $parallelSelectedOriginalLeak.safe) {
+            throw "parallel selected original R1 exposed its numeric value: $($parallelSelectedOriginalLeak | ConvertTo-Json -Compress)"
+        }
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
@@ -482,6 +591,24 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
         $initial = evaluateCdp $socket ([ref]$nextId) "({canvas:!!document.querySelector('canvas'),catalog:document.body.innerText.includes('Replacement Catalog'),empty:document.body.innerText.includes('No removed parts'),disclosed:/D1 failed|diode is open/i.test(document.body.innerText)})" ([ref]$failures)
         if (-not ($initial.canvas -and $initial.catalog -and $initial.empty) -or $initial.disclosed) {
             throw 'initial diode workbench, catalog, tray, or vague complaint was incorrect'
+        }
+        $diodeR1Bands = getResistorBandColors $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures)
+        foreach ($band in @('brown', 'black', 'red', 'gold')) {
+            if (-not ($diodeR1Bands.PSObject.Properties.Name -contains $band)) {
+                throw "diode-family R1 color band was not visible: $($diodeR1Bands | ConvertTo-Json -Compress)"
+            }
+        }
+        $diodeR1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $diodeR1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Markings: Color bands')" $deadline ([ref]$failures) 'diode-family original R1 markings'
+        $diodeR1Panel = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[1].innerText" ([ref]$failures)
+        if (-not ($diodeR1Panel -match 'R1' -and $diodeR1Panel -match 'Type: resistor' -and
+                $diodeR1Panel -match 'State: Installed' -and $diodeR1Panel -notmatch 'Value: 1000 Ohm')) {
+            throw "diode-family original R1 panel did not preserve identity without its numeric value: $diodeR1Panel"
+        }
+        $diodeR1Leak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
+        if (-not $diodeR1Leak.safe) {
+            throw "diode-family original R1 value leaked into ordinary UI: $($diodeR1Leak | ConvertTo-Json -Compress)"
         }
         if ($EvidenceDirectory) {
             [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null

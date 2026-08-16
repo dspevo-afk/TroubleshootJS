@@ -161,6 +161,16 @@ stable when a user lifts/removes a component or a future fault changes effective
 simulation behavior, while CircuitJS remains the source of truth for actual
 electrical behavior and measurements.
 
+Player-facing identification deliberately does not expose all nameplate
+metadata. Original resistor panels show the physical type, installed/removed
+state, and `Markings: Color bands` rather than nominal resistance; removed
+original parts retain an identity and the same rendered bands without a
+numeric label. The replacement catalog and a known installed catalog part may
+show their catalog value because that is an intentional selection, while
+developer verifiers may inspect exact original metadata. Ordinary contextual
+text, attributes, and generated complaint descriptions follow the same privacy
+boundary.
+
 Resistor-band rendering follows the stable component ID from each
 `PcbComponentPlacement` (including a tray component) to its
 `ResistorNameplate`, then through `ResistorColorCode` semantic tokens to local

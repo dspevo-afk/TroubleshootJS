@@ -92,7 +92,7 @@ class DiodeProtectedIndicatorGenerator {
             original.getTerminalForBoardPad("D1.K"), d1CathodeLink);
 
         String description = "Generated diode-protected indicator, seed " + seed + ", " +
-            supplyVoltage + " V, " + resistorValue + " ohm";
+            supplyVoltage + " V";
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID,
             DIRECT_SERIES_VARIANT, description, components, power, connections,
             new DiodeProtectedIndicatorGeneratedBoardValidator(),

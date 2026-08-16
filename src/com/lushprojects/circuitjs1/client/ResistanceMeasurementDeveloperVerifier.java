@@ -341,8 +341,11 @@ class ResistanceMeasurementDeveloperVerifier {
             instance.getSeed());
         renderer.setSelectedComponentId("R1");
         sim.pcbWorkbenchController.refresh();
-        require(sim.pcbWorkbenchController.getPanelTextForDeveloperVerification().contains(
-            "Value: 680 Ohm +/-5%"), "PCB component panel omitted the resistor nameplate");
+        String panelText = sim.pcbWorkbenchController.getPanelTextForDeveloperVerification();
+        require(panelText.contains("R1") && panelText.contains("Type: resistor") &&
+            panelText.contains("State: Installed") && panelText.contains("Markings: Color bands") &&
+            !panelText.contains("Value: 680 Ohm +/-5%"),
+            "PCB component panel exposed the original resistor value or omitted its markings");
         ProbeTarget r11 = hitPcbPad(sim, renderer, "R1.1");
         ProbeTarget r12 = hitPcbPad(sim, renderer, "R1.2");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);

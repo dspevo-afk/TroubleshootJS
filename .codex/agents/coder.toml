@@ -31,6 +31,17 @@ Return a concise implementation report containing:
 Return the implementation report and candidate to the primary architect,
 following the primary architect's directed reviewer handoff.
 
+For all browser-based player-flow validation:
+
+- use the Codex built-in browser when possible;
+- capture and surface screenshots at every important UI state, including after
+  reaching newly implemented UI and before and after important interactions;
+- do not merely report that the browser test passed;
+- preserve the screenshots as task evidence where appropriate; and
+- if the coder subagent browser session cannot be displayed directly in the
+  visible Codex browser pane, return screenshots to the primary architect
+  immediately during the task so the architect can inspect what it is seeing.
+
 Do not push to GitHub.
 Do not begin the final commit unless explicitly instructed by the primary architect.
 Do not spawn additional write-capable coding agents.

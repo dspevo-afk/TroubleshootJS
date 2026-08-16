@@ -151,7 +151,7 @@ TroubleshootJS has already moved well beyond a stock CircuitJS fork.
 - [x] KCL and branch-specific fault validation through the solver.
 - [x] Real parallel resistance measurement behavior.
 
-The current baseline is **Task 28: Compact Topology-Aware PCB Placement**.
+The current baseline is **Task 29: Player-Facing Component Identification Fidelity**.
 
 ---
 
@@ -200,7 +200,7 @@ verifier, and production-browser evidence passed.
 
 ## Task 29 — Player-Facing Component Identification Fidelity
 
-**Status:** `[>] NEXT`
+**Status:** `[x] Complete`
 
 ### Goal
 
@@ -220,11 +220,20 @@ Make component identification behave like a real troubleshooting board rather th
 
 A player can determine an original resistor value by reading its bands or electrically measuring it, but cannot obtain that answer from ordinary UI metadata.
 
+### Completed implementation
+
+Task 29 hides original resistor values from ordinary panels, loose-part labels,
+selected-part labels, accessibility-visible attributes, and generated family
+descriptions while preserving physical color bands, stable original identity,
+CircuitJS-backed measurement, and catalog/replacement values. The LED,
+diode-protected, and parallel normal-player flows plus the seeded developer
+routes and production-browser evidence passed.
+
 ---
 
 ## Task 30 — Generic Functional Challenge Completion Contract
 
-**Status:** `[ ]`
+**Status:** `[>] NEXT`
 
 ### Goal
 
@@ -1150,7 +1159,7 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 29 — Player-Facing Component Identification Fidelity**
+**Task 30 — Generic Functional Challenge Completion Contract**
 
-Task 28 passed final review and is committed in this run. The next milestone is
-selected only in a new user-approved task/run.
+Task 29 passed final review and is committed in this run. Task 30 is identified
+as the next eligible milestone but is not started in this task/run.

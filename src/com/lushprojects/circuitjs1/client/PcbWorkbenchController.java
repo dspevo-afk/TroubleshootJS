@@ -83,12 +83,22 @@ class PcbWorkbenchController {
         panel.add(new Label("Type: " + component.getType().toLowerCase()));
         ResistorNameplate nameplate = instance.getPhysicalSpecifications().getResistorNameplate(componentId);
         ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
+        PhysicalResistorPart installedResistor = null;
+        boolean replaceableResistor = false;
         if (resistorFamily != null && resistorFamily.getReplaceableResistorSlot().getComponentId()
-                .equals(componentId) && !resistorFamily.getReplaceableResistorSlot().isEmpty())
-            nameplate = resistorFamily.getReplaceableResistorSlot().getInstalledPart().getNameplate();
-        if (nameplate != null && !(instance.getFamilyState() instanceof
-                ParallelDualIndicatorFamilyState && "R1".equals(componentId)))
-            panel.add(new Label("Value: " + nameplate.getDisplayValue()));
+                .equals(componentId)) {
+            replaceableResistor = true;
+            if (!resistorFamily.getReplaceableResistorSlot().isEmpty()) {
+                installedResistor = resistorFamily.getReplaceableResistorSlot().getInstalledPart();
+                nameplate = installedResistor.getNameplate();
+            }
+        }
+        if (nameplate != null && (!replaceableResistor || installedResistor != null)) {
+            if (installedResistor == null || installedResistor.isOriginal())
+                panel.add(new Label("Markings: Color bands"));
+            else
+                panel.add(new Label("Value: " + nameplate.getDisplayValue()));
+        }
         if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState && "D1".equals(componentId) &&
                 !DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty())
             panel.add(new Label("Part: " + DiodeProtectedIndicatorFamilyState.require(instance)
@@ -103,6 +113,8 @@ class PcbWorkbenchController {
             panel.add(new Label("State: " + componentId + " slot empty"));
         else if (!bindings.isEmpty())
             panel.add(new Label("State: " + formatState(modifications.getComponentState(componentId))));
+        else if (nameplate != null && !replaceableResistor)
+            panel.add(new Label("State: Installed"));
         for (String padId : component.getPadIds()) {
             BoardPad pad = instance.getBoard().getPad(padId);
             panel.add(new Label("Lead " + pad.getTerminalId() + ": " + pad.getId()));
@@ -169,11 +181,7 @@ class PcbWorkbenchController {
                     .getLooseParts().isEmpty()))
             partsPanel.add(new Label("No removed parts."));
         for (PhysicalResistorPart part : renderer.getVisibleLooseParts()) {
-            String label = part.getNameplate().getDisplayValue();
-            if (instance.getFamilyState() instanceof ParallelDualIndicatorFamilyState &&
-                    "R1_ORIGINAL".equals(part.getId()))
-                label = "R1_ORIGINAL - Removed resistor";
-            Button select = new Button(label);
+            Button select = new Button(getResistorPartLabel(part));
             select.setStyleName("tsj-action-button");
             select.setEnabled(sim.isChallengeInteractionEnabled());
             final String partId = part.getId();
@@ -216,7 +224,7 @@ class PcbWorkbenchController {
             return;
         }
         PhysicalResistorPart part = resistorFamily.getResistorInventory().get(selectedPartId);
-        partsPanel.add(new Label("Selected: " + part.getNameplate().getDisplayValue()));
+        partsPanel.add(new Label("Selected: " + getResistorPartLabel(part)));
         partsPanel.add(new Label("State: Loose"));
         final String resistorComponentId = resistorFamily.getReplaceableResistorSlot().getComponentId();
         Button install = new Button("Install as " + resistorComponentId);
@@ -532,6 +540,12 @@ class PcbWorkbenchController {
     private ReplaceableResistorFamilyState getReplaceableResistorFamily() {
         return instance.getFamilyState() instanceof ReplaceableResistorFamilyState ?
             (ReplaceableResistorFamilyState) instance.getFamilyState() : null;
+    }
+
+    private String getResistorPartLabel(PhysicalResistorPart part) {
+        if (part.isOriginal())
+            return part.getId() + " - Removed resistor";
+        return part.getId() + " - " + part.getNameplate().getDisplayValue();
     }
 
     private interface ComponentAction { void execute(); }

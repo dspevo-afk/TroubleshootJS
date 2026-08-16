@@ -144,7 +144,7 @@ class LedIndicatorGenerator {
             originalLed.getTerminalForBoardPad("LED1.K"), ledCathodeLink);
 
         String description = "Generated LED indicator, seed " + seed + ", " + supplyVoltage +
-            " V, " + resistorValue + " ohm";
+            " V";
         return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, new LedIndicatorGeneratedBoardValidator(),

@@ -1414,6 +1414,19 @@ successful task; Git history preserves prior reports.
 
 For every successful task that changes or exercises visible player behavior:
 
+For all browser-based player-flow validation:
+
+- Use the Codex built-in browser when possible.
+- Capture and surface screenshots at every important UI state, including after
+  reaching newly implemented UI and before and after important interactions.
+- Do not merely report that a browser test passed; make the visual evidence
+  user-visible to the primary architect during the task.
+- Preserve the screenshots as task evidence where appropriate.
+- If a coder subagent's browser session cannot be displayed directly in the
+  visible Codex browser pane, return screenshots to the primary architect
+  immediately during the task so the architect can inspect what the coder is
+  seeing.
+
 1. Capture a small curated set of final production-browser screenshots after
    the final production build, using the actual production preview rather than
    mockups.

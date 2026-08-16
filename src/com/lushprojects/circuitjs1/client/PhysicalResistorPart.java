@@ -32,6 +32,7 @@ class PhysicalResistorPart {
     ResistorElm getElement() { return element; }
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }
     ResistorPartLocation getLocation() { return location; }
+    boolean isOriginal() { return id.endsWith("_ORIGINAL"); }
     boolean isFaulted() { return faultBinding != null && faultBinding.isApplied(); }
 
     CircuitMeasurementEndpoint getPublicTerminal(int terminal) {
