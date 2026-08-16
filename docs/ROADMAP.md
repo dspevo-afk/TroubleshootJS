@@ -1154,5 +1154,3 @@ When updating:
 
 Task 28 passed final review and is committed in this run. The next milestone is
 selected only in a new user-approved task/run.
-
-The next milestone is selected only in a new user-approved task/run.

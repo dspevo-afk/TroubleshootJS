@@ -104,4 +104,4 @@ rotation, SMD packages, multilayer routing, vias, arbitrary netlists, and
 professional manufacturing DRC are intentionally out of scope. Candidate
 quality is heuristic and currently uses a fixed working grid; larger future
 families will need additional placement regions and routing capacity. Task 29
-is the next planned milestone: the dedicated workbench UI foundation pass.
+is the next planned milestone: Player-Facing Component Identification Fidelity.

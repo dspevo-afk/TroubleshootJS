@@ -1219,6 +1219,10 @@ The escalation architect is:
 - reasoning: HIGH;
 - role: senior architectural escalation only.
 
+An authorized escalation uses the configured `sol_architect` custom agent from
+`.codex/agents/sol-architect.toml`. The primary Luna MAX thread remains the
+owner of orchestration.
+
 Sol is used only when the normal Luna workflow cannot safely resolve the task
 or when an architectural escalation condition is met. Sol is NOT required for
 routine successful milestones.
