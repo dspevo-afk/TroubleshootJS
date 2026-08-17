@@ -30,4 +30,10 @@ final class PhysicalNameplate {
     boolean hasWorkbenchDetail() { return workbenchDetailLabel != null; }
     String getWorkbenchDetailLabel() { return workbenchDetailLabel; }
     String getWorkbenchDetailValue() { return workbenchDetailValue; }
+
+    /** Copies catalog-visible markings onto a newly acquired physical identity. */
+    PhysicalNameplate forPhysicalPartId(String physicalPartId) {
+        return new PhysicalNameplate(physicalPartId, displayName, workbenchDetailLabel,
+            workbenchDetailValue);
+    }
 }

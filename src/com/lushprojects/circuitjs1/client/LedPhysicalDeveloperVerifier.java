@@ -41,9 +41,11 @@ class LedPhysicalDeveloperVerifier {
             "Correct R1 completed repair while LED1 was missing");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
 
-        require(leds.installNewFromCatalog(LedReplacementCatalog.REVERSED),
+        LedCatalogEntry reversedCatalog = state.getCatalog().get(LedReplacementCatalog.REVERSED);
+        require(leds.installNewFromCatalog(reversedCatalog.getId()),
             "Could not acquire reversed LED replacement");
         PhysicalLedPart reversed = state.getSlot().getInstalledPart();
+        verifyCatalogAcquisition(reversed, reversedCatalog);
         require(reversed != original && reversed.isReversedInstallation(),
             "Reversed LED acquisition lost identity or polarity");
         verifyRuntimeAllocatedIdentities(instance, replacementResistor, reversed);
@@ -57,9 +59,11 @@ class LedPhysicalDeveloperVerifier {
         verifyHealthyDiode(sim, looseProbe(sim, instance, reversed, 0),
             looseProbe(sim, instance, reversed, 1), "loose reversed-installation LED");
 
-        require(leds.installNewFromCatalog(LedReplacementCatalog.CORRECT),
+        LedCatalogEntry correctCatalog = state.getCatalog().get(LedReplacementCatalog.CORRECT);
+        require(leds.installNewFromCatalog(correctCatalog.getId()),
             "Could not acquire correct LED replacement");
         PhysicalLedPart healthy = state.getSlot().getInstalledPart();
+        verifyCatalogAcquisition(healthy, correctCatalog);
         require(healthy != original && healthy != reversed &&
             !healthy.getId().equals(original.getId()) && !healthy.getId().equals(reversed.getId()) &&
             healthy.getElement() != original.getElement() && healthy.getElement() != reversed.getElement(),
@@ -68,7 +72,22 @@ class LedPhysicalDeveloperVerifier {
         verifyHealthyDiode(sim, looseProbe(sim, instance, healthy, 0),
             looseProbe(sim, instance, healthy, 1), "loose correct LED replacement");
         require(leds.install(healthy.getId()), "Could not reinstall measured LED replacement");
-        require(sim.pcbWorkbenchController.getRenderer().getLooseTerminalPoint(healthy.getId(), 0) == null,
+        verifyCatalogAcquisition(healthy, correctCatalog);
+        require(leds.removeInstalledPart(),
+            "Could not remove healthy LED before repeated catalog acquisition");
+        require(leds.installNewFromCatalog(correctCatalog.getId()),
+            "Could not acquire the healthy LED catalog entry twice");
+        PhysicalLedPart secondHealthy = state.getSlot().getInstalledPart();
+        verifyCatalogAcquisition(secondHealthy, correctCatalog);
+        PhysicalCatalogAcquisitionDeveloperVerifier.verifySameSpecification(healthy, secondHealthy);
+        require(leds.removeInstalledPart(), "Could not remove second healthy LED acquisition");
+        verifyHealthyDiode(sim, looseProbe(sim, instance, secondHealthy, 0),
+            looseProbe(sim, instance, secondHealthy, 1), "loose second correct LED replacement");
+        require(leds.install(secondHealthy.getId()),
+            "Could not reinstall second correct LED acquisition");
+        verifyCatalogAcquisition(secondHealthy, correctCatalog);
+        require(sim.pcbWorkbenchController.getRenderer().getLooseTerminalPoint(
+                secondHealthy.getId(), 0) == null,
             "Installed LED was exposed as a loose tray target");
         require(state.getCatalog().getEntries().size() == catalogSize,
             "LED catalog depleted or changed after acquisition");
@@ -78,13 +97,14 @@ class LedPhysicalDeveloperVerifier {
 
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
-        double ledCurrent = Math.abs(healthy.getElement().getCurrent());
+        double ledCurrent = Math.abs(secondHealthy.getElement().getCurrent());
         require(ledCurrent >= .005 && ledCurrent <= .015 &&
             instance.getOperationalStates().isIlluminated("LED1") && challenge.isCompleted(),
             "Correct physical LED did not restore solved operation and challenge completion");
         require(original.getLocation() == LedPartLocation.LOOSE &&
             reversed.getLocation() == LedPartLocation.LOOSE &&
-            state.getInventory().getLooseParts().size() == 2,
+            healthy.getLocation() == LedPartLocation.LOOSE &&
+            state.getInventory().getLooseParts().size() == 3,
             "Installed and loose LED inventory locations disagree");
         sim.setCircuitTitle("LED physical verification passed");
     }
@@ -124,6 +144,13 @@ class LedPhysicalDeveloperVerifier {
                 resistorProvider.getPart(resistor.getId()) == resistor &&
                 ledProvider.getPart(led.getId()) == led,
             "Runtime-allocated physical identities were not registered and stable");
+    }
+
+    private static void verifyCatalogAcquisition(PhysicalLedPart part, LedCatalogEntry entry) {
+        PhysicalCatalogAcquisitionDeveloperVerifier.verify(part, entry, "LED1");
+        require(part.getNameplate() == entry.getSpecification() &&
+                "default-led".equals(part.getNameplate().getModelName()),
+            "LED acquisition discarded selected technical specification identity");
     }
 
     private static void verifyHealthyDiode(CirSim sim, ProbeTarget anode, ProbeTarget cathode,

@@ -777,6 +777,17 @@ the workbench renders only the physical instance's nameplate. Generated fault
 ownership, stress/damage state, private original values, and hidden ratings are
 not inferred or displayed from the generalized specification contract.
 
+Production catalog acquisition preserves this boundary: the resistor, diode,
+and LED slot controllers retain the exact immutable specification object from
+the selected `PhysicalCatalogEntry`, while `PhysicalNameplate.forPhysicalPartId`
+copies only the entry's permitted visible fields onto the newly allocated
+physical identity. Slot/component IDs therefore remain separate from catalog
+specification IDs, repeated acquisitions share immutable specification identity
+but receive distinct physical IDs, and removal/reinstallation does not rebuild
+either identity. Generated original parts continue to use their own privacy-safe
+nameplates, so hidden original values, ratings, fault state, and stress state
+remain unavailable to normal-player UI.
+
 `PhysicalPartInventory<P>` is the only runtime-backed identity/inventory
 mechanism. Resistor, diode, and LED generators now use typed views over that
 inventory; their old family inventory wrappers were removed. Acquisition still

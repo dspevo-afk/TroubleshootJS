@@ -114,18 +114,20 @@ class LedSlotController implements PhysicalSlotMutationProvider {
         requireSafeMutation();
         if (!capability.getSlot().isEmpty()) return false;
         final LedCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
+        final LedNameplate specification = entry.getSpecification();
+        final PhysicalNameplate playerNameplate = entry.getPlayerVisibleNameplate();
         final LEDElm element = DynamicLedBackingAllocator.create(instance.getSimulationElements(),
-            entry.getNameplate());
+            specification);
         final String componentId = capability.getSlot().getComponentId();
         PhysicalLedPart part = capability.getInventory().acquire(
             componentId + "_CATALOG_PART",
             new PhysicalPartIdentityFactory<PhysicalLedPart>() {
                 public PhysicalLedPart create(String partId) {
-                    return new PhysicalLedPart(partId,
-                        new LedNameplate(componentId, entry.getNameplate().getDisplayName(),
-                            entry.getNameplate().getModelName(), entry.getNameplate().getRed(),
-                            entry.getNameplate().getGreen(), entry.getNameplate().getBlue()),
-                        element, entry.isReversedInstallation(), LedPartLocation.LOOSE);
+                    return new PhysicalLedPart(partId, specification, specification,
+                        playerNameplate.forPhysicalPartId(partId), element,
+                        entry.isReversedInstallation(), LedPartLocation.LOOSE,
+                        new PhysicalPartProvenance(PhysicalPartProvenance.CATALOG_ACQUIRED,
+                            partId));
                 }
             });
         instance.registerRuntimeSimulationElement(element);

@@ -5,7 +5,96 @@
 Complete. Primary architect disposition: `FINAL PASS`. Task 36 was not
 started. No push was performed.
 
-Planned commit message: `Task 35: generalize physical part specifications`
+Original implementation commit message: `Task 35: generalize physical part specifications`
+
+Correction commit message: `Task 35: preserve catalog specification ownership`
+
+## Task 35 correction — production catalog ownership
+
+The post-commit blocker was corrected without beginning Task 36. Resistor,
+diode, and LED production catalog acquisitions now retain the exact immutable
+`PhysicalSpecification` object from the selected `PhysicalCatalogEntry`.
+Acquisition allocates a distinct runtime-owned physical-part ID and materializes
+the selected entry's permitted visible `PhysicalNameplate` fields onto that ID
+through `PhysicalNameplate.forPhysicalPartId`. Slot IDs such as R1, D1, and
+LED1 are no longer used as replacement specification IDs.
+
+The correction preserves the existing family boundaries: resistor, diode, and
+LED CircuitJS element creation, orientation interpretation, generated-fault
+ownership, resistor secondary-open behavior, and stress/damage behavior remain
+family-owned. Original generated resistor nameplates still expose only physical
+color-band markings in normal UI; catalog replacements retain their permitted
+catalog markings.
+
+### Correction protocol results
+
+- Coder — Nietzsche: `COMPLETE`. Implemented the bounded controller,
+  catalog-ID, visible-nameplate, and production-verifier correction. No commit
+  or push was performed.
+- Fresh reviewer — Hilbert: `PASS`. Independently verified the actual diff,
+  exact production specification identity, physical identity separation,
+  remove/reinstall and repeated acquisition behavior, orientation, privacy,
+  future canary preservation, and family-specific electrical ownership. A
+  transient concurrent browser timeout was not reproducible sequentially and
+  was treated as harness flakiness, not a product finding.
+- Primary architect: `FINAL PASS` after one bounded correction review round.
+  Escalation-architect review was not required.
+
+### Correction closed validation set
+
+- JDK 8 / GWT production OBF build: PASS; all five permutations compiled and
+  linked.
+- Architecture verifier, including the Task 35 future-part/specification and
+  package canaries: PASS.
+- Renderer-provider boundary verifier: PASS.
+- Procedural layout verifier, seed 3: PASS.
+- Seeded LED core matrix, seeds 0/2/3: 15/15 PASS.
+- Resistor replacement/identity route, seeds 0/2/3: 3/3 PASS, including the
+  d4ad007 regression assertion that the acquired specification ID is the
+  catalog ID rather than R1.
+- Diode replacement/open route, seeds 0/2/3: 3/3 PASS.
+- Diode-short route, seeds 0/2/3: 3/3 PASS.
+- LED replacement/identity route, seeds 0/2/3: 3/3 PASS.
+- Parallel-family route, seeds 0/2/3: 3/3 PASS.
+- Wrong-repair developer and normal-player routes: PASS.
+- Resistor stress/damage developer and normal-player routes: PASS, including
+  solver-backed secondary failure and pause/reset checks.
+- Generic normal-player replacement/privacy route: PASS; original numeric
+  resistor value was absent from the player panel.
+- LED, diode, and parallel normal-player routes: PASS.
+- PowerShell parser checks for the verification scripts: PASS.
+- `git diff --check`: PASS before staging; staged check is part of completion.
+- Deterministic seeded behavior, generated-fault ownership, and completion
+  checks: PASS through the existing seeded verifier routes.
+
+### Correction visible `@Browser` gate
+
+Using the visible in-app Browser on fresh production routes with real clicks:
+
+- LED seed 3 rendered normally. Selecting original R1 showed only
+  `Markings: Color bands`, with no numeric resistance, rating, fault, or stress
+  information.
+- Powering off, removing LED1, selecting the visible
+  `LED1_ORIGINAL - Generic red LED` tray part, and installing it as LED1
+  restored the installed state and stable A/K labels.
+- Installing a catalog LED visibly retained the permitted `Generic red LED`
+  marking. Diode seed 3 visibly rendered and exposed only `Generic silicon
+  diode`, `D1.A`, and `D1.K` markings.
+- Browser diagnostics contained no warning or error entries.
+
+Correction screenshots captured after the final production build, visually
+inspected as nonblank application states, and staged with this correction:
+
+- `docs/task-evidence/task-35-correction/led-initial.png` — fresh LED board,
+  complaint, catalogs, and empty tray.
+- `docs/task-evidence/task-35-correction/led-selected.png` — selected LED
+  with permitted player-visible marking and stable terminal labels.
+- `docs/task-evidence/task-35-correction/led-removed-tray.png` — power-off
+  empty slot with the original physical LED in the loose tray.
+- `docs/task-evidence/task-35-correction/led-installed.png` — catalog LED
+  installed with its permitted visible marking.
+- `docs/task-evidence/task-35-correction/diode-selected.png` — selected D1
+  with permitted marking and stable anode/cathode labels.
 
 ## Scope and outcome
 
@@ -285,6 +374,7 @@ It is identified only; it was not begun. Adding that family will require
 capacitor-specific specification, electrical model, render provider, and
 scenario code, but not a copied resistor identity/inventory foundation.
 
-Commit message: `Task 35: generalize physical part specifications`
+Original implementation commit message: `Task 35: generalize physical part specifications`
+Correction commit message: `Task 35: preserve catalog specification ownership`
 
 No push was performed. The task stops here as required.

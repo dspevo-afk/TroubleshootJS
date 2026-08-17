@@ -574,6 +574,13 @@ orientation metadata. Resistor, diode, and LED catalogs now use the common
 contract while retaining their family-specific specifications and CircuitJS
 electrical behavior.
 
+Production acquisition now retains the exact selected catalog specification
+object on each acquired physical part. Visible catalog metadata is materialized
+onto the physical identity through the common nameplate boundary; slot IDs such
+as R1, D1, and LED1 are never used as replacement specification IDs. Repeated
+acquisition creates distinct runtime-owned physical instances sharing the same
+immutable catalog specification, and removal/reinstallation preserves both.
+
 `PhysicalPartInventory<P>` remains the runtime-owned identity and inventory
 mechanism; the redundant resistor, diode, and LED inventory wrappers were
 removed. Stable part identity, acquisition, lookup, loose/installed
@@ -595,10 +602,10 @@ and solver-backed player behavior remain specialized and unchanged.
 
 ### Completion result
 
-Task 35 passed its closed validation set, independent coder/reviewer gates,
-the primary architect final review, and the visible production-browser smoke
-gate. Task 36 is the next eligible milestone and is identified only; it was
-not started.
+Task 35 and its bounded post-commit catalog-ownership correction passed the
+closed validation set, independent coder/reviewer gates, the primary architect
+final review, and the visible production-browser smoke gate. Task 36 is the
+next eligible milestone and is identified only; it was not started.
 
 ---
 
@@ -1338,7 +1345,8 @@ When updating:
 
 **Task 35 — Generalized Physical Part Specifications**
 
-Task 35 passed implementation, independent review, closed validation, and
-direct visible `@Browser` player-facing validation. Task 36 — Capacitor
+Task 35 passed implementation, its bounded catalog-ownership correction,
+independent review, closed validation, and direct visible `@Browser`
+player-facing validation. Task 36 — Capacitor
 Foundation and RC Family is the next eligible milestone and is identified only;
 it was not started.

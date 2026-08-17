@@ -132,8 +132,10 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
         if (!slot.isEmpty())
             return false;
         final ResistorCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
+        final ResistorNameplate specification = entry.getSpecification();
+        final PhysicalNameplate playerNameplate = entry.getPlayerVisibleNameplate();
         final ResistorElm element = DynamicResistorBackingAllocator.create(instance.getSimulationElements(),
-            entry.getNameplate().getNominalResistanceOhms());
+            specification.getNominalResistanceOhms());
         final ResistorSecondaryOpenPath openPath = ResistorSecondaryOpenPath.create(
             new CircuitPostMeasurementEndpoint(element, 1));
         final String componentId = slot.getComponentId();
@@ -141,11 +143,10 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
             componentId + "_CATALOG_PART",
             new PhysicalPartIdentityFactory<PhysicalResistorPart>() {
                 public PhysicalResistorPart create(String partId) {
-                    return new PhysicalResistorPart(partId,
-                        new ResistorNameplate(componentId,
-                            entry.getNameplate().getNominalResistanceOhms(), 5,
-                            entry.getNameplate().getRatedWattage()), element, null, openPath,
-                        ResistorPartLocation.INSTALLED);
+                    return new PhysicalResistorPart(partId, specification, specification,
+                        playerNameplate.forPhysicalPartId(partId), element, null, openPath,
+                        ResistorPartLocation.INSTALLED, new PhysicalPartProvenance(
+                            PhysicalPartProvenance.CATALOG_ACQUIRED, partId));
                 }
             });
         instance.registerRuntimeSimulationElement(element);

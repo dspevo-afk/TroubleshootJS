@@ -120,16 +120,19 @@ class DiodeSlotController implements PhysicalSlotMutationProvider {
         if (!capability.getSlot().isEmpty())
             return false;
         final DiodeCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
+        final DiodeNameplate specification = entry.getSpecification();
+        final PhysicalNameplate playerNameplate = entry.getPlayerVisibleNameplate();
         final DiodeElm element = DynamicDiodeBackingAllocator.create(instance.getSimulationElements());
         final String componentId = capability.getSlot().getComponentId();
         PhysicalDiodePart part = capability.getInventory().acquire(
             componentId + "_CATALOG_PART",
             new PhysicalPartIdentityFactory<PhysicalDiodePart>() {
                 public PhysicalDiodePart create(String partId) {
-                    return new PhysicalDiodePart(partId,
-                        new DiodeNameplate(componentId, entry.getNameplate().getDisplayName(),
-                            entry.getNameplate().getModelName()), element, null,
-                        entry.isReversedInstallation(), DiodePartLocation.LOOSE);
+                    return new PhysicalDiodePart(partId, specification, specification,
+                        playerNameplate.forPhysicalPartId(partId), element, null,
+                        entry.isReversedInstallation(), DiodePartLocation.LOOSE,
+                        new PhysicalPartProvenance(PhysicalPartProvenance.CATALOG_ACQUIRED,
+                            partId));
                 }
             });
         instance.registerRuntimeSimulationElement(element);

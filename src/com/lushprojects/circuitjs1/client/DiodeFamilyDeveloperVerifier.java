@@ -42,9 +42,11 @@ class DiodeFamilyDeveloperVerifier {
             verifyShort(sim, looseProbe(sim, instance, original, 0),
                 looseProbe(sim, instance, original, 1), "loose faulted original D1");
 
-        require(sim.getDiodeSlotController().installNewFromCatalog(DiodeReplacementCatalog.REVERSED),
+        DiodeCatalogEntry reversedCatalog = state.getCatalog().get(DiodeReplacementCatalog.REVERSED);
+        require(sim.getDiodeSlotController().installNewFromCatalog(reversedCatalog.getId()),
             "Could not install reversed diode");
         PhysicalDiodePart reversed = state.getSlot().getInstalledPart();
+        verifyCatalogAcquisition(reversed, reversedCatalog);
         require(reversed.isReversedInstallation(), "Reversed catalog diode lost orientation");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
@@ -57,9 +59,11 @@ class DiodeFamilyDeveloperVerifier {
         require(sim.getDiodeSlotController().removeInstalledPart(), "Could not remove reversed diode");
         verifyHealthy(sim, instance, reversed);
 
-        require(sim.getDiodeSlotController().installNewFromCatalog(DiodeReplacementCatalog.CORRECT),
+        DiodeCatalogEntry correctCatalog = state.getCatalog().get(DiodeReplacementCatalog.CORRECT);
+        require(sim.getDiodeSlotController().installNewFromCatalog(correctCatalog.getId()),
             "Could not install healthy diode");
         PhysicalDiodePart healthy = state.getSlot().getInstalledPart();
+        verifyCatalogAcquisition(healthy, correctCatalog);
         require(healthy != original && healthy != reversed &&
             !healthy.getId().equals(original.getId()) && !healthy.getId().equals(reversed.getId()),
             "Repeated diode acquisition did not create distinct physical parts");
@@ -75,6 +79,19 @@ class DiodeFamilyDeveloperVerifier {
                 looseProbe(sim, instance, original, 1), "original after healthy acquisition");
         require(sim.getDiodeSlotController().install(healthy.getId()),
             "Could not reinstall measured healthy diode");
+        verifyCatalogAcquisition(healthy, correctCatalog);
+        require(sim.getDiodeSlotController().removeInstalledPart(),
+            "Could not remove healthy diode before repeated catalog acquisition");
+        require(sim.getDiodeSlotController().installNewFromCatalog(correctCatalog.getId()),
+            "Could not acquire the healthy diode catalog entry twice");
+        PhysicalDiodePart secondHealthy = state.getSlot().getInstalledPart();
+        verifyCatalogAcquisition(secondHealthy, correctCatalog);
+        PhysicalCatalogAcquisitionDeveloperVerifier.verifySameSpecification(healthy, secondHealthy);
+        require(sim.getDiodeSlotController().removeInstalledPart(),
+            "Could not remove second healthy diode acquisition");
+        verifyHealthy(sim, instance, secondHealthy);
+        require(sim.getDiodeSlotController().install(secondHealthy.getId()),
+            "Could not reinstall second healthy diode acquisition");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         double diodeCurrent = Math.abs(current(instance, "D1"));
@@ -88,7 +105,8 @@ class DiodeFamilyDeveloperVerifier {
                 sim.getBoardModificationController(), BoardPowerState.POWERED, false),
             "Healthy diode did not produce solver-backed functional completion");
         require(original.getLocation() == DiodePartLocation.LOOSE && original.isFaulted() &&
-            reversed.getLocation() == DiodePartLocation.LOOSE,
+            reversed.getLocation() == DiodePartLocation.LOOSE &&
+            healthy.getLocation() == DiodePartLocation.LOOSE,
             "Repair changed loose diode identities or original fault");
         verifyTopology(sim, instance);
         sim.setCircuitTitle("Diode family verification passed");
@@ -129,6 +147,14 @@ class DiodeFamilyDeveloperVerifier {
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Healthy loose diode reverse test was not OL");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyCatalogAcquisition(PhysicalDiodePart part,
+            DiodeCatalogEntry entry) {
+        PhysicalCatalogAcquisitionDeveloperVerifier.verify(part, entry, "D1");
+        require(part.getNameplate() == entry.getSpecification() &&
+                "default".equals(part.getNameplate().getModelName()),
+            "Diode acquisition discarded selected technical specification identity");
     }
 
     private static void verifyOpen(CirSim sim, ProbeTarget first, ProbeTarget second, String label) {

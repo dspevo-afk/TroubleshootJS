@@ -10,8 +10,10 @@ class DiodeReplacementCatalog implements PhysicalPartCatalog<DiodeCatalogEntry> 
     private final HashMap<String, DiodeCatalogEntry> byId = new HashMap<String, DiodeCatalogEntry>();
 
     DiodeReplacementCatalog() {
-        add(new DiodeCatalogEntry(CORRECT, new DiodeNameplate("D1", "Generic silicon diode", "default"), false));
-        add(new DiodeCatalogEntry(REVERSED, new DiodeNameplate("D1", "Generic silicon diode (reversed)", "default"), true));
+        add(new DiodeCatalogEntry(CORRECT,
+            new DiodeNameplate(CORRECT, "Generic silicon diode", "default"), false));
+        add(new DiodeCatalogEntry(REVERSED,
+            new DiodeNameplate(REVERSED, "Generic silicon diode (reversed)", "default"), true));
     }
 
     private void add(DiodeCatalogEntry entry) {

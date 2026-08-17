@@ -12,6 +12,7 @@ class ReplacementDeveloperVerifier {
         verifyInventoryMetadata();
         ResistorSlotController slots = sim.getResistorSlotController();
         PhysicalResistorPart original = resistorInventory(instance).get("R1_ORIGINAL");
+        verifyOriginalResistorNameplate(original);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
         verifyPartTopology(sim, instance);
@@ -42,7 +43,10 @@ class ReplacementDeveloperVerifier {
             instance.getPhysicalSpecifications(), "R1").getNominalResistanceOhms();
         require(slots.installNewFromCatalog(catalogId(correctResistance)),
             "Correct catalog replacement did not install");
+        ResistorCatalogEntry correctCatalog = resistorCatalog(instance).get(
+            catalogId(correctResistance));
         String correctPartId = resistorSlot(instance).getInstalledPart().getId();
+        verifyCatalogAcquisition(resistorSlot(instance).getInstalledPart(), correctCatalog);
         verifyInstalledResistance(sim, instance, correctResistance);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
@@ -105,6 +109,7 @@ class ReplacementDeveloperVerifier {
         require(slots.installNewFromCatalog(wrongCatalog.getId()),
             "2.2 kOhm catalog replacement was not accepted");
         PhysicalResistorPart wrong = family.getSlot().getInstalledPart();
+        verifyCatalogAcquisition(wrong, wrongCatalog);
         require(wrong != null && wrong != original && wrong.getLocation() == ResistorPartLocation.INSTALLED &&
             family.getInventory().get(wrong.getId()) == wrong &&
             wrong.getNameplate().getNominalResistanceOhms() == wrongCatalog.getNameplate()
@@ -137,6 +142,7 @@ class ReplacementDeveloperVerifier {
         require(slots.installNewFromCatalog(correctCatalog.getId()),
             "1 kOhm catalog replacement was not accepted");
         PhysicalResistorPart correct = family.getSlot().getInstalledPart();
+        verifyCatalogAcquisition(correct, correctCatalog);
         require(correct != wrong && correct != original &&
             correct.getLocation() == ResistorPartLocation.INSTALLED &&
             family.getInventory().get(correct.getId()) == correct &&
@@ -257,9 +263,11 @@ class ReplacementDeveloperVerifier {
             boolean expectedCompletion) {
         require(slots.installNewFromCatalog(catalogId(resistance)), "Catalog replacement did not install");
         PhysicalResistorPart part = resistorSlot(instance).getInstalledPart();
+        verifyCatalogAcquisition(part, resistorCatalog(instance).get(catalogId(resistance)));
         require(slots.removeInstalledPart(), "Catalog replacement did not become a loose physical part");
         verifyResistance(sim, instance, part, false);
         require(slots.install(part.getId()), "Measured catalog replacement did not reinstall");
+        verifyCatalogAcquisition(part, resistorCatalog(instance).get(catalogId(resistance)));
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         verifyPartTopology(sim, instance);
@@ -463,12 +471,21 @@ class ReplacementDeveloperVerifier {
         HashSet<String> canonicalCoordinates = collectCoordinates(instance.getSimulationElements());
         HashSet<String> acquiredCoordinates = new HashSet<String>();
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        ResistorCatalogEntry repeatedCatalog = resistorCatalog(instance).get(catalogId(1000));
+        PhysicalSpecification repeatedSpecification = null;
         String lastAcquiredPartId = null;
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(slots.removeInstalledPart(), "Could not remove correct replacement before acquisition loop");
         for (int index = 0; index < 12; index++) {
-            require(slots.installNewFromCatalog(catalogId(1000)), "Catalog depleted during acquisition");
+            require(slots.installNewFromCatalog(repeatedCatalog.getId()),
+                "Catalog depleted during acquisition");
             PhysicalResistorPart part = resistorSlot(instance).getInstalledPart();
+            verifyCatalogAcquisition(part, repeatedCatalog);
+            if (repeatedSpecification == null)
+                repeatedSpecification = part.getSpecification();
+            else
+                require(part.getSpecification() == repeatedSpecification,
+                    "Repeated resistor acquisition did not preserve catalog specification identity");
             require(!ids.contains(part.getId()) && !elements.contains(part.getElement()) &&
                 !firstEndpoints.contains(part.getPublicTerminal(0)) &&
                 !secondEndpoints.contains(part.getPublicTerminal(1)) &&
@@ -496,6 +513,23 @@ class ReplacementDeveloperVerifier {
         sim.analyzeCircuit();
         sim.runCircuit(true);
         return lastAcquiredPartId;
+    }
+
+    private static void verifyCatalogAcquisition(PhysicalResistorPart part,
+            ResistorCatalogEntry entry) {
+        PhysicalCatalogAcquisitionDeveloperVerifier.verify(part, entry, "R1");
+        require(part.getNameplate() == entry.getSpecification() &&
+                part.getRatedWattage() == entry.getSpecification().getRatedWattage(),
+            "Resistor acquisition discarded selected technical specification identity");
+    }
+
+    private static void verifyOriginalResistorNameplate(PhysicalResistorPart original) {
+        PhysicalNameplate nameplate = original.getPlayerVisibleNameplate();
+        require(nameplate != null && "Physical resistor markings".equals(nameplate.getDisplayName()) &&
+                "Markings".equals(nameplate.getWorkbenchDetailLabel()) &&
+                "Color bands".equals(nameplate.getWorkbenchDetailValue()) &&
+                !nameplate.getWorkbenchDetailValue().equals(original.getNameplate().getDisplayValue()),
+            "Original resistor privacy/nameplate behavior changed");
     }
 
     private static void verifyNewBackingCoordinates(PhysicalResistorPart part,

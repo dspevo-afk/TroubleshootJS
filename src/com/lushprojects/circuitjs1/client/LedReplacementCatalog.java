@@ -10,10 +10,10 @@ class LedReplacementCatalog implements PhysicalPartCatalog<LedCatalogEntry> {
     private final HashMap<String, LedCatalogEntry> byId = new HashMap<String, LedCatalogEntry>();
 
     LedReplacementCatalog() {
-        LedNameplate nameplate = new LedNameplate("LED1", "Generic red LED", "default-led",
-            1, 0, 0);
-        add(new LedCatalogEntry(CORRECT, "Generic red LED", nameplate, false));
-        add(new LedCatalogEntry(REVERSED, "Generic red LED (reversed)", nameplate, true));
+        add(new LedCatalogEntry(CORRECT, "Generic red LED",
+            new LedNameplate(CORRECT, "Generic red LED", "default-led", 1, 0, 0), false));
+        add(new LedCatalogEntry(REVERSED, "Generic red LED (reversed)",
+            new LedNameplate(REVERSED, "Generic red LED", "default-led", 1, 0, 0), true));
     }
 
     private void add(LedCatalogEntry entry) {
