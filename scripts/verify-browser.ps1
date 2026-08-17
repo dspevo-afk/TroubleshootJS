@@ -18,6 +18,7 @@ param(
     [switch]$WrongRepairNormalPlayer,
     [switch]$StressDamage,
     [switch]$StressDamageNormalPlayer,
+    [switch]$QuickPlay,
     [switch]$Layout,
     [switch]$Architecture,
     [int]$PlayerSeed = 3,
@@ -173,6 +174,17 @@ function invokeCdp($socket, [ref]$nextId, [string]$method, $parameters, [ref]$fa
     return receiveCdp $socket $id $failures
 }
 
+function navigateAndWaitForDocument($socket, [ref]$nextId, [string]$url,
+        [DateTime]$deadline, [ref]$failures) {
+    $marker = [Guid]::NewGuid().ToString('N')
+    $separator = if ($url.IndexOf('?') -ge 0) { '&' } else { '?' }
+    $navigationUrl = $url + $separator + 'tsjVerifierNavigation=' + $marker
+    [void](invokeCdp $socket $nextId 'Page.navigate' @{ url = $navigationUrl } $failures)
+    $escapedMarker = $marker.Replace("'", "\\'")
+    waitForCdp $socket $nextId "location.href.includes('$escapedMarker')&&document.readyState==='complete'" $deadline $failures 'synchronized page navigation'
+    return evaluateCdp $socket $nextId 'performance.timeOrigin' $failures
+}
+
 function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debugPort,
         [string]$expectedComplaint = '') {
     $profile = Join-Path $env:TEMP ("tsj-browser-" + [Guid]::NewGuid().ToString('N'))
@@ -199,7 +211,7 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
         $failures = @()
         [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
         [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
-        [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
+        [void](navigateAndWaitForDocument $socket ([ref]$nextId) $url $deadline ([ref]$failures))
         if ($expectedComplaint) {
             $escapedComplaint = $expectedComplaint.Replace("'", "\\'")
             $ticketExpression = "(()=>{const title=[...document.querySelectorAll('.tsj-component-title')].find(e=>e.textContent.trim()==='Service Ticket');if(!title||!title.parentElement)return false;const lines=title.parentElement.innerText.split(/\r?\n+/).map(x=>x.trim()).filter(Boolean);return lines.length===2&&lines[0]==='Service Ticket'&&lines[1]==='$escapedComplaint';})()"
@@ -219,6 +231,12 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             Write-Host ("VERIFIER DIAGNOSTIC status=$($diagnostic.status) body=$($diagnostic.body.Replace("`n", ' | '))")
             if ($failures.Count -gt 0) { Write-Host ("VERIFIER CDP FAILURES: " + ($failures -join '; ')) }
             throw "timed out waiting for '$expected'"
+        }
+        if ($name -eq 'quick-play selector/session') {
+            $quickPlayReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-quick-play-report') || ''" ([ref]$failures)
+            if ($quickPlayReport -ne 'unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated') {
+                throw "Quick Play focused report was incomplete: $quickPlayReport"
+            }
         }
         if ($name -eq 'seed=3 stress-damage') {
             $stressReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-stress-report') || ''" ([ref]$failures)
@@ -486,6 +504,65 @@ function captureBrowserScreenshot($socket, [ref]$nextId, [string]$path, [ref]$fa
         format = 'png'; fromSurface = $true; captureBeyondViewport = $false
     } $failures
     [IO.File]::WriteAllBytes($path, [Convert]::FromBase64String($result.result.data))
+}
+
+function verifyQuickPlayNormalPlayer([string]$url, [int]$debugPort, [bool]$finishProof) {
+    if (-not $finishProof) { throw 'Quick Play fresh-page check did not follow finish-success proof' }
+    $profile = Join-Path $env:TEMP ("tsj-quick-play-" + [Guid]::NewGuid().ToString('N'))
+    $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+        '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
+    $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $socket = $null
+    try {
+        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        do {
+            Start-Sleep -Milliseconds 200
+            try {
+                $targets = Invoke-RestMethod "http://127.0.0.1:$debugPort/json/list" -TimeoutSec 2
+                $target = $targets | Where-Object { $_.type -eq 'page' } | Select-Object -First 1
+            } catch { $target = $null }
+        } while ($null -eq $target -and [DateTime]::UtcNow -lt $deadline)
+        if ($null -eq $target) { throw 'browser target did not become available' }
+        $socket = New-Object Net.WebSockets.ClientWebSocket
+        $socket.ConnectAsync([Uri]$target.webSocketDebuggerUrl,
+            [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+        $nextId = 1
+        $failures = @()
+        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
+        $firstDocumentTimeOrigin = navigateAndWaitForDocument $socket ([ref]$nextId) $url $deadline ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Service Ticket')&&document.body.innerText.includes('Finish Job')&&document.querySelectorAll('canvas').length>0" $deadline ([ref]$failures) 'normal Quick Play PCB and Finish Job'
+        $privacy = evaluateCdp $socket ([ref]$nextId) "(()=>{const body=document.body.innerText||'',lower=body.toLowerCase(),root=document.documentElement;return {body:body,hidden:/fault|stress|damage|rating|specification|answer|wattage/.test(lower),family:root.getAttribute('data-tsj-quick-play-family'),seed:root.getAttribute('data-tsj-quick-play-seed'),report:root.getAttribute('data-tsj-quick-play-report'),cleanParts:body.includes('No removed parts')&&!body.includes('State: Loose'),failure:body.includes('Functional check failed.'),finish:[...document.querySelectorAll('button')].filter(x=>x.innerText.trim()==='Finish Job').length};})()" ([ref]$failures)
+        if ($privacy.hidden -or $privacy.family -or $privacy.seed -or $privacy.report -or -not $privacy.cleanParts -or $privacy.failure -or $privacy.finish -ne 1) {
+            throw "Quick Play normal-player privacy or control boundary failed: $($privacy | ConvertTo-Json -Compress)"
+        }
+        $priorDocumentMarker = [Guid]::NewGuid().ToString('N')
+        [void](evaluateCdp $socket ([ref]$nextId) "window.__tsjVerifierPriorDocument='$priorDocumentMarker';true" ([ref]$failures))
+        if ($EvidenceDirectory) {
+            [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'quick-play-initial.png') ([ref]$failures)
+        }
+        $secondDocumentTimeOrigin = navigateAndWaitForDocument $socket ([ref]$nextId) $url $deadline ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Service Ticket')&&document.body.innerText.includes('Finish Job')&&!document.body.innerText.includes('Functional check failed.')" $deadline ([ref]$failures) 'fresh Quick Play reload state'
+        $freshState = evaluateCdp $socket ([ref]$nextId) "(()=>{const body=document.body.innerText||'',root=document.documentElement;return {prior:typeof window.__tsjVerifierPriorDocument==='undefined'?'':window.__tsjVerifierPriorDocument,cleanParts:body.includes('No removed parts')&&!body.includes('State: Loose'),failure:body.includes('Functional check failed.'),family:root.getAttribute('data-tsj-quick-play-family'),seed:root.getAttribute('data-tsj-quick-play-seed'),report:root.getAttribute('data-tsj-quick-play-report'),finish:[...document.querySelectorAll('button')].filter(x=>x.innerText.trim()==='Finish Job').length};})()" ([ref]$failures)
+        if ([double]$firstDocumentTimeOrigin -eq [double]$secondDocumentTimeOrigin -or
+                $freshState.prior -ne '' -or -not $freshState.cleanParts -or
+                $freshState.failure -or $freshState.family -or $freshState.seed -or
+                $freshState.report -or $freshState.finish -ne 1) {
+            throw "Quick Play reload did not create a clean new document: first=$firstDocumentTimeOrigin second=$secondDocumentTimeOrigin state=$($freshState | ConvertTo-Json -Compress)"
+        }
+        if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
+        Write-Host 'PASS quick-play-normal-player fresh-reload privacy=clean finish-job=visible'
+        return $true
+    } catch {
+        Write-Host "FAIL quick-play-normal-player - $($_.Exception.Message)"
+        return $false
+    } finally {
+        cleanupBrowser $browser $socket $profile
+    }
 }
 
 function verifyNormalPlayer([string]$url, [int]$debugPort) {
@@ -1243,6 +1320,15 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
 }
 
 if (-not (Test-Path $BrowserPath -PathType Leaf)) { throw "Browser not found: $BrowserPath" }
+if ($QuickPlay) {
+    $selectorPassed = verifyRoute 'quick-play selector/session' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play' 9495 | Select-Object -Last 1
+    if (-not $selectorPassed) { exit 1 }
+    $explicitPassed = verifyRoute 'quick-play explicit precedence' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjChallenge=led&seed=3&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play-explicit' 9496 | Select-Object -Last 1
+    if (-not $explicitPassed) { exit 1 }
+    $normalPassed = verifyQuickPlayNormalPlayer "$BaseUrl/circuitjs.html?tsjQuickPlay=true" 9497 ([bool]$selectorPassed) | Select-Object -Last 1
+    if (-not $normalPassed) { exit 1 }
+    exit 0
+}
 if ($Layout) {
     if (-not (verifyRoute "procedural-layout" "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyLayout=true&tsjVerifyGeometry=true" 'PASS:layout' 9440)) { exit 1 }
     exit 0

@@ -13,6 +13,23 @@ and compiler version recorded in the project metadata:
 The original Eclipse workflow remains usable, but Eclipse is not required for
 the commands below.
 
+## Normal player launch
+
+From any current working directory, double-click the root:
+
+```text
+Start TroubleshootJS.cmd
+```
+
+This starts or reuses the detached production preview, builds once with an
+available JDK 8 only when the compiled bootstrap is missing, and opens the
+default browser directly into Quick Play. The server stays running after the
+launcher exits. A startup failure remains visible in the command window and
+identifies the required build, JDK 8, or preview problem.
+
+The player launcher is intentionally separate from the legacy `DevMode`
+development path and from explicit developer challenge/verifier routes.
+
 ## Required software
 
 - Windows PowerShell 5.1 or PowerShell 7+
@@ -125,6 +142,17 @@ The generated board is `PARALLEL_DUAL_INDICATOR` /
 starts with a real `R1 OPEN` fault and the complaint `One indicator does not
 light.`.
 
+To open the normal Quick Play route manually while preserving the detached
+preview lifecycle, run:
+
+```powershell
+.\scripts\start-preview.ps1 -QuickPlay -OpenBrowser
+```
+
+The root player launcher adds `-BuildIfMissing`; direct developer preview
+commands do not force a production build when the compiled bootstrap already
+exists.
+
 ## Legacy GWT development server
 
 The legacy GWT 2.7 DevMode workflow is retained for compiler development only:
@@ -210,6 +238,19 @@ generated families across seeds 0, 2, and 3:
 ```powershell
 .\scripts\verify-browser.ps1 -Layout
 ```
+
+Task 35(A)'s focused Quick Play verifier is:
+
+```powershell
+.\scripts\verify-browser.ps1 -QuickPlay
+```
+
+It checks the eligible-family selector/session seam with an injected
+deterministic selection, explicit-route precedence, generic Finish Job
+behavior for unrepaired and correctly restored boards, fresh reload state, and
+normal-player privacy. The existing explicit LED, diode, and parallel smoke
+routes remain the adjacent regression set; the historical full matrix is not
+required for every launcher or Quick Play change.
 
 Normal-player flows accept `-PlayerSeed <seed>` for generated-geometry checks;
 their canvas clicks use the explicit developer-only geometry bridge rather than

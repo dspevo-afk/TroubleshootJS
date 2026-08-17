@@ -1483,6 +1483,52 @@ exclusively by an exploratory check is `FOLLOW-UP` by default unless it
 provides concrete evidence of a genuine `BLOCKER` in the product or an
 original acceptance criterion. The finish line must not move indefinitely.
 
+## Permanent Risk-Based Targeted Validation Policy
+
+For every bounded task, the primary architect must define the closed
+validation set before implementation and review begin. The set must name the
+task acceptance checks, the required build or test checks, the direct
+regressions for the changed execution path, and the adjacent regressions that
+protect established boundaries. A later exploratory check may inform a
+follow-up, but it must not silently expand the blocking set after the defined
+set has passed.
+
+For Java or GWT production-source changes, run one final JDK 8/GWT production
+build after the final source candidate is ready. Intermediate builds are
+diagnostic and do not replace that final build. The completion check also
+requires inspection of the final `git status` and `git diff`,
+`git diff --check`, and, when staging is authorized, `git diff --cached --check`
+after only the intended files are staged.
+
+Validation should cover the direct changed path and the smallest adjacent
+regressions that could be affected by it. Broad historical matrices are
+required only when the change surface or risk genuinely justifies them; they
+are not the default substitute for reasoning about coverage. Seeded procedural
+work should use deterministic representative seeds: at least one seed for
+each touched family or topology, plus boundary or previously-regressed seeds
+when relevant. Do not make a validation pass depend on probabilistic family or
+seed selection.
+
+Visible player behavior requires materially distinct built-in `@Browser`
+workflows appropriate to the risk, such as initial state, the new interaction,
+an invalid or unrepaired state, and a correctly completed state. Repeating the
+same route or relying only on DOM/CDP diagnostics is not materially distinct
+player validation. Screenshots should cover the important visible states and
+must be surfaced and preserved when the task evidence rules apply. The
+reviewer independently runs targeted checks for the changed boundary and any
+direct regression; reviewer validation may be narrower than the full closed
+set only when it still directly proves the review concerns.
+
+Correction rounds rerun the narrowest relevant failed checks, the direct
+regressions, and any required final build or browser evidence; they do not
+restart an unrelated full matrix. Documentation-only or evidence-only
+corrections do not require a product rebuild unless the correction changes
+production source or invalidates the evidence, but they do require a diff and
+consistency inspection. Testing effort scales with regression risk and change
+surface. This policy never weakens electrical truth, CircuitJS ownership,
+determinism, stable identity, power and measurement safety, player privacy, or
+the established architecture.
+
 ## Test-Harness Failures Versus Product Failures
 
 A test or verifier failure does not automatically mean that the product is

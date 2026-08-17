@@ -352,6 +352,12 @@ MouseOutHandler, MouseWheelHandler {
 	String troubleshootFixture = null;
 	String troubleshootChallenge = null;
 	long troubleshootFixtureSeed = 1;
+	boolean troubleshootQuickPlay;
+	boolean troubleshootQuickPlayVerification;
+	long troubleshootQuickPlayVerificationSeed = 3;
+	boolean troubleshootQuickPlayVerificationComplete;
+	boolean quickPlayActive;
+	QuickPlaySession quickPlaySession;
 	boolean troubleshootResistanceVerification;
 	private static final int VERIFIER_NOT_STARTED = 0;
 	private static final int VERIFIER_RUNNING = 1;
@@ -422,6 +428,11 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootFixture = qp.getValue("tsjFixture");
 			troubleshootChallenge = qp.getValue("tsjChallenge");
 	    troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
+	    troubleshootQuickPlay = qp.getBooleanValue("tsjQuickPlay", false);
+	    troubleshootQuickPlayVerification = qp.getBooleanValue("tsjVerifyQuickPlay", false);
+	    String quickPlayTestSeed = qp.getValue("tsjQuickPlayTestSeed");
+	    troubleshootQuickPlayVerificationSeed = quickPlayTestSeed == null ? 3 :
+		parseTroubleshootFixtureSeed(quickPlayTestSeed);
 	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
 	    troubleshootChallengeVerification = qp.getBooleanValue("tsjVerifyChallenge", false);
 	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
@@ -776,7 +787,8 @@ MouseOutHandler, MouseWheelHandler {
 		    getSetupList(false);
 		    readSetupFile(startCircuit, startLabel);
 		}
-		else if (troubleshootFixture != null || troubleshootChallenge != null)
+		else if (troubleshootFixture != null || troubleshootChallenge != null ||
+			troubleshootQuickPlay)
 		    getSetupList(false);
 		else
 		    getSetupList(true);
@@ -830,6 +842,15 @@ MouseOutHandler, MouseWheelHandler {
 	    installGeneratedBoard(generateParallelBoard(troubleshootFixtureSeed));
 	else if ("parallel".equals(troubleshootChallenge))
 	    installGeneratedChallenge(generateParallelBoard(troubleshootFixtureSeed));
+	else if (troubleshootQuickPlay) {
+	    quickPlaySession = troubleshootQuickPlayVerification ?
+		QuickPlaySession.create(new QuickPlayFixedRandomSource(new long[] { 0,
+		    troubleshootQuickPlayVerificationSeed })) :
+		QuickPlaySession.create();
+	    quickPlayActive = true;
+	    publishQuickPlaySelectionForDeveloperVerification(quickPlaySession.getSelection());
+	    installGeneratedChallenge(quickPlaySession.getInstance());
+	}
 	if (troubleshootStressVerification)
 	    installStressDeveloperBridge();
 	setSimRunning(running);
@@ -4196,7 +4217,7 @@ MouseOutHandler, MouseWheelHandler {
 	physicalRuntime.installRegisteredCapabilities(this, instance, boardModificationController, t);
 	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
-		instance.getPcbLayout(), verticalPanel) : null;
+		instance.getPcbLayout(), verticalPanel, quickPlayActive) : null;
 	boardPowerController.attach(instance.getExternalPowerBindings());
 	updateBoardPowerButton();
 	updateGeneratedView();
@@ -4212,7 +4233,8 @@ MouseOutHandler, MouseWheelHandler {
 
     void installGeneratedChallenge(GeneratedBoardInstance instance) {
 	installGeneratedBoard(instance);
-	generatedChallengeController = new GeneratedChallengeController(this, instance);
+	generatedChallengeController = new GeneratedChallengeController(this, instance,
+	    quickPlayActive);
 	generatedChallengeController.begin();
 	refreshChallengeInteractionState();
     }
@@ -4334,6 +4356,16 @@ MouseOutHandler, MouseWheelHandler {
 			ArchitectureDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:architecture");
 		    }
+		    if (troubleshootQuickPlayVerification &&
+			!troubleshootQuickPlayVerificationComplete) {
+			troubleshootQuickPlayVerificationComplete = true;
+			if (quickPlayActive)
+			    QuickPlayDeveloperVerifier.verify(this);
+			else
+			    QuickPlayDeveloperVerifier.verifyExplicitRoute(this);
+			publishBrowserVerificationResult(quickPlayActive ?
+			    "PASS:quick-play" : "PASS:quick-play-explicit");
+		    }
 		} finally {
 		    developerVerifierRunning = false;
 		}
@@ -4345,6 +4377,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification ||
 		    troubleshootGeometryVerification || troubleshootLayoutVerification ||
 		    troubleshootParallelVerification || troubleshootStressVerification ||
+		    troubleshootQuickPlayVerification ||
 		    troubleshootArchitectureVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
@@ -4357,6 +4390,16 @@ MouseOutHandler, MouseWheelHandler {
     private static native void publishBrowserVerificationResult(String result) /*-{
 	$doc.documentElement.setAttribute("data-tsj-verification", result);
     }-*/;
+
+    private static native void publishQuickPlaySelection(String familyId, String seed) /*-{
+	$doc.documentElement.setAttribute("data-tsj-quick-play-family", familyId);
+	$doc.documentElement.setAttribute("data-tsj-quick-play-seed", seed);
+    }-*/;
+
+	private void publishQuickPlaySelectionForDeveloperVerification(QuickPlaySelection selection) {
+	if (selection != null && troubleshootQuickPlayVerification)
+	    publishQuickPlaySelection(selection.getFamilyId(), String.valueOf(selection.getSeed()));
+    }
 
     void publishStressReportForDeveloperVerification(String result) {
 	publishBrowserStressReport(result);
@@ -4374,6 +4417,27 @@ MouseOutHandler, MouseWheelHandler {
 
 	GeneratedChallengeController getGeneratedChallengeController() {
 	return generatedChallengeController;
+	}
+
+	QuickPlaySelection getQuickPlaySelectionForDeveloperVerification() {
+	return quickPlaySession == null ? null : quickPlaySession.getSelection();
+	}
+
+	void publishQuickPlayVerificationReportForDeveloperVerification(String result) {
+	if (troubleshootQuickPlayVerification)
+	    publishQuickPlayVerificationReport(result);
+	}
+
+	private static native void publishQuickPlayVerificationReport(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-quick-play-report", result);
+	}-*/;
+
+	boolean isQuickPlayMode() { return quickPlayActive; }
+
+	boolean finishQuickPlayJob() {
+	if (!quickPlayActive || generatedChallengeController == null)
+	    return false;
+	return generatedChallengeController.finishJob();
 	}
 
 	boolean isChallengeInteractionEnabled() {

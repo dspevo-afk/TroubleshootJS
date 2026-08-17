@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.Window;
 
 class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final CirSim sim;
@@ -20,13 +21,16 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final VerticalPanel ticketPanel = new VerticalPanel();
     private final VerticalPanel partsPanel = new VerticalPanel();
     private final Label feedback = new Label();
+    private final boolean quickPlay;
+    private String finishFeedbackText = "";
 
     PcbWorkbenchController(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, PcbBoardLayout layout,
-            VerticalPanel sidebar) {
+            VerticalPanel sidebar, boolean quickPlay) {
         this.sim = sim;
         this.instance = instance;
         this.modifications = modifications;
+        this.quickPlay = quickPlay;
         renderer = new PcbWorkbenchRenderer(instance, modifications, layout);
         ticketPanel.setStyleName("tsj-component-panel");
         ticketPanel.setVisible(false);
@@ -71,6 +75,12 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     void hide() { panel.setVisible(false); }
 
     String getPanelTextForDeveloperVerification() { return panel.getElement().getInnerText(); }
+
+    String getPlayerFacingTextForDeveloperVerification() {
+        return ticketPanel.getElement().getInnerText() + "\n" +
+            panel.getElement().getInnerText() + "\n" +
+            partsPanel.getElement().getInnerText();
+    }
 
     PcbWorkbenchRenderer getRenderer() { return renderer; }
 
@@ -341,6 +351,29 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         ticketPanel.add(styledLabel("Service Ticket", "tsj-component-title"));
         ticketPanel.add(new Label(challenge.isReady() ? challenge.getComplaintText() :
             "Preparing challenge..."));
+        if (quickPlay) {
+            final Button finish = new Button("Finish Job");
+            finish.setStyleName("tsj-action-button");
+            finish.setEnabled(challenge.isReady() && !challenge.isCompleted());
+            finish.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    if (sim.finishQuickPlayJob()) {
+                        finishFeedbackText = "";
+                        Window.Location.reload();
+                    } else {
+                        finishFeedbackText =
+                            "Functional check failed. Continue troubleshooting.";
+                        rebuildTicket();
+                    }
+                }
+            });
+            ticketPanel.add(finish);
+            if (finishFeedbackText.length() != 0) {
+                Label result = new Label(finishFeedbackText);
+                result.setStyleName("tsj-inline-feedback");
+                ticketPanel.add(result);
+            }
+        }
     }
 
     private void addActions(final String componentId,

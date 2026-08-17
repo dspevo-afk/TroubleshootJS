@@ -609,6 +609,52 @@ next eligible milestone and is identified only; it was not started.
 
 ---
 
+## Task 35(A) — Quick Play / Playable Challenge Loop
+
+**Status:** `[x]` Complete — primary architect `FINAL PASS`
+
+### Goal
+
+Turn the existing generated-board foundation into a direct normal-player loop
+without adding a new circuit family or beginning Task 36.
+
+### Implementation candidate
+
+The root `Start TroubleshootJS.cmd` now resolves the repository from its own
+location, reuses or starts the detached production preview, opens the default
+browser into `tsjQuickPlay=true`, keeps the server alive, and reports useful
+startup/build errors. Preview startup builds only when the compiled bootstrap
+is missing and only when a safely resolved JDK 8 is available; it never installs
+a JDK and preserves explicit `-Challenge`/`-Seed` routes.
+
+Quick Play uses a small selector/registry/session seam. It selects only the
+normal-player LED, diode-protected-indicator, and parallel dual-indicator
+families, passes a fresh selected seed into the existing deterministic family
+generator, and never selects the developer-only diode-short route. The
+selection source is injectable for deterministic verification, while family,
+seed, fault, answer, ratings, stress, and specification details remain out of
+normal-player UI.
+
+Quick Play exposes a `Finish Job` control only for its own generated challenge.
+Preparation disables the control. Unrepaired or degraded boards stay on the
+same PCB with neutral feedback; correctly restored boards cross the existing
+solver-backed generic repair-status/completion boundary and reload into a
+fresh Quick Play session. Explicit challenge, fixture, and verifier route
+precedence remains unchanged.
+
+This task also adopts the permanent risk-based targeted validation policy in
+`AGENTS.md` and adds focused selector, Finish Job, launcher, privacy, and
+fresh-session checks. The existing explicit LED, diode, and parallel routes
+remain representative adjacent smoke regressions; the historical full matrix
+is not part of the default closed set.
+
+Task 35(A) passed its bounded targeted validation, independent reviewer gate,
+and visible production-browser gate. Task 36 — Capacitor Foundation and RC
+Family is the next eligible milestone; it is identified only and was not
+started.
+
+---
+
 # Phase 2 — Broaden the Circuit Vocabulary
 
 The project should next add circuit families that teach distinct troubleshooting concepts. Add them one at a time, validating each before composing them into larger boards.
@@ -617,7 +663,7 @@ The project should next add circuit families that teach distinct troubleshooting
 
 ## Task 36 — Capacitor Foundation and RC Family
 
-**Status:** `[>] Next planned milestone`
+**Status:** `[>]` Next eligible milestone after Task 35(A)
 
 ### Goals
 
@@ -1343,10 +1389,9 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 35 — Generalized Physical Part Specifications**
+**Task 36 — Capacitor Foundation and RC Family**
 
-Task 35 passed implementation, its bounded catalog-ownership correction,
-independent review, closed validation, and direct visible `@Browser`
-player-facing validation. Task 36 — Capacitor
-Foundation and RC Family is the next eligible milestone and is identified only;
-it was not started.
+Task 35(A) passed its targeted validation, independent reviewer gate, and
+visible player gate, and is committed as the current completed milestone.
+Task 36 is the next eligible milestone and is identified only; it was not
+started.

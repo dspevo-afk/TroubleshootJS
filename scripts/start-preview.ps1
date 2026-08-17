@@ -3,6 +3,9 @@ param(
     [ValidateSet('led', 'diode', 'parallel')]
     [string]$Challenge = 'led',
     [long]$Seed = 3,
+    [switch]$QuickPlay,
+    [switch]$BuildIfMissing,
+    [switch]$OpenBrowser,
     [ValidateRange(1, 65535)]
     [int]$Port = 8899,
     [ValidateRange(1, 60)]
@@ -18,8 +21,57 @@ $stateDirectory = Join-Path $repositoryRoot '.tools\preview'
 $stateFile = Join-Path $stateDirectory 'state.json'
 $stdoutLog = Join-Path $stateDirectory 'stdout.log'
 $stderrLog = Join-Path $stateDirectory 'stderr.log'
-$pageUrl = "http://127.0.0.1:$Port/circuitjs.html?tsjChallenge=$Challenge&seed=$Seed"
+$pageUrl = if ($QuickPlay) {
+    "http://127.0.0.1:$Port/circuitjs.html?tsjQuickPlay=true"
+} else {
+    "http://127.0.0.1:$Port/circuitjs.html?tsjChallenge=$Challenge&seed=$Seed"
+}
 $bootstrapUrl = "http://127.0.0.1:$Port/circuitjs1/circuitjs1.nocache.js"
+$bootstrapPath = Join-Path $repositoryRoot 'war\circuitjs1\circuitjs1.nocache.js'
+$buildScript = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'build.ps1'))
+
+function findJdk8Home {
+    $candidates = @()
+    if ($env:JAVA_HOME) { $candidates += $env:JAVA_HOME }
+    $candidates += (Join-Path $repositoryRoot '.tools\jdk8-download\jdk8u502-b07')
+    $candidates += (Join-Path $repositoryRoot '.tools\jdk8u502-b07')
+    $javaCommand = Get-Command 'java.exe' -ErrorAction SilentlyContinue
+    if ($javaCommand) {
+        $candidates += Split-Path -Parent (Split-Path -Parent $javaCommand.Source)
+    }
+    foreach ($candidate in $candidates) {
+        if (-not $candidate) { continue }
+        $javaPath = Join-Path ([IO.Path]::GetFullPath([string]$candidate)) 'bin\java.exe'
+        if (-not (Test-Path -LiteralPath $javaPath -PathType Leaf)) { continue }
+        $version = (& $javaPath -version 2>&1 | Out-String)
+        if ($version -match 'version "1\.8\.') {
+            return [IO.Path]::GetFullPath([string]$candidate)
+        }
+    }
+    return $null
+}
+
+function ensureProductionOutput {
+    if (Test-Path -LiteralPath $bootstrapPath -PathType Leaf) { return }
+    if (-not $BuildIfMissing) {
+        throw 'Production output is missing. Run scripts\build.ps1 with JDK 8 first.'
+    }
+    $jdkHome = findJdk8Home
+    if (-not $jdkHome) {
+        throw 'Production output is missing and no JDK 8 was found. Install or select a JDK 8 and run scripts\build.ps1; no JDK was installed automatically.'
+    }
+    $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
+    Write-Host "Production output is missing; building with JDK 8 at $jdkHome..."
+    & $powershell -NoProfile -ExecutionPolicy Bypass -File $buildScript `
+        -JavaHome $jdkHome -Target Compile -Style OBF
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $bootstrapPath -PathType Leaf)) {
+        throw 'JDK 8 production build failed or did not produce the compiled bootstrap.'
+    }
+}
+
+function openPageIfRequested {
+    if ($OpenBrowser) { Start-Process -FilePath $pageUrl }
+}
 
 function testEndpoint([string]$url) {
     try {
@@ -91,10 +143,13 @@ function stopOwnedProcess($validState) {
     [void]$validState.Process.WaitForExit(5000)
 }
 
+ensureProductionOutput
+
 $validState = readValidState
 if ($null -ne $validState -and [int]$validState.State.port -eq $Port -and (testHealthyPreview)) {
     Write-Host "TroubleshootJS preview already running (PID $($validState.Process.Id))."
     Write-Host $pageUrl
+    openPageIfRequested
     exit 0
 }
 
@@ -118,6 +173,7 @@ if (testHealthyPreview) {
     writeState $adopted $Port
     Write-Host "Adopted existing TroubleshootJS preview (PID $($adopted.Id))."
     Write-Host $pageUrl
+    openPageIfRequested
     exit 0
 }
 
@@ -136,6 +192,7 @@ do {
     if (testHealthyPreview) {
         Write-Host "TroubleshootJS preview started (PID $($process.Id))."
         Write-Host $pageUrl
+        openPageIfRequested
         exit 0
     }
     Start-Sleep -Milliseconds 200

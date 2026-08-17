@@ -820,3 +820,44 @@ three-terminal future part's specification/nameplate separation, stable part
 identity, runtime inventory lifecycle, terminal/pad identity, CircuitJS
 backing, capability discovery, footprint provider, and render provider.
 No capacitor implementation or Task 36 behavior belongs to this boundary.
+
+## Task 35(A) Quick Play session and completion boundary
+
+Quick Play is an additive player route selected by `tsjQuickPlay=true`. The
+small `QuickPlaySession` seam owns one `QuickPlaySelection`, and
+`QuickPlaySelector` obtains exactly a family choice and a fresh generator seed
+from its selection source. `QuickPlayFamilyRegistry` is the normal-player
+eligibility boundary for exactly `LED_INDICATOR`,
+`DIODE_PROTECTED_INDICATOR`, and `PARALLEL_DUAL_INDICATOR`. It delegates the
+selected seed (from the currently validated `{0, 2, 3}` seed envelope) to the
+existing deterministic family generator; it does not
+randomize topology, values, faults, layout, or measurements itself. Normal
+selection calls the diode generator's normal `generate` path, never the
+developer-only diode-short generator.
+
+The session and its generated board are page-owned state. A full reload of the
+Quick Play URL constructs a new selector/session, board, physical runtime,
+CircuitJS graph, probes, inventory, and challenge controller, so the next
+selection does not reuse prior physical modifications, damage, or completion
+state. The selected family and seed are available only through a developer
+verification attribute/getter; normal UI shows the real PCB, service complaint,
+and workbench without fault, answer, specification, rating, stress, or damage
+metadata.
+
+Route precedence remains explicit: `tsjFixture` and `tsjChallenge` routes are
+resolved before Quick Play, and their existing family/seed behavior is
+unchanged. Quick Play therefore cannot replace an explicit challenge, fixture,
+or developer verification route. The focused developer verifier injects its
+selection source so selector coverage is deterministic rather than
+probabilistic.
+
+`PcbWorkbenchController` adds `Finish Job` only when the active installed
+challenge came from Quick Play. The button is disabled while the generic
+challenge controller is preparing. Its action calls
+`GeneratedChallengeController.finishJob()`, which checks the existing generic
+`GeneratedRepairStatus` contract against the live solver-backed board. A failed
+or degraded check leaves the same board and reports only
+`Functional check failed. Continue troubleshooting.`. A correctly restored
+board crosses the existing generic completion boundary and then reloads the
+Quick Play URL for a clean next session. Stock CircuitJS, explicit generated
+routes, and arbitrary developer routes do not receive this control.

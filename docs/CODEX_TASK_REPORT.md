@@ -1,6 +1,162 @@
 # Task 35 — Generalized Physical Part Specifications
 
-## Status
+## Task 35(A) — Quick Play / Playable Challenge Loop
+
+**Status:** Complete — primary architect `FINAL PASS`.
+
+### Implementation summary
+
+Task 35(A) adds the root `Start TroubleshootJS.cmd` player launcher, minimal
+Quick Play preview options, a page-owned Quick Play selector/registry/session,
+the Quick Play-only `Finish Job` control, and focused browser/verifier coverage.
+Quick Play selects only the existing LED, diode-protected-indicator, and
+parallel dual-indicator normal-player families. Selection entropy chooses a
+family and one of the currently validated deterministic generator seeds
+`0/2/3`; the selected seed is passed unchanged to the existing family
+generator. The developer-only diode-short forcing route is not used.
+
+The Finish Job action remains disabled during preparation, uses the existing
+solver-backed generic repair status, leaves an unrepaired board unchanged with
+neutral feedback, and reloads the Quick Play URL after correct completion so a
+new session owns fresh board, graph, physical, probe, inventory, damage, and
+completion state.
+
+### Architecture decisions
+
+- `QuickPlayFamilyRegistry` is the eligibility and deterministic-generator
+  boundary; `QuickPlaySelector` owns only family/seed selection; and
+  `QuickPlaySession` owns one page lifetime. The injected random source makes
+  focused verification deterministic.
+- Explicit fixture/challenge routes remain ahead of Quick Play and preserve
+  their existing behavior. The Quick Play route is additive and does not
+  change stock CircuitJS or arbitrary developer routes.
+- `GeneratedChallengeController.finishJob()` checks only the existing generic
+  `GeneratedRepairStatus` contract. No catalog ID, fault metadata, expected
+  part, value, family answer key, stress, or rating is consulted by the player
+  control.
+- Quick Play is classified with generated routes during startup so the async
+  default CircuitJS setup-list load cannot overwrite the generated PCB. The
+  only additional solver lifecycle work is a normal CircuitJS update after the
+  Quick Play fault mutation, ensuring the faulted phase is validated before
+  the player sees the workbench.
+
+### Closed targeted validation set and rationale
+
+The closed set was defined before final implementation/review:
+
+- `& .\scripts\build.ps1 -JavaHome .tools\jdk8-download\jdk8u502-b07 -Target Compile -Style OBF`
+  — final primary JDK 8/GWT production build; all five permutations compiled
+  and linked; PASS.
+- `& .\scripts\verify-browser.ps1 -QuickPlay -TimeoutSeconds 90 -EvidenceDirectory .\docs\task-evidence\task-35A`
+  — PASS. Its deterministic route uses `tsjQuickPlayTestSeed=3` and verifies
+  eligible-family registry, seed-to-generator identity, distinct generated
+  sessions/boards with fresh physical and modification state, explicit-route
+  precedence, unrepaired Finish Job refusal through `CirSim`, correct repair
+  followed by the same Quick Play finish boundary, and the corresponding
+  developer-only report.
+- The same corrected Quick Play verifier was repeated ten times after the
+  randomized route exposed an existing generator seed envelope; all ten
+  correction runs passed, and the final compatibility-default adjustment was
+  followed by one additional full Quick Play pass.
+- `& .\scripts\verify-browser.ps1 -Seeds 3 -Route challenge -TimeoutSeconds 60`,
+  `& .\scripts\verify-browser.ps1 -Diode -Seeds 3 -TimeoutSeconds 60`, and
+  `& .\scripts\verify-browser.ps1 -Parallel -Seeds 3 -TimeoutSeconds 60` —
+  one representative explicit LED, diode, and parallel smoke; all passed.
+- PowerShell parser checks for `scripts/start-preview.ps1`,
+  `scripts/verify-browser.ps1`, and `scripts/preview.ps1`, plus static checks
+  for `%~dp0`, `-QuickPlay`, `-BuildIfMissing`, and `-OpenBrowser` in
+  `Start TroubleshootJS.cmd` — all passed.
+- `& .\scripts\start-preview.ps1 -Challenge led -Seed 3` — PASS; existing
+  explicit URL remained `?tsjChallenge=led&seed=3`.
+- Final `git status --short`, `git diff --check`, diff/stat inspection, and
+  untracked-file inspection — PASS; no files were staged.
+- Root launcher static checks, PowerShell parser checks, preview reuse from
+  `C:\Windows`, Quick Play/production bootstrap HTTP reachability, and explicit
+  `-Challenge led -Seed 3` URL preservation — PASS.
+
+This set directly exercises every changed selector/session/Finish Job/launcher
+boundary and the smallest adjacent explicit-route regressions. The historical
+full matrix is intentionally excluded because this bounded change does not
+touch unrelated families or broad CircuitJS behavior.
+
+### Second-review correction evidence
+
+The reload validation was corrected to append a changing query parameter rather
+than a fragment. The focused normal-player check now requires a changed
+`performance.timeOrigin`, absence of a marker written into the prior
+`window`, clean parts/physical state, one Finish Job control, no failure
+feedback, and no developer-only family, seed, or report attributes. It is
+gated on the deterministic finish-success report from the corrected
+CirSim/PcbWorkbench boundary. The final OBF build and focused verifier passed
+after this validation correction; explicit representative smokes also passed.
+
+### Coder and reviewer dispositions; visible Browser evidence
+
+Coder disposition: `COMPLETE` after two bounded correction passes. The first
+correction added deterministic fresh-session and finish-boundary assertions;
+the second corrected the focused verifier's fragment-only navigation to a
+full-document, post-success fresh-page check.
+
+Reviewer disposition: `PASS`. The final reviewer independently inspected the
+actual diff and targeted launcher, route, privacy, completion, scope, and
+fresh-document checks. No unresolved `BLOCKER`, `FOLLOW-UP`, or `BACKLOG`
+finding remained.
+
+Primary architect visible `@Browser` gate, using real visible clicks and
+normal-player controls on the production preview:
+
+- Quick Play opened directly on a real generated PCB with a customer complaint
+  and no diagnosis or answer metadata.
+- Clicking `Finish Job` before repair kept the same board and showed only
+  `Functional check failed. Continue troubleshooting.`.
+- The player powered down the board, selected a visible PCB component, removed
+  it, selected a catalog replacement, installed it through the visible
+  workbench, powered the board back up, and clicked `Finish Job`.
+- Successful completion reloaded Quick Play into a fresh visible PCB with an
+  empty parts tray; previous removed parts and completion feedback were absent.
+- The final visible Browser diagnostic check returned no warning or error
+  entries. Normal UI text exposed no family, seed, fault, answer, rating,
+  stress, damage, or specification diagnostics.
+
+Visible evidence is preserved at:
+`docs/task-evidence/task-35A/quick-play-browser-initial.png`,
+`quick-play-browser-failed.png`, and `quick-play-browser-fresh.png`.
+Supplemental headless verifier evidence remains at
+`docs/task-evidence/task-35A/quick-play-initial.png`.
+
+### Known limitations and follow-ups
+
+- The current deterministic family generators support a validated Quick Play
+  seed envelope of `0/2/3`; broad arbitrary-seed generation remains future
+  generator work.
+- Automated coverage verifies the CirSim/PcbWorkbench-facing boundary and
+  full-document fresh-page state; the visible Browser gate supplies the actual
+  player interaction evidence.
+- The detached preview remains a local production preview. Task 36, menus,
+  scoring/economy, save/share, and public deployment are out of scope.
+
+### Next milestone and suggested commit message
+
+Task 36 — Capacitor Foundation and RC Family is the next eligible milestone;
+it was identified only and was not started. Suggested commit message:
+`Task 35(A): add quick play loop`
+
+### Final handoff
+
+Primary architect disposition: `FINAL PASS`. The actual implementation diff,
+targeted validation evidence, and final reviewer `PASS` were independently
+inspected. The final repository checks are `git diff --check`, intended-file
+staging only, and `git diff --cached --check`; no push is performed.
+
+Commit message: `Task 35(A): add quick play loop`
+
+After this commit, work stops. Task 36 is identified as next but is not
+started by Task 35(A).
+
+## Prior Task 35 status
+
+The following historical status applies only to Task 35; the completed
+Task 35(A) status is recorded above.
 
 Complete. Primary architect disposition: `FINAL PASS`. Task 36 was not
 started. No push was performed.

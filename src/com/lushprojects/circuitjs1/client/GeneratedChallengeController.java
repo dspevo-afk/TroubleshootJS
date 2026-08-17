@@ -9,15 +9,22 @@ class GeneratedChallengeController {
     private final GeneratedFaultController faults;
     private final GeneratedChallengeLifecycleEvidence lifecycleEvidence =
         new GeneratedChallengeLifecycleEvidence();
+    private final boolean finishJobRequired;
     private boolean developerVerificationScope;
     private GeneratedChallengeState state = GeneratedChallengeState.PREPARING_HEALTHY;
     private GeneratedScenario<GeneratedObservedBehavior> scenario;
 
     GeneratedChallengeController(CirSim sim, GeneratedBoardInstance instance) {
+        this(sim, instance, false);
+    }
+
+    GeneratedChallengeController(CirSim sim, GeneratedBoardInstance instance,
+            boolean finishJobRequired) {
         if (instance.getChallengeDefinition() == null)
             throw new IllegalArgumentException("Generated challenge requires a definition");
         this.sim = sim;
         this.instance = instance;
+        this.finishJobRequired = finishJobRequired;
         definition = instance.getChallengeDefinition();
         validateDefinition();
         faults = new GeneratedFaultController(sim, instance, definition.getFaultBinding());
@@ -34,6 +41,8 @@ class GeneratedChallengeController {
             lifecycleEvidence.healthyFamilyValidated = true;
             state = GeneratedChallengeState.PREPARING_FAULTED;
             faults.apply();
+            if (sim.isQuickPlayMode())
+                sim.updateCircuit();
             lifecycleEvidence.selectedFaultApplied = faults.isApplied();
             return;
         }
@@ -89,13 +98,26 @@ class GeneratedChallengeController {
             definition.getBehaviorContract().verifyFaulted(instance,
                 sim.getBoardModificationController(),
                 BoardPowerState.POWERED);
-        if (definition.getBehaviorContract().getRepairStatus(instance,
+        if (!finishJobRequired && definition.getBehaviorContract().getRepairStatus(instance,
             sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
-                sim.activeMeasurementOverlay) == GeneratedRepairStatus.CORRECTLY_RESTORED) {
+            sim.activeMeasurementOverlay) == GeneratedRepairStatus.CORRECTLY_RESTORED) {
             state = GeneratedChallengeState.COMPLETED;
             sim.refreshBoardModificationControls();
             sim.repaint();
         }
+    }
+
+    boolean finishJob() {
+        if (!isReady())
+            return false;
+        if (definition.getBehaviorContract().getRepairStatus(instance,
+                sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
+                sim.activeMeasurementOverlay) != GeneratedRepairStatus.CORRECTLY_RESTORED)
+            return false;
+        state = GeneratedChallengeState.COMPLETED;
+        sim.refreshBoardModificationControls();
+        sim.repaint();
+        return true;
     }
 
     void beginDeveloperVerificationScope() { developerVerificationScope = true; }
