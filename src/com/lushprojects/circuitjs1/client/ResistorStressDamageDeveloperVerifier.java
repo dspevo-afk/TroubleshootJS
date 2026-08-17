@@ -14,12 +14,16 @@ class ResistorStressDamageDeveloperVerifier {
             instance.getFaultBinding().getFault().getId() + "/" +
             instance.getFaultBinding().getFault().getType());
 
-        LedIndicatorFamilyState family = LedIndicatorFamilyState.require(instance);
+        ReplaceableResistorBoardCapability family =
+            ReplaceableResistorBoardCapability.require(instance);
         ResistorSlotController slots = sim.getResistorSlotController();
         ResistorStressDamageSystem damage = sim.getResistorStressDamageSystem();
-        PhysicalResistorPart original = family.getResistorInventory().get("R1_ORIGINAL");
+        PhysicalResistorPart original = family.getInventory().get("R1_ORIGINAL");
         String originalId = original.getId();
         GeneratedFaultBinding originalFault = instance.getFaultBinding();
+        require(original.ownsGeneratedFault(originalFault) &&
+                GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, "R1"),
+            "Generated R1 fault was not owned by the installed original physical part");
         StringBuilder report = new StringBuilder();
         challenge.beginDeveloperVerificationScope();
         try {
@@ -27,10 +31,10 @@ class ResistorStressDamageDeveloperVerifier {
             settle(sim);
             require(slots.removeInstalledPart(), "Could not remove original for stress proof");
 
-            ResistorCatalogEntry severeCatalog = family.getResistorCatalog().get("R_CATALOG_220");
+            ResistorCatalogEntry severeCatalog = family.getCatalog().get("R_CATALOG_220");
             require(slots.installNewFromCatalog(severeCatalog.getId()),
                 "Could not install severe lower-value replacement");
-            PhysicalResistorPart severe = family.getR1Slot().getInstalledPart();
+            PhysicalResistorPart severe = family.getSlot().getInstalledPart();
             require(severe != null && severe != original && severe.getId().equals("R1_CATALOG_PART_0"),
                 "Severe replacement did not acquire a distinct physical identity");
             requireAuxiliaryBinding(instance, severe, "catalog severe install");
@@ -69,6 +73,9 @@ class ResistorStressDamageDeveloperVerifier {
                 original.getLocation() == ResistorPartLocation.LOOSE && original.isFaulted() &&
                 instance.getFaultBinding() == originalFault,
                 "Secondary failure did not preserve identity/original-fault ownership or LED behavior");
+            require(!severe.ownsGeneratedFault(originalFault) &&
+                    !GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, "R1"),
+                "Secondary-open replacement was mistaken for the installed original-fault owner");
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
             require(slots.removeInstalledPart() && severe.getLocation() == ResistorPartLocation.LOOSE &&
                 severe.getSecondaryOpenPath().isOpen(),
@@ -106,6 +113,8 @@ class ResistorStressDamageDeveloperVerifier {
                 "Failed severe part could not be removed");
             require(slots.install(original.getId()) && original.getLocation() == ResistorPartLocation.INSTALLED,
                 "Catalog-to-original installation did not restore the original physical part");
+            require(GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, "R1"),
+                "Reinstalled original physical part did not restore generated-fault ownership");
             requireAuxiliaryBinding(instance, original, "catalog-to-original install");
             require(!instance.getComponentBindings().isElementBoundToComponent("R1",
                 severe.getSecondaryOpenPath().getSimulationElement()),
@@ -114,7 +123,7 @@ class ResistorStressDamageDeveloperVerifier {
                 "Original part could not be removed after catalog-to-original binding check");
             require(slots.installNewFromCatalog("R_CATALOG_330"),
                 "Could not install modest-overload catalog replacement");
-            PhysicalResistorPart mild = family.getR1Slot().getInstalledPart();
+            PhysicalResistorPart mild = family.getSlot().getInstalledPart();
             sim.setBoardPowerState(BoardPowerState.POWERED);
             settle(sim);
             damage.refreshSolvedMeasurements();
@@ -148,7 +157,7 @@ class ResistorStressDamageDeveloperVerifier {
             require(slots.removeInstalledPart(), "Could not remove mild part before correct replacement");
             require(slots.installNewFromCatalog("R_CATALOG_1000"),
                 "Could not install correct catalog replacement");
-            PhysicalResistorPart correct = family.getR1Slot().getInstalledPart();
+            PhysicalResistorPart correct = family.getSlot().getInstalledPart();
             String correctId = correct.getId();
             ResistorElm correctElement = correct.getElement();
             sim.setBoardPowerState(BoardPowerState.POWERED);
@@ -184,10 +193,10 @@ class ResistorStressDamageDeveloperVerifier {
             require(correctState.getAccumulatedDamage() == 0 && !correctState.isFailed() &&
                 !correct.getSecondaryOpenPath().isOpen() && original.isFaulted() &&
                 original.getLocation() == ResistorPartLocation.LOOSE &&
-                correct.getRatedWattage() == family.getResistorCatalog().get("R_CATALOG_1000")
+                correct.getRatedWattage() == family.getCatalog().get("R_CATALOG_1000")
                     .getNameplate().getRatedWattage(),
                 "Reset did not deterministically clear secondary damage while preserving original fault");
-            report.append(";D{poweredOffPaused=true,activeMeterPaused=true};F{resetDamage=0,failedPartReset=true,catalogToOriginalAuxiliary=true,originalFaultOwned=true,ratingsReproduced=true}");
+            report.append(";D{poweredOffPaused=true,activeMeterPaused=true};F{resetDamage=0,failedPartReset=true,catalogToOriginalAuxiliary=true,originalFaultOwned=true,secondaryFailureNotOriginalFault=true,ratingsReproduced=true}");
         } finally {
             challenge.endDeveloperVerificationScope();
         }

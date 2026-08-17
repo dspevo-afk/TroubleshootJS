@@ -19,6 +19,7 @@ param(
     [switch]$StressDamage,
     [switch]$StressDamageNormalPlayer,
     [switch]$Layout,
+    [switch]$Architecture,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -27,35 +28,108 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $CdpReceiveTimeoutMilliseconds = 30000
+$CdpSendTimeoutMilliseconds = 5000
 
 function sendCdp($socket, [int]$id, [string]$method, $parameters) {
     $message = @{ id = $id; method = $method; params = $parameters } | ConvertTo-Json -Compress -Depth 8
     $bytes = [Text.Encoding]::UTF8.GetBytes($message)
-    $socket.SendAsync((New-Object ArraySegment[byte] -ArgumentList (,$bytes)),
-        [Net.WebSockets.WebSocketMessageType]::Text, $true, [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+    $sendTimeout = New-Object Threading.CancellationTokenSource $CdpSendTimeoutMilliseconds
+    try {
+        $socket.SendAsync((New-Object ArraySegment[byte] -ArgumentList (,$bytes)),
+            [Net.WebSockets.WebSocketMessageType]::Text, $true,
+            $sendTimeout.Token).GetAwaiter().GetResult()
+    } finally {
+        $sendTimeout.Dispose()
+    }
+}
+
+function getEdgeProcessSnapshot() {
+    try {
+        return @(Get-CimInstance Win32_Process -Filter "Name = 'msedge.exe'" -ErrorAction Stop)
+    } catch {
+        throw "Could not query Edge processes: $($_.Exception.Message)"
+    }
+}
+
+function getEdgeProcessesForProfile($browser, [string]$profile) {
+    if (-not $profile) { throw 'Temporary browser profile was not supplied' }
+    $processes = @(getEdgeProcessSnapshot)
+    $unquotedMarker = '--user-data-dir=' + $profile
+    $quotedMarker = '--user-data-dir="' + $profile + '"'
+    $ids = @{}
+    $pending = New-Object Collections.Generic.Queue[int]
+    if ($null -ne $browser) {
+        try { $pending.Enqueue([int]$browser.Id) } catch {
+            throw "Could not read browser process ID: $($_.Exception.Message)"
+        }
+    }
+    foreach ($process in $processes) {
+        $commandLine = [string]$process.CommandLine
+        if ($commandLine -and
+                ($commandLine.IndexOf($unquotedMarker, [StringComparison]::OrdinalIgnoreCase) -ge 0 -or
+                 $commandLine.IndexOf($quotedMarker, [StringComparison]::OrdinalIgnoreCase) -ge 0)) {
+            $pending.Enqueue([int]$process.ProcessId)
+        }
+    }
+    while ($pending.Count -gt 0) {
+        $id = $pending.Dequeue()
+        if ($ids.ContainsKey($id)) { continue }
+        $ids[$id] = $true
+        foreach ($process in $processes) {
+            if ([int]$process.ParentProcessId -eq $id) {
+                $pending.Enqueue([int]$process.ProcessId)
+            }
+        }
+    }
+    return @($processes | Where-Object { $ids.ContainsKey([int]$_.ProcessId) })
 }
 
 function cleanupBrowser($browser, $socket, [string]$profile) {
+    if ($null -eq $browser -and $null -eq $socket -and
+            -not (Test-Path -LiteralPath $profile -ErrorAction Stop)) { return }
     if ($null -ne $socket) {
-        try { [void](sendCdp $socket 2147483000 'Browser.close' @{}) } catch { }
-        $socket.Dispose()
+        try { $socket.Abort() } catch { throw "Could not close browser debugging socket: $($_.Exception.Message)" }
+        try { $socket.Dispose() } catch { throw "Could not dispose browser debugging socket: $($_.Exception.Message)" }
     }
-    if (-not $browser.WaitForExit(5000)) {
-        Stop-Process -Id $browser.Id -Force -ErrorAction SilentlyContinue
-        [void]$browser.WaitForExit(5000)
+    if (-not $profile) { throw 'Temporary browser profile was not supplied' }
+    $processDeadline = [DateTime]::UtcNow.AddSeconds(15)
+    do {
+        $running = @(getEdgeProcessesForProfile $browser $profile)
+        if ($running.Count -eq 0) { break }
+        foreach ($process in $running) {
+            try {
+                Stop-Process -Id ([int]$process.ProcessId) -Force -ErrorAction Stop
+            } catch {
+                $stillPresent = @(getEdgeProcessesForProfile $browser $profile |
+                    Where-Object { [int]$_.ProcessId -eq [int]$process.ProcessId })
+                if ($stillPresent.Count -ne 0) {
+                    throw "Could not terminate Edge process $($process.ProcessId): $($_.Exception.Message)"
+                }
+            }
+        }
+        if ([DateTime]::UtcNow -ge $processDeadline) {
+            throw "Timed out terminating Edge descendants for temporary profile '$profile'"
+        }
+        Start-Sleep -Milliseconds 100
+    } while ([DateTime]::UtcNow -lt $processDeadline)
+    $remaining = @(getEdgeProcessesForProfile $browser $profile)
+    if ($remaining.Count -ne 0) {
+        throw "Timed out terminating Edge descendants for temporary profile '$profile'"
     }
-    $cleanupError = $null
-    for ($attempt = 0; $attempt -lt 10 -and (Test-Path -LiteralPath $profile); $attempt++) {
+    $removeError = $null
+    for ($attempt = 0; $attempt -lt 25; $attempt++) {
+        if (-not (Test-Path -LiteralPath $profile -ErrorAction Stop)) { break }
         try {
             Remove-Item -LiteralPath $profile -Recurse -Force -ErrorAction Stop
-            $cleanupError = $null
+            $removeError = $null
         } catch {
-            $cleanupError = $_.Exception.Message
+            $removeError = $_.Exception.Message
+            if ($attempt -eq 24) { break }
             Start-Sleep -Milliseconds 200
         }
     }
-    if (Test-Path -LiteralPath $profile) {
-        Write-Warning "Could not remove temporary browser profile '$profile': $cleanupError"
+    if (Test-Path -LiteralPath $profile -ErrorAction Stop) {
+        throw "Could not remove temporary browser profile '$profile': $removeError"
     }
 }
 
@@ -158,6 +232,9 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory ("parallel-seed-" + $Matches[1] + ".png")) ([ref]$failures)
         }
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
         Write-Host "PASS $name"
         $success = $true
     } catch {
@@ -529,6 +606,9 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
             throw "faulted original effective resistance was unexpected: $originalReading"
         }
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
         Write-Host "PASS normal-player seed=3 forward=$forward reverse=$reverse original=$originalReading"
         return $true
     } catch {
@@ -627,8 +707,14 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
         clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
         Write-Host 'PARALLEL PLAYER DC mode exited'
         clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
-        Write-Host 'PARALLEL PLAYER power off'
-        clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
+        Write-Host 'PARALLEL PLAYER power on'
+        $currentR1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
+        if ($null -eq $currentR1) { throw 'parallel current R1 geometry was unavailable after power transition' }
+        clickPoint $socket ([ref]$nextId) $currentR1 'left' ([ref]$failures)
+        $currentR1Panel = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[1].innerText" ([ref]$failures)
+        if ($currentR1Panel -notmatch '(?m)^R1$' -or $currentR1Panel -notmatch 'Remove component') {
+            throw "parallel post-power contextual panel did not identify R1 with expected action: $currentR1Panel"
+        }
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'parallel R1 component controls'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')" $deadline ([ref]$failures) 'parallel faulted original tray part'
@@ -654,6 +740,9 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'parallel-repaired.png') ([ref]$failures)
         }
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
         Write-Host 'PASS parallel-normal-player seed=3 supply=solver-backed repair=verified'
         return $true
     } catch {
@@ -727,6 +816,9 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory $initialEvidenceName) ([ref]$failures)
         }
         if ($PersistentPreviewEvidence) {
+            cleanupBrowser $browser $socket $profile
+            $socket = $null
+            $browser = $null
             Write-Host 'PASS persistent-preview fresh diode normal-player load'
             return $true
         }
@@ -751,6 +843,7 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
         clickPoint $socket ([ref]$nextId) $d1Anode 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'installed open D1 reverse OL'
         clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const button=[...document.querySelectorAll('button')].find(x=>x.innerText.trim()==='DIODE');return !!button&&!button.className.includes('chsel');})()" $deadline ([ref]$failures) 'diode mode exit cleanup'
         clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('D1_ORIGINAL - Generic silicon diode')" $deadline ([ref]$failures) 'loose original diode'
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:D1_ORIGINAL:0']&&!!window.__tsjPcbGeometry.points['loose:D1_ORIGINAL:1']" $deadline ([ref]$failures) 'loose original diode geometry'
@@ -793,6 +886,9 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
         clickPoint $socket ([ref]$nextId) $originalCathode 'right' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'original remains OL'
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
         Write-Host "PASS diode-normal-player seed=3 healthy-forward=$forward reverse=OL original=OL"
         return $true
     } catch {
@@ -890,6 +986,9 @@ function verifyWrongRepairNormalPlayer([string]$url, [int]$debugPort) {
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'completed.png') ([ref]$failures)
         }
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
         Write-Host 'PASS wrong-repair-normal-player seed=3 2200-ohm-degraded 1000-ohm-restored'
         return $true
     } catch {
@@ -970,6 +1069,10 @@ function verifyStressDamageNormalPlayer([string]$url, [int]$debugPort) {
         if (-not ($failureUi.complaint -and $failureUi.value -and $failureUi.power) -or $failureUi.diagnostic -or $failureUi.complete) {
             throw "secondary-failure player UI leaked diagnostics or completed unexpectedly: $($failureUi | ConvertTo-Json -Compress)"
         }
+        if ($failures.Count -gt 0) {
+            throw ("secondary-failure normal-player path emitted console/page exceptions: " +
+                ($failures -join '; '))
+        }
         captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $evidence 'secondary-failure.png') ([ref]$failures)
 
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'stress power-off before repair'
@@ -980,7 +1083,10 @@ function verifyStressDamageNormalPlayer([string]$url, [int]$debugPort) {
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'stress natural solver-backed repair completion'
         captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $evidence 'correct-restored.png') ([ref]$failures)
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
-        Write-Host 'PASS stress-damage-normal-player seed=3 severe-open natural-behavior no-diagnostic-ui'
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
+        Write-Host 'PASS stress-damage-normal-player seed=3 severe-open natural-behavior no-diagnostic-ui no-console-or-page-exceptions'
         return $true
     } catch {
         Write-Host "FAIL stress-damage-normal-player seed=3 - $($_.Exception.Message)"
@@ -1035,6 +1141,9 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory $initialEvidenceName) ([ref]$failures)
         }
         if ($PersistentPreviewEvidence) {
+            cleanupBrowser $browser $socket $profile
+            $socket = $null
+            $browser = $null
             Write-Host 'PASS persistent-preview fresh normal-player load'
             return $true
         }
@@ -1113,6 +1222,9 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')&&document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')&&!document.body.innerText.includes('No removed parts')" $deadline ([ref]$failures) 'separate original and replacement LED state'
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')&&document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')" $deadline ([ref]$failures) 'separate original and replacement LEDs'
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
         Write-Host "PASS led-normal-player seed=3 forward=$forward reverse=OL identities=separate"
         return $true
     } catch {
@@ -1133,6 +1245,10 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
 if (-not (Test-Path $BrowserPath -PathType Leaf)) { throw "Browser not found: $BrowserPath" }
 if ($Layout) {
     if (-not (verifyRoute "procedural-layout" "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyLayout=true&tsjVerifyGeometry=true" 'PASS:layout' 9440)) { exit 1 }
+    exit 0
+}
+if ($Architecture) {
+    if (-not (verifyRoute 'architecture seams' "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyArchitecture=true" 'PASS:architecture' 9494)) { exit 1 }
     exit 0
 }
 if ($WrongRepair) {

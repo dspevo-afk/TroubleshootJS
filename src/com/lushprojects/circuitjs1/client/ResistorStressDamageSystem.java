@@ -12,19 +12,19 @@ class ResistorStressDamageSystem {
     private static final double FAILURE_DAMAGE = 1.0;
 
     private final CirSim sim;
-    private final ReplaceableResistorFamilyState family;
+    private final ReplaceableResistorBoardCapability capability;
     private final HashMap<String, ResistorStressState> states =
         new HashMap<String, ResistorStressState>();
     private double lastSimulationTime;
 
-    ResistorStressDamageSystem(CirSim sim, ReplaceableResistorFamilyState family,
+    ResistorStressDamageSystem(CirSim sim, ReplaceableResistorBoardCapability capability,
             double initialSimulationTime) {
-        if (sim == null || family == null)
+        if (sim == null || capability == null)
             throw new IllegalArgumentException("Missing resistor stress owner");
         this.sim = sim;
-        this.family = family;
+        this.capability = capability;
         this.lastSimulationTime = initialSimulationTime;
-        for (PhysicalResistorPart part : family.getResistorInventory().getAll())
+        for (PhysicalResistorPart part : capability.getInventory().getAll())
             register(part);
     }
 
@@ -100,11 +100,11 @@ class ResistorStressDamageSystem {
     }
 
     private void integrate(double seconds) {
-        ReplaceableComponentSlot slot = family.getReplaceableResistorSlot();
+        ReplaceableComponentSlot slot = capability.getSlot();
         PhysicalResistorPart installed = slot.isEmpty() ? null : slot.getInstalledPart();
         for (ResistorStressState state : states.values()) {
             PhysicalResistorPart part = state.getPart();
-            if (part != installed || part.getLocation() != ResistorPartLocation.INSTALLED)
+            if (part != installed || !part.isInstalled())
                 continue;
             double power = Math.abs(part.getElement().getPower());
             if (Double.isNaN(power) || Double.isInfinite(power))
@@ -129,9 +129,9 @@ class ResistorStressDamageSystem {
     }
 
     private boolean isInstalled(PhysicalResistorPart part) {
-        ReplaceableComponentSlot slot = family.getReplaceableResistorSlot();
+        ReplaceableComponentSlot slot = capability.getSlot();
         return !slot.isEmpty() && slot.getInstalledPart() == part &&
-            part.getLocation() == ResistorPartLocation.INSTALLED;
+            part.isInstalled();
     }
 
     private boolean isBoardPowered() {

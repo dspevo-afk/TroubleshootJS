@@ -1,6 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
-final class LedNameplate {
+final class LedNameplate implements PhysicalSpecification {
     private final String componentId;
     private final String displayName;
     private final String modelName;
@@ -23,6 +23,7 @@ final class LedNameplate {
     }
 
     String getComponentId() { return componentId; }
+    public String getSpecificationId() { return componentId; }
     String getDisplayName() { return displayName; }
     String getModelName() { return modelName; }
     double getRed() { return red; }

@@ -111,10 +111,20 @@ class PcbLayoutDeveloperVerifier {
         for (String componentId : board.getComponentIds())
             require(layout.getSilkscreenLabel("component:" + componentId) != null,
                 "component label is missing: " + componentId);
-        require(layout.getSilkscreenLabel("net:J1.1").getTargetPadId().equals("J1.1"),
-            "positive connector label is not tied to J1.1");
-        require(layout.getSilkscreenLabel("net:J1.2").getTargetPadId().equals("J1.2"),
-            "ground connector label is not tied to J1.2");
+        for (String powerInputId : board.getPowerInputIds()) {
+            ExternalBoardPowerInput input = board.getPowerInput(powerInputId);
+            verifyPowerLabel(layout, board, input.getPositivePadId());
+            verifyPowerLabel(layout, board, input.getReturnPadId());
+        }
+    }
+
+    private static void verifyPowerLabel(PcbBoardLayout layout, TroubleshootBoard board,
+            String padId) {
+        BoardPad pad = board.getPad(padId);
+        require(pad != null, "power-input label references an unknown logical pad: " + padId);
+        PcbSilkscreenLabel label = layout.getSilkscreenLabel("net:" + padId);
+        require(label != null && padId.equals(label.getTargetPadId()),
+            "power-input label is not tied to its logical pad: " + padId);
     }
 
     private static void verifySeedThreeLedEndpointRegression(PcbBoardLayout layout) {

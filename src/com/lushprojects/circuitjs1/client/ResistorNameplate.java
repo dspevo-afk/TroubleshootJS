@@ -1,6 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
-class ResistorNameplate {
+class ResistorNameplate implements PhysicalSpecification {
     static final double DEFAULT_RATED_WATTAGE = .25;
     private final String componentId;
     private final double nominalResistanceOhms;
@@ -24,6 +24,8 @@ class ResistorNameplate {
     }
 
     String getComponentId() { return componentId; }
+    public String getSpecificationId() { return componentId; }
+    String getDisplayName() { return getDisplayValue(); }
     double getNominalResistanceOhms() { return nominalResistanceOhms; }
     double getTolerancePercent() { return tolerancePercent; }
     double getRatedWattage() { return ratedWattage; }

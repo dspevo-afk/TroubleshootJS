@@ -9,12 +9,14 @@ class DiodeFamilyDeveloperVerifier {
         require(instance != null && DiodeProtectedIndicatorGenerator.FAMILY_ID.equals(
             instance.getCircuitFamilyId()) && challenge != null && challenge.isReady(),
             "Diode verification requires a ready diode challenge");
+        WorkbenchCapabilityDeveloperVerifier.verifyRegisteredProviders(sim);
         verifyScenario(sim, instance, challenge);
-        DiodeProtectedIndicatorFamilyState state =
-            DiodeProtectedIndicatorFamilyState.require(instance);
+        ReplaceableDiodeBoardCapability state =
+            ReplaceableDiodeBoardCapability.require(instance);
         require(instance.getBoard().getPad("D1.A") != null &&
             instance.getBoard().getPad("D1.K") != null &&
-            instance.getPhysicalSpecifications().getDiodeNameplate("D1") != null,
+            StandardPhysicalDefinitionProviders.DIODE.find(
+                instance.getPhysicalSpecifications(), "D1") != null,
             "D1 logical identity or nameplate is missing");
         require(state.getCatalog().getEntries().size() == 2,
             "Diode catalog choices changed unexpectedly");
@@ -42,7 +44,7 @@ class DiodeFamilyDeveloperVerifier {
 
         require(sim.getDiodeSlotController().installNewFromCatalog(DiodeReplacementCatalog.REVERSED),
             "Could not install reversed diode");
-        PhysicalDiodePart reversed = state.getD1Slot().getInstalledPart();
+        PhysicalDiodePart reversed = state.getSlot().getInstalledPart();
         require(reversed.isReversedInstallation(), "Reversed catalog diode lost orientation");
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
@@ -57,7 +59,7 @@ class DiodeFamilyDeveloperVerifier {
 
         require(sim.getDiodeSlotController().installNewFromCatalog(DiodeReplacementCatalog.CORRECT),
             "Could not install healthy diode");
-        PhysicalDiodePart healthy = state.getD1Slot().getInstalledPart();
+        PhysicalDiodePart healthy = state.getSlot().getInstalledPart();
         require(healthy != original && healthy != reversed &&
             !healthy.getId().equals(original.getId()) && !healthy.getId().equals(reversed.getId()),
             "Repeated diode acquisition did not create distinct physical parts");
@@ -230,18 +232,18 @@ class DiodeFamilyDeveloperVerifier {
     }
 
     private static void verifyTopology(CirSim sim, GeneratedBoardInstance instance) {
-        DiodeProtectedIndicatorFamilyState state =
-            DiodeProtectedIndicatorFamilyState.require(instance);
+        ReplaceableDiodeBoardCapability state =
+            ReplaceableDiodeBoardCapability.require(instance);
         int installed = 0;
         for (PhysicalDiodePart part : state.getInventory().getAll()) {
             if (part.getLocation() == DiodePartLocation.INSTALLED)
                 installed++;
-            for (CircuitElm element : part.getBackingElements())
+            for (CircuitElm element : part.getElectricalBacking().getCircuitElements())
                 require(count(sim.elmList, element) == 1,
                     "Diode backing missing or duplicated: " + part.getId());
         }
-        require((state.getD1Slot().isEmpty() && installed == 0) ||
-            (!state.getD1Slot().isEmpty() && installed == 1),
+        require((state.getSlot().isEmpty() && installed == 0) ||
+            (!state.getSlot().isEmpty() && installed == 1),
             "Diode slot and physical locations disagree");
     }
 

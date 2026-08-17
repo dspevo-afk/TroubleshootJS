@@ -19,12 +19,17 @@ class LedIndicatorGenerator {
         double resistorValue = RESISTOR_VALUES[valueIndex];
         TroubleshootBoard board = createBoard();
         BoardPhysicalSpecifications physicalSpecifications = new BoardPhysicalSpecifications();
-        physicalSpecifications.addResistorNameplate(new ResistorNameplate("R1", resistorValue, 5));
+        physicalSpecifications.addPhysicalDefinition("J1",
+            new BasicPhysicalSpecification("J1_CONNECTOR"),
+            new PhysicalNameplate("J1", "Power input connector"),
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2);
+        StandardPhysicalDefinitionProviders.RESISTOR.add(physicalSpecifications,
+            new ResistorNameplate("R1", resistorValue, 5));
         physicalSpecifications.addPowerInputNameplate(new PowerInputNameplate("VIN_INPUT",
             supplyVoltage));
         LedNameplate ledNameplate = new LedNameplate("LED1", "Generic red LED", "default-led",
             1, 0, 0);
-        physicalSpecifications.addLedNameplate(ledNameplate);
+        StandardPhysicalDefinitionProviders.LED.add(physicalSpecifications, ledNameplate);
 
         DCVoltageElm supply = new DCVoltageElm(160, 320);
         supply.drag(160, 160);
@@ -46,7 +51,6 @@ class LedIndicatorGenerator {
         SwitchElm r1FaultIsolation = new SwitchElm(480, 240);
         r1FaultIsolation.drag(512, 240);
 
-        ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory();
         ResistorReplacementCatalog resistorCatalog = new ResistorReplacementCatalog();
         WireElm r1Lead2Link = new WireElm(512, 240);
         r1Lead2Link.drag(560, 160);
@@ -122,22 +126,39 @@ class LedIndicatorGenerator {
         ResistorSecondaryOpenPath originalOpenPath = ResistorSecondaryOpenPath.create(
             resistorOpenPathUpstream);
         elements.add(originalOpenPath.getSimulationElement());
+        PhysicalBoardRuntime physicalRuntime = new PhysicalBoardRuntime(board);
+        ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory(
+            physicalRuntime, "R1_REPLACEMENTS");
+        LedReplacementInventory ledInventory = new LedReplacementInventory(
+            physicalRuntime, "LED1_REPLACEMENTS");
+        PhysicalBoardSlot r1PhysicalSlot = physicalRuntime.createSlot("R1");
+        PhysicalBoardSlot led1PhysicalSlot = physicalRuntime.createSlot("LED1");
+        PhysicalBoardSlot j1PhysicalSlot = physicalRuntime.createSlot("J1");
         PhysicalResistorPart originalR1 = new PhysicalResistorPart("R1_ORIGINAL",
-            new ResistorNameplate("R1_ORIGINAL", resistorValue, 5), resistor,
-            resistorFaultBinding, originalOpenPath, ResistorPartLocation.INSTALLED);
+            StandardPhysicalDefinitionProviders.RESISTOR.require(physicalSpecifications, "R1"),
+            new ResistorNameplate("R1_ORIGINAL", resistorValue, 5),
+            physicalSpecifications.getNameplate("R1"), resistor,
+            resistorFaultBinding, originalOpenPath, ResistorPartLocation.INSTALLED,
+            new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, "R1"));
         componentBindings.bindAuxiliaryComponentElement("R1",
             originalOpenPath.getSimulationElement());
-        LedReplacementInventory ledInventory = new LedReplacementInventory();
         LedReplacementCatalog ledCatalog = new LedReplacementCatalog();
-        PhysicalLedPart originalLed = new PhysicalLedPart("LED1_ORIGINAL", ledNameplate, led,
-            false, LedPartLocation.INSTALLED);
+        PhysicalLedPart originalLed = new PhysicalLedPart("LED1_ORIGINAL", ledNameplate,
+            ledNameplate, physicalSpecifications.getNameplate("LED1"), led, false,
+            LedPartLocation.INSTALLED,
+            new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, "LED1"));
         ledInventory.add(originalLed);
         LedComponentSlot led1Slot = new LedComponentSlot("LED1", ledNameplate, originalLed,
-            ledAnodeLink, ledCathodeLink);
+            ledAnodeLink, ledCathodeLink, led1PhysicalSlot);
         resistorInventory.add(originalR1);
         ReplaceableComponentSlot r1Slot = new ReplaceableComponentSlot("R1",
-            physicalSpecifications.getResistorNameplate("R1"), originalR1, r1Lead1Link,
-            r1Lead2Link);
+            StandardPhysicalDefinitionProviders.RESISTOR.require(physicalSpecifications, "R1"),
+            originalR1, r1Lead1Link,
+            r1Lead2Link, r1PhysicalSlot);
+        physicalRuntime.registerCapability(new ReplaceableResistorBoardCapability(r1Slot,
+            resistorInventory, resistorCatalog));
+        physicalRuntime.registerCapability(new ReplaceableLedBoardCapability(led1Slot,
+            ledInventory, ledCatalog));
         GeneratedChallengeBehaviorContract behaviorContract =
             new GeneratedChallengeBehaviorAdapter(new LedIndicatorGeneratedBoardValidator(),
                 new LedIndicatorFaultValidator(), new LedIndicatorRepairValidator());
@@ -169,6 +190,14 @@ class LedIndicatorGenerator {
         connectionBindings.bind("LED1", "LED1.K", bindings.getEndpoint("LED1.K"),
             originalLed.getTerminalForBoardPad("LED1.K"), ledCathodeLink);
 
+        FixedPhysicalPart<BasicPhysicalSpecification> connector =
+            PhysicalFoundationPartFactory.fromBoardBindings("J1",
+                (BasicPhysicalSpecification) physicalSpecifications.getSpecification("J1"),
+                physicalSpecifications.getNameplate("J1"), PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
+                bindings, connectorFaultSwitch,
+                new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "J1"));
+        j1PhysicalSlot.install(connector);
+
         String description = "Generated LED indicator, seed " + seed + ", " + supplyVoltage +
             " V";
         return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
@@ -177,8 +206,8 @@ class LedIndicatorGenerator {
             PCB_LAYOUT_GENERATOR.generate(board, seed), physicalSpecifications, faultBinding,
             operationalStates, new GeneratedChallengeDefinition("LED_INDICATOR_NO_LIGHT",
                 "LED_INDICATOR", DIRECT_SERIES_VARIANT, seed, scenarios, fault,
-                faultBinding, behaviorContract), new LedIndicatorFamilyState(r1Slot,
-                resistorInventory, resistorCatalog, led1Slot, ledInventory, ledCatalog));
+                faultBinding, behaviorContract), new LedIndicatorFamilyState(),
+            physicalRuntime);
     }
 
     private TroubleshootBoard createBoard() {

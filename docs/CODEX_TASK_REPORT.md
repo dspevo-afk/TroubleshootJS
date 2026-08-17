@@ -1,3 +1,118 @@
+# Task 34(A) — Core Extensibility Hardening and Validation Policy
+
+## Status
+
+Complete. Primary architect disposition: FINAL PASS. All executable subagent
+stage reviews passed, the architect-owned visible Browser gate passed, and no
+push was performed. Task 35 remains the next eligible roadmap milestone and
+was not started.
+
+Final commit message: Task 34(A): harden extensibility boundaries
+
+## Summary
+
+Task 34(A) hardens the physical-part, workbench, PCB-rendering, and instrument
+extension boundaries while preserving CircuitJS as the electrical source of
+truth. The work is staged as:
+
+- Stage A: runtime-owned PhysicalPart, PhysicalBoardSlot, package, terminal,
+  pad/net identity, capability, rating, provenance, failure, and simulation
+  backing contracts.
+- Stage B: capability-owned workbench operations and generic discovery for
+  remove, lift, reconnect, restore, replacement, catalog, and loose
+  inspection.
+- Stage C: provider-owned installed/loose PCB rendering, terminal geometry,
+  hit/selection bounds, polarity/orientation, pads, and probe targets.
+- Stage D: genuinely pluggable InstrumentMode providers with provider-owned
+  measurement, lifecycle, power policy, polarity, cleanup, and dynamic
+  production UI registration.
+
+The implementation preserves family-specific electrical topology and
+validation while removing component-type/reference-ID dispatch from common
+workbench and renderer orchestration. A future-shaped instrument provider is
+registered through the production registry/controller path and is exercised by
+the architecture canary.
+
+## Review and recovery protocol
+
+- Sol Max diagnostic pass produced the staged recovery order A through E and
+  identified the reusable PhysicalPart, slot, capability, render-provider,
+  and InstrumentMode seams.
+- Stage A had three bounded review failures; the user-authorized Sol Max
+  corrections repaired family-owned state, runtime identity/capability
+  ownership, and generated-fault ownership for secondary failures.
+- The main architect then completed the independent visible LED/diode Stage A
+  gate before Stage B began.
+- Stage B, Stage C, and Stage D each received fresh independent reviewer
+  disposition. Stage B PASS, Stage C PASS, and Stage D PASS.
+- The only Stage C finding classified as out of stage was provider-owned
+  rendering before Stage C implementation; it was not used to weaken the
+  Stage A gate.
+- The Stage D reviewer initially found a real production-discovery blocker.
+  A bounded correction added post-construction visible-provider registration
+  and a production-visible canary; the fresh review then returned PASS.
+
+## Architect-owned visible Browser gate
+
+After all executable subagent reviews, the primary architect used the visible
+in-app Browser on fresh seed-3 routes:
+
+- LED route: the board rendered normally with R1 color bands, LED1 body and
+  polarity, copper, pads, J1, and labels in the expected locations. CUA
+  selection of LED1 exposed its type, part, lead identities, and generic
+  component controls. CUA selection of R1 exposed markings and R1.1/R1.2
+  terminal identities. With power off, Lift lead 1, Reconnect lead 1, and
+  Remove component were reachable; the lift/reconnect cycle restored R1
+  identity and the board powered on again.
+- Diode route: the board rendered R1, D1, LED1, copper, pads, J1, and labels.
+  D1 was visibly recognizable with its cathode stripe on the expected side.
+  CUA selection exposed D1.A and D1.K; R1 selection exposed its markings and
+  terminal identities. With power off, Lift lead A, Reconnect lead A, and
+  Remove component were reachable; the lift/reconnect cycle restored D1
+  identity and powered operation.
+- No player-visible private original resistance, rating, stress/damage,
+  injected-fault, or fault-infrastructure information appeared. Current
+  browser diagnostics contained only CircuitJS convergence and expected
+  unconnected-node log entries from lift actions; there were no error or
+  warning entries attributable to the candidate.
+
+The visible gate screenshots were surfaced directly in the architect session.
+The written gate record is
+docs/task-evidence/task-34a/visible-browser-gate.md. Supporting production
+evidence remains under docs/task-evidence/task-34 and
+docs/task-evidence/task-34-review2.
+
+## Closed validation set
+
+- Visible in-app Browser LED and diode seed-3 gate: PASS.
+- Architecture and renderer provider-boundary verifiers: PASS.
+- Procedural layout verifier: PASS.
+- Seeded LED core matrix, seeds 0/2/3: 15/15 PASS.
+- Diode, diode-short, parallel, and LED-parts matrices, seeds 0/2/3:
+  PASS.
+- Wrong-repair and stress electrical verifiers: PASS.
+- LED, diode, parallel, wrong-repair, and stress normal-player routes:
+  PASS. Stress normal-player confirmed natural secondary-open behavior,
+  no diagnostic UI, and no console/page exceptions.
+- PowerShell parser checks for verify-browser.ps1 and
+  verify-renderer-boundary.ps1: PASS.
+- git diff --check: PASS; Git emitted only expected line-ending conversion
+  warnings for the existing Windows worktree.
+- The final architect build rerun was environment-limited: this host exposes
+  OpenJDK 21 while GWT 2.7.0 requires JDK 8. The delegated implementation
+  and review rounds recorded JDK 8/GWT production-build PASS; no source
+  change was made to bypass the project’s JDK 8 guard.
+
+## Scope boundaries and handoff
+
+No AGENTS.md policy change, normal-player harness rewrite, Task 35 work,
+commit push, or unrelated cleanup was performed. The known distinction
+between visible architect validation and subagent headless validation remains
+the project rule. The next eligible milestone is Task 35 — Generalized
+Physical Part Specifications; it is identified only and was not started.
+
+---
+
 # Task 34 — Component Ratings and Stress/Damage v1
 
 ## Status

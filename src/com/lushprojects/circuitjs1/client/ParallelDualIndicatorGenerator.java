@@ -22,16 +22,22 @@ class ParallelDualIndicatorGenerator {
 
         TroubleshootBoard board = createBoard();
         BoardPhysicalSpecifications physicalSpecifications = new BoardPhysicalSpecifications();
-        physicalSpecifications.addResistorNameplate(new ResistorNameplate("R1", r1Value, 5));
-        physicalSpecifications.addResistorNameplate(new ResistorNameplate("R2", r2Value, 5));
+        physicalSpecifications.addPhysicalDefinition("J1",
+            new BasicPhysicalSpecification("J1_CONNECTOR"),
+            new PhysicalNameplate("J1", "Power input connector"),
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2);
+        StandardPhysicalDefinitionProviders.RESISTOR.add(physicalSpecifications,
+            new ResistorNameplate("R1", r1Value, 5));
+        StandardPhysicalDefinitionProviders.RESISTOR.add(physicalSpecifications,
+            new ResistorNameplate("R2", r2Value, 5));
         physicalSpecifications.addPowerInputNameplate(new PowerInputNameplate("VIN_INPUT",
             supplyVoltage));
         LedNameplate led1Nameplate = new LedNameplate("LED1", "Generic red LED", "default-led",
             1, 0, 0);
         LedNameplate led2Nameplate = new LedNameplate("LED2", "Generic red LED", "default-led",
             1, 0, 0);
-        physicalSpecifications.addLedNameplate(led1Nameplate);
-        physicalSpecifications.addLedNameplate(led2Nameplate);
+        StandardPhysicalDefinitionProviders.LED.add(physicalSpecifications, led1Nameplate);
+        StandardPhysicalDefinitionProviders.LED.add(physicalSpecifications, led2Nameplate);
 
         DCVoltageElm supply = new DCVoltageElm(128, 528);
         supply.drag(128, 128);
@@ -134,7 +140,6 @@ class ParallelDualIndicatorGenerator {
         GeneratedFaultBinding faultBinding = selectedFault.getBinding();
         GeneratedFaultBinding resistorFaultBinding = "R1".equals(
             fault.getTargetComponentId()) ? faultBinding : null;
-        ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory();
         ResistorReplacementCatalog resistorCatalog = new ResistorReplacementCatalog();
         CircuitPostMeasurementEndpoint resistorOpenPathUpstream = null;
         if (resistorFaultBinding != null && fault.getType() == GeneratedFaultType.RESISTOR_OPEN)
@@ -145,15 +150,29 @@ class ParallelDualIndicatorGenerator {
         ResistorSecondaryOpenPath originalOpenPath = ResistorSecondaryOpenPath.create(
             resistorOpenPathUpstream);
         elements.add(originalOpenPath.getSimulationElement());
+        PhysicalBoardRuntime physicalRuntime = new PhysicalBoardRuntime(board);
+        ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory(
+            physicalRuntime, "R1_REPLACEMENTS");
+        PhysicalBoardSlot r1PhysicalSlot = physicalRuntime.createSlot("R1");
+        PhysicalBoardSlot r2PhysicalSlot = physicalRuntime.createSlot("R2");
+        PhysicalBoardSlot led1PhysicalSlot = physicalRuntime.createSlot("LED1");
+        PhysicalBoardSlot led2PhysicalSlot = physicalRuntime.createSlot("LED2");
+        PhysicalBoardSlot j1PhysicalSlot = physicalRuntime.createSlot("J1");
         PhysicalResistorPart originalR1 = new PhysicalResistorPart("R1_ORIGINAL",
-            new ResistorNameplate("R1_ORIGINAL", r1Value, 5), r1, resistorFaultBinding,
-            originalOpenPath, ResistorPartLocation.INSTALLED);
+            StandardPhysicalDefinitionProviders.RESISTOR.require(physicalSpecifications, "R1"),
+            new ResistorNameplate("R1_ORIGINAL", r1Value, 5),
+            physicalSpecifications.getNameplate("R1"), r1, resistorFaultBinding,
+            originalOpenPath, ResistorPartLocation.INSTALLED,
+            new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, "R1"));
         componentBindings.bindAuxiliaryComponentElement("R1",
             originalOpenPath.getSimulationElement());
         resistorInventory.add(originalR1);
         ReplaceableComponentSlot r1Slot = new ReplaceableComponentSlot("R1",
-            physicalSpecifications.getResistorNameplate("R1"), originalR1, r1Lead1Link,
-            r1Lead2Link);
+            StandardPhysicalDefinitionProviders.RESISTOR.require(physicalSpecifications, "R1"),
+            originalR1, r1Lead1Link,
+            r1Lead2Link, r1PhysicalSlot);
+        physicalRuntime.registerCapability(new ReplaceableResistorBoardCapability(r1Slot,
+            resistorInventory, resistorCatalog));
 
         GeneratedChallengeBehaviorContract behaviorContract =
             new GeneratedChallengeBehaviorAdapter(
@@ -201,6 +220,32 @@ class ParallelDualIndicatorGenerator {
         connectionBindings.bind("LED2", "LED2.K", bindings.getEndpoint("LED2.K"),
             new CircuitPostMeasurementEndpoint(led2, 1), led2CathodeLink);
 
+        FixedPhysicalPart<ResistorNameplate> fixedR2 =
+            PhysicalFoundationPartFactory.fromBoardBindings("R2",
+                StandardPhysicalDefinitionProviders.RESISTOR.require(physicalSpecifications, "R2"),
+                physicalSpecifications.getNameplate("R2"), PhysicalPackages.AXIAL_RESISTOR,
+                bindings, r2, new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "R2"));
+        FixedPhysicalPart<LedNameplate> fixedLed1 =
+            PhysicalFoundationPartFactory.fromBoardBindings("LED1",
+                StandardPhysicalDefinitionProviders.LED.require(physicalSpecifications, "LED1"),
+                physicalSpecifications.getNameplate("LED1"), PhysicalPackages.THROUGH_HOLE_LED,
+                bindings, led1, new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "LED1"));
+        FixedPhysicalPart<LedNameplate> fixedLed2 =
+            PhysicalFoundationPartFactory.fromBoardBindings("LED2",
+                StandardPhysicalDefinitionProviders.LED.require(physicalSpecifications, "LED2"),
+                physicalSpecifications.getNameplate("LED2"), PhysicalPackages.THROUGH_HOLE_LED,
+                bindings, led2, new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "LED2"));
+        FixedPhysicalPart<BasicPhysicalSpecification> connector =
+            PhysicalFoundationPartFactory.fromBoardBindings("J1",
+                (BasicPhysicalSpecification) physicalSpecifications.getSpecification("J1"),
+                physicalSpecifications.getNameplate("J1"), PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
+                bindings, connectorFaultSwitch,
+                new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "J1"));
+        r2PhysicalSlot.install(fixedR2);
+        led1PhysicalSlot.install(fixedLed1);
+        led2PhysicalSlot.install(fixedLed2);
+        j1PhysicalSlot.install(connector);
+
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID,
             DUAL_PARALLEL_BRANCHES_VARIANT,
             "Generated dual parallel indicator board, seed " + seed,
@@ -211,7 +256,8 @@ class ParallelDualIndicatorGenerator {
                 DUAL_PARALLEL_BRANCHES_VARIANT, seed, scenarios,
                 "Repair verified. Both indicators operating normally.", fault, faultBinding,
                 behaviorContract),
-            new ParallelDualIndicatorFamilyState(r1Slot, resistorInventory, resistorCatalog));
+            new ParallelDualIndicatorFamilyState(),
+            physicalRuntime);
     }
 
     private LEDElm createLed(int x1, int y1, int x2, int y2, LedNameplate nameplate) {

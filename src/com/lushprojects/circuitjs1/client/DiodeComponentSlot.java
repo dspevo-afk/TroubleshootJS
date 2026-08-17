@@ -5,37 +5,38 @@ class DiodeComponentSlot {
     private final DiodeNameplate intendedNameplate;
     private final WireElm anodePadAttachment;
     private final WireElm cathodePadAttachment;
-    private PhysicalDiodePart installedPart;
+    private final PhysicalBoardSlot physicalSlot;
 
     DiodeComponentSlot(String componentId, DiodeNameplate intendedNameplate,
             PhysicalDiodePart installedPart, WireElm anodePadAttachment,
-            WireElm cathodePadAttachment) {
+            WireElm cathodePadAttachment, PhysicalBoardSlot physicalSlot) {
         if (componentId == null || intendedNameplate == null || installedPart == null ||
-                anodePadAttachment == null || cathodePadAttachment == null)
+                anodePadAttachment == null || cathodePadAttachment == null || physicalSlot == null)
             throw new IllegalArgumentException("Invalid diode slot");
         this.componentId = componentId;
         this.intendedNameplate = intendedNameplate;
         this.anodePadAttachment = anodePadAttachment;
         this.cathodePadAttachment = cathodePadAttachment;
+        this.physicalSlot = physicalSlot;
         install(installedPart);
     }
 
     String getComponentId() { return componentId; }
     DiodeNameplate getIntendedNameplate() { return intendedNameplate; }
-    PhysicalDiodePart getInstalledPart() { return installedPart; }
-    boolean isEmpty() { return installedPart == null; }
-    void clear() { installedPart = null; }
+    PhysicalBoardSlot getPhysicalSlot() { return physicalSlot; }
+    PhysicalDiodePart getInstalledPart() { return (PhysicalDiodePart) physicalSlot.getInstalledPart(); }
+    boolean isEmpty() { return !physicalSlot.isOccupied(); }
+    void clear() { physicalSlot.remove(); }
     void install(PhysicalDiodePart part) {
-        if (part == null)
-            throw new IllegalArgumentException("Missing diode part");
-        moveAttachmentEnd(anodePadAttachment, part.getTerminalForBoardPad("D1.A"), false);
-        moveAttachmentEnd(cathodePadAttachment, part.getTerminalForBoardPad("D1.K"), true);
-        installedPart = part;
+        if (part == null) throw new IllegalArgumentException("Missing diode part");
+        moveAttachmentEnd(anodePadAttachment, part.getTerminalForBoardPad(componentId + ".A"), false);
+        moveAttachmentEnd(cathodePadAttachment, part.getTerminalForBoardPad(componentId + ".K"), true);
+        physicalSlot.install(part);
     }
 
-    private void moveAttachmentEnd(WireElm attachment, CircuitMeasurementEndpoint terminal,
+    private void moveAttachmentEnd(WireElm attachment, CircuitMeasurementEndpoint endpoint,
             boolean moveFirstEnd) {
-        CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint) terminal;
+        CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint) endpoint;
         Point point = post.getElement().getPost(post.getPostIndex());
         if (moveFirstEnd) { attachment.x = point.x; attachment.y = point.y; }
         else { attachment.x2 = point.x; attachment.y2 = point.y; }

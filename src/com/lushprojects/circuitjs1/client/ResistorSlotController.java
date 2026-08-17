@@ -1,70 +1,156 @@
 package com.lushprojects.circuitjs1.client;
 
-class ResistorSlotController {
+class ResistorSlotController implements PhysicalSlotMutationProvider {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
+    private final ReplaceableResistorBoardCapability capability;
 
     ResistorSlotController(CirSim sim, GeneratedBoardInstance instance,
-            BoardModificationController modifications) {
+            BoardModificationController modifications,
+            ReplaceableResistorBoardCapability capability) {
+        if (capability == null)
+            throw new IllegalArgumentException("Missing replaceable resistor capability");
         this.sim = sim;
         this.instance = instance;
         this.modifications = modifications;
+        this.capability = capability;
     }
 
-    boolean removeInstalledPart() {
+    public WorkbenchCapabilityMetadata getMetadata() {
+        return new WorkbenchCapabilityMetadata("REPLACEABLE_RESISTOR_" + getComponentId(),
+            "Resistor workbench", "SLOT_OPERATIONS");
+    }
+
+    public String getOperationLabel(WorkbenchOperation operation) {
+        if (operation == null) return "Modify resistor";
+        if (WorkbenchOperation.INSTALL.equals(operation.getId()))
+            return "Install as " + getComponentId();
+        if (WorkbenchOperation.CATALOG_INSTALL.equals(operation.getId()))
+            return capability.getInstallNewLabel();
+        if (WorkbenchOperation.LIFT_LEAD.equals(operation.getId()) ||
+                WorkbenchOperation.RECONNECT_LEAD.equals(operation.getId())) {
+            BoardPad pad = instance.getBoard().getPad(operation.getPadId());
+            String action = WorkbenchOperation.LIFT_LEAD.equals(operation.getId()) ?
+                "Lift lead " : "Reconnect lead ";
+            return action + (pad == null ? operation.getPadId() : pad.getTerminalId());
+        }
+        if (WorkbenchOperation.RESTORE.equals(operation.getId())) return "Restore component";
+        return "Remove component";
+    }
+
+    public boolean supports(WorkbenchOperation operation) {
+        if (operation == null || !getComponentId().equals(operation.getComponentId()))
+            return false;
+        String id = operation.getId();
+        return WorkbenchOperation.INSTALL.equals(id) || WorkbenchOperation.REMOVE.equals(id) ||
+            WorkbenchOperation.CATALOG_INSTALL.equals(id) ||
+            WorkbenchOperation.LIFT_LEAD.equals(id) ||
+            WorkbenchOperation.RECONNECT_LEAD.equals(id) ||
+            WorkbenchOperation.RESTORE.equals(id);
+    }
+
+    public boolean isAvailable(WorkbenchOperation operation, WorkbenchCapabilityContext context) {
+        if (!supports(operation) || !isSafeMutationAvailable())
+            return false;
+        ReplaceableComponentSlot slot = capability.getSlot();
+        String id = operation.getId();
+        if (WorkbenchOperation.CATALOG_INSTALL.equals(id))
+            return slot.isEmpty() && hasCatalogEntry(operation.getCatalogEntryId());
+        if (WorkbenchOperation.INSTALL.equals(id))
+            return operation.getPart() != null && ownsPart(operation.getPart().getId()) &&
+                !operation.getPart().isInstalled() && slot.isEmpty();
+        if (WorkbenchOperation.REMOVE.equals(id))
+            return !slot.isEmpty() && matchesInstalledPart(operation);
+        if (WorkbenchOperation.LIFT_LEAD.equals(id))
+            return !slot.isEmpty() && matchesInstalledPart(operation) &&
+                modifications.getComponentState(getComponentId()) == ComponentPhysicalState.INSTALLED &&
+                hasConnectedPad(operation.getPadId());
+        if (WorkbenchOperation.RECONNECT_LEAD.equals(id))
+            return !slot.isEmpty() && matchesInstalledPart(operation) &&
+                modifications.getComponentState(getComponentId()) == ComponentPhysicalState.LEAD_LIFTED &&
+                hasDisconnectedPad(operation.getPadId());
+        if (WorkbenchOperation.RESTORE.equals(id))
+            return !slot.isEmpty() && matchesInstalledPart(operation) &&
+                modifications.getComponentState(getComponentId()) != ComponentPhysicalState.INSTALLED;
+        return false;
+    }
+
+    public boolean invoke(WorkbenchOperation operation, WorkbenchCapabilityContext context) {
+        if (!isAvailable(operation, context))
+            return false;
+        String id = operation.getId();
+        if (WorkbenchOperation.CATALOG_INSTALL.equals(id))
+            return installNewFromCatalog(operation.getCatalogEntryId());
+        if (WorkbenchOperation.INSTALL.equals(id))
+            return install(operation.getPart().getId());
+        if (WorkbenchOperation.REMOVE.equals(id))
+            return removeInstalledPart();
+        if (WorkbenchOperation.LIFT_LEAD.equals(id))
+            return modifications.liftLead(getComponentId(), operation.getPadId());
+        if (WorkbenchOperation.RECONNECT_LEAD.equals(id))
+            return modifications.reconnectLead(getComponentId(), operation.getPadId());
+        return modifications.restoreComponent(getComponentId());
+    }
+
+    public String getComponentId() { return capability.getSlot().getComponentId(); }
+    public boolean ownsPart(String partId) { return capability.getInventory().contains(partId); }
+
+    public boolean removeInstalledPart() {
         requireSafeMutation();
-        ReplaceableResistorFamilyState family = requireFamily();
-        ReplaceableComponentSlot slot = family.getReplaceableResistorSlot();
+        ReplaceableComponentSlot slot = capability.getSlot();
         if (slot.isEmpty())
             return false;
         PhysicalResistorPart part = slot.getInstalledPart();
         modifications.removeComponent(slot.getComponentId());
-        part.setLocation(ResistorPartLocation.LOOSE);
         slot.clear();
         finishMutation();
         return true;
     }
 
-    boolean install(String partId) {
+    public boolean install(String partId) {
         requireSafeMutation();
-        ReplaceableResistorFamilyState family = requireFamily();
-        ReplaceableComponentSlot slot = family.getReplaceableResistorSlot();
+        ReplaceableComponentSlot slot = capability.getSlot();
         if (!slot.isEmpty())
             return false;
-        PhysicalResistorPart part = family.getResistorInventory().get(partId);
-        if (part.getLocation() != ResistorPartLocation.LOOSE)
+        PhysicalResistorPart part = capability.getInventory().get(partId);
+        if (part.isInstalled())
             return false;
         instance.getComponentBindings().replaceSingleElement(slot.getComponentId(), part.getElement());
 	instance.getComponentBindings().replaceAuxiliaryComponentElement(slot.getComponentId(),
 	    part.getSecondaryOpenPath().getSimulationElement());
 	retargetComponentLeadBindings(part);
-        part.setLocation(ResistorPartLocation.INSTALLED);
         slot.install(part);
         modifications.restoreComponent(slot.getComponentId());
         finishMutation();
         return true;
     }
 
-    boolean installNewFromCatalog(String catalogEntryId) {
+    public boolean installNewFromCatalog(String catalogEntryId) {
         requireSafeMutation();
-        ReplaceableResistorFamilyState family = requireFamily();
-        ReplaceableComponentSlot slot = family.getReplaceableResistorSlot();
+        ReplaceableComponentSlot slot = capability.getSlot();
         if (!slot.isEmpty())
             return false;
-        ResistorCatalogEntry entry = family.getResistorCatalog().get(catalogEntryId);
-        ResistorElm element = DynamicResistorBackingAllocator.create(instance.getSimulationElements(),
+        final ResistorCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
+        final ResistorElm element = DynamicResistorBackingAllocator.create(instance.getSimulationElements(),
             entry.getNameplate().getNominalResistanceOhms());
-        ResistorSecondaryOpenPath openPath = ResistorSecondaryOpenPath.create(
+        final ResistorSecondaryOpenPath openPath = ResistorSecondaryOpenPath.create(
             new CircuitPostMeasurementEndpoint(element, 1));
-        PhysicalResistorPart part = new PhysicalResistorPart(family.allocateCatalogPartId(),
-            new ResistorNameplate(slot.getComponentId(), entry.getNameplate().getNominalResistanceOhms(), 5,
-                entry.getNameplate().getRatedWattage()), element, null, openPath,
-            ResistorPartLocation.INSTALLED);
+        final String componentId = slot.getComponentId();
+        PhysicalResistorPart part = capability.getInventory().acquire(
+            componentId + "_CATALOG_PART",
+            new PhysicalPartIdentityFactory<PhysicalResistorPart>() {
+                public PhysicalResistorPart create(String partId) {
+                    return new PhysicalResistorPart(partId,
+                        new ResistorNameplate(componentId,
+                            entry.getNameplate().getNominalResistanceOhms(), 5,
+                            entry.getNameplate().getRatedWattage()), element, null, openPath,
+                        ResistorPartLocation.INSTALLED);
+                }
+            });
         instance.registerRuntimeSimulationElement(element);
         instance.registerRuntimeSimulationElement(openPath.getSimulationElement());
-        family.getResistorInventory().add(part);
-        sim.getResistorStressDamageSystem().register(part);
+        capability.getStressDamageSystem().register(part);
         sim.elmList.add(element);
         sim.elmList.add(openPath.getSimulationElement());
         instance.getComponentBindings().replaceSingleElement(slot.getComponentId(), element);
@@ -92,7 +178,7 @@ class ResistorSlotController {
     }
 
     private void retargetComponentLeadBindings(PhysicalResistorPart part) {
-        String componentId = requireFamily().getReplaceableResistorSlot().getComponentId();
+        String componentId = capability.getSlot().getComponentId();
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
                 .getForComponent(componentId)) {
             BoardPad pad = instance.getBoard().getPad(binding.getPadId());
@@ -108,9 +194,34 @@ class ResistorSlotController {
         }
     }
 
-    private ReplaceableResistorFamilyState requireFamily() {
-        if (!(instance.getFamilyState() instanceof ReplaceableResistorFamilyState))
-            throw new IllegalStateException("Generated family has no replaceable resistor contract");
-        return (ReplaceableResistorFamilyState) instance.getFamilyState();
+    private boolean isSafeMutationAvailable() {
+        return sim.getGeneratedBoardInstance() == instance && !sim.activeMeasurementOverlay &&
+            sim.isChallengeInteractionEnabled() &&
+            sim.getBoardPowerController().isElectricallyUnpowered();
     }
+
+    private boolean matchesInstalledPart(WorkbenchOperation operation) {
+        return operation.getPart() == null || operation.getPart() == capability.getSlot().getInstalledPart();
+    }
+
+    private boolean hasConnectedPad(String padId) {
+        return hasPad(padId) && modifications.isLeadConnected(getComponentId(), padId);
+    }
+
+    private boolean hasDisconnectedPad(String padId) {
+        return hasPad(padId) && !modifications.isLeadConnected(getComponentId(), padId);
+    }
+
+    private boolean hasPad(String padId) {
+        return padId != null && instance.getBoard().getPad(padId) != null &&
+            getComponentId().equals(instance.getBoard().getPad(padId).getComponentId());
+    }
+
+    private boolean hasCatalogEntry(String catalogEntryId) {
+        if (catalogEntryId == null) return false;
+        for (ResistorCatalogEntry entry : capability.getCatalog().getEntries())
+            if (catalogEntryId.equals(entry.getId())) return true;
+        return false;
+    }
+
 }

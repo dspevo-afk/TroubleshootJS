@@ -26,9 +26,17 @@ class DiodeProtectedIndicatorGenerator {
         double resistorValue = RESISTOR_VALUES[valueIndex];
         TroubleshootBoard board = createBoard();
         BoardPhysicalSpecifications specs = new BoardPhysicalSpecifications();
+        specs.addPhysicalDefinition("J1", new BasicPhysicalSpecification("J1_CONNECTOR"),
+            new PhysicalNameplate("J1", "Power input connector"),
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2);
         specs.addPowerInputNameplate(new PowerInputNameplate("VIN_INPUT", supplyVoltage));
-        specs.addDiodeNameplate(new DiodeNameplate("D1", "Generic silicon diode", "default"));
-        specs.addResistorNameplate(new ResistorNameplate("R1", resistorValue, 5));
+        StandardPhysicalDefinitionProviders.DIODE.add(specs,
+            new DiodeNameplate("D1", "Generic silicon diode", "default"));
+        StandardPhysicalDefinitionProviders.RESISTOR.add(specs,
+            new ResistorNameplate("R1", resistorValue, 5));
+        LedNameplate ledNameplate = new LedNameplate("LED1", "Generic red LED", "default-led",
+            1, 0, 0);
+        StandardPhysicalDefinitionProviders.LED.add(specs, ledNameplate);
 
         DCVoltageElm supply = new DCVoltageElm(160, 320); supply.drag(160, 160);
         supply.maxVoltage = supplyVoltage;
@@ -84,14 +92,26 @@ class DiodeProtectedIndicatorGenerator {
         GeneratedFaultBinding faultBinding = selectedFault.getBinding();
         GeneratedFaultBinding diodeFaultBinding = "D1".equals(
             fault.getTargetComponentId()) ? faultBinding : null;
+        PhysicalBoardRuntime physicalRuntime = new PhysicalBoardRuntime(board);
+        PhysicalBoardSlot d1PhysicalSlot = physicalRuntime.createSlot("D1");
+        PhysicalBoardSlot r1PhysicalSlot = physicalRuntime.createSlot("R1");
+        PhysicalBoardSlot led1PhysicalSlot = physicalRuntime.createSlot("LED1");
+        PhysicalBoardSlot j1PhysicalSlot = physicalRuntime.createSlot("J1");
         PhysicalDiodePart original = new PhysicalDiodePart("D1_ORIGINAL",
-            new DiodeNameplate("D1_ORIGINAL", "Generic silicon diode", "default"), diode,
-            diodeFaultBinding, false, DiodePartLocation.INSTALLED);
-        DiodeReplacementInventory inventory = new DiodeReplacementInventory();
+            StandardPhysicalDefinitionProviders.DIODE.require(specs, "D1"),
+            new DiodeNameplate("D1_ORIGINAL", "Generic silicon diode", "default"),
+            specs.getNameplate("D1"), diode,
+            diodeFaultBinding, false, DiodePartLocation.INSTALLED,
+            new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, "D1"));
+        DiodeReplacementInventory inventory = new DiodeReplacementInventory(physicalRuntime,
+            "D1_REPLACEMENTS");
         inventory.add(original);
         DiodeReplacementCatalog catalog = new DiodeReplacementCatalog();
-        DiodeComponentSlot slot = new DiodeComponentSlot("D1", specs.getDiodeNameplate("D1"),
-            original, d1AnodeLink, d1CathodeLink);
+        DiodeComponentSlot slot = new DiodeComponentSlot("D1",
+            StandardPhysicalDefinitionProviders.DIODE.require(specs, "D1"),
+            original, d1AnodeLink, d1CathodeLink, d1PhysicalSlot);
+        physicalRuntime.registerCapability(new ReplaceableDiodeBoardCapability(slot, inventory,
+            catalog));
 
         GeneratedChallengeBehaviorContract behaviorContract =
             new GeneratedChallengeBehaviorAdapter(
@@ -121,6 +141,25 @@ class DiodeProtectedIndicatorGenerator {
         connections.bind("D1", "D1.K", bindings.getEndpoint("D1.K"),
             original.getTerminalForBoardPad("D1.K"), d1CathodeLink);
 
+        FixedPhysicalPart<ResistorNameplate> fixedR1 =
+            PhysicalFoundationPartFactory.fromBoardBindings("R1",
+                StandardPhysicalDefinitionProviders.RESISTOR.require(specs, "R1"),
+                specs.getNameplate("R1"), PhysicalPackages.AXIAL_RESISTOR, bindings, resistor,
+                new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "R1"));
+        FixedPhysicalPart<LedNameplate> fixedLed1 =
+            PhysicalFoundationPartFactory.fromBoardBindings("LED1",
+                StandardPhysicalDefinitionProviders.LED.require(specs, "LED1"),
+                specs.getNameplate("LED1"), PhysicalPackages.THROUGH_HOLE_LED, bindings, led,
+                new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "LED1"));
+        FixedPhysicalPart<BasicPhysicalSpecification> connector =
+            PhysicalFoundationPartFactory.fromBoardBindings("J1",
+                (BasicPhysicalSpecification) specs.getSpecification("J1"), specs.getNameplate("J1"),
+                PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, bindings, connectorFaultSwitch,
+                new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "J1"));
+        r1PhysicalSlot.install(fixedR1);
+        led1PhysicalSlot.install(fixedLed1);
+        j1PhysicalSlot.install(connector);
+
         String description = "Generated diode-protected indicator, seed " + seed + ", " +
             supplyVoltage + " V";
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID,
@@ -129,7 +168,7 @@ class DiodeProtectedIndicatorGenerator {
             PCB_LAYOUT_GENERATOR.generate(board, seed), specs, faultBinding, operational,
             new GeneratedChallengeDefinition("DIODE_INDICATOR_NO_LIGHT", FAMILY_ID,
                 DIRECT_SERIES_VARIANT, seed, scenarios, fault, faultBinding, behaviorContract),
-            new DiodeProtectedIndicatorFamilyState(slot, inventory, catalog));
+            new DiodeProtectedIndicatorFamilyState(), physicalRuntime);
     }
 
     private DiodeElm createDefaultDiode(int x, int y, int x2, int y2) {

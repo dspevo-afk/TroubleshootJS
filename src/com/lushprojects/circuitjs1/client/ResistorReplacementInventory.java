@@ -1,40 +1,48 @@
 package com.lushprojects.circuitjs1.client;
 
-import java.util.HashMap;
 import java.util.Vector;
 
 class ResistorReplacementInventory {
-    private final HashMap<String, PhysicalResistorPart> parts =
-        new HashMap<String, PhysicalResistorPart>();
-    private final Vector<String> order = new Vector<String>();
+    private final PhysicalPartInventory<PhysicalResistorPart> inventory;
+
+    ResistorReplacementInventory(PhysicalBoardRuntime runtime, String inventoryId) {
+        inventory = new PhysicalPartInventory<PhysicalResistorPart>(runtime, inventoryId,
+            new PhysicalPartTypeAdapter<PhysicalResistorPart>() {
+                public PhysicalResistorPart require(PhysicalPart<?> part) {
+                    if (!(part instanceof PhysicalResistorPart))
+                        throw new IllegalArgumentException("Physical inventory part is not a resistor");
+                    return (PhysicalResistorPart) part;
+                }
+            });
+    }
 
     void add(PhysicalResistorPart part) {
-        if (parts.put(part.getId(), part) != null)
-            throw new IllegalArgumentException("Duplicate resistor part: " + part.getId());
-        order.add(part.getId());
+        inventory.add(part);
+    }
+
+    PhysicalResistorPart acquire(String idNamespace,
+            PhysicalPartIdentityFactory<PhysicalResistorPart> factory) {
+        return inventory.acquire(idNamespace, factory);
     }
 
     PhysicalResistorPart get(String partId) {
-        PhysicalResistorPart part = parts.get(partId);
-        if (part == null)
-            throw new IllegalArgumentException("Unknown resistor part: " + partId);
-        return part;
+        return inventory.get(partId);
     }
 
     Vector<PhysicalResistorPart> getAll() {
         Vector<PhysicalResistorPart> result = new Vector<PhysicalResistorPart>();
-        for (String partId : order)
-            result.add(parts.get(partId));
+        result.addAll(inventory.getAll());
         return result;
     }
 
     Vector<PhysicalResistorPart> getLooseParts() {
         Vector<PhysicalResistorPart> result = new Vector<PhysicalResistorPart>();
         for (PhysicalResistorPart part : getAll())
-            if (part.getLocation() == ResistorPartLocation.LOOSE)
+            if (!part.isInstalled())
                 result.add(part);
         return result;
     }
 
-    int size() { return order.size(); }
+    boolean contains(String partId) { return inventory.contains(partId); }
+    int size() { return inventory.size(); }
 }

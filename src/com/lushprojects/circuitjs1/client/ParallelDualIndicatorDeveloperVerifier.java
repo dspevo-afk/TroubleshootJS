@@ -11,6 +11,7 @@ class ParallelDualIndicatorDeveloperVerifier {
         require(instance != null && "PARALLEL_DUAL_INDICATOR".equals(instance.getCircuitFamilyId()),
             "Parallel verifier is not running on the parallel family");
         require(challenge != null && challenge.isReady(), "Parallel challenge did not become ready");
+        WorkbenchCapabilityDeveloperVerifier.verifyRegisteredProviders(sim);
         verifyScenario(instance, challenge);
         verifyGeneratedMetadata();
         verifyLogicalTopology(instance);
@@ -44,11 +45,11 @@ class ParallelDualIndicatorDeveloperVerifier {
                 "Parallel fault selection was not reproducible for seed " + seed);
             double expectedR1 = seed == 0 ? 330 : seed == 2 ? 680 : 1000;
             double expectedR2 = seed == 0 ? 680 : seed == 2 ? 1500 : 2200;
-            requireApproximately(expectedR1, board.getPhysicalSpecifications()
-                .getResistorNameplate("R1").getNominalResistanceOhms(), .001,
+            requireApproximately(expectedR1, StandardPhysicalDefinitionProviders.RESISTOR.require(
+                board.getPhysicalSpecifications(), "R1").getNominalResistanceOhms(), .001,
                 "Unexpected parallel R1 value for seed " + seed);
-            requireApproximately(expectedR2, board.getPhysicalSpecifications()
-                .getResistorNameplate("R2").getNominalResistanceOhms(), .001,
+            requireApproximately(expectedR2, StandardPhysicalDefinitionProviders.RESISTOR.require(
+                board.getPhysicalSpecifications(), "R2").getNominalResistanceOhms(), .001,
                 "Unexpected parallel R2 value for seed " + seed);
         }
         require(new ParallelDualIndicatorGenerator().generate(0).getChallengeDefinition().getFault()
@@ -215,7 +216,8 @@ class ParallelDualIndicatorDeveloperVerifier {
             GeneratedChallengeController challenge) {
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
-        ReplaceableComponentSlot slot = ParallelDualIndicatorFamilyState.require(instance).getR1Slot();
+        ReplaceableComponentSlot slot = ReplaceableResistorBoardCapability.require(instance)
+            .getSlot();
         require(sim.getResistorSlotController().removeInstalledPart(), "Parallel R1 did not remove");
         String catalogId = "R_CATALOG_" + (long)slot.getIntendedNameplate().getNominalResistanceOhms();
         require(sim.getResistorSlotController().installNewFromCatalog(catalogId),

@@ -4,8 +4,9 @@ class LedIndicatorRepairValidator implements GeneratedRepairValidator {
     public GeneratedRepairStatus getRepairStatus(GeneratedBoardInstance instance,
             BoardModificationController modifications, BoardPowerState powerState,
             boolean activeMeasurementOverlay) {
-        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
-        LedComponentSlot ledSlot = LedIndicatorFamilyState.require(instance).getLed1Slot();
+        ReplaceableComponentSlot slot = ReplaceableResistorBoardCapability.require(instance)
+            .getSlot();
+        LedComponentSlot ledSlot = ReplaceableLedBoardCapability.require(instance).getSlot();
         if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay || slot.isEmpty() ||
                 ledSlot.isEmpty() || !modifications.isComponentInstalled("LED1") ||
                 !modifications.isComponentInstalled("R1") || slot.getInstalledPart().isFaulted())

@@ -82,7 +82,7 @@ class GeneratedChallengeController {
             instance.getConnectionBindings().getForComponentOrEmpty(targetComponentId);
         boolean targetInstalled = targetConnections.isEmpty() ||
             sim.getBoardModificationController().isComponentInstalled(targetComponentId);
-        if (instance.getFamilyState().isFaultedTargetInstalled(targetComponentId) &&
+        if (instance.getFamilyState().isFaultedTargetInstalled(instance, targetComponentId) &&
             targetInstalled &&
             sim.getBoardModificationController().isFullyRestored() &&
             sim.getBoardPowerController().getState() == BoardPowerState.POWERED)

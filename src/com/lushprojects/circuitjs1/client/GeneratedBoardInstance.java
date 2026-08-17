@@ -15,6 +15,7 @@ class GeneratedBoardInstance {
     private final GeneratedChallengeBehaviorContract behaviorContract;
     private final PcbBoardLayout pcbLayout;
     private final BoardPhysicalSpecifications physicalSpecifications;
+    private final PhysicalBoardRuntime physicalRuntime;
     private final GeneratedFaultBinding faultBinding;
     private final GeneratedComponentOperationalStates operationalStates;
     private final GeneratedChallengeDefinition challengeDefinition;
@@ -28,7 +29,8 @@ class GeneratedBoardInstance {
             GeneratedChallengeBehaviorContract behaviorContract, PcbBoardLayout pcbLayout,
             BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
             GeneratedComponentOperationalStates operationalStates,
-            GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState) {
+            GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
+            PhysicalBoardRuntime physicalRuntime) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -46,6 +48,10 @@ class GeneratedBoardInstance {
             throw new IllegalArgumentException("Missing generated physical specifications");
         this.physicalSpecifications = physicalSpecifications;
         physicalSpecifications.seal();
+        if (physicalRuntime == null)
+            throw new IllegalArgumentException("Missing generated physical board runtime");
+        this.physicalRuntime = physicalRuntime;
+        physicalRuntime.validate();
         this.faultBinding = faultBinding;
         this.operationalStates = operationalStates;
         this.challengeDefinition = challengeDefinition;
@@ -106,6 +112,10 @@ class GeneratedBoardInstance {
 
     BoardPhysicalSpecifications getPhysicalSpecifications() {
         return physicalSpecifications;
+    }
+
+    PhysicalBoardRuntime getPhysicalBoardRuntime() {
+        return physicalRuntime;
     }
 
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }

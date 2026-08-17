@@ -20,6 +20,17 @@ class SeededPcbLayoutGenerator {
     private static final int FINAL_BOARD_X = 40;
     private static final int FINAL_BOARD_Y = 40;
     private static final int FINAL_EDGE_MARGIN = 26;
+    private final PcbFootprintRegistry footprintRegistry;
+
+    SeededPcbLayoutGenerator() {
+        this(StandardPcbFootprintProviders.createRegistry());
+    }
+
+    SeededPcbLayoutGenerator(PcbFootprintRegistry footprintRegistry) {
+        if (footprintRegistry == null)
+            throw new IllegalArgumentException("Missing PCB footprint registry");
+        this.footprintRegistry = footprintRegistry;
+    }
 
     PcbBoardLayout generate(TroubleshootBoard board, long seed) {
         if (board == null)
@@ -60,10 +71,10 @@ class SeededPcbLayoutGenerator {
             new Rectangle(850, 125, 150, 255));
 
         TopologyPlacementGraph topology = new TopologyPlacementGraph(board);
-        Vector<Footprint> placed = placeTopology(board, topology, outline, random, variationMode);
-        for (Footprint footprint : placed) {
-            layout.addComponent(footprint.placement);
-            for (PcbPadPlacement pad : footprint.pads)
+        Vector<PcbFootprint> placed = placeTopology(board, topology, outline, random, variationMode);
+        for (PcbFootprint footprint : placed) {
+            layout.addComponent(footprint.getPlacement());
+            for (PcbPadPlacement pad : footprint.getPads())
                 layout.addPad(pad);
         }
         routeNets(layout, board, outline);
@@ -75,22 +86,24 @@ class SeededPcbLayoutGenerator {
         return layout;
     }
 
-    private Vector<Footprint> placeTopology(TroubleshootBoard board,
+    private Vector<PcbFootprint> placeTopology(TroubleshootBoard board,
             TopologyPlacementGraph topology, Rectangle outline, Random random,
             int variationMode) {
-        Vector<Footprint> placed = new Vector<Footprint>();
-        Footprint connector = placeConnector(board, outline, random, placed, variationMode);
+        Vector<PcbFootprint> placed = new Vector<PcbFootprint>();
+        BoardComponent connectorComponent = findConnector(board);
+        PcbFootprint connector = placeConnector(connectorComponent, outline, random, placed,
+            variationMode);
         placed.add(connector);
 
         Vector<String> componentIds = board.getComponentIds();
         Collections.sort(componentIds);
         Vector<String> remaining = new Vector<String>();
         for (String componentId : componentIds)
-            if (!"J1".equals(componentId))
+            if (!connectorComponent.getId().equals(componentId))
                 remaining.add(componentId);
         while (!remaining.isEmpty()) {
             String componentId = chooseNextComponent(remaining, placed, topology);
-            Footprint footprint = placeTopologyComponent(board.getComponent(componentId),
+            PcbFootprint footprint = placeTopologyComponent(board.getComponent(componentId),
                 topology, outline, random, placed, variationMode);
             placed.add(footprint);
             remaining.remove(componentId);
@@ -98,7 +111,7 @@ class SeededPcbLayoutGenerator {
         return placed;
     }
 
-    private String chooseNextComponent(Vector<String> remaining, Vector<Footprint> placed,
+    private String chooseNextComponent(Vector<String> remaining, Vector<PcbFootprint> placed,
             TopologyPlacementGraph topology) {
         String bestId = remaining.get(0);
         double bestScore = Double.NEGATIVE_INFINITY;
@@ -116,35 +129,39 @@ class SeededPcbLayoutGenerator {
         return bestId;
     }
 
-    private Footprint placeConnector(TroubleshootBoard board, Rectangle outline, Random random,
-            Vector<Footprint> placed, int variationMode) {
-        BoardComponent connector = board.getComponent("J1");
-        if (connector == null || !"CONNECTOR".equals(connector.getType()))
-            throw new IllegalStateException("Simple PCB generator requires connector J1");
+    private PcbFootprint placeConnector(BoardComponent connector, Rectangle outline, Random random,
+            Vector<PcbFootprint> placed, int variationMode) {
+        if (connector == null)
+            throw new IllegalStateException("PCB generator requires a connector component");
+        PcbFootprint unplaced = createFootprint(connector, 0, 0, new Random(0), outline);
+        int x = outline.x + outline.width - unplaced.getPlacement().getWidth() - 20;
+        PcbFootprint prototype = createFootprint(connector, x, outline.y + 20,
+            new Random(0), outline);
+        int randomRange = Math.max(1, outline.height - prototype.getPlacement().getHeight() - 100);
         for (int attempt = 0; attempt < 80; attempt++) {
             // Keep the pad escape directed into the working area.  Seeded
             // variation is applied to the topology cluster, not by making the
             // connector's routing corridor point at the canvas edge.
-            boolean rightEdge = true;
-            int x = rightEdge ? outline.x + outline.width - 120 : outline.x + 20;
-            int y = align(outline.y + 80 + random.nextInt(outline.height - 230));
-            Footprint candidate = createFootprint(connector, x, y, random, outline);
+            int y = align(outline.y + 80 + random.nextInt(randomRange));
+            PcbFootprint candidate = createFootprint(connector, x, y, random, outline);
             if (fits(candidate, outline, placed))
                 return candidate;
         }
         throw new IllegalStateException("Unable to place board connector");
     }
 
-    private Footprint placeTopologyComponent(BoardComponent component,
+    private PcbFootprint placeTopologyComponent(BoardComponent component,
             TopologyPlacementGraph topology, Rectangle outline, Random random,
-            Vector<Footprint> placed, int variationMode) {
-        Footprint prototype = createFootprint(component, 0, 0,
+            Vector<PcbFootprint> placed, int variationMode) {
+        PcbFootprint prototype = createFootprint(component, 0, 0,
             new Random(random.nextLong()), outline);
-        int targetX = outline.x + outline.width / 2 - prototype.placement.getWidth() / 2;
-        int targetY = outline.y + outline.height / 2 - prototype.placement.getHeight() / 2;
+        int targetX = outline.x + outline.width / 2 -
+            prototype.getPlacement().getWidth() / 2;
+        int targetY = outline.y + outline.height / 2 -
+            prototype.getPlacement().getHeight() / 2;
         double targetWeight = 0;
         for (TopologyPlacementGraph.PadLink link : topology.getLinksFor(component.getId())) {
-            Footprint other = findFootprint(placed, link.getOtherComponentId());
+            PcbFootprint other = findFootprint(placed, link.getOtherComponentId());
             if (other == null)
                 continue;
             PcbPadPlacement sourcePad = prototype.getPad(link.getPadId());
@@ -155,11 +172,13 @@ class SeededPcbLayoutGenerator {
         }
         if (targetWeight > 0) {
             targetX = (int) Math.round((targetX -
-                (outline.x + outline.width / 2 - prototype.placement.getWidth() / 2)) /
-                targetWeight + (outline.x + outline.width / 2 - prototype.placement.getWidth() / 2));
+                (outline.x + outline.width / 2 - prototype.getPlacement().getWidth() / 2)) /
+                targetWeight + (outline.x + outline.width / 2 -
+                    prototype.getPlacement().getWidth() / 2));
             targetY = (int) Math.round((targetY -
-                (outline.y + outline.height / 2 - prototype.placement.getHeight() / 2)) /
-                targetWeight + (outline.y + outline.height / 2 - prototype.placement.getHeight() / 2));
+                (outline.y + outline.height / 2 - prototype.getPlacement().getHeight() / 2)) /
+                targetWeight + (outline.y + outline.height / 2 -
+                    prototype.getPlacement().getHeight() / 2));
         }
         targetX += random.nextInt(31) - 15;
         targetY += random.nextInt(31) - 15;
@@ -171,12 +190,12 @@ class SeededPcbLayoutGenerator {
             { -80, -50 }, { 80, -50 }, { -80, 50 }, { 80, 50 }, { -160, 0 },
             { 160, 0 }, { -120, -50 }, { 120, -50 }, { -120, 50 }, { 120, 50 }
         };
-        Footprint best = null;
+        PcbFootprint best = null;
         double bestScore = Double.POSITIVE_INFINITY;
         int firstOffset = random.nextInt(offsets.length);
         for (int index = 0; index < offsets.length; index++) {
             int[] offset = offsets[(firstOffset + index) % offsets.length];
-            Footprint candidate = translated(prototype,
+            PcbFootprint candidate = translated(prototype,
                 align(targetX + offset[0]), align(targetY + offset[1]));
             if (!fits(candidate, outline, placed))
                 continue;
@@ -193,7 +212,7 @@ class SeededPcbLayoutGenerator {
 
         for (int y = outline.y + 20; y < outline.y + outline.height - 100; y += GRID) {
             for (int x = outline.x + 20; x < outline.x + outline.width - 260; x += GRID) {
-                Footprint candidate = translated(prototype, x, y);
+                PcbFootprint candidate = translated(prototype, x, y);
                 if (!fits(candidate, outline, placed))
                     continue;
                 double score = placementScore(candidate, topology, placed, targetX, targetY,
@@ -209,23 +228,23 @@ class SeededPcbLayoutGenerator {
         return best;
     }
 
-    private boolean fits(Footprint candidate, Rectangle outline, Vector<Footprint> placed) {
-        Rectangle courtyard = candidate.placement.getRoutingCourtyard();
+    private boolean fits(PcbFootprint candidate, Rectangle outline, Vector<PcbFootprint> placed) {
+        Rectangle courtyard = candidate.getPlacement().getRoutingCourtyard();
         if (courtyard.x < outline.x + 10 || courtyard.y < outline.y + 10 ||
                 courtyard.x + courtyard.width > outline.x + outline.width - 10 ||
                 courtyard.y + courtyard.height > outline.y + outline.height - 10)
             return false;
         Rectangle padded = new Rectangle(courtyard.x - 8, courtyard.y - 8,
             courtyard.width + 16, courtyard.height + 16);
-        for (Footprint other : placed) {
-            Rectangle otherCourtyard = other.placement.getRoutingCourtyard();
+        for (PcbFootprint other : placed) {
+            Rectangle otherCourtyard = other.getPlacement().getRoutingCourtyard();
             if (padded.intersects(new Rectangle(otherCourtyard.x - 8, otherCourtyard.y - 8,
                     otherCourtyard.width + 16, otherCourtyard.height + 16)))
                 return false;
         }
-        for (PcbPadPlacement pad : candidate.pads) {
-            for (Footprint other : placed) {
-                for (PcbPadPlacement otherPad : other.pads) {
+        for (PcbPadPlacement pad : candidate.getPads()) {
+            for (PcbFootprint other : placed) {
+                for (PcbPadPlacement otherPad : other.getPads()) {
                     int dx = pad.getX() - otherPad.getX();
                     int dy = pad.getY() - otherPad.getY();
                     if (dx * dx + dy * dy < 26 * 26)
@@ -236,24 +255,24 @@ class SeededPcbLayoutGenerator {
         return true;
     }
 
-    private double placementScore(Footprint candidate, TopologyPlacementGraph topology,
-            Vector<Footprint> placed, int targetX, int targetY, String componentId,
+    private double placementScore(PcbFootprint candidate, TopologyPlacementGraph topology,
+            Vector<PcbFootprint> placed, int targetX, int targetY, String componentId,
             int variationMode) {
-        double score = Math.abs(candidate.placement.getX() - targetX) * .15 +
-            Math.abs(candidate.placement.getY() - targetY) * .15;
+        double score = Math.abs(candidate.getPlacement().getX() - targetX) * .15 +
+            Math.abs(candidate.getPlacement().getY() - targetY) * .15;
         int componentSign = (componentId.hashCode() & 1) == 0 ? -1 : 1;
         if (variationMode == 0)
-            score += Math.abs(candidate.placement.getX() - targetX - componentSign * 40) * .35;
+            score += Math.abs(candidate.getPlacement().getX() - targetX - componentSign * 40) * .35;
         else if (variationMode == 1)
-            score += Math.abs(candidate.placement.getY() - targetY - componentSign * 50) * .35;
+            score += Math.abs(candidate.getPlacement().getY() - targetY - componentSign * 50) * .35;
         else if (variationMode == 2)
-            score += Math.abs((candidate.placement.getX() - targetX) - componentSign * 40) * .20 +
-                Math.abs((candidate.placement.getY() - targetY) + componentSign * 50) * .20;
+            score += Math.abs((candidate.getPlacement().getX() - targetX) - componentSign * 40) * .20 +
+                Math.abs((candidate.getPlacement().getY() - targetY) + componentSign * 50) * .20;
         else
-            score += Math.abs(candidate.placement.getX() - targetX + componentSign * 80) * .30;
+            score += Math.abs(candidate.getPlacement().getX() - targetX + componentSign * 80) * .30;
         for (TopologyPlacementGraph.PadLink link : topology.getLinksFor(
-                candidate.placement.getComponentId())) {
-            Footprint other = findFootprint(placed, link.getOtherComponentId());
+                candidate.getPlacement().getComponentId())) {
+            PcbFootprint other = findFootprint(placed, link.getOtherComponentId());
             if (other == null)
                 continue;
             PcbPadPlacement sourcePad = candidate.getPad(link.getPadId());
@@ -264,77 +283,34 @@ class SeededPcbLayoutGenerator {
         return score;
     }
 
-    private Footprint findFootprint(Vector<Footprint> footprints, String componentId) {
-        for (Footprint footprint : footprints)
-            if (footprint.placement.getComponentId().equals(componentId))
+    private PcbFootprint findFootprint(Vector<PcbFootprint> footprints, String componentId) {
+        for (PcbFootprint footprint : footprints)
+            if (footprint.getPlacement().getComponentId().equals(componentId))
                 return footprint;
         return null;
     }
 
-    private Footprint translated(Footprint source, int x, int y) {
-        int dx = x - source.placement.getX();
-        int dy = y - source.placement.getY();
-        PcbComponentPlacement placement = source.placement;
-        PcbComponentPlacement translatedPlacement = new PcbComponentPlacement(
-            placement.getComponentId(), x, y, placement.getWidth(), placement.getHeight(),
-            translate(placement.getKeepOut(), dx, dy),
-            translate(placement.getRoutingCourtyard(), dx, dy));
-        Vector<PcbPadPlacement> translatedPads = new Vector<PcbPadPlacement>();
-        for (PcbPadPlacement pad : source.pads)
-            translatedPads.add(new PcbPadPlacement(pad.getPadId(), pad.getX() + dx,
-                pad.getY() + dy, pad.getEscapeDx(), pad.getEscapeDy(), pad.getEscapeLength()));
-        return new Footprint(translatedPlacement, translatedPads);
+    private PcbFootprint translated(PcbFootprint source, int x, int y) {
+        return source.translated(x, y);
     }
 
-    private static Rectangle translate(Rectangle rectangle, int dx, int dy) {
-        return new Rectangle(rectangle.x + dx, rectangle.y + dy, rectangle.width,
-            rectangle.height);
-    }
-
-    private Footprint createFootprint(BoardComponent component, int x, int y, Random random,
-            Rectangle outline) {
-        Vector<String> padIds = component.getPadIds();
-        if (padIds.size() != 2)
-            throw new IllegalStateException("Simple PCB footprint requires two pads: " +
-                component.getId());
-        Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-        PcbComponentPlacement placement;
-        String type = component.getType();
-        if ("CONNECTOR".equals(type)) {
-            boolean leftEdge = x < outline.x + outline.width / 2;
-            int padX = leftEdge ? x + 90 : x + 10;
-            int escapeDx = leftEdge ? 1 : -1;
-            pads.add(new PcbPadPlacement(padIds.get(0), padX, y + 40, escapeDx, 0, 30));
-            pads.add(new PcbPadPlacement(padIds.get(1), padX, y + 100, escapeDx, 0, 30));
-            placement = new PcbComponentPlacement(component.getId(), x, y, 100, 130,
-                new Rectangle(x, y, 100, 130), new Rectangle(x - 6, y - 6, 112, 142));
-        } else if ("RESISTOR".equals(type)) {
-            int span = 220 + random.nextInt(3) * 20;
-            pads.add(new PcbPadPlacement(padIds.get(0), x + 30, y + 30, -1, 0, 50));
-            pads.add(new PcbPadPlacement(padIds.get(1), x + span - 30, y + 30, 1, 0, 50));
-            placement = new PcbComponentPlacement(component.getId(), x, y, span, 70,
-                new Rectangle(x + 70, y + 18, span - 140, 34),
-                new Rectangle(x + 12, y + 5, span - 24, 60));
-        } else if ("DIODE".equals(type)) {
-            int span = 230 + random.nextInt(2) * 20;
-            pads.add(new PcbPadPlacement(padIds.get(0), x + 30, y + 30, -1, 0, 50));
-            pads.add(new PcbPadPlacement(padIds.get(1), x + span - 30, y + 30, 1, 0, 50));
-            placement = new PcbComponentPlacement(component.getId(), x, y, span, 70,
-                new Rectangle(x + 72, y + 19, span - 144, 32),
-                new Rectangle(x + 12, y + 5, span - 24, 60));
-        } else if ("LED".equals(type)) {
-            // The LED body sits above its two leads.  Both pads therefore
-            // escape straight down, through the short lead corridor, rather
-            // than routing sideways through the circular body keep-out.
-            pads.add(new PcbPadPlacement(padIds.get(0), x + 20, y + 70, 0, 1, 35));
-            pads.add(new PcbPadPlacement(padIds.get(1), x + 60, y + 70, 0, 1, 35));
-            placement = new PcbComponentPlacement(component.getId(), x, y, 90, 100,
-                new Rectangle(x + 15, y + 12, 60, 60),
-                new Rectangle(x + 6, y + 4, 78, 101));
-        } else {
-            throw new IllegalStateException("Unsupported PCB footprint type: " + type);
+    private BoardComponent findConnector(TroubleshootBoard board) {
+        BoardComponent selected = null;
+        for (String componentId : board.getComponentIds()) {
+            BoardComponent candidate = board.getComponent(componentId);
+            if (candidate != null && candidate.getPhysicalPackage() != null &&
+                    candidate.getPhysicalPackage().isConnector() &&
+                    (selected == null || candidate.getId().compareTo(selected.getId()) < 0))
+                selected = candidate;
         }
-        return new Footprint(placement, pads);
+        if (selected != null)
+            return selected;
+        throw new IllegalStateException("PCB generator requires a connector component");
+    }
+
+    private PcbFootprint createFootprint(BoardComponent component, int x, int y, Random random,
+            Rectangle outline) {
+        return footprintRegistry.create(component, x, y, random, outline);
     }
 
     private void placeSilkscreen(PcbBoardLayout layout, TroubleshootBoard board,
@@ -369,12 +345,18 @@ class SeededPcbLayoutGenerator {
                 14, true, null);
         }
 
-        PcbComponentPlacement connector = layout.getComponent("J1");
+        BoardComponent connectorComponent = findConnector(board);
+        PcbComponentPlacement connector = layout.getComponent(connectorComponent.getId());
         if (connector == null)
-            throw new IllegalStateException("Missing connector for silkscreen labels");
+            throw new IllegalStateException("Missing logical connector for silkscreen labels");
         boolean leftEdge = connector.getX() < outline.x + outline.width / 2;
-        placeNetLabel(layout, board, outline, "J1.1", "+V", leftEdge);
-        placeNetLabel(layout, board, outline, "J1.2", "GND", leftEdge);
+        for (String powerInputId : board.getPowerInputIds()) {
+            ExternalBoardPowerInput input = board.getPowerInput(powerInputId);
+            if (connectorComponent.getPadIds().contains(input.getPositivePadId()))
+                placeNetLabel(layout, board, outline, input.getPositivePadId(), "+V", leftEdge);
+            if (connectorComponent.getPadIds().contains(input.getReturnPadId()))
+                placeNetLabel(layout, board, outline, input.getReturnPadId(), "GND", leftEdge);
+        }
     }
 
     private void placeNetLabel(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline,
@@ -414,6 +396,21 @@ class SeededPcbLayoutGenerator {
         for (Rectangle candidate : candidates) {
             if (isLabelPositionFree(layout, board, outline, candidate))
                 return candidate;
+        }
+        // Compact multi-terminal packages can consume all four conventional
+        // reference-label positions.  Keep labels collision-free by using a
+        // deterministic board scan before rejecting an otherwise valid route.
+        Rectangle sample = candidates.isEmpty() ? null : candidates.get(0);
+        if (sample != null) {
+            for (int y = outline.y + 4; y + sample.height <= outline.y + outline.height;
+                    y += GRID) {
+                for (int x = outline.x + 4; x + sample.width <= outline.x + outline.width;
+                        x += GRID) {
+                    Rectangle fallback = new Rectangle(x, y, sample.width, sample.height);
+                    if (isLabelPositionFree(layout, board, outline, fallback))
+                        return fallback;
+                }
+            }
         }
         throw new IllegalStateException("Unable to place collision-free PCB silkscreen label");
     }
@@ -481,9 +478,37 @@ class SeededPcbLayoutGenerator {
             if (padIds.size() < 2)
                 throw new IllegalStateException("Cannot route net with fewer than two pads: " +
                     netId);
-            for (int index = 1; index < padIds.size(); index++)
+            BoardPad anchorPad = board.getPad(padIds.get(0));
+            Vector<String> electricallyReachedPadIds = new Vector<String>();
+            electricallyReachedPadIds.add(anchorPad.getId());
+            for (int index = 1; index < padIds.size(); index++) {
+                BoardPad endPad = board.getPad(padIds.get(index));
+                // Multiple pins of one package can share a logical net.  The
+                // package itself supplies an explicitly declared internal
+                // connection.  Once one such pin has copper, a second trace
+                // to an internally joined pin is redundant and would cross
+                // the package courtyard.
+                if (isInternallyReached(board, endPad, electricallyReachedPadIds)) {
+                    electricallyReachedPadIds.add(endPad.getId());
+                    continue;
+                }
                 layout.addTrace(router.route(netId, padIds.get(0), padIds.get(index)));
+                electricallyReachedPadIds.add(endPad.getId());
+            }
         }
+    }
+
+    private boolean isInternallyReached(TroubleshootBoard board, BoardPad candidate,
+            Vector<String> reachedPadIds) {
+        BoardComponent component = board.getComponent(candidate.getComponentId());
+        for (String reachedPadId : reachedPadIds) {
+            BoardPad reached = board.getPad(reachedPadId);
+            if (candidate.getComponentId().equals(reached.getComponentId()) &&
+                    component.getPhysicalPackage().isInternallyConnected(
+                    candidate.getTerminalId(), reached.getTerminalId()))
+                return true;
+        }
+        return false;
     }
 
     private static Random attemptRandom(long seed, int attempt) {
@@ -491,23 +516,6 @@ class SeededPcbLayoutGenerator {
     }
 
     private static int align(int value) { return (value / GRID) * GRID; }
-
-    private static class Footprint {
-        private final PcbComponentPlacement placement;
-        private final Vector<PcbPadPlacement> pads;
-
-        Footprint(PcbComponentPlacement placement, Vector<PcbPadPlacement> pads) {
-            this.placement = placement;
-            this.pads = pads;
-        }
-
-        PcbPadPlacement getPad(String padId) {
-            for (PcbPadPlacement pad : pads)
-                if (pad.getPadId().equals(padId))
-                    return pad;
-            throw new IllegalStateException("Footprint is missing pad: " + padId);
-        }
-    }
 
     private static class Router {
         private final PcbBoardLayout layout;
@@ -608,7 +616,8 @@ class SeededPcbLayoutGenerator {
             }
             if (goal == null)
                 throw new IllegalStateException("Unable to route net " + netId + " from " +
-                    startPadId + " to " + endPadId);
+                    startPadId + "@" + startPad.getX() + "," + startPad.getY() + " to " +
+                    endPadId + "@" + endPad.getX() + "," + endPad.getY());
 
             Vector<Point> points = new Vector<Point>();
             int currentX = goal.x;

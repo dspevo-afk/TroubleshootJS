@@ -40,6 +40,7 @@ class TopologyPlacementGraph {
         new HashMap<String, Vector<PadLink>>();
 
     TopologyPlacementGraph(TroubleshootBoard board) {
+        String connectorId = findConnectorId(board);
         Vector<String> componentIds = board.getComponentIds();
         for (String componentId : componentIds)
             linksByComponent.put(componentId, new Vector<PadLink>());
@@ -52,15 +53,19 @@ class TopologyPlacementGraph {
                 BoardPad firstPad = board.getPad(padIds.get(first));
                 for (int second = first + 1; second < padIds.size(); second++) {
                     BoardPad secondPad = board.getPad(padIds.get(second));
-                    if (firstPad.getComponentId().equals(secondPad.getComponentId()))
+                    BoardComponent firstComponent = board.getComponent(firstPad.getComponentId());
+                    BoardComponent secondComponent = board.getComponent(secondPad.getComponentId());
+                    if (firstComponent.getId().equals(secondComponent.getId()) &&
+                            firstComponent.getPhysicalPackage().isInternallyConnected(
+                            firstPad.getTerminalId(), secondPad.getTerminalId()))
                         continue;
                     double weight = padIds.size() == 2 ? 3.0 : 1.0;
                     // The connector is an external anchor.  Its common return
                     // and supply pads still attract a cluster, but direct
                     // component-to-component links should form the functional
                     // chain or branch around that anchor.
-                    if ("J1".equals(firstPad.getComponentId()) ||
-                            "J1".equals(secondPad.getComponentId()))
+                    if (connectorId.equals(firstPad.getComponentId()) ||
+                            connectorId.equals(secondPad.getComponentId()))
                         weight *= .45;
                     addLink(firstPad.getComponentId(), new PadLink(
                         firstPad.getComponentId(), firstPad.getId(),
@@ -85,5 +90,20 @@ class TopologyPlacementGraph {
             linksByComponent.put(componentId, links);
         }
         links.add(link);
+    }
+
+    private static String findConnectorId(TroubleshootBoard board) {
+        String selected = null;
+        for (String componentId : board.getComponentIds()) {
+            BoardComponent component = board.getComponent(componentId);
+            if (component == null || component.getPhysicalPackage() == null ||
+                    !component.getPhysicalPackage().isConnector())
+                continue;
+            if (selected == null || componentId.compareTo(selected) < 0)
+                selected = componentId;
+        }
+        if (selected == null)
+            throw new IllegalStateException("Topology graph requires a connector component");
+        return selected;
     }
 }

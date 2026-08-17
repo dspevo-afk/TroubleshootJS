@@ -211,14 +211,18 @@ class ResistanceMeasurementDeveloperVerifier {
 
     private static void verifyPhysicalSpecificationRejections() {
         BoardPhysicalSpecifications specifications = new BoardPhysicalSpecifications();
-        specifications.addResistorNameplate(new ResistorNameplate("R1", 330, 5));
-        specifications.addResistorNameplate(new ResistorNameplate("R2", 680, 5));
+        StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
+            new ResistorNameplate("R1", 330, 5));
+        StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
+            new ResistorNameplate("R2", 680, 5));
         requireBands(new ResistorColorBand[] { ResistorColorBand.ORANGE,
             ResistorColorBand.ORANGE, ResistorColorBand.BROWN, ResistorColorBand.GOLD },
-            ResistorColorCode.getFourBandCode(specifications.getResistorNameplate("R1")), -1);
+            ResistorColorCode.getFourBandCode(StandardPhysicalDefinitionProviders.RESISTOR
+                .require(specifications, "R1")), -1);
         requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
             ResistorColorBand.BROWN, ResistorColorBand.GOLD },
-            ResistorColorCode.getFourBandCode(specifications.getResistorNameplate("R2")), -2);
+            ResistorColorCode.getFourBandCode(StandardPhysicalDefinitionProviders.RESISTOR
+                .require(specifications, "R2")), -2);
         requireColorCodeRejected(332);
         requireColorCodeRejected(101);
         requireInvalidResistorNameplate(Double.NaN, 5);
@@ -271,8 +275,8 @@ class ResistanceMeasurementDeveloperVerifier {
     private static void verifyGeneratedPhysicalSpecification(long seed, double voltage,
             double resistance, ResistorColorBand[] expectedBands) {
         GeneratedBoardInstance instance = new LedIndicatorGenerator().generate(seed);
-        ResistorNameplate resistorNameplate = instance.getPhysicalSpecifications()
-            .getResistorNameplate("R1");
+        ResistorNameplate resistorNameplate = StandardPhysicalDefinitionProviders.RESISTOR.require(
+            instance.getPhysicalSpecifications(), "R1");
         PowerInputNameplate inputNameplate = instance.getPhysicalSpecifications()
             .getPowerInputNameplate("VIN_INPUT");
         require(resistorNameplate != null && inputNameplate != null,
@@ -337,7 +341,7 @@ class ResistanceMeasurementDeveloperVerifier {
         require("+9V".equals(renderer.getPowerInputLabelForDeveloperVerification()),
             "PCB input marking did not use its nameplate");
         requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
-            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, renderer.getResistorBands("R1"),
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, getDeveloperResistorBands(instance),
             instance.getSeed());
         renderer.setSelectedComponentId("R1");
         sim.pcbWorkbenchController.refresh();
@@ -364,7 +368,7 @@ class ResistanceMeasurementDeveloperVerifier {
         modifications.liftLead("R1", "R1.1");
         sim.updateCircuit();
         requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
-            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, renderer.getResistorBands("R1"),
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, getDeveloperResistorBands(instance),
             instance.getSeed());
         require(r11.isValid() && r12.isValid(),
             "PCB pad targets did not survive lead lift and reanalysis");
@@ -391,7 +395,7 @@ class ResistanceMeasurementDeveloperVerifier {
         modifications.removeComponent("R1");
         sim.updateCircuit();
         requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
-            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, renderer.getResistorBands("R1"),
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, getDeveloperResistorBands(instance),
             instance.getSeed());
         require(r11.isValid() && r12.isValid(),
             "PCB pad targets did not survive component removal and reanalysis");
@@ -406,7 +410,7 @@ class ResistanceMeasurementDeveloperVerifier {
         modifications.restoreComponent("R1");
         sim.updateCircuit();
         requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
-            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, renderer.getResistorBands("R1"),
+            ResistorColorBand.BROWN, ResistorColorBand.GOLD }, getDeveloperResistorBands(instance),
             instance.getSeed());
         sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
         requireApproximately(680,
@@ -939,6 +943,12 @@ class ResistanceMeasurementDeveloperVerifier {
     private static void requireVoltageReadout(CirSim sim, String message) {
         String readout = sim.instrumentController.getReadingForDeveloperVerification();
         require(!"--- V".equals(readout) && readout.endsWith("V"), message + ": " + readout);
+    }
+
+    private static ResistorColorBand[] getDeveloperResistorBands(GeneratedBoardInstance instance) {
+        ResistorNameplate nameplate = StandardPhysicalDefinitionProviders.RESISTOR.require(
+            instance.getPhysicalSpecifications(), "R1");
+        return ResistorColorCode.getFourBandCode(nameplate);
     }
 
     private static void require(boolean condition, String message) {

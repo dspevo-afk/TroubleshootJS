@@ -690,3 +690,62 @@ screenshots are `initial-board.png`, `severe-overload-powered.png`,
 `secondary-failure.png`, and `correct-restored.png`. Failed-part identity,
 graph ownership, and solver measurements are supported by the developer/CDP
 verifier rather than treated as substitutes for the direct player-facing gate.
+
+---
+
+## Task 34(A) — Core extensibility boundaries
+
+Task 34(A) hardens the seams needed to add future physical part families and
+instrument modes without making the common workbench a catalog of component
+types.
+
+PhysicalBoardRuntime is the owner of runtime identity and association. It
+registers PhysicalBoardSlot instances, physical part instances, inventory
+ownership, runtime capabilities, and mutation providers. A slot owns its
+board package, pad IDs, terminal IDs, net IDs, and installed-part association.
+PhysicalPart exposes reusable identity, specification, package, terminal,
+electrical-backing, mount-state, provenance, failure-state, render metadata,
+and capability contracts. PhysicalPartIdentityFactory allocates IDs through
+the runtime-owned inventory namespace; family generators retain only the
+electrical topology and family-specific validation they actually own.
+
+WorkbenchCapabilityRegistry and WorkbenchCapabilityStrategy provide the
+operation seam. PhysicalSlotMutationProvider implementations own remove, lift,
+reconnect, restore, replacement, catalog, and loose-part behavior for their
+declared slot/capability. PcbWorkbenchController discovers those providers
+through the runtime and renders generic controls; it does not dispatch on
+resistor, diode, LED, or reference-designator names.
+
+PhysicalPartRenderRegistry composes PhysicalPartRenderProvider and
+PhysicalPartRenderProbeProvider implementations. Typed PhysicalPackage and
+PhysicalPartRenderMetadata carry package geometry, terminal geometry, visual
+markings, polarity/orientation, hit regions, selection bounds, pads, and
+probe targets. PcbWorkbenchRenderer performs common traversal, transforms,
+selection, and probe orchestration. Providers draw both fixed and replaceable
+parts, including loose/tray instances; the renderer does not decide
+electrical behavior.
+
+InstrumentModeProvider and InstrumentModeStrategy are the production mode
+contract. InstrumentModeRegistry composes the built-in providers through a
+bootstrap seam and accepts later production registrations with duplicate,
+developer-only, and invalid-provider rejection. InstrumentController owns
+common pointer/probe/UI lifecycle only. A registered visible provider can
+create a button after controller construction, receive activation and probe
+events, update its display, and clean up when switched or exited. DC voltage,
+resistance, continuity, and diode test continue to use the CircuitMeasurement
+boundary and CircuitJS-backed measurements.
+
+The architecture verifier includes positive and negative canaries for
+3–6-terminal parts, package connectivity, provider-owned rendering and probe
+resolution, capability discovery, and post-construction visible instrument
+registration. Normal UI continues to omit original numeric resistor values,
+ratings, stress/damage state, injected fault identity, and other developer
+diagnostics.
+
+The final architect-owned visible gate used the built application at
+tsjChallenge=led&seed=3 and tsjChallenge=diode&seed=3. Direct visible clicks
+selected LED1, D1, and R1; power-off controls exposed lift/reconnect/remove;
+lift/reconnect restored physical identity and powered operation; current
+browser diagnostics contained no error or warning entries. Headless
+verifiers and the visible gate are recorded in the Task 34(A) completion
+report.

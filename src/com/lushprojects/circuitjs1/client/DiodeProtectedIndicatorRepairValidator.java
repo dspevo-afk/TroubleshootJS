@@ -4,11 +4,11 @@ class DiodeProtectedIndicatorRepairValidator implements GeneratedRepairValidator
     public GeneratedRepairStatus getRepairStatus(GeneratedBoardInstance instance,
             BoardModificationController modifications, BoardPowerState powerState,
             boolean activeMeasurementOverlay) {
-        DiodeProtectedIndicatorFamilyState state =
-            DiodeProtectedIndicatorFamilyState.require(instance);
+        ReplaceableDiodeBoardCapability capability =
+            ReplaceableDiodeBoardCapability.require(instance);
         if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay ||
-                state.getD1Slot().isEmpty() || !modifications.isComponentInstalled("D1") ||
-                state.getD1Slot().getInstalledPart().isFaulted())
+                capability.getSlot().isEmpty() || !modifications.isComponentInstalled("D1") ||
+                capability.getSlot().getInstalledPart().isFaulted())
             return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
         double diodeCurrent = Math.abs(instance.getComponentBindings().getSingleElement("D1").getCurrent());
         double resistorCurrent = Math.abs(instance.getComponentBindings().getSingleElement("R1").getCurrent());

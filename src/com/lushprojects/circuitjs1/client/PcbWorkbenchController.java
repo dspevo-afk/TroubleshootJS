@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-class PcbWorkbenchController {
+class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
@@ -72,6 +72,28 @@ class PcbWorkbenchController {
 
     PcbWorkbenchRenderer getRenderer() { return renderer; }
 
+    private WorkbenchCapabilityStrategy getCapability(PhysicalPart part,
+            WorkbenchOperation operation) {
+        return WorkbenchCapabilityDiscovery.find(part, operation,
+            instance.getPhysicalBoardRuntime().getWorkbenchCapabilityRegistry());
+    }
+
+    private boolean isOperationAvailable(PhysicalPart part, WorkbenchOperation operation) {
+        WorkbenchCapabilityStrategy capability = getCapability(part, operation);
+        return capability != null && capability.isAvailable(operation, this);
+    }
+
+    private boolean dispatchOperation(PhysicalPart part, WorkbenchOperation operation) {
+        WorkbenchCapabilityStrategy capability = getCapability(part, operation);
+        return capability != null && capability.invoke(operation, this);
+    }
+
+    private String operationLabel(PhysicalPart part, WorkbenchOperation operation,
+            String fallback) {
+        WorkbenchCapabilityStrategy capability = getCapability(part, operation);
+        return capability == null ? fallback : capability.getOperationLabel(operation);
+    }
+
     private void rebuildPanel() {
         panel.clear();
         String componentId = renderer.getSelectedComponentId();
@@ -81,39 +103,22 @@ class PcbWorkbenchController {
         BoardComponent component = instance.getBoard().getComponent(componentId);
         panel.add(styledLabel(component.getId(), "tsj-component-title"));
         panel.add(new Label("Type: " + component.getType().toLowerCase()));
-        ResistorNameplate nameplate = instance.getPhysicalSpecifications().getResistorNameplate(componentId);
-        ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
-        PhysicalResistorPart installedResistor = null;
-        boolean replaceableResistor = false;
-        if (resistorFamily != null && resistorFamily.getReplaceableResistorSlot().getComponentId()
-                .equals(componentId)) {
-            replaceableResistor = true;
-            if (!resistorFamily.getReplaceableResistorSlot().isEmpty()) {
-                installedResistor = resistorFamily.getReplaceableResistorSlot().getInstalledPart();
-                nameplate = installedResistor.getNameplate();
-            }
-        }
-        if (nameplate != null && (!replaceableResistor || installedResistor != null)) {
-            if (installedResistor == null || installedResistor.isOriginal())
-                panel.add(new Label("Markings: Color bands"));
-            else
-                panel.add(new Label("Value: " + nameplate.getDisplayValue()));
-        }
-        if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState && "D1".equals(componentId) &&
-                !DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty())
-            panel.add(new Label("Part: " + DiodeProtectedIndicatorFamilyState.require(instance)
-                .getD1Slot().getInstalledPart().getNameplate().getDisplayName()));
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "LED1".equals(componentId) &&
-                !LedIndicatorFamilyState.require(instance).getLed1Slot().isEmpty())
-            panel.add(new Label("Part: " + LedIndicatorFamilyState.require(instance).getLed1Slot()
-                .getInstalledPart().getNameplate().getDisplayName()));
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        WorkbenchPartsProvider partsProvider = runtime.getWorkbenchPartsProvider(componentId);
+        PhysicalPart<?> installedPart = runtime.getInstalledPart(componentId);
+        PhysicalNameplate nameplate = installedPart == null ?
+            (partsProvider == null ? instance.getPhysicalSpecifications().getNameplate(componentId) :
+                null) : installedPart.getPlayerVisibleNameplate();
+        if (nameplate != null && nameplate.hasWorkbenchDetail())
+            panel.add(new Label(nameplate.getWorkbenchDetailLabel() + ": " +
+                nameplate.getWorkbenchDetailValue()));
         Vector<GeneratedComponentConnectionBinding> bindings =
             instance.getConnectionBindings().getForComponentOrEmpty(componentId);
-        if (isReplaceableSlotEmpty(componentId))
+        if (isManagedSlotEmpty(componentId))
             panel.add(new Label("State: " + componentId + " slot empty"));
         else if (!bindings.isEmpty())
             panel.add(new Label("State: " + formatState(modifications.getComponentState(componentId))));
-        else if (nameplate != null && !replaceableResistor)
+        else if (nameplate != null && nameplate.hasWorkbenchDetail() && partsProvider == null)
             panel.add(new Label("State: Installed"));
         for (String padId : component.getPadIds()) {
             BoardPad pad = instance.getBoard().getPad(padId);
@@ -134,219 +139,61 @@ class PcbWorkbenchController {
     private void rebuildPartsPanel() {
         partsPanel.clear();
         renderer.clampTrayPage();
-        if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState) {
-            rebuildDiodePartsPanel();
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        Vector<WorkbenchPartsProvider> providers = runtime.getWorkbenchPartsProviders();
+        if (providers.isEmpty())
             return;
-        }
-        final ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
-        if (resistorFamily == null)
-            return;
-        partsPanel.add(styledLabel("Resistor Replacement Catalog", "tsj-component-title"));
-        final ListBox catalog = new ListBox();
-        for (ResistorCatalogEntry entry : resistorFamily.getResistorCatalog().getEntries())
-            catalog.addItem(entry.getNameplate().getDisplayValue(), entry.getId());
-        boolean canInstallNew = sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered() &&
-            resistorFamily.getReplaceableResistorSlot().isEmpty();
-        catalog.setEnabled(canInstallNew);
-        partsPanel.add(catalog);
-        Button installNew = new Button("Install new resistor");
-        installNew.setStyleName("tsj-action-button");
-        installNew.setEnabled(canInstallNew);
-        installNew.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                try {
-                    sim.getResistorSlotController().installNewFromCatalog(
-                        catalog.getValue(catalog.getSelectedIndex()));
-                    renderer.setSelectedPartId(null);
-                } catch (BoardModificationRejectedException exception) {
-                    feedback.setText("Turn board power off.");
-                }
-                refresh();
-                sim.repaint();
-            }
-        });
-        partsPanel.add(installNew);
-        if (!sim.getBoardPowerController().isElectricallyUnpowered())
-            partsPanel.add(new Label("Turn board power off."));
-        else if (!resistorFamily.getReplaceableResistorSlot().isEmpty())
-            partsPanel.add(new Label("Remove " + resistorFamily.getReplaceableResistorSlot()
-                .getComponentId() + " before installing a replacement."));
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState)
-            addLedCatalog();
+        boolean powered = !sim.getBoardPowerController().isElectricallyUnpowered();
+        boolean powerWarningAdded = false;
+        for (WorkbenchPartsProvider provider : providers)
+            powerWarningAdded = addCatalog(provider, powered, powerWarningAdded);
+
         partsPanel.add(styledLabel("Parts Tray", "tsj-component-title"));
-        if (resistorFamily.getResistorInventory().getLooseParts().isEmpty() &&
-                (!(instance.getFamilyState() instanceof LedIndicatorFamilyState) ||
-                ((LedIndicatorFamilyState) instance.getFamilyState()).getLedInventory()
-                    .getLooseParts().isEmpty()))
+        Vector<PhysicalPart<?>> looseParts = getLooseParts(providers);
+        if (looseParts.isEmpty())
             partsPanel.add(new Label("No removed parts."));
-        for (PhysicalResistorPart part : renderer.getVisibleLooseParts()) {
-            Button select = new Button(getResistorPartLabel(part));
-            select.setStyleName("tsj-action-button");
-            select.setEnabled(sim.isChallengeInteractionEnabled());
-            final String partId = part.getId();
-            select.addClickHandler(new ClickHandler() {
-                public void onClick(ClickEvent event) {
-                    renderer.setSelectedPartId(partId);
-                    renderer.setSelectedComponentId(null);
-                    rebuildPanel();
-                    rebuildPartsPanel();
-                    sim.repaint();
-                }
-            });
-            partsPanel.add(select);
-        }
-        for (PhysicalLedPart part : renderer.getVisibleLooseLedParts()) {
-            Button select = new Button(part.getId() + " - " + part.getNameplate().getDisplayName());
-            select.setStyleName("tsj-action-button");
-            select.setEnabled(sim.isChallengeInteractionEnabled());
-            final String partId = part.getId();
-            select.addClickHandler(new ClickHandler() {
-                public void onClick(ClickEvent event) {
-                    renderer.setSelectedPartId(partId);
-                    renderer.setSelectedComponentId(null);
-                    rebuildPanel();
-                    rebuildPartsPanel();
-                    sim.repaint();
-                }
-            });
-            partsPanel.add(select);
-        }
+        int pageSize = renderer.getPartsPerTrayPage();
+        int start = renderer.getTrayPage() * pageSize;
+        int end = Math.min(looseParts.size(), start + pageSize);
+        for (int index = start; index < end; index++)
+            addLoosePartButton(looseParts.get(index));
         addPaginationControls();
+
         final String selectedPartId = renderer.getSelectedPartId();
         if (selectedPartId == null)
             return;
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState &&
-                ((LedIndicatorFamilyState) instance.getFamilyState()).getLedInventory()
-                .contains(selectedPartId)) {
-            LedIndicatorFamilyState state = (LedIndicatorFamilyState) instance.getFamilyState();
-            addSelectedLedControls(state, selectedPartId);
-            return;
-        }
-        PhysicalResistorPart part = resistorFamily.getResistorInventory().get(selectedPartId);
-        partsPanel.add(new Label("Selected: " + getResistorPartLabel(part)));
-        partsPanel.add(new Label("State: Loose"));
-        final String resistorComponentId = resistorFamily.getReplaceableResistorSlot().getComponentId();
-        Button install = new Button("Install as " + resistorComponentId);
-        install.setStyleName("tsj-action-button");
-        install.setEnabled(sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered() &&
-            resistorFamily.getReplaceableResistorSlot().isEmpty());
-        install.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                try {
-                    if (sim.getResistorSlotController().install(selectedPartId))
-                        renderer.setSelectedPartId(null);
-                } catch (BoardModificationRejectedException exception) {
-                    feedback.setText("Turn board power off before modifying components.");
-                }
-                refresh();
-                sim.repaint();
-            }
-        });
-        partsPanel.add(install);
+        WorkbenchPartsProvider selectedProvider =
+            runtime.getWorkbenchPartsProviderForPart(selectedPartId);
+        if (selectedProvider != null)
+            addSelectedPartControls(selectedProvider, selectedPartId);
     }
 
-    private void rebuildDiodePartsPanel() {
-        final DiodeProtectedIndicatorFamilyState state =
-            DiodeProtectedIndicatorFamilyState.require(instance);
-        partsPanel.add(styledLabel("Replacement Catalog", "tsj-component-title"));
+    private boolean addCatalog(final WorkbenchPartsProvider provider, boolean powered,
+            boolean powerWarningAdded) {
+        final String componentId = provider.getComponentId();
+        Vector<WorkbenchCatalogEntry> entries = provider.getCatalogEntries();
+        if (entries.isEmpty())
+            return powerWarningAdded;
+        partsPanel.add(styledLabel(provider.getCatalogTitle(), "tsj-component-title"));
         final ListBox catalog = new ListBox();
-        for (DiodeCatalogEntry entry : state.getCatalog().getEntries())
-            catalog.addItem(entry.getNameplate().getDisplayName(), entry.getId());
-        boolean canInstallNew = sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered() && state.getD1Slot().isEmpty();
-        catalog.setEnabled(canInstallNew);
-        partsPanel.add(catalog);
-        Button installNew = new Button("Install new diode");
-        installNew.setStyleName("tsj-action-button");
-        installNew.setEnabled(canInstallNew);
-        installNew.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                try {
-                    sim.getDiodeSlotController().installNewFromCatalog(
-                        catalog.getValue(catalog.getSelectedIndex()));
-                    renderer.setSelectedPartId(null);
-                } catch (BoardModificationRejectedException exception) {
-                    feedback.setText("Turn board power off.");
-                }
-                refresh();
-                sim.repaint();
-            }
-        });
-        partsPanel.add(installNew);
-        if (!sim.getBoardPowerController().isElectricallyUnpowered())
-            partsPanel.add(new Label("Turn board power off."));
-        else if (!state.getD1Slot().isEmpty())
-            partsPanel.add(new Label("Remove D1 before installing a replacement."));
-        partsPanel.add(styledLabel("Parts Tray", "tsj-component-title"));
-        Vector<PhysicalDiodePart> loose = state.getInventory().getLooseParts();
-        if (loose.isEmpty())
-            partsPanel.add(new Label("No removed parts."));
-        int start = renderer.getTrayPage() * 3;
-        for (int index = start; index < loose.size() && index < start + 3; index++) {
-            PhysicalDiodePart part = loose.get(index);
-            Button select = new Button(part.getId() + " - " + part.getNameplate().getDisplayName());
-            select.setStyleName("tsj-action-button");
-            select.setEnabled(sim.isChallengeInteractionEnabled());
-            final String partId = part.getId();
-            select.addClickHandler(new ClickHandler() {
-                public void onClick(ClickEvent event) {
-                    renderer.setSelectedPartId(partId);
-                    renderer.setSelectedComponentId(null);
-                    rebuildPanel();
-                    rebuildPartsPanel();
-                    sim.repaint();
-                }
-            });
-            partsPanel.add(select);
-        }
-        addPaginationControls();
-        final String selectedPartId = renderer.getSelectedPartId();
-        if (selectedPartId == null)
-            return;
-        PhysicalDiodePart part = state.getInventory().get(selectedPartId);
-        partsPanel.add(new Label("Selected: " + part.getId() + " - " +
-            part.getNameplate().getDisplayName()));
-        partsPanel.add(new Label("State: Loose"));
-        Button install = new Button("Install as D1");
-        install.setStyleName("tsj-action-button");
-        install.setEnabled(sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered() && state.getD1Slot().isEmpty());
-        install.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                try {
-                    if (sim.getDiodeSlotController().install(selectedPartId))
-                        renderer.setSelectedPartId(null);
-                } catch (BoardModificationRejectedException exception) {
-                    feedback.setText("Turn board power off before modifying components.");
-                }
-                refresh();
-                sim.repaint();
-            }
-        });
-        partsPanel.add(install);
-    }
-
-    private void addLedCatalog() {
-        final LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
-        partsPanel.add(styledLabel("LED Replacement Catalog", "tsj-component-title"));
-        final ListBox catalog = new ListBox();
-        for (LedCatalogEntry entry : state.getLedCatalog().getEntries())
+        for (WorkbenchCatalogEntry entry : entries)
             catalog.addItem(entry.getDisplayName(), entry.getId());
-        boolean canInstall = sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered() && state.getLed1Slot().isEmpty();
-        catalog.setEnabled(canInstall);
+        String firstCatalogId = entries.get(0).getId();
+        boolean canInstallNew = isOperationAvailable(null,
+            WorkbenchOperation.forCatalog(componentId, firstCatalogId));
+        catalog.setEnabled(canInstallNew);
         partsPanel.add(catalog);
-        Button installNew = new Button("Install new LED");
+        Button installNew = new Button(operationLabel(null,
+            WorkbenchOperation.forCatalog(componentId, firstCatalogId),
+            provider.getInstallNewLabel()));
         installNew.setStyleName("tsj-action-button");
-        installNew.setEnabled(canInstall);
+        installNew.setEnabled(canInstallNew);
         installNew.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 try {
-                    sim.getLedSlotController().installNewFromCatalog(
-                        catalog.getValue(catalog.getSelectedIndex()));
-                    renderer.setSelectedPartId(null);
+                    if (dispatchOperation(null, WorkbenchOperation.forCatalog(componentId,
+                            catalog.getValue(catalog.getSelectedIndex()))))
+                        renderer.setSelectedPartId(null);
                 } catch (BoardModificationRejectedException exception) {
                     feedback.setText("Turn board power off.");
                 }
@@ -355,24 +202,56 @@ class PcbWorkbenchController {
             }
         });
         partsPanel.add(installNew);
-        if (!state.getLed1Slot().isEmpty())
-            partsPanel.add(new Label("Remove LED1 before installing a replacement."));
+        if (powered && !powerWarningAdded) {
+            partsPanel.add(new Label("Turn board power off."));
+            powerWarningAdded = true;
+        }
+        PhysicalBoardSlot slot = instance.getPhysicalBoardRuntime().getSlot(componentId);
+        if (slot != null && slot.isOccupied() && (!powered ||
+                provider.showOccupiedMessageWhenPowered()))
+            partsPanel.add(new Label("Remove " + componentId +
+                " before installing a replacement."));
+        return powerWarningAdded;
     }
 
-    private void addSelectedLedControls(final LedIndicatorFamilyState state,
+    private void addLoosePartButton(PhysicalPart<?> part) {
+        WorkbenchPartsProvider provider = instance.getPhysicalBoardRuntime()
+            .getWorkbenchPartsProviderForPart(part.getId());
+        if (provider == null)
+            throw new IllegalStateException("Loose part has no workbench provider: " + part.getId());
+        Button select = new Button(provider.getPartLabel(part));
+        select.setStyleName("tsj-action-button");
+        select.setEnabled(sim.isChallengeInteractionEnabled());
+        final String partId = part.getId();
+        select.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                renderer.setSelectedPartId(partId);
+                renderer.setSelectedComponentId(null);
+                rebuildPanel();
+                rebuildPartsPanel();
+                sim.repaint();
+            }
+        });
+        partsPanel.add(select);
+    }
+
+    private void addSelectedPartControls(final WorkbenchPartsProvider provider,
             final String selectedPartId) {
-        PhysicalLedPart part = state.getLedInventory().get(selectedPartId);
-        partsPanel.add(new Label("Selected: " + part.getId() + " - " +
-            part.getNameplate().getDisplayName()));
+        final PhysicalPart<?> part = provider.getPart(selectedPartId);
+        final String componentId = provider.getComponentId();
+        partsPanel.add(new Label("Selected: " + provider.getPartLabel(part)));
         partsPanel.add(new Label("State: Loose"));
-        Button install = new Button("Install as LED1");
+        final WorkbenchOperation installOperation = WorkbenchOperation.forPartAtSlot(
+            WorkbenchOperation.INSTALL, part, componentId);
+        Button install = new Button(operationLabel(part, installOperation,
+            "Install as " + componentId));
         install.setStyleName("tsj-action-button");
-        install.setEnabled(sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered() && state.getLed1Slot().isEmpty());
+        install.setEnabled(getCapability(part, installOperation) != null &&
+            isOperationAvailable(part, installOperation));
         install.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 try {
-                    if (sim.getLedSlotController().install(selectedPartId))
+                    if (dispatchOperation(part, installOperation))
                         renderer.setSelectedPartId(null);
                 } catch (BoardModificationRejectedException exception) {
                     feedback.setText("Turn board power off before modifying components.");
@@ -382,6 +261,32 @@ class PcbWorkbenchController {
             }
         });
         partsPanel.add(install);
+
+        final WorkbenchOperation inspectOperation =
+            WorkbenchOperation.forPart(WorkbenchOperation.INSPECT_LOOSE, part);
+        final WorkbenchCapabilityStrategy inspectCapability = getCapability(part,
+            inspectOperation);
+        if (inspectCapability != null) {
+            Button inspect = new Button(inspectCapability.getOperationLabel(inspectOperation));
+            inspect.setStyleName("tsj-action-button");
+            inspect.setEnabled(isOperationAvailable(part, inspectOperation));
+            inspect.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    if (dispatchOperation(part, inspectOperation))
+                        feedback.setText("Inspection: " + provider.getPartLabel(part));
+                    refresh();
+                    sim.repaint();
+                }
+            });
+            partsPanel.add(inspect);
+        }
+    }
+
+    private Vector<PhysicalPart<?>> getLooseParts(Vector<WorkbenchPartsProvider> providers) {
+        Vector<PhysicalPart<?>> result = new Vector<PhysicalPart<?>>();
+        for (WorkbenchPartsProvider provider : providers)
+            result.addAll(provider.getLooseParts());
+        return result;
     }
 
     private void addPaginationControls() {
@@ -420,74 +325,90 @@ class PcbWorkbenchController {
 
     private void addActions(final String componentId,
             Vector<GeneratedComponentConnectionBinding> bindings, boolean disabled) {
-        if (isReplaceableSlotEmpty(componentId))
+        if (isManagedSlotEmpty(componentId))
             return;
-        if (instance.getFamilyState() instanceof ParallelDualIndicatorFamilyState &&
-                !"R1".equals(componentId))
+        final PhysicalPart part = getInstalledPhysicalPart(componentId);
+        if (part != null && !hasComponentCapability(part, componentId))
             return;
         ComponentPhysicalState state = modifications.getComponentState(componentId);
         if (state == ComponentPhysicalState.INSTALLED) {
             for (final GeneratedComponentConnectionBinding binding : bindings) {
                 BoardPad pad = instance.getBoard().getPad(binding.getPadId());
-                addAction("Lift lead " + pad.getTerminalId(), disabled, new ComponentAction() {
+                final WorkbenchOperation operation = part == null ?
+                    WorkbenchOperation.forComponentLead(WorkbenchOperation.LIFT_LEAD, componentId,
+                        binding.getPadId()) :
+                    WorkbenchOperation.forPartLead(WorkbenchOperation.LIFT_LEAD, part,
+                        componentId, binding.getPadId());
+                addAction(operationLabel(part, operation, "Lift lead " + pad.getTerminalId()),
+                    disabled || !isOperationAvailable(part, operation), new ComponentAction() {
                     public void execute() {
-                        modifications.liftLead(componentId, binding.getPadId());
+                        dispatchOperation(part, operation);
                     }
                 });
             }
-            addRemoveAction(componentId, disabled);
+            addRemoveAction(componentId, part, disabled);
         } else if (state == ComponentPhysicalState.LEAD_LIFTED) {
             for (final GeneratedComponentConnectionBinding binding : bindings) {
                 final BoardPad pad = instance.getBoard().getPad(binding.getPadId());
                 if (modifications.isLeadConnected(componentId, binding.getPadId())) {
-                    addAction("Lift lead " + pad.getTerminalId(), disabled, new ComponentAction() {
+                    final WorkbenchOperation operation = part == null ?
+                        WorkbenchOperation.forComponentLead(WorkbenchOperation.LIFT_LEAD,
+                            componentId, binding.getPadId()) :
+                        WorkbenchOperation.forPartLead(WorkbenchOperation.LIFT_LEAD, part,
+                            componentId, binding.getPadId());
+                    addAction(operationLabel(part, operation, "Lift lead " + pad.getTerminalId()),
+                        disabled || !isOperationAvailable(part, operation), new ComponentAction() {
                         public void execute() {
-                            modifications.liftLead(componentId, binding.getPadId());
+                            dispatchOperation(part, operation);
                         }
                     });
                 } else {
-                    addAction("Reconnect lead " + pad.getTerminalId(), disabled,
+                    final WorkbenchOperation operation = part == null ?
+                        WorkbenchOperation.forComponentLead(WorkbenchOperation.RECONNECT_LEAD,
+                            componentId, binding.getPadId()) :
+                        WorkbenchOperation.forPartLead(WorkbenchOperation.RECONNECT_LEAD, part,
+                            componentId, binding.getPadId());
+                    addAction(operationLabel(part, operation,
+                            "Reconnect lead " + pad.getTerminalId()),
+                        disabled || !isOperationAvailable(part, operation),
                         new ComponentAction() {
                             public void execute() {
-                                modifications.reconnectLead(componentId, binding.getPadId());
+                                dispatchOperation(part, operation);
                             }
                         });
                 }
             }
-            addRemoveAction(componentId, disabled);
-            addRestoreAction(componentId, disabled);
+            addRemoveAction(componentId, part, disabled);
+            addRestoreAction(componentId, part, disabled);
         } else {
-            addRestoreAction(componentId, disabled);
+            addRestoreAction(componentId, part, disabled);
         }
     }
 
-    private void addRemoveAction(final String componentId, boolean disabled) {
-        addAction("Remove component", disabled, new ComponentAction() {
+    private void addRemoveAction(final String componentId, final PhysicalPart part,
+            boolean disabled) {
+        final WorkbenchOperation operation = part == null ?
+            WorkbenchOperation.forComponent(WorkbenchOperation.REMOVE, componentId) :
+            WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, part);
+        addAction(operationLabel(part, operation, "Remove component"),
+            disabled || !isOperationAvailable(part, operation),
+            new ComponentAction() {
             public void execute() {
-                ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
-                if (resistorFamily != null && resistorFamily.getReplaceableResistorSlot()
-                        .getComponentId().equals(componentId))
-                    sim.getResistorSlotController().removeInstalledPart();
-                else if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "LED1".equals(componentId))
-                    sim.getLedSlotController().removeInstalledPart();
-                else if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState && "D1".equals(componentId))
-                    sim.getDiodeSlotController().removeInstalledPart();
-                else
-                    modifications.removeComponent(componentId);
+                dispatchOperation(part, operation);
             }
         });
     }
 
-    private void addRestoreAction(final String componentId, boolean disabled) {
-        addAction("Restore component", disabled, new ComponentAction() {
+    private void addRestoreAction(final String componentId, final PhysicalPart part,
+            boolean disabled) {
+        final WorkbenchOperation operation = part == null ?
+            WorkbenchOperation.forComponent(WorkbenchOperation.RESTORE, componentId) :
+            WorkbenchOperation.forPart(WorkbenchOperation.RESTORE, part);
+        addAction(operationLabel(part, operation, "Restore component"),
+            disabled || !isOperationAvailable(part, operation),
+            new ComponentAction() {
             public void execute() {
-                ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
-                if (!((resistorFamily != null && resistorFamily.getReplaceableResistorSlot()
-                        .getComponentId().equals(componentId)) ||
-                        (instance.getFamilyState() instanceof LedIndicatorFamilyState &&
-                        "LED1".equals(componentId))) &&
-                        !(instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState && "D1".equals(componentId)))
-                    modifications.restoreComponent(componentId);
+                dispatchOperation(part, operation);
             }
         });
     }
@@ -525,27 +446,40 @@ class PcbWorkbenchController {
         return "Installed";
     }
 
-    private boolean isReplaceableSlotEmpty(String componentId) {
-        if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState)
-            return "D1".equals(componentId) &&
-                DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty();
-        ReplaceableResistorFamilyState resistorFamily = getReplaceableResistorFamily();
-        boolean resistorEmpty = resistorFamily != null && resistorFamily.getReplaceableResistorSlot()
-            .getComponentId().equals(componentId) && resistorFamily.getReplaceableResistorSlot().isEmpty();
-        boolean ledEmpty = instance.getFamilyState() instanceof LedIndicatorFamilyState &&
-            "LED1".equals(componentId) && LedIndicatorFamilyState.require(instance).getLed1Slot().isEmpty();
-        return resistorEmpty || ledEmpty;
+    PhysicalPart getInstalledPhysicalPart(String componentId) {
+        return instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
     }
 
-    private ReplaceableResistorFamilyState getReplaceableResistorFamily() {
-        return instance.getFamilyState() instanceof ReplaceableResistorFamilyState ?
-            (ReplaceableResistorFamilyState) instance.getFamilyState() : null;
+    public boolean isAvailable(WorkbenchOperation operation) {
+        WorkbenchCapabilityStrategy capability = getCapability(operation == null ? null :
+            operation.getPart(), operation);
+        return capability != null && capability.isAvailable(operation, this);
     }
 
-    private String getResistorPartLabel(PhysicalResistorPart part) {
-        if (part.isOriginal())
-            return part.getId() + " - Removed resistor";
-        return part.getId() + " - " + part.getNameplate().getDisplayValue();
+    public boolean dispatch(WorkbenchOperation operation) {
+        WorkbenchCapabilityStrategy capability = getCapability(operation == null ? null :
+            operation.getPart(), operation);
+        return capability != null && capability.isAvailable(operation, this) &&
+            capability.invoke(operation, this);
+    }
+
+    private boolean hasComponentCapability(PhysicalPart part, String componentId) {
+        WorkbenchOperation remove = part == null ?
+            WorkbenchOperation.forComponent(WorkbenchOperation.REMOVE, componentId) :
+            WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, part);
+        WorkbenchOperation lift = part == null ?
+            WorkbenchOperation.forComponentLead(WorkbenchOperation.LIFT_LEAD, componentId,
+                instance.getBoard().getComponent(componentId).getPadIds().firstElement()) :
+            WorkbenchOperation.forPartLead(WorkbenchOperation.LIFT_LEAD, part, componentId,
+                instance.getBoard().getComponent(componentId).getPadIds().firstElement());
+        return getCapability(part, remove) != null || getCapability(part, lift) != null;
+    }
+
+    private boolean isManagedSlotEmpty(String componentId) {
+        PhysicalSlotMutationProvider provider = instance.getPhysicalBoardRuntime()
+            .getMutationProvider(componentId);
+        PhysicalBoardSlot slot = instance.getPhysicalBoardRuntime().getSlot(componentId);
+        return provider != null && slot != null && !slot.isOccupied();
     }
 
     private interface ComponentAction { void execute(); }

@@ -1,15 +1,19 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.HashMap;
 import java.util.Vector;
 
+/** Common PCB canvas, transform, selection, and provider orchestration. */
 class PcbWorkbenchRenderer {
     private static final int PAD_RADIUS = 13;
     private static final int DRILL_RADIUS = 5;
     private static final int HIT_RADIUS_SQ = 18 * 18;
+    private static final int PARTS_PER_TRAY_PAGE = 3;
 
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
     private final PcbBoardLayout layout;
+    private final PhysicalPartRenderRegistry renderRegistry;
     private Rectangle canvasArea = new Rectangle(0, 0, 1, 1);
     private double scale = 1;
     private int offsetX;
@@ -17,13 +21,21 @@ class PcbWorkbenchRenderer {
     private String selectedComponentId;
     private String selectedPartId;
     private int trayPage;
-    private static final int PARTS_PER_TRAY_PAGE = 3;
 
     PcbWorkbenchRenderer(GeneratedBoardInstance instance,
             BoardModificationController modifications, PcbBoardLayout layout) {
+        this(instance, modifications, layout, StandardPhysicalPartRenderProviders.createRegistry());
+    }
+
+    PcbWorkbenchRenderer(GeneratedBoardInstance instance,
+            BoardModificationController modifications, PcbBoardLayout layout,
+            PhysicalPartRenderRegistry renderRegistry) {
+        if (instance == null || modifications == null || layout == null || renderRegistry == null)
+            throw new IllegalArgumentException("Missing PCB workbench renderer dependency");
         this.instance = instance;
         this.modifications = modifications;
         this.layout = layout;
+        this.renderRegistry = renderRegistry;
     }
 
     void draw(Graphics graphics, Rectangle area) {
@@ -35,7 +47,6 @@ class PcbWorkbenchRenderer {
             graphics.drawLine(x, 0, x, area.height);
         for (int y = 0; y < area.height; y += 32)
             graphics.drawLine(0, y, area.width, y);
-
         drawBoard(graphics);
         drawTray(graphics);
         if (CirSim.theSim != null && CirSim.theSim.isGeometryVerificationEnabled())
@@ -49,7 +60,6 @@ class PcbWorkbenchRenderer {
         graphics.setColor("#b5dfc8");
         graphics.setLineWidth(2);
         graphics.drawRect(outline.x, outline.y, outline.width, outline.height);
-
         graphics.setColor("#b56c2f");
         graphics.setLineWidth(Math.max(5, scaleInt(PcbTraceRules.TRACE_WIDTH)));
         for (PcbTraceGeometry trace : layout.getTraces()) {
@@ -60,12 +70,10 @@ class PcbWorkbenchRenderer {
                     screenX(sourceX[index]), screenY(sourceY[index]));
         }
         graphics.setLineWidth(1);
-
         for (PcbPadPlacement pad : layout.getPads())
             drawPad(graphics, pad);
         for (PcbComponentPlacement component : layout.getComponents())
             drawComponent(graphics, component);
-
         drawSilkscreenLabels(graphics);
     }
 
@@ -83,158 +91,31 @@ class PcbWorkbenchRenderer {
         BoardComponent component = instance.getBoard().getComponent(placement.getComponentId());
         if (component == null)
             return;
-        if (placement.getComponentId().equals(selectedComponentId)) {
-            Rectangle bounds = screenRect(placement);
-            graphics.setColor("#f4d35e");
-            graphics.setLineWidth(4);
-            graphics.drawRect(bounds.x - 8, bounds.y - 8, bounds.width + 16, bounds.height + 16);
-            graphics.setLineWidth(1);
-        }
-        if ("RESISTOR".equals(component.getType()))
-            drawResistor(graphics, placement);
-        else if ("DIODE".equals(component.getType()))
-            drawDiode(graphics, placement);
-        else if ("LED".equals(component.getType()))
-            drawLed(graphics, placement);
-        else if ("CONNECTOR".equals(component.getType()))
-            drawConnector(graphics, placement);
+        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(
+            placement.getComponentId());
+        PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
+            component.getPhysicalPackage(), 0, false);
+        drawComponent(graphics, placement, component, part, context,
+            placement.getComponentId().equals(selectedComponentId));
     }
 
-    private void drawResistor(Graphics graphics, PcbComponentPlacement placement) {
-        boolean detachable = !instance.getConnectionBindings()
-            .getForComponentOrEmpty(placement.getComponentId()).isEmpty();
-        ComponentPhysicalState state = detachable ?
-            modifications.getComponentState(placement.getComponentId()) : ComponentPhysicalState.INSTALLED;
-        if (state == ComponentPhysicalState.REMOVED)
-            return;
-        Vector<String> padIds = instance.getBoard().getComponent(placement.getComponentId()).getPadIds();
-        Point pad1 = getPadPoint(padIds.get(0));
-        Point pad2 = getPadPoint(padIds.get(1));
-        boolean lead1Connected = !detachable ||
-            modifications.isLeadConnected(placement.getComponentId(), padIds.get(0));
-        boolean lead2Connected = !detachable ||
-            modifications.isLeadConnected(placement.getComponentId(), padIds.get(1));
-        int bodyY = pad1.y - (state == ComponentPhysicalState.LEAD_LIFTED ? scaleInt(28) : 0);
-        int bodyLeft = pad1.x + scaleInt(45);
-        int bodyRight = pad2.x - scaleInt(45);
+    private PhysicalPartRenderGeometry drawComponent(Graphics graphics,
+            PcbComponentPlacement placement, BoardComponent component, PhysicalPart<?> part,
+            PhysicalPartRenderContext context, boolean selected) {
+        PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
+        PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
+        if (selected)
+            drawSelection(graphics, geometry);
+        renderer.drawInstalled(graphics, context, geometry, selected);
+        return geometry;
+    }
 
-        graphics.setColor("#c6c2b2");
-        graphics.setLineWidth(Math.max(3, scaleInt(4)));
-        Point lead1End = lead1Connected ? pad1 : getComponentLeadPoint(placement.getComponentId(), padIds.get(0));
-        Point lead2End = lead2Connected ? pad2 : getComponentLeadPoint(placement.getComponentId(), padIds.get(1));
-        graphics.drawLine(bodyLeft, bodyY, lead1End.x, lead1End.y);
-        graphics.drawLine(bodyRight, bodyY, lead2End.x, lead2End.y);
+    private void drawSelection(Graphics graphics, PhysicalPartRenderGeometry geometry) {
+        Rectangle bounds = geometry.getSelectionBounds();
+        graphics.setColor("#f4d35e");
+        graphics.setLineWidth(4);
+        graphics.drawRect(bounds.x - 8, bounds.y - 8, bounds.width + 16, bounds.height + 16);
         graphics.setLineWidth(1);
-
-        int bodyHeight = Math.max(22, scaleInt(34));
-        graphics.setColor("#d9c79b");
-        graphics.fillRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
-        graphics.setColor("#302a22");
-        graphics.drawRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
-        PhysicalResistorPart installed = getInstalledResistorPart(placement.getComponentId());
-        if (installed != null)
-            drawResistorBands(graphics, installed, bodyLeft, bodyRight, bodyY, bodyHeight);
-        else
-            drawResistorBands(graphics, getResistorBands(placement.getComponentId()), bodyLeft,
-                bodyRight, bodyY, bodyHeight);
-
-    }
-
-    private void drawDiode(Graphics graphics, PcbComponentPlacement placement) {
-        ComponentPhysicalState state = modifications.getComponentState("D1");
-        DiodeComponentSlot slot = DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot();
-        if (state == ComponentPhysicalState.REMOVED || slot.isEmpty())
-            return;
-        PhysicalDiodePart part = slot.getInstalledPart();
-        Vector<String> padIds = instance.getBoard().getComponent("D1").getPadIds();
-        Point leftPad = getPadPoint(padIds.get(0));
-        Point rightPad = getPadPoint(padIds.get(1));
-        boolean leftConnected = modifications.isLeadConnected("D1", padIds.get(0));
-        boolean rightConnected = modifications.isLeadConnected("D1", padIds.get(1));
-        int bodyY = leftPad.y - (state == ComponentPhysicalState.LEAD_LIFTED ? scaleInt(28) : 0);
-        int bodyLeft = leftPad.x + scaleInt(42);
-        int bodyRight = rightPad.x - scaleInt(42);
-        Point leftEnd = leftConnected ? leftPad : getComponentLeadPoint("D1", padIds.get(0));
-        Point rightEnd = rightConnected ? rightPad : getComponentLeadPoint("D1", padIds.get(1));
-        graphics.setColor("#a8adb0");
-        graphics.setLineWidth(Math.max(3, scaleInt(4)));
-        graphics.drawLine(bodyLeft, bodyY, leftEnd.x, leftEnd.y);
-        graphics.drawLine(bodyRight, bodyY, rightEnd.x, rightEnd.y);
-        graphics.setLineWidth(1);
-        int bodyHeight = Math.max(22, scaleInt(32));
-        graphics.setColor("#282c31");
-        graphics.fillRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
-        graphics.setColor("#111315");
-        graphics.drawRect(bodyLeft, bodyY - bodyHeight / 2, bodyRight - bodyLeft, bodyHeight);
-        drawCathodeBand(graphics, part.isReversedInstallation() ? bodyLeft : bodyRight,
-            bodyY, bodyHeight, part.isReversedInstallation());
-        graphics.drawString("K", part.isReversedInstallation() ? leftPad.x - scaleInt(5) :
-            rightPad.x - scaleInt(5), rightPad.y + scaleInt(28));
-    }
-
-    private void drawLed(Graphics graphics, PcbComponentPlacement placement) {
-        Vector<String> padIds = instance.getBoard().getComponent(placement.getComponentId()).getPadIds();
-        Point anode = getPadPoint(padIds.get(0));
-        Point cathode = getPadPoint(padIds.get(1));
-        PhysicalLedPart physicalPart = getInstalledLedPart(placement.getComponentId());
-        ComponentPhysicalState state = physicalPart == null ? ComponentPhysicalState.INSTALLED :
-            modifications.getComponentState(placement.getComponentId());
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState &&
-                (physicalPart == null || state == ComponentPhysicalState.REMOVED))
-            return;
-        int centerX = (anode.x + cathode.x) / 2;
-        int centerY = anode.y - scaleInt(33) -
-            (state == ComponentPhysicalState.LEAD_LIFTED ? scaleInt(28) : 0);
-        int radius = Math.max(16, scaleInt(25));
-        graphics.setColor("#a6b8ad");
-        graphics.setLineWidth(3);
-        Point anodeEnd = physicalPart != null && !modifications.isLeadConnected(
-            placement.getComponentId(), padIds.get(0)) ?
-            getComponentLeadPoint(placement.getComponentId(), padIds.get(0)) : anode;
-        Point cathodeEnd = physicalPart != null && !modifications.isLeadConnected(
-            placement.getComponentId(), padIds.get(1)) ?
-            getComponentLeadPoint(placement.getComponentId(), padIds.get(1)) : cathode;
-        graphics.drawLine(anodeEnd.x, anodeEnd.y, centerX - scaleInt(10), centerY + scaleInt(15));
-        graphics.drawLine(cathodeEnd.x, cathodeEnd.y, centerX + scaleInt(10), centerY + scaleInt(15));
-        graphics.setLineWidth(1);
-        graphics.setColor("#b5232d");
-        if (instance.getOperationalStates().isIlluminated(placement.getComponentId())) {
-            graphics.setColor("#ffdc4f");
-            graphics.fillOval(centerX - radius - scaleInt(9), centerY - radius - scaleInt(9),
-                radius * 2 + scaleInt(18), radius * 2 + scaleInt(18));
-            graphics.setColor("#b5232d");
-        }
-        graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
-        graphics.setColor("#f36a6f");
-        graphics.fillOval(centerX - radius / 2, centerY - radius / 2, radius / 2, radius / 2);
-        graphics.setColor("#f3efe4");
-        boolean reversed = physicalPart != null && physicalPart.isReversedInstallation();
-        graphics.fillRect(reversed ? centerX - radius : centerX + radius - scaleInt(6),
-            centerY - radius / 2,
-            Math.max(3, scaleInt(5)), radius);
-        graphics.drawString("K", (reversed ? anode : cathode).x - scaleInt(4),
-            cathode.y + scaleInt(27));
-    }
-
-    private void drawConnector(Graphics graphics, PcbComponentPlacement placement) {
-        Rectangle bounds = screenRect(placement);
-        graphics.setColor("#2d8f71");
-        graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-        graphics.setColor("#b8ead7");
-        graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
-        BoardComponent component = instance.getBoard().getComponent(placement.getComponentId());
-        for (String padId : component.getPadIds()) {
-            Point pad = getPadPoint(padId);
-            int radius = Math.max(13, scaleInt(20));
-            graphics.setColor("#b8c8c2");
-            graphics.fillOval(pad.x - radius, pad.y - radius, radius * 2, radius * 2);
-            graphics.setColor("#4d5b57");
-            graphics.setLineWidth(3);
-            graphics.drawLine(pad.x - radius / 2, pad.y, pad.x + radius / 2, pad.y);
-            if ("J1.1".equals(padId))
-                graphics.drawLine(pad.x, pad.y - radius / 2, pad.x, pad.y + radius / 2);
-            graphics.setLineWidth(1);
-        }
     }
 
     private void drawSilkscreenLabels(Graphics graphics) {
@@ -242,10 +123,8 @@ class PcbWorkbenchRenderer {
             graphics.setFont(new Font("sans-serif", label.isBold() ? Font.BOLD : 0,
                 Math.max(10, scaleInt(label.getFontSize()))));
             graphics.setColor(label.getId().startsWith("net:") ? "#f2f5e9" : "#d9f1e3");
-            String text = "net:J1.1".equals(label.getId()) ? getPowerInputLabel() :
-                label.getText();
-            graphics.drawString(text, screenX(label.getBaselineX()),
-                screenY(label.getBaselineY()));
+            String text = getPowerInputLabel(label.getTargetPadId(), label.getText());
+            graphics.drawString(text, screenX(label.getBaselineX()), screenY(label.getBaselineY()));
         }
     }
 
@@ -258,20 +137,22 @@ class PcbWorkbenchRenderer {
         graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
         graphics.setColor("#3d484c");
         graphics.drawString("PARTS TRAY", tray.x + scaleInt(20), tray.y + scaleInt(30));
-        boolean empty = getLoosePartCount() == 0;
-        if (empty) {
+        Vector<PhysicalPart<?>> parts = getVisibleLoosePhysicalParts();
+        if (parts.isEmpty()) {
             graphics.setFont(new Font("sans-serif", 0, Math.max(11, scaleInt(12))));
             graphics.drawString("No removed parts", tray.x + scaleInt(20), tray.y + scaleInt(70));
         }
-        int index = 0;
-        if (isDiodeFamily()) {
-            for (PhysicalDiodePart part : getVisibleLooseDiodeParts())
-                drawTrayDiode(graphics, part, index++);
-        } else {
-            for (PhysicalResistorPart part : getVisibleLooseParts())
-                drawTrayResistor(graphics, part, index++);
-            for (PhysicalLedPart part : getVisibleLooseLedParts())
-                drawTrayLed(graphics, part, index++);
+        for (int index = 0; index < parts.size(); index++) {
+            PhysicalPart<?> part = parts.get(index);
+            PhysicalPartRenderProvider provider = renderRegistry.getProvider(part.getPackage());
+            if (provider == null)
+                throw new IllegalStateException("No physical render provider for part package: " +
+                    part.getPackage().getId());
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, null, part,
+                part.getPackage(), index, true);
+            PhysicalPartRenderer renderer = provider.getRenderer(part);
+            PhysicalPartRenderGeometry geometry = renderer.getLooseGeometry(context);
+            renderer.drawLoose(graphics, context, geometry, part.getId().equals(selectedPartId));
         }
         if (getTrayPageCount() > 1) {
             graphics.setFont(new Font("sans-serif", 0, Math.max(10, scaleInt(11))));
@@ -280,117 +161,40 @@ class PcbWorkbenchRenderer {
         }
     }
 
-    private void drawTrayLed(Graphics graphics, PhysicalLedPart part, int index) {
-        Point anode = getLooseLedLeadPoint(part.getId(), 0);
-        Point cathode = getLooseLedLeadPoint(part.getId(), 1);
-        int centerX = (anode.x + cathode.x) / 2;
-        int centerY = anode.y;
-        int radius = Math.max(11, scaleInt(16));
-        graphics.setColor("#a8adb0");
-        graphics.setLineWidth(3);
-        graphics.drawLine(anode.x, anode.y, centerX - radius, centerY);
-        graphics.drawLine(centerX + radius, centerY, cathode.x, cathode.y);
-        graphics.setLineWidth(1);
-        graphics.setColor("#b5232d");
-        graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
-        graphics.setColor("#f36a6f");
-        graphics.fillOval(centerX - radius / 2, centerY - radius / 2, radius / 2, radius / 2);
-        boolean cathodeLeft = cathode.x < anode.x;
-        graphics.setColor("#f3efe4");
-        graphics.fillRect(cathodeLeft ? centerX - radius : centerX + radius - scaleInt(4),
-            centerY - radius / 2, Math.max(3, scaleInt(4)), radius);
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
-        graphics.setColor("#3d484c");
-        graphics.drawString(part.getId().equals(selectedPartId) ? "SELECTED" : "LED",
-            Math.min(anode.x, cathode.x) + scaleInt(20), centerY - scaleInt(26));
-    }
-
-    private void drawTrayDiode(Graphics graphics, PhysicalDiodePart part, int index) {
-        Point anode = getLooseDiodeLeadPoint(part.getId(), 0);
-        Point cathode = getLooseDiodeLeadPoint(part.getId(), 1);
-        Point left = anode.x < cathode.x ? anode : cathode;
-        Point right = anode.x < cathode.x ? cathode : anode;
-        int bodyLeft = left.x + scaleInt(24);
-        int bodyRight = right.x - scaleInt(24);
-        graphics.setColor("#a8adb0");
-        graphics.setLineWidth(3);
-        graphics.drawLine(left.x, left.y, bodyLeft, left.y);
-        graphics.drawLine(bodyRight, right.y, right.x, right.y);
-        graphics.setLineWidth(1);
-        graphics.setColor("#282c31");
-        graphics.fillRect(bodyLeft, left.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
-        graphics.setColor("#111315");
-        graphics.drawRect(bodyLeft, left.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
-        drawCathodeBand(graphics, cathode.x < anode.x ? bodyLeft : bodyRight, left.y,
-            scaleInt(28), cathode.x < anode.x);
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
-        graphics.setColor("#3d484c");
-        graphics.drawString(part.getId().equals(selectedPartId) ? "SELECTED" : "DIODE",
-            left.x + scaleInt(20), left.y - scaleInt(26));
-    }
-
-    private void drawTrayResistor(Graphics graphics, PhysicalResistorPart part, int index) {
-        Point lead1 = getLoosePartLeadPoint(part.getId(), 0);
-        Point lead2 = getLoosePartLeadPoint(part.getId(), 1);
-        int bodyLeft = lead1.x + scaleInt(24);
-        int bodyRight = lead2.x - scaleInt(24);
-        graphics.setColor("#a8adb0");
-        graphics.setLineWidth(3);
-        graphics.drawLine(lead1.x, lead1.y, bodyLeft, lead1.y);
-        graphics.drawLine(bodyRight, lead2.y, lead2.x, lead2.y);
-        graphics.setLineWidth(1);
-        graphics.setColor("#d9c79b");
-        graphics.fillRect(bodyLeft, lead1.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
-        graphics.setColor("#302a22");
-        graphics.drawRect(bodyLeft, lead1.y - scaleInt(14), bodyRight - bodyLeft, scaleInt(28));
-        drawResistorBands(graphics, part, bodyLeft, bodyRight, lead1.y, scaleInt(28));
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
-        graphics.drawString(part.getId().equals(selectedPartId) ? "SELECTED" : "RESISTOR",
-            lead1.x + scaleInt(20), lead1.y - scaleInt(26));
-    }
-
     ProbeTarget findProbeTarget(CirSim sim, int screenX, int screenY) {
-        if (isDiodeFamily()) {
-            for (PhysicalDiodePart part : getVisibleLooseDiodeParts()) {
-                for (int terminal = 0; terminal < 2; terminal++) {
-                    Point point = getLooseDiodeLeadPoint(part.getId(), terminal);
-                    if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
-                        return new PhysicalDiodePartProbeTarget(sim, instance, part.getId(),
-                            terminal, this);
-                }
-            }
-        }
-        for (PhysicalResistorPart part : getVisibleLooseParts()) {
-            for (int terminal = 0; terminal < 2; terminal++) {
-                Point point = getLoosePartLeadPoint(part.getId(), terminal);
+        Vector<PhysicalPart<?>> looseParts = getVisibleLoosePhysicalParts();
+        for (int index = 0; index < looseParts.size(); index++) {
+            PhysicalPart<?> part = looseParts.get(index);
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, null, part,
+                part.getPackage(), index, true);
+            PhysicalPartRenderer renderer = requireRenderer(part.getPackage(), part);
+            PhysicalPartRenderGeometry geometry = renderer.getLooseGeometry(context);
+            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+                Point point = terminal.getPoint();
                 if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
-                    return new PhysicalResistorPartProbeTarget(sim, instance, part.getId(), terminal, this);
+                    return renderer.createLooseProbeTarget(sim, context,
+                        terminal.getTerminalIndex());
             }
         }
-        for (PhysicalLedPart part : getVisibleLooseLedParts()) {
-            for (int terminal = 0; terminal < 2; terminal++) {
-                Point point = getLooseLedLeadPoint(part.getId(), terminal);
-                if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
-                    return new PhysicalLedPartProbeTarget(sim, instance, part.getId(), terminal, this);
-            }
-        }
-        for (PcbComponentPlacement component : layout.getComponents()) {
-            Vector<GeneratedComponentConnectionBinding> bindings =
-                instance.getConnectionBindings().getForComponentOrEmpty(component.getComponentId());
-            if (bindings.isEmpty() || modifications.getComponentState(component.getComponentId()) ==
+        for (PcbComponentPlacement placement : layout.getComponents()) {
+            BoardComponent component = instance.getBoard().getComponent(placement.getComponentId());
+            if (component == null)
+                continue;
+            Vector<GeneratedComponentConnectionBinding> bindings = instance.getConnectionBindings()
+                .getForComponentOrEmpty(placement.getComponentId());
+            if (bindings.isEmpty() || modifications.getComponentState(placement.getComponentId()) ==
                     ComponentPhysicalState.INSTALLED)
                 continue;
-            for (GeneratedComponentConnectionBinding binding : bindings) {
-                Point point = getComponentLeadPoint(binding.getComponentId(), binding.getPadId());
-                if (point != null && Graphics.distanceSq(point.x, point.y, screenX, screenY) <=
-                        HIT_RADIUS_SQ) {
-                    String partId = getInstalledPhysicalPartId(binding.getComponentId());
-                    if (partId == null)
-                        continue;
-                    return new ComponentLeadProbeTarget(sim, instance, binding.getComponentId(),
-                        binding.getPadId(), this, partId, binding.getComponentEndpoint());
-                }
-            }
+            PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(
+                placement.getComponentId());
+            if (part == null)
+                continue;
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
+                component.getPhysicalPackage(), 0, false);
+            ProbeTarget target = findInstalledProbeTarget(sim, placement, component, part,
+                context, screenX, screenY);
+            if (target != null)
+                return target;
         }
         for (PcbPadPlacement pad : layout.getPads()) {
             Point point = getPadPoint(pad.getPadId());
@@ -401,53 +205,30 @@ class PcbWorkbenchRenderer {
     }
 
     String findComponentId(int screenX, int screenY) {
-        for (PcbComponentPlacement component : layout.getComponents()) {
-            if (isReplaceableSlotEmpty(component.getComponentId()))
+        for (PcbComponentPlacement placement : layout.getComponents()) {
+            if (isReplaceableSlotEmpty(placement.getComponentId()))
                 continue;
-            Vector<GeneratedComponentConnectionBinding> bindings =
-                instance.getConnectionBindings().getForComponentOrEmpty(component.getComponentId());
-            if (!bindings.isEmpty() && modifications.getComponentState(component.getComponentId()) ==
-                    ComponentPhysicalState.REMOVED) {
-                Point lead1 = getComponentLeadPoint(component.getComponentId(),
-                    instance.getBoard().getComponent(component.getComponentId()).getPadIds().get(0));
-                if (lead1 != null) {
-                    Rectangle trayPart = new Rectangle(lead1.x - scaleInt(8),
-                        lead1.y - scaleInt(35), scaleInt(145), scaleInt(70));
-                    if (trayPart.contains(screenX, screenY))
-                        return component.getComponentId();
-                }
-            } else if (screenRect(component).contains(screenX, screenY)) {
-                return component.getComponentId();
-            }
+            BoardComponent component = instance.getBoard().getComponent(placement.getComponentId());
+            if (component == null)
+                continue;
+            PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(
+                placement.getComponentId());
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
+                component.getPhysicalPackage(), 0, false);
+            if (findComponentIdForPlacement(placement, component, part, context, screenX, screenY))
+                return placement.getComponentId();
         }
         return null;
     }
 
     String findPartId(int screenX, int screenY) {
-        if (isDiodeFamily()) {
-            for (PhysicalDiodePart part : getVisibleLooseDiodeParts()) {
-                Point anode = getLooseDiodeLeadPoint(part.getId(), 0);
-                Point cathode = getLooseDiodeLeadPoint(part.getId(), 1);
-                int left = Math.min(anode.x, cathode.x);
-                Rectangle trayPart = new Rectangle(left - scaleInt(8), anode.y - scaleInt(35),
-                    scaleInt(145), scaleInt(70));
-                if (trayPart.contains(screenX, screenY))
-                    return part.getId();
-            }
-        }
-        for (PhysicalResistorPart part : getVisibleLooseParts()) {
-            Point lead1 = getLoosePartLeadPoint(part.getId(), 0);
-            Rectangle trayPart = new Rectangle(lead1.x - scaleInt(8), lead1.y - scaleInt(35),
-                scaleInt(145), scaleInt(70));
-            if (trayPart.contains(screenX, screenY))
-                return part.getId();
-        }
-        for (PhysicalLedPart part : getVisibleLooseLedParts()) {
-            Point anode = getLooseLedLeadPoint(part.getId(), 0);
-            Point cathode = getLooseLedLeadPoint(part.getId(), 1);
-            Rectangle trayPart = new Rectangle(Math.min(anode.x, cathode.x) - scaleInt(8),
-                anode.y - scaleInt(35), scaleInt(145), scaleInt(70));
-            if (trayPart.contains(screenX, screenY))
+        Vector<PhysicalPart<?>> parts = getVisibleLoosePhysicalParts();
+        for (int index = 0; index < parts.size(); index++) {
+            PhysicalPart<?> part = parts.get(index);
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, null, part,
+                part.getPackage(), index, true);
+            PhysicalPartRenderer renderer = requireRenderer(part.getPackage(), part);
+            if (renderer.getLooseGeometry(context).contains(screenX, screenY))
                 return part.getId();
         }
         return null;
@@ -459,66 +240,39 @@ class PcbWorkbenchRenderer {
     }
 
     Point getComponentLeadPoint(String componentId, String padId) {
-        PcbPadPlacement pad = layout.getPad(padId);
-        if (pad == null)
+        PcbComponentPlacement placement = layout.getComponent(componentId);
+        BoardComponent component = instance.getBoard().getComponent(componentId);
+        if (placement == null || component == null)
             return null;
-        ComponentPhysicalState state = modifications.getComponentState(componentId);
-        Vector<String> padIds = instance.getBoard().getComponent(componentId).getPadIds();
-        int terminalIndex = padIds.indexOf(padId);
-        if (state == ComponentPhysicalState.REMOVED) {
-            Rectangle tray = layout.getPartsTray();
-            return new Point(screenX(tray.x + (terminalIndex == 0 ? 18 : tray.width - 18)),
-                screenY(tray.y + 125));
-        }
-        int direction = terminalIndex == 0 ? 1 : -1;
-        if (modifications.isLeadConnected(componentId, padId))
-            return new Point(screenX(pad.getX() + direction * 25), screenY(pad.getY() - 20));
-        return new Point(screenX(pad.getX() + direction * 20), screenY(pad.getY() - 28));
+        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+        PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
+            component.getPhysicalPackage(), 0, false);
+        PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
+        PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
+        for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
+            if (padId.equals(terminal.getBoardPadId()))
+                return terminal.getPoint();
+        return null;
     }
 
     boolean hasPad(String padId) { return layout.getPad(padId) != null; }
-    Point getLoosePartLeadPoint(String partId, int terminal) {
-        int index = 0;
-        for (PhysicalResistorPart part : getVisibleLooseParts()) {
-            if (part.getId().equals(partId)) {
-                Rectangle tray = layout.getPartsTray();
-                int y = tray.y + 70 + index * 48;
-                return new Point(screenX(tray.x + (terminal == 0 ? 18 : tray.width - 18)), screenY(y));
-            }
-            index++;
-        }
-        return null;
-    }
 
-    Point getLooseDiodeLeadPoint(String partId, int terminal) {
-        int index = 0;
-        for (PhysicalDiodePart part : getVisibleLooseDiodeParts()) {
-            if (part.getId().equals(partId)) {
-                Rectangle tray = layout.getPartsTray();
-                int y = tray.y + 70 + index * 48;
-                boolean left = (terminal == 0) != part.isReversedInstallation();
-                return new Point(screenX(tray.x + (left ? 18 : tray.width - 18)), screenY(y));
-            }
-            index++;
-        }
-        return null;
-    }
-
-    Point getLooseLedLeadPoint(String partId, int terminal) {
-        int index = getVisibleLooseParts().size();
-        for (PhysicalLedPart part : getVisibleLooseLedParts()) {
-            if (part.getId().equals(partId)) {
-                Rectangle tray = layout.getPartsTray();
-                int y = tray.y + 70 + index * 48;
-                boolean left = (terminal == 0) != part.isReversedInstallation();
-                return new Point(screenX(tray.x + (left ? 18 : tray.width - 18)), screenY(y));
-            }
-            index++;
+    Point getLooseTerminalPoint(String partId, int terminal) {
+        Vector<PhysicalPart<?>> parts = getVisibleLoosePhysicalParts();
+        for (int index = 0; index < parts.size(); index++) {
+            PhysicalPart<?> part = parts.get(index);
+            if (!part.getId().equals(partId))
+                continue;
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, null, part,
+                part.getPackage(), index, true);
+            PhysicalPartRenderer renderer = requireRenderer(part.getPackage(), part);
+            return renderer.getLooseGeometry(context).getTerminalPoint(terminal);
         }
         return null;
     }
 
     int getTrayPage() { return trayPage; }
+    int getPartsPerTrayPage() { return PARTS_PER_TRAY_PAGE; }
     int getTrayPageCount() {
         int count = getLoosePartCount();
         return Math.max(1, (count + PARTS_PER_TRAY_PAGE - 1) / PARTS_PER_TRAY_PAGE);
@@ -530,49 +284,84 @@ class PcbWorkbenchRenderer {
     }
     void clampTrayPage() { trayPage = clampTrayPageValue(trayPage); }
 
-    Vector<PhysicalResistorPart> getVisibleLooseParts() {
-        if (isDiodeFamily())
-            return new Vector<PhysicalResistorPart>();
-        if (!(instance.getFamilyState() instanceof ReplaceableResistorFamilyState))
-            return new Vector<PhysicalResistorPart>();
-        Vector<PhysicalResistorPart> loose = ((ReplaceableResistorFamilyState) instance.getFamilyState())
-            .getResistorInventory().getLooseParts();
+    Vector<PhysicalPart<?>> getVisibleLoosePhysicalParts() {
+        Vector<PhysicalPart<?>> all = getAllLoosePhysicalParts();
         clampTrayPage();
-        Vector<PhysicalResistorPart> result = new Vector<PhysicalResistorPart>();
+        Vector<PhysicalPart<?>> result = new Vector<PhysicalPart<?>>();
         int start = trayPage * PARTS_PER_TRAY_PAGE;
-        for (int index = start; index < loose.size() && index < start + PARTS_PER_TRAY_PAGE; index++)
-            result.add(loose.get(index));
+        for (int index = start; index < all.size() && index < start + PARTS_PER_TRAY_PAGE; index++)
+            result.add(all.get(index));
         return result;
     }
 
-    Vector<PhysicalDiodePart> getVisibleLooseDiodeParts() {
-        if (!isDiodeFamily())
-            return new Vector<PhysicalDiodePart>();
-        Vector<PhysicalDiodePart> loose = DiodeProtectedIndicatorFamilyState.require(instance)
-            .getInventory().getLooseParts();
-        clampTrayPage();
-        Vector<PhysicalDiodePart> result = new Vector<PhysicalDiodePart>();
-        int start = trayPage * PARTS_PER_TRAY_PAGE;
-        int end = Math.min(loose.size(), start + PARTS_PER_TRAY_PAGE);
-        for (int index = start; index < end; index++)
-            result.add(loose.get(index));
-        return result;
+    String getPowerInputLabelForDeveloperVerification() { return getPowerInputLabel(); }
+    void setSelectedComponentId(String componentId) { selectedComponentId = componentId; }
+    String getSelectedComponentId() { return selectedComponentId; }
+    void setSelectedPartId(String partId) { selectedPartId = partId; }
+    String getSelectedPartId() { return selectedPartId; }
+
+    PhysicalPartRenderRegistry getRenderRegistryForDeveloperVerification() { return renderRegistry; }
+
+    PhysicalPartRenderGeometry getInstalledGeometryForDeveloperVerification(String componentId) {
+        PcbComponentPlacement placement = layout.getComponent(componentId);
+        BoardComponent component = instance.getBoard().getComponent(componentId);
+        if (placement == null || component == null)
+            return null;
+        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+        PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
+            component.getPhysicalPackage(), 0, false);
+        return requireRenderer(component.getPhysicalPackage(), part).getInstalledGeometry(context);
     }
 
-    Vector<PhysicalLedPart> getVisibleLooseLedParts() {
-        Vector<PhysicalLedPart> result = new Vector<PhysicalLedPart>();
-        if (!(instance.getFamilyState() instanceof LedIndicatorFamilyState))
-            return result;
-        LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
-        Vector<PhysicalResistorPart> resistors = state.getResistorInventory().getLooseParts();
-        Vector<PhysicalLedPart> leds = state.getLedInventory().getLooseParts();
-        clampTrayPage();
-        int globalStart = trayPage * PARTS_PER_TRAY_PAGE;
-        int globalEnd = globalStart + PARTS_PER_TRAY_PAGE;
-        int start = Math.max(0, globalStart - resistors.size());
-        int end = Math.min(leds.size(), globalEnd - resistors.size());
-        for (int index = start; index < end; index++)
-            result.add(leds.get(index));
+    boolean drawInstalledForDeveloperVerification(CirSim sim, Graphics graphics,
+            String componentId) {
+        if (sim == null || graphics == null || sim.circuitArea == null)
+            throw new IllegalArgumentException("Incomplete installed render verification request");
+        PcbComponentPlacement placement = layout.getComponent(componentId);
+        BoardComponent component = instance.getBoard().getComponent(componentId);
+        if (placement == null || component == null)
+            return false;
+        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+        updateTransform(sim.circuitArea);
+        PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
+            component.getPhysicalPackage(), 0, false);
+        drawComponent(graphics, placement, component, part, context, false);
+        return context.wasBodyDrawn();
+    }
+
+    PhysicalPartRenderCanaryResult renderProviderCanaryForDeveloperVerification(CirSim sim,
+            Graphics graphics, TroubleshootBoard canaryBoard, PhysicalPart<?> part,
+            PcbComponentPlacement placement, HashMap<String, Point> padPoints) {
+        if (sim == null || graphics == null || canaryBoard == null || part == null ||
+                placement == null || padPoints == null || sim.circuitArea == null)
+            throw new IllegalArgumentException("Incomplete physical render canary request");
+        BoardComponent component = canaryBoard.getComponent(placement.getComponentId());
+        if (component == null || component.getPhysicalPackage() != part.getPackage())
+            throw new IllegalArgumentException("Render canary board/part mismatch");
+        updateTransform(sim.circuitArea);
+        PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
+            component.getPhysicalPackage(), 0, false, canaryBoard, padPoints);
+        PhysicalPartRenderGeometry geometry = drawComponent(graphics, placement, component, part,
+            context, true);
+        Rectangle selection = geometry.getSelectionBounds();
+        String hit = findComponentIdForPlacement(placement, component, part, context,
+            selection.x + selection.width / 2, selection.y + selection.height / 2) ?
+            placement.getComponentId() : null;
+        Vector<ProbeTarget> probeTargets = new Vector<ProbeTarget>();
+        for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+            Point point = terminal.getPoint();
+            probeTargets.add(findInstalledProbeTarget(sim, placement, component, part, context,
+                point.x, point.y));
+        }
+        return new PhysicalPartRenderCanaryResult(geometry, hit, probeTargets,
+            context.wasBodyDrawn());
+    }
+
+    private Vector<PhysicalPart<?>> getAllLoosePhysicalParts() {
+        Vector<PhysicalPart<?>> result = new Vector<PhysicalPart<?>>();
+        for (WorkbenchPartsProvider provider : instance.getPhysicalBoardRuntime()
+                .getWorkbenchPartsProviders())
+            result.addAll(provider.getLooseParts());
         return result;
     }
 
@@ -580,21 +369,73 @@ class PcbWorkbenchRenderer {
         return Math.max(0, Math.min(page, getTrayPageCount() - 1));
     }
 
-    ResistorColorBand[] getResistorBands(String componentId) {
-        PhysicalResistorPart installed = getInstalledResistorPart(componentId);
-        if (installed != null)
-            return ResistorColorCode.getFourBandCode(installed.getNameplate());
-        ResistorNameplate nameplate = instance.getPhysicalSpecifications()
-            .getResistorNameplate(componentId);
-        if (nameplate == null)
-            throw new IllegalStateException("Missing resistor nameplate: " + componentId);
-        return ResistorColorCode.getFourBandCode(nameplate);
+    private PhysicalPartRenderer requireRenderer(PhysicalPackage physicalPackage,
+            PhysicalPart<?> part) {
+        PhysicalPartRenderProvider provider = renderRegistry.getProvider(physicalPackage);
+        if (provider == null)
+            throw new IllegalStateException("No physical render provider for package: " +
+                (physicalPackage == null ? "null" : physicalPackage.getId()));
+        PhysicalPartRenderer renderer = provider.getRenderer(part);
+        if (renderer == null)
+            throw new IllegalStateException("Physical render provider returned no renderer: " +
+                physicalPackage.getId());
+        return renderer;
     }
-    String getPowerInputLabelForDeveloperVerification() { return getPowerInputLabel(); }
-    void setSelectedComponentId(String componentId) { selectedComponentId = componentId; }
-    String getSelectedComponentId() { return selectedComponentId; }
-    void setSelectedPartId(String partId) { selectedPartId = partId; }
-    String getSelectedPartId() { return selectedPartId; }
+
+    private boolean findComponentIdForPlacement(PcbComponentPlacement placement,
+            BoardComponent component, PhysicalPart<?> part, PhysicalPartRenderContext context,
+            int screenX, int screenY) {
+        return requireRenderer(component.getPhysicalPackage(), part)
+            .getInstalledGeometry(context).contains(screenX, screenY);
+    }
+
+    private ProbeTarget findInstalledProbeTarget(CirSim sim, PcbComponentPlacement placement,
+            BoardComponent component, PhysicalPart<?> part, PhysicalPartRenderContext context,
+            int screenX, int screenY) {
+        if (part == null)
+            return null;
+        PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
+        PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
+        for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+            Point point = terminal.getPoint();
+            if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
+                return renderer.createInstalledProbeTarget(sim, context,
+                    terminal.getTerminalIndex());
+        }
+        return null;
+    }
+
+    private String getPowerInputLabel() {
+        Vector<String> powerInputIds = instance.getBoard().getPowerInputIds();
+        if (powerInputIds.size() != 1)
+            return "VIN";
+        PowerInputNameplate nameplate = instance.getPhysicalSpecifications()
+            .getPowerInputNameplate(powerInputIds.get(0));
+        return nameplate == null ? "VIN" : nameplate.getDisplayLabel();
+    }
+
+    private String getPowerInputLabel(String padId, String fallback) {
+        if (padId == null)
+            return fallback;
+        for (String powerInputId : instance.getBoard().getPowerInputIds()) {
+            ExternalBoardPowerInput input = instance.getBoard().getPowerInput(powerInputId);
+            if (input.getPositivePadId().equals(padId))
+                return getPowerInputLabel();
+            if (input.getReturnPadId().equals(padId))
+                return "GND";
+        }
+        return fallback;
+    }
+
+    private boolean isReplaceableSlotEmpty(String componentId) {
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        PhysicalBoardSlot slot = runtime.getSlot(componentId);
+        return runtime.getMutationProvider(componentId) != null && slot != null &&
+            !slot.isOccupied();
+    }
+
+    private int getLoosePartCount() { return getAllLoosePhysicalParts().size(); }
+    private Point getLoosePartMarkerPoint(String partId) { return getLooseTerminalPoint(partId, 0); }
 
     private void publishDeveloperGeometry() {
         StringBuilder json = new StringBuilder("{\"points\":{");
@@ -608,25 +449,17 @@ class PcbWorkbenchRenderer {
             Point point = getPadPoint(pad.getPadId());
             first = appendDeveloperPoint(json, first, "pad:" + pad.getPadId(), point.x, point.y);
         }
-        for (PhysicalResistorPart part : getVisibleLooseParts()) {
-            for (int terminal = 0; terminal < 2; terminal++) {
-                Point point = getLoosePartLeadPoint(part.getId(), terminal);
-                first = appendDeveloperPoint(json, first, "loose:" + part.getId() + ":" + terminal,
-                    point.x, point.y);
-            }
-        }
-        for (PhysicalDiodePart part : getVisibleLooseDiodeParts()) {
-            for (int terminal = 0; terminal < 2; terminal++) {
-                Point point = getLooseDiodeLeadPoint(part.getId(), terminal);
-                first = appendDeveloperPoint(json, first, "loose:" + part.getId() + ":" + terminal,
-                    point.x, point.y);
-            }
-        }
-        for (PhysicalLedPart part : getVisibleLooseLedParts()) {
-            for (int terminal = 0; terminal < 2; terminal++) {
-                Point point = getLooseLedLeadPoint(part.getId(), terminal);
-                first = appendDeveloperPoint(json, first, "loose:" + part.getId() + ":" + terminal,
-                    point.x, point.y);
+        Vector<PhysicalPart<?>> visibleParts = getVisibleLoosePhysicalParts();
+        for (int index = 0; index < visibleParts.size(); index++) {
+            PhysicalPart<?> part = visibleParts.get(index);
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, null, part,
+                part.getPackage(), index, true);
+            PhysicalPartRenderGeometry geometry = requireRenderer(part.getPackage(), part)
+                .getLooseGeometry(context);
+            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+                Point point = terminal.getPoint();
+                first = appendDeveloperPoint(json, first, "loose:" + part.getId() + ":" +
+                    terminal.getTerminalIndex(), point.x, point.y);
             }
         }
         json.append("}}");
@@ -645,108 +478,48 @@ class PcbWorkbenchRenderer {
         $wnd.__tsjPcbGeometry = JSON.parse(json);
     }-*/;
 
-    private PhysicalResistorPart getInstalledResistorPart(String componentId) {
-        if (!isDiodeFamily() && instance.getFamilyState() instanceof ReplaceableResistorFamilyState) {
-            ReplaceableComponentSlot slot = ((ReplaceableResistorFamilyState)
-                instance.getFamilyState()).getReplaceableResistorSlot();
-            if (slot.getComponentId().equals(componentId))
-                return slot.getInstalledPart();
-        }
-        return null;
+    private PhysicalPart<?> getInstalledPhysicalPart(String componentId) {
+        return instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
     }
 
-    private String getInstalledPhysicalPartId(String componentId) {
-        PhysicalResistorPart resistor = getInstalledResistorPart(componentId);
-        if (resistor != null)
-            return resistor.getId();
-        if (isDiodeFamily() && "D1".equals(componentId)) {
-            DiodeComponentSlot slot = DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot();
-            return slot.isEmpty() ? null : slot.getInstalledPart().getId();
-        }
-        PhysicalLedPart led = getInstalledLedPart(componentId);
-        if (led != null)
-            return led.getId();
-        return null;
+    PhysicalPart<?> getInstalledPhysicalPartForDeveloperVerification(String componentId) {
+        return getInstalledPhysicalPart(componentId);
     }
 
-    private boolean isReplaceableSlotEmpty(String componentId) {
-        if (isDiodeFamily())
-            return "D1".equals(componentId) &&
-                DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty();
-        boolean empty = false;
-        if (instance.getFamilyState() instanceof ReplaceableResistorFamilyState) {
-            ReplaceableComponentSlot slot = ((ReplaceableResistorFamilyState)
-                instance.getFamilyState()).getReplaceableResistorSlot();
-            empty = slot.getComponentId().equals(componentId) && slot.isEmpty();
-        }
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState)
-            empty |= "LED1".equals(componentId) &&
-                LedIndicatorFamilyState.require(instance).getLed1Slot().isEmpty();
-        return empty;
-    }
-
-    private boolean isDiodeFamily() {
-        return instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState;
-    }
-
-    private PhysicalLedPart getInstalledLedPart(String componentId) {
-        if (!(instance.getFamilyState() instanceof LedIndicatorFamilyState) ||
-                !"LED1".equals(componentId))
+    ProbeTarget createInstalledProbeTargetForProvider(CirSim sim,
+            PhysicalPartRenderContext context, int terminal) {
+        if (context.isDeveloperCanary())
+            return new PhysicalPartRenderCanaryProbeTarget(sim, context, terminal);
+        String padId = context.getBoardPadId(terminal);
+        if (padId == null)
             return null;
-        LedComponentSlot slot = LedIndicatorFamilyState.require(instance).getLed1Slot();
-        return slot.isEmpty() ? null : slot.getInstalledPart();
+        GeneratedComponentConnectionBinding binding = instance.getConnectionBindings()
+            .get(context.getComponentId(), padId);
+        PhysicalPart<?> part = context.getPart();
+        return new ComponentLeadProbeTarget(sim, instance, context.getComponentId(), padId, this,
+            part == null ? null : part.getId(), binding.getComponentEndpoint());
     }
 
-    private int getLoosePartCount() {
-        if (isDiodeFamily())
-            return DiodeProtectedIndicatorFamilyState.require(instance).getInventory()
-                .getLooseParts().size();
-        if (!(instance.getFamilyState() instanceof ReplaceableResistorFamilyState))
-            return 0;
-        ReplaceableResistorFamilyState state =
-            (ReplaceableResistorFamilyState) instance.getFamilyState();
-        int count = state.getResistorInventory().getLooseParts().size();
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState)
-            count += ((LedIndicatorFamilyState) instance.getFamilyState()).getLedInventory()
-                .getLooseParts().size();
-        return count;
+    GeneratedBoardInstance getInstanceForProvider() { return instance; }
+    BoardModificationController getModificationsForProvider() { return modifications; }
+    Rectangle getPartsTrayForProvider() { return layout.getPartsTray(); }
+    PcbBoardLayout getLayoutForProvider() { return layout; }
+    String getSelectedPartForProvider() { return selectedPartId; }
+    Point getProviderTerminalPoint(PhysicalPartRenderContext context, int terminal) {
+        return context.getProviderTerminalPoint(terminal);
+    }
+    int screenXForProvider(int value) { return screenX(value); }
+    int screenYForProvider(int value) { return screenY(value); }
+    int scaleIntForProvider(int value) { return scaleInt(value); }
+    Rectangle screenRectForProvider(Rectangle value) { return screenRect(value); }
+    Rectangle screenRectForProvider(PcbComponentPlacement value) {
+        return new Rectangle(screenX(value.getX()), screenY(value.getY()),
+            scaleInt(value.getWidth()), scaleInt(value.getHeight()));
     }
 
-    private Point getLoosePartMarkerPoint(String partId) {
-        Point point = getLoosePartLeadPoint(partId, 0);
-        if (point != null) return point;
-        point = getLooseDiodeLeadPoint(partId, 0);
-        if (point != null) return point;
-        return getLooseLedLeadPoint(partId, 0);
-    }
-
-    private void drawResistorBands(Graphics graphics, PhysicalResistorPart part, int left, int right,
-            int y, int height) {
-        if (part == null)
-            return;
-        ResistorColorBand[] bands = ResistorColorCode.getFourBandCode(part.getNameplate());
-        for (int index = 0; index < bands.length; index++) {
-            int x = left + (right - left) * (index + 1) / 5;
-            graphics.setColor(getBandColor(bands[index]));
-            graphics.fillRect(x - Math.max(2, scaleInt(3)), y - height / 2,
-                Math.max(4, scaleInt(6)), height);
-        }
-    }
-
-    private void drawResistorBands(Graphics graphics, ResistorColorBand[] bands, int left, int right,
-            int y, int height) {
-        for (int index = 0; index < bands.length; index++) {
-            int x = left + (right - left) * (index + 1) / 5;
-            graphics.setColor(getBandColor(bands[index]));
-            graphics.fillRect(x - Math.max(2, scaleInt(3)), y - height / 2,
-                Math.max(4, scaleInt(6)), height);
-        }
-    }
-
-    private void drawCathodeBand(Graphics graphics, int edge, int y, int height, boolean left) {
-        int width = Math.max(5, scaleInt(8));
-        graphics.setColor("#d8dde0");
-        graphics.fillRect(left ? edge : edge - width, y - height / 2, width, height);
+    Point getProviderCanaryPadPoint(String padId, HashMap<String, Point> padPoints) {
+        Point logical = padPoints.get(padId);
+        return logical == null ? null : new Point(screenX(logical.x), screenY(logical.y));
     }
 
     private void updateTransform(Rectangle area) {
@@ -766,43 +539,9 @@ class PcbWorkbenchRenderer {
         return new Rectangle(screenX(rectangle.x), screenY(rectangle.y),
             scaleInt(rectangle.width), scaleInt(rectangle.height));
     }
+
     private Rectangle screenRect(PcbComponentPlacement component) {
         return new Rectangle(screenX(component.getX()), screenY(component.getY()),
             scaleInt(component.getWidth()), scaleInt(component.getHeight()));
-    }
-
-    private String getPowerInputLabel() {
-        Vector<String> powerInputIds = instance.getBoard().getPowerInputIds();
-        if (powerInputIds.size() != 1)
-            return "VIN";
-        PowerInputNameplate nameplate = instance.getPhysicalSpecifications()
-            .getPowerInputNameplate(powerInputIds.get(0));
-        return nameplate == null ? "VIN" : nameplate.getDisplayLabel();
-    }
-
-    private String getBandColor(ResistorColorBand band) {
-        if (band == ResistorColorBand.BLACK)
-            return "#222222";
-        if (band == ResistorColorBand.BROWN)
-            return "#7d4a2d";
-        if (band == ResistorColorBand.RED)
-            return "#b5232d";
-        if (band == ResistorColorBand.ORANGE)
-            return "#cc6c2b";
-        if (band == ResistorColorBand.YELLOW)
-            return "#e0ba36";
-        if (band == ResistorColorBand.GREEN)
-            return "#278456";
-        if (band == ResistorColorBand.BLUE)
-            return "#355caa";
-        if (band == ResistorColorBand.VIOLET)
-            return "#7754a1";
-        if (band == ResistorColorBand.GRAY)
-            return "#73777b";
-        if (band == ResistorColorBand.WHITE)
-            return "#e8e8e4";
-        if (band == ResistorColorBand.GOLD)
-            return "#c7a33b";
-        throw new IllegalArgumentException("Unsupported resistor band: " + band);
     }
 }

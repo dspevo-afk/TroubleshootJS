@@ -9,14 +9,15 @@ class LedPhysicalDeveloperVerifier {
         require(instance != null && "LED_INDICATOR".equals(instance.getCircuitFamilyId()) &&
             challenge != null && challenge.isReady(),
             "LED physical verification requires a ready LED challenge");
-        LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
+        WorkbenchCapabilityDeveloperVerifier.verifyRegisteredProviders(sim);
+        ReplaceableLedBoardCapability state = ReplaceableLedBoardCapability.require(instance);
         LedSlotController leds = sim.getLedSlotController();
-        PhysicalLedPart original = state.getLedInventory().get("LED1_ORIGINAL");
-        int catalogSize = state.getLedCatalog().getEntries().size();
-        Vector<LedCatalogEntry> catalogEntries = state.getLedCatalog().getEntries();
-        require(state.getLedInventory().getAll().size() == 1 &&
-            state.getLedInventory().getLooseParts().isEmpty() &&
-            state.getLed1Slot().getInstalledPart() == original &&
+        PhysicalLedPart original = state.getInventory().get("LED1_ORIGINAL");
+        int catalogSize = state.getCatalog().getEntries().size();
+        Vector<LedCatalogEntry> catalogEntries = state.getCatalog().getEntries();
+        require(state.getInventory().getAll().size() == 1 &&
+            state.getInventory().getLooseParts().isEmpty() &&
+            state.getSlot().getInstalledPart() == original &&
             original.getLocation() == LedPartLocation.INSTALLED,
             "Initial LED1 physical state is incorrect");
         verifyPartTopology(sim, instance);
@@ -26,14 +27,14 @@ class LedPhysicalDeveloperVerifier {
         verifyHealthyDiode(sim, boardProbe(sim, instance, "LED1.A"),
             boardProbe(sim, instance, "LED1.K"), "installed original LED1");
         require(leds.removeInstalledPart(), "Could not remove original LED1");
-        require(state.getLed1Slot().isEmpty() && state.getLedInventory().getLooseParts().size() == 1 &&
-            state.getLedInventory().getLooseParts().get(0) == original,
+        require(state.getSlot().isEmpty() && state.getInventory().getLooseParts().size() == 1 &&
+            state.getInventory().getLooseParts().get(0) == original,
             "Removing LED1 did not preserve its physical identity");
         verifyHealthyDiode(sim, looseProbe(sim, instance, original, 0),
             looseProbe(sim, instance, original, 1), "loose original LED1");
         verifyPartTopology(sim, instance);
 
-        replaceR1WithHealthyPart(sim, instance);
+        PhysicalResistorPart replacementResistor = replaceR1WithHealthyPart(sim, instance);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(!challenge.isCompleted() && !instance.getOperationalStates().isIlluminated("LED1"),
@@ -42,9 +43,10 @@ class LedPhysicalDeveloperVerifier {
 
         require(leds.installNewFromCatalog(LedReplacementCatalog.REVERSED),
             "Could not acquire reversed LED replacement");
-        PhysicalLedPart reversed = state.getLed1Slot().getInstalledPart();
+        PhysicalLedPart reversed = state.getSlot().getInstalledPart();
         require(reversed != original && reversed.isReversedInstallation(),
             "Reversed LED acquisition lost identity or polarity");
+        verifyRuntimeAllocatedIdentities(instance, replacementResistor, reversed);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(!challenge.isCompleted() && !instance.getOperationalStates().isIlluminated("LED1") &&
@@ -57,7 +59,7 @@ class LedPhysicalDeveloperVerifier {
 
         require(leds.installNewFromCatalog(LedReplacementCatalog.CORRECT),
             "Could not acquire correct LED replacement");
-        PhysicalLedPart healthy = state.getLed1Slot().getInstalledPart();
+        PhysicalLedPart healthy = state.getSlot().getInstalledPart();
         require(healthy != original && healthy != reversed &&
             !healthy.getId().equals(original.getId()) && !healthy.getId().equals(reversed.getId()) &&
             healthy.getElement() != original.getElement() && healthy.getElement() != reversed.getElement(),
@@ -66,11 +68,11 @@ class LedPhysicalDeveloperVerifier {
         verifyHealthyDiode(sim, looseProbe(sim, instance, healthy, 0),
             looseProbe(sim, instance, healthy, 1), "loose correct LED replacement");
         require(leds.install(healthy.getId()), "Could not reinstall measured LED replacement");
-        require(sim.pcbWorkbenchController.getRenderer().getLooseLedLeadPoint(healthy.getId(), 0) == null,
+        require(sim.pcbWorkbenchController.getRenderer().getLooseTerminalPoint(healthy.getId(), 0) == null,
             "Installed LED was exposed as a loose tray target");
-        require(state.getLedCatalog().getEntries().size() == catalogSize,
+        require(state.getCatalog().getEntries().size() == catalogSize,
             "LED catalog depleted or changed after acquisition");
-        require(state.getLedCatalog().getEntries().equals(catalogEntries),
+        require(state.getCatalog().getEntries().equals(catalogEntries),
             "LED catalog entries changed after acquisition");
         verifyPartTopology(sim, instance);
 
@@ -82,23 +84,46 @@ class LedPhysicalDeveloperVerifier {
             "Correct physical LED did not restore solved operation and challenge completion");
         require(original.getLocation() == LedPartLocation.LOOSE &&
             reversed.getLocation() == LedPartLocation.LOOSE &&
-            state.getLedInventory().getLooseParts().size() == 2,
+            state.getInventory().getLooseParts().size() == 2,
             "Installed and loose LED inventory locations disagree");
         sim.setCircuitTitle("LED physical verification passed");
     }
 
-    private static void replaceR1WithHealthyPart(CirSim sim, GeneratedBoardInstance instance) {
+    private static PhysicalResistorPart replaceR1WithHealthyPart(CirSim sim,
+            GeneratedBoardInstance instance) {
         ResistorSlotController resistors = sim.getResistorSlotController();
         require(resistors.removeInstalledPart(), "Could not remove failed R1 before LED checks");
-        double expected = instance.getPhysicalSpecifications().getResistorNameplate("R1")
-            .getNominalResistanceOhms();
+        double expected = StandardPhysicalDefinitionProviders.RESISTOR.require(
+            instance.getPhysicalSpecifications(), "R1").getNominalResistanceOhms();
         String catalogId = null;
-        for (ResistorCatalogEntry entry : LedIndicatorFamilyState.require(instance)
-                .getResistorCatalog().getEntries())
+        for (ResistorCatalogEntry entry : ReplaceableResistorBoardCapability.require(instance)
+                .getCatalog().getEntries())
             if (Math.abs(entry.getNameplate().getNominalResistanceOhms() - expected) < .001)
                 catalogId = entry.getId();
         require(catalogId != null && resistors.installNewFromCatalog(catalogId),
             "Could not install correct R1 before LED checks");
+        return ReplaceableResistorBoardCapability.require(instance).getSlot().getInstalledPart();
+    }
+
+    private static void verifyRuntimeAllocatedIdentities(GeneratedBoardInstance instance,
+            PhysicalPart<?> resistor, PhysicalPart<?> led) {
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        WorkbenchPartsProvider resistorProvider =
+            runtime.getWorkbenchPartsProviderForPart(resistor.getId());
+        WorkbenchPartsProvider ledProvider = runtime.getWorkbenchPartsProviderForPart(led.getId());
+        require("R1_CATALOG_PART_0".equals(resistor.getId()) &&
+                "LED1_CATALOG_PART_0".equals(led.getId()) && !resistor.getId().equals(led.getId()),
+            "Runtime allocator did not preserve deterministic provider namespaces");
+        require(resistorProvider != null && ledProvider != null &&
+                resistorProvider != ledProvider && resistorProvider.ownsPart(resistor.getId()) &&
+                ledProvider.ownsPart(led.getId()),
+            "Different provider views did not retain their runtime-allocated parts");
+        require(runtime.getPart(resistor.getId()) == resistor &&
+                runtime.getPart(resistor.getId()) == resistor &&
+                runtime.getPart(led.getId()) == led && runtime.getPart(led.getId()) == led &&
+                resistorProvider.getPart(resistor.getId()) == resistor &&
+                ledProvider.getPart(led.getId()) == led,
+            "Runtime-allocated physical identities were not registered and stable");
     }
 
     private static void verifyHealthyDiode(CirSim sim, ProbeTarget anode, ProbeTarget cathode,
@@ -129,31 +154,31 @@ class LedPhysicalDeveloperVerifier {
     }
 
     private static void verifyPartTopology(CirSim sim, GeneratedBoardInstance instance) {
-        LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
+        ReplaceableLedBoardCapability state = ReplaceableLedBoardCapability.require(instance);
         int installed = 0;
-        for (PhysicalLedPart part : state.getLedInventory().getAll()) {
+        for (PhysicalLedPart part : state.getInventory().getAll()) {
             if (part.getLocation() == LedPartLocation.INSTALLED) installed++;
             Point anode = part.getElement().getPost(0);
             Point cathode = part.getElement().getPost(1);
             require(part.getTerminal(0) != part.getTerminal(1) &&
                 (anode.x != cathode.x || anode.y != cathode.y),
                 "LED measurement endpoints were not distinct: " + part.getId());
-            for (CircuitElm element : part.getBackingElements())
+            for (CircuitElm element : part.getElectricalBacking().getCircuitElements())
                 require(count(sim.elmList, element) == 1,
                     "LED backing missing or duplicated: " + part.getId());
         }
-        Vector<PhysicalLedPart> parts = state.getLedInventory().getAll();
+        Vector<PhysicalLedPart> parts = state.getInventory().getAll();
         for (int left = 0; left < parts.size(); left++)
             for (int right = left + 1; right < parts.size(); right++)
                 require(parts.get(left).getElement() != parts.get(right).getElement(),
                     "Physical LEDs shared a backing LEDElm");
-        require((state.getLed1Slot().isEmpty() && installed == 0) ||
-            (!state.getLed1Slot().isEmpty() && installed == 1 &&
-                state.getLed1Slot().getInstalledPart().getLocation() == LedPartLocation.INSTALLED),
+        require((state.getSlot().isEmpty() && installed == 0) ||
+            (!state.getSlot().isEmpty() && installed == 1 &&
+                state.getSlot().getInstalledPart().getLocation() == LedPartLocation.INSTALLED),
             "LED slot and physical locations disagree");
-        if (!state.getLed1Slot().isEmpty())
+        if (!state.getSlot().isEmpty())
             require(instance.getComponentBindings().getSingleElement("LED1") ==
-                state.getLed1Slot().getInstalledPart().getElement(),
+                state.getSlot().getInstalledPart().getElement(),
                 "LED component binding does not follow the installed physical part");
     }
 

@@ -1,31 +1,40 @@
 package com.lushprojects.circuitjs1.client;
 
-import java.util.HashMap;
 import java.util.Vector;
 
 class DiodeReplacementInventory {
-    private final Vector<PhysicalDiodePart> ordered = new Vector<PhysicalDiodePart>();
-    private final HashMap<String, PhysicalDiodePart> parts = new HashMap<String, PhysicalDiodePart>();
+    private final PhysicalPartInventory<PhysicalDiodePart> inventory;
+
+    DiodeReplacementInventory(PhysicalBoardRuntime runtime, String inventoryId) {
+        inventory = new PhysicalPartInventory<PhysicalDiodePart>(runtime, inventoryId,
+            new PhysicalPartTypeAdapter<PhysicalDiodePart>() {
+                public PhysicalDiodePart require(PhysicalPart<?> part) {
+                    if (!(part instanceof PhysicalDiodePart))
+                        throw new IllegalArgumentException("Physical inventory part is not a diode");
+                    return (PhysicalDiodePart) part;
+                }
+            });
+    }
 
     void add(PhysicalDiodePart part) {
-        if (part == null || parts.containsKey(part.getId()))
-            throw new IllegalArgumentException("Invalid or duplicate diode part");
-        ordered.add(part);
-        parts.put(part.getId(), part);
+        inventory.add(part);
+    }
+
+    PhysicalDiodePart acquire(String idNamespace,
+            PhysicalPartIdentityFactory<PhysicalDiodePart> factory) {
+        return inventory.acquire(idNamespace, factory);
     }
 
     PhysicalDiodePart get(String id) {
-        PhysicalDiodePart part = parts.get(id);
-        if (part == null)
-            throw new IllegalArgumentException("Unknown diode part: " + id);
-        return part;
+        return inventory.get(id);
     }
 
-    Vector<PhysicalDiodePart> getAll() { return new Vector<PhysicalDiodePart>(ordered); }
+    boolean contains(String id) { return inventory.contains(id); }
+    Vector<PhysicalDiodePart> getAll() { return inventory.getAll(); }
     Vector<PhysicalDiodePart> getLooseParts() {
         Vector<PhysicalDiodePart> result = new Vector<PhysicalDiodePart>();
-        for (PhysicalDiodePart part : ordered)
-            if (part.getLocation() == DiodePartLocation.LOOSE)
+        for (PhysicalDiodePart part : inventory.getAll())
+            if (!part.isInstalled())
                 result.add(part);
         return result;
     }

@@ -11,11 +11,11 @@ class ReplacementDeveloperVerifier {
             "Replacement verification requires a ready challenge");
         verifyInventoryMetadata();
         ResistorSlotController slots = sim.getResistorSlotController();
-        PhysicalResistorPart original = LedIndicatorFamilyState.require(instance).getResistorInventory().get("R1_ORIGINAL");
+        PhysicalResistorPart original = resistorInventory(instance).get("R1_ORIGINAL");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
         verifyPartTopology(sim, instance);
-        require(slots.removeInstalledPart() && LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty() &&
+        require(slots.removeInstalledPart() && resistorSlot(instance).isEmpty() &&
             original.getLocation() == ResistorPartLocation.LOOSE && original.isFaulted(),
             "Removing original failed R1 did not empty slot and preserve fault");
         verifyResistance(sim, instance, original, true);
@@ -38,11 +38,11 @@ class ReplacementDeveloperVerifier {
         verifyPartTopology(sim, instance);
         verifyReplacement(sim, instance, challenge, slots, 10, .025, 1, true, false);
         verifyReplacement(sim, instance, challenge, slots, 10000000, 0, .001, false, false);
-        double correctResistance = instance.getPhysicalSpecifications().getResistorNameplate("R1")
-            .getNominalResistanceOhms();
+        double correctResistance = StandardPhysicalDefinitionProviders.RESISTOR.require(
+            instance.getPhysicalSpecifications(), "R1").getNominalResistanceOhms();
         require(slots.installNewFromCatalog(catalogId(correctResistance)),
             "Correct catalog replacement did not install");
-        String correctPartId = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getId();
+        String correctPartId = resistorSlot(instance).getInstalledPart().getId();
         verifyInstalledResistance(sim, instance, correctResistance);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
@@ -78,12 +78,13 @@ class ReplacementDeveloperVerifier {
             "Indicator does not light.".equals(challenge.getComplaintText()),
             "Wrong-repair route did not retain the original R1 challenge");
 
-        LedIndicatorFamilyState family = LedIndicatorFamilyState.require(instance);
+        ReplaceableResistorBoardCapability family =
+            ReplaceableResistorBoardCapability.require(instance);
         ResistorSlotController slots = sim.getResistorSlotController();
-        PhysicalResistorPart original = family.getResistorInventory().get("R1_ORIGINAL");
+        PhysicalResistorPart original = family.getInventory().get("R1_ORIGINAL");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(slots.removeInstalledPart(), "Faulted R1 did not remove through slot controller");
-        require(family.getR1Slot().isEmpty() && original.getLocation() == ResistorPartLocation.LOOSE &&
+        require(family.getSlot().isEmpty() && original.getLocation() == ResistorPartLocation.LOOSE &&
             original.isFaulted(), "Removing R1 changed original physical fault ownership");
         verifyPartTopology(sim, instance);
         require(challenge.getDefinition().getBehaviorContract().getRepairStatus(instance,
@@ -98,14 +99,14 @@ class ReplacementDeveloperVerifier {
             "Open or removed R1 did not remain nonfunctional after a solved powered check");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
 
-        ResistorCatalogEntry wrongCatalog = family.getResistorCatalog().get(catalogId(2200));
+        ResistorCatalogEntry wrongCatalog = family.getCatalog().get(catalogId(2200));
         require(wrongCatalog.getNameplate().getNominalResistanceOhms() == 2200,
             "2.2 kOhm catalog entry has the wrong nameplate");
         require(slots.installNewFromCatalog(wrongCatalog.getId()),
             "2.2 kOhm catalog replacement was not accepted");
-        PhysicalResistorPart wrong = family.getR1Slot().getInstalledPart();
+        PhysicalResistorPart wrong = family.getSlot().getInstalledPart();
         require(wrong != null && wrong != original && wrong.getLocation() == ResistorPartLocation.INSTALLED &&
-            family.getResistorInventory().get(wrong.getId()) == wrong &&
+            family.getInventory().get(wrong.getId()) == wrong &&
             wrong.getNameplate().getNominalResistanceOhms() == wrongCatalog.getNameplate()
                 .getNominalResistanceOhms() &&
             instance.getComponentBindings().getSingleElement("R1") == wrong.getElement() &&
@@ -130,15 +131,15 @@ class ReplacementDeveloperVerifier {
         require(slots.removeInstalledPart() && wrong.getLocation() == ResistorPartLocation.LOOSE,
             "2.2 kOhm replacement did not remove through slot controller");
         verifyPartTopology(sim, instance);
-        ResistorCatalogEntry correctCatalog = family.getResistorCatalog().get(catalogId(1000));
+        ResistorCatalogEntry correctCatalog = family.getCatalog().get(catalogId(1000));
         require(correctCatalog.getNameplate().getNominalResistanceOhms() == 1000,
             "1 kOhm catalog entry has the wrong nameplate");
         require(slots.installNewFromCatalog(correctCatalog.getId()),
             "1 kOhm catalog replacement was not accepted");
-        PhysicalResistorPart correct = family.getR1Slot().getInstalledPart();
+        PhysicalResistorPart correct = family.getSlot().getInstalledPart();
         require(correct != wrong && correct != original &&
             correct.getLocation() == ResistorPartLocation.INSTALLED &&
-            family.getResistorInventory().get(correct.getId()) == correct &&
+            family.getInventory().get(correct.getId()) == correct &&
             correct.getNameplate().getNominalResistanceOhms() == 1000 &&
             instance.getComponentBindings().getSingleElement("R1") == correct.getElement() &&
             correct.getElement().getResistance() == 1000,
@@ -191,12 +192,13 @@ class ReplacementDeveloperVerifier {
     private static void verifyHealthyReplacementLiftedLeadVoltage(CirSim sim,
             GeneratedBoardInstance instance, ResistorSlotController slots, String partId,
             double resistance) {
-        PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getResistorInventory().get(partId);
+        PhysicalResistorPart part = resistorInventory(instance).get(partId);
         CircuitPostProbeTarget ground = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.2"));
         CircuitPostProbeTarget boardPad2 = getProbe(sim, instance.getSimulationBindings().getEndpoint("R1.2"));
         ProbeTarget liftedLead2 = new ComponentLeadProbeTarget(sim, instance, "R1", "R1.2",
             sim.pcbWorkbenchController.getRenderer());
-        require(!LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty() && LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart() == part,
+        require(!resistorSlot(instance).isEmpty() &&
+            resistorSlot(instance).getInstalledPart() == part,
             "Correct replacement was not installed before lifted-lead voltage check");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(sim.getBoardModificationController().liftLead("R1", "R1.2"),
@@ -254,7 +256,7 @@ class ReplacementDeveloperVerifier {
             double minimumCurrent, double maximumCurrent, boolean expectedIllumination,
             boolean expectedCompletion) {
         require(slots.installNewFromCatalog(catalogId(resistance)), "Catalog replacement did not install");
-        PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart();
+        PhysicalResistorPart part = resistorSlot(instance).getInstalledPart();
         require(slots.removeInstalledPart(), "Catalog replacement did not become a loose physical part");
         verifyResistance(sim, instance, part, false);
         require(slots.install(part.getId()), "Measured catalog replacement did not reinstall");
@@ -338,12 +340,12 @@ class ReplacementDeveloperVerifier {
     }
 
     private static void verifyPartTopology(CirSim sim, GeneratedBoardInstance instance) {
-        ReplaceableComponentSlot slot = LedIndicatorFamilyState.require(instance).getR1Slot();
+        ReplaceableComponentSlot slot = resistorSlot(instance);
         int installedCount = 0;
-        for (PhysicalResistorPart part : LedIndicatorFamilyState.require(instance).getResistorInventory().getAll()) {
+        for (PhysicalResistorPart part : resistorInventory(instance).getAll()) {
             if (part.getLocation() == ResistorPartLocation.INSTALLED)
                 installedCount++;
-            for (CircuitElm element : part.getBackingElements())
+            for (CircuitElm element : part.getElectricalBacking().getCircuitElements())
                 require(countOccurrences(sim.elmList, element) == 1,
                     "Part backing is missing or duplicated: " + part.getId());
         }
@@ -364,7 +366,7 @@ class ReplacementDeveloperVerifier {
                     " partNode=" + getNode(slot.getInstalledPart().getPublicTerminal(terminal)) +
                     " attachment=" + describeEndpoint(binding.getConnectionElement(), attachmentPartPost) +
                     " part=" + describeEndpoint(slot.getInstalledPart().getPublicTerminal(terminal)));
-                for (PhysicalResistorPart part : LedIndicatorFamilyState.require(instance).getResistorInventory().getAll())
+                for (PhysicalResistorPart part : resistorInventory(instance).getAll())
                     if (part != slot.getInstalledPart())
                         require(getNode(binding.getConnectionElement(), attachmentPartPost) != getNode(
                             part.getPublicTerminal(terminal)),
@@ -441,19 +443,19 @@ class ReplacementDeveloperVerifier {
 
     private static void verifySeed(long seed, double expected) {
         GeneratedBoardInstance instance = new LedIndicatorGenerator().generate(seed);
-        require(LedIndicatorFamilyState.require(instance).getResistorInventory().size() == 1 &&
-            LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts().isEmpty() &&
-            LedIndicatorFamilyState.require(instance).getResistorCatalog().size() == 73 &&
-            LedIndicatorFamilyState.require(instance).getResistorCatalog().get(catalogId(expected)).getNameplate()
+        require(resistorInventory(instance).size() == 1 &&
+            resistorInventory(instance).getLooseParts().isEmpty() &&
+            resistorCatalog(instance).size() == 73 &&
+            resistorCatalog(instance).get(catalogId(expected)).getNameplate()
                 .getNominalResistanceOhms() == expected,
             "Invalid catalog state for seed " + seed);
     }
 
     private static String verifyUnlimitedAcquisition(CirSim sim, GeneratedBoardInstance instance,
             ResistorSlotController slots) {
-        int initialCount = LedIndicatorFamilyState.require(instance).getResistorInventory().size();
-        int catalogSize = LedIndicatorFamilyState.require(instance).getResistorCatalog().size();
-        Vector<ResistorCatalogEntry> catalogEntries = LedIndicatorFamilyState.require(instance).getResistorCatalog().getEntries();
+        int initialCount = resistorInventory(instance).size();
+        int catalogSize = resistorCatalog(instance).size();
+        Vector<ResistorCatalogEntry> catalogEntries = resistorCatalog(instance).getEntries();
         Vector<String> ids = new Vector<String>();
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         Vector<CircuitMeasurementEndpoint> firstEndpoints = new Vector<CircuitMeasurementEndpoint>();
@@ -466,7 +468,7 @@ class ReplacementDeveloperVerifier {
         require(slots.removeInstalledPart(), "Could not remove correct replacement before acquisition loop");
         for (int index = 0; index < 12; index++) {
             require(slots.installNewFromCatalog(catalogId(1000)), "Catalog depleted during acquisition");
-            PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart();
+            PhysicalResistorPart part = resistorSlot(instance).getInstalledPart();
             require(!ids.contains(part.getId()) && !elements.contains(part.getElement()) &&
                 !firstEndpoints.contains(part.getPublicTerminal(0)) &&
                 !secondEndpoints.contains(part.getPublicTerminal(1)) &&
@@ -481,15 +483,16 @@ class ReplacementDeveloperVerifier {
             require(slots.removeInstalledPart(), "Could not remove acquired catalog part");
             lastAcquiredPartId = part.getId();
         }
-        require(LedIndicatorFamilyState.require(instance).getResistorInventory().size() == initialCount + 12 &&
-            LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts().size() >= 12 &&
-            LedIndicatorFamilyState.require(instance).getResistorCatalog().size() == catalogSize &&
-            sameCatalogEntries(catalogEntries, LedIndicatorFamilyState.require(instance).getResistorCatalog().getEntries()),
+        require(resistorInventory(instance).size() == initialCount + 12 &&
+            resistorInventory(instance).getLooseParts().size() >= 12 &&
+            resistorCatalog(instance).size() == catalogSize &&
+            sameCatalogEntries(catalogEntries, resistorCatalog(instance).getEntries()),
             "Repeated catalog acquisition did not retain physical tray parts or depleted catalog");
         verifyTrayPaginationAndProbeGeometry(sim, instance, renderer, lastAcquiredPartId);
         require(lastAcquiredPartId != null, "No healthy catalog part was acquired");
-        require(slots.installNewFromCatalog(catalogId(instance.getPhysicalSpecifications()
-            .getResistorNameplate("R1").getNominalResistanceOhms())), "Could not restore correct catalog part");
+        require(slots.installNewFromCatalog(catalogId(StandardPhysicalDefinitionProviders.RESISTOR
+            .require(instance.getPhysicalSpecifications(), "R1").getNominalResistanceOhms())),
+            "Could not restore correct catalog part");
         sim.analyzeCircuit();
         sim.runCircuit(true);
         return lastAcquiredPartId;
@@ -498,7 +501,7 @@ class ReplacementDeveloperVerifier {
     private static void verifyNewBackingCoordinates(PhysicalResistorPart part,
             HashSet<String> canonicalCoordinates, HashSet<String> acquiredCoordinates) {
         HashSet<String> partCoordinates = new HashSet<String>();
-        for (CircuitElm backing : part.getBackingElements()) {
+        for (CircuitElm backing : part.getElectricalBacking().getCircuitElements()) {
             String first = coordinate(backing.x, backing.y);
             String second = coordinate(backing.x2, backing.y2);
             require(!first.equals(second) &&
@@ -517,23 +520,24 @@ class ReplacementDeveloperVerifier {
 
     private static void verifyTrayPaginationAndProbeGeometry(CirSim sim,
             GeneratedBoardInstance instance, PcbWorkbenchRenderer renderer, String retainedPartId) {
-        Vector<PhysicalResistorPart> loose = LedIndicatorFamilyState.require(instance).getResistorInventory().getLooseParts();
+        Vector<PhysicalResistorPart> loose = resistorInventory(instance).getLooseParts();
         int expectedPages = Math.max(1, (loose.size() + 2) / 3);
         require(renderer.getTrayPageCount() == expectedPages && expectedPages >= 2,
             "Tray page count did not match loose inventory");
         renderer.setTrayPage(0);
-        require(renderer.getVisibleLooseParts().size() <= 3,
+        require(renderer.getVisibleLoosePhysicalParts().size() <= 3,
             "Tray page exposes more than three physical parts");
-        PhysicalResistorPart firstPagePart = renderer.getVisibleLooseParts().get(0);
+        PhysicalResistorPart firstPagePart = (PhysicalResistorPart)
+            renderer.getVisibleLoosePhysicalParts().get(0);
         verifyVisiblePartProbeTarget(sim, renderer, firstPagePart);
         renderer.setSelectedPartId(firstPagePart.getId());
         renderer.setTrayPage(1);
         require(renderer.getSelectedPartId() == null,
             "Changing tray page did not clear selection for hidden part");
-        require(renderer.getLoosePartLeadPoint(firstPagePart.getId(), 0) == null &&
-            renderer.getLoosePartLeadPoint(firstPagePart.getId(), 1) == null,
+        require(renderer.getLooseTerminalPoint(firstPagePart.getId(), 0) == null &&
+            renderer.getLooseTerminalPoint(firstPagePart.getId(), 1) == null,
             "Hidden tray part still has a marker point");
-        PhysicalResistorPart retainedPart = LedIndicatorFamilyState.require(instance).getResistorInventory().get(retainedPartId);
+        PhysicalResistorPart retainedPart = resistorInventory(instance).get(retainedPartId);
         int retainedPage = loose.indexOf(retainedPart) / 3;
         renderer.setTrayPage(retainedPage);
         PhysicalResistorPartProbeTarget retainedTarget = new PhysicalResistorPartProbeTarget(sim,
@@ -550,10 +554,10 @@ class ReplacementDeveloperVerifier {
             "Returning to tray page did not restore marker for the same physical part");
         for (int page = 0; page < renderer.getTrayPageCount(); page++) {
             renderer.setTrayPage(page);
-            require(renderer.getVisibleLooseParts().size() <= 3,
+            require(renderer.getVisibleLoosePhysicalParts().size() <= 3,
                 "Tray page exposes more than three physical parts");
-            for (PhysicalResistorPart part : renderer.getVisibleLooseParts())
-                verifyVisiblePartProbeTarget(sim, renderer, part);
+            for (PhysicalPart<?> part : renderer.getVisibleLoosePhysicalParts())
+                verifyVisiblePartProbeTarget(sim, renderer, (PhysicalResistorPart) part);
         }
         renderer.setTrayPage(0);
     }
@@ -561,7 +565,7 @@ class ReplacementDeveloperVerifier {
     private static void verifyVisiblePartProbeTarget(CirSim sim, PcbWorkbenchRenderer renderer,
             PhysicalResistorPart part) {
         for (int terminal = 0; terminal < 2; terminal++) {
-            Point point = renderer.getLoosePartLeadPoint(part.getId(), terminal);
+            Point point = renderer.getLooseTerminalPoint(part.getId(), terminal);
             ProbeTarget target = renderer.findProbeTarget(sim, point.x, point.y);
             require(target instanceof PhysicalResistorPartProbeTarget &&
                 target.isSameTarget(new PhysicalResistorPartProbeTarget(sim,
@@ -580,6 +584,20 @@ class ReplacementDeveloperVerifier {
     }
 
     private static String coordinate(int x, int y) { return x + ":" + y; }
+
+    private static ReplaceableComponentSlot resistorSlot(GeneratedBoardInstance instance) {
+        return ReplaceableResistorBoardCapability.require(instance).getSlot();
+    }
+
+    private static ResistorReplacementInventory resistorInventory(
+            GeneratedBoardInstance instance) {
+        return ReplaceableResistorBoardCapability.require(instance).getInventory();
+    }
+
+    private static ResistorReplacementCatalog resistorCatalog(
+            GeneratedBoardInstance instance) {
+        return ReplaceableResistorBoardCapability.require(instance).getCatalog();
+    }
 
     private static boolean sameCatalogEntries(Vector<ResistorCatalogEntry> expected,
             Vector<ResistorCatalogEntry> actual) {

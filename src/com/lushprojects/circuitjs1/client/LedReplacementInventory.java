@@ -1,32 +1,40 @@
 package com.lushprojects.circuitjs1.client;
 
-import java.util.HashMap;
 import java.util.Vector;
 
 class LedReplacementInventory {
-    private final Vector<PhysicalLedPart> ordered = new Vector<PhysicalLedPart>();
-    private final HashMap<String, PhysicalLedPart> parts = new HashMap<String, PhysicalLedPart>();
+    private final PhysicalPartInventory<PhysicalLedPart> inventory;
+
+    LedReplacementInventory(PhysicalBoardRuntime runtime, String inventoryId) {
+        inventory = new PhysicalPartInventory<PhysicalLedPart>(runtime, inventoryId,
+            new PhysicalPartTypeAdapter<PhysicalLedPart>() {
+                public PhysicalLedPart require(PhysicalPart<?> part) {
+                    if (!(part instanceof PhysicalLedPart))
+                        throw new IllegalArgumentException("Physical inventory part is not an LED");
+                    return (PhysicalLedPart) part;
+                }
+            });
+    }
 
     void add(PhysicalLedPart part) {
-        if (part == null || parts.containsKey(part.getId()))
-            throw new IllegalArgumentException("Invalid or duplicate LED part");
-        ordered.add(part);
-        parts.put(part.getId(), part);
+        inventory.add(part);
+    }
+
+    PhysicalLedPart acquire(String idNamespace,
+            PhysicalPartIdentityFactory<PhysicalLedPart> factory) {
+        return inventory.acquire(idNamespace, factory);
     }
 
     PhysicalLedPart get(String id) {
-        PhysicalLedPart part = parts.get(id);
-        if (part == null)
-            throw new IllegalArgumentException("Unknown LED part: " + id);
-        return part;
+        return inventory.get(id);
     }
 
-    boolean contains(String id) { return parts.containsKey(id); }
-    Vector<PhysicalLedPart> getAll() { return new Vector<PhysicalLedPart>(ordered); }
+    boolean contains(String id) { return inventory.contains(id); }
+    Vector<PhysicalLedPart> getAll() { return inventory.getAll(); }
     Vector<PhysicalLedPart> getLooseParts() {
         Vector<PhysicalLedPart> result = new Vector<PhysicalLedPart>();
-        for (PhysicalLedPart part : ordered)
-            if (part.getLocation() == LedPartLocation.LOOSE)
+        for (PhysicalLedPart part : inventory.getAll())
+            if (!part.isInstalled())
                 result.add(part);
         return result;
     }

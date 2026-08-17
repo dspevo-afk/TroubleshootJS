@@ -19,7 +19,7 @@ class MeterLifecycleDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
         ResistorSlotController slots = sim.getResistorSlotController();
-        if (!LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
+        if (!resistorSlot(instance).isEmpty())
             require(slots.removeInstalledPart(), "Could not remove original R1");
         require(slots.installNewFromCatalog(catalogId(instance)), "Could not install correct R1 replacement");
         sim.setBoardPowerState(BoardPowerState.POWERED);
@@ -32,8 +32,9 @@ class MeterLifecycleDeveloperVerifier {
             String liftedPadId) {
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
         String attachedPadId = "R1.1".equals(liftedPadId) ? "R1.2" : "R1.1";
-        double expected = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getNameplate().getNominalResistanceOhms();
-        double tolerance = expected * LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getNameplate()
+        double expected = resistorSlot(instance).getInstalledPart().getNameplate()
+            .getNominalResistanceOhms();
+        double tolerance = expected * resistorSlot(instance).getInstalledPart().getNameplate()
             .getTolerancePercent() / 100.0;
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
@@ -78,7 +79,8 @@ class MeterLifecycleDeveloperVerifier {
 
     private static void verifyRetainedLiftedLeadVoltage(CirSim sim, GeneratedBoardInstance instance) {
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
-        double resistance = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getNameplate().getNominalResistanceOhms();
+        double resistance = resistorSlot(instance).getInstalledPart().getNameplate()
+            .getNominalResistanceOhms();
         double vin = instance.getPhysicalSpecifications().getPowerInputNameplate("VIN_INPUT")
             .getNominalVoltage();
         double expected = vin * DcVoltageMeasurementStimulus.INPUT_RESISTANCE /
@@ -211,7 +213,7 @@ class MeterLifecycleDeveloperVerifier {
             throw new IllegalStateException("Lifted resistance " + phase + " expected=" + expected +
                 " actual=" + actual + " label=" +
                 sim.instrumentController.getReadingForDeveloperVerification() + " installed=" +
-                LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getId() + " state=" +
+                resistorSlot(instance).getInstalledPart().getId() + " state=" +
                 sim.getBoardModificationController().getComponentState("R1") + " red=" +
                 describeTarget(sim, instance, red) + " black=" +
                 describeTarget(sim, instance, black) + " mode=" +
@@ -247,9 +249,9 @@ class MeterLifecycleDeveloperVerifier {
     }
 
     private static boolean belongsToInstalledPart(GeneratedBoardInstance instance, CircuitElm element) {
-        if (LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
+        if (resistorSlot(instance).isEmpty())
             return false;
-        PhysicalResistorPart part = LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart();
+        PhysicalResistorPart part = resistorSlot(instance).getInstalledPart();
 		CircuitMeasurementEndpoint first = part.getPublicTerminal(0);
 		CircuitMeasurementEndpoint second = part.getPublicTerminal(1);
 		return (first instanceof CircuitPostMeasurementEndpoint &&
@@ -259,8 +261,12 @@ class MeterLifecycleDeveloperVerifier {
     }
 
     private static String catalogId(GeneratedBoardInstance instance) {
-        return "R_CATALOG_" + (long) instance.getPhysicalSpecifications().getResistorNameplate("R1")
-            .getNominalResistanceOhms();
+        return "R_CATALOG_" + (long) StandardPhysicalDefinitionProviders.RESISTOR.require(
+            instance.getPhysicalSpecifications(), "R1").getNominalResistanceOhms();
+    }
+
+    private static ReplaceableComponentSlot resistorSlot(GeneratedBoardInstance instance) {
+        return ReplaceableResistorBoardCapability.require(instance).getSlot();
     }
 
     private static void settle(CirSim sim) {

@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-16_
+_Last updated: 2026-08-17_
 
 ## Purpose
 
@@ -490,6 +490,51 @@ Headless/CDP routes and their distinct screenshots—`initial-board.png`,
 `correct-restored.png`—are supporting evidence for solver, identity, graph,
 and deterministic checks only. Normal UI contains no wattage, stress, or
 damage diagnostics.
+
+---
+
+## Task 34(A) — Core Extensibility Hardening and Validation Policy
+
+**Status:** [x] Complete
+
+### Goal
+
+Harden the reusable physical-part, workbench, renderer, and instrument
+extension boundaries without replacing CircuitJS as the electrical source of
+truth or beginning Task 35.
+
+### Completed implementation
+
+Task 34(A) now has a runtime-owned physical foundation. PhysicalBoardRuntime
+owns stable physical-part identities, board slots, package/terminal/pad/net
+associations, inventory ownership, capability registration, and slot mutation
+providers. PhysicalPart, PhysicalSpecification, PhysicalPackage, and the
+capability contracts provide reusable metadata and lifecycle seams while
+family-specific electrical behavior remains specialized where appropriate.
+
+Workbench operations are capability-owned and discovered through the generic
+workbench registry. The common controller no longer owns resistor, diode, LED,
+or reference-designator mutation branches. Provider-owned PCB rendering now
+covers installed and loose parts, package-specific geometry, terminal and pad
+identity, selection/hit regions, polarity, and probe targets. The common
+renderer is orchestration only.
+
+Instrument modes are provider-driven through InstrumentModeProvider,
+InstrumentModeStrategy, and InstrumentModeRegistry. Provider implementations
+own mode metadata, probe semantics, measurement/stimulus lifecycle, power
+policy, cleanup, and state. Production registration refreshes visible controls
+after controller construction, and the architecture canary exercises a
+newly-registered visible provider through the production UI path.
+
+### Completion and dependency result
+
+The main architect completed the required visible LED and diode seed-3 gate
+after all executable subagent review passes. The boards rendered with stable
+physical identities, correct resistor markings, diode cathode orientation,
+LED polarity, selectable parts, reachable lift/reconnect controls, and no
+player-visible original values, stress, fault, or private infrastructure.
+Task 35 — Generalized Physical Part Specifications remains the next eligible
+milestone and was identified only; it was not started.
 
 ---
 

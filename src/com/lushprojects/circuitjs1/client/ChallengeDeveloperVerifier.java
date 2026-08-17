@@ -186,8 +186,8 @@ class ChallengeDeveloperVerifier {
         requireApproximately(voltage, variant.getPhysicalSpecifications()
             .getPowerInputNameplate("VIN_INPUT").getNominalVoltage(), .001,
             "Unexpected deterministic VIN for seed " + seed);
-        requireApproximately(resistance, variant.getPhysicalSpecifications()
-            .getResistorNameplate("R1").getNominalResistanceOhms(), .001,
+        requireApproximately(resistance, StandardPhysicalDefinitionProviders.RESISTOR.require(
+            variant.getPhysicalSpecifications(), "R1").getNominalResistanceOhms(), .001,
             "Unexpected deterministic R1 for seed " + seed);
         require(expectedId.equals(definition.getFault().getId()) &&
             expectedType == definition.getFault().getType() &&
@@ -318,8 +318,8 @@ class ChallengeDeveloperVerifier {
                 "Developer-cleared LED did not illuminate");
             if (faults.getFault().getType() == GeneratedFaultType.RESISTOR_INCORRECT_VALUE)
                 require(((ResistorElm) instance.getComponentBindings().getSingleElement("R1"))
-                    .getResistance() == instance.getPhysicalSpecifications()
-                    .getResistorNameplate("R1").getNominalResistanceOhms(),
+                    .getResistance() == StandardPhysicalDefinitionProviders.RESISTOR.require(
+                        instance.getPhysicalSpecifications(), "R1").getNominalResistanceOhms(),
                     "Clearing incorrect resistor fault did not restore nominal resistance");
             require(!faults.clearForDeveloperVerification(), "Repeated developer clear was not idempotent");
             require(faults.apply(), "Developer fault reapply was ignored");

@@ -59,56 +59,14 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     String getPadIdForDeveloperVerification() { return padId; }
 
     private boolean isSelectedPhysicalPartStillInstalled() {
-        if (instance.getFamilyState() instanceof ReplaceableResistorFamilyState) {
-            ReplaceableResistorFamilyState state =
-                (ReplaceableResistorFamilyState) instance.getFamilyState();
-            ReplaceableComponentSlot slot = state.getReplaceableResistorSlot();
-            if (slot.getComponentId().equals(componentId) && !slot.isEmpty()) {
-                PhysicalResistorPart part = slot.getInstalledPart();
-                return physicalPartId.equals(part.getId()) && part.getLocation() ==
-                    ResistorPartLocation.INSTALLED;
-            }
-        }
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState) {
-            LedIndicatorFamilyState state = LedIndicatorFamilyState.require(instance);
-            if ("R1".equals(componentId) && !state.getR1Slot().isEmpty()) {
-                PhysicalResistorPart part = state.getR1Slot().getInstalledPart();
-                return physicalPartId.equals(part.getId()) && part.getLocation() ==
-                    ResistorPartLocation.INSTALLED;
-            }
-            if ("LED1".equals(componentId) && !state.getLed1Slot().isEmpty()) {
-                PhysicalLedPart part = state.getLed1Slot().getInstalledPart();
-                return physicalPartId.equals(part.getId()) && part.getLocation() ==
-                    LedPartLocation.INSTALLED;
-            }
-            return false;
-        }
-        if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState) {
-            DiodeComponentSlot slot = DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot();
-            return "D1".equals(componentId) && !slot.isEmpty() &&
-                physicalPartId.equals(slot.getInstalledPart().getId()) &&
-                slot.getInstalledPart().getLocation() == DiodePartLocation.INSTALLED;
-        }
-        return false;
+        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+        return part != null && part.isInstalled() && physicalPartId.equals(part.getId());
     }
 
     private static String getInstalledPartId(GeneratedBoardInstance instance, String componentId) {
-        if (instance.getFamilyState() instanceof ReplaceableResistorFamilyState) {
-            ReplaceableResistorFamilyState state =
-                (ReplaceableResistorFamilyState) instance.getFamilyState();
-            ReplaceableComponentSlot slot = state.getReplaceableResistorSlot();
-            if (slot.getComponentId().equals(componentId) && !slot.isEmpty())
-                return slot.getInstalledPart().getId();
-        }
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "R1".equals(componentId) &&
-                !LedIndicatorFamilyState.require(instance).getR1Slot().isEmpty())
-            return LedIndicatorFamilyState.require(instance).getR1Slot().getInstalledPart().getId();
-        if (instance.getFamilyState() instanceof LedIndicatorFamilyState && "LED1".equals(componentId) &&
-                !LedIndicatorFamilyState.require(instance).getLed1Slot().isEmpty())
-            return LedIndicatorFamilyState.require(instance).getLed1Slot().getInstalledPart().getId();
-        if (instance.getFamilyState() instanceof DiodeProtectedIndicatorFamilyState && "D1".equals(componentId) &&
-                !DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().isEmpty())
-            return DiodeProtectedIndicatorFamilyState.require(instance).getD1Slot().getInstalledPart().getId();
+        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+        if (part != null)
+            return part.getId();
         throw new IllegalArgumentException("Component lead is not installed: " + componentId);
     }
 }
