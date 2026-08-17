@@ -8,14 +8,13 @@ import java.util.Vector;
 class PcbFootprintRegistry {
     private final HashMap<String, PcbFootprintProvider> providers =
         new HashMap<String, PcbFootprintProvider>();
+    private final HashMap<String, PhysicalPackage> packages =
+        new HashMap<String, PhysicalPackage>();
 
     void register(PhysicalPackage physicalPackage, PcbFootprintProvider provider) {
         if (physicalPackage == null || provider == null)
             throw new IllegalArgumentException("Invalid PCB footprint provider registration");
-        if (providers.containsKey(physicalPackage.getId()))
-            throw new IllegalArgumentException("Duplicate PCB footprint provider: " +
-                physicalPackage.getId());
-        providers.put(physicalPackage.getId(), provider);
+        registerDefinition(physicalPackage, provider);
     }
 
     /** Compatibility registration for a package ID, never for a BoardComponent type. */
@@ -32,8 +31,7 @@ class PcbFootprintRegistry {
         if (component == null)
             throw new IllegalArgumentException("Missing board component for footprint");
         PhysicalPackage physicalPackage = component.getPhysicalPackage();
-        PcbFootprintProvider provider = physicalPackage == null ? null :
-            providers.get(physicalPackage.getId());
+        PcbFootprintProvider provider = getProvider(physicalPackage);
         if (provider == null)
             throw new IllegalStateException("No PCB footprint provider for package: " +
                 (physicalPackage == null ? "null" : physicalPackage.getId()));
@@ -46,6 +44,30 @@ class PcbFootprintRegistry {
 
     PcbFootprintProvider getProvider(String packageId) {
         return providers.get(packageId);
+    }
+
+    PcbFootprintProvider getProvider(PhysicalPackage physicalPackage) {
+        if (physicalPackage == null)
+            return null;
+        PhysicalPackage registered = packages.get(physicalPackage.getId());
+        if (registered != null && !registered.isEquivalentTo(physicalPackage))
+            throw new IllegalArgumentException("Conflicting PCB package definition: " +
+                physicalPackage.getId());
+        return providers.get(physicalPackage.getId());
+    }
+
+    private void registerDefinition(PhysicalPackage physicalPackage,
+            PcbFootprintProvider provider) {
+        String packageId = physicalPackage.getId();
+        if (providers.containsKey(packageId)) {
+            PhysicalPackage registered = packages.get(packageId);
+            if (registered != null && !registered.isEquivalentTo(physicalPackage))
+                throw new IllegalArgumentException("Conflicting PCB package definition: " +
+                    packageId);
+            throw new IllegalArgumentException("Duplicate PCB footprint provider: " + packageId);
+        }
+        packages.put(packageId, physicalPackage);
+        providers.put(packageId, provider);
     }
 
     private static class VectorPadValidator {

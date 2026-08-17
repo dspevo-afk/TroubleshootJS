@@ -15,6 +15,8 @@ final class StandardPcbFootprintProviders {
         registry.register(PhysicalPackages.THROUGH_HOLE_LED, new LedProvider());
         registry.register(PhysicalPackages.MULTI_TERMINAL, new MultiTerminalProvider(3, 6));
         registry.register(PhysicalPackages.DEV_CANARY_3, new MultiTerminalProvider(3, 3));
+        registry.register(PhysicalPackages.DEV_CANARY_3_ORDERED,
+            new MultiTerminalProvider(3, 3));
         registry.register(PhysicalPackages.DEV_CANARY_4, new MultiTerminalProvider(4, 4));
         registry.register(PhysicalPackages.DEV_CANARY_5, new MultiTerminalProvider(5, 5));
         registry.register(PhysicalPackages.DEV_CANARY_6, new MultiTerminalProvider(6, 6));

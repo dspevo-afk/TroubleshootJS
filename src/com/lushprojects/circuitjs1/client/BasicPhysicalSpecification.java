@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 /** Catalog definition for a fixed physical item without typed mutable values. */
 final class BasicPhysicalSpecification implements PhysicalSpecification {
     private final String id;
@@ -12,5 +14,9 @@ final class BasicPhysicalSpecification implements PhysicalSpecification {
 
     public String getSpecificationId() {
         return id;
+    }
+
+    public Vector<PhysicalRating> getRatings() {
+        return new Vector<PhysicalRating>();
     }
 }

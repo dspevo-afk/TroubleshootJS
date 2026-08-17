@@ -8,13 +8,14 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
     static final String ID = "REPLACEABLE_RESISTOR";
 
     private final ReplaceableComponentSlot slot;
-    private final ResistorReplacementInventory inventory;
+    private final PhysicalPartInventory<PhysicalResistorPart> inventory;
     private final ResistorReplacementCatalog catalog;
     private ResistorSlotController controller;
     private ResistorStressDamageSystem stressDamageSystem;
 
     ReplaceableResistorBoardCapability(ReplaceableComponentSlot slot,
-            ResistorReplacementInventory inventory, ResistorReplacementCatalog catalog) {
+            PhysicalPartInventory<PhysicalResistorPart> inventory,
+            ResistorReplacementCatalog catalog) {
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable resistor runtime capability");
         this.slot = slot;
@@ -24,7 +25,7 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
 
     public String getCapabilityId() { return ID; }
     ReplaceableComponentSlot getSlot() { return slot; }
-    ResistorReplacementInventory getInventory() { return inventory; }
+    PhysicalPartInventory<PhysicalResistorPart> getInventory() { return inventory; }
     ResistorReplacementCatalog getCatalog() { return catalog; }
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,

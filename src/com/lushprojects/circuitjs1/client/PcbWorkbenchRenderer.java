@@ -336,7 +336,7 @@ class PcbWorkbenchRenderer {
                 placement == null || padPoints == null || sim.circuitArea == null)
             throw new IllegalArgumentException("Incomplete physical render canary request");
         BoardComponent component = canaryBoard.getComponent(placement.getComponentId());
-        if (component == null || component.getPhysicalPackage() != part.getPackage())
+        if (component == null || !component.getPhysicalPackage().isEquivalentTo(part.getPackage()))
             throw new IllegalArgumentException("Render canary board/part mismatch");
         updateTransform(sim.circuitArea);
         PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,

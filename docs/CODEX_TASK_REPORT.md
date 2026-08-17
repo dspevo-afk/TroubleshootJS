@@ -1,307 +1,290 @@
-# Task 34(A) — Core Extensibility Hardening and Validation Policy
+# Task 35 — Generalized Physical Part Specifications
 
 ## Status
 
-Complete. Primary architect disposition: FINAL PASS. All executable subagent
-stage reviews passed, the architect-owned visible Browser gate passed, and no
-push was performed. Task 35 remains the next eligible roadmap milestone and
-was not started.
+Complete. Primary architect disposition: `FINAL PASS`. Task 36 was not
+started. No push was performed.
 
-Final commit message: Task 34(A): harden extensibility boundaries
+Planned commit message: `Task 35: generalize physical part specifications`
 
-## Summary
+## Scope and outcome
 
-Task 34(A) hardens the physical-part, workbench, PCB-rendering, and instrument
-extension boundaries while preserving CircuitJS as the electrical source of
-truth. The work is staged as:
+Task 35 completed the generalized physical-part/specification architecture
+needed for future component families while preserving CircuitJS as electrical
+truth and retaining legitimate family-specific behavior.
 
-- Stage A: runtime-owned PhysicalPart, PhysicalBoardSlot, package, terminal,
-  pad/net identity, capability, rating, provenance, failure, and simulation
-  backing contracts.
-- Stage B: capability-owned workbench operations and generic discovery for
-  remove, lift, reconnect, restore, replacement, catalog, and loose
-  inspection.
-- Stage C: provider-owned installed/loose PCB rendering, terminal geometry,
-  hit/selection bounds, polarity/orientation, pads, and probe targets.
-- Stage D: genuinely pluggable InstrumentMode providers with provider-owned
-  measurement, lifecycle, power policy, polarity, cleanup, and dynamic
-  production UI registration.
+The common boundary now distinguishes:
 
-The implementation preserves family-specific electrical topology and
-validation while removing component-type/reference-ID dispatch from common
-workbench and renderer orchestration. A future-shaped instrument provider is
-registered through the production registry/controller path and is exercised by
-the architecture canary.
+- immutable `PhysicalSpecification` data and extensible ratings;
+- reusable typed `PhysicalPartCatalog` entries;
+- player-visible `PhysicalNameplate` markings;
+- stable individual `PhysicalPart` identity;
+- package, terminal, pad, and orientation metadata;
+- runtime-owned inventory and loose/installed lifecycle;
+- CircuitJS electrical backing; and
+- family-owned electrical factories, polarity interpretation, fault bindings,
+  and repair validation.
 
-## Review and recovery protocol
-
-- Sol Max diagnostic pass produced the staged recovery order A through E and
-  identified the reusable PhysicalPart, slot, capability, render-provider,
-  and InstrumentMode seams.
-- Stage A had three bounded review failures; the user-authorized Sol Max
-  corrections repaired family-owned state, runtime identity/capability
-  ownership, and generated-fault ownership for secondary failures.
-- The main architect then completed the independent visible LED/diode Stage A
-  gate before Stage B began.
-- Stage B, Stage C, and Stage D each received fresh independent reviewer
-  disposition. Stage B PASS, Stage C PASS, and Stage D PASS.
-- The only Stage C finding classified as out of stage was provider-owned
-  rendering before Stage C implementation; it was not used to weaken the
-  Stage A gate.
-- The Stage D reviewer initially found a real production-discovery blocker.
-  A bounded correction added post-construction visible-provider registration
-  and a production-visible canary; the fresh review then returned PASS.
-
-## Architect-owned visible Browser gate
-
-After all executable subagent reviews, the primary architect used the visible
-in-app Browser on fresh seed-3 routes:
-
-- LED route: the board rendered normally with R1 color bands, LED1 body and
-  polarity, copper, pads, J1, and labels in the expected locations. CUA
-  selection of LED1 exposed its type, part, lead identities, and generic
-  component controls. CUA selection of R1 exposed markings and R1.1/R1.2
-  terminal identities. With power off, Lift lead 1, Reconnect lead 1, and
-  Remove component were reachable; the lift/reconnect cycle restored R1
-  identity and the board powered on again.
-- Diode route: the board rendered R1, D1, LED1, copper, pads, J1, and labels.
-  D1 was visibly recognizable with its cathode stripe on the expected side.
-  CUA selection exposed D1.A and D1.K; R1 selection exposed its markings and
-  terminal identities. With power off, Lift lead A, Reconnect lead A, and
-  Remove component were reachable; the lift/reconnect cycle restored D1
-  identity and powered operation.
-- No player-visible private original resistance, rating, stress/damage,
-  injected-fault, or fault-infrastructure information appeared. Current
-  browser diagnostics contained only CircuitJS convergence and expected
-  unconnected-node log entries from lift actions; there were no error or
-  warning entries attributable to the candidate.
-
-The visible gate screenshots were surfaced directly in the architect session.
-The written gate record is
-docs/task-evidence/task-34a/visible-browser-gate.md. Supporting production
-evidence remains under docs/task-evidence/task-34 and
-docs/task-evidence/task-34-review2.
-
-## Closed validation set
-
-- Visible in-app Browser LED and diode seed-3 gate: PASS.
-- Architecture and renderer provider-boundary verifiers: PASS.
-- Procedural layout verifier: PASS.
-- Seeded LED core matrix, seeds 0/2/3: 15/15 PASS.
-- Diode, diode-short, parallel, and LED-parts matrices, seeds 0/2/3:
-  PASS.
-- Wrong-repair and stress electrical verifiers: PASS.
-- LED, diode, parallel, wrong-repair, and stress normal-player routes:
-  PASS. Stress normal-player confirmed natural secondary-open behavior,
-  no diagnostic UI, and no console/page exceptions.
-- PowerShell parser checks for verify-browser.ps1 and
-  verify-renderer-boundary.ps1: PASS.
-- git diff --check: PASS; Git emitted only expected line-ending conversion
-  warnings for the existing Windows worktree.
-- The final architect build rerun was environment-limited: this host exposes
-  OpenJDK 21 while GWT 2.7.0 requires JDK 8. The delegated implementation
-  and review rounds recorded JDK 8/GWT production-build PASS; no source
-  change was made to bypass the project’s JDK 8 guard.
-
-## Scope boundaries and handoff
-
-No AGENTS.md policy change, normal-player harness rewrite, Task 35 work,
-commit push, or unrelated cleanup was performed. The known distinction
-between visible architect validation and subagent headless validation remains
-the project rule. The next eligible milestone is Task 35 — Generalized
-Physical Part Specifications; it is identified only and was not started.
-
----
-
-# Task 34 — Component Ratings and Stress/Damage v1
-
-## Status
-
-Complete. Primary architect disposition: `FINAL PASS`. Task 35 is the next
-eligible roadmap milestone and was not started. No push was performed.
-
-Final commit message: `Task 34: add resistor stress damage`
-
-## Summary
-
-Task 34 adds a narrow resistor-only stress/damage vertical slice. Physical
-resistors carry immutable hidden rated wattage, while
-`ResistorStressDamageSystem` reads live solved CircuitJS resistor power and
-advances deterministic service-time damage. Severe overload produces a real
-secondary resistor-open state on the same physical part. Correctly rated and
-mildly overloaded replacements survive the bounded validation window.
-
-The original generated customer fault remains owned by its original physical
-resistor. Secondary damage is independent state on the replacement and changes
-the CircuitJS graph rather than selecting a special complaint or completion
-answer. Task 35's generalized physical-part specification architecture and all
-other component damage classes remain out of scope.
+Resistor, diode, and LED catalogs use the common catalog-entry contract.
+`PhysicalPartInventory<P>` is the single runtime-owned identity/inventory
+mechanism; the redundant family inventory wrappers were removed. The
+developer-only canary is a future-shaped, non-capacitor three-terminal part and
+does not add a player-visible component family.
 
 ## Architectural decisions
 
-- `ResistorNameplate` stores immutable hidden rated wattage. Catalog entries
-  preserve that specification, and each acquisition creates a distinct
-  `PhysicalResistorPart` with its own immutable rating and CircuitJS backing.
-- `ResistorStressDamageSystem` owns current physical part, rated watts, live
-  solved watts, stress ratio, accumulated damage, service time, failure time,
-  secondary failure state, and reset behavior.
-- Actual stress is `abs(ResistorElm.getPower()) / ratedWattage`; catalog
-  resistance is not used as a substitute for solved electrical stress.
-- `ResistorSecondaryOpenPath` owns a real CircuitJS `SwitchElm` in the
-  physical resistor's public second-terminal path. Opening it collapses branch
-  current naturally and leaves the same physical ID installed or loose.
-- The secondary path is separate from `GeneratedFaultBinding`; the original
-  loose `R1_ORIGINAL` retains its original generated fault while a replacement
-  may independently fail.
-- Service time is derived from CircuitJS simulation time during normal
-  operation. A developer-only service-time seam advances a known interval
-  without sleeping. Power-off, loose parts, and active temporary meter
-  overlays do not accumulate normal service damage.
-- Reset clears secondary damage and closes the secondary path while preserving
-  original-fault ownership. Auxiliary component bindings retarget whenever a
-  different physical resistor is installed, including catalog-to-original and
-  failed-part reinstall paths.
-- Normal player text and accessibility content expose resistance/state and the
-  existing complaint only; wattage, stress, accumulated damage, and failure
-  diagnostics remain developer-only.
+### Specifications, catalogs, and privacy
 
-## Concrete deterministic electrical proof
+`PhysicalSpecification` carries a stable specification ID and a small
+extensible `Vector<PhysicalRating>` boundary. Existing resistor specifications
+expose `PowerRating`; diode, LED, and basic specifications expose no ratings.
+This allows future voltage/current/capacitance-specific data without teaching
+generic runtime code every rating type.
 
-Fixture: LED challenge, seed `3`, 12 V supply, original generated R1 fault
-`LED_R1_INCORRECT_VALUE/RESISTOR_INCORRECT_VALUE`, original physical part
-`R1_ORIGINAL`.
+`PhysicalCatalogEntry<S>` and `AbstractPhysicalCatalogEntry<S>` own common
+immutable entry identity, typed specification, player-visible nameplate, and
+orientation. Resistor, diode, and LED entries retain their own electrical
+fields and factories where needed.
 
-| Case | Physical part / resistance | Rated W | Solved W before failure | Stress ratio | Service / failure time | Result |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| A correct | `R1_CATALOG_PART_2` / 1000 Ohm | 0.25 | 0.10431712989518951 | 0.41726851958075806 | 10 / — | Damage 0; same ID/backing; LED operating and repair contract completed |
-| B severe | `R1_CATALOG_PART_0` / 220 Ohm | 0.25 | 0.4606930416523886 | 1.8427721666095545 | 3.5 / 2.815850719609588 | Damage 1.2429636186414272; same ID opened; post-failure current `2.007372046364253e-24 A`; LED dark/nonfunctional |
-| C mild | `R1_CATALOG_PART_1` / 330 Ohm | 0.22 | 0.3095359534060624 | 1.4069816063911926 | 10 / — | Damage 0.8281701397037783; survived; current remained nonzero |
+`PhysicalNameplate` remains the normal-player privacy boundary. The workbench
+reads player-visible instance metadata only. Hidden original values, ratings,
+generated fault ownership, stress/damage state, and private backing data are
+not exposed by the generalized specification contract.
 
-Case B initially had nonzero current and an operating LED before the threshold.
-After failure, CircuitJS reported approximately zero current and the existing
-solver-backed functional status observed nonfunctional behavior. Removing and
-reinstalling the failed part preserved its ID and open path. The original
-`R1_ORIGINAL` remained loose and fault-owned throughout.
+### Runtime identity and family specialization
 
-Case D advanced an already stressed but not-yet-failed severe part for 5
-seconds with board power off; damage and service time did not increase.
-Powering on resumed accumulation from the existing state. Case E exercised
-the active DC-voltage measurement transaction; its temporary stimulus left
-persistent damage and service time unchanged. The stress subsystem also gates
-all active measurement overlays, including resistance, continuity, and diode
-stimuli. Case F reset the challenge deterministically: damage returned to 0,
-the secondary path closed, ratings reproduced, and original-fault ownership
-remained intact.
+`PhysicalBoardRuntime` remains the owner of physical identity, inventory
+membership, and installed/loose association. `PhysicalPartInventory<P>` is a
+typed view over that runtime storage. Removing and reinstalling a part keeps
+the same physical ID; replacement acquisition creates a new physical instance.
 
-## Browser evidence
+Family controllers still own CircuitJS element construction, attachment
+retargeting, diode/LED reversal interpretation, generated-fault bindings, and
+resistor stress/secondary-open behavior. No generic branch was added for
+resistor, diode, LED, or reference designators.
 
-The primary player-facing manual gate was completed through Computer Use on the
-active Windows desktop in Edge. Genuine visible mouse/keyboard actions selected
-original R1, powered off the board, removed it, selected/acquired and installed
-the 220 Ohm catalog replacement, powered on, and showed the initially operating
-LED with the original complaint and no wattage/stress/damage diagnostic. Only
-the permitted developer service-time seam was then used; the same installed
-part was visibly observed after secondary open with the LED dark and no
-diagnostic UI.
+### Orientation and package identity
 
-Direct Computer Use screenshots, captured from the visible production window,
-are:
+`PhysicalPartOrientation` carries `NON_POLARIZED`, `NORMAL`, and `REVERSED`
+metadata. Generic physical/render contracts carry it; family providers
+interpret its electrical and visual meaning. Terminal names and pad IDs remain
+stable independent of render orientation.
 
-- `docs/task-evidence/task-34/computer-use-severe-overload-powered.png`
-- `docs/task-evidence/task-34/computer-use-secondary-failure.png`
+Package identity is declared by stable package ID. `PhysicalPackage`
+canonicalizes endpoint order and sorts normalized internal connections, making
+equivalent definitions order-independent. Board-slot compatibility, footprint
+lookup, and physical-render lookup use the same package-definition equivalence
+rule. Conflicting same-ID definitions are rejected deterministically.
 
-The following are supporting headless Edge/CDP production screenshots only:
+`PcbWorkbenchController.addCatalog()` now evaluates availability and the
+install label for the selected catalog entry rather than deriving both from the
+first entry.
 
-- `docs/task-evidence/task-34/initial-board.png`
-- `docs/task-evidence/task-34/severe-overload-powered.png`
-- `docs/task-evidence/task-34/secondary-failure.png`
-- `docs/task-evidence/task-34/correct-restored.png`
+## Future-shaped canary
 
-CDP/verifier routes support deterministic solver, identity, graph, and
-regression checks; they are not substitutes for the direct Computer Use
-player-facing gate.
+`PhysicalSpecificationDeveloperVerifier` exercises a non-capacitor,
+three-terminal future part with:
+
+- immutable specification identity and a private technical field;
+- separate player-visible nameplate metadata;
+- non-polarized orientation;
+- runtime-owned acquisition of distinct stable physical instances;
+- loose/installed/remove/reinstall lifecycle;
+- stable terminal and pad IDs;
+- CircuitJS wire backing validation;
+- generic capability discovery;
+- typed footprint lookup;
+- provider-owned installed and loose rendering; and
+- equivalent package definitions with reversed connection declaration order.
+
+The canary also proves deterministic rejection of a conflicting same-ID
+package definition and never registers a player-visible future component.
 
 ## Files changed
 
-Product/runtime and verifier:
+Product/runtime and developer verification:
 
-- `src/com/lushprojects/circuitjs1/client/CirSim.java`
-- `src/com/lushprojects/circuitjs1/client/GeneratedComponentBindings.java`
+- `src/com/lushprojects/circuitjs1/client/AbstractPhysicalCatalogEntry.java`
+- `src/com/lushprojects/circuitjs1/client/ArchitectureDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/BasicPhysicalSpecification.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeCatalogEntry.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeNameplate.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeProtectedIndicatorGenerator.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeReplacementCatalog.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeReplacementInventory.java` (removed)
+- `src/com/lushprojects/circuitjs1/client/FixedPhysicalPart.java`
+- `src/com/lushprojects/circuitjs1/client/LedCatalogEntry.java`
 - `src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java`
+- `src/com/lushprojects/circuitjs1/client/LedNameplate.java`
+- `src/com/lushprojects/circuitjs1/client/LedReplacementCatalog.java`
+- `src/com/lushprojects/circuitjs1/client/LedReplacementInventory.java` (removed)
 - `src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorGenerator.java`
+- `src/com/lushprojects/circuitjs1/client/PcbFootprintRegistry.java`
+- `src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java`
+- `src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalBoardRuntime.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalBoardSlot.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalDiodePart.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalLedPart.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPackage.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPackages.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPart.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartCatalog.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartInventory.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartOrientation.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderMetadata.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderRegistry.java`
 - `src/com/lushprojects/circuitjs1/client/PhysicalResistorPart.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalSpecification.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalSpecificationDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/ReplaceableDiodeBoardCapability.java`
+- `src/com/lushprojects/circuitjs1/client/ReplaceableLedBoardCapability.java`
+- `src/com/lushprojects/circuitjs1/client/ReplaceableResistorBoardCapability.java`
 - `src/com/lushprojects/circuitjs1/client/ReplacementDeveloperVerifier.java`
 - `src/com/lushprojects/circuitjs1/client/ResistorCatalogEntry.java`
 - `src/com/lushprojects/circuitjs1/client/ResistorNameplate.java`
 - `src/com/lushprojects/circuitjs1/client/ResistorReplacementCatalog.java`
-- `src/com/lushprojects/circuitjs1/client/ResistorSlotController.java`
-- `src/com/lushprojects/circuitjs1/client/ResistorSecondaryOpenPath.java`
-- `src/com/lushprojects/circuitjs1/client/ResistorStressDamageDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/ResistorStressDamageSystem.java`
-- `scripts/verify-browser.ps1`
+- `src/com/lushprojects/circuitjs1/client/ResistorReplacementInventory.java` (removed)
+- `src/com/lushprojects/circuitjs1/client/StandardPcbFootprintProviders.java`
+- `src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java`
 
-Documentation and evidence:
+Documentation and visual evidence:
 
-- `AGENTS.md`
 - `docs/ARCHITECTURE.md`
 - `docs/ROADMAP.md`
 - `docs/CODEX_TASK_REPORT.md`
-- the six PNGs under `docs/task-evidence/task-34/` listed above
+- `docs/task-evidence/task-35/led-initial.png`
+- `docs/task-evidence/task-35/led-selected.png`
+- `docs/task-evidence/task-35/led-removed-tray.png`
+- `docs/task-evidence/task-35/diode-initial.png`
+- `docs/task-evidence/task-35/diode-selected.png`
+
+## Multi-agent protocol results
+
+### Coder — Nietzsche
+
+Initial implementation: `COMPLETE`. The coder implemented the bounded
+catalog/specification, runtime inventory, orientation, package identity,
+selected-entry UI, and future-canary work. It reported the required build,
+verifiers, regressions, and diff checks passing, with no commit or push.
+
+Correction round 1: `COMPLETE`. The coder resolved the reviewer blocker by
+sorting canonical package connections and expanding the canary to exercise
+reordered package definitions through slot installation, footprint lookup,
+installed rendering, loose rendering, removal, and reinstall identity. It
+reported a fresh JDK 8/GWT build and affected regressions passing, with no
+commit or push.
+
+### Reviewer — Fermat
+
+Initial review: `FAIL` with one `BLOCKER`. `PhysicalPackage` normalized each
+connection endpoint but did not sort the connection set, so equivalent
+definitions in different declaration order could disagree across slot,
+footprint, and render boundaries.
+
+The primary architect classified this as a genuine blocker because it violated
+the Task 35 package-identity acceptance criterion and returned only this
+precise correction to the coder.
+
+Correction review: `PASS`. The blocker was resolved. The reviewer found these
+non-blocking items:
+
+- `FOLLOW-UP`: the legacy `PcbFootprintRegistry.register(String, ...)`
+  compatibility overload does not retain a package definition for future
+  conflict validation; current production registration uses the typed overload;
+- `FOLLOW-UP`: strengthen direct future-canary assertions for every rendered
+  pad ID/draw-loose path if that evidence boundary becomes necessary;
+- `FOLLOW-UP`: add a fresh visible-browser trace to the correction-specific
+  review record if future process evidence needs it; this is not a product
+  defect.
+
+No reviewer `BLOCKER` remains. These follow-ups do not reopen Task 35.
+
+### Primary architect
+
+The primary architect independently inspected the actual corrected diff and
+relevant execution paths, including the runtime inventory, catalog entries,
+nameplate privacy boundary, family electrical parts, package registries,
+workbench catalog selection, orientation, render providers, and the canary.
+No additional blocker was found. Primary final disposition: `FINAL PASS`.
+
+Primary architect review rounds: one, with one bounded coder/reviewer
+correction pass inside that round. Escalation architect review was not
+required.
 
 ## Closed validation set
 
-- JDK 8 / GWT production build: PASS; `scripts/build.ps1` compiled and linked
-  all five permutations.
-- PowerShell parser validation for `scripts/verify-browser.ps1`: PASS.
-- `-StressDamage`: PASS with Cases A–F and the electrical values above.
-- `-StressDamageNormalPlayer`: PASS as supporting CDP proof; direct manual
-  validation is recorded separately above.
-- LED seed matrix `-Seeds 0,2,3`: PASS for all 15 existing routes.
-- Existing `-WrongRepair` and `-WrongRepairNormalPlayer`: PASS.
-- Existing resistance, continuity, diode, and DC-voltage measurement checks:
-  PASS through the resistance/meter/diode developer routes and regression
-  matrix.
-- Generated-fault, challenge/scenario, repair-status, and completion checks:
-  PASS.
-- Parallel and diode family regressions, including diode-short and LED-parts:
-  PASS for seeds 0, 2, and 3.
-- Existing normal-player LED, parallel, diode, and generic repair flows:
-  PASS for player seed 3.
-- Procedural layout, stable identity, attachment, no-duplicate-backing, and
-  auxiliary-binding checks: PASS.
-- `git diff --check`: PASS.
-- Final staged `git diff --cached --check`: PASS after staging the intended
-  Task 34 files.
+All checks below were run after the correction; the production build was also
+rerun by the primary architect with JDK 8.
 
-The known concurrent legacy-CDP WebSocket race was reproduced only as a
-test-harness issue; serialized runs passed and no player-facing defect was
-demonstrated. It is a `FOLLOW-UP`, not a Task 34 product blocker.
+- `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile
+  -Style OBF`: PASS; all five GWT permutations compiled and linked.
+- `scripts/verify-browser.ps1 -Architecture`: PASS; includes the Task 34(A)
+  architecture checks and the Task 35 future-part/specification canary.
+- `scripts/verify-renderer-boundary.ps1`: PASS.
+- `scripts/verify-browser.ps1 -Layout -PlayerSeed 3`: PASS.
+- Seeded LED core matrix, seeds 0/2/3: 15/15 PASS, covering resistance,
+  continuity/meter, challenge/completion, replacement, and combined repair.
+- Resistor replacement/identity: 3/3 PASS through the replacement route.
+- Diode replacement/identity and generated diode behavior: 3/3 PASS;
+  diode-short: 3/3 PASS.
+- LED parts/replacement/identity: 3/3 PASS.
+- Parallel family regression: 3/3 PASS.
+- Wrong-repair developer and normal-player routes: PASS.
+- Resistor stress/damage developer and normal-player routes: PASS, including
+  solver-backed secondary-open behavior, pause/resume safety, reset, and no
+  diagnostic UI.
+- LED, diode, parallel, and wrong-repair normal-player routes: PASS.
+- PowerShell parser checks for `scripts/verify-browser.ps1`: PASS.
+- `git diff --check`: PASS; only expected Windows line-ending warnings were
+  emitted.
+- Deterministic seeded values and generated-fault ownership/completion checks:
+  PASS through the seeded verifier matrices and stress report.
 
-## Protocol results and handoff
+### Visible `@Browser` gate
 
-- Coder result: Franklin `COMPLETE`; implementation and both bounded
-  correction passes reported complete, with no source changes in the final
-  documentation/evidence correction.
-- Reviewer result: Einstein final independent review `PASS`.
-- Reviewer findings and classifications:
-  - Initial `BLOCKER`: missing required Computer Use rule and accepted visible
-    evidence; resolved by exact `AGENTS.md` rule and direct evidence files.
-  - Initial `BLOCKER`: stale auxiliary binding after existing-part install;
-    resolved by retargeting the binding and adding catalog/original/reinstall
-    verifier assertions.
-  - Initial `FOLLOW-UP`: stale roadmap pointer; resolved in final roadmap docs.
-  - Correction review `BLOCKER`: first wording/evidence correction was not
-    exact/preserved; resolved in the final bounded correction.
-  - Correction review `FOLLOW-UP`: same roadmap pointer drift; resolved.
-  - Final review: `PASS`; no unresolved `BLOCKER`, `FOLLOW-UP`, or `BACKLOG`
-    finding remains for this milestone.
-- Primary architect review rounds: one; final result `FINAL PASS`.
-- Escalation-architect review: not required.
-- Known limitations: the accelerated damage model is intentionally an
-  approximate deterministic service model, not thermal/materials physics; it
-  covers only resistor power stress and open failure. Customer-return history,
-  scoring, economy, cascading damage, and generalized component ratings remain
-  future work.
-- Next roadmap milestone: Task 35 — Generalized Physical Part
-  Specifications; identified only and not started.
-- Commit message: `Task 34: add resistor stress damage`.
+After the final primary JDK 8/GWT build, the primary architect used the
+visible in-app Browser with real visible clicks and typed/semantic controls on
+fresh routes:
+
+- LED seed 3 rendered normally. LED1 selection exposed only `Generic red LED`,
+  `LED1.A`, and `LED1.K` markings. Power-off removal moved
+  `LED1_ORIGINAL - Generic red LED` to the visible loose tray; reinstalling
+  the selected tray part returned it to the installed slot without changing
+  its visible identity.
+- Diode seed 3 rendered normally. D1 selection exposed only `Generic silicon
+  diode`, `D1.A`, and `D1.K` markings.
+- The visible browser log check returned no error or warning entries.
+
+Committed screenshots, all captured from the final production-browser
+viewport and visually inspected as nonblank application states:
+
+- `docs/task-evidence/task-35/led-initial.png` — fresh LED board, catalogs,
+  complaint, and empty parts tray.
+- `docs/task-evidence/task-35/led-selected.png` — selected LED1 with permitted
+  nameplate and stable terminal labels.
+- `docs/task-evidence/task-35/led-removed-tray.png` — power-off empty slot and
+  original physical LED in the loose tray.
+- `docs/task-evidence/task-35/diode-initial.png` — fresh diode board and
+  replacement catalog.
+- `docs/task-evidence/task-35/diode-selected.png` — selected D1 with permitted
+  nameplate and stable anode/cathode labels.
+
+## Known non-blocking follow-ups
+
+The reviewer’s typed-registry compatibility-overload and stronger direct
+canary pad-assertion items are carried forward as `FOLLOW-UP`. No capacitor
+ratings, capacitor faults, RC circuits, capacitance measurement, transistors,
+relays, SMD gameplay, or broad PCB/CircuitJS work was implemented.
+
+## Handoff
+
+Next eligible roadmap milestone: Task 36 — Capacitor Foundation and RC Family.
+It is identified only; it was not begun. Adding that family will require
+capacitor-specific specification, electrical model, render provider, and
+scenario code, but not a copied resistor identity/inventory foundation.
+
+Commit message: `Task 35: generalize physical part specifications`
+
+No push was performed. The task stops here as required.

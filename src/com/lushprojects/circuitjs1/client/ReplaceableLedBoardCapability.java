@@ -8,11 +8,12 @@ final class ReplaceableLedBoardCapability implements PhysicalBoardRuntimeCapabil
     static final String ID = "REPLACEABLE_LED";
 
     private final LedComponentSlot slot;
-    private final LedReplacementInventory inventory;
+    private final PhysicalPartInventory<PhysicalLedPart> inventory;
     private final LedReplacementCatalog catalog;
     private LedSlotController controller;
 
-    ReplaceableLedBoardCapability(LedComponentSlot slot, LedReplacementInventory inventory,
+    ReplaceableLedBoardCapability(LedComponentSlot slot,
+            PhysicalPartInventory<PhysicalLedPart> inventory,
             LedReplacementCatalog catalog) {
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable LED runtime capability");
@@ -23,7 +24,7 @@ final class ReplaceableLedBoardCapability implements PhysicalBoardRuntimeCapabil
 
     public String getCapabilityId() { return ID; }
     LedComponentSlot getSlot() { return slot; }
-    LedReplacementInventory getInventory() { return inventory; }
+    PhysicalPartInventory<PhysicalLedPart> getInventory() { return inventory; }
     LedReplacementCatalog getCatalog() { return catalog; }
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,

@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 import java.util.HashMap;
 import java.util.Vector;
 
-class ResistorReplacementCatalog {
+class ResistorReplacementCatalog implements PhysicalPartCatalog<ResistorCatalogEntry> {
     private static final int[] E12_MANTISSAS = { 10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82 };
     private final HashMap<String, ResistorCatalogEntry> entries =
         new HashMap<String, ResistorCatalogEntry>();
@@ -31,14 +31,14 @@ class ResistorReplacementCatalog {
         order.add(id);
     }
 
-    ResistorCatalogEntry get(String id) {
+    public ResistorCatalogEntry get(String id) {
         ResistorCatalogEntry entry = entries.get(id);
         if (entry == null)
             throw new IllegalArgumentException("Unknown resistor catalog entry: " + id);
         return entry;
     }
 
-    Vector<ResistorCatalogEntry> getEntries() {
+    public Vector<ResistorCatalogEntry> getEntries() {
         Vector<ResistorCatalogEntry> result = new Vector<ResistorCatalogEntry>();
         for (String id : order)
             result.add(entries.get(id));

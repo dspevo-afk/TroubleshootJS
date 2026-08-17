@@ -1,24 +1,20 @@
 package com.lushprojects.circuitjs1.client;
 
-final class LedCatalogEntry {
-    private final String id;
-    private final String displayName;
-    private final LedNameplate nameplate;
-    private final boolean reversedInstallation;
+final class LedCatalogEntry extends AbstractPhysicalCatalogEntry<LedNameplate> {
 
     LedCatalogEntry(String id, String displayName, LedNameplate nameplate,
             boolean reversedInstallation) {
-        if (id == null || id.length() == 0 || displayName == null || displayName.length() == 0 ||
-                nameplate == null)
-            throw new IllegalArgumentException("Invalid LED catalog entry");
-        this.id = id;
-        this.displayName = displayName;
-        this.nameplate = nameplate;
-        this.reversedInstallation = reversedInstallation;
+        super(id, nameplate, createPlayerNameplate(id, displayName),
+            PhysicalPartOrientation.polarized(reversedInstallation));
     }
 
-    String getId() { return id; }
-    String getDisplayName() { return displayName; }
-    LedNameplate getNameplate() { return nameplate; }
-    boolean isReversedInstallation() { return reversedInstallation; }
+    String getDisplayName() { return getPlayerVisibleNameplate().getDisplayName(); }
+    LedNameplate getNameplate() { return getSpecification(); }
+    boolean isReversedInstallation() {
+        return getOrientation() == PhysicalPartOrientation.REVERSED;
+    }
+
+    private static PhysicalNameplate createPlayerNameplate(String id, String displayName) {
+        return new PhysicalNameplate(id, displayName, "Part", displayName);
+    }
 }

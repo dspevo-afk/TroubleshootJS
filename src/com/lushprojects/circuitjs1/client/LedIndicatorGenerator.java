@@ -127,10 +127,12 @@ class LedIndicatorGenerator {
             resistorOpenPathUpstream);
         elements.add(originalOpenPath.getSimulationElement());
         PhysicalBoardRuntime physicalRuntime = new PhysicalBoardRuntime(board);
-        ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory(
-            physicalRuntime, "R1_REPLACEMENTS");
-        LedReplacementInventory ledInventory = new LedReplacementInventory(
-            physicalRuntime, "LED1_REPLACEMENTS");
+        PhysicalPartInventory<PhysicalResistorPart> resistorInventory =
+            new PhysicalPartInventory<PhysicalResistorPart>(physicalRuntime, "R1_REPLACEMENTS",
+                PhysicalResistorPart.class);
+        PhysicalPartInventory<PhysicalLedPart> ledInventory =
+            new PhysicalPartInventory<PhysicalLedPart>(physicalRuntime, "LED1_REPLACEMENTS",
+                PhysicalLedPart.class);
         PhysicalBoardSlot r1PhysicalSlot = physicalRuntime.createSlot("R1");
         PhysicalBoardSlot led1PhysicalSlot = physicalRuntime.createSlot("LED1");
         PhysicalBoardSlot j1PhysicalSlot = physicalRuntime.createSlot("J1");

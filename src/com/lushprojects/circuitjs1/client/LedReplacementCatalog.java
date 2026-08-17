@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 import java.util.HashMap;
 import java.util.Vector;
 
-class LedReplacementCatalog {
+class LedReplacementCatalog implements PhysicalPartCatalog<LedCatalogEntry> {
     static final String CORRECT = "GENERIC_RED_LED_FORWARD";
     static final String REVERSED = "GENERIC_RED_LED_REVERSED";
     private final Vector<LedCatalogEntry> entries = new Vector<LedCatalogEntry>();
@@ -21,8 +21,8 @@ class LedReplacementCatalog {
         byId.put(entry.getId(), entry);
     }
 
-    Vector<LedCatalogEntry> getEntries() { return new Vector<LedCatalogEntry>(entries); }
-    LedCatalogEntry get(String id) {
+    public Vector<LedCatalogEntry> getEntries() { return new Vector<LedCatalogEntry>(entries); }
+    public LedCatalogEntry get(String id) {
         LedCatalogEntry entry = byId.get(id);
         if (entry == null)
             throw new IllegalArgumentException("Unknown LED catalog entry: " + id);

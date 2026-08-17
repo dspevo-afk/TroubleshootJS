@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 class ResistorNameplate implements PhysicalSpecification {
     static final double DEFAULT_RATED_WATTAGE = .25;
     private final String componentId;
@@ -25,6 +27,11 @@ class ResistorNameplate implements PhysicalSpecification {
 
     String getComponentId() { return componentId; }
     public String getSpecificationId() { return componentId; }
+    public Vector<PhysicalRating> getRatings() {
+        Vector<PhysicalRating> result = new Vector<PhysicalRating>();
+        result.add(new PowerRating(ratedWattage));
+        return result;
+    }
     String getDisplayName() { return getDisplayValue(); }
     double getNominalResistanceOhms() { return nominalResistanceOhms; }
     double getTolerancePercent() { return tolerancePercent; }

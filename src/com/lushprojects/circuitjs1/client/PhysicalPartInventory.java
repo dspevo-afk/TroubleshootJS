@@ -17,6 +17,11 @@ final class PhysicalPartInventory<P extends PhysicalPart<?>> {
         this.adapter = adapter;
     }
 
+    PhysicalPartInventory(PhysicalBoardRuntime runtime, String inventoryId,
+            final Class<P> partType) {
+        this(runtime, inventoryId, typeAdapter(partType));
+    }
+
     void add(P part) {
         adapter.require(part);
         runtime.addInventoryPart(inventoryId, part);
@@ -37,6 +42,29 @@ final class PhysicalPartInventory<P extends PhysicalPart<?>> {
         return result;
     }
 
+    Vector<P> getLooseParts() {
+        Vector<P> result = new Vector<P>();
+        for (P part : getAll())
+            if (!part.isInstalled())
+                result.add(part);
+        return result;
+    }
+
     boolean contains(String partId) { return runtime.inventoryContains(inventoryId, partId); }
     int size() { return runtime.getInventoryParts(inventoryId).size(); }
+
+    private static <P extends PhysicalPart<?>> PhysicalPartTypeAdapter<P> typeAdapter(
+            final Class<P> partType) {
+        if (partType == null)
+            throw new IllegalArgumentException("Missing physical inventory part type");
+        return new PhysicalPartTypeAdapter<P>() {
+            @SuppressWarnings("unchecked")
+            public P require(PhysicalPart<?> part) {
+                if (part == null || part.getClass() != partType)
+                    throw new IllegalArgumentException("Physical inventory part type mismatch: " +
+                        partType.getName());
+                return (P) part;
+            }
+        };
+    }
 }

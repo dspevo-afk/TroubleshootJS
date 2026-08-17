@@ -589,7 +589,7 @@ class ReplacementDeveloperVerifier {
         return ReplaceableResistorBoardCapability.require(instance).getSlot();
     }
 
-    private static ResistorReplacementInventory resistorInventory(
+    private static PhysicalPartInventory<PhysicalResistorPart> resistorInventory(
             GeneratedBoardInstance instance) {
         return ReplaceableResistorBoardCapability.require(instance).getInventory();
     }

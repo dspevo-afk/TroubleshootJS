@@ -20,6 +20,8 @@ final class StandardPhysicalPartRenderProviders {
             new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.DEV_CANARY_3,
             new FixedProvider(new MultiTerminalRenderer()));
+        registry.register(PhysicalPackages.DEV_CANARY_3_ORDERED,
+            new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.DEV_CANARY_4,
             new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.DEV_CANARY_5,

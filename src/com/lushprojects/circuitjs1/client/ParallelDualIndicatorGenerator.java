@@ -151,8 +151,9 @@ class ParallelDualIndicatorGenerator {
             resistorOpenPathUpstream);
         elements.add(originalOpenPath.getSimulationElement());
         PhysicalBoardRuntime physicalRuntime = new PhysicalBoardRuntime(board);
-        ResistorReplacementInventory resistorInventory = new ResistorReplacementInventory(
-            physicalRuntime, "R1_REPLACEMENTS");
+        PhysicalPartInventory<PhysicalResistorPart> resistorInventory =
+            new PhysicalPartInventory<PhysicalResistorPart>(physicalRuntime, "R1_REPLACEMENTS",
+                PhysicalResistorPart.class);
         PhysicalBoardSlot r1PhysicalSlot = physicalRuntime.createSlot("R1");
         PhysicalBoardSlot r2PhysicalSlot = physicalRuntime.createSlot("R2");
         PhysicalBoardSlot led1PhysicalSlot = physicalRuntime.createSlot("LED1");

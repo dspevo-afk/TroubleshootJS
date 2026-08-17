@@ -289,7 +289,7 @@ final class PhysicalBoardRuntime {
             PhysicalBoardSlot slot = slotsByComponent.get(componentId);
             if (slot == null)
                 throw new IllegalStateException("Missing physical slot: " + componentId);
-            if (!component.getPhysicalPackage().getId().equals(slot.getPhysicalPackage().getId()))
+            if (!component.getPhysicalPackage().isEquivalentTo(slot.getPhysicalPackage()))
                 throw new IllegalStateException("Slot package changed: " + componentId);
             if (!component.getPhysicalPackage().isConnector() && !slot.isOccupied())
                 throw new IllegalStateException("Non-connector slot is empty: " + componentId);

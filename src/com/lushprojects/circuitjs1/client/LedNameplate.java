@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 final class LedNameplate implements PhysicalSpecification {
     private final String componentId;
     private final String displayName;
@@ -24,6 +26,9 @@ final class LedNameplate implements PhysicalSpecification {
 
     String getComponentId() { return componentId; }
     public String getSpecificationId() { return componentId; }
+    public Vector<PhysicalRating> getRatings() {
+        return new Vector<PhysicalRating>();
+    }
     String getDisplayName() { return displayName; }
     String getModelName() { return modelName; }
     double getRed() { return red; }

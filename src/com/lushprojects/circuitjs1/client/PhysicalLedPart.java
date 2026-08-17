@@ -64,9 +64,11 @@ class PhysicalLedPart implements PhysicalPart<LedNameplate> {
     public LedNameplate getSpecification() { return specification; }
     public PhysicalNameplate getPlayerVisibleNameplate() { return playerNameplate; }
     public PhysicalPartRenderMetadata getRenderMetadata() {
-        return new PhysicalPartRenderMetadata(nameplate, reversedInstallation,
+        return new PhysicalPartRenderMetadata(nameplate,
+            PhysicalPartOrientation.polarized(reversedInstallation),
             PhysicalPartRenderProbeProviders.LED);
     }
+    public PhysicalPartOrientation getOrientation() { return getRenderMetadata().getOrientation(); }
     public PhysicalPackage getPackage() { return PhysicalPackages.THROUGH_HOLE_LED; }
     public int getTerminalCount() { return 2; }
     public PhysicalPartTerminal getTerminal(int terminal) {

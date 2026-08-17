@@ -27,6 +27,15 @@ final class FixedPhysicalPart<S extends PhysicalSpecification> implements Physic
             PhysicalPackage physicalPackage, Vector<PhysicalPartTerminal> terminals,
             Vector<CircuitElm> backingElements, PhysicalPartProvenance provenance,
             PhysicalPartRenderProbeProvider looseProbeProvider) {
+        this(id, specification, nameplate, physicalPackage, terminals, backingElements,
+            provenance, looseProbeProvider, null);
+    }
+
+    FixedPhysicalPart(String id, S specification, PhysicalNameplate nameplate,
+            PhysicalPackage physicalPackage, Vector<PhysicalPartTerminal> terminals,
+            Vector<CircuitElm> backingElements, PhysicalPartProvenance provenance,
+            PhysicalPartRenderProbeProvider looseProbeProvider,
+            Vector<PhysicalPartCapability> additionalCapabilities) {
         if (id == null || id.length() == 0 || specification == null || nameplate == null ||
                 physicalPackage == null || terminals == null || backingElements == null ||
                 provenance == null || terminals.size() != physicalPackage.getTerminalCount())
@@ -37,6 +46,12 @@ final class FixedPhysicalPart<S extends PhysicalSpecification> implements Physic
         this.physicalPackage = physicalPackage;
         this.provenance = provenance;
         this.looseProbeProvider = looseProbeProvider;
+        if (additionalCapabilities != null)
+            for (PhysicalPartCapability capability : additionalCapabilities) {
+                if (capability == null)
+                    throw new IllegalArgumentException("Missing fixed part capability");
+                capabilities.add(capability);
+            }
         Vector<CircuitMeasurementEndpoint> endpoints = new Vector<CircuitMeasurementEndpoint>();
         this.terminals = new PhysicalPartTerminal[terminals.size()];
         for (int index = 0; index < terminals.size(); index++) {
@@ -52,8 +67,10 @@ final class FixedPhysicalPart<S extends PhysicalSpecification> implements Physic
     public S getSpecification() { return specification; }
     public PhysicalNameplate getPlayerVisibleNameplate() { return nameplate; }
     public PhysicalPartRenderMetadata getRenderMetadata() {
-        return new PhysicalPartRenderMetadata(specification, false, looseProbeProvider);
+        return new PhysicalPartRenderMetadata(specification, PhysicalPartOrientation.NON_POLARIZED,
+            looseProbeProvider);
     }
+    public PhysicalPartOrientation getOrientation() { return getRenderMetadata().getOrientation(); }
     public PhysicalPackage getPackage() { return physicalPackage; }
     public int getTerminalCount() { return terminals.length; }
     public PhysicalPartTerminal getTerminal(int terminal) {

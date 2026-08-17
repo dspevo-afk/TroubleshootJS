@@ -70,9 +70,11 @@ class PhysicalDiodePart implements PhysicalPart<DiodeNameplate>, GeneratedFaultO
     public DiodeNameplate getSpecification() { return specification; }
     public PhysicalNameplate getPlayerVisibleNameplate() { return playerNameplate; }
     public PhysicalPartRenderMetadata getRenderMetadata() {
-        return new PhysicalPartRenderMetadata(nameplate, reversedInstallation,
+        return new PhysicalPartRenderMetadata(nameplate,
+            PhysicalPartOrientation.polarized(reversedInstallation),
             PhysicalPartRenderProbeProviders.DIODE);
     }
+    public PhysicalPartOrientation getOrientation() { return getRenderMetadata().getOrientation(); }
     public PhysicalPackage getPackage() { return PhysicalPackages.AXIAL_DIODE; }
     public int getTerminalCount() { return 2; }
     public PhysicalPartTerminal getTerminal(int terminal) {

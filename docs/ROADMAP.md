@@ -540,7 +540,7 @@ milestone and was identified only; it was not started.
 
 ## Task 35 — Generalized Physical Part Specifications
 
-**Status:** `[ ]`
+**Status:** `[x] Complete`
 
 ### Goal
 
@@ -565,6 +565,41 @@ Preserve specialized electrical behavior where specialization is appropriate.
 
 Adding the next major component type does not require copying the resistor inventory/identity architecture wholesale.
 
+### Completed implementation
+
+Task 35 generalized the immutable `PhysicalSpecification` and
+`PhysicalPartCatalog` boundary with typed catalog entries, separate
+player-visible `PhysicalNameplate` metadata, extensible ratings, and generic
+orientation metadata. Resistor, diode, and LED catalogs now use the common
+contract while retaining their family-specific specifications and CircuitJS
+electrical behavior.
+
+`PhysicalPartInventory<P>` remains the runtime-owned identity and inventory
+mechanism; the redundant resistor, diode, and LED inventory wrappers were
+removed. Stable part identity, acquisition, lookup, loose/installed
+transitions, simulation backing, and family mutation controllers remain
+separate concerns.
+
+Package identity is stable by declared package ID with canonicalized,
+order-independent internal connectivity. Slot compatibility, footprint lookup,
+and physical render lookup now share the same definition rule and reject
+conflicting same-ID definitions deterministically. The developer-only
+future-shaped three-terminal canary proves catalog/specification privacy,
+inventory lifecycle, terminal/pad identity, CircuitJS backing, capability
+discovery, footprint lookup, and installed/loose rendering without adding a
+capacitor or another player-visible component family.
+
+The selected catalog entry now determines install availability and labeling.
+Existing resistor stress/damage, generated-fault ownership, LED/diode polarity,
+and solver-backed player behavior remain specialized and unchanged.
+
+### Completion result
+
+Task 35 passed its closed validation set, independent coder/reviewer gates,
+the primary architect final review, and the visible production-browser smoke
+gate. Task 36 is the next eligible milestone and is identified only; it was
+not started.
+
 ---
 
 # Phase 2 — Broaden the Circuit Vocabulary
@@ -575,7 +610,7 @@ The project should next add circuit families that teach distinct troubleshooting
 
 ## Task 36 — Capacitor Foundation and RC Family
 
-**Status:** `[ ]`
+**Status:** `[>] Next planned milestone`
 
 ### Goals
 
@@ -1303,6 +1338,7 @@ When updating:
 
 **Task 35 — Generalized Physical Part Specifications**
 
-Task 34 passed implementation and direct Computer Use player-facing
-validation. Task 35 is the next eligible milestone and is identified only; it
-was not started.
+Task 35 passed implementation, independent review, closed validation, and
+direct visible `@Browser` player-facing validation. Task 36 — Capacitor
+Foundation and RC Family is the next eligible milestone and is identified only;
+it was not started.

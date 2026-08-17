@@ -8,6 +8,7 @@ interface PhysicalPart<S extends PhysicalSpecification> {
     S getSpecification();
     PhysicalNameplate getPlayerVisibleNameplate();
     PhysicalPartRenderMetadata getRenderMetadata();
+    PhysicalPartOrientation getOrientation();
     PhysicalPackage getPackage();
     int getTerminalCount();
     PhysicalPartTerminal getTerminal(int terminal);

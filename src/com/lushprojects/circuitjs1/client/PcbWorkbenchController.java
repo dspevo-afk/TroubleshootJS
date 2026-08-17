@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -178,16 +180,20 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         final ListBox catalog = new ListBox();
         for (WorkbenchCatalogEntry entry : entries)
             catalog.addItem(entry.getDisplayName(), entry.getId());
-        String firstCatalogId = entries.get(0).getId();
-        boolean canInstallNew = isOperationAvailable(null,
-            WorkbenchOperation.forCatalog(componentId, firstCatalogId));
-        catalog.setEnabled(canInstallNew);
+        boolean anyCatalogAvailable = false;
+        for (WorkbenchCatalogEntry entry : entries)
+            anyCatalogAvailable = anyCatalogAvailable || isOperationAvailable(null,
+                WorkbenchOperation.forCatalog(componentId, entry.getId()));
+        catalog.setEnabled(anyCatalogAvailable);
         partsPanel.add(catalog);
-        Button installNew = new Button(operationLabel(null,
-            WorkbenchOperation.forCatalog(componentId, firstCatalogId),
-            provider.getInstallNewLabel()));
+        final Button installNew = new Button(provider.getInstallNewLabel());
         installNew.setStyleName("tsj-action-button");
-        installNew.setEnabled(canInstallNew);
+        updateCatalogControls(provider, componentId, catalog, installNew);
+        catalog.addChangeHandler(new ChangeHandler() {
+            public void onChange(ChangeEvent event) {
+                updateCatalogControls(provider, componentId, catalog, installNew);
+            }
+        });
         installNew.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 try {
@@ -212,6 +218,20 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             partsPanel.add(new Label("Remove " + componentId +
                 " before installing a replacement."));
         return powerWarningAdded;
+    }
+
+    private void updateCatalogControls(WorkbenchPartsProvider provider, String componentId,
+            ListBox catalog, Button installNew) {
+        int selectedIndex = catalog.getSelectedIndex();
+        if (selectedIndex < 0 || selectedIndex >= catalog.getItemCount()) {
+            installNew.setText(provider.getInstallNewLabel());
+            installNew.setEnabled(false);
+            return;
+        }
+        WorkbenchOperation operation = WorkbenchOperation.forCatalog(componentId,
+            catalog.getValue(selectedIndex));
+        installNew.setText(operationLabel(null, operation, provider.getInstallNewLabel()));
+        installNew.setEnabled(isOperationAvailable(null, operation));
     }
 
     private void addLoosePartButton(PhysicalPart<?> part) {

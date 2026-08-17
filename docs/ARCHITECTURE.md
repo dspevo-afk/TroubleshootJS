@@ -473,8 +473,9 @@ intended immutable board specification, pads/nets, and current occupancy;
 complete CircuitJS backing, two public terminals, optional internal fault binding,
 and loose/installed location. A fault switch is inside the failed original's
 public two-terminal path, so the removed physical part measures electrically open
-instead of merely carrying fault metadata. `ResistorReplacementInventory` is deterministic per seed and retains
-the original failed resistor alongside healthy replacement choices. Changing a
+instead of merely carrying fault metadata. `PhysicalPartInventory<PhysicalResistorPart>`
+is a typed view over the runtime-owned inventory and retains the original
+failed resistor alongside healthy replacement choices. Changing a
 part never mutates a nameplate or closes the original fault switch.
 
 `ResistorSlotController` is the only owner of R1 install/remove graph changes.
@@ -503,11 +504,11 @@ without embedding testing behavior in normal drawing.
 
 `GeneratedBoardInstance` is family-agnostic. Mutable repair and catalog state is
 held by its optional `GeneratedBoardFamilyState`; the LED family provides
-`LedIndicatorFamilyState` for the R1 and LED1 slots, their separate inventories
-and non-depleting catalogs, and their physical-part serial allocation. Generic
-runtime simulation-element ownership remains on the instance. Future component
-families must add their own family state rather than component-specific instance
-fields or getters.
+`LedIndicatorFamilyState` for the R1 and LED1 slots, typed views over the shared
+runtime inventories, non-depleting catalogs, and family-specific electrical
+allocation. Generic runtime simulation-element ownership remains on the
+instance. Future component families must add their own family state rather than
+component-specific instance fields or getters.
 
 `PhysicalLedPart` is intentionally distinct from `PhysicalDiodePart`. It owns a
 stable acquired identity, immutable LED nameplate, one actual CircuitJS
@@ -525,8 +526,9 @@ polarity cues, while loose parts use the existing paginated tray architecture.
 
 The second generated family is `DIODE_PROTECTED_INDICATOR`, with the series
 topology VIN -> D1 -> R1 -> LED1 -> GND. `DiodeProtectedIndicatorFamilyState`
-owns the D1 slot, diode inventory, non-depleting catalog, and physical-part serial
-allocator. None of those diode concepts are fields or getters on
+owns the D1 slot, its typed view over the runtime inventory, non-depleting
+catalog, and physical-part serial allocator. None of those diode concepts are
+fields or getters on
 `GeneratedBoardInstance`. The only family-state behavior used by generic
 challenge orchestration is a target-agnostic predicate that reports whether the
 faulted target remains installed.
@@ -749,3 +751,61 @@ lift/reconnect restored physical identity and powered operation; current
 browser diagnostics contained no error or warning entries. Headless
 verifiers and the visible gate are recorded in the Task 34(A) completion
 report.
+
+---
+
+## Task 35 — Generalized physical specifications and catalogs
+
+Task 35 completes the reusable physical-part/specification boundary needed by
+the next component family without moving family electrical behavior into the
+generic runtime.
+
+`PhysicalSpecification` is immutable technical catalog data. It exposes a
+stable specification ID and an extensible `Vector<PhysicalRating>` seam;
+resistors currently contribute `PowerRating`, while diode, LED, and basic
+specifications contribute no ratings. This keeps the generic runtime unaware
+of future rating kinds such as voltage or capacitance voltage. The
+`PhysicalPartCatalog<E>` contract is typed on reusable `PhysicalCatalogEntry`
+rows, and `AbstractPhysicalCatalogEntry` owns common immutable entry identity,
+specification, orientation metadata, and player-visible metadata. A future
+family can add its own specification fields and electrical factory without
+copying inventory or identity code.
+
+`PhysicalNameplate` remains the player-visible privacy boundary. A catalog row
+may contain hidden model/value/rating data in its `PhysicalSpecification`, but
+the workbench renders only the physical instance's nameplate. Generated fault
+ownership, stress/damage state, private original values, and hidden ratings are
+not inferred or displayed from the generalized specification contract.
+
+`PhysicalPartInventory<P>` is the only runtime-backed identity/inventory
+mechanism. Resistor, diode, and LED generators now use typed views over that
+inventory; their old family inventory wrappers were removed. Acquisition still
+allocates a new stable physical ID, while removing and reinstalling the same
+part preserves its identity and replacing it acquires a new one. Slot
+controllers and capability providers remain family-owned where they create
+CircuitJS elements, retarget electrical bindings, interpret polarity, or
+validate family behavior.
+
+`PhysicalPartOrientation` carries `NON_POLARIZED`, `NORMAL`, and `REVERSED`
+metadata. Generic part and render contracts carry the orientation, while
+diode/LED providers interpret reversal for electrical terminals and visual
+polarity. Terminal names and pad IDs remain stable independently of render
+orientation. Resistor power stress and secondary-open behavior remain owned by
+the resistor implementation and are unchanged.
+
+Package identity is declared by stable package ID. `PhysicalPackage`
+canonicalizes endpoint order and sorts its normalized internal-connection set;
+slot compatibility, PCB footprint lookup, and physical render lookup all use
+the same package definition equivalence rule. A same-ID conflicting definition
+is rejected deterministically. The developer-only Task 35 canary proves
+reordered equivalent definitions through slot installation, footprint lookup,
+installed rendering, loose rendering, removal, and reinstall identity, and
+proves conflict rejection without adding a player-visible component family.
+
+The selected catalog entry now controls workbench availability and the install
+button label, so future entries with different compatibility do not inherit
+the first entry's state. The Task 35 canary also proves a non-capacitor
+three-terminal future part's specification/nameplate separation, stable part
+identity, runtime inventory lifecycle, terminal/pad identity, CircuitJS
+backing, capability discovery, footprint provider, and render provider.
+No capacitor implementation or Task 36 behavior belongs to this boundary.

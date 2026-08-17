@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 import java.util.HashMap;
 import java.util.Vector;
 
-class DiodeReplacementCatalog {
+class DiodeReplacementCatalog implements PhysicalPartCatalog<DiodeCatalogEntry> {
     static final String CORRECT = "GENERIC_SILICON_FORWARD";
     static final String REVERSED = "GENERIC_SILICON_REVERSED";
     private final Vector<DiodeCatalogEntry> entries = new Vector<DiodeCatalogEntry>();
@@ -19,8 +19,8 @@ class DiodeReplacementCatalog {
         byId.put(entry.getId(), entry);
     }
 
-    Vector<DiodeCatalogEntry> getEntries() { return new Vector<DiodeCatalogEntry>(entries); }
-    DiodeCatalogEntry get(String id) {
+    public Vector<DiodeCatalogEntry> getEntries() { return new Vector<DiodeCatalogEntry>(entries); }
+    public DiodeCatalogEntry get(String id) {
         DiodeCatalogEntry entry = byId.get(id);
         if (entry == null)
             throw new IllegalArgumentException("Unknown diode catalog entry: " + id);

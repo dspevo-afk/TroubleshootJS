@@ -17,6 +17,7 @@ final class ArchitectureDeveloperVerifier {
         verifyPhysicalParts(sim);
         verifyRuntimePhysicalOwnership(sim.getGeneratedBoardInstance());
         verifyPhysicalDefinitionProviders(sim.getGeneratedBoardInstance());
+        PhysicalSpecificationDeveloperVerifier.verify(sim);
         PhysicalFoundationDeveloperVerifier.verify(sim);
         PhysicalPartRenderDeveloperVerifier.verify(sim);
         // This is intentionally part of the architecture route: migrating the

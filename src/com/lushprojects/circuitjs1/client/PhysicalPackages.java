@@ -16,6 +16,8 @@ final class PhysicalPackages {
         new String[] { "1", "2", "3", "4", "5", "6" }, false);
     static final PhysicalPackage DEV_CANARY_3 = packageOf("DEV_CANARY_3",
         new String[] { "1", "2", "3" }, new String[] { "1=2" }, false);
+    static final PhysicalPackage DEV_CANARY_3_ORDERED = packageOf("DEV_CANARY_3_ORDERED",
+        new String[] { "1", "2", "3" }, new String[] { "1=2", "2=3" }, false);
     static final PhysicalPackage DEV_CANARY_4 = packageOf("DEV_CANARY_4",
         new String[] { "1", "2", "3", "4" }, new String[] { "1=2" }, false);
     static final PhysicalPackage DEV_CANARY_5 = packageOf("DEV_CANARY_5",

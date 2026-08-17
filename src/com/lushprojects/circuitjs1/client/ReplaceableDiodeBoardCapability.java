@@ -8,12 +8,13 @@ final class ReplaceableDiodeBoardCapability implements PhysicalBoardRuntimeCapab
     static final String ID = "REPLACEABLE_DIODE";
 
     private final DiodeComponentSlot slot;
-    private final DiodeReplacementInventory inventory;
+    private final PhysicalPartInventory<PhysicalDiodePart> inventory;
     private final DiodeReplacementCatalog catalog;
     private DiodeSlotController controller;
 
     ReplaceableDiodeBoardCapability(DiodeComponentSlot slot,
-            DiodeReplacementInventory inventory, DiodeReplacementCatalog catalog) {
+            PhysicalPartInventory<PhysicalDiodePart> inventory,
+            DiodeReplacementCatalog catalog) {
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable diode runtime capability");
         this.slot = slot;
@@ -23,7 +24,7 @@ final class ReplaceableDiodeBoardCapability implements PhysicalBoardRuntimeCapab
 
     public String getCapabilityId() { return ID; }
     DiodeComponentSlot getSlot() { return slot; }
-    DiodeReplacementInventory getInventory() { return inventory; }
+    PhysicalPartInventory<PhysicalDiodePart> getInventory() { return inventory; }
     DiodeReplacementCatalog getCatalog() { return catalog; }
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,

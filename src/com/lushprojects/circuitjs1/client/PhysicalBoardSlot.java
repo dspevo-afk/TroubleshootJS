@@ -71,7 +71,7 @@ final class PhysicalBoardSlot {
     void install(PhysicalPart<?> part) {
         if (part == null || installedPart != null)
             throw new IllegalStateException("Physical slot is already occupied");
-        if (part.getPackage() == null || !physicalPackage.getId().equals(part.getPackage().getId()) ||
+        if (part.getPackage() == null || !physicalPackage.isEquivalentTo(part.getPackage()) ||
                 part.getTerminalCount() != padIds.size())
             throw new IllegalArgumentException("Physical part does not fit board slot: " + componentId);
         if (part.getMountState().isInstalled())

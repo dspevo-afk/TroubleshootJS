@@ -1,5 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Collections;
 import java.util.Vector;
 
 /** Typed package definition shared by placement, routing, and installed parts. */
@@ -24,7 +25,6 @@ final class PhysicalPackage {
             throw new IllegalArgumentException("Invalid physical package");
         this.id = id;
         this.terminalIds = new Vector<String>(terminalIds);
-        this.internalConnections = new Vector<String>(internalConnections);
         this.connector = connector;
         for (int index = 0; index < this.terminalIds.size(); index++) {
             String terminalId = this.terminalIds.get(index);
@@ -36,7 +36,7 @@ final class PhysicalPackage {
                         terminalId);
         }
         Vector<String> normalizedConnections = new Vector<String>();
-        for (String connection : this.internalConnections) {
+        for (String connection : internalConnections) {
             if (connection == null)
                 throw new IllegalArgumentException("Invalid physical package connectivity");
             int separator = connection.indexOf('=');
@@ -57,12 +57,21 @@ final class PhysicalPackage {
                     connection);
             normalizedConnections.add(normalized);
         }
+        Collections.sort(normalizedConnections);
+        this.internalConnections = normalizedConnections;
     }
 
     String getId() { return id; }
     int getTerminalCount() { return terminalIds.size(); }
     Vector<String> getTerminalIds() { return new Vector<String>(terminalIds); }
     boolean isConnector() { return connector; }
+
+    /** Package identity is declared by ID, while compatibility includes its definition. */
+    boolean isEquivalentTo(PhysicalPackage other) {
+        return other != null && id.equals(other.id) && connector == other.connector &&
+            terminalIds.equals(other.terminalIds) && internalConnections.equals(
+                other.internalConnections);
+    }
 
     /** Returns true only for a declared package-internal connection. */
     boolean isInternallyConnected(String firstTerminal, String secondTerminal) {

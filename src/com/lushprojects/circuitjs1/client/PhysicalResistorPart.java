@@ -74,9 +74,10 @@ class PhysicalResistorPart implements PhysicalPart<ResistorNameplate>, Generated
     public ResistorNameplate getSpecification() { return specification; }
     public PhysicalNameplate getPlayerVisibleNameplate() { return playerNameplate; }
     public PhysicalPartRenderMetadata getRenderMetadata() {
-        return new PhysicalPartRenderMetadata(nameplate, false,
+        return new PhysicalPartRenderMetadata(nameplate, PhysicalPartOrientation.NON_POLARIZED,
             PhysicalPartRenderProbeProviders.RESISTOR);
     }
+    public PhysicalPartOrientation getOrientation() { return getRenderMetadata().getOrientation(); }
     public PhysicalPackage getPackage() { return PhysicalPackages.AXIAL_RESISTOR; }
     public int getTerminalCount() { return 2; }
     public PhysicalPartTerminal getTerminal(int terminal) {

@@ -103,8 +103,9 @@ class DiodeProtectedIndicatorGenerator {
             specs.getNameplate("D1"), diode,
             diodeFaultBinding, false, DiodePartLocation.INSTALLED,
             new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, "D1"));
-        DiodeReplacementInventory inventory = new DiodeReplacementInventory(physicalRuntime,
-            "D1_REPLACEMENTS");
+        PhysicalPartInventory<PhysicalDiodePart> inventory =
+            new PhysicalPartInventory<PhysicalDiodePart>(physicalRuntime, "D1_REPLACEMENTS",
+                PhysicalDiodePart.class);
         inventory.add(original);
         DiodeReplacementCatalog catalog = new DiodeReplacementCatalog();
         DiodeComponentSlot slot = new DiodeComponentSlot("D1",

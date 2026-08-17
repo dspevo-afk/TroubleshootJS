@@ -96,13 +96,13 @@ final class PhysicalPartRenderDeveloperVerifier {
 
     private static void requireSpecializedLooseTarget(PhysicalPackage physicalPackage,
             ProbeTarget target, String partId) {
-        if (physicalPackage == PhysicalPackages.AXIAL_RESISTOR)
+        if (PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(physicalPackage))
             require(target instanceof PhysicalResistorPartProbeTarget,
                 "Resistor loose probe did not resolve through its provider: " + partId);
-        else if (physicalPackage == PhysicalPackages.AXIAL_DIODE)
+        else if (PhysicalPackages.AXIAL_DIODE.isEquivalentTo(physicalPackage))
             require(target instanceof PhysicalDiodePartProbeTarget,
                 "Diode loose probe did not resolve through its provider: " + partId);
-        else if (physicalPackage == PhysicalPackages.THROUGH_HOLE_LED)
+        else if (PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage))
             require(target instanceof PhysicalLedPartProbeTarget,
                 "LED loose probe did not resolve through its provider: " + partId);
     }
@@ -161,9 +161,9 @@ final class PhysicalPartRenderDeveloperVerifier {
     }
 
     private static boolean isFixedProductionBodyPackage(PhysicalPackage physicalPackage) {
-        return physicalPackage == PhysicalPackages.AXIAL_RESISTOR ||
-            physicalPackage == PhysicalPackages.AXIAL_DIODE ||
-            physicalPackage == PhysicalPackages.THROUGH_HOLE_LED;
+        return PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(physicalPackage) ||
+            PhysicalPackages.AXIAL_DIODE.isEquivalentTo(physicalPackage) ||
+            PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage);
     }
 
     private static PhysicalPackage packageFor(int terminalCount) {
