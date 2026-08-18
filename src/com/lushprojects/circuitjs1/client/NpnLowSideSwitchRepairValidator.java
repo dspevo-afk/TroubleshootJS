@@ -5,12 +5,13 @@ final class NpnLowSideSwitchRepairValidator implements GeneratedRepairValidator 
     public GeneratedRepairStatus getRepairStatus(GeneratedBoardInstance instance,
             BoardModificationController modifications, BoardPowerState powerState,
             boolean activeMeasurementOverlay) {
-        if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay || modifications == null ||
-                !modifications.isFullyRestored() || !allInstalled(instance, modifications))
-            return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
         NpnLowSideSwitchFamilyState state = state(instance);
         boolean priorCommandedOn = state.isCommandedOn();
         try {
+            if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay ||
+                    modifications == null || !modifications.isFullyRestored() ||
+                    !allInstalled(instance, modifications))
+                return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
             state.setCommandedOn(CircuitElm.sim, true);
             if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance))
                 return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;

@@ -994,6 +994,15 @@ time and models stored energy. A developer-only
 envelope only when the NPN verifier flag is active; normal player pages never
 receive the attribute or its hidden terms.
 
+`NpnLowSideSwitchRepairValidator.getRepairStatus()` captures the command state
+before its precondition gates, performs the genuine healthy ON/OFF CircuitJS
+profile, and restores the command through `NpnLowSideSwitchFamilyState` on
+every exit path, including early nonfunctional returns. The developer proof
+also snapshots the live control voltage, load/base/collector currents, and
+collector voltage around faulted/wrong and correctly repaired status queries
+for both C-E-open commanded-ON and C-E-short commanded-OFF cases. The
+snapshot is intentionally solver-backed; it is not a second bookkeeping model.
+
 The parts-tray correction is generic rather than family-specific. Fixed RC,
 seeded LED/diode/parallel, and NPN layouts all call the same tray placement and
 geometry validation seam. The compact-board calculation excludes tray chrome,
@@ -1012,3 +1021,9 @@ Visible in-app Browser evidence is stored under
 `docs/task-evidence/task-37-correction/`. The renderer still shows the compact
 physical `NPN` body and B/C/E markings; improving that silkscreen fidelity is
 future work, not an electrical-truth blocker for this milestone.
+
+The final correction's focused verifier regenerates ordinary Quick Play NPN
+seeds 0, 1, 2, and 3, compares each raw J1.1/J2.1 `PcbSilkscreenLabel` and
+rendered targeted label to the generated physical nameplates, and preserves
+the normal-player NPN seed envelope 0, 2, and 3 without exposing developer
+metadata.

@@ -708,8 +708,9 @@ result is recorded below.
 
 ## Task 37 — NPN Low-Side Switch Family
 
-**Status:** `[x]` Complete — primary architect `FINAL PASS` after the post-review
-correction; Task 38 is next eligible and has not been started
+**Status:** `[x]` Complete — primary architect `FINAL PASS` after the
+silkscreen/state-preservation post-review correction; Task 38 is next eligible
+and has not been started
 
 ### Goals
 
@@ -756,6 +757,13 @@ fault ownership separate from catalog replacements. Architecture/renderer/
 layout checks, Quick Play, RC/stored-energy, and LED/diode/parallel
 regressions remain passing. Visible in-app Browser evidence is recorded under
 `docs/task-evidence/task-37-correction/`.
+
+The final bounded correction strengthens the acceptance proof without changing
+the NPN family architecture: generated seed 0/1/2/3 raw and rendered
+silkscreen text is compared with its physical power-input nameplates, and
+wrong/correct CE-open and CE-short status checks compare live CircuitJS state
+before and after restoration. The correction is accepted only after fresh
+independent review; Task 38 remains unstarted.
 
 ---
 
