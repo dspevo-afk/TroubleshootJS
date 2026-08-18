@@ -747,10 +747,11 @@ board/tray overlap and all existing fixed/procedural layouts were corrected;
 the NPN verifier proves exact parity with the registered TO-92 footprint.
 
 Task 37 passed the bounded coder/reviewer protocol, final JDK 8/GWT build,
-post-review corrections, and the 12/12 forced NPN seed/fault verification
-matrix for normal-player seeds 0, 2, and 3. The correction also proves natural
-ordinary-generator reachability for NPN seeds 0–3, preserves the legacy
-families' `{0, 2, 3}` envelope, resolves
+post-review corrections, and the 16/16 forced NPN seed/fault verification
+matrix for seeds 0, 1, 2, and 3. The correction also proves four ordinary
+Quick Play NPN routes, including the non-forced seed-1 C-E-short route through
+repair and Finish Job; it preserves the legacy families' `{0, 2, 3}` envelope,
+keeps the NPN envelope at `{0, 1, 2, 3}`, and resolves
 each connector's authoritative positive nameplate and `GND` return label,
 removes the old ground detour, rejects route overlap/self-intersection,
 restores prior commanded state after instantaneous checks, and keeps original

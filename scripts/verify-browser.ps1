@@ -1515,6 +1515,9 @@ function verifyRcNormalPlayer([string]$url, [int]$debugPort) {
     }
 }
 
+$npnValidationSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
+    @(0, 1, 2, 3)
+}
 if (-not (Test-Path $BrowserPath -PathType Leaf)) { throw "Browser not found: $BrowserPath" }
 if ($QuickPlay) {
     $selectorPassed = verifyRoute 'quick-play selector/session' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play' 9495 | Select-Object -Last 1
@@ -1525,6 +1528,18 @@ if ($QuickPlay) {
     if (-not $explicitPassed) { exit 1 }
     $normalPassed = verifyQuickPlayNormalPlayer "$BaseUrl/circuitjs.html?tsjQuickPlay=true" 9497 ([bool]$selectorPassed) | Select-Object -Last 1
     if (-not $normalPassed) { exit 1 }
+    $npnQuickPlayCase = 0
+    foreach ($seed in $npnValidationSeeds) {
+        $route = "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&" +
+            "tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=$seed"
+        $label = if ($seed -eq 1) { 'quick-play npn seed 1 C-E-short finish' } else {
+            "quick-play npn seed $seed"
+        }
+        if (-not (verifyRoute $label $route 'PASS:quick-play' (9500 + $npnQuickPlayCase))) {
+            exit 1
+        }
+        $npnQuickPlayCase++
+    }
     exit 0
 }
 if ($Layout) {
@@ -1539,7 +1554,7 @@ if ($Npn) {
     $faults = @('TRANSISTOR_CE_OPEN', 'TRANSISTOR_CE_SHORT',
         'BASE_RESISTOR_OPEN', 'LOAD_PATH_OPEN')
     $case = 0
-    foreach ($seed in $Seeds) {
+    foreach ($seed in $npnValidationSeeds) {
         foreach ($fault in $faults) {
             $route = "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=$seed&" +
                 "tsjNpnFault=$fault&tsjVerifyNpn=true&running=true"

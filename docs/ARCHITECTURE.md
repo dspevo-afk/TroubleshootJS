@@ -846,6 +846,15 @@ verification attribute/getter; normal UI shows the real PCB, service complaint,
 and workbench without fault, answer, specification, rating, stress, or damage
 metadata.
 
+The Quick Play canary exercises the same ordinary selector/generator boundary
+with exact and arbitrary injected selection values. It proves that NPN seeds
+0, 1, 2, and 3 naturally reach C-E open, C-E short, base-resistor open, and
+load-path open respectively, while the legacy families remain on `{0, 2, 3}`
+and the diode developer-only short remains excluded. The NPN canary also reads
+the generated physical load-input nameplates (`9 V`, `12 V`, `5 V`, `9 V`),
+so the seed envelope covers all three nominal load supplies without teaching
+Quick Play about fault effects or bypassing the family generator.
+
 Route precedence remains explicit: `tsjFixture` and `tsjChallenge` routes are
 resolved before Quick Play, and their existing family/seed behavior is
 unchanged. Quick Play therefore cannot replace an explicit challenge, fixture,
@@ -1029,8 +1038,8 @@ ordering. This preserves provider ownership while keeping the tray visible,
 selectable, paginated, and probeable.
 
 Focused Task 37 correction validation covers the JDK 8/GWT production build,
-the four-seed natural NPN envelope, the 12-case forced seed/fault matrix for
-normal-player seeds 0, 2, and 3,
+the four-seed natural NPN envelope, the 16-case forced seed/fault matrix for
+seeds 0, 1, 2, and 3, and four ordinary Quick Play NPN routes,
 provider/renderer and architecture boundaries, layout determinism/tray
 separation, Quick Play, RC/stored-energy, and LED/diode/parallel regressions.
 Visible in-app Browser evidence is stored under
@@ -1041,5 +1050,8 @@ future work, not an electrical-truth blocker for this milestone.
 The final correction's focused verifier regenerates ordinary Quick Play NPN
 seeds 0, 1, 2, and 3, compares each raw J1.1/J2.1 `PcbSilkscreenLabel` and
 rendered targeted label to the generated physical nameplates, and preserves
-the normal-player NPN seed envelope 0, 2, and 3 without exposing developer
+the family-specific normal-player envelopes: legacy families use 0, 2, and 3;
+NPN uses 0, 1, 2, and 3. The seed-1 ordinary route presents the solver-backed
+stuck-active complaint, restores Q1 through the real workbench path, and
+finishes through the generic completion boundary without exposing developer
 metadata.

@@ -1,252 +1,167 @@
-# Task 37 Correction Report — NPN Silkscreen Truth and Repair-State Preservation
+# Task 37 Correction Report — NPN Quick Play Seed/Fault Reachability
 
 Date: 2026-08-18
 
-Original Task 37 commit: `7194bd19a2b0eb1ca95eba9e4e457438a277bb9`
+Original Task 37 commit named by the request: `7194bd19a2b0eb1ca95eba9e4e457438a277bb9`.
 
-Correction baseline in this checkout: `8752612` (`Task 37: fix NPN player truth and routing`)
+Actual correction baseline in this checkout: `94a3141aa735f847e5f97d018eff6aadfd0425aa`
+(`Task 37: fix NPN validation state and meter stability`).
 
 Scope: Task 37 only. Task 38/NMOS was not started.
 
 ## Summary and decision
 
-`FINAL PASS`. This correction closes two Task 37 proof gaps:
+This correction closes the reviewed Quick Play coverage gap. The family-specific
+normal-player boundary is preserved: legacy families continue to use `{0, 2,
+3}`, while `NPN_LOW_SIDE_SWITCH` uses `{0, 1, 2, 3}`. The correction adds a
+permanent verifier canary and expands the browser harness so ordinary Quick Play
+can reach and validate all four NPN faults, including the seed-1 C-E-short
+stuck-active scenario.
 
-1. The developer verifier now proves that NPN J1.1/J2.1 raw and rendered
-   silkscreen text follows the generated physical power-input nameplates for
-   ordinary Quick Play seeds 0, 1, 2, and 3. Production label ownership remains
-   `NpnLowSideSwitchGenerator -> BoardPhysicalSpecifications ->
-   PowerInputNameplate -> NpnLowSideSwitchPcbLayoutFactory/renderer`; no seed
-   mapping was duplicated in production layout code.
-2. `getRepairStatus()` now has focused live-state preservation coverage. The
-   real CircuitJS ON/OFF functional test still runs, and the prior command is
-   restored through the family-state switch path on every exit, including early
-   precondition returns. The verifier compares live control voltage, load/base/
-   collector currents, and collector voltage before and after faulted/wrong and
-   correctly repaired status queries.
+The NPN generator remains the owner of the seed-to-voltage and seed-to-fault
+behavior. The Quick Play verifier reaches it through the ordinary
+`QuickPlaySelector`/`QuickPlayFamilyRegistry` path; it does not force a fault,
+rewrite a generated fault, or expose fault metadata to players.
 
-The latest user instruction authorizes pushing after the final commit. The
-correction is therefore intended to land as one new local commit and then be
-pushed on the existing `codex/task-37-npn-player-truth-routing` branch.
+Primary architect result: `FINAL PASS`, subject to the single local commit
+below. No push is performed because the current Task 37 completion protocol
+requires stopping after the commit.
 
-## Acceptance criteria and implementation
+## Architectural correction
 
-### Silkscreen/nameplate truth
+`QuickPlayDeveloperVerifier` now permanently checks:
 
-`NpnLowSideSwitchPcbLayoutFactory` already consumed the authoritative
-`BoardPhysicalSpecifications` from the prior correction. This task adds the
-missing focused proof rather than adding a second value source. For each seed,
-`NpnLowSideSwitchDeveloperVerifier.verifyDeterministicNameplateEnvelope()` uses
-the ordinary `QuickPlaySelector` and `selector.generate()`, reads the generated
-physical nameplates and actual `PcbSilkscreenLabel` objects, then compares both
-raw text and renderer-targeted text.
+- arbitrary injected random values remain inside each family’s validated seed
+  envelope;
+- legacy family envelopes remain `{0, 2, 3}`;
+- NPN’s ordinary envelope is `{0, 1, 2, 3}`;
+- ordinary NPN generation maps seeds 0, 1, 2, and 3 to
+  `TRANSISTOR_CE_OPEN`, `TRANSISTOR_CE_SHORT`, `BASE_RESISTOR_OPEN`, and
+  `LOAD_PATH_OPEN` respectively;
+- the generated `LOAD_VIN_INPUT` physical nameplates are 9 V, 12 V, 5 V, and
+  9 V for those seeds; and
+- the diode developer-only short remains excluded from normal Quick Play.
 
-| Seed | LOAD_VIN_INPUT nameplate | J1.1 text | CONTROL_VIN_INPUT nameplate | J2.1 text |
-| ---: | ---: | --- | ---: | --- |
-| 0 | 9 V | `+9V` | 5 V | `+5V` |
-| 1 | 12 V | `+12V` | 5 V | `+5V` |
-| 2 | 5 V | `+5V` | 5 V | `+5V` |
-| 3 | 9 V | `+9V` | 5 V | `+5V` |
+The family-specific registry boundary already existed in the prior Task 37
+player-truth correction and was not replaced with a global seed change. This
+correction verifies that boundary and extends `scripts/verify-browser.ps1` to
+use seeds 0, 1, 2, and 3 by default for both the NPN electrical matrix and the
+ordinary Quick Play NPN routes. A caller-supplied `-Seeds` list remains
+supported.
 
-The normal-player NPN envelope remains 0, 2, and 3; seed 1 is included only
-for the deterministic boundary proof and is not added to the legacy-family
-envelope. No fault, answer, seed, or developer report metadata is added to
-normal player UI.
-
-### Repair-status state preservation
-
-`NpnLowSideSwitchRepairValidator.getRepairStatus()` captures the current
-command before its precondition gates, runs the real healthy ON and OFF
-CircuitJS profile, and restores the prior command in `finally` through
-`NpnLowSideSwitchFamilyState.setCommandedOn(CircuitElm.sim, ...)`. The early
-non-powered, overlay, incomplete-modification, and incomplete-installation
-returns are inside that `try/finally`, so they cannot skip restoration.
-
-The verifier covers these meaningful states across the forced NPN routes:
-
-| Scenario | Entry command | Live entry expectation | Status proof |
-| --- | --- | --- | --- |
-| C-E open, faulted/wrong replacement | ON/high | control about 5 V, load inactive, base drive present | non-success and all five live observations unchanged |
-| C-E short, faulted/wrong replacement | OFF/low | control about 0 V, load active, collector near ground | non-success and all five live observations unchanged |
-| C-E open, correct replacement | ON/high | healthy load/base/collector behavior | `CORRECTLY_RESTORED`, command and live state unchanged |
-| C-E short, correct replacement | OFF/low | healthy load/base-off behavior | `CORRECTLY_RESTORED`, command and live state unchanged |
-
-The five live observations are J2.1-J2.2 control voltage, RLOAD load current,
-base current, collector current, and Q1.C-Q1.E collector voltage. Wrong
-replacement setup also synchronizes the actual control switch through the same
-solver-backed family-state method before taking its baseline; it does not only
-assign the boolean command field.
-
-## Files changed
-
-- `src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchDeveloperVerifier.java`
-  - ordinary generated seed/nameplate assertions;
-  - faulted and repaired live-state snapshots;
-  - solver-backed wrong-replacement setup synchronization;
-  - CE-open/CE-short command-state coverage.
-- `src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchRepairValidator.java`
-  - moves precondition exits inside the state-restoring `try/finally` while
-    preserving the functional ON/OFF proof.
-- `docs/ARCHITECTURE.md`
-  - documents the final state-restoration and generated-nameplate proof seam.
-- `docs/ROADMAP.md`
-  - records the accepted Task 37 correction while keeping Task 38 next and
-    unstarted.
-- `docs/task-evidence/task-37-correction/npn-seed2-final-normal-silkscreen.png`
-  - rebuilt normal-player seed-2 (+5 V) board evidence.
+For ordinary Quick Play seed 1, the verifier checks the live CircuitJS state:
+the control is low, load current is materially present, and collector voltage
+is low. It then removes and replaces Q1 through the normal physical-part path,
+proves healthy ON/OFF behavior through the real solver-backed family state, and
+finishes through the generic repair/completion boundary.
 
 ## Validation evidence
 
-### Production/build and source checks
+### Build and static checks
 
-- JDK 8/GWT production build:
+- JDK 8/GWT production build with
   `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`
   passed all five permutations, compilation, and linking.
 - `scripts/verify-renderer-boundary.ps1`: `PASS:renderer-provider-boundary`.
 - `scripts/verify-browser.ps1` PowerShell AST parse: `PASS:verify-browser-parser`.
-- Final source diff checks were clean before staging; staged diff check is run
-  as part of completion.
+- `git diff --check` passed before staging; the cached form is run again during
+  completion.
 
-### Visible in-app Browser
+### NPN electrical and Quick Play coverage
 
-The rebuilt local production preview was opened in the visible Codex in-app
-Browser. Normal-player seed 2 visibly showed `+5V` at J1.1 and J2.1, `GND` at
-J1.2 and J2.2, the real complaint, board power, and an empty parts tray. The
-normal page had no developer electrical-report attribute. The screenshot is
-stored in the evidence directory above.
+- The expanded forced validation matrix executed all 16 seed/fault combinations:
+  seeds 0, 1, 2, and 3 crossed with all four NPN faults. Every route returned
+  `PASS:npn` through the CircuitJS board and validators.
+- The matrix reported the expected load supply variants: seed 0 `+9V`, seed 1
+  `+12V`, seed 2 `+5V`, and seed 3 `+9V`; the control supply remained `+5V`.
+- Ordinary Quick Play developer routes for NPN seeds 0, 1, 2, and 3 each
+  returned `PASS:quick-play` with
+  `unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated`.
+  These routes used the normal selector/generator boundary and did not pass a
+  forced fault.
+- The ordinary seed-1 route selected the C-E-short behavior and exercised the
+  existing stuck-active complaint and live low-control/high-load-current
+  compatibility proof. The corrected replacement completed through generic
+  `Finish Job`.
 
-Developer routes were exercised through the same visible Browser after the
-production rebuild:
+### Visible in-app Browser acceptance
 
-- Natural NPN seeds 0, 1, 2, and 3: each `PASS:npn`, with reports showing
-  `+9V`, `+12V`, `+5V`, and `+9V` load labels respectively and `+5V` control.
-- Forced matrix for seeds 0, 2, and 3 crossed with all four NPN faults:
-  `12/12` `PASS:npn` routes.
-- Ordinary Quick Play NPN seed 1: `PASS:quick-play`; report
-  `unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated`;
-  normal-player privacy remained clean and `Finish Job` remained generic.
-- Architecture: `PASS:architecture`.
-- PCB layout: `PASS:layout`.
-- RC: `PASS:rc`.
-- Stored energy: `PASS:stored-energy`.
-- LED: `PASS:resistance`.
-- Diode: `PASS:diode`.
-- Parallel: `PASS:parallel`.
+Using the visible local in-app Browser and real player interaction, a natural
+normal-player Quick Play session reached the NPN seed-1 C-E-short presentation.
+The visible board showed the +12 V load nameplate, +5 V control nameplate, the
+active controlled load, and the complaint:
+`The controlled load stays active when control is low.`
 
-One in-app Browser route read encountered a transient CDP timeout/closed-tab
-condition during the adjacent regression pass. The page had loaded; a fresh
-visible tab and separate stabilized reads completed the affected checks. This
-was a browser-harness interruption, not a product assertion failure.
+The visible workflow then powered the board off, selected and removed Q1,
+installed the generic NPN replacement from the parts tray, powered the board
+back on, and used the normal `Finish Job` action. The application transitioned
+to a fresh challenge session after successful completion. The visible browser
+does not expose a direct player control-toggle widget; the low-control/live
+stuck-active electrical condition and restored ON/OFF proof are therefore
+asserted by the solver-backed verifier at the generic completion boundary, not
+by hidden player UI state.
 
-The standalone PowerShell Edge harness was not reported as passing. Its host
-process inspection encountered WMI/CIM `Access denied` before route execution;
-the visible in-app Browser was used for the required player-facing and route
-evidence instead.
+Architecture and PCB layout routes were rechecked in the visible application
+with `PASS:architecture` and `PASS:layout`. The existing Task 37 regression
+evidence also passed for RC/stored-energy, LED, diode, and parallel families;
+those areas were not changed by this correction. A later diode-route read hit
+the known in-app CDP deadline and is recorded as a harness interruption rather
+than a false product pass.
 
-## Coder and reviewer protocol
+The standalone PowerShell Edge harness was not reported as passing: its Edge
+process query was blocked by the documented WMI/CIM `Access denied` condition
+before route execution. The visible in-app Browser was used for the required
+player-facing and route validation instead.
 
-- Coder Galileo delivered the first bounded candidate with generated
-  nameplate checks and solver-state observations.
-- Fresh reviewer Poincare returned `FAIL` with a `BLOCKER`: wrong-replacement
-  checks lacked live before/after observations.
-- Coder James added the five live observations around wrong-replacement status.
-- Fresh reviewer Carson returned `FAIL` with a `BLOCKER`: the verifier setup
-  had synchronized only bookkeeping, not the actual CircuitJS switch.
-- Coder Hooke corrected setup by calling `setCommandedOn(sim, ...)` before the
-  wrong-replacement baseline.
-- Fresh reviewer Raman independently returned `PASS` after inspecting the
-  corrected diff and validation evidence.
-- Primary architect review rounds: three candidate reviews, including two
-  blocker correction rounds.
+## Files changed
+
+- `AGENTS.md` — added the requested Parallel Subagent Policy; the user-owned
+  `.codex/config.toml` max-concurrent-subagent change was left unstaged.
+- `src/com/lushprojects/circuitjs1/client/QuickPlayDeveloperVerifier.java` —
+  family-envelope, ordinary NPN fault/voltage reachability, seed-1 live
+  scenario, and generic repair/Finish Job canaries.
+- `scripts/verify-browser.ps1` — default NPN matrix and ordinary Quick Play
+  route coverage expanded to seeds 0, 1, 2, and 3.
+- `docs/ARCHITECTURE.md` — documents the family-specific envelope and ordinary
+  NPN reachability proof boundary.
+- `docs/ROADMAP.md` — records the accepted 16-case Task 37 correction and keeps
+  Task 38 as the next eligible, unstarted milestone.
+- `docs/CODEX_TASK_REPORT.md` — replaced with this correction report.
+
+No screenshot or evidence artifact is added to the commit.
+
+## Review protocol
+
+- Bounded coder Fermat implemented the verifier and browser-harness correction,
+  reported the build and route evidence, and did not push.
+- Fresh read-only reviewer Hilbert inspected the actual diff and execution
+  paths, specifically checking ordinary (not forced) NPN reachability, the
+  family-specific seed boundary, the seed-1 live scenario, generic completion,
+  and regression scope. Result: `PASS`.
+- The reviewer was explicitly told that the max-subagent setting was changed
+  by the user and was not a subagent edit; that `.codex/config.toml` change is
+  intentionally left alone and unstaged.
+- Primary architect review: one normal review round, followed by independent
+  final inspection of the implementation, documentation, validation evidence,
+  and intended file list. Result: `FINAL PASS`.
 - Escalation architect: not required.
-- Primary architect final result: `FINAL PASS`.
 
 ## Known limitations
 
-The compact TO-92 renderer still uses the existing physical `NPN` body and
-B/C/E markings. That is previously documented physical-fidelity debt and is
-outside this state/nameplate correction. It does not replace the electrical
-model, nameplate ownership, or solver-backed measurement behavior.
+- The standalone Edge/PowerShell harness remains unavailable under the current
+  WMI/CIM permissions; this is recorded as unavailable, not passing.
+- The in-app Browser occasionally reports a CDP frame-tree/deadline timeout
+  while a route is still settling. Stabilized reads passed for the required
+  Quick Play seed routes; the isolated later diode read is retained as a
+  harness limitation.
+- Existing compact TO-92 renderer physical-fidelity debt remains outside this
+  bounded Quick Play correction.
 
 ## Final boundary
 
-Only this Task 37 correction is included. Task 38/NMOS was not started. The
-commit message is:
+Only Task 37 correction work is included. Task 38/NMOS, PNP, PMOS, and other
+future-family work was not started.
 
-`Task 37: fix NPN board state and labels`
+Commit message:
 
-The latest user instruction authorizes pushing this one correction commit after
-the final checks; no further milestone work is permitted in this task.
-
-## Task 37 correction — NPN validation purity and meter stability
-
-This section records the accepted bounded correction. It remains Task 37-only;
-Task 38/NMOS was not started.
-
-### Root causes and architectural correction
-
-NPN fault validation and scenario compatibility exercised the real control
-switch, but compatibility and the fault validator could leave the command in
-the last tested state. Candidate-order evaluation therefore leaked a control
-condition into the selected challenge. The repair validator already restored
-its command on its normal path, but its early exits and all related validation
-paths needed the same finally-safe discipline.
-
-The correction snapshots the command in the NPN compatibility, fault, and
-repair validators, runs real CircuitJS ON/OFF checks, and restores the exact
-prior command in nested `finally` blocks. `CirSim` now exposes a narrow
-observational-validation transaction that suppresses only intermediate
-`needAnalyze()` instrument topology refreshes while those checks run. The
-selected scenario has a deliberate presentation boundary: not-switching
-establishes commanded ON/high, while stuck-active establishes commanded
-OFF/low. Compatible candidates and developer-visible compatible IDs are sorted
-by stable scenario ID, so reversing catalog insertion order does not change
-the result.
-
-The meter flicker root cause was the combination of `needAnalyze()` clearing
-DC mode to `--- V` and temporary active-measurement cleanup unconditionally
-scheduling generated-board verification. That verification re-entered NPN
-repair validation, which toggled the control and fed back into measurement
-refresh. Intermediate refreshes are now suppressed only inside the explicit
-validation transaction, and a temporary measurement that has restored its own
-overlay no longer creates a new challenge verification. Already-pending
-verification caused by a real board or power mutation remains pending; normal
-power, probe, and topology changes still refresh the instrument.
-
-### Focused validation evidence
-
-- JDK 8/GWT production build passed all five permutations and linking with
-  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`.
-- Final NPN matrix passed `12/12` for seeds 0, 2, and 3 crossed with
-  `TRANSISTOR_CE_OPEN`, `TRANSISTOR_CE_SHORT`, `BASE_RESISTOR_OPEN`, and
-  `LOAD_PATH_OPEN`; natural NPN seeds 0–3 also passed.
-- NPN developer verification now checks compatibility state before/after,
-  reversed candidate order, repeated compatibility idempotence across solver
-  elements, command, power, overlay, physical slots, and fault application,
-  deliberate complaint presentation, real DC control/collector readings,
-  measurement counts, analysis counts, reverification counts, and placeholder
-  display transitions.
-- LED stable DC, RC live DC across a real power transition, Quick Play, diode,
-  parallel, architecture, layout, and stored-energy routes passed through the
-  in-app Browser. Renderer-boundary verification passed.
-- Visible normal-player Browser evidence shows stationary NPN control probes at
-  `5 V` before and after a 3.5-second wait, then a stationary collector probe at
-  `4.188 V` before and after a 3.5-second wait in the final primary pass; no
-  placeholder appeared after the probes were valid. The preserved verifier
-  captures are:
-  `docs/task-evidence/task-37-correction/npn-stable-control-after-probes.png`,
-  `npn-stable-control-after-wait.png`, and
-  `npn-stable-collector-after-wait.png`.
-- `git diff --check` passed. The standalone
-  `scripts/verify-browser.ps1 -NpnNatural -Seeds 0 -TimeoutSeconds 30` harness
-  did not run its route because its Edge process query failed with WMI/CIM
-  `Access denied`; it is recorded as unavailable, not as a pass. The existing
-  local preview and visible in-app Browser were used for route execution.
-
-### Reviewer disposition
-
-Coder validation is complete. The fresh independent reviewer inspected the
-actual diff and returned `PASS`; the primary architect independently rebuilt
-the production bundle, reran the visible in-app Browser matrix, confirmed the
-normal-player +5V/stable-meter evidence, and returned `FINAL PASS`. The
-correction is ready for its single Task 37 commit and the user-authorized push.
+`Task 37: fix NPN quick play fault coverage`

@@ -23,11 +23,13 @@ final class QuickPlayDeveloperVerifier {
             instance.getChallengeDefinition().getSelectionSeed(),
             "Quick Play selection was not passed to the deterministic generator");
         verifyDeterministicFamilySelection();
+        verifySelectionEnvelopes();
         verifyNaturalNpnSeedEnvelope();
         require(instance.getFaultBinding().getFault().getType() != GeneratedFaultType.DIODE_SHORT,
             "Quick Play selected the developer-only diode short fault");
         verifyFreshSessionBoundary();
         verifyUnrepairedFinishDoesNotAdvance(sim, challenge);
+        verifySeedOneNpnScenario(sim, challenge, instance);
         verifyCorrectRepairCanFinish(sim, challenge, instance);
         verifyNormalPlayerPrivacy(sim);
         sim.publishQuickPlayVerificationReportForDeveloperVerification(
@@ -121,12 +123,48 @@ final class QuickPlayDeveloperVerifier {
     }
 
     /**
+     * Exercises arbitrary selector values through the ordinary Quick Play
+     * selector/generator boundary and checks each family against its own
+     * validated seed envelope.  The expected sets are intentionally explicit
+     * here: this is the canary for accidental changes to the registry boundary.
+     */
+    private static void verifySelectionEnvelopes() {
+        Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
+        long[] injectedValues = { Long.MIN_VALUE, -7, -1, 0, 1, 2, 3, 4, 17,
+            Long.MAX_VALUE };
+        long[] legacySeeds = { 0, 2, 3 };
+        long[] npnSeeds = { 0, 1, 2, 3 };
+        for (int familyIndex = 0; familyIndex < families.size(); familyIndex++) {
+            String familyId = families.elementAt(familyIndex);
+            long[] expectedSeeds = QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ?
+                npnSeeds : legacySeeds;
+            for (long injectedValue : injectedValues) {
+                QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                    new long[] { familyIndex, injectedValue }));
+                QuickPlaySelection selection = selector.select();
+                GeneratedBoardInstance generated = selector.generate(selection);
+                require(familyId.equals(selection.getFamilyId()) &&
+                    familyId.equals(generated.getCircuitFamilyId()) &&
+                    contains(expectedSeeds, selection.getSeed()) &&
+                    generated.getSeed() == selection.getSeed(),
+                    "Quick Play selection escaped the " + familyId + " seed envelope for " +
+                        injectedValue);
+                if (QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR.equals(familyId))
+                    require(generated.getFaultBinding().getFault().getType() !=
+                        GeneratedFaultType.DIODE_SHORT,
+                        "Quick Play diode selection admitted the developer-only short fault");
+            }
+        }
+    }
+
+    /**
      * Exercises the ordinary selector/generator boundary.  This intentionally
      * does not use generateForFaultVerification: the public Quick Play path
      * must reach the validated NPN envelope through its normal seed.
      */
     private static void verifyNaturalNpnSeedEnvelope() {
         long[] seeds = { 0, 1, 2, 3 };
+        double[] loadVoltages = { 9, 12, 5, 9 };
         GeneratedFaultType[] faults = {
             GeneratedFaultType.TRANSISTOR_CE_OPEN,
             GeneratedFaultType.TRANSISTOR_CE_SHORT,
@@ -143,7 +181,33 @@ final class QuickPlayDeveloperVerifier {
                     generated.getSeed() == seeds[index] && generated.getFaultBinding().getFault()
                         .getType() == faults[index],
                 "Natural NPN Quick Play seed boundary changed at seed " + seeds[index]);
+            PowerInputNameplate loadInput = generated.getPhysicalSpecifications()
+                .getPowerInputNameplate("LOAD_VIN_INPUT");
+            require(loadInput != null &&
+                Math.abs(loadInput.getNominalVoltage() - loadVoltages[index]) < .0001,
+                "Natural NPN Quick Play load voltage changed at seed " + seeds[index]);
         }
+    }
+
+    private static void verifySeedOneNpnScenario(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        if (!QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) ||
+                instance.getSeed() != 1)
+            return;
+        require(challenge.getScenario() != null &&
+            challenge.getScenario().getObservedBehavior() ==
+                GeneratedObservedBehavior.NPN_LOAD_STUCK_ACTIVE &&
+            "The controlled load stays active when control is low.".equals(
+                challenge.getComplaintText()),
+            "Quick Play NPN seed 1 did not present the exact stuck-active complaint");
+        NpnLowSideSwitchFamilyState state = (NpnLowSideSwitchFamilyState)
+            instance.getFamilyState();
+        double control = NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "J2.1") -
+            NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "J2.2");
+        require(!state.isCommandedOn() && control < 1 &&
+            NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005 &&
+            NpnLowSideSwitchGeneratedBoardValidator.collectorVoltage(instance) < 1,
+            "Quick Play NPN seed 1 did not present live low-control, stuck-active behavior");
     }
 
     private static void verifyUnrepairedFinishDoesNotAdvance(CirSim sim,
@@ -161,6 +225,10 @@ final class QuickPlayDeveloperVerifier {
             return;
         }
         if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId())) {
+            if (instance.getSeed() == 1) {
+                verifySeedOneNpnRepairCanFinish(sim, challenge, instance);
+                return;
+            }
             verifyNpnCorrectRepairCanFinish(sim, challenge, instance);
             return;
         }
@@ -183,6 +251,29 @@ final class QuickPlayDeveloperVerifier {
             GeneratedRepairStatus.CORRECTLY_RESTORED && sim.finishQuickPlayJob() &&
             challenge.isCompleted(),
             "Correctly restored Quick Play challenge did not finish through generic status");
+    }
+
+    private static void verifySeedOneNpnRepairCanFinish(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        NpnSlotController slots = sim.getNpnSlotController();
+        require(slots != null, "Quick Play NPN seed 1 has no Q1 slot controller");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
+            NpnReplacementCatalog.CORRECT),
+            "Quick Play NPN seed 1 did not accept the correct Q1 catalog replacement");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        NpnLowSideSwitchFamilyState state = (NpnLowSideSwitchFamilyState)
+            instance.getFamilyState();
+        state.setCommandedOn(sim, true);
+        require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
+            "Quick Play NPN seed 1 replacement did not restore real ON behavior");
+        state.setCommandedOn(sim, false);
+        require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
+            "Quick Play NPN seed 1 replacement did not restore real OFF behavior");
+        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
+            sim.finishQuickPlayJob() && challenge.isCompleted(),
+            "Quick Play NPN seed 1 correct replacement did not finish generically");
     }
 
     private static void verifyNpnCorrectRepairCanFinish(CirSim sim,
@@ -318,5 +409,12 @@ final class QuickPlayDeveloperVerifier {
     private static void require(boolean condition, String message) {
         if (!condition)
             throw new IllegalStateException(message);
+    }
+
+    private static boolean contains(long[] values, long expected) {
+        for (long value : values)
+            if (value == expected)
+                return true;
+        return false;
     }
 }

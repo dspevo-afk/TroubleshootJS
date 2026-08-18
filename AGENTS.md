@@ -1023,6 +1023,46 @@ This protocol augments all existing project architecture, development,
 validation, and completion requirements. It does not remove, weaken, or
 replace them.
 
+## Parallel Subagent Policy
+
+The primary architect should use parallel subagents when doing so can safely
+reduce task completion time or improve independent analysis.
+
+Parallel work is encouraged for independent activities such as:
+
+- repository/code-path investigation
+- architecture analysis
+- searching for related implementations
+- test and verifier analysis
+- documentation inspection
+- independent bug investigation
+- independent review of distinct concerns
+- browser/test evidence analysis
+
+Multiple write-capable coder subagents MAY work in parallel only when their
+ownership boundaries are explicitly separated and their edits cannot reasonably
+conflict.
+
+Examples of safe parallel implementation:
+
+- one coder modifies production code while another adds isolated tests
+- coders modify separate modules with clearly defined interfaces
+- one coder implements a new isolated class while another updates an
+  unrelated verifier or fixture
+- independent fixes in files/subsystems with no overlapping ownership
+
+Do NOT run multiple write-capable agents in parallel when:
+
+- they may edit the same files
+- one agent's implementation depends on another agent's unfinished design
+- they are changing the same subsystem or shared abstraction
+- integration order is unclear
+- concurrent edits could produce conflicting architectural decisions
+
+The primary architect must assign explicit ownership before spawning parallel
+write-capable agents and remains responsible for integrating and reviewing all
+results.
+
 The normal workflow uses a primary architect and bounded coder/reviewer
 implementation and review roles. A separate escalation architect is available
 when the normal bounded process cannot safely resolve a substantive issue.
