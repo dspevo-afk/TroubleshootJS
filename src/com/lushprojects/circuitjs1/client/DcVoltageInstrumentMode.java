@@ -26,8 +26,10 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
         }
         if (!refreshPending)
             return;
-        refreshPending = false;
-        getState().setRefreshPending(false);
+        boolean live = controller.usesLiveDcVoltageForStrategy(
+            controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
+        refreshPending = live;
+        getState().setRefreshPending(live);
         getState().setPrimaryValue(controller.measureDcVoltageForStrategy(
             controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy()));
         getState().incrementMeasurementCount();
@@ -44,7 +46,9 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     }
 
     public void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze) {
-        if (didAnalyze && refreshPending)
+        if ((didAnalyze || controller.usesLiveDcVoltageForStrategy(
+                controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy())) &&
+                refreshPending)
             controller.updateReadingForStrategy();
     }
 }

@@ -55,13 +55,14 @@ final class ResistanceInstrumentMode extends AbstractInstrumentModeStrategy {
         }
         if (!refreshPending)
             return;
-        refreshPending = false;
-        getState().setRefreshPending(false);
         if (!controller.isMeasurementAllowedForStrategy(this, red, black)) {
+            keepWaitingIfNecessary(controller, red, black);
             getState().setPrimaryValue(Double.NaN);
             getState().setContinuityDetected(false);
             return;
         }
+        refreshPending = false;
+        getState().setRefreshPending(false);
         getState().setPrimaryValue(controller.measureResistanceForStrategy(red, black));
         getState().incrementMeasurementCount();
         controller.validateTargetsForStrategy();
@@ -83,7 +84,7 @@ final class ResistanceInstrumentMode extends AbstractInstrumentModeStrategy {
             text = getInitialDisplay();
             getState().setContinuityDetected(false);
         } else if (!controller.isMeasurementAllowedForStrategy(this, red, black)) {
-            text = "POWER OFF";
+            text = controller.getActiveMeasurementReadinessForStrategy(red, black).getDisplayText();
             getState().setContinuityDetected(false);
         } else if (Double.isNaN(resistance) || Double.isInfinite(resistance) ||
                 resistance > MAX_RESISTANCE) {
@@ -100,7 +101,19 @@ final class ResistanceInstrumentMode extends AbstractInstrumentModeStrategy {
     }
 
     public void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze) {
-        if (didAnalyze && refreshPending)
+        ActiveMeasurementReadiness readiness = controller.getActiveMeasurementReadinessForStrategy(
+            controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
+        if (refreshPending && (didAnalyze || readiness == ActiveMeasurementReadiness.WAITING ||
+                readiness == ActiveMeasurementReadiness.DISCHARGE))
             controller.updateReadingForStrategy();
+    }
+
+    private void keepWaitingIfNecessary(InstrumentController controller, ProbeTarget red,
+            ProbeTarget black) {
+        ActiveMeasurementReadiness readiness =
+            controller.getActiveMeasurementReadinessForStrategy(red, black);
+        refreshPending = readiness == ActiveMeasurementReadiness.WAITING ||
+            readiness == ActiveMeasurementReadiness.DISCHARGE;
+        getState().setRefreshPending(refreshPending);
     }
 }

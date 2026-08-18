@@ -38,6 +38,31 @@ class GeneratedFaultEngine {
         return diodeShort(id, familyId, seed, componentId, bypassSwitch, true);
     }
 
+    static GeneratedFaultCandidate capacitorOpen(String id, String familyId, long seed,
+            String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.CAPACITOR_OPEN,
+            componentId, familyId, seed), new SwitchOpenFaultEffect(switchElement));
+    }
+
+    static GeneratedFaultCandidate capacitorPositiveLeadOpen(String id, String familyId,
+            long seed, String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.CAPACITOR_OPEN,
+            componentId, familyId, seed), new CapacitorPositiveLeadOpenFaultEffect(switchElement));
+    }
+
+    static GeneratedFaultCandidate capacitorShort(String id, String familyId, long seed,
+            String componentId, SwitchElm bypassSwitch) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.CAPACITOR_SHORT,
+            componentId, familyId, seed), new SwitchParallelShortFaultEffect(bypassSwitch));
+    }
+
+    static GeneratedFaultCandidate capacitorShuntShort(String id, String familyId, long seed,
+            String componentId, ResistorElm bypassResistor, SwitchElm positiveLeadSwitch) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.CAPACITOR_SHORT,
+            componentId, familyId, seed), new CapacitorShortFaultEffect(bypassResistor,
+                positiveLeadSwitch));
+    }
+
     static GeneratedFaultCandidate diodeShort(String id, String familyId, long seed,
             String componentId, SwitchElm bypassSwitch, boolean compatible) {
         return candidate(new GeneratedFault(id, GeneratedFaultType.DIODE_SHORT,

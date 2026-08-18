@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('led', 'diode', 'parallel')]
+    [ValidateSet('led', 'diode', 'parallel', 'rc')]
     [string]$Challenge = 'led',
     [long]$Seed = 3,
     [switch]$QuickPlay,

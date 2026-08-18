@@ -35,13 +35,14 @@ final class DiodeTestInstrumentMode extends AbstractInstrumentModeStrategy {
         }
         if (!refreshPending)
             return;
-        refreshPending = false;
-        getState().setRefreshPending(false);
         if (!controller.isMeasurementAllowedForStrategy(this, red, black)) {
+            keepWaitingIfNecessary(controller, red, black);
             getState().setPrimaryValue(Double.NaN);
             getState().setSecondaryValue(Double.NaN);
             return;
         }
+        refreshPending = false;
+        getState().setRefreshPending(false);
         DiodeMeasurementResult result = controller.measureDiodeForStrategy(red, black);
         getState().incrementMeasurementCount();
         controller.validateTargetsForStrategy();
@@ -73,7 +74,7 @@ final class DiodeTestInstrumentMode extends AbstractInstrumentModeStrategy {
         if (red == null || black == null)
             text = getInitialDisplay();
         else if (!controller.isMeasurementAllowedForStrategy(this, red, black))
-            text = "POWER OFF";
+            text = controller.getActiveMeasurementReadinessForStrategy(red, black).getDisplayText();
         else if (Double.isNaN(voltage) || Double.isNaN(current) ||
                 Double.isInfinite(voltage) || Double.isInfinite(current))
             text = "OL";
@@ -84,7 +85,19 @@ final class DiodeTestInstrumentMode extends AbstractInstrumentModeStrategy {
     }
 
     public void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze) {
-        if (didAnalyze && refreshPending)
+        ActiveMeasurementReadiness readiness = controller.getActiveMeasurementReadinessForStrategy(
+            controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
+        if (refreshPending && (didAnalyze || readiness == ActiveMeasurementReadiness.WAITING ||
+                readiness == ActiveMeasurementReadiness.DISCHARGE))
             controller.updateReadingForStrategy();
+    }
+
+    private void keepWaitingIfNecessary(InstrumentController controller, ProbeTarget red,
+            ProbeTarget black) {
+        ActiveMeasurementReadiness readiness =
+            controller.getActiveMeasurementReadinessForStrategy(red, black);
+        refreshPending = readiness == ActiveMeasurementReadiness.WAITING ||
+            readiness == ActiveMeasurementReadiness.DISCHARGE;
+        getState().setRefreshPending(refreshPending);
     }
 }

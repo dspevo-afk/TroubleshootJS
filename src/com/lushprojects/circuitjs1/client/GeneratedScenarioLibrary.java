@@ -43,6 +43,22 @@ final class GeneratedScenarioLibrary {
         return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
     }
 
+    static GeneratedScenarioCatalog<GeneratedObservedBehavior> rcDelay() {
+        Vector<GeneratedScenario<GeneratedObservedBehavior>> candidates =
+            new Vector<GeneratedScenario<GeneratedObservedBehavior>>();
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "RC_DELAY_IMMEDIATE", "STARTS_TOO_SOON",
+            "The controller responds immediately after power-up.",
+            GeneratedObservedBehavior.RC_DELAY_TOO_FAST,
+            new RcTemporalCompatibility()));
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "RC_DELAY_NO_START", "DOES_NOT_REACH_OPERATING_STATE",
+            "The controller never responds after power-up.",
+            GeneratedObservedBehavior.RC_DELAY_STUCK_LOW,
+            new RcTemporalCompatibility()));
+        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
+    }
+
     private static class DarkIndicatorCompatibility
             implements GeneratedScenarioCompatibility<GeneratedObservedBehavior> {
         private final String ledId;
@@ -126,6 +142,17 @@ final class GeneratedScenarioLibrary {
             CircuitPostMeasurementEndpoint endpoint = (CircuitPostMeasurementEndpoint)
                 instance.getSimulationBindings().getEndpoint(padId);
             return endpoint.getElement().getPostVoltage(endpoint.getPostIndex());
+        }
+    }
+
+    private static class RcTemporalCompatibility
+            implements GeneratedScenarioCompatibility<GeneratedObservedBehavior> {
+        public boolean matches(GeneratedBoardInstance instance,
+                BoardModificationController modifications, BoardPowerState powerState,
+                GeneratedObservedBehavior observedBehavior) {
+            GeneratedTemporalBehavior temporal = instance.getTemporalBehavior();
+            return powerState == BoardPowerState.POWERED && temporal != null &&
+                temporal.getObservedBehavior() == observedBehavior;
         }
     }
 }

@@ -21,6 +21,9 @@ param(
     [switch]$QuickPlay,
     [switch]$Layout,
     [switch]$Architecture,
+    [switch]$Rc,
+    [switch]$StoredEnergy,
+    [switch]$RcNormalPlayer,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -101,11 +104,9 @@ function cleanupBrowser($browser, $socket, [string]$profile) {
             try {
                 Stop-Process -Id ([int]$process.ProcessId) -Force -ErrorAction Stop
             } catch {
-                $stillPresent = @(getEdgeProcessesForProfile $browser $profile |
-                    Where-Object { [int]$_.ProcessId -eq [int]$process.ProcessId })
-                if ($stillPresent.Count -ne 0) {
-                    throw "Could not terminate Edge process $($process.ProcessId): $($_.Exception.Message)"
-                }
+                # A browser child can exit between the WMI snapshot and
+                # Stop-Process.  The loop below re-enumerates the isolated
+                # temporary profile and still fails if any process remains.
             }
         }
         if ([DateTime]::UtcNow -ge $processDeadline) {
@@ -155,11 +156,16 @@ function receiveCdp($socket, [int]$wantedId, [ref]$failures) {
             $description = if ($details.exception -and $details.exception.description) {
                 $details.exception.description
             } else { $details.text }
-            $failures.Value += 'JavaScript exception: ' + $description
+            $stack = ''
+            if ($details.stackTrace -and $details.stackTrace.callFrames) {
+                $stack = ' ' + (($details.stackTrace.callFrames | Select-Object -First 8 |
+                    ForEach-Object { "$($_.functionName)@$($_.url):$($_.lineNumber)" }) -join ' <- ')
+            }
+            $failures.Value += 'JavaScript exception: ' + $description + $stack
         }
         if ($method -eq 'Runtime.consoleAPICalled') {
             $text = ($message.params.args | ForEach-Object { $_.value }) -join ' '
-            if ($text -match '(?i)verification failed|generated board verification failed|pcb_generator_failure|parallel_generator_failure|uncaught|exception') {
+            if ($text -match '(?i)verification failed|generated board verification failed|pcb_generator_failure|parallel_generator_failure|rc_generator_failure|uncaught|exception') {
                 $failures.Value += 'Console failure: ' + $text
             }
         }
@@ -397,6 +403,25 @@ function clickTrayPartAndWaitForSelection($socket, [ref]$nextId, [string]$button
 function getCanvasPoint($socket, [ref]$nextId, [string]$targetKey, [ref]$failures) {
     $escaped = $targetKey.Replace("'", "\\'")
     return evaluateCdp $socket $nextId "(()=>{const c=[...document.querySelectorAll('canvas')].find(x=>{const r=x.getBoundingClientRect();return r.width>100&&r.height>100});const g=window.__tsjPcbGeometry;if(!c||!g||!g.points||!g.points['$escaped'])return null;const r=c.getBoundingClientRect(),p=g.points['$escaped'];return {x:r.left+p.x*r.width/c.width,y:r.top+p.y*r.height/c.height};})()" $failures
+}
+
+function getMeterVoltage($socket, [ref]$nextId, [ref]$failures, [string]$description) {
+    $reading = [string](evaluateCdp $socket $nextId "(()=>{const e=document.querySelector('.tsj-meter-display');return e?e.innerText:'';})()" $failures)
+    $match = [regex]::Match($reading, '^\s*(-?(?:\d+(?:\.\d*)?|\.\d+))\s*([pnμµumkMG]?)V\s*$')
+    if (-not $match.Success) { throw "$description was not a DC voltage reading: $reading" }
+    $scale = switch ($match.Groups[2].Value) {
+        'p' { 1e-12; break }
+        'n' { 1e-9; break }
+        'μ' { 1e-6; break }
+        'µ' { 1e-6; break }
+        'u' { 1e-6; break }
+        'm' { 1e-3; break }
+        'k' { 1e3; break }
+        'M' { 1e6; break }
+        'G' { 1e9; break }
+        default { 1; break }
+    }
+    return [double]::Parse($match.Groups[1].Value, [Globalization.CultureInfo]::InvariantCulture) * $scale
 }
 
 function getPlayerValueLeakDiagnostics($socket, [ref]$nextId, [string]$originalValue,
@@ -1319,10 +1344,176 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
     }
 }
 
+function verifyRcNormalPlayer([string]$url, [int]$debugPort) {
+    $profile = Join-Path $env:TEMP ("tsj-rc-player-" + [Guid]::NewGuid().ToString('N'))
+    $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+        '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
+    $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $socket = $null
+    try {
+        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        do {
+            Start-Sleep -Milliseconds 200
+            try {
+                $targets = Invoke-RestMethod "http://127.0.0.1:$debugPort/json/list" -TimeoutSec 2
+                $target = $targets | Where-Object { $_.type -eq 'page' } | Select-Object -First 1
+            } catch { $target = $null }
+        } while ($null -eq $target -and [DateTime]::UtcNow -lt $deadline)
+        if ($null -eq $target) { throw 'browser target did not become available' }
+        $socket = New-Object Net.WebSockets.ClientWebSocket
+        $socket.ConnectAsync([Uri]$target.webSocketDebuggerUrl,
+            [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+        $nextId = 1
+        $failures = @()
+        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('controller responds immediately after power-up.')" $deadline ([ref]$failures) 'ready RC challenge'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points['component:C1']&&!!window.__tsjPcbGeometry.points['component:C2']" $deadline ([ref]$failures) 'RC provider-owned capacitor geometry'
+        $ticket = evaluateCdp $socket ([ref]$nextId) "(()=>{const t=[...document.querySelectorAll('.tsj-component-title')].find(x=>x.textContent.trim()==='Service Ticket');return t&&t.parentElement?t.parentElement.innerText:'';})()" ([ref]$failures)
+        if ($ticket -match '(?i)c1|capacitor|fault|open|short|1\s*uF') {
+            throw "RC complaint disclosed implementation details: $ticket"
+        }
+        if ($EvidenceDirectory) {
+            [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-initial.png') ([ref]$failures)
+        }
+        $c1 = getCanvasPoint $socket ([ref]$nextId) 'component:C1' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')&&document.body.innerText.includes('C1')" $deadline ([ref]$failures) 'RC capacitor controls'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'power off RC board'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('C1_ORIGINAL - Electrolytic capacitor')&&document.body.innerText.includes('State: C1 slot empty')" $deadline ([ref]$failures) 'remove fault-owning C1'
+        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:C1_ORIGINAL:0']&&!!window.__tsjPcbGeometry.points['loose:C1_ORIGINAL:1']" $deadline ([ref]$failures) 'loose capacitor geometry and probes'
+        selectOptionWithKeyboard $socket ([ref]$nextId) 0 '33 uF 16 V' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new capacitor' "!document.body.innerText.includes('State: C1 slot empty')&&document.body.innerText.includes('C1_ORIGINAL - Electrolytic capacitor')" $deadline ([ref]$failures) 'install RC replacement'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Repair verified. The controller delay is operating normally.')" $deadline ([ref]$failures) 'solver-backed RC repair'
+        # The following sequence is deliberately ordinary player input.  It
+        # proves that the visible C1/R2 path leaves a material residual after
+        # the power-button/mode-cleanup latency, refuses an active meter while
+        # charged, then becomes usable only after the real solver discharge.
+        $c1Positive = getCanvasPoint $socket ([ref]$nextId) 'pad:C1.+' ([ref]$failures)
+        $c1Negative = getCanvasPoint $socket ([ref]$nextId) 'pad:C1.-' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&Math.abs(v)>1;})()" $deadline ([ref]$failures) 'charged RC voltage'
+        $charged = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'charged C1'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-charged.png') ([ref]$failures)
+        }
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'power off charged RC board'
+        Start-Sleep -Milliseconds 120
+        waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&Math.abs(v)>1;})()" $deadline ([ref]$failures) 'material residual after ordinary power-off latency'
+        $residual = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'power-off C1 residual'
+        if ($residual -ge ($charged - .05)) {
+            throw "C1 did not visibly begin its real R2 discharge: charged=$charged residual=$residual"
+        }
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-residual.png') ([ref]$failures)
+        }
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='DISCHARGE'" $deadline ([ref]$failures) 'charged OHM refusal'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-refused.png') ([ref]$failures)
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-ohm.png') ([ref]$failures)
+        }
+        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'CONT' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='DISCHARGE'" $deadline ([ref]$failures) 'charged continuity refusal'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-continuity.png') ([ref]$failures)
+        }
+        clickButton $socket ([ref]$nextId) 'CONT' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='DISCHARGE'" $deadline ([ref]$failures) 'charged diode refusal'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-diode.png') ([ref]$failures)
+        }
+        # Exit every blocked mode before readiness polling so none can inject
+        # its source immediately when C1 naturally reaches the safety limit.
+        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&Math.abs(v)<0.25;})()" $deadline ([ref]$failures) 'natural C1 discharge below the shared safety threshold'
+        $discharged = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'discharged C1'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharged.png') ([ref]$failures)
+        }
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='DISCHARGE'&&t!=='SETTLING'&&t!=='POWER OFF'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'active meter after natural discharge'
+        $readyReading = [string](evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures))
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-ready.png') ([ref]$failures)
+        }
+        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
+        # A successful active measurement has a real source and can recharge
+        # C1.  Let the same visible R2 path clear it again before proving the
+        # next power-up rise.
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&Math.abs(v)<0.25;})()" $deadline ([ref]$failures) 'post-measurement natural C1 discharge'
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'power on repaired RC board'
+        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
+        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v);})()" $deadline ([ref]$failures) 'early repaired RC voltage'
+        $risingEarly = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'early repaired C1 voltage'
+        $riseThreshold = ($risingEarly + .25).ToString([Globalization.CultureInfo]::InvariantCulture)
+        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&v>$riseThreshold;})()" $deadline ([ref]$failures) 'visible repaired RC rise'
+        $risingLate = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'late repaired C1 voltage'
+        if ($risingLate -le ($risingEarly + .25)) {
+            throw "RC output did not visibly rise through normal player timing: early=$risingEarly late=$risingLate"
+        }
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-repaired.png') ([ref]$failures)
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-rising.png') ([ref]$failures)
+        }
+        if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
+        Write-Host "PASS rc-normal-player provider-geometry=visible repair=solver-backed charged=$charged residual=$residual discharged=$discharged ready=$readyReading rise=$risingEarly->$risingLate"
+        return $true
+    } catch {
+        Write-Host "FAIL rc-normal-player - $($_.Exception.Message)"
+        if ($null -ne $socket) {
+            try {
+                $snapshot = evaluateCdp $socket ([ref]$nextId) "document.body.innerText" ([ref]$failures)
+                $start = [Math]::Max(0, $snapshot.Length - 1600)
+                $meter = evaluateCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display');return e?e.innerText:'';})()" ([ref]$failures)
+                Write-Host ("RC PLAYER UI SNAPSHOT: " + $snapshot.Substring($start).Replace("`n", " | ") + " meter=" + $meter)
+            } catch { }
+        }
+        return $false
+    } finally {
+        cleanupBrowser $browser $socket $profile
+    }
+}
+
 if (-not (Test-Path $BrowserPath -PathType Leaf)) { throw "Browser not found: $BrowserPath" }
 if ($QuickPlay) {
     $selectorPassed = verifyRoute 'quick-play selector/session' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play' 9495 | Select-Object -Last 1
     if (-not $selectorPassed) { exit 1 }
+    $rcFinishPassed = verifyRoute 'quick-play rc finish' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=3&tsjQuickPlayTestSeed=3" 'PASS:quick-play' 9498 | Select-Object -Last 1
+    if (-not $rcFinishPassed) { exit 1 }
     $explicitPassed = verifyRoute 'quick-play explicit precedence' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjChallenge=led&seed=3&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play-explicit' 9496 | Select-Object -Last 1
     if (-not $explicitPassed) { exit 1 }
     $normalPassed = verifyQuickPlayNormalPlayer "$BaseUrl/circuitjs.html?tsjQuickPlay=true" 9497 ([bool]$selectorPassed) | Select-Object -Last 1
@@ -1369,6 +1560,10 @@ if ($LedNormalPlayer) {
     if (-not (verifyNormalLedPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyGeometry=true" 9470)) { exit 1 }
     exit 0
 }
+if ($RcNormalPlayer) {
+    if (-not (verifyRcNormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=rc&seed=$PlayerSeed&tsjVerifyGeometry=true" 9500)) { exit 1 }
+    exit 0
+}
 $family = 'led'
 $routes = @(
     @{ Name = 'resistance'; Query = 'tsjVerifyResistance=true'; Expected = 'PASS:resistance'; Complaint = 'Indicator does not light.' },
@@ -1391,6 +1586,16 @@ if ($Parallel) {
 if ($LedParts) {
     $family = 'led'
     $routes = @(@{ Name = 'led-parts'; Query = 'tsjVerifyLedParts=true'; Expected = 'PASS:led-parts'; Complaint = 'Indicator does not light.' })
+}
+if ($Rc) {
+    $family = 'rc'
+    $routes = @(@{ Name = 'rc'; Query = 'tsjVerifyRc=true'; Expected = 'PASS:rc' })
+    if ($StoredEnergy) {
+        $routes = @(@{ Name = 'rc-stored-energy'; Query = 'tsjVerifyRc=true&tsjVerifyStoredEnergy=true'; Expected = 'PASS:rc' })
+    }
+} elseif ($StoredEnergy) {
+    $family = 'rc'
+    $routes = @(@{ Name = 'stored-energy'; Query = 'tsjVerifyStoredEnergy=true'; Expected = 'PASS:stored-energy' })
 }
 $passed = $true
 $index = 0

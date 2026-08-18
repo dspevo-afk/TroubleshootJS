@@ -105,6 +105,10 @@ final class PhysicalPartRenderDeveloperVerifier {
         else if (PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage))
             require(target instanceof PhysicalLedPartProbeTarget,
                 "LED loose probe did not resolve through its provider: " + partId);
+        else if (PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR.isEquivalentTo(physicalPackage) ||
+                PhysicalPackages.RADIAL_CERAMIC_CAPACITOR.isEquivalentTo(physicalPackage))
+            require(target instanceof PhysicalCapacitorPartProbeTarget,
+                "Capacitor loose probe did not resolve through its provider: " + partId);
     }
 
     private static void verifyTerminalCountCanaries(CirSim sim, PcbWorkbenchRenderer renderer,
@@ -163,7 +167,9 @@ final class PhysicalPartRenderDeveloperVerifier {
     private static boolean isFixedProductionBodyPackage(PhysicalPackage physicalPackage) {
         return PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(physicalPackage) ||
             PhysicalPackages.AXIAL_DIODE.isEquivalentTo(physicalPackage) ||
-            PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage);
+            PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage) ||
+            PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR.isEquivalentTo(physicalPackage) ||
+            PhysicalPackages.RADIAL_CERAMIC_CAPACITOR.isEquivalentTo(physicalPackage);
     }
 
     private static PhysicalPackage packageFor(int terminalCount) {

@@ -4,5 +4,8 @@ package com.lushprojects.circuitjs1.client;
 enum GeneratedObservedBehavior {
     DARK_INDICATOR,
     ASYMMETRIC_INDICATORS,
-    DIODE_SHORT_HIGH_CURRENT
+    DIODE_SHORT_HIGH_CURRENT,
+    RC_DELAY_HEALTHY_DELAY,
+    RC_DELAY_TOO_FAST,
+    RC_DELAY_STUCK_LOW
 }

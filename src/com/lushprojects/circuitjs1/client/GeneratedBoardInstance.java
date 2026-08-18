@@ -20,6 +20,7 @@ class GeneratedBoardInstance {
     private final GeneratedComponentOperationalStates operationalStates;
     private final GeneratedChallengeDefinition challengeDefinition;
     private final GeneratedBoardFamilyState familyState;
+    private final GeneratedTemporalBehavior temporalBehavior;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -31,6 +32,22 @@ class GeneratedBoardInstance {
             GeneratedComponentOperationalStates operationalStates,
             GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
             PhysicalBoardRuntime physicalRuntime) {
+        this(board, simulationElements, seed, circuitFamilyId, topologyVariantId, description,
+            componentBindings, externalPowerBindings, connectionBindings, behaviorContract,
+            pcbLayout, physicalSpecifications, faultBinding, operationalStates,
+            challengeDefinition, familyState, physicalRuntime, null);
+    }
+
+    GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
+            long seed, String circuitFamilyId, String topologyVariantId, String description,
+            GeneratedComponentBindings componentBindings,
+            GeneratedExternalPowerBindings externalPowerBindings,
+            GeneratedComponentConnectionBindings connectionBindings,
+            GeneratedChallengeBehaviorContract behaviorContract, PcbBoardLayout pcbLayout,
+            BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
+            GeneratedComponentOperationalStates operationalStates,
+            GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
+            PhysicalBoardRuntime physicalRuntime, GeneratedTemporalBehavior temporalBehavior) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -56,6 +73,7 @@ class GeneratedBoardInstance {
         this.operationalStates = operationalStates;
         this.challengeDefinition = challengeDefinition;
         this.familyState = familyState;
+        this.temporalBehavior = temporalBehavior;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
     }
@@ -122,6 +140,7 @@ class GeneratedBoardInstance {
     GeneratedComponentOperationalStates getOperationalStates() { return operationalStates; }
     GeneratedChallengeDefinition getChallengeDefinition() { return challengeDefinition; }
     GeneratedBoardFamilyState getFamilyState() { return familyState; }
+    GeneratedTemporalBehavior getTemporalBehavior() { return temporalBehavior; }
 
     PcbBoardLayout getPcbLayout() {
         return pcbLayout;

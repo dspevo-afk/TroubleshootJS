@@ -10,12 +10,18 @@ final class StandardPhysicalPartRenderProviders {
         PhysicalPartRenderRegistry registry = new PhysicalPartRenderRegistry();
         registry.register(PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
             new FixedProvider(new ConnectorRenderer()));
+        registry.register(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,
+            new FixedProvider(new ConnectorRenderer()));
         registry.register(PhysicalPackages.AXIAL_RESISTOR,
             new FixedProvider(new ResistorRenderer()));
         registry.register(PhysicalPackages.AXIAL_DIODE,
             new FixedProvider(new DiodeRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED,
             new FixedProvider(new LedRenderer()));
+        registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
+            new FixedProvider(new ElectrolyticCapacitorRenderer()));
+        registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
+            new FixedProvider(new CeramicCapacitorRenderer()));
         registry.register(PhysicalPackages.MULTI_TERMINAL,
             new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.DEV_CANARY_3,
@@ -168,12 +174,24 @@ final class StandardPhysicalPartRenderProviders {
         }
     }
 
+    private static final class CapacitorMetadataAdapter {
+        CapacitorSpecification require(PhysicalPart<?> part) {
+            PhysicalPartRenderMetadata metadata = requireMetadata(part, "capacitor");
+            if (!(metadata.getVisualSpecification() instanceof CapacitorSpecification))
+                throw new IllegalStateException("Capacitor package has non-capacitor metadata: " +
+                    part.getId());
+            return (CapacitorSpecification) metadata.getVisualSpecification();
+        }
+    }
+
     private static final ResistorMetadataAdapter RESISTOR_METADATA =
         new ResistorMetadataAdapter();
     private static final DiodeMetadataAdapter DIODE_METADATA =
         new DiodeMetadataAdapter();
     private static final LedMetadataAdapter LED_METADATA =
         new LedMetadataAdapter();
+    private static final CapacitorMetadataAdapter CAPACITOR_METADATA =
+        new CapacitorMetadataAdapter();
 
     private static PhysicalPartRenderMetadata requireMetadata(PhysicalPart<?> part,
             String packageName) {
@@ -416,6 +434,146 @@ final class StandardPhysicalPartRenderProviders {
             graphics.setLineWidth(3);
             graphics.drawLine(start.x, start.y, end.x, end.y);
             graphics.setLineWidth(1);
+        }
+    }
+
+    /** Radial, polarized package provider. Its plus/minus geometry stays package-owned. */
+    private static final class ElectrolyticCapacitorRenderer extends BaseRenderer {
+        public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext context) {
+            return installedGeometry(context, installedTerminals(context));
+        }
+
+        public PhysicalPartRenderGeometry getLooseGeometry(PhysicalPartRenderContext context) {
+            return looseGeometry(context, looseTerminals(context, false), false);
+        }
+
+        public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (context.isComponentRemoved() || context.getPart() == null)
+                return;
+            CapacitorSpecification specification = CAPACITOR_METADATA.require(context.getPart());
+            Point plus = context.getBoardPadPoint(0);
+            Point minus = context.getBoardPadPoint(1);
+            if (plus == null || minus == null)
+                return;
+            int centerX = (plus.x + minus.x) / 2;
+            int centerY = Math.min(plus.y, minus.y) - context.scale(34) -
+                (context.getComponentState() == ComponentPhysicalState.LEAD_LIFTED ?
+                    context.scale(28) : 0);
+            int radius = Math.max(20, context.scale(31));
+            drawLead(graphics, context.getMountedLeadEnd(0),
+                new Point(centerX - context.scale(13), centerY + radius), Math.max(3, context.scale(4)));
+            drawLead(graphics, context.getMountedLeadEnd(1),
+                new Point(centerX + context.scale(13), centerY + radius), Math.max(3, context.scale(4)));
+            drawElectrolyticBody(graphics, context, specification, centerX, centerY, radius);
+            graphics.setColor("#f7f5e8");
+            graphics.drawString("+", plus.x - context.scale(5), plus.y - context.scale(10));
+            graphics.drawString("-", minus.x - context.scale(4), minus.y - context.scale(10));
+            context.markBodyDrawn();
+        }
+
+        public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (context.getPart() == null)
+                return;
+            CapacitorSpecification specification = CAPACITOR_METADATA.require(context.getPart());
+            Point plus = context.getLooseTerminalPoint(0, false);
+            Point minus = context.getLooseTerminalPoint(1, false);
+            int centerX = (plus.x + minus.x) / 2;
+            int centerY = plus.y;
+            int radius = Math.max(13, context.scale(20));
+            drawLead(graphics, plus, new Point(centerX - context.scale(10), centerY));
+            drawLead(graphics, new Point(centerX + context.scale(10), centerY), minus);
+            drawElectrolyticBody(graphics, context, specification, centerX, centerY, radius);
+            graphics.setColor("#f7f5e8");
+            graphics.drawString("+", plus.x + context.scale(4), plus.y - context.scale(8));
+            drawPartLabel(graphics, context, context.getPart().getId().equals(
+                context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "CAPACITOR",
+                plus.x + context.scale(20), plus.y - context.scale(26));
+            context.markBodyDrawn();
+        }
+
+        private void drawElectrolyticBody(Graphics graphics, PhysicalPartRenderContext context,
+                CapacitorSpecification specification, int centerX, int centerY, int radius) {
+            graphics.setColor("#35576d");
+            graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            graphics.setColor("#182833");
+            graphics.drawRect(centerX - radius + context.scale(2),
+                centerY - radius + context.scale(2), radius * 2 - context.scale(4),
+                radius * 2 - context.scale(4));
+            graphics.setColor("#d9e1df");
+            graphics.fillRect(centerX + radius / 3, centerY - radius + context.scale(3),
+                Math.max(4, context.scale(7)), radius * 2 - context.scale(6));
+            graphics.setColor("#eff4ed");
+            graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(8, context.scale(10))));
+            graphics.drawString(specification.getNameplate().getMarking(),
+                centerX - radius + context.scale(4), centerY + context.scale(4));
+        }
+    }
+
+    /** Compact non-polarized ceramic provider with its code marking rendered on the body. */
+    private static final class CeramicCapacitorRenderer extends BaseRenderer {
+        public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext context) {
+            return installedGeometry(context, installedTerminals(context));
+        }
+
+        public PhysicalPartRenderGeometry getLooseGeometry(PhysicalPartRenderContext context) {
+            return looseGeometry(context, looseTerminals(context, false), false);
+        }
+
+        public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (context.isComponentRemoved() || context.getPart() == null)
+                return;
+            CapacitorSpecification specification = CAPACITOR_METADATA.require(context.getPart());
+            Point first = context.getBoardPadPoint(0);
+            Point second = context.getBoardPadPoint(1);
+            if (first == null || second == null)
+                return;
+            int centerX = (first.x + second.x) / 2;
+            int centerY = Math.min(first.y, second.y) - context.scale(22) -
+                (context.getComponentState() == ComponentPhysicalState.LEAD_LIFTED ?
+                    context.scale(28) : 0);
+            drawLead(graphics, context.getMountedLeadEnd(0),
+                new Point(centerX - context.scale(12), centerY + context.scale(12)));
+            drawLead(graphics, context.getMountedLeadEnd(1),
+                new Point(centerX + context.scale(12), centerY + context.scale(12)));
+            drawCeramicBody(graphics, context, specification, centerX, centerY,
+                Math.max(15, context.scale(23)), Math.max(12, context.scale(17)));
+            context.markBodyDrawn();
+        }
+
+        public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (context.getPart() == null)
+                return;
+            CapacitorSpecification specification = CAPACITOR_METADATA.require(context.getPart());
+            Point first = context.getLooseTerminalPoint(0, false);
+            Point second = context.getLooseTerminalPoint(1, false);
+            int centerX = (first.x + second.x) / 2;
+            drawLead(graphics, first, new Point(centerX - context.scale(12), first.y));
+            drawLead(graphics, new Point(centerX + context.scale(12), first.y), second);
+            drawCeramicBody(graphics, context, specification, centerX, first.y,
+                Math.max(12, context.scale(17)), Math.max(10, context.scale(13)));
+            drawPartLabel(graphics, context, context.getPart().getId().equals(
+                context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "CERAMIC",
+                first.x + context.scale(20), first.y - context.scale(26));
+            context.markBodyDrawn();
+        }
+
+        private void drawCeramicBody(Graphics graphics, PhysicalPartRenderContext context,
+                CapacitorSpecification specification, int centerX, int centerY, int halfWidth,
+                int halfHeight) {
+            graphics.setColor("#bd8a54");
+            graphics.fillRect(centerX - halfWidth, centerY - halfHeight, halfWidth * 2,
+                halfHeight * 2);
+            graphics.setColor("#5b402c");
+            graphics.drawRect(centerX - halfWidth, centerY - halfHeight, halfWidth * 2,
+                halfHeight * 2);
+            graphics.setColor("#2b211a");
+            graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(8, context.scale(10))));
+            graphics.drawString(specification.getNameplate().getMarking(),
+                centerX - halfWidth + context.scale(3), centerY + context.scale(4));
         }
     }
 

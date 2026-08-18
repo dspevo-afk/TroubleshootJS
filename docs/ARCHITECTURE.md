@@ -826,11 +826,12 @@ No capacitor implementation or Task 36 behavior belongs to this boundary.
 Quick Play is an additive player route selected by `tsjQuickPlay=true`. The
 small `QuickPlaySession` seam owns one `QuickPlaySelection`, and
 `QuickPlaySelector` obtains exactly a family choice and a fresh generator seed
-from its selection source. `QuickPlayFamilyRegistry` is the normal-player
-eligibility boundary for exactly `LED_INDICATOR`,
-`DIODE_PROTECTED_INDICATOR`, and `PARALLEL_DUAL_INDICATOR`. It delegates the
-selected seed (from the currently validated `{0, 2, 3}` seed envelope) to the
-existing deterministic family generator; it does not
+from its selection source. `QuickPlayFamilyRegistry` was initially the
+normal-player eligibility boundary for `LED_INDICATOR`,
+`DIODE_PROTECTED_INDICATOR`, and `PARALLEL_DUAL_INDICATOR`; Task 36 adds
+`RC_DELAY` through the same registry. It delegates the selected seed (from the
+currently validated `{0, 2, 3}` seed envelope) to the existing deterministic
+family generator; it does not
 randomize topology, values, faults, layout, or measurements itself. Normal
 selection calls the diode generator's normal `generate` path, never the
 developer-only diode-short generator.
@@ -861,3 +862,76 @@ or degraded check leaves the same board and reports only
 board crosses the existing generic completion boundary and then reloads the
 Quick Play URL for a clean next session. Stock CircuitJS, explicit generated
 routes, and arbitrary developer routes do not receive this control.
+
+## Task 36 — capacitor foundation, RC delay, and stored-energy readiness
+
+Capacitors now have an immutable typed `CapacitorSpecification`, separate
+player-facing `CapacitorNameplate`, reusable `VoltageRating`, catalog entry,
+and distinct runtime `PhysicalCapacitorPart` identity. A catalog selection
+retains the exact immutable specification while each acquisition receives a
+new physical part identity. The original C1 remains the sole fault-owning
+physical part, so removing and reinstalling it restores its generated fault;
+a catalog replacement never inherits that fault. Neither a catalog ID nor a
+specification ID is used to decide repair success.
+
+The physical package/provider boundary now includes radial electrolytic and
+ceramic through-hole capacitors. The electrolytic package owns `+`/`-`
+terminals, polarity stripe/plus rendering, and permitted value/rating marking;
+the ceramic provider owns its compact `104` marking. Footprint, installed and
+loose-part render geometry, and probe targeting remain package/render-provider
+owned rather than component-family switches in the generic workbench or PCB
+renderer. Reversed electrolytic installation is rejected by terminal/package
+compatibility; this task does not model reverse-install damage.
+
+`RC_DELAY` / `RC_CHARGE_DELAY` is the first deterministic temporal family. It
+uses ordinary CircuitJS `CapacitorElm` elements: `VIN -> R1 -> RC_OUT`/J2,
+with C1 and R2 each from `RC_OUT` to `GND`, and the healthy ceramic C2 directly
+from `VIN` to `GND`. Stable pads and nets include `VIN`, `RC_OUT`, and `GND`.
+Its current documented seed envelope is: seed 0 = 5 V / R1 12 kOhm / R2 10
+kOhm / C1 positive-lead open; seed 2 = 9 V / R1 15 kOhm / R2 10 kOhm / C1
+short; seed 3 = 12 V / R1 15 kOhm / R2 10 kOhm / C1 positive-lead open. C1
+is 33 uF / 16 V, C2 is 100 nF / 50 V. The actual R2/C1 power-off discharge
+constant is `.330 s`; effective healthy charge constants are about `.180 s`
+for seed 0 and `.198 s` for seeds 2/3. The profile performs a genuine
+external isolation for `1.000 s` and uses `.100 s` and `.800 s` power-on
+checkpoints. R1 limits the short-fault source current.
+
+`GeneratedTemporalBehavior` is an optional family-owned contract. The generic
+challenge lifecycle invokes it without knowing an RC component or fault ID.
+The RC implementation performs a genuine external power-off isolation and
+resistive discharge through the real graph, advances bounded CircuitJS solver
+time, retains a pre-fault healthy sample, then samples the faulted output and
+classifies healthy delayed rise, open-too-fast, or short-stuck-low from those
+live solver samples. Generic `Finish Job`
+therefore accepts only a functionally valid timing repair, not a matching
+part/catalog identity; instantaneous families retain their existing behavior.
+`GeneratedLiveTemporalSimulation` is a second optional generic seam: a family
+may request a small bounded solver-time increment during an ordinary live UI
+update. `CirSim` performs only that real solver advance and never receives an
+RC ID, a waveform, or a display formula. RC requests `.005 s` per live update
+so the visible C1/R2 charge and discharge complete at a usable cadence while
+remaining ordinary `CapacitorElm` physics. Once a challenge is completed, the
+generic controller no longer replays its temporal profile on later frames or
+on a repeated direct Finish Job request: only the exact `READY` state may run
+the functional repair profile. `COMPLETED` remains interaction-ready but is a
+terminal, mutation-free state, so manual power cycles retain the player's
+actual live capacitor state.
+
+`BoardPowerState.UNPOWERED` remains external source isolation. Optional
+`ActiveMeasurementReadinessCapability` adds a separate, generic stored-energy
+policy with one documented residual-voltage threshold of `.25 V`. The RC
+policy reports `POWER OFF`, `SETTLING`, or `DISCHARGE` before it returns ready and
+maps every exposed board pad back to the installed storage part's physical board
+nets; loose physical parts remain relevant only when their own terminals are
+selected. Both the measurement adapter and CirSim's direct resistance/diode
+transactions enforce it, preventing temporary overlays until the real circuit
+has discharged. DC voltage receives a provider-gated live reading only for
+this temporal board; ordinary boards preserve the legacy one-shot path.
+An active OHM/continuity/diode transaction is itself a real source and can
+recharge C1; after cleanup the same generic policy correctly requires another
+natural R2 discharge before the next active transaction.
+
+Quick Play now has four eligible normal-player families, including `RC_DELAY`.
+Its generic completion path uses the temporal repair contract when present,
+while explicit fixture/challenge precedence and normal-player fault/privacy
+boundaries remain unchanged.

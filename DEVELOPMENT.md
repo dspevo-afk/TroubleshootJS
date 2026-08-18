@@ -142,6 +142,28 @@ The generated board is `PARALLEL_DUAL_INDICATOR` /
 starts with a real `R1 OPEN` fault and the complaint `One indicator does not
 light.`.
 
+Task 36's deterministic RC-delay family can be previewed directly with:
+
+```powershell
+.\scripts\start-preview.ps1 -Challenge rc -Seed 3
+```
+
+It is a real CircuitJS charge-delay topology with stable `VIN`, `RC_OUT`, and
+`GND` nets: `VIN -> R1 -> RC_OUT`, C1 and R2 from `RC_OUT` to `GND`, and a
+healthy 100 nF ceramic C2 from `VIN` to `GND`. C1 is the original 33 uF / 16 V
+radial electrolytic. The documented deterministic envelope is seed 0: 5 V,
+R1 = 12 kOhm, R2 = 10 kOhm, C1 positive-lead open; seed 2: 9 V, R1 = 15
+kOhm, R2 = 10 kOhm, C1 short; and seed 3: 12 V, R1 = 15 kOhm, R2 = 10 kOhm,
+C1 positive-lead open. The real R2-only C1 discharge time constant is `.330 s`;
+the effective healthy charge constants are about `.180 s` (seed 0) and `.198 s`
+(seeds 2/3). The deterministic solver profile isolates external power for
+`1.000 s`, then samples at `.100 s` and `.800 s` after power-on. R1 limits the
+selected C1 short. An optional generic live-temporal solver contract advances
+only bounded CircuitJS simulation time during ordinary RC UI frames, so the
+player sees the actual capacitor voltage rather than a JavaScript timer curve.
+These values and fault bindings are developer documentation, not normal-player
+UI metadata.
+
 To open the normal Quick Play route manually while preserving the detached
 preview lifecycle, run:
 
@@ -251,6 +273,27 @@ behavior for unrepaired and correctly restored boards, fresh reload state, and
 normal-player privacy. The existing explicit LED, diode, and parallel smoke
 routes remain the adjacent regression set; the historical full matrix is not
 required for every launcher or Quick Play change.
+
+Task 36's focused transient and stored-energy routes are:
+
+```powershell
+.\scripts\verify-browser.ps1 -Rc -StoredEnergy -Seeds 0,2,3
+.\scripts\verify-browser.ps1 -RcNormalPlayer -PlayerSeed 3 -EvidenceDirectory docs/task-evidence/task-36
+.\scripts\verify-renderer-boundary.ps1
+```
+
+The RC verifier proves ordinary `CapacitorElm` charge/discharge samples,
+both deterministic fault types, typed physical/package identity, original-part
+remove/reinstall fault preservation, incorrect low/high timing replacements,
+the correct replacement, and clean solver/overlay state. The stored-energy
+route verifies the `.25 V` readiness threshold and blocks OHM/continuity/diode
+transactions—including noncanonical R1 pads on a charged C1 net—until real
+discharge. `-RcNormalPlayer` drives the normal workbench through browser input:
+it captures a charged C1, a material residual after the ordinary power-off
+latency, visible `DISCHARGE` refusals in OHM/continuity/diode modes, natural
+decay below `.25 V`, a fresh active measurement, the required
+post-measurement re-discharge, and a real power-on rise. It supplements, but
+does not replace, the required visible in-app browser validation.
 
 Normal-player flows accept `-PlayerSeed <seed>` for generated-geometry checks;
 their canvas clicks use the explicit developer-only geometry bridge rather than

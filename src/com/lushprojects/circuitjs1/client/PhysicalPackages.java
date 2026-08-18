@@ -10,8 +10,15 @@ final class PhysicalPackages {
         new String[] { "A", "K" }, false);
     static final PhysicalPackage THROUGH_HOLE_LED = packageOf("THROUGH_HOLE_LED",
         new String[] { "A", "K" }, false);
+    static final PhysicalPackage RADIAL_ELECTROLYTIC_CAPACITOR =
+        packageOf("RADIAL_ELECTROLYTIC_CAPACITOR", new String[] { "+", "-" }, false);
+    static final PhysicalPackage RADIAL_CERAMIC_CAPACITOR =
+        packageOf("RADIAL_CERAMIC_CAPACITOR", new String[] { "1", "2" }, false);
     static final PhysicalPackage THROUGH_HOLE_CONNECTOR_2 = packageOf("THROUGH_HOLE_CONNECTOR_2",
         new String[] { "1", "2" }, true);
+    /** A two-pin output header is physically a connector but not the power-input anchor. */
+    static final PhysicalPackage THROUGH_HOLE_OUTPUT_HEADER_2 =
+        packageOf("THROUGH_HOLE_OUTPUT_HEADER_2", new String[] { "1", "2" }, false);
     static final PhysicalPackage MULTI_TERMINAL = packageOf("MULTI_TERMINAL",
         new String[] { "1", "2", "3", "4", "5", "6" }, false);
     static final PhysicalPackage DEV_CANARY_3 = packageOf("DEV_CANARY_3",
@@ -41,6 +48,8 @@ final class PhysicalPackages {
         if ("RESISTOR".equals(type)) return AXIAL_RESISTOR;
         if ("DIODE".equals(type)) return AXIAL_DIODE;
         if ("LED".equals(type)) return THROUGH_HOLE_LED;
+        if ("CAPACITOR_ELECTROLYTIC".equals(type)) return RADIAL_ELECTROLYTIC_CAPACITOR;
+        if ("CAPACITOR_CERAMIC".equals(type)) return RADIAL_CERAMIC_CAPACITOR;
         if ("MULTI_TERMINAL".equals(type)) return MULTI_TERMINAL;
         if ("DEV_CANARY_3".equals(type)) return DEV_CANARY_3;
         if ("DEV_CANARY_4".equals(type)) return DEV_CANARY_4;

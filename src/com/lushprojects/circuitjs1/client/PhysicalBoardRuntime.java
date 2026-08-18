@@ -231,6 +231,38 @@ final class PhysicalBoardRuntime {
                 ((PhysicalBoardRuntimeLifecycle) capability).observeSimulationTime(simulationTime);
     }
 
+    void onBoardPowerStateChanged(BoardPowerState state) {
+        for (PhysicalBoardRuntimeCapability capability : getCapabilities())
+            if (capability instanceof PhysicalBoardRuntimePowerLifecycle)
+                ((PhysicalBoardRuntimePowerLifecycle) capability).onBoardPowerStateChanged(state);
+    }
+
+    ActiveMeasurementReadiness getActiveMeasurementReadiness(
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,
+            BoardPowerState powerState, boolean electricallyUnpowered) {
+        ActiveMeasurementReadiness result = ActiveMeasurementReadiness.READY;
+        for (PhysicalBoardRuntimeCapability capability : getCapabilities()) {
+            if (!(capability instanceof ActiveMeasurementReadinessCapability))
+                continue;
+            ActiveMeasurementReadiness readiness =
+                ((ActiveMeasurementReadinessCapability) capability).getActiveMeasurementReadiness(
+                    red, black, powerState, electricallyUnpowered);
+            if (!readiness.isReady())
+                result = readiness;
+        }
+        return result;
+    }
+
+    boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black) {
+        for (PhysicalBoardRuntimeCapability capability : getCapabilities())
+            if (capability instanceof ActiveMeasurementReadinessCapability &&
+                    ((ActiveMeasurementReadinessCapability) capability).usesLiveDcVoltage(red,
+                        black))
+                return true;
+        return false;
+    }
+
     void resetForBoardReset() {
         for (PhysicalBoardRuntimeCapability capability : getCapabilities())
             if (capability instanceof PhysicalBoardRuntimeLifecycle)

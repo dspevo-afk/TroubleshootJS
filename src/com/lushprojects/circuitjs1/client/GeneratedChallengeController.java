@@ -37,19 +37,30 @@ class GeneratedChallengeController {
 
     void afterGeneratedVerification() {
         if (state == GeneratedChallengeState.PREPARING_HEALTHY) {
+            if (instance.getTemporalBehavior() != null)
+                instance.getTemporalBehavior().prepareHealthyProfile(sim, instance);
             lifecycleEvidence.healthyGraphAnalyzedAfterTimeAdvance = true;
             lifecycleEvidence.healthyFamilyValidated = true;
             state = GeneratedChallengeState.PREPARING_FAULTED;
             faults.apply();
-            if (sim.isQuickPlayMode())
+            if (instance.getTemporalBehavior() != null)
+                instance.getTemporalBehavior().prepareFaultedProfile(sim, instance);
+            // A temporal family has already advanced its real solver profile.
+            // Complete the second (faulted) validation pass immediately so its
+            // deterministic profile does not depend on a later paint tick.
+            if (instance.getTemporalBehavior() != null || sim.isQuickPlayMode())
                 sim.updateCircuit();
             lifecycleEvidence.selectedFaultApplied = faults.isApplied();
             return;
         }
         if (state == GeneratedChallengeState.PREPARING_FAULTED) {
             lifecycleEvidence.faultedGraphAnalyzedAfterTimeAdvance = true;
-            definition.getBehaviorContract().verifyFaulted(instance,
-                sim.getBoardModificationController(), sim.getBoardPowerController().getState());
+            if (instance.getTemporalBehavior() != null)
+                instance.getTemporalBehavior().verifyFaultedProfile(sim, instance,
+                    sim.getBoardModificationController(), sim.getBoardPowerController().getState());
+            else
+                definition.getBehaviorContract().verifyFaulted(instance,
+                    sim.getBoardModificationController(), sim.getBoardPowerController().getState());
             lifecycleEvidence.selectedFaultValidated = true;
             scenario = definition.getScenarioCatalog().select(definition.getSelectionSeed(), instance,
                 sim.getBoardModificationController(), sim.getBoardPowerController().getState());
@@ -82,7 +93,10 @@ class GeneratedChallengeController {
     }
 
     void verifyReadyState() {
-        if (!isReady() || developerVerificationScope)
+        // Completion is terminal.  Re-running a temporal functional profile
+        // after a player has already repaired the board would silently reset
+        // its live capacitor state on every ordinary solver frame.
+        if (state != GeneratedChallengeState.READY || developerVerificationScope)
             return;
         if (!faults.isApplied())
             throw new IllegalStateException("Selected challenge fault was cleared outside developer scope");
@@ -95,12 +109,8 @@ class GeneratedChallengeController {
             targetInstalled &&
             sim.getBoardModificationController().isFullyRestored() &&
             sim.getBoardPowerController().getState() == BoardPowerState.POWERED)
-            definition.getBehaviorContract().verifyFaulted(instance,
-                sim.getBoardModificationController(),
-                BoardPowerState.POWERED);
-        if (!finishJobRequired && definition.getBehaviorContract().getRepairStatus(instance,
-            sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
-            sim.activeMeasurementOverlay) == GeneratedRepairStatus.CORRECTLY_RESTORED) {
+            verifyFaultedBehavior(BoardPowerState.POWERED);
+        if (!finishJobRequired && getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED) {
             state = GeneratedChallengeState.COMPLETED;
             sim.refreshBoardModificationControls();
             sim.repaint();
@@ -108,11 +118,12 @@ class GeneratedChallengeController {
     }
 
     boolean finishJob() {
-        if (!isReady())
+        // READY includes the only state allowed to run a functional profile.
+        // COMPLETED remains interaction-ready, but it is terminal: temporal
+        // profiles must never replay merely because Finish Job is invoked again.
+        if (state != GeneratedChallengeState.READY)
             return false;
-        if (definition.getBehaviorContract().getRepairStatus(instance,
-                sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
-                sim.activeMeasurementOverlay) != GeneratedRepairStatus.CORRECTLY_RESTORED)
+        if (getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED)
             return false;
         state = GeneratedChallengeState.COMPLETED;
         sim.refreshBoardModificationControls();
@@ -123,6 +134,25 @@ class GeneratedChallengeController {
     void beginDeveloperVerificationScope() { developerVerificationScope = true; }
     void endDeveloperVerificationScope() { developerVerificationScope = false; }
     boolean isDeveloperVerificationScopeActive() { return developerVerificationScope; }
+
+    GeneratedRepairStatus getRepairStatus() {
+        if (instance.getTemporalBehavior() != null)
+            return instance.getTemporalBehavior().getRepairStatus(sim, instance,
+                sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
+                sim.activeMeasurementOverlay);
+        return definition.getBehaviorContract().getRepairStatus(instance,
+            sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
+            sim.activeMeasurementOverlay);
+    }
+
+    private void verifyFaultedBehavior(BoardPowerState powerState) {
+        if (instance.getTemporalBehavior() != null)
+            instance.getTemporalBehavior().verifyFaultedProfile(sim, instance,
+                sim.getBoardModificationController(), powerState);
+        else
+            definition.getBehaviorContract().verifyFaulted(instance,
+                sim.getBoardModificationController(), powerState);
+    }
 
     private void validateDefinition() {
         if (!definition.getCircuitFamilyId().equals(instance.getCircuitFamilyId()) ||

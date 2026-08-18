@@ -109,6 +109,9 @@ class GeneratedComponentConnectionBindings {
                     binding.getPadId());
             Point boardPoint = boardPost.getElement().getPost(boardPost.getPostIndex());
             Point componentPoint = componentPost.getElement().getPost(componentPost.getPostIndex());
+            if (boardPoint == null || componentPoint == null)
+                throw new IllegalStateException("Detachable connection endpoint has no point: " +
+                    binding.getPadId());
             if (boardPoint.equals(componentPoint) ||
                     !touchesPoint(binding.getConnectionElement(), boardPoint) ||
                     !touchesPoint(binding.getConnectionElement(), componentPoint))
@@ -129,7 +132,8 @@ class GeneratedComponentConnectionBindings {
             return false;
         try {
             CircuitElm backing = componentBindings.getSingleElement(connection.getComponentId());
-            return faultBinding.isPublicTerminal(backing, endpoint, 1);
+            return faultBinding.isPublicTerminal(backing, endpoint, 0) ||
+                faultBinding.isPublicTerminal(backing, endpoint, 1);
         } catch (RuntimeException ignored) {
             return false;
         }

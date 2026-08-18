@@ -23,10 +23,23 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
             (CircuitPostMeasurementEndpoint) black);
     }
 
+    public boolean usesLiveDcVoltage(ProbeTarget redProbe, ProbeTarget blackProbe) {
+        CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);
+        return endpoints != null && sim.usesLiveDcVoltage(endpoints[0], endpoints[1]);
+    }
+
+    public ActiveMeasurementReadiness getActiveMeasurementReadiness(ProbeTarget redProbe,
+            ProbeTarget blackProbe) {
+        CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);
+        if (endpoints == null)
+            return ActiveMeasurementReadiness.POWER_OFF;
+        if (!boardPowerController.isElectricallyUnpowered())
+            return ActiveMeasurementReadiness.POWER_OFF;
+        return sim.getActiveMeasurementReadiness(endpoints[0], endpoints[1]);
+    }
+
     public boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe) {
-        return boardPowerController.isElectricallyUnpowered() &&
-            redProbe != null && blackProbe != null &&
-            redProbe.isValid() && blackProbe.isValid();
+        return getActiveMeasurementReadiness(redProbe, blackProbe).isReady();
     }
 
     public double measureResistance(ProbeTarget redProbe, ProbeTarget blackProbe) {
@@ -61,5 +74,17 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
         } finally {
             session.close();
         }
+    }
+
+    private CircuitPostMeasurementEndpoint[] endpoints(ProbeTarget redProbe, ProbeTarget blackProbe) {
+        if (redProbe == null || blackProbe == null || !redProbe.isValid() || !blackProbe.isValid())
+            return null;
+        CircuitMeasurementEndpoint red = redProbe.getMeasurementEndpoint();
+        CircuitMeasurementEndpoint black = blackProbe.getMeasurementEndpoint();
+        if (!(red instanceof CircuitPostMeasurementEndpoint) ||
+                !(black instanceof CircuitPostMeasurementEndpoint))
+            return null;
+        return new CircuitPostMeasurementEndpoint[] { (CircuitPostMeasurementEndpoint) red,
+            (CircuitPostMeasurementEndpoint) black };
     }
 }

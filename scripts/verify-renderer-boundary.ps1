@@ -25,13 +25,16 @@ $forbiddenRendererTokens = @(
     'drawResistor(',
     'drawDiode(',
     'drawLed(',
+    'drawCapacitor(',
     'drawConnector(',
     'PhysicalResistorPart',
     'PhysicalDiodePart',
     'PhysicalLedPart',
+    'PhysicalCapacitorPart',
     '"RESISTOR"',
     '"DIODE"',
     '"LED"',
+    '"CAPACITOR"',
     '"CONNECTOR"'
 )
 foreach ($token in $forbiddenRendererTokens) {
@@ -46,6 +49,8 @@ $requiredProviderTokens = @(
     'PhysicalPackages.AXIAL_RESISTOR',
     'PhysicalPackages.AXIAL_DIODE',
     'PhysicalPackages.THROUGH_HOLE_LED',
+    'PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR',
+    'PhysicalPackages.RADIAL_CERAMIC_CAPACITOR',
     'PhysicalPackages.THROUGH_HOLE_CONNECTOR_2',
     'PhysicalPackages.DEV_CANARY_3',
     'PhysicalPackages.DEV_CANARY_6',
@@ -60,7 +65,8 @@ foreach ($token in $requiredProviderTokens) {
 foreach ($token in @(
     'instanceof PhysicalResistorPart',
     'instanceof PhysicalDiodePart',
-    'instanceof PhysicalLedPart'
+    'instanceof PhysicalLedPart',
+    'instanceof PhysicalCapacitorPart'
 )) {
     if ($provider.IndexOf($token, [StringComparison]::Ordinal) -ge 0) {
         throw "physical render provider still gates loose probes by concrete subclass: $token"
@@ -79,7 +85,8 @@ foreach ($token in @(
 foreach ($token in @(
     'PhysicalResistorPartProbeTarget',
     'PhysicalDiodePartProbeTarget',
-    'PhysicalLedPartProbeTarget'
+    'PhysicalLedPartProbeTarget',
+    'PhysicalCapacitorPartProbeTarget'
 )) {
     if ($probeProviders.IndexOf($token, [StringComparison]::Ordinal) -lt 0) {
         throw "typed loose probe provider token is missing: $token"

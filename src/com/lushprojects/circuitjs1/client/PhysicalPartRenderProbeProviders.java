@@ -32,5 +32,15 @@ final class PhysicalPartRenderProbeProviders {
             }
         };
 
+    static final PhysicalPartRenderProbeProvider CAPACITOR =
+        new PhysicalPartRenderProbeProvider() {
+            public ProbeTarget createLooseProbeTarget(CirSim sim,
+                    GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
+                    PcbWorkbenchRenderer renderer) {
+                return new PhysicalCapacitorPartProbeTarget(sim, instance, part.getId(),
+                    terminal, renderer);
+            }
+        };
+
     private PhysicalPartRenderProbeProviders() { }
 }

@@ -355,6 +355,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootQuickPlay;
 	boolean troubleshootQuickPlayVerification;
 	long troubleshootQuickPlayVerificationSeed = 3;
+	int troubleshootQuickPlayVerificationFamilyIndex;
 	boolean troubleshootQuickPlayVerificationComplete;
 	boolean quickPlayActive;
 	QuickPlaySession quickPlaySession;
@@ -378,6 +379,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootGeometryVerification;
 	boolean troubleshootLayoutVerification;
 	boolean troubleshootArchitectureVerification;
+	boolean troubleshootRcVerification;
+	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
 	boolean troubleshootReplacementVerificationComplete;
@@ -388,6 +391,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootParallelVerificationComplete;
 	boolean troubleshootStressVerificationComplete;
 	boolean troubleshootArchitectureVerificationComplete;
+	boolean troubleshootRcVerificationComplete;
+	boolean troubleshootStoredEnergyVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
 //    String baseURL = "http://www.falstad.com/circuit/";
@@ -433,6 +438,9 @@ MouseOutHandler, MouseWheelHandler {
 	    String quickPlayTestSeed = qp.getValue("tsjQuickPlayTestSeed");
 	    troubleshootQuickPlayVerificationSeed = quickPlayTestSeed == null ? 3 :
 		parseTroubleshootFixtureSeed(quickPlayTestSeed);
+	    String quickPlayTestFamily = qp.getValue("tsjQuickPlayTestFamily");
+	    troubleshootQuickPlayVerificationFamilyIndex = quickPlayTestFamily == null ? 0 :
+		(int) parseTroubleshootFixtureSeed(quickPlayTestFamily);
 	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
 	    troubleshootChallengeVerification = qp.getBooleanValue("tsjVerifyChallenge", false);
 	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
@@ -447,6 +455,8 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootGeometryVerification = qp.getBooleanValue("tsjVerifyGeometry", false);
 	    troubleshootLayoutVerification = qp.getBooleanValue("tsjVerifyLayout", false);
 	    troubleshootArchitectureVerification = qp.getBooleanValue("tsjVerifyArchitecture", false);
+	    troubleshootRcVerification = qp.getBooleanValue("tsjVerifyRc", false);
+	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
@@ -832,19 +842,24 @@ MouseOutHandler, MouseWheelHandler {
 	    installGeneratedBoard(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("diode".equals(troubleshootFixture))
 	    installGeneratedBoard(new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	else if ("rc".equals(troubleshootFixture))
+	    installGeneratedBoard(generateRcBoard(troubleshootFixtureSeed));
 	else if ("led".equals(troubleshootChallenge))
 	    installGeneratedChallenge(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("diode".equals(troubleshootChallenge))
 	    installGeneratedChallenge(troubleshootDiodeShort ?
 		new DiodeProtectedIndicatorGenerator().generateForDeveloperVerification(troubleshootFixtureSeed) :
 		new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	else if ("rc".equals(troubleshootChallenge))
+	    installGeneratedChallenge(generateRcBoard(troubleshootFixtureSeed));
 	else if ("parallel".equals(troubleshootFixture))
 	    installGeneratedBoard(generateParallelBoard(troubleshootFixtureSeed));
 	else if ("parallel".equals(troubleshootChallenge))
 	    installGeneratedChallenge(generateParallelBoard(troubleshootFixtureSeed));
 	else if (troubleshootQuickPlay) {
 	    quickPlaySession = troubleshootQuickPlayVerification ?
-		QuickPlaySession.create(new QuickPlayFixedRandomSource(new long[] { 0,
+		QuickPlaySession.create(new QuickPlayFixedRandomSource(new long[] {
+		    troubleshootQuickPlayVerificationFamilyIndex,
 		    troubleshootQuickPlayVerificationSeed })) :
 		QuickPlaySession.create();
 	    quickPlayActive = true;
@@ -861,6 +876,15 @@ MouseOutHandler, MouseWheelHandler {
 	    return new ParallelDualIndicatorGenerator().generate(seed);
 	} catch (RuntimeException failure) {
 	    console("parallel_generator_failure: " + failure.getMessage());
+	    throw failure;
+	}
+    }
+
+    private GeneratedBoardInstance generateRcBoard(long seed) {
+	try {
+	    return new RcDelayGenerator().generate(seed);
+	} catch (RuntimeException failure) {
+	    console("rc_generator_failure: " + failure.getMessage());
 	    throw failure;
 	}
     }
@@ -1330,6 +1354,11 @@ MouseOutHandler, MouseWheelHandler {
     		runStopButton.setHTML(LSHTML("<strong>RUN</strong>&nbsp;/&nbsp;Stop"));
     		runStopButton.setStylePrimaryName("topButton");
     		timer.scheduleRepeating(FASTTIMER);
+		// A generated board can be installed during init before the simulator
+		// begins running.  Re-request its solve once the timer is live so the
+		// validation gate always observes an actual CircuitJS step.
+		if (generatedBoardVerificationPending && !generatedBoardVerificationAnalyzed)
+		    needAnalyze();
     	} else {
     		simRunning = false;
     		runStopButton.setHTML(LSHTML("Run&nbsp;/&nbsp;<strong>STOP</strong>"));
@@ -1373,6 +1402,10 @@ MouseOutHandler, MouseWheelHandler {
 	    analyzeCircuit();
 	    analyzeFlag = false;
 	}
+	if (stopMessage != null && generatedBoardVerificationPending) {
+	    console("Generated board verification failed: analysis stopped: " + stopMessage);
+	    throw new IllegalStateException("Generated board analysis stopped: " + stopMessage);
+	}
 	if (generatedBoardVerificationPending && didAnalyze)
 	    generatedBoardVerificationAnalyzed = true;
 //	if (editDialog != null && editDialog.elm instanceof CircuitElm)
@@ -1398,6 +1431,9 @@ MouseOutHandler, MouseWheelHandler {
 	if (simRunning) {
 	    try {
 		runCircuit(didAnalyze);
+		advanceLiveGeneratedTemporalSimulation();
+		if (stopMessage != null && generatedBoardVerificationPending)
+		    throw new IllegalStateException("Generated board solver stopped: " + stopMessage);
 			instrumentController.onSimulationStepComplete(didAnalyze);
 			if (generatedBoardInstance != null)
 			    generatedBoardInstance.getPhysicalBoardRuntime().observeSimulationTime(t);
@@ -2712,6 +2748,16 @@ MouseOutHandler, MouseWheelHandler {
     int subIterations;
     
     void runCircuit(boolean didAnalyze) {
+	runCircuit(didAnalyze, 0);
+    }
+
+    /**
+     * The ordinary UI uses a wall-clock-sized batch.  A generated temporal
+     * behavior may request a bounded number of ordinary CircuitJS solver
+     * iterations instead; its observable duration still comes solely from
+     * {@link #t} and the element companion models.
+     */
+    private void runCircuit(boolean didAnalyze, int iterationLimit) {
 	if (circuitMatrix == null || elmList.size() == 0) {
 	    circuitMatrix = null;
 	    return;
@@ -2857,6 +2903,8 @@ MouseOutHandler, MouseWheelHandler {
 		lastNodeVoltages[i] = nodeVoltages[i];
 //	    console("set lastrightside at " + t + " " + lastNodeVoltages);
 		
+	    if (iterationLimit > 0 && iter >= iterationLimit)
+		break;
 	    tm = System.currentTimeMillis();
 	    lit = tm;
 	    // Check whether enough time has elapsed to perform an *additional* iteration after
@@ -4179,6 +4227,16 @@ MouseOutHandler, MouseWheelHandler {
 	return elmList.contains(element);
     }
 
+    /** One ordinary, bounded CircuitJS solver iteration for temporal profiles. */
+    private void runGeneratedTemporalSolverStep() {
+	if (lastIterTime == 0)
+	    lastIterTime = System.currentTimeMillis();
+	runCircuit(true, 1);
+	// Restore only CircuitJS's UI scheduling bookkeeping.  The profile's
+	// duration is still controlled by solver time t, never this timestamp.
+	lastIterTime = System.currentTimeMillis();
+    }
+
     GeneratedBoardInstance generatedBoardInstance;
 	GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
@@ -4219,6 +4277,7 @@ MouseOutHandler, MouseWheelHandler {
 	    new PcbWorkbenchController(this, instance, boardModificationController,
 		instance.getPcbLayout(), verticalPanel, quickPlayActive) : null;
 	boardPowerController.attach(instance.getExternalPowerBindings());
+	physicalRuntime.onBoardPowerStateChanged(boardPowerController.getState());
 	updateBoardPowerButton();
 	updateGeneratedView();
 	setCircuitTitle(instance.getDescription());
@@ -4278,7 +4337,21 @@ MouseOutHandler, MouseWheelHandler {
     private void runGeneratedBoardVerificationIfReady(boolean didAnalyze) {
 	if (!generatedBoardVerificationPending)
 	    return;
-	if (!generatedBoardVerificationAnalyzed || t <= generatedBoardVerificationStartTime)
+	if (!generatedBoardVerificationAnalyzed)
+	    return;
+	// Capacitor-family verification needs one actual transient solve after
+	// analysis.  CircuitJS deliberately uses the first run to establish its
+	// iteration clock, so take the second solver step here instead of waiting
+	// for an unrelated browser paint tick.
+	if (t <= generatedBoardVerificationStartTime && generatedBoardInstance != null &&
+		generatedBoardInstance.getTemporalBehavior() != null) {
+	    runCircuit(true);
+	    if (stopMessage != null)
+		throw new IllegalStateException("Generated temporal verification stopped: " +
+		    stopMessage);
+	    generatedBoardInstance.getPhysicalBoardRuntime().observeSimulationTime(t);
+	}
+	if (t <= generatedBoardVerificationStartTime)
 	    return;
 	try {
 	    verifyGeneratedBoard();
@@ -4366,6 +4439,17 @@ MouseOutHandler, MouseWheelHandler {
 			publishBrowserVerificationResult(quickPlayActive ?
 			    "PASS:quick-play" : "PASS:quick-play-explicit");
 		    }
+		    if (troubleshootStoredEnergyVerification &&
+			    !troubleshootStoredEnergyVerificationComplete) {
+			troubleshootStoredEnergyVerificationComplete = true;
+			StoredEnergyDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:stored-energy");
+		    }
+		    if (troubleshootRcVerification && !troubleshootRcVerificationComplete) {
+			troubleshootRcVerificationComplete = true;
+			RcDelayDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:rc");
+		    }
 		} finally {
 		    developerVerifierRunning = false;
 		}
@@ -4378,7 +4462,8 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootGeometryVerification || troubleshootLayoutVerification ||
 		    troubleshootParallelVerification || troubleshootStressVerification ||
 		    troubleshootQuickPlayVerification ||
-		    troubleshootArchitectureVerification)
+		    troubleshootArchitectureVerification || troubleshootRcVerification ||
+		    troubleshootStoredEnergyVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4471,6 +4556,11 @@ MouseOutHandler, MouseWheelHandler {
 		ReplaceableLedBoardCapability.find(generatedBoardInstance);
 	    return capability == null ? null : capability.getController();
 	}
+	CapacitorSlotController getCapacitorSlotController() {
+	    ReplaceableCapacitorBoardCapability capability =
+		ReplaceableCapacitorBoardCapability.find(generatedBoardInstance);
+	    return capability == null ? null : capability.getController();
+	}
 
     void verifyGeneratedBoard() {
 	if (generatedBoardInstance == null)
@@ -4498,10 +4588,66 @@ MouseOutHandler, MouseWheelHandler {
 	}
 	if (!boardPowerController.setState(state))
 	    return;
+	generatedBoardInstance.getPhysicalBoardRuntime().onBoardPowerStateChanged(state);
 	updateBoardPowerButton();
 	refreshBoardModificationControls();
 	instrumentController.refreshActiveMeasurement();
 	requestGeneratedBoardVerification();
+    }
+
+    /**
+     * Family-owned solver profiles may use this narrow transition seam before
+     * player interaction becomes available.  It changes the ordinary external
+     * isolation graph and not any player-owned board state.
+     */
+    void setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState state) {
+	if (generatedBoardInstance == null || activeMeasurementOverlay)
+	    throw new IllegalStateException("Cannot transition generated temporal profile now");
+	if (boardPowerController.setState(state))
+	    generatedBoardInstance.getPhysicalBoardRuntime().onBoardPowerStateChanged(state);
+	updateBoardPowerButton();
+    }
+
+    /** Advance ordinary CircuitJS transient solving without a wall-clock timer. */
+    void advanceGeneratedTemporalProfile(double durationSeconds) {
+	analyzeCircuit();
+	advanceGeneratedTemporalSolver(durationSeconds);
+    }
+
+    /**
+     * Advance a live transient after the ordinary UI analysis step.  This is
+     * intentionally solver-time only: optional families provide a bounded
+     * increment while CircuitJS continues to determine every voltage.
+     */
+    private void advanceLiveGeneratedTemporalSimulation() {
+	if (generatedBoardInstance == null || activeMeasurementOverlay)
+	    return;
+	GeneratedTemporalBehavior temporal = generatedBoardInstance.getTemporalBehavior();
+	if (!(temporal instanceof GeneratedLiveTemporalSimulation))
+	    return;
+	double durationSeconds = ((GeneratedLiveTemporalSimulation) temporal)
+	    .getLiveSolverAdvanceSeconds();
+	if (durationSeconds <= 0 || durationSeconds > .100 || Double.isNaN(durationSeconds) ||
+		Double.isInfinite(durationSeconds))
+	    throw new IllegalStateException("Invalid live generated temporal duration");
+	advanceGeneratedTemporalSolver(durationSeconds);
+    }
+
+    private void advanceGeneratedTemporalSolver(double durationSeconds) {
+	if (durationSeconds <= 0 || Double.isNaN(durationSeconds) ||
+		Double.isInfinite(durationSeconds))
+	    throw new IllegalArgumentException("Invalid generated temporal duration");
+	final double target = t + durationSeconds;
+	int iterations = 0;
+	while (t + 1e-12 < target) {
+	    runGeneratedTemporalSolverStep();
+	    if (stopMessage != null)
+		throw new IllegalStateException("Generated temporal profile stopped: " + stopMessage);
+	    if (++iterations > 200000)
+		throw new IllegalStateException("Generated temporal profile did not settle");
+	}
+	if (generatedBoardInstance != null)
+	    generatedBoardInstance.getPhysicalBoardRuntime().synchronizeSimulationTime(t);
     }
 
     private void updateBoardPowerButton() {
@@ -4546,6 +4692,7 @@ MouseOutHandler, MouseWheelHandler {
     double measureResistance(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black) {
 	if (!boardPowerController.isElectricallyUnpowered() ||
+		!getActiveMeasurementReadiness(red, black).isReady() ||
 		!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return Double.NaN;
 	final CircuitPostMeasurementEndpoint redEndpoint = red;
@@ -4575,6 +4722,9 @@ MouseOutHandler, MouseWheelHandler {
 	    CircuitPostMeasurementEndpoint black) {
 	if (!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return Double.NaN;
+	if (usesLiveDcVoltage(red, black))
+	    return red.getElement().getPostVoltage(red.getPostIndex()) -
+		black.getElement().getPostVoltage(black.getPostIndex());
 	final DcVoltageMeasurementStimulus stimulus = new DcVoltageMeasurementStimulus(red, black);
 	return runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
 	    public double readResult() {
@@ -4628,6 +4778,7 @@ MouseOutHandler, MouseWheelHandler {
     DiodeMeasurementResult measureDiode(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black) {
 	if (!boardPowerController.isElectricallyUnpowered() ||
+		!getActiveMeasurementReadiness(red, black).isReady() ||
 		!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return null;
 	final DiodeTestStimulus stimulus = new DiodeTestStimulus(this, red, black);
@@ -4639,6 +4790,21 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	});
 	return result[0];
+    }
+
+    ActiveMeasurementReadiness getActiveMeasurementReadiness(
+	    CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+	if (generatedBoardInstance == null)
+	    return boardPowerController.isElectricallyUnpowered() ?
+		ActiveMeasurementReadiness.READY : ActiveMeasurementReadiness.POWER_OFF;
+	return generatedBoardInstance.getPhysicalBoardRuntime().getActiveMeasurementReadiness(red,
+	    black, boardPowerController.getState(), boardPowerController.isElectricallyUnpowered());
+    }
+
+    boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black) {
+	return generatedBoardInstance != null && generatedBoardInstance.getPhysicalBoardRuntime()
+	    .usesLiveDcVoltage(red, black);
     }
 
     private double runTemporaryActiveMeasurement(ActiveMeasurementStimulus stimulus,

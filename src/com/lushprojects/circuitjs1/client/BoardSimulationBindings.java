@@ -26,6 +26,29 @@ class BoardSimulationBindings {
         return padEndpoints.get(padId);
     }
 
+    /**
+     * Resolves an exposed CircuitJS post back to its logical board net.  A
+     * physical board can expose one net from several backing elements, so
+     * policy code must not assume a chosen connector post is the only public
+     * representation of that net.
+     */
+    String getNetIdForEndpoint(CircuitPostMeasurementEndpoint endpoint) {
+        if (endpoint == null)
+            return null;
+        String netId = null;
+        for (String padId : board.getPadIds()) {
+            CircuitMeasurementEndpoint candidate = padEndpoints.get(padId);
+            if (!(candidate instanceof CircuitPostMeasurementEndpoint) ||
+                    !sameEndpoint(endpoint, (CircuitPostMeasurementEndpoint) candidate))
+                continue;
+            String candidateNetId = board.getPad(padId).getNetId();
+            if (netId != null && !netId.equals(candidateNetId))
+                throw new IllegalStateException("Board endpoint is bound to multiple nets");
+            netId = candidateNetId;
+        }
+        return netId;
+    }
+
     Vector<CircuitMeasurementEndpoint> getEndpointsForNet(String netId) {
         BoardNet net = board.getNet(netId);
         if (net == null)
@@ -37,5 +60,11 @@ class BoardSimulationBindings {
                 endpoints.add(endpoint);
         }
         return endpoints;
+    }
+
+    private boolean sameEndpoint(CircuitPostMeasurementEndpoint first,
+            CircuitPostMeasurementEndpoint second) {
+        return first.getElement() == second.getElement() &&
+            first.getPostIndex() == second.getPostIndex();
     }
 }

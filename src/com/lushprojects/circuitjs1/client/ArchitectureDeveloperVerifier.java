@@ -494,7 +494,8 @@ final class ArchitectureDeveloperVerifier {
             } else {
                 String componentId = part.getBoardSlot() == null ? null :
                     part.getBoardSlot().getComponentId();
-                require(part.getCapabilities().isEmpty() && componentId != null,
+                require((part instanceof PhysicalCapacitorPart || part.getCapabilities().isEmpty()) &&
+                    componentId != null,
                     "fixed production part exposes mutation capabilities: " + part.getId());
                 WorkbenchOperation remove = WorkbenchOperation.forPart(
                     WorkbenchOperation.REMOVE, part);

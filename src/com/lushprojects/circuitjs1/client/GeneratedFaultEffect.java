@@ -48,6 +48,86 @@ class SwitchOpenFaultEffect implements GeneratedFaultEffect {
     public CircuitElm getValueMutationTarget() { return null; }
 }
 
+/** A lead-open capacitor fault exposes the board-side positive lead, not a fake meter value. */
+class CapacitorPositiveLeadOpenFaultEffect implements GeneratedFaultEffect {
+    private final SwitchElm switchElement;
+
+    CapacitorPositiveLeadOpenFaultEffect(SwitchElm switchElement) {
+        if (switchElement == null)
+            throw new IllegalArgumentException("Missing capacitor open switch");
+        this.switchElement = switchElement;
+    }
+
+    public void setApplied(boolean applied) {
+        boolean open = switchElement.position == 1;
+        if (open != applied)
+            switchElement.toggle();
+    }
+
+    public boolean isApplied() { return switchElement.position == 1; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (backingElement == null || terminal < 0 || terminal > 1)
+            throw new IllegalArgumentException("Invalid open capacitor terminal");
+        return terminal == 0 ? new CircuitPostMeasurementEndpoint(switchElement, 0) :
+            new CircuitPostMeasurementEndpoint(backingElement, 1);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(switchElement);
+        return result;
+    }
+
+    public CircuitElm getValueMutationTarget() { return null; }
+}
+
+/**
+ * A shorted capacitor keeps its board-facing positive lead distinct from the
+ * capacitor body.  The private bypass is therefore part of the original
+ * physical part, rather than a board-level shortcut that a later replacement
+ * could accidentally inherit.
+ */
+class CapacitorShortFaultEffect implements GeneratedFaultEffect {
+    private static final double OPEN_SHUNT_RESISTANCE_OHMS = 1e12;
+    private static final double SHORT_SHUNT_RESISTANCE_OHMS = .1;
+    private final ResistorElm bypassResistor;
+    private final SwitchElm positiveLeadSwitch;
+    private boolean applied;
+
+    CapacitorShortFaultEffect(ResistorElm bypassResistor, SwitchElm positiveLeadSwitch) {
+        if (bypassResistor == null || positiveLeadSwitch == null)
+            throw new IllegalArgumentException("Missing capacitor short infrastructure");
+        this.bypassResistor = bypassResistor;
+        this.positiveLeadSwitch = positiveLeadSwitch;
+        setApplied(false);
+    }
+
+    public void setApplied(boolean applied) {
+        bypassResistor.setResistance(applied ? SHORT_SHUNT_RESISTANCE_OHMS :
+            OPEN_SHUNT_RESISTANCE_OHMS);
+        this.applied = applied;
+    }
+
+    public boolean isApplied() { return applied; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (backingElement == null || terminal < 0 || terminal > 1)
+            throw new IllegalArgumentException("Invalid shorted capacitor terminal");
+        return terminal == 0 ? new CircuitPostMeasurementEndpoint(positiveLeadSwitch, 0) :
+            new CircuitPostMeasurementEndpoint(backingElement, 1);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(bypassResistor);
+        result.add(positiveLeadSwitch);
+        return result;
+    }
+
+    public CircuitElm getValueMutationTarget() { return null; }
+}
+
 class ResistorIncorrectValueFaultEffect implements GeneratedFaultEffect {
     private final ResistorElm resistor;
     private final double healthyValue;

@@ -48,13 +48,14 @@ final class QuickPlayDeveloperVerifier {
 
     private static void verifyEligibleFamilies() {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        require(families.size() == 3 &&
+        require(families.size() == 4 &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("LED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_PROTECTED_INDICATOR") &&
-            QuickPlayFamilyRegistry.isNormalPlayerEligible("PARALLEL_DUAL_INDICATOR"),
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("PARALLEL_DUAL_INDICATOR") &&
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("RC_DELAY"),
             "Quick Play eligible-family registry changed");
         require(!QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_SHORT") &&
-            !QuickPlayFamilyRegistry.isNormalPlayerEligible("TASK_36_CAPACITOR"),
+            !QuickPlayFamilyRegistry.isNormalPlayerEligible("TASK_37_FUTURE"),
             "Quick Play registry admitted a developer or future family");
     }
 
@@ -127,6 +128,10 @@ final class QuickPlayDeveloperVerifier {
 
     private static void verifyCorrectRepairCanFinish(CirSim sim,
             GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        if (QuickPlayFamilyRegistry.RC_DELAY.equals(instance.getCircuitFamilyId())) {
+            verifyRcCorrectRepairCanFinish(sim, challenge, instance);
+            return;
+        }
         require("LED_INDICATOR".equals(instance.getCircuitFamilyId()) && instance.getSeed() == 3,
             "Quick Play verification selection is not the deterministic LED proof");
         ResistorSlotController slots = sim.getResistorSlotController();
@@ -146,6 +151,96 @@ final class QuickPlayDeveloperVerifier {
             GeneratedRepairStatus.CORRECTLY_RESTORED && sim.finishQuickPlayJob() &&
             challenge.isCompleted(),
             "Correctly restored Quick Play challenge did not finish through generic status");
+    }
+
+    private static void verifyRcCorrectRepairCanFinish(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        CapacitorSlotController slots = sim.getCapacitorSlotController();
+        require(slots != null, "Quick Play RC proof has no capacitor capability");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
+            CapacitorReplacementCatalog.CORRECT),
+            "Quick Play RC replacement was not accepted");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        GeneratedRepairStatus status = challenge.getRepairStatus();
+        require(status == GeneratedRepairStatus.CORRECTLY_RESTORED &&
+            sim.finishQuickPlayJob() && challenge.isCompleted(),
+            "RC Quick Play Finish Job did not use the temporal functional test");
+        verifyCompletedRcFinishIsNoOp(sim, challenge, instance);
+    }
+
+    /**
+     * Completion is intentionally still interaction-ready, so a second direct
+     * Finish Job call must be a strict no-op.  In particular, it cannot enter
+     * RcDelayTemporalBehavior.getRepairStatus(), which would replay the real
+     * power-cycle profile and change solver time and capacitor charge.
+     */
+    private static void verifyCompletedRcFinishIsNoOp(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        CircuitPostMeasurementEndpoint output = endpoint(instance, "J2.1");
+        CircuitPostMeasurementEndpoint ground = endpoint(instance, "J2.2");
+        BoardModificationController modifications = sim.getBoardModificationController();
+        ReplaceableCapacitorBoardCapability capability =
+            ReplaceableCapacitorBoardCapability.require(instance);
+        require(!capability.getSlot().isEmpty(),
+            "Completed RC Quick Play proof has no installed replacement");
+        PhysicalCapacitorPart installed = capability.getSlot().getInstalledPart();
+        String installedId = installed.getId();
+        Vector<CircuitElm> topology = new Vector<CircuitElm>(sim.elmList);
+        String circuit = sim.dumpCircuit();
+        int undo = sim.undoStack.size();
+        int redo = sim.redoStack.size();
+        boolean unsaved = sim.unsavedChanges;
+        double solverTime = sim.t;
+        double outputVoltage = voltage(output, ground);
+        BoardPowerState powerState = sim.getBoardPowerController().getState();
+        GeneratedChallengeState challengeState = challenge.getState();
+        boolean overlay = sim.activeMeasurementOverlay;
+        boolean fullyRestored = modifications.isFullyRestored();
+        ComponentPhysicalState c1State = modifications.getComponentState("C1");
+        boolean c1PositiveConnected = modifications.isLeadConnected("C1", "C1.+");
+        boolean c1NegativeConnected = modifications.isLeadConnected("C1", "C1.-");
+        boolean faultApplied = instance.getFaultBinding().isApplied();
+
+        require(challengeState == GeneratedChallengeState.COMPLETED &&
+            !sim.finishQuickPlayJob() && challengeState == challenge.getState(),
+            "Completed RC Quick Play Finish Job was not a terminal no-op");
+        require(sameBits(solverTime, sim.t),
+            "Completed RC Quick Play Finish Job replayed solver time");
+        require(powerState == sim.getBoardPowerController().getState() &&
+            sameBits(outputVoltage, voltage(output, ground)) && overlay == sim.activeMeasurementOverlay,
+            "Completed RC Quick Play Finish Job changed power, RC_OUT, or meter overlay state");
+        require(sim.elmList.equals(topology) && circuit.equals(sim.dumpCircuit()) &&
+            undo == sim.undoStack.size() && redo == sim.redoStack.size() &&
+            unsaved == sim.unsavedChanges,
+            "Completed RC Quick Play Finish Job changed solver topology or history");
+        require(fullyRestored == modifications.isFullyRestored() &&
+            c1State == modifications.getComponentState("C1") &&
+            c1PositiveConnected == modifications.isLeadConnected("C1", "C1.+") &&
+            c1NegativeConnected == modifications.isLeadConnected("C1", "C1.-") &&
+            capability.getSlot().getInstalledPart() == installed && installed.isInstalled() &&
+            installedId.equals(capability.getSlot().getInstalledPart().getId()) &&
+            faultApplied == instance.getFaultBinding().isApplied(),
+            "Completed RC Quick Play Finish Job changed board modification or physical-part state");
+    }
+
+    private static CircuitPostMeasurementEndpoint endpoint(GeneratedBoardInstance instance,
+            String padId) {
+        CircuitMeasurementEndpoint endpoint = instance.getSimulationBindings().getEndpoint(padId);
+        if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
+            throw new IllegalStateException("RC Quick Play pad is not CircuitJS-backed: " + padId);
+        return (CircuitPostMeasurementEndpoint) endpoint;
+    }
+
+    private static double voltage(CircuitPostMeasurementEndpoint first,
+            CircuitPostMeasurementEndpoint second) {
+        return first.getElement().getPostVoltage(first.getPostIndex()) -
+            second.getElement().getPostVoltage(second.getPostIndex());
+    }
+
+    private static boolean sameBits(double first, double second) {
+        return Double.doubleToLongBits(first) == Double.doubleToLongBits(second);
     }
 
     private static void verifyNormalPlayerPrivacy(CirSim sim) {

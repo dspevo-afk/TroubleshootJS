@@ -663,7 +663,8 @@ The project should next add circuit families that teach distinct troubleshooting
 
 ## Task 36 — Capacitor Foundation and RC Family
 
-**Status:** `[>]` Next eligible milestone after Task 35(A)
+**Status:** `[x]` Complete — primary architect `FINAL PASS`; Task 37 is next
+eligible and has not been started
 
 ### Goals
 
@@ -683,11 +684,30 @@ Introduce capacitors as real stored-energy/reactive components and create the fi
 
 A capacitance meter is not required merely to introduce capacitors. Voltage, resistance behavior, timing, and isolation can already support useful troubleshooting.
 
+### Completion result
+
+Task 36 adds typed physical capacitor specification/nameplate/rating/catalog
+identity, provider-owned radial electrolytic and ceramic packages, the
+solver-backed `RC_DELAY` family, generic optional temporal functional testing,
+and generic stored-energy measurement readiness. Its deterministic documented
+fixture topology is `VIN -> R1 -> RC_OUT`, C1 and R2 from `RC_OUT` to `GND`,
+and C2 from `VIN` to `GND`; its seed envelope is seed 0: 5 V / R1 12 kOhm /
+R2 10 kOhm / C1 positive-lead open; seed 2: 9 V / R1 15 kOhm / R2 10 kOhm /
+C1 short; seed 3: 12 V / R1 15 kOhm / R2 10 kOhm / C1 positive-lead open.
+C1 is 33 uF / 16 V and C2 is 100 nF / 50 V. Its real R2/C1 discharge constant
+is `.330 s`; its generic live solver cadence makes the physical residual and
+subsequent rise observable in the normal player flow without an artificial
+discharge graph or a UI waveform. Focused automated RC, stored-energy,
+renderer-boundary, Quick Play, and adjacent family checks pass;
+the visible in-app browser acceptance gate is recorded separately in the Task
+36 report, including its specific native-select Browser-control limitation.
+Task 37 is now the next eligible milestone and has not been started.
+
 ---
 
 ## Task 37 — NPN Low-Side Switch Family
 
-**Status:** `[ ]`
+**Status:** `[>]` Next eligible milestone after Task 36
 
 ### Goals
 
@@ -1389,9 +1409,7 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 36 — Capacitor Foundation and RC Family**
+**Task 37 — NPN Low-Side Switch Family**
 
-Task 35(A) passed its targeted validation, independent reviewer gate, and
-visible player gate, and is committed as the current completed milestone.
-Task 36 is the next eligible milestone and is identified only; it was not
-started.
+Task 36 passed final acceptance. Task 37 is the next eligible milestone only;
+it has not been started.

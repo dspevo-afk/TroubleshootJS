@@ -1,3 +1,93 @@
+# Task 36 — Capacitor Foundation and RC Family
+
+**Status:** Complete — primary architect `FINAL PASS`.
+
+## Implementation summary
+
+Task 36 adds the first real stored-energy component family without replacing
+CircuitJS electrical behavior. Capacitors now have typed immutable
+specification/nameplate/rating/catalog identity, provider-owned radial
+electrolytic and ceramic physical packages, physical board parts/pads/probes,
+and correct remove/install lifecycle ownership. The first temporal family is
+`RC_DELAY`: `VIN -> R1 -> RC_OUT`, C1 and R2 from `RC_OUT` to `GND`, and C2
+from `VIN` to `GND`. It uses ordinary `CapacitorElm` simulation with stable
+`VIN`, `RC_OUT`, and `GND` board identities.
+
+The deterministic envelope is seed 0 (5 V, R1 12 kOhm, R2 10 kOhm, C1
+positive-lead open), seed 2 (9 V, R1 15 kOhm, R2 10 kOhm, C1 short), and seed
+3 (12 V, R1 15 kOhm, R2 10 kOhm, C1 positive-lead open). C1 is a 33 uF / 16 V
+electrolytic and C2 is a 100 nF / 50 V ceramic. R2 provides the real `.330 s`
+discharge path. The generic live-temporal seam advances only bounded CircuitJS
+solver time during ordinary UI updates, making stored charge and subsequent
+charge observable without a JavaScript waveform or hidden discharge graph.
+
+Active resistance, continuity, and diode transactions now use the generic
+stored-energy readiness boundary. With board power off, C1's residual charge
+first produces safety feedback (`DISCHARGE`) and only returns an active meter
+result after genuine natural decay through R2. Quick Play now includes
+`RC_DELAY` while preserving explicit-route precedence and normal-player
+privacy.
+
+## Review and correction history
+
+The coder completed the bounded implementation through three correction rounds.
+Independent reviewer Round 1 required physical fault/nameplate/topology
+corrections; the primary architect then found the active-meter net-scoping
+gap. A visible-browser observation exposed an artificial discharge timing
+issue; the final coder round replaced it with live bounded solver progression.
+
+The final independent reviewer found a terminal-lifecycle defect: because
+`isReady()` intentionally includes `COMPLETED`, a repeated direct Quick Play
+Finish Job could replay the RC functional power-cycle profile and mutate solver
+time/capacitor charge. The escalation architect required the narrow repair:
+only exact `READY` can call `getRepairStatus()` from `finishJob()`. The final
+Quick Play verifier proves a second completed RC Finish Job returns `false`
+without changing solver time, power, voltages, overlay, topology, modification
+state, or fault state. The fresh reviewer returned `PASS`; the escalation
+architect returned `FINAL PASS`; the primary architect independently reviewed
+the final source and diff and returns `FINAL PASS`.
+
+## Final validation
+
+- `& .\scripts\build.ps1 -JavaHome .tools\jdk8-download\jdk8u502-b07 -Target Compile -Style OBF`
+  — PASS; all five JDK 8/GWT production permutations compiled and linked.
+- `& .\scripts\verify-browser.ps1 -Rc -StoredEnergy -Seeds 0,2,3 -TimeoutSeconds 120`
+  — PASS; typed physical identity, real RC charge/discharge, open/short faults,
+  original fault preservation, wrong low/high replacements, correct repair,
+  stored-energy refusal/ready behavior, and clean solver/overlay lifecycle.
+- `& .\scripts\verify-browser.ps1 -QuickPlay -TimeoutSeconds 180` — PASS;
+  selector/session, forced RC Finish Job, explicit-route precedence, fresh
+  normal-player reload/privacy, and the completed-RC Finish Job no-op proof.
+- `& .\scripts\verify-browser.ps1 -RcNormalPlayer -PlayerSeed 3 -EvidenceDirectory docs/task-evidence/task-36 -TimeoutSeconds 180`
+  — PASS; charged `4.724 V`, residual `3.361 V`, discharged
+  `2.36E-13 V`, ready `227.291 mOhm`, and real rise `2.46E-13 -> 1.43 V`.
+- `& .\scripts\verify-renderer-boundary.ps1`, the architecture verifier, and
+  seed-3 LED, diode, and parallel browser routes — PASS.
+- Final `git diff --check` — PASS (line-ending notices only).
+
+## Visible in-app Browser evidence
+
+The primary architect used real visible Browser clicks and left/right probe
+placement against the production RC route. Directly observed: the generic
+customer ticket and physical C1/C2 markings/polarity; C1 remove/reinstall;
+real 4.799 V C1 charge; immediate powered-off `DISCHARGE` safety feedback;
+the post-decay 227.291 mOhm reading; direct-challenge repair verification; and
+a fresh visible Quick Play board after completion. The detailed evidence and
+the specific Browser native-select input limitation are recorded in
+`docs/task-evidence/task-36/visible-browser-validation.md`. No desktop
+automation, DOM mutation, or synthetic player input was used as a substitute.
+The wrong-value visual interaction is covered by the focused automated RC
+verifier because the in-app Browser did not route real-input selection changes
+to alternative options in its native `<select>` control.
+
+## Handoff
+
+Task 37 — NPN Low-Side Switch Family is the next eligible roadmap milestone;
+it has not been started. Suggested commit message:
+`Task 36: add capacitor RC family`.
+
+---
+
 # Task 35 — Generalized Physical Part Specifications
 
 ## Task 35(A) — Quick Play / Playable Challenge Loop

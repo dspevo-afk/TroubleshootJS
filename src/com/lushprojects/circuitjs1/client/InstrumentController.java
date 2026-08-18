@@ -228,6 +228,10 @@ class InstrumentController {
         return continuityFeedback.getStopCount();
     }
 
+    int getContinuityMeasurementCountForDeveloperVerification() {
+        return getModeState("CONTINUITY").getMeasurementCount();
+    }
+
     void exitInstrumentModeForDeveloperVerification() {
         setActiveMode("NONE", true);
         updateReading();
@@ -341,6 +345,15 @@ class InstrumentController {
 
     double measureDcVoltageForStrategy(ProbeTarget red, ProbeTarget black) {
         return measurementAdapter.measureDcVoltage(red, black);
+    }
+
+    boolean usesLiveDcVoltageForStrategy(ProbeTarget red, ProbeTarget black) {
+        return measurementAdapter.usesLiveDcVoltage(red, black);
+    }
+
+    ActiveMeasurementReadiness getActiveMeasurementReadinessForStrategy(ProbeTarget red,
+            ProbeTarget black) {
+        return measurementAdapter.getActiveMeasurementReadiness(red, black);
     }
 
     double measureResistanceForStrategy(ProbeTarget red, ProbeTarget black) {

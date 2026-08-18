@@ -82,6 +82,32 @@ final class StandardPhysicalDefinitionProviders {
             }
         };
 
+    static final PhysicalDefinitionProvider<CapacitorSpecification> CAPACITOR =
+        new PhysicalDefinitionProvider<CapacitorSpecification>() {
+            public String getProviderId() { return "CAPACITOR"; }
+            public void add(BoardPhysicalSpecifications definitions,
+                    CapacitorSpecification specification) {
+                if (specification == null)
+                    throw new IllegalArgumentException("Missing capacitor specification");
+                definitions.addPhysicalDefinition(specification.getSpecificationId(), specification,
+                    specification.getNameplate().forPhysicalPartId(
+                        specification.getSpecificationId()), specification.getPhysicalPackage());
+            }
+            public CapacitorSpecification find(BoardPhysicalSpecifications definitions,
+                    String componentId) {
+                PhysicalSpecification value = definitions.getSpecification(componentId);
+                return value instanceof CapacitorSpecification ? (CapacitorSpecification) value : null;
+            }
+            public CapacitorSpecification require(BoardPhysicalSpecifications definitions,
+                    String componentId) {
+                PhysicalSpecification value = definitions.getSpecification(componentId);
+                if (value == null) throw missing(componentId, getProviderId());
+                if (!(value instanceof CapacitorSpecification))
+                    throw wrongType(componentId, getProviderId());
+                return (CapacitorSpecification) value;
+            }
+        };
+
     private static final HashMap<String, PhysicalDefinitionProvider<?>> PROVIDERS =
         new HashMap<String, PhysicalDefinitionProvider<?>>();
 
@@ -89,6 +115,7 @@ final class StandardPhysicalDefinitionProviders {
         register(RESISTOR);
         register(DIODE);
         register(LED);
+        register(CAPACITOR);
     }
 
     private StandardPhysicalDefinitionProviders() {}

@@ -10,6 +10,7 @@ final class QuickPlayFamilyRegistry {
     static final String LED_INDICATOR = "LED_INDICATOR";
     static final String DIODE_PROTECTED_INDICATOR = "DIODE_PROTECTED_INDICATOR";
     static final String PARALLEL_DUAL_INDICATOR = "PARALLEL_DUAL_INDICATOR";
+    static final String RC_DELAY = "RC_DELAY";
     private static final long[] NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
 
     private QuickPlayFamilyRegistry() { }
@@ -19,13 +20,14 @@ final class QuickPlayFamilyRegistry {
         result.add(LED_INDICATOR);
         result.add(DIODE_PROTECTED_INDICATOR);
         result.add(PARALLEL_DUAL_INDICATOR);
+        result.add(RC_DELAY);
         return result;
     }
 
     static boolean isNormalPlayerEligible(String familyId) {
         return LED_INDICATOR.equals(familyId) ||
             DIODE_PROTECTED_INDICATOR.equals(familyId) ||
-            PARALLEL_DUAL_INDICATOR.equals(familyId);
+            PARALLEL_DUAL_INDICATOR.equals(familyId) || RC_DELAY.equals(familyId);
     }
 
     static GeneratedBoardInstance generate(String familyId, long seed) {
@@ -35,6 +37,8 @@ final class QuickPlayFamilyRegistry {
             return new DiodeProtectedIndicatorGenerator().generate(seed);
         if (PARALLEL_DUAL_INDICATOR.equals(familyId))
             return new ParallelDualIndicatorGenerator().generate(seed);
+        if (RC_DELAY.equals(familyId))
+            return new RcDelayGenerator().generate(seed);
         throw new IllegalArgumentException("Quick Play family is not normal-player eligible: " +
             familyId);
     }

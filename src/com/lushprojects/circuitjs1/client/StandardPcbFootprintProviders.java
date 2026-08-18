@@ -10,9 +10,15 @@ final class StandardPcbFootprintProviders {
     static PcbFootprintRegistry createRegistry() {
         PcbFootprintRegistry registry = new PcbFootprintRegistry();
         registry.register(PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, new ConnectorProvider());
+        registry.register(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,
+            new OutputHeaderProvider());
         registry.register(PhysicalPackages.AXIAL_RESISTOR, new AxialProvider(0));
         registry.register(PhysicalPackages.AXIAL_DIODE, new AxialProvider(1));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED, new LedProvider());
+        registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
+            new ElectrolyticCapacitorProvider());
+        registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
+            new CeramicCapacitorProvider());
         registry.register(PhysicalPackages.MULTI_TERMINAL, new MultiTerminalProvider(3, 6));
         registry.register(PhysicalPackages.DEV_CANARY_3, new MultiTerminalProvider(3, 3));
         registry.register(PhysicalPackages.DEV_CANARY_3_ORDERED,
@@ -83,6 +89,21 @@ final class StandardPcbFootprintProviders {
         }
     }
 
+    /** Compact routed output header; only the selected power connector anchors the board. */
+    private static class OutputHeaderProvider implements PcbFootprintProvider {
+        public PcbFootprint create(BoardComponent component, int x, int y, Random random,
+                Rectangle outline) {
+            requireTwoPads(component);
+            Vector<String> ids = component.getPadIds();
+            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
+            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 30, 0, -1, 30));
+            pads.add(new PcbPadPlacement(ids.get(1), x + 70, y + 30, 0, -1, 30));
+            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 100, 70,
+                new Rectangle(x + 8, y + 8, 84, 54),
+                new Rectangle(x - 6, y - 6, 112, 82)), pads);
+        }
+    }
+
     private static class LedProvider implements PcbFootprintProvider {
         public PcbFootprint create(BoardComponent component, int x, int y, Random random,
                 Rectangle outline) {
@@ -94,6 +115,34 @@ final class StandardPcbFootprintProviders {
             return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 90, 100,
                 new Rectangle(x + 15, y + 12, 60, 60),
                 new Rectangle(x + 6, y + 4, 78, 101)), pads);
+        }
+    }
+
+    private static class ElectrolyticCapacitorProvider implements PcbFootprintProvider {
+        public PcbFootprint create(BoardComponent component, int x, int y, Random random,
+                Rectangle outline) {
+            requireTwoPads(component);
+            Vector<String> ids = component.getPadIds();
+            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
+            pads.add(new PcbPadPlacement(ids.get(0), x + 30, y + 30, 0, -1, 38));
+            pads.add(new PcbPadPlacement(ids.get(1), x + 80, y + 30, 0, -1, 38));
+            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 120, 120,
+                new Rectangle(x + 15, y + 12, 90, 75),
+                new Rectangle(x + 5, y + 4, 110, 110)), pads);
+        }
+    }
+
+    private static class CeramicCapacitorProvider implements PcbFootprintProvider {
+        public PcbFootprint create(BoardComponent component, int x, int y, Random random,
+                Rectangle outline) {
+            requireTwoPads(component);
+            Vector<String> ids = component.getPadIds();
+            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
+            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 30, 0, -1, 30));
+            pads.add(new PcbPadPlacement(ids.get(1), x + 60, y + 30, 0, -1, 30));
+            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 90, 90,
+                new Rectangle(x + 12, y + 16, 66, 45),
+                new Rectangle(x + 5, y + 5, 80, 80)), pads);
         }
     }
 
