@@ -25,6 +25,7 @@ final class QuickPlayDeveloperVerifier {
         verifyDeterministicFamilySelection();
         verifySelectionEnvelopes();
         verifyNaturalNpnSeedEnvelope();
+        verifyNaturalNmosSeedEnvelope();
         require(instance.getFaultBinding().getFault().getType() != GeneratedFaultType.DIODE_SHORT,
             "Quick Play selected the developer-only diode short fault");
         verifyFreshSessionBoundary();
@@ -51,12 +52,13 @@ final class QuickPlayDeveloperVerifier {
 
     private static void verifyEligibleFamilies() {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        require(families.size() == 5 &&
+        require(families.size() == 6 &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("LED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_PROTECTED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("PARALLEL_DUAL_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("RC_DELAY") &&
-            QuickPlayFamilyRegistry.isNormalPlayerEligible("NPN_LOW_SIDE_SWITCH"),
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("NPN_LOW_SIDE_SWITCH") &&
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("NMOS_LOW_SIDE_SWITCH"),
             "Quick Play eligible-family registry changed");
         require(!QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_SHORT") &&
             !QuickPlayFamilyRegistry.isNormalPlayerEligible("TASK_37_FUTURE"),
@@ -136,8 +138,10 @@ final class QuickPlayDeveloperVerifier {
         long[] npnSeeds = { 0, 1, 2, 3 };
         for (int familyIndex = 0; familyIndex < families.size(); familyIndex++) {
             String familyId = families.elementAt(familyIndex);
+            long[] nmosSeeds = { 0, 1, 2 };
             long[] expectedSeeds = QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ?
-                npnSeeds : legacySeeds;
+                npnSeeds : QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId) ?
+                nmosSeeds : legacySeeds;
             for (long injectedValue : injectedValues) {
                 QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
                     new long[] { familyIndex, injectedValue }));
@@ -189,6 +193,37 @@ final class QuickPlayDeveloperVerifier {
         }
     }
 
+    /**
+     * Permanent normal-player canary for every NMOS fault admitted by Quick
+     * Play.  This intentionally exercises the selector and normal generator,
+     * rather than the developer-only forced-fault route.
+     */
+    private static void verifyNaturalNmosSeedEnvelope() {
+        long[] seeds = { 0, 1, 2 };
+        double[] loadVoltages = { 9, 12, 5 };
+        GeneratedFaultType[] faults = {
+            GeneratedFaultType.NMOS_DS_OPEN,
+            GeneratedFaultType.NMOS_DS_SHORT,
+            GeneratedFaultType.NMOS_GATE_OPEN
+        };
+        for (int index = 0; index < seeds.length; index++) {
+            QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                new long[] { 5, seeds[index] }));
+            QuickPlaySelection selection = selector.select();
+            GeneratedBoardInstance generated = selector.generate(selection);
+            require(QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(
+                    selection.getFamilyId()) && selection.getSeed() == seeds[index] &&
+                    generated.getSeed() == seeds[index] && generated.getFaultBinding().getFault()
+                        .getType() == faults[index],
+                "Natural NMOS Quick Play seed boundary changed at seed " + seeds[index]);
+            PowerInputNameplate loadInput = generated.getPhysicalSpecifications()
+                .getPowerInputNameplate("LOAD_VIN_INPUT");
+            require(loadInput != null &&
+                Math.abs(loadInput.getNominalVoltage() - loadVoltages[index]) < .0001,
+                "Natural NMOS Quick Play load voltage changed at seed " + seeds[index]);
+        }
+    }
+
     private static void verifySeedOneNpnScenario(CirSim sim,
             GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
         if (!QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) ||
@@ -230,6 +265,10 @@ final class QuickPlayDeveloperVerifier {
                 return;
             }
             verifyNpnCorrectRepairCanFinish(sim, challenge, instance);
+            return;
+        }
+        if (QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId())) {
+            verifyNmosCorrectRepairCanFinish(sim, challenge);
             return;
         }
         require("LED_INDICATOR".equals(instance.getCircuitFamilyId()) && instance.getSeed() == 3,
@@ -299,6 +338,37 @@ final class QuickPlayDeveloperVerifier {
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
             sim.finishQuickPlayJob() && challenge.isCompleted(),
             "Correctly restored NPN Quick Play challenge did not finish through generic status");
+    }
+
+    private static void verifyNmosCorrectRepairCanFinish(CirSim sim,
+            GeneratedChallengeController challenge) {
+        NmosSlotController slots = sim.getNmosSlotController();
+        require(slots != null, "Quick Play NMOS challenge has no Q1 slot controller");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
+            NmosReplacementCatalog.CORRECT),
+            "Quick Play NMOS replacement was not accepted");
+        for (CircuitElm element : sim.getGeneratedBoardInstance().getFaultBinding()
+                .getPrivateSimulationElements())
+            require(sim.elmList.contains(element),
+                "Quick Play NMOS catalog replacement lost declared private fault graph");
+        if (sim.getGeneratedBoardInstance().getFaultBinding().getEffect() instanceof
+                NmosfetDsShortFaultEffect)
+            require(!((NmosfetDsShortFaultEffect) sim.getGeneratedBoardInstance()
+                .getFaultBinding().getEffect()).isBoardPathEnabled(),
+                "Quick Play NMOS catalog replacement retained original private board path");
+        require(!((PhysicalNmosPart) sim.getGeneratedBoardInstance().getPhysicalBoardRuntime()
+                .getInstalledPart("Q1")).ownsGeneratedFault(
+                    sim.getGeneratedBoardInstance().getFaultBinding()),
+            "Quick Play NMOS catalog replacement retained original fault identity");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        sim.runCircuit(true);
+        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
+            sim.finishQuickPlayJob() && challenge.isCompleted(),
+            "Correctly restored NMOS Quick Play challenge did not finish generically");
     }
 
     private static void verifyRcCorrectRepairCanFinish(CirSim sim,

@@ -20,6 +20,8 @@ final class StandardPhysicalPartRenderProviders {
             new FixedProvider(new LedRenderer()));
         registry.register(PhysicalPackages.TO92_NPN,
             new FixedProvider(new NpnRenderer()));
+        registry.register(PhysicalPackages.TO92_NMOS,
+            new FixedProvider(new NmosRenderer()));
         registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
             new FixedProvider(new ElectrolyticCapacitorRenderer()));
         registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
@@ -503,6 +505,72 @@ final class StandardPhysicalPartRenderProviders {
             drawPartLabel(graphics, context, context.getPart().getId().equals(
                 context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "NPN",
                 Math.min(base.x, Math.min(collector.x, emitter.x)) + context.scale(20),
+                centerY - context.scale(27));
+            context.markBodyDrawn();
+        }
+    }
+
+    /** TO-92-like NMOS renderer; physical terminals are G/D/S, never fault markings. */
+    private static final class NmosRenderer extends BaseRenderer {
+        public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext context) {
+            return installedGeometry(context, installedTerminals(context));
+        }
+
+        public PhysicalPartRenderGeometry getLooseGeometry(PhysicalPartRenderContext context) {
+            return looseGeometry(context, looseTerminals(context, false), false);
+        }
+
+        public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (context.isComponentRemoved() || context.getPart() == null) return;
+            Point gate = context.getBoardPadPoint(0);
+            Point drain = context.getBoardPadPoint(1);
+            Point source = context.getBoardPadPoint(2);
+            if (gate == null || drain == null || source == null) return;
+            int centerX = (drain.x + source.x) / 2;
+            int centerY = Math.min(gate.y, Math.min(drain.y, source.y)) -
+                context.scale(36) -
+                (context.getComponentState() == ComponentPhysicalState.LEAD_LIFTED ?
+                    context.scale(28) : 0);
+            int radius = Math.max(20, context.scale(28));
+            drawLead(graphics, context.getMountedLeadEnd(0),
+                new Point(centerX - radius, centerY + context.scale(6)));
+            drawLead(graphics, context.getMountedLeadEnd(1),
+                new Point(centerX - context.scale(8), centerY + radius));
+            drawLead(graphics, context.getMountedLeadEnd(2),
+                new Point(centerX + context.scale(8), centerY + radius));
+            graphics.setColor("#2f6680");
+            graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            graphics.setColor("#c7e0ea");
+            graphics.drawRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            graphics.setColor("#eef5f1");
+            graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(9, context.scale(11))));
+            graphics.drawString("NMOS", centerX - context.scale(20), centerY + context.scale(4));
+            graphics.drawString("G", gate.x - context.scale(5), gate.y + context.scale(22));
+            graphics.drawString("D", drain.x - context.scale(5), drain.y + context.scale(22));
+            graphics.drawString("S", source.x - context.scale(5), source.y + context.scale(22));
+            context.markBodyDrawn();
+        }
+
+        public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (context.getPart() == null) return;
+            Point gate = context.getLooseTerminalPoint(0, false);
+            Point drain = context.getLooseTerminalPoint(1, false);
+            Point source = context.getLooseTerminalPoint(2, false);
+            int centerX = (drain.x + source.x) / 2;
+            int centerY = gate.y;
+            int radius = Math.max(15, context.scale(21));
+            drawLead(graphics, gate, new Point(centerX - radius, centerY));
+            drawLead(graphics, drain, new Point(centerX - context.scale(7), centerY));
+            drawLead(graphics, new Point(centerX + context.scale(7), centerY), source);
+            graphics.setColor("#2f6680");
+            graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            graphics.setColor("#c7e0ea");
+            graphics.drawRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            drawPartLabel(graphics, context, context.getPart().getId().equals(
+                context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "NMOS",
+                Math.min(gate.x, Math.min(drain.x, source.x)) + context.scale(20),
                 centerY - context.scale(27));
             context.markBodyDrawn();
         }

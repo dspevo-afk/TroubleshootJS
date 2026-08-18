@@ -12,8 +12,10 @@ final class QuickPlayFamilyRegistry {
     static final String PARALLEL_DUAL_INDICATOR = "PARALLEL_DUAL_INDICATOR";
     static final String RC_DELAY = "RC_DELAY";
     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
+    static final String NMOS_LOW_SIDE_SWITCH = "NMOS_LOW_SIDE_SWITCH";
     private static final long[] LEGACY_NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
     private static final long[] NPN_NORMAL_PLAYER_SEEDS = { 0, 1, 2, 3 };
+    private static final long[] NMOS_NORMAL_PLAYER_SEEDS = { 0, 1, 2 };
 
     private QuickPlayFamilyRegistry() { }
 
@@ -24,6 +26,7 @@ final class QuickPlayFamilyRegistry {
         result.add(PARALLEL_DUAL_INDICATOR);
         result.add(RC_DELAY);
         result.add(NPN_LOW_SIDE_SWITCH);
+        result.add(NMOS_LOW_SIDE_SWITCH);
         return result;
     }
 
@@ -31,7 +34,7 @@ final class QuickPlayFamilyRegistry {
         return LED_INDICATOR.equals(familyId) ||
             DIODE_PROTECTED_INDICATOR.equals(familyId) ||
             PARALLEL_DUAL_INDICATOR.equals(familyId) || RC_DELAY.equals(familyId) ||
-            NPN_LOW_SIDE_SWITCH.equals(familyId);
+            NPN_LOW_SIDE_SWITCH.equals(familyId) || NMOS_LOW_SIDE_SWITCH.equals(familyId);
     }
 
     static GeneratedBoardInstance generate(String familyId, long seed) {
@@ -45,6 +48,8 @@ final class QuickPlayFamilyRegistry {
             return new RcDelayGenerator().generate(seed);
         if (NPN_LOW_SIDE_SWITCH.equals(familyId))
             return new NpnLowSideSwitchGenerator().generate(seed);
+        if (NMOS_LOW_SIDE_SWITCH.equals(familyId))
+            return new NmosLowSideSwitchGenerator().generate(seed);
         throw new IllegalArgumentException("Quick Play family is not normal-player eligible: " +
             familyId);
     }
@@ -68,7 +73,9 @@ final class QuickPlayFamilyRegistry {
     }
 
     private static long[] seedsFor(String familyId) {
-        return NPN_LOW_SIDE_SWITCH.equals(familyId) ? NPN_NORMAL_PLAYER_SEEDS :
+        if (NPN_LOW_SIDE_SWITCH.equals(familyId)) return NPN_NORMAL_PLAYER_SEEDS;
+        if (NMOS_LOW_SIDE_SWITCH.equals(familyId)) return NMOS_NORMAL_PLAYER_SEEDS;
+        return
             LEGACY_NORMAL_PLAYER_SEEDS;
     }
 }

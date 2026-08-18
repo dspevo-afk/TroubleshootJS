@@ -774,7 +774,8 @@ passed; Task 38 remains unstarted.
 
 ## Task 38 — NMOS Low-Side Switch Family
 
-**Status:** `[>]` Next eligible milestone after Task 37
+**Status:** `[x]` Complete — primary architect `FINAL PASS`; Task 39 is next
+eligible and has not been started
 
 ### Goals
 
@@ -788,11 +789,42 @@ Introduce:
 
 Avoid making it merely an NPN circuit with a different picture.
 
+### Completion result
+
+Task 38 adds the solver-backed `NMOS_LOW_SIDE_SWITCH` family using the real
+`NMosfetElm` model, independent load/control supplies, stable
+`LOAD_SUPPLY`/`CONTROL_INPUT`/`GATE_DRIVE`/`GATE`/`LOAD_NODE`/`DRAIN`/`GND`
+nets, and explicit CircuitJS post mapping G=0, S=1, D=2 with the body diode
+preserved. Healthy validation proves live VGS, VDS, load current, and
+effectively zero gate current in both commanded states.
+
+The family supports Q1-owned D-S open, D-S short, and gate-path-open faults.
+The original physical part retains its private solver fault when loose or
+reinstalled; a catalog replacement allocates a distinct fault-free NMOS. The
+typed G/D/S physical package, installed/loose renderer and probe target,
+replaceable Q1 slot, provider-owned one-sided PCB footprint, symptom-only
+scenarios, generic live repair status, privacy checks, and stable layout parity
+are implemented.
+
+Quick Play appends NMOS at index 5 with normal-player seeds `{0, 1, 2}` and a
+natural-fault canary for all three admitted faults. Dedicated NMOS, layout,
+Quick Play, NPN-regression, renderer-boundary, parser, and JDK 8/GWT checks
+pass. Visible in-app Browser evidence covers the rendered PCB, G/D/S pads,
+complaint privacy, power-off removal, loose parts tray, catalog installation,
+power restoration, Finish Job blocking before repair, Finish Job success after
+repair, and a live 5 V gate-source probe. Browser evidence is stored under
+`docs/task-evidence/task-38/`. The standalone Edge harness remains blocked by
+WMI/CIM `Access denied` in this environment.
+
+Task 38 passed the bounded coder/reviewer protocol, one targeted correction
+round for original-fault D-S-short path isolation, and final primary review.
+Task 39 is the next eligible milestone; it is identified but not started.
+
 ---
 
 ## Task 39 — Relay Driver Family
 
-**Status:** `[ ]`
+**Status:** `[>]` Next eligible milestone after Task 38
 
 ### Goals
 
@@ -1455,7 +1487,7 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 38 — NMOS Low-Side Switch Family**
+**Task 39 — Relay Driver Family**
 
-Task 37 passed final acceptance. Task 38 is the next eligible milestone only;
+Task 38 passed final acceptance. Task 39 is the next eligible milestone only;
 it has been identified but not started.

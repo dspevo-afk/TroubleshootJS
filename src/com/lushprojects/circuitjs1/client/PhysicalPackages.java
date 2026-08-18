@@ -12,6 +12,8 @@ final class PhysicalPackages {
         new String[] { "A", "K" }, false);
     static final PhysicalPackage TO92_NPN = packageOf("TO92_NPN",
         new String[] { "B", "C", "E" }, false);
+    static final PhysicalPackage TO92_NMOS = packageOf("TO92_NMOS",
+        new String[] { "G", "D", "S" }, false);
     static final PhysicalPackage RADIAL_ELECTROLYTIC_CAPACITOR =
         packageOf("RADIAL_ELECTROLYTIC_CAPACITOR", new String[] { "+", "-" }, false);
     static final PhysicalPackage RADIAL_CERAMIC_CAPACITOR =
@@ -51,6 +53,7 @@ final class PhysicalPackages {
         if ("DIODE".equals(type)) return AXIAL_DIODE;
         if ("LED".equals(type)) return THROUGH_HOLE_LED;
         if ("NPN_TRANSISTOR".equals(type)) return TO92_NPN;
+        if ("NMOS_TRANSISTOR".equals(type)) return TO92_NMOS;
         if ("CAPACITOR_ELECTROLYTIC".equals(type)) return RADIAL_ELECTROLYTIC_CAPACITOR;
         if ("CAPACITOR_CERAMIC".equals(type)) return RADIAL_CERAMIC_CAPACITOR;
         if ("MULTI_TERMINAL".equals(type)) return MULTI_TERMINAL;

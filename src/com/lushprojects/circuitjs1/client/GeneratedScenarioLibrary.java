@@ -75,6 +75,22 @@ final class GeneratedScenarioLibrary {
         return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
     }
 
+    static GeneratedScenarioCatalog<GeneratedObservedBehavior> nmosLowSideSwitch() {
+        Vector<GeneratedScenario<GeneratedObservedBehavior>> candidates =
+            new Vector<GeneratedScenario<GeneratedObservedBehavior>>();
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "NMOS_LOAD_NOT_SWITCHING", "CONTROLLED_LOAD_DOES_NOT_SWITCH_ON",
+            "The controlled load does not turn on.",
+            GeneratedObservedBehavior.NMOS_LOAD_NOT_SWITCHING,
+            new NmosLoadCompatibility(false), new NmosLoadPresentation()));
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "NMOS_LOAD_STUCK_ACTIVE", "CONTROLLED_LOAD_STAYS_ACTIVE",
+            "The controlled load remains on when control is low.",
+            GeneratedObservedBehavior.NMOS_LOAD_STUCK_ACTIVE,
+            new NmosLoadCompatibility(true), new NmosLoadPresentation()));
+        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
+    }
+
     private static class DarkIndicatorCompatibility
             implements GeneratedScenarioCompatibility<GeneratedObservedBehavior> {
         private final String ledId;
@@ -218,6 +234,52 @@ final class GeneratedScenarioLibrary {
                 throw new IllegalStateException("NPN scenario presentation has no family state");
             boolean commandedOn = observedBehavior == GeneratedObservedBehavior.NPN_LOAD_NOT_SWITCHING;
             ((NpnLowSideSwitchFamilyState) instance.getFamilyState()).setCommandedOn(sim,
+                commandedOn);
+        }
+    }
+
+    private static class NmosLoadCompatibility
+            implements GeneratedScenarioCompatibility<GeneratedObservedBehavior> {
+        private final boolean stuckActive;
+
+        NmosLoadCompatibility(boolean stuckActive) { this.stuckActive = stuckActive; }
+
+        public boolean matches(GeneratedBoardInstance instance,
+                BoardModificationController modifications, BoardPowerState powerState,
+                GeneratedObservedBehavior observedBehavior) {
+            if (powerState != BoardPowerState.POWERED ||
+                    !(instance.getFamilyState() instanceof NmosLowSideSwitchFamilyState))
+                return false;
+            NmosLowSideSwitchFamilyState state =
+                (NmosLowSideSwitchFamilyState) instance.getFamilyState();
+            boolean priorCommandedOn = state.isCommandedOn();
+            CirSim sim = CircuitElm.sim;
+            if (sim != null) sim.beginObservationalValidation();
+            try {
+                state.setCommandedOn(sim, !stuckActive);
+                return stuckActive ?
+                    NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005 :
+                    NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001;
+            } finally {
+                try {
+                    state.setCommandedOn(sim, priorCommandedOn);
+                } finally {
+                    if (sim != null) sim.endObservationalValidation();
+                }
+            }
+        }
+    }
+
+    private static class NmosLoadPresentation
+            implements GeneratedScenarioPresentation<GeneratedObservedBehavior> {
+        public void present(CirSim sim, GeneratedBoardInstance instance,
+                GeneratedObservedBehavior observedBehavior) {
+            if (!(instance.getFamilyState() instanceof NmosLowSideSwitchFamilyState) ||
+                    (observedBehavior != GeneratedObservedBehavior.NMOS_LOAD_NOT_SWITCHING &&
+                        observedBehavior != GeneratedObservedBehavior.NMOS_LOAD_STUCK_ACTIVE))
+                throw new IllegalStateException("NMOS scenario presentation has no family state");
+            boolean commandedOn = observedBehavior == GeneratedObservedBehavior.NMOS_LOAD_NOT_SWITCHING;
+            ((NmosLowSideSwitchFamilyState) instance.getFamilyState()).setCommandedOn(sim,
                 commandedOn);
         }
     }

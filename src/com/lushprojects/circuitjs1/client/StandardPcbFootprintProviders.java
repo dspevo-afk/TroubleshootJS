@@ -16,6 +16,7 @@ final class StandardPcbFootprintProviders {
         registry.register(PhysicalPackages.AXIAL_DIODE, new AxialProvider(1));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED, new LedProvider());
         registry.register(PhysicalPackages.TO92_NPN, new NpnProvider());
+        registry.register(PhysicalPackages.TO92_NMOS, new NmosProvider());
         registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
             new ElectrolyticCapacitorProvider());
         registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
@@ -101,7 +102,7 @@ final class StandardPcbFootprintProviders {
             pads.add(new PcbPadPlacement(ids.get(1), x + 70, y + 30, 0, -1, 30));
             return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 100, 70,
                 new Rectangle(x + 8, y + 8, 84, 54),
-                new Rectangle(x - 6, y - 6, 112, 82)), pads);
+                new Rectangle(x - 6, y, 112, 70)), pads);
         }
     }
 
@@ -130,6 +131,24 @@ final class StandardPcbFootprintProviders {
             Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
             pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 90, -1, 0, 30));
             // Clear the inclusive courtyard boundary used by the PCB route validator.
+            pads.add(new PcbPadPlacement(ids.get(1), x + 60, y + 90, 0, 1, 32));
+            pads.add(new PcbPadPlacement(ids.get(2), x + 100, y + 90, 0, 1, 32));
+            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 130, 125,
+                new Rectangle(x + 28, y + 12, 74, 60),
+                new Rectangle(x + 5, y + 4, 120, 118)), pads);
+        }
+    }
+
+    /** Compact TO-92-like NMOS footprint with explicit G/D/S pad order. */
+    private static class NmosProvider implements PcbFootprintProvider {
+        public PcbFootprint create(BoardComponent component, int x, int y, Random random,
+                Rectangle outline) {
+            if (component.getPadIds().size() != 3)
+                throw new IllegalStateException("NMOS provider requires G/D/S pads for " +
+                    component.getId());
+            Vector<String> ids = component.getPadIds();
+            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
+            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 90, -1, 0, 30));
             pads.add(new PcbPadPlacement(ids.get(1), x + 60, y + 90, 0, 1, 32));
             pads.add(new PcbPadPlacement(ids.get(2), x + 100, y + 90, 0, 1, 32));
             return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 130, 125,

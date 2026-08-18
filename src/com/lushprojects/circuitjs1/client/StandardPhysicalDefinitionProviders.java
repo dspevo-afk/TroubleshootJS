@@ -135,6 +135,33 @@ final class StandardPhysicalDefinitionProviders {
             }
         };
 
+    static final PhysicalDefinitionProvider<NmosSpecification> NMOS =
+        new PhysicalDefinitionProvider<NmosSpecification>() {
+            public String getProviderId() { return "NMOS"; }
+            public void add(BoardPhysicalSpecifications definitions,
+                    NmosSpecification specification) {
+                if (specification == null)
+                    throw new IllegalArgumentException("Missing NMOS specification");
+                definitions.addPhysicalDefinition(specification.getSpecificationId(),
+                    specification, new PhysicalNameplate(specification.getSpecificationId(),
+                        "Generic N-channel MOSFET", "Part", "Generic N-channel MOSFET"),
+                    PhysicalPackages.TO92_NMOS);
+            }
+            public NmosSpecification find(BoardPhysicalSpecifications definitions,
+                    String componentId) {
+                PhysicalSpecification value = definitions.getSpecification(componentId);
+                return value instanceof NmosSpecification ? (NmosSpecification) value : null;
+            }
+            public NmosSpecification require(BoardPhysicalSpecifications definitions,
+                    String componentId) {
+                PhysicalSpecification value = definitions.getSpecification(componentId);
+                if (value == null) throw missing(componentId, getProviderId());
+                if (!(value instanceof NmosSpecification))
+                    throw wrongType(componentId, getProviderId());
+                return (NmosSpecification) value;
+            }
+        };
+
     private static final HashMap<String, PhysicalDefinitionProvider<?>> PROVIDERS =
         new HashMap<String, PhysicalDefinitionProvider<?>>();
 
@@ -144,6 +171,7 @@ final class StandardPhysicalDefinitionProviders {
         register(LED);
         register(CAPACITOR);
         register(NPN);
+        register(NMOS);
     }
 
     private StandardPhysicalDefinitionProviders() {}

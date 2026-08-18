@@ -941,10 +941,11 @@ An active OHM/continuity/diode transaction is itself a real source and can
 recharge C1; after cleanup the same generic policy correctly requires another
 natural R2 discharge before the next active transaction.
 
-Quick Play now has five eligible normal-player families, including `RC_DELAY`
-and `NPN_LOW_SIDE_SWITCH`. Its generic completion path uses the temporal repair
-contract when present, while explicit fixture/challenge precedence and
-normal-player fault/privacy boundaries remain unchanged.
+Quick Play now has six eligible normal-player families, including `RC_DELAY`,
+`NPN_LOW_SIDE_SWITCH`, and `NMOS_LOW_SIDE_SWITCH`. Its generic completion path
+uses the temporal repair contract when present, while explicit
+fixture/challenge precedence and normal-player fault/privacy boundaries remain
+unchanged.
 
 ## Task 37 — NPN low-side switch family and tray correction
 
@@ -1055,3 +1056,50 @@ NPN uses 0, 1, 2, and 3. The seed-1 ordinary route presents the solver-backed
 stuck-active complaint, restores Q1 through the real workbench path, and
 finishes through the generic completion boundary without exposing developer
 metadata.
+
+## Task 38 — NMOS low-side switch family
+
+The NMOS family keeps CircuitJS as the electrical source of truth. Its bounded
+topology uses independent load and control supplies: `LOAD_SUPPLY -> RLOAD ->
+LED1 -> Q1.D`, `Q1.S -> GND`, and `CONTROL_INPUT -> GATE_DRIVE -> Q1.G`, with
+`RPD` from the gate to ground. Stable logical nets are `LOAD_SUPPLY`,
+`CONTROL_INPUT`, `GATE_DRIVE`, `GATE`, `LOAD_NODE`, `DRAIN`, and `GND`; stable
+physical pads are `Q1.G`, `Q1.D`, and `Q1.S`.
+
+At the CircuitJS binding boundary, `NMosfetElm`/`MosfetElm` post order is
+permanently documented as post 0 = gate, post 1 = source, and post 2 = drain.
+The generated model remains a three-post NMOS with its default body diode
+enabled and no exposed body terminal. Physical package order is deliberately
+G/D/S and is translated explicitly to solver posts G/S/D. The solver's legacy
+MOSFET channel coefficient is configured through the typed NMOS specification;
+it is not treated as BJT beta or as a base-current model. Healthy validation
+measures live VGS, VDS, load/LED current, control/load supply voltage, and
+`getCurrentIntoNode(0)` gate current, which remains effectively zero.
+
+The fault boundary contains Q1-owned D-S open, D-S short, and gate-path-open
+effects. D-S short uses a 0.1-ohm solver shunt plus a series private board-path
+switch. That switch remains in the original part's electrical backing when the
+part is loose or reinstalled, and is opened when a distinct catalog backing is
+installed; replacements do not inherit the original `GeneratedFaultBinding`.
+Fault and scenario compatibility checks command the real control switch only
+inside an observational boundary and restore the prior command in `finally`.
+Generic repair status requires healthy live ON and OFF behavior and does not
+recognize a component ID, catalog ID, or hidden fault flag.
+
+The physical layer adds typed NMOS specification, TO-92-style G/D/S package,
+installed/loose renderer and probe target, private original-fault identity,
+replaceable Q1 slot, and a catalog that allocates a distinct live
+`NMosfetElm`. The one-sided PCB layout uses the registered provider for Q1
+footprint geometry, pads, keepout, and routing parity. `NMOS_LOW_SIDE_SWITCH`
+is appended to Quick Play at index 5 with the validated normal-player seed
+envelope `{0, 1, 2}` mapping naturally to D-S open, D-S short, and gate open.
+Complaints remain symptom-only: controlled load does not turn on, or remains on
+when control is low.
+
+Task 38 validation includes the dedicated NMOS developer verifier, deterministic
+fault/seed canary, provider/layout parity, NPN/Quick Play regression, JDK 8/GWT
+OBF build, and visible in-app Browser evidence under
+`docs/task-evidence/task-38/`. The standalone Edge PowerShell harness remains
+unavailable in this environment because its WMI/CIM process query returns
+`Access denied`; this is recorded as a harness limitation rather than a
+product pass.

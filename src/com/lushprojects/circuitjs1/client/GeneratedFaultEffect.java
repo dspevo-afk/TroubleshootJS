@@ -272,3 +272,126 @@ class TransistorCeShortFaultEffect implements GeneratedFaultEffect {
 
     public CircuitElm getValueMutationTarget() { return null; }
 }
+
+/** Drain/source open owned by the original NMOS body; post 2 is drain. */
+class NmosfetDsOpenFaultEffect implements GeneratedFaultEffect {
+    private final SwitchElm switchElement;
+
+    NmosfetDsOpenFaultEffect(SwitchElm switchElement) {
+        if (switchElement == null)
+            throw new IllegalArgumentException("Missing NMOS D-S open switch");
+        this.switchElement = switchElement;
+    }
+
+    public void setApplied(boolean applied) {
+        boolean open = switchElement.position == 1;
+        if (open != applied)
+            switchElement.toggle();
+    }
+
+    public boolean isApplied() { return switchElement.position == 1; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (!(backingElement instanceof NMosfetElm) || terminal < 0 || terminal > 2)
+            throw new IllegalArgumentException("Invalid NMOS terminal");
+        return terminal == 2 ? new CircuitPostMeasurementEndpoint(switchElement, 1) :
+            new CircuitPostMeasurementEndpoint(backingElement, terminal);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(switchElement);
+        return result;
+    }
+
+    public CircuitElm getValueMutationTarget() { return null; }
+}
+
+/** Low-ohm D-S shunt owned by the original NMOS body. */
+class NmosfetDsShortFaultEffect implements GeneratedFaultEffect {
+    private static final double OPEN_SHUNT_RESISTANCE_OHMS = 1e12;
+    private static final double SHORT_SHUNT_RESISTANCE_OHMS = .1;
+    private final ResistorElm bypassResistor;
+    private final SwitchElm boardPathSwitch;
+    private boolean applied;
+    private boolean boardPathEnabled = true;
+
+    NmosfetDsShortFaultEffect(ResistorElm bypassResistor, SwitchElm boardPathSwitch) {
+        if (bypassResistor == null || boardPathSwitch == null)
+            throw new IllegalArgumentException("Missing NMOS D-S shunt");
+        this.bypassResistor = bypassResistor;
+        this.boardPathSwitch = boardPathSwitch;
+        setApplied(false);
+    }
+
+    public void setApplied(boolean applied) {
+        bypassResistor.setResistance(applied ? SHORT_SHUNT_RESISTANCE_OHMS :
+            OPEN_SHUNT_RESISTANCE_OHMS);
+        this.applied = applied;
+        setBoardPathSwitchClosed(applied && boardPathEnabled);
+    }
+
+    public boolean isApplied() { return applied; }
+
+    void setBoardPathEnabled(boolean enabled) {
+        boardPathEnabled = enabled;
+        setBoardPathSwitchClosed(applied && enabled);
+    }
+
+    boolean isBoardPathEnabled() { return boardPathEnabled; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (!(backingElement instanceof NMosfetElm) || terminal < 0 || terminal > 2)
+            throw new IllegalArgumentException("Invalid NMOS terminal");
+        return new CircuitPostMeasurementEndpoint(backingElement, terminal);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(bypassResistor);
+        result.add(boardPathSwitch);
+        return result;
+    }
+
+    public CircuitElm getValueMutationTarget() { return null; }
+
+    private void setBoardPathSwitchClosed(boolean closed) {
+        boolean isClosed = boardPathSwitch.position == 0;
+        if (isClosed != closed)
+            boardPathSwitch.toggle();
+    }
+}
+
+/** Gate-path open owned by the original NMOS body, leaving board gate visible. */
+class NmosfetGateOpenFaultEffect implements GeneratedFaultEffect {
+    private final SwitchElm switchElement;
+
+    NmosfetGateOpenFaultEffect(SwitchElm switchElement) {
+        if (switchElement == null)
+            throw new IllegalArgumentException("Missing NMOS gate open switch");
+        this.switchElement = switchElement;
+    }
+
+    public void setApplied(boolean applied) {
+        boolean open = switchElement.position == 1;
+        if (open != applied)
+            switchElement.toggle();
+    }
+
+    public boolean isApplied() { return switchElement.position == 1; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (!(backingElement instanceof NMosfetElm) || terminal < 0 || terminal > 2)
+            throw new IllegalArgumentException("Invalid NMOS terminal");
+        return terminal == 0 ? new CircuitPostMeasurementEndpoint(switchElement, 1) :
+            new CircuitPostMeasurementEndpoint(backingElement, terminal);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(switchElement);
+        return result;
+    }
+
+    public CircuitElm getValueMutationTarget() { return null; }
+}

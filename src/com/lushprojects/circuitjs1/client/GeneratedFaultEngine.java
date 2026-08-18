@@ -93,6 +93,25 @@ class GeneratedFaultEngine {
             componentId, familyId, seed), new SwitchOpenFaultEffect(switchElement));
     }
 
+    static GeneratedFaultCandidate nmosDsOpen(String id, String familyId, long seed,
+            String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.NMOS_DS_OPEN,
+            componentId, familyId, seed), new NmosfetDsOpenFaultEffect(switchElement));
+    }
+
+    static GeneratedFaultCandidate nmosDsShort(String id, String familyId, long seed,
+            String componentId, ResistorElm bypassResistor, SwitchElm boardPathSwitch) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.NMOS_DS_SHORT,
+            componentId, familyId, seed), new NmosfetDsShortFaultEffect(bypassResistor,
+                boardPathSwitch));
+    }
+
+    static GeneratedFaultCandidate nmosGateOpen(String id, String familyId, long seed,
+            String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.NMOS_GATE_OPEN,
+            componentId, familyId, seed), new NmosfetGateOpenFaultEffect(switchElement));
+    }
+
     static GeneratedFaultCandidate connectorOpenPath(String id, String familyId, long seed,
             String componentId, SwitchElm switchElement) {
         return connectorOpenPath(id, familyId, seed, componentId, switchElement, true);

@@ -352,6 +352,7 @@ MouseOutHandler, MouseWheelHandler {
 	String troubleshootFixture = null;
 	String troubleshootChallenge = null;
 	String troubleshootNpnFault = null;
+	String troubleshootNmosFault = null;
 	long troubleshootFixtureSeed = 1;
 	boolean troubleshootQuickPlay;
 	boolean troubleshootQuickPlayVerification;
@@ -382,6 +383,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootArchitectureVerification;
 	boolean troubleshootRcVerification;
 	boolean troubleshootNpnVerification;
+	boolean troubleshootNmosVerification;
 	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
@@ -395,6 +397,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootArchitectureVerificationComplete;
 	boolean troubleshootRcVerificationComplete;
 	boolean troubleshootNpnVerificationComplete;
+	boolean troubleshootNmosVerificationComplete;
 	boolean troubleshootStoredEnergyVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
@@ -436,6 +439,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootFixture = qp.getValue("tsjFixture");
 	    troubleshootChallenge = qp.getValue("tsjChallenge");
 	    troubleshootNpnFault = qp.getValue("tsjNpnFault");
+	    troubleshootNmosFault = qp.getValue("tsjNmosFault");
 	    troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
 	    troubleshootQuickPlay = qp.getBooleanValue("tsjQuickPlay", false);
 	    troubleshootQuickPlayVerification = qp.getBooleanValue("tsjVerifyQuickPlay", false);
@@ -461,6 +465,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootArchitectureVerification = qp.getBooleanValue("tsjVerifyArchitecture", false);
 	    troubleshootRcVerification = qp.getBooleanValue("tsjVerifyRc", false);
 	    troubleshootNpnVerification = qp.getBooleanValue("tsjVerifyNpn", false);
+	    troubleshootNmosVerification = qp.getBooleanValue("tsjVerifyNmos", false);
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
@@ -851,6 +856,8 @@ MouseOutHandler, MouseWheelHandler {
 	    installGeneratedBoard(generateRcBoard(troubleshootFixtureSeed));
 	else if ("npn".equals(troubleshootFixture))
 	    installGeneratedBoard(generateNpnBoard(troubleshootFixtureSeed));
+	else if ("nmos".equals(troubleshootFixture))
+	    installGeneratedBoard(generateNmosBoard(troubleshootFixtureSeed));
 	else if ("led".equals(troubleshootChallenge))
 	    installGeneratedChallenge(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("diode".equals(troubleshootChallenge))
@@ -861,6 +868,8 @@ MouseOutHandler, MouseWheelHandler {
 	    installGeneratedChallenge(generateRcBoard(troubleshootFixtureSeed));
 	else if ("npn".equals(troubleshootChallenge))
 	    installGeneratedChallenge(generateNpnBoard(troubleshootFixtureSeed));
+	else if ("nmos".equals(troubleshootChallenge))
+	    installGeneratedChallenge(generateNmosBoard(troubleshootFixtureSeed));
 	else if ("parallel".equals(troubleshootFixture))
 	    installGeneratedBoard(generateParallelBoard(troubleshootFixtureSeed));
 	else if ("parallel".equals(troubleshootChallenge))
@@ -910,6 +919,21 @@ MouseOutHandler, MouseWheelHandler {
 	}
     }
 
+    private GeneratedBoardInstance generateNmosBoard(long seed) {
+	try {
+	    NmosLowSideSwitchGenerator generator = new NmosLowSideSwitchGenerator();
+	    GeneratedFaultType forced = parseNmosFaultForVerification();
+	    return forced == null ? generator.generate(seed) :
+	        generator.generateForFaultVerification(seed, forced);
+	} catch (RuntimeException failure) {
+	    console("nmos_generator_failure: " + failure.getMessage());
+	    if (troubleshootNmosVerification)
+		publishBrowserVerificationResult("FAIL:nmos-generator:" +
+		    failure.getClass().getName() + ":" + failure.getMessage());
+	    throw failure;
+	}
+    }
+
     private GeneratedFaultType parseNpnFaultForVerification() {
 	if (!troubleshootNpnVerification || troubleshootNpnFault == null)
 	    return null;
@@ -923,6 +947,19 @@ MouseOutHandler, MouseWheelHandler {
 	    return GeneratedFaultType.LOAD_PATH_OPEN;
 	throw new IllegalArgumentException("Unsupported developer NPN fault: " +
 	    troubleshootNpnFault);
+    }
+
+    private GeneratedFaultType parseNmosFaultForVerification() {
+	if (!troubleshootNmosVerification || troubleshootNmosFault == null)
+	    return null;
+	if ("NMOS_DS_OPEN".equals(troubleshootNmosFault))
+	    return GeneratedFaultType.NMOS_DS_OPEN;
+	if ("NMOS_DS_SHORT".equals(troubleshootNmosFault))
+	    return GeneratedFaultType.NMOS_DS_SHORT;
+	if ("NMOS_GATE_OPEN".equals(troubleshootNmosFault))
+	    return GeneratedFaultType.NMOS_GATE_OPEN;
+	throw new IllegalArgumentException("Unsupported developer NMOS fault: " +
+	    troubleshootNmosFault);
     }
 
     void setColors(String positiveColor, String negativeColor) {
@@ -4513,6 +4550,11 @@ MouseOutHandler, MouseWheelHandler {
 			NpnLowSideSwitchDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:npn");
 		    }
+		    if (troubleshootNmosVerification && !troubleshootNmosVerificationComplete) {
+			troubleshootNmosVerificationComplete = true;
+			NmosLowSideSwitchDeveloperVerifier.verify(this);
+			publishBrowserVerificationResult("PASS:nmos");
+		    }
 		} finally {
 		    developerVerifierRunning = false;
 		}
@@ -4526,7 +4568,8 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootParallelVerification || troubleshootStressVerification ||
 		    troubleshootQuickPlayVerification ||
 		    troubleshootArchitectureVerification || troubleshootRcVerification ||
-		    troubleshootStoredEnergyVerification || troubleshootNpnVerification)
+		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
+		    troubleshootNmosVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4627,6 +4670,11 @@ MouseOutHandler, MouseWheelHandler {
 	NpnSlotController getNpnSlotController() {
 	    ReplaceableNpnBoardCapability capability =
 		ReplaceableNpnBoardCapability.find(generatedBoardInstance);
+	    return capability == null ? null : capability.getController();
+	}
+	NmosSlotController getNmosSlotController() {
+	    ReplaceableNmosBoardCapability capability =
+		ReplaceableNmosBoardCapability.find(generatedBoardInstance);
 	    return capability == null ? null : capability.getController();
 	}
 	DiodeSlotController getDiodeSlotController() {

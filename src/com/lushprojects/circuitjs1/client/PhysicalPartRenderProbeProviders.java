@@ -52,5 +52,15 @@ final class PhysicalPartRenderProbeProviders {
             }
         };
 
+    static final PhysicalPartRenderProbeProvider NMOS =
+        new PhysicalPartRenderProbeProvider() {
+            public ProbeTarget createLooseProbeTarget(CirSim sim,
+                    GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
+                    PcbWorkbenchRenderer renderer) {
+                return new PhysicalNmosPartProbeTarget(sim, instance, part.getId(), terminal,
+                    renderer);
+            }
+        };
+
     private PhysicalPartRenderProbeProviders() { }
 }

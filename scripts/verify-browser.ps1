@@ -26,6 +26,8 @@ param(
     [switch]$RcNormalPlayer,
     [switch]$Npn,
     [switch]$NpnNatural,
+    [switch]$Nmos,
+    [switch]$NmosNatural,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -1518,6 +1520,9 @@ function verifyRcNormalPlayer([string]$url, [int]$debugPort) {
 $npnValidationSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
     @(0, 1, 2, 3)
 }
+$nmosValidationSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
+    @(0, 1, 2)
+}
 if (-not (Test-Path $BrowserPath -PathType Leaf)) { throw "Browser not found: $BrowserPath" }
 if ($QuickPlay) {
     $selectorPassed = verifyRoute 'quick-play selector/session' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play' 9495 | Select-Object -Last 1
@@ -1539,6 +1544,15 @@ if ($QuickPlay) {
             exit 1
         }
         $npnQuickPlayCase++
+    }
+    $nmosQuickPlayCase = 0
+    foreach ($seed in $nmosValidationSeeds) {
+        $route = "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&" +
+            "tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=$seed"
+        if (-not (verifyRoute "quick-play nmos seed $seed" $route 'PASS:quick-play' (9600 + $nmosQuickPlayCase))) {
+            exit 1
+        }
+        $nmosQuickPlayCase++
     }
     exit 0
 }
@@ -1572,6 +1586,32 @@ if ($NpnNatural) {
     foreach ($seed in $naturalSeeds) {
         $route = "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=$seed&tsjVerifyNpn=true&running=true"
         if (-not (verifyRoute "npn-natural-seed-$seed" $route 'PASS:npn' (9570 + $case))) {
+            exit 1
+        }
+        $case++
+    }
+    exit 0
+}
+if ($Nmos) {
+    $faults = @('NMOS_DS_OPEN', 'NMOS_DS_SHORT', 'NMOS_GATE_OPEN')
+    $case = 0
+    foreach ($seed in $nmosValidationSeeds) {
+        foreach ($fault in $faults) {
+            $route = "$BaseUrl/circuitjs.html?tsjChallenge=nmos&seed=$seed&" +
+                "tsjNmosFault=$fault&tsjVerifyNmos=true&running=true"
+            if (-not (verifyRoute "nmos-$fault-seed-$seed" $route 'PASS:nmos' (9610 + $case))) {
+                exit 1
+            }
+            $case++
+        }
+    }
+    exit 0
+}
+if ($NmosNatural) {
+    $case = 0
+    foreach ($seed in $nmosValidationSeeds) {
+        $route = "$BaseUrl/circuitjs.html?tsjChallenge=nmos&seed=$seed&tsjVerifyNmos=true&running=true"
+        if (-not (verifyRoute "nmos-natural-seed-$seed" $route 'PASS:nmos' (9650 + $case))) {
             exit 1
         }
         $case++

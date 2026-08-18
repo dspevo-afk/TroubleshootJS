@@ -224,10 +224,19 @@ class PcbBoardLayout {
             PcbTraceGeometry trace, BoardPad startPad, BoardPad endPad, int x1, int y1,
             int x2, int y2) {
         PcbPadPlacement escapePad = null;
-        if (component.getComponentId().equals(startPad.getComponentId()))
-            escapePad = pads.get(trace.getStartPadId());
-        else if (component.getComponentId().equals(endPad.getComponentId()))
-            escapePad = pads.get(trace.getEndPadId());
+        PcbPadPlacement startPlacement = pads.get(trace.getStartPadId());
+        PcbPadPlacement endPlacement = pads.get(trace.getEndPadId());
+        if (component.getComponentId().equals(startPad.getComponentId()) &&
+                component.getComponentId().equals(endPad.getComponentId())) {
+            if (touches(x1, y1, startPlacement) || touches(x2, y2, startPlacement))
+                escapePad = startPlacement;
+            else if (touches(x1, y1, endPlacement) || touches(x2, y2, endPlacement))
+                escapePad = endPlacement;
+        } else if (component.getComponentId().equals(startPad.getComponentId())) {
+            escapePad = startPlacement;
+        } else if (component.getComponentId().equals(endPad.getComponentId())) {
+            escapePad = endPlacement;
+        }
         if (escapePad == null)
             return false;
         Rectangle keepOut = component.getRoutingCourtyard();
@@ -250,6 +259,10 @@ class PcbBoardLayout {
                 escapePad.isInEscapeCorridor(x1, overlapBottom);
         }
         return false;
+    }
+
+    private boolean touches(int x, int y, PcbPadPlacement pad) {
+        return pad != null && x == pad.getX() && y == pad.getY();
     }
 
     private void validateSilkscreen(TroubleshootBoard board) {

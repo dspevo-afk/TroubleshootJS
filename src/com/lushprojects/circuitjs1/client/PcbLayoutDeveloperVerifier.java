@@ -9,6 +9,7 @@ class PcbLayoutDeveloperVerifier {
         verifyFamily("PARALLEL_DUAL_INDICATOR");
         verifyFamily("RC_DELAY");
         verifyFamily("NPN_LOW_SIDE_SWITCH");
+        verifyFamily("NMOS_LOW_SIDE_SWITCH");
         GeneratedBoardInstance current = sim.getGeneratedBoardInstance();
         PcbBoardLayout regenerated = generate(current.getCircuitFamilyId(), current.getSeed())
             .getPcbLayout();
@@ -42,6 +43,8 @@ class PcbLayoutDeveloperVerifier {
         }
         if ("NPN_LOW_SIDE_SWITCH".equals(familyId))
             verifyNpnFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
+        if ("NMOS_LOW_SIDE_SWITCH".equals(familyId))
+            verifyNmosFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
         if ("LED_INDICATOR".equals(familyId))
             verifySeedThreeLedEndpointRegression(seed3);
         require(seed0.geometryFingerprint().equals(seed0Repeat.geometryFingerprint()),
@@ -190,11 +193,16 @@ class PcbLayoutDeveloperVerifier {
             TroubleshootBoard board, PcbComponentPlacement component, PcbTraceGeometry trace,
             int x1, int y1, int x2, int y2) {
         String[] endpointIds = { trace.getStartPadId(), trace.getEndPadId() };
+        boolean sameEndpointComponent = board.getPad(trace.getStartPadId()).getComponentId()
+            .equals(board.getPad(trace.getEndPadId()).getComponentId());
         for (String endpointId : endpointIds) {
             BoardPad boardPad = board.getPad(endpointId);
             if (!component.getComponentId().equals(boardPad.getComponentId()))
                 continue;
             PcbPadPlacement pad = layout.getPad(endpointId);
+            if (sameEndpointComponent && !((x1 == pad.getX() && y1 == pad.getY()) ||
+                    (x2 == pad.getX() && y2 == pad.getY())))
+                continue;
             int left = Math.min(x1, x2);
             int right = Math.max(x1, x2);
             int top = Math.min(y1, y2);
@@ -250,6 +258,29 @@ class PcbLayoutDeveloperVerifier {
                 "NPN Q1 " + terminalIds[index] +
                 " diverges from TO-92 provider geometry");
         }
+    }
+
+    private static void verifyNmosFootprint(PcbBoardLayout layout, TroubleshootBoard board,
+            long seed) {
+        require(board.getPad("Q1.G") != null && board.getPad("Q1.D") != null &&
+            board.getPad("Q1.S") != null && "GATE".equals(board.getPad("Q1.G").getNetId()) &&
+            "DRAIN".equals(board.getPad("Q1.D").getNetId()) &&
+            "GND".equals(board.getPad("Q1.S").getNetId()),
+            "NMOS layout verifier lost stable G/D/S pads");
+        PcbComponentPlacement actualPlacement = layout.getComponent("Q1");
+        PcbFootprint expected = StandardPcbFootprintProviders.createRegistry().create(
+            board.getComponent("Q1"), actualPlacement.getX(), actualPlacement.getY(),
+            new java.util.Random(seed), layout.getBoardOutline());
+        require(samePlacement(actualPlacement, expected.getPlacement()),
+            "NMOS Q1 placement/body/courtyard diverges from registered provider");
+        String[] terminalIds = { "Q1.G", "Q1.D", "Q1.S" };
+        Vector<PcbPadPlacement> expectedPads = expected.getPads();
+        require(expectedPads.size() == terminalIds.length,
+            "NMOS provider did not expose three stable terminals");
+        for (int index = 0; index < terminalIds.length; index++)
+            require(expectedPads.get(index).getPadId().equals(terminalIds[index]) &&
+                samePad(layout.getPad(terminalIds[index]), expectedPads.get(index)),
+                "NMOS Q1 " + terminalIds[index] + " diverges from registered provider geometry");
     }
 
     private static boolean samePlacement(PcbComponentPlacement first,
@@ -316,6 +347,8 @@ class PcbLayoutDeveloperVerifier {
             return new RcDelayGenerator().generate(seed);
         if ("NPN_LOW_SIDE_SWITCH".equals(familyId))
             return new NpnLowSideSwitchGenerator().generate(seed);
+        if ("NMOS_LOW_SIDE_SWITCH".equals(familyId))
+            return new NmosLowSideSwitchGenerator().generate(seed);
         throw new IllegalArgumentException("Unsupported PCB verifier family: " + familyId);
     }
 
