@@ -163,23 +163,44 @@ body.tsj-workbench-ui .tsj-component-panel .tsj-current {
   color: #f0c487;
 }
 
-/* The shell is a zero-area presentation root and does not reserve layout space. */
+body.tsj-workbench-ui .tsj-workbench-sidebar-host {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  table-layout: fixed;
+}
+
+body.tsj-workbench-ui .tsj-workbench-sidebar-host .tsj-workbench-sidebar-cell {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+body.tsj-workbench-ui .tsj-workbench-sidebar-host .tsj-workbench-shell {
+  min-width: 0;
+}
+
+/* The shell is an in-flow presentation root and reserves only sidebar space. */
 .tsj-workbench-shell {
   position: static;
-  width: 0;
-  height: 0;
-  top: 0;
-  right: 0;
-  left: 0;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
   overflow: visible;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .tsj-ui-strip {
-  position: fixed;
-  top: 10px;
-  right: 12px;
-  display: inline-block;
+  position: relative;
+  display: block;
+  width: calc(100% - 20px);
+  min-width: 0;
+  max-width: calc(100% - 20px);
+  box-sizing: border-box;
+  margin: 0 10px 10px;
   padding: 3px;
   border: 1px solid #4d585b;
   border-radius: 4px;
@@ -187,10 +208,14 @@ body.tsj-workbench-ui .tsj-component-panel .tsj-current {
   box-shadow: 0 5px 16px rgba(0, 0, 0, .36);
   pointer-events: auto;
   z-index: 10003;
-  white-space: nowrap;
+  font-size: 0;
+  white-space: normal;
 }
 
 .tsj-ui-tab {
+  display: inline-block;
+  width: 49%;
+  box-sizing: border-box;
   min-width: 66px;
   min-height: 34px;
   margin: 0;
@@ -204,6 +229,9 @@ body.tsj-workbench-ui .tsj-component-panel .tsj-current {
   font-weight: bold;
   letter-spacing: .08em;
   cursor: pointer;
+  vertical-align: top;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .tsj-ui-tab:last-child {
@@ -602,6 +630,17 @@ body.tsj-workbench-ui .tsj-component-panel .tsj-current {
 
 /* Modern flex layout keeps the current centered presentation where supported. */
 @supports (display: flex) {
+  .tsj-ui-strip {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .tsj-ui-tab {
+    display: block;
+    width: auto;
+    flex: 1 1 49%;
+  }
+
   .tsj-ui-overlay {
     align-items: center;
     justify-content: center;
@@ -738,16 +777,18 @@ body.tsj-workbench-ui .tsj-component-panel .tsj-current {
 
 @media screen and (max-width: 620px) {
   .tsj-ui-strip {
-    right: 6px;
-    left: 6px;
-    display: flex;
+    width: calc(100% - 12px);
+    max-width: calc(100% - 12px);
+    margin-right: 6px;
+    margin-left: 6px;
   }
 
   .tsj-ui-tab {
+    width: 100%;
     min-width: 0;
-    flex: 1;
     padding-right: 5px;
     padding-left: 5px;
+    flex: 1 1 100%;
   }
 
   .tsj-ui-dialog {
@@ -769,5 +810,12 @@ body.tsj-workbench-ui .tsj-component-panel .tsj-current {
   .tsj-store-card {
     width: 98%;
     width: calc(100% - 10px);
+  }
+}
+
+@media screen and (max-width: 150px) {
+  .tsj-ui-tab {
+    width: 100%;
+    flex: 1 1 100%;
   }
 }

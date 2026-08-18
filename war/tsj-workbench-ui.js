@@ -8,8 +8,9 @@
     cartCount: 0
   };
   var initialized = false;
+  var discoveryObserver = null;
+  var discoveryTimer = null;
   var shell;
-  var strip;
   var overlay;
   var overlayContent;
   var tabButtons = {};
@@ -88,6 +89,7 @@
   function closeOverlay() {
     removeClass(overlay, 'is-open');
     overlay.setAttribute('aria-hidden', 'true');
+    window.tsjWorkbenchOverlayOpen = false;
     setTabState('TOOLS');
     if (tabButtons.TOOLS && tabButtons.TOOLS.focus) {
       tabButtons.TOOLS.focus();
@@ -98,6 +100,7 @@
     setTabState(name);
     addClass(overlay, 'is-open');
     overlay.setAttribute('aria-hidden', 'false');
+    window.tsjWorkbenchOverlayOpen = true;
     renderOverlay(name);
   }
 
@@ -350,7 +353,6 @@
       }(tabNames[i]));
     }
     shell.appendChild(nav);
-    strip = nav;
     overlay = createElement('div', 'tsj-ui-overlay');
     overlay.setAttribute('aria-hidden', 'true');
     overlay.setAttribute('role', 'presentation');
@@ -366,6 +368,7 @@
     overlayContent = dialog;
     overlay.appendChild(dialog);
     shell.appendChild(overlay);
+    window.tsjWorkbenchOverlayOpen = false;
     setTabState('TOOLS');
   }
 
@@ -373,9 +376,35 @@
     return document.querySelector('.tsj-meter-panel');
   }
 
-  function markPresentationContext() {
-    if (!findWorkbenchAnchor()) {
+  function markSidebarHost(cell) {
+    var node = cell;
+    while (node && node.nodeType === 1) {
+      if (String(node.tagName).toLowerCase() === 'table') {
+        addClass(node, 'tsj-workbench-sidebar-host');
+        addClass(cell, 'tsj-workbench-sidebar-cell');
+        return;
+      }
+      node = node.parentNode;
+    }
+  }
+
+  function mountShell() {
+    var anchor = findWorkbenchAnchor();
+    var cell;
+    if (!anchor) {
       return false;
+    }
+    cell = anchor.parentNode;
+    if (!cell || !cell.insertBefore) {
+      return false;
+    }
+    markSidebarHost(cell);
+    if (!shell) {
+      shell = createElement('div', 'tsj-workbench-shell');
+      buildShell();
+    }
+    if (shell.parentNode !== cell || shell.nextSibling !== anchor) {
+      cell.insertBefore(shell, anchor);
     }
     addClass(document.body, 'tsj-workbench-ui');
     return true;
@@ -411,6 +440,44 @@
     return false;
   }
 
+  function isEditableDialogTarget(element) {
+    var node = element;
+    var tagName;
+    if (!isInsideDialog(element)) {
+      return false;
+    }
+    while (node && node !== overlayContent) {
+      if (node.nodeType === 1) {
+        tagName = String(node.tagName).toUpperCase();
+        if (tagName === 'INPUT' || tagName === 'TEXTAREA' ||
+            tagName === 'SELECT' || node.isContentEditable ||
+            node.contentEditable === 'true') {
+          return true;
+        }
+      }
+      node = node.parentNode;
+    }
+    return false;
+  }
+
+  function isAllowedDialogKey(event) {
+    return event.key === 'Tab' || event.key === 'Escape' ||
+      event.key === 'Enter' || event.key === ' ' ||
+      event.keyCode === 9 || event.keyCode === 27 ||
+      event.keyCode === 13 || event.keyCode === 32;
+  }
+
+  function guardOverlayKey(event) {
+    if (!overlay || !hasClass(overlay, 'is-open') ||
+        isEditableDialogTarget(event.target) || isAllowedDialogKey(event)) {
+      return;
+    }
+    event.preventDefault();
+    if (event.stopPropagation) {
+      event.stopPropagation();
+    }
+  }
+
   function trapDialogFocus(event) {
     var focusable;
     var first;
@@ -436,77 +503,106 @@
     }
   }
 
-  function positionStrip() {
-    var anchor = findWorkbenchAnchor();
-    var rect;
-    var right;
-    if (!strip || !anchor || !anchor.getBoundingClientRect) {
+  function activateFocusedDialogButton(event) {
+    var active;
+    var node;
+    if (!overlay || !hasClass(overlay, 'is-open') ||
+        !(event.key === 'Enter' || event.key === ' ' ||
+          event.keyCode === 13 || event.keyCode === 32)) {
       return;
     }
-    rect = anchor.getBoundingClientRect();
-    right = window.innerWidth - rect.right + 10;
-    strip.style.right = (right > 6 ? right : 6) + 'px';
-    strip.style.top = (rect.top + 10) + 'px';
+    active = document.activeElement;
+    if (!active || active.tagName !== 'BUTTON' || active.disabled ||
+        !isInsideDialog(active)) {
+      return;
+    }
+    node = active;
+    while (node && node !== overlayContent) {
+      if (node.isContentEditable || node.contentEditable === 'true') {
+        return;
+      }
+      node = node.parentNode;
+    }
+    event.preventDefault();
+    active.click();
   }
 
   function initialize() {
     if (initialized || !document.body) {
-      return;
+      return initialized;
+    }
+    if (!mountShell()) {
+      return false;
     }
     initialized = true;
-    shell = createElement('div', 'tsj-workbench-shell');
-    document.body.appendChild(shell);
-    buildShell();
-    markPresentationContext();
-    positionStrip();
-    window.addEventListener('resize', positionStrip);
+    return true;
   }
 
-  function startLegacyInitializationFallback() {
-    var attempts = 0;
-    var maxAttempts = 60;
-    var timer = window.setInterval(function () {
-      attempts += 1;
-      if (markPresentationContext()) {
-        positionStrip();
-        window.clearInterval(timer);
-      } else if (attempts >= maxAttempts) {
-        window.clearInterval(timer);
+  function stopDiscovery() {
+    if (discoveryObserver) {
+      discoveryObserver.disconnect();
+      discoveryObserver = null;
+    }
+    if (discoveryTimer) {
+      window.clearTimeout(discoveryTimer);
+      discoveryTimer = null;
+    }
+  }
+
+  function tryMountShell() {
+    if (initialize()) {
+      stopDiscovery();
+      return true;
+    }
+    return false;
+  }
+
+  function scheduleLegacyInitializationFallback() {
+    if (initialized || discoveryTimer) {
+      return;
+    }
+    discoveryTimer = window.setTimeout(function retryMount() {
+      discoveryTimer = null;
+      if (!tryMountShell()) {
+        scheduleLegacyInitializationFallback();
       }
-    }, 250);
+    }, 500);
   }
 
   function start() {
-    var observer;
-    initialize();
     if (!document.body) {
       return;
     }
-    if (markPresentationContext()) {
-      positionStrip();
+    if (tryMountShell()) {
       return;
     }
     if (!window.MutationObserver) {
-      startLegacyInitializationFallback();
+      scheduleLegacyInitializationFallback();
       return;
     }
-    observer = new window.MutationObserver(function () {
-      if (markPresentationContext()) {
-        positionStrip();
-        observer.disconnect();
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-    window.setTimeout(function () { observer.disconnect(); }, 15000);
+    if (!discoveryObserver) {
+      discoveryObserver = new window.MutationObserver(function () {
+        if (tryMountShell()) {
+          stopDiscovery();
+        }
+      });
+      discoveryObserver.observe(document.body, { childList: true, subtree: true });
+    }
   }
 
   document.addEventListener('keydown', function (event) {
     if (overlay && hasClass(overlay, 'is-open')) {
+      activateFocusedDialogButton(event);
       trapDialogFocus(event);
       if (event.key === 'Escape' || event.keyCode === 27) {
         closeOverlay();
       }
+      guardOverlayKey(event);
     }
+  });
+
+  document.addEventListener('keypress', function (event) {
+    guardOverlayKey(event);
   });
 
   if (document.readyState === 'loading') {
