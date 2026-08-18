@@ -1,0 +1,293 @@
+READ-ONLY RESEARCH TASK — TROUBLESHOOTJS TROUBLESHOOTING REALISM & SOLVABILITY AUDIT
+
+This is a READ-ONLY audit. Do NOT implement features.
+
+Other Codex sessions may be working concurrently on Task 38, UI work, and other research. Do not interfere with them.
+
+The only repository file you may create or modify is:
+
+docs/research/TROUBLESHOOTING_REALISM_SOLVABILITY_AUDIT.md
+
+Do NOT modify production code, tests, build scripts, AGENTS.md, ROADMAP.md, ARCHITECTURE.md, CODEX_TASK_REPORT.md, UI files, or active Task 38 files.
+
+GOAL
+
+Evaluate TroubleshootJS from the perspective of a competent electronics technician/player rather than merely from the perspective of code correctness.
+
+The central question is:
+
+Does each current troubleshooting challenge provide a fair, realistic, electrically grounded diagnostic problem that can be solved through accessible observations and measurements without hidden answer metadata?
+
+Inspect all currently merged normal-player families and faults. Treat unfinished Task 38/NMOS work as unfinished unless it is necessary to understand future direction.
+
+==================================================
+1. MAP CURRENT PLAYER DIAGNOSTIC FLOW
+==================================================
+
+For each implemented normal-player family, document:
+- customer complaint / scenario;
+- healthy functional behavior;
+- available fault types;
+- visible symptom under each fault;
+- useful powered measurements;
+- useful unpowered measurements;
+- useful in-circuit measurements;
+- when lead lifting/removal is diagnostically useful;
+- valid repair actions;
+- repair/completion criteria.
+
+Ground claims in actual code and validators.
+
+==================================================
+2. FAULT-BY-FAULT REALISM REVIEW
+==================================================
+
+For every current normal-player fault, answer:
+- Is the fault physically/electrically plausible?
+- Does it produce a believable symptom?
+- Does the complaint reveal too much or too little?
+- Can the player distinguish it from other plausible faults?
+- Is there at least one rational diagnostic path?
+- Is the challenge trivial because a single obvious measurement gives away the answer?
+- Is the challenge unfair because the necessary observation is inaccessible?
+- Does the fault survive removal, lead lifting, replacement, and other physical mutations correctly?
+- Can a healthy but incorrect replacement create believable results?
+
+==================================================
+3. SOLVABILITY
+==================================================
+
+Evaluate whether generated challenges can ever become:
+- electrically valid but diagnostically impossible;
+- ambiguous between multiple faults with identical accessible observations;
+- dependent on hidden metadata;
+- dependent on a measurement mode the player does not yet have;
+- dependent on inaccessible internal nodes;
+- dependent on knowing original hidden component values;
+- impossible to repair with allowed physical actions.
+
+Identify which solvability properties are currently guaranteed by code and which are merely assumed.
+
+==================================================
+4. DIAGNOSTIC DISTINGUISHABILITY
+==================================================
+
+For each family, compare fault signatures.
+
+Consider observations such as:
+- rail voltages;
+- voltage across load;
+- voltage across switching element;
+- control-node voltage;
+- resistance with board unpowered;
+- diode-test behavior;
+- continuity;
+- component removal/lifted-lead behavior;
+- visible LED/output state.
+
+Where two faults can look similar initially, determine whether realistic follow-up measurements distinguish them.
+
+A good challenge may have several plausible suspects. The problem is only unfair if rational measurements cannot separate them.
+
+==================================================
+5. TRIVIALITY / ANSWER LEAKAGE
+==================================================
+
+Identify places where the game may accidentally reveal the fault through:
+- catalog restrictions;
+- component panel wording;
+- highlighted metadata;
+- fault-specific UI labels;
+- complaint text;
+- replacement choices;
+- designators/values that should be hidden;
+- developer metadata leaking into normal player mode.
+
+Also identify challenges that are technically hidden but too easy because only one component could possibly explain the symptom.
+
+==================================================
+6. REAL TECHNICIAN WORKFLOW
+==================================================
+
+For representative current boards, describe how a competent technician would likely troubleshoot them:
+1. visual/function observation;
+2. supply verification;
+3. divide-and-conquer measurements;
+4. component-level testing;
+5. isolation/lifting/removal if necessary;
+6. repair;
+7. functional verification.
+
+Compare that path to what the game currently permits.
+
+Flag cases where TroubleshootJS forces an unnatural workflow.
+
+==================================================
+7. RED HERRINGS AND HEALTHY CIRCUITRY
+==================================================
+
+Evaluate whether current boards require genuine reasoning or whether the faulty component is too structurally obvious.
+
+Recommend future categories of meaningful healthy circuitry that can create realistic alternative hypotheses without becoming random clutter.
+
+Examples may include:
+- power indicators;
+- protection networks;
+- secondary rails;
+- filtering;
+- unrelated outputs;
+- pull networks;
+- diagnostic/test circuitry.
+
+Do NOT implement them.
+
+==================================================
+8. MEASUREMENT COVERAGE
+==================================================
+
+Evaluate whether the currently implemented meter modes are sufficient for existing challenges.
+
+Identify future measurement modes that would materially expand realistic diagnosis, such as:
+- capacitance;
+- AC voltage;
+- frequency;
+- oscilloscope;
+- current measurement;
+- logic analysis.
+
+Do not recommend adding modes merely because real meters have them. Tie each recommendation to actual future diagnostic needs.
+
+==================================================
+9. WRONG REPAIR REALISM
+==================================================
+
+Investigate how the current architecture handles:
+- replacing a healthy part;
+- wrong resistor value;
+- reversed diode/LED;
+- incorrect transistor/MOSFET;
+- leaving a faulty part removed;
+- collateral damage;
+- completing a job with latent problems.
+
+Identify where future realism would benefit from allowing wrong-but-electrically-valid repair choices rather than restricting the player to the correct catalog.
+
+==================================================
+10. COMPLETION / CUSTOMER RETURN REALISM
+==================================================
+
+Evaluate current Finish Job / repair validation semantics.
+
+Questions:
+- Does completion require restored function rather than merely replacing the generated-fault owner?
+- Can secondary damage remain and still pass?
+- Can an alternate electrically valid repair pass?
+- Can a temporary or marginal repair pass?
+- Does completion preserve the distinction between original fault and player-created damage?
+
+Include the future customer-return concept as a recommendation only where relevant.
+
+==================================================
+11. AUTOMATED SOLVABILITY VALIDATION
+==================================================
+
+Recommend what future generator validation could automatically prove before accepting a challenge.
+
+Potential checks:
+- healthy board works;
+- fault creates intended symptom;
+- correct repair restores expected function;
+- board remains measurable;
+- at least one diagnostic path exists;
+- required nodes are probeable;
+- fault signatures are sufficiently distinguishable;
+- no hidden answer data is required;
+- no normal-player metadata leaks.
+
+Separate what is realistically automatable from what may require curated family metadata or human review.
+
+==================================================
+12. PLAYER-DIFFICULTY MODEL
+==================================================
+
+Propose a future difficulty model based on diagnostic reasoning rather than arbitrary handicaps.
+
+Possible dimensions:
+- number of plausible suspects;
+- amount of healthy red-herring circuitry;
+- number of rails/subsystems;
+- whether isolation is required;
+- whether dynamic measurements are required;
+- similarity of fault signatures;
+- visibility of component markings;
+- fault intermittency later.
+
+Avoid fake difficulty such as random hidden information that a real technician would normally have access to.
+
+==================================================
+13. REPORT
+==================================================
+
+Write findings to exactly:
+
+docs/research/TROUBLESHOOTING_REALISM_SOLVABILITY_AUDIT.md
+
+Use this structure:
+
+# TroubleshootJS Troubleshooting Realism & Solvability Audit
+## 1. Executive Summary
+## 2. Current Diagnostic Architecture
+## 3. Family-by-Family Review
+## 4. Fault-by-Fault Review
+## 5. Solvability Risks
+## 6. Diagnostic Distinguishability
+## 7. Triviality / Answer Leakage
+## 8. Real-Technician Workflow Comparison
+## 9. Red Herrings and Healthy Circuitry
+## 10. Measurement Coverage
+## 11. Wrong-Repair Realism
+## 12. Completion / Customer Return Semantics
+## 13. Automated Solvability Validation
+## 14. Difficulty Model
+## 15. Prioritized Recommendations
+## 16. Recommended Bounded Future Tasks
+## 17. File/Class Watchlist
+## 18. Risks and Open Questions
+
+In the executive summary, directly answer:
+
+"Do current TroubleshootJS challenges behave like fair electronics troubleshooting problems, and what is the biggest realism risk as complexity grows?"
+
+==================================================
+14. VALIDATION AND COMPLETION
+==================================================
+
+Re-read technical claims and verify them against repository code.
+Clearly separate current behavior, inference, and recommendation.
+
+Run git status --short.
+
+The only repository change must be:
+
+docs/research/TROUBLESHOOTING_REALISM_SOLVABILITY_AUDIT.md
+
+Commit only the report on an isolated branch.
+
+Suggested branch:
+codex/troubleshooting-realism-audit
+
+Suggested commit:
+Document troubleshooting realism audit
+
+Do not merge, rebase active branches, or begin implementation.
+Push only if explicitly authorized.
+
+At the end report:
+- branch;
+- commit SHA;
+- report path;
+- biggest current realism strength;
+- biggest current solvability risk;
+- top three recommendations.
+
+STOP.
