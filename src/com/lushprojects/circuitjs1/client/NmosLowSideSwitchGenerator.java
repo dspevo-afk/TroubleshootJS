@@ -60,10 +60,10 @@ final class NmosLowSideSwitchGenerator {
         controlInputTrace.drag(240, 96);
         SwitchElm controlCommand = new SwitchElm(240, 96);
         controlCommand.drag(272, 96);
-        WireElm gateDriveTrace = new WireElm(272, 96);
-        gateDriveTrace.drag(336, 96);
-        WireElm gateDriveLink = new WireElm(336, 96);
-        gateDriveLink.drag(496, 96);
+        // The command switch is external control infrastructure.  Everything
+        // after its output is the one physical board gate conductor.
+        WireElm controlBoardTrace = new WireElm(272, 96);
+        controlBoardTrace.drag(496, 96);
         WireElm gateNodeTrace = new WireElm(496, 96);
         gateNodeTrace.drag(544, 288);
         ResistorElm gatePullDown = new ResistorElm(496, 96);
@@ -82,12 +82,8 @@ final class NmosLowSideSwitchGenerator {
         gateFaultSwitch.drag(gate.x + 32, gate.y);
         SwitchElm drainFaultSwitch = new SwitchElm(drain.x, drain.y);
         drainFaultSwitch.drag(drain.x + 32, drain.y);
-        WireElm gateAttachment = new WireElm(544, 288);
-        gateAttachment.drag(gate.x, gate.y);
         WireElm drainTrace = new WireElm(led.getPost(1).x, led.getPost(1).y);
         drainTrace.drag(drain.x - 48, drain.y);
-        WireElm drainAttachment = new WireElm(drain.x - 48, drain.y);
-        drainAttachment.drag(drain.x, drain.y);
         WireElm sourceTrace = new WireElm(704, 416);
         sourceTrace.drag(source.x - 48, source.y);
         WireElm sourceAttachment = new WireElm(source.x - 48, source.y);
@@ -109,8 +105,8 @@ final class NmosLowSideSwitchGenerator {
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         add(elements, loadSupply, loadIsolation, loadInputTrace, loadResistorLead1,
             loadResistor, loadResistorLead2, loadNodeTrace, led, controlSupply,
-            controlIsolation, controlInputTrace, controlCommand, gateDriveTrace,
-            gateDriveLink, gateNodeTrace, gatePullDown, mosfet, gateFaultSwitch,
+            controlIsolation, controlInputTrace, controlCommand, controlBoardTrace,
+            gateNodeTrace, gatePullDown, mosfet, gateFaultSwitch,
             drainTrace, sourceTrace, dsFaultShunt, ground, loadReturn, controlReturn,
             pullDownReturn);
 
@@ -141,6 +137,19 @@ final class NmosLowSideSwitchGenerator {
         selectedBinding = selected.getBinding();
         GeneratedFault fault = selected.getFault();
 
+        // Fault-owned public terminals are the board boundary for the original
+        // part.  In particular, DS-open and gate-open expose switch post 1;
+        // ending these attachments at the raw NMOS post would bypass the
+        // private switch and make the fault both electrically ineffective and
+        // invalid under connection-binding validation.  Switch post 0 remains
+        // coincident with the raw NMOS terminal.
+        Point gateBoardPoint = publicPoint(selectedBinding.getPublicTerminal(mosfet, 0));
+        WireElm gateAttachment = new WireElm(544, 288);
+        gateAttachment.drag(gateBoardPoint.x, gateBoardPoint.y);
+        Point drainBoardPoint = publicPoint(selectedBinding.getPublicTerminal(mosfet, 2));
+        WireElm drainAttachment = new WireElm(drain.x - 48, drain.y);
+        drainAttachment.drag(drainBoardPoint.x, drainBoardPoint.y);
+
         BoardSimulationBindings bindings = board.getSimulationBindings();
         bindings.bindPad("J1.1", new CircuitPostMeasurementEndpoint(loadInputTrace, 0));
         bindings.bindPad("J1.2", new CircuitPostMeasurementEndpoint(ground, 0));
@@ -148,12 +157,9 @@ final class NmosLowSideSwitchGenerator {
         bindings.bindPad("RLOAD.2", new CircuitPostMeasurementEndpoint(loadNodeTrace, 0));
         bindings.bindPad("LED1.A", new CircuitPostMeasurementEndpoint(loadNodeTrace, 1));
         bindings.bindPad("LED1.K", new CircuitPostMeasurementEndpoint(drainTrace, 0));
-        bindings.bindPad("J2.1", new CircuitPostMeasurementEndpoint(controlInputTrace, 1));
+        // J2.1 is the board-side control input, after the external command.
+        bindings.bindPad("J2.1", new CircuitPostMeasurementEndpoint(controlBoardTrace, 1));
         bindings.bindPad("J2.2", new CircuitPostMeasurementEndpoint(ground, 0));
-        bindings.bindPad("TP1.1", new CircuitPostMeasurementEndpoint(gateDriveTrace, 0));
-        bindings.bindPad("TP1.2", new CircuitPostMeasurementEndpoint(gateDriveTrace, 1));
-        bindings.bindPad("TP2.1", new CircuitPostMeasurementEndpoint(controlInputTrace, 0));
-        bindings.bindPad("TP2.2", new CircuitPostMeasurementEndpoint(controlInputTrace, 1));
         bindings.bindPad("RPD.1", new CircuitPostMeasurementEndpoint(gateNodeTrace, 0));
         bindings.bindPad("RPD.2", new CircuitPostMeasurementEndpoint(ground, 0));
         bindings.bindPad("Q1.G", new CircuitPostMeasurementEndpoint(gateNodeTrace, 1));
@@ -175,8 +181,6 @@ final class NmosLowSideSwitchGenerator {
         PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(board);
         PhysicalBoardSlot j1Slot = runtime.createSlot("J1");
         PhysicalBoardSlot j2Slot = runtime.createSlot("J2");
-        PhysicalBoardSlot tp1Slot = runtime.createSlot("TP1");
-        PhysicalBoardSlot tp2Slot = runtime.createSlot("TP2");
         PhysicalBoardSlot loadSlot = runtime.createSlot("RLOAD");
         PhysicalBoardSlot pullDownSlot = runtime.createSlot("RPD");
         PhysicalBoardSlot ledSlot = runtime.createSlot("LED1");
@@ -227,17 +231,6 @@ final class NmosLowSideSwitchGenerator {
             specifications.getNameplate("J2"), PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
             bindings, controlCommand, new PhysicalPartProvenance(
                 PhysicalPartProvenance.FIXED_GENERATED, "J2")));
-        tp1Slot.install(PhysicalFoundationPartFactory.fromBoardBindings("TP1",
-            (BasicPhysicalSpecification) specifications.getSpecification("TP1"),
-            specifications.getNameplate("TP1"), PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,
-            bindings, gateDriveTrace, new PhysicalPartProvenance(
-                PhysicalPartProvenance.FIXED_GENERATED, "TP1")));
-        tp2Slot.install(PhysicalFoundationPartFactory.fromBoardBindings("TP2",
-            (BasicPhysicalSpecification) specifications.getSpecification("TP2"),
-            specifications.getNameplate("TP2"), PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,
-            bindings, controlInputTrace, new PhysicalPartProvenance(
-                PhysicalPartProvenance.FIXED_GENERATED, "TP2")));
-
         GeneratedExternalPowerBindings powerBindings = new GeneratedExternalPowerBindings(board);
         Vector<CircuitElm> loadPowerElements = new Vector<CircuitElm>();
         loadPowerElements.add(loadSupply); loadPowerElements.add(loadIsolation);
@@ -269,6 +262,13 @@ final class NmosLowSideSwitchGenerator {
         for (CircuitElm value : values) elements.add(value);
     }
 
+    private Point publicPoint(CircuitMeasurementEndpoint endpoint) {
+        if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
+            throw new IllegalArgumentException("NMOS public terminal must be a CircuitJS post");
+        CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint) endpoint;
+        return post.getElement().getPost(post.getPostIndex());
+    }
+
     private BoardPhysicalSpecifications createSpecifications(NmosValues values) {
         BoardPhysicalSpecifications specifications = new BoardPhysicalSpecifications();
         specifications.addPhysicalDefinition("J1", new BasicPhysicalSpecification("J1_CONNECTOR"),
@@ -277,12 +277,6 @@ final class NmosLowSideSwitchGenerator {
         specifications.addPhysicalDefinition("J2", new BasicPhysicalSpecification("J2_CONNECTOR"),
             new PhysicalNameplate("J2", "Control input connector"),
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2);
-        specifications.addPhysicalDefinition("TP1", new BasicPhysicalSpecification("TP1_HEADER"),
-            new PhysicalNameplate("TP1", "Gate drive test header"),
-            PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2);
-        specifications.addPhysicalDefinition("TP2", new BasicPhysicalSpecification("TP2_HEADER"),
-            new PhysicalNameplate("TP2", "Control input test header"),
-            PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2);
         StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
             new ResistorNameplate("RLOAD", values.loadResistanceOhms, 5, .5));
         StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
@@ -302,17 +296,11 @@ final class NmosLowSideSwitchGenerator {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID);
         board.addNet(new BoardNet("LOAD_SUPPLY"));
         board.addNet(new BoardNet("CONTROL_INPUT"));
-        board.addNet(new BoardNet("GATE_DRIVE"));
-        board.addNet(new BoardNet("GATE"));
         board.addNet(new BoardNet("LOAD_NODE"));
         board.addNet(new BoardNet("DRAIN"));
         board.addNet(new BoardNet("GND"));
         board.addComponent(new BoardComponent("J1", "CONNECTOR"));
         board.addComponent(new BoardComponent("J2", "CONNECTOR"));
-        board.addComponent(new BoardComponent("TP1", "OUTPUT_HEADER",
-            PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2));
-        board.addComponent(new BoardComponent("TP2", "OUTPUT_HEADER",
-            PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2));
         board.addComponent(new BoardComponent("RLOAD", "RESISTOR"));
         board.addComponent(new BoardComponent("RPD", "RESISTOR"));
         board.addComponent(new BoardComponent("LED1", "LED"));
@@ -321,17 +309,13 @@ final class NmosLowSideSwitchGenerator {
         addPad(board, "J1.2", "J1", "2", "GND");
         addPad(board, "J2.1", "J2", "1", "CONTROL_INPUT");
         addPad(board, "J2.2", "J2", "2", "GND");
-        addPad(board, "TP1.1", "TP1", "1", "GATE_DRIVE");
-        addPad(board, "TP1.2", "TP1", "2", "GATE_DRIVE");
-        addPad(board, "TP2.1", "TP2", "1", "CONTROL_INPUT");
-        addPad(board, "TP2.2", "TP2", "2", "CONTROL_INPUT");
         addPad(board, "RLOAD.1", "RLOAD", "1", "LOAD_SUPPLY");
         addPad(board, "RLOAD.2", "RLOAD", "2", "LOAD_NODE");
-        addPad(board, "RPD.1", "RPD", "1", "GATE");
+        addPad(board, "RPD.1", "RPD", "1", "CONTROL_INPUT");
         addPad(board, "RPD.2", "RPD", "2", "GND");
         addPad(board, "LED1.A", "LED1", "A", "LOAD_NODE");
         addPad(board, "LED1.K", "LED1", "K", "DRAIN");
-        addPad(board, "Q1.G", "Q1", "G", "GATE");
+        addPad(board, "Q1.G", "Q1", "G", "CONTROL_INPUT");
         addPad(board, "Q1.D", "Q1", "D", "DRAIN");
         addPad(board, "Q1.S", "Q1", "S", "GND");
         board.addPowerInput(new ExternalBoardPowerInput("LOAD_VIN_INPUT", "J1.1", "J1.2",

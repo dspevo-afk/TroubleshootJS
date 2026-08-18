@@ -43,8 +43,10 @@ class PcbLayoutDeveloperVerifier {
         }
         if ("NPN_LOW_SIDE_SWITCH".equals(familyId))
             verifyNpnFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
-        if ("NMOS_LOW_SIDE_SWITCH".equals(familyId))
+        if ("NMOS_LOW_SIDE_SWITCH".equals(familyId)) {
             verifyNmosFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
+            verifyNmosControlRouting(seed0, seed0Board.getBoard());
+        }
         if ("LED_INDICATOR".equals(familyId))
             verifySeedThreeLedEndpointRegression(seed3);
         require(seed0.geometryFingerprint().equals(seed0Repeat.geometryFingerprint()),
@@ -263,7 +265,8 @@ class PcbLayoutDeveloperVerifier {
     private static void verifyNmosFootprint(PcbBoardLayout layout, TroubleshootBoard board,
             long seed) {
         require(board.getPad("Q1.G") != null && board.getPad("Q1.D") != null &&
-            board.getPad("Q1.S") != null && "GATE".equals(board.getPad("Q1.G").getNetId()) &&
+            board.getPad("Q1.S") != null &&
+            "CONTROL_INPUT".equals(board.getPad("Q1.G").getNetId()) &&
             "DRAIN".equals(board.getPad("Q1.D").getNetId()) &&
             "GND".equals(board.getPad("Q1.S").getNetId()),
             "NMOS layout verifier lost stable G/D/S pads");
@@ -281,6 +284,32 @@ class PcbLayoutDeveloperVerifier {
             require(expectedPads.get(index).getPadId().equals(terminalIds[index]) &&
                 samePad(layout.getPad(terminalIds[index]), expectedPads.get(index)),
                 "NMOS Q1 " + terminalIds[index] + " diverges from registered provider geometry");
+    }
+
+    private static void verifyNmosControlRouting(PcbBoardLayout layout, TroubleshootBoard board) {
+        require(board.getNet("GATE_DRIVE") == null && board.getNet("GATE") == null &&
+            board.getComponent("TP1") == null && board.getComponent("TP2") == null &&
+            layout.getComponent("TP1") == null && layout.getComponent("TP2") == null &&
+            layout.getPad("TP1.1") == null && layout.getPad("TP2.1") == null,
+            "NMOS layout retained obsolete gate/control pseudo-geometry");
+        require("CONTROL_INPUT".equals(board.getPad("J2.1").getNetId()) &&
+            "CONTROL_INPUT".equals(board.getPad("RPD.1").getNetId()) &&
+            "CONTROL_INPUT".equals(board.getPad("Q1.G").getNetId()),
+            "NMOS layout control pads do not share CONTROL_INPUT");
+        int count = 0;
+        boolean rpd = false;
+        boolean gate = false;
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            if (!"CONTROL_INPUT".equals(trace.getNetId()))
+                continue;
+            count++;
+            require("J2.1".equals(trace.getStartPadId()),
+                "NMOS control route does not start at J2.1");
+            rpd |= "RPD.1".equals(trace.getEndPadId());
+            gate |= "Q1.G".equals(trace.getEndPadId());
+        }
+        require(count == 2 && rpd && gate,
+            "NMOS visible copper does not join J2.1 to the gate network");
     }
 
     private static boolean samePlacement(PcbComponentPlacement first,

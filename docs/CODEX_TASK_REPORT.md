@@ -15,17 +15,24 @@ pull-down, stable board nets and G/D/S pads, typed physical NMOS identity,
 provider-owned PCB geometry, solver-backed faults, normal-player scenarios,
 Quick Play registration, and generic live repair completion.
 
-Primary architect result: `FINAL PASS`, subject to the single local commit
-below. No push is performed. Task 39 is identified as the next eligible
-milestone and was not started.
+The earlier primary `FINAL PASS` for commit `ee310d4` was overturned by
+post-commit visible review: the player-visible PCB control/gate connectivity
+did not match the solver graph. This uncommitted correction narrows the
+physical boundary and is returned for primary architect re-review. No push or
+new commit is performed. Task 39 is identified as the next eligible milestone
+and was not started.
 
 ## Electrical and architectural decisions
 
 - The permanent CircuitJS binding is post 0 = gate, post 1 = source, post 2 =
   drain. The generated NMOS remains three-post with the default body diode
   enabled and no body terminal.
-- Stable nets are `LOAD_SUPPLY`, `CONTROL_INPUT`, `GATE_DRIVE`, `GATE`,
-  `LOAD_NODE`, `DRAIN`, and `GND`; Q1 pads are `Q1.G`, `Q1.D`, and `Q1.S`.
+- External control infrastructure owns the command switch. The physical path
+  is `external control infrastructure -> J2.1 -> CONTROL_INPUT -> Q1.G/RPD.1`;
+  J2.1 is the board-side commanded voltage after `controlCommand`. The stable
+  nets are `LOAD_SUPPLY`, `CONTROL_INPUT`, `LOAD_NODE`, `DRAIN`, and `GND`;
+  J2.1, RPD.1, and Q1.G share `CONTROL_INPUT`, with no `GATE_DRIVE`, `GATE`,
+  TP1, or TP2 physical identity.
 - Healthy proof measures live VGS, VDS, load/LED current, supply/control
   voltage, and CircuitJS gate terminal current. Gate current remains within
   the high-impedance tolerance.
@@ -48,8 +55,9 @@ milestone and was not started.
 - Typed specification/catalog/physical part, G/D/S package, installed/loose
   renderer/probe target, replaceable Q1 slot, and distinct catalog backing
   allocator.
-- Registered provider-owned TO-92-style NMOS footprint and one-sided routed
-  layout with authoritative Q1 parity checks.
+- Registered provider-owned TO-92-style NMOS footprint and compact one-sided
+  routed layout with authoritative Q1 parity checks. Visible CONTROL_INPUT
+  copper branches from J2.1 to RPD.1 and Q1.G.
 - CirSim challenge/fixture routes, Quick Play registry/verifier, preview and
   browser-verifier routes, and renderer-boundary integration.
 - `BoardModificationController.java` has only the harmless final-newline
@@ -59,23 +67,26 @@ milestone and was not started.
 
 ### Build and static checks
 
-- JDK 8/GWT OBF production build after the correction passed all five
+- JDK 8/GWT PRETTY production build after this correction passed all five
+  permutations, compilation, and linking:
+  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style PRETTY`.
+- The matching JDK 8/GWT OBF production build also passed all five
   permutations, compilation, and linking:
   `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`.
-- Coder correction validation also passed PRETTY and OBF builds, renderer
-  boundary, browser-script AST parsing, and `git diff --check`.
-- Primary reruns passed `PASS:renderer-provider-boundary`,
-  `PASS:verify-browser-parser`, and the final OBF build.
-- Dedicated NMOS, layout, Quick Play, NPN regression, and deterministic
-  natural-seed checks passed. The corrected NMOS Quick Play verifier covered
-  seeds 0, 1, and 2; the dedicated NMOS verifier covered the complete fault
-  envelope and lifecycle.
+- Renderer-provider boundary, browser-script parser, and `git diff --check`
+  checks passed.
+- Runtime canary execution is pending: the Edge PowerShell harness stops at
+  WMI/CIM `Access denied`, and the built-in in-app Browser backend was
+  unavailable after reconnect in this correction attempt.
 
 ### Visible in-app Browser acceptance
 
-Using the visible local in-app Browser and real visible interaction:
+Earlier visible evidence was collected before this correction and does not
+prove the corrected PCB routing. During this correction, the local in-app
+Browser backend was unavailable and no new visible acceptance claim is made.
+The intended acceptance flow remains:
 
-- The rendered board showed a recognizable NMOS and labeled G, D, and S pads;
+- The rendered board shows a recognizable NMOS and labeled G, D, and S pads;
   the complaint remained symptom-only (`The controlled load does not turn
   on.` / `The controlled load remains on when control is low.`).
 - The board was powered off, Q1 was selected and removed, the original appeared
@@ -108,11 +119,12 @@ visible in-app Browser was used for the required player-facing validation.
   uncommitted and unpushed.
 - Independent reviewer Hume returned `PASS` for the initial candidate and
   `PASS` again after the D-S-short replacement-path correction.
-- Primary review found one real blocker through visible Quick Play validation:
-  the original D-S-short private path survived replacement. The targeted
-  correction added solver-visible series isolation and expanded lifecycle
-  assertions. No escalation architect was required.
-- Final primary result: `FINAL PASS`.
+- Post-commit primary visible review found a new real blocker: the player-visible
+  PCB control/gate connectivity did not match the solver graph. The correction
+  moves the command boundary outside the board, collapses the physical gate
+  path to `CONTROL_INPUT`, removes TP1/TP2, and adds a family canary for solver
+  voltage agreement and visible copper continuity. Primary re-review remains
+  pending.
 
 ## Known limitations
 
@@ -120,8 +132,10 @@ visible in-app Browser was used for the required player-facing validation.
   permission profile; this is recorded as unavailable, not as passing.
 - Existing compact component-rendering fidelity remains bounded by the current
   renderer and is outside Task 38's electrical scope.
-- The visible browser has no direct player-facing control-toggle widget; live
-  ON/OFF behavior is verified through the solver-backed family completion and
+- The in-app Browser backend was unavailable during this correction attempt;
+  visible player-flow revalidation is a handoff requirement for the primary
+  reviewer. The existing player UI still has no direct control-toggle widget;
+  live ON/OFF behavior is verified through the solver-backed family state and
   developer boundaries.
 
 ## Final boundary

@@ -15,6 +15,7 @@ final class NmosLowSideSwitchDeveloperVerifier {
             NmosLowSideSwitchGenerator.FAMILY_ID.equals(instance.getCircuitFamilyId()),
             "NMOS challenge did not become ready");
         verifyTopologyAndPhysicalIdentity(instance);
+        verifyBoardControlPath(sim, instance, challenge);
         verifyProviderFootprint(instance);
         verifyPrivacy(instance, challenge);
         verifyScenarioStatePurity(sim, instance, challenge);
@@ -47,6 +48,99 @@ final class NmosLowSideSwitchDeveloperVerifier {
             "NMOS generated fault is not privately owned by original Q1");
         require(Math.abs(NmosLowSideSwitchGeneratedBoardValidator.gateCurrent(instance)) < 1e-9,
             "NMOS solver gate current is not high impedance");
+    }
+
+    private static void verifyBoardControlPath(CirSim sim, GeneratedBoardInstance instance,
+            GeneratedChallengeController challenge) {
+        TroubleshootBoard board = instance.getBoard();
+        require(board.getNet("GATE_DRIVE") == null && board.getNet("GATE") == null,
+            "NMOS board retained a split gate/control net identity");
+        require(board.getComponent("TP1") == null && board.getComponent("TP2") == null &&
+            board.getPad("TP1.1") == null && board.getPad("TP1.2") == null &&
+            board.getPad("TP2.1") == null && board.getPad("TP2.2") == null,
+            "NMOS board retained pseudo test headers");
+        String[] controlPads = { "J2.1", "RPD.1", "Q1.G" };
+        for (String padId : controlPads)
+            require("CONTROL_INPUT".equals(board.getPad(padId).getNetId()),
+                "NMOS control pad is not on the single board control net: " + padId);
+        verifyVisibleControlCopper(instance);
+
+        NmosLowSideSwitchFamilyState state = state(instance);
+        boolean priorCommand = state.isCommandedOn();
+        BoardPowerState priorPower = sim.getBoardPowerController().getState();
+        boolean priorFault = instance.getFaultBinding().isApplied();
+        challenge.beginDeveloperVerificationScope();
+        try {
+            if (!challenge.getFaultController().clearForDeveloperVerification())
+                throw new IllegalStateException("NMOS control canary could not clear its fault");
+            sim.setBoardPowerState(BoardPowerState.POWERED);
+            settle(sim);
+            state.setCommandedOn(sim, true);
+            requireControlVoltageAgreement(instance, 4.5, 5.5,
+                "NMOS commanded ON control voltage is not a shared +5 V board node");
+            state.setCommandedOn(sim, false);
+            requireControlVoltageAgreement(instance, -.1, .1,
+                "NMOS commanded OFF control voltage is not pulled low");
+            require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
+                "NMOS commanded OFF still drives the load");
+            sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            settle(sim);
+            state.setCommandedOn(sim, true);
+            requireControlVoltageAgreement(instance, -.1, .1,
+                "NMOS board power OFF did not isolate the control input");
+            require(NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001,
+                "NMOS board power OFF did not isolate the load input");
+        } finally {
+            try {
+                sim.setBoardPowerState(priorPower);
+                settle(sim);
+                state.setCommandedOn(sim, priorCommand);
+                if (priorFault && !challenge.getFaultController().isApplied())
+                    challenge.getFaultController().apply();
+            } finally {
+                challenge.endDeveloperVerificationScope();
+                settle(sim);
+            }
+        }
+    }
+
+    private static void verifyVisibleControlCopper(GeneratedBoardInstance instance) {
+        Vector<PcbTraceGeometry> traces = instance.getPcbLayout().getTraces();
+        int controlTraceCount = 0;
+        boolean reachesPullDown = false;
+        boolean reachesGate = false;
+        for (PcbTraceGeometry trace : traces) {
+            if (!"CONTROL_INPUT".equals(trace.getNetId()))
+                continue;
+            controlTraceCount++;
+            require("J2.1".equals(trace.getStartPadId()),
+                "NMOS control copper does not use J2.1 as its stable root");
+            reachesPullDown |= "RPD.1".equals(trace.getEndPadId());
+            reachesGate |= "Q1.G".equals(trace.getEndPadId());
+            require(trace.getXPoints().length >= 2,
+                "NMOS control copper has no visible routed segment");
+        }
+        require(controlTraceCount == 2 && reachesPullDown && reachesGate,
+            "NMOS PCB does not visibly join J2.1 to RPD.1 and Q1.G");
+    }
+
+    private static void requireControlVoltageAgreement(GeneratedBoardInstance instance,
+            double minimum, double maximum, String message) {
+        double j2 = NmosLowSideSwitchGeneratedBoardValidator.controlVoltage(instance);
+        double rpd = NmosLowSideSwitchGeneratedBoardValidator.voltage(instance, "RPD.1") -
+            NmosLowSideSwitchGeneratedBoardValidator.voltage(instance, "RPD.2");
+        double gate = NmosLowSideSwitchGeneratedBoardValidator.boardGateVoltage(instance);
+        require(j2 >= minimum && j2 <= maximum && rpd >= minimum && rpd <= maximum &&
+            gate >= minimum && gate <= maximum && Math.abs(j2 - rpd) < 1e-6 &&
+            Math.abs(j2 - gate) < 1e-6,
+            message);
+    }
+
+    private static void settle(CirSim sim) {
+        sim.needAnalyze();
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        sim.runCircuit(true);
     }
 
     private static void verifyProviderFootprint(GeneratedBoardInstance instance) {

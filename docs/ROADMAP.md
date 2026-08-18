@@ -774,8 +774,8 @@ passed; Task 38 remains unstarted.
 
 ## Task 38 — NMOS Low-Side Switch Family
 
-**Status:** `[x]` Complete — primary architect `FINAL PASS`; Task 39 is next
-eligible and has not been started
+**Status:** `[x]` Implemented; post-commit visible review correction pending
+primary architect re-review; Task 39 is next eligible and has not been started
 
 ### Goals
 
@@ -793,10 +793,17 @@ Avoid making it merely an NPN circuit with a different picture.
 
 Task 38 adds the solver-backed `NMOS_LOW_SIDE_SWITCH` family using the real
 `NMosfetElm` model, independent load/control supplies, stable
-`LOAD_SUPPLY`/`CONTROL_INPUT`/`GATE_DRIVE`/`GATE`/`LOAD_NODE`/`DRAIN`/`GND`
-nets, and explicit CircuitJS post mapping G=0, S=1, D=2 with the body diode
+`LOAD_SUPPLY`/`CONTROL_INPUT`/`LOAD_NODE`/`DRAIN`/`GND` nets, and explicit
+CircuitJS post mapping G=0, S=1, D=2 with the body diode
 preserved. Healthy validation proves live VGS, VDS, load current, and
 effectively zero gate current in both commanded states.
+
+The control command switch is external infrastructure. The board-facing path
+is `external control infrastructure -> J2.1 -> CONTROL_INPUT -> Q1.G/RPD.1`;
+J2.1 is the commanded voltage after the switch. The board has no separate
+`GATE_DRIVE` or `GATE` identity and no TP1/TP2 pseudo-headers. Board power off
+opens both supply isolation switches while the real 100 kOhm RPD holds the
+board control node low.
 
 The family supports Q1-owned D-S open, D-S short, and gate-path-open faults.
 The original physical part retains its private solver fault when loose or
@@ -807,18 +814,17 @@ scenarios, generic live repair status, privacy checks, and stable layout parity
 are implemented.
 
 Quick Play appends NMOS at index 5 with normal-player seeds `{0, 1, 2}` and a
-natural-fault canary for all three admitted faults. Dedicated NMOS, layout,
-Quick Play, NPN-regression, renderer-boundary, parser, and JDK 8/GWT checks
-pass. Visible in-app Browser evidence covers the rendered PCB, G/D/S pads,
-complaint privacy, power-off removal, loose parts tray, catalog installation,
-power restoration, Finish Job blocking before repair, Finish Job success after
-repair, and a live 5 V gate-source probe. Browser evidence is stored under
-`docs/task-evidence/task-38/`. The standalone Edge harness remains blocked by
-WMI/CIM `Access denied` in this environment.
+natural-fault canary for all three admitted faults. The permanent family canary
+also checks ON/OFF voltage agreement at J2.1/RPD.1/Q1.G, compact visible
+CONTROL_INPUT copper, and absence of obsolete pseudo-headers. The standalone
+Edge harness remains blocked by WMI/CIM `Access denied` in this environment;
+the in-app browser backend was unavailable during this correction attempt, so
+new visible acceptance evidence is still required from the primary reviewer.
 
-Task 38 passed the bounded coder/reviewer protocol, one targeted correction
-round for original-fault D-S-short path isolation, and final primary review.
-Task 39 is the next eligible milestone; it is identified but not started.
+The earlier `FINAL PASS` recorded after commit `ee310d4` was overturned by
+post-commit visible review: the player-visible PCB control/gate connectivity
+did not match the solver graph. This correction narrows the physical boundary
+and leaves Task 39 identified but not started.
 
 ---
 

@@ -1061,10 +1061,13 @@ metadata.
 
 The NMOS family keeps CircuitJS as the electrical source of truth. Its bounded
 topology uses independent load and control supplies: `LOAD_SUPPLY -> RLOAD ->
-LED1 -> Q1.D`, `Q1.S -> GND`, and `CONTROL_INPUT -> GATE_DRIVE -> Q1.G`, with
-`RPD` from the gate to ground. Stable logical nets are `LOAD_SUPPLY`,
-`CONTROL_INPUT`, `GATE_DRIVE`, `GATE`, `LOAD_NODE`, `DRAIN`, and `GND`; stable
-physical pads are `Q1.G`, `Q1.D`, and `Q1.S`.
+LED1 -> Q1.D`, `Q1.S -> GND`, and external control infrastructure -> `J2.1` ->
+the real board gate net -> `Q1.G`, with `RPD` from that same gate net to ground.
+The command switch is outside the physical-board boundary, so `J2.1` is the
+board-side commanded voltage. Stable logical nets are `LOAD_SUPPLY`,
+`CONTROL_INPUT`, `LOAD_NODE`, `DRAIN`, and `GND`; `J2.1`, `RPD.1`, and `Q1.G`
+share `CONTROL_INPUT`, and stable physical pads remain `Q1.G`, `Q1.D`, and
+`Q1.S`. No TP1/TP2 pseudo-headers are generated.
 
 At the CircuitJS binding boundary, `NMosfetElm`/`MosfetElm` post order is
 permanently documented as post 0 = gate, post 1 = source, and post 2 = drain.
@@ -1090,7 +1093,9 @@ The physical layer adds typed NMOS specification, TO-92-style G/D/S package,
 installed/loose renderer and probe target, private original-fault identity,
 replaceable Q1 slot, and a catalog that allocates a distinct live
 `NMosfetElm`. The one-sided PCB layout uses the registered provider for Q1
-footprint geometry, pads, keepout, and routing parity. `NMOS_LOW_SIDE_SWITCH`
+footprint geometry, pads, keepout, and routing parity; visible
+`CONTROL_INPUT` copper branches from J2.1 to RPD.1 and Q1.G on the compact
+one-sided board. `NMOS_LOW_SIDE_SWITCH`
 is appended to Quick Play at index 5 with the validated normal-player seed
 envelope `{0, 1, 2}` mapping naturally to D-S open, D-S short, and gate open.
 Complaints remain symptom-only: controlled load does not turn on, or remains on

@@ -13,14 +13,15 @@ final class NmosLowSideSwitchGeneratedBoardValidator implements GeneratedBoardVa
             throw new IllegalStateException("NMOS binding exposed a body terminal");
         requirePadNet(instance, "J1.1", "LOAD_SUPPLY");
         requirePadNet(instance, "J2.1", "CONTROL_INPUT");
-        requirePadNet(instance, "TP1.1", "GATE_DRIVE");
-        requirePadNet(instance, "RPD.1", "GATE");
-        requirePadNet(instance, "Q1.G", "GATE");
+        requirePadNet(instance, "RPD.1", "CONTROL_INPUT");
+        requirePadNet(instance, "Q1.G", "CONTROL_INPUT");
         requirePadNet(instance, "Q1.D", "DRAIN");
         requirePadNet(instance, "Q1.S", "GND");
         if (powerState == BoardPowerState.UNPOWERED) {
             if (Math.abs(loadCurrent(instance)) > .000001 ||
-                    Math.abs(gatePullDown(instance).getCurrent()) > .000001)
+                    Math.abs(gatePullDown(instance).getCurrent()) > .000001 ||
+                    Math.abs(controlVoltage(instance)) > .1 ||
+                    Math.abs(voltage(instance, "RPD.1") - voltage(instance, "RPD.2")) > .1)
                 throw new IllegalStateException("Unpowered NMOS board has current");
             return;
         }
@@ -35,7 +36,7 @@ final class NmosLowSideSwitchGeneratedBoardValidator implements GeneratedBoardVa
         double vgs = gateSourceVoltage(instance);
         double vds = drainSourceVoltage(instance);
         double supply = voltage(instance, "J1.1") - voltage(instance, "J1.2");
-        double control = voltage(instance, "J2.1") - voltage(instance, "J2.2");
+        double control = controlVoltage(instance);
         return load >= MIN_LOAD_CURRENT && mosfet >= MIN_LOAD_CURRENT && led >= .005 &&
             Math.abs(load - led) < .0005 && Math.abs(load - mosfet) < .002 &&
             vgs > 3 && vds < 1.0 && supply > 4 && control > 3 && gateCurrent(instance) < 1e-9;
@@ -70,6 +71,9 @@ final class NmosLowSideSwitchGeneratedBoardValidator implements GeneratedBoardVa
     }
     static double boardGateVoltage(GeneratedBoardInstance instance) {
         return voltage(instance, "Q1.G") - voltage(instance, "Q1.S");
+    }
+    static double controlVoltage(GeneratedBoardInstance instance) {
+        return voltage(instance, "J2.1") - voltage(instance, "J2.2");
     }
     static double drainSourceVoltage(GeneratedBoardInstance instance) {
         NMosfetElm q = mosfet(instance);
