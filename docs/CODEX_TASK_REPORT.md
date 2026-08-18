@@ -177,3 +177,76 @@ commit message is:
 
 The latest user instruction authorizes pushing this one correction commit after
 the final checks; no further milestone work is permitted in this task.
+
+## Task 37 correction — NPN validation purity and meter stability
+
+This section records the accepted bounded correction. It remains Task 37-only;
+Task 38/NMOS was not started.
+
+### Root causes and architectural correction
+
+NPN fault validation and scenario compatibility exercised the real control
+switch, but compatibility and the fault validator could leave the command in
+the last tested state. Candidate-order evaluation therefore leaked a control
+condition into the selected challenge. The repair validator already restored
+its command on its normal path, but its early exits and all related validation
+paths needed the same finally-safe discipline.
+
+The correction snapshots the command in the NPN compatibility, fault, and
+repair validators, runs real CircuitJS ON/OFF checks, and restores the exact
+prior command in nested `finally` blocks. `CirSim` now exposes a narrow
+observational-validation transaction that suppresses only intermediate
+`needAnalyze()` instrument topology refreshes while those checks run. The
+selected scenario has a deliberate presentation boundary: not-switching
+establishes commanded ON/high, while stuck-active establishes commanded
+OFF/low. Compatible candidates and developer-visible compatible IDs are sorted
+by stable scenario ID, so reversing catalog insertion order does not change
+the result.
+
+The meter flicker root cause was the combination of `needAnalyze()` clearing
+DC mode to `--- V` and temporary active-measurement cleanup unconditionally
+scheduling generated-board verification. That verification re-entered NPN
+repair validation, which toggled the control and fed back into measurement
+refresh. Intermediate refreshes are now suppressed only inside the explicit
+validation transaction, and a temporary measurement that has restored its own
+overlay no longer creates a new challenge verification. Already-pending
+verification caused by a real board or power mutation remains pending; normal
+power, probe, and topology changes still refresh the instrument.
+
+### Focused validation evidence
+
+- JDK 8/GWT production build passed all five permutations and linking with
+  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`.
+- Final NPN matrix passed `12/12` for seeds 0, 2, and 3 crossed with
+  `TRANSISTOR_CE_OPEN`, `TRANSISTOR_CE_SHORT`, `BASE_RESISTOR_OPEN`, and
+  `LOAD_PATH_OPEN`; natural NPN seeds 0–3 also passed.
+- NPN developer verification now checks compatibility state before/after,
+  reversed candidate order, repeated compatibility idempotence across solver
+  elements, command, power, overlay, physical slots, and fault application,
+  deliberate complaint presentation, real DC control/collector readings,
+  measurement counts, analysis counts, reverification counts, and placeholder
+  display transitions.
+- LED stable DC, RC live DC across a real power transition, Quick Play, diode,
+  parallel, architecture, layout, and stored-energy routes passed through the
+  in-app Browser. Renderer-boundary verification passed.
+- Visible normal-player Browser evidence shows stationary NPN control probes at
+  `5 V` before and after a 3.5-second wait, then a stationary collector probe at
+  `4.188 V` before and after a 3.5-second wait in the final primary pass; no
+  placeholder appeared after the probes were valid. The preserved verifier
+  captures are:
+  `docs/task-evidence/task-37-correction/npn-stable-control-after-probes.png`,
+  `npn-stable-control-after-wait.png`, and
+  `npn-stable-collector-after-wait.png`.
+- `git diff --check` passed. The standalone
+  `scripts/verify-browser.ps1 -NpnNatural -Seeds 0 -TimeoutSeconds 30` harness
+  did not run its route because its Edge process query failed with WMI/CIM
+  `Access denied`; it is recorded as unavailable, not as a pass. The existing
+  local preview and visible in-app Browser were used for route execution.
+
+### Reviewer disposition
+
+Coder validation is complete. The fresh independent reviewer inspected the
+actual diff and returned `PASS`; the primary architect independently rebuilt
+the production bundle, reran the visible in-app Browser matrix, confirmed the
+normal-player +5V/stable-meter evidence, and returned `FINAL PASS`. The
+correction is ready for its single Task 37 commit and the user-authorized push.

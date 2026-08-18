@@ -29,6 +29,8 @@ class InstrumentController {
     private InstrumentModeStrategy activeStrategy;
     private ProbeTarget redProbe;
     private ProbeTarget blackProbe;
+    private int dcVoltagePlaceholderDisplayCount;
+    private int dcVoltageDisplayChangeCount;
 
     InstrumentController(final CirSim sim, VerticalPanel panel) {
         this.sim = sim;
@@ -155,6 +157,14 @@ class InstrumentController {
 
     int getDcVoltageMeasurementCountForDeveloperVerification() {
         return getModeState("DC_VOLTAGE").getMeasurementCount();
+    }
+
+    int getDcVoltagePlaceholderDisplayCountForDeveloperVerification() {
+        return dcVoltagePlaceholderDisplayCount;
+    }
+
+    int getDcVoltageDisplayChangeCountForDeveloperVerification() {
+        return dcVoltageDisplayChangeCount;
     }
 
     boolean isResistanceRefreshPendingForDeveloperVerification() {
@@ -332,6 +342,14 @@ class InstrumentController {
     }
 
     void setInstrumentDisplayForStrategy(String text) {
+        if (activeStrategy.getId().equals("DC_VOLTAGE")) {
+            String prior = readingLabel.getText();
+            if (!text.equals(prior)) {
+                dcVoltageDisplayChangeCount++;
+                if ("--- V".equals(text))
+                    dcVoltagePlaceholderDisplayCount++;
+            }
+        }
         readingLabel.setText(text);
     }
 

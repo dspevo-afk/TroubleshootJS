@@ -709,8 +709,8 @@ result is recorded below.
 ## Task 37 — NPN Low-Side Switch Family
 
 **Status:** `[x]` Complete — primary architect `FINAL PASS` after the
-silkscreen/state-preservation post-review correction; Task 38 is next eligible
-and has not been started
+silkscreen/state-preservation and validation-purity/meter-stability corrections;
+Task 38 is next eligible and has not been started
 
 ### Goals
 
@@ -747,9 +747,10 @@ board/tray overlap and all existing fixed/procedural layouts were corrected;
 the NPN verifier proves exact parity with the registered TO-92 footprint.
 
 Task 37 passed the bounded coder/reviewer protocol, final JDK 8/GWT build,
-post-review correction, and the 16/16 forced NPN seed/fault verification
-matrix. The correction also proves natural ordinary-generator reachability for
-NPN seeds 0–3, preserves the legacy families' `{0, 2, 3}` envelope, resolves
+post-review corrections, and the 12/12 forced NPN seed/fault verification
+matrix for normal-player seeds 0, 2, and 3. The correction also proves natural
+ordinary-generator reachability for NPN seeds 0–3, preserves the legacy
+families' `{0, 2, 3}` envelope, resolves
 each connector's authoritative positive nameplate and `GND` return label,
 removes the old ground detour, rejects route overlap/self-intersection,
 restores prior commanded state after instantaneous checks, and keeps original
@@ -758,12 +759,15 @@ layout checks, Quick Play, RC/stored-energy, and LED/diode/parallel
 regressions remain passing. Visible in-app Browser evidence is recorded under
 `docs/task-evidence/task-37-correction/`.
 
-The final bounded correction strengthens the acceptance proof without changing
+The final bounded corrections strengthen the acceptance proof without changing
 the NPN family architecture: generated seed 0/1/2/3 raw and rendered
-silkscreen text is compared with its physical power-input nameplates, and
+silkscreen text is compared with its physical power-input nameplates,
 wrong/correct CE-open and CE-short status checks compare live CircuitJS state
-before and after restoration. The correction is accepted only after fresh
-independent review; Task 38 remains unstarted.
+before and after restoration, and scenario/fault/repair validation uses a
+solver-backed observational boundary with deliberate NPN presentation state.
+The DC meter verifier covers stable NPN control/collector readings and the
+cross-family LED/RC paths without placeholder flicker. Fresh independent review
+passed; Task 38 remains unstarted.
 
 ---
 

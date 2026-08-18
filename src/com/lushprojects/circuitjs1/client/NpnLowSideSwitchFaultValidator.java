@@ -10,30 +10,42 @@ final class NpnLowSideSwitchFaultValidator implements GeneratedFaultValidator {
             throw new IllegalStateException("NPN fault validation requires powered, untouched board");
         NpnLowSideSwitchFamilyState state = state(instance);
         GeneratedFaultType type = instance.getFaultBinding().getFault().getType();
-        if (type == GeneratedFaultType.TRANSISTOR_CE_SHORT) {
-            state.setCommandedOn(CircuitElm.sim, false);
-            if (NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance) ||
-                    NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .005 ||
-                    NpnLowSideSwitchGeneratedBoardValidator.collectorVoltage(instance) > 1.0)
-                throw new IllegalStateException("NPN C-E short did not create stuck-active low-control behavior");
-            state.setCommandedOn(CircuitElm.sim, true);
-            return;
+        CirSim sim = CircuitElm.sim;
+        boolean priorCommandedOn = state.isCommandedOn();
+        if (sim != null)
+            sim.beginObservationalValidation();
+        try {
+            if (type == GeneratedFaultType.TRANSISTOR_CE_SHORT) {
+                state.setCommandedOn(sim, false);
+                if (NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance) ||
+                        NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .005 ||
+                        NpnLowSideSwitchGeneratedBoardValidator.collectorVoltage(instance) > 1.0)
+                    throw new IllegalStateException("NPN C-E short did not create stuck-active low-control behavior");
+                return;
+            }
+            state.setCommandedOn(sim, true);
+            double load = NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance);
+            double base = NpnLowSideSwitchGeneratedBoardValidator.baseCurrent(instance);
+            if (load > .000001)
+                throw new IllegalStateException("NPN open fault still drives the load");
+            if (type == GeneratedFaultType.TRANSISTOR_CE_OPEN && base < .00002)
+                throw new IllegalStateException("NPN C-E open fault lost independent base drive");
+            if (type == GeneratedFaultType.BASE_RESISTOR_OPEN && base > .000001)
+                throw new IllegalStateException("Base-path open fault still drives base");
+            if (type == GeneratedFaultType.LOAD_PATH_OPEN && base < .00002)
+                throw new IllegalStateException("Load-path open masquerades as a base fault");
+            if (type != GeneratedFaultType.TRANSISTOR_CE_OPEN &&
+                    type != GeneratedFaultType.BASE_RESISTOR_OPEN &&
+                    type != GeneratedFaultType.LOAD_PATH_OPEN)
+                throw new IllegalStateException("Unsupported NPN fault type: " + type);
+        } finally {
+            try {
+                state.setCommandedOn(sim, priorCommandedOn);
+            } finally {
+                if (sim != null)
+                    sim.endObservationalValidation();
+            }
         }
-        state.setCommandedOn(CircuitElm.sim, true);
-        double load = NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance);
-        double base = NpnLowSideSwitchGeneratedBoardValidator.baseCurrent(instance);
-        if (load > .000001)
-            throw new IllegalStateException("NPN open fault still drives the load");
-        if (type == GeneratedFaultType.TRANSISTOR_CE_OPEN && base < .00002)
-            throw new IllegalStateException("NPN C-E open fault lost independent base drive");
-        if (type == GeneratedFaultType.BASE_RESISTOR_OPEN && base > .000001)
-            throw new IllegalStateException("Base-path open fault still drives base");
-        if (type == GeneratedFaultType.LOAD_PATH_OPEN && base < .00002)
-            throw new IllegalStateException("Load-path open masquerades as a base fault");
-        if (type != GeneratedFaultType.TRANSISTOR_CE_OPEN &&
-                type != GeneratedFaultType.BASE_RESISTOR_OPEN &&
-                type != GeneratedFaultType.LOAD_PATH_OPEN)
-            throw new IllegalStateException("Unsupported NPN fault type: " + type);
     }
 
     private NpnLowSideSwitchFamilyState state(GeneratedBoardInstance instance) {

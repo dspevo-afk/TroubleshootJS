@@ -66,12 +66,12 @@ final class GeneratedScenarioLibrary {
             "NPN_LOAD_NOT_SWITCHING", "CONTROLLED_LOAD_DOES_NOT_SWITCH_ON",
             "The controlled load does not switch on.",
             GeneratedObservedBehavior.NPN_LOAD_NOT_SWITCHING,
-            new NpnLoadCompatibility(false)));
+            new NpnLoadCompatibility(false), new NpnLoadPresentation()));
         candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
             "NPN_LOAD_STUCK_ACTIVE", "CONTROLLED_LOAD_STAYS_ACTIVE",
             "The controlled load stays active when control is low.",
             GeneratedObservedBehavior.NPN_LOAD_STUCK_ACTIVE,
-            new NpnLoadCompatibility(true)));
+            new NpnLoadCompatibility(true), new NpnLoadPresentation()));
         return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
     }
 
@@ -187,16 +187,38 @@ final class GeneratedScenarioLibrary {
             NpnLowSideSwitchFamilyState state =
                 (NpnLowSideSwitchFamilyState) instance.getFamilyState();
             boolean priorCommandedOn = state.isCommandedOn();
+            CirSim sim = CircuitElm.sim;
+            if (sim != null)
+                sim.beginObservationalValidation();
             try {
                 if (stuckActive) {
-                    state.setCommandedOn(CircuitElm.sim, false);
+                    state.setCommandedOn(sim, false);
                     return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005;
                 }
-                state.setCommandedOn(CircuitElm.sim, true);
+                state.setCommandedOn(sim, true);
                 return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001;
             } finally {
-                state.setCommandedOn(CircuitElm.sim, priorCommandedOn);
+                try {
+                    state.setCommandedOn(sim, priorCommandedOn);
+                } finally {
+                    if (sim != null)
+                        sim.endObservationalValidation();
+                }
             }
+        }
+    }
+
+    private static class NpnLoadPresentation
+            implements GeneratedScenarioPresentation<GeneratedObservedBehavior> {
+        public void present(CirSim sim, GeneratedBoardInstance instance,
+                GeneratedObservedBehavior observedBehavior) {
+            if (!(instance.getFamilyState() instanceof NpnLowSideSwitchFamilyState) ||
+                    (observedBehavior != GeneratedObservedBehavior.NPN_LOAD_NOT_SWITCHING &&
+                        observedBehavior != GeneratedObservedBehavior.NPN_LOAD_STUCK_ACTIVE))
+                throw new IllegalStateException("NPN scenario presentation has no family state");
+            boolean commandedOn = observedBehavior == GeneratedObservedBehavior.NPN_LOAD_NOT_SWITCHING;
+            ((NpnLowSideSwitchFamilyState) instance.getFamilyState()).setCommandedOn(sim,
+                commandedOn);
         }
     }
 }

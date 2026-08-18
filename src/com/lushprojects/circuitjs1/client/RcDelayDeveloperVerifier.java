@@ -135,6 +135,7 @@ final class RcDelayDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.POWERED);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
             "RC correct electrical replacement did not pass the real transient profile");
+        verifyLiveDcDisplayDuringPowerTransition(sim);
         require(!sim.activeMeasurementOverlay && sim.getBoardModificationController().isFullyRestored(),
             "RC verification contaminated a meter overlay or board modification state");
         sim.setCircuitTitle("RC delay verification passed");
@@ -142,6 +143,51 @@ final class RcDelayDeveloperVerifier {
 
     private static boolean finite(double value) {
         return !Double.isNaN(value) && !Double.isInfinite(value);
+    }
+
+    private static void verifyLiveDcDisplayDuringPowerTransition(CirSim sim) {
+        require(sim.pcbWorkbenchController != null,
+            "RC live DC verification has no PCB renderer");
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        ProbeTarget output = probeForPad(sim, renderer, "J2.1");
+        ProbeTarget ground = probeForPad(sim, renderer, "J2.2");
+        sim.instrumentController.setDcVoltageProbesForDeveloperVerification(output, ground);
+        double poweredVoltage = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+        require(finite(poweredVoltage) &&
+                !"--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "RC live DC path did not produce an initial powered display");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        double unpoweredVoltage = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+        require(finite(unpoweredVoltage) && Math.abs(unpoweredVoltage - poweredVoltage) > .001,
+            "RC live DC path did not show a real voltage change on power-off");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.updateCircuit();
+        double firstPoweredVoltage = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+        require(finite(firstPoweredVoltage) &&
+                !"--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                Math.abs(firstPoweredVoltage - unpoweredVoltage) > .001,
+            "RC live DC path did not update to the powered solver value");
+        int placeholdersAfterPowerOn = sim.instrumentController
+            .getDcVoltagePlaceholderDisplayCountForDeveloperVerification();
+        for (int cycle = 0; cycle < 8; cycle++) {
+            sim.updateCircuit();
+            require(!"--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                    finite(sim.instrumentController.getLatestDcVoltageForDeveloperVerification()),
+                "RC live DC display entered a placeholder during cycle " + cycle);
+        }
+        require(sim.instrumentController.getDcVoltagePlaceholderDisplayCountForDeveloperVerification() ==
+                placeholdersAfterPowerOn,
+            "RC live DC display flickered after the real power transition settled");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static ProbeTarget probeForPad(CirSim sim, PcbWorkbenchRenderer renderer,
+            String padId) {
+        Point point = renderer.getPadPoint(padId);
+        ProbeTarget target = sim.pcbWorkbenchController.findProbeTarget(point.x, point.y);
+        require(target != null && target.isValid(), "RC probe target was not valid: " + padId);
+        return target;
     }
 
     private static void requirePhysicalNameplate(PhysicalCapacitorPart part) {

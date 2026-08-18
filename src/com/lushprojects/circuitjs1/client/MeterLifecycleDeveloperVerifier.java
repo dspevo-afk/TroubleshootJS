@@ -8,6 +8,7 @@ class MeterLifecycleDeveloperVerifier {
         require(instance != null && sim.getGeneratedChallengeController() != null &&
             sim.getGeneratedChallengeController().isReady(), "Meter verification requires ready challenge");
         installCorrectReplacement(sim, instance);
+        verifyStableLedDc(sim);
         verifyLiftedLeadResistance(sim, instance, "R1.2");
         verifyLiftedLeadResistance(sim, instance, "R1.1");
         verifyRetainedLiftedLeadVoltage(sim, instance);
@@ -263,6 +264,38 @@ class MeterLifecycleDeveloperVerifier {
     private static String catalogId(GeneratedBoardInstance instance) {
         return "R_CATALOG_" + (long) StandardPhysicalDefinitionProviders.RESISTOR.require(
             instance.getPhysicalSpecifications(), "R1").getNominalResistanceOhms();
+    }
+
+    private static void verifyStableLedDc(CirSim sim) {
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        ProbeTarget vin = hitPad(sim, renderer, "J1.1");
+        ProbeTarget ground = hitPad(sim, renderer, "J1.2");
+        sim.instrumentController.setDcVoltageProbesForDeveloperVerification(vin, ground);
+        String initialText = sim.instrumentController.getReadingForDeveloperVerification();
+        double initialVoltage = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+        require(!"--- V".equals(initialText) && finite(initialVoltage),
+            "LED stable DC path did not produce a real initial display");
+        int placeholders = sim.instrumentController
+            .getDcVoltagePlaceholderDisplayCountForDeveloperVerification();
+        int measurements = sim.instrumentController
+            .getDcVoltageMeasurementCountForDeveloperVerification();
+        for (int cycle = 0; cycle < 12; cycle++) {
+            sim.updateCircuit();
+            require(!"--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                    finite(sim.instrumentController.getLatestDcVoltageForDeveloperVerification()) &&
+                    Math.abs(sim.instrumentController.getLatestDcVoltageForDeveloperVerification() -
+                        initialVoltage) < .0001,
+                "LED stable DC display changed without a real voltage change at cycle " + cycle);
+        }
+        require(sim.instrumentController.getDcVoltagePlaceholderDisplayCountForDeveloperVerification() ==
+                placeholders && sim.instrumentController.getDcVoltageMeasurementCountForDeveloperVerification() ==
+                    measurements,
+            "LED stable DC path flickered or stopped receiving ordinary measurements");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static boolean finite(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value);
     }
 
     private static ReplaceableComponentSlot resistorSlot(GeneratedBoardInstance instance) {

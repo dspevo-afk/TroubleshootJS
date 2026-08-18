@@ -57,6 +57,9 @@ final class NpnLowSideSwitchDeveloperVerifier {
         require(challenge.getScenario() != null && challenge.getScenario().isCompatible(instance,
             sim.getBoardModificationController(), BoardPowerState.POWERED),
             "NPN complaint is not backed by the observed solved behavior");
+        verifyScenarioPresentation(instance, challenge);
+        verifyScenarioCompatibilityPurity(sim, instance, challenge);
+        verifyStableDcMeasurements(sim, instance, challenge);
         verifyHealthyReference(instance, challenge, sim);
         verifyStatePreservingChecks(instance, challenge, sim);
         verifyPhysicalRepairLifecycle(instance, challenge, sim);
@@ -288,6 +291,205 @@ final class NpnLowSideSwitchDeveloperVerifier {
                 " ledI=" + ledCurrent + " baseI=" + baseCurrent + " collectorI=" +
                 collectorCurrent + " power=" + calculatedPower + "/" + solverPower +
                 " rating=" + loadNameplate.getRatedWattage());
+    }
+
+    private static void verifyScenarioPresentation(GeneratedBoardInstance instance,
+            GeneratedChallengeController challenge) {
+        GeneratedObservedBehavior observed = challenge.getScenario().getObservedBehavior();
+        boolean expectedOn = observed == GeneratedObservedBehavior.NPN_LOAD_NOT_SWITCHING;
+        require(observed == GeneratedObservedBehavior.NPN_LOAD_NOT_SWITCHING ||
+                observed == GeneratedObservedBehavior.NPN_LOAD_STUCK_ACTIVE,
+            "NPN challenge selected a non-NPN presentation behavior");
+        require(familyState(instance).isCommandedOn() == expectedOn,
+            "NPN selected complaint did not establish its deliberate command presentation");
+        double control = NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "J2.1") -
+            NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "J2.2");
+        double load = NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance);
+        if (expectedOn)
+            require(control > 3 && load < .000001,
+                "NPN not-switching presentation is not commanded ON/high with an inactive load");
+        else
+            require(control < 1 && load > .005,
+                "NPN stuck-active presentation is not commanded OFF/low with an active load");
+    }
+
+    private static void verifyScenarioCompatibilityPurity(CirSim sim,
+            GeneratedBoardInstance instance, GeneratedChallengeController challenge) {
+        GeneratedScenarioCatalog<GeneratedObservedBehavior> catalog =
+            challenge.getDefinition().getScenarioCatalog();
+        GeneratedScenarioCatalog<GeneratedObservedBehavior> reversed =
+            catalog.reversedForDeveloperVerification();
+        String beforeCircuit = simulationTopologyFingerprint(sim);
+        String beforePhysical = physicalStateFingerprint(instance);
+        String beforeModifications = modificationStateFingerprint(sim);
+        boolean beforeCommand = familyState(instance).isCommandedOn();
+        BoardPowerState beforePower = sim.getBoardPowerController().getState();
+        boolean beforeOverlay = sim.activeMeasurementOverlay;
+        boolean beforeFaultApplied = instance.getFaultBinding().isApplied();
+        Vector<String> expected = catalog.getCompatibleScenarioIdsForDeveloperVerification(
+            instance, sim.getBoardModificationController(), beforePower);
+        require(!expected.isEmpty(), "NPN compatibility did not produce a compatible set");
+        requireSnapshotUnchanged(sim, instance, beforeCircuit, beforePhysical, beforeModifications,
+            beforeCommand,
+            beforePower, beforeOverlay, beforeFaultApplied,
+            "first NPN compatibility evaluation");
+        Vector<String> reversedSet = reversed.getCompatibleScenarioIdsForDeveloperVerification(
+            instance, sim.getBoardModificationController(), beforePower);
+        require(expected.equals(reversedSet),
+            "NPN compatible scenario set depended on candidate order");
+        GeneratedScenario<GeneratedObservedBehavior> first = catalog.select(
+            challenge.getDefinition().getSelectionSeed(), instance,
+            sim.getBoardModificationController(), beforePower);
+        requireSnapshotUnchanged(sim, instance, beforeCircuit, beforePhysical, beforeModifications,
+            beforeCommand,
+            beforePower, beforeOverlay, beforeFaultApplied,
+            "NPN ordered compatibility selection");
+        GeneratedScenario<GeneratedObservedBehavior> second = reversed.select(
+            challenge.getDefinition().getSelectionSeed(), instance,
+            sim.getBoardModificationController(), beforePower);
+        require(first.getScenarioId().equals(second.getScenarioId()),
+            "NPN selected scenario depended on candidate order");
+        requireSnapshotUnchanged(sim, instance, beforeCircuit, beforePhysical, beforeModifications,
+            beforeCommand,
+            beforePower, beforeOverlay, beforeFaultApplied,
+            "NPN reversed compatibility selection");
+        Vector<String> repeated = catalog.getCompatibleScenarioIdsForDeveloperVerification(
+            instance, sim.getBoardModificationController(), beforePower);
+        require(expected.equals(repeated), "NPN repeated compatibility was not idempotent");
+        requireSnapshotUnchanged(sim, instance, beforeCircuit, beforePhysical, beforeModifications,
+            beforeCommand,
+            beforePower, beforeOverlay, beforeFaultApplied,
+            "repeated NPN compatibility evaluation");
+        require(!sim.isObservationalValidationActiveForDeveloperVerification(),
+            "NPN compatibility left an observational transaction open");
+    }
+
+    private static void verifyStableDcMeasurements(CirSim sim, GeneratedBoardInstance instance,
+            GeneratedChallengeController challenge) {
+        require(sim.pcbWorkbenchController != null,
+            "NPN DC stability verification has no PCB renderer");
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        ProbeTarget ground = probeForPad(sim, renderer, "J2.2");
+        ProbeTarget control = probeForPad(sim, renderer, "J2.1");
+        ProbeTarget collector = probeForPad(sim, renderer, "Q1.C");
+        sim.instrumentController.setDcVoltageProbesForDeveloperVerification(control, ground);
+        requireStableDcSeries(sim, challenge, familyState(instance).isCommandedOn(),
+            "NPN control-to-ground");
+        sim.instrumentController.setDcVoltageProbesForDeveloperVerification(collector, ground);
+        requireStableDcSeries(sim, challenge, familyState(instance).isCommandedOn(),
+            "NPN collector-to-ground");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void requireStableDcSeries(CirSim sim,
+            GeneratedChallengeController challenge, boolean expectedCommand, String label) {
+        String initialText = sim.instrumentController.getReadingForDeveloperVerification();
+        double initialVoltage = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+        require(!"--- V".equals(initialText) && finite(initialVoltage),
+            label + " did not produce an initial real DC display");
+        int placeholderBefore = sim.instrumentController
+            .getDcVoltagePlaceholderDisplayCountForDeveloperVerification();
+        int measurementBefore = sim.instrumentController
+            .getDcVoltageMeasurementCountForDeveloperVerification();
+        int analysisBefore = sim.getAnalysisCountForDeveloperVerification();
+        int verificationBefore = sim.getGeneratedVerificationCountForDeveloperVerification();
+        boolean commandBefore = expectedCommand;
+        GeneratedRepairStatus status = challenge.getRepairStatus();
+        require(status != GeneratedRepairStatus.CORRECTLY_RESTORED,
+            label + " unexpectedly reported a faulted board as repaired");
+        require(familyState(sim.getGeneratedBoardInstance()).isCommandedOn() == commandBefore,
+            label + " repair validation changed the live command");
+        require(sim.instrumentController.getReadingForDeveloperVerification().equals(initialText) &&
+                sim.instrumentController.getDcVoltagePlaceholderDisplayCountForDeveloperVerification() ==
+                    placeholderBefore &&
+                sim.instrumentController.getDcVoltageMeasurementCountForDeveloperVerification() ==
+                    measurementBefore &&
+                sim.getGeneratedVerificationCountForDeveloperVerification() == verificationBefore,
+            label + " internal validation changed the stable instrument display or count");
+        require(sim.getAnalysisCountForDeveloperVerification() > analysisBefore &&
+                !sim.isObservationalValidationActiveForDeveloperVerification(),
+            label + " did not complete its observational analysis transaction");
+        sim.updateCircuit();
+        double settledVoltage = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+        int settledPlaceholders = sim.instrumentController
+            .getDcVoltagePlaceholderDisplayCountForDeveloperVerification();
+        for (int cycle = 0; cycle < 12; cycle++) {
+            sim.updateCircuit();
+            String text = sim.instrumentController.getReadingForDeveloperVerification();
+            double voltage = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+            require(!"--- V".equals(text) && finite(voltage) &&
+                    Math.abs(voltage - settledVoltage) < .0001,
+                label + " flickered or changed without a real voltage change at cycle " + cycle);
+        }
+        require(sim.instrumentController.getDcVoltagePlaceholderDisplayCountForDeveloperVerification() ==
+                settledPlaceholders,
+            label + " entered the placeholder display during ordinary stable updates");
+    }
+
+    private static ProbeTarget probeForPad(CirSim sim, PcbWorkbenchRenderer renderer,
+            String padId) {
+        Point point = renderer.getPadPoint(padId);
+        ProbeTarget target = sim.pcbWorkbenchController.findProbeTarget(point.x, point.y);
+        require(target != null && target.isValid(), "NPN probe target was not valid: " + padId);
+        return target;
+    }
+
+    private static boolean finite(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value);
+    }
+
+    private static String physicalStateFingerprint(GeneratedBoardInstance instance) {
+        String result = "";
+        for (PhysicalBoardSlot slot : instance.getPhysicalBoardRuntime().getSlots()) {
+            PhysicalPart<?> part = slot.getInstalledPart();
+            result += slot.getId() + "=" + (part == null ? "" : part.getId()) + ";";
+        }
+        for (PhysicalPart<?> part : instance.getPhysicalBoardRuntime().getPhysicalParts())
+            result += part.getId() + "@installed=" + part.isInstalled() + "@faulted=" +
+                part.isFaulted() + ";";
+        return result;
+    }
+
+    private static void requireSnapshotUnchanged(CirSim sim, GeneratedBoardInstance instance,
+            String circuit, String physical, String modifications, boolean command,
+            BoardPowerState power,
+            boolean overlay, boolean faultApplied, String operation) {
+        require(circuit.equals(simulationTopologyFingerprint(sim)),
+            operation + " changed topology/elements");
+        require(physical.equals(physicalStateFingerprint(instance)),
+            operation + " changed physical parts");
+        require(modifications.equals(modificationStateFingerprint(sim)),
+            operation + " changed board modifications");
+        require(familyState(instance).isCommandedOn() == command,
+            operation + " changed the command");
+        require(sim.getBoardPowerController().getState() == power,
+            operation + " changed board power");
+        require(sim.activeMeasurementOverlay == overlay,
+            operation + " changed the active measurement overlay");
+        require(instance.getFaultBinding().isApplied() == faultApplied,
+            operation + " changed fault application");
+    }
+
+    private static String modificationStateFingerprint(CirSim sim) {
+        String result = "";
+        for (String componentId : new String[] { "Q1", "RB", "RLOAD" })
+            result += componentId + "=" + sim.getBoardModificationController()
+                .getComponentState(componentId) + ";";
+        return result;
+    }
+
+    private static String simulationTopologyFingerprint(CirSim sim) {
+        String result = "";
+        for (int index = 0; index < sim.elmList.size(); index++) {
+            CircuitElm element = sim.getElm(index);
+            result += index + ":" + System.identityHashCode(element) + ":" +
+                element.getClass().getName() + ":" + element.x + ":" + element.y + ":" +
+                element.x2 + ":" + element.y2;
+            if (element instanceof SwitchElm)
+                result += ":switch=" + ((SwitchElm) element).position;
+            result += ";";
+        }
+        return result;
     }
 
     private static void verifySolvedFault(GeneratedBoardInstance instance,

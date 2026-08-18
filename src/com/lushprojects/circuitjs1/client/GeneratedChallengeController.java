@@ -64,6 +64,7 @@ class GeneratedChallengeController {
             lifecycleEvidence.selectedFaultValidated = true;
             scenario = definition.getScenarioCatalog().select(definition.getSelectionSeed(), instance,
                 sim.getBoardModificationController(), sim.getBoardPowerController().getState());
+            scenario.present(sim, instance);
             lifecycleEvidence.scenarioCompatibilityValidated = true;
             state = GeneratedChallengeState.READY;
             lifecycleEvidence.readyAfterValidation = true;

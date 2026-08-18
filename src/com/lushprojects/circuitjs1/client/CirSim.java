@@ -1846,9 +1846,25 @@ MouseOutHandler, MouseWheelHandler {
     
     void needAnalyze() {
 	analyzeFlag = true;
-	if (instrumentController != null && !activeMeasurementOverlay)
+	if (instrumentController != null && !activeMeasurementOverlay &&
+		observationalValidationDepth == 0)
 	    instrumentController.onCircuitTopologyChanged();
     	repaint();
+    }
+
+    /**
+     * Suppress only intermediate instrument topology refreshes while a
+     * solver-backed validator temporarily exercises a real control. Callers
+     * must pair this with endObservationalValidation() in a finally block.
+     */
+    void beginObservationalValidation() {
+	observationalValidationDepth++;
+    }
+
+    void endObservationalValidation() {
+	if (observationalValidationDepth <= 0)
+	    throw new IllegalStateException("Unbalanced observational validation transaction");
+	observationalValidationDepth--;
     }
     
     Vector<CircuitNode> nodeList;
@@ -2272,6 +2288,7 @@ MouseOutHandler, MouseWheelHandler {
     
     // analyze the circuit when something changes, so it can be simulated
     void analyzeCircuit() {
+	analysisCountForDeveloperVerification++;
 	if (elmList.isEmpty()) {
 	    postDrawList = new Vector<Point>();
 	    badConnectionList = new Vector<Point>();
@@ -4277,6 +4294,11 @@ MouseOutHandler, MouseWheelHandler {
 	GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
 	boolean activeMeasurementOverlay;
+	/* Internal solver-backed checks may toggle real controls, but must not
+	 * publish each temporary topology to a player's instrument display. */
+	int observationalValidationDepth;
+	int analysisCountForDeveloperVerification;
+	int generatedVerificationCountForDeveloperVerification;
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
 	ActiveMeasurementStimulus lastActiveMeasurementStimulus;
@@ -4628,6 +4650,7 @@ MouseOutHandler, MouseWheelHandler {
 	    return;
 	if (activeMeasurementOverlay)
 	    return;
+	generatedVerificationCountForDeveloperVerification++;
 	if (boardPowerController.getState() == BoardPowerState.UNPOWERED &&
 		!boardPowerController.isElectricallyUnpowered())
 	    throw new IllegalStateException("Generated board is logically unpowered without electrical isolation");
@@ -4898,7 +4921,11 @@ MouseOutHandler, MouseWheelHandler {
 		generatedBoardVerificationAnalyzed = true;
 		runGeneratedBoardVerificationIfReady(true);
 	    } else {
-		requestGeneratedBoardVerification();
+		/* The temporary meter graph is gone and no persistent board state
+		 * changed. Do not manufacture a challenge verification here: doing so
+		 * makes an ordinary measurement re-enter repair validation, which may
+		 * exercise a family control and feed back into the meter. A verification
+		 * already requested by a real board/power mutation remains pending. */
 		activeMeasurementOverlay = false;
 	    }
 	    activeMeasurementSolverRestored = isStimulusAbsentFromSolver(stimulus);
@@ -4910,6 +4937,18 @@ MouseOutHandler, MouseWheelHandler {
     boolean isActiveMeasurementSolverRestoredForDeveloperVerification() {
 	return activeMeasurementSolverRestored && lastActiveMeasurementStimulus != null &&
 	    isStimulusAbsentFromSolver(lastActiveMeasurementStimulus);
+    }
+
+    int getAnalysisCountForDeveloperVerification() {
+	return analysisCountForDeveloperVerification;
+    }
+
+    int getGeneratedVerificationCountForDeveloperVerification() {
+	return generatedVerificationCountForDeveloperVerification;
+    }
+
+    boolean isObservationalValidationActiveForDeveloperVerification() {
+	return observationalValidationDepth != 0;
     }
 
     private boolean isStimulusAbsentFromSolver(ActiveMeasurementStimulus stimulus) {

@@ -1003,6 +1003,21 @@ collector voltage around faulted/wrong and correctly repaired status queries
 for both C-E-open commanded-ON and C-E-short commanded-OFF cases. The
 snapshot is intentionally solver-backed; it is not a second bookkeeping model.
 
+The instantaneous NPN fault, scenario, and repair validators share a narrow
+`CirSim` observational-validation depth. While that depth is nonzero,
+`needAnalyze()` still analyzes and solves the real switched graph but does not
+clear the active instrument through an intermediate topology refresh. Each
+validator owns a nested `try/finally` restoration, so candidate evaluation and
+automatic ready-state checks cannot leak a temporary command into the next
+candidate or into the player view. `GeneratedScenarioCatalog` orders compatible
+scenarios by stable scenario ID, and the selected scenario then applies its
+explicit family presentation boundary: NPN not-switching is presented
+commanded ON/high, while NPN stuck-active is presented commanded OFF/low.
+Temporary active-measurement cleanup removes its overlay and solver elements
+without manufacturing a new generated-board verification request when no real
+board mutation is pending; legitimate board, power, and probe changes retain
+their normal refresh/verification behavior.
+
 The parts-tray correction is generic rather than family-specific. Fixed RC,
 seeded LED/diode/parallel, and NPN layouts all call the same tray placement and
 geometry validation seam. The compact-board calculation excludes tray chrome,
@@ -1014,7 +1029,8 @@ ordering. This preserves provider ownership while keeping the tray visible,
 selectable, paginated, and probeable.
 
 Focused Task 37 correction validation covers the JDK 8/GWT production build,
-the four-seed natural NPN envelope, the 16-case forced seed/fault matrix,
+the four-seed natural NPN envelope, the 12-case forced seed/fault matrix for
+normal-player seeds 0, 2, and 3,
 provider/renderer and architecture boundaries, layout determinism/tray
 separation, Quick Play, RC/stored-energy, and LED/diode/parallel regressions.
 Visible in-app Browser evidence is stored under

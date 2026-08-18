@@ -7,20 +7,28 @@ final class NpnLowSideSwitchRepairValidator implements GeneratedRepairValidator 
             boolean activeMeasurementOverlay) {
         NpnLowSideSwitchFamilyState state = state(instance);
         boolean priorCommandedOn = state.isCommandedOn();
+        CirSim sim = CircuitElm.sim;
+        if (sim != null)
+            sim.beginObservationalValidation();
         try {
             if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay ||
                     modifications == null || !modifications.isFullyRestored() ||
                     !allInstalled(instance, modifications))
                 return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-            state.setCommandedOn(CircuitElm.sim, true);
+            state.setCommandedOn(sim, true);
             if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance))
                 return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-            state.setCommandedOn(CircuitElm.sim, false);
+            state.setCommandedOn(sim, false);
             if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance))
                 return GeneratedRepairStatus.DEGRADED_BUT_OPERATING;
             return GeneratedRepairStatus.CORRECTLY_RESTORED;
         } finally {
-            state.setCommandedOn(CircuitElm.sim, priorCommandedOn);
+            try {
+                state.setCommandedOn(sim, priorCommandedOn);
+            } finally {
+                if (sim != null)
+                    sim.endObservationalValidation();
+            }
         }
     }
 
