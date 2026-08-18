@@ -23,6 +23,7 @@ final class QuickPlayDeveloperVerifier {
             instance.getChallengeDefinition().getSelectionSeed(),
             "Quick Play selection was not passed to the deterministic generator");
         verifyDeterministicFamilySelection();
+        verifyNaturalNpnSeedEnvelope();
         require(instance.getFaultBinding().getFault().getType() != GeneratedFaultType.DIODE_SHORT,
             "Quick Play selected the developer-only diode short fault");
         verifyFreshSessionBoundary();
@@ -116,6 +117,32 @@ final class QuickPlayDeveloperVerifier {
                 generated.getSeed() == selection.getSeed() &&
                 generated.getFaultBinding().getFault().getType() != GeneratedFaultType.DIODE_SHORT,
                 "Quick Play family did not generate through its deterministic normal route");
+        }
+    }
+
+    /**
+     * Exercises the ordinary selector/generator boundary.  This intentionally
+     * does not use generateForFaultVerification: the public Quick Play path
+     * must reach the validated NPN envelope through its normal seed.
+     */
+    private static void verifyNaturalNpnSeedEnvelope() {
+        long[] seeds = { 0, 1, 2, 3 };
+        GeneratedFaultType[] faults = {
+            GeneratedFaultType.TRANSISTOR_CE_OPEN,
+            GeneratedFaultType.TRANSISTOR_CE_SHORT,
+            GeneratedFaultType.BASE_RESISTOR_OPEN,
+            GeneratedFaultType.LOAD_PATH_OPEN
+        };
+        for (int index = 0; index < seeds.length; index++) {
+            QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                new long[] { 4, seeds[index] }));
+            QuickPlaySelection selection = selector.select();
+            GeneratedBoardInstance generated = selector.generate(selection);
+            require(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(
+                    selection.getFamilyId()) && selection.getSeed() == seeds[index] &&
+                    generated.getSeed() == seeds[index] && generated.getFaultBinding().getFault()
+                        .getType() == faults[index],
+                "Natural NPN Quick Play seed boundary changed at seed " + seeds[index]);
         }
     }
 

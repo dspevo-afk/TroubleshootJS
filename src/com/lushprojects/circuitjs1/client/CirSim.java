@@ -4535,6 +4535,15 @@ MouseOutHandler, MouseWheelHandler {
 	$doc.documentElement.setAttribute("data-tsj-stress-report", result);
     }-*/;
 
+    void publishNpnElectricalReportForDeveloperVerification(String result) {
+	if (troubleshootNpnVerification)
+	    publishBrowserNpnElectricalReport(result);
+    }
+
+    private static native void publishBrowserNpnElectricalReport(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-npn-electrical-report", result);
+    }-*/;
+
     GeneratedBoardInstance getGeneratedBoardInstance() {
 	return generatedBoardInstance;
     }

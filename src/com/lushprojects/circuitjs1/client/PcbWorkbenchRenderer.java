@@ -295,6 +295,11 @@ class PcbWorkbenchRenderer {
     }
 
     String getPowerInputLabelForDeveloperVerification() { return getPowerInputLabel(); }
+
+    String getRenderedSilkscreenLabelTextForDeveloperVerification(String labelId) {
+        PcbSilkscreenLabel label = layout.getSilkscreenLabel(labelId);
+        return label == null ? null : getPowerInputLabel(label.getTargetPadId(), label.getText());
+    }
     void setSelectedComponentId(String componentId) { selectedComponentId = componentId; }
     String getSelectedComponentId() { return selectedComponentId; }
     void setSelectedPartId(String partId) { selectedPartId = partId; }
@@ -409,8 +414,12 @@ class PcbWorkbenchRenderer {
         Vector<String> powerInputIds = instance.getBoard().getPowerInputIds();
         if (powerInputIds.size() != 1)
             return "VIN";
+        return getPowerInputLabel(powerInputIds.get(0));
+    }
+
+    private String getPowerInputLabel(String powerInputId) {
         PowerInputNameplate nameplate = instance.getPhysicalSpecifications()
-            .getPowerInputNameplate(powerInputIds.get(0));
+            .getPowerInputNameplate(powerInputId);
         return nameplate == null ? "VIN" : nameplate.getDisplayLabel();
     }
 
@@ -420,7 +429,7 @@ class PcbWorkbenchRenderer {
         for (String powerInputId : instance.getBoard().getPowerInputIds()) {
             ExternalBoardPowerInput input = instance.getBoard().getPowerInput(powerInputId);
             if (input.getPositivePadId().equals(padId))
-                return getPowerInputLabel();
+                return getPowerInputLabel(input.getId());
             if (input.getReturnPadId().equals(padId))
                 return "GND";
         }

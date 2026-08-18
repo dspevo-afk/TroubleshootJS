@@ -9,13 +9,18 @@ final class NpnLowSideSwitchRepairValidator implements GeneratedRepairValidator 
                 !modifications.isFullyRestored() || !allInstalled(instance, modifications))
             return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
         NpnLowSideSwitchFamilyState state = state(instance);
-        state.setCommandedOn(CircuitElm.sim, true);
-        if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance))
-            return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-        state.setCommandedOn(CircuitElm.sim, false);
-        if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance))
-            return GeneratedRepairStatus.DEGRADED_BUT_OPERATING;
-        return GeneratedRepairStatus.CORRECTLY_RESTORED;
+        boolean priorCommandedOn = state.isCommandedOn();
+        try {
+            state.setCommandedOn(CircuitElm.sim, true);
+            if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance))
+                return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+            state.setCommandedOn(CircuitElm.sim, false);
+            if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance))
+                return GeneratedRepairStatus.DEGRADED_BUT_OPERATING;
+            return GeneratedRepairStatus.CORRECTLY_RESTORED;
+        } finally {
+            state.setCommandedOn(CircuitElm.sim, priorCommandedOn);
+        }
     }
 
     public boolean isFunctionallyRepaired(GeneratedBoardInstance instance,

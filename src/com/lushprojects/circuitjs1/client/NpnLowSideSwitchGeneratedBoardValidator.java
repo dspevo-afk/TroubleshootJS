@@ -56,6 +56,10 @@ final class NpnLowSideSwitchGeneratedBoardValidator implements GeneratedBoardVal
         return Math.abs(transistor(instance).ic);
     }
 
+    static double ledCurrent(GeneratedBoardInstance instance) {
+        return Math.abs(led(instance).getCurrent());
+    }
+
     static double collectorVoltage(GeneratedBoardInstance instance) {
         return voltage(instance, "Q1.C") - voltage(instance, "Q1.E");
     }

@@ -316,7 +316,8 @@ final class NpnLowSideSwitchGenerator {
             new NpnLowSideSwitchRepairValidator());
         GeneratedScenarioCatalog<GeneratedObservedBehavior> scenarios =
             GeneratedScenarioLibrary.npnLowSideSwitch();
-        PcbBoardLayout layout = NpnLowSideSwitchPcbLayoutFactory.create(board, seed);
+        PcbBoardLayout layout = NpnLowSideSwitchPcbLayoutFactory.create(board, specifications,
+            seed);
         GeneratedChallengeDefinition challenge = new GeneratedChallengeDefinition(
             "NPN_LOW_SIDE_SWITCH_CHALLENGE", FAMILY_ID, TOPOLOGY_VARIANT, seed, scenarios,
             "Repair verified. The controlled load switches normally.", fault, faultBinding,

@@ -829,15 +829,13 @@ No capacitor implementation or Task 36 behavior belongs to this boundary.
 Quick Play is an additive player route selected by `tsjQuickPlay=true`. The
 small `QuickPlaySession` seam owns one `QuickPlaySelection`, and
 `QuickPlaySelector` obtains exactly a family choice and a fresh generator seed
-from its selection source. `QuickPlayFamilyRegistry` was initially the
-normal-player eligibility boundary for `LED_INDICATOR`,
-`DIODE_PROTECTED_INDICATOR`, and `PARALLEL_DUAL_INDICATOR`; Task 36 adds
-`RC_DELAY` through the same registry. It delegates the selected seed (from the
-currently validated `{0, 2, 3}` seed envelope) to the existing deterministic
-family generator; it does not
-randomize topology, values, faults, layout, or measurements itself. Normal
-selection calls the diode generator's normal `generate` path, never the
-developer-only diode-short generator.
+from its selection source. `QuickPlayFamilyRegistry` is the normal-player
+eligibility boundary: the legacy families retain their validated seed envelope
+`{0, 2, 3}`, while `NPN_LOW_SIDE_SWITCH` has its own validated envelope
+`{0, 1, 2, 3}`. The selector delegates the selected seed to the selected
+family's ordinary generator path; it does not randomize topology, values,
+faults, layout, or measurements itself. Normal selection therefore never
+forces a developer-only fault or verifier route.
 
 The session and its generated board are page-owned state. A full reload of the
 Quick Play URL constructs a new selector/session, board, physical runtime,
@@ -972,6 +970,30 @@ on and off and does not recognize a component ID, catalog ID, or hidden fault
 flag. `NPN_LOW_SIDE_SWITCH` is registered in Quick Play without exposing
 fault, answer, or physical metadata in the normal player UI.
 
+The two connector positive pads have independent authoritative
+`PowerInputNameplate` records. The NPN layout receives those records from the
+generated physical board specification, and the renderer resolves a targeted
+positive pad to that pad's own display label (`+5V`, `+9V`, or `+12V`); return
+pads resolve to `GND`. This prevents a multi-input board from collapsing every
+positive connector label to an aggregate `VIN` label while preserving the
+generic single-input fallback for older families.
+
+The NPN ground copper is routed as a shared trunk from J1.2 to J2.2, RPD.2,
+and Q1.E. The route validator now rejects duplicate points, repeated or
+overlapping segments, non-adjacent self-intersections, and backtracking while
+allowing adjacent continuous/orthogonal segments and intentional same-net
+topology. The NPN generator consequently has no old long ground detour or
+ambiguous crossing in its stable route IDs.
+
+Instantaneous NPN repair and compatibility checks are observational: they may
+temporarily command the real solver-backed board to test a state, but capture
+the prior commanded state and restore it in `finally`. The RC temporal family
+remains intentionally stateful because its validation advances real solver
+time and models stored energy. A developer-only
+`data-tsj-npn-electrical-report` exposes the live full-precision healthy
+envelope only when the NPN verifier flag is active; normal player pages never
+receive the attribute or its hidden terms.
+
 The parts-tray correction is generic rather than family-specific. Fixed RC,
 seeded LED/diode/parallel, and NPN layouts all call the same tray placement and
 geometry validation seam. The compact-board calculation excludes tray chrome,
@@ -982,8 +1004,11 @@ placement, body, courtyard, pad coordinates, escape vectors/lengths, and B/C/E
 ordering. This preserves provider ownership while keeping the tray visible,
 selectable, paginated, and probeable.
 
-Focused Task 37 validation covers the JDK 8/GWT production build, all 12 NPN
-seed/fault routes, provider/renderer and architecture boundaries, layout
-determinism/tray separation, Quick Play, RC/stored-energy, and LED/diode/
-parallel regressions. Visible in-app Browser evidence is stored under
-`docs/task-evidence/task-37/`.
+Focused Task 37 correction validation covers the JDK 8/GWT production build,
+the four-seed natural NPN envelope, the 16-case forced seed/fault matrix,
+provider/renderer and architecture boundaries, layout determinism/tray
+separation, Quick Play, RC/stored-energy, and LED/diode/parallel regressions.
+Visible in-app Browser evidence is stored under
+`docs/task-evidence/task-37-correction/`. The renderer still shows the compact
+physical `NPN` body and B/C/E markings; improving that silkscreen fidelity is
+future work, not an electrical-truth blocker for this milestone.

@@ -6,14 +6,17 @@ import java.util.Random;
 final class NpnLowSideSwitchPcbLayoutFactory {
     private NpnLowSideSwitchPcbLayoutFactory() { }
 
-    static PcbBoardLayout create(TroubleshootBoard board, long seed) {
+    static PcbBoardLayout create(TroubleshootBoard board,
+            BoardPhysicalSpecifications specifications, long seed) {
+        if (specifications == null)
+            throw new IllegalArgumentException("Missing NPN physical specifications");
         int shift = (int) (((seed % 4) + 4) % 4) * 10;
         PcbBoardLayout layout = new PcbBoardLayout(1400, 800,
             new Rectangle(40 + shift, 30, 1150, 720), new Rectangle(1200, 125, 150, 255));
         addComponents(layout, board, seed, shift);
         addPads(layout, shift);
         addTraces(layout, shift);
-        addLabels(layout, shift);
+        addLabels(layout, specifications, shift);
         layout.positionPartsTrayDisjointFromBoard();
         layout.validateGeometry(board);
         return layout;
@@ -103,9 +106,9 @@ final class NpnLowSideSwitchPcbLayoutFactory {
         trace(layout, "GND", "J1.2", "J2.2", 100+s,180, 60+s,180,
             60+s,600, 100+s,600);
         trace(layout, "GND", "J1.2", "RPD.2", 100+s,180, 60+s,180,
-            60+s,450, 520+s,450, 520+s,385, 470+s,385);
+            60+s,430, 520+s,430, 520+s,385, 470+s,385);
         trace(layout, "GND", "J1.2", "Q1.E", 100+s,180, 60+s,180,
-            60+s,700, 50+s,700, 50+s,430, emitter.getX(),430,
+            60+s,430, emitter.getX(),430,
             emitter.getX(),260,
             emitterEscapeX,emitterEscapeY, emitter.getX(),emitter.getY());
     }
@@ -122,7 +125,12 @@ final class NpnLowSideSwitchPcbLayoutFactory {
         layout.addTrace(new PcbTraceGeometry(net, start, end, x, y));
     }
 
-    private static void addLabels(PcbBoardLayout layout, int s) {
+    private static void addLabels(PcbBoardLayout layout,
+            BoardPhysicalSpecifications specifications, int s) {
+        String loadSupplyLabel = specifications.getPowerInputNameplate("LOAD_VIN_INPUT")
+            .getDisplayLabel();
+        String controlSupplyLabel = specifications.getPowerInputNameplate("CONTROL_VIN_INPUT")
+            .getDisplayLabel();
         label(layout, "board-title", "TSJ NPN LOW-SIDE", 500+s, 720, 150, 18, null);
         label(layout, "component:J1", "J1", 100+s, 225, 18, 18, null);
         label(layout, "component:J2", "J2", 100+s, 645, 18, 18, null);
@@ -131,9 +139,9 @@ final class NpnLowSideSwitchPcbLayoutFactory {
         label(layout, "component:RPD", "RPD", 300+s, 300, 26, 18, null);
         label(layout, "component:LED1", "LED1", 620+s, 45, 36, 18, null);
         label(layout, "component:Q1", "Q1", 960+s, 240, 18, 18, null);
-        label(layout, "net:J1.1", "+12V", 230+s, 135, 42, 16, "J1.1");
+        label(layout, "net:J1.1", loadSupplyLabel, 230+s, 135, 42, 16, "J1.1");
         label(layout, "net:J1.2", "GND", 200+s, 225, 30, 16, "J1.2");
-        label(layout, "net:J2.1", "+5V", 220+s, 565, 30, 16, "J2.1");
+        label(layout, "net:J2.1", controlSupplyLabel, 220+s, 565, 42, 16, "J2.1");
         label(layout, "net:J2.2", "GND", 200+s, 645, 30, 16, "J2.2");
     }
 

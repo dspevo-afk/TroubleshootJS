@@ -12,7 +12,8 @@ final class QuickPlayFamilyRegistry {
     static final String PARALLEL_DUAL_INDICATOR = "PARALLEL_DUAL_INDICATOR";
     static final String RC_DELAY = "RC_DELAY";
     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
-    private static final long[] NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
+    private static final long[] LEGACY_NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
+    private static final long[] NPN_NORMAL_PLAYER_SEEDS = { 0, 1, 2, 3 };
 
     private QuickPlayFamilyRegistry() { }
 
@@ -56,12 +57,18 @@ final class QuickPlayFamilyRegistry {
         if (!isNormalPlayerEligible(familyId))
             throw new IllegalArgumentException("Quick Play family is not normal-player eligible: " +
                 familyId);
-        for (long seed : NORMAL_PLAYER_SEEDS)
+        long[] normalPlayerSeeds = seedsFor(familyId);
+        for (long seed : normalPlayerSeeds)
             if (seed == selectionValue)
                 return seed;
-        int index = (int) (selectionValue % NORMAL_PLAYER_SEEDS.length);
+        int index = (int) (selectionValue % normalPlayerSeeds.length);
         if (index < 0)
-            index += NORMAL_PLAYER_SEEDS.length;
-        return NORMAL_PLAYER_SEEDS[index];
+            index += normalPlayerSeeds.length;
+        return normalPlayerSeeds[index];
+    }
+
+    private static long[] seedsFor(String familyId) {
+        return NPN_LOW_SIDE_SWITCH.equals(familyId) ? NPN_NORMAL_PLAYER_SEEDS :
+            LEGACY_NORMAL_PLAYER_SEEDS;
     }
 }

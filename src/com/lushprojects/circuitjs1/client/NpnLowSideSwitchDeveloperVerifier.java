@@ -1,5 +1,8 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Random;
+import java.util.Vector;
+
 /** Focused deterministic checks for the Task 37 player-facing route. */
 final class NpnLowSideSwitchDeveloperVerifier {
     private NpnLowSideSwitchDeveloperVerifier() { }
@@ -29,6 +32,9 @@ final class NpnLowSideSwitchDeveloperVerifier {
             sameEndpoint(npn.getPublicTerminal(1), componentEndpoint(instance, "Q1.C")) &&
             sameEndpoint(npn.getPublicTerminal(2), componentEndpoint(instance, "Q1.E")),
             "NPN pad-to-terminal mapping changed");
+        verifyProviderFootprint(instance);
+        verifyConnectorMarkings(sim, instance);
+        verifyNpnGroundTree(instance);
         GeneratedFaultBinding binding = instance.getFaultBinding();
         require(binding != null && binding.isApplied(),
             "NPN selected fault is not applied");
@@ -51,6 +57,7 @@ final class NpnLowSideSwitchDeveloperVerifier {
             sim.getBoardModificationController(), BoardPowerState.POWERED),
             "NPN complaint is not backed by the observed solved behavior");
         verifyHealthyReference(instance, challenge, sim);
+        verifyStatePreservingChecks(instance, challenge, sim);
         verifyPhysicalRepairLifecycle(instance, challenge, sim);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
             "NPN repair lifecycle did not finish in a functional state");
@@ -72,6 +79,170 @@ final class NpnLowSideSwitchDeveloperVerifier {
                     second.getPcbLayout().geometryFingerprint()),
                 "NPN seeded fault envelope is not deterministic: " + types[index]);
         }
+    }
+
+    private static void verifyProviderFootprint(GeneratedBoardInstance instance) {
+        PcbBoardLayout layout = instance.getPcbLayout();
+        PcbComponentPlacement actualPlacement = layout.getComponent("Q1");
+        require(actualPlacement != null, "NPN layout omitted the provider-owned Q1 placement");
+        PcbFootprint expected = StandardPcbFootprintProviders.createRegistry().create(
+            instance.getBoard().getComponent("Q1"), actualPlacement.getX(),
+            actualPlacement.getY(), new Random(instance.getSeed()), layout.getBoardOutline());
+        PcbComponentPlacement expectedPlacement = expected.getPlacement();
+        require(actualPlacement.getX() == expectedPlacement.getX() &&
+            actualPlacement.getY() == expectedPlacement.getY() &&
+            actualPlacement.getWidth() == expectedPlacement.getWidth() &&
+            actualPlacement.getHeight() == expectedPlacement.getHeight() &&
+            sameRectangle(actualPlacement.getKeepOut(), expectedPlacement.getKeepOut()) &&
+            sameRectangle(actualPlacement.getRoutingCourtyard(),
+                expectedPlacement.getRoutingCourtyard()),
+            "Generated Q1 placement/body/courtyard diverged from the TO-92 provider");
+        String[] terminalIds = { "Q1.B", "Q1.C", "Q1.E" };
+        Vector<String> boardPadIds = instance.getBoard().getComponent("Q1").getPadIds();
+        require(boardPadIds.size() == terminalIds.length,
+            "NPN Q1 board terminal count changed");
+        for (int index = 0; index < terminalIds.length; index++) {
+            require(terminalIds[index].equals(boardPadIds.get(index)),
+                "NPN board pad order is not B/C/E at index " + index);
+            PcbPadPlacement actual = layout.getPad(terminalIds[index]);
+            PcbPadPlacement provider = expected.getPad(terminalIds[index]);
+            require(actual != null && samePad(actual, provider),
+                "Generated Q1 pad or escape diverged from the TO-92 provider: " +
+                    terminalIds[index]);
+        }
+    }
+
+    private static void verifyConnectorMarkings(CirSim sim, GeneratedBoardInstance instance) {
+        BoardPhysicalSpecifications specifications = instance.getPhysicalSpecifications();
+        PowerInputNameplate load = specifications.getPowerInputNameplate("LOAD_VIN_INPUT");
+        PowerInputNameplate control = specifications.getPowerInputNameplate("CONTROL_VIN_INPUT");
+        require(load != null && control != null,
+            "NPN physical specifications omitted an external power input nameplate");
+        require(sim.pcbWorkbenchController != null,
+            "NPN connector marking verification has no workbench renderer");
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        require(instance.getPcbLayout().getSilkscreenLabel("net:J1.1") != null &&
+            load.getDisplayLabel().equals(instance.getPcbLayout().getSilkscreenLabel("net:J1.1")
+                .getText()) && load.getDisplayLabel().equals(
+                    renderer.getRenderedSilkscreenLabelTextForDeveloperVerification("net:J1.1")),
+            "NPN J1 marking does not match the authoritative load nameplate");
+        require(instance.getPcbLayout().getSilkscreenLabel("net:J2.1") != null &&
+            control.getDisplayLabel().equals(instance.getPcbLayout().getSilkscreenLabel("net:J2.1")
+                .getText()) && control.getDisplayLabel().equals(
+                    renderer.getRenderedSilkscreenLabelTextForDeveloperVerification("net:J2.1")),
+            "NPN J2 marking does not match the authoritative control nameplate");
+        require("GND".equals(renderer.getRenderedSilkscreenLabelTextForDeveloperVerification(
+                "net:J1.2")) && "GND".equals(
+                renderer.getRenderedSilkscreenLabelTextForDeveloperVerification("net:J2.2")),
+            "NPN targeted return-pad markings did not resolve to GND");
+    }
+
+    private static void verifyNpnGroundTree(GeneratedBoardInstance instance) {
+        PcbBoardLayout layout = instance.getPcbLayout();
+        layout.validateGeometry(instance.getBoard());
+        String[] groundPads = { "J1.2", "J2.2", "RPD.2", "Q1.E" };
+        for (String padId : groundPads)
+            require(instance.getBoard().getPad(padId) != null &&
+                "GND".equals(instance.getBoard().getPad(padId).getNetId()),
+                "NPN ground pad lost its stable GND net identity: " + padId);
+        int shift = (int) (((instance.getSeed() % 4) + 4) % 4) * 10;
+        int groundTraceCount = 0;
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            if (!"GND".equals(trace.getNetId()))
+                continue;
+            groundTraceCount++;
+            require("J1.2".equals(trace.getStartPadId()) &&
+                ("J2.2".equals(trace.getEndPadId()) || "RPD.2".equals(trace.getEndPadId()) ||
+                    "Q1.E".equals(trace.getEndPadId())),
+                "NPN ground tree did not retain stable trace endpoints");
+            int[] x = trace.getXPoints();
+            int[] y = trace.getYPoints();
+            for (int index = 0; index < x.length; index++) {
+                require(!(x[index] == 50 + shift && y[index] == 700),
+                    "NPN ground tree retained the old loop/detour geometry");
+                for (int prior = 0; prior < index; prior++)
+                    require(x[index] != x[prior] || y[index] != y[prior],
+                        "NPN ground trace repeats a point: " + trace.getEndPadId());
+            }
+            if ("J2.2".equals(trace.getEndPadId()))
+                require(hasPoint(trace, 60 + shift, 600),
+                    "NPN J2.2 ground branch did not use the shared trunk");
+            else {
+                require(hasPoint(trace, 60 + shift, 430),
+                    "NPN ground branch did not leave the shared y=430 trunk");
+                if ("RPD.2".equals(trace.getEndPadId()))
+                    require(hasPoint(trace, 520 + shift, 430),
+                        "NPN RPD.2 branch did not use its deterministic tree escape");
+                else {
+                    PcbPadPlacement emitter = layout.getPad("Q1.E");
+                    require(hasPoint(trace, emitter.getX() + emitter.getEscapeDx() *
+                            emitter.getEscapeLength(), emitter.getY() + emitter.getEscapeDy() *
+                            emitter.getEscapeLength()),
+                        "NPN Q1.E branch did not use the provider escape");
+                }
+            }
+        }
+        require(groundTraceCount == 3,
+            "NPN GND tree did not expose exactly three stable branch traces");
+    }
+
+    private static void verifyHealthyElectricalEnvelope(CirSim sim, GeneratedBoardInstance instance) {
+        PowerInputNameplate loadInput = instance.getPhysicalSpecifications()
+            .getPowerInputNameplate("LOAD_VIN_INPUT");
+        PowerInputNameplate controlInput = instance.getPhysicalSpecifications()
+            .getPowerInputNameplate("CONTROL_VIN_INPUT");
+        ResistorNameplate loadNameplate = StandardPhysicalDefinitionProviders.RESISTOR.require(
+            instance.getPhysicalSpecifications(), "RLOAD");
+        ResistorElm loadResistor = (ResistorElm) instance.getComponentBindings()
+            .getSingleElement("RLOAD");
+        double loadSupply = NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "J1.1") -
+            NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "J1.2");
+        double controlSupply = NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "J2.1") -
+            NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "J2.2");
+        double loadCurrent = NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance);
+        double ledCurrent = NpnLowSideSwitchGeneratedBoardValidator.ledCurrent(instance);
+        double baseCurrent = NpnLowSideSwitchGeneratedBoardValidator.baseCurrent(instance);
+        double collectorCurrent = NpnLowSideSwitchGeneratedBoardValidator.collectorCurrent(instance);
+        double resistorVoltage = NpnLowSideSwitchGeneratedBoardValidator.voltage(instance,
+            "RLOAD.1") - NpnLowSideSwitchGeneratedBoardValidator.voltage(instance, "RLOAD.2");
+        double calculatedPower = Math.abs(resistorVoltage * loadResistor.getCurrent());
+        double resistorPower = loadResistor.getPower();
+        double solverPower = Math.abs(resistorPower);
+        sim.publishNpnElectricalReportForDeveloperVerification(
+            "seed=" + instance.getSeed() +
+            ";loadLabel=" + loadInput.getDisplayLabel() +
+            ";loadNominalV=" + loadInput.getNominalVoltage() +
+            ";controlLabel=" + controlInput.getDisplayLabel() +
+            ";controlNominalV=" + controlInput.getNominalVoltage() +
+            ";loadSolverV=" + loadSupply +
+            ";controlSolverV=" + controlSupply +
+            ";rloadOhms=" + loadResistor.getResistance() +
+            ";rloadRatingW=" + loadNameplate.getRatedWattage() +
+            ";loadCurrentA=" + loadCurrent +
+            ";ledCurrentA=" + ledCurrent +
+            ";baseCurrentA=" + baseCurrent +
+            ";collectorCurrentA=" + collectorCurrent +
+            ";rloadPowerCalculatedW=" + calculatedPower +
+            ";rloadPowerSolverW=" + resistorPower);
+        require(loadInput != null && controlInput != null && loadInput.getNominalVoltage() > 4 &&
+            loadInput.getNominalVoltage() <= 12 && controlInput.getNominalVoltage() == 5,
+            "NPN connector nameplate left the intended voltage envelope");
+        requireApproximately(loadInput.getNominalVoltage(), loadSupply, .1,
+            "NPN healthy load connector solver voltage");
+        requireApproximately(controlInput.getNominalVoltage(), controlSupply, .1,
+            "NPN healthy control connector solver voltage");
+        requireApproximately(loadNameplate.getNominalResistanceOhms(), loadResistor.getResistance(),
+            .001, "NPN RLOAD solver resistance");
+        require(loadCurrent > .008 && loadCurrent < .05 && ledCurrent > .005 && ledCurrent < .05 &&
+            baseCurrent > .00002 && baseCurrent < .01 && collectorCurrent > .005 &&
+            collectorCurrent < .05 && calculatedPower > 0 && calculatedPower <=
+            loadNameplate.getRatedWattage() && solverPower <= loadNameplate.getRatedWattage() &&
+            Math.abs(calculatedPower - solverPower) < .0001,
+            "NPN healthy ON electrical envelope invalid: supply=" + loadSupply +
+                " RLOAD=" + loadResistor.getResistance() + " loadI=" + loadCurrent +
+                " ledI=" + ledCurrent + " baseI=" + baseCurrent + " collectorI=" +
+                collectorCurrent + " power=" + calculatedPower + "/" + solverPower +
+                " rating=" + loadNameplate.getRatedWattage());
     }
 
     private static void verifySolvedFault(GeneratedBoardInstance instance,
@@ -112,6 +283,7 @@ final class NpnLowSideSwitchDeveloperVerifier {
             state.setCommandedOn(sim, true);
             require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
                 "NPN healthy reference did not switch on in CircuitJS");
+            verifyHealthyElectricalEnvelope(sim, instance);
             state.setCommandedOn(sim, false);
             require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
                 "NPN healthy reference did not switch off in CircuitJS");
@@ -121,6 +293,20 @@ final class NpnLowSideSwitchDeveloperVerifier {
         }
         GeneratedFaultType type = instance.getFaultBinding().getFault().getType();
         state.setCommandedOn(sim, type == GeneratedFaultType.TRANSISTOR_CE_SHORT ? false : true);
+    }
+
+    private static void verifyStatePreservingChecks(GeneratedBoardInstance instance,
+            GeneratedChallengeController challenge, CirSim sim) {
+        NpnLowSideSwitchFamilyState state = familyState(instance);
+        boolean prior = state.isCommandedOn();
+        challenge.getRepairStatus();
+        require(state.isCommandedOn() == prior,
+            "NPN repair-status check persisted its temporary command");
+        require(challenge.getScenario() != null && challenge.getScenario().isCompatible(instance,
+                sim.getBoardModificationController(), BoardPowerState.POWERED),
+            "NPN scenario compatibility check failed during state-preservation regression");
+        require(state.isCommandedOn() == prior,
+            "NPN scenario compatibility check persisted its temporary command");
     }
 
     private static void verifyPhysicalRepairLifecycle(GeneratedBoardInstance instance,
@@ -139,14 +325,19 @@ final class NpnLowSideSwitchDeveloperVerifier {
                 "NPN original fault identity was not installed");
             require(controller.removeInstalledPart() && instance.getFaultBinding().isApplied() &&
                 !original.isInstalled(), "Removing original NPN lost its fault ownership");
+            if (instance.getSeed() == 1 && instance.getFaultBinding().getFault().getType() ==
+                    GeneratedFaultType.TRANSISTOR_CE_SHORT)
+                verifyLooseCeShortMeasurement(sim, instance, original);
             require(controller.install(original.getId()) && original.isInstalled() &&
                 original.ownsGeneratedFault(instance.getFaultBinding()),
                 "Reinstalling original NPN changed its fault identity");
+            verifyNpnTerminalIdentity(instance, original);
             require(controller.removeInstalledPart() &&
                 controller.installNewFromCatalog(NpnReplacementCatalog.WRONG_LOW_BETA),
                 "Wrong NPN catalog replacement was not accepted");
             PhysicalNpnPart wrong = capability.getSlot().getInstalledPart();
             require(wrong != original && wrong.getFaultBinding() == null &&
+                wrong.getElement() != original.getElement() &&
                 !wrong.ownsGeneratedFault(instance.getFaultBinding()),
                 "NPN catalog replacement inherited original identity or fault");
             sim.setBoardPowerState(BoardPowerState.POWERED);
@@ -157,6 +348,12 @@ final class NpnLowSideSwitchDeveloperVerifier {
             require(controller.removeInstalledPart() &&
                 controller.installNewFromCatalog(NpnReplacementCatalog.CORRECT),
                 "Correct NPN catalog replacement was not accepted");
+            PhysicalNpnPart correct = capability.getSlot().getInstalledPart();
+            require(correct != original && correct != wrong && correct.getFaultBinding() == null &&
+                correct.getElement() != original.getElement() &&
+                correct.getElement() != wrong.getElement(),
+                "Correct NPN replacement did not receive a distinct physical backing");
+            verifyNpnTerminalIdentity(instance, correct);
         } else {
             ReplaceableResistorBoardCapability capability =
                 ReplaceableResistorBoardCapability.find(instance.getPhysicalBoardRuntime(), target);
@@ -189,11 +386,57 @@ final class NpnLowSideSwitchDeveloperVerifier {
         }
         sim.setBoardPowerState(BoardPowerState.POWERED);
         GeneratedFaultType type = instance.getFaultBinding().getFault().getType();
-        familyState(instance).setCommandedOn(sim, type == GeneratedFaultType.TRANSISTOR_CE_SHORT ? false : true);
+        NpnLowSideSwitchFamilyState state = familyState(instance);
+        if (instance.getSeed() == 1 && type == GeneratedFaultType.TRANSISTOR_CE_SHORT) {
+            state.setCommandedOn(sim, true);
+            require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
+                "Natural seed-1 correct NPN did not switch on after CE-short repair");
+            state.setCommandedOn(sim, false);
+            require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
+                "Natural seed-1 correct NPN did not switch off after CE-short repair");
+        }
+        state.setCommandedOn(sim, type == GeneratedFaultType.TRANSISTOR_CE_SHORT ? false : true);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
             "Correct NPN physical repair did not restore functional switching");
         require(modifications.isFullyRestored() && !sim.activeMeasurementOverlay,
             "NPN repair verifier left modification or measurement residue");
+        if (instance.getSeed() == 1 && type == GeneratedFaultType.TRANSISTOR_CE_SHORT)
+            require(challenge.finishJob() && challenge.isCompleted(),
+                "Natural seed-1 correct NPN did not pass generic Finish Job readiness");
+    }
+
+    private static void verifyLooseCeShortMeasurement(CirSim sim, GeneratedBoardInstance instance,
+            PhysicalNpnPart original) {
+        require(sim.pcbWorkbenchController != null,
+            "Natural seed-1 loose NPN verification has no renderer");
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        ProbeTarget collector = new PhysicalNpnPartProbeTarget(sim, instance, original.getId(), 1,
+            renderer);
+        ProbeTarget emitter = new PhysicalNpnPartProbeTarget(sim, instance, original.getId(), 2,
+            renderer);
+        require(collector.isValid() && emitter.isValid(),
+            "Removed original NPN did not expose valid loose B/C/E probe targets");
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(collector, emitter);
+        double resistance = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
+        require(!Double.isNaN(resistance) && !Double.isInfinite(resistance) && resistance < 1,
+            "Natural seed-1 loose CE resistance did not reflect the real short backing: " +
+                resistance);
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(collector, emitter);
+        require(sim.instrumentController.isContinuityDetectedForDeveloperVerification() &&
+            !"OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Natural seed-1 loose CE continuity did not reflect the real short backing");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyNpnTerminalIdentity(GeneratedBoardInstance instance,
+            PhysicalNpnPart part) {
+        require("B".equals(part.getTerminal(0).getTerminalName()) &&
+            "C".equals(part.getTerminal(1).getTerminalName()) &&
+            "E".equals(part.getTerminal(2).getTerminalName()) &&
+            sameEndpoint(part.getPublicTerminal(0), componentEndpoint(instance, "Q1.B")) &&
+            sameEndpoint(part.getPublicTerminal(1), componentEndpoint(instance, "Q1.C")) &&
+            sameEndpoint(part.getPublicTerminal(2), componentEndpoint(instance, "Q1.E")),
+            "Installed NPN replacement did not preserve Q1 B/C/E terminal identities");
     }
 
     private static NpnLowSideSwitchFamilyState familyState(GeneratedBoardInstance instance) {
@@ -219,6 +462,35 @@ final class NpnLowSideSwitchDeveloperVerifier {
         CircuitPostMeasurementEndpoint a = (CircuitPostMeasurementEndpoint) first;
         CircuitPostMeasurementEndpoint b = (CircuitPostMeasurementEndpoint) second;
         return a.getElement() == b.getElement() && a.getPostIndex() == b.getPostIndex();
+    }
+
+    private static boolean sameRectangle(Rectangle first, Rectangle second) {
+        return first != null && second != null && first.x == second.x && first.y == second.y &&
+            first.width == second.width && first.height == second.height;
+    }
+
+    private static boolean samePad(PcbPadPlacement first, PcbPadPlacement second) {
+        return first.getPadId().equals(second.getPadId()) && first.getX() == second.getX() &&
+            first.getY() == second.getY() && first.getEscapeDx() == second.getEscapeDx() &&
+            first.getEscapeDy() == second.getEscapeDy() &&
+            first.getEscapeLength() == second.getEscapeLength();
+    }
+
+    private static boolean hasPoint(PcbTraceGeometry trace, int x, int y) {
+        int[] xPoints = trace.getXPoints();
+        int[] yPoints = trace.getYPoints();
+        for (int index = 0; index < xPoints.length; index++)
+            if (xPoints[index] == x && yPoints[index] == y)
+                return true;
+        return false;
+    }
+
+    private static void requireApproximately(double expected, double actual, double tolerance,
+            String message) {
+        if (Double.isNaN(actual) || Double.isInfinite(actual) ||
+                Math.abs(expected - actual) > tolerance)
+            throw new IllegalStateException(message + ": expected=" + expected + " actual=" +
+                actual + " tolerance=" + tolerance);
     }
 
     private static void require(boolean condition, String message) {

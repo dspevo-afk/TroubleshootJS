@@ -25,6 +25,7 @@ param(
     [switch]$StoredEnergy,
     [switch]$RcNormalPlayer,
     [switch]$Npn,
+    [switch]$NpnNatural,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -249,6 +250,11 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             $stressReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-stress-report') || ''" ([ref]$failures)
             if (-not $stressReport) { throw 'stress verifier did not publish its developer electrical report' }
             Write-Host "TASK34 ELECTRICAL REPORT: $stressReport"
+        }
+        if ($name -like 'npn-*') {
+            $npnElectricalReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-npn-electrical-report') || ''" ([ref]$failures)
+            if (-not $npnElectricalReport) { throw 'NPN verifier did not publish its developer electrical report' }
+            Write-Host "NPN ELECTRICAL REPORT: $npnElectricalReport"
         }
         Start-Sleep -Milliseconds 100
         [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures))
@@ -1542,6 +1548,18 @@ if ($Npn) {
             }
             $case++
         }
+    }
+    exit 0
+}
+if ($NpnNatural) {
+    $naturalSeeds = @(0, 1, 2, 3)
+    $case = 0
+    foreach ($seed in $naturalSeeds) {
+        $route = "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=$seed&tsjVerifyNpn=true&running=true"
+        if (-not (verifyRoute "npn-natural-seed-$seed" $route 'PASS:npn' (9570 + $case))) {
+            exit 1
+        }
+        $case++
     }
     exit 0
 }

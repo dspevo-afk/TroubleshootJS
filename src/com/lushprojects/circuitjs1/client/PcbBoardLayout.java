@@ -313,14 +313,44 @@ class PcbBoardLayout {
                     trace.getNetId());
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
-            for (int first = 0; first < xPoints.length; first++) {
+            for (int index = 1; index < xPoints.length; index++) {
+                if (xPoints[index] == xPoints[index - 1] &&
+                        yPoints[index] == yPoints[index - 1])
+                    throw new IllegalStateException("PCB trace has consecutive duplicate points: " +
+                        trace.getNetId());
+            }
+            for (int first = 1; first < xPoints.length; first++) {
                 for (int second = first + 1; second < xPoints.length; second++) {
-                    if (xPoints[first] == xPoints[second] && yPoints[first] == yPoints[second])
-                        throw new IllegalStateException("PCB trace backtracks: " +
+                    if (!segmentsIntersect(xPoints[first - 1], yPoints[first - 1],
+                            xPoints[first], yPoints[first], xPoints[second - 1],
+                            yPoints[second - 1], xPoints[second], yPoints[second]))
+                        continue;
+                    if (second == first + 1 && adjacentSegmentsShareOnlyEndpoint(
+                            xPoints[first - 1], yPoints[first - 1], xPoints[first],
+                            yPoints[first], xPoints[second - 1], yPoints[second - 1],
+                            xPoints[second], yPoints[second]))
+                        continue;
+                    if (collinearOverlap(xPoints[first - 1], yPoints[first - 1],
+                            xPoints[first], yPoints[first], xPoints[second - 1],
+                            yPoints[second - 1], xPoints[second], yPoints[second]) > 0)
+                        throw new IllegalStateException("PCB trace has repeated or overlapping segments: " +
                             trace.getNetId());
+                    throw new IllegalStateException("PCB trace self-intersects: " +
+                        trace.getNetId());
                 }
             }
         }
+    }
+
+    private static boolean adjacentSegmentsShareOnlyEndpoint(int ax1, int ay1, int ax2,
+            int ay2, int bx1, int by1, int bx2, int by2) {
+        if (ax2 != bx1 || ay2 != by1)
+            return false;
+        if (ay1 == ay2 && by1 == by2)
+            return collinearOverlap(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) == 0;
+        if (ax1 == ax2 && bx1 == bx2)
+            return collinearOverlap(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) == 0;
+        return true;
     }
 
     void validateTraceClearance() {

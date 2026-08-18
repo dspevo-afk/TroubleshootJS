@@ -186,12 +186,17 @@ final class GeneratedScenarioLibrary {
                 return false;
             NpnLowSideSwitchFamilyState state =
                 (NpnLowSideSwitchFamilyState) instance.getFamilyState();
-            if (stuckActive) {
-                state.setCommandedOn(CircuitElm.sim, false);
-                return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005;
+            boolean priorCommandedOn = state.isCommandedOn();
+            try {
+                if (stuckActive) {
+                    state.setCommandedOn(CircuitElm.sim, false);
+                    return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005;
+                }
+                state.setCommandedOn(CircuitElm.sim, true);
+                return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001;
+            } finally {
+                state.setCommandedOn(CircuitElm.sim, priorCommandedOn);
             }
-            state.setCommandedOn(CircuitElm.sim, true);
-            return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001;
         }
     }
 }
