@@ -1,0 +1,1082 @@
+READ-ONLY RESEARCH TASK — TROUBLESHOOTJS PROCEDURAL GENERATION SCALABILITY AUDIT
+
+You are performing a READ-ONLY architecture investigation for TroubleshootJS.
+
+This is NOT an implementation task.
+
+Other Codex sessions are currently working concurrently on:
+- Task 38 — NMOS Low-Side Switch Family
+- presentation/UI work
+- component visual-realism research
+
+Do not interfere with any of them.
+
+==================================================
+OPERATING MODE
+==================================================
+
+Treat the repository as READ ONLY except for exactly one permitted research report:
+
+docs/research/PROCEDURAL_GENERATION_SCALABILITY_AUDIT.md
+
+You may create that file.
+
+Do NOT modify any other repository file.
+
+Do NOT:
+- modify production code;
+- modify tests;
+- modify build scripts;
+- modify existing documentation;
+- modify Task 38 work;
+- modify UI work;
+- modify component-rendering work;
+- implement a new circuit family;
+- change the roadmap;
+- create generator infrastructure;
+- refactor existing architecture.
+
+Your job is to investigate what exists and determine how well it can scale toward genuinely complex procedurally generated troubleshooting boards.
+
+==================================================
+REPOSITORY
+==================================================
+
+Repository:
+
+C:\Users\david\Desktop\TroubleshootJS
+
+Inspect all relevant code and documentation.
+
+Important areas will likely include:
+
+- generated circuit-family classes
+- GeneratedBoardInstance
+- TroubleshootBoard
+- BoardComponent / BoardPad / BoardNet
+- generated component bindings
+- external power bindings
+- fault engine
+- scenario system
+- repair/completion validators
+- physical board runtime
+- PCB layout generation
+- footprint providers
+- router / A* routing
+- layout validation
+- Quick Play selection
+- deterministic seed handling
+- current LED / diode / parallel / RC / NPN families
+- in-progress NMOS work only when useful for understanding current direction
+- docs/ARCHITECTURE.md
+- docs/ROADMAP.md
+- AGENTS.md
+
+Do not assume these are the only relevant files.
+
+Trace the actual generation pipeline.
+
+==================================================
+PRIMARY QUESTION
+==================================================
+
+Determine whether the current TroubleshootJS architecture can realistically evolve from today's small circuit families into believable complex circuit boards without degrading into random collections of components.
+
+The long-term target is not merely:
+
+"generate more resistors and capacitors."
+
+The target is eventually being able to create coherent boards resembling the electrical complexity of things such as:
+
+- basic coffee makers;
+- small appliance controllers;
+- pump controllers;
+- HVAC/control boards;
+- simple power supplies;
+- motor/fan controllers;
+- timer-based equipment;
+- sensor/control/output systems.
+
+These boards should contain multiple functional subsystems that interact coherently.
+
+The generator must eventually create circuits that make electrical sense.
+
+==================================================
+CORE CONCERN
+==================================================
+
+The central risk to investigate is:
+
+As board complexity increases, will procedural generation naturally produce believable functional circuitry, or will it tend to produce nonsense such as:
+
+- arbitrary resistors added only for variety;
+- random capacitors with no electrical purpose;
+- LEDs inserted without a meaningful role;
+- redundant pull-ups/pull-downs;
+- meaningless parallel paths;
+- components whose values are electrically possible but functionally absurd;
+- circuits that technically solve but do not represent any plausible device;
+- faults with no meaningful symptom;
+- red-herring circuitry that is obviously random;
+- unsolvable or ambiguous challenges.
+
+Do not assume more components automatically means more realism.
+
+==================================================
+1. MAP THE CURRENT GENERATION ARCHITECTURE
+==================================================
+
+Document the actual current pipeline.
+
+Identify where each of these responsibilities currently lives:
+
+- family selection;
+- seed selection;
+- topology selection;
+- component creation;
+- component value selection;
+- logical nets;
+- stable pad IDs;
+- CircuitJS element creation;
+- external power inputs;
+- healthy validation;
+- fault candidate creation;
+- fault selection;
+- fault injection;
+- faulty behavior validation;
+- scenario/customer complaint selection;
+- physical-part creation;
+- PCB footprint assignment;
+- component placement;
+- routing;
+- board geometry validation;
+- repair validation;
+- Quick Play eligibility.
+
+Create an understandable architecture map.
+
+For example, if accurate:
+
+seed
+→ family generator
+→ logical board
+→ CircuitJS graph
+→ physical specifications
+→ healthy validation
+→ fault injection
+→ faulty validation
+→ PCB layout
+→ challenge
+
+But derive the real sequence from code.
+
+==================================================
+2. DETERMINE WHAT "PROCEDURAL" MEANS TODAY
+==================================================
+
+Analyze how procedural the current system actually is.
+
+For each implemented family, determine which aspects are:
+
+A. FIXED TEMPLATE
+
+Examples:
+- fixed topology;
+- fixed component count;
+- fixed net structure;
+- fixed subsystem structure.
+
+B. SEEDED VARIATION
+
+Examples:
+- supply voltage;
+- resistor value;
+- selected fault;
+- PCB placement;
+- layout;
+- routing;
+- package;
+- scenario.
+
+C. TRULY COMPOSED OR GENERATED
+
+Examples:
+- optional branches;
+- changing number of components;
+- changing topology;
+- functional subsystem composition.
+
+Do not use "procedural generation" loosely.
+
+Clearly explain the current level of generative freedom.
+
+==================================================
+3. FAMILY SCALABILITY
+==================================================
+
+Evaluate the current "one generator per circuit family" architecture.
+
+Questions:
+
+- Does it scale cleanly to 10 families?
+- 25?
+- 50?
+- 100?
+
+- Will each family eventually become a giant bespoke class?
+- Are values/topologies duplicated between families?
+- Are validation rules likely to become repetitive?
+- Does adding every new family require custom:
+  - generation;
+  - faults;
+  - validation;
+  - scenario logic;
+  - repair logic;
+  - PCB layout?
+
+Identify where duplication is already appearing.
+
+Do NOT prematurely recommend generic abstractions merely because code looks similar.
+
+Different electrical families should remain different when their semantics actually differ.
+
+==================================================
+4. FUNCTIONAL SUBSYSTEM COMPOSITION
+==================================================
+
+This is a major focus.
+
+Investigate how TroubleshootJS could eventually compose larger boards from meaningful functional blocks.
+
+Potential subsystem examples:
+
+POWER ENTRY
+- input connector
+- fuse/protection
+- rectifier
+- filtering
+- regulator
+
+CONTROL INPUT
+- button
+- sensor
+- voltage divider
+- pull-up/pull-down
+- comparator
+
+CONTROL LOGIC
+- transistor
+- MOSFET
+- timer
+- comparator
+- logic IC
+- microcontroller abstraction later
+
+OUTPUT DRIVER
+- transistor driver
+- MOSFET driver
+- relay driver
+
+LOAD / EXTERNAL OUTPUT
+- LED
+- buzzer
+- motor
+- fan
+- heater
+- valve
+- display
+
+SUPPORT CIRCUITRY
+- decoupling
+- snubber
+- flyback diode
+- filtering
+- bias network
+- status LED
+
+Determine whether a future generator could use a structure conceptually like:
+
+DeviceIntent
+→ FunctionalSubsystems
+→ subsystem interfaces
+→ signal/power contracts
+→ concrete circuit blocks
+→ assembled logical board
+→ CircuitJS validation
+
+Do not force this exact architecture.
+
+Evaluate alternatives.
+
+==================================================
+5. DEFINE WHAT A FUNCTIONAL BLOCK WOULD NEED
+==================================================
+
+Investigate what metadata a reusable subsystem/block would need to compose safely.
+
+Possible concepts:
+
+- required input rail;
+- provided output rail;
+- signal type;
+- voltage domain;
+- active-high / active-low control;
+- expected impedance;
+- source/sink capability;
+- nominal current;
+- load requirements;
+- common ground requirement;
+- output type;
+- optional protection requirements;
+- expected healthy behavior.
+
+Example:
+
+NPN LOW-SIDE DRIVER
+
+Inputs:
+- CONTROL_SIGNAL
+- LOAD_SUPPLY
+
+Output/effect:
+- sinks LOAD_NODE to GND when commanded
+
+Requirements:
+- shared ground;
+- control voltage compatible with base network;
+- load current within transistor capability.
+
+Could such contracts allow meaningful composition without hardcoding every full appliance topology?
+
+Investigate.
+
+==================================================
+6. POWER AND SIGNAL DOMAIN COMPOSITION
+==================================================
+
+Complex boards will have multiple rails and signal domains.
+
+Evaluate whether current architecture can represent:
+
+- mains-derived rail;
+- unregulated DC;
+- regulated 12 V;
+- 5 V logic;
+- 3.3 V logic;
+- isolated sections;
+- control signals;
+- analog sensor signals;
+- switched loads.
+
+Questions:
+
+- Can current stable BoardNet identities support this?
+- Can current ExternalBoardPowerInput semantics scale?
+- What metadata is missing for safe subsystem composition?
+- How would a generator prevent connecting incompatible voltage domains?
+- How would it prevent feeding a 12 V signal into a 5 V-only input?
+- How should grounds/shared references be modeled?
+
+Do NOT implement an electrical-rule engine.
+
+Identify requirements.
+
+==================================================
+7. COMPONENT VALUE GENERATION
+==================================================
+
+Analyze how component values are selected today.
+
+Determine whether future value generation should be:
+
+- random from broad ranges;
+- selected from E-series values;
+- derived from equations;
+- selected from validated design templates;
+- solved from subsystem requirements;
+- some combination.
+
+Examples:
+
+LED resistor should derive from:
+- supply voltage;
+- LED Vf;
+- intended current.
+
+BJT base resistor should derive from:
+- control voltage;
+- expected load current;
+- forced beta/current assumptions.
+
+Voltage divider should derive from:
+- desired output ratio;
+- loading constraints.
+
+RC timing should derive from:
+- desired time constant.
+
+Do not allow component values to become decorative randomness.
+
+Recommend how future generators should maintain electrical intent.
+
+==================================================
+8. OPTIONAL SUPPORT COMPONENTS
+==================================================
+
+Investigate how to add believable variation without meaningless clutter.
+
+Examples:
+
+- optional decoupling capacitor;
+- status LED;
+- reverse-polarity diode;
+- flyback diode;
+- filtering capacitor;
+- pull-down resistor;
+- test point;
+- connector protection;
+- indicator branch.
+
+For each optional element, the generator should know WHY it exists.
+
+Evaluate a design where optional components have roles/constraints rather than being randomly inserted.
+
+For example:
+
+OPTIONAL_DECOUPLING
+valid only across a power rail near an active subsystem.
+
+OPTIONAL_STATUS_LED
+must indicate a meaningful rail or state.
+
+OPTIONAL_FILTER
+must affect a real signal path.
+
+Discuss how optional support elements can act as realistic red herrings while remaining electrically defensible.
+
+==================================================
+9. RED-HERRING CIRCUITRY
+==================================================
+
+The game eventually needs healthy irrelevant circuitry.
+
+Investigate how to generate red herrings that feel like something an engineer actually designed.
+
+Bad example:
+
+"Add a random 10 k resistor because more parts makes the board harder."
+
+Good examples might include:
+
+- power-present indicator;
+- reverse-polarity protection;
+- unused connector input;
+- sensor filtering;
+- decoupling;
+- diagnostic LED;
+- auxiliary rail;
+- secondary output;
+- pull-up network.
+
+Determine what architecture would allow irrelevant-but-purposeful circuitry.
+
+==================================================
+10. FAULT GENERATION AT SCALE
+==================================================
+
+Analyze whether the existing fault engine can scale from small families into multi-subsystem boards.
+
+Questions:
+
+- Can faults remain component/local effects?
+- How should fault candidates be constrained by topology?
+- How should a generator ensure a fault creates a meaningful customer-visible symptom?
+- How can it avoid faults that:
+  - do nothing;
+  - completely destroy all behavior;
+  - create multiple unrelated symptoms;
+  - are indistinguishable from another candidate;
+  - make the board impossible to repair?
+
+Evaluate the existing pipeline:
+
+healthy
+→ inject fault
+→ simulate
+→ validate symptom
+
+Determine whether this rejection model can scale.
+
+==================================================
+11. AUTOMATIC SOLVABILITY
+==================================================
+
+This is another major focus.
+
+A generated board should not merely be electrically valid.
+
+It must be troubleshootable.
+
+Investigate what automated validation may eventually be required to reject bad challenges.
+
+Possible criteria:
+
+- healthy board reaches expected operating behavior;
+- fault produces a customer-visible symptom;
+- fault does not make simulation unstable;
+- board remains repairable;
+- at least one valid repair exists;
+- correct repair restores behavior;
+- fault is distinguishable through accessible measurements;
+- required diagnostic nodes are physically probeable;
+- player is not required to know hidden metadata;
+- no impossible measurement sequence is required;
+- normal repair actions can actually isolate the fault.
+
+Determine which of these can be realistically automated and which may require curated block metadata.
+
+==================================================
+12. DIAGNOSTIC DISTINGUISHABILITY
+==================================================
+
+Complex boards may contain several faults that produce similar symptoms.
+
+Investigate how generation can avoid ambiguous or trivial challenges.
+
+For example:
+
+Customer complaint:
+"Motor does not run."
+
+Possible causes:
+- missing supply;
+- blown fuse;
+- failed MOSFET;
+- open motor connection;
+- missing gate drive.
+
+Those can be excellent alternatives if measurements distinguish them.
+
+But if two generated faults produce exactly the same accessible observations, the player may have no rational way to choose.
+
+Discuss possible future validation strategies such as:
+
+- diagnostic signatures;
+- accessible measurement vectors;
+- scenario compatibility metadata;
+- curated fault groups.
+
+Do not build the system.
+
+Evaluate feasibility.
+
+==================================================
+13. CUSTOMER COMPLAINT SCALABILITY
+==================================================
+
+Analyze the current scenario/complaint architecture.
+
+Can it scale to complex devices without needing handcrafted text for every exact circuit permutation?
+
+Investigate whether complaints can be generated from:
+
+device behavior
++
+affected functional output
++
+observed symptom
+
+rather than:
+
+specific hidden component fault.
+
+Examples:
+
+"Unit powers on, but the fan never starts."
+
+"Display works, but the heater does not energize."
+
+"Controller starts normally but shuts down after several seconds."
+
+The complaint must remain symptom-based and not reveal the answer.
+
+Recommend how future subsystem semantics could support complaint generation.
+
+==================================================
+14. PCB GENERATION AS A SCALING LIMIT
+==================================================
+
+Investigate the interaction between electrical complexity and PCB layout complexity.
+
+Do NOT perform a full PCB-routing audit; another dedicated audit may do that later.
+
+But answer:
+
+- At roughly what point does current one-sided routing become a likely bottleneck?
+- Does adding more components substantially increase generator rejection?
+- Can existing placement/routing infrastructure support composed subsystems?
+- Would subsystem-aware placement help?
+- Will 0-ohm jumpers eventually be necessary?
+- Will multi-layer routing eventually become necessary?
+
+Identify this as an electrical-generation dependency where appropriate.
+
+==================================================
+15. PERFORMANCE / GENERATION REJECTION COST
+==================================================
+
+The eventual pipeline may be:
+
+generate
+→ simulate healthy
+→ validate
+→ inject fault
+→ simulate fault
+→ validate
+→ generate PCB
+→ route
+→ validate
+→ maybe reject and retry
+
+Investigate how expensive repeated rejection could become as board complexity rises.
+
+Questions:
+
+- Which stages are likely cheapest?
+- Which are likely most expensive?
+- Should cheap semantic validation happen before PCB routing?
+- Should fault validation happen before physical layout?
+- Could routing failures dominate generation time?
+- Would bounded retry budgets be necessary?
+
+Recommend an efficient ordering.
+
+==================================================
+16. SEED DETERMINISM
+==================================================
+
+Complex generation must remain reproducible.
+
+Investigate how to preserve deterministic seeds across:
+
+- subsystem selection;
+- block variant selection;
+- component values;
+- fault selection;
+- optional support circuitry;
+- placement;
+- routing.
+
+Important question:
+
+Should a single random stream drive everything?
+
+Or should deterministic sub-seeds be derived for separate concerns so adding one optional resistor does not completely scramble:
+
+- fault selection;
+- board placement;
+- values;
+- unrelated subsystems?
+
+Evaluate the current seed architecture and recommend a future deterministic strategy.
+
+==================================================
+17. COMPLEXITY SCALING EXERCISE
+==================================================
+
+Perform a conceptual architecture exercise.
+
+Do NOT implement it.
+
+Take a hypothetical basic coffee-maker controller.
+
+Example behavior:
+
+- mains enters board;
+- low-voltage power supply creates control rail;
+- power indicator LED;
+- pushbutton input;
+- timer/control function;
+- heater controlled through relay or semiconductor;
+- thermal/sensor input;
+- external heater/load connector.
+
+Describe how the CURRENT architecture would need to generate such a board.
+
+Identify:
+
+- which existing families/subsystems could be reused;
+- which missing blocks would be needed;
+- what composition infrastructure is currently missing;
+- where bespoke family code would explode;
+- where routing/layout becomes difficult.
+
+Then propose how a future composition architecture could generate the same device more cleanly.
+
+Repeat briefly for one second example, such as:
+
+- fan controller;
+- pump controller;
+- small regulated power board.
+
+This exercise should expose architectural weaknesses.
+
+==================================================
+18. CURRENT ARCHITECTURE STRENGTHS
+==================================================
+
+Do not only criticize.
+
+Identify what TroubleshootJS already has that strongly supports future scaling.
+
+Possible examples:
+
+- stable component/pad/net identity;
+- CircuitJS solver source of truth;
+- family-agnostic GeneratedBoardInstance;
+- explicit fault engine;
+- solver-backed behavioral validators;
+- physical-part identity;
+- generic workbench mutation;
+- seeded generation;
+- PCB footprint/provider architecture;
+- functional repair contract;
+- scenario abstraction.
+
+Explain which existing choices should be preserved.
+
+==================================================
+19. CURRENT ARCHITECTURE LIMITS
+==================================================
+
+Identify where current code is intentionally still family-specific or bounded.
+
+Classify limitations:
+
+A. Fine for now
+B. Should be addressed before medium boards
+C. Must be addressed before large/composed boards
+D. Likely long-term scalability blocker
+
+Avoid declaring every duplication a blocker.
+
+==================================================
+20. RECOMMENDED FUTURE ARCHITECTURE
+==================================================
+
+Propose a future direction.
+
+Do NOT implement it.
+
+The recommendation should be incremental.
+
+Avoid:
+
+"Rewrite the generator."
+
+Prefer something like:
+
+existing validated families
+→ reusable functional block descriptors
+→ subsystem composition
+→ device-level intent
+→ semantic validation
+→ CircuitJS healthy validation
+→ fault injection
+→ symptom validation
+→ physical PCB generation
+
+if that is supported by the investigation.
+
+Clearly identify which abstractions are needed first and which can wait.
+
+==================================================
+21. DO WE NEED A GENERAL CIRCUIT GENERATOR?
+==================================================
+
+Answer this directly.
+
+Possible answers could be:
+
+A. Keep manually coded families forever.
+
+B. Build a completely general random circuit generator.
+
+C. Build a constrained composition system using validated functional blocks.
+
+D. Hybrid approach.
+
+Evaluate tradeoffs.
+
+The answer should prioritize believable electronics over arbitrary topology diversity.
+
+==================================================
+22. PROCEDURAL COMPLEXITY LEVELS
+==================================================
+
+Propose a conceptual progression.
+
+For example:
+
+LEVEL 1
+single functional family
+3–8 components
+
+LEVEL 2
+family + support circuitry
+8–15 components
+
+LEVEL 3
+two interacting subsystems
+15–30 components
+
+LEVEL 4
+multi-rail/multi-subsystem board
+30–60 components
+
+LEVEL 5
+appliance-scale controller
+60+ components
+
+These numbers are only examples.
+
+Derive sensible stages from the actual architecture.
+
+For each level identify what new infrastructure becomes necessary.
+
+==================================================
+23. PRIORITIZED RECOMMENDATIONS
+==================================================
+
+Provide:
+
+TIER 1 — PRESERVE / NO ACTION YET
+
+Things the current architecture already handles well.
+
+TIER 2 — PREPARE BEFORE COMPOSITE BOARDS
+
+Infrastructure that should exist before combining several circuit families.
+
+TIER 3 — REQUIRED FOR COMPLEX GENERATED BOARDS
+
+Major capabilities needed before coffee-maker-level boards.
+
+TIER 4 — LATER OPTIMIZATION
+
+Capabilities that can wait until complexity actually demands them.
+
+==================================================
+24. PROPOSE BOUNDED FUTURE TASKS
+==================================================
+
+Convert the findings into possible future architecture tasks.
+
+Examples:
+
+Generation Task A:
+introduce functional block interface/metadata.
+
+Generation Task B:
+compose two validated subsystems onto one board.
+
+Generation Task C:
+introduce rail/signal compatibility contracts.
+
+Generation Task D:
+optional support circuitry with explicit semantic roles.
+
+Generation Task E:
+multi-subsystem fault/symptom validation.
+
+Do NOT assume these exact tasks are correct.
+
+Derive them from the audit.
+
+For each proposed task include:
+
+- goal;
+- why it is needed;
+- likely affected classes;
+- prerequisites;
+- risk;
+- whether it should happen before or after specific roadmap milestones.
+
+==================================================
+25. REPORT FILE
+==================================================
+
+Write the final report to exactly:
+
+docs/research/PROCEDURAL_GENERATION_SCALABILITY_AUDIT.md
+
+Create docs/research/ only if necessary.
+
+This is the ONLY repository file you may create or modify.
+
+Use this structure:
+
+# TroubleshootJS Procedural Generation Scalability Audit
+
+## 1. Executive Summary
+
+Include a direct answer:
+
+"Can the current architecture eventually support complex believable generated boards?"
+
+Answer:
+- Yes
+- Yes, with substantial intermediate architecture
+- No without major redesign
+
+and explain why.
+
+## 2. Current Generation Pipeline
+
+## 3. What Is Actually Procedural Today?
+
+## 4. Current Family Architecture
+
+## 5. Scalability Strengths
+
+## 6. Scalability Limits
+
+## 7. Functional Subsystem Composition
+
+## 8. Proposed Functional Block Contract
+
+## 9. Power / Signal Domain Composition
+
+## 10. Component Value Generation
+
+## 11. Optional Support Components and Red Herrings
+
+## 12. Fault Generation at Scale
+
+## 13. Solvability and Diagnostic Distinguishability
+
+## 14. Scenario / Complaint Scaling
+
+## 15. PCB Generation Dependency
+
+## 16. Performance and Rejection Pipeline
+
+## 17. Deterministic Seed Strategy
+
+## 18. Coffee-Maker Complexity Exercise
+
+## 19. Secondary Device Complexity Exercise
+
+## 20. Recommended Long-Term Generation Architecture
+
+## 21. General Generator vs Functional Block Composition
+
+## 22. Procedural Complexity Levels
+
+## 23. Prioritized Recommendations
+
+### Tier 1
+### Tier 2
+### Tier 3
+### Tier 4
+
+## 24. Recommended Bounded Future Tasks
+
+## 25. File/Class Watchlist
+
+## 26. Risks and Open Questions
+
+==================================================
+26. IMPORTANT PHILOSOPHY
+==================================================
+
+TroubleshootJS should NOT pursue arbitrary random topology merely because it is technically possible.
+
+The goal is not:
+
+"Every seed makes a wildly different graph."
+
+The goal is:
+
+"Every board looks and behaves like something an engineer plausibly designed."
+
+Prefer:
+
+bounded, validated, semantically meaningful variation
+
+over:
+
+maximum entropy.
+
+CircuitJS remains the electrical source of truth.
+
+Healthy circuits must make sense before faults are introduced.
+
+Random values/components are unacceptable when they have no electrical purpose.
+
+==================================================
+27. VALIDATION
+==================================================
+
+Before finishing:
+
+1. Re-read all technical claims.
+2. Verify claims against actual repository code.
+3. Distinguish:
+   - current implemented behavior;
+   - inference;
+   - recommendation.
+4. Do not claim future infrastructure already exists.
+5. Confirm no repository files besides the report were changed.
+
+Run:
+
+git status --short
+
+The only repository change must be:
+
+docs/research/PROCEDURAL_GENERATION_SCALABILITY_AUDIT.md
+
+==================================================
+28. COMPLETION
+==================================================
+
+Do NOT implement anything.
+
+Do NOT modify:
+
+- AGENTS.md
+- docs/ROADMAP.md
+- docs/ARCHITECTURE.md
+- docs/CODEX_TASK_REPORT.md
+
+Do NOT touch active Task 38 or UI work.
+
+When complete:
+
+1. inspect the report;
+2. inspect git diff;
+3. confirm the report is the only repository change;
+4. commit only the report on an isolated research branch;
+5. do not merge it;
+6. do not rebase active branches;
+7. do not begin implementation.
+
+Suggested branch:
+
+codex/procedural-generation-audit
+
+Suggested commit:
+
+Document procedural generation scalability
+
+Push only if explicitly authorized.
+
+Then report:
+- branch name;
+- commit SHA;
+- report path;
+- the single most important scalability finding;
+- the three most important future architecture recommendations.
+
+STOP.
