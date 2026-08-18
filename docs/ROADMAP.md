@@ -774,8 +774,8 @@ passed; Task 38 remains unstarted.
 
 ## Task 38 — NMOS Low-Side Switch Family
 
-**Status:** `[x]` Implemented; post-commit visible review correction pending
-primary architect re-review; Task 39 is next eligible and has not been started
+**Status:** `[x]` Complete — correction passed independent review and primary
+validation; Task 39 is next eligible and has not been started
 
 ### Goals
 
@@ -818,13 +818,18 @@ natural-fault canary for all three admitted faults. The permanent family canary
 also checks ON/OFF voltage agreement at J2.1/RPD.1/Q1.G, compact visible
 CONTROL_INPUT copper, and absence of obsolete pseudo-headers. The standalone
 Edge harness remains blocked by WMI/CIM `Access denied` in this environment;
-the in-app browser backend was unavailable during this correction attempt, so
-new visible acceptance evidence is still required from the primary reviewer.
+the required visible in-app Browser validation passed the corrected boards,
+developer canary, layout verifier, NPN regression, and Quick Play seeds 0, 1,
+and 2. Fresh screenshots cover the corrected board, 5 V/0 V gate and control
+measurements, power-off removal, catalog replacement, and repair verification.
 
 The earlier `FINAL PASS` recorded after commit `ee310d4` was overturned by
 post-commit visible review: the player-visible PCB control/gate connectivity
-did not match the solver graph. This correction narrows the physical boundary
-and leaves Task 39 identified but not started.
+did not match the solver graph. The correction moves command infrastructure
+outside the board, collapses the physical path to `CONTROL_INPUT`, removes
+TP1/TP2, fixes the original-fault switch attachment boundary, and reroutes the
+gate branch around the drain trace. Primary architect final result: `FINAL
+PASS`; Task 39 remains identified but not started.
 
 ---
 

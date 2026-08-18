@@ -1,148 +1,152 @@
-# Task 38 Report — NMOS Low-Side Switch Family
+# Task 38 Correction Report — NMOS Physical Gate Topology
 
 Date: 2026-08-18
 
-Baseline: `ef778563ea48f3a5b2db3bf6eca1ff69cafa4c31` (`master`).
+Correction baseline: `ee310d4b6bc0ed1dfeccb6a4408772075fefe9f9`
+(`Task 38: add NMOS low-side switch family`, `master`).
 
-Scope: Task 38 only. The concurrent UI worktree and component-visual research
-worktree were left untouched; no presentation files were changed.
+Scope: bounded Task 38 correction only. The concurrent UI-shell worktree and
+component-visual-realism research worktree were left untouched. No
+presentation files, Task 39 files, or research report changes are included.
 
 ## Summary and decision
 
-Task 38 adds a solver-backed `NMOS_LOW_SIDE_SWITCH` family. The family uses a
-real `NMosfetElm`, independent load/control supplies, a 100 kOhm gate
-pull-down, stable board nets and G/D/S pads, typed physical NMOS identity,
-provider-owned PCB geometry, solver-backed faults, normal-player scenarios,
-Quick Play registration, and generic live repair completion.
+The post-commit review overturned the earlier Task 38 `FINAL PASS`: the
+player-visible NMOS PCB declared separate control/gate physical nets and
+rendered pseudo-headers even though CircuitJS silently bridged the same
+conductor with WireElm/control-command infrastructure. The old board could
+therefore show an apparently disconnected control region while the solver
+treated it as connected.
 
-The earlier primary `FINAL PASS` for commit `ee310d4` was overturned by
-post-commit visible review: the player-visible PCB control/gate connectivity
-did not match the solver graph. This uncommitted correction narrows the
-physical boundary and is returned for primary architect re-review. No push or
-new commit is performed. Task 39 is identified as the next eligible milestone
-and was not started.
+This correction moves the command abstraction outside the physical board
+boundary, makes the player-visible board truth match the solver graph, removes
+TP1/TP2, fixes the original Q1 fault-switch attachment boundary, and reroutes
+the compact one-sided layout around the drain trace.
 
-## Electrical and architectural decisions
+Primary architect final result: `FINAL PASS` for the correction. The correction
+is committed in the current history and is being published at the user's
+request. Task 39 is the next eligible milestone and was not started.
 
-- The permanent CircuitJS binding is post 0 = gate, post 1 = source, post 2 =
-  drain. The generated NMOS remains three-post with the default body diode
-  enabled and no body terminal.
-- External control infrastructure owns the command switch. The physical path
-  is `external control infrastructure -> J2.1 -> CONTROL_INPUT -> Q1.G/RPD.1`;
-  J2.1 is the board-side commanded voltage after `controlCommand`. The stable
-  nets are `LOAD_SUPPLY`, `CONTROL_INPUT`, `LOAD_NODE`, `DRAIN`, and `GND`;
-  J2.1, RPD.1, and Q1.G share `CONTROL_INPUT`, with no `GATE_DRIVE`, `GATE`,
-  TP1, or TP2 physical identity.
-- Healthy proof measures live VGS, VDS, load/LED current, supply/control
-  voltage, and CircuitJS gate terminal current. Gate current remains within
-  the high-impedance tolerance.
-- Q1 owns D-S open, D-S short, and gate-path-open effects. D-S short is a real
-  0.1-ohm shunt with a solver-visible series private board-path switch. The
-  original fault graph stays attached to the loose/reinstalled original; a
-  catalog replacement opens that original board path and receives a distinct
-  fault-free `NMosfetElm` backing.
-- Physical terminal order is G/D/S and is explicitly translated to solver
-  order G/S/D. No BJT base/collector/emitter behavior or fake meter values was
-  added. No new meter mode was added.
-- Quick Play appends NMOS at family index 5 and preserves earlier indices. Its
-  normal-player seed envelope is `{0, 1, 2}`, naturally reaching D-S open,
-  D-S short, and gate open.
+## Corrected electrical and physical boundary
+
+- CircuitJS remains the electrical source of truth. External control
+  infrastructure contains `controlCommand`; the physical boundary begins at
+  its commanded output: `external control infrastructure -> J2.1 -> real
+  board gate net -> Q1.G`, with `RPD` from that same board net to ground.
+- `J2.1`, `RPD.1`, and `Q1.G` share one physical `CONTROL_INPUT` BoardNet.
+  `LOAD_SUPPLY`, `LOAD_NODE`, `DRAIN`, and `GND` remain distinct physical nets.
+  There is no `GATE_DRIVE` or `GATE` BoardNet and no TP1/TP2 component or pad.
+- Board power OFF still isolates both load and control supplies. The real
+  100 kOhm pull-down holds the board control node low.
+- The NMOS binding remains post 0 = gate, post 1 = source, post 2 = drain,
+  with three posts, default body diode, and physical package order G/D/S.
+- D-S-open and gate-open board attachments now terminate at the selected
+  fault binding's public switch posts. There is no direct board-to-raw-Q1
+  bypass. D-S-short retains its solver-visible private board-path switch and
+  original-part ownership/isolation behavior.
 
 ## Implementation areas
 
-- NMOS generator, family state, validators, scenario compatibility/presentation,
-  fault effects, and developer verifier.
-- Typed specification/catalog/physical part, G/D/S package, installed/loose
-  renderer/probe target, replaceable Q1 slot, and distinct catalog backing
-  allocator.
-- Registered provider-owned TO-92-style NMOS footprint and compact one-sided
-  routed layout with authoritative Q1 parity checks. Visible CONTROL_INPUT
-  copper branches from J2.1 to RPD.1 and Q1.G.
-- CirSim challenge/fixture routes, Quick Play registry/verifier, preview and
-  browser-verifier routes, and renderer-boundary integration.
-- `BoardModificationController.java` has only the harmless final-newline
-  normalization reported by review.
+- `NmosLowSideSwitchGenerator.java`: corrected control boundary, collapsed
+  board net identity, removed pseudo-headers, and corrected fault-switch
+  attachment endpoints.
+- `NmosLowSideSwitchPcbLayoutFactory.java`: removed the fake-header area,
+  added visible J2.1-rooted branches to RPD.1/Q1.G, and routed the gate branch
+  around the DRAIN corridor for seeds 0–3.
+- `NmosLowSideSwitchGeneratedBoardValidator.java` and
+  `NmosLowSideSwitchDeveloperVerifier.java`: added family-scoped live canaries
+  for BoardNet identity, solver voltage agreement, ON/OFF behavior, power-off
+  isolation, pseudo-header absence, and visible copper continuity.
+- `PcbLayoutDeveloperVerifier.java`: added NMOS control-routing and obsolete
+  pseudo-geometry checks while preserving provider parity and global layout
+  validation.
+- `docs/ARCHITECTURE.md` and `docs/ROADMAP.md`: documented the corrected
+  physical boundary, the overturned prior pass, and final validation.
 
 ## Validation evidence
 
-### Build and static checks
+### Builds and static checks
 
-- JDK 8/GWT PRETTY production build after this correction passed all five
-  permutations, compilation, and linking:
-  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style PRETTY`.
-- The matching JDK 8/GWT OBF production build also passed all five
-  permutations, compilation, and linking:
-  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`.
-- Renderer-provider boundary, browser-script parser, and `git diff --check`
-  checks passed.
-- Runtime canary execution is pending: the Edge PowerShell harness stops at
-  WMI/CIM `Access denied`, and the built-in in-app Browser backend was
-  unavailable after reconnect in this correction attempt.
+- JDK 8/GWT PRETTY production build passed all five permutations, compilation,
+  and linking after the final route correction.
+- JDK 8/GWT OBF production build passed all five permutations, compilation,
+  and linking after the final route correction.
+- `PASS:renderer-provider-boundary`.
+- `PASS:verify-browser-parser`.
+- `git diff --check` passed.
+- A read-only route sweep found no unrelated CONTROL_INPUT/DRAIN crossings for
+  seeds 0, 1, 2, or 3; the layout verifier also passed endpoint escapes,
+  clearance, keepouts, route quality, determinism, and tray separation.
 
 ### Visible in-app Browser acceptance
 
-Earlier visible evidence was collected before this correction and does not
-prove the corrected PCB routing. During this correction, the local in-app
-Browser backend was unavailable and no new visible acceptance claim is made.
-The intended acceptance flow remains:
+The required visible local Browser was used with real navigation, clicks,
+left/right probe placement, power control, component selection, removal, and
+catalog replacement:
 
-- The rendered board shows a recognizable NMOS and labeled G, D, and S pads;
-  the complaint remained symptom-only (`The controlled load does not turn
-  on.` / `The controlled load remains on when control is low.`).
-- The board was powered off, Q1 was selected and removed, the original appeared
-  in the parts tray, the catalog NMOS was installed, and the board was powered
-  back on.
-- A real left-click/right-click DC probe transaction on Q1 gate/source showed
-  `5 V`.
-- Unrepaired Quick Play Finish Job visibly reported
-  `Functional check failed. Continue troubleshooting.`
-- The corrected NMOS D-S-short replacement flow visibly reached
-  `Repair verified. The controlled load switches normally.`; the corrected
-  Quick Play verifier route also reached the same repaired state.
+- Corrected seed 1 rendered the symptom-only stuck-active complaint, visible
+  copper from J2 into the RPD/Q1 gate network, and Q1 G/D/S pads with no TP1 or
+  TP2 pseudo-headers.
+- In the D-S-short low-control case, a real DC V measurement showed `0 V`
+  from Q1.G to Q1.S and `0 V` from J2.1 to J2.2 while the load remained
+  active. This directly exercises the corrected physical control boundary.
+- Corrected seed 0 rendered the symptom-only no-light complaint; a real DC V
+  gate/source probe showed `5 V` with board power ON.
+- With board power OFF, Q1 was visibly selected with G/D/S lead labels,
+  removed through the workbench control, and shown in the parts tray.
+- The catalog NMOS was installed visibly, board power was restored, and the
+  Service Ticket changed to `Repair verified. The controlled load switches
+  normally.`
+- Visible developer routes returned `PASS:nmos` for seeds 0, 1, and 2 and
+  `PASS:layout`, `PASS:npn`, and `PASS:quick-play` for the corresponding
+  regression routes.
+- Explicit visible NMOS Quick Play routes returned `PASS:quick-play` for
+  seeds 0, 1, and 2. The family report was
+  `unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated`.
 
-Evidence images are stored in
-`docs/task-evidence/task-38/`:
+Fresh screenshots are stored in
+`docs/task-evidence/task-38-correction/`:
 
-- `01-nmos-board-complaint.png`
-- `02-q1-selected-gds.png`
-- `03-nmos-repaired.png`
-- `04-nmos-gate-source-probe.png`
-- `05-nmos-ds-short-repaired.png`
+- `01-corrected-nmos-board-complaint.png`
+- `02-ds-short-gate-source-0v.png`
+- `03-ds-short-j2-0v.png`
+- `04-gate-source-5v.png`
+- `05-q1-removed-power-off.png`
+- `06-repair-verified.png`
 
-The standalone Edge PowerShell harness was not a product pass: its Edge
-process query failed with WMI/CIM `Access denied` before route execution. The
-visible in-app Browser was used for the required player-facing validation.
+The standalone `scripts/verify-browser.ps1 -Nmos -Seeds 0,1,2` harness was
+attempted but is unavailable in this environment: its Edge process query
+returns WMI/CIM `Access denied` before route execution. It is recorded as
+unavailable, not as a product pass. The visible in-app Browser routes above
+are the player-facing evidence.
 
 ## Review protocol
 
-- Bounded coder Hubble implemented Task 38 and correction round 1; it remained
-  uncommitted and unpushed.
-- Independent reviewer Hume returned `PASS` for the initial candidate and
-  `PASS` again after the D-S-short replacement-path correction.
-- Post-commit primary visible review found a new real blocker: the player-visible
-  PCB control/gate connectivity did not match the solver graph. The correction
-  moves the command boundary outside the board, collapses the physical gate
-  path to `CONTROL_INPUT`, removes TP1/TP2, and adds a family canary for solver
-  voltage agreement and visible copper continuity. Primary re-review remains
-  pending.
+- Coder Hubble implemented the correction and two targeted follow-up rounds;
+  all work remained uncommitted and unpushed during delegation.
+- Reviewer Hume first found a real FAIL: D-S-open and gate-open attachments
+  bypassed or failed to touch their fault switches. The coder corrected the
+  endpoints to the fault binding public posts; Hume then returned PASS.
+- Primary visible validation found a second real blocker: the first corrected
+  layout crossed CONTROL_INPUT and DRAIN for seed 1. The coder rerouted the
+  gate branch; Hume independently rechecked seeds 0–3 and returned PASS.
+- No escalation architect was required.
 
 ## Known limitations
 
 - The standalone Edge/WMI harness remains unavailable under the current
-  permission profile; this is recorded as unavailable, not as passing.
-- Existing compact component-rendering fidelity remains bounded by the current
-  renderer and is outside Task 38's electrical scope.
-- The in-app Browser backend was unavailable during this correction attempt;
-  visible player-flow revalidation is a handoff requirement for the primary
-  reviewer. The existing player UI still has no direct control-toggle widget;
-  live ON/OFF behavior is verified through the solver-backed family state and
-  developer boundaries.
+  permission profile.
+- Existing compact component-rendering fidelity remains bounded by the
+  current renderer and is outside this electrical/topology correction.
+- The player UI has no direct control-toggle widget; ON/OFF control-state
+  proof is provided by the solver-backed family canary and the visible
+  D-S-short low-control measurements.
 
 ## Final boundary
 
-Only Task 38 work is included. Task 39 relay-driver work, UI-shell work, and
-component-visual-realism research were not integrated.
+Only this bounded Task 38 correction is included. Task 39 relay-driver work,
+UI-shell work, and component-visual-realism research were not integrated.
 
-Commit message:
+Correction commit message:
 
-`Task 38: add NMOS low-side switch family`
+`Task 38: fix NMOS physical gate topology`

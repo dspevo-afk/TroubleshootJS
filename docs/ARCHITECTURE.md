@@ -1107,4 +1107,11 @@ OBF build, and visible in-app Browser evidence under
 `docs/task-evidence/task-38/`. The standalone Edge PowerShell harness remains
 unavailable in this environment because its WMI/CIM process query returns
 `Access denied`; this is recorded as a harness limitation rather than a
-product pass.
+product pass. The permanent control-boundary canary proves ON/OFF voltage
+agreement at J2.1/RPD.1/Q1.G, board-power isolation, absence of TP1/TP2, and
+J2-rooted visible copper. The corrected layout also avoids unrelated trace
+crossings for seeds 0 through 3 while preserving provider parity, clearance,
+keepouts, deterministic routing, and parts-tray separation. Fresh visible
+Browser evidence covers the symptom-only complaint, 5 V gate/source, the
+D-S-short low-control case with both J2.1 and Q1.G at 0 V while the load stays
+active, power-off Q1 removal, catalog replacement, and repair verification.
