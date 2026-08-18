@@ -69,6 +69,30 @@ class GeneratedFaultEngine {
             componentId, familyId, seed), new SwitchParallelShortFaultEffect(bypassSwitch), compatible);
     }
 
+    static GeneratedFaultCandidate transistorCollectorOpen(String id, String familyId,
+            long seed, String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.TRANSISTOR_CE_OPEN,
+            componentId, familyId, seed), new TransistorCollectorOpenFaultEffect(switchElement));
+    }
+
+    static GeneratedFaultCandidate transistorCeShort(String id, String familyId,
+            long seed, String componentId, ResistorElm bypassResistor) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.TRANSISTOR_CE_SHORT,
+            componentId, familyId, seed), new TransistorCeShortFaultEffect(bypassResistor));
+    }
+
+    static GeneratedFaultCandidate baseResistorOpen(String id, String familyId,
+            long seed, String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.BASE_RESISTOR_OPEN,
+            componentId, familyId, seed), new SwitchOpenFaultEffect(switchElement));
+    }
+
+    static GeneratedFaultCandidate loadPathOpen(String id, String familyId,
+            long seed, String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.LOAD_PATH_OPEN,
+            componentId, familyId, seed), new SwitchOpenFaultEffect(switchElement));
+    }
+
     static GeneratedFaultCandidate connectorOpenPath(String id, String familyId, long seed,
             String componentId, SwitchElm switchElement) {
         return connectorOpenPath(id, familyId, seed, componentId, switchElement, true);

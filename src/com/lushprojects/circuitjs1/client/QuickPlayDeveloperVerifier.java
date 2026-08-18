@@ -48,11 +48,12 @@ final class QuickPlayDeveloperVerifier {
 
     private static void verifyEligibleFamilies() {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        require(families.size() == 4 &&
+        require(families.size() == 5 &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("LED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_PROTECTED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("PARALLEL_DUAL_INDICATOR") &&
-            QuickPlayFamilyRegistry.isNormalPlayerEligible("RC_DELAY"),
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("RC_DELAY") &&
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("NPN_LOW_SIDE_SWITCH"),
             "Quick Play eligible-family registry changed");
         require(!QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_SHORT") &&
             !QuickPlayFamilyRegistry.isNormalPlayerEligible("TASK_37_FUTURE"),
@@ -132,6 +133,10 @@ final class QuickPlayDeveloperVerifier {
             verifyRcCorrectRepairCanFinish(sim, challenge, instance);
             return;
         }
+        if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId())) {
+            verifyNpnCorrectRepairCanFinish(sim, challenge, instance);
+            return;
+        }
         require("LED_INDICATOR".equals(instance.getCircuitFamilyId()) && instance.getSeed() == 3,
             "Quick Play verification selection is not the deterministic LED proof");
         ResistorSlotController slots = sim.getResistorSlotController();
@@ -151,6 +156,31 @@ final class QuickPlayDeveloperVerifier {
             GeneratedRepairStatus.CORRECTLY_RESTORED && sim.finishQuickPlayJob() &&
             challenge.isCompleted(),
             "Correctly restored Quick Play challenge did not finish through generic status");
+    }
+
+    private static void verifyNpnCorrectRepairCanFinish(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        String target = challenge.getDefinition().getFault().getTargetComponentId();
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        if ("Q1".equals(target)) {
+            NpnSlotController slots = sim.getNpnSlotController();
+            require(slots != null && slots.removeInstalledPart() &&
+                slots.installNewFromCatalog(NpnReplacementCatalog.CORRECT),
+                "Quick Play NPN replacement was not accepted");
+        } else {
+            ResistorSlotController slots = sim.getResistorSlotController(target);
+            require(slots != null && slots.removeInstalledPart() &&
+                slots.installNewFromCatalog("R_CATALOG_" + ("RB".equals(target) ? "1000" : "330")),
+                "Quick Play NPN resistor replacement was not accepted");
+        }
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        sim.runCircuit(true);
+        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
+            sim.finishQuickPlayJob() && challenge.isCompleted(),
+            "Correctly restored NPN Quick Play challenge did not finish through generic status");
     }
 
     private static void verifyRcCorrectRepairCanFinish(CirSim sim,

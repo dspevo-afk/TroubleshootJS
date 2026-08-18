@@ -24,6 +24,7 @@ param(
     [switch]$Rc,
     [switch]$StoredEnergy,
     [switch]$RcNormalPlayer,
+    [switch]$Npn,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -1526,6 +1527,22 @@ if ($Layout) {
 }
 if ($Architecture) {
     if (-not (verifyRoute 'architecture seams' "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyArchitecture=true" 'PASS:architecture' 9494)) { exit 1 }
+    exit 0
+}
+if ($Npn) {
+    $faults = @('TRANSISTOR_CE_OPEN', 'TRANSISTOR_CE_SHORT',
+        'BASE_RESISTOR_OPEN', 'LOAD_PATH_OPEN')
+    $case = 0
+    foreach ($seed in $Seeds) {
+        foreach ($fault in $faults) {
+            $route = "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=$seed&" +
+                "tsjNpnFault=$fault&tsjVerifyNpn=true&running=true"
+            if (-not (verifyRoute "npn-$fault-seed-$seed" $route 'PASS:npn' (9510 + $case))) {
+                exit 1
+            }
+            $case++
+        }
+    }
     exit 0
 }
 if ($WrongRepair) {

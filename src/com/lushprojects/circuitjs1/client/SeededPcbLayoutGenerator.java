@@ -82,6 +82,7 @@ class SeededPcbLayoutGenerator {
         layout.validateGeometry(board);
         layout.compactToContent(FINAL_BOARD_X + variationMode * 10,
             FINAL_BOARD_Y + (variationMode % 2) * 10, FINAL_EDGE_MARGIN);
+        layout.positionPartsTrayDisjointFromBoard();
         layout.validateGeometry(board);
         return layout;
     }
@@ -345,17 +346,15 @@ class SeededPcbLayoutGenerator {
                 14, true, null);
         }
 
-        BoardComponent connectorComponent = findConnector(board);
-        PcbComponentPlacement connector = layout.getComponent(connectorComponent.getId());
-        if (connector == null)
-            throw new IllegalStateException("Missing logical connector for silkscreen labels");
-        boolean leftEdge = connector.getX() < outline.x + outline.width / 2;
         for (String powerInputId : board.getPowerInputIds()) {
             ExternalBoardPowerInput input = board.getPowerInput(powerInputId);
-            if (connectorComponent.getPadIds().contains(input.getPositivePadId()))
-                placeNetLabel(layout, board, outline, input.getPositivePadId(), "+V", leftEdge);
-            if (connectorComponent.getPadIds().contains(input.getReturnPadId()))
-                placeNetLabel(layout, board, outline, input.getReturnPadId(), "GND", leftEdge);
+            BoardPad positivePad = board.getPad(input.getPositivePadId());
+            PcbComponentPlacement positiveComponent = positivePad == null ? null :
+                layout.getComponent(positivePad.getComponentId());
+            boolean leftEdge = positiveComponent == null ||
+                positiveComponent.getX() < outline.x + outline.width / 2;
+            placeNetLabel(layout, board, outline, input.getPositivePadId(), "+V", leftEdge);
+            placeNetLabel(layout, board, outline, input.getReturnPadId(), "GND", leftEdge);
         }
     }
 

@@ -108,6 +108,33 @@ final class StandardPhysicalDefinitionProviders {
             }
         };
 
+    static final PhysicalDefinitionProvider<NpnSpecification> NPN =
+        new PhysicalDefinitionProvider<NpnSpecification>() {
+            public String getProviderId() { return "NPN"; }
+            public void add(BoardPhysicalSpecifications definitions,
+                    NpnSpecification specification) {
+                if (specification == null)
+                    throw new IllegalArgumentException("Missing NPN specification");
+                definitions.addPhysicalDefinition(specification.getSpecificationId(),
+                    specification, new PhysicalNameplate(specification.getSpecificationId(),
+                        "Generic NPN transistor", "Part", "Generic NPN transistor"),
+                    PhysicalPackages.TO92_NPN);
+            }
+            public NpnSpecification find(BoardPhysicalSpecifications definitions,
+                    String componentId) {
+                PhysicalSpecification value = definitions.getSpecification(componentId);
+                return value instanceof NpnSpecification ? (NpnSpecification) value : null;
+            }
+            public NpnSpecification require(BoardPhysicalSpecifications definitions,
+                    String componentId) {
+                PhysicalSpecification value = definitions.getSpecification(componentId);
+                if (value == null) throw missing(componentId, getProviderId());
+                if (!(value instanceof NpnSpecification))
+                    throw wrongType(componentId, getProviderId());
+                return (NpnSpecification) value;
+            }
+        };
+
     private static final HashMap<String, PhysicalDefinitionProvider<?>> PROVIDERS =
         new HashMap<String, PhysicalDefinitionProvider<?>>();
 
@@ -116,6 +143,7 @@ final class StandardPhysicalDefinitionProviders {
         register(DIODE);
         register(LED);
         register(CAPACITOR);
+        register(NPN);
     }
 
     private StandardPhysicalDefinitionProviders() {}

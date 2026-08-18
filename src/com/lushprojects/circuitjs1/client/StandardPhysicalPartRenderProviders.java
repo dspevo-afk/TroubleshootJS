@@ -18,6 +18,8 @@ final class StandardPhysicalPartRenderProviders {
             new FixedProvider(new DiodeRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED,
             new FixedProvider(new LedRenderer()));
+        registry.register(PhysicalPackages.TO92_NPN,
+            new FixedProvider(new NpnRenderer()));
         registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
             new FixedProvider(new ElectrolyticCapacitorRenderer()));
         registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
@@ -434,6 +436,75 @@ final class StandardPhysicalPartRenderProviders {
             graphics.setLineWidth(3);
             graphics.drawLine(start.x, start.y, end.x, end.y);
             graphics.setLineWidth(1);
+        }
+    }
+
+    /** TO-92 package renderer; B/C/E geometry and loose targets stay here. */
+    private static final class NpnRenderer extends BaseRenderer {
+        public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext context) {
+            return installedGeometry(context, installedTerminals(context));
+        }
+
+        public PhysicalPartRenderGeometry getLooseGeometry(PhysicalPartRenderContext context) {
+            return looseGeometry(context, looseTerminals(context, false), false);
+        }
+
+        public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (context.isComponentRemoved() || context.getPart() == null)
+                return;
+            Point base = context.getBoardPadPoint(0);
+            Point collector = context.getBoardPadPoint(1);
+            Point emitter = context.getBoardPadPoint(2);
+            if (base == null || collector == null || emitter == null)
+                return;
+            int centerX = (collector.x + emitter.x) / 2;
+            int centerY = Math.min(base.y, Math.min(collector.y, emitter.y)) -
+                context.scale(36) -
+                (context.getComponentState() == ComponentPhysicalState.LEAD_LIFTED ?
+                    context.scale(28) : 0);
+            int radius = Math.max(20, context.scale(28));
+            drawLead(graphics, context.getMountedLeadEnd(0),
+                new Point(centerX - radius, centerY + context.scale(6)));
+            drawLead(graphics, context.getMountedLeadEnd(1),
+                new Point(centerX - context.scale(8), centerY + radius));
+            drawLead(graphics, context.getMountedLeadEnd(2),
+                new Point(centerX + context.scale(8), centerY + radius));
+            graphics.setColor("#2f6680");
+            graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            graphics.setColor("#c7e0ea");
+            graphics.drawRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            graphics.setColor("#eef5f1");
+            graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(9, context.scale(11))));
+            graphics.drawString("NPN", centerX - context.scale(16), centerY + context.scale(4));
+            graphics.drawString("B", base.x - context.scale(5), base.y + context.scale(22));
+            graphics.drawString("C", collector.x - context.scale(5), collector.y + context.scale(22));
+            graphics.drawString("E", emitter.x - context.scale(5), emitter.y + context.scale(22));
+            context.markBodyDrawn();
+        }
+
+        public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (context.getPart() == null)
+                return;
+            Point base = context.getLooseTerminalPoint(0, false);
+            Point collector = context.getLooseTerminalPoint(1, false);
+            Point emitter = context.getLooseTerminalPoint(2, false);
+            int centerX = (collector.x + emitter.x) / 2;
+            int centerY = base.y;
+            int radius = Math.max(15, context.scale(21));
+            drawLead(graphics, base, new Point(centerX - radius, centerY));
+            drawLead(graphics, collector, new Point(centerX - context.scale(7), centerY));
+            drawLead(graphics, new Point(centerX + context.scale(7), centerY), emitter);
+            graphics.setColor("#2f6680");
+            graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            graphics.setColor("#c7e0ea");
+            graphics.drawRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            drawPartLabel(graphics, context, context.getPart().getId().equals(
+                context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "NPN",
+                Math.min(base.x, Math.min(collector.x, emitter.x)) + context.scale(20),
+                centerY - context.scale(27));
+            context.markBodyDrawn();
         }
     }
 

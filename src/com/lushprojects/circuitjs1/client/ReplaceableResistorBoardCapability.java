@@ -12,18 +12,28 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
     private final ResistorReplacementCatalog catalog;
     private ResistorSlotController controller;
     private ResistorStressDamageSystem stressDamageSystem;
+    private final String capabilityId;
 
     ReplaceableResistorBoardCapability(ReplaceableComponentSlot slot,
             PhysicalPartInventory<PhysicalResistorPart> inventory,
             ResistorReplacementCatalog catalog) {
+        this(ID, slot, inventory, catalog);
+    }
+
+    ReplaceableResistorBoardCapability(String capabilityId, ReplaceableComponentSlot slot,
+            PhysicalPartInventory<PhysicalResistorPart> inventory,
+            ResistorReplacementCatalog catalog) {
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable resistor runtime capability");
+        if (capabilityId == null || capabilityId.length() == 0)
+            throw new IllegalArgumentException("Missing replaceable resistor capability ID");
+        this.capabilityId = capabilityId;
         this.slot = slot;
         this.inventory = inventory;
         this.catalog = catalog;
     }
 
-    public String getCapabilityId() { return ID; }
+    public String getCapabilityId() { return capabilityId; }
     ReplaceableComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalResistorPart> getInventory() { return inventory; }
     ResistorReplacementCatalog getCatalog() { return catalog; }
@@ -98,6 +108,18 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
         PhysicalBoardRuntimeCapability capability = runtime.getCapability(ID);
         return capability instanceof ReplaceableResistorBoardCapability ?
             (ReplaceableResistorBoardCapability) capability : null;
+    }
+
+    static ReplaceableResistorBoardCapability find(PhysicalBoardRuntime runtime,
+            String componentId) {
+        if (runtime == null || componentId == null)
+            return null;
+        for (PhysicalBoardRuntimeCapability value : runtime.getCapabilities())
+            if (value instanceof ReplaceableResistorBoardCapability &&
+                    componentId.equals(((ReplaceableResistorBoardCapability) value)
+                        .getComponentId()))
+                return (ReplaceableResistorBoardCapability) value;
+        return null;
     }
 
     static ReplaceableResistorBoardCapability require(GeneratedBoardInstance instance) {

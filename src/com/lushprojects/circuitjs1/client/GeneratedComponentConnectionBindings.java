@@ -132,8 +132,10 @@ class GeneratedComponentConnectionBindings {
             return false;
         try {
             CircuitElm backing = componentBindings.getSingleElement(connection.getComponentId());
-            return faultBinding.isPublicTerminal(backing, endpoint, 0) ||
-                faultBinding.isPublicTerminal(backing, endpoint, 1);
+            for (int terminal = 0; terminal < backing.getPostCount(); terminal++)
+                if (faultBinding.isPublicTerminal(backing, endpoint, terminal))
+                    return true;
+            return false;
         } catch (RuntimeException ignored) {
             return false;
         }

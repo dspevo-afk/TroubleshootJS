@@ -72,6 +72,16 @@ class PcbBoardLayout {
         if (boardOutline.width <= 0 || boardOutline.height <= 0 || partsTray.width <= 0 ||
                 partsTray.height <= 0)
             throw new IllegalStateException("PCB layout has an invalid board or parts tray");
+        if (!inside(new Rectangle(0, 0, width, height), boardOutline.x, boardOutline.y) ||
+                !inside(new Rectangle(0, 0, width, height),
+                    boardOutline.x + boardOutline.width, boardOutline.y + boardOutline.height))
+            throw new IllegalStateException("PCB board outline leaves workbench canvas");
+        if (!inside(new Rectangle(0, 0, width, height), partsTray.x, partsTray.y) ||
+                !inside(new Rectangle(0, 0, width, height),
+                    partsTray.x + partsTray.width, partsTray.y + partsTray.height))
+            throw new IllegalStateException("PCB parts tray leaves workbench canvas");
+        if (partsTray.intersects(boardOutline))
+            throw new IllegalStateException("PCB parts tray intersects board outline");
 
         Vector<PcbComponentPlacement> componentList = getComponents();
         for (int first = 0; first < componentList.size(); first++) {
@@ -151,12 +161,38 @@ class PcbBoardLayout {
                 if (!traces.get(first).getNetId().equals(traces.get(second).getNetId()) &&
                         tracesCross(traces.get(first), traces.get(second)))
                     throw new IllegalStateException("Unrelated PCB traces cross: " +
-                        traces.get(first).getNetId() + " and " + traces.get(second).getNetId());
+                        traces.get(first).getNetId() + " and " + traces.get(second).getNetId() +
+                        " " + crossingSegmentDescription(traces.get(first), traces.get(second)));
             }
         }
         validateTraceClearance();
         validateSilkscreen(board);
         validateRouteQuality();
+    }
+
+    /** Places workbench chrome outside the board while preserving both sizes. */
+    void positionPartsTrayDisjointFromBoard() {
+        int gap = 24;
+        Rectangle[] candidates = new Rectangle[] {
+            new Rectangle(boardOutline.x + boardOutline.width + gap, boardOutline.y,
+                partsTray.width, partsTray.height),
+            new Rectangle(boardOutline.x - partsTray.width - gap, boardOutline.y,
+                partsTray.width, partsTray.height),
+            new Rectangle(boardOutline.x, boardOutline.y + boardOutline.height + gap,
+                partsTray.width, partsTray.height),
+            new Rectangle(boardOutline.x, boardOutline.y - partsTray.height - gap,
+                partsTray.width, partsTray.height)
+        };
+        Rectangle canvas = new Rectangle(0, 0, width, height);
+        for (Rectangle candidate : candidates) {
+            if (inside(canvas, candidate.x, candidate.y) &&
+                    inside(canvas, candidate.x + candidate.width, candidate.y + candidate.height) &&
+                    !candidate.intersects(boardOutline)) {
+                partsTray.setBounds(candidate.x, candidate.y, candidate.width, candidate.height);
+                return;
+            }
+        }
+        throw new IllegalStateException("Unable to place parts tray outside board outline");
     }
 
     private void validateTraceCourtyards(TroubleshootBoard board, PcbTraceGeometry trace,
@@ -621,6 +657,27 @@ class PcbBoardLayout {
         return false;
     }
 
+    private static String crossingSegmentDescription(PcbTraceGeometry first,
+            PcbTraceGeometry second) {
+        int[] firstX = first.getXPoints();
+        int[] firstY = first.getYPoints();
+        int[] secondX = second.getXPoints();
+        int[] secondY = second.getYPoints();
+        for (int firstIndex = 1; firstIndex < firstX.length; firstIndex++) {
+            for (int secondIndex = 1; secondIndex < secondX.length; secondIndex++) {
+                if (segmentsIntersect(firstX[firstIndex - 1], firstY[firstIndex - 1],
+                        firstX[firstIndex], firstY[firstIndex], secondX[secondIndex - 1],
+                        secondY[secondIndex - 1], secondX[secondIndex], secondY[secondIndex]))
+                    return "firstSegment=" + firstX[firstIndex - 1] + "," +
+                        firstY[firstIndex - 1] + " -> " + firstX[firstIndex] + "," +
+                        firstY[firstIndex] + " secondSegment=" + secondX[secondIndex - 1] +
+                        "," + secondY[secondIndex - 1] + " -> " + secondX[secondIndex] +
+                        "," + secondY[secondIndex];
+            }
+        }
+        return "segments=unknown";
+    }
+
     private static boolean segmentsIntersect(int ax1, int ay1, int ax2, int ay2,
             int bx1, int by1, int bx2, int by2) {
         int aLeft = Math.min(ax1, ax2);
@@ -635,8 +692,10 @@ class PcbBoardLayout {
             return false;
         boolean aHorizontal = ay1 == ay2;
         boolean bHorizontal = by1 == by2;
-        if (aHorizontal == bHorizontal)
-            return true;
+        if (aHorizontal && bHorizontal)
+            return ay1 == by1;
+        if (!aHorizontal && !bHorizontal)
+            return ax1 == bx1;
         return aHorizontal ? bx1 >= aLeft && bx1 <= aRight && ay1 >= bTop && ay1 <= bBottom :
             ax1 >= bLeft && ax1 <= bRight && by1 >= aTop && by1 <= aBottom;
     }

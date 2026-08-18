@@ -42,5 +42,15 @@ final class PhysicalPartRenderProbeProviders {
             }
         };
 
+    static final PhysicalPartRenderProbeProvider NPN =
+        new PhysicalPartRenderProbeProvider() {
+            public ProbeTarget createLooseProbeTarget(CirSim sim,
+                    GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
+                    PcbWorkbenchRenderer renderer) {
+                return new PhysicalNpnPartProbeTarget(sim, instance, part.getId(), terminal,
+                    renderer);
+            }
+        };
+
     private PhysicalPartRenderProbeProviders() { }
 }

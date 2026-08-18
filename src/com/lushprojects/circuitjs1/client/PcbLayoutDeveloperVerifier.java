@@ -7,6 +7,8 @@ class PcbLayoutDeveloperVerifier {
         verifyFamily("LED_INDICATOR");
         verifyFamily("DIODE_PROTECTED_INDICATOR");
         verifyFamily("PARALLEL_DUAL_INDICATOR");
+        verifyFamily("RC_DELAY");
+        verifyFamily("NPN_LOW_SIDE_SWITCH");
         GeneratedBoardInstance current = sim.getGeneratedBoardInstance();
         PcbBoardLayout regenerated = generate(current.getCircuitFamilyId(), current.getSeed())
             .getPcbLayout();
@@ -38,6 +40,8 @@ class PcbLayoutDeveloperVerifier {
             verifyMultiPadNets(seed2, seed2Board.getBoard());
             verifyMultiPadNets(seed3, seed3Board.getBoard());
         }
+        if ("NPN_LOW_SIDE_SWITCH".equals(familyId))
+            verifyNpnFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
         if ("LED_INDICATOR".equals(familyId))
             verifySeedThreeLedEndpointRegression(seed3);
         require(seed0.geometryFingerprint().equals(seed0Repeat.geometryFingerprint()),
@@ -220,6 +224,50 @@ class PcbLayoutDeveloperVerifier {
         verifyMultiPadNet(layout, board, "GND", new String[] { "J1.2", "LED1.K", "LED2.K" });
     }
 
+    private static void verifyNpnFootprint(PcbBoardLayout layout, TroubleshootBoard board,
+            long seed) {
+        require(board.getPad("Q1.B") != null && board.getPad("Q1.C") != null &&
+            board.getPad("Q1.E") != null &&
+            "BASE".equals(board.getPad("Q1.B").getNetId()) &&
+            "COLLECTOR".equals(board.getPad("Q1.C").getNetId()) &&
+            "GND".equals(board.getPad("Q1.E").getNetId()),
+            "NPN layout verifier lost stable B/C/E pads");
+        PcbComponentPlacement actualPlacement = layout.getComponent("Q1");
+        PcbFootprint expected = StandardPcbFootprintProviders.createRegistry().create(
+            board.getComponent("Q1"), actualPlacement.getX(), actualPlacement.getY(),
+            new java.util.Random(seed), layout.getBoardOutline());
+        require(samePlacement(actualPlacement, expected.getPlacement()),
+            "NPN Q1 placement/body/courtyard diverges from TO-92 provider");
+        Vector<PcbPadPlacement> expectedPads = expected.getPads();
+        String[] terminalIds = { "Q1.B", "Q1.C", "Q1.E" };
+        require(expectedPads.size() == terminalIds.length,
+            "TO-92 provider did not expose three stable terminals");
+        for (int index = 0; index < terminalIds.length; index++) {
+            PcbPadPlacement expectedPad = expectedPads.get(index);
+            PcbPadPlacement actualPad = layout.getPad(terminalIds[index]);
+            require(expectedPad.getPadId().equals(terminalIds[index]) &&
+                samePad(actualPad, expectedPad),
+                "NPN Q1 " + terminalIds[index] +
+                " diverges from TO-92 provider geometry");
+        }
+    }
+
+    private static boolean samePlacement(PcbComponentPlacement first,
+            PcbComponentPlacement second) {
+        return first.getComponentId().equals(second.getComponentId()) &&
+            first.getX() == second.getX() && first.getY() == second.getY() &&
+            first.getWidth() == second.getWidth() && first.getHeight() == second.getHeight() &&
+            first.getKeepOut().equals(second.getKeepOut()) &&
+            first.getRoutingCourtyard().equals(second.getRoutingCourtyard());
+    }
+
+    private static boolean samePad(PcbPadPlacement first, PcbPadPlacement second) {
+        return first.getPadId().equals(second.getPadId()) && first.getX() == second.getX() &&
+            first.getY() == second.getY() && first.getEscapeDx() == second.getEscapeDx() &&
+            first.getEscapeDy() == second.getEscapeDy() &&
+            first.getEscapeLength() == second.getEscapeLength();
+    }
+
     private static void verifyMultiPadNet(PcbBoardLayout layout, TroubleshootBoard board,
             String netId, String[] padIds) {
         int traceCount = 0;
@@ -264,6 +312,10 @@ class PcbLayoutDeveloperVerifier {
             return new DiodeProtectedIndicatorGenerator().generate(seed);
         if ("PARALLEL_DUAL_INDICATOR".equals(familyId))
             return new ParallelDualIndicatorGenerator().generate(seed);
+        if ("RC_DELAY".equals(familyId))
+            return new RcDelayGenerator().generate(seed);
+        if ("NPN_LOW_SIDE_SWITCH".equals(familyId))
+            return new NpnLowSideSwitchGenerator().generate(seed);
         throw new IllegalArgumentException("Unsupported PCB verifier family: " + familyId);
     }
 

@@ -174,7 +174,7 @@ final class RcDelayGenerator {
         GeneratedFault fault = selected.getFault();
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID, CHARGE_DELAY_VARIANT,
             "Generated RC delay controller, seed " + seed, components, power, connections,
-            behavior, RcDelayPcbLayoutFactory.create(board), specs, faultBinding, operational,
+            behavior, RcDelayPcbLayoutFactory.create(board, seed), specs, faultBinding, operational,
             new GeneratedChallengeDefinition("RC_DELAY_STARTUP", FAMILY_ID, CHARGE_DELAY_VARIANT,
                 seed, scenarios, "Repair verified. The controller delay is operating normally.",
                 fault, faultBinding, behavior), new RcDelayFamilyState(), runtime, temporal);

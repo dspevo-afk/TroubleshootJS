@@ -264,7 +264,10 @@ Silkscreen reference and connector-net labels are generated as collision-aware
 layout objects rather than fixed renderer pixels. `J1.1` and `J1.2` retain
 stable pad identity while rendering a positive/negative connector cue and
 seed-dependent voltage text. The parts tray remains a separate workbench
-rectangle outside the board copper area. The browser verifier's geometry bridge
+rectangle outside the board outline and all board components, pads, traces, and
+silkscreen. `PcbBoardLayout.validateGeometry` rejects board/tray intersection,
+and `positionPartsTrayDisjointFromBoard` provides the shared placement invariant
+used by fixed and procedural layouts. The browser verifier's geometry bridge
 is read-only and only enabled by an explicit developer query; normal input is
 still dispatched through real CDP mouse events. Its CDP receive window is
 bounded independently from the route timeout so a slow diagnostic response
@@ -931,7 +934,56 @@ An active OHM/continuity/diode transaction is itself a real source and can
 recharge C1; after cleanup the same generic policy correctly requires another
 natural R2 discharge before the next active transaction.
 
-Quick Play now has four eligible normal-player families, including `RC_DELAY`.
-Its generic completion path uses the temporal repair contract when present,
-while explicit fixture/challenge precedence and normal-player fault/privacy
-boundaries remain unchanged.
+Quick Play now has five eligible normal-player families, including `RC_DELAY`
+and `NPN_LOW_SIDE_SWITCH`. Its generic completion path uses the temporal repair
+contract when present, while explicit fixture/challenge precedence and
+normal-player fault/privacy boundaries remain unchanged.
+
+## Task 37 — NPN low-side switch family and tray correction
+
+The NPN family keeps CircuitJS as the electrical source of truth. Its bounded
+topology has independent `LOAD_VIN_INPUT` and `CONTROL_VIN_INPUT` sources,
+`RLOAD -> LED1 -> Q1.C` on the load path, `RB -> Q1.B` with `RPD` to ground,
+and `Q1.E` on the ground net. Stable logical nets are `LOAD_SUPPLY`,
+`CONTROL_INPUT`, `BASE`, `LOAD_NODE`, `COLLECTOR`, and `GND`; stable Q1 pads
+are `Q1.B`, `Q1.C`, and `Q1.E`. `NTransistorElm`/`TransistorElm` post order
+is explicitly preserved as base/post 0, collector/post 1, emitter/post 2,
+and the family validators measure live transistor, LED, resistor, and node
+values for healthy, faulted, and repaired behavior.
+
+The physical foundation adds an immutable `NpnSpecification`, a TO-92 package
+with ordered B/C/E terminals, `PhysicalNpnPart`, and a replaceable Q1 slot.
+`StandardPcbFootprintProviders` owns the registered TO-92 footprint and
+`StandardPhysicalPartRenderProviders` plus
+`PhysicalPartRenderProbeProviders` own installed/loose body and probe geometry.
+Catalog acquisition allocates a separate live `NTransistorElm` backing and
+physical identity. The original Q1 retains its private generated fault when
+removed and reinstalled; a catalog replacement is a distinct fault-free part.
+`NpnSlotController` retargets the existing detachable graph connections so
+loose measurement and replacement remain solver-backed.
+
+The family fault boundary includes collector/emitter open, collector/emitter
+short, base-resistor open, and load-path open effects. Fault infrastructure is
+owned by the original physical part and is not copied into replacements.
+`NpnLowSideSwitchFaultValidator` and
+`NpnLowSideSwitchRepairValidator` consume solver state and the generic
+challenge lifecycle; repair success requires the live circuit to switch both
+on and off and does not recognize a component ID, catalog ID, or hidden fault
+flag. `NPN_LOW_SIDE_SWITCH` is registered in Quick Play without exposing
+fault, answer, or physical metadata in the normal player UI.
+
+The parts-tray correction is generic rather than family-specific. Fixed RC,
+seeded LED/diode/parallel, and NPN layouts all call the same tray placement and
+geometry validation seam. The compact-board calculation excludes tray chrome,
+then the shared invariant moves the tray to a valid canvas side and rejects
+any overlap with the board outline. `PcbLayoutDeveloperVerifier` additionally
+regenerates the Q1 footprint through the registered TO-92 provider and checks
+placement, body, courtyard, pad coordinates, escape vectors/lengths, and B/C/E
+ordering. This preserves provider ownership while keeping the tray visible,
+selectable, paginated, and probeable.
+
+Focused Task 37 validation covers the JDK 8/GWT production build, all 12 NPN
+seed/fault routes, provider/renderer and architecture boundaries, layout
+determinism/tray separation, Quick Play, RC/stored-energy, and LED/diode/
+parallel regressions. Visible in-app Browser evidence is stored under
+`docs/task-evidence/task-37/`.

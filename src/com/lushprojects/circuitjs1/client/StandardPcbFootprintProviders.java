@@ -15,6 +15,7 @@ final class StandardPcbFootprintProviders {
         registry.register(PhysicalPackages.AXIAL_RESISTOR, new AxialProvider(0));
         registry.register(PhysicalPackages.AXIAL_DIODE, new AxialProvider(1));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED, new LedProvider());
+        registry.register(PhysicalPackages.TO92_NPN, new NpnProvider());
         registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
             new ElectrolyticCapacitorProvider());
         registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
@@ -115,6 +116,25 @@ final class StandardPcbFootprintProviders {
             return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 90, 100,
                 new Rectangle(x + 15, y + 12, 60, 60),
                 new Rectangle(x + 6, y + 4, 78, 101)), pads);
+        }
+    }
+
+    /** Three-lead through-hole TO-92 footprint with stable B/C/E pad order. */
+    private static class NpnProvider implements PcbFootprintProvider {
+        public PcbFootprint create(BoardComponent component, int x, int y, Random random,
+                Rectangle outline) {
+            if (component.getPadIds().size() != 3)
+                throw new IllegalStateException("NPN provider requires B/C/E pads for " +
+                    component.getId());
+            Vector<String> ids = component.getPadIds();
+            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
+            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 90, -1, 0, 30));
+            // Clear the inclusive courtyard boundary used by the PCB route validator.
+            pads.add(new PcbPadPlacement(ids.get(1), x + 60, y + 90, 0, 1, 32));
+            pads.add(new PcbPadPlacement(ids.get(2), x + 100, y + 90, 0, 1, 32));
+            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 130, 125,
+                new Rectangle(x + 28, y + 12, 74, 60),
+                new Rectangle(x + 5, y + 4, 120, 118)), pads);
         }
     }
 

@@ -59,6 +59,22 @@ final class GeneratedScenarioLibrary {
         return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
     }
 
+    static GeneratedScenarioCatalog<GeneratedObservedBehavior> npnLowSideSwitch() {
+        Vector<GeneratedScenario<GeneratedObservedBehavior>> candidates =
+            new Vector<GeneratedScenario<GeneratedObservedBehavior>>();
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "NPN_LOAD_NOT_SWITCHING", "CONTROLLED_LOAD_DOES_NOT_SWITCH_ON",
+            "The controlled load does not switch on.",
+            GeneratedObservedBehavior.NPN_LOAD_NOT_SWITCHING,
+            new NpnLoadCompatibility(false)));
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "NPN_LOAD_STUCK_ACTIVE", "CONTROLLED_LOAD_STAYS_ACTIVE",
+            "The controlled load stays active when control is low.",
+            GeneratedObservedBehavior.NPN_LOAD_STUCK_ACTIVE,
+            new NpnLoadCompatibility(true)));
+        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
+    }
+
     private static class DarkIndicatorCompatibility
             implements GeneratedScenarioCompatibility<GeneratedObservedBehavior> {
         private final String ledId;
@@ -153,6 +169,29 @@ final class GeneratedScenarioLibrary {
             GeneratedTemporalBehavior temporal = instance.getTemporalBehavior();
             return powerState == BoardPowerState.POWERED && temporal != null &&
                 temporal.getObservedBehavior() == observedBehavior;
+        }
+    }
+
+    private static class NpnLoadCompatibility
+            implements GeneratedScenarioCompatibility<GeneratedObservedBehavior> {
+        private final boolean stuckActive;
+
+        NpnLoadCompatibility(boolean stuckActive) { this.stuckActive = stuckActive; }
+
+        public boolean matches(GeneratedBoardInstance instance,
+                BoardModificationController modifications, BoardPowerState powerState,
+                GeneratedObservedBehavior observedBehavior) {
+            if (powerState != BoardPowerState.POWERED ||
+                    !(instance.getFamilyState() instanceof NpnLowSideSwitchFamilyState))
+                return false;
+            NpnLowSideSwitchFamilyState state =
+                (NpnLowSideSwitchFamilyState) instance.getFamilyState();
+            if (stuckActive) {
+                state.setCommandedOn(CircuitElm.sim, false);
+                return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005;
+            }
+            state.setCommandedOn(CircuitElm.sim, true);
+            return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001;
         }
     }
 }

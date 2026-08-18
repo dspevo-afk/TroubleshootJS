@@ -52,6 +52,7 @@ $requiredProviderTokens = @(
     'PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR',
     'PhysicalPackages.RADIAL_CERAMIC_CAPACITOR',
     'PhysicalPackages.THROUGH_HOLE_CONNECTOR_2',
+    'PhysicalPackages.TO92_NPN',
     'PhysicalPackages.DEV_CANARY_3',
     'PhysicalPackages.DEV_CANARY_6',
     'getLooseProbeProvider'
@@ -86,7 +87,8 @@ foreach ($token in @(
     'PhysicalResistorPartProbeTarget',
     'PhysicalDiodePartProbeTarget',
     'PhysicalLedPartProbeTarget',
-    'PhysicalCapacitorPartProbeTarget'
+    'PhysicalCapacitorPartProbeTarget',
+    'PhysicalNpnPartProbeTarget'
 )) {
     if ($probeProviders.IndexOf($token, [StringComparison]::Ordinal) -lt 0) {
         throw "typed loose probe provider token is missing: $token"

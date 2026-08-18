@@ -663,8 +663,8 @@ The project should next add circuit families that teach distinct troubleshooting
 
 ## Task 36 — Capacitor Foundation and RC Family
 
-**Status:** `[x]` Complete — primary architect `FINAL PASS`; Task 37 is next
-eligible and has not been started
+**Status:** `[x]` Complete — primary architect `FINAL PASS`; Task 37 was the
+next eligible milestone at Task 36 acceptance and is completed below
 
 ### Goals
 
@@ -701,13 +701,15 @@ discharge graph or a UI waveform. Focused automated RC, stored-energy,
 renderer-boundary, Quick Play, and adjacent family checks pass;
 the visible in-app browser acceptance gate is recorded separately in the Task
 36 report, including its specific native-select Browser-control limitation.
-Task 37 is now the next eligible milestone and has not been started.
+At Task 36 acceptance, Task 37 was the next eligible milestone; its completed
+result is recorded below.
 
 ---
 
 ## Task 37 — NPN Low-Side Switch Family
 
-**Status:** `[>]` Next eligible milestone after Task 36
+**Status:** `[x]` Complete — primary architect `FINAL PASS`; Task 38 is next
+eligible and has not been started
 
 ### Goals
 
@@ -724,11 +726,36 @@ Introduce:
 
 The family should support multiple meaningful probe points and at least several fault locations that produce distinguishable symptoms.
 
+### Completion result
+
+Task 37 adds the solver-backed `NPN_LOW_SIDE_SWITCH` family with independent
+load/control supplies, stable `LOAD_SUPPLY`, `CONTROL_INPUT`, `BASE`,
+`LOAD_NODE`, `COLLECTOR`, and `GND` nets, and explicit CircuitJS
+`NTransistorElm` base/collector/emitter mapping. It supports seeded healthy
+ON/OFF behavior and four distinct compatible faults: Q1 C-E open, Q1 C-E
+short, base-resistor open, and load-path open. Fault effects remain private to
+the original physical part, while remove/reinstall preserves the original
+fault and catalog replacement creates a distinct solver-backed NPN.
+
+The physical layer adds ordered TO-92 B/C/E package/specification/nameplate
+identity, provider-owned footprint/render/probe geometry, loose-part
+inspection, a replaceable Q1 slot, and generic solver-backed repair status.
+Quick Play now includes the family while preserving explicit-route precedence
+and normal-player privacy. The shared `PcbBoardLayout` tray invariant rejects
+board/tray overlap and all existing fixed/procedural layouts were corrected;
+the NPN verifier proves exact parity with the registered TO-92 footprint.
+
+Task 37 passed the bounded coder/reviewer protocol, final JDK 8/GWT build,
+12/12 NPN seed/fault verification matrix, architecture/renderer/layout
+checks, Quick Play, RC/stored-energy, and LED/diode/parallel regressions.
+Visible in-app Browser evidence is recorded under
+`docs/task-evidence/task-37/`.
+
 ---
 
 ## Task 38 — NMOS Low-Side Switch Family
 
-**Status:** `[ ]`
+**Status:** `[>]` Next eligible milestone after Task 37
 
 ### Goals
 
@@ -1409,7 +1436,7 @@ When updating:
 
 # Immediate Next Milestone
 
-**Task 37 — NPN Low-Side Switch Family**
+**Task 38 — NMOS Low-Side Switch Family**
 
-Task 36 passed final acceptance. Task 37 is the next eligible milestone only;
-it has not been started.
+Task 37 passed final acceptance. Task 38 is the next eligible milestone only;
+it has been identified but not started.

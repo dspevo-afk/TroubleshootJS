@@ -11,6 +11,7 @@ final class QuickPlayFamilyRegistry {
     static final String DIODE_PROTECTED_INDICATOR = "DIODE_PROTECTED_INDICATOR";
     static final String PARALLEL_DUAL_INDICATOR = "PARALLEL_DUAL_INDICATOR";
     static final String RC_DELAY = "RC_DELAY";
+    static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
     private static final long[] NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
 
     private QuickPlayFamilyRegistry() { }
@@ -21,13 +22,15 @@ final class QuickPlayFamilyRegistry {
         result.add(DIODE_PROTECTED_INDICATOR);
         result.add(PARALLEL_DUAL_INDICATOR);
         result.add(RC_DELAY);
+        result.add(NPN_LOW_SIDE_SWITCH);
         return result;
     }
 
     static boolean isNormalPlayerEligible(String familyId) {
         return LED_INDICATOR.equals(familyId) ||
             DIODE_PROTECTED_INDICATOR.equals(familyId) ||
-            PARALLEL_DUAL_INDICATOR.equals(familyId) || RC_DELAY.equals(familyId);
+            PARALLEL_DUAL_INDICATOR.equals(familyId) || RC_DELAY.equals(familyId) ||
+            NPN_LOW_SIDE_SWITCH.equals(familyId);
     }
 
     static GeneratedBoardInstance generate(String familyId, long seed) {
@@ -39,6 +42,8 @@ final class QuickPlayFamilyRegistry {
             return new ParallelDualIndicatorGenerator().generate(seed);
         if (RC_DELAY.equals(familyId))
             return new RcDelayGenerator().generate(seed);
+        if (NPN_LOW_SIDE_SWITCH.equals(familyId))
+            return new NpnLowSideSwitchGenerator().generate(seed);
         throw new IllegalArgumentException("Quick Play family is not normal-player eligible: " +
             familyId);
     }

@@ -201,3 +201,74 @@ class SwitchParallelShortFaultEffect implements GeneratedFaultEffect {
 
     public CircuitElm getValueMutationTarget() { return null; }
 }
+
+/** Collector series-open equivalent owned by the original three-terminal part. */
+class TransistorCollectorOpenFaultEffect implements GeneratedFaultEffect {
+    private final SwitchElm switchElement;
+
+    TransistorCollectorOpenFaultEffect(SwitchElm switchElement) {
+        if (switchElement == null)
+            throw new IllegalArgumentException("Missing transistor collector-open switch");
+        this.switchElement = switchElement;
+    }
+
+    public void setApplied(boolean applied) {
+        boolean open = switchElement.position == 1;
+        if (open != applied)
+            switchElement.toggle();
+    }
+
+    public boolean isApplied() { return switchElement.position == 1; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (!(backingElement instanceof TransistorElm) || terminal < 0 || terminal > 2)
+            throw new IllegalArgumentException("Invalid transistor terminal");
+        return terminal == 1 ? new CircuitPostMeasurementEndpoint(switchElement, 1) :
+            new CircuitPostMeasurementEndpoint(backingElement, terminal);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(switchElement);
+        return result;
+    }
+
+    public CircuitElm getValueMutationTarget() { return null; }
+}
+
+/** Low-ohm collector/emitter shunt owned by the original transistor body. */
+class TransistorCeShortFaultEffect implements GeneratedFaultEffect {
+    private static final double OPEN_SHUNT_RESISTANCE_OHMS = 1e12;
+    private static final double SHORT_SHUNT_RESISTANCE_OHMS = .1;
+    private final ResistorElm bypassResistor;
+    private boolean applied;
+
+    TransistorCeShortFaultEffect(ResistorElm bypassResistor) {
+        if (bypassResistor == null)
+            throw new IllegalArgumentException("Missing transistor C-E shunt");
+        this.bypassResistor = bypassResistor;
+        setApplied(false);
+    }
+
+    public void setApplied(boolean applied) {
+        bypassResistor.setResistance(applied ? SHORT_SHUNT_RESISTANCE_OHMS :
+            OPEN_SHUNT_RESISTANCE_OHMS);
+        this.applied = applied;
+    }
+
+    public boolean isApplied() { return applied; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (!(backingElement instanceof TransistorElm) || terminal < 0 || terminal > 2)
+            throw new IllegalArgumentException("Invalid transistor terminal");
+        return new CircuitPostMeasurementEndpoint(backingElement, terminal);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(bypassResistor);
+        return result;
+    }
+
+    public CircuitElm getValueMutationTarget() { return null; }
+}
