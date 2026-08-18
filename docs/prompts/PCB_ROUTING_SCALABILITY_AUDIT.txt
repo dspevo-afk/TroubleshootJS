@@ -1,0 +1,433 @@
+READ-ONLY RESEARCH TASK — TROUBLESHOOTJS PCB ROUTING & LAYOUT SCALABILITY AUDIT
+
+This is a READ-ONLY architecture audit. Do NOT implement routing, placement, vias, layers, or rendering changes.
+
+Other Codex sessions may be working concurrently on Task 38, UI work, and other research. Do not interfere with them.
+
+The only repository file you may create or modify is:
+
+docs/research/PCB_ROUTING_SCALABILITY_AUDIT.md
+
+Do NOT modify production code, tests, build scripts, AGENTS.md, ROADMAP.md, ARCHITECTURE.md, CODEX_TASK_REPORT.md, UI files, or Task 38 files.
+
+GOAL
+
+Determine how far the current generated-PCB placement and routing architecture can realistically scale, what will fail first as boards become larger, and what incremental architecture would be needed before TroubleshootJS can generate believable multi-subsystem PCBs.
+
+The goal is not manufacturing-grade CAD. The goal is believable, deterministic, probeable game PCBs that preserve electrical semantics.
+
+==================================================
+1. MAP CURRENT PCB GENERATION PIPELINE
+==================================================
+
+Trace the actual code path from logical generated board to final PCB geometry.
+
+Identify ownership of:
+- physical package selection;
+- footprint generation;
+- component placement;
+- pad coordinates;
+- keep-outs;
+- routing courtyards;
+- pad escape vectors;
+- net ordering;
+- trace routing;
+- A*/grid routing if used;
+- trace-width/clearance rules;
+- silkscreen placement;
+- board outline;
+- parts tray placement;
+- deterministic seed behavior;
+- geometry validation;
+- route collision validation;
+- layout fingerprints;
+- renderer consumption;
+- probe mapping.
+
+Produce an architecture map grounded in actual classes.
+
+==================================================
+2. CURRENT ROUTER CAPABILITY
+==================================================
+
+Describe what the router can and cannot do today.
+
+Determine whether it supports:
+- Manhattan routing;
+- arbitrary bend counts;
+- per-net sequential routing;
+- rip-up/reroute;
+- obstacle avoidance;
+- crossing prevention;
+- shared copper/net merging;
+- buses;
+- vias;
+- multiple copper layers;
+- 0-ohm jumpers;
+- component rotation;
+- ground planes;
+- power planes;
+- trace-width classes.
+
+Do not infer features merely because they would be typical in PCB software.
+
+==================================================
+3. CURRENT PLACEMENT CAPABILITY
+==================================================
+
+Analyze how components are positioned today.
+
+Questions:
+- Is placement mostly random, heuristic, templated, or subsystem-aware?
+- How are connectors anchored?
+- Are electrically related parts deliberately clustered?
+- Are high-degree nets considered?
+- Are power/control sections separated?
+- Can components rotate?
+- How are footprint keep-outs used?
+- Does placement optimize route length or congestion?
+- What retry/rejection behavior exists?
+
+==================================================
+4. SCALING STRESS ANALYSIS
+==================================================
+
+Reason from the current algorithm and data structures about likely behavior at increasing board sizes.
+
+Consider roughly:
+- 5–10 components;
+- 15–25 components;
+- 30–50 components;
+- 50–100 components;
+- 100+ components.
+
+Do not invent benchmark numbers if none exist.
+
+For each range, identify likely bottlenecks such as:
+- placement collisions;
+- routing congestion;
+- impossible one-sided crossings;
+- excessive board expansion;
+- search cost;
+- deterministic retry explosion;
+- ugly long traces;
+- unreadable component density;
+- excessive rejection rates.
+
+==================================================
+5. ONE-SIDED ROUTING LIMIT
+==================================================
+
+This is a major focus.
+
+Determine what kinds of circuit graphs eventually become impossible or impractical on the current one-sided board representation.
+
+Discuss:
+- planar versus non-planar connectivity;
+- dense shared control/power nets;
+- connectors with many crossing destinations;
+- multi-subsystem interconnects;
+- the effect of component placement on planarity;
+- whether simply enlarging the board solves the problem;
+- where it does not.
+
+Do not claim a universal component-count threshold if topology is the real constraint.
+
+==================================================
+6. ZERO-OHM RESISTORS / JUMPERS
+==================================================
+
+Evaluate whether 0-ohm resistors or wire jumpers would be a good intermediate solution before true multilayer boards.
+
+Investigate how they could conceptually fit while preserving:
+- real component identity;
+- probeability;
+- continuity;
+- solver truth;
+- physical routing semantics;
+- generated board realism.
+
+Identify whether jumpers should be:
+- actual logical components;
+- routing infrastructure;
+- special physical components bound to a simple CircuitJS wire/resistor model;
+- another approach.
+
+Do NOT implement them.
+
+Discuss when jumpers improve realism and when excessive jumpers merely disguise a failing router.
+
+==================================================
+7. MULTILAYER / VIA PATH
+==================================================
+
+Evaluate what would be required later to support two-sided/multilayer PCB routing.
+
+Questions:
+- Does the current layout model encode layer identity anywhere?
+- What structures would need layer fields?
+- How would vias map electrically?
+- How would probeability differ front/back?
+- Could the board-flip concept fit the current renderer/controller architecture?
+- Would component pads be through-hole and therefore visible from both sides?
+- What happens to stable pad/net identity across layers?
+- Which validation rules would need extension?
+
+Do not implement multilayer support.
+
+Recommend the smallest plausible incremental path if/when it becomes necessary.
+
+==================================================
+8. GROUND / POWER DISTRIBUTION
+==================================================
+
+Evaluate current treatment of high-connectivity rails such as GND, VIN, 5V, and 12V.
+
+Investigate future options:
+- explicit routed buses;
+- ground rails;
+- copper pours/planes;
+- strategic vias;
+- star distribution;
+- subsystem-local power distribution.
+
+Explain which options improve routing scalability and which would substantially complicate measurement/render semantics.
+
+The simulator must not use invisible magical connectivity on a board that visually appears disconnected unless that connectivity is physically represented to the player.
+
+==================================================
+9. SUBSYSTEM-AWARE PLACEMENT
+==================================================
+
+Evaluate whether future composed boards should place components by functional subsystem before routing.
+
+Example:
+- power entry/regulator clustered together;
+- control logic clustered together;
+- driver near output connector;
+- sensor conditioning near sensor connector.
+
+Would this improve:
+- realism;
+- route length;
+- congestion;
+- troubleshooting readability;
+- generated-board rejection rate?
+
+Recommend what semantic information a placement system would need, without implementing it.
+
+==================================================
+10. FOOTPRINT / VISUAL / ROUTING ENVELOPE CONSISTENCY
+==================================================
+
+Inspect whether visual component bodies, footprint keep-outs, selection bounds, and routing courtyards agree.
+
+Use the existing visual realism audit if available, but independently verify relevant claims from code.
+
+Identify cases where the router thinks space is free while the renderer draws a body there, or where overly conservative courtyards waste board space.
+
+Explain what should remain separate:
+- pad/electrical geometry;
+- routing keep-out;
+- selection/probe geometry;
+- visual body envelope.
+
+==================================================
+11. DETERMINISTIC GENERATION
+==================================================
+
+Analyze how placement/routing randomness and retry behavior are seeded today.
+
+Questions:
+- Does one random stream couple unrelated decisions?
+- Can minor generator changes completely scramble board layout?
+- Are failed route attempts deterministic?
+- Are layout fingerprints stable and useful?
+- Would derived sub-seeds for placement/routing/retries improve maintainability?
+
+Recommend a future deterministic strategy if necessary.
+
+==================================================
+12. FAILURE / RETRY STRATEGY
+==================================================
+
+Map what happens when:
+- placement fails;
+- a route cannot be found;
+- traces collide;
+- silkscreen conflicts;
+- board bounds are exceeded.
+
+Does generation retry locally, regenerate everything, enlarge the board, or fail?
+
+Recommend an efficient staged approach, for example:
+- cheap semantic checks;
+- placement;
+- congestion estimate;
+- routing;
+- local reroute/rip-up;
+- bounded regeneration.
+
+Do not force this exact solution.
+
+==================================================
+13. ROUTING QUALITY VS ROUTING SUCCESS
+==================================================
+
+A board can be technically routed and still look absurd.
+
+Evaluate how future validation could reject layouts with:
+- extreme trace detours;
+- needless zigzags;
+- excessive parallel congestion;
+- awkward component isolation;
+- traces weaving across the whole board;
+- unrealistic connector fanout.
+
+Recommend simple quality metrics that are appropriate for a game PCB generator rather than full CAD optimization.
+
+==================================================
+14. TROUBLESHOOTING READABILITY
+==================================================
+
+PCB generation should support the gameplay.
+
+Evaluate how board density and routing affect:
+- following traces visually;
+- probing pads;
+- identifying components;
+- understanding approximate subsystems;
+- avoiding accidental clicks;
+- distinguishing trace crossings/layers later.
+
+The hardest board should not simply be the most visually chaotic board.
+
+==================================================
+15. COMPLEXITY EXERCISES
+==================================================
+
+Without implementing anything, walk through likely placement/routing difficulty for:
+
+A. A basic coffee-maker controller with:
+- power entry;
+- low-voltage supply;
+- control section;
+- sensor input;
+- relay/MOSFET output;
+- indicator;
+- connectors.
+
+B. A somewhat denser board such as a fan or pump controller with multiple inputs/outputs.
+
+Identify which portions the current router could plausibly handle and where crossings/congestion are likely to force new infrastructure.
+
+==================================================
+16. PERFORMANCE
+==================================================
+
+Assess algorithmic hotspots based on the code.
+
+Discuss:
+- grid/search size;
+- number of nets;
+- obstacle count;
+- rerouting cost;
+- board-size growth;
+- deterministic retries.
+
+Do not fabricate runtime measurements.
+
+Recommend what should be measured later when real stress benchmarks are added.
+
+==================================================
+17. RECOMMENDED SCALING PATH
+==================================================
+
+Propose an incremental future path.
+
+Possible stages might include:
+1. improve placement heuristics;
+2. introduce subsystem-aware placement;
+3. add bounded rip-up/reroute;
+4. add explicit 0-ohm jumpers;
+5. add routing-quality scoring;
+6. add two-sided/layer-aware routing only when topology demands it.
+
+Do not assume this order is correct. Derive it from the code.
+
+Clearly state which additions are needed for medium boards and which can wait for genuinely complex boards.
+
+==================================================
+18. REPORT
+==================================================
+
+Write findings to exactly:
+
+docs/research/PCB_ROUTING_SCALABILITY_AUDIT.md
+
+Use this structure:
+
+# TroubleshootJS PCB Routing & Layout Scalability Audit
+## 1. Executive Summary
+## 2. Current PCB Generation Pipeline
+## 3. Current Placement Model
+## 4. Current Routing Model
+## 5. Scaling Stress Analysis
+## 6. One-Sided Routing Limits
+## 7. Zero-Ohm Jumpers / Wire Links
+## 8. Multilayer and Via Path
+## 9. Ground / Power Distribution
+## 10. Subsystem-Aware Placement
+## 11. Geometry Envelope Consistency
+## 12. Deterministic Seed Behavior
+## 13. Failure / Retry Strategy
+## 14. Routing Quality Metrics
+## 15. Troubleshooting Readability
+## 16. Coffee-Maker / Controller Exercises
+## 17. Performance Considerations
+## 18. Current Strengths
+## 19. Current Scalability Blockers
+## 20. Recommended Incremental Architecture
+## 21. Prioritized Recommendations
+## 22. Recommended Bounded Future Tasks
+## 23. File/Class Watchlist
+## 24. Risks and Open Questions
+
+In the executive summary directly answer:
+
+"How far can the current one-sided PCB generator plausibly scale, and what is most likely to fail first?"
+
+Do not provide fake precision when the answer depends more on topology than raw component count.
+
+==================================================
+19. VALIDATION AND COMPLETION
+==================================================
+
+Verify technical claims against repository code and clearly distinguish current behavior, inference, and recommendation.
+
+Run git status --short.
+
+The only repository change must be:
+
+docs/research/PCB_ROUTING_SCALABILITY_AUDIT.md
+
+Commit only the report on an isolated research branch.
+
+Suggested branch:
+codex/pcb-routing-scalability-audit
+
+Suggested commit:
+Document PCB routing scalability
+
+Do not merge, rebase active branches, or begin implementation.
+Push only if explicitly authorized.
+
+At the end report:
+- branch;
+- commit SHA;
+- report path;
+- most important current routing strength;
+- most likely scalability bottleneck;
+- top three architecture recommendations.
+
+STOP.
