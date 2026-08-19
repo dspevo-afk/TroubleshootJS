@@ -140,7 +140,7 @@ At minimum verify that:
 
 A future artwork modification that puts a resistor body 40 pixels away from its real pads must fail deterministic verification instead of silently creating a graphical/electrical disagreement.
 
-### 4. AUTHORIED INTERACTION ENVELOPES
+### 4. AUTHORED INTERACTION ENVELOPES
 
 Update component selection and dragging so supported generated-board parts use the package's authored interaction envelope rather than a generic package rectangle wherever practical.
 
@@ -393,10 +393,15 @@ When implementation is complete:
 8. Run:
    `git diff --cached --check`
 9. Commit with a concise descriptive message.
-10. DO NOT PUSH.
+10. Push the completed task commit to the current remote working branch.
+11. Verify the remote branch points at the exact completed commit.
+12. Do not begin Task 44 or any later roadmap milestone.
+
+Standing project rule: after every successfully completed future task, commit and push the validated task unless the user explicitly instructs otherwise. A task is not considered fully complete until the push has been verified.
 
 If any required validation fails:
 - do not commit
+- do not push
 - leave the worktree intact
 - report the failure precisely in your final response
 - do not claim Task 43 complete.
