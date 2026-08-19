@@ -217,8 +217,8 @@ system default, but `JAVA_HOME` must point to JDK 8 for this project. For the
 current PowerShell session:
 
 ```powershell
-$env:JAVA_HOME = 'C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.502.7-hotspot'
-& "$env:JAVA_HOME\\bin\\java.exe" -version
+$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-8.0.502.7-hotspot'
+& "$env:JAVA_HOME\bin\java.exe" -version
 ```
 
 The first line of the version output should begin with `openjdk version "1.8`
@@ -238,13 +238,13 @@ available; it does not install Java for you.
 From the repository root:
 
 ```powershell
-.\\scripts\\build.ps1
+.\scripts\build.ps1
 ```
 
 To select JDK 8 without changing `JAVA_HOME`:
 
 ```powershell
-.\\scripts\\build.ps1 -JavaHome 'C:\\path\\to\\jdk8'
+.\scripts\build.ps1 -JavaHome 'C:\path\to\jdk8'
 ```
 
 On first use, the script downloads and SHA-256-verifies the pinned compiler
@@ -257,7 +257,7 @@ If PowerShell blocks repository scripts, use a process-local execution-policy
 override:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\build.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build.ps1
 ```
 
 ### Production preview and explicit challenges
@@ -265,26 +265,26 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\build.ps1
 After a build, start a visible production preview with Quick Play:
 
 ```powershell
-.\\scripts\\start-preview.ps1 -QuickPlay -OpenBrowser
+.\scripts\start-preview.ps1 -QuickPlay -OpenBrowser
 ```
 
 You can also open a particular seeded family while developing or reproducing a
 challenge:
 
 ```powershell
-.\\scripts\\start-preview.ps1 -Challenge led -Seed 3 -OpenBrowser
-.\\scripts\\start-preview.ps1 -Challenge diode -Seed 3 -OpenBrowser
-.\\scripts\\start-preview.ps1 -Challenge parallel -Seed 3 -OpenBrowser
-.\\scripts\\start-preview.ps1 -Challenge rc -Seed 3 -OpenBrowser
-.\\scripts\\start-preview.ps1 -Challenge npn -Seed 0 -OpenBrowser
-.\\scripts\\start-preview.ps1 -Challenge nmos -Seed 0 -OpenBrowser
+.\scripts\start-preview.ps1 -Challenge led -Seed 3 -OpenBrowser
+.\scripts\start-preview.ps1 -Challenge diode -Seed 3 -OpenBrowser
+.\scripts\start-preview.ps1 -Challenge parallel -Seed 3 -OpenBrowser
+.\scripts\start-preview.ps1 -Challenge rc -Seed 3 -OpenBrowser
+.\scripts\start-preview.ps1 -Challenge npn -Seed 0 -OpenBrowser
+.\scripts\start-preview.ps1 -Challenge nmos -Seed 0 -OpenBrowser
 ```
 
 The detached preview defaults to port 8899 and prints the URL it is using. To
 stop the preview managed by the repository scripts:
 
 ```powershell
-.\\scripts\\stop-preview.ps1
+.\scripts\stop-preview.ps1
 ```
 
 ### Checks for contributors
@@ -292,13 +292,13 @@ stop the preview managed by the repository scripts:
 With the production preview running, the main browser regression matrix is:
 
 ```powershell
-.\\scripts\\verify-browser.ps1
+.\scripts\verify-browser.ps1
 ```
 
 The normal-player replacement flow can be run separately:
 
 ```powershell
-.\\scripts\\verify-browser.ps1 -NormalPlayer
+.\scripts\verify-browser.ps1 -NormalPlayer
 ```
 
 The repository also contains focused developer routes for the six families,
@@ -312,7 +312,7 @@ The legacy GWT DevMode server is retained for compiler development only. It is
 not the recommended player preview:
 
 ```powershell
-.\\scripts\\dev.ps1
+.\scripts\dev.ps1
 ```
 
 Then open <http://127.0.0.1:8888/circuitjs.html>. Stop it with `Ctrl+C` in its
