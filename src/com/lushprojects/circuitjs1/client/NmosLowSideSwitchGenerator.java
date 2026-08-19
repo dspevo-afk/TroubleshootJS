@@ -255,7 +255,7 @@ final class NmosLowSideSwitchGenerator {
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID, TOPOLOGY_VARIANT,
             "Generated NMOS low-side switch, seed " + seed, componentBindings, powerBindings,
             connectionBindings, behaviorContract, layout, specifications, selectedBinding,
-            operationalStates, challenge, familyState, runtime);
+            operationalStates, challenge, familyState, runtime, null, false, candidates);
     }
 
     private void add(Vector<CircuitElm> elements, CircuitElm... values) {

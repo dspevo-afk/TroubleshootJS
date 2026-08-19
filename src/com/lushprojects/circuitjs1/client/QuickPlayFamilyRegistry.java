@@ -14,7 +14,7 @@ final class QuickPlayFamilyRegistry {
     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
     static final String NMOS_LOW_SIDE_SWITCH = "NMOS_LOW_SIDE_SWITCH";
     private static final long[] LEGACY_NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
-    private static final long[] NPN_NORMAL_PLAYER_SEEDS = { 0, 1, 2, 3 };
+    private static final long[] NPN_NORMAL_PLAYER_SEEDS = { 0, 1, 2 };
     private static final long[] NMOS_NORMAL_PLAYER_SEEDS = { 0, 1, 2 };
 
     private QuickPlayFamilyRegistry() { }

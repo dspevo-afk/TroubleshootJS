@@ -137,7 +137,7 @@ final class QuickPlayDeveloperVerifier {
         long[] injectedValues = { Long.MIN_VALUE, -7, -1, 0, 1, 2, 3, 4, 17,
             Long.MAX_VALUE };
         long[] legacySeeds = { 0, 2, 3 };
-        long[] npnSeeds = { 0, 1, 2, 3 };
+        long[] npnSeeds = { 0, 1, 2 };
         for (int familyIndex = 0; familyIndex < families.size(); familyIndex++) {
             String familyId = families.elementAt(familyIndex);
             long[] nmosSeeds = { 0, 1, 2 };
@@ -169,13 +169,12 @@ final class QuickPlayDeveloperVerifier {
      * must reach the validated NPN envelope through its normal seed.
      */
     private static void verifyNaturalNpnSeedEnvelope() {
-        long[] seeds = { 0, 1, 2, 3 };
-        double[] loadVoltages = { 9, 12, 5, 9 };
+        long[] seeds = { 0, 1, 2 };
+        double[] loadVoltages = { 9, 12, 5 };
         GeneratedFaultType[] faults = {
             GeneratedFaultType.TRANSISTOR_CE_OPEN,
             GeneratedFaultType.TRANSISTOR_CE_SHORT,
-            GeneratedFaultType.BASE_RESISTOR_OPEN,
-            GeneratedFaultType.LOAD_PATH_OPEN
+            GeneratedFaultType.BASE_RESISTOR_OPEN
         };
         for (int index = 0; index < seeds.length; index++) {
             QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(

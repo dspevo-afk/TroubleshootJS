@@ -143,8 +143,8 @@ final class NpnLowSideSwitchDeveloperVerifier {
     }
 
     private static void verifyDeterministicNameplateEnvelope() {
-        long[] seeds = { 0, 1, 2, 3 };
-        double[] expectedLoadVoltages = { 9, 12, 5, 9 };
+        long[] seeds = { 0, 1, 2 };
+        double[] expectedLoadVoltages = { 9, 12, 5 };
         for (int index = 0; index < seeds.length; index++) {
             QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
                 new long[] { 4, seeds[index] }));

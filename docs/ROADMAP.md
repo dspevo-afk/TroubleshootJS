@@ -1020,7 +1020,7 @@ product-session-flow requirement.
 
 ## Task 40 — Physical Fault Locus and Serviceability Admission
 
-**Status:** [>] Immediate next milestone
+**Status:** [x] Completed
 
 **Purpose:** Make the physical thing the player diagnoses agree with the solver
 effect and the available repair.
@@ -1044,7 +1044,7 @@ effect and the available repair.
 **Explicit non-goals:** No new trace fault, connector fault, jumper, trace cut,
 or generic repair implementation.
 
-**Acceptance criteria:** All 14 currently admitted normal routes across LED,
+**Acceptance criteria:** All 13 currently admitted normal routes across LED,
 diode, parallel, RC, NPN, and NMOS have a coherent chain:
 
     solver effect
@@ -1055,6 +1055,12 @@ diode, parallel, RC, NPN, and NMOS have a coherent chain:
 
 Private solver switches never become fake PCB components, and physical-owner
 counts rather than enum counts are available for later difficulty evidence.
+
+The implementation source of truth is 13 normal routes: LED 2, diode 1,
+parallel 2, RC 2, NPN 3, and NMOS 3. The earlier estimate of 14 was stale:
+`DIODE_SHORT` remains developer-only and is not normally admitted, while NPN
+`LOAD_PATH_OPEN` is also developer-only and was removed from normal admission
+under the selected option-B resolution.
 
 **Architectural invariants:** Physical and electrical identities remain
 separate but connected; hidden fault metadata remains private.
@@ -1068,7 +1074,7 @@ corrected control-boundary lesson.
 
 ## Task 41 — Diagnostic Solvability Verifier v1 and Complexity Evidence
 
-**Status:** [!] Blocked by Tasks 39–40
+**Status:** [>] Immediate next milestone
 
 **Purpose:** Add the missing family-agnostic proof that a challenge can actually
 be diagnosed, repaired, and retested by a player.
@@ -1095,7 +1101,7 @@ search, new instrument, new family, or player-facing answer/hint.
 
 **Acceptance criteria:**
 
-- All 14 current normal routes pass or are removed from admission.
+- All 13 current normal routes pass or are removed from admission.
 - NPN C-E open versus load-path open, NMOS D-S open versus gate-path open, and
   RC open versus short receive explicit separating-plan evidence.
 - Hidden command state, developer-only hooks, Finish Job pass/fail, destructive
@@ -3017,8 +3023,9 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 # Immediate Next Milestone
 
-**Task 40 — Physical Fault Locus and Serviceability Admission**
+**Task 41 — Diagnostic Solvability Verifier v1 and Complexity Evidence**
 
-Task 39 has completed implementation, validation, and review. Task 40 is now
-selected as the next eligible milestone; no Task 40 production implementation
-has started. Relay Driver remains deferred and transformed into Task 66.
+Tasks 39 and 40 have completed implementation, validation, review, and
+publication. Task 41 is now the next eligible milestone; no Task 41 production
+implementation has started. Relay Driver remains deferred and transformed
+into Task 66.

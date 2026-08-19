@@ -385,6 +385,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootNpnVerification;
 	boolean troubleshootNmosVerification;
 	boolean troubleshootTask39Verification;
+	boolean troubleshootTask40Verification;
 	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
@@ -400,6 +401,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootNpnVerificationComplete;
 	boolean troubleshootNmosVerificationComplete;
 	boolean troubleshootTask39VerificationComplete;
+	boolean troubleshootTask40VerificationComplete;
 	boolean troubleshootStoredEnergyVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
@@ -469,6 +471,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootNpnVerification = qp.getBooleanValue("tsjVerifyNpn", false);
 	    troubleshootNmosVerification = qp.getBooleanValue("tsjVerifyNmos", false);
 	    troubleshootTask39Verification = qp.getBooleanValue("tsjVerifyTask39", false);
+	    troubleshootTask40Verification = qp.getBooleanValue("tsjVerifyTask40", false);
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
@@ -4574,6 +4577,18 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootTask40Verification &&
+		!troubleshootTask40VerificationComplete &&
+		(generatedChallengeController == null || generatedChallengeController.isReady())) {
+		developerVerifierRunning = true;
+		try {
+		    troubleshootTask40VerificationComplete = true;
+		    Task40DeveloperVerifier.verify(this);
+		    publishBrowserVerificationResult("PASS:task40");
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	} catch (RuntimeException e) {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootWrongRepairVerification ||
@@ -4584,7 +4599,8 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootQuickPlayVerification ||
 		    troubleshootArchitectureVerification || troubleshootRcVerification ||
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
-		    troubleshootNmosVerification || troubleshootTask39Verification)
+		    troubleshootNmosVerification || troubleshootTask39Verification ||
+		    troubleshootTask40Verification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +

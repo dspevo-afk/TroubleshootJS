@@ -1,3 +1,62 @@
+# Task 40 — Physical Fault Locus and Serviceability Admission
+
+Date: 2026-08-19
+
+Status: `FINAL PASS` for implementation, validation, and independent review;
+ready for the primary-architect commit/push gate.
+
+## Scope and behavior
+
+Task 40 adds family-agnostic hidden metadata connecting each normally admitted
+solver fault candidate to a stable physical locus, legal observation and
+isolation actions, a supported repair path, and the Task 39 customer retest.
+Loci are semantic component-internal, terminal/lead attachment, connector
+contact, or trace-segment identities; private CircuitJS switches never become
+physical owners. Admission now rejects unknown observation, isolation, and
+repair IDs before candidate selection or physical-owner metrics. The verifier
+also proves that a bogus `BOGUS_REPAIR` candidate is rejected.
+
+The generated board retains the full admitted candidate set for owner metrics
+and keeps selected-binding integrity separate. Runtime admission checks the
+installed original physical part, stable terminal/connection bindings, probe
+exposure, replacement provider, operation catalog, and family controller
+providers. `Task40DeveloperVerifier` then executes real remove/lift/reconnect
+and catalog-install operations through the existing workbench controller,
+repowers the board, and invokes customer retest. Connector and trace candidates
+remain incompatible for normal play. NPN `LOAD_PATH_OPEN` is a forced
+developer-only fixture; NMOS public Q1 terminals and RC C1 positive-lead
+attachment remain owned by the original physical part.
+
+The source-of-truth normal corpus is 13 routes: LED 2, diode 1, parallel 2,
+RC 2, NPN 3, and NMOS 3. The roadmap’s previous estimate of 14 was stale:
+normal `DIODE_SHORT` is developer-only and NPN `LOAD_PATH_OPEN` was removed
+from normal admission under the option-B resolution.
+
+## Validation evidence
+
+- JDK8 OBF compile/link passed with the bundled JDK 8u502 after the final
+  action-whitelist correction.
+- PowerShell parser check returned `PS_PARSE_OK`; `git diff --check` passed.
+- The focused Task 40 route in the visible in-app Browser completed the real
+  generated-candidate verifier and reported `PASS:task40`.
+- Independent review reran/confirmed Task 40, Task 39, NPN, and NMOS browser
+  verifiers and found no blocker.
+- The standalone Edge/CDP helper remains environment-limited on this host:
+  its cleanup/process snapshot can fail before app execution with Edge/WMI
+  access denied or a WebSocket cancellation. This does not invalidate the
+  visible in-app Browser result.
+
+## Review and limitations
+
+The first independent review found metadata-only Task 40 verification and
+selected-owner-only metrics; both were corrected. A fresh independent review
+then found the stale 14-route documentation and the missing admission-time
+action whitelist; the roadmap/report/architecture notes and source verifier
+were corrected. The fresh review returned `FINAL PASS`. Task 41 is identified
+as the next milestone but has not been implemented.
+
+---
+
 # Task 39 — Player-Operable Functional Inputs and Customer Retest Contract
 
 Date: 2026-08-19

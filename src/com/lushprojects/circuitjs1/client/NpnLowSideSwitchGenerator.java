@@ -140,7 +140,7 @@ final class NpnLowSideSwitchGenerator {
         GeneratedFaultEngine.clearAll(candidates);
         GeneratedFaultCandidate selected = forcedType == null ?
             GeneratedFaultEngine.select(seed, candidates) :
-            GeneratedFaultEngine.select(forcedType, candidates);
+            GeneratedFaultEngine.selectForDeveloperVerification(forcedType, candidates);
         for (GeneratedFaultCandidate candidateFault : candidates)
             for (CircuitElm privateElement : candidateFault.getPrivateSimulationElements())
                 if (!elements.contains(privateElement))
@@ -325,7 +325,8 @@ final class NpnLowSideSwitchGenerator {
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID, TOPOLOGY_VARIANT,
             "Generated NPN low-side switch, seed " + seed, componentBindings, powerBindings,
             connectionBindings, behaviorContract, layout, specifications, faultBinding,
-            operationalStates, challenge, familyState, runtime);
+            operationalStates, challenge, familyState, runtime, null, forcedType != null,
+            candidates);
     }
 
     private GeneratedFaultBinding targetBinding(GeneratedFault fault, GeneratedFaultBinding binding,

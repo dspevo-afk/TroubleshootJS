@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
+import java.util.Collections;
 
 class GeneratedBoardInstance {
     private final TroubleshootBoard board;
@@ -17,10 +18,12 @@ class GeneratedBoardInstance {
     private final BoardPhysicalSpecifications physicalSpecifications;
     private final PhysicalBoardRuntime physicalRuntime;
     private final GeneratedFaultBinding faultBinding;
+    private final Vector<GeneratedFaultCandidate> faultCandidates;
     private final GeneratedComponentOperationalStates operationalStates;
     private final GeneratedChallengeDefinition challengeDefinition;
     private final GeneratedBoardFamilyState familyState;
     private final GeneratedTemporalBehavior temporalBehavior;
+    private final boolean developerOnlyFaultRoute;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -35,7 +38,7 @@ class GeneratedBoardInstance {
         this(board, simulationElements, seed, circuitFamilyId, topologyVariantId, description,
             componentBindings, externalPowerBindings, connectionBindings, behaviorContract,
             pcbLayout, physicalSpecifications, faultBinding, operationalStates,
-            challengeDefinition, familyState, physicalRuntime, null);
+            challengeDefinition, familyState, physicalRuntime, null, false);
     }
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
@@ -48,6 +51,41 @@ class GeneratedBoardInstance {
             GeneratedComponentOperationalStates operationalStates,
             GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
             PhysicalBoardRuntime physicalRuntime, GeneratedTemporalBehavior temporalBehavior) {
+        this(board, simulationElements, seed, circuitFamilyId, topologyVariantId, description,
+            componentBindings, externalPowerBindings, connectionBindings, behaviorContract,
+            pcbLayout, physicalSpecifications, faultBinding, operationalStates,
+            challengeDefinition, familyState, physicalRuntime, temporalBehavior, false);
+    }
+
+    GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
+            long seed, String circuitFamilyId, String topologyVariantId, String description,
+            GeneratedComponentBindings componentBindings,
+            GeneratedExternalPowerBindings externalPowerBindings,
+            GeneratedComponentConnectionBindings connectionBindings,
+            GeneratedChallengeBehaviorContract behaviorContract, PcbBoardLayout pcbLayout,
+            BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
+            GeneratedComponentOperationalStates operationalStates,
+            GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
+            PhysicalBoardRuntime physicalRuntime, GeneratedTemporalBehavior temporalBehavior,
+            boolean developerOnlyFaultRoute) {
+        this(board, simulationElements, seed, circuitFamilyId, topologyVariantId, description,
+            componentBindings, externalPowerBindings, connectionBindings, behaviorContract,
+            pcbLayout, physicalSpecifications, faultBinding, operationalStates,
+            challengeDefinition, familyState, physicalRuntime, temporalBehavior,
+            developerOnlyFaultRoute, null);
+    }
+
+    GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
+            long seed, String circuitFamilyId, String topologyVariantId, String description,
+            GeneratedComponentBindings componentBindings,
+            GeneratedExternalPowerBindings externalPowerBindings,
+            GeneratedComponentConnectionBindings connectionBindings,
+            GeneratedChallengeBehaviorContract behaviorContract, PcbBoardLayout pcbLayout,
+            BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
+            GeneratedComponentOperationalStates operationalStates,
+            GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
+            PhysicalBoardRuntime physicalRuntime, GeneratedTemporalBehavior temporalBehavior,
+            boolean developerOnlyFaultRoute, Vector<GeneratedFaultCandidate> faultCandidates) {
         this.board = board;
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
@@ -70,10 +108,14 @@ class GeneratedBoardInstance {
         this.physicalRuntime = physicalRuntime;
         physicalRuntime.validate();
         this.faultBinding = faultBinding;
+        this.faultCandidates = faultCandidates == null ?
+            new Vector<GeneratedFaultCandidate>() :
+            new Vector<GeneratedFaultCandidate>(faultCandidates);
         this.operationalStates = operationalStates;
         this.challengeDefinition = challengeDefinition;
         this.familyState = familyState;
         this.temporalBehavior = temporalBehavior;
+        this.developerOnlyFaultRoute = developerOnlyFaultRoute;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
     }
@@ -137,6 +179,32 @@ class GeneratedBoardInstance {
     }
 
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }
+    Vector<GeneratedFaultCandidate> getFaultCandidates() {
+        return new Vector<GeneratedFaultCandidate>(faultCandidates);
+    }
+    Vector<String> getAdmittedFaultPhysicalOwnerIds() {
+        return GeneratedFaultServiceabilityAdmission.getPhysicalOwnerIds(faultCandidates);
+    }
+    int getAdmittedFaultPhysicalOwnerCount() {
+        return getAdmittedFaultPhysicalOwnerIds().size();
+    }
+    GeneratedFaultServiceability getFaultServiceability() {
+        return faultBinding == null ? null : faultBinding.getServiceability();
+    }
+    GeneratedFaultLocus getFaultLocus() {
+        return faultBinding == null ? null : faultBinding.getFaultLocus();
+    }
+    Vector<String> getFaultPhysicalOwnerIds() {
+        Vector<String> result = new Vector<String>();
+        GeneratedFaultLocus locus = getFaultLocus();
+        if (locus != null && getFaultServiceability() != null &&
+                getFaultServiceability().isAdmissible())
+            result.add(locus.getOwnerId());
+        Collections.sort(result);
+        return result;
+    }
+    int getFaultPhysicalOwnerCount() { return getFaultPhysicalOwnerIds().size(); }
+    boolean isDeveloperOnlyFaultRoute() { return developerOnlyFaultRoute; }
     GeneratedComponentOperationalStates getOperationalStates() { return operationalStates; }
     GeneratedChallengeDefinition getChallengeDefinition() { return challengeDefinition; }
     GeneratedBoardFamilyState getFamilyState() { return familyState; }

@@ -29,6 +29,7 @@ param(
     [switch]$Nmos,
     [switch]$NmosNatural,
     [switch]$Task39,
+    [switch]$Task40,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -1446,6 +1447,9 @@ $npnValidationSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } el
 $nmosValidationSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
     @(0, 1, 2)
 }
+$npnNormalPlayerSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
+    @(0, 1, 2)
+}
 if (-not (Test-Path $BrowserPath -PathType Leaf)) { throw "Browser not found: $BrowserPath" }
 if ($QuickPlay) {
     $selectorPassed = verifyRoute 'quick-play selector/session' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play' 9495 | Select-Object -Last 1
@@ -1457,7 +1461,7 @@ if ($QuickPlay) {
     $normalPassed = verifyQuickPlayNormalPlayer "$BaseUrl/circuitjs.html?tsjQuickPlay=true" 9497 ([bool]$selectorPassed) | Select-Object -Last 1
     if (-not $normalPassed) { exit 1 }
     $npnQuickPlayCase = 0
-    foreach ($seed in $npnValidationSeeds) {
+    foreach ($seed in $npnNormalPlayerSeeds) {
         $route = "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&" +
             "tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=$seed"
         $label = if ($seed -eq 1) { 'quick-play npn seed 1 C-E-short finish' } else {
@@ -1504,7 +1508,7 @@ if ($Npn) {
     exit 0
 }
 if ($NpnNatural) {
-    $naturalSeeds = @(0, 1, 2, 3)
+    $naturalSeeds = @(0, 1, 2)
     $case = 0
     foreach ($seed in $naturalSeeds) {
         $route = "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=$seed&tsjVerifyNpn=true&running=true"
@@ -1548,6 +1552,10 @@ if ($Task39) {
     if (-not (verifyTask39NormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=0&running=true" 9704 @('Set control HIGH', 'Set control LOW') 'Retest Customer')) { exit 1 }
     if (-not (verifyTask39NormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=nmos&seed=0&running=true" 9705 @('Set control HIGH', 'Set control LOW') 'Retest Customer')) { exit 1 }
     if (-not (verifyTask39NormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=rc&seed=0&running=true" 9706 @() 'Power-cycle and Retest Customer')) { exit 1 }
+    exit 0
+}
+if ($Task40) {
+    if (-not (verifyRoute 'task40 physical locus/serviceability admission' "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=0&tsjVerifyTask40=true&running=true" 'PASS:task40' 9710)) { exit 1 }
     exit 0
 }
 if ($WrongRepair) {

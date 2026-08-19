@@ -218,6 +218,8 @@ class GeneratedChallengeController {
         if (definition.getFaultBinding() != instance.getFaultBinding())
             throw new IllegalArgumentException("Challenge fault binding is not owned by board");
         validateFaultEffectOwnership(instance, definition.getFault(), definition.getFaultBinding());
+        if (!instance.isDeveloperOnlyFaultRoute())
+            GeneratedFaultServiceabilityAdmission.validate(instance, definition.getFaultBinding());
     }
 
     static void validateFaultEffectOwnership(GeneratedBoardInstance instance,

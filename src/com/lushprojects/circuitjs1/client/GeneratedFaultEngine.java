@@ -89,8 +89,10 @@ class GeneratedFaultEngine {
 
     static GeneratedFaultCandidate loadPathOpen(String id, String familyId,
             long seed, String componentId, SwitchElm switchElement) {
+        // Option B: the solver effect remains available to an explicit
+        // developer-forced route, but it is not a normal admitted candidate.
         return candidate(new GeneratedFault(id, GeneratedFaultType.LOAD_PATH_OPEN,
-            componentId, familyId, seed), new SwitchOpenFaultEffect(switchElement));
+            componentId, familyId, seed), new SwitchOpenFaultEffect(switchElement), false);
     }
 
     static GeneratedFaultCandidate nmosDsOpen(String id, String familyId, long seed,
@@ -134,10 +136,12 @@ class GeneratedFaultEngine {
     static GeneratedFaultCandidate select(long seed, Vector<GeneratedFaultCandidate> candidates) {
         Vector<GeneratedFaultCandidate> compatible = new Vector<GeneratedFaultCandidate>();
         for (GeneratedFaultCandidate candidate : candidates)
-            if (candidate != null && candidate.isCompatible())
+            if (candidate != null && candidate.isCompatible()) {
+                GeneratedFaultServiceabilityAdmission.validateCandidate(candidate);
                 compatible.add(candidate);
+            }
         if (compatible.isEmpty())
-            throw new IllegalStateException("No compatible generated fault candidates");
+            throw new IllegalStateException("No serviceable generated fault candidates");
         int index = (int) (seed % compatible.size());
         if (index < 0)
             index += compatible.size();
@@ -148,9 +152,21 @@ class GeneratedFaultEngine {
             Vector<GeneratedFaultCandidate> candidates) {
         for (GeneratedFaultCandidate candidate : candidates)
             if (candidate != null && candidate.isCompatible() &&
-                candidate.getFault().getType() == requiredType)
+                candidate.getFault().getType() == requiredType) {
+                GeneratedFaultServiceabilityAdmission.validateCandidate(candidate);
                 return candidate;
+            }
         throw new IllegalStateException("No compatible generated fault candidate for type: " +
+            requiredType);
+    }
+
+    /** Explicit developer-only selection, including intentionally unadmitted effects. */
+    static GeneratedFaultCandidate selectForDeveloperVerification(GeneratedFaultType requiredType,
+            Vector<GeneratedFaultCandidate> candidates) {
+        for (GeneratedFaultCandidate candidate : candidates)
+            if (candidate != null && candidate.getFault().getType() == requiredType)
+                return candidate;
+        throw new IllegalStateException("No generated fault candidate for developer type: " +
             requiredType);
     }
 

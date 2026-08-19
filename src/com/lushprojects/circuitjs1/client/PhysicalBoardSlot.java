@@ -55,6 +55,7 @@ final class PhysicalBoardSlot {
     String getComponentId() { return componentId; }
     PhysicalPackage getPhysicalPackage() { return physicalPackage; }
     Vector<String> getPadIds() { return new Vector<String>(padIds); }
+    Vector<String> getTerminalIds() { return new Vector<String>(terminalIds); }
     Vector<String> getNetIds() { return new Vector<String>(netIds); }
     PhysicalPart<?> getInstalledPart() { return installedPart; }
     boolean isOccupied() { return installedPart != null; }

@@ -169,7 +169,8 @@ class DiodeProtectedIndicatorGenerator {
             PCB_LAYOUT_GENERATOR.generate(board, seed), specs, faultBinding, operational,
             new GeneratedChallengeDefinition("DIODE_INDICATOR_NO_LIGHT", FAMILY_ID,
                 DIRECT_SERIES_VARIANT, seed, scenarios, fault, faultBinding, behaviorContract),
-            new DiodeProtectedIndicatorFamilyState(), physicalRuntime);
+            new DiodeProtectedIndicatorFamilyState(), physicalRuntime, null, false,
+            faultCandidates);
     }
 
     private DiodeElm createDefaultDiode(int x, int y, int x2, int y2) {

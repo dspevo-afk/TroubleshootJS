@@ -258,7 +258,7 @@ class ParallelDualIndicatorGenerator {
                 "Repair verified. Both indicators operating normally.", fault, faultBinding,
                 behaviorContract),
             new ParallelDualIndicatorFamilyState(),
-            physicalRuntime);
+            physicalRuntime, null, false, faultCandidates);
     }
 
     private LEDElm createLed(int x1, int y1, int x2, int y2, LedNameplate nameplate) {

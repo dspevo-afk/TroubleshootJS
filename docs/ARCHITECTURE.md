@@ -1148,3 +1148,42 @@ controls remain electrically live, while board power, instruments, PCB
 selection, and physical mutation controls are disabled and completion is not
 silently rechecked. Board power still uses `BoardPowerController` and remains
 independent from CircuitJS RUN/STOP.
+
+## Task 40 — physical fault locus and serviceability admission
+
+Task 40 adds a hidden physical-ownership boundary between a solver effect and
+the workbench actions that can legally expose, isolate, repair, and retest it.
+`GeneratedFaultLocus` classifies the owner as component-internal,
+terminal/lead attachment, connector contact, or trace segment. Locus identity
+is semantic and stable (`componentId`, terminal ID, or path ID); it never uses
+a private solver switch, CircuitJS coordinate, post/index, collection index,
+or generated UUID as a physical owner. `GeneratedFaultServiceability` carries
+the legal observation, isolation, repair, and Task 39 customer-retest IDs.
+
+`GeneratedFaultServiceabilityAdmission` is the candidate boundary. Admission
+requires compatibility, a stable locus, non-empty service actions, the known
+observation/workbench action whitelist, and `CUSTOMER_RETEST`. Runtime
+validation then checks the installed original physical owner, terminal and
+connection bindings, replacement provider, probe exposure, operation catalog,
+and family controller providers. `Task40DeveloperVerifier` executes the
+resulting remove/lift/reconnect/catalog-install operations through the real
+`PcbWorkbenchController`, powers the board, and invokes the existing customer
+retest; it does not accept metadata-only repair claims. A bogus repair ID is
+rejected at candidate admission and cannot inflate owner metrics.
+
+`GeneratedBoardInstance` retains the complete admitted candidate vector so
+physical-owner metrics count every candidate owner rather than only the
+selected binding. The selected owner remains separately available for runtime
+integrity checks. Current examples include RC `C1` positive-lead attachment,
+NMOS `Q1` public `G`/`D`/`S` terminals, NPN `Q1`/`RB` ownership, and component
+internal ownership for the supported simple parts. Connector and trace owners
+remain incompatible in normal admission; NPN `LOAD_PATH_OPEN` is retained
+only as a forced developer fixture until a real path owner and repair primitive
+exist. Normal UI surfaces none of this hidden fault metadata.
+
+The current normal admitted corpus is 13 routes: LED 2, diode 1, parallel 2,
+RC 2, NPN 3, and NMOS 3. The previous roadmap estimate of 14 was stale because
+normal `DIODE_SHORT` is developer-only and NPN `LOAD_PATH_OPEN` was removed
+from normal admission under the option-B resolution. Task 40 is therefore a
+serviceability/admission boundary only; it does not add trace, connector,
+jumper, cut, or generic repair gameplay.

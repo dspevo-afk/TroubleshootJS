@@ -16,6 +16,11 @@ class GeneratedFaultCandidate {
     GeneratedFault getFault() { return binding.getFault(); }
     GeneratedFaultBinding getBinding() { return binding; }
     boolean isCompatible() { return compatible; }
+    GeneratedFaultServiceability getServiceability() { return binding.getServiceability(); }
+    boolean isServiceable() {
+        return getServiceability() != null && getServiceability().isAdmissible();
+    }
+    boolean isAdmitted() { return compatible && isServiceable(); }
     Vector<CircuitElm> getPrivateSimulationElements() {
         return binding.getPrivateSimulationElements();
     }
