@@ -1,0 +1,586 @@
+READ-ONLY RESEARCH TASK — TROUBLESHOOTJS RUNTIME STATE / MUTATION / LIFECYCLE INTEGRITY AUDIT
+
+This is a READ-ONLY architecture and adversarial-sequence audit. Do NOT implement production features or fixes.
+
+Other Codex sessions are working concurrently, including the active Task 42 implementation. Do not interfere with them.
+
+BASELINE AND ISOLATION
+
+- Fetch origin first and base the audit on the latest accepted origin/master available when you start.
+- Record the exact baseline SHA in the report.
+- Create/use a dedicated branch named:
+  codex/state-lifecycle-integrity-audit
+- Use a separate worktree. Do NOT switch branches in, reset, clean, stash, modify, or otherwise disturb the user's main worktree or any other Codex worktree.
+- Do NOT inspect unfinished Task 42 work as though it were accepted architecture. The audit target is the latest accepted origin/master baseline.
+- Do NOT merge this branch into master.
+
+The only repository file you may create or modify for the final audit is:
+
+docs/research/STATE_LIFECYCLE_INTEGRITY_AUDIT.md
+
+Do NOT modify production code, tests, build scripts, AGENTS.md, ROADMAP.md, ARCHITECTURE.md, CODEX_TASK_REPORT.md, UI files, or Task 42 files in the final branch.
+
+TEMPORARY EXPERIMENTS
+
+You ARE encouraged to use temporary local instrumentation, temporary assertions, or controlled temporary test mutations in the isolated audit worktree when needed to understand state transitions.
+
+However:
+- temporary production/test changes must never be committed;
+- restore them before completion;
+- the final diff must contain only the audit report;
+- never push intentionally broken production state.
+
+This explicit audit protocol overrides the normal implementation-task completion behavior that would otherwise update CODEX_TASK_REPORT.md or production files.
+
+==================================================
+GOAL
+==================================================
+
+Determine whether TroubleshootJS's growing set of mutable runtime systems can enter contradictory, contaminated, orphaned, or impossible states when the player performs unusual but legal action sequences.
+
+The central question is:
+
+"Can a player, verifier, or lifecycle transition leave the physical board, CircuitJS graph, fault ownership, inventory, instruments, power/control state, damage state, repair state, and challenge/session state disagreeing with one another?"
+
+This audit should treat TroubleshootJS as a STATE MACHINE, not merely a collection of individually correct features.
+
+The project now has many interacting state dimensions, including:
+- generated fault ownership;
+- effective generated fault state;
+- physical original/replacement identity;
+- mounted / removed / loose state;
+- lifted / connected terminal state;
+- private fault infrastructure;
+- secondary stress/damage state;
+- board power state;
+- external control command state;
+- simulation RUN/STOP state;
+- stored energy / discharge readiness;
+- active resistance/continuity/diode measurement stimulus;
+- passive DC meter loading;
+- retained probe identity;
+- runtime physical-part registries;
+- catalogs and acquired replacement inventory;
+- challenge READY / repair / customer retest / Finish Job / COMPLETED state;
+- Quick Play session identity;
+- developer verification transactions.
+
+Each subsystem may be locally correct while combinations still fail.
+
+The audit should therefore focus heavily on ADVERSARIAL SEQUENCES and transition invariants.
+
+==================================================
+1. BUILD THE CURRENT STATE MODEL
+==================================================
+
+Map the authoritative owners of runtime state.
+
+At minimum inspect where applicable:
+- GeneratedBoardInstance;
+- GeneratedChallengeController;
+- GeneratedFaultBinding / GeneratedFaultEffect / fault engine;
+- physical board runtime and slots;
+- PhysicalPart and provenance/identity classes;
+- BoardModificationController;
+- generated component connection bindings;
+- replacement/catalog/inventory capabilities;
+- resistor stress/secondary-damage system;
+- capacitor stored-energy/readiness state;
+- BoardPowerController and external power bindings;
+- player functional input/control state from Task 39;
+- InstrumentController;
+- CircuitMeasurementAdapter and active measurement sessions;
+- retained probe targets;
+- PcbWorkbenchController / renderer selection state where relevant;
+- customer retest / functional completion state;
+- Quick Play session reset/fresh-session logic;
+- Task 41 diagnostic solvability snapshot/restore transaction.
+
+For each state domain identify:
+- authoritative owner;
+- derived/cached mirrors;
+- mutation entry points;
+- cleanup/restoration path;
+- what other domains must change atomically with it;
+- what event requests CircuitJS reanalysis;
+- what event requests verification;
+- what happens when the simulation is paused;
+- whether failure midway through a transition can leave partial state behind.
+
+==================================================
+2. DEFINE CROSS-SYSTEM INVARIANTS
+==================================================
+
+Extract the invariants the current architecture intends to maintain.
+
+Examples to investigate and refine:
+
+PHYSICAL / SOLVER IDENTITY
+- every mounted physical part has exactly the intended solver backing;
+- every solver-owned replaceable part belongs to exactly one physical part;
+- a removed/lifted part must not remain electrically connected except through explicitly modeled retained fault infrastructure;
+- a visual reconnection must correspond to real graph reconnection;
+- a physical part's immutable provenance/identity must not change because of mounting state.
+
+GENERATED FAULT OWNERSHIP
+- the original generated fault stays with the original physical owner unless the fault model explicitly says otherwise;
+- removal, lift, reconnect, reinstall, measurement, or session verification cannot silently cure the generated fault;
+- a catalog replacement must not inherit the original's private generated-fault infrastructure;
+- generated fault metadata must not become equivalent to current physical health.
+
+SECONDARY DAMAGE
+- secondary damage belongs to the actual damaged physical part;
+- removal/reinstall of a damaged part preserves its damage where physically appropriate;
+- replacing a damaged part does not transfer its damage to a new part;
+- secondary damage cannot be erased merely because the original generated fault was repaired;
+- Finish Job/customer retest must fail when meaningful secondary damage still prevents correct behavior.
+
+POWER / MEASUREMENT
+- active meter stimulus and external board power must never coexist when prohibited;
+- board-power-on must cancel/restore temporary active measurement first;
+- temporary measurement infrastructure must always be removed;
+- measurement cleanup must restore the exact prior valid power/control/runtime state;
+- RUN/STOP must remain distinct from electrical power state;
+- stored-energy safety must remain valid across measurement mode changes and physical mutations.
+
+PROBES
+- retained probes follow stable physical/logical identity only while that target remains physically meaningful;
+- removal/lift/replacement cannot cause a probe marker to silently sample a different physical part;
+- a replacement with the same logical slot does not automatically become the original physical probe target unless explicitly intended;
+- stale endpoints must invalidate rather than return believable wrong values.
+
+INVENTORY
+- every acquired replacement has unique physical identity;
+- installed/loose/inventory membership is mutually coherent;
+- a single physical part cannot appear installed and loose simultaneously;
+- session reset cannot retain acquired parts unless intentionally designed;
+- catalog definitions and acquired physical instances remain distinct.
+
+CHALLENGE LIFECYCLE
+- READY cannot coexist with incomplete preparation/fault installation;
+- successful repair status is not the same as latched job completion;
+- customer retest must evaluate the live repaired board, not stale prior verification;
+- Finish Job must not clear faults/damage as a side effect;
+- completion of one challenge cannot mutate the next challenge;
+- fresh Quick Play begins from a clean runtime envelope.
+
+VERIFIER TRANSACTIONS
+- developer diagnostics may temporarily mutate state but must restore it exactly;
+- restoration failures must not leave hidden partial state that normal play continues from;
+- verification must not become the owner of gameplay state.
+
+Document the actual current invariants, not only these examples.
+
+==================================================
+3. TRANSITION INVENTORY
+==================================================
+
+Build a transition table for important player/runtime actions.
+
+Include where currently supported:
+- power ON;
+- power OFF;
+- simulation pause/resume;
+- functional control HIGH/LOW;
+- select/clear instrument mode;
+- place/move red and black probes;
+- begin active resistance measurement;
+- begin continuity measurement;
+- begin diode measurement;
+- active-measurement completion/cancellation;
+- lift lead;
+- reconnect lead;
+- remove component;
+- reinstall original component;
+- acquire replacement;
+- install replacement;
+- remove replacement;
+- reinstall replacement;
+- accumulate stress;
+- secondary failure;
+- discharge stored energy;
+- invoke customer retest;
+- invoke Finish Job;
+- successful completion;
+- start fresh Quick Play challenge;
+- Task 41 diagnostic proof begin/restore;
+- failure/exception/timeout during any asynchronous verification transaction.
+
+For each transition identify:
+- legal preconditions;
+- state changed;
+- CircuitJS graph mutation;
+- required reanalysis;
+- required verification;
+- rollback/cancel behavior;
+- possible partial-failure window.
+
+==================================================
+4. ADVERSARIAL PLAYER-SEQUENCE TESTING
+==================================================
+
+This is the most important practical section.
+
+Exercise representative legal and near-boundary sequences designed to expose interaction bugs.
+
+Do not limit yourself to the happy path documented by task acceptance.
+
+Examples:
+
+A. ORIGINAL FAULT OWNER ROUND-TRIP
+1. Start a faulted challenge.
+2. Power off safely.
+3. Lift one lead of the original fault-owning part.
+4. Measure it.
+5. Reconnect it.
+6. Remove it.
+7. Measure it loose.
+8. Reinstall it.
+9. Power on.
+10. Confirm its original fault still exists electrically and physically.
+
+B. REPLACEMENT IDENTITY ROUND-TRIP
+1. Remove original fault owner.
+2. Acquire replacement A.
+3. Install A.
+4. Remove A.
+5. Reinstall original.
+6. Remove original again.
+7. Install A again.
+8. Acquire replacement B.
+9. Swap A/B through the same slot.
+10. Verify solver identity, provenance, fault state, and loose-part measurements remain attached to the correct physical instance.
+
+C. SECONDARY DAMAGE ROUND-TRIP
+1. Create a legal wrong replacement that can accumulate stress.
+2. Power it long enough to become damaged/failed using the project's permitted deterministic developer acceleration where needed.
+3. Power off.
+4. Remove it.
+5. Measure it loose.
+6. Reinstall it.
+7. Confirm damage persists.
+8. Replace it with a correct fresh part.
+9. Confirm damage does not transfer.
+10. Reinstall the damaged part and confirm it is still damaged.
+
+D. ACTIVE METER / POWER RACE
+1. Power board off.
+2. Begin resistance/continuity/diode transaction.
+3. Attempt power-on during the transaction or at sensitive lifecycle moments.
+4. Confirm measurement infrastructure is removed before external power reconnects.
+5. Confirm no temporary elements remain.
+6. Confirm probes and valid prior state are restored.
+
+E. STORED ENERGY / MUTATION INTERACTION
+1. Charge an RC challenge.
+2. Power off while energy remains.
+3. Attempt active measurement, lift/remove, and mode switching around readiness boundaries.
+4. Confirm no unsafe active stimulus is admitted.
+5. Confirm discharge/readiness state cannot become stale after graph mutation.
+
+F. PROBE IDENTITY THROUGH MUTATION
+1. Place probes on installed leads/pads.
+2. Lift/remove target part.
+3. Reconnect/reinstall it.
+4. Replace with a distinct physical part.
+5. Observe whether retained probes invalidate, persist, or rebind according to intended physical identity.
+6. Ensure no plausible-looking stale value is produced from the wrong endpoint.
+
+G. COMPLETION WITH RESIDUAL STATE
+1. Repair generated fault.
+2. Leave a separate wrong/damaged state if current mechanics permit it.
+3. Invoke customer retest / Finish Job.
+4. Verify completion reflects the entire live board state, not only generated fault metadata.
+
+H. FRESH SESSION CONTAMINATION
+1. Perform substantial modifications, acquire replacements, place probes, change instruments/control state, and possibly accumulate damage.
+2. Complete or abandon the challenge through supported paths.
+3. Start a fresh Quick Play challenge.
+4. Confirm no old physical part, inventory item, probe, meter overlay, external command state, damage, fault binding, selection, or solver element persists.
+
+I. PAUSE/RESUME EDGE CASES
+Repeat representative power, measurement, fault, and repair transitions while simulation is paused and then resumed.
+Determine whether verification waits correctly or stale state is accepted.
+
+J. RAPID / REPEATED ACTIONS
+Where the UI/controller permits it, repeat toggles or actions before prior verification settles:
+- power off/on/off;
+- control HIGH/LOW/HIGH;
+- instrument enter/exit;
+- remove/reinstall;
+- retest repeated;
+- Finish Job repeated.
+
+Determine whether actions are serialized, rejected, idempotent, or capable of producing split state.
+
+Not every sequence must be supported. If an action is correctly rejected, record the admission boundary and why it is safe.
+
+==================================================
+5. GRAPH OWNERSHIP AND ORPHANED INFRASTRUCTURE
+==================================================
+
+Inspect all private/internal CircuitJS infrastructure attached to gameplay state.
+
+Examples include:
+- external power isolation switches;
+- external command switches;
+- generated fault switches/shunts;
+- component connection switches;
+- secondary damage paths;
+- active measurement sources/resistors/switches;
+- passive meter loading;
+- any temporary verification elements.
+
+For each type determine:
+- authoritative owner;
+- creation/destruction timing;
+- whether it stays in elmList while physical owner is loose;
+- whether that is intentional;
+- how it reattaches after reinstall;
+- whether duplicate infrastructure can be created;
+- whether orphaned elements can survive reset;
+- whether ownership can migrate to replacement parts;
+- whether removal of an element can invalidate a probe or verifier unexpectedly.
+
+Explicitly look for elmList leaks, duplicate switches, disconnected private elements, and elements that continue affecting the board after their logical/physical owner is gone.
+
+==================================================
+6. GENERATED FAULT VS SECONDARY DAMAGE STATE MACHINE
+==================================================
+
+These are intentionally separate concepts. Verify that separation remains coherent through all relevant transitions.
+
+Create a state/ownership matrix including:
+- original healthy specification;
+- generated original fault;
+- original physical part installed/loose;
+- correct replacement installed;
+- incorrect replacement installed;
+- replacement under stress;
+- replacement secondarily failed;
+- original reinstalled after replacement damage;
+- correct replacement installed after secondary damage;
+- Finish Job/customer retest in each meaningful state.
+
+Determine whether any public API or verifier collapses these concepts into a generic isFaulted/isHealthy boolean in a way that can create future bugs.
+
+==================================================
+7. STORED ENERGY AND TEMPORAL STATE
+==================================================
+
+Audit RC/stored-energy behavior as lifecycle state rather than only capacitor math.
+
+Check interactions with:
+- board power toggles;
+- active measurement admission;
+- lead lift/removal;
+- replacement;
+- customer retest;
+- Quick Play reset;
+- simulation pause/resume;
+- diagnostic verifier snapshot/restore.
+
+Determine whether readiness is derived from live solver state or can become stale after topology changes.
+
+Determine whether changing the graph while charge exists can create an impossible or unvalidated energy transition.
+
+Do not require production-grade SPICE energy modeling. The question is internal consistency and player safety/logic within the simulator's declared model.
+
+==================================================
+8. ASYNCHRONOUS / REANALYSIS / VERIFICATION ORDERING
+==================================================
+
+TroubleshootJS often mutates a CircuitJS graph, requests reanalysis, waits for simulation time/state, and then verifies.
+
+Audit for race/order hazards such as:
+- validator reading pre-analysis volts/current after mutation;
+- multiple pending verification requests collapsing incorrectly;
+- a later action happening while an earlier verification still assumes old topology;
+- paused simulation preventing state settlement but lifecycle moving forward;
+- stale repair status used by Finish Job;
+- retest changing controls/power and failing to restore state on error;
+- temporal validator and meter transaction competing for graph ownership;
+- browser/UI reporting READY or repaired before electrical state has actually settled.
+
+Identify whether there is a central transaction/epoch/generation concept or whether correctness relies on informal ordering.
+
+Recommend one only if evidence shows it is needed. Do not invent architecture for its own sake.
+
+==================================================
+9. TASK 41 SNAPSHOT / RESTORE BOUNDARY
+==================================================
+
+Inspect the diagnostic-solvability proof's transactional snapshot/restore implementation in detail.
+
+Document exactly what it snapshots/restores:
+- CircuitJS graph identity/content;
+- generated owner state;
+- board power;
+- external control state;
+- instruments/probes;
+- physical runtime;
+- mounted/loose parts;
+- connection/lift/remove state;
+- inventory;
+- damage state;
+- stored energy/time state;
+- renderer/workbench state;
+- challenge lifecycle state;
+- any caches/static state.
+
+The roadmap reports injected restore-failure stages. Verify what those stages actually prove.
+
+Identify any important mutable state outside the transaction boundary.
+
+Ask whether composition later would add new state owners that could easily be forgotten by this snapshot mechanism.
+
+==================================================
+10. RESET / REPLAY / FRESH-SESSION INTEGRITY
+==================================================
+
+Audit every current session-start/reset path.
+
+Determine whether fresh challenge generation creates new authoritative runtime state or reuses mutable objects from the prior session.
+
+Check:
+- solver elmList cleanup;
+- generated instance ownership;
+- power/controller bindings;
+- instrument state;
+- retained probes;
+- physical runtime;
+- loose tray items;
+- acquired catalog parts;
+- original/replacement physical IDs;
+- fault bindings;
+- secondary damage;
+- customer operation state;
+- selected workbench part;
+- pending verification callbacks/timers;
+- debug overlays/evidence;
+- Quick Play family/seed selection state.
+
+Look for identity reuse that is intentional versus state reuse that is accidental.
+
+==================================================
+11. STATE INTEGRITY RISK REGISTER
+==================================================
+
+Create a prioritized risk register.
+
+For each significant issue include:
+- severity: P0 / P1 / P2 / P3;
+- state domains involved;
+- triggering sequence;
+- resulting contradictory/corrupted state;
+- whether the player can reach it normally;
+- whether current verifiers catch it;
+- likely future amplification under composition;
+- recommended bounded correction;
+- whether it should block Task 43 or Tasks 44-48.
+
+Use P0 sparingly for state corruption that can invalidate electrical/player truth or contaminate future sessions while normal validation still accepts the state.
+
+==================================================
+12. PERMANENT SEQUENCE CANARY RECOMMENDATIONS
+==================================================
+
+Recommend a SMALL number of durable adversarial sequence tests that provide high leverage.
+
+Possible examples:
+- original fault owner remove/measure/reinstall round-trip;
+- replacement A/B identity swap round-trip;
+- secondary damaged replacement remove/reinstall round-trip;
+- active meter interrupted by power-on;
+- charged RC -> power off -> mutation -> active meter readiness;
+- retained probe across original/remove/replacement sequence;
+- residual secondary damage blocks completion;
+- dirty challenge -> fresh Quick Play isolation;
+- repeated power/control/mode operations while verification is pending.
+
+For each recommended canary state:
+- protected invariant;
+- minimal sequence;
+- independent pass/fail signal;
+- architectural owner of the test.
+
+Do NOT implement these canaries during the audit.
+
+==================================================
+13. REQUIRED REPORT STRUCTURE
+==================================================
+
+Write:
+
+docs/research/STATE_LIFECYCLE_INTEGRITY_AUDIT.md
+
+Use approximately this structure:
+
+1. Executive Summary
+2. Baseline and Method
+3. Runtime State Ownership Map
+4. Cross-System Invariants
+5. Transition Inventory
+6. Adversarial Sequence Results
+7. Graph / Private Infrastructure Ownership
+8. Generated Fault vs Secondary Damage
+9. Measurement / Power / Stored-Energy Interactions
+10. Probe and Physical Identity Integrity
+11. Async / Reanalysis / Verification Ordering
+12. Task 41 Snapshot / Restore Assessment
+13. Fresh-Session / Reset Integrity
+14. State Integrity Risk Register
+15. Permanent Sequence Canary Recommendations
+16. Roadmap Impact
+17. Final Verdict
+
+Clearly label findings as:
+- [Observed]
+- [Experiment]
+- [Inference]
+- [Recommendation]
+
+Do not present inference as executed evidence.
+
+==================================================
+14. ROADMAP IMPACT
+==================================================
+
+Task 42 is currently underway elsewhere.
+
+The accepted roadmap afterward proceeds toward Task 43 physical package/interaction envelope truth and Tasks 44-48 composition infrastructure/proof.
+
+Do NOT edit ROADMAP.md.
+
+Instead determine:
+- whether any state-lifecycle defect should block Task 43;
+- whether any defect should block composition work in Tasks 44-48;
+- whether current lifecycle architecture is robust enough to add composed blocks without multiplying state corruption risk;
+- whether any correction can be folded into an existing roadmap milestone;
+- whether a dedicated bounded correction milestone is justified.
+
+Avoid redoing the procedural-generation, PCB-routing, troubleshooting-solvability, or visual-realism audits.
+
+==================================================
+15. COMPLETION / GIT PROTOCOL
+==================================================
+
+Before finishing:
+- restore/discard every temporary instrumentation/test mutation;
+- verify the dedicated audit worktree is clean except for the intended report;
+- inspect git diff;
+- run git diff --check;
+- confirm no Task 42 or unrelated concurrent files were changed;
+- commit ONLY docs/research/STATE_LIFECYCLE_INTEGRITY_AUDIT.md;
+- use a concise commit message such as:
+  "Audit runtime state and lifecycle integrity"
+- push ONLY the dedicated branch codex/state-lifecycle-integrity-audit to origin;
+- do NOT merge it into master;
+- report the final commit SHA and branch;
+- STOP.
+
+Do not begin fixes from the audit. Do not begin Task 43. Do not alter Task 42.
+
+FINAL QUESTION THE REPORT MUST ANSWER
+
+Can TroubleshootJS survive ugly but legal sequences of power changes, measurements, lead/component mutations, replacements, secondary damage, repair, retest, and session reset while keeping physical identity, fault ownership, CircuitJS graph state, and player-visible state perfectly coherent — and where are the current lifecycle landmines?
