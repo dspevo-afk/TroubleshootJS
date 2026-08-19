@@ -1,0 +1,416 @@
+READ-ONLY RESEARCH TASK — TROUBLESHOOTJS VERIFICATION INTEGRITY / FALSE-PASS AUDIT
+
+This is a READ-ONLY audit. Do NOT implement production features or fixes.
+
+Other Codex sessions are working concurrently, including the active Task 42 implementation. Do not interfere with them.
+
+BASELINE AND ISOLATION
+
+- Fetch origin first and base the audit on the latest accepted origin/master available when you start.
+- Record the exact baseline SHA in the report.
+- Create/use a dedicated branch named:
+  codex/verification-integrity-audit
+- Use a separate worktree. Do NOT switch branches in, reset, clean, stash, modify, or otherwise disturb the user's main worktree or any other Codex worktree.
+- Do NOT inspect unfinished Task 42 work as though it were accepted architecture. The audit target is the latest accepted origin/master baseline.
+- Do NOT merge this branch into master.
+
+The only repository file you may create or modify for the final audit is:
+
+docs/research/VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md
+
+Do NOT modify production code, tests, build scripts, AGENTS.md, ROADMAP.md, ARCHITECTURE.md, CODEX_TASK_REPORT.md, UI files, or Task 42 files in the final branch.
+
+TEMPORARY EXPERIMENTS
+
+You ARE encouraged to perform temporary local mutation experiments in your isolated audit worktree when useful. For example, deliberately break a binding or completion invariant and see whether the existing verifier actually catches it.
+
+However:
+- temporary mutations must never be committed;
+- restore them immediately after each experiment;
+- the final diff must contain only the audit report;
+- do not push any intentionally broken production state.
+
+This explicit audit protocol overrides the normal implementation-task completion behavior that would otherwise update CODEX_TASK_REPORT.md or production files.
+
+==================================================
+GOAL
+==================================================
+
+Determine how capable the current TroubleshootJS verification stack is of detecting SERIOUS IMPLEMENTATION DEFECTS rather than merely confirming that implementation code agrees with itself.
+
+The central question is:
+
+"If an important electrical, physical, diagnostic, repair, or player-visible defect existed today, how confident can we be that the current verification system would actually fail?"
+
+This concern is not hypothetical. TroubleshootJS has already had at least one important class of false confidence: the Task 38 NMOS implementation reached an apparent pass before later visible inspection exposed a mismatch between player-visible PCB control/gate connectivity and the real solver graph. The corrected Task 38 architecture is now accepted, but the event demonstrates why verifier independence matters.
+
+The audit should investigate the complete verification chain, identify self-referential or weak oracles, perform selected negative/mutation tests, and recommend permanent canaries or verification boundaries where justified.
+
+Do NOT turn this into a generic testing-style essay. Ground findings in the actual repository, actual verifier call paths, actual production behavior, and executed experiments where practical.
+
+==================================================
+1. MAP THE CURRENT VERIFICATION STACK
+==================================================
+
+Build an ownership/call-path map of the important validation systems currently capable of declaring something PASS, READY, repaired, complete, safe, routable, solvable, or valid.
+
+Inspect where relevant:
+- GeneratedBoardVerifier and structural generated-board checks;
+- family-specific healthy/faulted/repaired validators;
+- GeneratedChallengeController lifecycle gates;
+- generic functional completion contracts;
+- QuickPlayDeveloperVerifier and family developer routes;
+- diagnostic solvability verification from Task 41;
+- serviceability/fault-locus verification from Task 40;
+- player-operation/customer-retest verification from Task 39;
+- PCB layout / geometry developer verification;
+- physical runtime / package / replacement / catalog verification;
+- architecture canaries;
+- measurement verifiers;
+- active-measurement cleanup checks;
+- board-power safety checks;
+- stored-energy safety checks;
+- stress/secondary-damage checks;
+- fresh-session isolation checks;
+- browser verification scripts and routes;
+- visible/manual browser acceptance procedures documented by recent tasks;
+- privacy/answer-leakage checks;
+- seed/fault reachability checks;
+- any helper that supplies expected state to multiple validators.
+
+For each important verifier, identify:
+- what behavior it claims to prove;
+- what it actually observes;
+- whether it operates through public player capabilities or internal hooks;
+- what production state/helper it shares with the code under test;
+- whether its expected value is independently derived;
+- what defect classes it can and cannot catch.
+
+==================================================
+2. ORACLE INDEPENDENCE
+==================================================
+
+This is the core of the audit.
+
+For each important verifier, decide whether its oracle is genuinely independent of the implementation being verified.
+
+Classify important verification paths approximately as:
+- STRONG INDEPENDENT ORACLE;
+- PARTIALLY INDEPENDENT;
+- SELF-REFERENTIAL / WEAK;
+- UNKNOWN / NOT ENOUGH EVIDENCE.
+
+Examples of potentially weak/self-referential verification include:
+- production code and verifier both reading the same terminal-mapping table;
+- renderer and geometry verifier consuming the exact same incorrect geometry representation;
+- expected and actual electrical state derived by the same family-state method;
+- repair verifier checking expected fault metadata or expected part identity instead of solved restored function;
+- a validator asking an object whether it is healthy and treating that method as proof of health;
+- a browser route calling a developer helper instead of exercising the normal player path it claims to cover;
+- tests that update automatically when the implementation helper changes because both share one source of truth that is itself the thing needing validation.
+
+Shared abstractions are not automatically bad. The question is whether a wrong abstraction could make both production and its verifier agree on the same incorrect reality.
+
+==================================================
+3. NORMAL-PLAYER PATH AUTHENTICITY
+==================================================
+
+Identify every verifier or test route that is used as evidence for normal-player behavior.
+
+Determine whether it truly exercises:
+- visible player controls;
+- real workbench selection;
+- real pads/leads as probe targets;
+- public meter modes;
+- public power/control operations;
+- public lead lift/remove/reconnect actions;
+- public catalog/inventory/replacement actions;
+- public customer retest / Finish Job flow;
+- a fresh normal Quick Play session.
+
+Versus using:
+- forced faults;
+- direct family-state mutation;
+- developer-only JavaScript hooks;
+- private command switches;
+- direct solver element access;
+- hidden fault identity;
+- direct controller calls that bypass UI admission;
+- direct repair/completion flags.
+
+Developer-only tests are legitimate for internal invariants. The problem is only when they are cited as proving a normal-player path they do not actually exercise.
+
+Create a table distinguishing:
+- internal invariant proof;
+- normal-player route proof;
+- visible/manual acceptance proof.
+
+==================================================
+4. PLAYER-VISIBLE PCB VS REAL SOLVER GRAPH
+==================================================
+
+Determine how well the current verifier stack can detect divergence between what the player sees and what CircuitJS actually solves.
+
+Specifically examine whether existing checks would reliably detect:
+- visible copper connecting pads that are electrically disconnected;
+- solver connectivity with no corresponding visible copper;
+- wrong pad-to-terminal solver binding;
+- wrong transistor terminal ordering;
+- swapped MOSFET gate/drain/source mapping;
+- swapped BJT base/collector/emitter mapping;
+- reversed diode terminal semantics;
+- external command/power infrastructure accidentally represented as board copper;
+- private fault infrastructure being mistaken for a physical PCB component;
+- PCB route endpoint identity being internally consistent but physically/electrically wrong;
+- removed/lifted visual state disagreeing with the active electrical graph;
+- renderer body/lead presentation implying a connection that the solver does not have.
+
+Trace the strongest available end-to-end proof chain:
+
+visible component/lead/pad/trace
+  -> stable physical/logical identity
+  -> simulation binding
+  -> actual CircuitJS endpoint
+  -> solved electrical behavior
+
+Identify every place where that chain is only assumed rather than independently verified.
+
+Task 38's historical control/gate mismatch should be used as a concrete case study: explain why earlier verification could miss that class of defect and whether the CURRENT suite would now catch an equivalent defect elsewhere.
+
+==================================================
+5. FAULT / PHYSICAL OWNER / REPAIR FALSE PASSES
+==================================================
+
+Audit whether a challenge could falsely reach repaired/completed status despite one of the following:
+- the generated original fault still exists;
+- a replacement accidentally inherits the original's fault infrastructure;
+- reinstalling the original faulty part incorrectly clears its fault;
+- an original fault loses its private solver effect while removed or lead-lifted;
+- a wrong part clears hidden metadata but does not restore the customer's function;
+- another real fault or secondary damage remains after the expected original repair;
+- a severely damaged replacement remains electrically failed but Finish Job passes;
+- a part is physically mounted but electrically detached;
+- the correct solver state is restored using an impossible or inaccessible player action;
+- an alternate electrically valid repair is rejected because identity rather than function is checked;
+- generated-fault ownership and secondary-damage ownership become conflated.
+
+Inspect the Task 30-41 completion/serviceability contracts and determine whether their checks are sufficiently independent.
+
+==================================================
+6. MEASUREMENT FALSE PASSES
+==================================================
+
+Audit the verification around DC voltage, resistance, continuity, diode test, retained probes, active measurement transactions, and stored energy.
+
+Determine whether existing tests would catch:
+- stale voltage after reanalysis;
+- stale endpoint after lead lift/remove/reinstall;
+- two visible probe locations resolving to the same unintended solver endpoint;
+- loose-part probe resolving to installed-board endpoint;
+- installed lead probe resolving to loose-part/private infrastructure incorrectly;
+- red/black reference reversal errors;
+- resistance/diode/continuity being computed from component metadata rather than CircuitJS;
+- temporary meter elements remaining in elmList after measurement;
+- meter stimulus surviving a board-power-on transition;
+- board power changing without measurement cancellation;
+- active measurement allowed while stored energy remains unsafe;
+- measurement cleanup restoring the wrong graph or power state;
+- a measurement verifier using the same adapter's reported answer as both actual and expected result;
+- displayed accessible probe point not corresponding to the endpoint being sampled.
+
+Pay special attention to the distinction between proving measurement arithmetic and proving physical probe-to-solver identity.
+
+==================================================
+7. STATE ISOLATION AND ORDER DEPENDENCE
+==================================================
+
+Determine whether tests/verifiers can pass only because they run in a particular order or share global/static state.
+
+Look for:
+- family/seed state leaking into later routes;
+- browser route ordering assumptions;
+- instrument state persistence;
+- board power/control state persistence;
+- physical runtime/inventory persistence;
+- solver elements left behind by temporary verification;
+- generated challenge state persisting into a fresh session;
+- debug/developer mode state affecting later normal-player tests;
+- static caches/registries whose mutation could contaminate tests;
+- verifier snapshots restoring most but not all runtime dimensions.
+
+Task 41 reportedly added transactional snapshot/restore behavior and injected restoration-failure stages. Inspect this closely. Document exactly what it proves and what remains outside its snapshot boundary.
+
+==================================================
+8. NEGATIVE / MUTATION TESTING
+==================================================
+
+Perform a REPRESENTATIVE set of controlled local mutation experiments in the isolated audit worktree.
+
+The purpose is to test the TESTS.
+
+Choose high-impact invariants and temporarily break them one at a time.
+
+Potential examples:
+- swap NMOS G and D mapping;
+- swap NPN B and C mapping;
+- reverse diode binding;
+- disconnect a visible PCB route while leaving solver connection intact;
+- alter a stable pad binding while leaving rendered copper intact;
+- make a replacement inherit original generated-fault infrastructure;
+- make reinstallation incorrectly clear a generated fault;
+- leave a secondary-damage open path after a supposedly correct repair;
+- make completion accept expected replacement identity without restored solver behavior;
+- intentionally leave temporary meter infrastructure attached after measurement;
+- preserve old physical/runtime state into a fresh Quick Play session;
+- make a validator-operable control state unavailable to the normal player;
+- alter complaint/observable behavior compatibility.
+
+You do NOT need to perform every example. Select enough experiments to cover several distinct architectural layers.
+
+For each mutation record:
+1. exact temporary change;
+2. defect represented;
+3. verifier(s) expected to fail;
+4. commands/routes run;
+5. actual result;
+6. whether the defect was caught;
+7. if caught, which independent signal caught it;
+8. if not caught, why the current suite missed it;
+9. restoration confirmation.
+
+A strong result is not "all current tests pass." A strong result is "when we intentionally broke critical truths, the correct tests failed for the correct reason."
+
+Never commit these mutations.
+
+==================================================
+9. BROWSER / VISUAL ACCEPTANCE STRENGTH
+==================================================
+
+Audit what current browser evidence actually proves.
+
+Distinguish clearly between:
+- direct Java/JS developer route invocation;
+- automated browser interaction through DOM/canvas/player controls;
+- headless/CDP inspection;
+- visible in-app Browser interaction;
+- manual human-visible acceptance screenshots.
+
+Determine which defect classes require a genuinely visible/player-facing check because structured internal verification cannot establish them reliably.
+
+Do not simply recommend "more screenshots." Identify specific independent visual/electrical invariants worth verifying.
+
+==================================================
+10. FALSE-PASS RISK REGISTER
+==================================================
+
+Create a prioritized risk register.
+
+For each significant weakness include:
+- severity: P0 / P1 / P2 / P3;
+- affected subsystem(s);
+- concrete false-pass scenario;
+- why existing verification may accept it;
+- likely consequence for the player/project;
+- recommended verification improvement;
+- whether it should block Tasks 43-48 or can wait.
+
+Use P0 only for defects that could fundamentally invalidate electrical/player truth while normal verification still reports success.
+
+==================================================
+11. PERMANENT CANARY RECOMMENDATIONS
+==================================================
+
+Recommend a SMALL set of durable, high-value negative canaries rather than a giant brittle test suite.
+
+Candidates might include:
+- terminal permutation canary;
+- visible-copper vs solver-connectivity canary;
+- original-fault persistence through remove/reinstall canary;
+- secondary-damage completion blocker canary;
+- active-measurement cleanup canary;
+- fresh-session contamination canary;
+- normal-player capability reachability canary;
+- replacement solver-identity independence canary.
+
+For each recommendation explain:
+- what invariant it protects;
+- what independent oracle it should use;
+- what deliberate mutation should make it fail;
+- where it belongs architecturally.
+
+Do NOT implement these canaries in this audit.
+
+==================================================
+12. REQUIRED REPORT STRUCTURE
+==================================================
+
+Write:
+
+docs/research/VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md
+
+Use approximately this structure:
+
+1. Executive Summary
+2. Baseline and Method
+3. Current Verification Architecture
+4. Oracle Independence Matrix
+5. Normal-Player Path Authenticity
+6. PCB/Physical/Solver Truth Chain
+7. Fault and Repair Verification
+8. Measurement Verification
+9. State Isolation / Order Dependence
+10. Mutation-Test Results
+11. Browser / Visual Acceptance Assessment
+12. False-Pass Risk Register
+13. Permanent Canary Recommendations
+14. Roadmap Impact
+15. Final Verdict
+
+Clearly label findings as:
+- [Observed]
+- [Experiment]
+- [Inference]
+- [Recommendation]
+
+Do not present inference as executed evidence.
+
+==================================================
+13. ROADMAP IMPACT
+==================================================
+
+The active roadmap currently has Task 42 underway, followed by Task 43 Physical Package and Interaction Envelope Contract and later composition work.
+
+Do NOT edit ROADMAP.md.
+
+Instead state in the report:
+- whether any finding should block Task 43;
+- whether any finding should block Tasks 44-48 composition work;
+- which findings can be folded into already-planned milestones;
+- which findings deserve a new bounded correction milestone;
+- which findings are not urgent.
+
+Avoid duplicating the four existing architecture audits under new names.
+
+==================================================
+14. COMPLETION / GIT PROTOCOL
+==================================================
+
+Before finishing:
+- restore/discard every temporary production/test mutation;
+- verify the dedicated audit worktree is clean except for the intended report;
+- inspect git diff;
+- run git diff --check;
+- confirm no Task 42 or unrelated concurrent files were changed;
+- commit ONLY docs/research/VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md;
+- use a concise commit message such as:
+  "Audit verification integrity and false-pass risks"
+- push ONLY the dedicated branch codex/verification-integrity-audit to origin;
+- do NOT merge it into master;
+- report the final commit SHA and branch;
+- STOP.
+
+Do not begin fixes from the audit. Do not begin Task 43. Do not alter Task 42.
+
+FINAL QUESTION THE REPORT MUST ANSWER
+
+Can we trust the current TroubleshootJS verifier stack to fail loudly when the player-visible physical board, live CircuitJS graph, diagnostic workflow, or repaired state is wrong — and exactly where can we NOT trust it yet?
