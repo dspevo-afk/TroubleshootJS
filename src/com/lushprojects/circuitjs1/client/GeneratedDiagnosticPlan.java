@@ -15,6 +15,7 @@ final class GeneratedDiagnosticPlan {
     private final Vector<String> inputPowerTransitions;
     private final Vector<String> isolationActionIds;
     private final Vector<String> repairActionIds;
+    private final Vector<String> workflowActionIds;
     private final Vector<String> playerOperationIds;
     private final Vector<String> temporalWaitSampleIds;
     private final Vector<String> railDomainIds;
@@ -30,6 +31,19 @@ final class GeneratedDiagnosticPlan {
             String[] temporalWaitSampleIds, String[] railDomainIds, int depth,
             boolean parallelPathAmbiguity, boolean unaffectedFunctionRetestObservation,
             String equivalentRepairClass) {
+        this(templateId, referenceTargetId, probeTargetIds, meterModeIds,
+            inputPowerTransitions, isolationActionIds, repairActionIds, new String[0],
+            playerOperationIds, temporalWaitSampleIds, railDomainIds, depth,
+            parallelPathAmbiguity, unaffectedFunctionRetestObservation, equivalentRepairClass);
+    }
+
+    GeneratedDiagnosticPlan(String templateId, String referenceTargetId,
+            String[] probeTargetIds, String[] meterModeIds,
+            String[] inputPowerTransitions, String[] isolationActionIds,
+            String[] repairActionIds, String[] workflowActionIds,
+            String[] playerOperationIds, String[] temporalWaitSampleIds,
+            String[] railDomainIds, int depth, boolean parallelPathAmbiguity,
+            boolean unaffectedFunctionRetestObservation, String equivalentRepairClass) {
         requireSemanticId(templateId, "diagnostic template ID");
         requireSemanticId(referenceTargetId, "diagnostic reference target ID");
         if (depth <= 0 || equivalentRepairClass == null || equivalentRepairClass.length() == 0)
@@ -41,6 +55,7 @@ final class GeneratedDiagnosticPlan {
         this.inputPowerTransitions = copy(inputPowerTransitions, "input/power transition");
         this.isolationActionIds = copy(isolationActionIds, "isolation action");
         this.repairActionIds = copy(repairActionIds, "repair action");
+        this.workflowActionIds = copyOptional(workflowActionIds, "workflow action");
         this.playerOperationIds = copy(playerOperationIds, "player operation");
         this.temporalWaitSampleIds = copy(temporalWaitSampleIds, "temporal wait/sample");
         this.railDomainIds = copy(railDomainIds, "rail/domain");
@@ -59,6 +74,7 @@ final class GeneratedDiagnosticPlan {
     }
     Vector<String> getIsolationActionIds() { return new Vector<String>(isolationActionIds); }
     Vector<String> getRepairActionIds() { return new Vector<String>(repairActionIds); }
+    Vector<String> getWorkflowActionIds() { return new Vector<String>(workflowActionIds); }
     Vector<String> getPlayerOperationIds() { return new Vector<String>(playerOperationIds); }
     Vector<String> getTemporalWaitSampleIds() {
         return new Vector<String>(temporalWaitSampleIds);
@@ -74,6 +90,19 @@ final class GeneratedDiagnosticPlan {
     private static Vector<String> copy(String[] values, String category) {
         if (values == null || values.length == 0)
             throw new IllegalArgumentException("Diagnostic plan has no " + category + " IDs");
+        Vector<String> result = new Vector<String>();
+        for (String value : values) {
+            requireSemanticId(value, category + " ID");
+            if (result.contains(value))
+                throw new IllegalArgumentException("Duplicate diagnostic " + category + " ID");
+            result.add(value);
+        }
+        return result;
+    }
+
+    private static Vector<String> copyOptional(String[] values, String category) {
+        if (values == null)
+            throw new IllegalArgumentException("Diagnostic plan has no " + category + " list");
         Vector<String> result = new Vector<String>();
         for (String value : values) {
             requireSemanticId(value, category + " ID");

@@ -91,12 +91,9 @@ final class GeneratedDiagnosticSolvabilityAdmission {
             "CONTROL_INPUT_LOW", "RC_RESIDUAL_SAMPLE", "RC_EARLY_SAMPLE",
             "RC_LATE_SAMPLE" },
             "input/power transition");
-        validateAllowed(plan.getIsolationActionIds(), new String[] { WorkbenchOperation.REMOVE,
-            WorkbenchOperation.LIFT_LEAD, WorkbenchOperation.RECONNECT_LEAD,
-            WorkbenchOperation.RESTORE }, "isolation action");
-        validateAllowed(plan.getRepairActionIds(), new String[] { WorkbenchOperation.CATALOG_INSTALL,
-            WorkbenchOperation.INSTALL, WorkbenchOperation.RECONNECT_LEAD,
-            WorkbenchOperation.RESTORE }, "repair action");
+        validateIsolationActions(plan.getIsolationActionIds());
+        validateFaultClearingRepairActions(plan.getRepairActionIds());
+        validateWorkflowActions(plan.getWorkflowActionIds());
         validateAllowed(plan.getPlayerOperationIds(), new String[] {
             GeneratedBoardOperationIds.CONTROL_INPUT_HIGH,
             GeneratedBoardOperationIds.CONTROL_INPUT_LOW,
@@ -122,6 +119,27 @@ final class GeneratedDiagnosticSolvabilityAdmission {
                 throw new IllegalArgumentException("Diagnostic plan contains unsupported " +
                     category + ": " + value);
         }
+    }
+
+    private static void validateIsolationActions(Vector<String> actionIds) {
+        for (String actionId : actionIds)
+            if (!GeneratedActionVocabulary.isExecutableIsolation(actionId))
+                throw new IllegalArgumentException("Diagnostic plan contains unsupported or reserved " +
+                    "isolation action: " + actionId);
+    }
+
+    private static void validateFaultClearingRepairActions(Vector<String> actionIds) {
+        for (String actionId : actionIds)
+            if (!GeneratedActionVocabulary.isFaultClearingRepair(actionId))
+                throw new IllegalArgumentException("Diagnostic plan repair action is not an executable " +
+                    "fault-clearing repair: " + actionId);
+    }
+
+    private static void validateWorkflowActions(Vector<String> actionIds) {
+        for (String actionId : actionIds)
+            if (!GeneratedActionVocabulary.isExecutableWorkflow(actionId))
+                throw new IllegalArgumentException("Diagnostic plan contains unsupported or reserved " +
+                    "workflow action: " + actionId);
     }
 
     private static void validatePublicSemanticId(String value, String category) {

@@ -15,11 +15,19 @@ final class GeneratedFaultServiceability {
     private final Vector<String> observationActionIds;
     private final Vector<String> isolationActionIds;
     private final Vector<String> repairActionIds;
+    private final Vector<String> workflowActionIds;
     private final String customerRetestOperationId;
 
     GeneratedFaultServiceability(GeneratedFaultLocus locus, String[] observations,
             String[] isolations, String[] repairs, String customerRetestOperationId) {
-        if (locus == null || observations == null || isolations == null || repairs == null)
+        this(locus, observations, isolations, repairs, new String[0], customerRetestOperationId);
+    }
+
+    GeneratedFaultServiceability(GeneratedFaultLocus locus, String[] observations,
+            String[] isolations, String[] repairs, String[] workflows,
+            String customerRetestOperationId) {
+        if (locus == null || observations == null || isolations == null || repairs == null ||
+                workflows == null)
             throw new IllegalArgumentException("Incomplete generated fault serviceability");
         GeneratedBoardOperation.requireStableSemanticId(customerRetestOperationId,
             "fault retest operation ID");
@@ -27,6 +35,7 @@ final class GeneratedFaultServiceability {
         observationActionIds = copyActionIds(observations, "observation");
         isolationActionIds = copyActionIds(isolations, "isolation");
         repairActionIds = copyActionIds(repairs, "repair");
+        workflowActionIds = copyActionIds(workflows, "workflow");
         this.customerRetestOperationId = customerRetestOperationId;
     }
 
@@ -34,6 +43,10 @@ final class GeneratedFaultServiceability {
     Vector<String> getObservationActionIds() { return new Vector<String>(observationActionIds); }
     Vector<String> getIsolationActionIds() { return new Vector<String>(isolationActionIds); }
     Vector<String> getRepairActionIds() { return new Vector<String>(repairActionIds); }
+    Vector<String> getFaultClearingRepairActionIds() {
+        return new Vector<String>(repairActionIds);
+    }
+    Vector<String> getWorkflowActionIds() { return new Vector<String>(workflowActionIds); }
     String getCustomerRetestOperationId() { return customerRetestOperationId; }
     String getRetestOperationId() { return customerRetestOperationId; }
     int getObservationActionCount() { return observationActionIds.size(); }
@@ -45,33 +58,41 @@ final class GeneratedFaultServiceability {
     boolean isAdmissible() {
         return locus != null && !observationActionIds.isEmpty() &&
             !isolationActionIds.isEmpty() && !repairActionIds.isEmpty() &&
-            hasOnlyKnownActionIds() &&
+            hasExecutableObservationContract() && hasExecutableRepairContract() &&
+            hasExecutableWorkflowIds() &&
             GeneratedBoardOperationIds.CUSTOMER_RETEST.equals(customerRetestOperationId);
     }
 
-    private boolean hasOnlyKnownActionIds() {
+    private boolean hasExecutableObservationContract() {
         for (String actionId : observationActionIds)
-            if (!isKnownObservationAction(actionId)) return false;
+            if (!GeneratedActionVocabulary.isExecutableObservation(actionId)) return false;
         for (String actionId : isolationActionIds)
-            if (!isKnownWorkbenchAction(actionId)) return false;
-        for (String actionId : repairActionIds)
-            if (!isKnownWorkbenchAction(actionId)) return false;
+            if (!GeneratedActionVocabulary.isExecutableIsolation(actionId)) return false;
         return true;
     }
 
-    private static boolean isKnownObservationAction(String actionId) {
-        return OBSERVE_COMPONENT_TERMINALS.equals(actionId) ||
-            OBSERVE_PUBLIC_TERMINALS.equals(actionId) ||
-            OBSERVE_CONNECTOR_CONTACT.equals(actionId);
+    private boolean hasExecutableRepairContract() {
+        for (String actionId : repairActionIds)
+            if (!GeneratedActionVocabulary.isFaultClearingRepair(actionId)) return false;
+        return true;
     }
 
-    private static boolean isKnownWorkbenchAction(String actionId) {
-        return WorkbenchOperation.REMOVE.equals(actionId) ||
-            WorkbenchOperation.LIFT_LEAD.equals(actionId) ||
-            WorkbenchOperation.RECONNECT_LEAD.equals(actionId) ||
-            WorkbenchOperation.RESTORE.equals(actionId) ||
-            WorkbenchOperation.CATALOG_INSTALL.equals(actionId) ||
-            WorkbenchOperation.INSTALL.equals(actionId);
+    private boolean hasExecutableWorkflowIds() {
+        for (String actionId : workflowActionIds)
+            if (!GeneratedActionVocabulary.isExecutableWorkflow(actionId)) return false;
+        return true;
+    }
+
+    boolean hasOnlyKnownActionIds() {
+        for (String actionId : observationActionIds)
+            if (!GeneratedActionVocabulary.isKnownObservation(actionId)) return false;
+        for (String actionId : isolationActionIds)
+            if (!GeneratedActionVocabulary.isKnownWorkbench(actionId)) return false;
+        for (String actionId : repairActionIds)
+            if (!GeneratedActionVocabulary.isKnownWorkbench(actionId)) return false;
+        for (String actionId : workflowActionIds)
+            if (!GeneratedActionVocabulary.isKnownWorkbench(actionId)) return false;
+        return true;
     }
 
     private static Vector<String> copyActionIds(String[] values, String category) {

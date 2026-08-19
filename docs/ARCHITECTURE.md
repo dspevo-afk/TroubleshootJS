@@ -1200,7 +1200,9 @@ probe targets, `InstrumentController` modes, `BoardPowerController` state,
 player input operations, temporal waits, isolation, repair, and customer
 retest. Voltage, resistance, continuity, and diode observations are produced
 by CircuitJS; evidence records actual values and tolerances rather than labels
-or scripted readings.
+or scripted readings. Plan capability metadata is kept separate from the
+execution trace: a declared isolation or meter capability is not reported as
+executed unless the verifier actually performs it.
 
 The current normal corpus is deliberately explicit: 13 routes across LED 2,
 diode 1, parallel 2, RC 2, NPN 3, and NMOS 3. Candidate groups are compared
@@ -1222,3 +1224,46 @@ render globals), and the active UI/runtime flags. Normal rollback is
 transactional with best-effort exception recovery; eight injected restore
 stages are exercised by the developer verifier. Task 41 evidence is published
 only on an explicit developer verification route and never in normal-player UI.
+
+## Task 40/41 contract-hardening correction
+
+The bounded correction after Task 41 keeps the accepted solver-backed proof and
+hardens the serviceability contract before the next milestone. In
+`GeneratedFaultServiceability` and `GeneratedDiagnosticPlan`, fault-clearing
+repair actions are distinct from workflow/manipulation actions. For the current
+catalog, `CATALOG_INSTALL` is the fault-clearing replacement primitive;
+`RECONNECT_LEAD` is only a physical workflow/restoration operation. Reconnecting
+a lifted C1 positive lead or Q1 gate lead, and reinstalling the original
+`GeneratedFaultOwningPart`, therefore remain explicitly non-restoring paths.
+The Task 40 verifier proves those negative cases through the live workbench and
+then proves that a different correct catalog part reaches
+`CORRECTLY_RESTORED` and passes `CUSTOMER_RETEST`.
+
+`GeneratedActionVocabulary` is shared by the Task 40 and Task 41 executable
+admission boundaries. Known/reserved IDs such as `RESTORE` and
+connector-specific observation are not currently executable and cannot make a
+normal candidate or plan admissible. Connector and trace repair gameplay is
+unchanged and remains deferred.
+
+`GeneratedDiagnosticExecutionTrace` records the meter modes, input/power
+transitions, isolation operations, temporal waits, repair sequence, and
+customer retest actually exercised by the proof. Evidence exposes those as
+`executed*` fields alongside unambiguous `declared*` plan fields. The measured
+depth is the sum of the distinct frozen-trace entries for executed meter modes,
+input/power transitions, isolation actions, and temporal waits; repair and
+retest are reachability evidence and are intentionally excluded. It is not
+copied from the catalog's hand-authored plan depth, and the trace checks that
+the published value still equals that formula. In particular, the RC plan may
+declare remove/lift isolation capability while its current signature execution
+performs no isolation, which is reported as zero executed isolation actions
+rather than fabricated evidence.
+
+Candidate equivalence now requires both solver-observation equivalence within
+the defined sample tolerances and equivalent legal physical repair semantics
+(owner, locus/path, terminal, and repair/workflow action sets). The negative
+fixture rejects observationally identical candidates with different physical
+owners instead of assigning them an `EQUIVALENT_REPAIR` class. The live
+pre-READY gate, solver truth, unchanged topology/layout, detached snapshot /
+restore, and player evidence privacy remain intact across all 13 normal routes.
+Task 42 remains the next eligible roadmap milestone and was not started by this
+correction.

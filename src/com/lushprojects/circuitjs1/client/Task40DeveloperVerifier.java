@@ -108,11 +108,18 @@ final class Task40DeveloperVerifier {
         require(sim.getBoardPowerController().isElectricallyUnpowered(),
             "Task 40 isolation did not establish electrical unpowered state: " + type);
 
-        if ("C1".equals(instance.getFaultLocus().getComponentId()))
+        if (type == GeneratedFaultType.CAPACITOR_OPEN &&
+                "C1".equals(instance.getFaultLocus().getComponentId())) {
             exerciseLead(sim, instance, "C1", "+");
+            verifyNotRestoredAfterPhysicalWorkflow(sim, challenge,
+                "CAPACITOR_OPEN reconnect C1.+");
+        }
         if (NmosLowSideSwitchGenerator.FAMILY_ID.equals(instance.getCircuitFamilyId()) &&
                 "Q1".equals(instance.getFaultLocus().getComponentId())) {
             exerciseLead(sim, instance, "Q1", "G");
+            if (type == GeneratedFaultType.NMOS_GATE_OPEN)
+                verifyNotRestoredAfterPhysicalWorkflow(sim, challenge,
+                    "NMOS_GATE_OPEN reconnect Q1.G");
             exerciseLead(sim, instance, "Q1", "D");
             exerciseLead(sim, instance, "Q1", "S");
         }
@@ -122,6 +129,9 @@ final class Task40DeveloperVerifier {
         require(original != null && ((GeneratedFaultOwningPart) original)
             .ownsGeneratedFault(instance.getFaultBinding()),
             "Task 40 original owner was not installed: " + componentId);
+        if (type == GeneratedFaultType.CAPACITOR_OPEN ||
+                type == GeneratedFaultType.NMOS_GATE_OPEN)
+            verifyOriginalReinstallDoesNotRestore(sim, challenge, instance, original);
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
         require(instance.getPhysicalBoardRuntime().getInstalledPart(componentId) == null &&
             !original.isInstalled(), "Task 40 provider removal did not detach: " + componentId);
@@ -144,6 +154,34 @@ final class Task40DeveloperVerifier {
         require(challenge.performCustomerRetest().isPassed(),
             "Task 40 CUSTOMER_RETEST did not pass: " + type);
         sim.verifyGeneratedBoard();
+    }
+
+    private static void verifyNotRestoredAfterPhysicalWorkflow(CirSim sim,
+            GeneratedChallengeController challenge, String caseId) {
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        sim.runCircuit(true);
+        require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "Task 40 physical workflow incorrectly cleared generated fault: " + caseId);
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+    }
+
+    private static void verifyOriginalReinstallDoesNotRestore(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance,
+            PhysicalPart<?> original) {
+        String componentId = instance.getFaultLocus().getComponentId();
+        dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
+        require(instance.getPhysicalBoardRuntime().getInstalledPart(componentId) == null,
+            "Task 40 original reinstall setup did not remove the fault owner: " + componentId);
+        dispatch(sim, WorkbenchOperation.forPartAtSlot(WorkbenchOperation.INSTALL, original,
+            componentId));
+        require(instance.getPhysicalBoardRuntime().getInstalledPart(componentId) == original &&
+                original.isInstalled() && ((GeneratedFaultOwningPart) original)
+                    .ownsGeneratedFault(instance.getFaultBinding()),
+            "Task 40 original fault owner was not reinstalled: " + componentId);
+        verifyNotRestoredAfterPhysicalWorkflow(sim, challenge,
+            "original fault-owning part reinstall " + componentId);
     }
 
     private static GeneratedChallengeController installReadyChallenge(CirSim sim,

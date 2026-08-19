@@ -1136,6 +1136,20 @@ instrument state, runtime/render state, and physical modifications. Eight
 injected restore-failure stages are exercised. Normal UI state is restored with
 three panels and no proof overlay/evidence leakage.
 
+**Bounded Task 40/41 contract-hardening correction (2026-08-19):** The accepted
+Task 41 solver proof remains unchanged in scope, but serviceability metadata now
+separates fault-clearing replacement from lead reconnect/workflow actions. The
+Task 40 verifier proves that reconnecting CAPACITOR_OPEN and NMOS_GATE_OPEN
+leads, or reinstalling the original fault-owning part, does not restore the
+fault; a different correct catalog replacement reaches CORRECTLY_RESTORED and
+passes CUSTOMER_RETEST. Shared action admission rejects reserved RESTORE and
+connector-only observation as non-executable. Diagnostic evidence keeps
+declared plan capabilities separate from the live execution trace, derives its
+measured depth from executed trace events, and rejects observationally
+equivalent but repair-owner-distinct candidates. All 13 normal routes remain
+admitted and pass. Task 42 remains the immediate next milestone and was not
+started.
+
 ---
 
 ## Task 42 — Existing-Family Diagnostic Diversity Proof

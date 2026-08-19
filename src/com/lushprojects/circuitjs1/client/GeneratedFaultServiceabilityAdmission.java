@@ -20,6 +20,9 @@ final class GeneratedFaultServiceabilityAdmission {
         if (!serviceability.isAdmissible())
             throw new IllegalArgumentException("Fault candidate has no reachable repair primitive: " +
                 candidate.getFault().getId());
+        if (!serviceability.hasOnlyKnownActionIds())
+            throw new IllegalArgumentException("Fault candidate contains a reserved or unknown action: " +
+                candidate.getFault().getId());
         validateLocusIdentity(serviceability.getLocus());
     }
 
@@ -132,7 +135,9 @@ final class GeneratedFaultServiceabilityAdmission {
             .getWorkbenchCapabilityRegistry();
         for (String actionId : serviceability.getIsolationActionIds())
             requireWorkbenchSupport(instance, registry, installed, componentId, actionId);
-        for (String actionId : serviceability.getRepairActionIds())
+        for (String actionId : serviceability.getFaultClearingRepairActionIds())
+            requireWorkbenchSupport(instance, registry, installed, componentId, actionId);
+        for (String actionId : serviceability.getWorkflowActionIds())
             requireWorkbenchSupport(instance, registry, installed, componentId, actionId);
     }
 
@@ -161,7 +166,8 @@ final class GeneratedFaultServiceabilityAdmission {
             operation = WorkbenchOperation.forPartLead(actionId, installed, componentId,
                 componentId + "." + terminalId);
         } else {
-            throw new IllegalArgumentException("Unknown fault workbench action: " + actionId);
+            throw new IllegalArgumentException("Reserved fault workbench action is not executable: " +
+                actionId);
         }
         WorkbenchCapabilityStrategy capability = WorkbenchCapabilityDiscovery.find(installed,
             operation, registry);
@@ -181,7 +187,9 @@ final class GeneratedFaultServiceabilityAdmission {
             serviceability);
         for (String actionId : serviceability.getIsolationActionIds())
             requireControllerSupport(sim.pcbWorkbenchController, instance, actionId);
-        for (String actionId : serviceability.getRepairActionIds())
+        for (String actionId : serviceability.getFaultClearingRepairActionIds())
+            requireControllerSupport(sim.pcbWorkbenchController, instance, actionId);
+        for (String actionId : serviceability.getWorkflowActionIds())
             requireControllerSupport(sim.pcbWorkbenchController, instance, actionId);
     }
 
@@ -216,12 +224,17 @@ final class GeneratedFaultServiceabilityAdmission {
                 locus.getComponentId());
         } else if (WorkbenchOperation.REMOVE.equals(actionId)) {
             operation = WorkbenchOperation.forPart(actionId, installed);
-        } else {
+        } else if (WorkbenchOperation.LIFT_LEAD.equals(actionId) ||
+                WorkbenchOperation.RECONNECT_LEAD.equals(actionId)) {
             operation = WorkbenchOperation.forPartLead(actionId, installed,
                 locus.getComponentId(), locus.getComponentId() + "." + locus.getTerminalId());
+        } else {
+            throw new IllegalArgumentException("Reserved fault workbench action is not executable: " +
+                actionId);
         }
-        if (WorkbenchCapabilityDiscovery.find(installed, operation,
-                instance.getPhysicalBoardRuntime().getWorkbenchCapabilityRegistry()) == null)
+        WorkbenchCapabilityStrategy capability = WorkbenchCapabilityDiscovery.find(installed,
+            operation, instance.getPhysicalBoardRuntime().getWorkbenchCapabilityRegistry());
+        if (capability == null || !capability.supports(operation))
             throw new IllegalArgumentException("Controller has no fault action provider: " +
                 actionId);
     }

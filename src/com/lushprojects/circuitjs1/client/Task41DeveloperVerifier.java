@@ -25,20 +25,31 @@ final class Task41DeveloperVerifier {
             require(routes.size() == 13, "Task 41 normal route count changed: " + routes.size());
             Vector<GeneratedDiagnosticSolvabilityEvidence> evidence =
                 new Vector<GeneratedDiagnosticSolvabilityEvidence>();
-            int minimumDepth = Integer.MAX_VALUE;
-            int worstDepth = 0;
+            int declaredDepthMinimum = Integer.MAX_VALUE;
+            int declaredDepthWorst = 0;
+            int measuredDepthMinimum = Integer.MAX_VALUE;
+            int measuredDepthWorst = 0;
             int solverSamples = 0;
-            int transitionCount = 0;
-            int isolationCount = 0;
-            int temporalCount = 0;
+            int declaredTransitionCount = 0;
+            int declaredIsolationCount = 0;
+            int declaredTemporalCount = 0;
+            int executedTransitionCount = 0;
+            int executedIsolationCount = 0;
+            int executedTemporalCount = 0;
+            int declaredMeterModeCount = 0;
+            int executedMeterModeCount = 0;
             boolean parallelAmbiguity = false;
             boolean retestObserved = true;
-            Vector<String> templates = new Vector<String>();
-            Vector<String> meterModes = new Vector<String>();
+            Vector<String> declaredTemplates = new Vector<String>();
+            Vector<String> declaredMeterModes = new Vector<String>();
+            Vector<String> executedMeterModes = new Vector<String>();
             Vector<String> domains = new Vector<String>();
-            Vector<String> transitions = new Vector<String>();
-            Vector<String> isolations = new Vector<String>();
-            Vector<String> temporal = new Vector<String>();
+            Vector<String> declaredTransitions = new Vector<String>();
+            Vector<String> executedTransitions = new Vector<String>();
+            Vector<String> declaredIsolations = new Vector<String>();
+            Vector<String> executedIsolations = new Vector<String>();
+            Vector<String> declaredTemporal = new Vector<String>();
+            Vector<String> executedTemporal = new Vector<String>();
             Vector<String> candidateMetrics = new Vector<String>();
             Vector<String> evaluatedGroups = new Vector<String>();
             for (Route route : routes) {
@@ -57,21 +68,52 @@ final class Task41DeveloperVerifier {
                         withEquivalentRepairClass(selected.evidence,
                             equivalentClasses.get(selectedIndex));
                     evidence.add(routeEvidence);
-                    minimumDepth = Math.min(minimumDepth, routeEvidence.getMinimumPlanDepth());
-                    worstDepth = Math.max(worstDepth, routeEvidence.getWorstPlanDepth());
+                    declaredDepthMinimum = Math.min(declaredDepthMinimum,
+                        routeEvidence.getDeclaredPlanDepth());
+                    declaredDepthWorst = Math.max(declaredDepthWorst,
+                        routeEvidence.getDeclaredPlanDepth());
+                    measuredDepthMinimum = Math.min(measuredDepthMinimum,
+                        routeEvidence.getMeasuredExecutionDepth());
+                    measuredDepthWorst = Math.max(measuredDepthWorst,
+                        routeEvidence.getMeasuredExecutionDepth());
                     solverSamples += routeEvidence.getSolverSamples().size();
-                    transitionCount += routeEvidence.getInputPowerTransitions().size();
-                    isolationCount += routeEvidence.getIsolationActions().size();
-                    temporalCount += routeEvidence.getTemporalWaitsSamples().size();
-                    parallelAmbiguity |= routeEvidence.hasParallelPathAmbiguity();
+                    Vector<String> routeDeclaredTransitions =
+                        routeEvidence.getDeclaredInputPowerTransitions();
+                    Vector<String> routeExecutedTransitions =
+                        routeEvidence.getExecutedInputPowerTransitions();
+                    Vector<String> routeDeclaredIsolations =
+                        routeEvidence.getDeclaredIsolationActionIds();
+                    Vector<String> routeExecutedIsolations =
+                        routeEvidence.getExecutedIsolationActionIds();
+                    Vector<String> routeDeclaredTemporal =
+                        routeEvidence.getDeclaredTemporalWaitSampleIds();
+                    Vector<String> routeExecutedTemporal =
+                        routeEvidence.getExecutedTemporalWaitSamples();
+                    Vector<String> routeDeclaredMeterModes =
+                        routeEvidence.getDeclaredMeterModeIds();
+                    Vector<String> routeExecutedMeterModes =
+                        routeEvidence.getExecutedMeterModeIds();
+                    declaredTransitionCount += routeDeclaredTransitions.size();
+                    declaredIsolationCount += routeDeclaredIsolations.size();
+                    declaredTemporalCount += routeDeclaredTemporal.size();
+                    executedTransitionCount += routeExecutedTransitions.size();
+                    executedIsolationCount += routeExecutedIsolations.size();
+                    executedTemporalCount += routeExecutedTemporal.size();
+                    declaredMeterModeCount += routeDeclaredMeterModes.size();
+                    executedMeterModeCount += routeExecutedMeterModes.size();
+                    parallelAmbiguity |= routeEvidence.hasDeclaredParallelPathAmbiguity();
                     retestObserved &= routeEvidence.hasUnaffectedFunctionRetestObservation() &&
                         routeEvidence.isCustomerRetestPassed();
-                    appendUnique(templates, routeEvidence.getTemplatesConsidered());
-                    appendUnique(meterModes, routeEvidence.getMeterModes());
-                    appendUnique(domains, routeEvidence.getRailsDomains());
-                    appendUnique(transitions, routeEvidence.getInputPowerTransitions());
-                    appendUnique(isolations, routeEvidence.getIsolationActions());
-                    appendUnique(temporal, routeEvidence.getTemporalWaitsSamples());
+                    appendUnique(declaredTemplates, routeEvidence.getDeclaredTemplateIds());
+                    appendUnique(declaredMeterModes, routeDeclaredMeterModes);
+                    appendUnique(executedMeterModes, routeExecutedMeterModes);
+                    appendUnique(domains, routeEvidence.getDeclaredRailDomainIds());
+                    appendUnique(declaredTransitions, routeDeclaredTransitions);
+                    appendUnique(executedTransitions, routeExecutedTransitions);
+                    appendUnique(declaredIsolations, routeDeclaredIsolations);
+                    appendUnique(executedIsolations, routeExecutedIsolations);
+                    appendUnique(declaredTemporal, routeDeclaredTemporal);
+                    appendUnique(executedTemporal, routeExecutedTemporal);
                     String metric = routeEvidence.getRouteId() + "@" + routeEvidence.getSeed() +
                         "=" + routeEvidence.getAdmittedCandidateCount() + "/" +
                         routeEvidence.getAdmittedPhysicalOwnerCount();
@@ -80,19 +122,35 @@ final class Task41DeveloperVerifier {
             }
             lastNegativeRejectionReason = verifyNegativePlanAdmission(sim);
             Task41SimulationSnapshot.verifyInjectedFailureStagesForDeveloperVerification(sim);
-            require(minimumDepth != Integer.MAX_VALUE && worstDepth >= minimumDepth,
-                "Task 41 did not produce deterministic plan-depth evidence");
+            require(declaredDepthMinimum != Integer.MAX_VALUE &&
+                    declaredDepthWorst >= declaredDepthMinimum &&
+                    measuredDepthMinimum != Integer.MAX_VALUE &&
+                    measuredDepthWorst >= measuredDepthMinimum,
+                "Task 41 did not produce deterministic declared/measured plan-depth evidence");
             require(retestObserved, "Task 41 route did not prove unaffected-function retest");
             lastEvidence = evidence;
             sim.publishTask41EvidenceForDeveloperVerification(
-                "routes=" + evidence.size() + ";minDepth=" + minimumDepth +
-                ";maxDepth=" + worstDepth + ";templates=" + templates.size() +
-                ";solverSamples=" + solverSamples + ";transitions=" + transitionCount +
-                ";isolation=" + isolationCount + ";meterModes=" + meterModes.size() +
-                ";temporal=" + temporalCount + ";railsDomains=" + domains.size() +
+                "routes=" + evidence.size() + ";declaredDepth=" + declaredDepthMinimum +
+                ".." + declaredDepthWorst + ";measuredDepth=" + measuredDepthMinimum +
+                ".." + measuredDepthWorst + ";declaredTemplates=" + declaredTemplates.size() +
+                ";solverSamples=" + solverSamples + ";declaredMeterModes=" +
+                declaredMeterModeCount + ";executedMeterModes=" + executedMeterModeCount +
+                ";declaredTransitions=" + declaredTransitionCount +
+                ";executedTransitions=" + executedTransitionCount +
+                ";declaredIsolation=" + declaredIsolationCount +
+                ";executedIsolation=" + executedIsolationCount +
+                ";declaredTemporal=" + declaredTemporalCount +
+                ";executedTemporal=" + executedTemporalCount +
+                ";declaredRailsDomains=" + domains.size() +
                 ";parallelAmbiguity=" + parallelAmbiguity + ";retest=" + retestObserved +
+                ";declaredVsExecuted=transitions:" + declaredTransitionCount + ">" +
+                executedTransitionCount + ",isolation:" + declaredIsolationCount + ">" +
+                executedIsolationCount + ",temporal:" + declaredTemporalCount + ">" +
+                executedTemporalCount + ",meterModes:" + declaredMeterModeCount + ">" +
+                executedMeterModeCount +
                 ";candidateMetrics=" + join(candidateMetrics, ",") +
                 ";sampleToleranceEvidence=" + sampleEvidence(evidence) +
+                ";repairEquivalence=" + repairEquivalenceEvidence(evidence) +
                 ";negative=" + lastNegativeRejectionReason + ";result=PASS");
         } finally {
             try {
@@ -208,14 +266,17 @@ final class Task41DeveloperVerifier {
                 "Task 41 candidate install attached a player workbench");
             settleReady(sim, evaluated);
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, evaluated);
-            DiagnosticSignature signature = collectSolverSignature(sim, evaluated, plan);
+            GeneratedDiagnosticExecutionTrace.Builder trace =
+                GeneratedDiagnosticExecutionTrace.builder();
+            DiagnosticSignature signature = collectSolverSignature(sim, evaluated, plan, trace);
             sim.instrumentController.clearTargets();
             sim.instrumentController.exitInstrumentModeForDeveloperVerification();
             require(!sim.activeMeasurementOverlay, "Task 41 measurement overlay survived signature capture");
 
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
             sim.updateCircuit();
-            RepairRetestObservation repairObservation = performRealRepairAndRetest(sim, evaluated);
+            RepairRetestObservation repairObservation = performRealRepairAndRetest(sim,
+                evaluated, trace);
             require(sim.getBoardModificationController().isFullyRestored() &&
                     sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
                     !sim.activeMeasurementOverlay,
@@ -225,11 +286,7 @@ final class Task41DeveloperVerifier {
                 evaluated.getCircuitFamilyId(), evaluated.getSeed(),
                 evaluated.getDiagnosticSolvabilityContract().getAdmittedCandidateCount(),
                 evaluated.getDiagnosticSolvabilityContract().getAdmittedPhysicalOwnerCount(),
-                plan.getDepth(), plan.getDepth(), singleton(plan.getTemplateId()),
-                signature.getSamples(), plan.getInputPowerTransitions(),
-                plan.getIsolationActionIds(), plan.getMeterModeIds(),
-                plan.getTemporalWaitSampleIds(), plan.getRailDomainIds(),
-                plan.hasParallelPathAmbiguity(),
+                plan, signature.getSamples(), trace.freeze(signature.getRepairSemantics()),
                 repairObservation.unaffectedFunctionRetestObservation,
                 signature.getEquivalentRepairClass(), "PASS", "NONE",
                 repairObservation.repairReachable, repairObservation.customerRetestPassed,
@@ -304,8 +361,13 @@ final class Task41DeveloperVerifier {
         for (int left = 0; left < evaluations.size(); left++)
             for (int right = left + 1; right < evaluations.size(); right++)
                 if (sameSignature(evaluations.get(left).signature,
-                        evaluations.get(right).signature))
+                        evaluations.get(right).signature)) {
+                    require(sameRepairSemantics(evaluations.get(left).signature,
+                            evaluations.get(right).signature),
+                        "REPAIR_EQUIVALENCE_REJECTED: identical solver observations have " +
+                        "different legal physical repair semantics");
                     union(groups, left, right);
+                }
         for (int left = 0; left < evaluations.size(); left++)
             for (int right = left + 1; right < evaluations.size(); right++)
                 if (findGroup(groups, left) == findGroup(groups, right) &&
@@ -366,49 +428,53 @@ final class Task41DeveloperVerifier {
         if (first != second) groups[second] = first;
     }
 
+    private static boolean sameRepairSemantics(DiagnosticSignature left,
+            DiagnosticSignature right) {
+        return left != null && right != null && left.repairSemantics != null &&
+            left.repairSemantics.isEquivalentTo(right.repairSemantics);
+    }
+
     private static GeneratedDiagnosticSolvabilityEvidence withEquivalentRepairClass(
             GeneratedDiagnosticSolvabilityEvidence source, String classId) {
-        return new GeneratedDiagnosticSolvabilityEvidence(source.getRouteId(), source.getFamilyId(),
-            source.getSeed(), source.getAdmittedCandidateCount(),
-            source.getAdmittedPhysicalOwnerCount(), source.getMinimumPlanDepth(),
-            source.getWorstPlanDepth(), source.getTemplatesConsidered(), source.getSolverSamples(),
-            source.getInputPowerTransitions(), source.getIsolationActions(), source.getMeterModes(),
-            source.getTemporalWaitsSamples(), source.getRailsDomains(),
-            source.hasParallelPathAmbiguity(), source.hasUnaffectedFunctionRetestObservation(),
-            classId, source.getDeterministicResult(), source.getDeterministicRejectionReason(),
-            source.isRepairReachable(), source.isCustomerRetestPassed(), source.isStateIsolated());
+        return source.withEquivalentRepairClass(classId);
     }
 
     private static DiagnosticSignature collectSolverSignature(CirSim sim,
-            GeneratedBoardInstance instance, GeneratedDiagnosticPlan plan) {
+            GeneratedBoardInstance instance, GeneratedDiagnosticPlan plan,
+            GeneratedDiagnosticExecutionTrace.Builder trace) {
         if (QuickPlayFamilyRegistry.RC_DELAY.equals(instance.getCircuitFamilyId()))
-            return collectRcTemporalSignature(sim, instance, plan);
+            return collectRcTemporalSignature(sim, instance, plan, trace);
 
         Vector<GeneratedDiagnosticSample> samples = new Vector<GeneratedDiagnosticSample>();
         if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) ||
                 QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId())) {
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
-            appendDcSamples(sim, instance, plan, samples, "CONTROL_HIGH");
+            trace.recordInputPowerTransition(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH);
+            appendDcSamples(sim, instance, plan, samples, "CONTROL_HIGH", trace);
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
-            appendDcSamples(sim, instance, plan, samples, "CONTROL_LOW");
+            trace.recordInputPowerTransition(GeneratedBoardOperationIds.CONTROL_INPUT_LOW);
+            appendDcSamples(sim, instance, plan, samples, "CONTROL_LOW", trace);
         } else {
-            appendDcSamples(sim, instance, plan, samples, "STEADY_STATE");
+            appendDcSamples(sim, instance, plan, samples, "STEADY_STATE", trace);
         }
 
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        trace.recordInputPowerTransition("BOARD_POWER_OFF");
         sim.updateCircuit();
         String[] pair = isolationPair(instance.getCircuitFamilyId());
         ProbeTarget first = boardProbe(sim, instance, pair[0]);
         ProbeTarget second = boardProbe(sim, instance, pair[1]);
         sim.instrumentController.setResistanceProbesForDeveloperVerification(first, second);
         addResistanceSample(sim, samples, "OHM_" + pair[0] + "_" + pair[1],
-            sim.instrumentController.getLatestResistanceReadingForDeveloperVerification());
+            sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), trace);
         sim.instrumentController.setContinuityProbesForDeveloperVerification(first, second);
+        trace.recordMeterMode("CONTINUITY");
         addSample(samples, "CONTINUITY_" + pair[0] + "_" + pair[1],
             sim.instrumentController.isContinuityDetectedForDeveloperVerification() ? 1 : 0);
         if (QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR.equals(instance.getCircuitFamilyId())) {
             sim.instrumentController.setDiodeProbesForDeveloperVerification(first, second);
+            trace.recordMeterMode("DIODE");
             addSample(samples, "DIODE_FORWARD_VOLTAGE",
                 sim.getLastDiodeMeasurementVoltageForDeveloperVerification());
             addSample(samples, "DIODE_FORWARD_CURRENT",
@@ -416,46 +482,61 @@ final class Task41DeveloperVerifier {
         }
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         require(!sim.activeMeasurementOverlay, "Task 41 active meter transaction was not restored");
-        return new DiagnosticSignature(samples, "NONE");
+        return new DiagnosticSignature(samples, "NONE",
+            GeneratedDiagnosticRepairSemantics.forServiceability(
+                instance.getFaultServiceability()));
     }
 
     private static DiagnosticSignature collectRcTemporalSignature(CirSim sim,
-            GeneratedBoardInstance instance, GeneratedDiagnosticPlan plan) {
+            GeneratedBoardInstance instance, GeneratedDiagnosticPlan plan,
+            GeneratedDiagnosticExecutionTrace.Builder trace) {
         Vector<GeneratedDiagnosticSample> samples = new Vector<GeneratedDiagnosticSample>();
         RcDelayTemporalBehavior temporal = (RcDelayTemporalBehavior) instance.getTemporalBehavior();
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.UNPOWERED);
+        trace.recordInputPowerTransition("BOARD_POWER_OFF_INITIAL");
         sim.advanceGeneratedTemporalProfile(.120);
-        addSample(samples, "RC_RESIDUAL_SAMPLE", measureDc(sim, instance, "J2.1", "J2.2"));
+        trace.recordTemporalWaitSample("RC_RESIDUAL_SAMPLE", .120);
+        addSample(samples, "RC_RESIDUAL_SAMPLE", measureDc(sim, instance, "J2.1", "J2.2",
+            trace));
         sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.POWERED);
+        trace.recordInputPowerTransition("RC_POWER_ON");
         temporal.advanceForDeveloperVerification(sim, .100);
-        addSample(samples, "RC_EARLY_SAMPLE", measureDc(sim, instance, "J2.1", "J2.2"));
+        trace.recordTemporalWaitSample("RC_EARLY_SAMPLE", .100);
+        addSample(samples, "RC_EARLY_SAMPLE", measureDc(sim, instance, "J2.1", "J2.2",
+            trace));
         temporal.advanceForDeveloperVerification(sim, .700);
-        addSample(samples, "RC_LATE_SAMPLE", measureDc(sim, instance, "J2.1", "J2.2"));
+        trace.recordTemporalWaitSample("RC_LATE_SAMPLE", .700);
+        addSample(samples, "RC_LATE_SAMPLE", measureDc(sim, instance, "J2.1", "J2.2",
+            trace));
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        trace.recordInputPowerTransition("BOARD_POWER_OFF_FINAL");
         sim.updateCircuit();
         // The board has just undergone a real power transition.  Advance the
         // existing solver-backed temporal profile until the meter's stored-
         // energy policy has observed the powered-down state.
         sim.advanceGeneratedTemporalProfile(.800);
+        trace.recordTemporalWaitSample("RC_POWER_OFF_SETTLE", .800);
         ProbeTarget positive = boardProbe(sim, instance, "C1.+");
         ProbeTarget negative = boardProbe(sim, instance, "C1.-");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(positive, negative);
         addResistanceSample(sim, samples, "OHM_C1+_C1-",
-            sim.instrumentController.getLatestResistanceReadingForDeveloperVerification());
+            sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), trace);
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         require(!sim.activeMeasurementOverlay, "Task 41 RC measurement was not restored");
-        return new DiagnosticSignature(samples, "NONE");
+        return new DiagnosticSignature(samples, "NONE",
+            GeneratedDiagnosticRepairSemantics.forServiceability(
+                instance.getFaultServiceability()));
     }
 
     private static void appendDcSamples(CirSim sim, GeneratedBoardInstance instance,
             GeneratedDiagnosticPlan plan, Vector<GeneratedDiagnosticSample> samples,
-            String prefix) {
+            String prefix, GeneratedDiagnosticExecutionTrace.Builder trace) {
         for (String targetId : plan.getProbeTargetIds()) {
             if (targetId.equals(plan.getReferenceTargetId())) continue;
             addSample(samples, prefix + "_DC_" + targetId,
-                measureDc(sim, instance, targetId, plan.getReferenceTargetId()));
+                measureDc(sim, instance, targetId, plan.getReferenceTargetId(), trace));
         }
     }
 
@@ -473,7 +554,9 @@ final class Task41DeveloperVerifier {
      * bound for immutable numeric signature comparison.
      */
     private static void addResistanceSample(CirSim sim,
-            Vector<GeneratedDiagnosticSample> samples, String sampleId, double reading) {
+            Vector<GeneratedDiagnosticSample> samples, String sampleId, double reading,
+            GeneratedDiagnosticExecutionTrace.Builder trace) {
+        trace.recordMeterMode("RESISTANCE");
         double value = reading;
         if (Double.isNaN(value) || Double.isInfinite(value)) {
             require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
@@ -491,10 +574,11 @@ final class Task41DeveloperVerifier {
     }
 
     private static double measureDc(CirSim sim, GeneratedBoardInstance instance,
-            String redId, String blackId) {
+            String redId, String blackId, GeneratedDiagnosticExecutionTrace.Builder trace) {
         ProbeTarget red = boardProbe(sim, instance, redId);
         ProbeTarget black = boardProbe(sim, instance, blackId);
         sim.instrumentController.setDcVoltageProbesForDeveloperVerification(red, black);
+        trace.recordMeterMode("DC_VOLTAGE");
         double reading = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
         require(!Double.isNaN(reading) && !Double.isInfinite(reading),
             "Task 41 solver returned a non-finite DC sample: " + redId);
@@ -524,14 +608,16 @@ final class Task41DeveloperVerifier {
     }
 
     private static RepairRetestObservation performRealRepairAndRetest(CirSim sim,
-            GeneratedBoardInstance instance) {
+            GeneratedBoardInstance instance, GeneratedDiagnosticExecutionTrace.Builder trace) {
         String componentId = instance.getFaultLocus().getComponentId();
         PhysicalPart<?> original = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
         require(original != null && original.isInstalled(),
             "Task 41 physical fault owner is not installed: " + componentId);
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
+        trace.recordRepairAction(WorkbenchOperation.REMOVE);
         String catalogId = correctCatalogId(instance, componentId);
         dispatch(sim, WorkbenchOperation.forCatalog(componentId, catalogId));
+        trace.recordRepairAction(WorkbenchOperation.CATALOG_INSTALL);
         require(instance.getPhysicalBoardRuntime().getInstalledPart(componentId) != original,
             "Task 41 replacement reused the faulted physical owner");
         sim.setBoardPowerState(BoardPowerState.POWERED);
@@ -544,6 +630,7 @@ final class Task41DeveloperVerifier {
         require(repairReachable,
             "Task 41 correct physical repair did not restore solver behavior");
         GeneratedCustomerRetestResult retest = challenge.performCustomerRetest();
+        trace.recordAction(GeneratedBoardOperationIds.CUSTOMER_RETEST);
         boolean customerRetestPassed = retest != null && retest.isPassed();
         require(customerRetestPassed,
             "Task 41 legal repair did not pass CUSTOMER_RETEST");
@@ -593,9 +680,30 @@ final class Task41DeveloperVerifier {
             throw new IllegalStateException("Task 41 admitted a developer-only plan operation");
         } catch (IllegalArgumentException expected) {
             verifyNegativeCandidateSeparation();
+            String reservedAction = verifyReservedActionRejection();
+            String repairEquivalence = verifyNegativeRepairSemanticsEquivalence(sim);
             String excludedObservation = verifyExcludedDeveloperRoutes(sim);
             return "UNSUPPORTED_PLAYER_OPERATION;EQUIVALENT_REPAIR_CLASS_REQUIRED;" +
-                "DIODE_SHORT_EXCLUDED;" + excludedObservation;
+                reservedAction + ";" + repairEquivalence + ";DIODE_SHORT_EXCLUDED;" +
+                excludedObservation;
+        }
+    }
+
+    private static String verifyReservedActionRejection() {
+        GeneratedDiagnosticPlan reserved = new GeneratedDiagnosticPlan(
+            "NEGATIVE_RESERVED_RESTORE", "J1.2", new String[] { "J1.1", "J1.2" },
+            new String[] { "DC_VOLTAGE" }, new String[] { "BOARD_POWER_ON" },
+            new String[] { WorkbenchOperation.REMOVE },
+            new String[] { WorkbenchOperation.CATALOG_INSTALL },
+            new String[] { WorkbenchOperation.RESTORE },
+            new String[] { GeneratedBoardOperationIds.CUSTOMER_RETEST },
+            new String[] { "STEADY_STATE_SAMPLE" }, new String[] { "VIN", "GND" },
+            2, false, false, "NONE");
+        try {
+            GeneratedDiagnosticSolvabilityAdmission.validatePlan(reserved);
+            throw new IllegalStateException("Task 41 admitted reserved RESTORE workflow");
+        } catch (IllegalArgumentException expected) {
+            return "RESERVED_RESTORE_REJECTED";
         }
     }
 
@@ -619,6 +727,150 @@ final class Task41DeveloperVerifier {
         }
     }
 
+    private static String verifyNegativeRepairSemanticsEquivalence(CirSim sim) {
+        /*
+         * Keep this negative assertion grounded in the same generated board
+         * family used by the live proof.  The two boards receive the same
+         * legal player isolation sequence before capture, so their resulting
+         * circuits are genuinely live-equivalent.  Each signature is still
+         * captured independently from CircuitJS; only the generated repair
+         * semantics remain different.
+         */
+        GeneratedBoardInstance collectorOpen = new NpnLowSideSwitchGenerator()
+            .generateForDiagnosticSolvability(0, GeneratedFaultType.TRANSISTOR_CE_OPEN);
+        GeneratedBoardInstance baseOpen = new NpnLowSideSwitchGenerator()
+            .generateForDiagnosticSolvability(0, GeneratedFaultType.BASE_RESISTOR_OPEN);
+        require(collectorOpen.getCircuitFamilyId().equals(baseOpen.getCircuitFamilyId()) &&
+                collectorOpen.getTopologyVariantId().equals(baseOpen.getTopologyVariantId()) &&
+                collectorOpen.getSeed() == baseOpen.getSeed() &&
+                collectorOpen.getPcbLayout().geometryFingerprint().equals(
+                    baseOpen.getPcbLayout().geometryFingerprint()),
+            "Task 41 negative repair fixture changed NPN topology/layout");
+
+        GeneratedFaultCandidate collectorCandidate = findGeneratedCandidate(collectorOpen,
+            GeneratedFaultType.TRANSISTOR_CE_OPEN);
+        GeneratedFaultCandidate baseCandidate = findGeneratedCandidate(baseOpen,
+            GeneratedFaultType.BASE_RESISTOR_OPEN);
+        require(collectorCandidate.getBinding() == collectorOpen.getFaultBinding() &&
+                baseCandidate.getBinding() == baseOpen.getFaultBinding(),
+            "Task 41 negative repair fixture did not use each board's selected candidate");
+        require(GeneratedFaultServiceabilityAdmission.isAdmitted(collectorCandidate) &&
+                GeneratedDiagnosticSolvabilityAdmission.isAdmitted(collectorCandidate) &&
+                GeneratedFaultServiceabilityAdmission.isAdmitted(baseCandidate) &&
+                GeneratedDiagnosticSolvabilityAdmission.isAdmitted(baseCandidate),
+            "Task 41 negative repair fixture selected an unadmitted NPN candidate");
+        require(collectorCandidate.getServiceability() != null &&
+                baseCandidate.getServiceability() != null &&
+                collectorCandidate.getServiceability().getLocus() != null &&
+                baseCandidate.getServiceability().getLocus() != null,
+            "Task 41 negative repair fixture has incomplete serviceability bindings");
+        String collectorOwner = collectorCandidate.getServiceability().getLocus().getOwnerId();
+        String baseOwner = baseCandidate.getServiceability().getLocus().getOwnerId();
+        require(!collectorOwner.equals(baseOwner),
+            "Task 41 negative repair fixture did not retain different physical owners");
+        GeneratedDiagnosticRepairSemantics collectorRepairSemantics =
+            GeneratedDiagnosticRepairSemantics.forServiceability(
+                collectorCandidate.getServiceability());
+        GeneratedDiagnosticRepairSemantics baseRepairSemantics =
+            GeneratedDiagnosticRepairSemantics.forServiceability(baseCandidate.getServiceability());
+        require(!collectorRepairSemantics.isEquivalentTo(baseRepairSemantics),
+            "Task 41 negative repair fixture unexpectedly has equivalent repair semantics");
+
+        Task41SimulationSnapshot priorSnapshot = Task41SimulationSnapshot.capture(sim);
+        priorSnapshot.beginProof(sim);
+        DiagnosticSignature collectorOpenSignature = null;
+        DiagnosticSignature baseOpenSignature = null;
+        try {
+            collectorOpenSignature = collectLiveNegativeRepairSignature(sim, collectorOpen);
+            baseOpenSignature = collectLiveNegativeRepairSignature(sim, baseOpen);
+            require(collectorOpenSignature.getSamples().size() > 0 &&
+                    baseOpenSignature.getSamples().size() > 0,
+                "Task 41 negative repair fixture produced no live solver samples");
+            require(collectorOpenSignature.getSamples().size() ==
+                    baseOpenSignature.getSamples().size(),
+                "Task 41 negative repair fixture changed live sample shape");
+            require(collectorOpenSignature.getRepairSemantics().isEquivalentTo(
+                        collectorRepairSemantics) &&
+                    baseOpenSignature.getRepairSemantics().isEquivalentTo(baseRepairSemantics),
+                "Task 41 negative repair fixture lost generated repair semantics");
+            require(sameSignature(collectorOpenSignature, baseOpenSignature),
+                "Task 41 constructed NPN isolation pair is not live-equivalent");
+
+            Vector<CandidateEvaluation> evaluations = new Vector<CandidateEvaluation>();
+            evaluations.add(new CandidateEvaluation(GeneratedFaultType.TRANSISTOR_CE_OPEN,
+                collectorOpenSignature, null,
+                collectorOpen.getTopologyVariantId(),
+                collectorOpen.getPcbLayout().geometryFingerprint()));
+            evaluations.add(new CandidateEvaluation(GeneratedFaultType.BASE_RESISTOR_OPEN,
+                baseOpenSignature, null,
+                baseOpen.getTopologyVariantId(),
+                baseOpen.getPcbLayout().geometryFingerprint()));
+            try {
+                classifyCandidateEquivalence(evaluations, "NPN_NEGATIVE_REPAIR_SEMANTICS", 0);
+                throw new IllegalStateException("Task 41 formed an equivalent class for different " +
+                    "physical repair owners");
+            } catch (IllegalStateException expected) {
+                require(expected.getMessage().indexOf("REPAIR_EQUIVALENCE_REJECTED") >= 0,
+                    "Task 41 live repair-equivalence rejection was not deterministic");
+                return "REPAIR_EQUIVALENCE_REJECTED_DIFFERENT_OWNER";
+            }
+        } finally {
+            try {
+                try {
+                    sim.instrumentController.clearTargets();
+                    sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+                } finally {
+                    if (sim.activeMeasurementOverlay)
+                        throw new IllegalStateException(
+                            "Task 41 negative repair fixture left measurement overlay");
+                }
+            } finally {
+                priorSnapshot.restore(sim);
+                priorSnapshot.assertRestored(sim);
+            }
+        }
+    }
+
+    private static GeneratedFaultCandidate findGeneratedCandidate(GeneratedBoardInstance instance,
+            GeneratedFaultType type) {
+        for (GeneratedFaultCandidate candidate : instance.getFaultCandidates())
+            if (candidate.getFault().getType() == type) return candidate;
+        throw new IllegalStateException("Task 41 generated negative fixture has no candidate: " +
+            type);
+    }
+
+    private static DiagnosticSignature collectLiveNegativeRepairSignature(CirSim sim,
+            GeneratedBoardInstance instance) {
+        sim.installGeneratedChallengeForDeveloperVerification(instance);
+        require(sim.getAttachedPcbWorkbenchCountForDeveloperVerification() == 0,
+            "Task 41 negative repair fixture attached a player workbench");
+        settleReady(sim, instance);
+        GeneratedDiagnosticSolvabilityAdmission.validate(sim, instance);
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        sim.updateCircuit();
+        PhysicalPart<?> baseResistor = instance.getPhysicalBoardRuntime().getInstalledPart("RB");
+        require(baseResistor != null && baseResistor.isInstalled(),
+            "Task 41 negative repair fixture has no installed NPN base resistor");
+        // Remove the base path and lift the collector through the same real
+        // player operations for both candidates; do not rewrite meter samples.
+        dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, baseResistor));
+        PhysicalPart<?> transistor = instance.getPhysicalBoardRuntime().getInstalledPart("Q1");
+        require(transistor != null && transistor.isInstalled(),
+            "Task 41 negative repair fixture has no installed NPN transistor");
+        dispatch(sim, WorkbenchOperation.forPartLead(WorkbenchOperation.LIFT_LEAD, transistor,
+            "Q1", "Q1.C"));
+        sim.analyzeCircuit();
+        sim.updateCircuit();
+        DiagnosticSignature signature = collectSolverSignature(sim, instance,
+            planFor(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH),
+            GeneratedDiagnosticExecutionTrace.builder());
+        sim.instrumentController.clearTargets();
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        require(!sim.activeMeasurementOverlay,
+            "Task 41 negative repair fixture left a measurement overlay after capture");
+        return signature;
+    }
+
     private static String verifyExcludedDeveloperRoutes(CirSim sim) {
         GeneratedBoardInstance diode = new DiodeProtectedIndicatorGenerator().generate(0);
         boolean diodeShortAdmitted = false;
@@ -632,7 +884,24 @@ final class Task41DeveloperVerifier {
             .generateForFaultVerification(0, GeneratedFaultType.LOAD_PATH_OPEN);
         require(loadPath.isDeveloperOnlyFaultRoute(),
             "Task 41 treated NPN LOAD_PATH_OPEN as a normal route");
-        return verifyNpnLoadPathObservationComparison(sim);
+        return verifyConnectorOnlyObservationRejected() + ";" +
+            verifyNpnLoadPathObservationComparison(sim);
+    }
+
+    private static String verifyConnectorOnlyObservationRejected() {
+        GeneratedFaultServiceability connectorServiceability = new GeneratedFaultServiceability(
+            GeneratedFaultLocus.connectorContact("J1", "1"),
+            new String[] { GeneratedFaultServiceability.OBSERVE_CONNECTOR_CONTACT },
+            new String[] { WorkbenchOperation.REMOVE },
+            new String[] { WorkbenchOperation.CATALOG_INSTALL },
+            GeneratedBoardOperationIds.CUSTOMER_RETEST);
+        GeneratedFaultCandidate connector = new GeneratedFaultCandidate(
+            new GeneratedFaultBinding(new GeneratedFault("TASK41_CONNECTOR_OBSERVATION",
+                GeneratedFaultType.CONNECTOR_OPEN_PATH, "J1", "LED_INDICATOR", 0),
+                new SwitchOpenFaultEffect(new SwitchElm(0, 0)), connectorServiceability), true);
+        require(!GeneratedFaultServiceabilityAdmission.isAdmitted(connector),
+            "Task 41 admitted connector-only observation evidence");
+        return "CONNECTOR_OBSERVATION_REJECTED";
     }
 
     /**
@@ -663,7 +932,8 @@ final class Task41DeveloperVerifier {
             settleReady(sim, collectorOpen);
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, collectorOpen);
             collectorOpenSignature = collectSolverSignature(sim, collectorOpen,
-                planFor(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH));
+                planFor(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH),
+                GeneratedDiagnosticExecutionTrace.builder());
             sim.instrumentController.clearTargets();
             sim.instrumentController.exitInstrumentModeForDeveloperVerification();
             require(!sim.activeMeasurementOverlay,
@@ -675,18 +945,25 @@ final class Task41DeveloperVerifier {
             settleReady(sim, loadPath);
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, loadPath);
             loadPathSignature = collectSolverSignature(sim, loadPath,
-                planFor(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH));
+                planFor(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH),
+                GeneratedDiagnosticExecutionTrace.builder());
             sim.instrumentController.clearTargets();
             sim.instrumentController.exitInstrumentModeForDeveloperVerification();
             require(!sim.activeMeasurementOverlay,
                 "Task 41 NPN exclusion load-path observation left a measurement overlay");
             boolean separated = !sameSignature(collectorOpenSignature, loadPathSignature);
-            String relation = separated ? "SEPARATED" :
-                "EQUIVALENT_REPAIR_CLASS_NPN_CE_OPEN_LOAD_PATH_OPEN";
+            boolean sameLegalRepairPath = sameRepairSemantics(collectorOpenSignature,
+                loadPathSignature);
+            String relation = separated ? "SEPARATED" : (sameLegalRepairPath ?
+                "EQUIVALENT_REPAIR_CLASS_NPN_CE_OPEN_LOAD_PATH_OPEN" :
+                "UNRESOLVED_REPAIR_SEMANTICS");
             return "NPN_LOAD_PATH_OPEN_DEVELOPER_ONLY;NPN_CE_OPEN_VS_LOAD_PATH_OPEN=" +
                 relation + ";NPN_EXCLUSION_SAME_LAYOUT;NPN_EXCLUSION_SAMPLE_TOLERANCES=" +
                 signatureEvidence("NPN_CE_OPEN", collectorOpenSignature) + "/" +
-                signatureEvidence("NPN_LOAD_PATH_OPEN", loadPathSignature);
+                signatureEvidence("NPN_LOAD_PATH_OPEN", loadPathSignature) +
+                ";NPN_EXCLUSION_REPAIR_SEMANTICS=" +
+                collectorOpenSignature.getRepairSemantics().stableDescription() + "/" +
+                loadPathSignature.getRepairSemantics().stableDescription();
         } finally {
             try {
                 try {
@@ -809,6 +1086,18 @@ final class Task41DeveloperVerifier {
         return result.toString();
     }
 
+    private static String repairEquivalenceEvidence(
+            Vector<GeneratedDiagnosticSolvabilityEvidence> evidence) {
+        StringBuilder result = new StringBuilder();
+        for (GeneratedDiagnosticSolvabilityEvidence route : evidence) {
+            if (result.length() != 0) result.append(",");
+            result.append(route.getRouteId()).append("@").append(route.getSeed())
+                .append("=").append(route.getEquivalentRepairClass()).append("|")
+                .append(route.getRepairSemantics().stableDescription());
+        }
+        return result.toString();
+    }
+
     private static void require(boolean condition, String message) {
         if (!condition) throw new IllegalStateException(message);
     }
@@ -878,16 +1167,25 @@ final class Task41DeveloperVerifier {
     private static final class DiagnosticSignature {
         private final Vector<GeneratedDiagnosticSample> samples;
         private final String equivalentRepairClass;
+        private final GeneratedDiagnosticRepairSemantics repairSemantics;
 
         DiagnosticSignature(Vector<GeneratedDiagnosticSample> samples,
                 String equivalentRepairClass) {
+            this(samples, equivalentRepairClass, null);
+        }
+
+        DiagnosticSignature(Vector<GeneratedDiagnosticSample> samples,
+                String equivalentRepairClass,
+                GeneratedDiagnosticRepairSemantics repairSemantics) {
             this.samples = new Vector<GeneratedDiagnosticSample>(samples);
             this.equivalentRepairClass = equivalentRepairClass;
+            this.repairSemantics = repairSemantics;
         }
 
         Vector<GeneratedDiagnosticSample> getSamples() {
             return new Vector<GeneratedDiagnosticSample>(samples);
         }
         String getEquivalentRepairClass() { return equivalentRepairClass; }
+        GeneratedDiagnosticRepairSemantics getRepairSemantics() { return repairSemantics; }
     }
 }

@@ -1,3 +1,79 @@
+# Task 40/41 — Bounded Serviceability and Diagnostic Contract-Hardening Correction
+
+Date: 2026-08-19
+
+Status: `FINAL PASS`. The accepted Task 41 implementation was retained; the
+independent read-only review returned `FINAL PASS` after the live-equivalence
+fixture correction. Task 42 was not started.
+
+## Scope and behavior
+
+This correction hardens the Task 40 → Task 41 contract without changing the
+accepted solver-backed observation machinery, candidate evaluation,
+transactional snapshot/restore, or live pre-READY gate. Fault-clearing repair
+actions are now distinct from workflow/manipulation actions. Current catalog
+replacement is the fault-clearing primitive; reconnecting a lifted lead and
+reinstalling the original fault-owning physical part are explicitly not cures.
+Task 40 regression proof covers CAPACITOR_OPEN and NMOS_GATE_OPEN reconnects,
+original-owner reinstall, correct replacement, CORRECTLY_RESTORED, and the real
+customer-retest boundary.
+
+Task 40 and Task 41 use the shared action vocabulary with a clear
+known/reserved/currently-executable boundary. RESTORE and connector-only
+observation remain reserved/deferred and cannot enter executable admission.
+The diagnostic plan keeps declared capabilities separate from a live execution
+trace. Meter modes, input/power transitions, isolation actions, temporal
+samples, repair operations, and measured depth are reported as executed only
+when the verifier actually performs them. The depth metric is derived from
+trace events rather than copied from the catalog's 4/5/6 plan constants.
+
+Candidate equivalence requires both solver-observation equivalence within the
+sample tolerances and equivalent physical repair owner/path/action semantics.
+The negative verifier fixture rejects two identical observation signatures with
+different physical repair owners.
+
+## Validation evidence
+
+- JDK8 OBF compile/link passed with the bundled JDK 8u502; PowerShell parser
+  check returned `PS_PARSE_OK`; `git diff --check` passed.
+- Visible in-app Browser Task 41 reported `PASS:task41` for all 13 normal
+  routes (LED 2, diode 1, parallel 2, RC 2, NPN 3, NMOS 3), with 121 solver
+  samples. The explicit metrics were `declaredDepth=4..6`,
+  `measuredDepth=4..9`, `declaredMeterModes=40`,
+  `executedMeterModes=38`, `declaredTransitions=51`,
+  `executedTransitions=29`, `declaredIsolation=15`,
+  `executedIsolation=0`, `declaredTemporal=25`, and
+  `executedTemporal=8`. The declared-versus-executed marker repeats those
+  distinctions, and the output also reported
+  `REPAIR_EQUIVALENCE_REJECTED_DIFFERENT_OWNER`, reserved RESTORE rejection,
+  and connector observation rejection.
+- Visible in-app Browser Task 40 reported `PASS:task40`; Task 39 NPN, NMOS,
+  and RC routes reported `PASS:task39`.
+- Visible legacy verifier routes passed for LED resistance/meter/challenge/
+  replacement, diode, parallel, and RC open/short behavior. NPN
+  `TRANSISTOR_CE_OPEN`, `TRANSISTOR_CE_SHORT`, and `BASE_RESISTOR_OPEN` plus
+  NMOS `NMOS_DS_OPEN`, `NMOS_DS_SHORT`, and `NMOS_GATE_OPEN` each passed their
+  normal verifier routes.
+- A visible normal-player NPN session selected Q1, powered down, removed the
+  original part, installed the catalog replacement, powered up, exercised
+  HIGH/LOW, and clicked `Retest Customer`; the UI reported repair verification.
+  No visible validation console errors or warnings were observed.
+
+The standalone `scripts/verify-browser.ps1` helper remains environment-limited
+on this host by its Edge process/WebSocket and Win32 process-query boundary;
+the required player-facing evidence was obtained in the visible in-app
+Browser. This is a harness limitation, not an application failure.
+
+## Review and handoff
+
+An independent read-only reviewer inspected false solvability, fabricated
+execution/depth evidence, repair-aware equivalence, and action admission and
+returned `FINAL PASS`. The correction commit SHA, remote verification, and
+post-push notification are recorded in the primary handoff. Task 42 remains
+the next eligible milestone but was not started.
+
+---
+
 # Task 41 — Diagnostic Solvability Verifier v1 and Complexity Evidence
 
 Date: 2026-08-19

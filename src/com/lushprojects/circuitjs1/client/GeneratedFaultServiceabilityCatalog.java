@@ -14,11 +14,10 @@ final class GeneratedFaultServiceabilityCatalog {
     private static final String[] ISOLATE_REMOVE = { WorkbenchOperation.REMOVE };
     private static final String[] ISOLATE_LEAD = { WorkbenchOperation.LIFT_LEAD };
     private static final String[] REPAIR_REPLACE = {
-        WorkbenchOperation.CATALOG_INSTALL, WorkbenchOperation.INSTALL
+        WorkbenchOperation.CATALOG_INSTALL
     };
-    private static final String[] REPAIR_LEAD = {
-        WorkbenchOperation.RECONNECT_LEAD, WorkbenchOperation.CATALOG_INSTALL,
-        WorkbenchOperation.INSTALL
+    private static final String[] WORKFLOW_LEAD = {
+        WorkbenchOperation.RECONNECT_LEAD
     };
 
     private GeneratedFaultServiceabilityCatalog() { }
@@ -30,10 +29,10 @@ final class GeneratedFaultServiceabilityCatalog {
         switch (fault.getType()) {
         case CAPACITOR_OPEN:
             return serviceable(GeneratedFaultLocus.terminalAttachment(componentId, "+"),
-                OBSERVE_COMPONENT, ISOLATE_LEAD, REPAIR_LEAD);
+                OBSERVE_COMPONENT, ISOLATE_LEAD, REPAIR_REPLACE, WORKFLOW_LEAD);
         case NMOS_GATE_OPEN:
             return serviceable(GeneratedFaultLocus.terminalAttachment(componentId, "G"),
-                OBSERVE_PUBLIC, ISOLATE_LEAD, REPAIR_LEAD);
+                OBSERVE_PUBLIC, ISOLATE_LEAD, REPAIR_REPLACE, WORKFLOW_LEAD);
         case CONNECTOR_OPEN_PATH:
             // The contact has a semantic identity, but there is deliberately no
             // repair primitive yet.  The candidate remains incompatible.
@@ -74,5 +73,12 @@ final class GeneratedFaultServiceabilityCatalog {
             String[] observations, String[] isolations, String[] repairs) {
         return new GeneratedFaultServiceability(locus, observations, isolations, repairs,
             GeneratedBoardOperationIds.CUSTOMER_RETEST);
+    }
+
+    private static GeneratedFaultServiceability serviceable(GeneratedFaultLocus locus,
+            String[] observations, String[] isolations, String[] repairs,
+            String[] workflows) {
+        return new GeneratedFaultServiceability(locus, observations, isolations, repairs,
+            workflows, GeneratedBoardOperationIds.CUSTOMER_RETEST);
     }
 }
