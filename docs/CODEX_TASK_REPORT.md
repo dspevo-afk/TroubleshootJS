@@ -1,3 +1,63 @@
+# Task 41 — Diagnostic Solvability Verifier v1 and Complexity Evidence
+
+Date: 2026-08-19
+
+Status: `FINAL PASS` for implementation, validation, independent review, and
+publication. Task 42 is identified as the next eligible milestone but was not
+started.
+
+## Scope and behavior
+
+Task 41 adds a family-agnostic diagnostic solvability contract and a live
+pre-READY admission boundary. The developer proof enumerates the compatible
+fault candidates for one unchanged topology/layout, then exercises rendered
+PCB probe endpoints, CircuitJS-backed DC voltage/resistance/continuity/diode
+measurements, board power, player-controlled inputs, temporal waits,
+isolation, repair, and customer retest. It records numeric solver samples and
+tolerances, candidate separation, explicit equivalent-repair classes, and
+deterministic rejection reasons.
+
+The normal admitted corpus is 13 routes: LED 2, diode 1, parallel 2, RC 2,
+NPN 3, and NMOS 3. `DIODE_SHORT` remains developer-only. NPN
+`LOAD_PATH_OPEN` is excluded from normal admission and is checked only as a
+developer-only same-layout comparison against C-E open. The proof rejects
+unsupported player operations and requires the unaffected-function retest.
+
+Developer candidate boards use detached real workbench renderers, so proof
+execution cannot append duplicate player panels. `Task41SimulationSnapshot`
+restores the exact generated owner and CircuitJS graph object identity/content
+without re-analysis, plus board power bindings, instruments and continuity
+feedback counters, physical modification state, runtime/render counters and
+static CircuitElm render state. Transactional rollback has best-effort
+exception recovery and eight injected restore-failure stages.
+
+## Validation evidence
+
+- JDK8 OBF compile/link passed with the bundled JDK 8u502.
+- PowerShell parser check returned `PS_PARSE_OK`; `git diff --check` passed.
+- Visible in-app Browser Task 41 route reported `PASS:task41` with three
+  rendered component panels, no measurement overlays, and evidence metrics:
+  `routes=13`, `minDepth=4`, `maxDepth=6`, `templates=6`,
+  `solverSamples=121`, `transitions=51`, `isolation=15`, `meterModes=4`,
+  `temporal=25`, `railsDomains=11`, `parallelAmbiguity=1`, and `retest=1`.
+  The evidence attribute contains actual numeric sample/tolerance pairs.
+- Visible Task 40 reported `PASS:task40`. Visible Task 39 NPN, NMOS, and RC
+  routes each reported `PASS:task39` with three rendered component panels.
+- The fresh independent read-only reviewer returned `FINAL PASS` after the
+  exact-runtime and continuity-counter correction round. The initial review
+  blockers were corrected and the corrected build/routes were rerun.
+
+## Limitations and handoff
+
+The standalone `scripts/verify-browser.ps1 -Task41 -Seeds @(0)` helper remains
+environment-limited on this host by the Edge process/WebSocket boundary and
+Win32 process-query access. Required player-facing evidence was obtained with
+the visible in-app Browser; the helper limitation is not an application
+failure. The final publication SHA and remote verification are reported in
+the primary-architect handoff and post-push notification.
+
+---
+
 # Task 40 — Physical Fault Locus and Serviceability Admission
 
 Date: 2026-08-19

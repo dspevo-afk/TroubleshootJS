@@ -63,6 +63,10 @@ class GeneratedChallengeController {
                 definition.getBehaviorContract().verifyFaulted(instance,
                     sim.getBoardModificationController(), sim.getBoardPowerController().getState());
             lifecycleEvidence.selectedFaultValidated = true;
+            if (!instance.isDeveloperOnlyFaultRoute() &&
+                    !sim.developerVerifierRunning &&
+                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning())
+                GeneratedDiagnosticSolvabilityAdmission.validateLive(sim, instance, this);
             scenario = definition.getScenarioCatalog().select(definition.getSelectionSeed(), instance,
                 sim.getBoardModificationController(), sim.getBoardPowerController().getState());
             scenario.present(sim, instance);
@@ -218,8 +222,9 @@ class GeneratedChallengeController {
         if (definition.getFaultBinding() != instance.getFaultBinding())
             throw new IllegalArgumentException("Challenge fault binding is not owned by board");
         validateFaultEffectOwnership(instance, definition.getFault(), definition.getFaultBinding());
-        if (!instance.isDeveloperOnlyFaultRoute())
+        if (!instance.isDeveloperOnlyFaultRoute()) {
             GeneratedFaultServiceabilityAdmission.validate(instance, definition.getFaultBinding());
+        }
     }
 
     static void validateFaultEffectOwnership(GeneratedBoardInstance instance,

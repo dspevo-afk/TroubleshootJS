@@ -45,6 +45,12 @@ final class InstrumentModeState {
         measurementCount++;
     }
 
+    void setMeasurementCountForDeveloperVerification(int measurementCount) {
+        if (measurementCount < 0)
+            throw new IllegalArgumentException("Negative instrument measurement count");
+        this.measurementCount = measurementCount;
+    }
+
     boolean isContinuityDetected() {
         return continuityDetected;
     }

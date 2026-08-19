@@ -30,6 +30,7 @@ param(
     [switch]$NmosNatural,
     [switch]$Task39,
     [switch]$Task40,
+    [switch]$Task41,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -1556,6 +1557,10 @@ if ($Task39) {
 }
 if ($Task40) {
     if (-not (verifyRoute 'task40 physical locus/serviceability admission' "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=0&tsjVerifyTask40=true&running=true" 'PASS:task40' 9710)) { exit 1 }
+    exit 0
+}
+if ($Task41) {
+    if (-not (verifyRoute 'task41 diagnostic solvability' "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=0&tsjVerifyTask41=true&running=true" 'PASS:task41' 9720)) { exit 1 }
     exit 0
 }
 if ($WrongRepair) {

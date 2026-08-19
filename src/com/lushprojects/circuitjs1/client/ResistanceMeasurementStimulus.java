@@ -3,6 +3,7 @@ package com.lushprojects.circuitjs1.client;
 class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
     static final double TEST_VOLTAGE = 1;
     static final double INTERNAL_RESISTANCE = 1000;
+    static final double MINIMUM_TEST_CURRENT = 1e-10;
     // At 10 Mohm, this path contributes at most 0.001% conductance error.
     static final double REFERENCE_RESISTANCE = 1e12;
 

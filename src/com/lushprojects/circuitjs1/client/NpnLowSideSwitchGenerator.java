@@ -23,7 +23,20 @@ final class NpnLowSideSwitchGenerator {
         return generateInternal(seed, type);
     }
 
+    GeneratedBoardInstance generateForDiagnosticSolvability(long seed, GeneratedFaultType type) {
+        if (type != GeneratedFaultType.TRANSISTOR_CE_OPEN &&
+                type != GeneratedFaultType.TRANSISTOR_CE_SHORT &&
+                type != GeneratedFaultType.BASE_RESISTOR_OPEN)
+            throw new IllegalArgumentException("Unsupported normal NPN diagnostic fault: " + type);
+        return generateInternal(seed, type, false);
+    }
+
     private GeneratedBoardInstance generateInternal(long seed, GeneratedFaultType forcedType) {
+        return generateInternal(seed, forcedType, forcedType != null);
+    }
+
+    private GeneratedBoardInstance generateInternal(long seed, GeneratedFaultType forcedType,
+            boolean developerOnlyFaultRoute) {
         NpnValues values = valuesFor(seed);
         TroubleshootBoard board = createBoard();
         BoardPhysicalSpecifications specifications = createSpecifications(values);
@@ -325,7 +338,7 @@ final class NpnLowSideSwitchGenerator {
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID, TOPOLOGY_VARIANT,
             "Generated NPN low-side switch, seed " + seed, componentBindings, powerBindings,
             connectionBindings, behaviorContract, layout, specifications, faultBinding,
-            operationalStates, challenge, familyState, runtime, null, forcedType != null,
+            operationalStates, challenge, familyState, runtime, null, developerOnlyFaultRoute,
             candidates);
     }
 

@@ -13,6 +13,17 @@ class LedIndicatorGenerator {
     private static final double[] RESISTOR_VALUES = { 330, 680, 1000 };
 
     GeneratedBoardInstance generate(long seed) {
+        return generate(seed, null);
+    }
+
+    GeneratedBoardInstance generateForFaultVerification(long seed, GeneratedFaultType type) {
+        if (type != GeneratedFaultType.RESISTOR_OPEN &&
+                type != GeneratedFaultType.RESISTOR_INCORRECT_VALUE)
+            throw new IllegalArgumentException("Unsupported LED diagnostic fault: " + type);
+        return generate(seed, type);
+    }
+
+    private GeneratedBoardInstance generate(long seed, GeneratedFaultType forcedType) {
         Random random = new Random(seed);
         int valueIndex = random.nextInt(SUPPLY_VOLTAGES.length);
         double supplyVoltage = SUPPLY_VOLTAGES[valueIndex];
@@ -108,7 +119,9 @@ class LedIndicatorGenerator {
         faultCandidates.add(GeneratedFaultEngine.connectorOpenPath("LED_J1_OPEN_PATH",
             "LED_INDICATOR", seed, "J1", connectorFaultSwitch, false));
         GeneratedFaultEngine.clearAll(faultCandidates);
-        GeneratedFaultCandidate selectedFault = GeneratedFaultEngine.select(seed, faultCandidates);
+        GeneratedFaultCandidate selectedFault = forcedType == null ?
+            GeneratedFaultEngine.select(seed, faultCandidates) :
+            GeneratedFaultEngine.select(forcedType, faultCandidates);
         for (GeneratedFaultCandidate candidate : faultCandidates)
             for (CircuitElm privateElement : candidate.getPrivateSimulationElements())
                 if (!elements.contains(privateElement))

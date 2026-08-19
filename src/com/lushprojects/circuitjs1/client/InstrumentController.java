@@ -32,6 +32,63 @@ class InstrumentController {
     private int dcVoltagePlaceholderDisplayCount;
     private int dcVoltageDisplayChangeCount;
 
+    static final class DeveloperState {
+        final InstrumentModeStrategy activeStrategy;
+        final ProbeTarget redProbe;
+        final ProbeTarget blackProbe;
+        final boolean interactionEnabled;
+        final String readingText;
+        final boolean continuityVisible;
+        final boolean continuityRequested;
+        final int continuityPrepareCount;
+        final int continuityStartCount;
+        final int continuityStopCount;
+        final int dcVoltagePlaceholderDisplayCount;
+        final int dcVoltageDisplayChangeCount;
+        final Vector<ModeState> modeStates;
+
+        DeveloperState(InstrumentModeStrategy activeStrategy, ProbeTarget redProbe,
+                ProbeTarget blackProbe, boolean interactionEnabled, String readingText,
+                boolean continuityVisible, boolean continuityRequested,
+                int continuityPrepareCount, int continuityStartCount, int continuityStopCount,
+                int dcVoltagePlaceholderDisplayCount, int dcVoltageDisplayChangeCount,
+                Vector<ModeState> modeStates) {
+            this.activeStrategy = activeStrategy;
+            this.redProbe = redProbe;
+            this.blackProbe = blackProbe;
+            this.interactionEnabled = interactionEnabled;
+            this.readingText = readingText;
+            this.continuityVisible = continuityVisible;
+            this.continuityRequested = continuityRequested;
+            this.continuityPrepareCount = continuityPrepareCount;
+            this.continuityStartCount = continuityStartCount;
+            this.continuityStopCount = continuityStopCount;
+            this.dcVoltagePlaceholderDisplayCount = dcVoltagePlaceholderDisplayCount;
+            this.dcVoltageDisplayChangeCount = dcVoltageDisplayChangeCount;
+            this.modeStates = modeStates;
+        }
+    }
+
+    static final class ModeState {
+        final String id;
+        final String displayText;
+        final double primaryValue;
+        final double secondaryValue;
+        final int measurementCount;
+        final boolean continuityDetected;
+        final boolean refreshPending;
+
+        ModeState(String id, InstrumentModeState state) {
+            this.id = id;
+            displayText = state.getDisplayText();
+            primaryValue = state.getPrimaryValue();
+            secondaryValue = state.getSecondaryValue();
+            measurementCount = state.getMeasurementCount();
+            continuityDetected = state.isContinuityDetected();
+            refreshPending = state.isRefreshPending();
+        }
+    }
+
     InstrumentController(final CirSim sim, VerticalPanel panel) {
         this.sim = sim;
         measurementAdapter = new CircuitMeasurementAdapter(sim);
@@ -72,6 +129,49 @@ class InstrumentController {
             button.setEnabled(enabled);
         if (!enabled)
             exitInstrumentModeForDeveloperVerification();
+    }
+
+    DeveloperState captureForDeveloperVerification() {
+        Vector<ModeState> states = new Vector<ModeState>();
+        for (InstrumentModeStrategy strategy : modeRegistry.getAll())
+            states.add(new ModeState(strategy.getId(), strategy.getState()));
+        return new DeveloperState(activeStrategy, redProbe, blackProbe, interactionEnabled,
+            readingLabel.getText(), continuityLabel.isVisible(),
+            continuityFeedback.isRequestedActive(),
+            continuityFeedback.getPrepareCount(), continuityFeedback.getStartCount(),
+            continuityFeedback.getStopCount(), dcVoltagePlaceholderDisplayCount,
+            dcVoltageDisplayChangeCount, states);
+    }
+
+    void restoreForDeveloperVerification(DeveloperState saved) {
+        if (saved == null)
+            throw new IllegalArgumentException("Missing instrument state snapshot");
+        activeStrategy = saved.activeStrategy;
+        redProbe = saved.redProbe;
+        blackProbe = saved.blackProbe;
+        interactionEnabled = saved.interactionEnabled;
+        dcVoltagePlaceholderDisplayCount = saved.dcVoltagePlaceholderDisplayCount;
+        dcVoltageDisplayChangeCount = saved.dcVoltageDisplayChangeCount;
+        for (ModeState savedState : saved.modeStates) {
+            InstrumentModeState state = modeRegistry.get(savedState.id).getState();
+            state.setDisplayText(savedState.displayText);
+            state.setPrimaryValue(savedState.primaryValue);
+            state.setSecondaryValue(savedState.secondaryValue);
+            state.setMeasurementCountForDeveloperVerification(savedState.measurementCount);
+            state.setContinuityDetected(savedState.continuityDetected);
+            state.setRefreshPending(savedState.refreshPending);
+        }
+        readingLabel.setText(saved.readingText);
+        continuityLabel.setVisible(saved.continuityVisible);
+        continuityFeedback.setActive(saved.continuityRequested);
+        if (!(continuityFeedback instanceof BrowserContinuityFeedback))
+            throw new IllegalStateException("Task 41 cannot restore continuity feedback counters");
+        ((BrowserContinuityFeedback) continuityFeedback).restoreCountersForDeveloperVerification(
+            saved.continuityPrepareCount, saved.continuityStartCount, saved.continuityStopCount);
+        for (String id : modeButtons.keySet())
+            modeButtons.get(id).setStyleName("chsel", activeStrategy.getId().equals(id));
+        for (Button button : modeButtons.values())
+            button.setEnabled(interactionEnabled);
     }
 
     void handlePointerInput(int button, int screenX, int screenY) {
@@ -240,6 +340,15 @@ class InstrumentController {
 
     int getContinuityMeasurementCountForDeveloperVerification() {
         return getModeState("CONTINUITY").getMeasurementCount();
+    }
+
+    /** Deliberately perturbs only developer feedback so rollback tests prove counter restore. */
+    void perturbContinuityFeedbackForDeveloperVerification() {
+        boolean requested = continuityFeedback.isRequestedActive();
+        continuityFeedback.prepare();
+        continuityFeedback.setActive(!requested);
+        continuityFeedback.setActive(requested);
+        continuityLabel.setVisible(requested);
     }
 
     void exitInstrumentModeForDeveloperVerification() {

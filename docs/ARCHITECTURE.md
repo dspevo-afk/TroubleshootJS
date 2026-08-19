@@ -1187,3 +1187,38 @@ normal `DIODE_SHORT` is developer-only and NPN `LOAD_PATH_OPEN` was removed
 from normal admission under the option-B resolution. Task 40 is therefore a
 serviceability/admission boundary only; it does not add trace, connector,
 jumper, cut, or generic repair gameplay.
+
+## Task 41 — diagnostic solvability verifier and complexity evidence
+
+Task 41 adds the family-agnostic `GeneratedDiagnosticSolvabilityContract`,
+`GeneratedDiagnosticPlan`, route catalog, solver sample, evidence, and live
+admission boundary. A normal generated challenge is not READY until the
+rendered board has passed the same bounded diagnostic proof used by the
+developer verifier. The proof operates on one unchanged topology/layout at a
+time, enumerates compatible candidates, and uses real `PcbWorkbenchController`
+probe targets, `InstrumentController` modes, `BoardPowerController` state,
+player input operations, temporal waits, isolation, repair, and customer
+retest. Voltage, resistance, continuity, and diode observations are produced
+by CircuitJS; evidence records actual values and tolerances rather than labels
+or scripted readings.
+
+The current normal corpus is deliberately explicit: 13 routes across LED 2,
+diode 1, parallel 2, RC 2, NPN 3, and NMOS 3. Candidate groups are compared
+pairwise using solver-derived signatures. Distinct candidates must have a
+separating plan; candidates with the same observable/repair behavior must
+share an explicit equivalent-repair class. `DIODE_SHORT` and NPN
+`LOAD_PATH_OPEN` are excluded from normal player admission. The latter is
+retained as a developer-only same-layout comparison against NPN C-E open so
+the exclusion is evidence-backed rather than silently ignored.
+
+Developer verification is isolated from the player workbench. Proof boards use
+detached real renderers, and `CirSim` tracks attached workbench ownership so a
+candidate cannot append duplicate player panels. `Task41SimulationSnapshot`
+restores the exact generated owner and CircuitJS graph object references and
+contents without re-running analysis. It also restores board-power bindings,
+instrument and continuity-feedback state, physical modifications, runtime and
+render counters (`myframes`, `mytime`, `myruntime`, `mydrawtime`, and CircuitElm
+render globals), and the active UI/runtime flags. Normal rollback is
+transactional with best-effort exception recovery; eight injected restore
+stages are exercised by the developer verifier. Task 41 evidence is published
+only on an explicit developer verification route and never in normal-player UI.

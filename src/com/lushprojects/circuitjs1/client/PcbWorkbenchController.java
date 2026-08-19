@@ -22,12 +22,20 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final VerticalPanel partsPanel = new VerticalPanel();
     private final Label feedback = new Label();
     private final boolean quickPlay;
+    private VerticalPanel sidebar;
+    private boolean attachedToSidebar;
     private String finishFeedbackText = "";
     private String customerRetestFeedbackText = "";
 
     PcbWorkbenchController(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, PcbBoardLayout layout,
             VerticalPanel sidebar, boolean quickPlay) {
+        this(sim, instance, modifications, layout, sidebar, quickPlay, true);
+    }
+
+    PcbWorkbenchController(CirSim sim, GeneratedBoardInstance instance,
+            BoardModificationController modifications, PcbBoardLayout layout,
+            VerticalPanel sidebar, boolean quickPlay, boolean attachToSidebar) {
         this.sim = sim;
         this.instance = instance;
         this.modifications = modifications;
@@ -35,13 +43,48 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         renderer = new PcbWorkbenchRenderer(instance, modifications, layout);
         ticketPanel.setStyleName("tsj-component-panel");
         ticketPanel.setVisible(false);
-        sidebar.add(ticketPanel);
         panel.setStyleName("tsj-component-panel");
         panel.setVisible(false);
-        sidebar.add(panel);
         partsPanel.setStyleName("tsj-component-panel");
-        sidebar.add(partsPanel);
+        if (attachToSidebar)
+            attachToSidebar(sidebar);
     }
+
+    void attachToSidebar(VerticalPanel targetSidebar) {
+        if (attachedToSidebar) {
+            if (sidebar != targetSidebar)
+                throw new IllegalStateException("Workbench is attached to another sidebar");
+            return;
+        }
+        if (targetSidebar == null)
+            throw new IllegalArgumentException("Missing workbench sidebar");
+        sidebar = targetSidebar;
+        sidebar.add(ticketPanel);
+        sidebar.add(panel);
+        sidebar.add(partsPanel);
+        attachedToSidebar = true;
+        sim.registerAttachedPcbWorkbenchForDeveloperVerification(this);
+    }
+
+    void detachFromSidebar() {
+        if (!attachedToSidebar)
+            return;
+        sidebar.remove(ticketPanel);
+        sidebar.remove(panel);
+        sidebar.remove(partsPanel);
+        attachedToSidebar = false;
+        sim.unregisterAttachedPcbWorkbenchForDeveloperVerification(this);
+        sidebar = null;
+    }
+
+    void disposeForDeveloperVerification() {
+        detachFromSidebar();
+        ticketPanel.clear();
+        panel.clear();
+        partsPanel.clear();
+    }
+
+    boolean isAttachedToSidebarForDeveloperVerification() { return attachedToSidebar; }
 
     void draw(Graphics graphics, Rectangle area) { renderer.draw(graphics, area); }
 

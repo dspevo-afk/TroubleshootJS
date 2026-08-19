@@ -1074,7 +1074,8 @@ corrected control-boundary lesson.
 
 ## Task 41 — Diagnostic Solvability Verifier v1 and Complexity Evidence
 
-**Status:** [>] Immediate next milestone
+**Status:** [x] Completed — implementation, validation, independent review, and
+publication passed.
 
 **Purpose:** Add the missing family-agnostic proof that a challenge can actually
 be diagnosed, repaired, and retested by a player.
@@ -1119,11 +1120,27 @@ largest fairness gap.
 
 **Unlocks:** Task 42 and the later difficulty-evidence contract.
 
+**Completion evidence:** The live pre-READY admission boundary now executes a
+family-agnostic, developer-only solvability proof over the 13 normal routes:
+LED 2, diode 1, parallel 2, RC 2, NPN 3, and NMOS 3. The proof uses rendered
+PCB probe targets, CircuitJS solver samples with numeric tolerances, real meter
+and board-power transitions, temporal waits, isolation actions, repair, and
+customer retest. It compares candidates pairwise and records explicit
+equivalent-repair classes. `DIODE_SHORT` remains developer-only, and NPN
+`LOAD_PATH_OPEN` remains a developer-only same-layout comparison; neither is
+normal-player admission.
+
+The developer proof runs with a detached workbench and an exact transactional
+snapshot of the generated owner, CircuitJS graph identity/content, board power,
+instrument state, runtime/render state, and physical modifications. Eight
+injected restore-failure stages are exercised. Normal UI state is restored with
+three panels and no proof overlay/evidence leakage.
+
 ---
 
 ## Task 42 — Existing-Family Diagnostic Diversity Proof
 
-**Status:** [!] Blocked by Task 41
+**Status:** [>] Immediate next milestone
 
 **Purpose:** Use the new verifier to improve one real challenge before
 generalizing architecture further.
@@ -3023,9 +3040,9 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 # Immediate Next Milestone
 
-**Task 41 — Diagnostic Solvability Verifier v1 and Complexity Evidence**
+**Task 42 — Existing-Family Diagnostic Diversity Proof**
 
 Tasks 39 and 40 have completed implementation, validation, review, and
-publication. Task 41 is now the next eligible milestone; no Task 41 production
-implementation has started. Relay Driver remains deferred and transformed
-into Task 66.
+publication. Task 41 has now completed implementation, validation, review, and
+publication. Task 42 is the next eligible milestone and has not started. Relay
+Driver remains deferred and transformed into Task 66.

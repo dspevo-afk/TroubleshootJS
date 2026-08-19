@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 class BrowserContinuityFeedback implements ContinuityFeedback {
     private boolean requestedActive;
-        private int prepareCount;
+    private int prepareCount;
     private int startCount;
     private int stopCount;
 
@@ -38,6 +38,13 @@ class BrowserContinuityFeedback implements ContinuityFeedback {
 
     public int getStopCount() {
         return stopCount;
+    }
+
+    /** Restore counters without replaying browser audio side effects. */
+    void restoreCountersForDeveloperVerification(int prepare, int start, int stop) {
+        prepareCount = prepare;
+        startCount = start;
+        stopCount = stop;
     }
 
     private static native void prepareAudio() /*-{

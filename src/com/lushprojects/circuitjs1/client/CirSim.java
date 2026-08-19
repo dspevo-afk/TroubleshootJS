@@ -227,6 +227,8 @@ MouseOutHandler, MouseWheelHandler {
 	InstrumentController instrumentController;
 	final BoardPowerController boardPowerController = new BoardPowerController();
 	PcbWorkbenchController pcbWorkbenchController;
+	private final Vector<PcbWorkbenchController> attachedPcbWorkbenches =
+	    new Vector<PcbWorkbenchController>();
     boolean didSwitch = false;
     int mousePost = -1;
     CircuitElm plotXElm, plotYElm;
@@ -386,6 +388,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootNmosVerification;
 	boolean troubleshootTask39Verification;
 	boolean troubleshootTask40Verification;
+	boolean troubleshootTask41Verification;
 	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
@@ -402,6 +405,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootNmosVerificationComplete;
 	boolean troubleshootTask39VerificationComplete;
 	boolean troubleshootTask40VerificationComplete;
+	boolean troubleshootTask41VerificationComplete;
 	boolean troubleshootStoredEnergyVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
@@ -472,6 +476,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootNmosVerification = qp.getBooleanValue("tsjVerifyNmos", false);
 	    troubleshootTask39Verification = qp.getBooleanValue("tsjVerifyTask39", false);
 	    troubleshootTask40Verification = qp.getBooleanValue("tsjVerifyTask40", false);
+	    troubleshootTask41Verification = qp.getBooleanValue("tsjVerifyTask41", false);
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
@@ -3741,6 +3746,15 @@ MouseOutHandler, MouseWheelHandler {
 	if (s != null)
 	    titleLabel.setText(s);
     }
+
+    String getCircuitTitleForDeveloperVerification() {
+	return titleLabel == null ? null : titleLabel.getText();
+    }
+
+    void restoreCircuitTitleForDeveloperVerification(String title) {
+	if (titleLabel != null)
+	    titleLabel.setText(title);
+    }
     
 	void readSetupFile(String str, String title) {
 		System.out.println(str);
@@ -3793,7 +3807,7 @@ MouseOutHandler, MouseWheelHandler {
 	    generatedBoardInstance = null;
 	    boardModificationController = null;
 	    if (pcbWorkbenchController != null)
-		pcbWorkbenchController.hide();
+		pcbWorkbenchController.disposeForDeveloperVerification();
 	    pcbWorkbenchController = null;
 	    boardPowerController.detach();
 	    updateBoardPowerButton();
@@ -4260,6 +4274,12 @@ MouseOutHandler, MouseWheelHandler {
     	}
     }
 
+    CircuitElm getMouseElmForDeveloperVerification() { return mouseElm; }
+
+    void restoreMouseElmForDeveloperVerification(CircuitElm element) {
+	setMouseElm(element);
+    }
+
     void removeZeroLengthElements() {
     	int i;
     	boolean changed = false;
@@ -4349,6 +4369,8 @@ MouseOutHandler, MouseWheelHandler {
 	String lastResistanceMeasurementDiagnostics;
 	double lastResistanceTestCurrent;
 	double lastResistanceReferenceCurrent;
+	double lastDiodeMeasurementVoltage;
+	double lastDiodeMeasurementCurrent;
 	int lastResistanceBlackProbeNode;
 	int lastResistanceReferenceGroundNode;
 	boolean generatedBoardVerificationPending;
@@ -4356,6 +4378,19 @@ MouseOutHandler, MouseWheelHandler {
 	double generatedBoardVerificationStartTime;
 
     void installGeneratedBoard(GeneratedBoardInstance instance) {
+	installGeneratedBoard(instance, true);
+    }
+
+    void installGeneratedBoardForDeveloperVerification(GeneratedBoardInstance instance) {
+	installGeneratedBoard(instance, false);
+    }
+
+    private void installGeneratedBoard(GeneratedBoardInstance instance,
+	    boolean attachWorkbenchToSidebar) {
+	if (pcbWorkbenchController != null) {
+	    pcbWorkbenchController.disposeForDeveloperVerification();
+	    pcbWorkbenchController = null;
+	}
 	instrumentController.clearTargets();
 	clearMouseElm();
 	clearSelection();
@@ -4376,7 +4411,8 @@ MouseOutHandler, MouseWheelHandler {
 	physicalRuntime.installRegisteredCapabilities(this, instance, boardModificationController, t);
 	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
-		instance.getPcbLayout(), verticalPanel, quickPlayActive) : null;
+		instance.getPcbLayout(), verticalPanel, quickPlayActive,
+		attachWorkbenchToSidebar) : null;
 	boardPowerController.attach(instance.getExternalPowerBindings());
 	physicalRuntime.onBoardPowerStateChanged(boardPowerController.getState());
 	updateBoardPowerButton();
@@ -4393,8 +4429,23 @@ MouseOutHandler, MouseWheelHandler {
 
     void installGeneratedChallenge(GeneratedBoardInstance instance) {
 	installGeneratedBoard(instance);
-	generatedChallengeController = new GeneratedChallengeController(this, instance,
-	    quickPlayActive);
+	installGeneratedChallengeController(instance);
+	    }
+
+    void installGeneratedChallengeForDeveloperVerification(GeneratedBoardInstance instance) {
+	installGeneratedBoardForDeveloperVerification(instance);
+	installGeneratedChallengeController(instance);
+	    }
+
+    private void installGeneratedChallengeController(GeneratedBoardInstance instance) {
+	try {
+	    generatedChallengeController = new GeneratedChallengeController(this, instance,
+		quickPlayActive);
+	} catch (RuntimeException failure) {
+	    if (troubleshootTask41Verification)
+		publishBrowserVerificationResult("FAIL:task41-constructor:" + failure.getMessage());
+	    throw failure;
+	}
 	generatedChallengeController.begin();
 	refreshChallengeInteractionState();
     }
@@ -4460,7 +4511,9 @@ MouseOutHandler, MouseWheelHandler {
 	    if (generatedChallengeController != null)
 		generatedChallengeController.afterGeneratedVerification();
 	    refreshChallengeInteractionState();
-	    if (!developerVerifierRunning && generatedChallengeController != null &&
+	    if (!developerVerifierRunning &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		generatedChallengeController != null &&
 		generatedChallengeController.isReady()) {
 		developerVerifierRunning = true;
 		try {
@@ -4565,7 +4618,9 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
-	    if (!developerVerifierRunning && troubleshootTask39Verification &&
+	    if (!developerVerifierRunning &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		troubleshootTask39Verification &&
 		!troubleshootTask39VerificationComplete &&
 		(generatedChallengeController == null || generatedChallengeController.isReady())) {
 		developerVerifierRunning = true;
@@ -4577,7 +4632,9 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
-	    if (!developerVerifierRunning && troubleshootTask40Verification &&
+	    if (!developerVerifierRunning &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		troubleshootTask40Verification &&
 		!troubleshootTask40VerificationComplete &&
 		(generatedChallengeController == null || generatedChallengeController.isReady())) {
 		developerVerifierRunning = true;
@@ -4585,6 +4642,20 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40VerificationComplete = true;
 		    Task40DeveloperVerifier.verify(this);
 		    publishBrowserVerificationResult("PASS:task40");
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
+	    if (!developerVerifierRunning && troubleshootTask41Verification &&
+		!troubleshootTask41VerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		(generatedChallengeController == null || generatedChallengeController.isReady())) {
+		developerVerifierRunning = true;
+		try {
+		    publishBrowserVerificationResult("RUNNING:task41");
+		    troubleshootTask41VerificationComplete = true;
+		    Task41DeveloperVerifier.verify(this);
+		    publishBrowserVerificationResult("PASS:task41");
 		} finally {
 		    developerVerifierRunning = false;
 		}
@@ -4600,7 +4671,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootArchitectureVerification || troubleshootRcVerification ||
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
 		    troubleshootNmosVerification || troubleshootTask39Verification ||
-		    troubleshootTask40Verification)
+		    troubleshootTask40Verification || troubleshootTask41Verification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4631,6 +4702,15 @@ MouseOutHandler, MouseWheelHandler {
 	$doc.documentElement.setAttribute("data-tsj-stress-report", result);
     }-*/;
 
+	void publishTask41EvidenceForDeveloperVerification(String result) {
+	    if (troubleshootTask41Verification)
+		publishBrowserTask41Evidence(result);
+	}
+
+    private static native void publishBrowserTask41Evidence(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-task41-evidence", result);
+    }-*/;
+
     void publishNpnElectricalReportForDeveloperVerification(String result) {
 	if (troubleshootNpnVerification)
 	    publishBrowserNpnElectricalReport(result);
@@ -4642,6 +4722,37 @@ MouseOutHandler, MouseWheelHandler {
 
     GeneratedBoardInstance getGeneratedBoardInstance() {
 	return generatedBoardInstance;
+    }
+
+    void registerAttachedPcbWorkbenchForDeveloperVerification(
+	    PcbWorkbenchController controller) {
+	if (controller == null)
+	    throw new IllegalArgumentException("Missing attached PCB workbench");
+	if (!attachedPcbWorkbenches.contains(controller))
+	    attachedPcbWorkbenches.add(controller);
+    }
+
+    void unregisterAttachedPcbWorkbenchForDeveloperVerification(
+	    PcbWorkbenchController controller) {
+	attachedPcbWorkbenches.remove(controller);
+    }
+
+    int getAttachedPcbWorkbenchCountForDeveloperVerification() {
+	return attachedPcbWorkbenches.size();
+    }
+
+    void assertSingleAttachedPcbWorkbenchForDeveloperVerification() {
+	if (attachedPcbWorkbenches.size() != 1 || pcbWorkbenchController == null ||
+		!attachedPcbWorkbenches.contains(pcbWorkbenchController) ||
+		!pcbWorkbenchController.isAttachedToSidebarForDeveloperVerification())
+	    throw new IllegalStateException("Task 41 expected exactly one attached PCB workbench");
+    }
+
+    void detachPcbWorkbenchForDeveloperVerification() {
+	if (pcbWorkbenchController == null)
+	    return;
+	pcbWorkbenchController.detachFromSidebar();
+	pcbWorkbenchController = null;
     }
 
     boolean isGeometryVerificationEnabled() { return troubleshootGeometryVerification; }
@@ -4867,6 +4978,12 @@ MouseOutHandler, MouseWheelHandler {
 	    pcbWorkbenchController.refresh();
     }
 
+    void refreshGeneratedUiForDeveloperVerification() {
+	updateBoardPowerButton();
+	updateGeneratedView();
+	setCircuitArea();
+    }
+
     double measureResistance(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black) {
 	if (!boardPowerController.isElectricallyUnpowered() ||
@@ -4886,7 +5003,8 @@ MouseOutHandler, MouseWheelHandler {
 		lastResistanceReferenceCurrent = stimulus.getReferenceResistor().getCurrent();
 		lastResistanceBlackProbeNode = blackEndpoint.getElement().nodes[blackEndpoint.getPostIndex()];
 		lastResistanceReferenceGroundNode = stimulus.getReferenceGround().nodes[0];
-		if (Double.isNaN(current) || Double.isInfinite(current) || Math.abs(current) < 1e-10)
+	if (Double.isNaN(current) || Double.isInfinite(current) ||
+		Math.abs(current) < ResistanceMeasurementStimulus.MINIMUM_TEST_CURRENT)
 		    return Double.POSITIVE_INFINITY;
 		double resistance = Math.abs(ResistanceMeasurementStimulus.TEST_VOLTAGE / current) -
 		    ResistanceMeasurementStimulus.INTERNAL_RESISTANCE;
@@ -4913,6 +5031,10 @@ MouseOutHandler, MouseWheelHandler {
 
     String getLastResistanceMeasurementDiagnosticsForDeveloperVerification() {
 	return lastResistanceMeasurementDiagnostics;
+    }
+
+    double getLastResistanceTestCurrentForDeveloperVerification() {
+	return lastResistanceTestCurrent;
     }
 
     boolean hasElectricallyNeutralResistanceReferenceForDeveloperVerification() {
@@ -4967,7 +5089,17 @@ MouseOutHandler, MouseWheelHandler {
 		return result[0].voltage;
 	    }
 	});
+	lastDiodeMeasurementVoltage = result[0] == null ? Double.NaN : result[0].voltage;
+	lastDiodeMeasurementCurrent = result[0] == null ? Double.NaN : result[0].current;
 	return result[0];
+    }
+
+    double getLastDiodeMeasurementVoltageForDeveloperVerification() {
+	return lastDiodeMeasurementVoltage;
+    }
+
+    double getLastDiodeMeasurementCurrentForDeveloperVerification() {
+	return lastDiodeMeasurementCurrent;
     }
 
     ActiveMeasurementReadiness getActiveMeasurementReadiness(

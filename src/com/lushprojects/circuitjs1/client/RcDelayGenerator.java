@@ -8,6 +8,17 @@ final class RcDelayGenerator {
     static final String CHARGE_DELAY_VARIANT = "RC_CHARGE_DELAY";
 
     GeneratedBoardInstance generate(long seed) {
+        return generate(seed, null);
+    }
+
+    GeneratedBoardInstance generateForFaultVerification(long seed, GeneratedFaultType type) {
+        if (type != GeneratedFaultType.CAPACITOR_OPEN &&
+                type != GeneratedFaultType.CAPACITOR_SHORT)
+            throw new IllegalArgumentException("Unsupported RC diagnostic fault: " + type);
+        return generate(seed, type);
+    }
+
+    private GeneratedBoardInstance generate(long seed, GeneratedFaultType forcedType) {
         RcValues values = valuesFor(seed);
         TroubleshootBoard board = createBoard();
         BoardPhysicalSpecifications specs = createSpecifications(values);
@@ -80,8 +91,9 @@ final class RcDelayGenerator {
         faults.add(GeneratedFaultEngine.capacitorShuntShort("RC_C1_SHORT", FAMILY_ID, seed,
             "C1", c1ShortFaultResistor, c1OpenFaultSwitch));
         GeneratedFaultEngine.clearAll(faults);
-        GeneratedFaultType requiredFault = values.shortFault ? GeneratedFaultType.CAPACITOR_SHORT :
-            GeneratedFaultType.CAPACITOR_OPEN;
+        GeneratedFaultType requiredFault = forcedType != null ? forcedType :
+            (values.shortFault ? GeneratedFaultType.CAPACITOR_SHORT :
+                GeneratedFaultType.CAPACITOR_OPEN);
         GeneratedFaultCandidate selected = GeneratedFaultEngine.select(requiredFault, faults);
         GeneratedFaultBinding faultBinding = selected.getBinding();
 

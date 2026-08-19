@@ -8,6 +8,19 @@ class BoardPowerController {
         return state;
     }
 
+    GeneratedExternalPowerBindings getBindingsForDeveloperVerification() {
+        return powerBindings;
+    }
+
+    void restoreForDeveloperVerification(GeneratedExternalPowerBindings bindings,
+            BoardPowerState savedState) {
+        if (bindings == null || savedState == null)
+            throw new IllegalArgumentException("Missing board power snapshot");
+        attach(bindings);
+        if (savedState == BoardPowerState.UNPOWERED)
+            setState(savedState);
+    }
+
     boolean setState(BoardPowerState state) {
     if (this.state == state && isStateEnforced(state))
         return false;

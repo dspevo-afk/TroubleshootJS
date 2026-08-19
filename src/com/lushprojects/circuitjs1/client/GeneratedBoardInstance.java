@@ -24,6 +24,7 @@ class GeneratedBoardInstance {
     private final GeneratedBoardFamilyState familyState;
     private final GeneratedTemporalBehavior temporalBehavior;
     private final boolean developerOnlyFaultRoute;
+    private final GeneratedDiagnosticSolvabilityContract diagnosticSolvabilityContract;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -116,6 +117,8 @@ class GeneratedBoardInstance {
         this.familyState = familyState;
         this.temporalBehavior = temporalBehavior;
         this.developerOnlyFaultRoute = developerOnlyFaultRoute;
+        this.diagnosticSolvabilityContract = GeneratedDiagnosticSolvabilityContract
+            .forGeneratedBoard(circuitFamilyId, topologyVariantId, seed, this.faultCandidates);
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
     }
@@ -205,6 +208,9 @@ class GeneratedBoardInstance {
     }
     int getFaultPhysicalOwnerCount() { return getFaultPhysicalOwnerIds().size(); }
     boolean isDeveloperOnlyFaultRoute() { return developerOnlyFaultRoute; }
+    GeneratedDiagnosticSolvabilityContract getDiagnosticSolvabilityContract() {
+        return diagnosticSolvabilityContract;
+    }
     GeneratedComponentOperationalStates getOperationalStates() { return operationalStates; }
     GeneratedChallengeDefinition getChallengeDefinition() { return challengeDefinition; }
     GeneratedBoardFamilyState getFamilyState() { return familyState; }
