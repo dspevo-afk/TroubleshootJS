@@ -15,16 +15,18 @@ final class NpnLowSideSwitchRepairValidator implements GeneratedRepairValidator 
                     modifications == null || !modifications.isFullyRestored() ||
                     !allInstalled(instance, modifications))
                 return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance))
                 return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-            state.setCommandedOn(sim, false);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             if (!NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance))
                 return GeneratedRepairStatus.DEGRADED_BUT_OPERATING;
             return GeneratedRepairStatus.CORRECTLY_RESTORED;
         } finally {
             try {
-                state.setCommandedOn(sim, priorCommandedOn);
+                instance.invokeOperation(priorCommandedOn ?
+                    GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             } finally {
                 if (sim != null)
                     sim.endObservationalValidation();

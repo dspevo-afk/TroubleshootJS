@@ -100,10 +100,15 @@ class DiodeFamilyDeveloperVerifier {
         require(diodeCurrent >= .005 && diodeCurrent <= .015 &&
             Math.abs(diodeCurrent - resistorCurrent) <= .0001 &&
             Math.abs(diodeCurrent - ledCurrent) <= .0001 &&
-            instance.getOperationalStates().isIlluminated("LED1") && challenge.isCompleted() &&
+            instance.getOperationalStates().isIlluminated("LED1") &&
             challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
                 sim.getBoardModificationController(), BoardPowerState.POWERED, false),
-            "Healthy diode did not produce solver-backed functional completion");
+            "Healthy diode did not produce solver-backed functional repair");
+        require(challenge.performCustomerRetest().isPassed(),
+            "Healthy diode did not pass the public customer retest");
+        sim.verifyGeneratedBoard();
+        require(challenge.isCompleted(),
+            "Healthy diode did not complete after the customer retest");
         require(original.getLocation() == DiodePartLocation.LOOSE && original.isFaulted() &&
             reversed.getLocation() == DiodePartLocation.LOOSE &&
             healthy.getLocation() == DiodePartLocation.LOOSE,

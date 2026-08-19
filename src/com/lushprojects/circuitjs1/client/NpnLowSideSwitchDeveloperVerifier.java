@@ -497,13 +497,13 @@ final class NpnLowSideSwitchDeveloperVerifier {
         GeneratedFaultType type = instance.getFaultBinding().getFault().getType();
         NpnLowSideSwitchFamilyState state = familyState(instance);
         if (type == GeneratedFaultType.TRANSISTOR_CE_SHORT) {
-            state.setCommandedOn(sim, false);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             require(NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005 &&
                 NpnLowSideSwitchGeneratedBoardValidator.collectorVoltage(instance) < 1.0,
                 "NPN C-E short did not remain active with low control");
             return;
         }
-        state.setCommandedOn(sim, true);
+        instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
         require(NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001,
             "NPN open fault still drove the load in its commanded-on state");
         if (type == GeneratedFaultType.TRANSISTOR_CE_OPEN)
@@ -527,11 +527,11 @@ final class NpnLowSideSwitchDeveloperVerifier {
         try {
             require(faults.clearForDeveloperVerification(),
                 "NPN developer fault clear was ignored");
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
                 "NPN healthy reference did not switch on in CircuitJS");
             verifyHealthyElectricalEnvelope(sim, instance);
-            state.setCommandedOn(sim, false);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
                 "NPN healthy reference did not switch off in CircuitJS");
             require(faults.apply(), "NPN developer fault reapply was ignored");
@@ -539,7 +539,9 @@ final class NpnLowSideSwitchDeveloperVerifier {
             challenge.endDeveloperVerificationScope();
         }
         GeneratedFaultType type = instance.getFaultBinding().getFault().getType();
-        state.setCommandedOn(sim, type == GeneratedFaultType.TRANSISTOR_CE_SHORT ? false : true);
+        instance.invokeOperation(type == GeneratedFaultType.TRANSISTOR_CE_SHORT ?
+            GeneratedBoardOperationIds.CONTROL_INPUT_LOW :
+            GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
     }
 
     private static void verifyStatePreservingChecks(GeneratedBoardInstance instance,
@@ -611,10 +613,14 @@ final class NpnLowSideSwitchDeveloperVerifier {
             if (type == GeneratedFaultType.TRANSISTOR_CE_OPEN ||
                     type == GeneratedFaultType.TRANSISTOR_CE_SHORT) {
                 boolean expectedCommandedOn = type == GeneratedFaultType.TRANSISTOR_CE_OPEN;
-                state.setCommandedOn(sim, expectedCommandedOn);
+                instance.invokeOperation(expectedCommandedOn ?
+                    GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
                 verifyWrongNpnReplacementStatus(instance, challenge, state, type);
             } else {
-                state.setCommandedOn(sim, type != GeneratedFaultType.TRANSISTOR_CE_SHORT);
+                instance.invokeOperation(type == GeneratedFaultType.TRANSISTOR_CE_SHORT ?
+                    GeneratedBoardOperationIds.CONTROL_INPUT_LOW :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
                 require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
                     "Wrong NPN replacement incorrectly completed repair");
             }
@@ -650,7 +656,9 @@ final class NpnLowSideSwitchDeveloperVerifier {
                 !wrong.ownsGeneratedFault(instance.getFaultBinding()),
                 "NPN resistor replacement inherited original identity or fault");
             sim.setBoardPowerState(BoardPowerState.POWERED);
-            state.setCommandedOn(sim, type != GeneratedFaultType.TRANSISTOR_CE_SHORT);
+            instance.invokeOperation(type == GeneratedFaultType.TRANSISTOR_CE_SHORT ?
+                GeneratedBoardOperationIds.CONTROL_INPUT_LOW :
+                GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
                 "Wrong NPN resistor replacement incorrectly completed repair");
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
@@ -660,21 +668,24 @@ final class NpnLowSideSwitchDeveloperVerifier {
         }
         sim.setBoardPowerState(BoardPowerState.POWERED);
         if (instance.getSeed() == 1 && type == GeneratedFaultType.TRANSISTOR_CE_SHORT) {
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
                 "Natural seed-1 correct NPN did not switch on after CE-short repair");
-            state.setCommandedOn(sim, false);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
                 "Natural seed-1 correct NPN did not switch off after CE-short repair");
         }
-        state.setCommandedOn(sim, type == GeneratedFaultType.TRANSISTOR_CE_SHORT ? false : true);
+        instance.invokeOperation(type == GeneratedFaultType.TRANSISTOR_CE_SHORT ?
+            GeneratedBoardOperationIds.CONTROL_INPUT_LOW :
+            GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
             "Correct NPN physical repair did not restore functional switching");
         require(modifications.isFullyRestored() && !sim.activeMeasurementOverlay,
             "NPN repair verifier left modification or measurement residue");
         if (instance.getSeed() == 1 && type == GeneratedFaultType.TRANSISTOR_CE_SHORT)
-            require(challenge.finishJob() && challenge.isCompleted(),
-                "Natural seed-1 correct NPN did not pass generic Finish Job readiness");
+            require(challenge.performCustomerRetest().isPassed() &&
+                challenge.isCompleted(),
+                "Natural seed-1 correct NPN did not pass the public customer retest and latch completion");
     }
 
     private static void verifyWrongNpnReplacementStatus(GeneratedBoardInstance instance,

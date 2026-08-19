@@ -16,14 +16,14 @@ final class NpnLowSideSwitchFaultValidator implements GeneratedFaultValidator {
             sim.beginObservationalValidation();
         try {
             if (type == GeneratedFaultType.TRANSISTOR_CE_SHORT) {
-                state.setCommandedOn(sim, false);
+                instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
                 if (NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance) ||
                         NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .005 ||
                         NpnLowSideSwitchGeneratedBoardValidator.collectorVoltage(instance) > 1.0)
                     throw new IllegalStateException("NPN C-E short did not create stuck-active low-control behavior");
                 return;
             }
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             double load = NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance);
             double base = NpnLowSideSwitchGeneratedBoardValidator.baseCurrent(instance);
             if (load > .000001)
@@ -40,7 +40,9 @@ final class NpnLowSideSwitchFaultValidator implements GeneratedFaultValidator {
                 throw new IllegalStateException("Unsupported NPN fault type: " + type);
         } finally {
             try {
-                state.setCommandedOn(sim, priorCommandedOn);
+                instance.invokeOperation(priorCommandedOn ?
+                    GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             } finally {
                 if (sim != null)
                     sim.endObservationalValidation();

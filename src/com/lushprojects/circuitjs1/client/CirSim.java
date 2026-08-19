@@ -384,6 +384,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootRcVerification;
 	boolean troubleshootNpnVerification;
 	boolean troubleshootNmosVerification;
+	boolean troubleshootTask39Verification;
 	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
@@ -398,6 +399,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootRcVerificationComplete;
 	boolean troubleshootNpnVerificationComplete;
 	boolean troubleshootNmosVerificationComplete;
+	boolean troubleshootTask39VerificationComplete;
 	boolean troubleshootStoredEnergyVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
@@ -466,6 +468,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootRcVerification = qp.getBooleanValue("tsjVerifyRc", false);
 	    troubleshootNpnVerification = qp.getBooleanValue("tsjVerifyNpn", false);
 	    troubleshootNmosVerification = qp.getBooleanValue("tsjVerifyNmos", false);
+	    troubleshootTask39Verification = qp.getBooleanValue("tsjVerifyTask39", false);
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
@@ -4559,6 +4562,18 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootTask39Verification &&
+		!troubleshootTask39VerificationComplete &&
+		(generatedChallengeController == null || generatedChallengeController.isReady())) {
+		developerVerifierRunning = true;
+		try {
+		    troubleshootTask39VerificationComplete = true;
+		    Task39DeveloperVerifier.verify(this);
+		    publishBrowserVerificationResult("PASS:task39");
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	} catch (RuntimeException e) {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootWrongRepairVerification ||
@@ -4569,7 +4584,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootQuickPlayVerification ||
 		    troubleshootArchitectureVerification || troubleshootRcVerification ||
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
-		    troubleshootNmosVerification)
+		    troubleshootNmosVerification || troubleshootTask39Verification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4640,8 +4655,21 @@ MouseOutHandler, MouseWheelHandler {
 	return generatedChallengeController.finishJob();
 	}
 
+	GeneratedCustomerRetestResult performCustomerRetest() {
+	if (generatedChallengeController == null)
+	    return GeneratedCustomerRetestSupport.failure();
+	return generatedChallengeController.performCustomerRetest();
+	}
+
+	boolean invokeGeneratedPlayerOperation(String stableId) {
+	if (generatedChallengeController == null)
+	    return false;
+	return generatedChallengeController.invokePlayerOperation(stableId);
+	}
+
 	boolean isChallengeInteractionEnabled() {
-	return generatedChallengeController == null || generatedChallengeController.isReady();
+	return generatedChallengeController == null ||
+	    generatedChallengeController.isPhysicalMutationAllowed();
 	}
 
 	void refreshChallengeInteractionState() {
@@ -4721,6 +4749,8 @@ MouseOutHandler, MouseWheelHandler {
 	if (!boardPowerController.setState(state))
 	    return;
 	generatedBoardInstance.getPhysicalBoardRuntime().onBoardPowerStateChanged(state);
+	if (generatedChallengeController != null)
+	    generatedChallengeController.invalidateCustomerRetest();
 	updateBoardPowerButton();
 	refreshBoardModificationControls();
 	instrumentController.refreshActiveMeasurement();

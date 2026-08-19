@@ -23,6 +23,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final Label feedback = new Label();
     private final boolean quickPlay;
     private String finishFeedbackText = "";
+    private String customerRetestFeedbackText = "";
 
     PcbWorkbenchController(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, PcbBoardLayout layout,
@@ -348,13 +349,19 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         ticketPanel.setVisible(challenge != null);
         if (challenge == null)
             return;
+        if (challenge.getCustomerRetestResult() == null)
+            customerRetestFeedbackText = "";
         ticketPanel.add(styledLabel("Service Ticket", "tsj-component-title"));
         ticketPanel.add(new Label(challenge.isReady() ? challenge.getComplaintText() :
             "Preparing challenge..."));
+        if (challenge.isReady())
+            addCustomerOperationControls(challenge);
         if (quickPlay) {
             final Button finish = new Button("Finish Job");
             finish.setStyleName("tsj-action-button");
-            finish.setEnabled(challenge.isReady() && !challenge.isCompleted());
+            finish.setEnabled(challenge.isReady() && !challenge.isCompleted() &&
+                challenge.getCustomerRetestResult() != null &&
+                challenge.getCustomerRetestResult().isPassed());
             finish.addClickHandler(new ClickHandler() {
                 public void onClick(ClickEvent event) {
                     if (sim.finishQuickPlayJob()) {
@@ -373,6 +380,50 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                 result.setStyleName("tsj-inline-feedback");
                 ticketPanel.add(result);
             }
+        }
+    }
+
+    private void addCustomerOperationControls(final GeneratedChallengeController challenge) {
+        GeneratedCustomerRetestProfile profile = challenge.getCustomerRetestProfile();
+        ticketPanel.add(new Label("Customer retest: " + profile.getPlayerInstruction()));
+        for (final GeneratedBoardOperation operation : instance.getOperationCatalog().getAll()) {
+            if (GeneratedBoardOperationIds.CUSTOMER_RETEST.equals(operation.getStableId()))
+                continue;
+            Button command = new Button(operation.getPlayerLabel());
+            command.setStyleName("tsj-action-button");
+            command.setEnabled(challenge.isReady());
+            final String operationId = operation.getStableId();
+            command.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    if (sim.invokeGeneratedPlayerOperation(operationId)) {
+                        customerRetestFeedbackText = "";
+                        refresh();
+                    }
+                    sim.repaint();
+                }
+            });
+            ticketPanel.add(command);
+        }
+        final GeneratedBoardOperation retestOperation = instance.getOperationCatalog().find(
+            GeneratedBoardOperationIds.CUSTOMER_RETEST);
+        if (retestOperation != null) {
+            Button retest = new Button(retestOperation.getPlayerLabel());
+            retest.setStyleName("tsj-action-button");
+            retest.setEnabled(challenge.isReady() && !challenge.isCompleted());
+            retest.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    GeneratedCustomerRetestResult result = sim.performCustomerRetest();
+                    customerRetestFeedbackText = result.getPlayerMessage();
+                    refresh();
+                    sim.repaint();
+                }
+            });
+            ticketPanel.add(retest);
+        }
+        if (customerRetestFeedbackText.length() != 0) {
+            Label result = new Label(customerRetestFeedbackText);
+            result.setStyleName("tsj-inline-feedback");
+            ticketPanel.add(result);
         }
     }
 

@@ -176,17 +176,15 @@ class ResistorStressDamageDeveloperVerifier {
                 !correctState.isFailed() && !correct.getSecondaryOpenPath().isOpen() &&
                 instance.getOperationalStates().isIlluminated("LED1"),
                 "Correct replacement did not survive the same bounded service window");
-            challenge.endDeveloperVerificationScope();
-            challenge.verifyReadyState();
-            require(challenge.isCompleted(), "Correct replacement did not complete the solver-backed repair: current=" +
-                getLedCurrent(instance) + " status=" + challenge.getDefinition().getBehaviorContract()
-                    .getRepairStatus(instance, sim.getBoardModificationController(), BoardPowerState.POWERED, false));
             report.append(";A{id=").append(correctId).append(",R=").append(
                 correct.getElement().getResistance()).append(",ratedW=").append(correct.getRatedWattage()).append(
                 ",solvedW=").append(correctPower).append(",ratio=").append(correctRatio).append(
                 ",damage=").append(correctState.getAccumulatedDamage()).append(",service=").append(
                 correctState.getServiceTime()).append(",survived=true,backingStable=true,led=true}");
 
+            // Complete all reset/damage checks while the challenge is still
+            // READY.  COMPLETED is intentionally terminal and must not be
+            // followed by simulation or board-state mutations.
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
             sim.resetAction();
             settle(sim);
@@ -197,6 +195,15 @@ class ResistorStressDamageDeveloperVerifier {
                     .getNameplate().getRatedWattage(),
                 "Reset did not deterministically clear secondary damage while preserving original fault");
             report.append(";D{poweredOffPaused=true,activeMeterPaused=true};F{resetDamage=0,failedPartReset=true,catalogToOriginalAuxiliary=true,originalFaultOwned=true,secondaryFailureNotOriginalFault=true,ratingsReproduced=true}");
+            sim.setBoardPowerState(BoardPowerState.POWERED);
+            settle(sim);
+            challenge.endDeveloperVerificationScope();
+            require(challenge.performCustomerRetest().isPassed(),
+                "Correct replacement did not pass the public customer retest");
+            challenge.verifyReadyState();
+            require(challenge.isCompleted(), "Correct replacement did not complete the solver-backed repair: current=" +
+                getLedCurrent(instance) + " status=" + challenge.getDefinition().getBehaviorContract()
+                    .getRepairStatus(instance, sim.getBoardModificationController(), BoardPowerState.POWERED, false));
         } finally {
             challenge.endDeveloperVerificationScope();
         }

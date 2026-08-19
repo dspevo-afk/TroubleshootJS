@@ -99,8 +99,13 @@ class LedPhysicalDeveloperVerifier {
         settle(sim);
         double ledCurrent = Math.abs(secondHealthy.getElement().getCurrent());
         require(ledCurrent >= .005 && ledCurrent <= .015 &&
-            instance.getOperationalStates().isIlluminated("LED1") && challenge.isCompleted(),
-            "Correct physical LED did not restore solved operation and challenge completion");
+            instance.getOperationalStates().isIlluminated("LED1"),
+            "Correct physical LED did not restore solver-backed operation");
+        require(challenge.performCustomerRetest().isPassed(),
+            "Correct physical LED did not pass the public customer retest");
+        sim.verifyGeneratedBoard();
+        require(challenge.isCompleted(),
+            "Correct physical LED did not complete after the customer retest");
         require(original.getLocation() == LedPartLocation.LOOSE &&
             reversed.getLocation() == LedPartLocation.LOOSE &&
             healthy.getLocation() == LedPartLocation.LOOSE &&

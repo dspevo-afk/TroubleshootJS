@@ -971,7 +971,7 @@ not authority to continue automatically.
 
 ## Task 39 — Player-Operable Functional Inputs and Customer Retest Contract
 
-**Status:** [>] Immediate next milestone
+**Status:** [x] Completed
 
 **Purpose:** Close the known gap between solver-capable validators and the
 operations a normal player can actually perform.
@@ -1020,7 +1020,7 @@ product-session-flow requirement.
 
 ## Task 40 — Physical Fault Locus and Serviceability Admission
 
-**Status:** [!] Blocked by Task 39
+**Status:** [>] Immediate next milestone
 
 **Purpose:** Make the physical thing the player diagnoses agree with the solver
 effect and the available repair.
@@ -3017,8 +3017,8 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 # Immediate Next Milestone
 
-**Task 39 — Player-Operable Functional Inputs and Customer Retest Contract**
+**Task 40 — Physical Fault Locus and Serviceability Admission**
 
-Its dependencies are satisfied by completed Tasks 1–38. Relay Driver is
-deferred and transformed into Task 66. Task 39 has been selected only; no
-production implementation has started.
+Task 39 has completed implementation, validation, and review. Task 40 is now
+selected as the next eligible milestone; no Task 40 production implementation
+has started. Relay Driver remains deferred and transformed into Task 66.

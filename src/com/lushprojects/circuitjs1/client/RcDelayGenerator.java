@@ -177,7 +177,7 @@ final class RcDelayGenerator {
             behavior, RcDelayPcbLayoutFactory.create(board, seed), specs, faultBinding, operational,
             new GeneratedChallengeDefinition("RC_DELAY_STARTUP", FAMILY_ID, CHARGE_DELAY_VARIANT,
                 seed, scenarios, "Repair verified. The controller delay is operating normally.",
-                fault, faultBinding, behavior), new RcDelayFamilyState(), runtime, temporal);
+            fault, faultBinding, behavior), new RcDelayFamilyState(temporal), runtime, temporal);
     }
 
     private BoardPhysicalSpecifications createSpecifications(RcValues values) {

@@ -923,9 +923,11 @@ so the visible C1/R2 charge and discharge complete at a usable cadence while
 remaining ordinary `CapacitorElm` physics. Once a challenge is completed, the
 generic controller no longer replays its temporal profile on later frames or
 on a repeated direct Finish Job request: only the exact `READY` state may run
-the functional repair profile. `COMPLETED` remains interaction-ready but is a
-terminal, mutation-free state, so manual power cycles retain the player's
-actual live capacitor state.
+the functional repair profile. `COMPLETED` remains semantic-operation-ready
+but is a terminal, mutation-free state: board power, instruments, PCB
+selection, and physical topology changes are disabled, so manual physical
+actions cannot silently alter the finished job or replay a temporal profile.
+The player's actual live capacitor state is still retained.
 
 `BoardPowerState.UNPOWERED` remains external source isolation. Optional
 `ActiveMeasurementReadinessCapability` adds a separate, generic stored-energy
@@ -1115,3 +1117,34 @@ keepouts, deterministic routing, and parts-tray separation. Fresh visible
 Browser evidence covers the symptom-only complaint, 5 V gate/source, the
 D-S-short low-control case with both J2.1 and Q1.G at 0 V while the load stays
 active, power-off Q1 removal, catalog replacement, and repair verification.
+
+## Task 39 — semantic player operations and customer retest
+
+Generated boards expose one family-neutral `GeneratedBoardOperationCatalog`
+through `GeneratedBoardInstance`. Operation IDs are stable semantic constants
+(`CONTROL_INPUT_HIGH`, `CONTROL_INPUT_LOW`, and `CUSTOMER_RETEST`); the ID
+validation rejects solver-node, pad, coordinate, collection-index, and UUID
+identity. Family state owns the catalog and its
+`GeneratedCustomerRetestProfile`, so the profile describes the required power
+or input transition, observable output, timing/repetition, and unaffected
+functions without exposing fault metadata or private values.
+
+The NPN and NMOS HIGH/LOW operations dispatch the existing external
+`SwitchElm` command switch and settle CircuitJS. Their customer profiles invoke
+those same semantic operations and validate J2.1/gate and load response from
+the solved circuit, restoring the prior command, board power, and physical
+state in nested `finally` cleanup. Scenario compatibility, fault validation,
+repair validation, and developer checks use the same boundary; there is no
+validator-only control hook. LED, diode-protected, and parallel-indicator
+families use the shared observation profile. RC owns a temporal profile that
+delegates to `RcDelayTemporalBehavior` for a real board-power cycle and natural
+stored-energy discharge rather than duplicating RC physics.
+
+`GeneratedChallengeController` keeps live repair status, customer-retest
+result, Finish Job, and latched `COMPLETED` state separate. A normal player
+sees family-safe operation/retest controls in the service ticket. Retest is
+required before completion. After completion, NPN/NMOS semantic operation
+controls remain electrically live, while board power, instruments, PCB
+selection, and physical mutation controls are disabled and completion is not
+silently rechecked. Board power still uses `BoardPowerController` and remains
+independent from CircuitJS RUN/STOP.

@@ -32,6 +32,8 @@ final class QuickPlayDeveloperVerifier {
         verifyUnrepairedFinishDoesNotAdvance(sim, challenge);
         verifySeedOneNpnScenario(sim, challenge, instance);
         verifyCorrectRepairCanFinish(sim, challenge, instance);
+        verifyCompletedPhysicalMutationIsRejected(sim, challenge, instance);
+        verifyCompletedSemanticOperationsRemainLive(sim, challenge, instance);
         verifyNormalPlayerPrivacy(sim);
         sim.publishQuickPlayVerificationReportForDeveloperVerification(
             "unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated");
@@ -287,9 +289,118 @@ final class QuickPlayDeveloperVerifier {
         sim.verifyGeneratedBoard();
         require(challenge.getDefinition().getBehaviorContract().getRepairStatus(instance,
             sim.getBoardModificationController(), BoardPowerState.POWERED, false) ==
-            GeneratedRepairStatus.CORRECTLY_RESTORED && sim.finishQuickPlayJob() &&
+            GeneratedRepairStatus.CORRECTLY_RESTORED && challenge.performCustomerRetest().isPassed() &&
+            sim.finishQuickPlayJob() &&
             challenge.isCompleted(),
             "Correctly restored Quick Play challenge did not finish through generic status");
+    }
+
+    private static void verifyCompletedPhysicalMutationIsRejected(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        require(challenge.isCompleted() && challenge.isReady(),
+            "Quick Play correct repair did not enter latched completed state");
+        String componentId = challenge.getDefinition().getFault().getTargetComponentId();
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        PhysicalSlotMutationProvider provider = runtime.getMutationProvider(componentId);
+        require(provider != null && componentId.equals(provider.getComponentId()),
+            "Completed Quick Play target has no active physical mutation provider: " + componentId);
+        PhysicalBoardSlot slot = runtime.getSlot(componentId);
+        require(slot != null && slot.getInstalledPart() != null,
+            "Completed Quick Play target has no installed physical part: " + componentId);
+        PhysicalPart<?> installed = slot.getInstalledPart();
+        BoardModificationController modifications = sim.getBoardModificationController();
+        ComponentPhysicalState componentState = modifications.getComponentState(componentId);
+        boolean fullyRestored = modifications.isFullyRestored();
+        Vector<GeneratedComponentConnectionBinding> bindings =
+            instance.getConnectionBindings().getForComponent(componentId);
+        boolean[] connected = new boolean[bindings.size()];
+        for (int index = 0; index < bindings.size(); index++)
+            connected[index] = modifications.isLeadConnected(componentId,
+                bindings.get(index).getPadId());
+        Vector<PhysicalPart> physicalParts = new Vector<PhysicalPart>(runtime.getPhysicalParts());
+        Vector<CircuitElm> topology = new Vector<CircuitElm>(sim.elmList);
+        String circuit = sim.dumpCircuit();
+        int undo = sim.undoStack.size();
+        int redo = sim.redoStack.size();
+        boolean unsaved = sim.unsavedChanges;
+        require(sim.getBoardPowerController().getState() == BoardPowerState.POWERED,
+            "Completed Quick Play mutation proof did not start powered");
+        try {
+            sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.UNPOWERED);
+            require(sim.getBoardPowerController().getState() == BoardPowerState.UNPOWERED,
+                "Completed Quick Play mutation proof could not enter developer power-off state");
+            boolean rejected = false;
+            try {
+                if (provider.removeInstalledPart())
+                    throw new IllegalStateException(
+                        "Completed Quick Play physical removal unexpectedly succeeded");
+                rejected = true;
+            } catch (BoardModificationRejectedException expected) {
+                rejected = true;
+            }
+            require(rejected, "Completed Quick Play physical removal was not rejected");
+            require(slot.getInstalledPart() == installed && runtime.getInstalledPart(componentId) == installed &&
+                    installed.isInstalled() && installed.getBoardSlot() == slot &&
+                    componentState == modifications.getComponentState(componentId) &&
+                    fullyRestored == modifications.isFullyRestored() &&
+                    physicalParts.equals(runtime.getPhysicalParts()),
+                "Completed Quick Play physical removal changed board state");
+            for (int index = 0; index < bindings.size(); index++)
+                require(connected[index] == modifications.isLeadConnected(componentId,
+                        bindings.get(index).getPadId()),
+                    "Completed Quick Play physical removal changed lead state");
+        } finally {
+            sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.POWERED);
+        }
+        require(sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
+                slot.getInstalledPart() == installed && runtime.getInstalledPart(componentId) == installed &&
+                installed.isInstalled() && installed.getBoardSlot() == slot &&
+                componentState == modifications.getComponentState(componentId) &&
+                fullyRestored == modifications.isFullyRestored() &&
+                physicalParts.equals(runtime.getPhysicalParts()) && sim.elmList.equals(topology) &&
+                circuit.equals(sim.dumpCircuit()) && undo == sim.undoStack.size() &&
+                redo == sim.redoStack.size() && unsaved == sim.unsavedChanges,
+            "Completed Quick Play physical mutation proof did not restore powered state unchanged");
+        for (int index = 0; index < bindings.size(); index++)
+            require(connected[index] == modifications.isLeadConnected(componentId,
+                    bindings.get(index).getPadId()),
+                "Completed Quick Play restoration changed lead state");
+    }
+
+    private static void verifyCompletedSemanticOperationsRemainLive(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        if (!QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) &&
+                !QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()))
+            return;
+        require(challenge.isCompleted() && challenge.isReady(),
+            "Completed switch challenge did not retain semantic readiness");
+        boolean priorCommand = QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(
+            instance.getCircuitFamilyId()) ?
+            ((NpnLowSideSwitchFamilyState) instance.getFamilyState()).isCommandedOn() :
+            ((NmosLowSideSwitchFamilyState) instance.getFamilyState()).isCommandedOn();
+        try {
+            require(sim.invokeGeneratedPlayerOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH),
+                "Completed switch challenge rejected public HIGH operation");
+            if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()))
+                require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
+                    "Completed NPN HIGH operation did not remain solver-backed");
+            else
+                require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
+                    "Completed NMOS HIGH operation did not remain solver-backed");
+            require(sim.invokeGeneratedPlayerOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW),
+                "Completed switch challenge rejected public LOW operation");
+            if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()))
+                require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
+                    "Completed NPN LOW operation did not remain solver-backed");
+            else
+                require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
+                    "Completed NMOS LOW operation did not remain solver-backed");
+        } finally {
+            require(sim.invokeGeneratedPlayerOperation(priorCommand ?
+                    GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_LOW),
+                "Completed switch challenge could not restore prior public operation state");
+        }
     }
 
     private static void verifySeedOneNpnRepairCanFinish(CirSim sim,
@@ -304,14 +415,15 @@ final class QuickPlayDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.POWERED);
         NpnLowSideSwitchFamilyState state = (NpnLowSideSwitchFamilyState)
             instance.getFamilyState();
-        state.setCommandedOn(sim, true);
+        instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
         require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
             "Quick Play NPN seed 1 replacement did not restore real ON behavior");
-        state.setCommandedOn(sim, false);
+        instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
         require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
             "Quick Play NPN seed 1 replacement did not restore real OFF behavior");
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
-            sim.finishQuickPlayJob() && challenge.isCompleted(),
+            challenge.performCustomerRetest().isPassed() && sim.finishQuickPlayJob() &&
+            challenge.isCompleted(),
             "Quick Play NPN seed 1 correct replacement did not finish generically");
     }
 
@@ -336,7 +448,8 @@ final class QuickPlayDeveloperVerifier {
         sim.runCircuit(true);
         sim.runCircuit(true);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
-            sim.finishQuickPlayJob() && challenge.isCompleted(),
+            challenge.performCustomerRetest().isPassed() && sim.finishQuickPlayJob() &&
+            challenge.isCompleted(),
             "Correctly restored NPN Quick Play challenge did not finish through generic status");
     }
 
@@ -367,7 +480,8 @@ final class QuickPlayDeveloperVerifier {
         sim.runCircuit(true);
         sim.runCircuit(true);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
-            sim.finishQuickPlayJob() && challenge.isCompleted(),
+            challenge.performCustomerRetest().isPassed() && sim.finishQuickPlayJob() &&
+            challenge.isCompleted(),
             "Correctly restored NMOS Quick Play challenge did not finish generically");
     }
 
@@ -383,16 +497,17 @@ final class QuickPlayDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.POWERED);
         GeneratedRepairStatus status = challenge.getRepairStatus();
         require(status == GeneratedRepairStatus.CORRECTLY_RESTORED &&
-            sim.finishQuickPlayJob() && challenge.isCompleted(),
+            challenge.performCustomerRetest().isPassed() && sim.finishQuickPlayJob() &&
+            challenge.isCompleted(),
             "RC Quick Play Finish Job did not use the temporal functional test");
         verifyCompletedRcFinishIsNoOp(sim, challenge, instance);
     }
 
     /**
-     * Completion is intentionally still interaction-ready, so a second direct
-     * Finish Job call must be a strict no-op.  In particular, it cannot enter
-     * RcDelayTemporalBehavior.getRepairStatus(), which would replay the real
-     * power-cycle profile and change solver time and capacitor charge.
+     * Completion keeps semantic customer operations available, but physical
+     * interaction is terminal.  A second direct Finish Job call must still be
+     * a strict no-op; in particular, it cannot enter RcDelayTemporalBehavior
+     * and replay the real power-cycle profile.
      */
     private static void verifyCompletedRcFinishIsNoOp(CirSim sim,
             GeneratedChallengeController challenge, GeneratedBoardInstance instance) {

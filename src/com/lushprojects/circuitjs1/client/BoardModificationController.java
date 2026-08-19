@@ -155,6 +155,8 @@ class BoardModificationController {
             return;
         sim.needAnalyze();
         sim.requestGeneratedBoardVerification();
+	if (sim.getGeneratedChallengeController() != null)
+	    sim.getGeneratedChallengeController().invalidateCustomerRetest();
 	sim.refreshBoardModificationControls();
     }
 }

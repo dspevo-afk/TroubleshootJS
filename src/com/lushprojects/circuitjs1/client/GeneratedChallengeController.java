@@ -13,6 +13,7 @@ class GeneratedChallengeController {
     private boolean developerVerificationScope;
     private GeneratedChallengeState state = GeneratedChallengeState.PREPARING_HEALTHY;
     private GeneratedScenario<GeneratedObservedBehavior> scenario;
+    private GeneratedCustomerRetestResult customerRetestResult;
 
     GeneratedChallengeController(CirSim sim, GeneratedBoardInstance instance) {
         this(sim, instance, false);
@@ -79,12 +80,28 @@ class GeneratedChallengeController {
 
     boolean isReady() { return state == GeneratedChallengeState.READY ||
         state == GeneratedChallengeState.COMPLETED; }
+    /**
+     * READY remains the only state in which player board interaction may
+     * change power, instruments, selection, or physical topology.  isReady()
+     * deliberately also includes COMPLETED for latched semantic operations.
+     */
+    boolean isPhysicalMutationAllowed() { return state == GeneratedChallengeState.READY; }
     boolean isCompleted() { return state == GeneratedChallengeState.COMPLETED; }
     GeneratedChallengeState getState() { return state; }
     GeneratedFaultController getFaultController() { return faults; }
     GeneratedChallengeDefinition getDefinition() { return definition; }
     GeneratedChallengeLifecycleEvidence getLifecycleEvidence() { return lifecycleEvidence; }
     GeneratedScenario<GeneratedObservedBehavior> getScenario() { return scenario; }
+    GeneratedCustomerRetestProfile getCustomerRetestProfile() {
+        return instance.getCustomerRetestProfile();
+    }
+    GeneratedCustomerRetestResult getCustomerRetestResult() { return customerRetestResult; }
+    GeneratedRepairStatus getLiveRepairStatus() { return getRepairStatus(); }
+
+    void invalidateCustomerRetest() {
+        if (state == GeneratedChallengeState.READY)
+            customerRetestResult = null;
+    }
     String getComplaintText() {
         if (scenario == null)
             return "Preparing challenge...";
@@ -111,10 +128,8 @@ class GeneratedChallengeController {
             sim.getBoardModificationController().isFullyRestored() &&
             sim.getBoardPowerController().getState() == BoardPowerState.POWERED)
             verifyFaultedBehavior(BoardPowerState.POWERED);
-        if (!finishJobRequired && getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED) {
-            state = GeneratedChallengeState.COMPLETED;
-            sim.refreshBoardModificationControls();
-            sim.repaint();
+        if (canLatchCompletionAfterCustomerRetest()) {
+            latchCompleted();
         }
     }
 
@@ -124,9 +139,34 @@ class GeneratedChallengeController {
         // profiles must never replay merely because Finish Job is invoked again.
         if (state != GeneratedChallengeState.READY)
             return false;
-        if (getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED)
+        if (getLiveRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED ||
+                customerRetestResult == null || !customerRetestResult.isPassed())
             return false;
-        state = GeneratedChallengeState.COMPLETED;
+        latchCompleted();
+        return true;
+    }
+
+    GeneratedCustomerRetestResult performCustomerRetest() {
+        if (state != GeneratedChallengeState.READY)
+            return GeneratedCustomerRetestSupport.failure();
+        GeneratedCustomerRetestResult result = instance.invokeOperation(
+            GeneratedBoardOperationIds.CUSTOMER_RETEST, sim);
+        customerRetestResult = result;
+        if (canLatchCompletionAfterCustomerRetest())
+            latchCompleted();
+        else {
+            sim.refreshBoardModificationControls();
+            sim.repaint();
+        }
+        return result;
+    }
+
+    boolean invokePlayerOperation(String stableId) {
+        if (!isReady() || GeneratedBoardOperationIds.CUSTOMER_RETEST.equals(stableId))
+            return false;
+        instance.invokeOperation(stableId, sim);
+        if (state == GeneratedChallengeState.READY)
+            customerRetestResult = null;
         sim.refreshBoardModificationControls();
         sim.repaint();
         return true;
@@ -143,7 +183,19 @@ class GeneratedChallengeController {
                 sim.activeMeasurementOverlay);
         return definition.getBehaviorContract().getRepairStatus(instance,
             sim.getBoardModificationController(), sim.getBoardPowerController().getState(),
-            sim.activeMeasurementOverlay);
+                sim.activeMeasurementOverlay);
+    }
+
+    private boolean canLatchCompletionAfterCustomerRetest() {
+        return !finishJobRequired && state == GeneratedChallengeState.READY &&
+            customerRetestResult != null && customerRetestResult.isPassed() &&
+            getLiveRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED;
+    }
+
+    private void latchCompleted() {
+        state = GeneratedChallengeState.COMPLETED;
+        sim.refreshChallengeInteractionState();
+        sim.repaint();
     }
 
     private void verifyFaultedBehavior(BoardPowerState powerState) {

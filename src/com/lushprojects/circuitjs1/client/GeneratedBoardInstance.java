@@ -142,6 +142,18 @@ class GeneratedBoardInstance {
     GeneratedBoardFamilyState getFamilyState() { return familyState; }
     GeneratedTemporalBehavior getTemporalBehavior() { return temporalBehavior; }
 
+    GeneratedBoardOperationCatalog getOperationCatalog() {
+        return familyState.getOperationCatalog();
+    }
+
+    GeneratedCustomerRetestProfile getCustomerRetestProfile() {
+        return familyState.getCustomerRetestProfile();
+    }
+
+    GeneratedCustomerRetestResult invokeOperation(String stableId, CirSim sim) {
+        return getOperationCatalog().invoke(stableId, sim, this);
+    }
+
     PcbBoardLayout getPcbLayout() {
         return pcbLayout;
     }

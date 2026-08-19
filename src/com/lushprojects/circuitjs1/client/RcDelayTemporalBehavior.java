@@ -104,6 +104,16 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
         advanceSolverTime(sim, NATURAL_DISCHARGE_SECONDS);
     }
 
+    /** Customer-facing retest: the board is really isolated, discharged, and repowered. */
+    void performCustomerRetest(CirSim sim) {
+        samplePowerCycle(sim);
+        observedBehavior = classifyAgainstHealthyProfile();
+    }
+
+    boolean passedCustomerRetest() {
+        return observedBehavior == GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY;
+    }
+
     private void samplePowerCycle(CirSim sim) {
         sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.UNPOWERED);
         advanceSolverTime(sim, NATURAL_DISCHARGE_SECONDS);

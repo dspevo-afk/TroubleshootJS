@@ -15,14 +15,14 @@ final class NmosLowSideSwitchFaultValidator implements GeneratedFaultValidator {
         if (sim != null) sim.beginObservationalValidation();
         try {
             if (type == GeneratedFaultType.NMOS_DS_SHORT) {
-                state.setCommandedOn(sim, false);
+                instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
                 if (NmosLowSideSwitchGeneratedBoardValidator.gateSourceVoltage(instance) > .1 ||
                         NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .005 ||
                         NmosLowSideSwitchGeneratedBoardValidator.drainSourceVoltage(instance) > 1)
                     throw new IllegalStateException("NMOS D-S short did not create stuck-active behavior");
                 return;
             }
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             if (NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .000001)
                 throw new IllegalStateException("NMOS open fault still drives the load");
             if (type == GeneratedFaultType.NMOS_DS_OPEN) {
@@ -37,7 +37,9 @@ final class NmosLowSideSwitchFaultValidator implements GeneratedFaultValidator {
             }
         } finally {
             try {
-                state.setCommandedOn(sim, priorCommandedOn);
+                instance.invokeOperation(priorCommandedOn ?
+                    GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             } finally {
                 if (sim != null) sim.endObservationalValidation();
             }

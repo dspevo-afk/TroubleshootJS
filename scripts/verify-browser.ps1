@@ -28,6 +28,7 @@ param(
     [switch]$NpnNatural,
     [switch]$Nmos,
     [switch]$NmosNatural,
+    [switch]$Task39,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -680,47 +681,18 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')&&[...document.querySelectorAll('select option')].some(x=>x.text==='1000 Ohm +/-5%')" $deadline ([ref]$failures) 'installed replacement excluded from tray while catalog value remains available'
-        clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'solver-backed repair completion'
-        Write-Host 'PLAYER repair verified'
-        clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $r1 'left' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'healthy replacement component controls'
-        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_ORIGINAL - Removed resistor')&&[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='R1_CATALOG_PART_0 - 1000 Ohm +/-5%')" $deadline ([ref]$failures) 'original and replacement loose resistor identities'
-        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:R1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:R1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'loose resistor geometry'
-        Write-Host 'PLAYER healthy replacement removed'
-        clickButton $socket ([ref]$nextId) 'R1_ORIGINAL - Removed resistor' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
-
-        $healthyLeft = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_CATALOG_PART_0:0' ([ref]$failures)
-        $healthyRight = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_CATALOG_PART_0:1' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $healthyLeft 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $healthyRight 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'healthy forward resistance'
-        $forward = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $healthyRight 'left' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'intermediate reversed-probe measurement'
-        clickPoint $socket ([ref]$nextId) $healthyLeft 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'healthy reverse resistance'
-        $reverse = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
-        if ($forward -ne $reverse -or $forward -notmatch '(?i)1(\.0+)?\s*kOhm') {
-            throw "healthy resistance mismatch: forward=$forward reverse=$reverse"
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'power on before customer retest'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Retest Customer' "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'solver-backed customer retest completion'
+        $terminal = evaluateCdp $socket ([ref]$nextId) "(()=>{const b=document.body.innerText||'',buttons=[...document.querySelectorAll('button')];const power=buttons.find(x=>x.innerText.includes('Board Power:'));const retest=buttons.find(x=>x.innerText.trim()==='Retest Customer');return {completed:b.includes('Repair verified. Indicator operating normally.'),powerDisabled:!!power&&power.disabled,retestDisabled:!!retest&&retest.disabled};})()" ([ref]$failures)
+        if (-not ($terminal.completed -and $terminal.powerDisabled -and $terminal.retestDisabled)) {
+            throw "completed resistor challenge did not enter the physical terminal state: $($terminal | ConvertTo-Json -Compress)"
         }
-        $originalLeft = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_ORIGINAL:0' ([ref]$failures)
-        $originalRight = getCanvasPoint $socket ([ref]$nextId) 'loose:R1_ORIGINAL:1' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $originalLeft 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $originalRight 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>/^100(?:\.0+)?\s*kOhm$/i.test(document.querySelector('.tsj-meter-display').innerText))()" $deadline ([ref]$failures) 'faulted original effective resistance'
-        $originalReading = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
-        if ($originalReading -notmatch '(?i)^100(\.0+)?\s*kOhm$') {
-            throw "faulted original effective resistance was unexpected: $originalReading"
-        }
+        Write-Host 'PLAYER repair verified; physical state is terminal'
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
         cleanupBrowser $browser $socket $profile
         $socket = $null
         $browser = $null
-        Write-Host "PASS normal-player seed=3 forward=$forward reverse=$reverse original=$originalReading"
+        Write-Host "PASS normal-player seed=3 terminal=mutation-free"
         return $true
     } catch {
         Write-Host "FAIL normal-player seed=3 - $($_.Exception.Message)"
@@ -844,8 +816,8 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
         }
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Both indicators operating normally.')" $deadline ([ref]$failures) 'parallel functional repair'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'parallel power on before customer retest'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Retest Customer' "document.body.innerText.includes('Repair verified. Both indicators operating normally.')" $deadline ([ref]$failures) 'parallel customer retest'
         if ($EvidenceDirectory) {
             waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'parallel-repaired.png') ([ref]$failures)
@@ -972,35 +944,18 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
         clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install new diode' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove D1 before installing a replacement.')" $deadline ([ref]$failures) 'installed catalog diode'
-        clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'diode functional repair'
-        Write-Host 'DIODE PLAYER repair verified'
-
-        clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $d1 'left' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'healthy D1 component controls'
-        clickButton $socket ([ref]$nextId) 'Remove component' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('D1_CATALOG_PART_0 - Generic silicon diode')&&document.body.innerText.includes('D1_ORIGINAL - Generic silicon diode')" $deadline ([ref]$failures) 'separate loose diode identities'
-        waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:D1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:D1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'healthy loose diode geometry'
-        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
-        $healthyAnode = getCanvasPoint $socket ([ref]$nextId) 'loose:D1_CATALOG_PART_0:0' ([ref]$failures)
-        $healthyCathode = getCanvasPoint $socket ([ref]$nextId) 'loose:D1_CATALOG_PART_0:1' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $healthyAnode 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $healthyCathode 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- V';})()" $deadline ([ref]$failures) 'healthy diode forward drop'
-        $forward = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $healthyCathode 'left' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!== '$forward'" $deadline ([ref]$failures) 'healthy diode intermediate measurement'
-        clickPoint $socket ([ref]$nextId) $healthyAnode 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'healthy diode reverse OL'
-        clickPoint $socket ([ref]$nextId) $originalAnode 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $originalCathode 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'original remains OL'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'diode power on before customer retest'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Retest Customer' "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'diode customer retest'
+        $terminal = evaluateCdp $socket ([ref]$nextId) "(()=>{const b=document.body.innerText||'',buttons=[...document.querySelectorAll('button')];const power=buttons.find(x=>x.innerText.includes('Board Power:'));const retest=buttons.find(x=>x.innerText.trim()==='Retest Customer');return {completed:b.includes('Repair verified. Indicator operating normally.'),powerDisabled:!!power&&power.disabled,retestDisabled:!!retest&&retest.disabled};})()" ([ref]$failures)
+        if (-not ($terminal.completed -and $terminal.powerDisabled -and $terminal.retestDisabled)) {
+            throw "completed diode challenge did not enter the physical terminal state: $($terminal | ConvertTo-Json -Compress)"
+        }
+        Write-Host 'DIODE PLAYER repair verified; physical state is terminal'
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
         cleanupBrowser $browser $socket $profile
         $socket = $null
         $browser = $null
-        Write-Host "PASS diode-normal-player seed=3 healthy-forward=$forward reverse=OL original=OL"
+        Write-Host "PASS diode-normal-player seed=3 terminal=mutation-free"
         return $true
     } catch {
         Write-Host "FAIL diode-normal-player seed=3 - $($_.Exception.Message)"
@@ -1092,7 +1047,7 @@ function verifyWrongRepairNormalPlayer([string]$url, [int]$debugPort) {
             }
         }
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'power on correct replacement'
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'generic functional completion text'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Retest Customer' "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'generic customer retest completion text'
         if ($EvidenceDirectory) {
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'completed.png') ([ref]$failures)
         }
@@ -1191,7 +1146,7 @@ function verifyStressDamageNormalPlayer([string]$url, [int]$debugPort) {
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new resistor' "document.body.innerText.includes('Value: 1000 Ohm +/-5%')" $deadline ([ref]$failures) 'stress correct replacement installation'
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'stress correct replacement power-on'
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'stress natural solver-backed repair completion'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Retest Customer' "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'stress natural solver-backed customer retest'
         captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $evidence 'correct-restored.png') ([ref]$failures)
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
         cleanupBrowser $browser $socket $profile
@@ -1318,25 +1273,24 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:LED1_CATALOG_PART_0:0']&&!!window.__tsjPcbGeometry.points['loose:LED1_CATALOG_PART_0:1']" $deadline ([ref]$failures) 'healthy loose LED geometry'
         clickButton $socket ([ref]$nextId) 'LED1_CATALOG_PART_0 - Generic red LED' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Install as LED1' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'LED and R1 functional repair'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'LED power on before customer retest'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Retest Customer' "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'LED and R1 customer retest'
+        $terminal = evaluateCdp $socket ([ref]$nextId) "(()=>{const b=document.body.innerText||'',buttons=[...document.querySelectorAll('button')];const power=buttons.find(x=>x.innerText.includes('Board Power:'));const retest=buttons.find(x=>x.innerText.trim()==='Retest Customer');return {completed:b.includes('Repair verified. Indicator operating normally.'),powerDisabled:!!power&&power.disabled,retestDisabled:!!retest&&retest.disabled};})()" ([ref]$failures)
+        if (-not ($terminal.completed -and $terminal.powerDisabled -and $terminal.retestDisabled)) {
+            throw "completed LED challenge did not enter the physical terminal state: $($terminal | ConvertTo-Json -Compress)"
+        }
         waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
         if ($EvidenceDirectory) {
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'repaired-board.png') ([ref]$failures)
         }
         Write-Host 'LED PLAYER repair verified'
 
-        clickButton $socket ([ref]$nextId) 'Board Power: ON' ([ref]$failures)
-        $led = getCanvasPoint $socket ([ref]$nextId) 'component:LED1' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $led 'left' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')" $deadline ([ref]$failures) 'repaired LED component controls'
-        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')&&document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')&&!document.body.innerText.includes('No removed parts')" $deadline ([ref]$failures) 'separate original and replacement LED state'
-        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('LED1_ORIGINAL - Generic red LED')&&document.body.innerText.includes('LED1_CATALOG_PART_0 - Generic red LED')" $deadline ([ref]$failures) 'separate original and replacement LEDs'
+        Write-Host 'LED PLAYER repair verified; physical state is terminal'
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
         cleanupBrowser $browser $socket $profile
         $socket = $null
         $browser = $null
-        Write-Host "PASS led-normal-player seed=3 forward=$forward reverse=OL identities=separate"
+        Write-Host "PASS led-normal-player seed=3 terminal=mutation-free"
         return $true
     } catch {
         Write-Host "FAIL led-normal-player seed=3 - $($_.Exception.Message)"
@@ -1395,111 +1349,20 @@ function verifyRcNormalPlayer([string]$url, [int]$debugPort) {
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:C1_ORIGINAL:0']&&!!window.__tsjPcbGeometry.points['loose:C1_ORIGINAL:1']" $deadline ([ref]$failures) 'loose capacitor geometry and probes'
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '33 uF 16 V' ([ref]$failures)
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new capacitor' "!document.body.innerText.includes('State: C1 slot empty')&&document.body.innerText.includes('C1_ORIGINAL - Electrolytic capacitor')" $deadline ([ref]$failures) 'install RC replacement'
-        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Repair verified. The controller delay is operating normally.')" $deadline ([ref]$failures) 'solver-backed RC repair'
-        # The following sequence is deliberately ordinary player input.  It
-        # proves that the visible C1/R2 path leaves a material residual after
-        # the power-button/mode-cleanup latency, refuses an active meter while
-        # charged, then becomes usable only after the real solver discharge.
-        $c1Positive = getCanvasPoint $socket ([ref]$nextId) 'pad:C1.+' ([ref]$failures)
-        $c1Negative = getCanvasPoint $socket ([ref]$nextId) 'pad:C1.-' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&Math.abs(v)>1;})()" $deadline ([ref]$failures) 'charged RC voltage'
-        $charged = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'charged C1'
-        if ($EvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-charged.png') ([ref]$failures)
-        }
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'power off charged RC board'
-        Start-Sleep -Milliseconds 120
-        waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&Math.abs(v)>1;})()" $deadline ([ref]$failures) 'material residual after ordinary power-off latency'
-        $residual = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'power-off C1 residual'
-        if ($residual -ge ($charged - .05)) {
-            throw "C1 did not visibly begin its real R2 discharge: charged=$charged residual=$residual"
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'power on before RC customer retest'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Power-cycle and Retest Customer' "document.body.innerText.includes('Customer retest passed.')&&document.body.innerText.includes('Repair verified. The controller delay is operating normally.')" $deadline ([ref]$failures) 'solver-backed RC customer retest'
+        $terminal = evaluateCdp $socket ([ref]$nextId) "(()=>{const b=document.body.innerText||'',buttons=[...document.querySelectorAll('button')];const power=buttons.find(x=>x.innerText.includes('Board Power:'));const retest=buttons.find(x=>x.innerText.trim()==='Power-cycle and Retest Customer');return {completed:b.includes('Repair verified. The controller delay is operating normally.'),powerDisabled:!!power&&power.disabled,retestDisabled:!!retest&&retest.disabled};})()" ([ref]$failures)
+        if (-not ($terminal.completed -and $terminal.powerDisabled -and $terminal.retestDisabled)) {
+            throw "completed RC challenge did not enter the physical terminal state: $($terminal | ConvertTo-Json -Compress)"
         }
         if ($EvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-residual.png') ([ref]$failures)
-        }
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='DISCHARGE'" $deadline ([ref]$failures) 'charged OHM refusal'
-        if ($EvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-refused.png') ([ref]$failures)
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-ohm.png') ([ref]$failures)
-        }
-        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'CONT' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='DISCHARGE'" $deadline ([ref]$failures) 'charged continuity refusal'
-        if ($EvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-continuity.png') ([ref]$failures)
-        }
-        clickButton $socket ([ref]$nextId) 'CONT' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='DISCHARGE'" $deadline ([ref]$failures) 'charged diode refusal'
-        if ($EvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-diode.png') ([ref]$failures)
-        }
-        # Exit every blocked mode before readiness polling so none can inject
-        # its source immediately when C1 naturally reaches the safety limit.
-        clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&Math.abs(v)<0.25;})()" $deadline ([ref]$failures) 'natural C1 discharge below the shared safety threshold'
-        $discharged = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'discharged C1'
-        if ($EvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharged.png') ([ref]$failures)
-        }
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='DISCHARGE'&&t!=='SETTLING'&&t!=='POWER OFF'&&t!=='--- Ohm';})()" $deadline ([ref]$failures) 'active meter after natural discharge'
-        $readyReading = [string](evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures))
-        if ($EvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-discharge-ready.png') ([ref]$failures)
-        }
-        clickButton $socket ([ref]$nextId) 'OHM' ([ref]$failures)
-        # A successful active measurement has a real source and can recharge
-        # C1.  Let the same visible R2 path clear it again before proving the
-        # next power-up rise.
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&Math.abs(v)<0.25;})()" $deadline ([ref]$failures) 'post-measurement natural C1 discharge'
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'power on repaired RC board'
-        clickButton $socket ([ref]$nextId) 'DC V' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Positive 'left' ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $c1Negative 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v);})()" $deadline ([ref]$failures) 'early repaired RC voltage'
-        $risingEarly = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'early repaired C1 voltage'
-        $riseThreshold = ($risingEarly + .25).ToString([Globalization.CultureInfo]::InvariantCulture)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const e=document.querySelector('.tsj-meter-display'),v=e&&parseFloat(e.innerText);return Number.isFinite(v)&&v>$riseThreshold;})()" $deadline ([ref]$failures) 'visible repaired RC rise'
-        $risingLate = getMeterVoltage $socket ([ref]$nextId) ([ref]$failures) 'late repaired C1 voltage'
-        if ($risingLate -le ($risingEarly + .25)) {
-            throw "RC output did not visibly rise through normal player timing: early=$risingEarly late=$risingLate"
-        }
-        if ($EvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-repaired.png') ([ref]$failures)
-            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-rising.png') ([ref]$failures)
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'rc-repaired-terminal.png') ([ref]$failures)
         }
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
         cleanupBrowser $browser $socket $profile
         $socket = $null
         $browser = $null
-        Write-Host "PASS rc-normal-player provider-geometry=visible repair=solver-backed charged=$charged residual=$residual discharged=$discharged ready=$readyReading rise=$risingEarly->$risingLate"
+        Write-Host "PASS rc-normal-player provider-geometry=visible repair=customer-retest-authoritative terminal=mutation-free"
         return $true
     } catch {
         Write-Host "FAIL rc-normal-player - $($_.Exception.Message)"
@@ -1511,6 +1374,66 @@ function verifyRcNormalPlayer([string]$url, [int]$debugPort) {
                 Write-Host ("RC PLAYER UI SNAPSHOT: " + $snapshot.Substring($start).Replace("`n", " | ") + " meter=" + $meter)
             } catch { }
         }
+        return $false
+    } finally {
+        cleanupBrowser $browser $socket $profile
+    }
+}
+
+function verifyTask39NormalPlayer([string]$url, [int]$debugPort,
+        [string[]]$commandButtons, [string]$retestButton) {
+    $profile = Join-Path $env:TEMP ("tsj-task39-player-" + [Guid]::NewGuid().ToString('N'))
+    $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+        '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
+    $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $socket = $null
+    try {
+        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        do {
+            Start-Sleep -Milliseconds 200
+            try {
+                $targets = Invoke-RestMethod "http://127.0.0.1:$debugPort/json/list" -TimeoutSec 2
+                $target = $targets | Where-Object { $_.type -eq 'page' } | Select-Object -First 1
+            } catch { $target = $null }
+        } while ($null -eq $target -and [DateTime]::UtcNow -lt $deadline)
+        if ($null -eq $target) { throw 'browser target did not become available' }
+        $socket = New-Object Net.WebSockets.ClientWebSocket
+        $socket.ConnectAsync([Uri]$target.webSocketDebuggerUrl,
+            [Threading.CancellationToken]::None).GetAwaiter().GetResult()
+        $nextId = 1
+        $failures = @()
+        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.navigate' @{ url = $url } ([ref]$failures))
+        waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Service Ticket')&&document.body.innerText.includes('Customer retest:')" $deadline ([ref]$failures) 'Task 39 visible customer operation profile'
+        $initial = evaluateCdp $socket ([ref]$nextId) "(()=>{const b=document.body.innerText||'',l=b.toLowerCase();return {hidden:/fault|answer|random seed|solver node|generatedfaulttype/.test(l),canvas:!!document.querySelector('canvas'),profile:b.includes('Customer retest:'),retest:[...document.querySelectorAll('button')].some(x=>x.innerText.trim()==='$retestButton')};})()" ([ref]$failures)
+        if ($initial.hidden -or -not $initial.canvas -or -not $initial.profile -or -not $initial.retest) {
+            throw "Task 39 normal-player privacy/control boundary failed: $($initial | ConvertTo-Json -Compress)"
+        }
+        if ($EvidenceDirectory) {
+            [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'task39-player-initial.png') ([ref]$failures)
+        }
+        foreach ($command in $commandButtons) {
+            clickButton $socket ([ref]$nextId) $command ([ref]$failures)
+            waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+        }
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'task39-player-after-inputs.png') ([ref]$failures)
+        }
+        clickButton $socket ([ref]$nextId) $retestButton ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Customer retest did not pass.')" $deadline ([ref]$failures) 'Task 39 visible customer retest result'
+        if ($EvidenceDirectory) {
+            captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'task39-player-retest-result.png') ([ref]$failures)
+        }
+        if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        cleanupBrowser $browser $socket $profile
+        $socket = $null
+        $browser = $null
+        Write-Host "PASS task39-normal-player retest=$retestButton"
+        return $true
+    } catch {
+        Write-Host "FAIL task39-normal-player - $($_.Exception.Message)"
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
@@ -1616,6 +1539,15 @@ if ($NmosNatural) {
         }
         $case++
     }
+    exit 0
+}
+if ($Task39) {
+    if (-not (verifyRoute 'task39 NPN healthy operation boundary' "$BaseUrl/circuitjs.html?tsjFixture=npn&seed=0&tsjVerifyTask39=true&running=true" 'PASS:task39' 9701)) { exit 1 }
+    if (-not (verifyRoute 'task39 NMOS healthy operation boundary' "$BaseUrl/circuitjs.html?tsjFixture=nmos&seed=0&tsjVerifyTask39=true&running=true" 'PASS:task39' 9702)) { exit 1 }
+    if (-not (verifyRoute 'task39 RC customer retest boundary' "$BaseUrl/circuitjs.html?tsjChallenge=rc&seed=0&tsjVerifyTask39=true&running=true" 'PASS:task39' 9703)) { exit 1 }
+    if (-not (verifyTask39NormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=0&running=true" 9704 @('Set control HIGH', 'Set control LOW') 'Retest Customer')) { exit 1 }
+    if (-not (verifyTask39NormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=nmos&seed=0&running=true" 9705 @('Set control HIGH', 'Set control LOW') 'Retest Customer')) { exit 1 }
+    if (-not (verifyTask39NormalPlayer "$BaseUrl/circuitjs.html?tsjChallenge=rc&seed=0&running=true" 9706 @() 'Power-cycle and Retest Customer')) { exit 1 }
     exit 0
 }
 if ($WrongRepair) {

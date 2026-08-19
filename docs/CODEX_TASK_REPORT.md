@@ -1,3 +1,63 @@
+# Task 39 — Player-Operable Functional Inputs and Customer Retest Contract
+
+Date: 2026-08-19
+
+Status: `FINAL PASS` for implementation, validation, and independent review;
+ready for the primary-architect commit/push gate.
+
+## Scope and behavior
+
+Task 39 adds a family-neutral `GeneratedBoardOperationCatalog` with stable
+semantic IDs (`CONTROL_INPUT_HIGH`, `CONTROL_INPUT_LOW`, and
+`CUSTOMER_RETEST`). NPN and NMOS HIGH/LOW operations dispatch their existing
+external CircuitJS command switches; customer profiles validate the resulting
+J2.1/gate and load behavior from the solved circuit and restore command, power,
+and physical state with nested `finally` cleanup. All six current families own
+profiles, and RC uses a real board-power cycle plus natural stored-energy
+discharge.
+
+The workbench exposes the operation/retest contract to a normal player. Live
+repair status, retest result, Finish Job, and latched `COMPLETED` are distinct.
+After completion, board power, instruments, PCB selection, and physical
+mutation are disabled; NPN/NMOS semantic operation controls remain live and
+solver-backed. Legacy replacement and stress verifiers now finish all physical
+checks before the public retest.
+
+## Validation evidence
+
+- JDK8 GWT OBF compile/link passed with the bundled JDK 8u502.
+- PowerShell parser check: `PS_PARSE_OK`; `git diff --check` passed.
+- `-Task39 -TimeoutSeconds 120`: six routes passed (NPN, NMOS, RC boundary
+  plus three visible normal-player routes).
+- Seeded matrices passed: NPN 16/16, NMOS 12/12, RC 4/4; natural NPN 4/4,
+  natural NMOS 4/4, stored-energy 3/3.
+- Affected legacy normal-player flows passed: resistor, diode, parallel, LED,
+  and RC terminal-state checks. Replacement seed 3, stress/damage, LED parts,
+  diode, parallel, and wrong-repair routes also passed; the two routes that
+  initially collided under concurrent Edge processes passed when rerun serially.
+- Visible built-in Browser interaction on the rebuilt preview exercised NPN
+  `Set control HIGH`, `Set control LOW`, and `Retest Customer`, producing the
+  expected solver-backed unrepaired retest message. A visible RC
+  `Power-cycle and Retest Customer` action likewise produced the expected
+  unrepaired message. Screenshots were captured during both flows.
+- Visible Quick Play NPN seed 3 reached the completed report
+  `unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated`;
+  physical controls were disabled while HIGH/LOW semantic controls remained
+  enabled.
+
+## Review and limitations
+
+The first independent review found post-completion physical checks in the
+replacement and stress verifiers; those checks were moved before completion,
+and both routes were rerun successfully. The second independent review
+returned `FINAL PASS`. The standalone full `-QuickPlay` harness still
+reports an Edge/CDP WebSocket cancellation when successful Finish Job reloads
+the document; the direct visible Quick Play route verifies the product state
+before that expected target replacement. This is recorded as harness evidence,
+not a product failure.
+
+---
+
 # Roadmap Completion-Workflow Consistency Correction Report
 
 Date: 2026-08-18

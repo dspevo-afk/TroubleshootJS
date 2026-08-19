@@ -52,11 +52,13 @@ class ReplacementDeveloperVerifier {
         settle(sim);
         require(getLedCurrent(instance) >= .005 && getLedCurrent(instance) <= .015 &&
             Math.abs(getLedCurrent(instance) - getInstalledResistorCurrent(instance)) <= .0001 &&
-            challenge.isCompleted() &&
             challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
                 sim.getBoardModificationController(), BoardPowerState.POWERED, false) &&
             instance.getOperationalStates().isIlluminated("LED1"),
-            "Correct replacement did not complete solved repair");
+            "Correct replacement did not restore solver-backed solved repair");
+        // Finish all physical and instrument checks while the lifecycle is
+        // still READY.  COMPLETED is deliberately mutation-free, so these
+        // checks cannot follow the public customer retest.
         verifyPassiveDcVoltageCases(sim, instance, correctResistance);
         verifyHealthyReplacementLiftedLeadVoltage(sim, instance, slots, correctPartId,
             correctResistance);
@@ -68,6 +70,13 @@ class ReplacementDeveloperVerifier {
         String looseHealthyPartId = verifyUnlimitedAcquisition(sim, instance, slots);
         verifyUnpoweredDcVoltageCases(sim, instance, original, looseHealthyPartId);
         verifyPartTopology(sim, instance);
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim);
+        require(challenge.performCustomerRetest().isPassed(),
+            "Correct replacement did not pass the public customer retest");
+        sim.verifyGeneratedBoard();
+        require(challenge.isCompleted(),
+            "Correct replacement did not complete after the customer retest");
         sim.setCircuitTitle("Replacement verification passed");
     }
 
@@ -157,13 +166,18 @@ class ReplacementDeveloperVerifier {
         double correctLedCurrent = getLedCurrent(instance);
         require(correctLedCurrent > .005 && correctLedCurrent < .015 &&
             Math.abs(correctLedCurrent - getInstalledResistorCurrent(instance)) <= .0001 &&
-            instance.getOperationalStates().isIlluminated("LED1") && challenge.isCompleted() &&
+            instance.getOperationalStates().isIlluminated("LED1") &&
             challenge.getDefinition().getBehaviorContract().getRepairStatus(instance,
                 sim.getBoardModificationController(), BoardPowerState.POWERED, false) ==
                 GeneratedRepairStatus.CORRECTLY_RESTORED &&
             challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
                 sim.getBoardModificationController(), BoardPowerState.POWERED, false),
-            "1 kOhm replacement did not restore solved LED operation");
+            "1 kOhm replacement did not restore solver-backed solved LED operation");
+        require(challenge.performCustomerRetest().isPassed(),
+            "1 kOhm replacement did not pass the public customer retest");
+        sim.verifyGeneratedBoard();
+        require(challenge.isCompleted(),
+            "1 kOhm replacement did not complete after the customer retest");
         require(original.getLocation() == ResistorPartLocation.LOOSE && original.isFaulted(),
             "Repair changed the original part's fault binding");
         sim.setCircuitTitle("Wrong repair verification passed");
@@ -279,6 +293,11 @@ class ReplacementDeveloperVerifier {
         require(challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
             sim.getBoardModificationController(), BoardPowerState.POWERED, false) == expectedCompletion,
             "Functional behavior contract disagreed for " + part.getId());
+        if (expectedCompletion) {
+            require(challenge.performCustomerRetest().isPassed(),
+                "Customer retest did not pass for " + part.getId());
+            sim.verifyGeneratedBoard();
+        }
         require(challenge.isCompleted() == expectedCompletion,
             "Unexpected completion state for " + part.getId());
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);

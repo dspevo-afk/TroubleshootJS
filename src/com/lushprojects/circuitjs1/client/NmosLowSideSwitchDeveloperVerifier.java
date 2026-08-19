@@ -75,17 +75,17 @@ final class NmosLowSideSwitchDeveloperVerifier {
                 throw new IllegalStateException("NMOS control canary could not clear its fault");
             sim.setBoardPowerState(BoardPowerState.POWERED);
             settle(sim);
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             requireControlVoltageAgreement(instance, 4.5, 5.5,
                 "NMOS commanded ON control voltage is not a shared +5 V board node");
-            state.setCommandedOn(sim, false);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             requireControlVoltageAgreement(instance, -.1, .1,
                 "NMOS commanded OFF control voltage is not pulled low");
             require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
                 "NMOS commanded OFF still drives the load");
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
             settle(sim);
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             requireControlVoltageAgreement(instance, -.1, .1,
                 "NMOS board power OFF did not isolate the control input");
             require(NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001,
@@ -94,7 +94,8 @@ final class NmosLowSideSwitchDeveloperVerifier {
             try {
                 sim.setBoardPowerState(priorPower);
                 settle(sim);
-                state.setCommandedOn(sim, priorCommand);
+                instance.invokeOperation(priorCommand ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
                 if (priorFault && !challenge.getFaultController().isApplied())
                     challenge.getFaultController().apply();
             } finally {
@@ -175,13 +176,13 @@ final class NmosLowSideSwitchDeveloperVerifier {
         GeneratedFaultType type = challenge.getDefinition().getFault().getType();
         NmosLowSideSwitchFamilyState state = state(instance);
         if (type == GeneratedFaultType.NMOS_DS_SHORT) {
-            state.setCommandedOn(sim, false);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             require(NmosLowSideSwitchGeneratedBoardValidator.gateSourceVoltage(instance) < .1 &&
                 NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005 &&
                 NmosLowSideSwitchGeneratedBoardValidator.drainSourceVoltage(instance) < 1,
                 "NMOS D-S short lacks its distinct low-control live symptom");
         } else {
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             require(NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001,
                 "NMOS open/gate fault did not suppress the load");
             if (type == GeneratedFaultType.NMOS_DS_OPEN)
@@ -233,10 +234,10 @@ final class NmosLowSideSwitchDeveloperVerifier {
             sim.needAnalyze();
             sim.analyzeCircuit();
             sim.runCircuit(true);
-            state.setCommandedOn(sim, true);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
             require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
                 "Healthy NMOS ON proof failed live CircuitJS conditions");
-            state.setCommandedOn(sim, false);
+            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
                 "Healthy NMOS OFF proof failed live CircuitJS conditions");
             require(NmosLowSideSwitchGeneratedBoardValidator.gateCurrent(instance) < 1e-9,
@@ -247,7 +248,8 @@ final class NmosLowSideSwitchDeveloperVerifier {
             try {
                 if (!faultRestored && !challenge.getFaultController().isApplied())
                     challenge.getFaultController().apply();
-                state.setCommandedOn(sim, priorCommand);
+                instance.invokeOperation(priorCommand ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
             } finally {
                 challenge.endDeveloperVerificationScope();
             }
@@ -311,8 +313,9 @@ final class NmosLowSideSwitchDeveloperVerifier {
         BoardPowerState power = sim.getBoardPowerController().getState();
         PhysicalNmosPart installed = (PhysicalNmosPart) instance.getPhysicalBoardRuntime()
             .getInstalledPart("Q1");
-        require(challenge.finishJob() && challenge.isCompleted(),
-            "Correct NMOS replacement did not finish generic challenge");
+        require(challenge.performCustomerRetest().isPassed() &&
+            challenge.isCompleted(),
+            "Correct NMOS replacement did not pass the public customer retest and latch completion");
         require(sim.elmList.equals(topology) && export.equals(sim.dumpCircuit()) &&
                 undo == sim.undoStack.size() && redo == sim.redoStack.size() &&
                 unsaved == sim.unsavedChanges && overlay == sim.activeMeasurementOverlay &&

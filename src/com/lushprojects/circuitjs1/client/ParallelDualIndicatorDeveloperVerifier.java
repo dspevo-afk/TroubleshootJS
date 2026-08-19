@@ -227,6 +227,8 @@ class ParallelDualIndicatorDeveloperVerifier {
         require(challenge.getDefinition().getBehaviorContract().isFunctionallyRepaired(instance,
             sim.getBoardModificationController(), BoardPowerState.POWERED, false),
             "Parallel correct replacement did not pass functional repair validation");
+        require(challenge.performCustomerRetest().isPassed(),
+            "Parallel correct replacement did not pass the public customer retest");
         sim.verifyGeneratedBoard();
         require(challenge.isCompleted(),
             "Parallel correct replacement did not transition the controller to COMPLETED");

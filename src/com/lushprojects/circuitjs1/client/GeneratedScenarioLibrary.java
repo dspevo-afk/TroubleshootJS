@@ -208,14 +208,16 @@ final class GeneratedScenarioLibrary {
                 sim.beginObservationalValidation();
             try {
                 if (stuckActive) {
-                    state.setCommandedOn(sim, false);
+                    instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
                     return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005;
                 }
-                state.setCommandedOn(sim, true);
+                instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
                 return NpnLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001;
             } finally {
                 try {
-                    state.setCommandedOn(sim, priorCommandedOn);
+                    instance.invokeOperation(priorCommandedOn ?
+                        GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                        GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
                 } finally {
                     if (sim != null)
                         sim.endObservationalValidation();
@@ -233,8 +235,8 @@ final class GeneratedScenarioLibrary {
                         observedBehavior != GeneratedObservedBehavior.NPN_LOAD_STUCK_ACTIVE))
                 throw new IllegalStateException("NPN scenario presentation has no family state");
             boolean commandedOn = observedBehavior == GeneratedObservedBehavior.NPN_LOAD_NOT_SWITCHING;
-            ((NpnLowSideSwitchFamilyState) instance.getFamilyState()).setCommandedOn(sim,
-                commandedOn);
+            instance.invokeOperation(commandedOn ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
         }
     }
 
@@ -256,13 +258,16 @@ final class GeneratedScenarioLibrary {
             CirSim sim = CircuitElm.sim;
             if (sim != null) sim.beginObservationalValidation();
             try {
-                state.setCommandedOn(sim, !stuckActive);
+                instance.invokeOperation(stuckActive ? GeneratedBoardOperationIds.CONTROL_INPUT_LOW :
+                    GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
                 return stuckActive ?
                     NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) > .005 :
                     NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001;
             } finally {
                 try {
-                    state.setCommandedOn(sim, priorCommandedOn);
+                    instance.invokeOperation(priorCommandedOn ?
+                        GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                        GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
                 } finally {
                     if (sim != null) sim.endObservationalValidation();
                 }
@@ -279,8 +284,8 @@ final class GeneratedScenarioLibrary {
                         observedBehavior != GeneratedObservedBehavior.NMOS_LOAD_STUCK_ACTIVE))
                 throw new IllegalStateException("NMOS scenario presentation has no family state");
             boolean commandedOn = observedBehavior == GeneratedObservedBehavior.NMOS_LOAD_NOT_SWITCHING;
-            ((NmosLowSideSwitchFamilyState) instance.getFamilyState()).setCommandedOn(sim,
-                commandedOn);
+            instance.invokeOperation(commandedOn ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+                GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
         }
     }
 }
