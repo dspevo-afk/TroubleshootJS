@@ -24,6 +24,7 @@ final class QuickPlayDeveloperVerifier {
             "Quick Play selection was not passed to the deterministic generator");
         verifyDeterministicFamilySelection();
         verifySelectionEnvelopes();
+        verifyNaturalLedSeedEnvelope();
         verifyNaturalNpnSeedEnvelope();
         verifyNaturalNmosSeedEnvelope();
         require(instance.getFaultBinding().getFault().getType() != GeneratedFaultType.DIODE_SHORT,
@@ -137,11 +138,13 @@ final class QuickPlayDeveloperVerifier {
         long[] injectedValues = { Long.MIN_VALUE, -7, -1, 0, 1, 2, 3, 4, 17,
             Long.MAX_VALUE };
         long[] legacySeeds = { 0, 2, 3 };
+        long[] ledSeeds = { 0, 2, 3, 4 };
         long[] npnSeeds = { 0, 1, 2 };
         for (int familyIndex = 0; familyIndex < families.size(); familyIndex++) {
             String familyId = families.elementAt(familyIndex);
             long[] nmosSeeds = { 0, 1, 2 };
-            long[] expectedSeeds = QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ?
+            long[] expectedSeeds = QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId) ?
+                ledSeeds : QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ?
                 npnSeeds : QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId) ?
                 nmosSeeds : legacySeeds;
             for (long injectedValue : injectedValues) {
@@ -191,6 +194,30 @@ final class QuickPlayDeveloperVerifier {
             require(loadInput != null &&
                 Math.abs(loadInput.getNominalVoltage() - loadVoltages[index]) < .0001,
                 "Natural NPN Quick Play load voltage changed at seed " + seeds[index]);
+        }
+    }
+
+    /**
+     * The LED route keeps its three legacy selections and adds one normal
+     * seed for the second physical fault owner.
+     */
+    private static void verifyNaturalLedSeedEnvelope() {
+        long[] seeds = { 0, 2, 3, 4 };
+        GeneratedFaultType[] faults = {
+            GeneratedFaultType.RESISTOR_OPEN,
+            GeneratedFaultType.RESISTOR_OPEN,
+            GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
+            GeneratedFaultType.LED_OPEN
+        };
+        for (int index = 0; index < seeds.length; index++) {
+            QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                new long[] { 0, seeds[index] }));
+            QuickPlaySelection selection = selector.select();
+            GeneratedBoardInstance generated = selector.generate(selection);
+            require(QuickPlayFamilyRegistry.LED_INDICATOR.equals(selection.getFamilyId()) &&
+                    selection.getSeed() == seeds[index] && generated.getSeed() == seeds[index] &&
+                    generated.getFaultBinding().getFault().getType() == faults[index],
+                "Natural LED Quick Play seed boundary changed at seed " + seeds[index]);
         }
     }
 

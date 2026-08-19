@@ -176,4 +176,11 @@ final class GeneratedDiagnosticSolvabilityAdmission {
                 }
         return owners.size();
     }
+
+    static GeneratedDiagnosticOwnerDiversity getOwnerDiversity(
+            Vector<GeneratedFaultCandidate> candidates) {
+        return getPhysicalOwnerCount(candidates) > 1 ?
+            GeneratedDiagnosticOwnerDiversity.MULTI_OWNER_DIAGNOSTIC :
+            GeneratedDiagnosticOwnerDiversity.GUIDED_EASY_SINGLE_OWNER;
+    }
 }

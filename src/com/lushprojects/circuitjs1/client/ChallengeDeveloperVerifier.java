@@ -53,6 +53,10 @@ class ChallengeDeveloperVerifier {
     }
 
     private static void verifyLedPolarity(CirSim sim, GeneratedBoardInstance instance) {
+        if (instance.getFaultBinding().getFault().getType() == GeneratedFaultType.LED_OPEN) {
+            verifyLedOpenPolarity(sim, instance);
+            return;
+        }
         CircuitPostProbeTarget anode = getProbe(sim, instance, "LED1.A");
         CircuitPostProbeTarget cathode = getProbe(sim, instance, "LED1.K");
         CircuitPostProbeTarget vin = getProbe(sim, instance, "J1.1");
@@ -99,6 +103,28 @@ class ChallengeDeveloperVerifier {
         sim.instrumentController.setContinuityProbesForDeveloperVerification(vin, r11);
         require(sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
             "Same-net continuity did not activate");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyLedOpenPolarity(CirSim sim, GeneratedBoardInstance instance) {
+        CircuitPostProbeTarget anode = getProbe(sim, instance, "LED1.A");
+        CircuitPostProbeTarget cathode = getProbe(sim, instance, "LED1.K");
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(anode, cathode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "LED_OPEN forward resistance did not remain OL");
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(cathode, anode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "LED_OPEN reverse resistance did not remain OL");
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(anode, cathode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                !sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
+            "LED_OPEN forward continuity was not open");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(anode, cathode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "LED_OPEN forward diode test was not open");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(cathode, anode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "LED_OPEN reverse diode test was not open");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
     }
 
@@ -204,6 +230,10 @@ class ChallengeDeveloperVerifier {
 
     private static void verifyPhysicalPersistence(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, GeneratedFaultController faults) {
+        if (instance.getFaultBinding().getFault().getType() == GeneratedFaultType.LED_OPEN) {
+            verifyFailedOriginalLedPersistence(sim, instance, modifications, faults);
+            return;
+        }
         if (instance.getFaultBinding().getFault().getType() == GeneratedFaultType.RESISTOR_OPEN)
             verifyFailedOriginalLiftedLeadVoltage(sim, instance, modifications, faults);
         else
@@ -261,6 +291,38 @@ class ChallengeDeveloperVerifier {
             modifications, BoardPowerState.POWERED);
         require(faults.isApplied(), "Reconnecting incorrect-value R1 cleared the fault");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+    }
+
+    private static void verifyFailedOriginalLedPersistence(CirSim sim,
+            GeneratedBoardInstance instance, BoardModificationController modifications,
+            GeneratedFaultController faults) {
+        GeneratedComponentConnectionBinding lead = instance.getConnectionBindings()
+            .get("LED1", "LED1.A");
+        require(modifications.liftLead("LED1", "LED1.A") && faults.isApplied(),
+            "LED_OPEN lead lift changed the internal fault");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        require(Math.abs(((LEDElm) instance.getComponentBindings().getSingleElement("LED1"))
+                .getCurrent()) < .000001 &&
+                !instance.getOperationalStates().isIlluminated("LED1"),
+            "LED_OPEN lifted lead unexpectedly restored the LED");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        require(modifications.reconnectLead("LED1", "LED1.A") && faults.isApplied(),
+            "LED_OPEN lead did not reconnect with the fault applied");
+        modifications.removeComponent("LED1");
+        require(modifications.getComponentState("LED1") == ComponentPhysicalState.REMOVED &&
+                faults.isApplied(), "LED_OPEN removal changed the internal fault");
+        CircuitPostProbeTarget anode = getProbe(sim, lead.getComponentEndpoint());
+        CircuitPostProbeTarget cathode = getProbe(sim,
+            instance.getConnectionBindings().get("LED1", "LED1.K").getComponentEndpoint());
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(anode, cathode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            "Removed LED_OPEN original did not measure open in the tray");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        modifications.restoreComponent("LED1");
+        require(modifications.getComponentState("LED1") == ComponentPhysicalState.INSTALLED &&
+                faults.isApplied(), "LED_OPEN restoration cleared the internal fault");
     }
 
     private static void verifyFailedOriginalLiftedLeadVoltage(CirSim sim,

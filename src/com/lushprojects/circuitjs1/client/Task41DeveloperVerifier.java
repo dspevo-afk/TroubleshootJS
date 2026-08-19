@@ -22,7 +22,9 @@ final class Task41DeveloperVerifier {
             require(sim.getAttachedPcbWorkbenchCountForDeveloperVerification() == 0,
                 "Task 41 proof attached a player workbench before candidate evaluation");
             Vector<Route> routes = normalRoutes();
-            require(routes.size() == 13, "Task 41 normal route count changed: " + routes.size());
+            require(routes.size() == admittedNormalCorpusCount(),
+                "Task 41 route/candidate corpus mismatch: routes=" + routes.size());
+            verifyOwnerDiversityClassification();
             Vector<GeneratedDiagnosticSolvabilityEvidence> evidence =
                 new Vector<GeneratedDiagnosticSolvabilityEvidence>();
             int declaredDepthMinimum = Integer.MAX_VALUE;
@@ -311,8 +313,11 @@ final class Task41DeveloperVerifier {
     }
 
     private static GeneratedFaultType[] candidateTypes(String familyId) {
-        if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId) ||
-                QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR.equals(familyId))
+        if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId))
+            return new GeneratedFaultType[] { GeneratedFaultType.RESISTOR_OPEN,
+                GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
+                GeneratedFaultType.LED_OPEN };
+        if (QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR.equals(familyId))
             return new GeneratedFaultType[] { GeneratedFaultType.RESISTOR_OPEN,
                 GeneratedFaultType.RESISTOR_INCORRECT_VALUE };
         if (QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR.equals(familyId))
@@ -409,6 +414,15 @@ final class Task41DeveloperVerifier {
                         "Task 41 distinct candidates share an equivalent-repair class: " +
                             familyId + "/" + seed);
             }
+        if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId)) {
+            CandidateEvaluation ledOpen = findEvaluation(evaluations, GeneratedFaultType.LED_OPEN);
+            CandidateEvaluation r1Open = findEvaluation(evaluations, GeneratedFaultType.RESISTOR_OPEN);
+            CandidateEvaluation r1Incorrect = findEvaluation(evaluations,
+                GeneratedFaultType.RESISTOR_INCORRECT_VALUE);
+            require(!sameSignature(ledOpen.signature, r1Open.signature) &&
+                    !sameSignature(ledOpen.signature, r1Incorrect.signature),
+                "Task 41 LED_OPEN solver evidence collapsed with an R1-owned candidate");
+        }
     }
 
     private static int findGroup(int[] groups, int index) {
@@ -656,6 +670,7 @@ final class Task41DeveloperVerifier {
     private static String correctCatalogId(GeneratedBoardInstance instance, String componentId) {
         if ("C1".equals(componentId)) return CapacitorReplacementCatalog.CORRECT;
         if ("D1".equals(componentId)) return DiodeReplacementCatalog.CORRECT;
+        if ("LED1".equals(componentId)) return LedReplacementCatalog.CORRECT;
         if ("Q1".equals(componentId))
             return QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) ?
                 NmosReplacementCatalog.CORRECT : NpnReplacementCatalog.CORRECT;
@@ -987,12 +1002,48 @@ final class Task41DeveloperVerifier {
         return plans.firstElement();
     }
 
+    private static int admittedNormalCorpusCount() {
+        int count = 0;
+        Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
+        for (String familyId : families) {
+            GeneratedBoardInstance representative =
+                QuickPlayFamilyRegistry.generate(familyId, 0);
+            count += GeneratedDiagnosticSolvabilityAdmission.getAdmittedCandidateCount(
+                representative.getFaultCandidates());
+        }
+        return count;
+    }
+
+    private static void verifyOwnerDiversityClassification() {
+        for (String familyId : QuickPlayFamilyRegistry.getNormalPlayerFamilyIds()) {
+            GeneratedBoardInstance representative =
+                QuickPlayFamilyRegistry.generate(familyId, 0);
+            GeneratedDiagnosticOwnerDiversity actual = representative
+                .getDiagnosticSolvabilityContract().getOwnerDiversity();
+            GeneratedDiagnosticOwnerDiversity derived = GeneratedDiagnosticSolvabilityAdmission
+                .getOwnerDiversity(representative.getFaultCandidates());
+            require(actual == derived,
+                "Task 41 owner-diversity contract is not derived for " + familyId);
+            if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId) ||
+                    QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId))
+                require(actual == GeneratedDiagnosticOwnerDiversity.MULTI_OWNER_DIAGNOSTIC,
+                    "Task 41 expected multi-owner family was classified as single-owner: " +
+                        familyId);
+            else
+                require(actual == GeneratedDiagnosticOwnerDiversity.GUIDED_EASY_SINGLE_OWNER,
+                    "Task 41 expected single-owner family was classified as multi-owner: " +
+                        familyId);
+        }
+    }
+
     private static Vector<Route> normalRoutes() {
         Vector<Route> routes = new Vector<Route>();
         routes.add(new Route(QuickPlayFamilyRegistry.LED_INDICATOR, 0,
             GeneratedFaultType.RESISTOR_OPEN));
         routes.add(new Route(QuickPlayFamilyRegistry.LED_INDICATOR, 0,
             GeneratedFaultType.RESISTOR_INCORRECT_VALUE));
+        routes.add(new Route(QuickPlayFamilyRegistry.LED_INDICATOR, 0,
+            GeneratedFaultType.LED_OPEN));
         routes.add(new Route(QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR, 0,
             GeneratedFaultType.DIODE_OPEN));
         routes.add(new Route(QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR, 0,

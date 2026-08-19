@@ -1,76 +1,95 @@
-# Task 40/41 — Bounded Serviceability and Diagnostic Contract-Hardening Correction
+# Task 42 — Existing-Family Diagnostic Diversity Proof
 
 Date: 2026-08-19
 
-Status: `FINAL PASS`. The accepted Task 41 implementation was retained; the
-independent read-only review returned `FINAL PASS` after the live-equivalence
-fixture correction. Task 42 was not started.
+Status: `FINAL PASS`. Task 42 only was implemented and validated; Task 43 was
+not started.
 
 ## Scope and behavior
 
-This correction hardens the Task 40 → Task 41 contract without changing the
-accepted solver-backed observation machinery, candidate evaluation,
-transactional snapshot/restore, or live pre-READY gate. Fault-clearing repair
-actions are now distinct from workflow/manipulation actions. Current catalog
-replacement is the fault-clearing primitive; reconnecting a lifted lead and
-reinstalling the original fault-owning physical part are explicitly not cures.
-Task 40 regression proof covers CAPACITOR_OPEN and NMOS_GATE_OPEN reconnects,
-original-owner reinstall, correct replacement, CORRECTLY_RESTORED, and the real
-customer-retest boundary.
+Task 42 extends the existing LED indicator family with a real solver-backed
+`LED_OPEN` fault. The generated graph inserts a private open switch owned by
+the physical `LED1`, while the board still exposes authentic LED terminals
+through that switch. The fault therefore persists through removal and
+reinstallation of the original physical part. Only a distinct correct LED
+catalog installation clears the fault. The existing R1 open and R1 incorrect
+routes remain intact.
 
-Task 40 and Task 41 use the shared action vocabulary with a clear
-known/reserved/currently-executable boundary. RESTORE and connector-only
-observation remain reserved/deferred and cannot enter executable admission.
-The diagnostic plan keeps declared capabilities separate from a live execution
-trace. Meter modes, input/power transitions, isolation actions, temporal
-samples, repair operations, and measured depth are reported as executed only
-when the verifier actually performs them. The depth metric is derived from
-trace events rather than copied from the catalog's 4/5/6 plan constants.
+The LED family now admits three normal candidates: R1 open, R1 incorrect, and
+LED open. The full normal corpus is 14 routes: LED 3, diode 1, parallel 2, RC
+2, NPN 3, and NMOS 3. Task 40 serviceability proves LED-open removal,
+catalog-install repair, and customer retest, with negative proofs for R1
+replacement/removal/reinstall and original bad-LED reinstall. Task 41
+solver-backed signatures distinguish LED open from both R1 faults and retain
+the wrong-owner repair negatives in the opposite direction.
 
-Candidate equivalence requires both solver-observation equivalence within the
-sample tolerances and equivalent physical repair owner/path/action semantics.
-The negative verifier fixture rejects two identical observation signatures with
-different physical repair owners.
+Owner diversity is derived from admitted physical repair-owner IDs rather than
+from a hand-maintained UI or difficulty table:
+
+| Family | Admitted routes | Distinct owners | Classification |
+| --- | ---: | ---: | --- |
+| LED | 3 | 2 (`LED1`, `R1`) | `MULTI_OWNER_DIAGNOSTIC` |
+| diode | 1 | 1 (`D1`) | `GUIDED_EASY_SINGLE_OWNER` |
+| parallel | 2 | 1 (`R1`) | `GUIDED_EASY_SINGLE_OWNER` |
+| RC | 2 | 1 (`C1`) | `GUIDED_EASY_SINGLE_OWNER` |
+| NPN | 3 | 2 (`Q1`, `RB`) | `MULTI_OWNER_DIAGNOSTIC` |
+| NMOS | 3 | 1 (`Q1`) | `GUIDED_EASY_SINGLE_OWNER` |
+
+The LED Quick Play seed envelope is `{0,2,3,4}` so the new fault is
+reachable without changing the shared legacy family envelope `{0,2,3}`.
 
 ## Validation evidence
 
-- JDK8 OBF compile/link passed with the bundled JDK 8u502; PowerShell parser
-  check returned `PS_PARSE_OK`; `git diff --check` passed.
-- Visible in-app Browser Task 41 reported `PASS:task41` for all 13 normal
-  routes (LED 2, diode 1, parallel 2, RC 2, NPN 3, NMOS 3), with 121 solver
-  samples. The explicit metrics were `declaredDepth=4..6`,
-  `measuredDepth=4..9`, `declaredMeterModes=40`,
-  `executedMeterModes=38`, `declaredTransitions=51`,
-  `executedTransitions=29`, `declaredIsolation=15`,
-  `executedIsolation=0`, `declaredTemporal=25`, and
-  `executedTemporal=8`. The declared-versus-executed marker repeats those
-  distinctions, and the output also reported
-  `REPAIR_EQUIVALENCE_REJECTED_DIFFERENT_OWNER`, reserved RESTORE rejection,
-  and connector observation rejection.
-- Visible in-app Browser Task 40 reported `PASS:task40`; Task 39 NPN, NMOS,
-  and RC routes reported `PASS:task39`.
-- Visible legacy verifier routes passed for LED resistance/meter/challenge/
-  replacement, diode, parallel, and RC open/short behavior. NPN
-  `TRANSISTOR_CE_OPEN`, `TRANSISTOR_CE_SHORT`, and `BASE_RESISTOR_OPEN` plus
-  NMOS `NMOS_DS_OPEN`, `NMOS_DS_SHORT`, and `NMOS_GATE_OPEN` each passed their
-  normal verifier routes.
-- A visible normal-player NPN session selected Q1, powered down, removed the
-  original part, installed the catalog replacement, powered up, exercised
-  HIGH/LOW, and clicked `Retest Customer`; the UI reported repair verification.
-  No visible validation console errors or warnings were observed.
+- Synced with `git pull --ff-only origin master` before implementation; the
+  starting master commit was `7abba4a` and the pulled baseline was `2ccc3b6`.
+- JDK8 OBF compile/link passed with bundled JDK 8u502. `git diff --check`
+  passed, and the architecture verifier passed.
+- Task 40 reported `PASS:task40`; Task 41 reported `PASS:task41` for all 14
+  routes with 128 solver samples. The live Task 41 evidence included
+  `routes=14`, `declaredDepth=4..6`, `measuredDepth=4..9`,
+  `declaredTemplates=6`, `declaredMeterModes=43`,
+  `executedMeterModes=41`, `declaredTransitions=54`,
+  `executedTransitions=30`, `declaredIsolation=16`,
+  `executedIsolation=0`, `declaredTemporal=26`, `executedTemporal=8`,
+  `declaredRailsDomains=11`, `parallelAmbiguity=1`, and `retest=1`.
+- Task 39 reported all six existing NPN, NMOS, and RC routes passing. Legacy
+  LED seed 0, 2, and 3 resistance/meter/challenge/replacement routes all
+  passed sequentially; LED physical-part verification and the Task 40/41
+  seed-4 proofs passed.
+- Visible in-app Browser validation used real player input on LED seed 4:
+  power off, select LED1, remove the installed part, install the correct
+  catalog LED, power on, and retest. The rendered UI reported
+  `Repair verified. Indicator operating normally.` and
+  `Customer retest passed. The reported behavior is resolved.` No browser
+  console errors or warnings were observed.
+- Evidence screenshots are `docs/task-evidence/task-42/led-open-initial.png`,
+  `led-removed-tray.png`, and `led-repaired-retest.png`.
 
-The standalone `scripts/verify-browser.ps1` helper remains environment-limited
-on this host by its Edge process/WebSocket and Win32 process-query boundary;
-the required player-facing evidence was obtained in the visible in-app
-Browser. This is a harness limitation, not an application failure.
+The aggregate Quick Play helper still has a pre-existing RC finish-route
+cancellation, and its complete LED seed-4 finish canary remains follow-up
+work; the explicit LED seed-4 player workflow and Task 40/41 proofs passed.
+This is recorded as a harness/coverage limitation, not a Task 42 product
+failure.
 
 ## Review and handoff
 
-An independent read-only reviewer inspected false solvability, fabricated
-execution/depth evidence, repair-aware equivalence, and action admission and
-returned `FINAL PASS`. The correction commit SHA, remote verification, and
-post-push notification are recorded in the primary handoff. Task 42 remains
-the next eligible milestone but was not started.
+The delegated coder returned the bounded implementation with the JDK8/GWT
+build, Task 40/41, physical LED, legacy, replacement, and stress checks
+passing; it did not commit, push, or edit documentation. An independent
+read-only reviewer returned `PASS` with no blockers or backlog findings. One
+primary-architect review round confirmed the private switch graph, public
+terminal mapping, persistent original-fault identity, derived owner counts,
+route totals, and the absence of Task 43 work. No escalation architect was
+needed.
+
+The intended commit message is `Add LED diagnostic fault diversity proof` on
+`master`, with only the Task 42 source, documentation, and browser evidence
+files staged. After final validation, the primary architect will verify the
+remote commit and attempt the required Gmail notification to
+`dspevock@stateofthearcelectric.com` with subject
+`TroubleshootJS: Task 42 LED diagnostic diversity proof pushed`.
+
+Task 43 is the next eligible roadmap milestone and remains unstarted.
 
 ---
 

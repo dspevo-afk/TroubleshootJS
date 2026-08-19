@@ -1154,7 +1154,8 @@ started.
 
 ## Task 42 — Existing-Family Diagnostic Diversity Proof
 
-**Status:** [>] Immediate next milestone
+**Status:** [x] Completed — implementation, validation, independent review, and
+publication passed.
 
 **Purpose:** Use the new verifier to improve one real challenge before
 generalizing architecture further.
@@ -1186,11 +1187,25 @@ playable value during architectural hardening.
 
 **Unlocks:** Task 43 only.
 
+**Completion evidence:** The LED family now admits a real `LED_OPEN` fault
+owned by physical `LED1`, alongside the two existing R1-owned faults. The
+private CircuitJS open path is exposed through the original LED's public
+terminals, survives removal and reinstallation, and is cleared only by a
+different healthy catalog LED. Task 40 and Task 41 both derive their normal
+corpus count from admitted candidates; the final corpus is 14 routes: LED 3,
+diode 1, parallel 2, RC 2, NPN 3, and NMOS 3. The solver evidence reports
+128 samples, separates LED_OPEN from both R1 candidates, and records owner
+counts of LED 2, diode 1, parallel 1, RC 1, NPN 2, and NMOS 1. Derived owner
+classification is `MULTI_OWNER_DIAGNOSTIC` for LED/NPN and
+`GUIDED_EASY_SINGLE_OWNER` for diode/parallel/RC/NMOS. The LED Quick Play
+envelope is family-specific `{0, 2, 3, 4}`; other legacy envelopes remain
+unchanged. Task 43 is the next eligible milestone and was not started.
+
 ---
 
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
-**Status:** [!] Blocked by Task 42
+**Status:** [>] Immediate next milestone
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -3054,9 +3069,8 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 # Immediate Next Milestone
 
-**Task 42 — Existing-Family Diagnostic Diversity Proof**
+**Task 43 — Physical Package and Interaction Envelope Contract**
 
-Tasks 39 and 40 have completed implementation, validation, review, and
-publication. Task 41 has now completed implementation, validation, review, and
-publication. Task 42 is the next eligible milestone and has not started. Relay
+Tasks 39 through 42 have completed implementation, validation, review, and
+publication. Task 43 is the next eligible milestone and has not started. Relay
 Driver remains deferred and transformed into Task 66.

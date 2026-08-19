@@ -1267,3 +1267,44 @@ pre-READY gate, solver truth, unchanged topology/layout, detached snapshot /
 restore, and player evidence privacy remain intact across all 13 normal routes.
 Task 42 remains the next eligible roadmap milestone and was not started by this
 correction.
+
+## Task 42 — existing-family diagnostic diversity proof
+
+Task 42 adds a second physical owner to the existing LED indicator family
+without changing the PCB renderer or substituting UI readings for CircuitJS.
+`GeneratedFaultType.LED_OPEN` uses a private `SwitchElm` in series with the
+original `LEDElm`. `LedOpenFaultEffect` maps the board-facing LED1 anode to
+the switch input and the board-facing cathode to the LED output. The original
+`PhysicalLedPart` retains that binding and the private switch in its electrical
+backing when it is removed or reinstalled; a catalog-acquired LED has a new
+`LEDElm` and no generated-fault binding. The normal repair boundary is
+therefore `REMOVE` → `CATALOG_INSTALL` → `CUSTOMER_RETEST`, with no hidden
+reconnect or restore shortcut.
+
+The LED fault is admitted through the same serviceability and diagnostic-plan
+contracts as the existing R1 faults. Task 40 exercises wrong-owner R1 repair,
+original-owner reinstall, and distinct correct LED replacement. Task 41 uses
+the existing LED public pads plus in-circuit resistance to separate LED_OPEN,
+R1 open, and R1 incorrect value from the solver, then performs real repair and
+retest. The normal route count is derived from the admitted candidate corpus,
+not a fixed expected-count assertion.
+
+`GeneratedDiagnosticOwnerDiversity` is a derived contract metric. It is
+computed from the distinct stable physical owner IDs of admitted candidates
+and is revalidated with the solvability contract. The current normal corpus is
+14 routes and has this derived shape:
+
+| Family | Admitted routes | Physical owners | Classification |
+| --- | ---: | --- | --- |
+| LED | 3 | LED1, R1 | MULTI_OWNER_DIAGNOSTIC |
+| Diode | 1 | D1 | GUIDED_EASY_SINGLE_OWNER |
+| Parallel | 2 | R1 | GUIDED_EASY_SINGLE_OWNER |
+| RC | 2 | C1 | GUIDED_EASY_SINGLE_OWNER |
+| NPN | 3 | Q1, RB | MULTI_OWNER_DIAGNOSTIC |
+| NMOS | 3 | Q1 | GUIDED_EASY_SINGLE_OWNER |
+
+The LED Quick Play seed envelope is family-specific `{0, 2, 3, 4}` so the
+new LED-owned route is reachable while the other legacy family envelopes and
+their established seed mappings remain unchanged. Classification is not a
+player-facing difficulty selector and no future topology/composition system
+is introduced. Task 43 is the next eligible milestone; it remains unstarted.

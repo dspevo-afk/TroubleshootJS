@@ -49,6 +49,7 @@ final class GeneratedFaultServiceabilityCatalog {
                 GeneratedBoardOperationIds.CUSTOMER_RETEST);
         case RESISTOR_OPEN:
         case RESISTOR_INCORRECT_VALUE:
+        case LED_OPEN:
         case DIODE_OPEN:
         case DIODE_SHORT:
         case CAPACITOR_SHORT:

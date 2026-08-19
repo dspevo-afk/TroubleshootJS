@@ -48,6 +48,40 @@ class SwitchOpenFaultEffect implements GeneratedFaultEffect {
     public CircuitElm getValueMutationTarget() { return null; }
 }
 
+/** Internal open of a two-terminal LED, exposing both package leads. */
+class LedOpenFaultEffect implements GeneratedFaultEffect {
+    private final SwitchElm switchElement;
+
+    LedOpenFaultEffect(SwitchElm switchElement) {
+        if (switchElement == null)
+            throw new IllegalArgumentException("Missing LED open switch");
+        this.switchElement = switchElement;
+    }
+
+    public void setApplied(boolean applied) {
+        boolean open = switchElement.position == 1;
+        if (open != applied)
+            switchElement.toggle();
+    }
+
+    public boolean isApplied() { return switchElement.position == 1; }
+
+    public CircuitMeasurementEndpoint getPublicTerminal(CircuitElm backingElement, int terminal) {
+        if (!(backingElement instanceof LEDElm) || terminal < 0 || terminal > 1)
+            throw new IllegalArgumentException("Invalid LED terminal");
+        return terminal == 0 ? new CircuitPostMeasurementEndpoint(switchElement, 0) :
+            new CircuitPostMeasurementEndpoint(backingElement, 1);
+    }
+
+    public Vector<CircuitElm> getPrivateSimulationElements() {
+        Vector<CircuitElm> result = new Vector<CircuitElm>();
+        result.add(switchElement);
+        return result;
+    }
+
+    public CircuitElm getValueMutationTarget() { return null; }
+}
+
 /** A lead-open capacitor fault exposes the board-side positive lead, not a fake meter value. */
 class CapacitorPositiveLeadOpenFaultEffect implements GeneratedFaultEffect {
     private final SwitchElm switchElement;

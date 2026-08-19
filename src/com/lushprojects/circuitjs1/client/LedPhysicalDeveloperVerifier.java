@@ -12,6 +12,8 @@ class LedPhysicalDeveloperVerifier {
         WorkbenchCapabilityDeveloperVerifier.verifyRegisteredProviders(sim);
         ReplaceableLedBoardCapability state = ReplaceableLedBoardCapability.require(instance);
         LedSlotController leds = sim.getLedSlotController();
+        boolean originalLedOpen = instance.getFaultBinding().getFault().getType() ==
+            GeneratedFaultType.LED_OPEN;
         PhysicalLedPart original = state.getInventory().get("LED1_ORIGINAL");
         int catalogSize = state.getCatalog().getEntries().size();
         Vector<LedCatalogEntry> catalogEntries = state.getCatalog().getEntries();
@@ -24,14 +26,22 @@ class LedPhysicalDeveloperVerifier {
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         sim.updateCircuit();
-        verifyHealthyDiode(sim, boardProbe(sim, instance, "LED1.A"),
-            boardProbe(sim, instance, "LED1.K"), "installed original LED1");
+        if (originalLedOpen)
+            verifyOpenDiode(sim, boardProbe(sim, instance, "LED1.A"),
+                boardProbe(sim, instance, "LED1.K"), "installed original LED1");
+        else
+            verifyHealthyDiode(sim, boardProbe(sim, instance, "LED1.A"),
+                boardProbe(sim, instance, "LED1.K"), "installed original LED1");
         require(leds.removeInstalledPart(), "Could not remove original LED1");
         require(state.getSlot().isEmpty() && state.getInventory().getLooseParts().size() == 1 &&
             state.getInventory().getLooseParts().get(0) == original,
             "Removing LED1 did not preserve its physical identity");
-        verifyHealthyDiode(sim, looseProbe(sim, instance, original, 0),
-            looseProbe(sim, instance, original, 1), "loose original LED1");
+        if (originalLedOpen)
+            verifyOpenDiode(sim, looseProbe(sim, instance, original, 0),
+                looseProbe(sim, instance, original, 1), "loose original LED1");
+        else
+            verifyHealthyDiode(sim, looseProbe(sim, instance, original, 0),
+                looseProbe(sim, instance, original, 1), "loose original LED1");
         verifyPartTopology(sim, instance);
 
         PhysicalResistorPart replacementResistor = replaceR1WithHealthyPart(sim, instance);
@@ -170,6 +180,17 @@ class LedPhysicalDeveloperVerifier {
         sim.instrumentController.setDiodeProbesForDeveloperVerification(cathode, anode);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             label + " reverse result was not OL");
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void verifyOpenDiode(CirSim sim, ProbeTarget anode, ProbeTarget cathode,
+            String label) {
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(anode, cathode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            label + " faulted LED forward result was not OL");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(cathode, anode);
+        require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
+            label + " faulted LED reverse result was not OL");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
     }
 

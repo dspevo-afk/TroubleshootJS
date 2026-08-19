@@ -27,6 +27,9 @@ class LedIndicatorFaultValidator implements GeneratedFaultValidator {
         if (type == GeneratedFaultType.RESISTOR_OPEN) {
             if (ledCurrent >= MAX_FAULTED_LED_CURRENT || resistorCurrent >= MAX_FAULTED_LED_CURRENT)
                 throw new IllegalStateException("Open resistor fault did not extinguish LED");
+        } else if (type == GeneratedFaultType.LED_OPEN) {
+            if (ledCurrent >= MAX_FAULTED_LED_CURRENT || resistorCurrent >= MAX_FAULTED_LED_CURRENT)
+                throw new IllegalStateException("Open LED fault did not open the solved LED path");
         } else if (type == GeneratedFaultType.RESISTOR_INCORRECT_VALUE) {
             double effectiveValue = instance.getFaultBinding().getFault().getEffectiveValue();
             if (Math.abs(resistor.getResistance() - effectiveValue) > effectiveValue * .001 ||
@@ -37,7 +40,7 @@ class LedIndicatorFaultValidator implements GeneratedFaultValidator {
         } else {
             throw new IllegalStateException("Unsupported LED fault type: " + type);
         }
-        if (type == GeneratedFaultType.RESISTOR_OPEN &&
+        if ((type == GeneratedFaultType.RESISTOR_OPEN || type == GeneratedFaultType.LED_OPEN) &&
                 instance.getOperationalStates().isIlluminated("LED1"))
             throw new IllegalStateException("Faulted LED is still visually illuminated");
         if (type == GeneratedFaultType.RESISTOR_INCORRECT_VALUE &&

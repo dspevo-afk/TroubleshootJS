@@ -27,6 +27,12 @@ class GeneratedFaultEngine {
             new ResistorIncorrectValueFaultEffect(resistor, healthyValue, effectiveValue));
     }
 
+    static GeneratedFaultCandidate ledOpen(String id, String familyId, long seed,
+            String componentId, SwitchElm switchElement) {
+        return candidate(new GeneratedFault(id, GeneratedFaultType.LED_OPEN,
+            componentId, familyId, seed), new LedOpenFaultEffect(switchElement));
+    }
+
     static GeneratedFaultCandidate diodeOpen(String id, String familyId, long seed,
             String componentId, SwitchElm switchElement) {
         return candidate(new GeneratedFault(id, GeneratedFaultType.DIODE_OPEN,

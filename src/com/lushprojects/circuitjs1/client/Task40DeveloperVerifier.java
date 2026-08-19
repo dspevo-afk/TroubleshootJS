@@ -15,10 +15,13 @@ final class Task40DeveloperVerifier {
         int routeCount = 0;
         routeCount += verify(new LedIndicatorGenerator().generate(0),
             GeneratedFaultType.RESISTOR_OPEN, GeneratedFaultLocusType.COMPONENT_INTERNAL,
-            new String[] { "R1" }, sim);
+            new String[] { "LED1", "R1" }, sim);
         routeCount += verify(new LedIndicatorGenerator().generate(3),
             GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
-            GeneratedFaultLocusType.COMPONENT_INTERNAL, new String[] { "R1" }, sim);
+            GeneratedFaultLocusType.COMPONENT_INTERNAL, new String[] { "LED1", "R1" }, sim);
+        routeCount += verify(new LedIndicatorGenerator().generateForFaultVerification(0,
+            GeneratedFaultType.LED_OPEN), GeneratedFaultType.LED_OPEN,
+            GeneratedFaultLocusType.COMPONENT_INTERNAL, new String[] { "LED1", "R1" }, sim);
         routeCount += verify(new DiodeProtectedIndicatorGenerator().generate(0),
             GeneratedFaultType.DIODE_OPEN, GeneratedFaultLocusType.COMPONENT_INTERNAL,
             new String[] { "D1" }, sim);
@@ -54,7 +57,8 @@ final class Task40DeveloperVerifier {
             new String[] { "Q1" }, sim);
 
         verifyConnectorAndForcedRejections();
-        require(routeCount == 13, "Unexpected Task 40 admitted route count: " + routeCount);
+        require(routeCount == admittedNormalCorpusCount(),
+            "Task 40 route/candidate corpus mismatch: routes=" + routeCount);
     }
 
     private static int verify(GeneratedBoardInstance instance, GeneratedFaultType type,
@@ -108,6 +112,14 @@ final class Task40DeveloperVerifier {
         require(sim.getBoardPowerController().isElectricallyUnpowered(),
             "Task 40 isolation did not establish electrical unpowered state: " + type);
 
+        if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(instance.getCircuitFamilyId())) {
+            if (type == GeneratedFaultType.LED_OPEN)
+                verifyWrongOwnerR1Repair(sim, instance, challenge);
+            else if (type == GeneratedFaultType.RESISTOR_OPEN ||
+                    type == GeneratedFaultType.RESISTOR_INCORRECT_VALUE)
+                verifyWrongOwnerLedRepair(sim, instance, challenge);
+        }
+
         if (type == GeneratedFaultType.CAPACITOR_OPEN &&
                 "C1".equals(instance.getFaultLocus().getComponentId())) {
             exerciseLead(sim, instance, "C1", "+");
@@ -129,7 +141,7 @@ final class Task40DeveloperVerifier {
         require(original != null && ((GeneratedFaultOwningPart) original)
             .ownsGeneratedFault(instance.getFaultBinding()),
             "Task 40 original owner was not installed: " + componentId);
-        if (type == GeneratedFaultType.CAPACITOR_OPEN ||
+        if (type == GeneratedFaultType.CAPACITOR_OPEN || type == GeneratedFaultType.LED_OPEN ||
                 type == GeneratedFaultType.NMOS_GATE_OPEN)
             verifyOriginalReinstallDoesNotRestore(sim, challenge, instance, original);
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
@@ -233,6 +245,7 @@ final class Task40DeveloperVerifier {
     private static String correctCatalogId(GeneratedBoardInstance instance, String componentId) {
         if ("C1".equals(componentId)) return CapacitorReplacementCatalog.CORRECT;
         if ("D1".equals(componentId)) return DiodeReplacementCatalog.CORRECT;
+        if ("LED1".equals(componentId)) return LedReplacementCatalog.CORRECT;
         if ("Q1".equals(componentId))
             return NmosLowSideSwitchGenerator.FAMILY_ID.equals(instance.getCircuitFamilyId()) ?
                 NmosReplacementCatalog.CORRECT : NpnReplacementCatalog.CORRECT;
@@ -242,6 +255,62 @@ final class Task40DeveloperVerifier {
             "Task 40 has no correct catalog mapping: " + componentId);
         return "R_CATALOG_" + (long)((ResistorNameplate) specification)
             .getNominalResistanceOhms();
+    }
+
+    private static void verifyWrongOwnerR1Repair(CirSim sim, GeneratedBoardInstance instance,
+            GeneratedChallengeController challenge) {
+        PhysicalPart<?> original = instance.getPhysicalBoardRuntime().getInstalledPart("R1");
+        require(original != null, "Task 40 LED_OPEN route has no R1 wrong-owner fixture");
+        dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
+        dispatch(sim, WorkbenchOperation.forCatalog("R1", resistorCatalogId(instance)));
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "LED_OPEN was incorrectly cured by a different-owner R1 replacement");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        PhysicalPart<?> replacement = instance.getPhysicalBoardRuntime().getInstalledPart("R1");
+        dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, replacement));
+        dispatch(sim, WorkbenchOperation.forPartAtSlot(WorkbenchOperation.INSTALL, original, "R1"));
+        verifyNotRestoredAfterPhysicalWorkflow(sim, challenge, "LED_OPEN original R1 reinstall");
+    }
+
+    private static void verifyWrongOwnerLedRepair(CirSim sim, GeneratedBoardInstance instance,
+            GeneratedChallengeController challenge) {
+        PhysicalPart<?> original = instance.getPhysicalBoardRuntime().getInstalledPart("LED1");
+        require(original != null, "R1-owned LED route has no LED wrong-owner fixture");
+        dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
+        dispatch(sim, WorkbenchOperation.forCatalog("LED1", LedReplacementCatalog.CORRECT));
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        sim.analyzeCircuit();
+        sim.runCircuit(true);
+        require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "R1-owned LED route was incorrectly cured by an LED replacement");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        PhysicalPart<?> replacement = instance.getPhysicalBoardRuntime().getInstalledPart("LED1");
+        dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, replacement));
+        dispatch(sim, WorkbenchOperation.forPartAtSlot(WorkbenchOperation.INSTALL, original, "LED1"));
+        verifyNotRestoredAfterPhysicalWorkflow(sim, challenge, "R1-owned original LED reinstall");
+    }
+
+    private static String resistorCatalogId(GeneratedBoardInstance instance) {
+        PhysicalSpecification specification = instance.getPhysicalSpecifications()
+            .getSpecification("R1");
+        require(specification instanceof ResistorNameplate,
+            "Task 40 LED_OPEN route has no R1 catalog mapping");
+        return "R_CATALOG_" + (long)((ResistorNameplate) specification)
+            .getNominalResistanceOhms();
+    }
+
+    private static int admittedNormalCorpusCount() {
+        int count = 0;
+        for (String familyId : QuickPlayFamilyRegistry.getNormalPlayerFamilyIds()) {
+            GeneratedBoardInstance representative =
+                QuickPlayFamilyRegistry.generate(familyId, 0);
+            count += GeneratedDiagnosticSolvabilityAdmission.getAdmittedCandidateCount(
+                representative.getFaultCandidates());
+        }
+        return count;
     }
 
     private static void verifyConnectorAndForcedRejections() {

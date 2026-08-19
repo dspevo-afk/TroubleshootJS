@@ -2,12 +2,13 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
-class PhysicalLedPart implements PhysicalPart<LedNameplate> {
+class PhysicalLedPart implements PhysicalPart<LedNameplate>, GeneratedFaultOwningPart {
     private final String id;
     private final LedNameplate specification;
     private final LedNameplate nameplate;
     private final PhysicalNameplate playerNameplate;
     private final LEDElm element;
+    private final GeneratedFaultBinding faultBinding;
     private final CircuitMeasurementEndpoint anode;
     private final CircuitMeasurementEndpoint cathode;
     private final PhysicalPartTerminal[] terminals;
@@ -29,12 +30,29 @@ class PhysicalLedPart implements PhysicalPart<LedNameplate> {
             PhysicalPartProvenance provenance) {
         this(id, specification, nameplate,
             createPlayerNameplate(id, nameplate), element,
-            reversedInstallation, location, provenance);
+            reversedInstallation, location, provenance, null);
+    }
+
+    PhysicalLedPart(String id, LedNameplate specification, LedNameplate nameplate,
+            LEDElm element, GeneratedFaultBinding faultBinding,
+            boolean reversedInstallation, LedPartLocation location,
+            PhysicalPartProvenance provenance) {
+        this(id, specification, nameplate,
+            createPlayerNameplate(id, nameplate), element, reversedInstallation,
+            location, provenance, faultBinding);
     }
 
     PhysicalLedPart(String id, LedNameplate specification, LedNameplate nameplate,
             PhysicalNameplate playerNameplate, LEDElm element, boolean reversedInstallation,
             LedPartLocation location, PhysicalPartProvenance provenance) {
+        this(id, specification, nameplate, playerNameplate, element, reversedInstallation,
+            location, provenance, null);
+    }
+
+    PhysicalLedPart(String id, LedNameplate specification, LedNameplate nameplate,
+            PhysicalNameplate playerNameplate, LEDElm element, boolean reversedInstallation,
+            LedPartLocation location, PhysicalPartProvenance provenance,
+            GeneratedFaultBinding faultBinding) {
         if (id == null || id.length() == 0 || specification == null || nameplate == null ||
                 playerNameplate == null || element == null || location == null || provenance == null)
             throw new IllegalArgumentException("Invalid physical LED part");
@@ -44,10 +62,13 @@ class PhysicalLedPart implements PhysicalPart<LedNameplate> {
         this.playerNameplate = playerNameplate.hasWorkbenchDetail() ? playerNameplate :
             createPlayerNameplate(id, nameplate);
         this.element = element;
+        this.faultBinding = faultBinding;
         this.reversedInstallation = reversedInstallation;
         this.provenance = provenance;
-        anode = new CircuitPostMeasurementEndpoint(element, 0);
-        cathode = new CircuitPostMeasurementEndpoint(element, 1);
+        anode = faultBinding == null ? new CircuitPostMeasurementEndpoint(element, 0) :
+            faultBinding.getPublicTerminal(element, 0);
+        cathode = faultBinding == null ? new CircuitPostMeasurementEndpoint(element, 1) :
+            faultBinding.getPublicTerminal(element, 1);
         terminals = new PhysicalPartTerminal[] {
             new PhysicalPartTerminal(id, "A", anode),
             new PhysicalPartTerminal(id, "K", cathode)
@@ -56,6 +77,7 @@ class PhysicalLedPart implements PhysicalPart<LedNameplate> {
         endpoints.add(anode); endpoints.add(cathode);
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         elements.add(element);
+        if (faultBinding != null) elements.addAll(faultBinding.getPrivateSimulationElements());
         backing = new CircuitPhysicalPartElectricalBacking(endpoints, elements);
         capabilities.add(new LoosePartInspectableCapability());
     }
@@ -85,7 +107,9 @@ class PhysicalLedPart implements PhysicalPart<LedNameplate> {
     public PhysicalBoardSlot getBoardSlot() { return mountState.getSlot(); }
     public PhysicalPartProvenance getProvenance() { return provenance; }
     public PhysicalFailureState getFailureState() {
-        return new PhysicalFailureState(PhysicalFailureState.HEALTHY, false);
+        return faultBinding != null && faultBinding.isApplied() ?
+            new PhysicalFailureState(PhysicalFailureState.GENERATED_FAULT, true) :
+            new PhysicalFailureState(PhysicalFailureState.HEALTHY, false);
     }
     public Vector<PhysicalPartCapability> getCapabilities() {
         return new Vector<PhysicalPartCapability>(capabilities);
@@ -93,10 +117,14 @@ class PhysicalLedPart implements PhysicalPart<LedNameplate> {
     public Vector<PhysicalPartCapability> getIntrinsicCapabilities() { return getCapabilities(); }
     public boolean isInstalled() { return mountState.isInstalled(); }
     public boolean isOriginal() { return provenance.isOriginal(); }
-    public boolean isFaulted() { return false; }
+    public boolean isFaulted() { return getFailureState().isFailed(); }
+    public boolean ownsGeneratedFault(GeneratedFaultBinding binding) {
+        return faultBinding != null && faultBinding == binding;
+    }
 
     LedNameplate getNameplate() { return nameplate; }
     LEDElm getElement() { return element; }
+    GeneratedFaultBinding getFaultBinding() { return faultBinding; }
     boolean isReversedInstallation() { return reversedInstallation; }
     LedPartLocation getLocation() {
         return isInstalled() ? LedPartLocation.INSTALLED : LedPartLocation.LOOSE;
