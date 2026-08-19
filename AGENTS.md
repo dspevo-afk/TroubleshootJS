@@ -272,8 +272,9 @@ Rules:
 5. The existence of later roadmap entries is NOT permission to implement them.
 6. Never automatically begin the next roadmap milestone after finishing the current one.
 7. After successful validation, review, final status/diff inspection,
-   authorized staging/checks, commit, and the authorized final push of the
-   current milestone, STOP.
+   authorized staging/checks, commit, verified final push, and the post-push
+   completion-notification attempt required by the Task Completion Protocol,
+   STOP.
 8. The user may explicitly override roadmap order at any time.
 9. Discovering an attractive adjacent feature is not permission to implement it.
 10. Do not perform future roadmap work opportunistically during another task.
@@ -1429,11 +1430,14 @@ proceed. It must then:
 6. Overwrite docs/CODEX_TASK_REPORT.md with the final task report.
 7. Stage only intended changes.
 8. Run `git diff --cached --check`.
-9. Commit exactly once with a concise descriptive message when the task
-   authorizes a commit.
+9. Commit exactly once with a concise descriptive message unless an explicit
+   task instruction overrides or forbids the commit.
 10. Verify the current branch, upstream, configured remote, and final commit
-    SHA; push the final accepted commit; verify that the remote contains that
-    SHA; then STOP without beginning another milestone.
+    SHA; push the final accepted commit; and verify that the remote contains
+    that SHA.
+11. Only after the verified push, send the project owner a concise completion
+    email through the connected Gmail capability when it is available.
+12. STOP without beginning another milestone.
 
 The final docs/CODEX_TASK_REPORT.md must include:
 
@@ -1450,12 +1454,17 @@ The final docs/CODEX_TASK_REPORT.md must include:
 - whether escalation-architect review was required;
 - escalation-architect diagnosis and result if used;
 - known limitations or concerns;
-- next roadmap milestone; and
-- commit message;
-- final commit SHA;
-- push success;
-- pushed remote; and
-- pushed branch/upstream.
+- next roadmap milestone;
+- intended commit message;
+- configured remote and branch/upstream;
+- notification destination and intended subject; and
+- a statement that the authoritative final commit SHA, push result, and
+  notification result are established after the report is written and are
+  available from repository history and the final Codex task response.
+
+Because the report is committed before its own final commit SHA and publication
+result exist, it must not contain pending placeholders or invented final SHA,
+push, or email results.
 
 ---
 
@@ -1644,9 +1653,10 @@ handoff/report, inspect git diff and status, stage only intended files, run the
 repository's required staged-diff checks, commit according to the existing
 Task Completion Protocol, verify the current branch, upstream, configured
 remote, and final commit SHA, push the final accepted commit, verify that the
-remote contains that SHA, and stop. Do not begin the next task unless
-instructed by the established workflow. “Could be improved” is not equivalent
-to “the current task is incorrect.”
+remote contains that SHA, attempt the required post-push Gmail completion
+notification, and stop. Do not begin the next task unless instructed by the
+established workflow. “Could be improved” is not equivalent to “the current
+task is incorrect.”
 
 ## Incremental Development Principle
 
@@ -1677,8 +1687,8 @@ not turn a `FOLLOW-UP` or `BACKLOG` into a blocker.
 
 A task is not incomplete merely because work remains after one implementation or
 validation pass. Continue through implementation, validation, screenshots,
-documentation, staging, commit, and the authorized final push in the same task
-whenever safely possible.
+documentation, staging, commit, verified final push, and post-push notification
+attempt in the same task whenever safely possible.
 Do not return an unfinished task after a first failed command, browser
 interaction, screenshot attempt, verifier failure, timeout, stale layout, or
 automation mistake while a suspected `BLOCKER` or closed-validation failure
@@ -1718,7 +1728,7 @@ because it prevents later validation; a hard blocker requires an external
 constraint or technically demonstrated contradiction that cannot be safely
 corrected within task scope.
 
-For normal TroubleshootJS implementation tasks, unless the task explicitly says
+For normal TroubleshootJS tasks, unless the task explicitly says
 otherwise:
 
 When the multi-agent workflow is used, do not proceed to staging or commit
@@ -1735,18 +1745,38 @@ until the successful multi-agent acceptance gates above have been satisfied.
 6. Update `docs/CODEX_TASK_REPORT.md` with the latest completed task report.
 7. Stage only intended source and documentation changes.
 8. Run `git diff --cached --check`.
-9. Commit with a concise descriptive message when the task authorizes a
-   commit.
+9. Commit with a concise descriptive message unless an explicit task
+   instruction overrides or forbids the commit.
 10. Verify the current branch, upstream, configured remote, and final commit
     SHA; push the final accepted commit; verify that the remote contains that
     SHA.
-11. STOP without beginning another milestone.
+11. Only after the verified push, send a concise completion email through the
+    connected Gmail capability when available. Unless the task says otherwise,
+    send it to `dspevock@stateofthearcelectric.com` with subject
+    `TroubleshootJS: <task/commit summary> pushed`. Include the task name/number,
+    exact commit SHA and message, pushed branch, change summary, validation,
+    known limitations/follow-up concerns, and next roadmap milestone when
+    applicable. Do not use or create another mail-delivery mechanism.
+12. STOP without beginning another milestone.
 
 If a required check in the closed validation set fails because of an
-unresolved `BLOCKER`, do not commit. Leave the changes in the working tree and
-clearly report the failure. Do not auto-commit when explicitly told not to.
-`docs/CODEX_TASK_REPORT.md` is intentionally overwritten after each successful
-task; Git history preserves prior reports.
+unresolved `BLOCKER`, do not commit, push, or send a success email. Leave the
+intended changes in the working tree for correction and clearly report the
+failure.
+
+If the commit succeeds but the push fails, do not claim completion and do not
+send a success email. Preserve the local commit, clearly report the push
+failure and exact local commit SHA, and STOP without beginning another roadmap
+task.
+
+If the push succeeds but Gmail is unavailable or the notification fails, the
+Git task remains successfully published. Clearly report the email
+failure/unavailability and do not claim or imply that a notification was sent.
+
+An explicit user instruction for an individual task may override automatic
+commit, push, or notification behavior. Do not auto-commit, push, or notify
+when explicitly told not to. `docs/CODEX_TASK_REPORT.md` is intentionally
+overwritten after each successful task; Git history preserves prior reports.
 
 ## Visual Evidence Protocol
 

@@ -1998,13 +1998,14 @@ lens color; renderer owns presentation only.
 
 ## Task 66 — Relay Driver Reusable Block and Composed Load Proof
 
-**Status:** [!] Blocked by Tasks 43, 45, 49, 51, and 57
+**Status:** [!] Blocked by Tasks 43, 45, 49, 51, 57, and 65
 
 **Purpose:** Transform the former Relay Driver family into the first post-proof
 reusable electromechanical block.
 
 **Dependencies:** Composition, domains, values/ratings, diagnostic admission,
-physical envelope, and supported layout.
+physical envelope, supported layout, and the completed Task 64–65 post-alpha
+visual sequence.
 
 **Bounded goals:** Model coil, contacts, driver, flyback protection, control and
 switched-load domains, physical relay package, player input/retest, and
@@ -2882,7 +2883,7 @@ All former entries below were unstarted.
 | 57 Multi-Subsystem Fault Selection | Transformed into Task 51 composed acceptance. |
 | 58 Multiple Faults | Deferred to conditional Task 86; not required for Psychotic. |
 | 59 Larger Placement / Routing | Superseded/split across Tasks 43 and 52–57, with conditional links/layers. |
-| 60 Difficulty Model | Split across Tasks 58–59, 80, and 88. |
+| 60 Difficulty Model | Split across Tasks 58–59, 80, and 85. |
 | 61 Challenge Generator | Absorbed into versioned request, assembler, and staged acceptance at Tasks 46–51; no new monolith. |
 | 62 Scoring / History | Retained as Task 87. |
 | 63 Guided Beginner | Absorbed into EASY assistance and Resources at Tasks 59–60. |
@@ -2953,6 +2954,12 @@ All former entries below were unstarted.
                         |
                         v
                  DESKTOP ALPHA GATE (63)
+                        |
+                        v
+             STATIC VISUAL / PCB POLISH (64)
+                        |
+                        v
+            CONTINUOUS LED VISUAL STATE (65)
                         |
                         v
         BLOCK / REPAIR / INSTRUMENT EXPANSION (66–79)
