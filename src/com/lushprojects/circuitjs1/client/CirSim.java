@@ -5939,6 +5939,8 @@ MouseOutHandler, MouseWheelHandler {
 //    public void keyReleased(KeyEvent e) {}
     
     boolean dialogIsShowing() {
+	if (isTsjWorkbenchOverlayOpen())
+	    return true;
     	if (editDialog!=null && editDialog.isShowing())
     		return true;
     	if (sliderDialog!=null && sliderDialog.isShowing())
@@ -5960,7 +5962,14 @@ MouseOutHandler, MouseWheelHandler {
     	return false;
     }
     
+    private static native boolean isTsjWorkbenchOverlayOpen() /*-{
+        return !!$wnd.tsjWorkbenchOverlayOpen ||
+            !!($doc.querySelector && $doc.querySelector('.tsj-ui-overlay.is-open'));
+    }-*/;
+
     public void onPreviewNativeEvent(NativePreviewEvent e) {
+        if (dialogIsShowing() && isTsjWorkbenchOverlayOpen())
+            return;
     	int cc=e.getNativeEvent().getCharCode();
     	int t=e.getTypeInt();
     	int code=e.getNativeEvent().getKeyCode();
