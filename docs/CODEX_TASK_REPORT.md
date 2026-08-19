@@ -236,7 +236,8 @@ harness/environment limitation, not a product pass or failure.
 Final accepted integration commit SHA, push result, remote, and branch/upstream
 are recorded below after the final commit and remote verification:
 
-- Final accepted integration commit SHA: `PENDING_FINAL_COMMIT_SHA`
-- Push result: `PENDING_PUSH_RESULT`
+- Final accepted integration commit SHA: `32940dc4c9de773eb4a7af663b1889d122bb1a3c`.
+- Push result: `succeeded; the accepted integration commit was pushed to
+  `origin/master` as part of the final fast-forward publication`
 - Remote: `origin`
 - Branch/upstream: `master` -> `origin/master`
