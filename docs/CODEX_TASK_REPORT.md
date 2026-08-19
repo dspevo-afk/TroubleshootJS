@@ -150,3 +150,93 @@ UI-shell work, and component-visual-realism research were not integrated.
 Correction commit message:
 
 `Task 38: fix NMOS physical gate topology`
+
+## Integration and publication addendum — 2026-08-18
+
+The historical Task 38 correction record above predates the repository
+integration requested after that correction. Its statements about the UI and
+research branches being out of scope describe the earlier correction only.
+This addendum is the current integration handoff record.
+
+### Baseline and integrated history
+
+- Clean integration baseline: `8c25f1abcbb61e1ba9430017031cfdd07671bf6f`
+  (`origin/master`).
+- Integrated `codex/component-visual-audit` at `f5407b476955672ae7181971b440d2e38a5e6801` in merge `9d47440`.
+- Integrated `codex/pcb-routing-scalability-audit` at `0681cc61d2fb92d06f8c1f0a571a4160eeded824` in merge `41bd56e`.
+- Integrated `codex/procedural-generation-audit` at `1eebf1a9bd7dc2ab3aac5f4278d4ae8eba03f989` in merge `6b2b065`.
+- Integrated `codex/troubleshooting-realism-audit` at `1875234c46b058b9400e86ad5716d7f536f12cf7` in merge `8d828c5`.
+- Integrated `codex/ui-workbench-shell` at `7bbb9de591155da0db0c173cb26c5e621a622c6a` in merge `4a1b56b`.
+- `codex/prompt-dropbox` was explicitly excluded and is not an ancestor of the
+  integrated history. No tracked `.worktrees` artifacts were included.
+
+Each audit branch contributed exactly its historical report under
+`docs/research/`; the four report blobs were verified unchanged against their
+source branches. The UI merge retained the current master NMOS implementation.
+Its `CirSim.java` change is limited to the workbench overlay hook (9 additions,
+0 deletions), with the HTML include and the branch's CSS/JS assets preserved.
+
+### Push-policy update
+
+`AGENTS.md` now gives delegated coders, reviewers, and escalation architects no
+independent push authority. The primary architect may push only the final
+accepted result after review, validation, status/diff inspection, intentional
+staging, cached diff checks, and commit. Failed, intermediate, unreviewed,
+unvalidated, unrelated, or unfinished states must not be pushed; routine force
+pushes remain prohibited without specific authorization. The completion
+lifecycle now verifies branch, upstream, remote, and SHA before and after the
+authorized push, and the completion report records those facts.
+
+### Final integration validation
+
+- JDK 8/GWT PRETTY and OBF production builds passed all five permutations and
+  linking.
+- Renderer-provider boundary and bundled UI JavaScript static checks passed;
+  `git diff --check` passed.
+- NPN developer verification passed for seeds 0–3. Natural NMOS verification
+  passed for seeds 0–2, including the forced D-S-short case. Architecture and
+  layout/geometry verification passed.
+- NMOS Quick Play verification passed for seeds 0–2 with the report
+  `unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated`.
+- The visible in-app Browser showed the workbench on load with TOOLS selected,
+  the SHOP mock store, RESOURCES and SETTINGS placeholders, overlay close and
+  keyboard isolation, a real DC measurement after close, component selection,
+  removal and replacement, board power control, NMOS Quick Play, and repair
+  verification. The mock store changed only its local cart/selection state and
+  did not mutate the board.
+- The normal-player NMOS flow visibly repaired the board and reported
+  `Repair verified. The controlled load switches normally.` The D-S-short,
+  low-control flow produced real `0 V` gate/source and J2.1/J2.2 readings.
+
+Fresh Browser evidence is stored in
+`docs/task-evidence/integration-ui/`:
+
+- `initial-workbench.png`
+- `mock-parts-store.png`
+- `nmos-complaint.png`
+- `nmos-low-control-0v.png`
+- `nmos-repaired.png`
+
+The repository's standalone preview launcher could not perform its WMI/CIM
+process check under the current permission profile (`Access denied`). The
+project preview itself was started directly and the required visible in-app
+Browser flows and read-only verifier routes completed. The WMI limitation is a
+harness/environment limitation, not a product pass or failure.
+
+### Review and completion state
+
+- Coder Peirce changed only `AGENTS.md`, returned without staging, committing,
+  or pushing, and passed its diff checks.
+- Reviewer Copernicus performed the independent integration review and returned
+  `PASS`. The primary architect independently reviewed the final tree and
+  returned `FINAL PASS`. No escalation architect was required.
+- Task 38 remains the accepted completed milestone. Task 39 (Relay Driver) is
+  the next eligible roadmap milestone and was not started.
+
+Final accepted integration commit SHA, push result, remote, and branch/upstream
+are recorded below after the final commit and remote verification:
+
+- Final accepted integration commit SHA: `PENDING_FINAL_COMMIT_SHA`
+- Push result: `PENDING_PUSH_RESULT`
+- Remote: `origin`
+- Branch/upstream: `master` -> `origin/master`

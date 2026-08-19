@@ -271,7 +271,9 @@ Rules:
 4. Convert the roadmap milestone into bounded implementation scope and explicit acceptance criteria.
 5. The existence of later roadmap entries is NOT permission to implement them.
 6. Never automatically begin the next roadmap milestone after finishing the current one.
-7. After successful validation and commit of the current milestone, STOP.
+7. After successful validation, review, final status/diff inspection,
+   authorized staging/checks, commit, and the authorized final push of the
+   current milestone, STOP.
 8. The user may explicitly override roadmap order at any time.
 9. Discovering an attractive adjacent feature is not permission to implement it.
 10. Do not perform future roadmap work opportunistically during another task.
@@ -1067,6 +1069,19 @@ The normal workflow uses a primary architect and bounded coder/reviewer
 implementation and review roles. A separate escalation architect is available
 when the normal bounded process cannot safely resolve a substantive issue.
 
+## Commit and Push Authority
+
+Delegated coder, reviewer, and escalation-architect subagents must never
+independently push or publish work. The coder returns its candidate to the
+primary architect for review and completion; returning a candidate does not
+authorize publication. The primary architect is the only role that may push,
+and may push ONLY the final accepted task result after the implementation and
+review gates, final validation, final `git status`/`git diff` inspection,
+intended-only staging, `git diff --cached --check`, and the final commit have
+all succeeded. Failed, intermediate, unreviewed, unresolved, unvalidated,
+unrelated, or unfinished work must never be pushed. Routine force-push is
+prohibited unless explicitly authorized for a specific situation.
+
 ## Primary Architect
 
 The primary architect is the main task thread and is the task owner,
@@ -1146,7 +1161,8 @@ The coder must:
 - inspect its own diff;
 - report files changed, behavior implemented, validation performed, failures,
   uncertainty, and architectural concerns;
-- never push automatically;
+- return the candidate to the primary architect and never independently push
+  or publish it;
 - never begin another milestone;
 - never weaken tests or acceptance criteria to make a task pass; and
 - stop and escalate architectural uncertainty instead of inventing a new
@@ -1363,7 +1379,13 @@ At all times:
 
 - Exactly one milestone may be worked on per autonomous run.
 - Never automatically start the next milestone.
-- Never push automatically.
+- Delegated coder, reviewer, and escalation-architect subagents must never
+  independently push or publish work; only the primary architect may push the
+  final accepted result after all completion gates succeed.
+- Failed, intermediate, unreviewed, unresolved, unvalidated, unrelated, or
+  unfinished work must never be pushed.
+- Routine force-push is prohibited unless explicitly authorized for a specific
+  situation.
 - Never weaken tests or acceptance criteria to achieve `PASS`.
 - Never change product requirements merely to make implementation easier.
 - Never allow multiple write-capable agents to edit the same implementation
@@ -1409,8 +1431,9 @@ proceed. It must then:
 8. Run `git diff --cached --check`.
 9. Commit exactly once with a concise descriptive message when the task
    authorizes a commit.
-10. Do not push.
-11. STOP without beginning another milestone.
+10. Verify the current branch, upstream, configured remote, and final commit
+    SHA; push the final accepted commit; verify that the remote contains that
+    SHA; then STOP without beginning another milestone.
 
 The final docs/CODEX_TASK_REPORT.md must include:
 
@@ -1428,7 +1451,11 @@ The final docs/CODEX_TASK_REPORT.md must include:
 - escalation-architect diagnosis and result if used;
 - known limitations or concerns;
 - next roadmap milestone; and
-- commit message.
+- commit message;
+- final commit SHA;
+- push success;
+- pushed remote; and
+- pushed branch/upstream.
 
 ---
 
@@ -1615,9 +1642,11 @@ additional reasons to delay completion:
 At that point, document `FOLLOW-UP` and `BACKLOG` findings, update the task
 handoff/report, inspect git diff and status, stage only intended files, run the
 repository's required staged-diff checks, commit according to the existing
-Task Completion Protocol when the task authorizes a commit, and stop. Do not
-begin the next task unless instructed by the established workflow. “Could be
-improved” is not equivalent to “the current task is incorrect.”
+Task Completion Protocol, verify the current branch, upstream, configured
+remote, and final commit SHA, push the final accepted commit, verify that the
+remote contains that SHA, and stop. Do not begin the next task unless
+instructed by the established workflow. “Could be improved” is not equivalent
+to “the current task is incorrect.”
 
 ## Incremental Development Principle
 
@@ -1648,7 +1677,8 @@ not turn a `FOLLOW-UP` or `BACKLOG` into a blocker.
 
 A task is not incomplete merely because work remains after one implementation or
 validation pass. Continue through implementation, validation, screenshots,
-documentation, staging, and commit in the same task whenever safely possible.
+documentation, staging, commit, and the authorized final push in the same task
+whenever safely possible.
 Do not return an unfinished task after a first failed command, browser
 interaction, screenshot attempt, verifier failure, timeout, stale layout, or
 automation mistake while a suspected `BLOCKER` or closed-validation failure
@@ -1707,7 +1737,9 @@ until the successful multi-agent acceptance gates above have been satisfied.
 8. Run `git diff --cached --check`.
 9. Commit with a concise descriptive message when the task authorizes a
    commit.
-10. Do not push.
+10. Verify the current branch, upstream, configured remote, and final commit
+    SHA; push the final accepted commit; verify that the remote contains that
+    SHA.
 11. STOP without beginning another milestone.
 
 If a required check in the closed validation set fails because of an
