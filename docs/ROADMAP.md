@@ -18,7 +18,11 @@ This roadmap answers a different question:
 
 The roadmap is a planning document, not permission for an autonomous agent to continue indefinitely.
 
-**One milestone is one bounded task. After a milestone is completed and committed, STOP. Never automatically begin the next milestone.**
+**One milestone is one bounded task. Complete its full `AGENTS.md` Task
+Completion Protocol—including validation, final inspection/reporting, staged
+checks, commit, verified upstream push, and the post-push Gmail notification
+attempt when available—then STOP. Never automatically begin the next
+milestone.**
 
 ---
 
@@ -64,7 +68,9 @@ The project architect should:
 3. Define bounded acceptance criteria for that milestone.
 4. Implement and review only that milestone.
 5. Commit only after final validation.
-6. Stop after the commit.
+6. Complete the permanent `AGENTS.md` Task Completion Protocol through verified
+   publication and the post-push notification attempt, then stop without
+   beginning the next milestone.
 
 Later roadmap phases describe direction. They are **not** authority to skip prerequisites or start several systems at once.
 
@@ -83,7 +89,11 @@ Where applicable, completion requires:
 - the JDK 8 / GWT production build passes;
 - architectural documentation is updated when behavior or boundaries change;
 - `docs/CODEX_TASK_REPORT.md` is updated;
-- the intended changes are committed once;
+- the intended changes are committed once and the configured upstream is
+  verified to contain the exact final SHA;
+- the post-push Gmail completion notification is attempted when available and
+  its result is reported truthfully;
+- the permanent `AGENTS.md` Task Completion Protocol is complete; and
 - the agent stops rather than beginning the next milestone.
 
 ---
@@ -2999,8 +3009,9 @@ Update this roadmap when a milestone completes or a decision gate resolves.
    implemented; current implementation truth remains in docs/ARCHITECTURE.md.
 6. Record task evidence, limitations, review, commit, and publication in
    docs/CODEX_TASK_REPORT.md.
-7. Stop after the accepted milestone. Never begin the newly unlocked task
-   automatically.
+7. Complete the permanent `AGENTS.md` Task Completion Protocol through verified
+   publication and the post-push notification attempt, then STOP. Never begin
+   the newly unlocked task automatically.
 
 ---
 

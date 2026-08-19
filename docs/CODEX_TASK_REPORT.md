@@ -1,159 +1,121 @@
-# Documentation and Publishing Workflow Correction Report
+# Roadmap Completion-Workflow Consistency Correction Report
 
 Date: 2026-08-18
 
 Task type: bounded documentation/process correction only.
 
-Baseline: clean local `master` synchronized with `origin/master` at accepted
-planning commit `8ef9d78f59c07c395b17fd7c8bd1bdd340d6f2d2`
-(`Redesign roadmap around audit findings`).
+Baseline: clean local `master` synchronized with `origin/master` at
+`a1e1957bd574c731b9dedcd33e0e53fcee1f89f4`
+(`Fix roadmap and publishing workflow`).
 
-Scope: `AGENTS.md`, `docs/ROADMAP.md`, and this rolling report only. No Task 39
-implementation, Relay work, visual implementation, production code, electrical
-behavior, PCB behavior, UI behavior, generator, validator, build, test, or
-CircuitJS integration was changed.
+Scope: `docs/ROADMAP.md` and this rolling report only. Task 39 and every
+implementation milestone remain untouched.
 
-## Summary
+## Contradiction corrected
 
-This correction preserves the accepted audit-driven roadmap design while
-repairing two internal roadmap references and making the project owner's
-push-and-notify completion workflow permanent.
+`AGENTS.md` already defined the normal successful primary-architect workflow as:
 
-- The former Task 60 Difficulty Model migration now points to actual difficulty
-  milestones Tasks 58–59, 80, and 85 rather than Save/Resume Task 88.
-- The intended post-alpha sequence is now explicit and consistent:
+    validation
+      → final diff/status inspection
+      → report and documentation
+      → intended-only staging and cached checks
+      → one final commit
+      → push to the configured upstream
+      → verify the remote contains the exact final SHA
+      → attempt the post-push Gmail completion notification when available
+      → STOP without beginning another milestone
 
-      Task 63 alpha gate
-        → Task 64 static visual/PCB polish
-        → Task 65 continuous LED visual state
-        → Task 66 reusable Relay block expansion
+The roadmap still said both “After a milestone is completed and committed,
+STOP” and “Stop after the commit.” Those statements could end a task before
+publication, remote verification, and notification.
 
-- Task 66 now names Task 65 in both its blocking declaration and dependency
-  description.
-- The Revised Dependency Map now includes Tasks 64–65 between the alpha gate
-  and Tasks 66–79.
-- The permanent completion protocol now requires a verified push followed by a
-  Gmail completion-notification attempt when that capability is available.
-- The rolling report no longer uses self-referential pending SHA/push fields.
+The roadmap now:
 
-Task 39 remains the sole immediate next implementation milestone and was not
-started.
+- preserves one milestone as one bounded task;
+- requires the full permanent `AGENTS.md` Task Completion Protocol before
+  stopping;
+- states that the configured upstream must contain the exact final SHA;
+- includes the post-push Gmail notification attempt and truthful result
+  reporting in its Definition of Done;
+- updates the roadmap-maintenance stop rule to the same boundary; and
+- continues to prohibit automatically beginning the next milestone.
 
-## Permanent workflow change
-
-For normal successful TroubleshootJS tasks, the primary architect now:
-
-1. performs the requested bounded work;
-2. runs the required build/test/browser validation;
-3. inspects the final diff and status;
-4. updates architecture/roadmap documents when applicable and overwrites this
-   rolling report;
-5. stages only intended changes;
-6. runs `git diff --cached --check`;
-7. creates one concise final commit;
-8. pushes the current branch to its configured upstream and verifies the remote
-   contains the exact final SHA;
-9. only after that verified push, sends the project owner a completion email
-   through the connected Gmail capability when available; and
-10. stops without beginning another roadmap milestone.
-
-Failure behavior is explicit:
-
-- Validation failure prevents commit, push, and success email; intended changes
-  remain available for correction and the failure is reported.
-- Commit success followed by push failure preserves the local commit, reports
-  its exact SHA, sends no success email, and stops.
-- Push success followed by Gmail unavailability/failure remains a successfully
-  published Git task, but the notification failure is reported without
-  fabricating delivery.
-- An explicit instruction for an individual task may override automatic commit,
-  push, or notification behavior.
-
-Delegated subagents remain prohibited from publishing; only the primary
-architect performs the accepted final push and notification workflow.
+No detailed process law was duplicated beyond the short sequence needed to
+remove ambiguity; `AGENTS.md` remains authoritative.
 
 ## Files changed
 
-- `AGENTS.md`
-  - updates permanent completion, failure, report, and stop conditions for the
-    verified push and post-push Gmail workflow;
-  - preserves validation-before-publication and primary-only push authority.
 - `docs/ROADMAP.md`
-  - corrects former Task 60's migration target from Task 88 to Task 85;
-  - makes Task 65 an explicit Task 66 prerequisite;
-  - inserts Tasks 64–65 into the dependency map.
+  - corrects the opening milestone boundary;
+  - replaces milestone-selection step 6's stop-after-commit instruction;
+  - aligns the Definition of Done with verified publication and notification;
+  - aligns the roadmap-maintenance stop rule.
 - `docs/CODEX_TASK_REPORT.md`
-  - replaces the prior planning report with this correction-task handoff;
-  - removes permanently stale final-commit/push placeholders.
+  - overwrites the previous correction handoff with this task report.
 
-`docs/ARCHITECTURE.md` was intentionally unchanged because no implemented
-architecture or behavior changed.
+`AGENTS.md` was reviewed and intentionally unchanged. Its normal primary
+workflow is already consistent, and its delegated coder/reviewer/escalation
+prohibitions against committing, pushing, publishing, or notifying remain
+intentional.
 
 ## Validation
 
 - Initial `git status`: clean on `master` with local HEAD and `origin/master`
-  both at `8ef9d78f59c07c395b17fd7c8bd1bdd340d6f2d2`.
-- Allowed-path check: only `AGENTS.md`, `docs/ROADMAP.md`, and this report are
-  intended to differ.
-- Re-read Tasks 58–66, the Former Future-Task Migration Map, the Revised
-  Dependency Map, and the Immediate Next Milestone after editing.
-- Re-read the permanent Task Completion Protocol and multi-agent completion
-  section after editing.
-- Confirmed automatic verified push is the normal default.
-- Confirmed validation failure prevents commit, push, and success email.
-- Confirmed push failure preserves/reports the local commit and prevents a
-  success email.
-- Confirmed Gmail is attempted only after remote verification and its failure
-  cannot masquerade as success.
-- Confirmed an explicit future task instruction may override commit, push, or
-  notification behavior.
-- Stale-reference scan found no difficulty milestone pointing to Save/Resume.
-- Task 66 status/dependencies and the dependency map all agree on Task 65.
-- Forward-dependency scan found no future/self dependency in future milestone
-  status/dependency declarations.
-- Exactly one immediate `[>]` status remains: Task 39.
-- Relay remains revised Task 66.
-- The diff does not touch completed Task 1–38 roadmap history.
-- No roadmap or report claims Task 39 implementation started.
-- No obsolete normal-task do-not-push default remains; subagent publication
-  prohibitions remain intentionally in force.
+  both at `a1e1957bd574c731b9dedcd33e0e53fcee1f89f4`.
+- Allowed-path inspection: only `docs/ROADMAP.md` and this report are intended
+  to differ.
+- Re-read the roadmap Purpose/task-boundary statement, Roadmap Rules →
+  Milestone selection, Definition of Done, Roadmap Maintenance Rules, and
+  Immediate Next Milestone after editing.
+- Searched `AGENTS.md` and `docs/ROADMAP.md` for normal primary-workflow
+  stop-after-commit, do-not-push, and commit-as-final-boundary language.
+- No stale normal-workflow stop-after-commit instruction remains in the
+  roadmap.
+- The primary sequence is unambiguous: commit → push → verify → notification
+  attempt → stop.
+- Delegated subagents remain prohibited from publishing; those rules were not
+  treated as contradictions.
+- Exactly one immediate `[>]` milestone remains Task 39.
+- Task 39's milestone text, scope, dependencies, and status were not modified,
+  and no Task 39 implementation was started.
+- No roadmap ordering, Task 64/65/66 dependency, difficulty migration, or
+  production/architecture content changed.
 - Working-tree `git diff --check`: passed.
 - Final intended-path, diff, status, and staged-diff checks: passed; exactly the
-  three authorized files are staged and `git diff --cached --check` is clean.
-- Production build and browser validation were intentionally not run because
-  this task changes documentation/process only.
+  two authorized files are staged and `git diff --cached --check` is clean.
+- Production JDK/GWT and browser validation were intentionally not run because
+  this correction is documentation/process only.
 
 ## Review and acceptance
 
-Coder subagent: not used; this was a bounded primary-architect documentation
+Coder/reviewer subagents: not used; this was a narrow primary-architect wording
 correction.
 
-Reviewer subagent: not required by this correction brief.
-
-Primary architect review rounds: one bounded edit and consistency pass.
-
-Primary architect result: `FINAL PASS` subject to the required final staging,
-push verification, and notification sequence.
+Primary architect result: `FINAL PASS` subject to the required final staged
+check, verified push, and notification sequence.
 
 Escalation architect: not required.
 
 ## Known limitations
 
-- The final commit SHA, push result, and notification result cannot exist until
-  after this report is written and committed. Their authoritative values are
-  available from repository history and the final Codex task response.
-- This documentation-only correction provides no production-runtime validation
-  evidence and intentionally starts no roadmap implementation.
+- The report is written before its own commit, push, and email action exist, so
+  it cannot contain its authoritative final commit SHA, push result, or
+  notification result. Those exact results are available from repository
+  history and the final Codex task response.
+- This task provides no production-runtime validation evidence and starts no
+  implementation milestone.
 
 ## Completion intent
 
-Intended commit message: `Fix roadmap and publishing workflow`
+Intended commit message: `Align roadmap completion workflow`
 
 Configured publication target: `master -> origin/master`
 
 Notification recipient: `dspevock@stateofthearcelectric.com`
 
-Intended notification subject: `TroubleshootJS: Roadmap correction pushed`
+Intended notification subject:
+`TroubleshootJS: Roadmap completion workflow correction pushed`
 
 Next roadmap milestone: Task 39 — Player-Operable Functional Inputs and
-Customer Retest Contract. It remains selected only and was not started.
+Customer Retest Contract. It remains the sole immediate milestone and was not
+started.
