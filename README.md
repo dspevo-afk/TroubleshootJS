@@ -95,23 +95,56 @@ The exact parts and controls vary by family. Hidden fault identity, expected
 answers, original private values, and developer verification evidence are not
 normal player features.
 
-## Bounded generation
+## Bounded generation and PCB verification
 
-TroubleshootJS does not make unrestricted random circuits. A family generator
-selects from a small set of known electrical patterns, chooses sensible seeded
-parameters, builds the logical circuit and PCB representation, and installs
-the generated board into the workbench. CircuitJS-backed healthy and faulted
-checks, scenario compatibility, and current diagnostic-admission checks then
-gate whether that installed board becomes `READY` and playable. Unsupported
-or uninteresting candidates stay out of the normal playable `READY` state or
-are rejected by admission; they are not papered over with a fake UI result.
+TroubleshootJS deliberately does not create arbitrary random netlists and hope
+that they happen to make good troubleshooting puzzles. Each current family
+starts from a bounded electrical pattern with supported player operations and
+fault types. A seed then selects sensible values and variants so that a
+challenge can be reproduced for a given generator version.
+
+Electrical generation and PCB generation are separate stages. The logical
+board owns stable component, pad, and net identities; the physical PCB layout
+consumes those identities rather than redefining the circuit. Where the current
+seeded PCB layout generator is used, it places connected components and pads,
+then routes the already-defined nets with deterministic bounded placement and
+Manhattan/A* routing. Component keep-outs, routing courtyards, pad escape paths,
+and geometry validation are used to keep unrelated copper from cutting through
+parts or silently connecting the wrong things. This is intentionally a
+simplified, readable one-sided PCB model rather than fabrication-grade
+autorouting.
+
+A generated board also does not become playable merely because the renderer
+managed to draw it. The admission pipeline is intended to reject boards that
+are electrically invalid, physically unserviceable, or effectively impossible
+to diagnose with the controls given to the player. In broad terms, the current
+checks do the following:
+
+1. Build and solve the healthy CircuitJS circuit and confirm its expected
+   baseline behavior.
+2. Choose a compatible hidden fault candidate, apply it to the active
+   simulation, and confirm that it produces a meaningful customer-facing
+   symptom.
+3. Check scenario compatibility and required unaffected behavior so a fault
+   does not accidentally invalidate the rest of the job.
+4. Check the physical fault locus and serviceability path: the relevant fault
+   must correspond to something the player can observe, isolate, remove,
+   reconnect, or replace through supported workbench actions.
+5. Run diagnostic-solvability verification through real rendered probe
+   endpoints and CircuitJS-backed meter modes, board power and functional
+   inputs, temporal waits where needed, isolation actions, repair, and customer
+   retest. The goal is to prove that the challenge can be worked from player
+   evidence rather than from private fault metadata.
+6. Admit the candidate to the normal `READY` state only after the applicable
+   checks pass. Unsupported candidates remain developer-only or are rejected
+   rather than being papered over with a scripted answer.
 
 The seed makes a challenge reproducible for a given generator version. That is
-useful for debugging, tests, and discussing a particular board. The long-term
-goal is to use these bounded building blocks to create richer troubleshooting
-situations with more realistic ambiguity, purposeful supporting circuitry,
-and additional repair choices. Broad procedural composition is not part of the
-current player surface.
+useful for debugging, tests, bug reports, and discussing a particular board.
+The long-term goal is to use these bounded building blocks to create richer
+troubleshooting situations with more realistic ambiguity, purposeful
+supporting circuitry, and additional repair choices. Broad procedural
+composition is not part of the current player surface.
 
 ## Current status and limitations
 
@@ -156,12 +189,17 @@ repair really fixed the customer's problem.
 
 ## AI-assisted development
 
-Development of this project is AI-assisted. AI tools may help with code
-exploration, implementation drafts, tests, documentation, and review. The
-human maintainer remains responsible for the architecture, requirements,
-validation, and final decisions; generated suggestions are checked against the
-repository and the CircuitJS-backed behavior rather than accepted as proof on
-their own.
+TroubleshootJS is developed extensively with AI coding agents. AI is used to
+explore the legacy codebase, implement features, write tests, produce
+documentation, and perform code review. This repository should not be read as a
+claim that the maintainer personally hand-wrote the Java.
+
+The maintainer's role is defining what the simulator should do, deciding
+whether the electronics and troubleshooting behavior makes sense, setting
+architecture and acceptance requirements, and rejecting or revising work that
+does not meet them. AI output is not treated as correct simply because an
+agent produced it; changes are built, tested, reviewed, and checked against
+CircuitJS-backed behavior before they are accepted.
 
 ## Build and run on Windows
 
@@ -179,8 +217,8 @@ system default, but `JAVA_HOME` must point to JDK 8 for this project. For the
 current PowerShell session:
 
 ```powershell
-$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-8.0.502.7-hotspot'
-& "$env:JAVA_HOME\bin\java.exe" -version
+$env:JAVA_HOME = 'C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.502.7-hotspot'
+& "$env:JAVA_HOME\\bin\\java.exe" -version
 ```
 
 The first line of the version output should begin with `openjdk version "1.8`
@@ -200,13 +238,13 @@ available; it does not install Java for you.
 From the repository root:
 
 ```powershell
-.\scripts\build.ps1
+.\\scripts\\build.ps1
 ```
 
 To select JDK 8 without changing `JAVA_HOME`:
 
 ```powershell
-.\scripts\build.ps1 -JavaHome 'C:\path\to\jdk8'
+.\\scripts\\build.ps1 -JavaHome 'C:\\path\\to\\jdk8'
 ```
 
 On first use, the script downloads and SHA-256-verifies the pinned compiler
@@ -219,7 +257,7 @@ If PowerShell blocks repository scripts, use a process-local execution-policy
 override:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\build.ps1
 ```
 
 ### Production preview and explicit challenges
@@ -227,26 +265,26 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build.ps1
 After a build, start a visible production preview with Quick Play:
 
 ```powershell
-.\scripts\start-preview.ps1 -QuickPlay -OpenBrowser
+.\\scripts\\start-preview.ps1 -QuickPlay -OpenBrowser
 ```
 
 You can also open a particular seeded family while developing or reproducing a
 challenge:
 
 ```powershell
-.\scripts\start-preview.ps1 -Challenge led -Seed 3 -OpenBrowser
-.\scripts\start-preview.ps1 -Challenge diode -Seed 3 -OpenBrowser
-.\scripts\start-preview.ps1 -Challenge parallel -Seed 3 -OpenBrowser
-.\scripts\start-preview.ps1 -Challenge rc -Seed 3 -OpenBrowser
-.\scripts\start-preview.ps1 -Challenge npn -Seed 0 -OpenBrowser
-.\scripts\start-preview.ps1 -Challenge nmos -Seed 0 -OpenBrowser
+.\\scripts\\start-preview.ps1 -Challenge led -Seed 3 -OpenBrowser
+.\\scripts\\start-preview.ps1 -Challenge diode -Seed 3 -OpenBrowser
+.\\scripts\\start-preview.ps1 -Challenge parallel -Seed 3 -OpenBrowser
+.\\scripts\\start-preview.ps1 -Challenge rc -Seed 3 -OpenBrowser
+.\\scripts\\start-preview.ps1 -Challenge npn -Seed 0 -OpenBrowser
+.\\scripts\\start-preview.ps1 -Challenge nmos -Seed 0 -OpenBrowser
 ```
 
 The detached preview defaults to port 8899 and prints the URL it is using. To
 stop the preview managed by the repository scripts:
 
 ```powershell
-.\scripts\stop-preview.ps1
+.\\scripts\\stop-preview.ps1
 ```
 
 ### Checks for contributors
@@ -254,13 +292,13 @@ stop the preview managed by the repository scripts:
 With the production preview running, the main browser regression matrix is:
 
 ```powershell
-.\scripts\verify-browser.ps1
+.\\scripts\\verify-browser.ps1
 ```
 
 The normal-player replacement flow can be run separately:
 
 ```powershell
-.\scripts\verify-browser.ps1 -NormalPlayer
+.\\scripts\\verify-browser.ps1 -NormalPlayer
 ```
 
 The repository also contains focused developer routes for the six families,
@@ -274,7 +312,7 @@ The legacy GWT DevMode server is retained for compiler development only. It is
 not the recommended player preview:
 
 ```powershell
-.\scripts\dev.ps1
+.\\scripts\\dev.ps1
 ```
 
 Then open <http://127.0.0.1:8888/circuitjs.html>. Stop it with `Ctrl+C` in its
