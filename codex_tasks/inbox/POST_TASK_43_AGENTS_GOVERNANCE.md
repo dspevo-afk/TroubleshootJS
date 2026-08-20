@@ -149,9 +149,27 @@ Investigators must not:
 
 They return concise evidence and recommendations to the primary architect.
 
+### Required-report barrier before decisions or implementation
+
+When the architect delegates investigators, reviewers, or other subagents whose reports are designated as required for the current decision, those reports form a hard synchronization barrier.
+
+The architect must wait until **all required active reports have arrived before making the architectural decision, finalizing synthesis, choosing an implementation strategy, classifying the next implementation chunk, or spawning a production coder**.
+
+A partial set of reports is evidence, not permission to decide early. The architect must not conclude that it has "seen enough," pre-commit to a design, or start implementation while another required report is still outstanding.
+
+If one required report arrives before the others, the architect may retain that completed report, but must return to dormant/event-driven waiting until every remaining required report arrives unless:
+
+- the completed report identifies a concrete blocker that requires immediate user action;
+- the completed report proves the remaining delegated work is invalid or unsafe to continue; or
+- the user explicitly changes the plan.
+
+When all required reports have arrived, the architect must consider the full set together before making the decision. Investigator voting does not determine the answer; the architect still resolves conflicts from evidence.
+
+A delegated investigation/review phase does not silently authorize the following implementation phase. The current task instructions or explicit user authorization still control what work may begin next.
+
 ### Architect synthesis is mandatory before implementation
 
-The architect must synthesize the investigation reports into **one authoritative implementation plan**.
+Only after the required-report barrier is satisfied may the architect synthesize the investigation reports into **one authoritative implementation plan**.
 
 The architect decides. Investigators advise.
 
@@ -399,11 +417,42 @@ Model switching is sequential, not tag-team editing.
 
 ---
 
-## 8. Subagent patience and anti-polling policy
+## 8. Subagent patience, event-driven idling, and anti-polling policy
 
 Once implementation, review, correction, investigation, or escalation has been delegated and the assigned subagent is actively working, the architect should trust delegated ownership and allow the subagent to work.
 
 The architect must not repeatedly poll activity merely to reassure itself that the subagent is still alive.
+
+### Event-driven dormant wait is mandatory when supported
+
+When the runtime supports automatic subagent-completion notifications, the architect must use them instead of continuing to think, poll, narrate, or spend credits while merely waiting.
+
+After delegating work whose result is required before the architect can make the next decision, the architect should enter this state explicitly:
+
+> **Remain alive but completely idle, and resume only on sub-agent completion.**
+
+While in that dormant wait state, the architect must not:
+
+- consume reasoning/model cycles merely to observe elapsed time;
+- issue periodic status narration;
+- say things such as "the worktree remains unchanged," "the agent is still working," "no new commits," "I continue to wait," or equivalent;
+- inspect git status, diffs, timestamps, logs, processes, partial files, or browser state merely to prove activity;
+- request progress updates that are not needed for a decision;
+- launch duplicate or speculative agents;
+- start a coder before required investigator/reviewer reports are complete;
+- make the pending architectural/implementation decision before all reports designated as required for that decision are complete;
+- perform unrelated analysis or implementation while waiting;
+- treat silence as permission to advance to the next phase.
+
+Credit/compute conservation is part of this rule. Dormant waiting should not burn architect cycles simply to report that nothing has happened.
+
+The architect may wake from dormant wait when a delegated subagent sends a completion notification, reports `BLOCKED`/`FAILURE`, requests clarification, the user supplies materially new instructions, or another genuine synchronization event occurs.
+
+If **multiple required subagents** are outstanding, the completion of one does not authorize the architect to make the pending decision, finalize synthesis, or begin dependent implementation. Retain the completed result as needed, then return to dormant wait until all required reports are available unless the new result establishes a concrete blocker or the user explicitly changes the plan.
+
+Do not terminate the orchestration merely because the architect is idling if the runtime supports remaining alive for completion notifications. The desired behavior is dormant and event-driven, not periodic polling and not premature session termination.
+
+### Wasteful liveness polling
 
 Wasteful liveness polling includes repeatedly:
 
@@ -421,17 +470,30 @@ Wasteful liveness polling includes repeatedly:
 
 Long elapsed time, silence, a long build, a long verifier run, or an unchanged file timestamp are not themselves evidence of failure.
 
-Prefer event-driven completion: delegate, let the phase run, react when the subagent returns, reports `BLOCKED`/`FAILURE`, requests clarification, or reaches a real synchronization point.
+Prefer event-driven completion: delegate, enter dormant wait when supported, and react when the subagent returns, reports `BLOCKED`/`FAILURE`, requests clarification, or reaches a real synchronization point.
 
-If the environment has no event-driven completion mechanism, an occasional lightweight status check is permitted. Do not poll an apparently active subagent more frequently than approximately once every 30 minutes solely for liveness. Longer intervals are preferred for large architecture tasks, and this is a ceiling on unnecessary polling frequency, not a requirement to poll every 30 minutes.
+If the environment has **no event-driven completion mechanism**, an occasional lightweight status check is permitted. Do not poll an apparently active subagent more frequently than approximately once every 30 minutes solely for liveness. Longer intervals are preferred for large architecture tasks, and this is a ceiling on unnecessary polling frequency, not a requirement to poll every 30 minutes.
 
 More frequent checking is permitted only for a concrete reason such as an explicit user status request, a known timeout/process failure, a subagent request/blocker, unexpected termination, suspected destructive/out-of-scope behavior, materially new user information, or an explicit synchronization point.
 
 Do not terminate, replace, duplicate, or spawn another coder for the same implementation merely because the current coder has been quiet.
 
+### Explicit authorization controls new work
+
+The architect/coordinator is not authorized to invent work merely because it can see a plausible next step.
+
+Do not start a new coder, add investigators, begin the next implementation chunk, continue into a later phase, edit production files directly, or expand the task unless that action is authorized by the current task instructions or by an explicit user instruction.
+
+A request to investigate does not imply permission to implement.
+A request to review does not imply permission to repair.
+A completed subagent does not imply permission to launch the next phase.
+Silence does not imply permission to continue.
+
+When the currently authorized step is complete and no next action is authorized, report the result and stop. The architect's primary role is to delegate, synthesize, review, classify, and coordinate within the requested scope, not to keep itself busy.
+
 Governing principle:
 
-> Delegate, trust the delegated phase, and inspect the result when it returns. Do not pay a senior architect to stare at file modification timestamps.
+> Delegate, go dormant when the platform can wake you, trust the delegated phase, and inspect the complete required evidence set when it returns. Do not pay a senior architect to narrate waiting or stare at file modification timestamps.
 
 ---
 
@@ -687,6 +749,7 @@ Primary architect
          A: architecture/ownership
          B: regressions/coupling/validation
          C: adversarial feasibility/falsification
+    -> dormant/event-driven wait until ALL required reports are complete
     -> architect synthesis into one authoritative plan
     -> ordered implementation chunks
          Spark for `SPARK_SAFE` chunks
@@ -694,6 +757,7 @@ Primary architect
          write ownership sequential
     -> complete assembled candidate
     -> fresh independent Luna MAX reviewer
+    -> dormant/event-driven wait for required review reports
     -> primary architect diagnosis/classification
     -> if correction needed:
          Spark for exact MECHANICAL correction
@@ -754,14 +818,23 @@ Because this is governance/documentation only:
 - confirm read-only parallel investigation is allowed without authorizing parallel writes;
 - confirm normal complex tasks are generally capped at 2–3 investigators rather than encouraging unlimited fan-out;
 - confirm at least one investigator may be assigned adversarial feasibility/falsification on architecture-sensitive work;
+- confirm **all reports designated as required for a decision must be complete before the architect makes that decision, finalizes synthesis, or launches dependent implementation**;
+- confirm a partial report set cannot be treated as "enough" to decide early;
 - confirm the architect must synthesize investigator findings into one plan before implementation;
 - confirm contradictory investigator opinions are not handed unresolved to the coder;
 - confirm a fresh independent Luna MAX reviewer is requested for substantive assembled implementations where supported;
 - confirm the reviewer is read-only and does not replace architect final responsibility;
 - confirm the architect is discouraged from routinely implementing delegated corrections itself;
+- confirm event-driven dormant waiting is mandatory when the runtime can automatically wake the architect on subagent completion;
+- confirm the architect is instructed to **remain alive but completely idle, and resume only on sub-agent completion** while waiting;
+- confirm periodic narration such as "the worktree remains unchanged," "the agent is still working," or equivalent is explicitly prohibited;
+- confirm dormant waiting is intended to conserve compute/credits rather than spend architect cycles observing elapsed time;
 - confirm repeated last-edit timestamp/git-status/diff/log/process liveness polling is explicitly prohibited;
-- confirm occasional lightweight status checks remain permitted when genuinely useful;
+- confirm occasional lightweight status checks remain permitted only when no event-driven completion exists or a concrete reason requires them;
+- confirm if multiple required subagents are outstanding, one completion causes the architect to return to dormant wait rather than make the pending decision early;
 - confirm long silence or unchanged files alone do not authorize killing/replacing an active subagent;
+- confirm the architect cannot invent new work, agents, implementation phases, or production edits merely because it sees a plausible next step;
+- confirm investigation does not imply implementation authorization, review does not imply repair authorization, and silence does not imply permission to continue;
 - confirm the convergence rule does not weaken persistence requirements;
 - confirm the feasibility rule explicitly allows `REALIZATION_INFEASIBLE` as a valid supported engineering conclusion;
 - confirm infeasibility does not become permission to call an entire feature impossible without evidence;
@@ -775,22 +848,27 @@ Explicitly inspect the final Multi-Agent Development Protocol and verify that a 
 2. Large/risky tasks may use 2–3 distinct read-only Luna MAX investigators before implementation.
 3. Investigators advise; the architect synthesizes and decides.
 4. At least one investigator may be tasked specifically with falsifying feasibility/assumptions.
-5. The architect decomposes the accepted plan into ordered chunks with explicit contracts and validation.
-6. Spark handles only fully specified mechanical chunks/corrections.
-7. Architecture-sensitive chunks/corrections use Luna MAX.
-8. Luna Extra High is not an intentional substitute for Luna MAX when MAX is required.
-9. Platform-side spawn downgrade should be recorded, not fought with endless respawning.
-10. Only one write-capable coder owns a given implementation surface at once.
-11. Fresh independent Luna MAX review attacks the complete assembled candidate after substantive implementation.
-12. Architect diagnoses and delegates corrections instead of routinely fixing production code itself.
-13. An active subagent should normally be left alone to work.
-14. Repeatedly checking last-edit timestamps, git status, diffs, logs, or process activity merely to prove liveness is prohibited.
-15. Approximately 30 minutes is the default minimum interval between purely liveness-oriented checks when no event-driven completion mechanism exists, with longer intervals appropriate for large tasks.
-16. Repeated non-converging local edits require a re-baseline/root-cause diagnosis.
-17. Agents are explicitly allowed to determine that a specific realization is infeasible under current constraints.
-18. `REALIZATION_INFEASIBLE` should identify the smallest constraint that must change rather than triggering endless brute force.
-19. A proven infeasible realization is a valid engineering result, not a failure to obey persistence rules.
-20. Parallel read-only analysis is a way to reduce uncertainty, not an excuse to maximize agent count.
+5. **Every report designated as required for the pending decision must arrive before that decision or dependent implementation is allowed.**
+6. A partial set of required reports never authorizes an early architectural conclusion merely because the architect believes it already knows the answer.
+7. The architect decomposes the accepted plan into ordered chunks with explicit contracts and validation.
+8. Spark handles only fully specified mechanical chunks/corrections.
+9. Architecture-sensitive chunks/corrections use Luna MAX.
+10. Luna Extra High is not an intentional substitute for Luna MAX when MAX is required.
+11. Platform-side spawn downgrade should be recorded, not fought with endless respawning.
+12. Only one write-capable coder owns a given implementation surface at once.
+13. Fresh independent Luna MAX review attacks the complete assembled candidate after substantive implementation.
+14. Architect diagnoses and delegates corrections instead of routinely fixing production code itself.
+15. When event-driven subagent completion is supported, the architect remains alive but completely idle until a required completion event arrives.
+16. With multiple required active reports, each partial completion is followed by dormant waiting until the complete required evidence set exists.
+17. Repeatedly checking last-edit timestamps, git status, diffs, logs, or process activity merely to prove liveness is prohibited.
+18. Periodic "still waiting" or "worktree unchanged" narration is prohibited.
+19. Approximately 30 minutes is the default minimum interval between purely liveness-oriented checks only when no event-driven completion mechanism exists, with longer intervals appropriate for large tasks.
+20. The architect performs only the work explicitly authorized by the current task/user and does not invent follow-on work merely to stay busy.
+21. Repeated non-converging local edits require a re-baseline/root-cause diagnosis.
+22. Agents are explicitly allowed to determine that a specific realization is infeasible under current constraints.
+23. `REALIZATION_INFEASIBLE` should identify the smallest constraint that must change rather than triggering endless brute force.
+24. A proven infeasible realization is a valid engineering result, not a failure to obey persistence rules.
+25. Parallel read-only analysis is a way to reduce uncertainty, not an excuse to maximize agent count.
 
 Update the appropriate task/report documentation only as required by the current governance/task-completion protocol.
 
