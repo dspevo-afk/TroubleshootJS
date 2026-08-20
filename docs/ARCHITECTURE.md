@@ -1307,4 +1307,49 @@ The LED Quick Play seed envelope is family-specific `{0, 2, 3, 4}` so the
 new LED-owned route is reachable while the other legacy family envelopes and
 their established seed mappings remain unchanged. Classification is not a
 player-facing difficulty selector and no future topology/composition system
-is introduced. Task 43 is the next eligible milestone; it remains unstarted.
+is introduced.
+
+## Task 43R-1 — physical package contract and geometry identity
+
+Task 43R-1 freezes package-local physical geometry as an immutable contract.
+`PhysicalPackageGeometry` owns body, connected and lifted lead poses, pad
+geometry, body keep-out, routing courtyard, selection, drag, and interaction
+surfaces. Board-pad probe surfaces and component-lead probe surfaces are
+separate declarations; the package validator rejects overlap within the full
+cross-terminal surface matrix, including peer board pads and component-lead
+probes. A placed geometry object projects these immutable values by checked
+translation rather than mutating package state.
+
+`PhysicalPackage` owns stable package identity, ordered terminal IDs, internal
+connectivity, the geometry-contract version, and a finite canonical catalog of
+named variants. Axial resistor variants are exactly `SPAN_220`, `SPAN_240`,
+and `SPAN_260`; axial diode variants are `SPAN_230` and `SPAN_250`; the
+two-terminal connector declares base and `MIRROR_X` realizations. Each
+placement retains its canonical package object, variant key, transform key,
+and geometry version. `PcbComponentPlacement.geometryFingerprint()` includes
+those values and the declared loose/default variant, so translation and layout
+identity cannot silently discard the selected physical realization.
+
+The package declares the loose/default projection explicitly. Installed,
+lifted, removed, reinstalled, and replacement operations retain the selected
+board placement realization; an unassigned loose projection uses the package's
+declared default rather than inferring geometry from a package ID. Legacy
+no-geometry `PhysicalPackage` constructors are marked developer-generic
+compatibility boundaries, the authoritative constructor rejects null or
+generic production geometry, and package-less placement compatibility is
+rejected for production. Legacy `PcbPadPlacement` constructors remain
+untouched; generated layouts continue to require package-backed placements.
+
+The focused Task 43 verifier enumerates the package catalog and checks
+determinism, terminal order, translation, canonical-object identity,
+undeclared/foreign geometry rejection, malformed escape and surface canaries,
+geometry-version identity, connector orientation, and stable generated board
+component/pad/net/semantic IDs. This contract change does not modify routes,
+CircuitJS elements, electrical endpoints, providers, renderers, or board
+mutation behavior.
+
+The existing renderer, physical-part context, and loose-tray consumers still
+consume the legacy board-side/default projection and cannot yet carry the
+selected footprint variant into the component-side rendering path. That is an
+explicit `REALIZATION_INFEASIBLE` consumer boundary deferred to Task 43R-2;
+43R-1 freezes the package contract without claiming that consumer migration.

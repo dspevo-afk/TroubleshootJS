@@ -1,3 +1,63 @@
+# Task 43R-1 — Freeze the Physical Package Contract and Geometry Identity
+
+Date: 2026-08-20
+
+Status: `FINAL PASS` locally on `codex/task43-recovery-integration`; the
+milestone was committed without pushing. The implementation started from
+checkpoint `239b52f0c1fd36eac5ccb65ad7dbe559474c1800` and did not modify
+`master` (`c0eb342b29165b8218a4b97b16fb8554fee42aff`).
+
+## Scope and behavior
+
+Task 43R-1 freezes the package-owned physical geometry contract and its
+deterministic identity. `PhysicalPackageGeometry` remains immutable and now
+declares separate board-pad probe surfaces plus connected/lifted component-lead
+poses and probe surfaces. Validation enforces envelope containment, ordered
+terminal identity, checked geometry arithmetic, valid escape vectors, and the
+complete pairwise non-overlap matrix across board-pad and component-lead probe
+surfaces.
+
+`PhysicalPackage` owns authoritative package identity, terminal order, internal
+connectivity, the explicit geometry-contract version, and finite canonical
+variant catalogs. Resistor spans are 220/240/260, diode spans are 230/250, and
+the two-terminal connector has explicit base and mirrored-right realizations.
+`PcbComponentPlacement` carries the selected canonical geometry, variant key,
+transform key, version, and explicit loose/default variant in its fingerprint.
+Translation preserves the selected realization and stable electrical/semantic
+IDs.
+
+Production packages require authoritative geometry. Legacy no-geometry package
+constructors are explicitly marked developer-generic compatibility boundaries;
+package-less production placements reject, while developer generic projection
+remains available only for canaries. `PcbPadPlacement`, routes, renderers,
+providers, board mutation, CircuitJS elements, and `AGENTS.md` were not changed.
+
+## Validation evidence
+
+- JDK 8u502 OBF GWT compile/link passed for all five permutations using
+  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07`.
+- Browser verifier passed: `PASS task43 physical package geometry contract`.
+- The verifier covered every registered production/developer package and
+  declared variant, connector orientation, deterministic placement, translation,
+  foreign/undeclared geometry, malformed escape, malformed board-pad and
+  lifted-lead geometry, cross-terminal probe overlap, version identity, and
+  stable generated component/pad/net/semantic IDs.
+- `git diff --check` passed after the implementation and correction.
+- Independent read-only Luna MAX reviewer first identified and then PASSed the
+  corrected cross-terminal probe matrix. The reviewer confirmed exactly the
+  authorized package/placement/verifier files changed and no electrical, route,
+  renderer, provider, or board-mutation changes.
+
+## Deferred boundary
+
+The current renderer, physical-part context, and loose-tray consumers still use
+the legacy board-side/default projection and do not carry selected footprint
+variants into component-side rendering. This remains the explicit
+`REALIZATION_INFEASIBLE` Task 43R-2 consumer boundary. No Task 43R-2 or Task 44
+work was started.
+
+---
+
 # Task 42 — Existing-Family Diagnostic Diversity Proof
 
 Date: 2026-08-19

@@ -5,15 +5,14 @@ import java.util.Vector;
 /**
  * Immutable physical envelope for one package in package-local coordinates.
  *
- * The package origin is the footprint/placement origin.  Electrical identity
+ * The package origin is the footprint/placement origin. Electrical identity
  * is deliberately absent: this class only describes where a physical feature
  * is, so translating or compacting a board cannot change its node mapping.
  *
- * Width and height define the nominal Rectangle(0, 0, width, height), not a
- * containment box for every declared feature.  Interaction and routing margins
- * are allowed to extend beyond that nominal rectangle; built-in packages
- * intentionally use that policy and consumers must use the declared envelopes
- * for containment.
+ * Board-pad and component-lead probe surfaces are deliberately separate. The
+ * legacy probe accessors below are explicitly board-pad aliases because the
+ * existing PCB pad/loose consumers have not yet migrated to the 43R-2
+ * component-lead surface.
  */
 final class PhysicalPackageGeometry {
     private final int width;
@@ -24,13 +23,32 @@ final class PhysicalPackageGeometry {
     private final Rectangle routingCourtyard;
     private final Rectangle selectionEnvelope;
     private final Rectangle dragEnvelope;
+    private final PcbGeometryContractVersion geometryContractVersion;
+    private final boolean developerGeneric;
 
     PhysicalPackageGeometry(int width, int height, Vector<Terminal> terminals,
             Rectangle bodyBounds, Rectangle bodyKeepOut, Rectangle routingCourtyard,
             Rectangle selectionEnvelope, Rectangle dragEnvelope) {
+        this(width, height, terminals, bodyBounds, bodyKeepOut, routingCourtyard,
+            selectionEnvelope, dragEnvelope, PcbGeometryContractVersion.current(), false);
+    }
+
+    PhysicalPackageGeometry(int width, int height, Vector<Terminal> terminals,
+            Rectangle bodyBounds, Rectangle bodyKeepOut, Rectangle routingCourtyard,
+            Rectangle selectionEnvelope, Rectangle dragEnvelope,
+            PcbGeometryContractVersion geometryContractVersion) {
+        this(width, height, terminals, bodyBounds, bodyKeepOut, routingCourtyard,
+            selectionEnvelope, dragEnvelope, geometryContractVersion, false);
+    }
+
+    private PhysicalPackageGeometry(int width, int height, Vector<Terminal> terminals,
+            Rectangle bodyBounds, Rectangle bodyKeepOut, Rectangle routingCourtyard,
+            Rectangle selectionEnvelope, Rectangle dragEnvelope,
+            PcbGeometryContractVersion geometryContractVersion, boolean developerGeneric) {
         if (width <= 0 || height <= 0 || terminals == null || terminals.size() == 0 ||
                 bodyBounds == null || bodyKeepOut == null || routingCourtyard == null ||
-                selectionEnvelope == null || dragEnvelope == null)
+                selectionEnvelope == null || dragEnvelope == null ||
+                geometryContractVersion == null)
             throw new IllegalArgumentException("Invalid physical package geometry");
         this.width = width;
         this.height = height;
@@ -45,32 +63,44 @@ final class PhysicalPackageGeometry {
         this.routingCourtyard = copyPositive(routingCourtyard, "routing courtyard");
         this.selectionEnvelope = copyPositive(selectionEnvelope, "selection envelope");
         this.dragEnvelope = copyPositive(dragEnvelope, "drag envelope");
+        this.geometryContractVersion = geometryContractVersion;
+        this.developerGeneric = developerGeneric;
         validate();
     }
 
     int getWidth() { return width; }
     int getHeight() { return height; }
+    PcbGeometryContractVersion getGeometryContractVersion() {
+        return geometryContractVersion;
+    }
+    int getGeometryContractVersionValue() { return geometryContractVersion.getValue(); }
+    boolean isDeveloperGeneric() { return developerGeneric; }
+
     Vector<Terminal> getTerminals() {
         Vector<Terminal> result = new Vector<Terminal>();
         for (Terminal terminal : terminals)
             result.add(terminal.copy());
         return result;
     }
+
     Vector<String> getTerminalIds() {
         Vector<String> result = new Vector<String>();
         for (Terminal terminal : terminals)
             result.add(terminal.getTerminalId());
         return result;
     }
+
     Terminal getTerminal(String terminalId) {
         for (Terminal terminal : terminals)
             if (terminal.getTerminalId().equals(terminalId))
                 return terminal.copy();
         return null;
     }
+
     Terminal getTerminal(int index) {
         return index < 0 || index >= terminals.size() ? null : terminals.get(index).copy();
     }
+
     /** Nominal placement rectangle; declared margins are intentionally excluded. */
     Rectangle getNominalBounds() { return new Rectangle(0, 0, width, height); }
     Rectangle getBodyBounds() { return new Rectangle(bodyBounds); }
@@ -82,25 +112,24 @@ final class PhysicalPackageGeometry {
     Placement placedAt(int x, int y) { return new Placement(this, x, y); }
 
     /**
-     * Returns the package-owned edge variant with its local X axis mirrored.
-     * This keeps the package contract immutable while preserving the historical
-     * left/right edge placement rule used by connector footprints.
+     * Returns the package-declared mirrored realization. This does not mutate
+     * this geometry; package definitions retain the returned object as a
+     * canonical variant.
      */
     PhysicalPackageGeometry mirroredHorizontally() {
         Vector<Terminal> mirrored = new Vector<Terminal>();
         for (Terminal terminal : terminals) {
-            Point pad = mirrorPoint(terminal.padCenter);
-            Point probe = mirrorPoint(terminal.probeCenter);
-            Lead lead = terminal.lead;
-            mirrored.add(new Terminal(terminal.terminalId, pad,
-                mirrorRect(terminal.padBounds), probe, mirrorRect(terminal.probeBounds),
-                new Lead(mirrorPoint(lead.padPoint), mirrorPoint(lead.bodyPoint),
-                    mirrorRect(lead.bounds)), -terminal.escapeDx, terminal.escapeDy,
-                terminal.escapeLength));
+            mirrored.add(new Terminal(terminal.terminalId,
+                mirrorPoint(terminal.padCenter), mirrorRect(terminal.padBounds),
+                mirrorPoint(terminal.boardPadProbeCenter),
+                mirrorRect(terminal.boardPadProbeBounds),
+                mirrorLead(terminal.connectedLead), mirrorLead(terminal.liftedLead),
+                -terminal.escapeDx, terminal.escapeDy, terminal.escapeLength));
         }
         return new PhysicalPackageGeometry(width, height, mirrored,
             mirrorRect(bodyBounds), mirrorRect(bodyKeepOut), mirrorRect(routingCourtyard),
-            mirrorRect(selectionEnvelope), mirrorRect(dragEnvelope));
+            mirrorRect(selectionEnvelope), mirrorRect(dragEnvelope),
+            geometryContractVersion, developerGeneric);
     }
 
     /** Package-local geometry translated into board coordinates. */
@@ -110,6 +139,8 @@ final class PhysicalPackageGeometry {
         private final int y;
 
         private Placement(PhysicalPackageGeometry source, int x, int y) {
+            if (source == null)
+                throw new IllegalArgumentException("Missing package geometry placement source");
             this.source = source;
             this.x = x;
             this.y = y;
@@ -120,72 +151,127 @@ final class PhysicalPackageGeometry {
         Rectangle getRoutingCourtyard() { return translated(source.routingCourtyard); }
         Rectangle getSelectionEnvelope() { return translated(source.selectionEnvelope); }
         Rectangle getDragEnvelope() { return translated(source.dragEnvelope); }
+
         Point getPadPoint(int index) {
             Terminal terminal = source.getTerminal(index);
             return terminal == null ? null : translate(terminal.getPadCenter());
         }
+
         Rectangle getPadBounds(int index) {
             Terminal terminal = source.getTerminal(index);
             return terminal == null ? null : translated(terminal.getPadBounds());
         }
-        Point getProbePoint(int index) {
+
+        Point getBoardPadProbeCenter(int index) {
             Terminal terminal = source.getTerminal(index);
-            return terminal == null ? null : translate(terminal.getProbeCenter());
+            return terminal == null ? null : translate(terminal.getBoardPadProbeCenter());
         }
-        Rectangle getProbeBounds(int index) {
+
+        Rectangle getBoardPadProbeBounds(int index) {
             Terminal terminal = source.getTerminal(index);
-            return terminal == null ? null : translated(terminal.getProbeBounds());
+            return terminal == null ? null : translated(terminal.getBoardPadProbeBounds());
         }
+
+        Point getComponentLeadProbeCenter(int index) {
+            return getComponentLeadProbeCenter(index, false);
+        }
+
+        Point getComponentLeadProbeCenter(int index, boolean lifted) {
+            Terminal terminal = source.getTerminal(index);
+            return terminal == null ? null : translate(
+                terminal.getComponentLeadProbeCenter(lifted));
+        }
+
+        Rectangle getComponentLeadProbeBounds(int index) {
+            return getComponentLeadProbeBounds(index, false);
+        }
+
+        Rectangle getComponentLeadProbeBounds(int index, boolean lifted) {
+            Terminal terminal = source.getTerminal(index);
+            return terminal == null ? null : translated(
+                terminal.getComponentLeadProbeBounds(lifted));
+        }
+
         Point getLeadBodyPoint(int index) {
-            Terminal terminal = source.getTerminal(index);
-            return terminal == null ? null : translate(terminal.getLead().getBodyPoint());
+            return getLeadBodyPoint(index, false);
         }
+
+        Point getLeadBodyPoint(int index, boolean lifted) {
+            Terminal terminal = source.getTerminal(index);
+            return terminal == null ? null : translate(terminal.getLead(lifted).getBodyPoint());
+        }
+
         Rectangle getLeadBounds(int index) {
+            return getLeadBounds(index, false);
+        }
+
+        Rectangle getLeadBounds(int index, boolean lifted) {
             Terminal terminal = source.getTerminal(index);
-            return terminal == null ? null : translated(terminal.getLead().getBounds());
+            return terminal == null ? null : translated(terminal.getLead(lifted).getBounds());
         }
+
+        /** Legacy board-side alias retained for existing PCB pad consumers. */
+        Point getProbePoint(int index) { return getBoardPadProbeCenter(index); }
+
+        /** Legacy board-side alias retained for existing PCB pad consumers. */
+        Rectangle getProbeBounds(int index) { return getBoardPadProbeBounds(index); }
+
         private Rectangle translated(Rectangle value) {
-            return new Rectangle(value.x + x, value.y + y, value.width, value.height);
+            return new Rectangle(checkedAdd(value.x, x), checkedAdd(value.y, y),
+                value.width, value.height);
         }
-        private Point translate(Point value) { return new Point(value.x + x, value.y + y); }
+
+        private Point translate(Point value) {
+            return new Point(checkedAdd(value.x, x), checkedAdd(value.y, y));
+        }
     }
 
-    /** Immutable pad, probe, and lead contract owned by one stable terminal ID. */
+    /** Immutable board-pad and connected/lifted lead contract for one terminal. */
     static final class Terminal {
         private final String terminalId;
         private final Point padCenter;
         private final Rectangle padBounds;
-        private final Point probeCenter;
-        private final Rectangle probeBounds;
-        private final Lead lead;
+        private final Point boardPadProbeCenter;
+        private final Rectangle boardPadProbeBounds;
+        private final Lead connectedLead;
+        private final Lead liftedLead;
         private final int escapeDx;
         private final int escapeDy;
         private final int escapeLength;
 
-        Terminal(String terminalId, Point padCenter, Rectangle padBounds, Point probeCenter,
-                Rectangle probeBounds, Lead lead, int escapeDx, int escapeDy,
+        Terminal(String terminalId, Point padCenter, Rectangle padBounds,
+                Point boardPadProbeCenter, Rectangle boardPadProbeBounds,
+                Lead connectedLead, Lead liftedLead, int escapeDx, int escapeDy,
                 int escapeLength) {
             if (terminalId == null || terminalId.trim().length() == 0 || padCenter == null ||
-                    padBounds == null || probeCenter == null || probeBounds == null || lead == null)
+                    padBounds == null || boardPadProbeCenter == null ||
+                    boardPadProbeBounds == null || connectedLead == null || liftedLead == null)
                 throw new IllegalArgumentException("Invalid package terminal geometry");
-            if (Math.abs(escapeDx) + Math.abs(escapeDy) > 1 || escapeLength < 0 ||
-                    (escapeLength > 0 && escapeDx == 0 && escapeDy == 0))
-                throw new IllegalArgumentException("Invalid package terminal escape geometry: " +
-                    terminalId);
+            validateEscape(terminalId, escapeDx, escapeDy, escapeLength);
             this.terminalId = terminalId;
             this.padCenter = new Point(padCenter);
             this.padBounds = copyPositive(padBounds, "pad");
-            this.probeCenter = new Point(probeCenter);
-            this.probeBounds = copyPositive(probeBounds, "probe");
-            this.lead = lead.copy();
+            this.boardPadProbeCenter = new Point(boardPadProbeCenter);
+            this.boardPadProbeBounds = copyPositive(boardPadProbeBounds, "board-pad probe");
+            this.connectedLead = connectedLead.copy();
+            this.liftedLead = liftedLead.copy();
             this.escapeDx = escapeDx;
             this.escapeDy = escapeDy;
             this.escapeLength = escapeLength;
         }
 
+        /** Compatibility constructor for developer-only geometry canaries. */
+        Terminal(String terminalId, Point padCenter, Rectangle padBounds,
+                Point boardPadProbeCenter, Rectangle boardPadProbeBounds, Lead lead,
+                int escapeDx, int escapeDy, int escapeLength) {
+            this(terminalId, padCenter, padBounds, boardPadProbeCenter, boardPadProbeBounds,
+                lead, lead.copy(), escapeDx, escapeDy, escapeLength);
+        }
+
         private Terminal(Terminal source) {
-            this(source.terminalId, source.padCenter, source.padBounds, source.probeCenter,
-                source.probeBounds, source.lead, source.escapeDx, source.escapeDy,
+            this(source.terminalId, source.padCenter, source.padBounds,
+                source.boardPadProbeCenter, source.boardPadProbeBounds,
+                source.connectedLead, source.liftedLead, source.escapeDx, source.escapeDy,
                 source.escapeLength);
         }
 
@@ -194,30 +280,63 @@ final class PhysicalPackageGeometry {
         String getTerminalId() { return terminalId; }
         Point getPadCenter() { return new Point(padCenter); }
         Rectangle getPadBounds() { return new Rectangle(padBounds); }
-        Point getProbeCenter() { return new Point(probeCenter); }
-        Rectangle getProbeBounds() { return new Rectangle(probeBounds); }
-        Lead getLead() { return lead.copy(); }
+        Point getBoardPadProbeCenter() { return new Point(boardPadProbeCenter); }
+        Rectangle getBoardPadProbeBounds() { return new Rectangle(boardPadProbeBounds); }
+
+        /** Legacy board-side alias; it is never the component-lead surface. */
+        Point getProbeCenter() { return getBoardPadProbeCenter(); }
+
+        /** Legacy board-side alias; it is never the component-lead surface. */
+        Rectangle getProbeBounds() { return getBoardPadProbeBounds(); }
+
+        Lead getConnectedLead() { return connectedLead.copy(); }
+        Lead getLiftedLead() { return liftedLead.copy(); }
+        Lead getLead() { return getConnectedLead(); }
+
+        Point getComponentLeadProbeCenter() { return getComponentLeadProbeCenter(false); }
+        Point getComponentLeadProbeCenter(boolean lifted) {
+            return (lifted ? liftedLead : connectedLead).getComponentProbeCenter();
+        }
+        Rectangle getComponentLeadProbeBounds() { return getComponentLeadProbeBounds(false); }
+        Rectangle getComponentLeadProbeBounds(boolean lifted) {
+            return (lifted ? liftedLead : connectedLead).getComponentProbeBounds();
+        }
+
+        Lead getLead(boolean lifted) { return lifted ? getLiftedLead() : getConnectedLead(); }
         int getEscapeDx() { return escapeDx; }
         int getEscapeDy() { return escapeDy; }
         int getEscapeLength() { return escapeLength; }
     }
 
-    /** Immutable straight lead segment from the pad to the visible body. */
+    /** Immutable straight lead pose and its component-side probe surface. */
     static final class Lead {
         private final Point padPoint;
         private final Point bodyPoint;
         private final Rectangle bounds;
+        private final Point componentProbeCenter;
+        private final Rectangle componentProbeBounds;
 
-        Lead(Point padPoint, Point bodyPoint, Rectangle bounds) {
-            if (padPoint == null || bodyPoint == null || bounds == null)
+        Lead(Point padPoint, Point bodyPoint, Rectangle bounds,
+                Point componentProbeCenter, Rectangle componentProbeBounds) {
+            if (padPoint == null || bodyPoint == null || bounds == null ||
+                    componentProbeCenter == null || componentProbeBounds == null)
                 throw new IllegalArgumentException("Invalid package lead geometry");
             this.padPoint = new Point(padPoint);
             this.bodyPoint = new Point(bodyPoint);
             this.bounds = copyPositive(bounds, "lead");
+            this.componentProbeCenter = new Point(componentProbeCenter);
+            this.componentProbeBounds = copyPositive(componentProbeBounds,
+                "component-lead probe");
+        }
+
+        /** Compatibility constructor for developer-only geometry canaries. */
+        Lead(Point padPoint, Point bodyPoint, Rectangle bounds) {
+            this(padPoint, bodyPoint, bounds, bodyPoint, centered(bodyPoint, 8, 8));
         }
 
         private Lead(Lead source) {
-            this(source.padPoint, source.bodyPoint, source.bounds);
+            this(source.padPoint, source.bodyPoint, source.bounds,
+                source.componentProbeCenter, source.componentProbeBounds);
         }
 
         private Lead copy() { return new Lead(this); }
@@ -225,46 +344,75 @@ final class PhysicalPackageGeometry {
         Point getPadPoint() { return new Point(padPoint); }
         Point getBodyPoint() { return new Point(bodyPoint); }
         Rectangle getBounds() { return new Rectangle(bounds); }
+        Point getComponentProbeCenter() { return new Point(componentProbeCenter); }
+        Rectangle getComponentProbeBounds() { return new Rectangle(componentProbeBounds); }
+
+        boolean isEquivalentTo(Lead other) {
+            return other != null && padPoint.equals(other.padPoint) &&
+                bodyPoint.equals(other.bodyPoint) && bounds.equals(other.bounds) &&
+                componentProbeCenter.equals(other.componentProbeCenter) &&
+                componentProbeBounds.equals(other.componentProbeBounds);
+        }
     }
 
-    /** Deterministic fallback used only by custom developer package definitions. */
+    /** Deterministic fallback used only by marked developer-generic packages. */
     static PhysicalPackageGeometry generic(Vector<String> terminalIds, boolean connector) {
         if (terminalIds == null || terminalIds.size() == 0)
             throw new IllegalArgumentException("Missing package terminals");
         int width = 150;
-        int height = 60 + (terminalIds.size() - 1) * 40;
+        int height = checkedAdd(60, checkedMultiply(terminalIds.size() - 1, 40));
         int padX = width - 30;
-        int escapeDx = 1;
         Vector<Terminal> terminals = new Vector<Terminal>();
         for (int index = 0; index < terminalIds.size(); index++) {
-            int padY = 30 + index * 40;
+            int padY = checkedAdd(30, checkedMultiply(index, 40));
             Point pad = new Point(padX, padY);
-            Rectangle padBounds = centered(pad, 26, 26);
-            Point probe = new Point(padX - 20, padY);
-            Rectangle probeBounds = centered(probe, 46, 46).union(padBounds);
-            Point body = new Point(width - 40, padY);
-            terminals.add(new Terminal(terminalIds.get(index), pad, padBounds, probe,
-                probeBounds, new Lead(pad, body, centered(pad, 30, 30)), escapeDx, 0, 30));
+            Point body = new Point(width - 55, padY);
+            Point liftedBody = new Point(width - 60, padY);
+            terminals.add(terminal(terminalIds.get(index), pad, centered(pad, 26, 26),
+                centered(pad, 30, 30), body, liftedBody, -1, 0, 30));
         }
         Rectangle body = new Rectangle(10, 10, width - 50, height - 20);
         Rectangle keepOut = new Rectangle(10, 10, width - 50, height - 20);
         Rectangle courtyard = new Rectangle(10, 10, width - 20, height - 20);
-        Rectangle selection = new Rectangle(-4, -4, width + 8, height + 8);
-        Rectangle drag = new Rectangle(-10, -10, width + 20, height + 20);
+        Rectangle selection = new Rectangle(-4, -4, checkedAdd(width, 8),
+            checkedAdd(height, 8));
+        Rectangle drag = new Rectangle(-10, -10, checkedAdd(width, 20),
+            checkedAdd(height, 20));
         return new PhysicalPackageGeometry(width, height, terminals, body, keepOut, courtyard,
-            selection, drag);
+            selection, drag, PcbGeometryContractVersion.current(), true);
+    }
+
+    private static Terminal terminal(String id, Point pad, Rectangle padBounds,
+            Rectangle boardProbe, Point body, Point liftedBody, int escapeDx, int escapeDy,
+            int escapeLength) {
+        Lead connected = lead(pad, body);
+        Lead lifted = lead(pad, liftedBody);
+        return new Terminal(id, pad, padBounds, pad, boardProbe, connected, lifted,
+            escapeDx, escapeDy, escapeLength);
+    }
+
+    private static Lead lead(Point pad, Point body) {
+        int left = Math.min(pad.x, body.x) - 3;
+        int top = Math.min(pad.y, body.y) - 3;
+        int right = Math.max(pad.x, body.x) + 3;
+        int bottom = Math.max(pad.y, body.y) + 3;
+        return new Lead(pad, body, rectangleFromEdges(left, top, right, bottom), body,
+            centered(body, 8, 8));
+    }
+
+    private Lead mirrorLead(Lead lead) {
+        return new Lead(mirrorPoint(lead.padPoint), mirrorPoint(lead.bodyPoint),
+            mirrorRect(lead.bounds), mirrorPoint(lead.componentProbeCenter),
+            mirrorRect(lead.componentProbeBounds));
     }
 
     private void validate() {
-        // Routing owns body/pad/lead exclusion and selection owns every
-        // declared interaction target.  Probe bounds are terminal-owned and
-        // deliberately include that terminal's pad, while nominal dimensions
-        // remain only placement dimensions (see the class contract above).
         if (!contains(bodyKeepOut, bodyBounds) || !contains(routingCourtyard, bodyKeepOut) ||
                 !contains(dragEnvelope, selectionEnvelope))
             throw new IllegalArgumentException("Package envelope containment failed");
         if (!contains(selectionEnvelope, bodyBounds) || !contains(dragEnvelope, bodyKeepOut))
             throw new IllegalArgumentException("Package selection envelope is incomplete");
+
         Vector<String> ids = new Vector<String>();
         for (Terminal terminal : terminals) {
             if (ids.contains(terminal.terminalId))
@@ -272,36 +420,79 @@ final class PhysicalPackageGeometry {
                     terminal.terminalId);
             ids.add(terminal.terminalId);
             if (!contains(routingCourtyard, terminal.padBounds) ||
-                    !contains(routingCourtyard, terminal.lead.getBounds()) ||
                     !contains(selectionEnvelope, terminal.padBounds) ||
-                    !contains(selectionEnvelope, terminal.probeBounds) ||
-                    !contains(selectionEnvelope, terminal.lead.getBounds()) ||
-                    !contains(dragEnvelope, terminal.probeBounds) ||
+                    !contains(selectionEnvelope, terminal.boardPadProbeBounds) ||
                     !contains(dragEnvelope, terminal.padBounds) ||
-                    !contains(dragEnvelope, terminal.lead.getBounds()) ||
-                    !contains(terminal.probeBounds, terminal.padBounds) ||
-                    !contains(terminal.probeBounds, terminal.probeCenter.x,
-                        terminal.probeCenter.y) ||
+                    !contains(dragEnvelope, terminal.boardPadProbeBounds) ||
                     !contains(terminal.padBounds, terminal.padCenter.x, terminal.padCenter.y) ||
-                    !contains(terminal.lead.getBounds(), terminal.padCenter.x,
-                        terminal.padCenter.y) ||
-                    !contains(terminal.lead.getBounds(), terminal.lead.getBodyPoint().x,
-                        terminal.lead.getBodyPoint().y) ||
-                    !terminal.lead.getPadPoint().equals(terminal.padCenter) ||
-                    !contains(bodyBounds, terminal.lead.getBodyPoint().x,
-                        terminal.lead.getBodyPoint().y))
-                throw new IllegalArgumentException("Package terminal geometry is inconsistent: " +
+                    !contains(terminal.boardPadProbeBounds, terminal.padBounds) ||
+                    !contains(terminal.boardPadProbeBounds, terminal.boardPadProbeCenter.x,
+                        terminal.boardPadProbeCenter.y))
+                throw new IllegalArgumentException("Board-pad probe geometry is inconsistent: " +
                     terminal.terminalId);
-            int distance = Math.abs(terminal.probeCenter.x - terminal.padCenter.x) +
-                Math.abs(terminal.probeCenter.y - terminal.padCenter.y);
-            if (distance > 80)
-                throw new IllegalArgumentException("Package probe is too far from pad: " +
+            validateLead(terminal, terminal.connectedLead, true);
+            validateLead(terminal, terminal.liftedLead, false);
+            if (intersects(terminal.boardPadProbeBounds,
+                    terminal.connectedLead.componentProbeBounds) ||
+                    intersects(terminal.boardPadProbeBounds,
+                    terminal.liftedLead.componentProbeBounds))
+                throw new IllegalArgumentException("Component probe overlaps board-pad probe: " +
                     terminal.terminalId);
         }
+
+        for (int first = 0; first < terminals.size(); first++) {
+            Terminal firstTerminal = terminals.get(first);
+            for (int second = first + 1; second < terminals.size(); second++) {
+                Terminal secondTerminal = terminals.get(second);
+                if (intersects(firstTerminal.boardPadProbeBounds,
+                        secondTerminal.boardPadProbeBounds) ||
+                        intersects(firstTerminal.boardPadProbeBounds,
+                            secondTerminal.connectedLead.componentProbeBounds) ||
+                        intersects(firstTerminal.boardPadProbeBounds,
+                            secondTerminal.liftedLead.componentProbeBounds) ||
+                        intersects(secondTerminal.boardPadProbeBounds,
+                            firstTerminal.connectedLead.componentProbeBounds) ||
+                        intersects(secondTerminal.boardPadProbeBounds,
+                            firstTerminal.liftedLead.componentProbeBounds))
+                    throw new IllegalArgumentException("Cross-terminal probe surfaces overlap: " +
+                        firstTerminal.terminalId + "/" + secondTerminal.terminalId);
+                if (intersects(firstTerminal.connectedLead.componentProbeBounds,
+                        secondTerminal.connectedLead.componentProbeBounds) ||
+                        intersects(firstTerminal.connectedLead.componentProbeBounds,
+                        secondTerminal.liftedLead.componentProbeBounds) ||
+                        intersects(firstTerminal.liftedLead.componentProbeBounds,
+                        secondTerminal.connectedLead.componentProbeBounds) ||
+                        intersects(firstTerminal.liftedLead.componentProbeBounds,
+                        secondTerminal.liftedLead.componentProbeBounds))
+                    throw new IllegalArgumentException("Peer component probes overlap: " +
+                        firstTerminal.terminalId + "/" + secondTerminal.terminalId);
+            }
+        }
+    }
+
+    private void validateLead(Terminal terminal, Lead lead, boolean connected) {
+        if (!contains(lead.bounds, lead.padPoint.x, lead.padPoint.y) ||
+                !contains(lead.bounds, lead.bodyPoint.x, lead.bodyPoint.y) ||
+                !contains(lead.bounds, lead.componentProbeCenter.x,
+                    lead.componentProbeCenter.y) ||
+                !contains(lead.componentProbeBounds, lead.componentProbeCenter.x,
+                    lead.componentProbeCenter.y) ||
+                !contains(selectionEnvelope, lead.bounds) ||
+                !contains(selectionEnvelope, lead.componentProbeBounds) ||
+                !contains(dragEnvelope, lead.bounds) ||
+                !contains(dragEnvelope, lead.componentProbeBounds) ||
+                !lead.padPoint.equals(terminal.padCenter) ||
+                (connected && !contains(bodyBounds, lead.bodyPoint.x, lead.bodyPoint.y)) ||
+                (!connected && !contains(selectionEnvelope, lead.bodyPoint.x,
+                    lead.bodyPoint.y)))
+            throw new IllegalArgumentException("Package lead geometry is inconsistent: " +
+                terminal.terminalId);
     }
 
     boolean isEquivalentTo(PhysicalPackageGeometry other) {
         if (other == null || width != other.width || height != other.height ||
+                !geometryContractVersion.equals(other.geometryContractVersion) ||
+                developerGeneric != other.developerGeneric ||
                 !bodyBounds.equals(other.bodyBounds) || !bodyKeepOut.equals(other.bodyKeepOut) ||
                 !routingCourtyard.equals(other.routingCourtyard) ||
                 !selectionEnvelope.equals(other.selectionEnvelope) ||
@@ -313,13 +504,12 @@ final class PhysicalPackageGeometry {
             if (!first.terminalId.equals(second.terminalId) ||
                     !first.padCenter.equals(second.padCenter) ||
                     !first.padBounds.equals(second.padBounds) ||
-                    !first.probeCenter.equals(second.probeCenter) ||
-                    !first.probeBounds.equals(second.probeBounds) ||
+                    !first.boardPadProbeCenter.equals(second.boardPadProbeCenter) ||
+                    !first.boardPadProbeBounds.equals(second.boardPadProbeBounds) ||
+                    !first.connectedLead.isEquivalentTo(second.connectedLead) ||
+                    !first.liftedLead.isEquivalentTo(second.liftedLead) ||
                     first.escapeDx != second.escapeDx || first.escapeDy != second.escapeDy ||
-                    first.escapeLength != second.escapeLength ||
-                    !first.lead.padPoint.equals(second.lead.padPoint) ||
-                    !first.lead.bodyPoint.equals(second.lead.bodyPoint) ||
-                    !first.lead.bounds.equals(second.lead.bounds))
+                    first.escapeLength != second.escapeLength)
                 return false;
         }
         return true;
@@ -329,6 +519,16 @@ final class PhysicalPackageGeometry {
         return expected != null && getTerminalIds().equals(expected);
     }
 
+    private static void validateEscape(String terminalId, int escapeDx, int escapeDy,
+            int escapeLength) {
+        long directionMagnitude = Math.abs((long) escapeDx) + Math.abs((long) escapeDy);
+        if (directionMagnitude > 1 || escapeLength < 0 ||
+                (escapeLength == 0 && directionMagnitude != 0) ||
+                (escapeLength > 0 && directionMagnitude == 0))
+            throw new IllegalArgumentException("Invalid package terminal escape geometry: " +
+                terminalId);
+    }
+
     private static Rectangle copyPositive(Rectangle value, String name) {
         if (value.width <= 0 || value.height <= 0)
             throw new IllegalArgumentException("Invalid package " + name + " bounds");
@@ -336,16 +536,27 @@ final class PhysicalPackageGeometry {
     }
 
     private static Rectangle centered(Point center, int width, int height) {
-        return new Rectangle(center.x - width / 2, center.y - height / 2, width, height);
+        if (center == null || width <= 0 || height <= 0)
+            throw new IllegalArgumentException("Invalid centered package geometry");
+        int left = checkedInt((long) center.x - width / 2);
+        int top = checkedInt((long) center.y - height / 2);
+        return new Rectangle(left, top, width, height);
     }
 
     private Rectangle mirrorRect(Rectangle value) {
-        return new Rectangle(width - (value.x + value.width), value.y, value.width,
-            value.height);
+        return new Rectangle(checkedInt((long) width - value.x - value.width), value.y,
+            value.width, value.height);
     }
 
     private Point mirrorPoint(Point value) {
-        return new Point(width - value.x, value.y);
+        return new Point(checkedInt((long) width - value.x), value.y);
+    }
+
+    private static Rectangle rectangleFromEdges(int left, int top, int right, int bottom) {
+        if (right <= left || bottom <= top)
+            throw new IllegalArgumentException("Invalid package lead edges");
+        return new Rectangle(left, top, checkedInt((long) right - left),
+            checkedInt((long) bottom - top));
     }
 
     private static boolean contains(Rectangle outer, Rectangle inner) {
@@ -361,5 +572,28 @@ final class PhysicalPackageGeometry {
         return x >= outer.x && y >= outer.y &&
             (long) x <= (long) outer.x + outer.width &&
             (long) y <= (long) outer.y + outer.height;
+    }
+
+    private static boolean intersects(Rectangle first, Rectangle second) {
+        long firstRight = (long) first.x + first.width;
+        long firstBottom = (long) first.y + first.height;
+        long secondRight = (long) second.x + second.width;
+        long secondBottom = (long) second.y + second.height;
+        return first.x < secondRight && second.x < firstRight &&
+            first.y < secondBottom && second.y < firstBottom;
+    }
+
+    private static int checkedAdd(int first, int second) {
+        return checkedInt((long) first + second);
+    }
+
+    private static int checkedMultiply(int first, int second) {
+        return checkedInt((long) first * second);
+    }
+
+    private static int checkedInt(long value) {
+        if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE)
+            throw new IllegalArgumentException("Package geometry integer overflow: " + value);
+        return (int) value;
     }
 }
