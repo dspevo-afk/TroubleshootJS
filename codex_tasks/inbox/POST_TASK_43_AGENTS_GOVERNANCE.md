@@ -18,7 +18,7 @@ Before editing, read the current post-Task-43 versions of:
 
 Also inspect the accepted Task 43 diff/history where useful.
 
-The goal is to make `AGENTS.md` more internally consistent, safer and more efficient for future autonomous work, and explicit about model selection, delegation, correction routing, subagent patience, convergence, feasibility, and architecture preservation while retaining every valid existing project law.
+The goal is to make `AGENTS.md` more internally consistent, safer and more efficient for future autonomous work, and explicit about model selection, investigation, delegation, correction routing, subagent patience, convergence, feasibility, and architecture preservation while retaining every valid existing project law.
 
 ---
 
@@ -66,7 +66,187 @@ Luna MAX is required by policy for substantive work involving, or plausibly affe
 
 ---
 
-## 2. GPT-5.3-Codex-Spark delegation policy
+## 2. Pre-implementation Luna MAX investigation and architect-synthesis protocol
+
+For large, architecture-sensitive, cross-cutting, or unusually risky milestones, the primary architect should consider a short **read-only investigation phase before any production writer begins**.
+
+The purpose is to discover hidden coupling, feasibility problems, regression risks, and architecture boundaries before a coder accumulates a large speculative diff.
+
+This is not required for every tiny task. Do not create an investigation bureaucracy around trivial, already-understood changes.
+
+### Investigator count
+
+For a normal complex milestone, use **2 or 3 read-only Luna MAX investigators** when their perspectives are materially distinct.
+
+Do not spawn a large crowd of redundant investigators merely because usage is available.
+
+More than 3 requires a concrete justification from the task's independent risk dimensions. The architect must not create a committee whose reports cost more to reconcile than the uncertainty they remove.
+
+Each investigator must be explicitly requested as **Luna MAX** under the model-selection policy. If the runtime silently downgrades the actual spawned configuration, record the mismatch rather than repeatedly respawning.
+
+### Distinct investigator roles
+
+Do not ask three agents the same vague question.
+
+For a difficult milestone, useful investigation roles include:
+
+#### Investigator A — Architecture and ownership
+
+Inspect the relevant implementation and report:
+
+- current authoritative owners of state/identity/behavior;
+- relevant call paths and mutation boundaries;
+- existing abstractions that must be reused;
+- invariants that must remain true;
+- likely integration points;
+- architecture decisions that the implementation must not make accidentally;
+- areas where a proposed change would create duplicate ownership or a parallel system.
+
+#### Investigator B — Regression, coupling, and validation
+
+Inspect:
+
+- affected families/features;
+- existing verifiers/tests/browser routes;
+- hidden coupling and legacy fixtures;
+- historical regressions relevant to the task;
+- likely failure surfaces;
+- the minimum closed validation set needed to prove the task without expanding into an unbounded matrix.
+
+#### Investigator C — Adversarial feasibility / falsification
+
+Actively try to prove that the initial implementation premise is wrong or incomplete.
+
+Ask questions such as:
+
+- Are any requested constraints mutually incompatible?
+- Is a particular historical realization actually feasible under the new rules?
+- Are we preserving an incidental implementation detail rather than a real contract?
+- Is there an easier clean architecture that satisfies the same requirement?
+- Could the proposed approach create an unobservable, unrepairable, nondeterministic, or physically impossible state?
+- Is there a reachability, graph, routing, lifecycle, or ownership limitation that should be proven before implementation?
+
+For geometry/routing work, explicitly consider whether the proposed fixed realization is routable before allowing prolonged coordinate experimentation.
+
+For lifecycle/state work, explicitly consider whether the requested transitions can be atomic/coherent under current ownership.
+
+For generation work, explicitly consider whether constraints can be satisfied without rejection explosions or hidden answer leakage.
+
+At least one investigator on a genuinely architecture-sensitive task should have an explicit falsification/adversarial role rather than assuming the requested approach must succeed.
+
+### Investigator restrictions
+
+Investigators are read-only unless the task explicitly assigns an isolated diagnostic artifact that cannot affect production state.
+
+Investigators must not:
+
+- edit production source;
+- independently implement their preferred design;
+- create competing worktrees for the same implementation;
+- silently change acceptance criteria;
+- begin later roadmap work;
+- vote on architecture as if majority opinion establishes correctness.
+
+They return concise evidence and recommendations to the primary architect.
+
+### Architect synthesis is mandatory before implementation
+
+The architect must synthesize the investigation reports into **one authoritative implementation plan**.
+
+The architect decides. Investigators advise.
+
+The synthesis should identify:
+
+- chosen architecture/integration boundary;
+- rejected alternatives and why where material;
+- real compatibility requirements;
+- explicit non-goals;
+- required invariants;
+- feasibility findings or unresolved feasibility checks;
+- ordered implementation chunks;
+- dependencies between chunks;
+- validation required after each meaningful boundary and at final completion.
+
+If investigators materially disagree, the architect must resolve the disagreement from evidence or request one focused follow-up investigation. Do not hand contradictory plans to a coder and ask the coder to decide the architecture by accident.
+
+If investigation discovers a genuine `REALIZATION_INFEASIBLE` or `ARCHITECTURAL_CONTRADICTION`, resolve that finding before spawning a production coder.
+
+---
+
+## 3. Ordered chunk decomposition and model routing
+
+After investigation/synthesis on a complex task, decompose the accepted plan into the **smallest useful ordered chunks**, but do not confuse small size with low risk.
+
+Every chunk must state:
+
+- what it changes;
+- what it must not change;
+- its dependency on previous chunks;
+- its authoritative contract/interface;
+- how completion is verified;
+- whether it is `SPARK_SAFE` or `LUNA_MAX_REQUIRED`.
+
+### `SPARK_SAFE`
+
+A chunk is Spark-safe only when all architecture and semantics are already decided and the remaining implementation is mechanical.
+
+Examples:
+
+- implement an already-designed immutable value object;
+- migrate known call sites to a finalized API;
+- add exact accessors/adapters dictated by an existing interface;
+- add narrowly specified canaries/tests;
+- mechanical provider/registry additions following a proven pattern;
+- fix straightforward compiler errors after an accepted refactor;
+- documentation/presentation-only changes with no simulation authority.
+
+### `LUNA_MAX_REQUIRED`
+
+A chunk requires Luna MAX whenever any meaningful reasoning remains about:
+
+- architecture;
+- electrical semantics;
+- graph ownership;
+- stable identity;
+- lifecycle/state ordering;
+- mutation atomicity/coherence;
+- measurement behavior;
+- physical geometry ownership;
+- routing/connectivity semantics;
+- procedural generation;
+- fault/repair/retest semantics;
+- deterministic replay/versioning;
+- feasibility;
+- ambiguous root cause;
+- competing implementation approaches.
+
+A chunk does not become Spark-safe merely because it is short.
+
+### Sequential write execution
+
+Write-capable chunks that affect the same milestone/worktree must run **sequentially** unless existing permanent rules prove they are genuinely disjoint.
+
+Preferred execution:
+
+```text
+architect synthesis
+-> chunk 1: Spark or Luna MAX according to risk
+-> inspect/validate boundary as appropriate
+-> chunk 2: Spark or Luna MAX according to risk
+-> inspect/validate boundary as appropriate
+-> ...
+-> complete assembled candidate
+```
+
+The architect must explicitly transfer write ownership between coders.
+
+Do not run multiple Spark coders against the same implementation surface simultaneously merely because the chunks are individually simple.
+
+Do not let Spark infer architecture from a vague chunk description. If the architect cannot specify the chunk precisely enough for mechanical execution, classify it `LUNA_MAX_REQUIRED`.
+
+---
+
+## 4. GPT-5.3-Codex-Spark delegation policy
 
 GPT-5.3-Codex-Spark may be used only for low-risk, tightly bounded work whose correct implementation is already substantially determined by existing architecture, explicit instructions, established interfaces/types, or focused tests.
 
@@ -127,7 +307,47 @@ Governing principle:
 
 ---
 
-## 3. Permanent correction-routing policy
+## 5. Fresh independent Luna MAX review after assembled implementation
+
+For substantive implementation milestones, the final assembled candidate should receive an independent read-only review from a **fresh Luna MAX reviewer** that did not participate in the implementation or investigation synthesis whenever the runtime supports spawning such a reviewer.
+
+Explicitly request Luna MAX. If the platform silently supplies a lower configuration, record the actual configuration rather than respawning indefinitely.
+
+The reviewer receives:
+
+- the original milestone requirements;
+- architect acceptance criteria;
+- permanent AGENTS.md invariants;
+- relevant architecture/roadmap context;
+- the final diff/candidate;
+- validation evidence.
+
+The reviewer should not be given the implementation agents' conclusions as assumptions it must preserve. It should independently try to falsify the result.
+
+Review priorities include:
+
+- architectural ownership violations;
+- CircuitJS/electrical truth;
+- stable identity;
+- lifecycle/mutation coherence;
+- temporary measurement cleanup;
+- fault/repair/retest validity;
+- deterministic generation/replay;
+- physical/electrical correspondence;
+- hidden answer/privacy leakage;
+- fixture-specific hacks;
+- missing validation;
+- whether multiple individually-correct Spark chunks compose into an incorrect whole.
+
+The reviewer is read-only and does not repair the candidate.
+
+Reviewer findings return to the architect for classification and correction routing.
+
+The architect still performs its own final review after reviewer acceptance/classification. Fresh Luna review does not replace architect responsibility.
+
+---
+
+## 6. Permanent correction-routing policy
 
 After a primary coder returns its candidate and a reviewer or architect identifies a legitimate `BLOCKER`, the architect should diagnose enough of the root cause to classify the correction as exactly one of:
 
@@ -164,7 +384,7 @@ architect diagnoses
 
 ---
 
-## 4. Exclusive write ownership
+## 7. Exclusive write ownership
 
 Only one write-capable coder may own a given implementation surface at a time.
 
@@ -179,9 +399,9 @@ Model switching is sequential, not tag-team editing.
 
 ---
 
-## 5. Subagent patience and anti-polling policy
+## 8. Subagent patience and anti-polling policy
 
-Once implementation, review, correction, or escalation has been delegated and the assigned subagent is actively working, the architect should trust delegated ownership and allow the subagent to work.
+Once implementation, review, correction, investigation, or escalation has been delegated and the assigned subagent is actively working, the architect should trust delegated ownership and allow the subagent to work.
 
 The architect must not repeatedly poll activity merely to reassure itself that the subagent is still alive.
 
@@ -215,7 +435,7 @@ Governing principle:
 
 ---
 
-## 6. Conservative parallel-subagent policy
+## 9. Conservative parallel-subagent policy
 
 Review the existing `Parallel Subagent Policy` and change any wording that implies the architect SHOULD parallelize merely because it might save elapsed time.
 
@@ -223,9 +443,10 @@ Permanent intent:
 
 - Parallelism is optional, not a goal.
 - Correctness, clear ownership, and integration simplicity outrank throughput.
-- Read-only investigation/review may be parallelized when genuinely useful.
+- A small number of **read-only Luna MAX investigators** may work in parallel before implementation when their scopes are distinct and useful.
+- Normal complex-task investigation should usually be capped at 2–3 investigators.
 - Write-capable parallel implementation is exceptional and requires clearly disjoint ownership with no shared abstraction or unfinished dependency.
-- Sequential implementation is the safe default when uncertainty exists.
+- Sequential write implementation is the safe default when uncertainty exists.
 - Never create extra agents merely to maximize utilization.
 - Exactly one roadmap milestone remains active regardless of subagent count.
 
@@ -233,7 +454,7 @@ Preserve the existing prohibition against concurrent writers touching the same i
 
 ---
 
-## 7. Architecture over incidental compatibility
+## 10. Architecture over incidental compatibility
 
 Task 43 exposed a permanent engineering lesson.
 
@@ -259,7 +480,7 @@ Do not treat historical pixels as sacred unless they are explicitly part of a co
 
 ---
 
-## 8. Intra-task convergence / anti-thrash protocol
+## 11. Intra-task convergence / anti-thrash protocol
 
 Persistence is required, but persistence must not become endless local patching.
 
@@ -295,7 +516,7 @@ Governing principle:
 
 ---
 
-## 9. Feasibility / impossibility / challenge-the-premise protocol
+## 12. Feasibility / impossibility / challenge-the-premise protocol
 
 Add a permanent rule stating that agents must **not assume every requested combination of constraints is satisfiable**.
 
@@ -347,7 +568,7 @@ This rule complements, and does not weaken, the persistence protocol. Persistenc
 
 ---
 
-## 10. Correct stable-identity wording
+## 13. Correct stable-identity wording
 
 Find the existing Development Rule approximately stating:
 
@@ -364,7 +585,7 @@ Preserve the implemented architecture in `docs/ARCHITECTURE.md`.
 
 ---
 
-## 11. Remove or neutralize stale sequencing guidance
+## 14. Remove or neutralize stale sequencing guidance
 
 `AGENTS.md` is permanent governance. `docs/ROADMAP.md` owns current development sequencing.
 
@@ -384,7 +605,7 @@ Actual player-facing profile IDs, constraints, availability, and calibration bel
 
 ---
 
-## 12. Correct generated-link / zero-ohm fallback guidance
+## 15. Correct generated-link / zero-ohm fallback guidance
 
 Reconcile any broad `AGENTS.md` guidance allowing jumper/zero-ohm fallback whenever one-sided routing fails with the current roadmap's evidence-gated physical-scalability sequence.
 
@@ -400,7 +621,7 @@ Do not implement generated-link functionality in this governance task.
 
 ---
 
-## 13. Reconcile large seed-sweep guidance with closed validation
+## 16. Reconcile large seed-sweep guidance with closed validation
 
 Clarify older guidance recommending hundreds/thousands of seeded generator tests.
 
@@ -415,7 +636,7 @@ Do not weaken any currently required deterministic verifier corpus.
 
 ---
 
-## 14. Tighten hard-coded electrical-result guidance
+## 17. Tighten hard-coded electrical-result guidance
 
 Remove ambiguity from early wording permitting hard-coded fake meter readings "unless absolutely necessary."
 
@@ -430,7 +651,7 @@ Preserve legitimate developer/test infrastructure.
 
 ---
 
-## 15. Keep governance changes isolated from implementation milestones
+## 18. Keep governance changes isolated from implementation milestones
 
 Clarify that unrelated `AGENTS.md` governance changes should not be injected into an active production implementation merely because a useful policy idea arose during that task.
 
@@ -440,53 +661,67 @@ Materially new user information affecting the active task may still be relayed u
 
 ---
 
-## 16. Reviewer and escalation model policy
+## 19. Reviewer and escalation model policy
 
 The reviewer remains independent and read-only.
 
-For architecture-sensitive review, prefer the highest-capability reasoning configuration available.
+For substantive architecture-sensitive final review, explicitly request a **fresh Luna MAX reviewer** where the runtime supports it.
 
 If explicit model selection is available for an escalation architect, request Luna MAX or another configuration explicitly designated as at least as capable for architectural reasoning.
+
+If the platform silently downgrades a requested reviewer/escalation configuration, record the actual configuration rather than entering an endless respawn loop.
 
 Do not use Spark as the independent architectural reviewer, escalation architect, or final authority on architecture-sensitive findings.
 
 ---
 
-## 17. Preserve the intended agent hierarchy
+## 20. Preserve the intended agent hierarchy
 
-The preferred long-term workflow is:
+For simple tasks, do not manufacture unnecessary ceremony. A direct architect -> appropriate coder -> reviewer -> architect path remains valid.
+
+For complex architecture-sensitive tasks, the preferred long-term workflow is:
 
 ```text
 Primary architect
-    -> Luna MAX primary coder
-    -> independent reviewer
+    -> 2-3 distinct read-only Luna MAX investigators when useful
+         A: architecture/ownership
+         B: regressions/coupling/validation
+         C: adversarial feasibility/falsification
+    -> architect synthesis into one authoritative plan
+    -> ordered implementation chunks
+         Spark for `SPARK_SAFE` chunks
+         Luna MAX for `LUNA_MAX_REQUIRED` chunks
+         write ownership sequential
+    -> complete assembled candidate
+    -> fresh independent Luna MAX reviewer
     -> primary architect diagnosis/classification
     -> if correction needed:
          Spark for exact MECHANICAL correction
          Luna MAX for REASONING_SENSITIVE correction
-    -> independent reviewer when required
+    -> independent review when required
     -> primary architect final review
     -> normal completion protocol
 ```
 
-The primary architect owns task definition, architecture, acceptance criteria, model selection, delegation, blocker classification, correction routing, final review, escalation, and publication/completion.
+The primary architect owns task definition, architecture, acceptance criteria, investigation scopes, synthesis, model selection, delegation, blocker classification, correction routing, final review, escalation, and publication/completion.
 
-Luna MAX owns difficult implementation.
+Luna MAX investigators own independent read-only analysis.
+Luna MAX coders own difficult/reasoning-sensitive implementation.
 Spark owns only explicitly bounded mechanical implementation.
-The reviewer owns independent inspection.
+The fresh reviewer owns independent hostile inspection of the assembled result.
 
 Do not blur these responsibilities merely to reduce elapsed time.
 
 ---
 
-## 18. Avoid a giant AGENTS.md rewrite
+## 21. Avoid a giant AGENTS.md rewrite
 
 This task is a targeted consistency pass, not a prose-modernization project.
 
 Do not:
 
 - rewrite the whole file;
-- reorder every section;
+- reorder every section without need;
 - remove permanent project laws;
 - alter accepted product architecture;
 - change Task Completion Protocol publication/email behavior unless a real contradiction is found;
@@ -505,16 +740,24 @@ If a proposed cleanup requires guessing whether an old rule remains product-auth
 Because this is governance/documentation only:
 
 - inspect the full final `AGENTS.md` diff;
-- search for contradictions involving roadmap authority, stable identity, CircuitJS truth, multi-agent ownership, validation, model selection, feasibility, subagent patience, and task completion;
+- search for contradictions involving roadmap authority, stable identity, CircuitJS truth, multi-agent ownership, validation, model selection, investigation, feasibility, subagent patience, and task completion;
 - confirm no production source changed;
 - confirm the document does not accidentally authorize future-roadmap work;
 - confirm substantive coder requests explicitly ask for Luna MAX;
+- confirm complex-task investigators explicitly request Luna MAX;
 - confirm Luna Extra High is not intentionally treated as equivalent to Luna MAX;
 - confirm a platform-side silent downgrade is reported rather than triggering an endless respawn loop;
 - confirm Spark cannot be selected merely for cost/speed;
 - confirm Spark cannot make architecture/electrical/state/identity decisions;
-- confirm correction routing is based on reasoning risk rather than diff size;
+- confirm implementation chunks are classified by reasoning risk rather than size;
 - confirm write ownership transfers sequentially before changing coders/models;
+- confirm read-only parallel investigation is allowed without authorizing parallel writes;
+- confirm normal complex tasks are generally capped at 2–3 investigators rather than encouraging unlimited fan-out;
+- confirm at least one investigator may be assigned adversarial feasibility/falsification on architecture-sensitive work;
+- confirm the architect must synthesize investigator findings into one plan before implementation;
+- confirm contradictory investigator opinions are not handed unresolved to the coder;
+- confirm a fresh independent Luna MAX reviewer is requested for substantive assembled implementations where supported;
+- confirm the reviewer is read-only and does not replace architect final responsibility;
 - confirm the architect is discouraged from routinely implementing delegated corrections itself;
 - confirm repeated last-edit timestamp/git-status/diff/log/process liveness polling is explicitly prohibited;
 - confirm occasional lightweight status checks remain permitted when genuinely useful;
@@ -528,20 +771,26 @@ Because this is governance/documentation only:
 
 Explicitly inspect the final Multi-Agent Development Protocol and verify that a future architect reading only `AGENTS.md` would understand:
 
-1. Main substantive coder request = Luna MAX.
-2. Architecture-sensitive correction = Luna MAX.
-3. Mechanical, fully specified correction = Spark permitted.
-4. Luna Extra High is not an intentional substitute for Luna MAX when MAX is required.
-5. A platform-side spawn downgrade should be recorded, not fought with endless respawning.
-6. Architect diagnoses and delegates corrections instead of routinely fixing production code itself.
-7. Only one write-capable coder owns a given implementation surface at once.
-8. An active coder should normally be left alone to work.
-9. Repeatedly checking last-edit timestamps, git status, diffs, logs, or process activity merely to prove liveness is prohibited.
-10. Approximately 30 minutes is the default minimum interval between purely liveness-oriented checks when no event-driven completion mechanism exists, with longer intervals appropriate for large tasks.
-11. Repeated non-converging local edits require a re-baseline/root-cause diagnosis.
-12. Agents are explicitly allowed to determine that a specific realization is infeasible under current constraints.
-13. `REALIZATION_INFEASIBLE` should identify the smallest constraint that must change rather than triggering endless brute force.
-14. A proven infeasible realization is a valid engineering result, not a failure to obey persistence rules.
+1. Main substantive implementation = Luna MAX unless a chunk is explicitly proven Spark-safe.
+2. Large/risky tasks may use 2–3 distinct read-only Luna MAX investigators before implementation.
+3. Investigators advise; the architect synthesizes and decides.
+4. At least one investigator may be tasked specifically with falsifying feasibility/assumptions.
+5. The architect decomposes the accepted plan into ordered chunks with explicit contracts and validation.
+6. Spark handles only fully specified mechanical chunks/corrections.
+7. Architecture-sensitive chunks/corrections use Luna MAX.
+8. Luna Extra High is not an intentional substitute for Luna MAX when MAX is required.
+9. Platform-side spawn downgrade should be recorded, not fought with endless respawning.
+10. Only one write-capable coder owns a given implementation surface at once.
+11. Fresh independent Luna MAX review attacks the complete assembled candidate after substantive implementation.
+12. Architect diagnoses and delegates corrections instead of routinely fixing production code itself.
+13. An active subagent should normally be left alone to work.
+14. Repeatedly checking last-edit timestamps, git status, diffs, logs, or process activity merely to prove liveness is prohibited.
+15. Approximately 30 minutes is the default minimum interval between purely liveness-oriented checks when no event-driven completion mechanism exists, with longer intervals appropriate for large tasks.
+16. Repeated non-converging local edits require a re-baseline/root-cause diagnosis.
+17. Agents are explicitly allowed to determine that a specific realization is infeasible under current constraints.
+18. `REALIZATION_INFEASIBLE` should identify the smallest constraint that must change rather than triggering endless brute force.
+19. A proven infeasible realization is a valid engineering result, not a failure to obey persistence rules.
+20. Parallel read-only analysis is a way to reduce uncertainty, not an excuse to maximize agent count.
 
 Update the appropriate task/report documentation only as required by the current governance/task-completion protocol.
 
