@@ -9,10 +9,9 @@ final class RcDelayPcbLayoutFactory {
     private RcDelayPcbLayoutFactory() { }
 
     static PcbBoardLayout create(TroubleshootBoard board, long seed) {
-        PcbBoardLayout layout = new PcbBoardLayout(1040, 520,
+        PcbBoardLayout layout = new PcbBoardLayout(1400, 800,
             new Rectangle(40, 30, 770, 430), new Rectangle(850, 125, 150, 255));
-        addComponents(layout);
-        addPads(layout);
+        addComponents(layout, board, seed);
         addTraces(layout);
         addLabels(layout);
         int variationMode = (int) ((seed % 4 + 4) % 4);
@@ -23,60 +22,85 @@ final class RcDelayPcbLayoutFactory {
         return layout;
     }
 
-    private static void addComponents(PcbBoardLayout layout) {
-        layout.addComponent(component("J1", 80, 150, 70, 100, 90, 160, 50, 80));
-        layout.addComponent(resistorComponent("R1", 250, 90, 180, 50, 280, 105, 120, 20));
-        layout.addComponent(component("C1", 450, 70, 100, 100, 460, 80, 80, 80));
-        layout.addComponent(component("J2", 690, 160, 70, 80, 700, 170, 50, 60));
-        layout.addComponent(resistorComponent("R2", 540, 290, 180, 50, 570, 305, 120, 20));
-        layout.addComponent(component("C2", 200, 300, 80, 70, 210, 310, 60, 40));
+    private static void addComponents(PcbBoardLayout layout, TroubleshootBoard board, long seed) {
+        addProviderFootprint(layout, board.getComponent("J1"), 50, 150, seed);
+        addProviderFootprint(layout, board.getComponent("R1"), 200, 90, seed + 1);
+        addProviderFootprint(layout, board.getComponent("C1"), 700, 70, seed + 2);
+        addProviderFootprint(layout, board.getComponent("J2"), 900, 160, seed + 3);
+        addProviderFootprint(layout, board.getComponent("R2"), 500, 290, seed + 4);
+        addProviderFootprint(layout, board.getComponent("C2"), 200, 300, seed + 5);
     }
 
-    private static PcbComponentPlacement component(String id, int x, int y, int width,
-            int height, int bodyX, int bodyY, int bodyWidth, int bodyHeight) {
-        Rectangle body = new Rectangle(bodyX, bodyY, bodyWidth, bodyHeight);
-        return new PcbComponentPlacement(id, x, y, width, height, body, body);
-    }
-
-    private static PcbComponentPlacement resistorComponent(String id, int x, int y, int width,
-            int height, int bodyX, int bodyY, int bodyWidth, int bodyHeight) {
-        Rectangle body = new Rectangle(bodyX, bodyY, bodyWidth, bodyHeight);
-        return new PcbComponentPlacement(id, x, y, width, height, body,
-            new Rectangle(x, y, width, height));
-    }
-
-    private static void addPads(PcbBoardLayout layout) {
-        pad(layout, "J1.1", 80, 180, -1, 0); pad(layout, "J1.2", 80, 220, -1, 0);
-        pad(layout, "J2.1", 690, 180, -1, 0); pad(layout, "J2.2", 690, 220, -1, 0);
-        pad(layout, "R1.1", 240, 120, -1, 0); pad(layout, "R1.2", 440, 120, 1, 0);
-        pad(layout, "R2.1", 530, 320, -1, 0); pad(layout, "R2.2", 730, 320, 1, 0);
-        pad(layout, "C1.+", 450, 80, -1, 0); pad(layout, "C1.-", 550, 140, 1, 0);
-        pad(layout, "C2.1", 190, 320, -1, 0); pad(layout, "C2.2", 190, 350, -1, 0);
-    }
-
-    private static void pad(PcbBoardLayout layout, String id, int x, int y, int dx, int dy) {
-        layout.addPad(new PcbPadPlacement(id, x, y, dx, dy, 20));
+    private static void addProviderFootprint(PcbBoardLayout layout, BoardComponent component,
+            int x, int y, long seed) {
+        PcbFootprint footprint = StandardPcbFootprintProviders.createRegistry().create(
+            component, x, y, new java.util.Random(seed), layout.getBoardOutline());
+        layout.addComponent(footprint.getPlacement());
+        for (PcbPadPlacement pad : footprint.getPads())
+            layout.addPad(pad);
     }
 
     private static void addTraces(PcbBoardLayout layout) {
-        trace(layout, "VIN", "J1.1", "R1.1", 80,180, 60,180, 60,120, 240,120);
-        trace(layout, "VIN", "J1.1", "C2.1", 80,180, 60,180, 60,140, 150,140,
-            150,320, 190,320);
+        PcbPadPlacement j11 = layout.getPad("J1.1");
+        PcbPadPlacement j12 = layout.getPad("J1.2");
+        PcbPadPlacement r11 = layout.getPad("R1.1");
+        PcbPadPlacement r12 = layout.getPad("R1.2");
+        PcbPadPlacement r21 = layout.getPad("R2.1");
+        PcbPadPlacement r22 = layout.getPad("R2.2");
+        PcbPadPlacement c1p = layout.getPad("C1.+");
+        PcbPadPlacement c1m = layout.getPad("C1.-");
+        PcbPadPlacement c21 = layout.getPad("C2.1");
+        PcbPadPlacement c22 = layout.getPad("C2.2");
+        PcbPadPlacement j21 = layout.getPad("J2.1");
+        PcbPadPlacement j22 = layout.getPad("J2.2");
+        int j1EscapeX = escapeX(j11);
+        int j1EscapeY = escapeY(j11);
+        int j1ReturnEscapeX = escapeX(j12);
+        int j1ReturnEscapeY = escapeY(j12);
+        int r1OutputEscapeX = escapeX(r12);
+        int r1OutputEscapeY = escapeY(r12);
+        int r2RouteX = r1OutputEscapeX + 20;
+        int r2ReturnEscapeX = escapeX(r22);
+        int r2ReturnEscapeY = escapeY(r22);
 
-        trace(layout, "RC_OUT", "R1.2", "C1.+", 440,120, 450,120, 450,90, 440,90,
-            440,80, 450,80);
-        trace(layout, "RC_OUT", "R1.2", "J2.1", 440,120, 450,120, 450,180, 690,180);
-        trace(layout, "RC_OUT", "R1.2", "R2.1", 440,120, 450,120, 450,180, 500,180,
-            500,320, 530,320);
+        trace(layout, "VIN", "J1.1", "R1.1", j11.getX(),j11.getY(), j1EscapeX,j1EscapeY,
+            j1EscapeX,r11.getY(), r11.getX(),r11.getY());
+        trace(layout, "VIN", "J1.1", "C2.1", j11.getX(),j11.getY(), j1EscapeX,j1EscapeY,
+            j1EscapeX,170, c21.getX(),170, c21.getX(),c21.getY());
 
-        trace(layout, "GND", "J1.2", "C1.-", 80,220, 60,220, 60,400, 780,400,
-            780,260, 760,260, 760,150, 560,150, 560,140, 550,140);
-        trace(layout, "GND", "J1.2", "J2.2", 80,220, 60,220, 60,420, 780,420,
-            780,250, 660,250, 660,220, 690,220);
-        trace(layout, "GND", "J1.2", "C2.2", 80,220, 60,220, 60,380, 150,380,
-            150,350, 190,350);
-        trace(layout, "GND", "J1.2", "R2.2", 80,220, 60,220, 60,440, 740,440,
-            740,320, 730,320);
+        trace(layout, "RC_OUT", "R1.2", "C1.+", r12.getX(),r12.getY(),
+            r1OutputEscapeX,r1OutputEscapeY, r1OutputEscapeX,60, c1p.getX(),60,
+            c1p.getX(),c1p.getY());
+        trace(layout, "RC_OUT", "R1.2", "J2.1", r12.getX(),r12.getY(),
+            r1OutputEscapeX,r1OutputEscapeY, r1OutputEscapeX,30, j21.getX(),30,
+            j21.getX(),j21.getY());
+        trace(layout, "RC_OUT", "R1.2", "R2.1", r12.getX(),r12.getY(),
+            r1OutputEscapeX,r1OutputEscapeY, r1OutputEscapeX,30, r2RouteX,30,
+            r2RouteX,320,
+            r21.getX(),r21.getY());
+
+        trace(layout, "GND", "J1.2", "C1.-", j12.getX(),j12.getY(),
+            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 840,400, 840,50,
+            c1m.getX(),50, c1m.getX(),c1m.getY());
+        trace(layout, "GND", "J1.2", "J2.2", j12.getX(),j12.getY(),
+            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 1100,400, 1100,20,
+            j22.getX(),20, j22.getX(),150,
+            j22.getX(),j22.getY());
+        trace(layout, "GND", "J1.2", "C2.2", j12.getX(),j12.getY(),
+            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 300,400, 300,250,
+            c22.getX(),250, c22.getX(),c22.getY());
+        trace(layout, "GND", "J1.2", "R2.2", j12.getX(),j12.getY(),
+            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,440, 1100,440,
+            1100,r2ReturnEscapeY,
+            r2ReturnEscapeX,r2ReturnEscapeY, r22.getX(),r22.getY());
+    }
+
+    private static int escapeX(PcbPadPlacement pad) {
+        return pad.getX() + pad.getEscapeDx() * pad.getEscapeLength();
+    }
+
+    private static int escapeY(PcbPadPlacement pad) {
+        return pad.getY() + pad.getEscapeDy() * pad.getEscapeLength();
     }
 
     private static void trace(PcbBoardLayout layout, String net, String start, String end,
@@ -93,14 +117,14 @@ final class RcDelayPcbLayoutFactory {
 
     private static void addLabels(PcbBoardLayout layout) {
         label(layout, "board-title", "TSJ RC DELAY", 300, 40, 108, 18, true, null);
-        label(layout, "component:J1", "J1", 100, 260, 18, 18, true, null);
+        label(layout, "component:J1", "J1", 100, 285, 18, 18, true, null);
         label(layout, "component:R1", "R1", 300, 70, 18, 18, true, null);
-        label(layout, "component:C1", "C1", 470, 52, 18, 18, true, null);
-        label(layout, "component:J2", "J2", 770, 130, 18, 18, true, null);
-        label(layout, "component:R2", "R2", 590, 270, 18, 18, true, null);
-        label(layout, "component:C2", "C2", 220, 380, 18, 18, true, null);
-        label(layout, "net:J1.1", "+V", 160, 160, 24, 16, false, "J1.1");
-        label(layout, "net:J1.2", "GND", 160, 200, 32, 16, false, "J1.2");
+        label(layout, "component:C1", "C1", 740, 52, 18, 18, true, null);
+        label(layout, "component:J2", "J2", 980, 110, 18, 18, true, null);
+        label(layout, "component:R2", "R2", 630, 270, 18, 18, true, null);
+        label(layout, "component:C2", "C2", 310, 380, 18, 18, true, null);
+        label(layout, "net:J1.1", "+V", 45, 100, 24, 16, false, "J1.1");
+        label(layout, "net:J1.2", "GND", -10, 120, 32, 16, false, "J1.2");
     }
 
     private static void label(PcbBoardLayout layout, String id, String text, int x, int y,

@@ -86,14 +86,25 @@ class PcbBoardLayout {
         Vector<PcbComponentPlacement> componentList = getComponents();
         for (int first = 0; first < componentList.size(); first++) {
             PcbComponentPlacement firstPlacement = componentList.get(first);
-            requireInside(firstPlacement.getBounds(), boardOutline,
+            BoardComponent boardComponent = board.getComponent(firstPlacement.getComponentId());
+            validatePackageGeometry(board, boardComponent, firstPlacement);
+            requireInside(firstPlacement.getBodyBounds(), boardOutline,
                 "component " + firstPlacement.getComponentId());
             requireInside(firstPlacement.getKeepOut(), boardOutline,
                 "component keep-out " + firstPlacement.getComponentId());
             requireInside(firstPlacement.getRoutingCourtyard(), boardOutline,
                 "component routing courtyard " + firstPlacement.getComponentId());
+            requireInside(firstPlacement.getSelectionEnvelope(), boardOutline,
+                "component selection envelope " + firstPlacement.getComponentId());
+            requireInside(firstPlacement.getDragEnvelope(), boardOutline,
+                "component drag envelope " + firstPlacement.getComponentId());
+            for (int terminal = 0; terminal < boardComponent.getPadIds().size(); terminal++) {
+                requireInside(firstPlacement.getLeadBounds(terminal), boardOutline,
+                    "component lead " + firstPlacement.getComponentId() + "/" + terminal);
+            }
             for (int second = first + 1; second < componentList.size(); second++) {
-                if (firstPlacement.getBounds().intersects(componentList.get(second).getBounds()))
+                if (firstPlacement.getBodyBounds().intersects(
+                        componentList.get(second).getBodyBounds()))
                     throw new IllegalStateException("PCB component bodies overlap: " +
                         firstPlacement.getComponentId() + " and " +
                         componentList.get(second).getComponentId());
@@ -107,14 +118,13 @@ class PcbBoardLayout {
 
         Vector<PcbPadPlacement> padList = getPads();
         for (PcbPadPlacement pad : padList) {
-            requireInside(new Rectangle(pad.getX(), pad.getY(), 0, 0), boardOutline,
-                "pad " + pad.getPadId());
+            requireInside(pad.getPadBounds(), boardOutline, "pad " + pad.getPadId());
+            requireInside(pad.getProbeBounds(), boardOutline,
+                "pad probe envelope " + pad.getPadId());
             for (PcbPadPlacement other : padList) {
                 if (pad == other)
                     continue;
-                int dx = pad.getX() - other.getX();
-                int dy = pad.getY() - other.getY();
-                if (dx * dx + dy * dy < 26 * 26)
+                if (pad.getPadBounds().intersects(other.getPadBounds()))
                     throw new IllegalStateException("PCB pads overlap: " + pad.getPadId() +
                         " and " + other.getPadId());
             }
@@ -148,7 +158,8 @@ class PcbBoardLayout {
                 if (index > 0 && xPoints[index] != xPoints[index - 1] &&
                         yPoints[index] != yPoints[index - 1])
                     throw new IllegalStateException("PCB trace is not Manhattan routed: " +
-                        trace.getNetId());
+                        trace.getNetId() + " segment=" + xPoints[index - 1] + "," +
+                        yPoints[index - 1] + " -> " + xPoints[index] + "," + yPoints[index]);
             }
             validateTraceCourtyards(board, trace, startPad, endPad);
         }
@@ -261,6 +272,51 @@ class PcbBoardLayout {
         return false;
     }
 
+    private void validatePackageGeometry(TroubleshootBoard board, BoardComponent component,
+            PcbComponentPlacement placement) {
+        if (component == null || component.getPhysicalPackage() == null ||
+                placement.getPhysicalPackage() == null ||
+                !component.getPhysicalPackage().isEquivalentTo(placement.getPhysicalPackage()))
+            throw new IllegalStateException("PCB component package definition diverged: " +
+                (component == null ? "null" : component.getId()));
+        PhysicalPackageGeometry geometry = placement.getPhysicalGeometry();
+        if (geometry == null || !component.getPhysicalPackage().acceptsGeometry(geometry))
+            throw new IllegalStateException("PCB component does not retain package geometry: " +
+                component.getId());
+        Vector<String> padIds = component.getPadIds();
+        if (padIds.size() != geometry.getTerminals().size())
+            throw new IllegalStateException("PCB component terminal count diverged from package: " +
+                component.getId());
+        PhysicalPackageGeometry.Placement placed = geometry.placedAt(placement.getX(),
+            placement.getY());
+        if (!placed.getBodyBounds().equals(placement.getBodyBounds()) ||
+                !placed.getBodyKeepOut().equals(placement.getKeepOut()) ||
+                !placed.getRoutingCourtyard().equals(placement.getRoutingCourtyard()) ||
+                !placed.getSelectionEnvelope().equals(placement.getSelectionEnvelope()) ||
+                !placed.getDragEnvelope().equals(placement.getDragEnvelope()) ||
+                placement.getWidth() != geometry.getWidth() ||
+                placement.getHeight() != geometry.getHeight())
+            throw new IllegalStateException("PCB component placement diverged from package geometry: " +
+                component.getId());
+        for (int index = 0; index < padIds.size(); index++) {
+            PcbPadPlacement pad = pads.get(padIds.get(index));
+            BoardPad boardPad = board.getPad(padIds.get(index));
+            PhysicalPackageGeometry.Terminal terminal = geometry.getTerminal(index);
+            if (terminal == null || boardPad == null ||
+                    !terminal.getTerminalId().equals(boardPad.getTerminalId()) || pad == null ||
+                    pad.getX() != placed.getPadPoint(index).x ||
+                    pad.getY() != placed.getPadPoint(index).y ||
+                    pad.getEscapeDx() != terminal.getEscapeDx() ||
+                    pad.getEscapeDy() != terminal.getEscapeDy() ||
+                    pad.getEscapeLength() != terminal.getEscapeLength() ||
+                    !pad.getPadBounds().equals(placed.getPadBounds(index)) ||
+                    !pad.getProbeBounds().equals(placed.getProbeBounds(index)))
+                throw new IllegalStateException("PCB pad diverged from package geometry: " +
+                padIds.get(index));
+        }
+    }
+
+
     private boolean touches(int x, int y, PcbPadPlacement pad) {
         return pad != null && x == pad.getX() && y == pad.getY();
     }
@@ -278,13 +334,12 @@ class PcbBoardLayout {
                 throw new IllegalStateException("Silkscreen label references unknown pad: " +
                     label.getTargetPadId());
             for (PcbComponentPlacement component : components.values()) {
-                if (bounds.intersects(component.getBounds()))
+                if (bounds.intersects(component.getBodyBounds()))
                     throw new IllegalStateException("Silkscreen label overlaps component: " +
                         label.getId() + " / " + component.getComponentId());
             }
             for (PcbPadPlacement pad : pads.values()) {
-                Rectangle padBounds = new Rectangle(pad.getX() - 16, pad.getY() - 16, 32, 32);
-                if (bounds.intersects(padBounds))
+                if (bounds.intersects(pad.getPadBounds()))
                     throw new IllegalStateException("Silkscreen label overlaps pad: " +
                         label.getId() + " / " + pad.getPadId());
             }
@@ -347,7 +402,8 @@ class PcbBoardLayout {
                             xPoints[first], yPoints[first], xPoints[second - 1],
                             yPoints[second - 1], xPoints[second], yPoints[second]) > 0)
                         throw new IllegalStateException("PCB trace has repeated or overlapping segments: " +
-                            trace.getNetId());
+                            trace.getNetId() + " pads=" + trace.getStartPadId() + "->" +
+                            trace.getEndPadId() + " points=" + pointsDescription(xPoints, yPoints));
                     throw new IllegalStateException("PCB trace self-intersects: " +
                         trace.getNetId());
                 }
@@ -364,6 +420,15 @@ class PcbBoardLayout {
         if (ax1 == ax2 && bx1 == bx2)
             return collinearOverlap(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) == 0;
         return true;
+    }
+
+    private static String pointsDescription(int[] x, int[] y) {
+        String result = "";
+        for (int index = 0; index < x.length; index++) {
+            if (index > 0) result += ";";
+            result += x[index] + "," + y[index];
+        }
+        return result;
     }
 
     void validateTraceClearance() {
@@ -515,7 +580,8 @@ class PcbBoardLayout {
             translatedComponents.put(componentId, new PcbComponentPlacement(componentId,
                 placement.getX() + dx, placement.getY() + dy, placement.getWidth(),
                 placement.getHeight(), translate(placement.getKeepOut(), dx, dy),
-                translate(placement.getRoutingCourtyard(), dx, dy)));
+                translate(placement.getRoutingCourtyard(), dx, dy),
+                placement.getPhysicalPackage(), placement.getPhysicalGeometry()));
         }
         components.clear();
         components.putAll(translatedComponents);
@@ -526,7 +592,8 @@ class PcbBoardLayout {
             PcbPadPlacement pad = pads.get(padId);
             translatedPads.put(padId, new PcbPadPlacement(padId, pad.getX() + dx,
                 pad.getY() + dy, pad.getEscapeDx(), pad.getEscapeDy(),
-                pad.getEscapeLength()));
+                pad.getEscapeLength(), translate(pad.getPadBounds(), dx, dy),
+                translate(pad.getProbeBounds(), dx, dy)));
         }
         pads.clear();
         pads.putAll(translatedPads);
@@ -563,10 +630,24 @@ class PcbBoardLayout {
 
     Rectangle getOccupiedContentBounds() {
         Rectangle result = null;
-        for (PcbComponentPlacement component : components.values())
+        for (PcbComponentPlacement component : components.values()) {
+            result = union(result, component.getBodyBounds());
+            result = union(result, component.getKeepOut());
             result = union(result, component.getRoutingCourtyard());
+            result = union(result, component.getSelectionEnvelope());
+            result = union(result, component.getDragEnvelope());
+            PhysicalPackageGeometry geometry = component.getPhysicalGeometry();
+            if (geometry != null) {
+                for (int index = 0; index < geometry.getTerminals().size(); index++) {
+                    result = union(result, component.getLeadBounds(index));
+                    result = union(result, component.getProbeBounds(index));
+                }
+            }
+        }
         for (PcbPadPlacement pad : pads.values())
-            result = union(result, new Rectangle(pad.getX() - 16, pad.getY() - 16, 32, 32));
+            result = union(result, pad.getPadBounds());
+        for (PcbPadPlacement pad : pads.values())
+            result = union(result, pad.getProbeBounds());
         for (PcbTraceGeometry trace : traces) {
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
@@ -754,24 +835,13 @@ class PcbBoardLayout {
         Collections.sort(componentIds);
         for (String id : componentIds) {
             PcbComponentPlacement placement = components.get(id);
-            result.append("C:").append(id).append('@').append(placement.getX()).append(',')
-                .append(placement.getY()).append(',').append(placement.getWidth()).append(',')
-                .append(placement.getHeight()).append('!')
-                .append(placement.getKeepOut().x).append(',').append(placement.getKeepOut().y)
-                .append(',').append(placement.getKeepOut().width).append(',')
-                .append(placement.getKeepOut().height).append('~')
-                .append(placement.getRoutingCourtyard().x).append(',')
-                .append(placement.getRoutingCourtyard().y).append(',')
-                .append(placement.getRoutingCourtyard().width).append(',')
-                .append(placement.getRoutingCourtyard().height).append(';');
+            result.append("C:").append(placement.geometryFingerprint()).append(';');
         }
         Vector<String> padIds = new Vector<String>(pads.keySet());
         Collections.sort(padIds);
         for (String id : padIds) {
             PcbPadPlacement pad = pads.get(id);
-            result.append("P:").append(id).append('@').append(pad.getX()).append(',')
-                .append(pad.getY()).append('!').append(pad.getEscapeDx()).append(',')
-                .append(pad.getEscapeDy()).append(',').append(pad.getEscapeLength()).append(';');
+            result.append("P:").append(pad.geometryFingerprint()).append(';');
         }
         Vector<String> labelIds = new Vector<String>(silkscreenLabels.keySet());
         Collections.sort(labelIds);
@@ -813,12 +883,7 @@ class PcbBoardLayout {
         Collections.sort(componentIds);
         for (String id : componentIds) {
             PcbComponentPlacement placement = components.get(id);
-            result.append(id).append('@').append(placement.getX()).append(',')
-                .append(placement.getY()).append(',').append(placement.getWidth()).append(',')
-                .append(placement.getHeight()).append('!').append(placement.getKeepOut().x)
-                .append(',').append(placement.getKeepOut().y).append(',')
-                .append(placement.getKeepOut().width).append(',')
-                .append(placement.getKeepOut().height).append(';');
+            result.append(placement.geometryFingerprint()).append(';');
         }
         return result.toString();
     }

@@ -28,15 +28,35 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     }
 
     public boolean isValid() {
-        if (sim.getGeneratedBoardInstance() != instance)
+        if (sim == null || sim.getGeneratedBoardInstance() != instance || endpoint == null ||
+                physicalPartId == null)
             return false;
         try {
-            return isSelectedPhysicalPartStillInstalled() &&
-                sim.getBoardModificationController().getComponentState(componentId) !=
-                    ComponentPhysicalState.INSTALLED &&
-                renderer.getComponentLeadPoint(componentId, padId) != null &&
-                endpoint != null;
-        } catch (IllegalArgumentException e) {
+            BoardComponent component = instance.getBoard().getComponent(componentId);
+            BoardPad boardPad = instance.getBoard().getPad(padId);
+            GeneratedComponentConnectionBinding binding = instance.getConnectionBindings()
+                .get(componentId, padId);
+            PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+            PhysicalBoardSlot slot = instance.getPhysicalBoardRuntime().getSlot(componentId);
+            if (component == null || boardPad == null || binding == null || part == null ||
+                    slot == null || boardPad.getComponentId() == null ||
+                    !componentId.equals(component.getId()) ||
+                    !componentId.equals(boardPad.getComponentId()) ||
+                    !componentId.equals(binding.getComponentId()) ||
+                    !padId.equals(binding.getPadId()) ||
+                    !part.isInstalled() || part.getBoardSlot() != slot ||
+                    !physicalPartId.equals(part.getId()) ||
+                    !component.getPhysicalPackage().isEquivalentTo(part.getPackage()) ||
+                    binding.getComponentEndpoint() != endpoint ||
+                    !padId.equals(boardPad.getId()) ||
+                    !hasStablePartTerminal(part, boardPad.getTerminalId(), endpoint) ||
+                    sim.getBoardModificationController().isLeadConnected(componentId, padId) ||
+                    sim.getBoardModificationController().getComponentState(componentId) ==
+                        ComponentPhysicalState.INSTALLED ||
+                    renderer.getComponentLeadPoint(componentId, padId) == null)
+                return false;
+            return true;
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -58,9 +78,13 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     String getComponentIdForDeveloperVerification() { return componentId; }
     String getPadIdForDeveloperVerification() { return padId; }
 
-    private boolean isSelectedPhysicalPartStillInstalled() {
-        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
-        return part != null && part.isInstalled() && physicalPartId.equals(part.getId());
+    private static boolean hasStablePartTerminal(PhysicalPart<?> part, String terminalId,
+            CircuitMeasurementEndpoint endpoint) {
+        for (PhysicalPartTerminal terminal : part.getTerminals())
+            if (terminalId != null && terminalId.equals(terminal.getTerminalName()) &&
+                    terminal.getEndpoint() == endpoint)
+                return true;
+        return false;
     }
 
     private static String getInstalledPartId(GeneratedBoardInstance instance, String componentId) {

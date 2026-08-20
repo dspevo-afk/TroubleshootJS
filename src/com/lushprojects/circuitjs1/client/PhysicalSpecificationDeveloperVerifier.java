@@ -221,7 +221,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         Vector<String> connections = new Vector<String>();
         connections.add("1=2");
         connections.add("2=3");
-        return new PhysicalPackage("DEV_CANARY_3_ORDERED", terminals, connections, false);
+        return PhysicalPackage.developerPackageWithGenericGeometry("DEV_CANARY_3_ORDERED",
+            terminals, connections, false);
     }
 
     private static PhysicalPackage reversedFuturePackage() {
@@ -230,13 +231,15 @@ final class PhysicalSpecificationDeveloperVerifier {
         Vector<String> connections = new Vector<String>();
         connections.add("2=3");
         connections.add("1=2");
-        return new PhysicalPackage("DEV_CANARY_3_ORDERED", terminals, connections, false);
+        return PhysicalPackage.developerPackageWithGenericGeometry("DEV_CANARY_3_ORDERED",
+            terminals, connections, false);
     }
 
     private static PhysicalPackage conflictingFuturePackage() {
         Vector<String> terminals = new Vector<String>();
         terminals.add("1"); terminals.add("2"); terminals.add("3");
-        return new PhysicalPackage("DEV_CANARY_3_ORDERED", terminals, new Vector<String>(), false);
+        return PhysicalPackage.developerPackageWithGenericGeometry("DEV_CANARY_3_ORDERED",
+            terminals, new Vector<String>(), false);
     }
 
     private static void verifyConflictingPackageRejected(PcbFootprintRegistry footprintRegistry,

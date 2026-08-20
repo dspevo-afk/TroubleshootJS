@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.HashMap;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 
@@ -38,6 +39,12 @@ class PcbFootprintRegistry {
         PcbFootprint footprint = provider.create(component, x, y, random, workingOutline);
         if (footprint == null || !component.getId().equals(footprint.getPlacement().getComponentId()))
             throw new IllegalStateException("PCB footprint provider returned the wrong component");
+        if (footprint.getPlacement().getPhysicalPackage() == null ||
+                !physicalPackage.isEquivalentTo(footprint.getPlacement().getPhysicalPackage()) ||
+                footprint.getPlacement().getPhysicalGeometry() == null ||
+                !physicalPackage.acceptsGeometry(footprint.getPlacement().getPhysicalGeometry()))
+            throw new IllegalStateException("PCB footprint provider did not consume package geometry: " +
+                physicalPackage.getId());
         VectorPadValidator.validate(component, footprint);
         return footprint;
     }
@@ -54,6 +61,15 @@ class PcbFootprintRegistry {
             throw new IllegalArgumentException("Conflicting PCB package definition: " +
                 physicalPackage.getId());
         return providers.get(physicalPackage.getId());
+    }
+
+    Vector<PhysicalPackage> getRegisteredPackages() {
+        Vector<String> ids = new Vector<String>(packages.keySet());
+        Collections.sort(ids);
+        Vector<PhysicalPackage> result = new Vector<PhysicalPackage>();
+        for (String id : ids)
+            result.add(packages.get(id));
+        return result;
     }
 
     private void registerDefinition(PhysicalPackage physicalPackage,
@@ -77,8 +93,18 @@ class PcbFootprintRegistry {
             if (expected.size() != actual.size())
                 throw new IllegalStateException("PCB footprint terminal count mismatch for " +
                     component.getId() + ": expected " + expected.size() + ", got " + actual.size());
-            for (String padId : expected)
-                footprint.getPad(padId);
+            for (int index = 0; index < expected.size(); index++) {
+                String padId = expected.get(index);
+                PcbPadPlacement pad = footprint.getPad(padId);
+                int separator = padId.lastIndexOf('.');
+                String terminalId = separator < 0 ? null : padId.substring(separator + 1);
+                PhysicalPackageGeometry.Terminal terminal =
+                    footprint.getPlacement().getPhysicalGeometry().getTerminal(index);
+                if (terminalId == null || terminal == null ||
+                        !terminal.getTerminalId().equals(terminalId))
+                    throw new IllegalStateException("PCB footprint terminal order mismatch for " +
+                        component.getId() + ": " + pad.getPadId());
+            }
         }
     }
 }

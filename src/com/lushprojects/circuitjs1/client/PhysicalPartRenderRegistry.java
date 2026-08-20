@@ -1,6 +1,8 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.HashMap;
+import java.util.Collections;
+import java.util.Vector;
 
 /** Typed package registry for physical-part rendering providers. */
 final class PhysicalPartRenderRegistry {
@@ -41,5 +43,14 @@ final class PhysicalPartRenderRegistry {
 
     boolean hasProvider(PhysicalPackage physicalPackage) {
         return getProvider(physicalPackage) != null;
+    }
+
+    Vector<PhysicalPackage> getRegisteredPackages() {
+        Vector<String> ids = new Vector<String>(packages.keySet());
+        Collections.sort(ids);
+        Vector<PhysicalPackage> result = new Vector<PhysicalPackage>();
+        for (String id : ids)
+            result.add(packages.get(id));
+        return result;
     }
 }

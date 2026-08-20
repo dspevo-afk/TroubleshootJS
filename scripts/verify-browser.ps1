@@ -31,6 +31,7 @@ param(
     [switch]$Task39,
     [switch]$Task40,
     [switch]$Task41,
+    [switch]$Task43,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -171,8 +172,12 @@ function receiveCdp($socket, [int]$wantedId, [ref]$failures) {
             $failures.Value += 'JavaScript exception: ' + $description + $stack
         }
         if ($method -eq 'Runtime.consoleAPICalled') {
-            $text = ($message.params.args | ForEach-Object { $_.value }) -join ' '
-            if ($text -match '(?i)verification failed|generated board verification failed|pcb_generator_failure|parallel_generator_failure|rc_generator_failure|uncaught|exception') {
+            $text = ($message.params.args | ForEach-Object {
+                if ($_.PSObject.Properties['value']) { $_.value }
+                elseif ($_.PSObject.Properties['description']) { $_.description }
+                else { $_.type }
+            }) -join ' '
+            if ($text -match '(?i)verification failed|generated board verification failed|Unable to generate|pcb_generator_failure|parallel_generator_failure|rc_generator_failure|uncaught|exception') {
                 $failures.Value += 'Console failure: ' + $text
             }
         }
@@ -1561,6 +1566,10 @@ if ($Task40) {
 }
 if ($Task41) {
     if (-not (verifyRoute 'task41 diagnostic solvability' "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=0&tsjVerifyTask41=true&running=true" 'PASS:task41' 9720)) { exit 1 }
+    exit 0
+}
+if ($Task43) {
+    if (-not (verifyRoute 'task43 physical package geometry contract' "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43=true&running=true" 'PASS:task43' 9730)) { exit 1 }
     exit 0
 }
 if ($WrongRepair) {

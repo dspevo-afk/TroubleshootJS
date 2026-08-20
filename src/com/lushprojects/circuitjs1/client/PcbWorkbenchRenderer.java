@@ -5,9 +5,7 @@ import java.util.Vector;
 
 /** Common PCB canvas, transform, selection, and provider orchestration. */
 class PcbWorkbenchRenderer {
-    private static final int PAD_RADIUS = 13;
     private static final int DRILL_RADIUS = 5;
-    private static final int HIT_RADIUS_SQ = 18 * 18;
     private static final int PARTS_PER_TRAY_PAGE = 3;
 
     private final GeneratedBoardInstance instance;
@@ -79,7 +77,8 @@ class PcbWorkbenchRenderer {
 
     private void drawPad(Graphics graphics, PcbPadPlacement pad) {
         Point point = getPadPoint(pad.getPadId());
-        int radius = Math.max(8, scaleInt(PAD_RADIUS));
+        Rectangle padBounds = screenRect(pad.getPadBounds());
+        int radius = Math.max(8, Math.min(padBounds.width, padBounds.height) / 2);
         int drill = Math.max(4, scaleInt(DRILL_RADIUS));
         graphics.setColor("#d79a43");
         graphics.fillOval(point.x - radius, point.y - radius, radius * 2, radius * 2);
@@ -162,6 +161,14 @@ class PcbWorkbenchRenderer {
     }
 
     ProbeTarget findProbeTarget(CirSim sim, int screenX, int screenY) {
+        // Board pads own the board-side probe envelope.  Resolve them before
+        // any component-side or tray target so an overlap at a pad can never
+        // be stolen by an installed-part renderer.
+        for (PcbPadPlacement pad : layout.getPads()) {
+            Rectangle probeBounds = screenRect(pad.getProbeBounds());
+            if (probeBounds.contains(screenX, screenY))
+                return new BoardPadProbeTarget(sim, instance, pad.getPadId(), this);
+        }
         Vector<PhysicalPart<?>> looseParts = getVisibleLoosePhysicalParts();
         for (int index = 0; index < looseParts.size(); index++) {
             PhysicalPart<?> part = looseParts.get(index);
@@ -170,8 +177,7 @@ class PcbWorkbenchRenderer {
             PhysicalPartRenderer renderer = requireRenderer(part.getPackage(), part);
             PhysicalPartRenderGeometry geometry = renderer.getLooseGeometry(context);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
-                Point point = terminal.getPoint();
-                if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
+                if (terminal.containsProbe(screenX, screenY))
                     return renderer.createLooseProbeTarget(sim, context,
                         terminal.getTerminalIndex());
             }
@@ -195,11 +201,6 @@ class PcbWorkbenchRenderer {
                 context, screenX, screenY);
             if (target != null)
                 return target;
-        }
-        for (PcbPadPlacement pad : layout.getPads()) {
-            Point point = getPadPoint(pad.getPadId());
-            if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
-                return new BoardPadProbeTarget(sim, instance, pad.getPadId(), this);
         }
         return null;
     }
@@ -249,9 +250,14 @@ class PcbWorkbenchRenderer {
             component.getPhysicalPackage(), 0, false);
         PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
         PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
-        for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
-            if (padId.equals(terminal.getBoardPadId()))
-                return terminal.getPoint();
+        for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+            if (!padId.equals(terminal.getBoardPadId()))
+                continue;
+            int terminalIndex = terminal.getTerminalIndex();
+            if (!context.isDeveloperCanary() && context.isLeadConnected(terminalIndex))
+                return null;
+            return terminal.getPoint();
+        }
         return null;
     }
 
@@ -402,10 +408,14 @@ class PcbWorkbenchRenderer {
         PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
         PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
         for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
-            Point point = terminal.getPoint();
-            if (Graphics.distanceSq(point.x, point.y, screenX, screenY) <= HIT_RADIUS_SQ)
+            int terminalIndex = terminal.getTerminalIndex();
+            if (!context.isDeveloperCanary() && context.isLeadConnected(terminalIndex))
+                continue;
+            Rectangle boardPadProbeBounds = terminal.getBoardPadId() == null ? null :
+                getPadProbeBounds(terminal.getBoardPadId());
+            if (terminal.containsComponentProbe(screenX, screenY, boardPadProbeBounds))
                 return renderer.createInstalledProbeTarget(sim, context,
-                    terminal.getTerminalIndex());
+                    terminalIndex);
         }
         return null;
     }
@@ -521,6 +531,9 @@ class PcbWorkbenchRenderer {
     int screenYForProvider(int value) { return screenY(value); }
     int scaleIntForProvider(int value) { return scaleInt(value); }
     Rectangle screenRectForProvider(Rectangle value) { return screenRect(value); }
+    Rectangle getPadProbeBoundsForDeveloperVerification(String padId) {
+        return getPadProbeBounds(padId);
+    }
     Rectangle screenRectForProvider(PcbComponentPlacement value) {
         return new Rectangle(screenX(value.getX()), screenY(value.getY()),
             scaleInt(value.getWidth()), scaleInt(value.getHeight()));
@@ -552,5 +565,10 @@ class PcbWorkbenchRenderer {
     private Rectangle screenRect(PcbComponentPlacement component) {
         return new Rectangle(screenX(component.getX()), screenY(component.getY()),
             scaleInt(component.getWidth()), scaleInt(component.getHeight()));
+    }
+
+    private Rectangle getPadProbeBounds(String padId) {
+        PcbPadPlacement pad = layout.getPad(padId);
+        return pad == null ? null : screenRect(pad.getProbeBounds());
     }
 }

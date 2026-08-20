@@ -389,6 +389,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask39Verification;
 	boolean troubleshootTask40Verification;
 	boolean troubleshootTask41Verification;
+	boolean troubleshootTask43Verification;
 	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
@@ -406,6 +407,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask39VerificationComplete;
 	boolean troubleshootTask40VerificationComplete;
 	boolean troubleshootTask41VerificationComplete;
+	boolean troubleshootTask43VerificationComplete;
 	boolean troubleshootStoredEnergyVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
@@ -477,6 +479,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootTask39Verification = qp.getBooleanValue("tsjVerifyTask39", false);
 	    troubleshootTask40Verification = qp.getBooleanValue("tsjVerifyTask40", false);
 	    troubleshootTask41Verification = qp.getBooleanValue("tsjVerifyTask41", false);
+	    troubleshootTask43Verification = qp.getBooleanValue("tsjVerifyTask43", false);
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
@@ -860,7 +863,7 @@ MouseOutHandler, MouseWheelHandler {
 	
 	
 	if ("led".equals(troubleshootFixture))
-	    installGeneratedBoard(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	    installGeneratedBoard(generateLedBoard(troubleshootFixtureSeed));
 	else if ("diode".equals(troubleshootFixture))
 	    installGeneratedBoard(new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
 	else if ("rc".equals(troubleshootFixture))
@@ -870,7 +873,7 @@ MouseOutHandler, MouseWheelHandler {
 	else if ("nmos".equals(troubleshootFixture))
 	    installGeneratedBoard(generateNmosBoard(troubleshootFixtureSeed));
 	else if ("led".equals(troubleshootChallenge))
-	    installGeneratedChallenge(new LedIndicatorGenerator().generate(troubleshootFixtureSeed));
+	    installGeneratedChallenge(generateLedBoard(troubleshootFixtureSeed));
 	else if ("diode".equals(troubleshootChallenge))
 	    installGeneratedChallenge(troubleshootDiodeShort ?
 		new DiodeProtectedIndicatorGenerator().generateForDeveloperVerification(troubleshootFixtureSeed) :
@@ -898,6 +901,17 @@ MouseOutHandler, MouseWheelHandler {
 	if (troubleshootStressVerification)
 	    installStressDeveloperBridge();
 	setSimRunning(running);
+    }
+
+    private GeneratedBoardInstance generateLedBoard(long seed) {
+	try {
+	    return new LedIndicatorGenerator().generate(seed);
+	} catch (RuntimeException failure) {
+	    console("led_generator_failure: " + failure.getMessage());
+	    if (troubleshootTask43Verification)
+		publishBrowserVerificationResult("FAIL:task43-generator:" + failure.getMessage());
+	    throw failure;
+	}
     }
 
     private GeneratedBoardInstance generateParallelBoard(long seed) {
@@ -4660,6 +4674,19 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootTask43Verification &&
+		!troubleshootTask43VerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		(generatedChallengeController == null || generatedChallengeController.isReady())) {
+		developerVerifierRunning = true;
+		try {
+		    troubleshootTask43VerificationComplete = true;
+		    Task43DeveloperVerifier.verify(this);
+		    publishBrowserVerificationResult("PASS:task43");
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	} catch (RuntimeException e) {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootWrongRepairVerification ||
@@ -4671,7 +4698,8 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootArchitectureVerification || troubleshootRcVerification ||
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
 		    troubleshootNmosVerification || troubleshootTask39Verification ||
-		    troubleshootTask40Verification || troubleshootTask41Verification)
+		    troubleshootTask40Verification || troubleshootTask41Verification ||
+		    troubleshootTask43Verification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +

@@ -48,6 +48,7 @@ final class PhysicalPartRenderContext {
     PcbComponentPlacement getPlacement() { return placement; }
     PhysicalPart<?> getPart() { return part; }
     PhysicalPackage getPhysicalPackage() { return physicalPackage; }
+    PhysicalPackageGeometry getPhysicalGeometry() { return installedPhysicalGeometry(); }
     int getTrayIndex() { return trayIndex; }
     boolean isLoose() { return loose; }
     boolean isDeveloperCanary() { return developerCanaryBoard != null; }
@@ -115,12 +116,11 @@ final class PhysicalPartRenderContext {
             return new Point(renderer.screenXForProvider(x),
                 renderer.screenYForProvider(tray.y + 125));
         }
-        boolean connected = isLeadConnected(terminal);
-        int direction = terminal == 0 ? 1 : -1;
-        return new Point(renderer.screenXForProvider(
-                getLogicalPadX(terminal) + direction * (connected ? 25 : 20)),
-            renderer.screenYForProvider(
-                getLogicalPadY(terminal) - (connected ? 20 : 28)));
+        // A connected terminal is represented by its board-side pad.  The
+        // package probe center is reserved for the physically detached
+        // component-side lead, so consumers cannot mistake a connected lead
+        // for a second probe target.
+        return isLeadConnected(terminal) ? pad : getPackageProbePoint(terminal);
     }
 
     Point getMountedLeadEnd(int terminal) {
@@ -129,18 +129,72 @@ final class PhysicalPartRenderContext {
     }
 
     Point getProviderTerminalPoint(int terminal) {
+        if (placement != null && developerCanaryBoard == null) {
+            PhysicalPackageGeometry.Placement geometry = installedPhysicalGeometry().placedAt(
+                placement.getX(), placement.getY());
+            Point point = geometry.getPadPoint(terminal);
+            if (point != null)
+                return new Point(screenX(point.x), screenY(point.y));
+        }
         Point pad = getBoardPadPoint(terminal);
         return pad == null ? getSyntheticTerminalPoint(terminal) : pad;
     }
 
+    Rectangle getInstalledBodyBounds() {
+        if (placement == null)
+            return new Rectangle(0, 0, 1, 1);
+        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
+            placement.getX(), placement.getY()).getBodyBounds());
+    }
+
+    Point getInstalledLeadBodyPoint(int terminal) {
+        if (placement == null)
+            return new Point(0, 0);
+        Point point = installedPhysicalGeometry().placedAt(placement.getX(), placement.getY())
+            .getLeadBodyPoint(terminal);
+        return point == null ? getSyntheticTerminalPoint(terminal) :
+            new Point(screenX(point.x), screenY(point.y));
+    }
+
+    Rectangle getInstalledSelectionBounds() {
+        if (placement == null)
+            return new Rectangle(0, 0, 1, 1);
+        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
+            placement.getX(), placement.getY()).getSelectionEnvelope());
+    }
+
+    Rectangle getInstalledDragBounds() {
+        if (placement == null)
+            return new Rectangle(0, 0, 1, 1);
+        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
+            placement.getX(), placement.getY()).getDragEnvelope());
+    }
+
+    Rectangle getInstalledProbeBounds(int terminal) {
+        if (placement == null)
+            return new Rectangle(0, 0, 1, 1);
+        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
+            placement.getX(), placement.getY()).getProbeBounds(terminal));
+    }
+
+    Rectangle getInstalledPadBounds(int terminal) {
+        if (placement == null)
+            return new Rectangle(0, 0, 1, 1);
+        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
+            placement.getX(), placement.getY()).getPadBounds(terminal));
+    }
+
+    Rectangle getInstalledLeadBounds(int terminal) {
+        if (placement == null)
+            return new Rectangle(0, 0, 1, 1);
+        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
+            placement.getX(), placement.getY()).getLeadBounds(terminal));
+    }
+
     Point getLooseTerminalPoint(int terminal, boolean reversed) {
-        Rectangle tray = renderer.getPartsTrayForProvider();
-        int count = Math.max(1, getTerminalCount());
-        int slot = reversed ? count - terminal - 1 : terminal;
-        int x = count == 1 ? tray.x + tray.width / 2 :
-            tray.x + 18 + (tray.width - 36) * slot / (count - 1);
-        return new Point(renderer.screenXForProvider(x),
-            renderer.screenYForProvider(tray.y + 70 + trayIndex * 48));
+        Point point = getLooseTerminalLayoutPoint(terminal, reversed);
+        return new Point(renderer.screenXForProvider(point.x),
+            renderer.screenYForProvider(point.y));
     }
 
     Rectangle getComponentBounds() {
@@ -157,16 +211,53 @@ final class PhysicalPartRenderContext {
     }
 
     Rectangle getLooseBounds(boolean reversed) {
-        Point first = getLooseTerminalPoint(0, reversed);
-        Point last = getLooseTerminalPoint(Math.max(0, getTerminalCount() - 1), reversed);
-        int top = first.y - renderer.scaleIntForProvider(35);
-        if (getTerminalCount() == 2)
-            return new Rectangle(Math.min(first.x, last.x) - renderer.scaleIntForProvider(8), top,
-                renderer.scaleIntForProvider(145), renderer.scaleIntForProvider(70));
-        int left = Math.min(first.x, last.x) - renderer.scaleIntForProvider(8);
-        int right = Math.max(first.x, last.x) + renderer.scaleIntForProvider(8);
-        return new Rectangle(left, top, Math.max(renderer.scaleIntForProvider(145), right - left),
-            renderer.scaleIntForProvider(70));
+        return getLooseSelectionBounds(reversed);
+    }
+
+    /**
+     * Tray layout is deliberately horizontal, while package geometry is
+     * package-local.  This adapter anchors the declared package envelope at
+     * terminal zero and translates each terminal's own pad/probe/lead
+     * rectangles to its tray lead end.  It keeps tray chrome separate without
+     * replacing terminal interaction geometry with a generic hit radius.
+     */
+    Rectangle getLooseSelectionBounds(boolean reversed) {
+        PhysicalPackageGeometry geometry = physicalPackage.getGeometry();
+        Rectangle result = translateLoosePackageRectangle(geometry.getSelectionEnvelope(),
+            reversed);
+        result = result.union(getLooseBodyBounds(reversed));
+        for (int terminal = 0; terminal < getTerminalCount(); terminal++) {
+            result = result.union(getLooseProbeBounds(terminal, reversed));
+            result = result.union(getLoosePadBounds(terminal, reversed));
+            result = result.union(getLooseLeadBounds(terminal, reversed));
+        }
+        return result;
+    }
+
+    Rectangle getLooseBodyBounds(boolean reversed) {
+        return translateLoosePackageRectangle(physicalPackage.getGeometry().getBodyBounds(),
+            reversed);
+    }
+
+    Rectangle getLooseDragBounds(boolean reversed) {
+        Rectangle result = translateLoosePackageRectangle(physicalPackage.getGeometry()
+            .getDragEnvelope(), reversed);
+        return result.union(getLooseSelectionBoundsWithoutDrag(reversed));
+    }
+
+    Rectangle getLooseProbeBounds(int terminal, boolean reversed) {
+        PhysicalPackageGeometry.Terminal declared = getDeclaredTerminal(terminal);
+        return translateLooseTerminalRectangle(declared.getProbeBounds(), terminal, reversed);
+    }
+
+    Rectangle getLoosePadBounds(int terminal, boolean reversed) {
+        PhysicalPackageGeometry.Terminal declared = getDeclaredTerminal(terminal);
+        return translateLooseTerminalRectangle(declared.getPadBounds(), terminal, reversed);
+    }
+
+    Rectangle getLooseLeadBounds(int terminal, boolean reversed) {
+        PhysicalPackageGeometry.Terminal declared = getDeclaredTerminal(terminal);
+        return translateLooseTerminalRectangle(declared.getLead().getBounds(), terminal, reversed);
     }
 
     boolean isComponentRemoved() {
@@ -211,16 +302,67 @@ final class PhysicalPartRenderContext {
         return new Point(screenX(x), screenY(y));
     }
 
-    private int getLogicalPadX(int terminal) {
-        String padId = getBoardPadId(terminal);
-        PcbPadPlacement pad = padId == null ? null : renderer.getLayoutForProvider().getPad(padId);
-        return pad == null ? placement.getX() : pad.getX();
+    private Point getPackageProbePoint(int terminal) {
+        if (placement == null)
+            return getSyntheticTerminalPoint(terminal);
+        Point point = installedPhysicalGeometry().placedAt(placement.getX(), placement.getY())
+            .getProbePoint(terminal);
+        return point == null ? getSyntheticTerminalPoint(terminal) :
+            new Point(screenX(point.x), screenY(point.y));
     }
 
-    private int getLogicalPadY(int terminal) {
-        String padId = getBoardPadId(terminal);
-        PcbPadPlacement pad = padId == null ? null : renderer.getLayoutForProvider().getPad(padId);
-        return pad == null ? placement.getY() : pad.getY();
+    private Point getLooseTerminalLayoutPoint(int terminal, boolean reversed) {
+        Rectangle tray = renderer.getPartsTrayForProvider();
+        int count = Math.max(1, getTerminalCount());
+        int slot = reversed ? count - terminal - 1 : terminal;
+        int x = count == 1 ? tray.x + tray.width / 2 :
+            tray.x + 18 + (tray.width - 36) * slot / (count - 1);
+        return new Point(x, tray.y + 70 + trayIndex * 48);
+    }
+
+    private Rectangle translateLoosePackageRectangle(Rectangle local, boolean reversed) {
+        PhysicalPackageGeometry.Terminal anchor = getDeclaredTerminal(0);
+        Point target = getLooseTerminalLayoutPoint(0, reversed);
+        Point source = anchor.getPadCenter();
+        Rectangle translated = new Rectangle(local.x + target.x - source.x,
+            local.y + target.y - source.y, local.width, local.height);
+        return renderer.screenRectForProvider(translated);
+    }
+
+    private Rectangle translateLooseTerminalRectangle(Rectangle local, int terminal,
+            boolean reversed) {
+        PhysicalPackageGeometry.Terminal declared = getDeclaredTerminal(terminal);
+        Point target = getLooseTerminalLayoutPoint(terminal, reversed);
+        Point source = declared.getPadCenter();
+        Rectangle translated = new Rectangle(local.x + target.x - source.x,
+            local.y + target.y - source.y, local.width, local.height);
+        return renderer.screenRectForProvider(translated);
+    }
+
+    private Rectangle getLooseSelectionBoundsWithoutDrag(boolean reversed) {
+        Rectangle result = translateLoosePackageRectangle(physicalPackage.getGeometry()
+            .getSelectionEnvelope(), reversed);
+        result = result.union(getLooseBodyBounds(reversed));
+        for (int terminal = 0; terminal < getTerminalCount(); terminal++) {
+            result = result.union(getLooseProbeBounds(terminal, reversed));
+            result = result.union(getLoosePadBounds(terminal, reversed));
+            result = result.union(getLooseLeadBounds(terminal, reversed));
+        }
+        return result;
+    }
+
+    private PhysicalPackageGeometry.Terminal getDeclaredTerminal(int terminal) {
+        PhysicalPackageGeometry.Terminal declared = physicalPackage.getGeometry()
+            .getTerminal(terminal);
+        if (declared == null)
+            throw new IllegalStateException("Package geometry omitted terminal " + terminal +
+                " for " + physicalPackage.getId());
+        return declared;
+    }
+
+    private PhysicalPackageGeometry installedPhysicalGeometry() {
+        return placement != null && placement.getPhysicalGeometry() != null ?
+            placement.getPhysicalGeometry() : physicalPackage.getGeometry();
     }
 
     private TroubleshootBoard getBoardForProvider() {

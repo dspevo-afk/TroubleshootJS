@@ -246,9 +246,7 @@ class SeededPcbLayoutGenerator {
         for (PcbPadPlacement pad : candidate.getPads()) {
             for (PcbFootprint other : placed) {
                 for (PcbPadPlacement otherPad : other.getPads()) {
-                    int dx = pad.getX() - otherPad.getX();
-                    int dy = pad.getY() - otherPad.getY();
-                    if (dx * dx + dy * dy < 26 * 26)
+                    if (pad.getPadBounds().intersects(otherPad.getPadBounds()))
                         return false;
                 }
             }
@@ -377,7 +375,7 @@ class SeededPcbLayoutGenerator {
 
     private Vector<Rectangle> getReferenceCandidates(PcbComponentPlacement placement, int width,
             int height) {
-        Rectangle bounds = placement.getBounds();
+        Rectangle bounds = placement.getBodyBounds();
         int centerX = bounds.x + bounds.width / 2;
         int centerY = bounds.y + bounds.height / 2;
         Vector<Rectangle> candidates = new Vector<Rectangle>();
@@ -421,11 +419,11 @@ class SeededPcbLayoutGenerator {
                 candidate.y + candidate.height > outline.y + outline.height)
             return false;
         for (PcbComponentPlacement component : layout.getComponents()) {
-            if (candidate.intersects(component.getBounds()))
+            if (candidate.intersects(component.getBodyBounds()))
                 return false;
         }
         for (PcbPadPlacement pad : layout.getPads()) {
-            if (candidate.intersects(new Rectangle(pad.getX() - 16, pad.getY() - 16, 32, 32)))
+            if (candidate.intersects(pad.getPadBounds()))
                 return false;
         }
         for (PcbTraceGeometry trace : layout.getTraces()) {

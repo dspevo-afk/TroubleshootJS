@@ -52,19 +52,7 @@ final class StandardPcbFootprintProviders {
             if (pinCount < 2 || pinCount > 6)
                 throw new IllegalStateException("Connector provider received " + pinCount +
                     " pads for " + component.getId() + "; expected 2-6");
-            boolean leftEdge = x < outline.x + outline.width / 2;
-            int padX = leftEdge ? x + 90 : x + 10;
-            int escapeDx = leftEdge ? 1 : -1;
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            Vector<String> ids = component.getPadIds();
-            int height = 130 + (pinCount - 2) * 40;
-            int pitch = pinCount == 2 ? 60 : 40;
-            for (int index = 0; index < pinCount; index++)
-                pads.add(new PcbPadPlacement(ids.get(index), padX, y + 40 + index * pitch,
-                    escapeDx, 0, 30));
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 100, height,
-                new Rectangle(x, y, 100, height), new Rectangle(x - 6, y - 6, 112, height + 12)),
-                pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 
@@ -76,18 +64,7 @@ final class StandardPcbFootprintProviders {
         public PcbFootprint create(BoardComponent component, int x, int y, Random random,
                 Rectangle outline) {
             requireTwoPads(component);
-            int span = visualKind == 0 ? 220 + random.nextInt(3) * 20 :
-                230 + random.nextInt(2) * 20;
-            Vector<String> ids = component.getPadIds();
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            pads.add(new PcbPadPlacement(ids.get(0), x + 30, y + 30, -1, 0, 50));
-            pads.add(new PcbPadPlacement(ids.get(1), x + span - 30, y + 30, 1, 0, 50));
-            int bodyInset = visualKind == 0 ? 70 : 72;
-            int bodyHeight = visualKind == 0 ? 34 : 32;
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, span, 70,
-                new Rectangle(x + bodyInset, y + (70 - bodyHeight) / 2,
-                    span - bodyInset * 2, bodyHeight),
-                new Rectangle(x + 12, y + 5, span - 24, 60)), pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 
@@ -96,13 +73,7 @@ final class StandardPcbFootprintProviders {
         public PcbFootprint create(BoardComponent component, int x, int y, Random random,
                 Rectangle outline) {
             requireTwoPads(component);
-            Vector<String> ids = component.getPadIds();
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 30, 0, -1, 30));
-            pads.add(new PcbPadPlacement(ids.get(1), x + 70, y + 30, 0, -1, 30));
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 100, 70,
-                new Rectangle(x + 8, y + 8, 84, 54),
-                new Rectangle(x - 6, y, 112, 70)), pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 
@@ -110,13 +81,7 @@ final class StandardPcbFootprintProviders {
         public PcbFootprint create(BoardComponent component, int x, int y, Random random,
                 Rectangle outline) {
             requireTwoPads(component);
-            Vector<String> ids = component.getPadIds();
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 70, 0, 1, 35));
-            pads.add(new PcbPadPlacement(ids.get(1), x + 60, y + 70, 0, 1, 35));
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 90, 100,
-                new Rectangle(x + 15, y + 12, 60, 60),
-                new Rectangle(x + 6, y + 4, 78, 101)), pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 
@@ -127,15 +92,7 @@ final class StandardPcbFootprintProviders {
             if (component.getPadIds().size() != 3)
                 throw new IllegalStateException("NPN provider requires B/C/E pads for " +
                     component.getId());
-            Vector<String> ids = component.getPadIds();
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 90, -1, 0, 30));
-            // Clear the inclusive courtyard boundary used by the PCB route validator.
-            pads.add(new PcbPadPlacement(ids.get(1), x + 60, y + 90, 0, 1, 32));
-            pads.add(new PcbPadPlacement(ids.get(2), x + 100, y + 90, 0, 1, 32));
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 130, 125,
-                new Rectangle(x + 28, y + 12, 74, 60),
-                new Rectangle(x + 5, y + 4, 120, 118)), pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 
@@ -146,14 +103,7 @@ final class StandardPcbFootprintProviders {
             if (component.getPadIds().size() != 3)
                 throw new IllegalStateException("NMOS provider requires G/D/S pads for " +
                     component.getId());
-            Vector<String> ids = component.getPadIds();
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 90, -1, 0, 30));
-            pads.add(new PcbPadPlacement(ids.get(1), x + 60, y + 90, 0, 1, 32));
-            pads.add(new PcbPadPlacement(ids.get(2), x + 100, y + 90, 0, 1, 32));
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 130, 125,
-                new Rectangle(x + 28, y + 12, 74, 60),
-                new Rectangle(x + 5, y + 4, 120, 118)), pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 
@@ -161,13 +111,7 @@ final class StandardPcbFootprintProviders {
         public PcbFootprint create(BoardComponent component, int x, int y, Random random,
                 Rectangle outline) {
             requireTwoPads(component);
-            Vector<String> ids = component.getPadIds();
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            pads.add(new PcbPadPlacement(ids.get(0), x + 30, y + 30, 0, -1, 38));
-            pads.add(new PcbPadPlacement(ids.get(1), x + 80, y + 30, 0, -1, 38));
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 120, 120,
-                new Rectangle(x + 15, y + 12, 90, 75),
-                new Rectangle(x + 5, y + 4, 110, 110)), pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 
@@ -175,13 +119,7 @@ final class StandardPcbFootprintProviders {
         public PcbFootprint create(BoardComponent component, int x, int y, Random random,
                 Rectangle outline) {
             requireTwoPads(component);
-            Vector<String> ids = component.getPadIds();
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            pads.add(new PcbPadPlacement(ids.get(0), x + 20, y + 30, 0, -1, 30));
-            pads.add(new PcbPadPlacement(ids.get(1), x + 60, y + 30, 0, -1, 30));
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, 90, 90,
-                new Rectangle(x + 12, y + 16, 66, 45),
-                new Rectangle(x + 5, y + 5, 80, 80)), pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 
@@ -202,26 +140,7 @@ final class StandardPcbFootprintProviders {
                 throw new IllegalStateException("Multi-terminal provider received " + pinCount +
                     " pads for " + component.getId() + "; expected " + minimumPins + "-" +
                     maximumPins);
-            int columns = 1;
-            int rows = (pinCount + columns - 1) / columns;
-            int pitch = 40;
-            int width = 150;
-            int height = 60 + (rows - 1) * pitch;
-            boolean connector = component.getPhysicalPackage().isConnector();
-            boolean leftEdge = x < outline.x + outline.width / 2;
-            int escapeDx = connector && !leftEdge ? -1 : 1;
-            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
-            Vector<String> ids = component.getPadIds();
-            int padX = connector && !leftEdge ? x + 30 : x + width - 30;
-            for (int index = 0; index < pinCount; index++) {
-                int row = index / columns;
-                int column = index % columns;
-                int padY = y + 30 + row * pitch;
-                pads.add(new PcbPadPlacement(ids.get(index), padX, padY, escapeDx, 0, 30));
-            }
-            return new PcbFootprint(new PcbComponentPlacement(component.getId(), x, y, width,
-                height, new Rectangle(x + 10, y + 10, width - 50, height - 20),
-                new Rectangle(x + 10, y + 10, width - 20, height - 20)), pads);
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }
 }
