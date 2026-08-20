@@ -58,9 +58,14 @@ and are not claimed implemented here.
 
 ## Checks and remaining validation
 
-- Exact allowed-file scope is limited to `Task43DeveloperVerifier.java`,
-  `docs/ARCHITECTURE.md`, and `docs/CODEX_TASK_REPORT.md`; no production
-  contract outside that scope was edited.
+- The correction intentionally touched the narrow geometry-lifecycle production
+  layer required by the approved R-1 ownership design: placement, package
+  geometry, slot/runtime binding, physical-part realization carriers, and
+  geometry versioning, alongside `Task43DeveloperVerifier.java` and the two
+  documentation files. It did not touch PCB route factories, renderer
+  implementation, tray implementation, CircuitJS electrical topology,
+  measurement endpoint behavior, fault behavior, stress/damage behavior, or
+  Task 44.
 - `git diff --check`: passed after the correction.
 - Task 43 verifier compile/link: passed across all five OBF GWT permutations
   with `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07`.

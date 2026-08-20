@@ -9,10 +9,12 @@ import java.util.Vector;
  * is deliberately absent: this class only describes where a physical feature
  * is, so translating or compacting a board cannot change its node mapping.
  *
- * Board-pad and component-lead probe surfaces are deliberately separate. The
- * legacy probe accessors below are explicitly board-pad aliases because the
- * existing PCB pad/loose consumers have not yet migrated to the 43R-2
- * component-lead surface.
+ * Staged consumer boundary:
+ * 43R-2: board/layout geometry consumers, compaction, containment, physical
+ * net-connectivity validation.
+ * 43R-3: installed rendering, selection, board-pad/component-side probing.
+ * 43R-4: loose-part rigid pose, loose rendering, loose hit testing, loose
+ * probing, realization consumer lifecycle.
  */
 final class PhysicalPackageGeometry {
     private final int width;

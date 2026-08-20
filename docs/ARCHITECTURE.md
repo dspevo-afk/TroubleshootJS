@@ -1358,9 +1358,11 @@ orientation, generated family/topology agreement, and stable generated board
 component/pad/net/semantic IDs plus runtime slot/part/terminal/endpoint/carrier
 identity. A synthetic SPAN_260 axial-resistor lifecycle proof covers binding,
 remove/reinstall, and rejection of a SPAN_220 rebind without adding electrical
-nodes to a live board. This contract change does not modify routes, CircuitJS
-elements, electrical endpoints, providers, renderers, or board mutation
-behavior.
+nodes to a live board. No CircuitJS electrical topology changed; no measurement
+endpoint identity changed; no generated fault semantics changed; no
+stress/damage semantics changed; no existing physical repair operation
+semantics were redesigned; physical slot installation now additionally
+binds/enforces the approved immutable geometry realization.
 
 The milestone boundary is intentionally staged. Task 43R-2 is strictly board
 geometry consumers: layout realization, compaction, containment, and physical
