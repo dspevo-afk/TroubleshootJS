@@ -12,6 +12,7 @@ final class PhysicalBoardSlot {
     private final Vector<String> netIds;
     private PhysicalBoardRuntime runtime;
     private PhysicalPart<?> installedPart;
+    private PhysicalGeometryRealization geometryRealization;
 
     PhysicalBoardSlot(TroubleshootBoard board, String componentId) {
         if (board == null || componentId == null || componentId.length() == 0)
@@ -57,6 +58,7 @@ final class PhysicalBoardSlot {
     Vector<String> getPadIds() { return new Vector<String>(padIds); }
     Vector<String> getTerminalIds() { return new Vector<String>(terminalIds); }
     Vector<String> getNetIds() { return new Vector<String>(netIds); }
+    PhysicalGeometryRealization getGeometryRealization() { return geometryRealization; }
     PhysicalPart<?> getInstalledPart() { return installedPart; }
     boolean isOccupied() { return installedPart != null; }
     PhysicalPartMountState getMountState() {
@@ -67,6 +69,32 @@ final class PhysicalBoardSlot {
         if (runtime == null || (this.runtime != null && this.runtime != runtime))
             throw new IllegalStateException("Physical slot runtime cannot be changed");
         this.runtime = runtime;
+    }
+
+    void bindGeometryRealization(PcbComponentPlacement placement) {
+        if (placement == null || !componentId.equals(placement.getComponentId()))
+            throw new IllegalArgumentException("Placement does not belong to physical slot: " +
+                componentId);
+        if (placement.getPhysicalPackage() == null ||
+                !physicalPackage.isEquivalentTo(placement.getPhysicalPackage()))
+            throw new IllegalArgumentException("Placement package does not fit physical slot: " +
+                componentId);
+        bindGeometryRealization(placement.getGeometryRealization());
+    }
+
+    void bindGeometryRealization(PhysicalGeometryRealization realization) {
+        if (realization == null ||
+                !physicalPackage.isEquivalentTo(realization.getPhysicalPackage()))
+            throw new IllegalArgumentException("Geometry realization does not fit physical slot: " +
+                componentId);
+        if (geometryRealization != null &&
+                !geometryRealization.isEquivalentTo(realization))
+            throw new IllegalStateException("Physical slot geometry realization cannot change: " +
+                componentId);
+        if (installedPart != null)
+            installedPart.bindGeometryRealization(realization);
+        if (geometryRealization == null)
+            geometryRealization = realization;
     }
 
     void install(PhysicalPart<?> part) {
@@ -81,6 +109,8 @@ final class PhysicalBoardSlot {
             findTerminal(part, terminalId);
         if (runtime != null)
             runtime.validatePartIdentity(part);
+        if (geometryRealization != null)
+            part.bindGeometryRealization(geometryRealization);
         part.getMountState().mount(this);
         installedPart = part;
         if (runtime != null)

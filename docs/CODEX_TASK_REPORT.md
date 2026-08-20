@@ -1,60 +1,89 @@
-# Task 43R-1 — Freeze the Physical Package Contract and Geometry Identity
+# Task 43R-1 correction handoff — package realization verifier and boundary
 
 Date: 2026-08-20
 
-Status: `FINAL PASS` locally on `codex/task43-recovery-integration`; the
-milestone was committed without pushing. The implementation started from
-checkpoint `239b52f0c1fd36eac5ccb65ad7dbe559474c1800` and did not modify
-`master` (`c0eb342b29165b8218a4b97b16fb8554fee42aff`).
+Status: `FINAL PASS — PRIMARY ARCHITECT VALIDATION AND INDEPENDENT REVIEW
+COMPLETE`. The bounded correction is integrated in the shared worktree. No push
+was performed; the primary architect retains publication authority.
 
-## Scope and behavior
+## Correction design and research handoff
 
-Task 43R-1 freezes the package-owned physical geometry contract and its
-deterministic identity. `PhysicalPackageGeometry` remains immutable and now
-declares separate board-pad probe surfaces plus connected/lifted component-lead
-poses and probe surfaces. Validation enforces envelope containment, ordered
-terminal identity, checked geometry arithmetic, valid escape vectors, and the
-complete pairwise non-overlap matrix across board-pad and component-lead probe
-surfaces.
+The integrated correction preserves the selected-geometry ownership contract:
+`PhysicalPackage` owns package definition/catalog/default,
+`PcbComponentPlacement` exposes the immutable `PhysicalGeometryRealization`,
+`PhysicalBoardSlot` retains the final layout carrier across removal, and each
+`PhysicalPart` binds that carrier once. Geometry contract version 2 is checked
+through explicit connected and detached lifted lead surfaces.
 
-`PhysicalPackage` owns authoritative package identity, terminal order, internal
-connectivity, the explicit geometry-contract version, and finite canonical
-variant catalogs. Resistor spans are 220/240/260, diode spans are 230/250, and
-the two-terminal connector has explicit base and mirrored-right realizations.
-`PcbComponentPlacement` carries the selected canonical geometry, variant key,
-transform key, version, and explicit loose/default variant in its fingerprint.
-Translation preserves the selected realization and stable electrical/semantic
-IDs.
+Luna's research/review summary identified the stale verifier use of the removed
+`Lead.getPadPoint()` API, the missing selected-realization lifecycle proof, and
+the need for generated runtime identity to cover carriers, parts, terminals,
+and CircuitJS endpoint identities. It also confirmed that renderer/tray
+consumers are deferred implementation slices rather than a verifier failure
+classification, and that legacy `PcbPadPlacement` compatibility must remain
+untouched.
 
-Production packages require authoritative geometry. Legacy no-geometry package
-constructors are explicitly marked developer-generic compatibility boundaries;
-package-less production placements reject, while developer generic projection
-remains available only for canaries. `PcbPadPlacement`, routes, renderers,
-providers, board mutation, CircuitJS elements, and `AGENTS.md` were not changed.
+Spark A integrated the package geometry/catalog/placement contract. Spark B
+integrated the slot/runtime/physical-part carrier ownership and one-time
+binding lifecycle. Spark C owns this bounded correction: verifier API and
+surface assertions, synthetic SPAN_260 lifecycle canary, generated identity
+snapshot/canaries, and the Task 43R-1 architecture and handoff wording.
 
-## Validation evidence
+## Scope and behavior implemented by this candidate
 
-- JDK 8u502 OBF GWT compile/link passed for all five permutations using
-  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07`.
-- Browser verifier passed: `PASS task43 physical package geometry contract`.
-- The verifier covered every registered production/developer package and
-  declared variant, connector orientation, deterministic placement, translation,
-  foreign/undeclared geometry, malformed escape, malformed board-pad and
-  lifted-lead geometry, cross-terminal probe overlap, version identity, and
-  stable generated component/pad/net/semantic IDs.
-- `git diff --check` passed after the implementation and correction.
-- Independent read-only Luna MAX reviewer first identified and then PASSed the
-  corrected cross-terminal probe matrix. The reviewer confirmed exactly the
-  authorized package/placement/verifier files changed and no electrical, route,
-  renderer, provider, or board-mutation changes.
+The verifier now checks connected endpoints against terminal pad centers;
+detached lifted endpoints against pad centers and board-pad probe bounds; shared
+lifted/connected body attachments; lead/probe containment in selection and drag
+envelopes; lifted lead/probe separation from board-pad probes; existing terminal
+order, translation, mirroring, and cross-terminal probe matrix checks; and
+negative canaries for malformed detached endpoints, bounds, and probes.
 
-## Deferred boundary
+A verifier-local synthetic axial-resistor board binds a real SPAN_260 footprint
+through `PcbBoardLayout` and `PhysicalBoardRuntime`, installs a real
+`PhysicalResistorPart` backed by a `ResistorElm`, removes/reinstalls the same
+part, checks stable part/terminal/endpoint/carrier identity, and rejects a
+SPAN_220 rebind. The synthetic element is not added to a live generated board.
+Generated identity proof now requires non-empty family/topology IDs and
+agreement with `GeneratedChallengeDefinition` and
+`GeneratedDiagnosticSolvabilityContract`; snapshots include sorted board
+component/pad/net mappings, semantic operation IDs, runtime slot/part/terminal
+IDs, endpoint identities, and realization fingerprints.
 
-The current renderer, physical-part context, and loose-tray consumers still use
-the legacy board-side/default projection and do not carry selected footprint
-variants into component-side rendering. This remains the explicit
-`REALIZATION_INFEASIBLE` Task 43R-2 consumer boundary. No Task 43R-2 or Task 44
-work was started.
+The architecture section now records contract version 2, explicit carrier
+ownership, one-time binding, detached lifted geometry, and the corrected
+boundaries: R-2 is board/layout/compaction/containment/connectivity; R-3 is
+installed rendering/selection/probing; R-4 is loose pose/render/hit/probe and
+physical-part realization consumer lifecycle. These consumers remain deferred
+and are not claimed implemented here.
+
+## Checks and remaining validation
+
+- Exact allowed-file scope is limited to `Task43DeveloperVerifier.java`,
+  `docs/ARCHITECTURE.md`, and `docs/CODEX_TASK_REPORT.md`; no production
+  contract outside that scope was edited.
+- `git diff --check`: passed after the correction.
+- Task 43 verifier compile/link: passed across all five OBF GWT permutations
+  with `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07`.
+- Task 43 browser route: passed through the visible Codex in-app Browser after
+  the prescribed `scripts/start-preview.ps1 -Port 8899` helper was shown to be
+  unavailable on this host because `System.Net.HttpListener` reports
+  “Operation is not supported on this platform”. A temporary loopback-only
+  static server served the already-built `war` output, and the Browser loaded
+  `circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43=true&running=true`.
+  The rendered application published `data-tsj-verification=PASS:task43`; no
+  Browser console errors or warnings were observed. No normal-player screenshot
+  is claimed because this is a developer-verifier route, not a player-flow
+  acceptance test.
+- Exact integrated allowed-file scope check: passed; only the authorized
+  Task 43R-1 source, verifier, and documentation files are present.
+- Fresh independent read-only Luna reviewer: returned exactly `PASS` with no
+  blockers against the frozen R-1 contract and current integrated diff.
+- Stale `Lead.getPadPoint()` search: passed with no remaining verifier use.
+- No renderer, tray, routing, electrical, fault, mutation, or Task 44 consumer
+  migration was invoked.
+
+Known limits are the intentionally deferred R-2/R-3/R-4 consumer slices. No
+Task 43R-2 work was started.
 
 ---
 

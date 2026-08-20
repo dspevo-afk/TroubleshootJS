@@ -26,6 +26,8 @@ final class Task43DeveloperVerifier {
 
         for (PhysicalPackage physicalPackage : registered)
             verifyPackage(physicalPackage, footprints, renderers);
+        verifyGeneratedIdentity(instance);
+        verifySelectedGeometryLifecycleCanary();
         verifyNegativeCanaries(registered);
         require(beforeIdentity.equals(boardIdentity(instance)),
             "Task 43 package canaries changed generated board identities");
@@ -178,9 +180,11 @@ final class Task43DeveloperVerifier {
                     contains(courtyard, pad) && contains(selection, connected.getBounds()) &&
                     contains(selection, lifted.getBounds()) && contains(drag, connected.getBounds()) &&
                     contains(drag, lifted.getBounds()) &&
-                    connected.getPadPoint().equals(terminal.getPadCenter()) &&
-                    lifted.getPadPoint().equals(terminal.getPadCenter()) &&
+                    connected.getEndPoint().equals(terminal.getPadCenter()) &&
+                    !lifted.getEndPoint().equals(terminal.getPadCenter()) &&
+                    !contains(boardProbe, lifted.getEndPoint()) &&
                     contains(body, connected.getBodyPoint()) &&
+                    lifted.getBodyPoint().equals(connected.getBodyPoint()) &&
                     contains(connected.getComponentProbeBounds(),
                         connected.getComponentProbeCenter()) &&
                     contains(lifted.getComponentProbeBounds(),
@@ -190,6 +194,7 @@ final class Task43DeveloperVerifier {
                     contains(drag, connected.getComponentProbeBounds()) &&
                     contains(drag, lifted.getComponentProbeBounds()) &&
                     !boardProbe.intersects(connected.getComponentProbeBounds()) &&
+                    !boardProbe.intersects(lifted.getBounds()) &&
                     !boardProbe.intersects(lifted.getComponentProbeBounds()) &&
                     !connected.isEquivalentTo(lifted) &&
                     Math.abs(terminal.getEscapeDx()) + Math.abs(terminal.getEscapeDy()) <= 1 &&
@@ -320,7 +325,9 @@ final class Task43DeveloperVerifier {
         expectRejectedMalformedEscape(source);
         expectRejectedMalformedBoardProbe(source);
         expectRejectedCrossTerminalProbe(source);
-        expectRejectedMalformedLiftedLead(source);
+        expectRejectedMalformedDetachedEndpoint(source);
+        expectRejectedMalformedLiftedBounds(source);
+        expectRejectedMalformedLiftedProbe(source);
         expectRejectedMalformedEnvelope(source);
         verifyVersionIdentity(production);
 
@@ -331,6 +338,7 @@ final class Task43DeveloperVerifier {
                 genericProjection.getPhysicalPackage().isDeveloperGeneric() &&
                 genericProjection.getPhysicalGeometry() == generic,
             "Generic compatibility projection did not become package-backed");
+        expectRejectedPackageLessPlacement(production);
         boolean productionLooseRejected = false;
         try {
             PcbComponentPlacement.fromPhysicalGeometry("TASK43_PRODUCTION_LOOSE", 40, 40,
@@ -344,6 +352,27 @@ final class Task43DeveloperVerifier {
         PhysicalPackage legacy = new PhysicalPackage("TASK43_LEGACY_GENERIC", 2);
         require(legacy.isDeveloperGeneric() && legacy.getGeometry().isDeveloperGeneric(),
             "Legacy no-geometry package boundary is not explicitly generic");
+    }
+
+    private static void verifyGeneratedIdentity(GeneratedBoardInstance instance) {
+        String familyId = instance.getCircuitFamilyId();
+        String topologyVariantId = instance.getTopologyVariantId();
+        require(familyId != null && familyId.length() > 0 &&
+                topologyVariantId != null && topologyVariantId.length() > 0,
+            "Generated board is missing circuit family/topology identity");
+
+        GeneratedChallengeDefinition challenge = instance.getChallengeDefinition();
+        require(challenge != null && familyId.equals(challenge.getCircuitFamilyId()) &&
+                topologyVariantId.equals(challenge.getTopologyVariantId()),
+            "Generated challenge identity disagrees with board identity");
+
+        GeneratedDiagnosticSolvabilityContract solvability =
+            instance.getDiagnosticSolvabilityContract();
+        require(solvability != null && familyId.equals(solvability.getFamilyId()) &&
+                topologyVariantId.equals(solvability.getTopologyVariantId()) &&
+                instance.getSeed() == solvability.getSeed(),
+            "Diagnostic solvability identity disagrees with board identity");
+        solvability.validate(instance);
     }
 
     private static void expectRejectedPlacement(PhysicalPackage physicalPackage,
@@ -427,11 +456,45 @@ final class Task43DeveloperVerifier {
             source.getGeometryContractVersion(), "cross-terminal probe overlap");
     }
 
-    private static void expectRejectedMalformedLiftedLead(PhysicalPackageGeometry source) {
+    private static void expectRejectedMalformedDetachedEndpoint(PhysicalPackageGeometry source) {
         PhysicalPackageGeometry.Terminal first = source.getTerminal(0);
         PhysicalPackageGeometry.Lead lifted = first.getLiftedLead();
         PhysicalPackageGeometry.Lead malformed = new PhysicalPackageGeometry.Lead(
-            lifted.getPadPoint(), lifted.getBodyPoint(), lifted.getBounds(),
+            first.getPadCenter(), lifted.getBodyPoint(), lifted.getBounds(),
+            lifted.getComponentProbeCenter(), lifted.getComponentProbeBounds());
+        Vector<PhysicalPackageGeometry.Terminal> terminals = source.getTerminals();
+        terminals.set(0, new PhysicalPackageGeometry.Terminal(first.getTerminalId(),
+            first.getPadCenter(), first.getPadBounds(), first.getBoardPadProbeCenter(),
+            first.getBoardPadProbeBounds(), first.getConnectedLead(), malformed,
+            first.getEscapeDx(), first.getEscapeDy(), first.getEscapeLength()));
+        expectRejectedGeometry(source, terminals, source.getBodyBounds(),
+            source.getBodyKeepOut(), source.getRoutingCourtyard(),
+            source.getSelectionEnvelope(), source.getDragEnvelope(),
+            source.getGeometryContractVersion(), "malformed detached lifted endpoint");
+    }
+
+    private static void expectRejectedMalformedLiftedBounds(PhysicalPackageGeometry source) {
+        PhysicalPackageGeometry.Terminal first = source.getTerminal(0);
+        PhysicalPackageGeometry.Lead lifted = first.getLiftedLead();
+        PhysicalPackageGeometry.Lead malformed = new PhysicalPackageGeometry.Lead(
+            lifted.getEndPoint(), lifted.getBodyPoint(), first.getPadBounds(),
+            lifted.getComponentProbeCenter(), lifted.getComponentProbeBounds());
+        Vector<PhysicalPackageGeometry.Terminal> terminals = source.getTerminals();
+        terminals.set(0, new PhysicalPackageGeometry.Terminal(first.getTerminalId(),
+            first.getPadCenter(), first.getPadBounds(), first.getBoardPadProbeCenter(),
+            first.getBoardPadProbeBounds(), first.getConnectedLead(), malformed,
+            first.getEscapeDx(), first.getEscapeDy(), first.getEscapeLength()));
+        expectRejectedGeometry(source, terminals, source.getBodyBounds(),
+            source.getBodyKeepOut(), source.getRoutingCourtyard(),
+            source.getSelectionEnvelope(), source.getDragEnvelope(),
+            source.getGeometryContractVersion(), "malformed detached lifted bounds");
+    }
+
+    private static void expectRejectedMalformedLiftedProbe(PhysicalPackageGeometry source) {
+        PhysicalPackageGeometry.Terminal first = source.getTerminal(0);
+        PhysicalPackageGeometry.Lead lifted = first.getLiftedLead();
+        PhysicalPackageGeometry.Lead malformed = new PhysicalPackageGeometry.Lead(
+            lifted.getEndPoint(), lifted.getBodyPoint(), lifted.getBounds(),
             new Point(lifted.getComponentProbeCenter().x + 1000,
                 lifted.getComponentProbeCenter().y + 1000), lifted.getComponentProbeBounds());
         Vector<PhysicalPackageGeometry.Terminal> terminals = source.getTerminals();
@@ -442,7 +505,7 @@ final class Task43DeveloperVerifier {
         expectRejectedGeometry(source, terminals, source.getBodyBounds(),
             source.getBodyKeepOut(), source.getRoutingCourtyard(),
             source.getSelectionEnvelope(), source.getDragEnvelope(),
-            source.getGeometryContractVersion(), "malformed lifted lead");
+            source.getGeometryContractVersion(), "malformed detached lifted probe");
     }
 
     private static void expectRejectedMalformedEnvelope(PhysicalPackageGeometry source) {
@@ -493,6 +556,102 @@ final class Task43DeveloperVerifier {
             "Geometry contract version is hidden from placement physical identity");
     }
 
+    private static void expectRejectedPackageLessPlacement(PhysicalPackage source) {
+        PhysicalPackageGeometry geometry = source.getGeometry();
+        PhysicalPackageGeometry.Placement placed = geometry.placedAt(40, 40);
+        boolean rejected = false;
+        try {
+            new PcbComponentPlacement("TASK43_PACKAGELESS", 40, 40, geometry.getWidth(),
+                geometry.getHeight(), placed.getBodyKeepOut(), placed.getRoutingCourtyard());
+        } catch (IllegalArgumentException expected) {
+            rejected = true;
+        }
+        require(rejected, "Package-less placement compatibility was accepted for production");
+    }
+
+    private static void verifySelectedGeometryLifecycleCanary() {
+        String componentId = "TASK43_LIFECYCLE_R1";
+        PhysicalPackage physicalPackage = PhysicalPackages.AXIAL_RESISTOR;
+        PhysicalPackage.GeometryVariant span260Variant =
+            physicalPackage.getGeometryVariant("SPAN_260");
+        require(span260Variant != null, "Axial resistor SPAN_260 variant is missing");
+        PhysicalPackageGeometry span260 = span260Variant.getGeometry();
+
+        TroubleshootBoard board = new TroubleshootBoard("TASK43_LIFECYCLE_BOARD");
+        board.addNet(new BoardNet("TASK43_LIFECYCLE_NET_1"));
+        board.addNet(new BoardNet("TASK43_LIFECYCLE_NET_2"));
+        board.addComponent(new BoardComponent(componentId, "AXIAL_RESISTOR",
+            physicalPackage));
+        board.addPad(new BoardPad(componentId + ".1", componentId, "1",
+            "TASK43_LIFECYCLE_NET_1"));
+        board.addPad(new BoardPad(componentId + ".2", componentId, "2",
+            "TASK43_LIFECYCLE_NET_2"));
+        board.validate();
+
+        PcbFootprint span260Footprint = PcbFootprint.fromPhysicalPackage(
+            board.getComponent(componentId), 240, 220, span260);
+        PcbBoardLayout layout = new PcbBoardLayout(1200, 700,
+            new Rectangle(20, 20, 900, 650), new Rectangle(960, 20, 220, 650));
+        layout.addComponent(span260Footprint.getPlacement());
+        for (PcbPadPlacement pad : span260Footprint.getPads())
+            layout.addPad(pad);
+        layout.validateAgainst(board);
+
+        PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(board);
+        PhysicalBoardSlot slot = runtime.createSlot(componentId);
+        ResistorElm element = new ResistorElm(96, 96);
+        ResistorNameplate specification = new ResistorNameplate(componentId, 1000, 5);
+        PhysicalResistorPart part = new PhysicalResistorPart(componentId + "_PART",
+            specification, element, null, null, ResistorPartLocation.LOOSE);
+        slot.install(part);
+        runtime.bindGeometryRealizations(layout);
+        runtime.validate();
+
+        PhysicalGeometryRealization carrier = slot.getGeometryRealization();
+        String carrierFingerprint = carrier == null ? null : carrier.fingerprint();
+        String partId = part.getId();
+        PhysicalPartTerminal[] terminals = new PhysicalPartTerminal[] {
+            part.getTerminal(0), part.getTerminal(1)
+        };
+        CircuitMeasurementEndpoint[] endpoints = new CircuitMeasurementEndpoint[] {
+            terminals[0].getEndpoint(), terminals[1].getEndpoint()
+        };
+        require(carrier != null && "SPAN_260".equals(carrier.getVariantKey()) &&
+                part.getGeometryRealization() == carrier &&
+                part.getElement() == element &&
+                carrierFingerprint.equals(span260Footprint.getPlacement()
+                    .getGeometryRealization().fingerprint()),
+            "Selected geometry lifecycle did not bind the SPAN_260 carrier");
+
+        PhysicalPart<?> removed = slot.remove();
+        require(removed == part && !slot.isOccupied() && !part.isInstalled(),
+            "Selected geometry lifecycle removal changed part identity");
+        slot.install(part);
+        runtime.validate();
+        require(slot.getInstalledPart() == part && part.getId().equals(partId) &&
+                slot.getGeometryRealization() == carrier &&
+                part.getGeometryRealization() == carrier &&
+                carrierFingerprint.equals(part.getGeometryRealization().fingerprint()) &&
+                part.getTerminal(0) == terminals[0] && part.getTerminal(1) == terminals[1] &&
+                part.getTerminal(0).getEndpoint() == endpoints[0] &&
+                part.getTerminal(1).getEndpoint() == endpoints[1],
+            "Selected geometry lifecycle changed part, terminal, endpoint, or carrier identity");
+
+        PhysicalPackageGeometry span220 = physicalPackage.getGeometryVariant("SPAN_220")
+            .getGeometry();
+        PcbFootprint span220Footprint = PcbFootprint.fromPhysicalPackage(
+            board.getComponent(componentId), 240, 220, span220);
+        boolean rejected = false;
+        try {
+            slot.bindGeometryRealization(span220Footprint.getPlacement());
+        } catch (IllegalStateException expected) {
+            rejected = true;
+        }
+        require(rejected && slot.getGeometryRealization() == carrier &&
+                part.getGeometryRealization() == carrier,
+            "Selected geometry lifecycle accepted a SPAN_220 rebind");
+    }
+
     private static PhysicalPackageGeometry cloneGeometry(PhysicalPackageGeometry source,
             PcbGeometryContractVersion version) {
         return new PhysicalPackageGeometry(source.getWidth(), source.getHeight(),
@@ -512,12 +671,30 @@ final class Task43DeveloperVerifier {
     private static String boardIdentity(GeneratedBoardInstance instance) {
         TroubleshootBoard board = instance.getBoard();
         StringBuilder result = new StringBuilder();
+        result.append("family=").append(instance.getCircuitFamilyId()).append('|')
+            .append("topology=").append(instance.getTopologyVariantId()).append('|')
+            .append("seed=").append(instance.getSeed()).append('|');
+        GeneratedChallengeDefinition challenge = instance.getChallengeDefinition();
+        if (challenge != null)
+            result.append("challenge=").append(challenge.getId()).append(':')
+                .append(challenge.getCircuitFamilyId()).append(':')
+                .append(challenge.getTopologyVariantId()).append('|');
+        GeneratedDiagnosticSolvabilityContract solvability =
+            instance.getDiagnosticSolvabilityContract();
+        if (solvability != null)
+            result.append("solvability=").append(solvability.getRouteId()).append(':')
+                .append(solvability.getFamilyId()).append(':')
+                .append(solvability.getTopologyVariantId()).append(':')
+                .append(solvability.getSeed()).append(':')
+                .append(solvability.getAdmittedCandidateCount()).append(':')
+                .append(solvability.getAdmittedPhysicalOwnerCount()).append('|');
         Vector<String> componentIds = board.getComponentIds();
         Collections.sort(componentIds);
         result.append("components=").append(componentIds).append('|');
         for (String componentId : componentIds) {
             BoardComponent component = board.getComponent(componentId);
-            result.append(componentId).append(" package=")
+            result.append(componentId).append(" type=").append(component.getType())
+                .append(" package=")
                 .append(component.getPhysicalPackage().getId()).append(" terminals=")
                 .append(component.getPhysicalPackage().getTerminalIds()).append(" pads=")
                 .append(component.getPadIds()).append(';');
@@ -543,7 +720,75 @@ final class Task43DeveloperVerifier {
             for (GeneratedBoardOperation operation : instance.getOperationCatalog().getAll())
                 semanticIds.add(operation.getStableId());
         Collections.sort(semanticIds);
-        result.append("semantic=").append(semanticIds);
+        result.append("semantic=").append(semanticIds).append('|');
+        appendRuntimeIdentity(result, instance.getPhysicalBoardRuntime());
+        return result.toString();
+    }
+
+    private static void appendRuntimeIdentity(StringBuilder result,
+            PhysicalBoardRuntime runtime) {
+        result.append("slots=");
+        if (runtime == null) {
+            result.append("null|");
+            return;
+        }
+        Vector<String> slotComponentIds = new Vector<String>();
+        for (PhysicalBoardSlot slot : runtime.getSlots())
+            slotComponentIds.add(slot.getComponentId());
+        Collections.sort(slotComponentIds);
+        for (String componentId : slotComponentIds) {
+            PhysicalBoardSlot slot = runtime.getSlot(componentId);
+            result.append(slot.getId()).append(':').append(slot.getComponentId())
+                .append(" package=").append(slot.getPhysicalPackage().getId())
+                .append(" pads=").append(slot.getPadIds())
+                .append(" terminals=").append(slot.getTerminalIds())
+                .append(" nets=").append(slot.getNetIds())
+                .append(" realization=");
+            appendRealization(result, slot.getGeometryRealization());
+            PhysicalPart<?> installed = slot.getInstalledPart();
+            result.append(" installed=")
+                .append(installed == null ? "null" : installed.getId()).append(';');
+            if (installed != null)
+                appendPartIdentity(result, installed);
+        }
+        result.append("|parts=");
+        Vector<String> partIds = new Vector<String>();
+        for (PhysicalPart<?> part : runtime.getPhysicalParts())
+            partIds.add(part.getId());
+        Collections.sort(partIds);
+        for (String partId : partIds)
+            appendPartIdentity(result, runtime.getPart(partId));
+        result.append('|');
+    }
+
+    private static void appendPartIdentity(StringBuilder result, PhysicalPart<?> part) {
+        result.append("part[").append(part.getId()).append("] package=")
+            .append(part.getPackage().getId()).append(" realization=");
+        appendRealization(result, part.getGeometryRealization());
+        result.append(" terminals=");
+        for (PhysicalPartTerminal terminal : part.getTerminals())
+            result.append(terminal.getId()).append('/')
+                .append(terminal.getTerminalName()).append('@')
+                .append(endpointIdentity(terminal.getEndpoint())).append(',');
+        result.append(';');
+    }
+
+    private static void appendRealization(StringBuilder result,
+            PhysicalGeometryRealization realization) {
+        result.append(realization == null ? "null" : realization.fingerprint());
+    }
+
+    private static String endpointIdentity(CircuitMeasurementEndpoint endpoint) {
+        if (endpoint == null)
+            return "null";
+        StringBuilder result = new StringBuilder();
+        result.append(endpoint.getClass().getName()).append('#')
+            .append(System.identityHashCode(endpoint));
+        if (endpoint instanceof CircuitPostMeasurementEndpoint) {
+            CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint) endpoint;
+            result.append(" element#").append(System.identityHashCode(post.getElement()))
+                .append(" post=").append(post.getPostIndex());
+        }
         return result.toString();
     }
 

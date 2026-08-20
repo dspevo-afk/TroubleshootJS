@@ -1311,14 +1311,17 @@ is introduced.
 
 ## Task 43R-1 — physical package contract and geometry identity
 
-Task 43R-1 freezes package-local physical geometry as an immutable contract.
-`PhysicalPackageGeometry` owns body, connected and lifted lead poses, pad
-geometry, body keep-out, routing courtyard, selection, drag, and interaction
-surfaces. Board-pad probe surfaces and component-lead probe surfaces are
-separate declarations; the package validator rejects overlap within the full
-cross-terminal surface matrix, including peer board pads and component-lead
-probes. A placed geometry object projects these immutable values by checked
-translation rather than mutating package state.
+Task 43R-1 freezes package-local physical geometry as an immutable contract
+(contract version 2). `PhysicalPackageGeometry` owns body, connected and lifted
+lead poses, pad geometry, body keep-out, routing courtyard, selection, drag,
+and interaction surfaces. Board-pad probe surfaces and component-lead probe
+surfaces are separate declarations; the package validator rejects overlap
+within the full cross-terminal surface matrix, including peer board pads and
+component-lead probes. Connected lead endpoints are terminal pad centers.
+Lifted leads have a detached free endpoint outside the board-pad probe surface,
+while their body attachment remains the connected body point. A placed geometry
+object projects these immutable values by checked translation rather than
+mutating package state.
 
 `PhysicalPackage` owns stable package identity, ordered terminal IDs, internal
 connectivity, the geometry-contract version, and a finite canonical catalog of
@@ -1326,30 +1329,44 @@ named variants. Axial resistor variants are exactly `SPAN_220`, `SPAN_240`,
 and `SPAN_260`; axial diode variants are `SPAN_230` and `SPAN_250`; the
 two-terminal connector declares base and `MIRROR_X` realizations. Each
 placement retains its canonical package object, variant key, transform key,
-and geometry version. `PcbComponentPlacement.geometryFingerprint()` includes
-those values and the declared loose/default variant, so translation and layout
-identity cannot silently discard the selected physical realization.
+and geometry version, and exposes an immutable
+`PhysicalGeometryRealization` carrier. `PcbComponentPlacement.geometryFingerprint()`
+includes those values and the declared loose/default variant, so translation
+and layout identity cannot silently discard the selected physical realization.
+`PhysicalPackage` owns the package definition/catalog/default;
+`PcbComponentPlacement` owns the selected board realization.
 
-The package declares the loose/default projection explicitly. Installed,
-lifted, removed, reinstalled, and replacement operations retain the selected
-board placement realization; an unassigned loose projection uses the package's
-declared default rather than inferring geometry from a package ID. Legacy
-no-geometry `PhysicalPackage` constructors are marked developer-generic
-compatibility boundaries, the authoritative constructor rejects null or
-generic production geometry, and package-less placement compatibility is
-rejected for production. Legacy `PcbPadPlacement` constructors remain
-untouched; generated layouts continue to require package-backed placements.
+The package declares the loose/default projection explicitly. The final
+`PcbBoardLayout` binds each generated package-backed `PhysicalBoardSlot` to its
+selected carrier, and the slot retains that carrier when its part is removed.
+Each `PhysicalPart` binds its carrier once; lift, reconnect, remove, and
+reinstall cannot change that realization. Replacement parts are new identities
+and receive the slot carrier when installed. An unassigned loose projection
+uses the package's declared default rather than inferring geometry from a
+package ID. Legacy no-geometry `PhysicalPackage` constructors are marked
+developer-generic compatibility boundaries, the authoritative constructor
+rejects null or generic production geometry, and package-less placement
+compatibility is rejected for production. Legacy `PcbPadPlacement`
+constructors remain untouched as a deprecated developer/compatibility seam;
+generated layouts continue to require package-backed placements.
 
 The focused Task 43 verifier enumerates the package catalog and checks
 determinism, terminal order, translation, canonical-object identity,
-undeclared/foreign geometry rejection, malformed escape and surface canaries,
-geometry-version identity, connector orientation, and stable generated board
-component/pad/net/semantic IDs. This contract change does not modify routes,
-CircuitJS elements, electrical endpoints, providers, renderers, or board
-mutation behavior.
+undeclared/foreign geometry rejection, malformed escape and detached lifted
+endpoint/bounds/probe canaries, geometry-version identity, connector
+orientation, generated family/topology agreement, and stable generated board
+component/pad/net/semantic IDs plus runtime slot/part/terminal/endpoint/carrier
+identity. A synthetic SPAN_260 axial-resistor lifecycle proof covers binding,
+remove/reinstall, and rejection of a SPAN_220 rebind without adding electrical
+nodes to a live board. This contract change does not modify routes, CircuitJS
+elements, electrical endpoints, providers, renderers, or board mutation
+behavior.
 
-The existing renderer, physical-part context, and loose-tray consumers still
-consume the legacy board-side/default projection and cannot yet carry the
-selected footprint variant into the component-side rendering path. That is an
-explicit `REALIZATION_INFEASIBLE` consumer boundary deferred to Task 43R-2;
-43R-1 freezes the package contract without claiming that consumer migration.
+The milestone boundary is intentionally staged. Task 43R-2 is strictly board
+geometry consumers: layout realization, compaction, containment, and physical
+net-connectivity validation. Task 43R-3 consumes installed geometry for board
+rendering, selection, and board-pad/component-side probe interaction. Task
+43R-4 covers loose-part rigid pose, loose rendering/hit testing/probing, and
+the physical-part realization consumer lifecycle. These renderer, tray,
+routing-consumer, and physical-part consumer slices remain deferred; 43R-1
+freezes the contract without claiming that any of them is implemented.

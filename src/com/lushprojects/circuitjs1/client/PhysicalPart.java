@@ -14,6 +14,8 @@ interface PhysicalPart<S extends PhysicalSpecification> {
     PhysicalPartTerminal getTerminal(int terminal);
     Vector<PhysicalPartTerminal> getTerminals();
     PhysicalPartElectricalBacking getElectricalBacking();
+    PhysicalGeometryRealization getGeometryRealization();
+    void bindGeometryRealization(PhysicalGeometryRealization realization);
     PhysicalPartMountState getMountState();
     PhysicalBoardSlot getBoardSlot();
     PhysicalPartProvenance getProvenance();

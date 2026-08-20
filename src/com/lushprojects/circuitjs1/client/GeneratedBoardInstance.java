@@ -107,6 +107,8 @@ class GeneratedBoardInstance {
         if (physicalRuntime == null)
             throw new IllegalArgumentException("Missing generated physical board runtime");
         this.physicalRuntime = physicalRuntime;
+        if (pcbLayout != null)
+            physicalRuntime.bindGeometryRealizations(pcbLayout);
         physicalRuntime.validate();
         this.faultBinding = faultBinding;
         this.faultCandidates = faultCandidates == null ?

@@ -157,6 +157,25 @@ final class PhysicalPackageGeometry {
             return terminal == null ? null : translate(terminal.getPadCenter());
         }
 
+        Point getLeadEndPoint(int index) {
+            return getLeadEndPoint(index, false);
+        }
+
+        Point getLeadEndPoint(int index, boolean lifted) {
+            Terminal terminal = source.getTerminal(index);
+            return terminal == null ? null : translate(terminal.getLead(lifted).getEndPoint());
+        }
+
+        Point getConnectedBoardEndPoint(int index) {
+            Terminal terminal = source.getTerminal(index);
+            return terminal == null ? null : translate(terminal.getConnectedBoardEndPoint());
+        }
+
+        Point getLiftedFreeEndPoint(int index) {
+            Terminal terminal = source.getTerminal(index);
+            return terminal == null ? null : translate(terminal.getLiftedFreeEndPoint());
+        }
+
         Rectangle getPadBounds(int index) {
             Terminal terminal = source.getTerminal(index);
             return terminal == null ? null : translated(terminal.getPadBounds());
@@ -283,6 +302,9 @@ final class PhysicalPackageGeometry {
         Point getBoardPadProbeCenter() { return new Point(boardPadProbeCenter); }
         Rectangle getBoardPadProbeBounds() { return new Rectangle(boardPadProbeBounds); }
 
+        Point getConnectedBoardEndPoint() { return connectedLead.getEndPoint(); }
+        Point getLiftedFreeEndPoint() { return liftedLead.getEndPoint(); }
+
         /** Legacy board-side alias; it is never the component-lead surface. */
         Point getProbeCenter() { return getBoardPadProbeCenter(); }
 
@@ -310,18 +332,18 @@ final class PhysicalPackageGeometry {
 
     /** Immutable straight lead pose and its component-side probe surface. */
     static final class Lead {
-        private final Point padPoint;
+        private final Point endPoint;
         private final Point bodyPoint;
         private final Rectangle bounds;
         private final Point componentProbeCenter;
         private final Rectangle componentProbeBounds;
 
-        Lead(Point padPoint, Point bodyPoint, Rectangle bounds,
+        Lead(Point endPoint, Point bodyPoint, Rectangle bounds,
                 Point componentProbeCenter, Rectangle componentProbeBounds) {
-            if (padPoint == null || bodyPoint == null || bounds == null ||
+            if (endPoint == null || bodyPoint == null || bounds == null ||
                     componentProbeCenter == null || componentProbeBounds == null)
                 throw new IllegalArgumentException("Invalid package lead geometry");
-            this.padPoint = new Point(padPoint);
+            this.endPoint = new Point(endPoint);
             this.bodyPoint = new Point(bodyPoint);
             this.bounds = copyPositive(bounds, "lead");
             this.componentProbeCenter = new Point(componentProbeCenter);
@@ -330,25 +352,25 @@ final class PhysicalPackageGeometry {
         }
 
         /** Compatibility constructor for developer-only geometry canaries. */
-        Lead(Point padPoint, Point bodyPoint, Rectangle bounds) {
-            this(padPoint, bodyPoint, bounds, bodyPoint, centered(bodyPoint, 8, 8));
+        Lead(Point endPoint, Point bodyPoint, Rectangle bounds) {
+            this(endPoint, bodyPoint, bounds, bodyPoint, centered(bodyPoint, 8, 8));
         }
 
         private Lead(Lead source) {
-            this(source.padPoint, source.bodyPoint, source.bounds,
+            this(source.endPoint, source.bodyPoint, source.bounds,
                 source.componentProbeCenter, source.componentProbeBounds);
         }
 
         private Lead copy() { return new Lead(this); }
 
-        Point getPadPoint() { return new Point(padPoint); }
+        Point getEndPoint() { return new Point(endPoint); }
         Point getBodyPoint() { return new Point(bodyPoint); }
         Rectangle getBounds() { return new Rectangle(bounds); }
         Point getComponentProbeCenter() { return new Point(componentProbeCenter); }
         Rectangle getComponentProbeBounds() { return new Rectangle(componentProbeBounds); }
 
         boolean isEquivalentTo(Lead other) {
-            return other != null && padPoint.equals(other.padPoint) &&
+            return other != null && endPoint.equals(other.endPoint) &&
                 bodyPoint.equals(other.bodyPoint) && bounds.equals(other.bounds) &&
                 componentProbeCenter.equals(other.componentProbeCenter) &&
                 componentProbeBounds.equals(other.componentProbeBounds);
@@ -367,9 +389,9 @@ final class PhysicalPackageGeometry {
             int padY = checkedAdd(30, checkedMultiply(index, 40));
             Point pad = new Point(padX, padY);
             Point body = new Point(width - 55, padY);
-            Point liftedBody = new Point(width - 60, padY);
+            Point liftedEnd = new Point(width - 60, padY);
             terminals.add(terminal(terminalIds.get(index), pad, centered(pad, 26, 26),
-                centered(pad, 30, 30), body, liftedBody, -1, 0, 30));
+                centered(pad, 30, 30), body, liftedEnd, -1, 0, 30));
         }
         Rectangle body = new Rectangle(10, 10, width - 50, height - 20);
         Rectangle keepOut = new Rectangle(10, 10, width - 50, height - 20);
@@ -383,25 +405,25 @@ final class PhysicalPackageGeometry {
     }
 
     private static Terminal terminal(String id, Point pad, Rectangle padBounds,
-            Rectangle boardProbe, Point body, Point liftedBody, int escapeDx, int escapeDy,
+            Rectangle boardProbe, Point body, Point liftedEnd, int escapeDx, int escapeDy,
             int escapeLength) {
-        Lead connected = lead(pad, body);
-        Lead lifted = lead(pad, liftedBody);
+        Lead connected = lead(pad, body, body);
+        Lead lifted = lead(liftedEnd, body, liftedEnd);
         return new Terminal(id, pad, padBounds, pad, boardProbe, connected, lifted,
             escapeDx, escapeDy, escapeLength);
     }
 
-    private static Lead lead(Point pad, Point body) {
-        int left = Math.min(pad.x, body.x) - 3;
-        int top = Math.min(pad.y, body.y) - 3;
-        int right = Math.max(pad.x, body.x) + 3;
-        int bottom = Math.max(pad.y, body.y) + 3;
-        return new Lead(pad, body, rectangleFromEdges(left, top, right, bottom), body,
-            centered(body, 8, 8));
+    private static Lead lead(Point endPoint, Point bodyPoint, Point componentProbeCenter) {
+        int left = checkedInt(Math.min((long) endPoint.x, bodyPoint.x) - 3L);
+        int top = checkedInt(Math.min((long) endPoint.y, bodyPoint.y) - 3L);
+        int right = checkedInt(Math.max((long) endPoint.x, bodyPoint.x) + 3L);
+        int bottom = checkedInt(Math.max((long) endPoint.y, bodyPoint.y) + 3L);
+        return new Lead(endPoint, bodyPoint, rectangleFromEdges(left, top, right, bottom),
+            componentProbeCenter, centered(componentProbeCenter, 8, 8));
     }
 
     private Lead mirrorLead(Lead lead) {
-        return new Lead(mirrorPoint(lead.padPoint), mirrorPoint(lead.bodyPoint),
+        return new Lead(mirrorPoint(lead.endPoint), mirrorPoint(lead.bodyPoint),
             mirrorRect(lead.bounds), mirrorPoint(lead.componentProbeCenter),
             mirrorRect(lead.componentProbeBounds));
     }
@@ -471,7 +493,7 @@ final class PhysicalPackageGeometry {
     }
 
     private void validateLead(Terminal terminal, Lead lead, boolean connected) {
-        if (!contains(lead.bounds, lead.padPoint.x, lead.padPoint.y) ||
+        if (!contains(lead.bounds, lead.endPoint.x, lead.endPoint.y) ||
                 !contains(lead.bounds, lead.bodyPoint.x, lead.bodyPoint.y) ||
                 !contains(lead.bounds, lead.componentProbeCenter.x,
                     lead.componentProbeCenter.y) ||
@@ -481,10 +503,14 @@ final class PhysicalPackageGeometry {
                 !contains(selectionEnvelope, lead.componentProbeBounds) ||
                 !contains(dragEnvelope, lead.bounds) ||
                 !contains(dragEnvelope, lead.componentProbeBounds) ||
-                !lead.padPoint.equals(terminal.padCenter) ||
-                (connected && !contains(bodyBounds, lead.bodyPoint.x, lead.bodyPoint.y)) ||
-                (!connected && !contains(selectionEnvelope, lead.bodyPoint.x,
-                    lead.bodyPoint.y)))
+                (connected && (!lead.endPoint.equals(terminal.padCenter) ||
+                    !contains(bodyBounds, lead.bodyPoint.x, lead.bodyPoint.y))) ||
+                (!connected && (lead.endPoint.equals(terminal.padCenter) ||
+                    contains(terminal.boardPadProbeBounds, lead.endPoint.x,
+                        lead.endPoint.y) ||
+                    intersects(terminal.boardPadProbeBounds, lead.bounds) ||
+                    !lead.bodyPoint.equals(terminal.connectedLead.bodyPoint) ||
+                    !contains(bodyBounds, lead.bodyPoint.x, lead.bodyPoint.y))))
             throw new IllegalArgumentException("Package lead geometry is inconsistent: " +
                 terminal.terminalId);
     }

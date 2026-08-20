@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.HashMap;
+import java.util.Collections;
 import java.util.Vector;
 
 /** Composition-root registry for physical board design, slots, and installed parts. */
@@ -51,6 +52,30 @@ final class PhysicalBoardRuntime {
     }
 
     PhysicalBoardSlot getSlot(String componentId) { return slotsByComponent.get(componentId); }
+
+    /** Binds each package-backed board slot to its already-selected layout realization. */
+    void bindGeometryRealizations(PcbBoardLayout layout) {
+        if (layout == null)
+            throw new IllegalArgumentException("Missing PCB board layout");
+        Vector<String> componentIds = board.getComponentIds();
+        Collections.sort(componentIds);
+        for (String componentId : componentIds) {
+            BoardComponent component = board.getComponent(componentId);
+            PhysicalBoardSlot slot = slotsByComponent.get(componentId);
+            PcbComponentPlacement placement = layout.getComponent(componentId);
+            if (component == null || component.getPhysicalPackage() == null || slot == null)
+                throw new IllegalStateException("Missing package-backed physical slot: " +
+                    componentId);
+            if (placement == null)
+                throw new IllegalStateException("Missing PCB placement for physical slot: " +
+                    componentId);
+            if (placement.getPhysicalPackage() == null ||
+                    !component.getPhysicalPackage().isEquivalentTo(
+                        placement.getPhysicalPackage()))
+                throw new IllegalStateException("PCB placement package mismatch: " + componentId);
+            slot.bindGeometryRealization(placement);
+        }
+    }
 
     Vector<PhysicalBoardSlot> getSlots() {
         Vector<PhysicalBoardSlot> result = new Vector<PhysicalBoardSlot>();

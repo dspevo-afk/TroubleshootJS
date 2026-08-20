@@ -246,26 +246,28 @@ final class PhysicalPackages {
     }
 
     private static PhysicalPackageGeometry.Terminal terminal(String id, int padX, int padY,
-            int connectedBodyX, int connectedBodyY, int liftedBodyX, int liftedBodyY,
+            int connectedBodyX, int connectedBodyY, int liftedEndX, int liftedEndY,
             int escapeDx, int escapeDy, int escapeLength) {
         Point pad = new Point(padX, padY);
         Rectangle padBounds = centered(pad, 26, 26);
         Rectangle boardProbe = centered(pad, 30, 30);
-        PhysicalPackageGeometry.Lead connected = lead(pad,
-            new Point(connectedBodyX, connectedBodyY));
-        PhysicalPackageGeometry.Lead lifted = lead(pad,
-            new Point(liftedBodyX, liftedBodyY));
+        Point connectedBody = new Point(connectedBodyX, connectedBodyY);
+        Point liftedEnd = new Point(liftedEndX, liftedEndY);
+        PhysicalPackageGeometry.Lead connected = lead(pad, connectedBody, connectedBody);
+        PhysicalPackageGeometry.Lead lifted = lead(liftedEnd, connectedBody, liftedEnd);
         return new PhysicalPackageGeometry.Terminal(id, pad, padBounds, pad, boardProbe,
             connected, lifted, escapeDx, escapeDy, escapeLength);
     }
 
-    private static PhysicalPackageGeometry.Lead lead(Point pad, Point body) {
-        int left = checkedInt(Math.min((long) pad.x, body.x) - 3L);
-        int top = checkedInt(Math.min((long) pad.y, body.y) - 3L);
-        int right = checkedInt(Math.max((long) pad.x, body.x) + 3L);
-        int bottom = checkedInt(Math.max((long) pad.y, body.y) + 3L);
-        return new PhysicalPackageGeometry.Lead(pad, body,
-            rectangleFromEdges(left, top, right, bottom), body, centered(body, 8, 8));
+    private static PhysicalPackageGeometry.Lead lead(Point endPoint, Point bodyPoint,
+            Point componentProbeCenter) {
+        int left = checkedInt(Math.min((long) endPoint.x, bodyPoint.x) - 3L);
+        int top = checkedInt(Math.min((long) endPoint.y, bodyPoint.y) - 3L);
+        int right = checkedInt(Math.max((long) endPoint.x, bodyPoint.x) + 3L);
+        int bottom = checkedInt(Math.max((long) endPoint.y, bodyPoint.y) + 3L);
+        return new PhysicalPackageGeometry.Lead(endPoint, bodyPoint,
+            rectangleFromEdges(left, top, right, bottom), componentProbeCenter,
+            centered(componentProbeCenter, 8, 8));
     }
 
     private static Rectangle centered(Point point, int width, int height) {

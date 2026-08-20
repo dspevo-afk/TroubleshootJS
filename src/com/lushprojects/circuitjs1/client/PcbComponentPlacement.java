@@ -16,6 +16,7 @@ class PcbComponentPlacement {
     private final String geometryVariantKey;
     private final String geometryTransformKey;
     private final PcbGeometryContractVersion geometryContractVersion;
+    private final PhysicalGeometryRealization geometryRealization;
 
     /** Legacy package-less constructor retained as a rejecting compatibility seam. */
     PcbComponentPlacement(String componentId, int x, int y, int width, int height) {
@@ -84,6 +85,9 @@ class PcbComponentPlacement {
         this.geometryVariantKey = variantKey;
         this.geometryTransformKey = transformKey;
         this.geometryContractVersion = physicalPackage.getGeometryContractVersion();
+        this.geometryRealization = new PhysicalGeometryRealization(physicalPackage,
+            physicalGeometry, geometryVariantKey, geometryTransformKey,
+            geometryContractVersion);
     }
 
     /** Explicit generic compatibility path; production geometry is rejected here. */
@@ -128,6 +132,16 @@ class PcbComponentPlacement {
     Point getLeadBodyPoint(int index, boolean lifted) {
         return placedGeometry().getLeadBodyPoint(index, lifted);
     }
+    Point getLeadEndPoint(int index) { return placedGeometry().getLeadEndPoint(index); }
+    Point getLeadEndPoint(int index, boolean lifted) {
+        return placedGeometry().getLeadEndPoint(index, lifted);
+    }
+    Point getConnectedBoardEndPoint(int index) {
+        return placedGeometry().getConnectedBoardEndPoint(index);
+    }
+    Point getLiftedFreeEndPoint(int index) {
+        return placedGeometry().getLiftedFreeEndPoint(index);
+    }
 
     /** Board-pad surface accessor. */
     Point getBoardPadProbeCenter(int index) {
@@ -167,6 +181,7 @@ class PcbComponentPlacement {
     String getGeometryTransformKey() { return geometryTransformKey; }
     PcbGeometryContractVersion getGeometryContractVersion() { return geometryContractVersion; }
     int getGeometryContractVersionValue() { return geometryContractVersion.getValue(); }
+    PhysicalGeometryRealization getGeometryRealization() { return geometryRealization; }
 
     String geometryFingerprint() {
         StringBuilder result = new StringBuilder();
@@ -209,8 +224,10 @@ class PcbComponentPlacement {
             appendPoint(result, placed.getComponentLeadProbeCenter(index, true));
             appendRectangle(result, "liftedProbe",
                 placed.getComponentLeadProbeBounds(index, true));
+            appendPoint(result, placed.getLeadEndPoint(index));
             appendPoint(result, placed.getLeadBodyPoint(index));
             appendRectangle(result, "connectedLead", placed.getLeadBounds(index));
+            appendPoint(result, placed.getLeadEndPoint(index, true));
             appendPoint(result, placed.getLeadBodyPoint(index, true));
             appendRectangle(result, "liftedLead", placed.getLeadBounds(index, true));
             result.append("escape=").append(terminal.getEscapeDx()).append(',')
@@ -261,7 +278,7 @@ class PcbComponentPlacement {
     private static void appendLead(StringBuilder result, String name,
             PhysicalPackageGeometry.Lead lead) {
         result.append(name).append('=');
-        appendPoint(result, lead.getPadPoint());
+        appendPoint(result, lead.getEndPoint());
         appendPoint(result, lead.getBodyPoint());
         appendRectangle(result, name + "Bounds", lead.getBounds());
         appendPoint(result, lead.getComponentProbeCenter());

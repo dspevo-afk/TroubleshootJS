@@ -11,6 +11,8 @@ final class FixedPhysicalPart<S extends PhysicalSpecification> implements Physic
     private final PhysicalPartTerminal[] terminals;
     private final CircuitPhysicalPartElectricalBacking backing;
     private final PhysicalPartMountState mountState = new PhysicalPartMountState();
+    private final PhysicalPartGeometryRealization geometryRealization =
+        new PhysicalPartGeometryRealization();
     private final PhysicalPartProvenance provenance;
     private final PhysicalPartRenderProbeProvider looseProbeProvider;
     private final Vector<PhysicalPartCapability> capabilities =
@@ -84,6 +86,12 @@ final class FixedPhysicalPart<S extends PhysicalSpecification> implements Physic
         return result;
     }
     public PhysicalPartElectricalBacking getElectricalBacking() { return backing; }
+    public PhysicalGeometryRealization getGeometryRealization() {
+        return geometryRealization.getGeometryRealization();
+    }
+    public void bindGeometryRealization(PhysicalGeometryRealization realization) {
+        geometryRealization.bind(getPackage(), realization);
+    }
     public PhysicalPartMountState getMountState() { return mountState; }
     public PhysicalBoardSlot getBoardSlot() { return mountState.getSlot(); }
     public PhysicalPartProvenance getProvenance() { return provenance; }
