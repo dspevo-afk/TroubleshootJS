@@ -314,10 +314,12 @@ class PcbWorkbenchRenderer {
     }
     void setTrayPage(int page) {
         trayPage = clampTrayPageValue(page);
-        if (selectedPartId != null && getLoosePartMarkerPoint(selectedPartId) == null)
-            selectedPartId = null;
+        clearSelectedPartIfHidden(getAllLoosePhysicalParts());
     }
-    void clampTrayPage() { trayPage = clampTrayPageValue(trayPage); }
+    void clampTrayPage() {
+        trayPage = clampTrayPageValue(trayPage);
+        clearSelectedPartIfHidden(getAllLoosePhysicalParts());
+    }
 
     Vector<PhysicalPart<?>> getVisibleLoosePhysicalParts() {
         Vector<PhysicalPart<?>> all = getAllLoosePhysicalParts();
@@ -326,6 +328,7 @@ class PcbWorkbenchRenderer {
         int start = trayPage * PARTS_PER_TRAY_PAGE;
         for (int index = start; index < all.size() && index < start + PARTS_PER_TRAY_PAGE; index++)
             result.add(all.get(index));
+        clearSelectedPartIfHidden(all);
         return result;
     }
 
@@ -343,8 +346,14 @@ class PcbWorkbenchRenderer {
             selectedComponentId = null;
         return selectedComponentId;
     }
-    void setSelectedPartId(String partId) { selectedPartId = partId; }
-    String getSelectedPartId() { return selectedPartId; }
+    void setSelectedPartId(String partId) {
+        selectedPartId = partId;
+        clearSelectedPartIfHidden(getAllLoosePhysicalParts());
+    }
+    String getSelectedPartId() {
+        clearSelectedPartIfHidden(getAllLoosePhysicalParts());
+        return selectedPartId;
+    }
 
     PhysicalPartRenderRegistry getRenderRegistryForDeveloperVerification() { return renderRegistry; }
 
@@ -495,6 +504,17 @@ class PcbWorkbenchRenderer {
     private int getLoosePartCount() { return getAllLoosePhysicalParts().size(); }
     private Point getLoosePartMarkerPoint(String partId) { return getLooseTerminalPoint(partId, 0); }
 
+    private void clearSelectedPartIfHidden(Vector<PhysicalPart<?>> all) {
+        if (selectedPartId == null || all == null)
+            return;
+        int start = trayPage * PARTS_PER_TRAY_PAGE;
+        int end = Math.min(all.size(), start + PARTS_PER_TRAY_PAGE);
+        for (int index = start; index < end; index++)
+            if (selectedPartId.equals(all.get(index).getId()))
+                return;
+        selectedPartId = null;
+    }
+
     private void publishDeveloperGeometry() {
         StringBuilder json = new StringBuilder("{\"points\":{");
         boolean first = true;
@@ -574,6 +594,11 @@ class PcbWorkbenchRenderer {
     int screenXForProvider(int value) { return screenX(value); }
     int screenYForProvider(int value) { return screenY(value); }
     int scaleIntForProvider(int value) { return scaleInt(value); }
+    int scaleLengthForProvider(double value) {
+        if (Double.isNaN(value) || Double.isInfinite(value) || value < 0.0)
+            throw new IllegalArgumentException("Invalid provider length: " + value);
+        return (int) Math.round(value * scale);
+    }
     Point screenPointForProvider(Point value) {
         return value == null ? null : new Point(screenX(value.x), screenY(value.y));
     }

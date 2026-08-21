@@ -31,6 +31,8 @@ final class Task43DeveloperVerifier {
         verifyNegativeCanaries(registered);
         PcbR2DeveloperVerifier.verify();
         PhysicalPartRenderDeveloperVerifier.verify(sim);
+        PhysicalPartRenderDeveloperVerifier.verifyLoosePoseCanaries(sim,
+            sim.pcbWorkbenchController.getRenderer(), renderers);
         require(beforeIdentity.equals(boardIdentity(instance)),
             "Task 43 package canaries changed generated board identities");
         sim.setCircuitTitle("Task 43 physical geometry verification passed");
@@ -645,13 +647,23 @@ final class Task43DeveloperVerifier {
             componentId + "_REPLACEMENT", new ResistorNameplate(componentId + "_REPLACEMENT",
                 2200, 5), replacementElement, null, null, ResistorPartLocation.LOOSE);
         runtime.registerPart(replacement);
+        LoosePartPose unboundReplacementPose = LoosePartPose.forPart(physicalPackage,
+            replacement, new Rectangle(960, 20, 220, 650), 0);
+        require(unboundReplacementPose.getSourceRealization() == null &&
+                unboundReplacementPose.getSourceGeometry() ==
+                    physicalPackage.getDefaultLooseGeometry(),
+            "Unbound replacement did not use the package-owned default loose geometry");
         require(slot.remove() == part && !part.isInstalled(),
             "Replacement canary could not enter final physical removal state");
         slot.install(replacement);
         runtime.validate();
+        LoosePartPose boundReplacementPose = LoosePartPose.forPart(physicalPackage,
+            replacement, new Rectangle(960, 20, 220, 650), 0);
         require(slot.getInstalledPart() == replacement && replacement.isInstalled() &&
                 replacement != part && !replacement.getId().equals(partId) &&
                 replacement.getGeometryRealization() == carrier &&
+                boundReplacementPose.getSourceRealization() == carrier &&
+                boundReplacementPose.getSourceGeometry() == carrier.getPhysicalGeometry() &&
                 replacement.getTerminal(0).getEndpoint() != endpoints[0] &&
                 replacement.getTerminal(1).getEndpoint() != endpoints[1] &&
                 "1".equals(replacement.getTerminal(0).getTerminalName()) &&
@@ -659,6 +671,11 @@ final class Task43DeveloperVerifier {
             "Replacement lifecycle did not change physical identity/endpoints while preserving carrier");
         require(slot.remove() == replacement && !replacement.isInstalled(),
             "Replacement canary could not remove the replacement part");
+        LoosePartPose removedReplacementPose = LoosePartPose.forPart(physicalPackage,
+            replacement, new Rectangle(960, 20, 220, 650), 0);
+        require(removedReplacementPose.getSourceRealization() == carrier &&
+                removedReplacementPose.getSourceGeometry() == carrier.getPhysicalGeometry(),
+            "Removed replacement did not retain its selected carrier for loose presentation");
         slot.install(part);
         runtime.validate();
         require(slot.getInstalledPart() == part && part.getGeometryRealization() == carrier &&

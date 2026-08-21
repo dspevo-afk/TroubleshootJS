@@ -157,6 +157,524 @@ final class PhysicalPartRenderDeveloperVerifier {
         }
     }
 
+    /**
+     * Exercises the loose projection without changing the live board or its
+     * inventory.  Every registered package is rendered from every declared
+     * variant so a package-specific fallback cannot hide behind the normal
+     * challenge's current inventory.
+     */
+    static void verifyLoosePoseCanaries(CirSim sim, PcbWorkbenchRenderer renderer,
+            PhysicalPartRenderRegistry registry) {
+        if (sim == null || renderer == null || registry == null)
+            throw new IllegalArgumentException("Incomplete loose pose verification request");
+        Graphics graphics = new Graphics(sim.backcontext);
+        int trayRow = 0;
+        for (PhysicalPackage physicalPackage : registry.getRegisteredPackages()) {
+            PhysicalPart<?> unbound = LooseRenderCanaryPart.create(
+                "LOOSE_CANARY_UNBOUND_" + physicalPackage.getId(), physicalPackage,
+                isPolarizedCanaryPackage(physicalPackage));
+            verifyLoosePoseProjection(sim, renderer, registry, graphics, unbound, trayRow++, null,
+                "unbound " + physicalPackage.getId());
+            for (PhysicalPackage.GeometryVariant variant : physicalPackage.getGeometryVariants()) {
+                LooseRenderCanaryPart bound = LooseRenderCanaryPart.create(
+                    "LOOSE_CANARY_BOUND_" + physicalPackage.getId() + "_" + variant.getKey(),
+                    physicalPackage, isPolarizedCanaryPackage(physicalPackage));
+                PhysicalGeometryRealization realization = new PhysicalGeometryRealization(
+                    physicalPackage, variant.getGeometry(), variant.getKey(),
+                    variant.getTransformKey(), variant.getGeometry().getGeometryContractVersion());
+                bound.bindGeometryRealization(realization);
+                verifyLoosePoseProjection(sim, renderer, registry, graphics, bound, trayRow++,
+                    realization, "bound " + physicalPackage.getId() + "/" + variant.getKey());
+            }
+        }
+        verifyLooseNegativeCanaries(sim, renderer, registry, graphics);
+    }
+
+    private static void verifyLoosePoseProjection(CirSim sim, PcbWorkbenchRenderer renderer,
+            PhysicalPartRenderRegistry registry, Graphics graphics, PhysicalPart<?> part,
+            int row, PhysicalGeometryRealization expectedRealization, String label) {
+        int trayRow = row % renderer.getPartsPerTrayPage();
+        PhysicalPackage physicalPackage = part.getPackage();
+        PhysicalPartRenderProvider provider = registry.getProvider(physicalPackage);
+        require(provider != null, "Loose canary has no provider: " + label);
+        PhysicalPartRenderer partRenderer = provider.getRenderer(part);
+        PhysicalPartRenderContext context = new PhysicalPartRenderContext(renderer, null, part,
+            physicalPackage, trayRow, true);
+        LoosePartPose pose = context.getLoosePose();
+        require(context.getPhysicalGeometry() == pose.getSourceGeometry(),
+            "Loose context did not expose its pose source geometry: " + label);
+        if (expectedRealization == null)
+            require(pose.getSourceRealization() == null && pose.getSourceGeometry() ==
+                    physicalPackage.getDefaultLooseGeometry(),
+                "Unbound loose part did not use the package canonical default: " + label);
+        else
+            require(pose.getSourceRealization() == expectedRealization &&
+                    pose.getSourceGeometry() == expectedRealization.getPhysicalGeometry(),
+                "Bound loose part lost its selected realization: " + label);
+        require(pose.getScale() > 0.0 && pose.getScale() <= 1.0 &&
+                !Double.isNaN(pose.getScale()) && !Double.isInfinite(pose.getScale()) &&
+                contains(pose.getTrayCell(), pose.getSelectionEnvelope()),
+            "Loose pose scale or cell containment is invalid: " + label);
+        if (isPolarizedCanaryPackage(physicalPackage))
+            require(pose.getOrientation() == PhysicalPartOrientation.REVERSED &&
+                    pose.isPolarityMirrored(),
+                "Reversed loose package did not use its explicit polarity mirror: " + label);
+        if (physicalPackage.isConnector() || pose.getSourceGeometry().isDeveloperGeneric())
+            require(pose.getQuarterTurn() == LoosePartPose.QuarterTurn.CLOCKWISE,
+                "Vertical loose package did not use its explicit quarter-turn: " + label);
+        else
+            require(pose.getQuarterTurn() == LoosePartPose.QuarterTurn.NONE,
+                "Horizontal loose package acquired an unexpected quarter-turn: " + label);
+
+        PhysicalPartRenderGeometry geometry = partRenderer.getLooseGeometry(context);
+        require(geometry.getSelectionBounds().equals(renderer.screenRectForProvider(
+                    pose.getSelectionEnvelope())) &&
+                geometry.getBodyBounds().equals(renderer.screenRectForProvider(
+                    pose.getBodyBounds())) &&
+                geometry.getDragBounds().equals(renderer.screenRectForProvider(
+                    pose.getDragEnvelope())),
+            "Loose provider did not consume the pose envelopes: " + label);
+        partRenderer.drawLoose(graphics, context, geometry, false);
+        require(context.wasBodyDrawn(), "Loose provider did not draw its body: " + label);
+
+        for (int index = 0; index < part.getTerminalCount(); index++) {
+            PhysicalPartRenderTerminal terminal = geometry.getTerminal(index);
+            require(terminal != null && terminal.getTerminalIndex() == index &&
+                    terminal.getTerminalId().equals(part.getTerminal(index).getTerminalName()) &&
+                    terminal.getBoardPadId() == null,
+                "Loose terminal identity or board-pad identity changed: " + label);
+            Point expectedPoint = renderer.screenPointForProvider(pose.getTerminalPoint(index));
+            require(pointEquals(terminal.getPoint(), expectedPoint) &&
+                    terminal.containsProbe(expectedPoint.x, expectedPoint.y) &&
+                    geometry.contains(expectedPoint.x, expectedPoint.y),
+                "Loose marker lost the transformed terminal surface: " + label + "." + index);
+            require(terminal.getPadBounds().equals(renderer.screenRectForProvider(
+                        pose.getPadBounds(index))) &&
+                    terminal.getProbeBounds().equals(renderer.screenRectForProvider(
+                        pose.getProbeBounds(index))) &&
+                    pointEquals(terminal.getComponentLeadPoint(), renderer.screenPointForProvider(
+                        pose.getComponentLeadPoint(index))) &&
+                    terminal.getComponentLeadProbeBounds().equals(renderer.screenRectForProvider(
+                        pose.getComponentLeadProbeBounds(index))) &&
+                    pointEquals(terminal.getLeadBodyPoint(), renderer.screenPointForProvider(
+                        pose.getLeadBodyPoint(index))) &&
+                    pointEquals(terminal.getLeadEndPoint(), renderer.screenPointForProvider(
+                        pose.getLeadEndPoint(index))) &&
+                    terminal.getLeadBounds().equals(renderer.screenRectForProvider(
+                        pose.getLeadBounds(index))),
+                "Loose terminal surface projection disagrees with the pose: " + label + "." +
+                    index);
+            Vector<Rectangle> surfaces = terminal.getProbeSurfaces();
+            Vector<Rectangle> expectedSurfaces = new Vector<Rectangle>();
+            for (Rectangle surface : pose.getProbeSurfaces(index))
+                expectedSurfaces.add(renderer.screenRectForProvider(surface));
+            require(sameRectangles(surfaces, expectedSurfaces),
+                "Loose terminal probe surfaces were reconstructed or warped: " + label + "." +
+                    index);
+            require(surfaceContains(surfaces, terminal.getPoint()),
+                "Loose marker is outside its declared terminal/lead probe surface: " + label +
+                    "." + index);
+            CircuitMeasurementEndpoint endpoint = part.getTerminal(index).getEndpoint();
+            ProbeTarget target = partRenderer.createLooseProbeTarget(sim, context, index);
+            require(target != null && part.getTerminal(index).getEndpoint() == endpoint,
+                "Loose provider changed probe endpoint identity: " + label + "." + index);
+            requireSpecializedLooseTarget(physicalPackage, target, part.getId());
+        }
+    }
+
+    private static void verifyLooseNegativeCanaries(CirSim sim, PcbWorkbenchRenderer renderer,
+            PhysicalPartRenderRegistry registry, Graphics graphics) {
+        require(sim != null && graphics != null,
+            "Loose negative canaries require a live render canvas");
+        int row = 0;
+        for (PhysicalPackage physicalPackage : registry.getRegisteredPackages()) {
+            LooseRenderCanaryPart part = LooseRenderCanaryPart.create(
+                "LOOSE_CANARY_NEGATIVE_" + physicalPackage.getId(), physicalPackage,
+                isPolarizedCanaryPackage(physicalPackage));
+            verifyLooseNegativeCanaryForPackage(renderer, registry, part, row++,
+                physicalPackage.getId());
+        }
+    }
+
+    private static void verifyLooseNegativeCanaryForPackage(PcbWorkbenchRenderer renderer,
+            PhysicalPartRenderRegistry registry, LooseRenderCanaryPart part, int row,
+            String label) {
+        PhysicalPackage physicalPackage = part.getPackage();
+        PhysicalPartRenderProvider provider = registry.getProvider(physicalPackage);
+        require(provider != null && provider.getRenderer(part) != null,
+            "Loose negative canary has no provider: " + label);
+        int trayRow = row % renderer.getPartsPerTrayPage();
+        PhysicalPartRenderContext context = new PhysicalPartRenderContext(renderer, null, part,
+            physicalPackage, trayRow, true);
+        PhysicalPartRenderer partRenderer = provider.getRenderer(part);
+        final PhysicalPartRenderGeometry geometry = partRenderer.getLooseGeometry(context);
+        final LoosePartPose pose = context.getLoosePose();
+        final Rectangle screenCell = renderer.screenRectForProvider(pose.getTrayCell());
+        final PhysicalPartRenderTerminal terminal = geometry.getTerminal(0);
+        require(terminal != null, "Loose negative canary omitted terminal 0: " + label);
+
+        verifyLooseOutsideNegative(geometry, screenCell, label);
+        verifyLooseUniformPoseNegative(geometry, pose, label);
+
+        final Rectangle body = geometry.getBodyBounds();
+        final Rectangle selection = geometry.getSelectionBounds();
+        final Rectangle warpedBody = new Rectangle(body.x, body.y,
+            body.width + Math.max(3, selection.width), body.height);
+        require(warpedBody.width != body.width && warpedBody.height == body.height,
+            "Negative canary did not create a non-uniform body warp: " + label);
+        expectLooseRejection("Physical render body escapes hit geometry",
+            new LooseNegativeConstruction() {
+                public void construct() {
+                    new PhysicalPartRenderGeometry(geometry.getTerminals(),
+                        geometry.getHitRegions(), selection, warpedBody,
+                        geometry.getLeadBounds(), geometry.getDragBounds());
+                }
+            }, "non-uniform body warp: " + label);
+
+        final Vector<PhysicalPartRenderHitRegion> bodylessHits = geometry.getHitRegions();
+        removeHitRegions(bodylessHits, body);
+        require(!containsHitRegion(bodylessHits, body),
+            "Negative canary did not remove the declared body hit region: " + label);
+        expectLooseRejection("Physical render body escapes hit geometry",
+            new LooseNegativeConstruction() {
+                public void construct() {
+                    new PhysicalPartRenderGeometry(geometry.getTerminals(), bodylessHits,
+                        selection, body, geometry.getLeadBounds(), geometry.getDragBounds());
+                }
+            }, "visible body outside hit geometry: " + label);
+
+        final Point emptyLeadPoint = findOutsideHit(geometry, selection);
+        require(emptyLeadPoint != null,
+            "Negative canary could not find an empty selection point for a lead warp: " + label);
+        final Rectangle corruptedLeadBounds = new Rectangle(emptyLeadPoint.x, emptyLeadPoint.y,
+            1, 1);
+        final Vector<PhysicalPartRenderTerminal> corruptedLeadTerminals = geometry.getTerminals();
+        final PhysicalPartRenderTerminal canonicalLeadTerminal = corruptedLeadTerminals.get(0);
+        corruptedLeadTerminals.set(0, new PhysicalPartRenderTerminal(
+            canonicalLeadTerminal.getTerminalIndex(), canonicalLeadTerminal.getTerminalId(), null,
+            canonicalLeadTerminal.getPoint(), canonicalLeadTerminal.getProbeBounds(), null, null,
+            canonicalLeadTerminal.getPadBounds(), canonicalLeadTerminal.getComponentLeadPoint(),
+            canonicalLeadTerminal.getComponentLeadProbeBounds(), emptyLeadPoint, emptyLeadPoint,
+            corruptedLeadBounds, canonicalLeadTerminal.getProbeSurfaces()));
+        final Vector<Rectangle> corruptedLeadBoundsList = geometry.getLeadBounds();
+        corruptedLeadBoundsList.set(0, corruptedLeadBounds);
+        expectLooseRejection("Physical render feature escapes hit geometry",
+            new LooseNegativeConstruction() {
+                public void construct() {
+                    new PhysicalPartRenderGeometry(corruptedLeadTerminals,
+                        geometry.getHitRegions(), selection, body, corruptedLeadBoundsList,
+                        geometry.getDragBounds());
+                }
+            }, "visible lead outside hit geometry: " + label);
+
+        Point emptyTrayPoint = findOutside(geometry, screenCell);
+        require(emptyTrayPoint != null && !geometry.contains(emptyTrayPoint.x, emptyTrayPoint.y),
+            "Negative canary did not identify empty tray space: " + label);
+        final Vector<PhysicalPartRenderHitRegion> giantTrayHits = geometry.getHitRegions();
+        final Rectangle giantTray = new Rectangle(screenCell.x - 4, screenCell.y - 4,
+            screenCell.width + 8, screenCell.height + 8);
+        giantTrayHits.add(new PhysicalPartRenderHitRegion(giantTray));
+        require(!contains(selection, giantTray),
+            "Negative canary giant tray region unexpectedly matched selection: " + label);
+        expectLooseRejection("Physical render hit region escapes selection",
+            new LooseNegativeConstruction() {
+                public void construct() {
+                    new PhysicalPartRenderGeometry(geometry.getTerminals(), giantTrayHits,
+                        selection, body, geometry.getLeadBounds(), geometry.getDragBounds());
+                }
+            }, "giant empty-tray hit region: " + label);
+
+        final Vector<Rectangle> markerlessSurfaces = new Vector<Rectangle>();
+        markerlessSurfaces.add(terminal.getComponentLeadProbeBounds());
+        expectLooseRejection("Physical render marker is outside its declared loose probe surfaces",
+            new LooseNegativeConstruction() {
+                public void construct() {
+                    new PhysicalPartRenderTerminal(terminal.getTerminalIndex(),
+                        terminal.getTerminalId(), null, terminal.getPoint(),
+                        terminal.getProbeBounds(), null, null, terminal.getPadBounds(),
+                        terminal.getComponentLeadPoint(), terminal.getComponentLeadProbeBounds(),
+                        terminal.getLeadBodyPoint(), terminal.getLeadEndPoint(),
+                        terminal.getLeadBounds(), markerlessSurfaces);
+                }
+            }, "marker outside declared surfaces: " + label);
+
+        final PhysicalPartRenderTerminal canonicalTerminal = geometry.getTerminal(0);
+        final Point mismatchedLeadBody = pose.transformPoint(new Point(
+            pose.getSourceGeometry().getTerminal(0).getConnectedLead().getBodyPoint().x +
+                pose.getSourceGeometry().getWidth() + 32,
+            pose.getSourceGeometry().getTerminal(0).getConnectedLead().getBodyPoint().y));
+        require(!pointEquals(mismatchedLeadBody, canonicalTerminal.getLeadBodyPoint()),
+            "Negative canary did not create a body/terminal transform mismatch: " + label);
+        expectLooseRejection("Physical render lead point escapes lead bounds",
+            new LooseNegativeConstruction() {
+                public void construct() {
+                    new PhysicalPartRenderTerminal(canonicalTerminal.getTerminalIndex(),
+                        canonicalTerminal.getTerminalId(), null, canonicalTerminal.getPoint(),
+                        canonicalTerminal.getProbeBounds(), null, null,
+                        canonicalTerminal.getPadBounds(), canonicalTerminal.getComponentLeadPoint(),
+                        canonicalTerminal.getComponentLeadProbeBounds(), mismatchedLeadBody,
+                        canonicalTerminal.getLeadEndPoint(), canonicalTerminal.getLeadBounds(),
+                        canonicalTerminal.getProbeSurfaces());
+                }
+            }, "body/terminal transform mismatch: " + label);
+    }
+
+    private static void verifyLooseOutsideNegative(PhysicalPartRenderGeometry geometry,
+            Rectangle cell, String label) {
+        Point outside = findOutside(geometry, cell);
+        require(outside != null && !geometry.contains(outside.x, outside.y),
+            "Loose hit geometry became a giant tray region: " + label);
+        PhysicalPartRenderTerminal terminal = geometry.getTerminal(0);
+        Point badMarker = findOutsideTerminal(terminal, cell);
+        require(badMarker != null && !terminal.containsProbe(badMarker.x, badMarker.y),
+            "Loose terminal accepted a marker outside its declared surfaces: " + label);
+    }
+
+    private static void verifyLooseUniformPoseNegative(PhysicalPartRenderGeometry geometry,
+            LoosePartPose pose, String label) {
+        PhysicalPackageGeometry.Terminal sourceTerminal = pose.getSourceGeometry().getTerminal(0);
+        Point canonicalPoint = pose.getTerminalPoint(0);
+        final Point independentlyTranslated = pose.transformPoint(new Point(
+            sourceTerminal.getPadCenter().x + pose.getSourceGeometry().getWidth() + 32,
+            sourceTerminal.getPadCenter().y));
+        require(!pointEquals(canonicalPoint, independentlyTranslated) &&
+                !contains(pose.getSelectionEnvelope(), new Rectangle(independentlyTranslated.x,
+                    independentlyTranslated.y, 1, 1)),
+            "Negative canary did not detect an independently translated terminal: " + label);
+        final PhysicalPartRenderTerminal canonicalTerminal = geometry.getTerminal(0);
+        expectLooseRejection("Physical render marker is outside its probe surface",
+            new LooseNegativeConstruction() {
+                public void construct() {
+                    new PhysicalPartRenderTerminal(canonicalTerminal.getTerminalIndex(),
+                        canonicalTerminal.getTerminalId(), null, independentlyTranslated,
+                        canonicalTerminal.getProbeBounds(), null, null,
+                        canonicalTerminal.getPadBounds(), canonicalTerminal.getComponentLeadPoint(),
+                        canonicalTerminal.getComponentLeadProbeBounds(),
+                        canonicalTerminal.getLeadBodyPoint(), canonicalTerminal.getLeadEndPoint(),
+                        canonicalTerminal.getLeadBounds(), canonicalTerminal.getProbeSurfaces());
+                }
+            }, "independently translated terminal: " + label);
+
+        Rectangle body = geometry.getBodyBounds();
+        Rectangle warpedBody = new Rectangle(body.x, body.y, body.width + 3, body.height);
+        require(!warpedBody.equals(body) && warpedBody.width != body.width &&
+                warpedBody.height == body.height,
+            "Negative canary did not make the body warp non-uniform: " + label);
+
+        Point canonicalLeadBody = pose.getLeadBodyPoint(0);
+        Point mismatchedLeadBody = pose.transformPoint(new Point(
+            sourceTerminal.getConnectedLead().getBodyPoint().x +
+                pose.getSourceGeometry().getWidth() + 32,
+            sourceTerminal.getConnectedLead().getBodyPoint().y));
+        require(!pointEquals(canonicalLeadBody, mismatchedLeadBody),
+            "Negative canary did not detect a body/terminal transform mismatch: " + label);
+    }
+
+    private interface LooseNegativeConstruction {
+        void construct();
+    }
+
+    private static void expectLooseRejection(String expectedMessage,
+            LooseNegativeConstruction construction, String label) {
+        String actualMessage = null;
+        try {
+            construction.construct();
+        } catch (IllegalArgumentException expected) {
+            actualMessage = expected.getMessage();
+        }
+        require(expectedMessage.equals(actualMessage),
+            "Negative canary had the wrong failure reason for " + label + ": expected " +
+                expectedMessage + ", got " + actualMessage);
+    }
+
+    private static Point findOutsideHit(PhysicalPartRenderGeometry geometry, Rectangle envelope) {
+        Vector<PhysicalPartRenderHitRegion> regions = geometry.getHitRegions();
+        for (int y = envelope.y; y < envelope.y + envelope.height; y++)
+            for (int x = envelope.x; x < envelope.x + envelope.width; x++)
+                if (!containsHitRegion(regions, new Rectangle(x, y, 1, 1)))
+                    return new Point(x, y);
+        return null;
+    }
+
+    private static void removeHitRegions(Vector<PhysicalPartRenderHitRegion> regions,
+            Rectangle bounds) {
+        for (int index = regions.size() - 1; index >= 0; index--)
+            if (bounds.equals(regions.get(index).getBounds()))
+                regions.remove(index);
+    }
+
+    private static boolean containsHitRegion(Vector<PhysicalPartRenderHitRegion> regions,
+            Rectangle bounds) {
+        for (PhysicalPartRenderHitRegion region : regions)
+            if (contains(region.getBounds(), bounds))
+                return true;
+        return false;
+    }
+
+    private static Point findOutside(PhysicalPartRenderGeometry geometry, Rectangle cell) {
+        for (int y = cell.y; y < cell.y + cell.height; y++)
+            for (int x = cell.x; x < cell.x + cell.width; x++)
+                if (!geometry.contains(x, y))
+                    return new Point(x, y);
+        return null;
+    }
+
+    private static Point findOutsideTerminal(PhysicalPartRenderTerminal terminal,
+            Rectangle cell) {
+        for (int y = cell.y; y < cell.y + cell.height; y++)
+            for (int x = cell.x; x < cell.x + cell.width; x++)
+                if (!terminal.containsProbe(x, y))
+                    return new Point(x, y);
+        return null;
+    }
+
+    private static boolean surfaceContains(Vector<Rectangle> surfaces, Point point) {
+        for (Rectangle surface : surfaces)
+            if (surface.contains(point.x, point.y))
+                return true;
+        return false;
+    }
+
+    private static boolean sameRectangles(Vector<Rectangle> first, Vector<Rectangle> second) {
+        if (first == null || second == null || first.size() != second.size())
+            return false;
+        for (int index = 0; index < first.size(); index++)
+            if (!first.get(index).equals(second.get(index)))
+                return false;
+        return true;
+    }
+
+    private static boolean isPolarizedCanaryPackage(PhysicalPackage physicalPackage) {
+        return PhysicalPackages.AXIAL_DIODE.isEquivalentTo(physicalPackage) ||
+            PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage);
+    }
+
+    private static final class LooseRenderCanaryPart implements PhysicalPart<PhysicalSpecification> {
+        private final String id;
+        private final PhysicalSpecification specification;
+        private final PhysicalNameplate nameplate;
+        private final PhysicalPackage physicalPackage;
+        private final PhysicalPartRenderMetadata metadata;
+        private final PhysicalPartTerminal[] terminals;
+        private final CircuitPhysicalPartElectricalBacking backing;
+        private final PhysicalPartMountState mountState = new PhysicalPartMountState();
+        private final PhysicalPartGeometryRealization geometryRealization =
+            new PhysicalPartGeometryRealization();
+
+        private LooseRenderCanaryPart(String id, PhysicalPackage physicalPackage,
+                PhysicalSpecification specification, PhysicalPartRenderMetadata metadata) {
+            this.id = id;
+            this.physicalPackage = physicalPackage;
+            this.specification = specification;
+            this.metadata = metadata;
+            this.nameplate = new PhysicalNameplate(id, "Loose render canary");
+            Vector<CircuitMeasurementEndpoint> endpoints = new Vector<CircuitMeasurementEndpoint>();
+            Vector<CircuitElm> elements = new Vector<CircuitElm>();
+            terminals = new PhysicalPartTerminal[physicalPackage.getTerminalCount()];
+            for (int index = 0; index < terminals.length; index++) {
+                WireElm wire = new WireElm(1000 + index * 32, 1000);
+                wire.drag(1016 + index * 32, 1000);
+                elements.add(wire);
+                CircuitMeasurementEndpoint endpoint = new CircuitPostMeasurementEndpoint(wire, 0);
+                endpoints.add(endpoint);
+                terminals[index] = new PhysicalPartTerminal(id,
+                    physicalPackage.getTerminalIds().get(index), endpoint);
+            }
+            backing = new CircuitPhysicalPartElectricalBacking(endpoints, elements);
+        }
+
+        static LooseRenderCanaryPart create(String id, PhysicalPackage physicalPackage,
+                boolean reversed) {
+            PhysicalSpecification specification;
+            PhysicalPartRenderMetadata metadata;
+            if (PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(physicalPackage)) {
+                ResistorNameplate resistor = new ResistorNameplate(id, 1000, 5);
+                specification = resistor;
+                metadata = new PhysicalPartRenderMetadata(resistor,
+                    PhysicalPartOrientation.NON_POLARIZED, PhysicalPartRenderProbeProviders.RESISTOR);
+            } else if (PhysicalPackages.AXIAL_DIODE.isEquivalentTo(physicalPackage)) {
+                DiodeNameplate diode = new DiodeNameplate(id, "Canary diode", "default");
+                specification = diode;
+                metadata = new PhysicalPartRenderMetadata(diode,
+                    PhysicalPartOrientation.polarized(reversed), PhysicalPartRenderProbeProviders.DIODE);
+            } else if (PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage)) {
+                LedNameplate led = new LedNameplate(id, "Canary LED", "default-led", 1, 0, 0);
+                specification = led;
+                metadata = new PhysicalPartRenderMetadata(led,
+                    PhysicalPartOrientation.polarized(reversed), PhysicalPartRenderProbeProviders.LED);
+            } else if (PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR.isEquivalentTo(
+                    physicalPackage) || PhysicalPackages.RADIAL_CERAMIC_CAPACITOR.isEquivalentTo(
+                    physicalPackage)) {
+                CapacitorNameplate nameplate = new CapacitorNameplate("Canary capacitor", "10uF");
+                CapacitorSpecification capacitor = new CapacitorSpecification(id, .00001, 20, 25,
+                    physicalPackage, nameplate);
+                specification = capacitor;
+                metadata = new PhysicalPartRenderMetadata(capacitor,
+                    physicalPackage.isEquivalentTo(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR) ?
+                        PhysicalPartOrientation.NORMAL : PhysicalPartOrientation.NON_POLARIZED,
+                    PhysicalPartRenderProbeProviders.CAPACITOR);
+            } else if (PhysicalPackages.TO92_NPN.isEquivalentTo(physicalPackage)) {
+                NpnSpecification npn = new NpnSpecification(id, 100);
+                specification = npn;
+                metadata = new PhysicalPartRenderMetadata(npn,
+                    PhysicalPartOrientation.NON_POLARIZED, PhysicalPartRenderProbeProviders.NPN);
+            } else if (PhysicalPackages.TO92_NMOS.isEquivalentTo(physicalPackage)) {
+                NmosSpecification nmos = new NmosSpecification(id, 2, 1);
+                specification = nmos;
+                metadata = new PhysicalPartRenderMetadata(nmos,
+                    PhysicalPartOrientation.NON_POLARIZED, PhysicalPartRenderProbeProviders.NMOS);
+            } else {
+                specification = new BasicPhysicalSpecification(id);
+                metadata = new PhysicalPartRenderMetadata(specification,
+                    PhysicalPartOrientation.NON_POLARIZED, null);
+            }
+            return new LooseRenderCanaryPart(id, physicalPackage, specification, metadata);
+        }
+
+        public String getId() { return id; }
+        public PhysicalSpecification getSpecification() { return specification; }
+        public PhysicalNameplate getPlayerVisibleNameplate() { return nameplate; }
+        public PhysicalPartRenderMetadata getRenderMetadata() { return metadata; }
+        public PhysicalPartOrientation getOrientation() { return metadata.getOrientation(); }
+        public PhysicalPackage getPackage() { return physicalPackage; }
+        public int getTerminalCount() { return terminals.length; }
+        public PhysicalPartTerminal getTerminal(int terminal) {
+            if (terminal < 0 || terminal >= terminals.length)
+                throw new IllegalArgumentException("Invalid loose render canary terminal");
+            return terminals[terminal];
+        }
+        public Vector<PhysicalPartTerminal> getTerminals() {
+            Vector<PhysicalPartTerminal> result = new Vector<PhysicalPartTerminal>();
+            for (PhysicalPartTerminal terminal : terminals)
+                result.add(terminal);
+            return result;
+        }
+        public PhysicalPartElectricalBacking getElectricalBacking() { return backing; }
+        public PhysicalGeometryRealization getGeometryRealization() {
+            return geometryRealization.getGeometryRealization();
+        }
+        public void bindGeometryRealization(PhysicalGeometryRealization realization) {
+            geometryRealization.bind(physicalPackage, realization);
+        }
+        public PhysicalPartMountState getMountState() { return mountState; }
+        public PhysicalBoardSlot getBoardSlot() { return mountState.getSlot(); }
+        public PhysicalPartProvenance getProvenance() {
+            return new PhysicalPartProvenance(PhysicalPartProvenance.DEVELOPER_CANARY, id);
+        }
+        public PhysicalFailureState getFailureState() {
+            return new PhysicalFailureState(PhysicalFailureState.HEALTHY, false);
+        }
+        public Vector<PhysicalPartCapability> getCapabilities() {
+            return new Vector<PhysicalPartCapability>();
+        }
+        public Vector<PhysicalPartCapability> getIntrinsicCapabilities() {
+            return getCapabilities();
+        }
+        public boolean isInstalled() { return mountState.isInstalled(); }
+        public boolean isOriginal() { return false; }
+        public boolean isFaulted() { return false; }
+    }
+
     private static void verifyConnectedAndLiftedProbeSemantics(CirSim sim,
             PcbWorkbenchRenderer renderer) {
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
@@ -282,6 +800,7 @@ final class PhysicalPartRenderDeveloperVerifier {
             require(mutationProvider.removeInstalledPart() && slot.getInstalledPart() == null &&
                     !part.isInstalled(),
                 "Physical removal did not reach final slot-empty state");
+            verifyRemovedLooseCarrier(renderer, part, carrier);
             require(liftedPad.isValid() && !componentTarget.isValid() &&
                     !graphRemovedTarget.isValid() &&
                     renderer.getComponentLeadPoint(candidate.getComponentId(),
@@ -338,6 +857,40 @@ final class PhysicalPartRenderDeveloperVerifier {
         }
     }
 
+    private static void verifyRemovedLooseCarrier(PcbWorkbenchRenderer renderer,
+            PhysicalPart<?> part, PhysicalGeometryRealization carrier) {
+        int savedPage = renderer.getTrayPage();
+        boolean found = false;
+        try {
+            for (int page = 0; page < renderer.getTrayPageCount(); page++) {
+                renderer.setTrayPage(page);
+                Vector<PhysicalPart<?>> visible = renderer.getVisibleLoosePhysicalParts();
+                for (int index = 0; index < visible.size(); index++) {
+                    PhysicalPart<?> candidate = visible.get(index);
+                    if (candidate != part)
+                        continue;
+                    PhysicalPartRenderProvider provider = renderer
+                        .getRenderRegistryForDeveloperVerification().getProvider(
+                            candidate.getPackage());
+                    require(provider != null, "Removed part lost its loose render provider");
+                    PhysicalPartRenderContext context = new PhysicalPartRenderContext(renderer,
+                        null, candidate, candidate.getPackage(), index, true);
+                    PhysicalPartRenderGeometry geometry = provider.getRenderer(candidate)
+                        .getLooseGeometry(context);
+                    LoosePartPose pose = context.getLoosePose();
+                    require(geometry != null && pose.getSourceRealization() == carrier &&
+                            pose.getSourceGeometry() == carrier.getPhysicalGeometry() &&
+                            renderer.getLooseTerminalPoint(candidate.getId(), 0) != null,
+                        "Removed original part did not use its retained loose carrier");
+                    found = true;
+                }
+            }
+        } finally {
+            renderer.setTrayPage(savedPage);
+        }
+        require(found, "Removed original part was not visible in the loose inventory");
+    }
+
     private static PhysicalPartRenderTerminal findTerminal(PhysicalPartRenderGeometry geometry,
             String padId) {
         if (geometry == null)
@@ -387,6 +940,12 @@ final class PhysicalPartRenderDeveloperVerifier {
         else if (PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage))
             require(target instanceof PhysicalLedPartProbeTarget,
                 "LED loose probe did not resolve through its provider: " + partId);
+        else if (PhysicalPackages.TO92_NPN.isEquivalentTo(physicalPackage))
+            require(target instanceof PhysicalNpnPartProbeTarget,
+                "NPN loose probe did not resolve through its provider: " + partId);
+        else if (PhysicalPackages.TO92_NMOS.isEquivalentTo(physicalPackage))
+            require(target instanceof PhysicalNmosPartProbeTarget,
+                "NMOS loose probe did not resolve through its provider: " + partId);
         else if (PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR.isEquivalentTo(physicalPackage) ||
                 PhysicalPackages.RADIAL_CERAMIC_CAPACITOR.isEquivalentTo(physicalPackage))
             require(target instanceof PhysicalCapacitorPartProbeTarget,
@@ -579,6 +1138,12 @@ final class PhysicalPartRenderDeveloperVerifier {
     private static void require(boolean condition, String message) {
         if (!condition)
             throw new IllegalStateException(message);
+    }
+
+    private static boolean contains(Rectangle outer, Rectangle inner) {
+        return outer != null && inner != null && inner.x >= outer.x && inner.y >= outer.y &&
+            (long) inner.x + inner.width <= (long) outer.x + outer.width &&
+            (long) inner.y + inner.height <= (long) outer.y + outer.height;
     }
 
     private static boolean pointEquals(Point first, Point second) {

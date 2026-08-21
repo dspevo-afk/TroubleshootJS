@@ -1199,14 +1199,14 @@ counts of LED 2, diode 1, parallel 1, RC 1, NPN 2, and NMOS 1. Derived owner
 classification is `MULTI_OWNER_DIAGNOSTIC` for LED/NPN and
 `GUIDED_EASY_SINGLE_OWNER` for diode/parallel/RC/NMOS. The LED Quick Play
 envelope is family-specific `{0, 2, 3, 4}`; other legacy envelopes remain
-unchanged. Task 43 is the next eligible milestone and was not started.
+unchanged. At the time of Task 42 completion, Task 43 was the next eligible
+milestone and was not started.
 
 ---
 
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
-**Status:** [~] Recovery in progress — 43R-1, 43R-2, and 43R-3 complete;
-43R-4 pending
+**Status:** [x] Complete — 43R-1, 43R-2, 43R-3, and 43R-4 complete
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1248,8 +1248,8 @@ architecture prerequisite.
   physical net connectivity.
 - `[x]` 43R-3 — installed geometry consumers for rendering, selection, and
   board/component probing; complete.
-- `[>]` 43R-4 — loose-part pose/render/hit/probe and physical-part consumer
-  lifecycle; not started.
+- `[x]` 43R-4 — loose-part pose/render/hit/probe and physical-part consumer
+  lifecycle; complete.
 
 43R-3 completion: installed board rendering, selection, hit testing, and
 board-pad/component-side probing now consume the exact package placement and
@@ -1258,7 +1258,15 @@ leads expose the detached component-side surface as a separate target. Physical
 removal and replacement invalidate mounted selection/targets, while same-part
 reinstallation preserves stable part/terminal/endpoint identity and creates a
 fresh target. No electrical, routing, measurement, or controller behavior was
-changed. Loose-part rendering and lifecycle remain deferred to 43R-4.
+changed.
+
+43R-4 completion: loose physical parts now use one immutable package-owned pose
+for rendering, selection, hit testing, probing, and tray pagination. Bound
+physical realizations remain the source of loose geometry; unbound parts use an
+explicit package default. The full registered provider matrix and negative
+interaction canaries pass, and the R3 installed/lifecycle identity contract is
+preserved. No electrical, routing, measurement, or future-milestone work was
+started.
 
 ---
 
@@ -1266,7 +1274,7 @@ changed. Loose-part rendering and lifecycle remain deferred to 43R-4.
 
 ## Task 44 — Functional Block Descriptor and Stable Namespace Contract
 
-**Status:** [!] Blocked by Tasks 41 and 43
+**Status:** [>] Next eligible milestone — not started
 
 **Purpose:** Define the smallest reusable generation unit above the existing
 leaf-family runtime.
@@ -3089,10 +3097,9 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 # Immediate Next Milestone
 
-**Task 43R-4 — loose-part rendering, probing, and physical-part lifecycle
-consumers (recovery slice)**
+**Task 44 — Functional Block Descriptor and Stable Namespace Contract**
 
-Tasks 39 through 42 and recovery slices 43R-1 through 43R-3 have completed
-implementation, validation, review, and publication. Task 43R-4 is the next
-eligible recovery slice and has not started. Task 44 remains blocked by Task
-43. Relay Driver remains deferred and transformed into Task 66.
+Tasks 39 through 42 and recovery slices 43R-1 through 43R-4 have completed
+implementation, validation, review, and publication. Task 44 is now the next
+eligible milestone and remains unstarted. Recovery slice 43R-5 is not defined
+or started. Relay Driver remains deferred and transformed into Task 66.

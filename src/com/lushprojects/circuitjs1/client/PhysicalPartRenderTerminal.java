@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 /** Provider-owned physical lead geometry for one terminal. */
 final class PhysicalPartRenderTerminal {
     private final int terminalIndex;
@@ -15,12 +17,14 @@ final class PhysicalPartRenderTerminal {
     private final Point leadBodyPoint;
     private final Point leadEndPoint;
     private final Rectangle leadBounds;
+    private final Vector<Rectangle> looseProbeSurfaces;
+    private final boolean looseProbeMode;
 
     PhysicalPartRenderTerminal(int terminalIndex, String terminalId, String boardPadId,
             Point point, Rectangle probeBounds, Rectangle padBounds, Rectangle leadBounds) {
         this(terminalIndex, terminalId, boardPadId, point, probeBounds,
             boardPadId == null ? null : point, boardPadId == null ? null : probeBounds, padBounds,
-            point, probeBounds, point, point, leadBounds);
+            point, probeBounds, point, point, leadBounds, null, false);
     }
 
     /**
@@ -32,6 +36,28 @@ final class PhysicalPartRenderTerminal {
             Rectangle boardPadProbeBounds, Rectangle padBounds, Point componentLeadPoint,
             Rectangle componentLeadProbeBounds, Point leadBodyPoint, Point leadEndPoint,
             Rectangle leadBounds) {
+        this(terminalIndex, terminalId, boardPadId, activePoint, activeProbeBounds,
+            boardPadPoint, boardPadProbeBounds, padBounds, componentLeadPoint,
+            componentLeadProbeBounds, leadBodyPoint, leadEndPoint, leadBounds, null, false);
+    }
+
+    /** Explicit loose projection with each declared probe surface retained. */
+    PhysicalPartRenderTerminal(int terminalIndex, String terminalId, String boardPadId,
+            Point activePoint, Rectangle activeProbeBounds, Point boardPadPoint,
+            Rectangle boardPadProbeBounds, Rectangle padBounds, Point componentLeadPoint,
+            Rectangle componentLeadProbeBounds, Point leadBodyPoint, Point leadEndPoint,
+            Rectangle leadBounds, Vector<Rectangle> looseProbeSurfaces) {
+        this(terminalIndex, terminalId, boardPadId, activePoint, activeProbeBounds,
+            boardPadPoint, boardPadProbeBounds, padBounds, componentLeadPoint,
+            componentLeadProbeBounds, leadBodyPoint, leadEndPoint, leadBounds,
+            looseProbeSurfaces, true);
+    }
+
+    private PhysicalPartRenderTerminal(int terminalIndex, String terminalId, String boardPadId,
+            Point activePoint, Rectangle activeProbeBounds, Point boardPadPoint,
+            Rectangle boardPadProbeBounds, Rectangle padBounds, Point componentLeadPoint,
+            Rectangle componentLeadProbeBounds, Point leadBodyPoint, Point leadEndPoint,
+            Rectangle leadBounds, Vector<Rectangle> looseProbeSurfaces, boolean looseProbeMode) {
         if (terminalIndex < 0 || terminalId == null || terminalId.length() == 0 ||
                 activePoint == null || activeProbeBounds == null || padBounds == null ||
                 activeProbeBounds.width <= 0 || activeProbeBounds.height <= 0 ||
@@ -40,6 +66,8 @@ final class PhysicalPartRenderTerminal {
                 componentLeadProbeBounds.height <= 0 || padBounds.width <= 0 ||
                 padBounds.height <= 0 || leadBounds.width <= 0 || leadBounds.height <= 0)
             throw new IllegalArgumentException("Invalid physical render terminal");
+        if (!contains(activeProbeBounds, activePoint))
+            throw new IllegalArgumentException("Physical render marker is outside its probe surface");
         if (boardPadId != null && (boardPadPoint == null || boardPadProbeBounds == null ||
                 boardPadProbeBounds.width <= 0 || boardPadProbeBounds.height <= 0))
             throw new IllegalArgumentException("Installed physical render terminal has no pad surface");
@@ -57,11 +85,28 @@ final class PhysicalPartRenderTerminal {
         this.leadBodyPoint = new Point(leadBodyPoint);
         this.leadEndPoint = new Point(leadEndPoint);
         this.leadBounds = new Rectangle(leadBounds);
+        this.looseProbeMode = looseProbeMode;
+        this.looseProbeSurfaces = new Vector<Rectangle>();
+        if (looseProbeMode) {
+            if (looseProbeSurfaces == null || looseProbeSurfaces.size() == 0)
+                throw new IllegalArgumentException("Loose physical render terminal has no probe surface");
+            for (Rectangle surface : looseProbeSurfaces) {
+                if (surface == null || surface.width <= 0 || surface.height <= 0)
+                    throw new IllegalArgumentException("Invalid loose physical render probe surface");
+                this.looseProbeSurfaces.add(new Rectangle(surface));
+            }
+        }
         if (boardPadId != null && (!contains(this.boardPadProbeBounds, this.padBounds) ||
                 !contains(this.boardPadProbeBounds, this.boardPadPoint)))
             throw new IllegalArgumentException("Physical render probe does not contain pad");
         if (!contains(this.componentLeadProbeBounds, this.componentLeadPoint))
             throw new IllegalArgumentException("Physical render component probe omits its center");
+        if (!contains(this.leadBounds, this.leadBodyPoint) ||
+                !contains(this.leadBounds, this.leadEndPoint))
+            throw new IllegalArgumentException("Physical render lead point escapes lead bounds");
+        if (looseProbeMode && !containsAny(this.looseProbeSurfaces, this.point))
+            throw new IllegalArgumentException(
+                "Physical render marker is outside its declared loose probe surfaces");
     }
 
     int getTerminalIndex() { return terminalIndex; }
@@ -85,7 +130,24 @@ final class PhysicalPartRenderTerminal {
     Rectangle getLeadBounds() { return new Rectangle(leadBounds); }
     Point getLeadBodyPoint() { return new Point(leadBodyPoint.x, leadBodyPoint.y); }
     Point getLeadEndPoint() { return new Point(leadEndPoint.x, leadEndPoint.y); }
-    boolean containsProbe(int x, int y) { return probeBounds.contains(x, y); }
+    Vector<Rectangle> getProbeSurfaces() {
+        Vector<Rectangle> result = new Vector<Rectangle>();
+        if (looseProbeMode) {
+            for (Rectangle surface : looseProbeSurfaces)
+                result.add(new Rectangle(surface));
+        } else {
+            result.add(new Rectangle(probeBounds));
+        }
+        return result;
+    }
+    boolean containsProbe(int x, int y) {
+        if (!looseProbeMode)
+            return probeBounds.contains(x, y);
+        for (Rectangle surface : looseProbeSurfaces)
+            if (surface.contains(x, y))
+                return true;
+        return false;
+    }
     boolean containsComponentProbe(int x, int y, Rectangle boardPadProbeBounds) {
         return componentLeadProbeBounds.contains(x, y) &&
             (boardPadProbeBounds == null || !boardPadProbeBounds.contains(x, y));
@@ -100,5 +162,12 @@ final class PhysicalPartRenderTerminal {
     private static boolean contains(Rectangle outer, Point point) {
         return point.x >= outer.x - 1 && point.y >= outer.y - 1 &&
             point.x <= outer.x + outer.width && point.y <= outer.y + outer.height;
+    }
+
+    private static boolean containsAny(Vector<Rectangle> surfaces, Point point) {
+        for (Rectangle surface : surfaces)
+            if (contains(surface, point))
+                return true;
+        return false;
     }
 }

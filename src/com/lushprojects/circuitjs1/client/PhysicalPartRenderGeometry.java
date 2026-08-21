@@ -38,20 +38,32 @@ final class PhysicalPartRenderGeometry {
         for (PhysicalPartRenderHitRegion region : this.hitRegions)
             if (region == null)
                 throw new IllegalArgumentException("Invalid physical render hit region");
+        for (PhysicalPartRenderHitRegion region : this.hitRegions)
+            if (!contains(this.selectionBounds, region.getBounds()))
+                throw new IllegalArgumentException("Physical render hit region escapes selection");
+        if (!containsHitRegion(this.bodyBounds))
+            throw new IllegalArgumentException("Physical render body escapes hit geometry");
         for (int index = 0; index < this.terminals.size(); index++) {
             PhysicalPartRenderTerminal terminal = this.terminals.get(index);
             if (terminal == null || terminal.getTerminalIndex() != index)
                 throw new IllegalArgumentException("Physical render terminals are not ordered");
+            if (!containsHitRegion(this.leadBounds.get(index)) ||
+                    !containsHitRegion(terminal.getPadBounds()) ||
+                    !containsHitRegion(terminal.getComponentLeadProbeBounds()) ||
+                    !containsAllHitRegions(terminal.getProbeSurfaces()))
+                throw new IllegalArgumentException("Physical render feature escapes hit geometry");
             if (!contains(this.selectionBounds, terminal.getProbeBounds()) ||
                     !contains(this.selectionBounds, terminal.getPadBounds()) ||
                     !contains(this.selectionBounds, terminal.getLeadBounds()) ||
                     !contains(this.selectionBounds, terminal.getComponentLeadProbeBounds()) ||
+                    !containsAll(this.selectionBounds, terminal.getProbeSurfaces()) ||
                     (terminal.getBoardPadProbeBounds() != null &&
                         !contains(this.selectionBounds, terminal.getBoardPadProbeBounds())) ||
                     !contains(this.dragBounds, terminal.getProbeBounds()) ||
                     !contains(this.dragBounds, terminal.getPadBounds()) ||
                     !contains(this.dragBounds, terminal.getLeadBounds()) ||
                     !contains(this.dragBounds, terminal.getComponentLeadProbeBounds()) ||
+                    !containsAll(this.dragBounds, terminal.getProbeSurfaces()) ||
                     (terminal.getBoardPadProbeBounds() != null &&
                         !contains(this.dragBounds, terminal.getBoardPadProbeBounds())))
                 throw new IllegalArgumentException("Physical render terminal escapes its envelope");
@@ -105,5 +117,26 @@ final class PhysicalPartRenderGeometry {
         return inner.x >= outer.x - 1 && inner.y >= outer.y - 1 &&
             (long) inner.x + inner.width <= (long) outer.x + outer.width + 1 &&
             (long) inner.y + inner.height <= (long) outer.y + outer.height + 1;
+    }
+
+    private static boolean containsAll(Rectangle outer, Vector<Rectangle> values) {
+        for (Rectangle value : values)
+            if (!contains(outer, value))
+                return false;
+        return true;
+    }
+
+    private boolean containsHitRegion(Rectangle value) {
+        for (PhysicalPartRenderHitRegion region : hitRegions)
+            if (contains(region.getBounds(), value))
+                return true;
+        return false;
+    }
+
+    private boolean containsAllHitRegions(Vector<Rectangle> values) {
+        for (Rectangle value : values)
+            if (!containsHitRegion(value))
+                return false;
+        return true;
     }
 }

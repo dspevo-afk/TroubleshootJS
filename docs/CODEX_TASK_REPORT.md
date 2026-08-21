@@ -1,3 +1,129 @@
+# Task 43R-4 completion report — loose package-owned pose and interaction
+
+Date: 2026-08-21
+
+Status: `FINAL PASS — IMPLEMENTATION, VALIDATION, AND INDEPENDENT REVIEW
+COMPLETE`. The bounded recovery slice is integrated in the shared worktree;
+the primary architect retains commit and publication authority until the final
+staged-diff, commit, push, remote-SHA, and notification gates complete.
+
+## Objective and bounded contract
+
+Task 43R-4 gives every loose physical part one rigid package-owned pose. The
+loose path must consume the exact bound `PhysicalGeometryRealization` when a
+part has one, or the explicit package-owned default loose geometry otherwise.
+The pose owns orientation/polarity metadata, any required quarter-turn, one
+uniform scale, one translation, and the fixed tray cell. Body, leads, pads,
+terminal markers, selection, drag, hit testing, and probes must all use that
+same transformed geometry. The milestone does not change routing, board
+placement, CircuitJS electrical behavior, measurement behavior, faults,
+stress/damage, replacement catalogs, or future roadmap work.
+
+## Implementation and architectural decisions
+
+- Added the immutable package-private `LoosePartPose` carrier. Its transform
+  order is package-local geometry, optional polarity mirror, optional clockwise
+  quarter-turn for connector/developer-generic vertical packages, one uniform
+  scale no greater than one, and one translation into the existing tray cell.
+- Changed loose `PhysicalPartRenderContext` projections to consume the pose and
+  the exact realization/default source; synthetic per-terminal tray positions
+  are no longer used for loose geometry.
+- Kept `PhysicalPartRenderGeometry` provider-owned as the common source for
+  loose draw, selection, hit, marker, and probe behavior. Containment validation
+  rejects visible features outside hit/envelope geometry, while pose-scaled
+  loose lead strokes are clamped to transformed lead bounds.
+- Updated the complete registered provider matrix, including the connector and
+  multi-terminal developer canaries, and tightened pagination/selection
+  invalidation for hidden loose parts.
+- Preserved R3 mounted-slot, part, terminal, endpoint, replacement, and probe
+  lifecycle identities. No electrical, routing, measurement, or controller
+  semantics changed.
+
+## Package matrix and negative canaries
+
+The loose verifier enumerates every registered package/provider, covering axial
+resistor, axial diode, through-hole LED, TO-92 NPN, TO-92 NMOS, radial
+electrolytic capacitor, radial ceramic capacitor, connectors, and supported
+multi-terminal developer canaries. Positive geometry, provider dispatch,
+orientation, polarity, terminal order, stable marker/probe surfaces, and tray
+projection checks pass.
+
+The matrix also rejects, with explicit intended reasons, independently warped
+terminals, non-uniform body warps, visible bodies outside hit geometry, visible
+leads outside hit geometry, giant empty-tray hit regions, markers outside
+declared terminal/lead surfaces, and body/terminal transform mismatches. The
+verifier retains pagination, stale-selection, variant, reversal, stable
+terminal identity, and generic-probe-radius checks.
+
+## Files changed
+
+Source scope is exactly the eight approved R4 files:
+
+- `src/com/lushprojects/circuitjs1/client/LoosePartPose.java`
+- `src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderGeometry.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderTerminal.java`
+- `src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java`
+- `src/com/lushprojects/circuitjs1/client/Task43DeveloperVerifier.java`
+
+Bookkeeping updates are limited to `docs/ARCHITECTURE.md`,
+`docs/ROADMAP.md`, and this report.
+
+## Validation and review
+
+- Official bundled JDK 8 OBF production build: passed all five GWT
+  permutations and link with
+  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`.
+- Renderer boundary verifier: passed.
+- `git diff --check`: passed.
+- Fresh rebuilt visible in-app Browser Task 43 route:
+  `data-tsj-verification=PASS:task43`; the rendered PCB/workbench screenshot
+  was captured as evidence. A fresh loopback origin was used after the build
+  to avoid stale browser cache.
+- Loose package/provider matrix and expanded negative canaries: passed through
+  the rebuilt Task 43 verifier.
+- R3 installed/remove/install/pagination/probe and lifecycle identity checks:
+  passed in the existing verifier coverage; installed rendering remains
+  unchanged.
+- Standard Edge helper invocation remains host-limited because querying Edge
+  processes returns WMI `Access denied`; the required visible in-app Browser
+  route passed. The pre-existing replacement verifier `NaN` lifted-measurement
+  issue remains unrelated and was not changed.
+- No source changes were made in route factories, board placement/netlists,
+  CircuitJS electrical behavior, measurements, faults, stress/damage, or
+  replacement catalog/economy code.
+
+## Coder, review, and handoff
+
+The delegated Luna MAX coder delivered the bounded initial implementation and
+then corrected the first review findings: loose lead strokes now follow pose
+scale and the negative canaries cover the registered package matrix with exact
+failure reasons. The primary architect performed two review rounds (initial
+candidate review and post-correction review). The first independent reviewer
+found the lead-stroke containment and negative-canary coverage blockers; both
+were corrected by the same delegated coder. A fresh independent read-only Luna
+MAX reviewer then returned `PASS` with no blocking findings. No escalation
+architect was required.
+
+The intended commit message is `Unify loose part geometry and interaction`.
+The configured publication remote is `origin`
+(`https://github.com/dspevo-afk/TroubleshootJS.git`), on branch
+`codex/task43-recovery-integration` tracking
+`origin/codex/task43-recovery-integration`. The post-push completion
+notification destination is `dspevock@stateofthearcelectric.com` with intended
+subject `TroubleshootJS: Task 43R-4 loose part geometry and interaction pushed`.
+The authoritative final commit SHA, exact remote verification, and notification
+result are established only after this report is written and the final
+publication protocol completes; no final SHA is claimed here.
+
+Task 44 is the next eligible roadmap milestone and remains unstarted. No
+43R-5 slice is defined or started. The architect will stop after the R4
+publication and notification attempt.
+
+---
+
 # Task 43R-3 completion report — installed rendering, selection, and probing
 
 Date: 2026-08-21

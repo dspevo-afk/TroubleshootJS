@@ -1444,3 +1444,48 @@ surface semantics, terminal identity, selection/hit/probe agreement, removal,
 reinstall, replacement invalidation, and board/runtime identity preservation.
 No CircuitJS electrical topology, measurement primitive, routing algorithm,
 or controller mutation semantics changed in this slice.
+
+## Task 43R-4 — loose rendering, probing, and physical-part lifecycle
+
+Task 43R-4 closes the tray-side consumers of the immutable package realization
+contract. `LoosePartPose` is the one package-private immutable presentation
+carrier for a loose part. When a physical part has a bound
+`PhysicalGeometryRealization`, the pose uses that exact realization and its
+`PhysicalPackageGeometry`; an unbound replacement uses the explicit
+package-owned default loose geometry. The tray renderer no longer invents
+synthetic terminal positions or reads a second package shape.
+
+The pose records source realization/geometry, physical orientation, polarity
+mirror state, the required quarter-turn metadata, one positive uniform scale no
+greater than one, a translation, and the fixed tray cell. Its transform order
+is package-local point/rectangle, optional polarity mirror, optional clockwise
+quarter-turn for connector/developer-generic vertical packages, one uniform
+scale, then one translation into the tray cell. The scale fits the existing
+three-row tray without changing tray dimensions or package-local identity.
+
+`PhysicalPartRenderContext` projects every loose feature through that pose:
+body, selection and drag envelopes, pads, probe surfaces, component-lead
+probe bounds, connected lead body/end/bounds, terminal markers, and hit
+geometry. `PhysicalPartRenderGeometry` is the provider-owned source shared by
+loose drawing, selection, hit testing, marker placement, and probe creation.
+It validates that visible bodies, leads, pads, probe surfaces, and markers are
+contained by the declared interaction envelope. Loose lead stroke width is
+scaled with the same pose and is clamped to its transformed lead bounds.
+
+All registered physical providers participate in the same contract: axial
+resistor and diode, through-hole LED, TO-92 NPN/NMOS, radial electrolytic and
+ceramic capacitors, connectors, and the multi-terminal developer canaries.
+Pagination clears a selection that is no longer visible and keeps hidden probe
+targets from acquiring a stale marker; it does not migrate identity to another
+tray part. Removal, replacement, and reinstall preserve the R3 slot/part/
+terminal/endpoint lifecycle rules: a bound carrier is retained for the same
+physical part, an unbound replacement falls back to the package default, an
+installed replacement binds its carrier, and a removed replacement uses that
+carrier while retaining its distinct physical identity.
+
+The R4 verifier exercises the package/provider matrix and rejects independent
+terminal warps, non-uniform body warps, visible features outside hit geometry,
+giant empty-tray hit regions, markers outside declared surfaces, and
+body/terminal transform mismatches with explicit failure reasons. No routing,
+board placement, CircuitJS electrical topology, measurement primitive, fault,
+stress/damage, or replacement-catalog behavior changed.
