@@ -102,14 +102,7 @@ final class PcbFootprint {
     PcbFootprint translated(int x, int y) {
         int dx = x - placement.getX();
         int dy = y - placement.getY();
-        PcbComponentPlacement translatedPlacement = new PcbComponentPlacement(
-            placement.getComponentId(), x, y, placement.getWidth(), placement.getHeight(),
-            new Rectangle(placement.getKeepOut().x + dx, placement.getKeepOut().y + dy,
-                placement.getKeepOut().width, placement.getKeepOut().height),
-            new Rectangle(placement.getRoutingCourtyard().x + dx,
-                placement.getRoutingCourtyard().y + dy,
-                placement.getRoutingCourtyard().width, placement.getRoutingCourtyard().height),
-            placement.getPhysicalPackage(), placement.getPhysicalGeometry());
+        PcbComponentPlacement translatedPlacement = placement.translatedTo(x, y);
         Vector<PcbPadPlacement> translatedPads = new Vector<PcbPadPlacement>();
         for (PcbPadPlacement pad : pads)
             translatedPads.add(new PcbPadPlacement(pad.getPadId(), pad.getX() + dx,

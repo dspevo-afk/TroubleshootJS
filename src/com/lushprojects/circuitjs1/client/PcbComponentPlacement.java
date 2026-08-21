@@ -47,6 +47,14 @@ class PcbComponentPlacement {
     PcbComponentPlacement(String componentId, int x, int y, int width, int height,
             Rectangle keepOut, Rectangle routingCourtyard, PhysicalPackage physicalPackage,
             PhysicalPackageGeometry physicalGeometry) {
+        this(componentId, x, y, width, height, keepOut, routingCourtyard, physicalPackage,
+            physicalGeometry, null);
+    }
+
+    private PcbComponentPlacement(String componentId, int x, int y, int width, int height,
+            Rectangle keepOut, Rectangle routingCourtyard, PhysicalPackage physicalPackage,
+            PhysicalPackageGeometry physicalGeometry,
+            PhysicalGeometryRealization suppliedGeometryRealization) {
         if (componentId == null || componentId.trim().length() == 0 || keepOut == null ||
                 keepOut.width <= 0 || keepOut.height <= 0 || routingCourtyard == null ||
                 routingCourtyard.width <= 0 || routingCourtyard.height <= 0 || width <= 0 ||
@@ -85,9 +93,29 @@ class PcbComponentPlacement {
         this.geometryVariantKey = variantKey;
         this.geometryTransformKey = transformKey;
         this.geometryContractVersion = physicalPackage.getGeometryContractVersion();
-        this.geometryRealization = new PhysicalGeometryRealization(physicalPackage,
-            physicalGeometry, geometryVariantKey, geometryTransformKey,
-            geometryContractVersion);
+        if (suppliedGeometryRealization == null)
+            this.geometryRealization = new PhysicalGeometryRealization(physicalPackage,
+                physicalGeometry, geometryVariantKey, geometryTransformKey,
+                geometryContractVersion);
+        else {
+            validateGeometryRealization(suppliedGeometryRealization, physicalPackage,
+                physicalGeometry, geometryVariantKey, geometryTransformKey,
+                geometryContractVersion, componentId);
+            this.geometryRealization = suppliedGeometryRealization;
+        }
+    }
+
+    /** Safe translation with package-backed identity preservation. */
+    PcbComponentPlacement translatedTo(int x, int y) {
+        PhysicalPackageGeometry.Placement placed = physicalGeometry.placedAt(x, y);
+        return new PcbComponentPlacement(componentId, x, y, width, height,
+            placed.getBodyKeepOut(), placed.getRoutingCourtyard(), physicalPackage,
+            physicalGeometry, geometryRealization);
+    }
+
+    /** Delta translation that rejects overflow while preserving geometry realization. */
+    PcbComponentPlacement translatedBy(int dx, int dy) {
+        return translatedTo(checkedAdd(this.x, dx), checkedAdd(this.y, dy));
     }
 
     /** Explicit generic compatibility path; production geometry is rejected here. */
@@ -239,6 +267,37 @@ class PcbComponentPlacement {
 
     private PhysicalPackageGeometry.Placement placedGeometry() {
         return physicalGeometry.placedAt(x, y);
+    }
+
+    private static int checkedAdd(int first, int second) {
+        long value = (long) first + second;
+        return checkedInt(value);
+    }
+
+    private static int checkedInt(long value) {
+        if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE)
+            throw new IllegalArgumentException("PCB component placement overflow: " + value);
+        return (int) value;
+    }
+
+    private static void validateGeometryRealization(
+            PhysicalGeometryRealization realization, PhysicalPackage physicalPackage,
+            PhysicalPackageGeometry physicalGeometry, String variantKey, String transformKey,
+            PcbGeometryContractVersion geometryContractVersion, String componentId) {
+        PhysicalPackage.GeometryVariant variant = physicalPackage.getGeometryVariant(
+            realization.getVariantKey());
+        if (!physicalPackage.acceptsGeometry(physicalGeometry) ||
+                realization.getPhysicalPackage() != physicalPackage ||
+                realization.getPhysicalGeometry() != physicalGeometry ||
+                variant == null || variant.getGeometry() != physicalGeometry ||
+                !variantKey.equals(realization.getVariantKey()) ||
+                !transformKey.equals(realization.getTransformKey()) ||
+                !transformKey.equals(variant.getTransformKey()) ||
+                !geometryContractVersion.equals(realization.getGeometryContractVersion()) ||
+                !geometryContractVersion.equals(physicalPackage.getGeometryContractVersion()) ||
+                !geometryContractVersion.equals(physicalGeometry.getGeometryContractVersion()))
+            throw new IllegalArgumentException("Mismatched physical geometry realization: " +
+                componentId);
     }
 
     private static PhysicalPackage compatibilityPackage(String componentId,

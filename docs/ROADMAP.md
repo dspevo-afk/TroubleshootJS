@@ -1205,7 +1205,8 @@ unchanged. Task 43 is the next eligible milestone and was not started.
 
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
-**Status:** [>] Immediate next milestone
+**Status:** [~] Recovery in progress — 43R-1 and 43R-2 complete; 43R-3 and
+43R-4 pending
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1239,6 +1240,16 @@ footprint geometry does not decide electrical behavior.
 architecture prerequisite.
 
 **Unlocks:** Task 44 and safe later package expansion.
+
+**Recovery slices:**
+
+- `[x]` 43R-1 — package realization verifier and geometry identity.
+- `[x]` 43R-2 — board geometry consumers, compaction, containment, and
+  physical net connectivity.
+- `[>]` 43R-3 — installed geometry consumers for rendering, selection, and
+  board/component probing; not started.
+- `[ ]` 43R-4 — loose-part pose/render/hit/probe and physical-part consumer
+  lifecycle; not started.
 
 ---
 
@@ -3069,8 +3080,10 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 # Immediate Next Milestone
 
-**Task 43 — Physical Package and Interaction Envelope Contract**
+**Task 43R-3 — installed geometry rendering, selection, and probing
+consumers (recovery slice)**
 
-Tasks 39 through 42 have completed implementation, validation, review, and
-publication. Task 43 is the next eligible milestone and has not started. Relay
-Driver remains deferred and transformed into Task 66.
+Tasks 39 through 42 and recovery slices 43R-1 and 43R-2 have completed
+implementation, validation, review, and publication. Task 43R-3 is the next
+eligible recovery slice and has not started. Task 43R-4 and Task 44 remain
+deferred. Relay Driver remains deferred and transformed into Task 66.

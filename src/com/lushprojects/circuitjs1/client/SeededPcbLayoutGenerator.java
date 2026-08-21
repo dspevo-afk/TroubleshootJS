@@ -430,8 +430,8 @@ class SeededPcbLayoutGenerator {
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 1; index < xPoints.length; index++) {
-                if (segmentIntersects(candidate, xPoints[index - 1], yPoints[index - 1],
-                        xPoints[index], yPoints[index]))
+                if (candidate.intersects(traceStroke(xPoints[index - 1],
+                        yPoints[index - 1], xPoints[index], yPoints[index])))
                     return false;
             }
         }
@@ -455,14 +455,25 @@ class SeededPcbLayoutGenerator {
         return Math.max(18, text.length() * (fontSize <= 12 ? 8 : 9));
     }
 
-    private static boolean segmentIntersects(Rectangle rectangle, int x1, int y1,
-            int x2, int y2) {
-        int left = Math.min(x1, x2);
-        int right = Math.max(x1, x2);
-        int top = Math.min(y1, y2);
-        int bottom = Math.max(y1, y2);
-        return right >= rectangle.x && left <= rectangle.x + rectangle.width &&
-            bottom >= rectangle.y && top <= rectangle.y + rectangle.height;
+    private static Rectangle traceStroke(int firstX, int firstY, int secondX, int secondY) {
+        int half = PcbTraceRules.TRACE_WIDTH / 2;
+        if (firstX == secondX)
+            return new Rectangle(firstX - half, Math.min(firstY, secondY) - half,
+                PcbTraceRules.TRACE_WIDTH,
+                Math.abs(secondY - firstY) + PcbTraceRules.TRACE_WIDTH);
+        if (firstY == secondY)
+            return new Rectangle(Math.min(firstX, secondX) - half, firstY - half,
+                Math.abs(secondX - firstX) + PcbTraceRules.TRACE_WIDTH,
+                PcbTraceRules.TRACE_WIDTH);
+        throw new IllegalStateException("PCB layout encountered a non-Manhattan trace");
+    }
+
+    private static Rectangle traceCollisionEnvelope(Rectangle rectangle) {
+        int half = PcbTraceRules.TRACE_WIDTH / 2;
+        int extension = PcbTraceRules.TRACE_WIDTH - half;
+        return new Rectangle(rectangle.x - extension, rectangle.y - extension,
+            rectangle.width + PcbTraceRules.TRACE_WIDTH,
+            rectangle.height + PcbTraceRules.TRACE_WIDTH);
     }
 
     private void routeNets(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline) {
@@ -715,6 +726,13 @@ class SeededPcbLayoutGenerator {
 
         private boolean courtyardIntersectionIsEscape(Rectangle courtyard,
                 PcbPadPlacement pad, int x1, int y1, int x2, int y2) {
+            courtyard = traceCollisionEnvelope(courtyard);
+            if (pad.getEscapeLength() > 0 &&
+                    ((x1 == pad.getX() && y1 == pad.getY() &&
+                        pad.isInEscapeCorridor(x2, y2)) ||
+                    (x2 == pad.getX() && y2 == pad.getY() &&
+                        pad.isInEscapeCorridor(x1, y1))))
+                return true;
             if (y1 == y2) {
                 int left = Math.max(Math.min(x1, x2), courtyard.x);
                 int right = Math.min(Math.max(x1, x2), courtyard.x + courtyard.width);
@@ -769,8 +787,12 @@ class SeededPcbLayoutGenerator {
             return Math.abs(x - otherX) + Math.abs(y - otherY);
         }
 
-        private int gridX(int x) { return (x - minX) % GRID == 0 ? (x - minX) / GRID : -1; }
-        private int gridY(int y) { return (y - minY) % GRID == 0 ? (y - minY) / GRID : -1; }
+        private int gridX(int x) {
+            return (x - minX) % GRID == 0 ? (x - minX) / GRID : -1;
+        }
+        private int gridY(int y) {
+            return (y - minY) % GRID == 0 ? (y - minY) / GRID : -1;
+        }
 
         private static boolean containsInclusive(Rectangle rectangle, int x, int y) {
             return x >= rectangle.x && y >= rectangle.y &&
@@ -779,15 +801,20 @@ class SeededPcbLayoutGenerator {
 
         private static boolean segmentTouchesKeepOut(Rectangle rectangle, int firstX, int firstY,
                 int secondX, int secondY) {
+            return rectangle.intersects(traceStroke(firstX, firstY, secondX, secondY));
+        }
+
+        private static Rectangle traceStroke(int firstX, int firstY, int secondX, int secondY) {
+            int half = PcbTraceRules.TRACE_WIDTH / 2;
             if (firstX == secondX)
-                return firstX >= rectangle.x && firstX <= rectangle.x + rectangle.width &&
-                    Math.max(Math.min(firstY, secondY), rectangle.y) <=
-                    Math.min(Math.max(firstY, secondY), rectangle.y + rectangle.height);
+                return new Rectangle(firstX - half, Math.min(firstY, secondY) - half,
+                    PcbTraceRules.TRACE_WIDTH,
+                    Math.abs(secondY - firstY) + PcbTraceRules.TRACE_WIDTH);
             if (firstY == secondY)
-                return firstY >= rectangle.y && firstY <= rectangle.y + rectangle.height &&
-                    Math.max(Math.min(firstX, secondX), rectangle.x) <=
-                    Math.min(Math.max(firstX, secondX), rectangle.x + rectangle.width);
-            return false;
+                return new Rectangle(Math.min(firstX, secondX) - half, firstY - half,
+                    Math.abs(secondX - firstX) + PcbTraceRules.TRACE_WIDTH,
+                    PcbTraceRules.TRACE_WIDTH);
+            throw new IllegalStateException("PCB router encountered a non-Manhattan move");
         }
 
         private static class SearchNode {

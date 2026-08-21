@@ -1,3 +1,117 @@
+# Task 43R-2 completion report — board geometry consumers and physical connectivity
+
+Date: 2026-08-20
+
+Status: `FINAL PASS — IMPLEMENTATION, VALIDATION, AND INDEPENDENT REVIEW
+COMPLETE`. The bounded recovery slice is integrated in the shared worktree;
+publication remains the primary architect's responsibility.
+
+## Objective and bounded contract
+
+Task 43R-2 closes the board-side consumers of the Task 43R-1 physical package
+contract: layout realization, checked compaction, full-stroke containment,
+surface/courtyard validation, and physical net connectivity. It does not
+implement Task 43R-3 or 43R-4 and does not touch Task 44, fixed route
+coordinates, renderer/tray consumers, CircuitJS electrical behavior, fault or
+stress behavior, or player probe/mutation behavior.
+
+The implementation DAG was: preserve the R-1 realization carrier and
+placement translation identity; make the board geometry validator authoritative
+for all installed surfaces and trace strokes; add a physical DSU over pad and
+trace-segment contacts plus transitive package-internal connectivity; mirror
+the stroke envelope in seeded routing; add focused positive/negative
+canaries; then run the official build and visible developer verification
+routes.
+
+## Research, delegation, and reconciliation
+
+Three read-only Luna investigations established the R-2 contract, current
+consumer call paths, and the fixed-route/deferred-consumer boundary before
+implementation. The primary architect reconciled the proposed centerline
+trace-clearance interpretation against the existing package courtyard
+contract and the generic generated families. The accepted result uses the
+full `TRACE_WIDTH` stroke with a narrow, explicit endpoint escape for a trace
+leaving its own endpoint pad; generic LED, diode, and parallel layouts remain
+strictly validated.
+
+The bounded implementation was delegated to `gpt-5.3-codex-spark` coders with
+Extra High (`xhigh`) reasoning. Each Spark coder received three separate
+chances to correct its own work. The board coder exhausted the Spark quota
+after the initial attempt and two correction attempts, so subsequent
+corrections used Luna. The Spark verifier work was completed in the same
+bounded scope; no coder pushed or published changes.
+
+## Implementation and correction record
+
+The integrated production changes preserve exact
+`PhysicalGeometryRealization` identity through `translatedTo`/
+`translatedBy`, validate canonical package-object identity, and carry all
+installed surfaces into containment and occupied bounds. `PcbBoardLayout`
+builds physical connectivity from pad nodes and absolute trace-stroke segment
+nodes, unions trace-pad/trace-trace/pad-pad contacts on matching nets, rejects
+cross-net contacts, applies transitive package internal connectivity, and
+requires every logical multi-pad net to be physically connected. The seeded
+router uses the same full-stroke collision envelope.
+
+The focused verifier and correction rounds addressed the following findings:
+
+- exact placement realization identity after translation;
+- absolute trace segment node offsets;
+- full-width courtyard/silkscreen containment while preserving generic-family
+  validity;
+- two-pad package-backed fixture coverage and legal `LEAD_NET` connectivity;
+- no-argument connected component-lead probe coverage;
+- canonical package-object identity and pad-pad DSU coverage;
+- exact fixed-layout deferrals, including the RC `VIN / C2` courtyard
+  signature exposed by the final full-width check.
+
+The exact deferred fixed-layout signatures retained or exposed by this strict
+check are:
+
+- RC `component:C2 / GND` silkscreen;
+- RC `VIN / C2` courtyard segment `296,210 -> 296,370`;
+- NPN `LOAD_SUPPLY / RLOAD` courtyard;
+- NPN zero-length segment at `1050,230`;
+- NMOS `LOAD_SUPPLY / RLOAD` courtyard.
+
+The existing RC silkscreen, NPN courtyard, and NMOS courtyard records remain
+the previously reserved R-5/R-6/R-7 fixed-route deferrals; the RC courtyard
+and NPN zero-length records are the R-2 recovery observations. These are
+explicit later-recovery records, not catch-all acceptance. Any other
+generated layout or geometry error remains a verifier failure.
+
+Jason's final coder accounting reported all five original reviewer blockers
+fixed. He estimated approximately 1,635 added lines in the total candidate:
+about 639 lines of final production architecture and 996 lines of permanent
+developer verifier/canary coverage, with zero temporary diagnostics or
+experiments remaining.
+
+## Validation evidence
+
+- `git diff --check`: passed.
+- Official JDK8 OBF compile/link passed across all five permutations with
+  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF
+  -Target Compile`.
+- The visible in-app Browser developer routes reported `PASS:task43` for LED,
+  diode, and parallel seeds 0, 2, and 3, and `PASS:layout` for the strict
+  layout route after the final RC deferral correction. Browser diagnostics
+  showed no product console logs on those routes.
+- The Task 43R-2 verifier includes positive and negative canaries for package
+  identity, two-/three-pad and transitive package connectivity, branches,
+  perpendicular traces, compaction identity, full-stroke edge containment,
+  surfaces, lifted/connected leads, endpoint escape, crossing/clearance,
+  orphan/disconnected nets, and generic generated LED/diode/parallel layouts.
+- A host limitation prevented the standard preview helper's Edge WMI process
+  query from completing; the already-running local server and visible
+  browser route were used instead. This is a harness limitation, not a
+  product failure.
+
+The fresh independent read-only Luna reviewer, explicitly run at Max
+reasoning, returned exactly `PASS` with no unresolved R-2 blocker. The primary
+architect's final staged-diff inspection and publication gate remain.
+
+---
+
 # Task 43R-1 correction handoff — package realization verifier and boundary
 
 Date: 2026-08-20

@@ -29,6 +29,7 @@ final class Task43DeveloperVerifier {
         verifyGeneratedIdentity(instance);
         verifySelectedGeometryLifecycleCanary();
         verifyNegativeCanaries(registered);
+        PcbR2DeveloperVerifier.verify();
         require(beforeIdentity.equals(boardIdentity(instance)),
             "Task 43 package canaries changed generated board identities");
         sim.setCircuitTitle("Task 43 physical geometry verification passed");
@@ -265,6 +266,7 @@ final class Task43DeveloperVerifier {
         PcbComponentPlacement moved = translated.getPlacement();
         require(original.getPhysicalPackage() == moved.getPhysicalPackage() &&
                 original.getPhysicalGeometry() == moved.getPhysicalGeometry() &&
+                original.getGeometryRealization() == moved.getGeometryRealization() &&
                 original.getGeometryVariantKey().equals(moved.getGeometryVariantKey()) &&
                 original.getGeometryTransformKey().equals(moved.getGeometryTransformKey()) &&
                 original.getGeometryContractVersionValue() ==

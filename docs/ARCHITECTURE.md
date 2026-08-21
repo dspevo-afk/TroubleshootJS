@@ -1372,3 +1372,41 @@ rendering, selection, and board-pad/component-side probe interaction. Task
 the physical-part realization consumer lifecycle. These renderer, tray,
 routing-consumer, and physical-part consumer slices remain deferred; 43R-1
 freezes the contract without claiming that any of them is implemented.
+
+## Task 43R-2 — board geometry consumers, compaction, and physical connectivity
+
+Task 43R-2 closes the board/layout consumers of the frozen package geometry
+contract. `PcbBoardLayout` now treats pad centers and trace-stroke segment
+nodes as one physical graph. Trace-to-pad, trace-to-trace, and pad-to-pad
+contacts are unioned only when they share a logical net; cross-net physical
+contacts are rejected, and every logical multi-pad net must have one connected
+physical component. Package-declared internal connectivity is applied
+transitively, so a multi-terminal package can connect separate board pads
+without fabricating trace copper. Orphan pads, disconnected islands, unknown
+trace pads, endpoint-only shortcuts, and unrelated trace crossings are
+rejected by the developer canaries.
+
+Containment and occupied-bounds validation use the complete installed geometry:
+body, body keep-out, routing courtyard, selection/drag envelope, pad/probe
+surfaces, and connected or lifted component leads. Trace containment and
+surface clearances use the full `TRACE_WIDTH` stroke. A trace may leave its
+own endpoint pad through the declared endpoint escape, but it may not use a
+pad center or zero-length segment as a connectivity shortcut or trespass
+through another component's routing courtyard/silkscreen. The seeded router's
+collision envelope mirrors this contract.
+
+Compaction translates placements through checked rigid translation and keeps
+the exact immutable `PhysicalGeometryRealization` object identity. Pads,
+traces, labels, and bounds translate with checked arithmetic; the selected
+package, variant, transform, geometry version, and realization fingerprint
+therefore remain stable after compaction. Production validation also requires
+the canonical package object rather than merely an equivalent package value.
+
+`PcbR2DeveloperVerifier` provides positive canaries for two-, three-, branch-,
+perpendicular-, transitive-package-, compaction-, and generated LED/diode/
+parallel-family layouts, plus negative canaries for the rejected physical
+contacts and surfaces above. `PcbLayoutDeveloperVerifier` keeps the existing
+fixed route factories out of this recovery slice: only exact known RC/NPN/
+NMOS geometry signatures are recorded as deferred layout failures. No fixed
+route coordinates, renderer, tray, electrical graph, fault, stress/damage,
+probe, or Task 44 work is included in 43R-2.
