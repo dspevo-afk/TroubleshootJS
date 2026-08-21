@@ -1313,8 +1313,11 @@ is introduced.
 
 ## Task 43R-1 — physical package contract and geometry identity
 
-Task 43R-1 freezes package-local physical geometry as an immutable contract
-(contract version 2). `PhysicalPackageGeometry` owns body, connected and lifted
+Task 43R-1 originally froze package-local physical geometry as an immutable
+contract (contract version 2). Recovery correction 43R-2C revised the live
+production geometry contract to version 3 for the escape correction described
+below; the original version-2 history remains recorded in the task handoff.
+`PhysicalPackageGeometry` owns body, connected and lifted
 lead poses, pad geometry, body keep-out, routing courtyard, selection, drag,
 and interaction surfaces. Board-pad probe surfaces and component-lead probe
 surfaces are separate declarations; the package validator rejects overlap
@@ -1412,6 +1415,32 @@ fixed route factories out of this recovery slice: only exact known RC/NPN/
 NMOS geometry signatures are recorded as deferred layout failures. No fixed
 route coordinates, renderer, tray, electrical graph, fault, stress/damage,
 probe, or Task 44 work is included in 43R-2.
+
+## Task 43R-2C — production escape geometry recovery correction
+
+Recovery correction 43R-2C revises the physical geometry contract from the
+historical R-2 version 2 to current contract version 3 before RC fixed-route
+reconstruction. The correction changes only the declared full-width escape
+lengths for four production geometry families: TO-92 NPN collector/emitter
+and TO-92 NMOS drain/source increase from 32 to 36, while radial ceramic
+capacitor terminals 1/2 and `THROUGH_HOLE_OUTPUT_HEADER_2` terminals 1/2
+increase from 30 to 35. Package IDs, terminal order, canonical variant keys
+and transforms, package flags, internal connectivity, and every other geometry
+surface remain unchanged. `RcDelayGenerator` continues to bind J2 to
+`THROUGH_HOLE_OUTPUT_HEADER_2` with its fixed `DEFAULT`/`IDENTITY` geometry;
+it is not replaced by the input connector package.
+
+The version bump is part of package/realization identity and therefore flows
+through placement and footprint fingerprints, package-backed validation, and
+physical lifecycle/rebinding checks. `PcbProductionEscapeDeveloperVerifier`
+is invoked once by `PcbR2DeveloperVerifier`; it enumerates the live registered
+package catalog while excluding developer-generic packages, requires the
+current matrix of 13 canonical variants and 28 nonzero terminal escapes, and
+validates package-backed long escape fixtures through the real
+`PcbBoardLayout.validateGeometry` oracle. A version-3 negative canary shortens
+exactly one corrected escape by one and requires the existing routing-courtyard
+failure. No router, fixed route, component movement, validator, electrical,
+measurement, fault, rendering, lifecycle, or Task 44 code is changed.
 
 ## Task 43R-3 — installed rendering, selection, and board/component probing
 

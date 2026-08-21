@@ -4,13 +4,14 @@ import java.util.Vector;
 
 /** Developer-only proof for the board/layout half of Task 43R-2. */
 final class PcbR2DeveloperVerifier {
-    private static final int EXPECTED_GEOMETRY_CONTRACT_VERSION = 2;
+    private static final int EXPECTED_GEOMETRY_CONTRACT_VERSION = 3;
     private static final long[] REPRESENTATIVE_SEEDS = { 0, 2, 3 };
 
     private PcbR2DeveloperVerifier() { }
 
     static void verify() {
         verifyGeometryContractVersion();
+        PcbProductionEscapeDeveloperVerifier.verify();
         verifyPositiveCanaries();
         verifyNegativeCanaries();
         verifyGeneratedLayouts();
@@ -20,7 +21,7 @@ final class PcbR2DeveloperVerifier {
         require(PcbGeometryContractVersion.CURRENT == EXPECTED_GEOMETRY_CONTRACT_VERSION &&
                 PcbGeometryContractVersion.CURRENT_VALUE ==
                     EXPECTED_GEOMETRY_CONTRACT_VERSION,
-            "R-2 geometry contract version is not 2");
+            "R-2 geometry contract version is not 3");
         Vector<PhysicalPackage> packages =
             StandardPcbFootprintProviders.createRegistry().getRegisteredPackages();
         for (PhysicalPackage physicalPackage : packages) {

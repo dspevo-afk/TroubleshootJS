@@ -179,8 +179,8 @@ final class PhysicalPackages {
         Vector<PhysicalPackageGeometry.Terminal> terminals =
             new Vector<PhysicalPackageGeometry.Terminal>();
         terminals.add(terminal(terminalIds[0], 20, 90, 48, 65, 48, 59, -1, 0, 30));
-        terminals.add(terminal(terminalIds[1], 60, 90, 80, 70, 80, 64, 0, 1, 32));
-        terminals.add(terminal(terminalIds[2], 100, 90, 92, 70, 92, 64, 0, 1, 32));
+        terminals.add(terminal(terminalIds[1], 60, 90, 80, 70, 80, 64, 0, 1, 36));
+        terminals.add(terminal(terminalIds[2], 100, 90, 92, 70, 92, 64, 0, 1, 36));
         return geometry(130, 125, terminals, new Rectangle(44, 26, 64, 56),
             new Rectangle(28, 12, 84, 78), new Rectangle(5, 4, 120, 118));
     }
@@ -197,8 +197,8 @@ final class PhysicalPackages {
     private static PhysicalPackageGeometry ceramic() {
         Vector<PhysicalPackageGeometry.Terminal> terminals =
             new Vector<PhysicalPackageGeometry.Terminal>();
-        terminals.add(terminal("1", 20, 30, 28, 10, 28, 6, 0, -1, 30));
-        terminals.add(terminal("2", 60, 30, 52, 10, 52, 6, 0, -1, 30));
+        terminals.add(terminal("1", 20, 30, 28, 10, 28, 6, 0, -1, 35));
+        terminals.add(terminal("2", 60, 30, 52, 10, 52, 6, 0, -1, 35));
         return geometry(90, 90, terminals, new Rectangle(15, 8, 50, 53),
             new Rectangle(10, 4, 70, 65), new Rectangle(5, 0, 80, 90));
     }
@@ -219,8 +219,8 @@ final class PhysicalPackages {
     private static PhysicalPackageGeometry outputHeader() {
         Vector<PhysicalPackageGeometry.Terminal> terminals =
             new Vector<PhysicalPackageGeometry.Terminal>();
-        terminals.add(terminal("1", 20, 30, 20, 10, 20, 6, 0, -1, 30));
-        terminals.add(terminal("2", 70, 30, 70, 10, 70, 6, 0, -1, 30));
+        terminals.add(terminal("1", 20, 30, 20, 10, 20, 6, 0, -1, 35));
+        terminals.add(terminal("2", 70, 30, 70, 10, 70, 6, 0, -1, 35));
         return geometry(100, 70, terminals, new Rectangle(8, 8, 84, 54),
             new Rectangle(8, 8, 84, 54), new Rectangle(-6, 0, 112, 70));
     }

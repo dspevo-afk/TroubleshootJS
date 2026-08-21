@@ -1,3 +1,85 @@
+# Task 43R-2C recovery correction — production escape geometry before RC routing
+
+Date: 2026-08-21
+
+Status: `FINAL PASS — IMPLEMENTATION, INDEPENDENT REVIEW, AND VALIDATION
+COMPLETE; PUBLICATION PENDING`. This is a bounded correction to the previously
+recorded 43R-2 implementation at baseline
+`9ac74733aa56d54711c539eed57be8f5cfb05636`; the earlier R-2 history below is
+preserved. The roadmap now records 43R-2C complete and no later recovery
+milestone was started.
+
+## Objective and implementation
+
+The physical escape geometry was impossible at the full `TRACE_WIDTH` stroke
+boundary for four production families. `PcbGeometryContractVersion.CURRENT`
+is now version 3 so the correction participates in the existing physical
+geometry/realization, placement and footprint fingerprint, package-backed
+validation, and lifecycle/rebinding identity contracts.
+
+`PhysicalPackages` changes only these escape lengths:
+
+- TO92 NPN collector/emitter: 32 -> 36;
+- TO92 NMOS drain/source: 32 -> 36;
+- radial ceramic capacitor terminals 1/2: 30 -> 35; and
+- `THROUGH_HOLE_OUTPUT_HEADER_2` terminals 1/2: 30 -> 35.
+
+J2 in `RcDelayGenerator` remains explicitly bound to
+`THROUGH_HOLE_OUTPUT_HEADER_2`, `DEFAULT`/`IDENTITY`; no route, endpoint,
+nameplate, or component identity was changed.
+
+The new permanent `PcbProductionEscapeDeveloperVerifier` is called once from
+`PcbR2DeveloperVerifier`. It enumerates the actual registered production
+catalog, skips developer-generic packages, asserts 13 canonical variants and
+28 nonzero terminal escapes, and builds package-backed target/sink fixtures
+for every case. Each long Manhattan route is validated by the real
+`PcbBoardLayout.validateGeometry` oracle. Version-3 negative canaries shorten
+one corrected escape by one, reuse the same route fixture, and require the
+existing `PCB trace passes through component routing courtyard` reason.
+
+## Files changed
+
+- `src/com/lushprojects/circuitjs1/client/PcbGeometryContractVersion.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPackages.java`
+- `src/com/lushprojects/circuitjs1/client/PcbR2DeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/PcbProductionEscapeDeveloperVerifier.java`
+- `docs/ARCHITECTURE.md`
+- `docs/CODEX_TASK_REPORT.md`
+- `docs/ROADMAP.md` (milestone bookkeeping only)
+
+No route algorithm, fixed route factory, component movement, validator,
+electrical/topology/measurement/fault/rendering/lifecycle, Task 44, or
+future milestone implementation was changed.
+
+## Validation and handoff
+
+- Bundled JDK 8 OBF compile/link passed all five permutations with
+  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF
+  -Target Compile`.
+- A focused Java 8 package/layout harness executed
+  `PcbProductionEscapeDeveloperVerifier.verify()` and reported
+  `PASS:production-escapes`, covering the live production matrix and the
+  version-3 shortened-escape negative canaries. The temporary harness was
+  removed after the check.
+- PowerShell parser validation returned `PS_PARSE_OK`, and `git diff --check`
+  passed.
+- The primary architect independently reran the JDK 8 OBF compile/link across
+  all five permutations after review; all permutations and linking passed.
+- A fresh independent Luna MAX read-only reviewer returned `PASS` with no
+  findings. The roadmap now records 43R-2C complete and leaves 43R-5 as the
+  next unstarted milestone.
+- Static scope checks confirmed that only the four requested production
+  escape declarations changed, all other geometry-version verifiers remain
+  `CURRENT`-based, and J2 still uses `THROUGH_HOLE_OUTPUT_HEADER_2`.
+- Browser/Edge validation was not run. The host's known Edge/WMI/CDP
+  limitation applies to this developer-only route and was not chased.
+
+The final working-tree status and diff remain for the publication gate. No
+commit or push was performed by the coder; the primary architect owns those
+operations. No later milestone work was started.
+
+---
+
 # Task 43R-4C recovery correction — loose projection lifecycle invalidation
 
 Date: 2026-08-21

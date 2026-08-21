@@ -1206,8 +1206,8 @@ milestone and was not started.
 
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
-**Status:** [~] RECOVERY IN PROGRESS — 43R-1, 43R-2, 43R-3, and 43R-4
-complete after accepted 43R-4C
+**Status:** [~] RECOVERY IN PROGRESS — 43R-1, 43R-2, 43R-2C, 43R-3,
+and 43R-4 complete after accepted 43R-4C
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1247,6 +1247,8 @@ architecture prerequisite.
 - `[x]` 43R-1 — package realization verifier and geometry identity.
 - `[x]` 43R-2 — board geometry consumers, compaction, containment, and
   physical net connectivity.
+- `[x]` 43R-2C — corrected impossible production full-width package escapes
+  and versioned the live geometry contract before RC routing.
 - `[x]` 43R-3 — installed geometry consumers for rendering, selection, and
   board/component probing; complete.
 - `[x]` 43R-4 — loose-part pose/render/hit/probe baseline retained; 43R-4C
@@ -3109,8 +3111,8 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 **43R-5 — RC fixed-layout reconstruction**
 
 Current state: Task 43 RECOVERY IN PROGRESS. Recovery slices 43R-1, 43R-2,
-43R-3, and 43R-4 are complete after accepted 43R-4C. Recovery slice 43R-5 is
-next and is explicitly RC fixed-layout reconstruction. Recovery slices 43R-6
+43R-2C, 43R-3, and 43R-4 are complete after accepted 43R-4C. Recovery slice
+43R-5 is next and is explicitly RC fixed-layout reconstruction. Recovery slices 43R-6
 (NPN fixed-layout reconstruction) and 43R-7 (NMOS fixed-layout
 reconstruction) are blocked by R5 and R6 respectively; 43R-8 (final Task 43
 acceptance/regression/cleanup) is blocked by R5/R6/R7. Task 44 is BLOCKED BY
