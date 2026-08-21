@@ -7,43 +7,98 @@ final class PhysicalPartRenderTerminal {
     private final String boardPadId;
     private final Point point;
     private final Rectangle probeBounds;
+    private final Point boardPadPoint;
+    private final Rectangle boardPadProbeBounds;
+    private final Point componentLeadPoint;
+    private final Rectangle componentLeadProbeBounds;
     private final Rectangle padBounds;
+    private final Point leadBodyPoint;
+    private final Point leadEndPoint;
     private final Rectangle leadBounds;
 
     PhysicalPartRenderTerminal(int terminalIndex, String terminalId, String boardPadId,
             Point point, Rectangle probeBounds, Rectangle padBounds, Rectangle leadBounds) {
+        this(terminalIndex, terminalId, boardPadId, point, probeBounds,
+            boardPadId == null ? null : point, boardPadId == null ? null : probeBounds, padBounds,
+            point, probeBounds, point, point, leadBounds);
+    }
+
+    /**
+     * Explicit installed projection.  Board-pad and component-lead surfaces
+     * remain distinct even when the active probe surface is the board pad.
+     */
+    PhysicalPartRenderTerminal(int terminalIndex, String terminalId, String boardPadId,
+            Point activePoint, Rectangle activeProbeBounds, Point boardPadPoint,
+            Rectangle boardPadProbeBounds, Rectangle padBounds, Point componentLeadPoint,
+            Rectangle componentLeadProbeBounds, Point leadBodyPoint, Point leadEndPoint,
+            Rectangle leadBounds) {
         if (terminalIndex < 0 || terminalId == null || terminalId.length() == 0 ||
-                point == null || probeBounds == null || padBounds == null || leadBounds == null ||
-                probeBounds.width <= 0 || probeBounds.height <= 0 || padBounds.width <= 0 ||
+                activePoint == null || activeProbeBounds == null || padBounds == null ||
+                activeProbeBounds.width <= 0 || activeProbeBounds.height <= 0 ||
+                leadBodyPoint == null || leadEndPoint == null || leadBounds == null ||
+                componentLeadProbeBounds == null || componentLeadProbeBounds.width <= 0 ||
+                componentLeadProbeBounds.height <= 0 || padBounds.width <= 0 ||
                 padBounds.height <= 0 || leadBounds.width <= 0 || leadBounds.height <= 0)
             throw new IllegalArgumentException("Invalid physical render terminal");
+        if (boardPadId != null && (boardPadPoint == null || boardPadProbeBounds == null ||
+                boardPadProbeBounds.width <= 0 || boardPadProbeBounds.height <= 0))
+            throw new IllegalArgumentException("Installed physical render terminal has no pad surface");
         this.terminalIndex = terminalIndex;
         this.terminalId = terminalId;
         this.boardPadId = boardPadId;
-        this.point = new Point(point.x, point.y);
-        this.probeBounds = new Rectangle(probeBounds);
+        this.point = new Point(activePoint.x, activePoint.y);
+        this.probeBounds = new Rectangle(activeProbeBounds);
+        this.boardPadPoint = boardPadPoint == null ? null : new Point(boardPadPoint);
+        this.boardPadProbeBounds = boardPadProbeBounds == null ? null :
+            new Rectangle(boardPadProbeBounds);
+        this.componentLeadPoint = new Point(componentLeadPoint);
+        this.componentLeadProbeBounds = new Rectangle(componentLeadProbeBounds);
         this.padBounds = new Rectangle(padBounds);
+        this.leadBodyPoint = new Point(leadBodyPoint);
+        this.leadEndPoint = new Point(leadEndPoint);
         this.leadBounds = new Rectangle(leadBounds);
-        if (!contains(probeBounds, padBounds))
+        if (boardPadId != null && (!contains(this.boardPadProbeBounds, this.padBounds) ||
+                !contains(this.boardPadProbeBounds, this.boardPadPoint)))
             throw new IllegalArgumentException("Physical render probe does not contain pad");
+        if (!contains(this.componentLeadProbeBounds, this.componentLeadPoint))
+            throw new IllegalArgumentException("Physical render component probe omits its center");
     }
 
     int getTerminalIndex() { return terminalIndex; }
     String getTerminalId() { return terminalId; }
     String getBoardPadId() { return boardPadId; }
+    /** Active probe/marker surface: board pad while connected, lead while lifted. */
     Point getPoint() { return new Point(point.x, point.y); }
+    /** Active probe surface: board pad while connected, lead while lifted. */
     Rectangle getProbeBounds() { return new Rectangle(probeBounds); }
+    Point getBoardPadPoint() {
+        return boardPadPoint == null ? null : new Point(boardPadPoint.x, boardPadPoint.y);
+    }
+    Rectangle getBoardPadProbeBounds() {
+        return boardPadProbeBounds == null ? null : new Rectangle(boardPadProbeBounds);
+    }
+    Point getComponentLeadPoint() {
+        return new Point(componentLeadPoint.x, componentLeadPoint.y);
+    }
+    Rectangle getComponentLeadProbeBounds() { return new Rectangle(componentLeadProbeBounds); }
     Rectangle getPadBounds() { return new Rectangle(padBounds); }
     Rectangle getLeadBounds() { return new Rectangle(leadBounds); }
+    Point getLeadBodyPoint() { return new Point(leadBodyPoint.x, leadBodyPoint.y); }
+    Point getLeadEndPoint() { return new Point(leadEndPoint.x, leadEndPoint.y); }
     boolean containsProbe(int x, int y) { return probeBounds.contains(x, y); }
     boolean containsComponentProbe(int x, int y, Rectangle boardPadProbeBounds) {
-        return containsProbe(x, y) &&
+        return componentLeadProbeBounds.contains(x, y) &&
             (boardPadProbeBounds == null || !boardPadProbeBounds.contains(x, y));
     }
 
     private static boolean contains(Rectangle outer, Rectangle inner) {
-        return inner.x >= outer.x && inner.y >= outer.y &&
-            (long) inner.x + inner.width <= (long) outer.x + outer.width &&
-            (long) inner.y + inner.height <= (long) outer.y + outer.height;
+        return inner.x >= outer.x - 1 && inner.y >= outer.y - 1 &&
+            (long) inner.x + inner.width <= (long) outer.x + outer.width + 1 &&
+            (long) inner.y + inner.height <= (long) outer.y + outer.height + 1;
+    }
+
+    private static boolean contains(Rectangle outer, Point point) {
+        return point.x >= outer.x - 1 && point.y >= outer.y - 1 &&
+            point.x <= outer.x + outer.width && point.y <= outer.y + outer.height;
     }
 }

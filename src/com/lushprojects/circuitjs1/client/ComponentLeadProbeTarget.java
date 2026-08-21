@@ -8,28 +8,40 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     private final PcbWorkbenchRenderer renderer;
     private final String physicalPartId;
     private final CircuitMeasurementEndpoint endpoint;
+    private final Object lifecycleIdentity;
 
     ComponentLeadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String componentId,
             String padId, PcbWorkbenchRenderer renderer) {
         this(sim, instance, componentId, padId, renderer, getInstalledPartId(instance, componentId),
-            instance.getConnectionBindings().get(componentId, padId).getComponentEndpoint());
+            instance.getConnectionBindings().get(componentId, padId).getComponentEndpoint(),
+            renderer == null ? null : renderer.captureInstalledTargetIdentity(componentId, padId));
     }
 
     ComponentLeadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String componentId,
             String padId, PcbWorkbenchRenderer renderer, String physicalPartId,
             CircuitMeasurementEndpoint endpoint) {
+        this(sim, instance, componentId, padId, renderer, physicalPartId, endpoint,
+            renderer == null ? null : renderer.captureInstalledTargetIdentity(componentId, padId));
+    }
+
+    ComponentLeadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String componentId,
+            String padId, PcbWorkbenchRenderer renderer, String physicalPartId,
+            CircuitMeasurementEndpoint endpoint, Object lifecycleIdentity) {
         this.sim = sim;
         this.instance = instance;
         this.componentId = componentId;
         this.padId = padId;
         this.renderer = renderer;
         this.physicalPartId = physicalPartId;
-        this.endpoint = endpoint;
+        this.endpoint = resolvePhysicalEndpoint(instance, componentId, padId, endpoint);
+        this.lifecycleIdentity = lifecycleIdentity;
     }
 
     public boolean isValid() {
-        if (sim == null || sim.getGeneratedBoardInstance() != instance || endpoint == null ||
-                physicalPartId == null)
+        if (sim == null || sim.getGeneratedBoardInstance() != instance || renderer == null ||
+                lifecycleIdentity == null || endpoint == null || physicalPartId == null ||
+                !renderer.isInstalledTargetIdentityCurrent(componentId, padId,
+                    lifecycleIdentity))
             return false;
         try {
             BoardComponent component = instance.getBoard().getComponent(componentId);
@@ -44,10 +56,11 @@ class ComponentLeadProbeTarget implements ProbeTarget {
                     !componentId.equals(boardPad.getComponentId()) ||
                     !componentId.equals(binding.getComponentId()) ||
                     !padId.equals(binding.getPadId()) ||
-                    !part.isInstalled() || part.getBoardSlot() != slot ||
+                    !part.isInstalled() || slot.getInstalledPart() != part ||
+                    part.getBoardSlot() != slot ||
                     !physicalPartId.equals(part.getId()) ||
                     !component.getPhysicalPackage().isEquivalentTo(part.getPackage()) ||
-                    binding.getComponentEndpoint() != endpoint ||
+                    !sameEndpoint(binding.getComponentEndpoint(), endpoint) ||
                     !padId.equals(boardPad.getId()) ||
                     !hasStablePartTerminal(part, boardPad.getTerminalId(), endpoint) ||
                     sim.getBoardModificationController().isLeadConnected(componentId, padId) ||
@@ -66,7 +79,9 @@ class ComponentLeadProbeTarget implements ProbeTarget {
             return false;
         ComponentLeadProbeTarget target = (ComponentLeadProbeTarget) other;
         return instance == target.instance && componentId.equals(target.componentId) &&
-            padId.equals(target.padId) && physicalPartId.equals(target.physicalPartId);
+            padId.equals(target.padId) && physicalPartId.equals(target.physicalPartId) &&
+            (lifecycleIdentity == null || target.lifecycleIdentity == null ||
+                lifecycleIdentity == target.lifecycleIdentity);
     }
 
     public Point getMarkerPoint() { return renderer.getComponentLeadPoint(componentId, padId); }
@@ -82,9 +97,37 @@ class ComponentLeadProbeTarget implements ProbeTarget {
             CircuitMeasurementEndpoint endpoint) {
         for (PhysicalPartTerminal terminal : part.getTerminals())
             if (terminalId != null && terminalId.equals(terminal.getTerminalName()) &&
-                    terminal.getEndpoint() == endpoint)
+                    sameEndpoint(terminal.getEndpoint(), endpoint))
                 return true;
         return false;
+    }
+
+    private static CircuitMeasurementEndpoint resolvePhysicalEndpoint(
+            GeneratedBoardInstance instance, String componentId, String padId,
+            CircuitMeasurementEndpoint fallback) {
+        if (instance == null || componentId == null || padId == null)
+            return fallback;
+        BoardPad boardPad = instance.getBoard().getPad(padId);
+        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+        if (boardPad == null || part == null)
+            return fallback;
+        for (PhysicalPartTerminal terminal : part.getTerminals())
+            if (boardPad.getTerminalId() != null &&
+                    boardPad.getTerminalId().equals(terminal.getTerminalName()))
+                return terminal.getEndpoint();
+        return fallback;
+    }
+
+    private static boolean sameEndpoint(CircuitMeasurementEndpoint first,
+            CircuitMeasurementEndpoint second) {
+        if (first == second)
+            return true;
+        if (!(first instanceof CircuitPostMeasurementEndpoint) ||
+                !(second instanceof CircuitPostMeasurementEndpoint))
+            return false;
+        CircuitPostMeasurementEndpoint a = (CircuitPostMeasurementEndpoint) first;
+        CircuitPostMeasurementEndpoint b = (CircuitPostMeasurementEndpoint) second;
+        return a.getElement() == b.getElement() && a.getPostIndex() == b.getPostIndex();
     }
 
     private static String getInstalledPartId(GeneratedBoardInstance instance, String componentId) {

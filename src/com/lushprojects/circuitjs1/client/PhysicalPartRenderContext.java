@@ -40,6 +40,8 @@ final class PhysicalPartRenderContext {
         this.developerCanaryBoard = developerCanaryBoard;
         this.developerCanaryPadPoints = developerCanaryPadPoints == null ? null :
             new HashMap<String, Point>(developerCanaryPadPoints);
+        if (placement != null && developerCanaryBoard == null)
+            renderer.observeInstalledProjection(getComponentId());
     }
 
     PcbWorkbenchRenderer getRenderer() { return renderer; }
@@ -52,6 +54,16 @@ final class PhysicalPartRenderContext {
     int getTrayIndex() { return trayIndex; }
     boolean isLoose() { return loose; }
     boolean isDeveloperCanary() { return developerCanaryBoard != null; }
+    /** Physical visibility is owned by slot occupancy, not electrical graph state. */
+    boolean isInstalledPartMounted() {
+        if (developerCanaryBoard != null)
+            return true;
+        if (placement == null || part == null || !part.isInstalled())
+            return false;
+        PhysicalBoardSlot slot = getInstance().getPhysicalBoardRuntime()
+            .getSlot(getComponentId());
+        return slot != null && slot.getInstalledPart() == part && part.getBoardSlot() == slot;
+    }
     void markBodyDrawn() { bodyDrawn = true; }
     boolean wasBodyDrawn() { return bodyDrawn; }
 
@@ -83,6 +95,8 @@ final class PhysicalPartRenderContext {
             return null;
         if (developerCanaryBoard != null)
             return renderer.getProviderCanaryPadPoint(padId, developerCanaryPadPoints);
+        if (placement != null)
+            return getInstalledBoardPadPoint(terminal);
         return renderer.getPadPoint(padId);
     }
 
@@ -102,39 +116,28 @@ final class PhysicalPartRenderContext {
     }
 
     Point getComponentProbePoint(int terminal) {
-        Point pad = getBoardPadPoint(terminal);
-        if (pad == null || getBoardForProvider().getComponent(getComponentId()) == null)
+        if (placement == null || getBoardForProvider().getComponent(getComponentId()) == null)
             return getSyntheticTerminalPoint(terminal);
-        if (isComponentRemoved()) {
-            Rectangle tray = renderer.getPartsTrayForProvider();
-            int count = Math.max(1, getTerminalCount());
-            int x;
-            if (count == 1)
-                x = tray.x + tray.width / 2;
-            else
-                x = tray.x + 18 + (tray.width - 36) * terminal / (count - 1);
-            return new Point(renderer.screenXForProvider(x),
-                renderer.screenYForProvider(tray.y + 125));
-        }
-        // A connected terminal is represented by its board-side pad.  The
-        // package probe center is reserved for the physically detached
-        // component-side lead, so consumers cannot mistake a connected lead
-        // for a second probe target.
-        return isLeadConnected(terminal) ? pad : getPackageProbePoint(terminal);
+        // The active installed probe surface is the board pad while connected
+        // and the exact detached component lead while lifted.  Electrical
+        // removal alone does not move the physically mounted part to the tray.
+        if (developerCanaryBoard != null)
+            return getBoardPadPoint(terminal);
+        return isLeadConnected(terminal) ? getInstalledBoardPadPoint(terminal) :
+            getInstalledComponentLeadPoint(terminal);
     }
 
     Point getMountedLeadEnd(int terminal) {
-        Point pad = getBoardPadPoint(terminal);
-        return pad == null || !isLeadConnected(terminal) ? getComponentProbePoint(terminal) : pad;
+        if (placement != null)
+            return getInstalledLeadEndPoint(terminal);
+        return getComponentProbePoint(terminal);
     }
 
     Point getProviderTerminalPoint(int terminal) {
         if (placement != null && developerCanaryBoard == null) {
-            PhysicalPackageGeometry.Placement geometry = installedPhysicalGeometry().placedAt(
-                placement.getX(), placement.getY());
-            Point point = geometry.getPadPoint(terminal);
+            Point point = getInstalledBoardPadPoint(terminal);
             if (point != null)
-                return new Point(screenX(point.x), screenY(point.y));
+                return point;
         }
         Point pad = getBoardPadPoint(terminal);
         return pad == null ? getSyntheticTerminalPoint(terminal) : pad;
@@ -150,10 +153,51 @@ final class PhysicalPartRenderContext {
     Point getInstalledLeadBodyPoint(int terminal) {
         if (placement == null)
             return new Point(0, 0);
-        Point point = installedPhysicalGeometry().placedAt(placement.getX(), placement.getY())
-            .getLeadBodyPoint(terminal);
+        Point point = getInstalledPlacedGeometry().getLeadBodyPoint(terminal,
+            !isLeadConnected(terminal));
         return point == null ? getSyntheticTerminalPoint(terminal) :
             new Point(screenX(point.x), screenY(point.y));
+    }
+
+    Point getInstalledLeadEndPoint(int terminal) {
+        if (placement == null)
+            return new Point(0, 0);
+        Point point = getInstalledPlacedGeometry().getLeadEndPoint(terminal,
+            !isLeadConnected(terminal));
+        return point == null ? getSyntheticTerminalPoint(terminal) :
+            new Point(screenX(point.x), screenY(point.y));
+    }
+
+    Point getInstalledBoardPadPoint(int terminal) {
+        if (placement == null)
+            return null;
+        if (developerCanaryBoard != null)
+            return getBoardPadPoint(terminal);
+        Point point = getInstalledPlacedGeometry().getBoardPadProbeCenter(terminal);
+        return point == null ? null : new Point(screenX(point.x), screenY(point.y));
+    }
+
+    Rectangle getInstalledBoardPadProbeBounds(int terminal) {
+        if (placement == null)
+            return new Rectangle(0, 0, 1, 1);
+        return renderer.screenRectForProvider(getInstalledPlacedGeometry()
+            .getBoardPadProbeBounds(terminal));
+    }
+
+    Point getInstalledComponentLeadPoint(int terminal) {
+        if (placement == null)
+            return getSyntheticTerminalPoint(terminal);
+        Point point = getInstalledPlacedGeometry().getComponentLeadProbeCenter(terminal,
+            !isLeadConnected(terminal));
+        return point == null ? getSyntheticTerminalPoint(terminal) :
+            new Point(screenX(point.x), screenY(point.y));
+    }
+
+    Rectangle getInstalledComponentLeadProbeBounds(int terminal) {
+        if (placement == null)
+            return new Rectangle(0, 0, 1, 1);
+        return renderer.screenRectForProvider(getInstalledPlacedGeometry()
+            .getComponentLeadProbeBounds(terminal, !isLeadConnected(terminal)));
     }
 
     Rectangle getInstalledSelectionBounds() {
@@ -173,22 +217,22 @@ final class PhysicalPartRenderContext {
     Rectangle getInstalledProbeBounds(int terminal) {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
-        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
-            placement.getX(), placement.getY()).getProbeBounds(terminal));
+        return isLeadConnected(terminal) ? getInstalledBoardPadProbeBounds(terminal) :
+            getInstalledComponentLeadProbeBounds(terminal);
     }
 
     Rectangle getInstalledPadBounds(int terminal) {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
-        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
-            placement.getX(), placement.getY()).getPadBounds(terminal));
+        return renderer.screenRectForProvider(getInstalledPlacedGeometry()
+            .getPadBounds(terminal));
     }
 
     Rectangle getInstalledLeadBounds(int terminal) {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
-        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
-            placement.getX(), placement.getY()).getLeadBounds(terminal));
+        return renderer.screenRectForProvider(getInstalledPlacedGeometry().getLeadBounds(terminal,
+            !isLeadConnected(terminal)));
     }
 
     Point getLooseTerminalPoint(int terminal, boolean reversed) {
@@ -363,6 +407,12 @@ final class PhysicalPartRenderContext {
     private PhysicalPackageGeometry installedPhysicalGeometry() {
         return placement != null && placement.getPhysicalGeometry() != null ?
             placement.getPhysicalGeometry() : physicalPackage.getGeometry();
+    }
+
+    private PhysicalPackageGeometry.Placement getInstalledPlacedGeometry() {
+        if (placement == null)
+            return physicalPackage.getGeometry().placedAt(0, 0);
+        return installedPhysicalGeometry().placedAt(placement.getX(), placement.getY());
     }
 
     private TroubleshootBoard getBoardForProvider() {

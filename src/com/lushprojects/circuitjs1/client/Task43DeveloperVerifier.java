@@ -30,6 +30,7 @@ final class Task43DeveloperVerifier {
         verifySelectedGeometryLifecycleCanary();
         verifyNegativeCanaries(registered);
         PcbR2DeveloperVerifier.verify();
+        PhysicalPartRenderDeveloperVerifier.verify(sim);
         require(beforeIdentity.equals(boardIdentity(instance)),
             "Task 43 package canaries changed generated board identities");
         sim.setCircuitTitle("Task 43 physical geometry verification passed");
@@ -638,6 +639,33 @@ final class Task43DeveloperVerifier {
                 part.getTerminal(0).getEndpoint() == endpoints[0] &&
                 part.getTerminal(1).getEndpoint() == endpoints[1],
             "Selected geometry lifecycle changed part, terminal, endpoint, or carrier identity");
+
+        ResistorElm replacementElement = new ResistorElm(96, 96);
+        PhysicalResistorPart replacement = new PhysicalResistorPart(
+            componentId + "_REPLACEMENT", new ResistorNameplate(componentId + "_REPLACEMENT",
+                2200, 5), replacementElement, null, null, ResistorPartLocation.LOOSE);
+        runtime.registerPart(replacement);
+        require(slot.remove() == part && !part.isInstalled(),
+            "Replacement canary could not enter final physical removal state");
+        slot.install(replacement);
+        runtime.validate();
+        require(slot.getInstalledPart() == replacement && replacement.isInstalled() &&
+                replacement != part && !replacement.getId().equals(partId) &&
+                replacement.getGeometryRealization() == carrier &&
+                replacement.getTerminal(0).getEndpoint() != endpoints[0] &&
+                replacement.getTerminal(1).getEndpoint() != endpoints[1] &&
+                "1".equals(replacement.getTerminal(0).getTerminalName()) &&
+                "2".equals(replacement.getTerminal(1).getTerminalName()),
+            "Replacement lifecycle did not change physical identity/endpoints while preserving carrier");
+        require(slot.remove() == replacement && !replacement.isInstalled(),
+            "Replacement canary could not remove the replacement part");
+        slot.install(part);
+        runtime.validate();
+        require(slot.getInstalledPart() == part && part.getGeometryRealization() == carrier &&
+                part.getTerminal(0) == terminals[0] && part.getTerminal(1) == terminals[1] &&
+                part.getTerminal(0).getEndpoint() == endpoints[0] &&
+                part.getTerminal(1).getEndpoint() == endpoints[1],
+            "Original physical identity was not restored after replacement canary");
 
         PhysicalPackageGeometry span220 = physicalPackage.getGeometryVariant("SPAN_220")
             .getGeometry();

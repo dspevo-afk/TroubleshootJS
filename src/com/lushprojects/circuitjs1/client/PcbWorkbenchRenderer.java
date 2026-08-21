@@ -19,6 +19,27 @@ class PcbWorkbenchRenderer {
     private String selectedComponentId;
     private String selectedPartId;
     private int trayPage;
+    private final HashMap<String, InstalledProjectionObservation> installedObservations =
+        new HashMap<String, InstalledProjectionObservation>();
+
+    /** Renderer-local identity for one observed installed projection epoch. */
+    private static final class InstalledProjectionObservation {
+        private final PhysicalPart<?> part;
+        private final PhysicalBoardSlot slot;
+        private final boolean partInstalled;
+        private final ComponentPhysicalState state;
+        private final String connectionSignature;
+        private final Object token = new Object();
+
+        InstalledProjectionObservation(PhysicalPart<?> part, PhysicalBoardSlot slot,
+                boolean partInstalled, ComponentPhysicalState state, String connectionSignature) {
+            this.part = part;
+            this.slot = slot;
+            this.partInstalled = partInstalled;
+            this.state = state;
+            this.connectionSignature = connectionSignature;
+        }
+    }
 
     PcbWorkbenchRenderer(GeneratedBoardInstance instance,
             BoardModificationController modifications, PcbBoardLayout layout) {
@@ -101,6 +122,8 @@ class PcbWorkbenchRenderer {
     private PhysicalPartRenderGeometry drawComponent(Graphics graphics,
             PcbComponentPlacement placement, BoardComponent component, PhysicalPart<?> part,
             PhysicalPartRenderContext context, boolean selected) {
+        if (!context.isInstalledPartMounted())
+            return null;
         PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
         PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
         if (selected)
@@ -214,6 +237,8 @@ class PcbWorkbenchRenderer {
                 continue;
             PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(
                 placement.getComponentId());
+            if (part == null || !part.isInstalled())
+                continue;
             PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
                 component.getPhysicalPackage(), 0, false);
             if (findComponentIdForPlacement(placement, component, part, context, screenX, screenY))
@@ -246,8 +271,12 @@ class PcbWorkbenchRenderer {
         if (placement == null || component == null)
             return null;
         PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+        if (part == null || !part.isInstalled())
+            return null;
         PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
             component.getPhysicalPackage(), 0, false);
+        if (!context.isInstalledPartMounted())
+            return null;
         PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
         PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
         for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
@@ -256,7 +285,7 @@ class PcbWorkbenchRenderer {
             int terminalIndex = terminal.getTerminalIndex();
             if (!context.isDeveloperCanary() && context.isLeadConnected(terminalIndex))
                 return null;
-            return terminal.getPoint();
+            return terminal.getComponentLeadPoint();
         }
         return null;
     }
@@ -307,7 +336,13 @@ class PcbWorkbenchRenderer {
         return label == null ? null : getPowerInputLabel(label.getTargetPadId(), label.getText());
     }
     void setSelectedComponentId(String componentId) { selectedComponentId = componentId; }
-    String getSelectedComponentId() { return selectedComponentId; }
+    String getSelectedComponentId() {
+        if (selectedComponentId != null)
+            observeInstalledProjection(selectedComponentId);
+        if (selectedComponentId != null && !isInstalledComponentMounted(selectedComponentId))
+            selectedComponentId = null;
+        return selectedComponentId;
+    }
     void setSelectedPartId(String partId) { selectedPartId = partId; }
     String getSelectedPartId() { return selectedPartId; }
 
@@ -405,15 +440,19 @@ class PcbWorkbenchRenderer {
             int screenX, int screenY) {
         if (part == null)
             return null;
+        if (!context.isDeveloperCanary() && !context.isInstalledPartMounted())
+            return null;
         PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
         PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
         for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
             int terminalIndex = terminal.getTerminalIndex();
             if (!context.isDeveloperCanary() && context.isLeadConnected(terminalIndex))
                 continue;
-            Rectangle boardPadProbeBounds = terminal.getBoardPadId() == null ? null :
-                getPadProbeBounds(terminal.getBoardPadId());
-            if (terminal.containsComponentProbe(screenX, screenY, boardPadProbeBounds))
+            Rectangle boardPadProbeBounds = terminal.getBoardPadProbeBounds();
+            boolean hit = context.isDeveloperCanary() ?
+                terminal.containsProbe(screenX, screenY) :
+                terminal.containsComponentProbe(screenX, screenY, boardPadProbeBounds);
+            if (hit)
                 return renderer.createInstalledProbeTarget(sim, context,
                     terminalIndex);
         }
@@ -509,14 +548,19 @@ class PcbWorkbenchRenderer {
             PhysicalPartRenderContext context, int terminal) {
         if (context.isDeveloperCanary())
             return new PhysicalPartRenderCanaryProbeTarget(sim, context, terminal);
+        if (!context.isInstalledPartMounted() || context.isLeadConnected(terminal))
+            return null;
         String padId = context.getBoardPadId(terminal);
         if (padId == null)
             return null;
         GeneratedComponentConnectionBinding binding = instance.getConnectionBindings()
             .get(context.getComponentId(), padId);
+        if (binding == null)
+            return null;
         PhysicalPart<?> part = context.getPart();
         return new ComponentLeadProbeTarget(sim, instance, context.getComponentId(), padId, this,
-            part == null ? null : part.getId(), binding.getComponentEndpoint());
+            part == null ? null : part.getId(), binding.getComponentEndpoint(),
+            captureInstalledTargetIdentity(context.getComponentId(), padId));
     }
 
     GeneratedBoardInstance getInstanceForProvider() { return instance; }
@@ -530,9 +574,61 @@ class PcbWorkbenchRenderer {
     int screenXForProvider(int value) { return screenX(value); }
     int screenYForProvider(int value) { return screenY(value); }
     int scaleIntForProvider(int value) { return scaleInt(value); }
+    Point screenPointForProvider(Point value) {
+        return value == null ? null : new Point(screenX(value.x), screenY(value.y));
+    }
     Rectangle screenRectForProvider(Rectangle value) { return screenRect(value); }
     Rectangle getPadProbeBoundsForDeveloperVerification(String padId) {
         return getPadProbeBounds(padId);
+    }
+
+    Object captureInstalledTargetIdentity(String componentId, String padId) {
+        InstalledProjectionObservation observation = observeInstalledProjection(componentId);
+        return observation == null ? null : observation.token;
+    }
+
+    boolean isInstalledTargetIdentityCurrent(String componentId, String padId, Object token) {
+        InstalledProjectionObservation observation = observeInstalledProjection(componentId);
+        return token != null && observation != null && token == observation.token;
+    }
+
+    InstalledProjectionObservation observeInstalledProjection(String componentId) {
+        if (componentId == null)
+            return null;
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        PhysicalPart<?> part = runtime.getInstalledPart(componentId);
+        PhysicalBoardSlot slot = runtime.getSlot(componentId);
+        boolean partInstalled = part != null && part.isInstalled() && slot != null &&
+            slot.getInstalledPart() == part && part.getBoardSlot() == slot;
+        StringBuilder connectionSignature = new StringBuilder();
+        Vector<GeneratedComponentConnectionBinding> bindings = instance.getConnectionBindings()
+            .getForComponentOrEmpty(componentId);
+        ComponentPhysicalState state = bindings.isEmpty() ? ComponentPhysicalState.INSTALLED :
+            modifications.getComponentState(componentId);
+        for (GeneratedComponentConnectionBinding binding : bindings)
+            connectionSignature.append(binding.getPadId()).append('=')
+                .append(modifications.isLeadConnected(componentId, binding.getPadId()))
+                .append(';');
+        InstalledProjectionObservation prior = installedObservations.get(componentId);
+        if (componentId.equals(selectedComponentId) &&
+                (!partInstalled || (prior != null && prior.part != part)))
+            selectedComponentId = null;
+        if (prior == null || prior.part != part || prior.slot != slot ||
+                prior.partInstalled != partInstalled ||
+                prior.state != state || !prior.connectionSignature.equals(connectionSignature.toString()))
+            installedObservations.put(componentId, new InstalledProjectionObservation(part, slot,
+                partInstalled, state, connectionSignature.toString()));
+        return installedObservations.get(componentId);
+    }
+
+    private boolean isInstalledComponentMounted(String componentId) {
+        if (componentId == null)
+            return false;
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        PhysicalPart<?> part = runtime.getInstalledPart(componentId);
+        PhysicalBoardSlot slot = runtime.getSlot(componentId);
+        return part != null && part.isInstalled() && slot != null &&
+            slot.getInstalledPart() == part && part.getBoardSlot() == slot;
     }
     Rectangle screenRectForProvider(PcbComponentPlacement value) {
         return new Rectangle(screenX(value.getX()), screenY(value.getY()),

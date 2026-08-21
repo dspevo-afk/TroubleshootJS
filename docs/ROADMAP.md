@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-18_
+_Last updated: 2026-08-21_
 
 ## Purpose
 
@@ -1205,7 +1205,7 @@ unchanged. Task 43 is the next eligible milestone and was not started.
 
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
-**Status:** [~] Recovery in progress — 43R-1 and 43R-2 complete; 43R-3 and
+**Status:** [~] Recovery in progress — 43R-1, 43R-2, and 43R-3 complete;
 43R-4 pending
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
@@ -1246,10 +1246,19 @@ architecture prerequisite.
 - `[x]` 43R-1 — package realization verifier and geometry identity.
 - `[x]` 43R-2 — board geometry consumers, compaction, containment, and
   physical net connectivity.
-- `[>]` 43R-3 — installed geometry consumers for rendering, selection, and
-  board/component probing; not started.
-- `[ ]` 43R-4 — loose-part pose/render/hit/probe and physical-part consumer
+- `[x]` 43R-3 — installed geometry consumers for rendering, selection, and
+  board/component probing; complete.
+- `[>]` 43R-4 — loose-part pose/render/hit/probe and physical-part consumer
   lifecycle; not started.
+
+43R-3 completion: installed board rendering, selection, hit testing, and
+board-pad/component-side probing now consume the exact package placement and
+physical-part projection. Connected leads expose board-pad surfaces; lifted
+leads expose the detached component-side surface as a separate target. Physical
+removal and replacement invalidate mounted selection/targets, while same-part
+reinstallation preserves stable part/terminal/endpoint identity and creates a
+fresh target. No electrical, routing, measurement, or controller behavior was
+changed. Loose-part rendering and lifecycle remain deferred to 43R-4.
 
 ---
 
@@ -3080,10 +3089,10 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 # Immediate Next Milestone
 
-**Task 43R-3 — installed geometry rendering, selection, and probing
+**Task 43R-4 — loose-part rendering, probing, and physical-part lifecycle
 consumers (recovery slice)**
 
-Tasks 39 through 42 and recovery slices 43R-1 and 43R-2 have completed
-implementation, validation, review, and publication. Task 43R-3 is the next
-eligible recovery slice and has not started. Task 43R-4 and Task 44 remain
-deferred. Relay Driver remains deferred and transformed into Task 66.
+Tasks 39 through 42 and recovery slices 43R-1 through 43R-3 have completed
+implementation, validation, review, and publication. Task 43R-4 is the next
+eligible recovery slice and has not started. Task 44 remains blocked by Task
+43. Relay Driver remains deferred and transformed into Task 66.

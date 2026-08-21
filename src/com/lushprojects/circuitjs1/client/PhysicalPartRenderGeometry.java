@@ -45,9 +45,15 @@ final class PhysicalPartRenderGeometry {
             if (!contains(this.selectionBounds, terminal.getProbeBounds()) ||
                     !contains(this.selectionBounds, terminal.getPadBounds()) ||
                     !contains(this.selectionBounds, terminal.getLeadBounds()) ||
+                    !contains(this.selectionBounds, terminal.getComponentLeadProbeBounds()) ||
+                    (terminal.getBoardPadProbeBounds() != null &&
+                        !contains(this.selectionBounds, terminal.getBoardPadProbeBounds())) ||
                     !contains(this.dragBounds, terminal.getProbeBounds()) ||
                     !contains(this.dragBounds, terminal.getPadBounds()) ||
-                    !contains(this.dragBounds, terminal.getLeadBounds()))
+                    !contains(this.dragBounds, terminal.getLeadBounds()) ||
+                    !contains(this.dragBounds, terminal.getComponentLeadProbeBounds()) ||
+                    (terminal.getBoardPadProbeBounds() != null &&
+                        !contains(this.dragBounds, terminal.getBoardPadProbeBounds())))
                 throw new IllegalArgumentException("Physical render terminal escapes its envelope");
         }
         if (!contains(this.selectionBounds, this.bodyBounds) ||
@@ -65,13 +71,24 @@ final class PhysicalPartRenderGeometry {
 
     Rectangle getSelectionBounds() { return new Rectangle(selectionBounds); }
     Rectangle getBodyBounds() { return new Rectangle(bodyBounds); }
-    Vector<Rectangle> getLeadBounds() { return new Vector<Rectangle>(leadBounds); }
+    Vector<Rectangle> getLeadBounds() {
+        Vector<Rectangle> result = new Vector<Rectangle>();
+        for (Rectangle lead : leadBounds)
+            result.add(new Rectangle(lead));
+        return result;
+    }
     Rectangle getDragBounds() { return new Rectangle(dragBounds); }
 
     Point getTerminalPoint(int terminal) {
         if (terminal < 0 || terminal >= terminals.size())
             return null;
         return terminals.get(terminal).getPoint();
+    }
+
+    PhysicalPartRenderTerminal getTerminal(int terminal) {
+        if (terminal < 0 || terminal >= terminals.size())
+            return null;
+        return terminals.get(terminal);
     }
 
     boolean contains(int x, int y) {

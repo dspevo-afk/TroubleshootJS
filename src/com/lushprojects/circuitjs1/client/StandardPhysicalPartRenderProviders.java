@@ -80,9 +80,17 @@ final class StandardPhysicalPartRenderProviders {
             Rectangle bounds = context.getInstalledSelectionBounds();
             Vector<PhysicalPartRenderHitRegion> hits = new Vector<PhysicalPartRenderHitRegion>();
             hits.add(new PhysicalPartRenderHitRegion(bounds));
+            hits.add(new PhysicalPartRenderHitRegion(context.getInstalledBodyBounds()));
             Vector<Rectangle> leads = new Vector<Rectangle>();
-            for (PhysicalPartRenderTerminal terminal : terminals)
+            for (PhysicalPartRenderTerminal terminal : terminals) {
                 leads.add(terminal.getLeadBounds());
+                hits.add(new PhysicalPartRenderHitRegion(terminal.getLeadBounds()));
+                if (terminal.getBoardPadProbeBounds() != null)
+                    hits.add(new PhysicalPartRenderHitRegion(
+                        terminal.getBoardPadProbeBounds()));
+                hits.add(new PhysicalPartRenderHitRegion(
+                    terminal.getComponentLeadProbeBounds()));
+            }
             return new PhysicalPartRenderGeometry(terminals, hits, bounds,
                 context.getInstalledBodyBounds(), leads, context.getInstalledDragBounds());
         }
@@ -103,12 +111,37 @@ final class StandardPhysicalPartRenderProviders {
         protected Vector<PhysicalPartRenderTerminal> installedTerminals(
                 PhysicalPartRenderContext context) {
             Vector<PhysicalPartRenderTerminal> result = new Vector<PhysicalPartRenderTerminal>();
-            for (int index = 0; index < context.getTerminalCount(); index++)
+            for (int index = 0; index < context.getTerminalCount(); index++) {
                 result.add(new PhysicalPartRenderTerminal(index, context.getTerminalName(index),
                     context.getBoardPadId(index), context.getComponentProbePoint(index),
-                    context.getInstalledProbeBounds(index), context.getInstalledPadBounds(index),
+                    context.getInstalledProbeBounds(index), context.getInstalledBoardPadPoint(index),
+                    context.getInstalledBoardPadProbeBounds(index),
+                    context.getInstalledPadBounds(index), context.getInstalledComponentLeadPoint(index),
+                    context.getInstalledComponentLeadProbeBounds(index),
+                    context.getInstalledLeadBodyPoint(index), context.getInstalledLeadEndPoint(index),
                     context.getInstalledLeadBounds(index)));
+            }
             return result;
+        }
+
+        protected PhysicalPartRenderTerminal installedTerminal(
+                PhysicalPartRenderGeometry geometry, int terminal) {
+            PhysicalPartRenderTerminal result = geometry.getTerminal(terminal);
+            if (result == null)
+                throw new IllegalArgumentException("Unknown installed terminal: " + terminal);
+            return result;
+        }
+
+        protected void drawInstalledLead(Graphics graphics, PhysicalPartRenderGeometry geometry,
+                int terminal) {
+            PhysicalPartRenderTerminal lead = installedTerminal(geometry, terminal);
+            drawLead(graphics, lead.getLeadEndPoint(), lead.getLeadBodyPoint());
+        }
+
+        protected void drawInstalledLead(Graphics graphics, PhysicalPartRenderGeometry geometry,
+                int terminal, int width) {
+            PhysicalPartRenderTerminal lead = installedTerminal(geometry, terminal);
+            drawLead(graphics, lead.getLeadEndPoint(), lead.getLeadBodyPoint(), width);
         }
 
         protected Vector<PhysicalPartRenderTerminal> looseTerminals(
@@ -228,16 +261,15 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.isComponentRemoved() || context.getPart() == null)
+            if (!context.isInstalledPartMounted())
                 return;
             ResistorNameplate nameplate = RESISTOR_METADATA.require(context.getPart());
             Rectangle body = geometry.getBodyBounds();
-            Point bodyLead1 = context.getInstalledLeadBodyPoint(0);
-            Point bodyLead2 = context.getInstalledLeadBodyPoint(1);
-            drawLead(graphics, bodyLead1, context.getMountedLeadEnd(0),
-                Math.max(3, context.scale(4)));
-            drawLead(graphics, bodyLead2, context.getMountedLeadEnd(1),
-                Math.max(3, context.scale(4)));
+            int leadWidth = Math.max(3, context.scale(4));
+            PhysicalPartRenderTerminal lead1 = installedTerminal(geometry, 0);
+            PhysicalPartRenderTerminal lead2 = installedTerminal(geometry, 1);
+            drawLead(graphics, lead1.getLeadBodyPoint(), lead1.getLeadEndPoint(), leadWidth);
+            drawLead(graphics, lead2.getLeadBodyPoint(), lead2.getLeadEndPoint(), leadWidth);
             drawResistorBody(graphics, context, nameplate, body);
             context.markBodyDrawn();
         }
@@ -311,19 +343,18 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.isComponentRemoved() || context.getPart() == null)
+            if (!context.isInstalledPartMounted())
                 return;
             DIODE_METADATA.require(context.getPart());
             boolean reversed = DIODE_METADATA.isReversed(context.getPart());
             Rectangle body = geometry.getBodyBounds();
-            Point leftPad = context.getBoardPadPoint(0);
-            Point rightPad = context.getBoardPadPoint(1);
+            Point leftPad = installedTerminal(geometry, 0).getBoardPadPoint();
+            Point rightPad = installedTerminal(geometry, 1).getBoardPadPoint();
             if (leftPad == null || rightPad == null)
                 return;
-            drawLead(graphics, context.getInstalledLeadBodyPoint(0), context.getMountedLeadEnd(0),
-                Math.max(3, context.scale(4)));
-            drawLead(graphics, context.getInstalledLeadBodyPoint(1), context.getMountedLeadEnd(1),
-                Math.max(3, context.scale(4)));
+            int leadWidth = Math.max(3, context.scale(4));
+            drawInstalledLead(graphics, geometry, 0, leadWidth);
+            drawInstalledLead(graphics, geometry, 1, leadWidth);
             graphics.setColor("#282c31");
             graphics.fillRect(body.x, body.y, body.width, body.height);
             graphics.setColor("#111315");
@@ -386,21 +417,22 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.isComponentRemoved() || context.getPart() == null)
+            if (!context.isInstalledPartMounted())
                 return;
             LED_METADATA.require(context.getPart());
-            Point anode = context.getBoardPadPoint(0);
-            Point cathode = context.getBoardPadPoint(1);
+            PhysicalPartRenderTerminal anodeTerminal = installedTerminal(geometry, 0);
+            PhysicalPartRenderTerminal cathodeTerminal = installedTerminal(geometry, 1);
+            Point anode = anodeTerminal.getBoardPadPoint();
+            Point cathode = cathodeTerminal.getBoardPadPoint();
             if (anode == null || cathode == null)
                 return;
             Rectangle body = geometry.getBodyBounds();
             int centerX = body.x + body.width / 2;
             int centerY = body.y + body.height / 2;
             int radius = Math.min(body.width, body.height) / 2;
-            drawLedLead(graphics, context.getMountedLeadEnd(0),
-                context.getInstalledLeadBodyPoint(0));
-            drawLedLead(graphics, context.getMountedLeadEnd(1),
-                context.getInstalledLeadBodyPoint(1));
+            drawLedLead(graphics, anodeTerminal.getLeadEndPoint(), anodeTerminal.getLeadBodyPoint());
+            drawLedLead(graphics, cathodeTerminal.getLeadEndPoint(),
+                cathodeTerminal.getLeadBodyPoint());
             graphics.setColor("#b5232d");
             if (context.isIlluminated()) {
                 graphics.setColor("#ffdc4f");
@@ -470,23 +502,20 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.isComponentRemoved() || context.getPart() == null)
+            if (!context.isInstalledPartMounted())
                 return;
-            Point base = context.getBoardPadPoint(0);
-            Point collector = context.getBoardPadPoint(1);
-            Point emitter = context.getBoardPadPoint(2);
+            Point base = installedTerminal(geometry, 0).getBoardPadPoint();
+            Point collector = installedTerminal(geometry, 1).getBoardPadPoint();
+            Point emitter = installedTerminal(geometry, 2).getBoardPadPoint();
             if (base == null || collector == null || emitter == null)
                 return;
             Rectangle body = geometry.getBodyBounds();
             int centerX = body.x + body.width / 2;
             int centerY = body.y + body.height / 2;
             int radius = Math.min(body.width, body.height) / 2;
-            drawLead(graphics, context.getMountedLeadEnd(0),
-                context.getInstalledLeadBodyPoint(0));
-            drawLead(graphics, context.getMountedLeadEnd(1),
-                context.getInstalledLeadBodyPoint(1));
-            drawLead(graphics, context.getMountedLeadEnd(2),
-                context.getInstalledLeadBodyPoint(2));
+            drawInstalledLead(graphics, geometry, 0);
+            drawInstalledLead(graphics, geometry, 1);
+            drawInstalledLead(graphics, geometry, 2);
             graphics.setColor("#2f6680");
             graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
             graphics.setColor("#c7e0ea");
@@ -537,21 +566,18 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.isComponentRemoved() || context.getPart() == null) return;
-            Point gate = context.getBoardPadPoint(0);
-            Point drain = context.getBoardPadPoint(1);
-            Point source = context.getBoardPadPoint(2);
+            if (!context.isInstalledPartMounted()) return;
+            Point gate = installedTerminal(geometry, 0).getBoardPadPoint();
+            Point drain = installedTerminal(geometry, 1).getBoardPadPoint();
+            Point source = installedTerminal(geometry, 2).getBoardPadPoint();
             if (gate == null || drain == null || source == null) return;
             Rectangle body = geometry.getBodyBounds();
             int centerX = body.x + body.width / 2;
             int centerY = body.y + body.height / 2;
             int radius = Math.min(body.width, body.height) / 2;
-            drawLead(graphics, context.getMountedLeadEnd(0),
-                context.getInstalledLeadBodyPoint(0));
-            drawLead(graphics, context.getMountedLeadEnd(1),
-                context.getInstalledLeadBodyPoint(1));
-            drawLead(graphics, context.getMountedLeadEnd(2),
-                context.getInstalledLeadBodyPoint(2));
+            drawInstalledLead(graphics, geometry, 0);
+            drawInstalledLead(graphics, geometry, 1);
+            drawInstalledLead(graphics, geometry, 2);
             graphics.setColor("#2f6680");
             graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
             graphics.setColor("#c7e0ea");
@@ -601,21 +627,20 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.isComponentRemoved() || context.getPart() == null)
+            if (!context.isInstalledPartMounted())
                 return;
             CapacitorSpecification specification = CAPACITOR_METADATA.require(context.getPart());
-            Point plus = context.getBoardPadPoint(0);
-            Point minus = context.getBoardPadPoint(1);
+            Point plus = installedTerminal(geometry, 0).getBoardPadPoint();
+            Point minus = installedTerminal(geometry, 1).getBoardPadPoint();
             if (plus == null || minus == null)
                 return;
             Rectangle body = geometry.getBodyBounds();
             int centerX = body.x + body.width / 2;
             int centerY = body.y + body.height / 2;
             int radius = Math.min(body.width, body.height) / 2;
-            drawLead(graphics, context.getMountedLeadEnd(0),
-                context.getInstalledLeadBodyPoint(0), Math.max(3, context.scale(4)));
-            drawLead(graphics, context.getMountedLeadEnd(1),
-                context.getInstalledLeadBodyPoint(1), Math.max(3, context.scale(4)));
+            int leadWidth = Math.max(3, context.scale(4));
+            drawInstalledLead(graphics, geometry, 0, leadWidth);
+            drawInstalledLead(graphics, geometry, 1, leadWidth);
             drawElectrolyticBody(graphics, context, specification, centerX, centerY, radius);
             graphics.setColor("#f7f5e8");
             graphics.drawString("+", plus.x - context.scale(5), plus.y - context.scale(10));
@@ -674,20 +699,18 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.isComponentRemoved() || context.getPart() == null)
+            if (!context.isInstalledPartMounted())
                 return;
             CapacitorSpecification specification = CAPACITOR_METADATA.require(context.getPart());
-            Point first = context.getBoardPadPoint(0);
-            Point second = context.getBoardPadPoint(1);
+            Point first = installedTerminal(geometry, 0).getBoardPadPoint();
+            Point second = installedTerminal(geometry, 1).getBoardPadPoint();
             if (first == null || second == null)
                 return;
             Rectangle body = geometry.getBodyBounds();
             int centerX = body.x + body.width / 2;
             int centerY = body.y + body.height / 2;
-            drawLead(graphics, context.getMountedLeadEnd(0),
-                context.getInstalledLeadBodyPoint(0));
-            drawLead(graphics, context.getMountedLeadEnd(1),
-                context.getInstalledLeadBodyPoint(1));
+            drawInstalledLead(graphics, geometry, 0);
+            drawInstalledLead(graphics, geometry, 1);
             drawCeramicBody(graphics, context, specification, centerX, centerY,
                 body.width / 2, body.height / 2);
             context.markBodyDrawn();
@@ -738,21 +761,27 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (!context.isInstalledPartMounted())
+                return;
             Rectangle bounds = context.getInstalledBodyBounds();
             graphics.setColor("#2d8f71");
             graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
             graphics.setColor("#b8ead7");
             graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
-            drawConnectorPads(graphics, context);
+            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
+                drawInstalledLead(graphics, geometry, terminal.getTerminalIndex());
+            drawConnectorPads(graphics, geometry, context);
             context.markBodyDrawn();
         }
 
         public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) { }
 
-        private void drawConnectorPads(Graphics graphics, PhysicalPartRenderContext context) {
-            for (int index = 0; index < context.getTerminalCount(); index++) {
-                Point pad = context.getBoardPadPoint(index);
+        private void drawConnectorPads(Graphics graphics, PhysicalPartRenderGeometry geometry,
+                PhysicalPartRenderContext context) {
+            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+                int index = terminal.getTerminalIndex();
+                Point pad = terminal.getBoardPadPoint();
                 if (pad == null)
                     continue;
                 int radius = Math.max(13, context.scale(20));
@@ -770,13 +799,7 @@ final class StandardPhysicalPartRenderProviders {
 
     private static final class MultiTerminalRenderer extends BaseRenderer {
         public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext context) {
-            Vector<PhysicalPartRenderTerminal> terminals = new Vector<PhysicalPartRenderTerminal>();
-            for (int index = 0; index < context.getTerminalCount(); index++)
-                terminals.add(new PhysicalPartRenderTerminal(index, context.getTerminalName(index),
-                    context.getBoardPadId(index), context.getComponentProbePoint(index),
-                    context.getInstalledProbeBounds(index), context.getInstalledPadBounds(index),
-                    context.getInstalledLeadBounds(index)));
-            return installedGeometry(context, terminals);
+            return installedGeometry(context, installedTerminals(context));
         }
 
         public PhysicalPartRenderGeometry getLooseGeometry(PhysicalPartRenderContext context) {
@@ -785,6 +808,8 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
+            if (!context.isInstalledPartMounted())
+                return;
             Rectangle bounds = context.getInstalledBodyBounds();
             boolean connector = context.getPhysicalPackage().isConnector();
             graphics.setColor(connector ? "#2d8f71" : "#485b69");
@@ -792,7 +817,8 @@ final class StandardPhysicalPartRenderProviders {
             graphics.setColor(connector ? "#b8ead7" : "#d6e2ea");
             graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
-                Point pad = context.getProviderTerminalPoint(terminal.getTerminalIndex());
+                drawInstalledLead(graphics, geometry, terminal.getTerminalIndex());
+                Point pad = terminal.getBoardPadPoint();
                 if (pad == null)
                     continue;
                 graphics.setColor("#b8c8c2");

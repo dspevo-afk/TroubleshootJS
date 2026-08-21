@@ -1410,3 +1410,37 @@ fixed route factories out of this recovery slice: only exact known RC/NPN/
 NMOS geometry signatures are recorded as deferred layout failures. No fixed
 route coordinates, renderer, tray, electrical graph, fault, stress/damage,
 probe, or Task 44 work is included in 43R-2.
+
+## Task 43R-3 — installed rendering, selection, and board/component probing
+
+Task 43R-3 consumes the immutable package placement contract for the installed
+board view. `PcbWorkbenchRenderer` obtains installed body, lead, selection,
+pad, and probe geometry from the registered `PhysicalPartRenderer`; it does
+not synthesize a second component shape for drawing, hit testing, or marker
+placement. `PhysicalPartRenderContext` exposes the exact placed package
+surfaces, and `PhysicalPartRenderTerminal` keeps board-pad and component-side
+lead surfaces distinct.
+
+For a connected lead, the board pad is the physical probe target and the
+component-side lead is not exposed. Lifting a lead preserves the board-pad
+target and exposes the detached component-side surface as a
+`ComponentLeadProbeTarget`. Both surfaces use the provider-declared bounds and
+points, so selection, hit testing, probe creation, and measurement markers
+agree with the rendered geometry. Loose/tray projections remain outside this
+slice and are deferred to 43R-4.
+
+Installed probe targets capture the renderer's observed physical projection
+epoch, mounted slot/part identity, physical package identity, stable terminal
+binding, and CircuitJS measurement endpoint. Removal, replacement, lead-state
+change, or slot association change invalidates stale targets. Renderer
+selection is also cleared when the selected component is no longer the exact
+part mounted in its slot. Same-part reinstall preserves the stable physical
+part, terminal, and endpoint identities but produces a fresh target for the
+new projection epoch; a replacement part has a distinct physical identity.
+
+`PhysicalPartRenderGeometry` returns defensive copies of mutable rectangles,
+and the focused Task 43 verifier covers provider dispatch, connected/lifted
+surface semantics, terminal identity, selection/hit/probe agreement, removal,
+reinstall, replacement invalidation, and board/runtime identity preservation.
+No CircuitJS electrical topology, measurement primitive, routing algorithm,
+or controller mutation semantics changed in this slice.

@@ -1,3 +1,86 @@
+# Task 43R-3 completion report — installed rendering, selection, and probing
+
+Date: 2026-08-21
+
+Status: `FINAL PASS — IMPLEMENTATION, VALIDATION, AND INDEPENDENT REVIEW
+COMPLETE`. The bounded recovery slice is integrated in the shared worktree;
+the primary architect retains commit and publication authority.
+
+## Objective and bounded contract
+
+Task 43R-3 unified the installed-board rendering, selection, hit-testing, and
+board/component-side probing consumers around the exact immutable package
+placement and physical-part projection established by 43R-1 and 43R-2. It
+does not implement 43R-4, Task 44, loose-part pose/rendering, routing changes,
+electrical changes, measurement changes, controller changes, or fixed-route
+repairs.
+
+The installed state contract is now explicit:
+
+- connected leads expose the exact board-pad surface and board-pad target;
+- lifted leads preserve the board pad and expose a separate detached
+  component-lead surface and target;
+- physical removal and replacement invalidate installed rendering/selection
+  and stale component-lead targets;
+- same-part reinstall preserves stable part, terminal, and CircuitJS endpoint
+  identity while creating a fresh renderer projection/target epoch; and
+- replacement parts have distinct physical identity.
+
+## Implementation
+
+`PcbWorkbenchRenderer` now uses provider-owned installed geometry for drawing,
+selection, hit testing, and marker/probe placement. `PhysicalPartRenderContext`
+and `PhysicalPartRenderTerminal` carry the exact placed board-pad and
+component-side surfaces. `ComponentLeadProbeTarget` validates mounted slot,
+part/package/terminal/binding/endpoint identity and the renderer projection
+epoch. Renderer selection and component-side lookup require the exact physical
+part to remain mounted in its slot. `PhysicalPartRenderGeometry` returns deep
+defensive copies for mutable lead rectangles.
+
+The focused developer verifier adds provider-dispatch and terminal-count
+canaries, connected/lifted surface checks, exact selection/hit/probe agreement,
+same-part remove/reinstall lifecycle checks, replacement identity invalidation,
+and board/runtime identity preservation. The implementation changed only the
+following eight authorized source files:
+
+- `src/com/lushprojects/circuitjs1/client/ComponentLeadProbeTarget.java`
+- `src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderGeometry.java`
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderTerminal.java`
+- `src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java`
+- `src/com/lushprojects/circuitjs1/client/Task43DeveloperVerifier.java`
+
+## Validation and review
+
+- Bundled JDK 8 OBF production build: passed all five permutations and link.
+- Renderer boundary verifier: `PASS:renderer-provider-boundary`.
+- Visible in-app Browser Task 43 route: `PASS:task43`; no console warnings or
+  errors observed.
+- `git diff --check`: passed.
+- Fresh independent read-only Luna MAX review: `FINAL PASS`; no blockers.
+- The standalone Edge helper remains host-limited by WMI `Access denied` when
+  querying Edge processes. This is a harness limitation; the required visible
+  in-app Browser route passed.
+- The pre-existing architecture routing negative canary remains outside this
+  R3 scope and was not changed.
+
+## Review and handoff
+
+The fresh Luna MAX coder corrected exact mounted-slot validation for installed
+component-lead lookup without reverting the accepted candidate or changing
+unrelated systems. The fresh independent reviewer confirmed provider-owned
+rendering/hit/probe geometry, lifecycle invalidation and selection clearing,
+immutable geometry copies, R3 canary coverage, eight-file source scope, and
+the absence of routing/electrical/measurement/controller/future-milestone
+changes.
+
+The primary architect will now stage only the eight source files and these
+three documentation updates, run cached checks, commit the accepted R3 result,
+push the current recovery branch, verify the remote SHA, and attempt the
+required post-push Gmail notification. No later milestone will be started.
+
 # Task 43R-2 completion report — board geometry consumers and physical connectivity
 
 Date: 2026-08-20
@@ -597,7 +680,3 @@ Notification recipient: `dspevock@stateofthearcelectric.com`
 
 Intended notification subject:
 `TroubleshootJS: Roadmap completion workflow correction pushed`
-
-Next roadmap milestone: Task 39 — Player-Operable Functional Inputs and
-Customer Retest Contract. It remains the sole immediate milestone and was not
-started.
