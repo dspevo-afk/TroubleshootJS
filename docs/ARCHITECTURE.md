@@ -120,9 +120,11 @@ The Replacement Catalog UI creates new physical parts while the Parts Tray UI
 only presents loose parts that have been removed from R1. Installed parts are
 not tray targets. The tray pages loose parts three at a time; drawing,
 hit-testing, selection, and loose-lead geometry share the same current-page
-slice. Changing a page clears an invisible part selection. A retained probe on
-a hidden loose part remains electrically bound to its physical ID, but its
-marker point becomes absent rather than moving to another equal-value part.
+slice. Changing a page clears an invisible part selection. After 43R-4C, a
+loose probe target captures the renderer's projection epoch: an off-page target
+is invalidated and cleared from the instrument, while its stable physical and
+electrical endpoint identity remains unchanged. Returning to the page requires
+a fresh target object and never revives the old target.
 
 R1 removal remains an electrical mutation transaction: both detachable
 connection bindings are removed while board power is electrically isolated,
@@ -1476,8 +1478,8 @@ All registered physical providers participate in the same contract: axial
 resistor and diode, through-hole LED, TO-92 NPN/NMOS, radial electrolytic and
 ceramic capacitors, connectors, and the multi-terminal developer canaries.
 Pagination clears a selection that is no longer visible and keeps hidden probe
-targets from acquiring a stale marker; it does not migrate identity to another
-tray part. Removal, replacement, and reinstall preserve the R3 slot/part/
+targets invalidated and cleared after 43R-4C; it does not migrate identity to
+another tray part. Removal, replacement, and reinstall preserve the R3 slot/part/
 terminal/endpoint lifecycle rules: a bound carrier is retained for the same
 physical part, an unbound replacement falls back to the package default, an
 installed replacement binds its carrier, and a removed replacement uses that

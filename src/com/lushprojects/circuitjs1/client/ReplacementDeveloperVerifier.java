@@ -598,13 +598,19 @@ class ReplacementDeveloperVerifier {
         Point retainedMarker = retainedTarget.getMarkerPoint();
         require(retainedMarker != null, "Retained loose part was not visible on its own tray page");
         renderer.setTrayPage(retainedPage == 0 ? 1 : 0);
-        require(retainedTarget.getMarkerPoint() == null,
+        require(!retainedTarget.isValid() && retainedTarget.getMarkerPoint() == null,
             "Retained loose probe marker moved onto another tray page");
         renderer.setTrayPage(retainedPage);
-        Point restoredMarker = retainedTarget.getMarkerPoint();
-        require(restoredMarker != null && restoredMarker.x == retainedMarker.x &&
+        Point freshPoint = renderer.getLooseTerminalPoint(retainedPartId, 0);
+        require(freshPoint != null, "Returning to tray page did not expose the retained part");
+        ProbeTarget freshTarget = renderer.findProbeTarget(sim, freshPoint.x, freshPoint.y);
+        Point restoredMarker = freshTarget == null ? null : freshTarget.getMarkerPoint();
+        require(!retainedTarget.isValid() && freshTarget != null && freshTarget != retainedTarget &&
+            freshTarget.isValid() && retainedTarget.isSameTarget(freshTarget) &&
+            freshTarget.getMeasurementEndpoint() == retainedTarget.getMeasurementEndpoint() &&
+            restoredMarker != null && restoredMarker.x == retainedMarker.x &&
             restoredMarker.y == retainedMarker.y,
-            "Returning to tray page did not restore marker for the same physical part");
+            "Returning to tray page did not require fresh stable-identity reacquisition");
         for (int page = 0; page < renderer.getTrayPageCount(); page++) {
             renderer.setTrayPage(page);
             require(renderer.getVisibleLoosePhysicalParts().size() <= 3,

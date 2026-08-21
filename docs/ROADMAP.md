@@ -1206,7 +1206,8 @@ milestone and was not started.
 
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
-**Status:** [x] Complete — 43R-1, 43R-2, 43R-3, and 43R-4 complete
+**Status:** [~] RECOVERY IN PROGRESS — 43R-1, 43R-2, 43R-3, and 43R-4
+complete after accepted 43R-4C
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1248,8 +1249,13 @@ architecture prerequisite.
   physical net connectivity.
 - `[x]` 43R-3 — installed geometry consumers for rendering, selection, and
   board/component probing; complete.
-- `[x]` 43R-4 — loose-part pose/render/hit/probe and physical-part consumer
-  lifecycle; complete.
+- `[x]` 43R-4 — loose-part pose/render/hit/probe baseline retained; 43R-4C
+  accepted the loose projection lifecycle correction.
+- `[>]` 43R-5 — next: RC fixed-layout reconstruction.
+- `[ ]` 43R-6 — blocked by R5: NPN fixed-layout reconstruction.
+- `[ ]` 43R-7 — blocked by R6: NMOS fixed-layout reconstruction.
+- `[ ]` 43R-8 — blocked by R5/R6/R7: final Task 43
+  acceptance/regression/cleanup.
 
 43R-3 completion: installed board rendering, selection, hit testing, and
 board-pad/component-side probing now consume the exact package placement and
@@ -1260,7 +1266,10 @@ reinstallation preserves stable part/terminal/endpoint identity and creates a
 fresh target. No electrical, routing, measurement, or controller behavior was
 changed.
 
-43R-4 completion: loose physical parts now use one immutable package-owned pose
+The following records the externally reviewed 43R-4 baseline; its pagination
+claim is superseded by the accepted 43R-4C correction described above.
+
+43R-4 baseline completion: loose physical parts now use one immutable package-owned pose
 for rendering, selection, hit testing, probing, and tray pagination. Bound
 physical realizations remain the source of loose geometry; unbound parts use an
 explicit package default. The full registered provider matrix and negative
@@ -1274,7 +1283,7 @@ started.
 
 ## Task 44 — Functional Block Descriptor and Stable Namespace Contract
 
-**Status:** [>] Next eligible milestone — not started
+**Status:** [!] BLOCKED BY TASK 43
 
 **Purpose:** Define the smallest reusable generation unit above the existing
 leaf-family runtime.
@@ -3097,9 +3106,13 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 # Immediate Next Milestone
 
-**Task 44 — Functional Block Descriptor and Stable Namespace Contract**
+**43R-5 — RC fixed-layout reconstruction**
 
-Tasks 39 through 42 and recovery slices 43R-1 through 43R-4 have completed
-implementation, validation, review, and publication. Task 44 is now the next
-eligible milestone and remains unstarted. Recovery slice 43R-5 is not defined
-or started. Relay Driver remains deferred and transformed into Task 66.
+Current state: Task 43 RECOVERY IN PROGRESS. Recovery slices 43R-1, 43R-2,
+43R-3, and 43R-4 are complete after accepted 43R-4C. Recovery slice 43R-5 is
+next and is explicitly RC fixed-layout reconstruction. Recovery slices 43R-6
+(NPN fixed-layout reconstruction) and 43R-7 (NMOS fixed-layout
+reconstruction) are blocked by R5 and R6 respectively; 43R-8 (final Task 43
+acceptance/regression/cleanup) is blocked by R5/R6/R7. Task 44 is BLOCKED BY
+TASK 43 and remains unstarted. Relay Driver remains deferred and transformed
+into Task 66.

@@ -1,3 +1,78 @@
+# Task 43R-4C recovery correction — loose projection lifecycle invalidation
+
+Date: 2026-08-21
+
+Status: `CODE-LEVEL ACCEPTED — OFFICIAL BROWSER VALIDATION BLOCKED`. Commit
+`006fa620846f914bde0239502f2198836003cfaa` was externally reviewed as the
+43R-4 baseline, but its pagination claims were too strong: an off-page loose
+probe target could remain valid electrically, disappear from the marker
+projection, and revive when the player returned to the old page. That stale
+held-target behavior is the blocker this correction closes, and recording the
+correction restores the ordered roadmap.
+
+The bounded correction captures a renderer-owned loose-projection epoch when a
+target is acquired. Validity now requires the same generated board and current
+loose projection, an existing loose part with a valid terminal, and pure
+visibility on the active page. Physical endpoint lookup and target equivalence
+remain keyed only by board instance, part ID, and terminal. The renderer
+advances the epoch once per actual page or visible-inventory-slice transition
+and notifies the instrument controller only after that transition. The
+controller clears only invalid loose red/black targets, preserves unaffected
+board-pad and installed targets, and resets the active reading/continuity
+display without changing CircuitJS topology.
+
+The expanded developer canary uses renderer hit acquisition and real
+`InstrumentController.handlePointerInput(...)` calls across two tray pages,
+including typed loose representatives and a live multi-terminal canary. It
+installs its board wire and every backing `CircuitElm` into the active
+`sim.elmList` exactly once, proves a renderer-acquired endpoint completes a
+real DC strategy measurement, tears the fixture down on success and failure,
+and retains the existing rigid-pose negative checks. Completion remains
+pending because the official browser routes still need to run successfully.
+
+The official replacement route exposed a deterministic stale expectation. Its
+`verifyTrayPaginationAndProbeGeometry` path directly constructs a retained
+`PhysicalResistorPartProbeTarget`, changes pages, and then requires that same
+old object to regain a marker after returning. Under the required epoch
+contract, the old object must remain invalid; only a fresh
+`renderer.findProbeTarget(...)` acquisition may become valid. No existing
+allowed production seam can mutate the verifier's retained reference into a
+fresh target, and making the old object valid again would violate 43R-4C.
+
+Dependency explanation before the verifier edit: the official replacement
+route is mandatory validation, and the clarification explicitly permits a
+narrow edit to `ReplacementDeveloperVerifier.java` when its canary is stale
+under the required semantics. The correction therefore changes only this
+canary's return-page assertion to reacquire through
+`renderer.findProbeTarget(...)`, while retaining old-target invalidation and
+checking stable physical/endpoint identity. No production lifecycle code is
+weakened, and no route is skipped or suppressed.
+
+Validation after this correction: the OBF JDK 8 build/link passed all five
+permutations; `verify-renderer-boundary.ps1` passed; the fresh-acquisition
+static canary and `git diff --check` passed. The official
+`verify-browser.ps1 -Task43` route and
+`verify-browser.ps1 -Route replacement -Seeds 3` route were both attempted
+after the rebuild, but this host could not expose the Edge target and cleanup
+failed with WMI `Access denied`. Therefore no browser `PASS:task43` or
+`PASS:replacement` is claimed. A supplemental direct headless Edge attempt
+also produced no DOM because the host Edge GPU process was unusable; it is not
+counted as route validation.
+
+Completion remains pending until both official browser routes can run and pass.
+
+Current roadmap state after the code-level correction is intentionally ordered
+as follows: Task 43 RECOVERY IN PROGRESS; 43R-1, 43R-2, 43R-3, and 43R-4 are
+complete after accepted 43R-4C; 43R-5 is next as RC fixed-layout
+reconstruction; 43R-6 is blocked by R5 as NPN fixed-layout reconstruction;
+43R-7 is blocked by R6 as NMOS fixed-layout reconstruction; 43R-8 is blocked
+by R5/R6/R7 as final Task 43 acceptance/regression/cleanup; and Task 44 is
+BLOCKED BY TASK 43. The browser routes remain unexecuted on this host because
+the Edge target is unavailable and WMI cleanup returns `Access denied`; no
+browser pass is implied by the code-level state.
+
+---
+
 # Task 43R-4 completion report — loose package-owned pose and interaction
 
 Date: 2026-08-21
@@ -6,6 +81,11 @@ Status: `FINAL PASS — IMPLEMENTATION, VALIDATION, AND INDEPENDENT REVIEW
 COMPLETE`. The bounded recovery slice is integrated in the shared worktree;
 the primary architect retains commit and publication authority until the final
 staged-diff, commit, push, remote-SHA, and notification gates complete.
+
+This is the historical externally reviewed 43R-4 baseline report. Its browser
+PASS below predates 43R-4C and is not validation of the correction; the current
+official Task 43 and replacement browser routes are unexecuted on the present
+host because Edge/CDP is unavailable and WMI returns `Access denied`.
 
 ## Objective and bounded contract
 
@@ -106,6 +186,10 @@ found the lead-stroke containment and negative-canary coverage blockers; both
 were corrected by the same delegated coder. A fresh independent read-only Luna
 MAX reviewer then returned `PASS` with no blocking findings. No escalation
 architect was required.
+
+The following closing roadmap snapshot belongs to the externally reviewed
+43R-4 baseline and is superseded by the 43R-4C correction above; it is
+preserved as historical completion evidence.
 
 The intended commit message is `Unify loose part geometry and interaction`.
 The configured publication remote is `origin`

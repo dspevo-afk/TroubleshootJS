@@ -41,6 +41,14 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         this.modifications = modifications;
         this.quickPlay = quickPlay;
         renderer = new PcbWorkbenchRenderer(instance, modifications, layout);
+        final CirSim simulation = sim;
+        renderer.setLooseProjectionTransitionListener(
+            new PcbWorkbenchRenderer.LooseProjectionTransitionListener() {
+                public void onLooseProjectionTransition() {
+                    if (simulation.instrumentController != null)
+                        simulation.instrumentController.onLooseProjectionChanged();
+                }
+            });
         ticketPanel.setStyleName("tsj-component-panel");
         ticketPanel.setVisible(false);
         panel.setStyleName("tsj-component-panel");

@@ -7,6 +7,7 @@ class PhysicalPartProbeTarget implements ProbeTarget {
     private final String partId;
     private final int terminal;
     private final PcbWorkbenchRenderer renderer;
+    private final Object looseProjectionToken;
 
     PhysicalPartProbeTarget(CirSim sim, GeneratedBoardInstance instance, String partId,
             int terminal, PcbWorkbenchRenderer renderer) {
@@ -15,11 +16,22 @@ class PhysicalPartProbeTarget implements ProbeTarget {
         this.partId = partId;
         this.terminal = terminal;
         this.renderer = renderer;
+        looseProjectionToken = renderer == null ? null : renderer.captureLooseProjectionToken();
     }
 
     public boolean isValid() {
-        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getPart(partId);
-        return sim.getGeneratedBoardInstance() == instance && part != null && !part.isInstalled();
+        if (sim == null || instance == null || renderer == null || looseProjectionToken == null ||
+                sim.getGeneratedBoardInstance() != instance ||
+                !renderer.isLooseProjectionTokenCurrent(looseProjectionToken))
+            return false;
+        try {
+            PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getPart(partId);
+            return part != null && !part.isInstalled() && terminal >= 0 &&
+                terminal < part.getTerminalCount() && part.getTerminal(terminal) != null &&
+                renderer.isLoosePartVisibleOnCurrentPage(partId);
+        } catch (RuntimeException ignored) {
+            return false;
+        }
     }
 
     public boolean isSameTarget(ProbeTarget other) {
@@ -30,7 +42,12 @@ class PhysicalPartProbeTarget implements ProbeTarget {
             terminal == target.terminal;
     }
 
-    public Point getMarkerPoint() { return renderer.getLooseTerminalPoint(partId, terminal); }
+    public Point getMarkerPoint() {
+        if (!isValid())
+            return null;
+        Point point = renderer.getLooseTerminalPoint(partId, terminal);
+        return isValid() ? point : null;
+    }
 
     public CircuitMeasurementEndpoint getMeasurementEndpoint() {
         PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getPart(partId);

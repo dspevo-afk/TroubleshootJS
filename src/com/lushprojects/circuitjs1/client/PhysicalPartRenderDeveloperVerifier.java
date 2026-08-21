@@ -3,6 +3,8 @@ package com.lushprojects.circuitjs1.client;
 import java.util.HashMap;
 import java.util.Vector;
 
+import com.google.gwt.dom.client.NativeEvent;
+
 /** Developer-only checks for provider discovery and provider-owned geometry. */
 final class PhysicalPartRenderDeveloperVerifier {
     private PhysicalPartRenderDeveloperVerifier() { }
@@ -117,6 +119,7 @@ final class PhysicalPartRenderDeveloperVerifier {
         renderer.setSelectedComponentId(null);
         verifyTerminalCountCanaries(sim, renderer, registry);
         verifyLooseProbeProviderDispatch(sim, renderer, registry);
+        verifyLooseProjectionLifecycle(sim, renderer, registry);
         verifyConnectedAndLiftedProbeSemantics(sim, renderer);
     }
 
@@ -155,6 +158,150 @@ final class PhysicalPartRenderDeveloperVerifier {
                 requireSpecializedLooseTarget(part.getPackage(), target, part.getId());
             }
         }
+    }
+
+    /**
+     * Uses a detached runtime so the lifecycle canary has two real tray pages
+     * without adding temporary parts to the generated challenge inventory.
+     * Targets are always acquired through the renderer hit path and held by
+     * the real instrument controller.
+     */
+    private static void verifyLooseProjectionLifecycle(CirSim sim,
+            PcbWorkbenchRenderer originalRenderer, PhysicalPartRenderRegistry registry) {
+        require(sim.getGeneratedChallengeController() != null,
+            "Loose lifecycle snapshot requires an active generated challenge owner");
+        Task41SimulationSnapshot originalSnapshot = Task41SimulationSnapshot.capture(sim);
+        LooseProjectionLifecycleFixture fixture = null;
+        try {
+            originalSnapshot.beginProof(sim);
+            fixture = LooseProjectionLifecycleFixture.create(sim, originalRenderer, registry);
+            sim.generatedBoardInstance = fixture.instance;
+            PcbWorkbenchRenderer renderer = fixture.controller.getRenderer();
+            require(renderer.getTrayPageCount() >= 2,
+                "Loose lifecycle canary did not provide two tray pages");
+            renderer.setTrayPage(0);
+            PhysicalPart<?> firstPart = renderer.getVisibleLoosePhysicalParts().firstElement();
+            ProbeTarget firstTarget = findLooseTarget(sim, renderer, firstPart, 0);
+            require(firstTarget != null && firstTarget.isValid() &&
+                    firstTarget.getMarkerPoint() != null &&
+                    firstTarget.getMeasurementEndpoint() == firstPart.getTerminal(0).getEndpoint(),
+                "Visible loose target did not expose valid marker/endpoint identity");
+            requireLiveEndpoint(sim, firstTarget,
+                "Visible loose target endpoint is not in the active CircuitJS graph");
+
+            Point boardPadPoint = renderer.getPadPoint(fixture.boardPadId);
+            ProbeTarget unaffectedBoardPad = renderer.findProbeTarget(sim, boardPadPoint.x,
+                boardPadPoint.y);
+            require(unaffectedBoardPad instanceof BoardPadProbeTarget &&
+                    unaffectedBoardPad.isValid(),
+                "Lifecycle canary could not acquire its unaffected board-pad target");
+            requireLiveEndpoint(sim, unaffectedBoardPad,
+                "Lifecycle canary board-pad endpoint is not in the active CircuitJS graph");
+            sim.instrumentController.activateDcVoltageModeForDeveloperVerification();
+            sim.instrumentController.handlePointerInput(NativeEvent.BUTTON_LEFT, firstTarget);
+            int beforeLiveDcMeasurement = sim.instrumentController
+                .getDcVoltageMeasurementCountForDeveloperVerification();
+            sim.instrumentController.handlePointerInput(NativeEvent.BUTTON_RIGHT,
+                unaffectedBoardPad);
+            require(sim.instrumentController.getRedProbeForStrategy() == firstTarget &&
+                    sim.instrumentController.getBlackProbeForStrategy() == unaffectedBoardPad &&
+                    sim.instrumentController.getDcVoltageMeasurementCountForDeveloperVerification() >
+                    beforeLiveDcMeasurement &&
+                    !Double.isNaN(sim.instrumentController.getLatestDcVoltageForDeveloperVerification()) &&
+                    !Double.isInfinite(sim.instrumentController.getLatestDcVoltageForDeveloperVerification()) &&
+                    !sim.activeMeasurementOverlay,
+                "Instrument controller did not execute a live measurement for renderer-acquired targets");
+
+            renderer.setTrayPage(1);
+            require(!firstTarget.isValid() && firstTarget.getMarkerPoint() == null &&
+                    sim.instrumentController.getRedProbeForStrategy() == null &&
+                    sim.instrumentController.getBlackProbeForStrategy() == unaffectedBoardPad &&
+                    "--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                    !sim.activeMeasurementOverlay,
+                "Page transition did not clear only the invalid loose target safely");
+
+            PhysicalPart<?> multiPart = fixture.multiTerminalPart;
+            ProbeTarget multiFirst = findLooseTarget(sim, renderer, multiPart, 1);
+            ProbeTarget multiSecond = findLooseTarget(sim, renderer, multiPart, 2);
+            require(multiFirst != null && multiSecond != null && multiFirst.isValid() &&
+                    multiSecond.isValid() && multiFirst.getMeasurementEndpoint() ==
+                    multiPart.getTerminal(1).getEndpoint() && multiSecond.getMeasurementEndpoint() ==
+                    multiPart.getTerminal(2).getEndpoint() && multiFirst != multiSecond,
+                "Live multi-terminal loose canary lost terminal identity");
+            requireLiveEndpoint(sim, multiFirst,
+                "Multi-terminal first endpoint is not in the active CircuitJS graph");
+            requireLiveEndpoint(sim, multiSecond,
+                "Multi-terminal second endpoint is not in the active CircuitJS graph");
+            sim.instrumentController.activateDcVoltageModeForDeveloperVerification();
+            sim.instrumentController.handlePointerInput(NativeEvent.BUTTON_LEFT, multiFirst);
+            sim.instrumentController.handlePointerInput(NativeEvent.BUTTON_RIGHT, multiSecond);
+            sim.instrumentController.clearTargets();
+            fixture.establishUnpowered(sim);
+            int beforeContinuityMeasurement = sim.instrumentController
+                .getContinuityMeasurementCountForDeveloperVerification();
+            sim.instrumentController.activateDeveloperInstrumentModeForVerification("CONTINUITY");
+            sim.instrumentController.handlePointerInput(NativeEvent.BUTTON_LEFT, multiFirst);
+            sim.instrumentController.handlePointerInput(NativeEvent.BUTTON_RIGHT, multiSecond);
+            require(sim.getBoardPowerController().isElectricallyUnpowered() &&
+                    sim.instrumentController.getContinuityMeasurementCountForDeveloperVerification() >
+                    beforeContinuityMeasurement &&
+                    !"POWER OFF".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                    !"--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                    !sim.activeMeasurementOverlay,
+                "Continuity canary did not execute a live unpowered measurement");
+            renderer.setTrayPage(0);
+            require(!multiFirst.isValid() && !multiSecond.isValid() &&
+                    multiFirst.getMarkerPoint() == null && multiSecond.getMarkerPoint() == null &&
+                    sim.instrumentController.getRedProbeForStrategy() == null &&
+                    sim.instrumentController.getBlackProbeForStrategy() == null &&
+                    "--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                    !sim.instrumentController.isContinuityIndicatorVisibleForDeveloperVerification() &&
+                    !sim.instrumentController.isContinuityFeedbackRequestedForDeveloperVerification() &&
+                    !sim.activeMeasurementOverlay,
+                "Page transition did not clear both held loose targets");
+
+            renderer.setTrayPage(1);
+            ProbeTarget freshMulti = findLooseTarget(sim, renderer, multiPart, 1);
+            require(freshMulti != null && freshMulti.isValid() && freshMulti != multiFirst &&
+                    freshMulti.isSameTarget(multiFirst) && freshMulti.getMeasurementEndpoint() ==
+                    multiFirst.getMeasurementEndpoint() && freshMulti.getMarkerPoint() != null &&
+                    !multiFirst.isValid(),
+                "Returning to a page revived an old loose target instead of reacquiring it");
+            requireLiveEndpoint(sim, freshMulti,
+                "Fresh loose target endpoint is not in the active CircuitJS graph");
+        } finally {
+            try {
+                if (fixture != null)
+                    fixture.dispose(sim);
+            } finally {
+                originalSnapshot.restore(sim);
+                originalSnapshot.assertRestored(sim);
+            }
+        }
+    }
+
+    private static void requireLiveEndpoint(CirSim sim, ProbeTarget target, String message) {
+        CircuitMeasurementEndpoint endpoint = target == null ? null :
+            target.getMeasurementEndpoint();
+        require(endpoint instanceof CircuitPostMeasurementEndpoint &&
+                sim.containsElement(((CircuitPostMeasurementEndpoint) endpoint).getElement()),
+            message);
+    }
+
+    private static ProbeTarget findLooseTarget(CirSim sim, PcbWorkbenchRenderer renderer,
+            PhysicalPart<?> part, int terminalIndex) {
+        Vector<PhysicalPart<?>> visible = renderer.getVisibleLoosePhysicalParts();
+        for (int index = 0; index < visible.size(); index++) {
+            if (visible.get(index) != part)
+                continue;
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(renderer, null, part,
+                part.getPackage(), index, true);
+            Point point = renderer.getRenderRegistryForDeveloperVerification()
+                .getProvider(part.getPackage()).getRenderer(part).getLooseGeometry(context)
+                .getTerminal(terminalIndex).getPoint();
+            return renderer.findProbeTarget(sim, point.x, point.y);
+        }
+        return null;
     }
 
     /**
@@ -673,6 +820,252 @@ final class PhysicalPartRenderDeveloperVerifier {
         public boolean isInstalled() { return mountState.isInstalled(); }
         public boolean isOriginal() { return false; }
         public boolean isFaulted() { return false; }
+    }
+
+    private static final class LooseProjectionLifecycleFixture {
+        private final GeneratedBoardInstance instance;
+        private final PcbWorkbenchController controller;
+        private final String boardPadId;
+        private final PhysicalPart<?> multiTerminalPart;
+        private final GeneratedExternalPowerBindings powerBindings;
+        private final Vector<CircuitElm> elements;
+
+        private LooseProjectionLifecycleFixture(GeneratedBoardInstance instance,
+                PcbWorkbenchController controller, String boardPadId,
+                PhysicalPart<?> multiTerminalPart, GeneratedExternalPowerBindings powerBindings,
+                Vector<CircuitElm> elements) {
+            this.instance = instance;
+            this.controller = controller;
+            this.boardPadId = boardPadId;
+            this.multiTerminalPart = multiTerminalPart;
+            this.powerBindings = powerBindings;
+            this.elements = elements;
+        }
+
+        static LooseProjectionLifecycleFixture create(CirSim sim,
+                PcbWorkbenchRenderer originalRenderer, PhysicalPartRenderRegistry registry) {
+            if (sim == null || originalRenderer == null || registry == null)
+                throw new IllegalArgumentException("Incomplete loose lifecycle fixture");
+            PcbBoardLayout layout = originalRenderer.getLayoutForProvider();
+            require(!layout.getComponents().isEmpty() && !layout.getPads().isEmpty(),
+                "Loose lifecycle fixture requires an existing board pad");
+            GeneratedBoardInstance originalInstance = sim.getGeneratedBoardInstance();
+            require(originalInstance != null && originalInstance.getBoard() != null,
+                "Loose lifecycle fixture requires the original board for layout identity");
+            TroubleshootBoard originalBoard = originalInstance.getBoard();
+            PhysicalPackage connectorPackage = PhysicalPackages.THROUGH_HOLE_CONNECTOR_2;
+            PcbPadPlacement layoutPad = null;
+            BoardPad layoutBoardPad = null;
+            for (PcbPadPlacement candidate : layout.getPads()) {
+                BoardPad candidateBoardPad = originalBoard.getPad(candidate.getPadId());
+                if (candidateBoardPad != null && connectorPackage.getTerminalIds().contains(
+                        candidateBoardPad.getTerminalId())) {
+                    layoutPad = candidate;
+                    layoutBoardPad = candidateBoardPad;
+                    break;
+                }
+            }
+            require(layoutPad != null && layoutBoardPad != null,
+                "Loose lifecycle fixture could not retain a connector-compatible layout pad");
+            String boardPadId = layoutPad.getPadId();
+            int separator = boardPadId.indexOf('.');
+            require(separator > 0, "Loose lifecycle fixture pad has no component identity");
+            String boardComponentId = boardPadId.substring(0, separator);
+            String selectedTerminalId = layoutBoardPad.getTerminalId();
+            String secondTerminalId = null;
+            for (String terminalId : connectorPackage.getTerminalIds())
+                if (!selectedTerminalId.equals(terminalId)) {
+                    secondTerminalId = terminalId;
+                    break;
+                }
+            require(secondTerminalId != null,
+                "Loose lifecycle fixture connector has no companion terminal");
+            String secondPadId = boardComponentId + "." + secondTerminalId;
+            require(!boardPadId.equals(secondPadId),
+                "Loose lifecycle fixture connector pads are not distinct");
+
+            Vector<CircuitElm> elements = new Vector<CircuitElm>();
+            Vector<CircuitElm> insertedElements = new Vector<CircuitElm>();
+            PcbWorkbenchController controller = null;
+            try {
+                TroubleshootBoard board = new TroubleshootBoard("TASK43_LOOSE_LIFECYCLE");
+                board.addNet(new BoardNet("CANARY_POWER"));
+                board.addNet(new BoardNet("CANARY_RETURN"));
+                board.addComponent(new BoardComponent(boardComponentId, "CONNECTOR",
+                    connectorPackage));
+                board.addPad(new BoardPad(boardPadId, boardComponentId, selectedTerminalId,
+                    "CANARY_POWER"));
+                board.addPad(new BoardPad(secondPadId, boardComponentId, secondTerminalId,
+                    "CANARY_RETURN"));
+                board.addPowerInput(new ExternalBoardPowerInput("CANARY_POWER_INPUT",
+                    boardPadId, secondPadId, "CANARY_POWER", "CANARY_RETURN"));
+
+                DCVoltageElm fixtureSupply = new DCVoltageElm(1800, 2200);
+                fixtureSupply.drag(1800, 1800);
+                fixtureSupply.maxVoltage = 5;
+                SwitchElm fixtureIsolation = new SwitchElm(1800, 1800);
+                fixtureIsolation.drag(1864, 1800);
+                WireElm boardWire = new WireElm(1864, 1800);
+                boardWire.drag(1880, 1800);
+                GroundElm returnGround = new GroundElm(1800, 2200);
+                returnGround.drag(1800, 2232);
+                elements.add(fixtureSupply);
+                elements.add(fixtureIsolation);
+                elements.add(boardWire);
+                elements.add(returnGround);
+                board.getSimulationBindings().bindPad(boardPadId,
+                    new CircuitPostMeasurementEndpoint(boardWire, 0));
+                board.getSimulationBindings().bindPad(secondPadId,
+                    new CircuitPostMeasurementEndpoint(returnGround, 0));
+                board.validate();
+
+                PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(board);
+                runtime.createSlot(boardComponentId);
+                Vector<PhysicalPart<?>> parts = new Vector<PhysicalPart<?>>();
+                PhysicalPackage[] packages = new PhysicalPackage[] {
+                    PhysicalPackages.AXIAL_RESISTOR, PhysicalPackages.AXIAL_DIODE,
+                    PhysicalPackages.THROUGH_HOLE_LED,
+                    PhysicalPackages.RADIAL_CERAMIC_CAPACITOR, PhysicalPackages.TO92_NPN,
+                    PhysicalPackages.TO92_NMOS
+                };
+                for (int index = 0; index < packages.length; index++) {
+                    LooseRenderCanaryPart part = LooseRenderCanaryPart.create(
+                        "TASK43_LOOSE_" + index, packages[index],
+                        isPolarizedCanaryPackage(packages[index]));
+                    runtime.registerPart(part);
+                    parts.add(part);
+                    elements.addAll(part.getElectricalBacking().getCircuitElements());
+                }
+                installFixtureElements(sim, elements, insertedElements);
+                LooseProjectionPartsProvider provider = new LooseProjectionPartsProvider(parts);
+                runtime.registerCapability(provider);
+
+                GeneratedComponentBindings componentBindings =
+                    new GeneratedComponentBindings(board);
+                GeneratedExternalPowerBindings powerBindings =
+                    new GeneratedExternalPowerBindings(board);
+                Vector<CircuitElm> powerElements = new Vector<CircuitElm>();
+                powerElements.add(fixtureSupply);
+                powerElements.add(fixtureIsolation);
+                powerBindings.bindPowerInput("CANARY_POWER_INPUT",
+                    new ExternalPowerSimulationBinding(powerElements,
+                        new SwitchExternalPowerControl(fixtureIsolation)));
+                GeneratedComponentConnectionBindings connectionBindings =
+                    new GeneratedComponentConnectionBindings(board);
+                BoardPhysicalSpecifications specifications = new BoardPhysicalSpecifications();
+                GeneratedChallengeBehaviorContract behavior =
+                    new GeneratedChallengeBehaviorContract() {
+                        public void verifyHealthy(GeneratedBoardInstance instance,
+                                BoardPowerState powerState) { }
+                        public void verifyFaulted(GeneratedBoardInstance instance,
+                                BoardModificationController modifications,
+                                BoardPowerState powerState) { }
+                        public GeneratedRepairStatus getRepairStatus(
+                                GeneratedBoardInstance instance,
+                                BoardModificationController modifications,
+                                BoardPowerState powerState, boolean activeMeasurementOverlay) {
+                            return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+                        }
+                        public boolean isFunctionallyRepaired(GeneratedBoardInstance instance,
+                                BoardModificationController modifications,
+                                BoardPowerState powerState, boolean activeMeasurementOverlay) {
+                            return false;
+                        }
+                    };
+                GeneratedBoardInstance instance = new GeneratedBoardInstance(board, elements,
+                    43L, QuickPlayFamilyRegistry.LED_INDICATOR, "TASK43_LOOSE_LIFECYCLE",
+                    "Task 43 loose lifecycle canary", componentBindings, powerBindings,
+                    connectionBindings, behavior, null, specifications, null, null, null, null,
+                    runtime, null, false, new Vector<GeneratedFaultCandidate>());
+                BoardModificationController modifications = new BoardModificationController(sim,
+                    instance);
+                controller = new PcbWorkbenchController(sim, instance, modifications, layout,
+                    null, false, false);
+                return new LooseProjectionLifecycleFixture(instance, controller, boardPadId,
+                    parts.lastElement(), powerBindings, elements);
+            } catch (RuntimeException failure) {
+                try {
+                    if (controller != null)
+                        controller.disposeForDeveloperVerification();
+                } finally {
+                    removeFixtureElements(sim, insertedElements);
+                }
+                throw failure;
+            }
+        }
+
+        void dispose(CirSim sim) {
+            try {
+                controller.disposeForDeveloperVerification();
+            } finally {
+                try {
+                    if (sim.getBoardPowerController().getBindingsForDeveloperVerification() ==
+                            powerBindings)
+                        sim.getBoardPowerController().detach();
+                } finally {
+                    removeFixtureElements(sim, elements);
+                }
+            }
+        }
+
+        void establishUnpowered(CirSim sim) {
+            BoardPowerController power = sim.getBoardPowerController();
+            power.attach(powerBindings);
+            require(power.setState(BoardPowerState.UNPOWERED),
+                "Loose lifecycle fixture could not switch its board power off");
+            require(power.isElectricallyUnpowered(),
+                "Loose lifecycle fixture did not establish electrical unpowered state");
+        }
+
+        private static void installFixtureElements(CirSim sim, Vector<CircuitElm> elements,
+                Vector<CircuitElm> insertedElements) {
+            for (CircuitElm element : elements) {
+                require(element != null && !sim.elmList.contains(element) &&
+                        !insertedElements.contains(element),
+                    "Loose lifecycle fixture attempted duplicate or missing element insertion");
+                sim.elmList.add(element);
+                insertedElements.add(element);
+            }
+        }
+
+        private static void removeFixtureElements(CirSim sim, Vector<CircuitElm> elements) {
+            if (sim == null || sim.elmList == null || elements == null)
+                return;
+            for (CircuitElm element : elements)
+                while (sim.elmList.remove(element)) {
+                }
+        }
+    }
+
+    private static final class LooseProjectionPartsProvider implements WorkbenchPartsProvider,
+            PhysicalBoardRuntimeCapability {
+        private final Vector<PhysicalPart<?>> parts;
+
+        LooseProjectionPartsProvider(Vector<PhysicalPart<?>> parts) {
+            this.parts = new Vector<PhysicalPart<?>>(parts);
+        }
+
+        public String getCapabilityId() { return "TASK43_LOOSE_LIFECYCLE_PARTS"; }
+        public String getComponentId() { return "TASK43_LOOSE_LIFECYCLE"; }
+        public String getCatalogTitle() { return ""; }
+        public String getInstallNewLabel() { return ""; }
+        public boolean showOccupiedMessageWhenPowered() { return false; }
+        public Vector<WorkbenchCatalogEntry> getCatalogEntries() {
+            return new Vector<WorkbenchCatalogEntry>();
+        }
+        public Vector<PhysicalPart<?>> getLooseParts() {
+            return new Vector<PhysicalPart<?>>(parts);
+        }
+        public String getPartLabel(PhysicalPart<?> part) {
+            return part == null ? "" : part.getId();
+        }
+        public PhysicalPart<?> getPart(String partId) {
+            for (PhysicalPart<?> part : parts)
+                if (part.getId().equals(partId))
+                    return part;
+            return null;
+        }
+        public boolean ownsPart(String partId) { return getPart(partId) != null; }
     }
 
     private static void verifyConnectedAndLiftedProbeSemantics(CirSim sim,

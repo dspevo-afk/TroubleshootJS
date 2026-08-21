@@ -215,6 +215,23 @@ class InstrumentController {
         activeStrategy.refresh(this);
     }
 
+    void onLooseProjectionChanged() {
+        boolean redCleared = redProbe != null && !redProbe.isValid();
+        boolean blackCleared = blackProbe != null && !blackProbe.isValid();
+        if (!redCleared && !blackCleared)
+            return;
+        if (redCleared)
+            redProbe = null;
+        if (blackCleared)
+            blackProbe = null;
+        activeStrategy.refresh(this);
+        updateReading();
+        setContinuityFeedbackForStrategy(false);
+        // Display/feedback widgets update immediately. The renderer or page
+        // handler owns the next paint; do not schedule one from this callback,
+        // which may run while a renderer repaint is already in progress.
+    }
+
     void onSimulationStepComplete(boolean didAnalyze) {
         if (sim.activeMeasurementOverlay)
             return;
@@ -531,7 +548,7 @@ class InstrumentController {
     }
 
     private void drawProbe(Graphics graphics, ProbeTarget target, Color color) {
-        if (target == null)
+        if (target == null || !target.isValid())
             return;
         Point point = target.getMarkerPoint();
         if (point == null)

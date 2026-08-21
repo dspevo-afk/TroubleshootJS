@@ -19,8 +19,18 @@ class PcbWorkbenchRenderer {
     private String selectedComponentId;
     private String selectedPartId;
     private int trayPage;
+    private Object looseProjectionToken = new Object();
+    private boolean looseProjectionInitialized;
+    private int observedLooseProjectionPage;
+    private Vector<PhysicalPart<?>> observedLooseProjection =
+        new Vector<PhysicalPart<?>>();
+    private LooseProjectionTransitionListener looseProjectionListener;
     private final HashMap<String, InstalledProjectionObservation> installedObservations =
         new HashMap<String, InstalledProjectionObservation>();
+
+    interface LooseProjectionTransitionListener {
+        void onLooseProjectionTransition();
+    }
 
     /** Renderer-local identity for one observed installed projection epoch. */
     private static final class InstalledProjectionObservation {
@@ -55,6 +65,10 @@ class PcbWorkbenchRenderer {
         this.modifications = modifications;
         this.layout = layout;
         this.renderRegistry = renderRegistry;
+    }
+
+    void setLooseProjectionTransitionListener(LooseProjectionTransitionListener listener) {
+        looseProjectionListener = listener;
     }
 
     void draw(Graphics graphics, Rectangle area) {
@@ -313,22 +327,53 @@ class PcbWorkbenchRenderer {
         return Math.max(1, (count + PARTS_PER_TRAY_PAGE - 1) / PARTS_PER_TRAY_PAGE);
     }
     void setTrayPage(int page) {
-        trayPage = clampTrayPageValue(page);
-        clearSelectedPartIfHidden(getAllLoosePhysicalParts());
+        Vector<PhysicalPart<?>> all = getAllLoosePhysicalParts();
+        trayPage = clampTrayPageValue(page, all.size());
+        synchronizeLooseProjection(all);
+        clearSelectedPartIfHidden(all);
     }
     void clampTrayPage() {
-        trayPage = clampTrayPageValue(trayPage);
-        clearSelectedPartIfHidden(getAllLoosePhysicalParts());
+        Vector<PhysicalPart<?>> all = getAllLoosePhysicalParts();
+        trayPage = clampTrayPageValue(trayPage, all.size());
+        synchronizeLooseProjection(all);
+        clearSelectedPartIfHidden(all);
     }
 
     Vector<PhysicalPart<?>> getVisibleLoosePhysicalParts() {
         Vector<PhysicalPart<?>> all = getAllLoosePhysicalParts();
-        clampTrayPage();
+        trayPage = clampTrayPageValue(trayPage, all.size());
+        Vector<PhysicalPart<?>> result = getVisibleLoosePhysicalParts(all);
+        synchronizeLooseProjection(all, result);
+        clearSelectedPartIfHidden(all);
+        return result;
+    }
+
+    Object captureLooseProjectionToken() { return looseProjectionToken; }
+
+    boolean isLooseProjectionTokenCurrent(Object token) {
+        return token != null && token == looseProjectionToken;
+    }
+
+    /** Pure target-lifecycle predicate; it never clamps, clears, or advances projection state. */
+    boolean isLoosePartVisibleOnCurrentPage(String partId) {
+        if (partId == null || trayPage < 0)
+            return false;
+        Vector<PhysicalPart<?>> all = getAllLoosePhysicalParts();
+        int start = trayPage * PARTS_PER_TRAY_PAGE;
+        if (start < 0 || start >= all.size())
+            return false;
+        int end = Math.min(all.size(), start + PARTS_PER_TRAY_PAGE);
+        for (int index = start; index < end; index++)
+            if (partId.equals(all.get(index).getId()))
+                return true;
+        return false;
+    }
+
+    private Vector<PhysicalPart<?>> getVisibleLoosePhysicalParts(Vector<PhysicalPart<?>> all) {
         Vector<PhysicalPart<?>> result = new Vector<PhysicalPart<?>>();
         int start = trayPage * PARTS_PER_TRAY_PAGE;
         for (int index = start; index < all.size() && index < start + PARTS_PER_TRAY_PAGE; index++)
             result.add(all.get(index));
-        clearSelectedPartIfHidden(all);
         return result;
     }
 
@@ -421,7 +466,47 @@ class PcbWorkbenchRenderer {
     }
 
     private int clampTrayPageValue(int page) {
-        return Math.max(0, Math.min(page, getTrayPageCount() - 1));
+        return clampTrayPageValue(page, getLoosePartCount());
+    }
+
+    private int clampTrayPageValue(int page, int loosePartCount) {
+        int pageCount = Math.max(1, (loosePartCount + PARTS_PER_TRAY_PAGE - 1) /
+            PARTS_PER_TRAY_PAGE);
+        return Math.max(0, Math.min(page, pageCount - 1));
+    }
+
+    private void synchronizeLooseProjection(Vector<PhysicalPart<?>> all) {
+        synchronizeLooseProjection(all, getVisibleLoosePhysicalParts(all));
+    }
+
+    private void synchronizeLooseProjection(Vector<PhysicalPart<?>> all,
+            Vector<PhysicalPart<?>> visible) {
+        if (all == null || visible == null)
+            return;
+        boolean changed = !looseProjectionInitialized ||
+            observedLooseProjectionPage != trayPage ||
+            !sameLooseProjection(observedLooseProjection, visible);
+        if (!changed)
+            return;
+        observedLooseProjectionPage = trayPage;
+        observedLooseProjection = new Vector<PhysicalPart<?>>(visible);
+        if (!looseProjectionInitialized) {
+            looseProjectionInitialized = true;
+            return;
+        }
+        looseProjectionToken = new Object();
+        if (looseProjectionListener != null)
+            looseProjectionListener.onLooseProjectionTransition();
+    }
+
+    private boolean sameLooseProjection(Vector<PhysicalPart<?>> first,
+            Vector<PhysicalPart<?>> second) {
+        if (first == null || second == null || first.size() != second.size())
+            return false;
+        for (int index = 0; index < first.size(); index++)
+            if (first.get(index) != second.get(index))
+                return false;
+        return true;
     }
 
     private PhysicalPartRenderer requireRenderer(PhysicalPackage physicalPackage,
