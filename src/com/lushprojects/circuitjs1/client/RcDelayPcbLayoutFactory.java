@@ -58,41 +58,43 @@ final class RcDelayPcbLayoutFactory {
         int j1ReturnEscapeX = escapeX(j12);
         int j1ReturnEscapeY = escapeY(j12);
         int r1OutputEscapeX = escapeX(r12);
-        int r1OutputEscapeY = escapeY(r12);
-        int r2RouteX = r1OutputEscapeX + 20;
-        int r2ReturnEscapeX = escapeX(r22);
-        int r2ReturnEscapeY = escapeY(r22);
+        int r1Span = r12.getX() - 170;
+        int r2InputEscapeX = escapeX(r21);
 
-        trace(layout, "VIN", "J1.1", "R1.1", j11.getX(),j11.getY(), j1EscapeX,j1EscapeY,
-            j1EscapeX,r11.getY(), r11.getX(),r11.getY());
-        trace(layout, "VIN", "J1.1", "C2.1", j11.getX(),j11.getY(), j1EscapeX,j1EscapeY,
-            j1EscapeX,170, c21.getX(),170, c21.getX(),c21.getY());
+        trace(layout, "VIN", "J1.1", "R1.1", j11.getX(),j11.getY(),
+            j1EscapeX + 10,j1EscapeY, j1EscapeX + 10,r11.getY(), r11.getX(),r11.getY());
+        trace(layout, "VIN", "J1.1", "C2.1", j11.getX(),j11.getY(), 300,j11.getY(),
+            300,275, c21.getX(),275, c21.getX(),c21.getY());
 
         trace(layout, "RC_OUT", "R1.2", "C1.+", r12.getX(),r12.getY(),
-            r1OutputEscapeX,r1OutputEscapeY, r1OutputEscapeX,60, c1p.getX(),60,
+            r1OutputEscapeX,r12.getY(), r1OutputEscapeX,47, c1p.getX(),47,
             c1p.getX(),c1p.getY());
         trace(layout, "RC_OUT", "R1.2", "J2.1", r12.getX(),r12.getY(),
-            r1OutputEscapeX,r1OutputEscapeY, r1OutputEscapeX,30, j21.getX(),30,
+            r1OutputEscapeX,r12.getY(), r1OutputEscapeX,47, j21.getX(),47,
             j21.getX(),j21.getY());
-        trace(layout, "RC_OUT", "R1.2", "R2.1", r12.getX(),r12.getY(),
-            r1OutputEscapeX,r1OutputEscapeY, r1OutputEscapeX,30, r2RouteX,30,
-            r2RouteX,320,
-            r21.getX(),r21.getY());
+        if (r1Span == 260) {
+            trace(layout, "RC_OUT", "R1.2", "R2.1", r12.getX(),r12.getY(),
+                r1OutputEscapeX,r12.getY(), r1OutputEscapeX,290,
+                r2InputEscapeX,r21.getY(), r21.getX(),r21.getY());
+        } else {
+            trace(layout, "RC_OUT", "R1.2", "R2.1", r12.getX(),r12.getY(),
+                r1OutputEscapeX,r12.getY(), r1OutputEscapeX,290,
+                r2InputEscapeX,290, r2InputEscapeX,r21.getY(),
+                r21.getX(),r21.getY());
+        }
 
         trace(layout, "GND", "J1.2", "C1.-", j12.getX(),j12.getY(),
-            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 840,400, 840,50,
-            c1m.getX(),50, c1m.getX(),c1m.getY());
+            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 300,400, 300,365,
+            850,365, 850,62, c1m.getX(),62, c1m.getX(),c1m.getY());
         trace(layout, "GND", "J1.2", "J2.2", j12.getX(),j12.getY(),
-            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 1100,400, 1100,20,
-            j22.getX(),20, j22.getX(),150,
-            j22.getX(),j22.getY());
+            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 300,400, 300,365,
+            1016,365, 1016,62, j22.getX(),62, j22.getX(),j22.getY());
         trace(layout, "GND", "J1.2", "C2.2", j12.getX(),j12.getY(),
-            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 300,400, 300,250,
-            c22.getX(),250, c22.getX(),c22.getY());
+            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 300,400, 300,290,
+            c22.getX(),290, c22.getX(),c22.getY());
         trace(layout, "GND", "J1.2", "R2.2", j12.getX(),j12.getY(),
-            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,440, 1100,440,
-            1100,r2ReturnEscapeY,
-            r2ReturnEscapeX,r2ReturnEscapeY, r22.getX(),r22.getY());
+            j1ReturnEscapeX,j1ReturnEscapeY, j1ReturnEscapeX,400, 300,400, 300,365,
+            850,365, 850,320, r22.getX(),r22.getY());
     }
 
     private static int escapeX(PcbPadPlacement pad) {

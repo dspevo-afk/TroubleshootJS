@@ -1520,3 +1520,44 @@ giant empty-tray hit regions, markers outside declared surfaces, and
 body/terminal transform mismatches with explicit failure reasons. No routing,
 board placement, CircuitJS electrical topology, measurement primitive, fault,
 stress/damage, or replacement-catalog behavior changed.
+
+## Task 43R-5 — RC fixed-layout reconstruction
+
+Recovery slice 43R-5 replaces the stale authored RC copper route after the
+version-3 package escape correction. `RcDelayPcbLayoutFactory` keeps the live
+RC logical topology and every fixed component anchor unchanged: J1 at
+`(50,150)`, R1 at `(200,90)`, C1 at `(700,70)`, J2 at `(900,160)`, R2 at
+`(500,290)`, and C2 at `(200,300)`. J2 remains the typed
+`THROUGH_HOLE_OUTPUT_HEADER_2` package with `DEFAULT`/`IDENTITY` geometry.
+The route is derived from the generated pad centers and declared v3 escapes;
+it does not move components or duplicate package geometry.
+
+The global route witness contains two VIN branches from J1.1, three RC_OUT
+branches from R1.2, and four GND branches from J1.2. VIN uses the R1.1 lane
+at y=190/120 and the C2.1 lane at y=190/275. RC_OUT leaves the R1.2
+escape, rises to the y=47 upper lane, and branches to C1.+ and J2.1; its
+R2.1 branch drops through the span-specific x coordinate at y=290. GND uses
+the lower y=400/y=365 trunk, then rises through the C1.- and J2.2 v3 upward
+escapes at y=62; the C2.2 branch uses y=290 and the R2.2 branch uses the
+lower return lane. The three R1/R2 axial spans (220, 240, 260) use the
+approved finite branch forms, including the direct x=480 transition for
+the 260/220 case, without duplicate or zero-length segments.
+
+The route factory still runs the generic `PcbBoardLayout` oracle after
+compaction. Compaction applies one checked rigid translation to all geometry
+and uses the four existing seed-origin classes, so component/package
+identity and route fingerprints remain deterministic while the board stays
+content-fitted. The corrected C2 and J2 escape lengths are consumed from the
+package pads rather than reintroduced as route constants.
+
+The closed R5 witness covers all nine structural span combinations and all
+four compaction-origin classes, with complete VIN/RC_OUT/GND physical
+connectivity, full-width courtyard containment, unrelated-net clearance,
+silkscreen/body/pad separation, route-quality limits, and deterministic
+fingerprints. The in-app fixed-layout verifier reports `PASS:layout`. The
+RC electrical/stored-energy browser route remains limited by the accepted
+43R-4C renderer debt (`Renderer omitted disconnected component-side lead:
+C1.+`); Task 40/41 corpus routes likewise stop at their deferred NPN fixed
+layout. These are validation boundaries, not R5 route changes. No generic
+validator, renderer, electrical model, fault model, NPN, NMOS, or Task 44
+code changed.
