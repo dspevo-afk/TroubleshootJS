@@ -1561,3 +1561,50 @@ C1.+`); Task 40/41 corpus routes likewise stop at their deferred NPN fixed
 layout. These are validation boundaries, not R5 route changes. No generic
 validator, renderer, electrical model, fault model, NPN, NMOS, or Task 44
 code changed.
+
+## Task 43R-6 — NPN fixed-layout reconstruction
+
+Recovery slice 43R-6 replaces the stale authored NPN copper route after the
+version-3 package escape correction. `NpnLowSideSwitchPcbLayoutFactory`
+preserves the live NPN topology, component anchors, package providers, and
+CircuitJS node identities. The route is reconstructed globally from the
+current pad centers and declared package escapes; no generic validator,
+renderer, placement, geometry contract, or electrical behavior changed.
+
+The fixed board has J1 at `(170,150)`, J2 at `(170,570)`, RLOAD at
+`(330,100)`, RB at `(530,530)`, RPD at `(280,380)`, LED1 at `(620,140)`,
+and Q1 at `(970,190)` before compaction. Each resistor selects one of the
+three canonical axial spans `SPAN_220`, `SPAN_240`, or `SPAN_260`, so the
+explicit structural matrix is 3 × 3 × 3 = 27 resistor tuples. The nine
+authored traces are the two supply/control paths, load path, collector path,
+two Q1-base branches, and the four-way J1.2 ground tree:
+
+- `LOAD_SUPPLY`: J1.1 to RLOAD.1;
+- `CONTROL`: J2.1 to RB.1;
+- `LOAD_NODE`: RLOAD.2 to LED1.A;
+- `COLLECTOR`: LED1.K to Q1.C;
+- `BASE_RPD`: Q1.B to RPD.1;
+- `BASE_RB`: Q1.B to RB.2;
+- `GND_J1_J2`: J1.2 to J2.2;
+- `GND_J1_RPD`: J1.2 to RPD.2;
+- `GND_J1_Q1`: J1.2 to Q1.E.
+
+The base routes use the upper y=36 lane and separate y=330/y=470 branches.
+The ground tree uses the translated x=60/y=430 trunk, a y=440 RPD detour,
+and the emitter branch's x=214 separation from the RPD branch. The paths
+have no duplicate, zero-length, self-intersecting, or courtyard-crossing
+segments; the closed witness records minimum distinct-net centerline
+separation of 16 units. Compaction remains a checked rigid translation and
+preserves package/variant identity, route membership, and deterministic
+fingerprints across its four origin classes.
+
+`NpnFixedLayoutDeveloperVerifier` executes all 27 canonical resistor tuples
+across all four compaction-origin classes, for 108/108 cases. It uses the
+live generator fixture, canonical package objects, exact nine-trace endpoint
+and membership assertions, the real `PcbBoardLayout.validateGeometry`
+oracle, deterministic duplicate fingerprints, and normalized translation
+equivalence. The NPN ground-tree verifier now derives its checks from the
+placed, compacted J1.2/J2.2 pads rather than stale absolute coordinates.
+The build and developer outputs were `PASS:NPN_FIXED_LAYOUT_MATRIX`,
+`PASS:npn`, and `PASS:task43`; the expected NMOS fixed-layout frontier
+remains deferred to 43R-7.

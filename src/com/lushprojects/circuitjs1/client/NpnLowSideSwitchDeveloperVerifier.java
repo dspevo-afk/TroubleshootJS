@@ -193,7 +193,18 @@ final class NpnLowSideSwitchDeveloperVerifier {
             require(instance.getBoard().getPad(padId) != null &&
                 "GND".equals(instance.getBoard().getPad(padId).getNetId()),
                 "NPN ground pad lost its stable GND net identity: " + padId);
-        int shift = (int) (((instance.getSeed() % 4) + 4) % 4) * 10;
+        PcbPadPlacement j12 = layout.getPad("J1.2");
+        PcbPadPlacement j22 = layout.getPad("J2.2");
+        require(j12 != null && j22 != null,
+            "NPN ground tree lost connector pad placements");
+        int variationShift = (int) (((instance.getSeed() % 4) + 4) % 4) * 10;
+        int compactionDx = j12.getX() - (170 + variationShift);
+        int compactionDy = j12.getY() - 180;
+        int expectedGroundTreeX = 60 + variationShift + compactionDx;
+        int expectedGroundTreeY = 430 + compactionDy;
+        int expectedRpdTreeX = 520 + variationShift + compactionDx;
+        int expectedOldLoopX = 50 + variationShift + compactionDx;
+        int expectedOldLoopY = 700 + compactionDy;
         int groundTraceCount = 0;
         for (PcbTraceGeometry trace : layout.getTraces()) {
             if (!"GND".equals(trace.getNetId()))
@@ -206,21 +217,21 @@ final class NpnLowSideSwitchDeveloperVerifier {
             int[] x = trace.getXPoints();
             int[] y = trace.getYPoints();
             for (int index = 0; index < x.length; index++) {
-                require(!(x[index] == 50 + shift && y[index] == 700),
+                require(!(x[index] == expectedOldLoopX && y[index] == expectedOldLoopY),
                     "NPN ground tree retained the old loop/detour geometry");
                 for (int prior = 0; prior < index; prior++)
                     require(x[index] != x[prior] || y[index] != y[prior],
                         "NPN ground trace repeats a point: " + trace.getEndPadId());
             }
             if ("J2.2".equals(trace.getEndPadId()))
-                require(hasPoint(trace, 60 + shift, 600),
+                require(hasPoint(trace, expectedGroundTreeX, j22.getY()),
                     "NPN J2.2 ground branch did not use the shared trunk");
             else {
-                require(hasPoint(trace, 60 + shift, 430),
-                    "NPN ground branch did not leave the shared y=430 trunk");
+                require(hasPoint(trace, expectedGroundTreeX, expectedGroundTreeY),
+                    "NPN ground branch did not leave the shared translated y=430 trunk");
                 if ("RPD.2".equals(trace.getEndPadId()))
-                    require(hasPoint(trace, 520 + shift, 430),
-                        "NPN RPD.2 branch did not use its deterministic tree escape");
+                    require(hasPoint(trace, expectedRpdTreeX, expectedGroundTreeY),
+                        "NPN RPD.2 branch did not use its deterministic translated tree escape");
                 else {
                     PcbPadPlacement emitter = layout.getPad("Q1.E");
                     require(hasPoint(trace, emitter.getX() + emitter.getEscapeDx() *

@@ -27,6 +27,7 @@ final class Task43DeveloperVerifier {
         for (PhysicalPackage physicalPackage : registered)
             verifyPackage(physicalPackage, footprints, renderers);
         verifyGeneratedIdentity(instance);
+        NpnFixedLayoutDeveloperVerifier.verify();
         verifySelectedGeometryLifecycleCanary();
         verifyNegativeCanaries(registered);
         PcbR2DeveloperVerifier.verify();

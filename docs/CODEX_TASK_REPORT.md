@@ -1,141 +1,144 @@
-# Task 43R-5 completion report — RC fixed-layout reconstruction
+# Task 43R-6 completion report — NPN fixed-layout reconstruction
 
 ## Roadmap milestone
 
-Task 43 recovery milestone **43R-5 — RC fixed-layout reconstruction** is
-complete. This task was limited to the fixed RC route. 43R-6 (NPN), 43R-7
-(NMOS), 43R-8 (Task 43 acceptance/regression), and Task 44 were not started.
-The roadmap now identifies 43R-6 as the next eligible milestone.
+Task 43 recovery milestone **43R-6 — NPN fixed-layout reconstruction** is
+complete. This task was limited to the NPN fixed route and its NPN-specific
+developer evidence. 43R-7 (NMOS), 43R-8 (final Task 43 acceptance), and Task
+44 were not started. The roadmap now identifies 43R-7 as the next eligible
+milestone.
+
+## Starting point and scope
+
+- Branch: `codex/task43-recovery-integration`
+- Starting accepted head: `a006a1d6be8728f48af8a94b35abe88ab43b7716`
+- Starting state: clean and equal to
+  `origin/codex/task43-recovery-integration`.
+- Allowed production source: `NpnLowSideSwitchPcbLayoutFactory.java`.
+- Allowed support changes: NPN-specific developer verification, Task 43 NPN
+  aggregation, and the three handoff documents.
+- RC/NMOS factories, package/geometry contract, generic validators, renderer,
+  measurement/fault/stress/replacement systems, and Task 44 were untouched.
 
 ## Summary
 
-`RcDelayPcbLayoutFactory` was reconstructed from the approved global route
-witness for the current package geometry contract v3. The authored RC copper
-route now uses all six fixed component anchors, all logical VIN/RC_OUT/GND
-memberships, and the corrected package-declared escapes. The old RC copper was
-not locally patched; the route was replaced globally.
+`NpnLowSideSwitchPcbLayoutFactory` now uses one approved global all-net route
+set for the current version-3 package geometry. The route keeps the live NPN
+topology, component anchors, canonical package objects, stable electrical
+node identities, and compaction behavior. It consumes pad centers and
+declared package escapes instead of relying on the stale authored route.
 
-The implementation covers the complete finite R1/R2 span matrix (220, 240,
-260 ohms represented by the seeded axial spans), including the one direct
-transition required by the 260-span branch. Existing compaction remains a
-uniform rigid translation over its four seed-origin classes.
+The un-compacted anchors are J1 `(170,150)`, J2 `(170,570)`, RLOAD
+`(330,100)`, RB `(530,530)`, RPD `(280,380)`, LED1 `(620,140)`, and Q1
+`(970,190)`. The nine trace memberships are:
 
-## Architectural decisions
+- `LOAD_SUPPLY`: J1.1 → RLOAD.1;
+- `CONTROL`: J2.1 → RB.1;
+- `LOAD_NODE`: RLOAD.2 → LED1.A;
+- `COLLECTOR`: LED1.K → Q1.C;
+- `BASE_RPD`: Q1.B → RPD.1;
+- `BASE_RB`: Q1.B → RB.2;
+- `GND_J1_J2`: J1.2 → J2.2;
+- `GND_J1_RPD`: J1.2 → RPD.2;
+- `GND_J1_Q1`: J1.2 → Q1.E.
 
-- The live RC topology remains unchanged:
-  - VIN: `J1.1`, `R1.1`, `C2.1`;
-  - RC_OUT: `R1.2`, `C1.+`, `J2.1`, `R2.1`;
-  - GND: `J1.2`, `C1.-`, `J2.2`, `C2.2`, `R2.2`.
-- Component anchors remain J1 `(50,150)`, R1 `(200,90)`, C1 `(700,70)`,
-  J2 `(900,160)`, R2 `(500,290)`, and C2 `(200,300)`.
-- J2 remains `THROUGH_HOLE_OUTPUT_HEADER_2` with `DEFAULT`/`IDENTITY`
-  geometry. No package, orientation, placement, or geometry-contract change
-  was made.
-- The route consumes pad centers and declared v3 escapes. C2 and J2 use
-  their corrected 35-unit escapes; no stale v2 escape value is reintroduced.
-- The generic `PcbBoardLayout` validator remains the electrical/physical
-  geometry oracle. No renderer, generic validator, CircuitJS electrical,
-  fault, stress/damage, NPN, NMOS, or Task 44 code was changed.
+The three canonical axial span variants are independently selected for
+RLOAD, RB, and RPD: 27 structural tuples total. Four existing compaction
+origin classes produce the closed 27 × 4 = **108-case** witness. The base
+routes use the y=36 upper lane with y=330 and y=470 branches. The ground
+tree uses the x=60/y=430 trunk, the y=440 RPD detour, and the separated
+emitter branch. The resulting routes have no duplicate, zero-length,
+self-intersecting, or courtyard-crossing segment; minimum distinct-net
+centerline separation is 16 units.
+
+`NpnFixedLayoutDeveloperVerifier` uses the live generator fixture, canonical
+package objects, exact trace endpoint and membership assertions, the real
+`PcbBoardLayout.validateGeometry` oracle, deterministic duplicate
+fingerprints, and normalized rigid-translation equivalence. The existing NPN
+ground-tree checks were made translation-relative to the compacted J1.2/J2.2
+pads.
 
 ## Files changed
 
-- `src/com/lushprojects/circuitjs1/client/RcDelayPcbLayoutFactory.java` —
-  reconstructed the nine-case RC route witness.
-- `docs/ARCHITECTURE.md` — documented the R5 route and validation boundary.
-- `docs/ROADMAP.md` — marked 43R-5 complete and identified 43R-6 as next.
+- `src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchPcbLayoutFactory.java`
+  — reconstructed the global nine-trace NPN route and added the bounded
+  developer matrix factory overload.
+- `src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchDeveloperVerifier.java`
+  — updated ground-tree checks to use the placed compacted pads.
+- `src/com/lushprojects/circuitjs1/client/NpnFixedLayoutDeveloperVerifier.java`
+  — added the explicit 27-tuple × 4-origin NPN witness.
+- `src/com/lushprojects/circuitjs1/client/Task43DeveloperVerifier.java` —
+  included the NPN fixed-layout matrix in the Task 43 developer aggregation.
+- `docs/ARCHITECTURE.md` — documented the R6 route and validation boundary.
+- `docs/ROADMAP.md` — marked R6 complete and identified R7 as next.
 - `docs/CODEX_TASK_REPORT.md` — this handoff report.
-- `docs/task-evidence/task-43/rc-production-preview.png` — final production
-  preview, normal-player powered state.
-- `docs/task-evidence/task-43/rc-production-power-off.png` — final production
-  preview after the normal-player board-power interaction.
 
 ## Validation performed
 
-### Implementation and finite route witness
+### Build and developer verifiers
 
-- Approved route witness: all 9 structural R1/R2 span combinations × all 4
-  compaction-origin classes = **36/36 PASS**.
-- VIN, RC_OUT, and GND physical connectivity passed for every case.
-- v3 endpoint escape legality passed for C2 and J2 upward escapes.
-- Full-width courtyard containment, unrelated-net clearance, silkscreen
-  separation, body/pad separation, route quality, and deterministic identity
-  checks passed.
-- Route metrics from the closed witness: trace width 9; minimum centerline
-  separation 15; minimum unrelated-net visible gap 6; maximum bends 8; maximum
-  detour ratio 2.5; no self-intersection, duplicate, repeated, or zero-length
-  segment.
-- The in-app fixed-layout developer verifier reported `PASS:layout` on the RC
-  route after the final production source candidate was built.
+Final build command:
 
-### Build
+`.\scripts\build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
 
-Final command:
+Result: bundled JDK 8 accepted; all five GWT permutations compiled;
+production linking succeeded.
 
-`scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
+The cache-busted compiled production preview ran the in-app developer route
+with `tsjVerifyLayout=true`, `tsjVerifyNpn=true`, and
+`tsjVerifyTask43=true`. Observed results:
 
-Result: bundled JDK 8 accepted; all five production GWT permutations compiled;
-production link succeeded.
+- `PASS:NPN_FIXED_LAYOUT_MATRIX:cases=108/108;variantTuples=27;originClasses=4`;
+- `PASS:task43`;
+- NPN electrical report published solver-backed +9 V/+5 V rails, 330 Ω
+  RLOAD, 21.48 mA load/LED current, 4.31 mA base current, and 0.1523 W
+  RLOAD power;
+- the same run reached the expected deferred NMOS courtyard frontier and
+  did not claim NMOS success.
 
-### RC, stored-energy, and adjacent regression verifiers
+### Normal-player validation
 
-- The RC + stored-energy in-app developer route executed, then stopped on the
-  accepted 43R-4C external renderer debt:
-  `Renderer omitted disconnected component-side lead: C1.+`.
-  This is the known loose/renderer validation boundary and is not an R5 route
-  or geometry failure. The deferred Edge/WMI/CDP browser harness debt was not
-  retried.
-- The Task 40 and Task 41 corpus routes executed through their developer
-  verifiers but stopped at the already-deferred NPN fixed-layout route with:
-  `PCB trace passes through component routing courtyard: LOAD_SUPPLY / RLOAD
-  segment 310,60 -> 310,100 keepOut=Rect(312,75,216,60) ...`.
-  That is the R6 dependency boundary; no NPN source was changed during R5.
-- No verifier result was fabricated or replaced with a hard-coded UI value.
+The visible in-app browser production page rendered the actual NPN PCB with
+board traces, components, service ticket, power control, meter controls, and
+parts tray. Through normal visible interaction, the check clicked `Set
+control HIGH`, `Set control LOW`, and `Retest Customer`. The rendered result
+was `Customer retest did not pass. Continue troubleshooting.`, which is the
+expected unrepaired challenge behavior.
 
-### Production visual evidence
-
-The final production build was served from `war/` and inspected in the Codex
-in-app browser using normal-player mode. Both screenshots are nonblank and
-show the actual RC PCB, routed copper, labeled components, J2, C2, service
-ticket, and parts tray. The powered screenshot proves the final visible board
-state; the power-off screenshot proves the normal board-power interaction
-leaves the reconstructed copper visible and stable.
+The first preview attempts were blank because the browser had a stale GWT
+selection/bootstrap cache: it requested old missing permutation hashes and,
+on one origin, a stale Super Dev Mode recompile hook. Super Dev Mode was not
+needed or enabled. A temporary no-cache local preview with a cache-busted
+`circuitjs1.nocache.js` URL served the current compiled `war/` and rendered
+the page; no product source or preview script was changed for this fix.
+The separate external `scripts/verify-browser.ps1 -Npn -Layout` harness
+still ended with a WebSocket close and Edge-process cleanup `Access denied`
+from WMI, so that host limitation remains recorded separately from the
+successful visible in-app check.
 
 ## Multi-agent implementation and review
 
-- Coder: Copernicus (Luna MAX), delegated the single production-file change;
-  returned only the authorized source modification and did not commit or push.
-  Two correction rounds removed a zero-length R2.2 segment and an extra
-  collinear J1.1 route vertex. The final candidate passed the coder’s build and
-  layout checks.
-- Independent reviewer: Godel (fresh read-only Luna MAX). Initial review
-  identified the extra collinear route vertex as a deterministic-fingerprint
-  blocker. After the authorized correction, the reviewer re-read the final
-  diff and returned **PASS**.
-- Primary architect review rounds: two implementation correction rounds,
-  followed by one final acceptance review of the source, diff, witness,
-  validation, and scope.
+- Phase A investigators: Bacon, Gibbs, and Anscombe; read-only, parallel,
+  `gpt-5.6-luna` MAX reasoning. Their route reports were reconciled before
+  implementation and the verifier-compatible witness was frozen.
+- Coder: Tesla; single write-capable `gpt-5.6-luna` MAX worker. Changed only
+  the authorized NPN/developer files and returned the build/verifier evidence.
+- Independent reviewer: Averroes; fresh read-only `gpt-5.6-luna` MAX reviewer.
+  Re-read the final diff and returned **PASS** for route membership, 108-case
+  matrix coverage, identity, translation, and scope.
+- Primary architect review: one final diff/scope review after the coder and
+  before the independent review; **FINAL PASS**.
 - Escalation architect: not required.
-- Primary architect final result: **FINAL PASS**.
-
-## Known limitations and follow-up
-
-- 43R-4C’s Edge/WMI/CDP host debt remains deferred to 43R-8 and was not
-  retried as R5 work.
-- The RC electrical/stored-energy route is still blocked by the known R4C
-  disconnected-lead renderer error.
-- Task 40/41 full corpus routes remain blocked at the deferred NPN geometry
-  signature; this is the reason 43R-6 is next.
-- No R6, R7, R8, or Task 44 implementation was begun.
 
 ## Completion protocol handoff
 
-- Intended commit message: `Reconstruct Task 43 RC fixed routing`
+- Intended commit message: `Reconstruct Task 43 NPN fixed routing`
 - Branch: `codex/task43-recovery-integration`
 - Upstream: `origin/codex/task43-recovery-integration`
 - Configured remote: `origin` (`https://github.com/dspevo-afk/TroubleshootJS.git`)
 - Notification destination: `dspevock@stateofthearcelectric.com`
-- Intended subject: `TroubleshootJS: Task 43R-5 RC fixed routing pushed`
+- Intended subject: `TroubleshootJS: Task 43R-6 NPN fixed routing pushed`
 
-The authoritative final commit SHA, push result, and notification result are
-established after this report is written and are available from repository
-history and the final Codex task response.
+The authoritative final commit SHA, verified push result, and notification
+result are established after this report is written and are available from
+repository history and the final Codex task response.
