@@ -1605,6 +1605,40 @@ and membership assertions, the real `PcbBoardLayout.validateGeometry`
 oracle, deterministic duplicate fingerprints, and normalized translation
 equivalence. The NPN ground-tree verifier now derives its checks from the
 placed, compacted J1.2/J2.2 pads rather than stale absolute coordinates.
-The build and developer outputs were `PASS:NPN_FIXED_LAYOUT_MATRIX`,
-`PASS:npn`, and `PASS:task43`; the expected NMOS fixed-layout frontier
-remains deferred to 43R-7.
+At the end of 43R-6, the build and developer outputs were
+`PASS:NPN_FIXED_LAYOUT_MATRIX`, `PASS:npn`, and `PASS:task43`; the NMOS
+fixed-layout frontier was then deferred to 43R-7.
+
+## Task 43R-7 — NMOS fixed-layout reconstruction
+
+Recovery slice 43R-7 replaces the abandoned NMOS authored copper route after
+the version-3 package escape correction. `NmosLowSideSwitchPcbLayoutFactory`
+preserves the live NMOS topology, fixed component anchors, canonical package
+objects, stable board/component/pad/net identities, and CircuitJS endpoint
+bindings. The route is derived from named pad centers and package-declared
+escapes; no generic geometry, validator, electrical, measurement, fault,
+stress, replacement, RC, NPN, or Task 44 implementation changed.
+
+The approved un-compacted anchors are J1 `(80+s,80)`, J2 `(80+s,400)`, RLOAD
+`(350+s,200)`, RPD `(300+s,320)`, LED1 `(500+s,70)`, and Q1 `(900+s,100)` on
+the existing 1300x680 canvas, with `s=10*m` for four origin classes. RLOAD
+and RPD independently select `SPAN_220`, `SPAN_240`, or `SPAN_260`. The eight
+traces are inserted in this order: LOAD_SUPPLY, LOAD_NODE, DRAIN,
+CONTROL_INPUT to RPD.1, CONTROL_INPUT to Q1.G, and the three J1.2-rooted GND
+branches to J2.2, RPD.2, and Q1.S. The DRAIN upper lane is dynamically 20 units
+right of the LOAD_NODE resistor escape lane. Q1 has no internal terminal
+connectivity, so all three control/load-return unions are physical copper.
+
+After labels and copper are added, the factory applies the established rigid
+compaction contract `compactToContent(40+s, 30+(m%2)*10, 26)`, positions the
+parts tray disjointly, and runs `validateGeometry`. The developer-only fixed
+factory overload and `NmosFixedLayoutDeveloperVerifier` cover all nine
+resistor tuples across all four origin classes, for exactly 36 cases. Each case
+checks the coordinate witness, endpoint order, logical membership, real
+physical-union oracle, package/escape parity, route quality, clearance,
+deterministic duplicate fingerprints, and normalized origin-class geometry.
+
+The normal in-app developer results are `PASS:NMOS_FIXED_LAYOUT_MATRIX`,
+`PASS:layout`, `PASS:task43`, and `PASS:nmos` for the existing nine NMOS
+electrical/control/mutation checks. 43R-8 is now the next eligible milestone;
+it was not started here.

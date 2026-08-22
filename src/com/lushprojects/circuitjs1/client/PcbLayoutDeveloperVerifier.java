@@ -70,9 +70,10 @@ class PcbLayoutDeveloperVerifier {
 
     /**
      * R-2 keeps the strict geometry contract authoritative.  These are the
-     * authored-route failures reserved for the later R-2/R-5/R-6/R-7 slices;
+     * authored-route failures reserved for the remaining R-2/R-5/R-6 slices;
      * only their exact fixed signatures are deferred here. All other layout
-     * failures remain hard verifier failures.
+     * failures, including the completed NMOS frontier, remain hard verifier
+     * failures.
      */
     private static boolean recordDeferredFixedLayoutFailure(String familyId,
             RuntimeException failure) {
@@ -93,10 +94,6 @@ class PcbLayoutDeveloperVerifier {
         else if ("NPN_LOW_SIDE_SWITCH".equals(familyId) && message != null &&
                 message.indexOf("PCB trace segment has zero length: 1050,230") >= 0)
             evidence = "DEFERRED R-2 fixed NPN layout: " + message;
-        else if ("NMOS_LOW_SIDE_SWITCH".equals(familyId) && message != null &&
-                message.indexOf("PCB trace passes through component routing courtyard: " +
-                    "LOAD_SUPPLY / RLOAD") >= 0)
-            evidence = "DEFERRED R-7 fixed NMOS layout: " + message;
         if (evidence == null)
             return false;
         CirSim.console(evidence);
