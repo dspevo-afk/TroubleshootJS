@@ -1673,7 +1673,7 @@ electrical/stored-energy browser route may still report the accepted renderer
 boundary for the disconnected C1 positive component-side lead; that is outside
 this fixed-layout acceptance proof.
 
-## Task 43R-4D — detached installed lead renderer/probe corrective closure
+## Historical pre-acceptance record — Task 43R-4D — detached installed lead renderer/probe corrective closure
 
 43R-4D classifies the remaining `Renderer omitted disconnected component-side
 lead: C1.+` failure as an `IMPLEMENTATION_FAILURE` in the generic developer
@@ -1752,7 +1752,7 @@ not be claimed in this environment because the Edge harness's WMI process
 inspection is denied and the in-app local preview remained at a blank GWT
 bootstrap shell.
 
-### Current 43R-4D acceptance evidence update — 2026-08-22
+### Historical pre-final-review 43R-4D acceptance-evidence update — 2026-08-22
 
 The preceding paragraph records the earlier blocked harness attempt. A clean
 compiled `war/` was subsequently served at `127.0.0.1:3000` and exercised by
@@ -1777,5 +1777,5 @@ build, renderer boundary, Task 43 installed positive/negative verifier,
 layout, RC seeds 0/2/3, stored-energy seeds 0/2/3, and combined RC/stored
 runtime lanes passed through the clean supported in-app Browser route. Visible
 normal-player power, selection, lead-lift, and reconnect transitions also
-passed with no Browser error logs. 43R-8 remains held and unstarted, and Task
-44 remains blocked and unstarted.
+passed with no Browser error logs. 43R-8 is next eligible and remains
+unstarted, and Task 44 remains blocked and unstarted.

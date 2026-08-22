@@ -1208,8 +1208,8 @@ milestone and was not started.
 
 **Status:** [~] RECOVERY IN PROGRESS — 43R-1, 43R-2, 43R-2C, 43R-3,
 43R-4, 43R-5, 43R-5A, 43R-6, and 43R-7 complete after accepted 43R-4C;
-43R-4D remains an unaccepted corrective candidate because mandatory runtime
-acceptance is externally blocked.
+43R-4D is complete/accepted with the recorded final runtime and
+independent-review evidence; 43R-8 is next eligible/unstarted.
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1255,15 +1255,15 @@ architecture prerequisite.
   board/component probing; complete.
 - `[x]` 43R-4 — loose-part pose/render/hit/probe baseline retained; 43R-4C
   accepted the loose projection lifecycle correction.
-- `[~]` 43R-4D — corrective detached installed-lead rendering/probe verifier
-  candidate; acceptance is pending mandatory compiled-preview runtime evidence.
-  Its verifier-only remediation adds the two installed-path negative canaries
-  identified by review. This is not Task 43 or 43R-8 completion.
+- `[x]` 43R-4D — corrective detached installed-lead rendering/probe verifier
+  complete/accepted with the recorded final runtime and independent-review
+  evidence. Its verifier-only remediation adds the two installed-path negative
+  canaries identified by review. This is not Task 43 or 43R-8 completion.
 - `[x]` 43R-5 — RC fixed-layout reconstruction; complete.
 - `[x]` 43R-5A — corrective RC fixed-layout acceptance-proof closure; complete.
 - `[x]` 43R-6 — NPN fixed-layout reconstruction; complete.
 - `[x]` 43R-7 — NMOS fixed-layout reconstruction; complete.
-- `[ ]` 43R-8 — held pending independent 43R-4D acceptance; final Task 43
+- `[>]` 43R-8 — next eligible/unstarted; final Task 43
   acceptance/regression/cleanup remains unstarted. 43R-5A is a corrective
   proof slice only; do not begin 43R-8 as part of this correction.
 
@@ -3122,7 +3122,7 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 ---
 
-## Task 43R-4D — detached installed lead renderer/probe corrective closure
+## Historical pre-acceptance record — Task 43R-4D — detached installed lead renderer/probe corrective closure
 
 The 43R-4D candidate addresses the generic verifier state-dispatch defect exposed by the RC
 `C1.+` lead-lift regression. The failure was an `IMPLEMENTATION_FAILURE`, not
@@ -3179,17 +3179,14 @@ converted into unrun acceptance claims.
 
 **43R-8 — final Task 43 acceptance/regression/cleanup**
 
-Current state: Task 43 RECOVERY IN PROGRESS. Recovery slice 43R-4D has a
-source-validated but unaccepted candidate; the mandatory browser/runtime lane
-is blocked by host Edge/WMI access failure and a blank in-app GWT shell. The
-review-identified installed-path negative canaries are now present in the
-verifier, but no runtime acceptance has been claimed.
-Recovery slice 43R-8 remains held and unstarted until 43R-4D is independently
-accepted; it covers final Task 43 acceptance/regression/cleanup. Task 44 is
-BLOCKED BY TASK 43 and remains unstarted. Relay Driver remains deferred and
-transformed into Task 66.
+Current state: Task 43 RECOVERY IN PROGRESS. Recovery slice 43R-4D is
+ACCEPTED/COMPLETE with the already recorded final supported in-app Browser
+runtime and independent Luna MAX review evidence. Recovery slice 43R-8 is
+NEXT ELIGIBLE/UNSTARTED and covers final Task 43
+acceptance/regression/cleanup. Task 44 is BLOCKED BY TASK 43 and remains
+unstarted. Relay Driver remains deferred and transformed into Task 66.
 
-### Current 43R-4D remediation gate update — 2026-08-22
+### Historical pre-final-review 43R-4D remediation gate update — 2026-08-22
 
 The WMI/blank-shell statement above is historical for the first harness
 attempt. The corrected candidate now has a clean supported in-app Browser
@@ -3205,6 +3202,6 @@ remains blocked and unstarted.
 
 43R-4D is complete and independently accepted: the final Luna MAX reviewer
 returned `PASS` after the source, installed-path, runtime, scope, and
-documentation gates passed. The immediate follow-on 43R-8 remains held and
-unstarted under its existing acceptance dependency; Task 44 remains blocked
-and unstarted. No later milestone was begun automatically.
+documentation gates passed. The immediate follow-on 43R-8 is next eligible
+and remains unstarted; Task 44 remains blocked and unstarted. No later
+milestone was begun automatically.

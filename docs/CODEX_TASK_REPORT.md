@@ -221,7 +221,7 @@ and coder-reported compiled-preview verifier results.
   the final task response.
 - 43R-8 was marked next eligible but was not started. Task 44 was not started.
 
-# Task 43R-4D implementation report — detached installed lead renderer/probe closure
+# Historical pre-acceptance report — Task 43R-4D implementation report — detached installed lead renderer/probe closure
 
 ## Roadmap milestone
 
@@ -340,7 +340,7 @@ passed. No compiled-war in-app Browser result was run or claimed by this
 remediation writer; the primary architect must obtain that runtime evidence
 and perform final review before accepting 43R-4D.
 
-## Acceptance disposition
+## Historical pre-final-review acceptance disposition
 
 The fresh read-only Luna MAX final reviewer returned `BLOCKERS`, so the
 candidate is not a final pass. The external blocker is the unavailable
@@ -364,7 +364,7 @@ No RC layout, electrical topology, measurement, fault, stress, replacement,
 scoring, NPN/NMOS route, package catalog, AGENTS.md, scripts, or Task 44 file
 was edited.
 
-## 43R-4D remediation runtime closure update — 2026-08-22
+## Historical pre-final-review 43R-4D remediation runtime closure update — 2026-08-22
 
 The earlier WMI/Edge harness failure is retained as harness history, but it is
 not the final runtime result. After the verifier-only fixture corrections, the
@@ -408,8 +408,8 @@ documentation.
 - Normal-player Browser interaction visibly exercised power toggle, R1
   selection, lead lift, and reconnect; expected states were observed and no
   Browser error logs were recorded.
-- `git diff --check` passed. 43R-8 remains held and unstarted; Task 44 remains
-  blocked and unstarted.
+- `git diff --check` passed. 43R-8 is next eligible and remains unstarted;
+  Task 44 remains blocked and unstarted.
 - Escalation architect: not required.
 
 The final changed files are exactly the three handoff documents and
