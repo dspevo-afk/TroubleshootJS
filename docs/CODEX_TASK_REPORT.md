@@ -1,3 +1,72 @@
+# Task 43R-3 corrective return — lifted component endpoint identity
+
+## Status
+
+Task 43 recovery correction **43R-3 corrective return** is accepted in its
+bounded scope after the required read-only MAX investigation, one-writer
+implementation, validation, and independent MAX review. It unblocks the
+previously blocked 43R-8B candidate, but 43R-8B has not been resumed or
+accepted. Task 44 remains untouched.
+
+## Starting state and ownership
+
+The 43R-8B candidate was uncommitted in exactly four files and was preserved
+before this corrective return in the named stash
+`43R-8B candidate preserved before 43R-3 corrective return`. The worktree was
+then restored clean before lifecycle investigation. The observed failure was
+`FAIL:Lifted component target changed stable physical or endpoint identity:
+R1.1`, before the 43R-8B forced-negative canary.
+
+The failure belongs to 43R-3: the part and physical terminal remain mounted
+through lead lift, while the installed component-side target must preserve
+physical/lifecycle identity and the active electrical binding. 43R-4 loose,
+removal, and reinstallation behavior remains a regression gate, not the owner
+of this mounted-lead defect.
+
+## Reconciled diagnosis and implementation
+
+The classification is `IMPLEMENTATION_FAILURE` in the verifier's comparison
+boundary. `PhysicalPartTerminal` owns immutable physical-terminal identity for
+one physical part. `GeneratedComponentConnectionBinding` owns the mutable,
+orientation-aware component-side electrical endpoint used by replacement and
+reversed LED/diode retargeting. `ComponentLeadProbeTarget` intentionally
+captures that binding endpoint and retains it across invalidation.
+
+Initial generated R1.1 creates separate `CircuitPostMeasurementEndpoint`
+wrappers in the physical part and the binding for the same CircuitJS
+element/post. The old canary compared those wrappers with Java reference
+identity before any lifecycle mutation. The corrective change is limited to
+`PhysicalPartRenderDeveloperVerifier.java`: cross-owner binding/physical
+endpoint comparisons use the existing semantic `(CircuitElm, postIndex)`
+helper, while exact target-to-current-binding, physical part/terminal,
+carrier, slot, board-pad, lifecycle, stale-target, and replacement identity
+checks remain strict. No production target, renderer, binding, physical
+terminal, measurement, fault, or loose-lifecycle code changed.
+
+This preserves CircuitJS as the electrical source of truth and preserves the
+43R-8A binding-authoritative orientation contract; it does not accept arbitrary
+endpoints or special-case R1.1.
+
+## Validation and review
+
+- JDK 8/GWT production compile/link — passed all five permutations and link.
+- `scripts/verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
+- `scripts/verify-browser.ps1 -Task43` — `PASS:task43`, including the complete
+  installed physical-render/lifecycle positive and negative canaries.
+- `scripts/verify-browser.ps1 -Task39` — all six developer/regression routes
+  passed.
+- `scripts/verify-browser.ps1 -Task40` — passed.
+- `scripts/verify-browser.ps1 -Task41` — passed.
+- `git diff --check` — passed.
+- Independent read-only Luna MAX review — `PASS`.
+
+The corrective checkpoint is separate from the preserved 43R-8B candidate.
+No push is authorized by the current recovery instructions. 43R-8B remains
+held for reapplication only after this checkpoint, and Task 44 remains
+unstarted.
+
+---
+
 # Task 43R-8A completion report — existing-family replacement and measurement recovery
 
 ## Roadmap milestone

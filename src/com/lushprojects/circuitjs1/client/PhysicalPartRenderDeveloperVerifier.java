@@ -1421,6 +1421,8 @@ final class PhysicalPartRenderDeveloperVerifier {
                 binding.getPadId());
         String stablePartId = candidate.part.getId();
         CircuitMeasurementEndpoint stableEndpoint = stableTerminal.getEndpoint();
+        // Keep physical part/terminal identity exact; compare independently allocated
+        // CircuitJS endpoint wrappers semantically only at the binding/terminal boundary.
         try {
             if (!power.isElectricallyUnpowered())
                 power.setState(BoardPowerState.UNPOWERED);
@@ -1460,7 +1462,8 @@ final class PhysicalPartRenderDeveloperVerifier {
                     componentTarget.getComponentIdForDeveloperVerification()) &&
                     binding.getPadId().equals(componentTarget.getPadIdForDeveloperVerification()) &&
                     stablePartId.equals(componentTarget.getPhysicalPartIdForDeveloperVerification()) &&
-                    liftedTarget.getMeasurementEndpoint() == stableEndpoint &&
+                    liftedTarget.getMeasurementEndpoint() == binding.getComponentEndpoint() &&
+                    sameCircuitPostEndpoint(liftedTarget.getMeasurementEndpoint(), stableEndpoint) &&
                     pointEquals(componentTarget.getMarkerPoint(), componentSide),
                 "Lifted component target changed stable physical or endpoint identity: " +
                     binding.getPadId());
@@ -1538,7 +1541,9 @@ final class PhysicalPartRenderDeveloperVerifier {
                     graphRemovedTarget.isValid() && stablePartId.equals(
                         ((ComponentLeadProbeTarget) graphRemovedTarget)
                             .getPhysicalPartIdForDeveloperVerification()) &&
-                    graphRemovedTarget.getMeasurementEndpoint() == stableEndpoint,
+                    graphRemovedTarget.getMeasurementEndpoint() == binding.getComponentEndpoint() &&
+                    sameCircuitPostEndpoint(graphRemovedTarget.getMeasurementEndpoint(),
+                        stableEndpoint),
                 "Graph-only removal lost the still-mounted component-side target: " +
                     binding.getPadId());
             require(mutationProvider.removeInstalledPart() && slot.getInstalledPart() == null &&
@@ -1592,7 +1597,9 @@ final class PhysicalPartRenderDeveloperVerifier {
                     reinstalledTarget.isValid() && stablePartId.equals(
                         ((ComponentLeadProbeTarget) reinstalledTarget)
                             .getPhysicalPartIdForDeveloperVerification()) &&
-                    reinstalledTarget.getMeasurementEndpoint() == stableEndpoint &&
+                    reinstalledTarget.getMeasurementEndpoint() == binding.getComponentEndpoint() &&
+                    sameCircuitPostEndpoint(reinstalledTarget.getMeasurementEndpoint(),
+                        stableEndpoint) &&
                     pointEquals(reinstalledTarget.getMarkerPoint(), reinstalledPoint) &&
                     !componentTarget.isSameTarget(reinstalledTarget) &&
                     !graphRemovedTarget.isSameTarget(reinstalledTarget),
@@ -1712,8 +1719,10 @@ final class PhysicalPartRenderDeveloperVerifier {
                 "Replacement endpoint canary did not create a distinct isolated endpoint: " +
                     binding.getPadId());
             require(!originalTarget.isValid() && originalTarget.getMarkerPoint() == null &&
-                    originalTarget.getMeasurementEndpoint() == originalEndpoint &&
-                    originalTarget.getMeasurementEndpoint() != replacementTerminal.getEndpoint() &&
+                    sameCircuitPostEndpoint(originalTarget.getMeasurementEndpoint(),
+                        originalEndpoint) &&
+                    !sameCircuitPostEndpoint(originalTarget.getMeasurementEndpoint(),
+                        replacementTerminal.getEndpoint()) &&
                     isolatedRenderer.getComponentLeadPoint(candidate.componentId,
                         binding.getPadId()) == null &&
                     isolatedRenderer.findProbeTarget(sim, originalPoint.x, originalPoint.y) == null,
@@ -1735,8 +1744,11 @@ final class PhysicalPartRenderDeveloperVerifier {
                     !replacementTarget.isSameTarget(originalTarget) &&
                     replacement.getId().equals(((ComponentLeadProbeTarget) replacementTarget)
                         .getPhysicalPartIdForDeveloperVerification()) &&
-                    replacementTarget.getMeasurementEndpoint() == replacementTerminal.getEndpoint() &&
-                    replacementTarget.getMeasurementEndpoint() != originalEndpoint,
+                    replacementTarget.getMeasurementEndpoint() == binding.getComponentEndpoint() &&
+                    sameCircuitPostEndpoint(replacementTarget.getMeasurementEndpoint(),
+                        replacementTerminal.getEndpoint()) &&
+                    !sameCircuitPostEndpoint(replacementTarget.getMeasurementEndpoint(),
+                        originalEndpoint),
                 "Replacement lead did not acquire a fresh isolated physical endpoint target: " +
                     binding.getPadId());
         } finally {

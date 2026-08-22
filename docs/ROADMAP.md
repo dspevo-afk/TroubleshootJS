@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-21_
+_Last updated: 2026-08-22_
 
 ## Purpose
 
@@ -3230,3 +3230,17 @@ correction, the required normal-player LED/diode/parallel flows passed, and the
 fresh independent Luna MAX reviewer returned `PASS`. 43R-8B is now the next
 eligible milestone and remains unstarted; Task 44 remains blocked and
 unstarted. No later milestone was begun automatically.
+
+### 43R-3 corrective return — 2026-08-22
+
+The 43R-3 corrective return is complete and independently accepted. It repairs
+the verifier's pre-mutation R1.1 endpoint-wrapper comparison while preserving
+the binding-authoritative installed target contract and strict physical,
+lifecycle, stale-target, board-pad, replacement, and loose-part checks. JDK 8
+/ GWT, renderer-boundary, complete Task 43, and Task 39/40/41 regression
+routes passed, and the independent Luna MAX reviewer returned `PASS`.
+
+The uncommitted 43R-8B candidate remains preserved separately and is not
+included in this checkpoint. 43R-8B is still held for explicit resumption
+after the corrective checkpoint; final Task 43 acceptance and Task 44 remain
+unstarted. No push is authorized for this corrective return.

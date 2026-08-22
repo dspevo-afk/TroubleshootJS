@@ -1787,3 +1787,29 @@ runtime lanes passed through the clean supported in-app Browser route. Visible
 normal-player power, selection, lead-lift, and reconnect transitions also
 passed with no Browser error logs. 43R-8 is next eligible and remains
 unstarted, and Task 44 remains blocked and unstarted.
+
+## Task 43R-3 corrective return — lifted component endpoint identity
+
+The 43R-3 corrective return closes a verifier boundary defect exposed before
+43R-8B. A mounted physical part owns stable `PhysicalPartTerminal` and
+physical-part identity across lead lift, reconnect, graph-only removal,
+physical removal, and same-part reinstall. The installed component-side
+measurement target remains authoritative to the current
+`GeneratedComponentConnectionBinding`, whose endpoint may be retargeted for
+replacement and orientation-aware LED/diode installation.
+
+The generated R1.1 path can hold two independently allocated
+`CircuitPostMeasurementEndpoint` wrappers for the same CircuitJS element/post:
+one from the physical part and one from the binding. Those wrappers are
+electrically equivalent but are not Java-reference identical. The verifier now
+uses its existing semantic post comparison only at that cross-owner boundary.
+It still requires exact target-to-binding identity, physical part/terminal and
+carrier identity, slot/mount state, lifecycle invalidation, board-pad
+identity/separation, and replacement non-migration. No production renderer,
+probe-target, binding, physical-terminal, measurement, fault, or loose-part
+lifecycle behavior changed.
+
+The corrective source/build, renderer-boundary, complete Task 43,
+Task 39/40/41 regression routes, and independent read-only Luna MAX review
+passed. The 43R-8B candidate remains preserved separately and is not part of
+this correction; 43R-8B and Task 44 remain unstarted.
