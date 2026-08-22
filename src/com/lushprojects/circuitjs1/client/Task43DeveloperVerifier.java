@@ -38,6 +38,8 @@ final class Task43DeveloperVerifier {
             sim.pcbWorkbenchController.getRenderer(), renderers);
         require(beforeIdentity.equals(boardIdentity(instance)),
             "Task 43 package canaries changed generated board identities");
+        if (sim.isTask43ForcedFailureActive())
+            throw new IllegalStateException("task43-forced-negative-canary");
         sim.setCircuitTitle("Task 43 physical geometry verification passed");
     }
 
