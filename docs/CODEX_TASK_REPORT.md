@@ -220,3 +220,210 @@ and coder-reported compiled-preview verifier results.
   established after this report is staged and committed, and are reported in
   the final task response.
 - 43R-8 was marked next eligible but was not started. Task 44 was not started.
+
+# Task 43R-4D implementation report — detached installed lead renderer/probe closure
+
+## Roadmap milestone
+
+Task 43 recovery correction **43R-4D — detached installed lead renderer/probe
+closure** is implemented in the bounded candidate, but remains unaccepted.
+It is a corrective closure candidate only; it does not claim Task 43 or 43R-8
+complete. 43R-8 remains held and unstarted pending independent 43R-4D
+acceptance, and Task 44 remains unstarted.
+
+## Starting state and scope
+
+- Branch: `codex/task43-recovery-integration`.
+- HEAD: `14afe84be8d0c6bad64965b5f0e6627f428bfa35`, the accepted checkpoint.
+- `master` and `origin/master`: `c0eb342b29165b8218a4b97b16fb8554fee42aff`.
+- The worktree was clean before implementation. No commit, push, merge, reset,
+  or publication was performed.
+- The reconciled Phase-A classification was `IMPLEMENTATION_FAILURE`: the
+  generic verifier used electrical disconnected state as installed-mount state
+  after C1 had been physically removed. Slot/part mounting identity remains
+  the authority; production renderer/context/provider/geometry/target code was
+  not changed.
+
+## Implementation
+
+`PhysicalPartRenderDeveloperVerifier` now computes physical mounting from the
+runtime installed part, slot ownership, `part.isInstalled()`, and
+`part.getBoardSlot()` independently of lead connection state. Its package
+geometry checks remain active, while mounted connected/lifted assertions and
+an explicit physically-removed branch dispatch separately. The removed branch
+rejects installed component-side point/target/hit reachability, preserves
+board-pad targets, and checks loose-provider ownership.
+
+The generic installed lifecycle canary now uses both terminal positions of the
+same two-terminal part. It deterministically prefers an installed non-capacitor
+resistor path (the generated LED-family `R1` path when present), with `C1` as
+the RC fallback. The same helper checks connected board-only probing, first and
+second lead lifts, package point/bounds/marker agreement, distinct
+`BoardPadProbeTarget` versus `ComponentLeadProbeTarget` classes and endpoint
+identities, physical-part/terminal identity, board-pad precedence, reconnect
+invalidation, graph-only removal preserving mounted interaction, physical
+removal invalidation and loose transfer, same-part reinstall with a fresh
+target, and wrong physical identity/component-pad rejection. Its endpoint
+negative performs a real generic catalog replacement: the old target must
+retain the original endpoint and invalidate, while the replacement acquires a
+new physical-part/terminal target. Thus the RC path explicitly exercises
+`C1.+` while C1 remains mounted and lifted, and the LED-family path exercises a
+representative non-capacitor binding.
+
+The installed pre-mutation binding check now uses a verifier-local semantic
+comparison for `CircuitPostMeasurementEndpoint` wrappers (same element and
+post index) only when comparing the generated binding endpoint with the
+physical terminal endpoint. Exact endpoint identity checks remain in the
+target-stability, reinstall, and replacement distinctions.
+
+The correction adds exactly two installed-path adversarial canaries. The
+`verifyInstalledProbeOverlapNegative` canary creates a detached one-component
+fixture, wraps the real package provider with a mutable installed terminal copy
+whose same-terminal board-pad and detached component probe surfaces completely
+collapse, and invokes the real installed geometry/provider/renderer hit path.
+Every point in the collapsed surface must resolve to the valid declared
+`BoardPadProbeTarget` with board-pad precedence and never to a valid ambiguous
+component-side target. The `verifyInstalledDetachedMarkerNegative` canary
+obtains the real installed projection, copies its installed surfaces, moves the
+detached marker outside its declared component-lead probe, and exercises the
+`PhysicalPartRenderTerminal` constructor boundary, requiring the specific
+`Physical render component probe omits its center` rejection. Both remain
+installed-mode checks with a `boardPadId`; the detached fixture's temporary
+instance/modification view is restored and no canonical package geometry or
+live tray/selection/power state is mutated.
+
+The lifecycle outcomes represented by the verifier are:
+
+- connected: mounted part, board-pad target, no component-side target;
+- lead-lifted: same mounted part, board pad plus distinct physical-terminal
+  component target;
+- removed: empty slot, no installed component interaction, fresh loose target;
+- reinstalled: same part/carrier/terminal/endpoint identity, stale target still
+  invalid, fresh target only after a real new lift.
+
+## Validation evidence and limitations
+
+- `.\scripts\build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
+  — passed all five GWT permutations and production linking.
+- `.\scripts\verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
+- A temporary local static preview served the compiled `war/` and returned
+  HTTP 200 for `circuitjs.html` and the active GWT bootstrap resource.
+- `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -Task43 -TimeoutSeconds 90`
+  — could not produce a verifier result: the host denied the harness's WMI
+  Edge-process inspection (`Access denied`) after its browser connection
+  failed. The in-app browser loaded only a blank GWT bootstrap shell and did
+  not expose a `data-tsj-verification` result. Therefore no `PASS:task43` or
+  RC behavioral PASS is claimed here.
+- The required `-Layout`, `-StoredEnergy -Seeds 0,2,3`, and `-Rc -Seeds 0,2,3`
+  harness lanes were also attempted and stopped at the same browser-target/WMI
+  `Access denied` failure; no route PASS is inferred.
+- Task 43 result: no browser verifier result was obtained in this environment;
+  no Task 43 PASS is claimed from source compilation.
+- C1.+ regression result: the RC-mounted/lifted branch now checks the real
+  renderer point and hit path for `C1.+`; a live route PASS could not be
+  observed because the browser verification environment remained blocked.
+- Representative non-capacitor result: the generic canary deterministically
+  selects the generated LED-family `R1` when present and covers both terminal
+  positions; its live route PASS is likewise unclaimed here.
+- RC fixed-layout matrix result: not rerun by this corrective verifier task;
+  prior accepted matrix evidence is unchanged and not re-claimed here.
+- RC stored-energy result: not rerun by this corrective verifier task; no new
+  stored-energy PASS is inferred.
+- Final `git diff --check` is clean and final scope inspection shows only the
+  four authorized files listed below. No runtime route result is inferred from
+  source compilation.
+
+The remediation source gate was rerun with
+`.\scripts\build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
+using the bundled JDK 8; all five GWT permutations and production linking
+passed. No compiled-war in-app Browser result was run or claimed by this
+remediation writer; the primary architect must obtain that runtime evidence
+and perform final review before accepting 43R-4D.
+
+## Acceptance disposition
+
+The fresh read-only Luna MAX final reviewer returned `BLOCKERS`, so the
+candidate is not a final pass. The external blocker is the unavailable
+mandatory browser/runtime lane described above. The reviewer also identified
+an installed-path validation gap. This remediation adds the two explicit
+installed negatives described above. The candidate remains unaccepted pending
+the primary architect's runtime evidence and final review.
+
+Because mandatory validation and final review did not pass, no staging, commit,
+push, or completion email was performed. The four-file candidate remains in
+the working tree for a later correction/acceptance run.
+
+## Changed files
+
+- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderDeveloperVerifier.java`
+- `docs/ARCHITECTURE.md`
+- `docs/ROADMAP.md`
+- `docs/CODEX_TASK_REPORT.md`
+
+No RC layout, electrical topology, measurement, fault, stress, replacement,
+scoring, NPN/NMOS route, package catalog, AGENTS.md, scripts, or Task 44 file
+was edited.
+
+## 43R-4D remediation runtime closure update — 2026-08-22
+
+The earlier WMI/Edge harness failure is retained as harness history, but it is
+not the final runtime result. After the verifier-only fixture corrections, the
+compiled `war/` was served from a clean local static origin at
+`http://127.0.0.1:3000` and exercised through the supported in-app Browser.
+
+- Final JDK 8 production build/link: passed all five GWT permutations.
+- Final renderer boundary check: `PASS:renderer-provider-boundary`.
+- Clean Browser `tsjVerifyTask43=true`: `PASS:task43`; this includes the
+  installed overlap and detached-marker negative canaries.
+- Clean Browser layout lane: `PASS:layout`.
+- Clean Browser RC lane: `PASS:rc` for seeds 0, 2, and 3.
+- Clean Browser stored-energy lane: `PASS:stored-energy` for seeds 0, 2, and
+  3; combined RC/stored-energy seed 3: `PASS:rc`.
+- Visible normal-player Browser interaction selected R1, toggled board power,
+  lifted lead 1, observed `State: Lead Lifted`, reconnected it, and observed
+  `State: Installed`; Browser error logs were empty.
+- `git diff --check`: clean. The candidate remains unstaged and uncommitted
+  pending the required fresh independent final review and acceptance gates.
+
+The replacement-endpoint lifecycle negative now runs its real catalog
+mutation on a disposable generated board and restores the live simulation
+references and verification flags, preventing acquired replacement inventory
+from contaminating the production board identity. 43R-4D is still not marked
+accepted until the fresh independent Luna MAX reviewer returns `PASS`.
+
+## Final acceptance — Task 43R-4D — 2026-08-22
+
+43R-4D is accepted. The fresh independent read-only Luna MAX reviewer returned
+`PASS` after inspecting the final four-file diff, installed positive and
+negative coverage, isolated replacement cleanup, runtime evidence, scope, and
+documentation.
+
+- Primary architect final result: `FINAL PASS`.
+- Source/build gates: JDK 8 build/link passed all five GWT permutations;
+  renderer boundary returned `PASS:renderer-provider-boundary`.
+- Runtime gates on the clean supported in-app Browser route returned
+  `PASS:task43`, `PASS:layout`, RC `PASS:rc` for seeds 0/2/3,
+  `PASS:stored-energy` for seeds 0/2/3, and combined RC/stored-energy
+  `PASS:rc`.
+- Normal-player Browser interaction visibly exercised power toggle, R1
+  selection, lead lift, and reconnect; expected states were observed and no
+  Browser error logs were recorded.
+- `git diff --check` passed. 43R-8 remains held and unstarted; Task 44 remains
+  blocked and unstarted.
+- Escalation architect: not required.
+
+The final changed files are exactly the three handoff documents and
+`PhysicalPartRenderDeveloperVerifier.java`. No production renderer,
+package/geometry, electrical, measurement, fault, replacement, NPN/NMOS,
+43R-8, or Task 44 work was started.
+
+Intended commit message: `Close Task 43R-4D installed-path acceptance`.
+Configured remote/upstream: `origin`, branch
+`codex/task43-recovery-integration` tracking
+`origin/codex/task43-recovery-integration`.
+Notification destination: `dspevock@stateofthearcelectric.com`.
+Intended subject: `TroubleshootJS: Task 43R-4D installed-path acceptance pushed`.
+
+The authoritative final commit SHA, verified push result, and notification
+result are established after this report is written and are available from
+repository history and the final Codex task response.

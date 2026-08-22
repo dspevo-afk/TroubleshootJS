@@ -1207,7 +1207,9 @@ milestone and was not started.
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
 **Status:** [~] RECOVERY IN PROGRESS — 43R-1, 43R-2, 43R-2C, 43R-3,
-43R-4, 43R-5, 43R-5A, 43R-6, and 43R-7 complete after accepted 43R-4C
+43R-4, 43R-5, 43R-5A, 43R-6, and 43R-7 complete after accepted 43R-4C;
+43R-4D remains an unaccepted corrective candidate because mandatory runtime
+acceptance is externally blocked.
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1253,13 +1255,17 @@ architecture prerequisite.
   board/component probing; complete.
 - `[x]` 43R-4 — loose-part pose/render/hit/probe baseline retained; 43R-4C
   accepted the loose projection lifecycle correction.
+- `[~]` 43R-4D — corrective detached installed-lead rendering/probe verifier
+  candidate; acceptance is pending mandatory compiled-preview runtime evidence.
+  Its verifier-only remediation adds the two installed-path negative canaries
+  identified by review. This is not Task 43 or 43R-8 completion.
 - `[x]` 43R-5 — RC fixed-layout reconstruction; complete.
 - `[x]` 43R-5A — corrective RC fixed-layout acceptance-proof closure; complete.
 - `[x]` 43R-6 — NPN fixed-layout reconstruction; complete.
 - `[x]` 43R-7 — NMOS fixed-layout reconstruction; complete.
-- `[>]` 43R-8 — next eligible milestone: final Task 43 acceptance/regression/
-  cleanup. 43R-5A is a corrective proof slice only; do not begin 43R-8 as
-  part of this correction.
+- `[ ]` 43R-8 — held pending independent 43R-4D acceptance; final Task 43
+  acceptance/regression/cleanup remains unstarted. 43R-5A is a corrective
+  proof slice only; do not begin 43R-8 as part of this correction.
 
 43R-5A completion: the live RC factory now exposes a developer-only finite
 matrix seam without changing the production route, component anchors, package
@@ -3116,13 +3122,89 @@ Update this roadmap when a milestone completes or a decision gate resolves.
 
 ---
 
+## Task 43R-4D — detached installed lead renderer/probe corrective closure
+
+The 43R-4D candidate addresses the generic verifier state-dispatch defect exposed by the RC
+`C1.+` lead-lift regression. The failure was an `IMPLEMENTATION_FAILURE`, not
+a package geometry, renderer production path, target endpoint, RC routing, or
+electrical-topology defect: electrical disconnection left the original part
+mounted in its slot, while the verifier treated disconnected state as an
+installed lift even after physical slot removal. Runtime slot/part mounting
+identity is authoritative for the installed-versus-loose decision. The
+candidate remains unaccepted because mandatory runtime evidence is still
+required; the verifier-only installed-path negative remediation described below
+has been added without changing production render, target, or geometry code.
+
+The verifier records one explicit lifecycle table: connected means a mounted
+part with board-pad probing only; lead-lifted means that same mounted part with
+the board pad and a distinct detached component-side target; removed means an
+empty slot with no installed component-side point/target/hit and loose/tray
+ownership; reinstalled means the same physical identity can return with a
+fresh projection target and board-side-only probing until another real lift.
+The generic canary covers both terminal positions, prefers an installed
+two-terminal non-capacitor (the generated LED-family `R1` path when present),
+and uses `C1` only as the RC fallback. It checks the positive C1.+ path,
+representative non-capacitor path, endpoint/class/identity distinction,
+provider geometry/marker agreement, board-pad precedence, reconnect and
+physical-removal invalidation, graph-only removal preservation, loose transfer,
+same-part reinstall freshness, and wrong identity/binding rejection. Its
+replacement negative uses the existing catalog mutation boundary to prove an
+old component target retains its original endpoint and does not migrate to a
+new physical part.
+
+The correction also adds exactly two installed-path adversarial canaries in
+`PhysicalPartRenderDeveloperVerifier`: `verifyInstalledProbeOverlapNegative`
+uses a detached fixture and a mutable installed terminal copy to collapse one
+terminal's board-pad and detached component probe surfaces, then verifies the
+real renderer resolves every point to a valid board-pad target with board-pad
+precedence and no valid component-side target;
+`verifyInstalledDetachedMarkerNegative` passes a mutable installed terminal copy
+with its detached marker outside the declared component-lead probe to the real
+terminal constructor and requires the specific
+`Physical render component probe omits its center` rejection. Both remain
+installed-mode checks with a `boardPadId`; the fixture's temporary instance and
+modification view are restored before return.
+
+Only `PhysicalPartRenderDeveloperVerifier.java` and the three handoff
+documents were changed for this correction. No RC route, electrical/topology,
+measurement, fault, stress, replacement, scoring, NPN/NMOS route, or Task 44
+work was started. 43R-8 remains the next eligible milestone and is identified
+only; it was not started by 43R-4D. Runtime route limitations and the pending
+review blockers are recorded in `docs/CODEX_TASK_REPORT.md` rather than
+converted into unrun acceptance claims.
+
+---
+
 # Immediate Next Milestone
 
 **43R-8 — final Task 43 acceptance/regression/cleanup**
 
-Current state: Task 43 RECOVERY IN PROGRESS. Recovery slices 43R-1, 43R-2,
-43R-2C, 43R-3, 43R-4, 43R-5, 43R-5A, 43R-6, and 43R-7 are complete after
-accepted 43R-4C. Recovery slice 43R-8 is now the next eligible milestone and
-covers final Task 43 acceptance/regression/cleanup. Task 44 is BLOCKED BY TASK
-43 and remains unstarted. Relay Driver remains deferred and transformed into
-Task 66.
+Current state: Task 43 RECOVERY IN PROGRESS. Recovery slice 43R-4D has a
+source-validated but unaccepted candidate; the mandatory browser/runtime lane
+is blocked by host Edge/WMI access failure and a blank in-app GWT shell. The
+review-identified installed-path negative canaries are now present in the
+verifier, but no runtime acceptance has been claimed.
+Recovery slice 43R-8 remains held and unstarted until 43R-4D is independently
+accepted; it covers final Task 43 acceptance/regression/cleanup. Task 44 is
+BLOCKED BY TASK 43 and remains unstarted. Relay Driver remains deferred and
+transformed into Task 66.
+
+### Current 43R-4D remediation gate update — 2026-08-22
+
+The WMI/blank-shell statement above is historical for the first harness
+attempt. The corrected candidate now has a clean supported in-app Browser
+runtime record from the compiled `war/` on `127.0.0.1:3000`: `PASS:task43`,
+`PASS:layout`, RC `PASS:rc` for seeds 0/2/3, stored-energy
+`PASS:stored-energy` for seeds 0/2/3, and combined RC/stored-energy `PASS:rc`.
+Source/build, renderer-boundary, installed positive, and installed negative
+gates also pass. A fresh independent Luna MAX review is still pending, so
+43R-4D is not yet marked accepted. 43R-8 remains held and unstarted; Task 44
+remains blocked and unstarted.
+
+### 43R-4D final milestone status — 2026-08-22
+
+43R-4D is complete and independently accepted: the final Luna MAX reviewer
+returned `PASS` after the source, installed-path, runtime, scope, and
+documentation gates passed. The immediate follow-on 43R-8 remains held and
+unstarted under its existing acceptance dependency; Task 44 remains blocked
+and unstarted. No later milestone was begun automatically.

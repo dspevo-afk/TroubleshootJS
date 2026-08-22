@@ -1,5 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -18,12 +19,19 @@ final class PhysicalPartRenderDeveloperVerifier {
         Graphics graphics = new Graphics(sim.backcontext);
         PhysicalPartRenderRegistry registry = renderer.getRenderRegistryForDeveloperVerification();
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
         for (String componentId : instance.getBoard().getComponentIds()) {
             BoardComponent component = instance.getBoard().getComponent(componentId);
             require(registry.hasProvider(component.getPhysicalPackage()),
                 "Missing render provider for production package: " +
                     component.getPhysicalPackage().getId());
-            PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+            PhysicalPart<?> part = runtime.getInstalledPart(componentId);
+            PhysicalBoardSlot slot = runtime.getSlot(componentId);
+            // Electrical disconnection is not physical removal.  Keep this
+            // dispatch independent so a slot-empty component cannot be
+            // mistaken for an installed lifted lead.
+            boolean physicallyMounted = part != null && slot != null && part.isInstalled() &&
+                slot.getInstalledPart() == part && part.getBoardSlot() == slot;
             if (part != null && isFixedProductionBodyPackage(component.getPhysicalPackage()) &&
                     part.getProvenance() != null &&
                     PhysicalPartProvenance.FIXED_GENERATED.equals(
@@ -80,7 +88,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                     .getForComponentOrEmpty(componentId).isEmpty() ||
                     sim.getBoardModificationController().isLeadConnected(componentId,
                         terminal.getBoardPadId());
-                boolean lifted = !connected;
+                boolean providerLeadLifted = !connected;
                 require(declared != null && declared.getTerminalId().equals(
                         terminal.getTerminalId()) && terminal.getBoardPadId() != null &&
                         terminal.getPadBounds().equals(renderer.screenRectForProvider(
@@ -90,30 +98,48 @@ final class PhysicalPartRenderDeveloperVerifier {
                         terminal.getBoardPadProbeBounds().equals(renderer.screenRectForProvider(
                             placed.getBoardPadProbeBounds(terminalIndex))) &&
                         pointEquals(terminal.getComponentLeadPoint(), renderer.screenPointForProvider(
-                            placed.getComponentLeadProbeCenter(terminalIndex, lifted))) &&
+                            placed.getComponentLeadProbeCenter(terminalIndex, providerLeadLifted))) &&
                         terminal.getComponentLeadProbeBounds().equals(renderer.screenRectForProvider(
-                            placed.getComponentLeadProbeBounds(terminalIndex, lifted))) &&
+                            placed.getComponentLeadProbeBounds(terminalIndex, providerLeadLifted))) &&
                         pointEquals(terminal.getLeadBodyPoint(), renderer.screenPointForProvider(
-                            placed.getLeadBodyPoint(terminalIndex, lifted))) &&
+                            placed.getLeadBodyPoint(terminalIndex, providerLeadLifted))) &&
                         pointEquals(terminal.getLeadEndPoint(), renderer.screenPointForProvider(
-                            placed.getLeadEndPoint(terminalIndex, lifted))) &&
+                            placed.getLeadEndPoint(terminalIndex, providerLeadLifted))) &&
                         terminal.getProbeBounds().equals(renderer.screenRectForProvider(
-                            lifted ? placed.getComponentLeadProbeBounds(terminalIndex, true) :
+                            providerLeadLifted ? placed.getComponentLeadProbeBounds(terminalIndex, true) :
                                 placed.getBoardPadProbeBounds(terminalIndex))) &&
                         terminal.getLeadBounds().equals(renderer.screenRectForProvider(
-                            placed.getLeadBounds(terminalIndex, lifted))),
+                            placed.getLeadBounds(terminalIndex, providerLeadLifted))),
                     "Installed provider diverged from package terminal geometry: " +
                         componentId + "." + terminal.getTerminalId());
-                if (connected)
+                if (physicallyMounted) {
+                    if (connected)
+                        require(renderer.getComponentLeadPoint(componentId,
+                                terminal.getBoardPadId()) == null,
+                            "Connected lead exposed a component-side target: " +
+                                terminal.getBoardPadId());
+                    else
+                        require(renderer.getComponentLeadPoint(componentId,
+                                terminal.getBoardPadId()) != null,
+                            "Renderer omitted mounted disconnected component-side lead: " +
+                                terminal.getBoardPadId());
+                } else {
+                    Point componentPoint = terminal.getComponentLeadPoint();
+                    Rectangle boardProbe = terminal.getBoardPadProbeBounds();
+                    Rectangle componentProbe = terminal.getComponentLeadProbeBounds();
                     require(renderer.getComponentLeadPoint(componentId,
-                            terminal.getBoardPadId()) == null,
-                        "Connected lead exposed a component-side target: " +
-                            terminal.getBoardPadId());
-                else
-                    require(renderer.getComponentLeadPoint(componentId,
-                            terminal.getBoardPadId()) != null,
-                        "Renderer omitted disconnected component-side lead: " +
-                            terminal.getBoardPadId());
+                            terminal.getBoardPadId()) == null && componentPoint != null &&
+                            boardProbe != null && componentProbe != null &&
+                            !componentProbe.intersects(boardProbe) &&
+                            !boardProbe.contains(componentPoint.x, componentPoint.y),
+                        "Physically removed component retained an installed lead surface: " +
+                            componentId + "." + terminal.getBoardPadId());
+                    ProbeTarget removedHit = renderer.findProbeTarget(sim, componentPoint.x,
+                        componentPoint.y);
+                    require(removedHit == null,
+                        "Physically removed component-side geometry remained reachable: " +
+                            componentId + "." + terminal.getBoardPadId());
+                }
             }
         }
         renderer.setSelectedComponentId(null);
@@ -121,6 +147,7 @@ final class PhysicalPartRenderDeveloperVerifier {
         verifyLooseProbeProviderDispatch(sim, renderer, registry);
         verifyLooseProjectionLifecycle(sim, renderer, registry);
         verifyConnectedAndLiftedProbeSemantics(sim, renderer);
+        verifyInstalledNegativeCanaries(sim, registry);
     }
 
     private static void verifyLooseProbeProviderDispatch(CirSim sim,
@@ -1068,185 +1095,952 @@ final class PhysicalPartRenderDeveloperVerifier {
         public boolean ownsPart(String partId) { return getPart(partId) != null; }
     }
 
+    private static void verifyInstalledNegativeCanaries(CirSim sim,
+            PhysicalPartRenderRegistry registry) {
+        require(sim != null && registry != null,
+            "Installed negative canaries require a live render context");
+        InstalledRenderNegativeFixture fixture = InstalledRenderNegativeFixture.create(sim);
+        GeneratedBoardInstance savedInstance = sim.generatedBoardInstance;
+        BoardModificationController savedModifications = sim.boardModificationController;
+        try {
+            // Use a detached verification board and its own modification view so the
+            // malformed installed projection cannot change the live challenge state.
+            sim.generatedBoardInstance = fixture.instance;
+            sim.boardModificationController = fixture.modifications;
+            verifyInstalledProbeOverlapNegative(sim, registry, fixture);
+            verifyInstalledDetachedMarkerNegative(sim, registry, fixture);
+        } finally {
+            sim.generatedBoardInstance = savedInstance;
+            sim.boardModificationController = savedModifications;
+        }
+    }
+
+    private static void verifyInstalledProbeOverlapNegative(CirSim sim,
+            PhysicalPartRenderRegistry registry, InstalledRenderNegativeFixture fixture) {
+        PhysicalPartRenderProvider standardProvider = registry.getProvider(fixture.part.getPackage());
+        require(standardProvider != null && standardProvider.getRenderer(fixture.part) != null,
+            "Installed overlap canary has no standard package renderer");
+        PcbWorkbenchRenderer canonicalRenderer = new PcbWorkbenchRenderer(fixture.instance,
+            fixture.modifications, fixture.layout, registry);
+        PhysicalPartRenderGeometry canonicalGeometry = canonicalRenderer
+            .getInstalledGeometryForDeveloperVerification(fixture.componentId);
+        PhysicalPartRenderTerminal canonicalTerminal = findTerminal(canonicalGeometry,
+            fixture.liftedPadId);
+        require(canonicalTerminal != null && canonicalTerminal.getBoardPadId() != null &&
+                canonicalTerminal.getBoardPadPoint() != null &&
+                canonicalTerminal.getBoardPadProbeBounds() != null &&
+                canonicalTerminal.getComponentLeadPoint() != null &&
+                canonicalTerminal.getComponentLeadProbeBounds() != null,
+            "Installed overlap canary has incomplete canonical installed surfaces");
+
+        PhysicalPartRenderRegistry malformedRegistry = new PhysicalPartRenderRegistry();
+        malformedRegistry.register(fixture.part.getPackage(),
+            new InstalledOverlapProjectionProvider(standardProvider, canonicalTerminal
+                .getTerminalIndex()));
+        PcbWorkbenchRenderer malformedRenderer = new PcbWorkbenchRenderer(fixture.instance,
+            fixture.modifications, fixture.layout, malformedRegistry);
+        PhysicalPartRenderGeometry malformedGeometry = malformedRenderer
+            .getInstalledGeometryForDeveloperVerification(fixture.componentId);
+        PhysicalPartRenderTerminal malformedTerminal = findTerminal(malformedGeometry,
+            fixture.liftedPadId);
+        require(malformedTerminal != null && malformedTerminal.getBoardPadId() != null &&
+                malformedTerminal.getBoardPadProbeBounds().equals(
+                    malformedTerminal.getComponentLeadProbeBounds()) &&
+                pointEquals(malformedTerminal.getBoardPadPoint(),
+                    malformedTerminal.getComponentLeadPoint()) &&
+                pointEquals(malformedTerminal.getPoint(), malformedTerminal.getBoardPadPoint()),
+            "Installed overlap canary did not create a complete same-terminal probe collapse");
+
+        Rectangle collapsedSurface = malformedTerminal.getComponentLeadProbeBounds();
+        for (int y = collapsedSurface.y; y < collapsedSurface.y + collapsedSurface.height; y++)
+            for (int x = collapsedSurface.x; x < collapsedSurface.x + collapsedSurface.width; x++) {
+                ProbeTarget hit = malformedRenderer.findProbeTarget(sim, x, y);
+                require(hit instanceof BoardPadProbeTarget && hit.isValid() &&
+                        fixture.liftedPadId.equals(((BoardPadProbeTarget) hit).getPadId()),
+                    "Installed overlap canary exposed an ambiguous component target or lost " +
+                        "board-pad precedence: " + fixture.liftedPadId);
+                require(!(hit instanceof ComponentLeadProbeTarget && hit.isValid()),
+                    "Installed overlap canary returned a valid component target at a collapsed " +
+                        "board-pad surface: " + fixture.liftedPadId);
+            }
+    }
+
+    private static void verifyInstalledDetachedMarkerNegative(CirSim sim,
+            PhysicalPartRenderRegistry registry, InstalledRenderNegativeFixture fixture) {
+        PcbWorkbenchRenderer canonicalRenderer = new PcbWorkbenchRenderer(fixture.instance,
+            fixture.modifications, fixture.layout, registry);
+        PhysicalPartRenderGeometry geometry = canonicalRenderer
+            .getInstalledGeometryForDeveloperVerification(fixture.componentId);
+        final PhysicalPartRenderTerminal terminal = findTerminal(geometry, fixture.liftedPadId);
+        require(terminal != null && terminal.getBoardPadId() != null &&
+                terminal.getComponentLeadProbeBounds() != null &&
+                terminal.getComponentLeadPoint() != null,
+            "Installed marker canary has incomplete canonical installed surfaces");
+        final Rectangle componentProbe = terminal.getComponentLeadProbeBounds();
+        final Point detachedOutside = new Point(componentProbe.x + componentProbe.width + 20,
+            componentProbe.y + componentProbe.height / 2);
+        require(!componentProbe.contains(detachedOutside.x, detachedOutside.y),
+            "Installed marker canary did not place its detached marker outside the probe");
+        expectInstalledRejection("Physical render component probe omits its center",
+            new InstalledNegativeConstruction() {
+                public void construct() {
+                    new PhysicalPartRenderTerminal(terminal.getTerminalIndex(),
+                        terminal.getTerminalId(), terminal.getBoardPadId(), terminal.getPoint(),
+                        terminal.getProbeBounds(), terminal.getBoardPadPoint(),
+                        terminal.getBoardPadProbeBounds(), terminal.getPadBounds(),
+                        detachedOutside, componentProbe, terminal.getLeadBodyPoint(),
+                        terminal.getLeadEndPoint(), terminal.getLeadBounds());
+                }
+            }, "detached installed marker outside component probe: " + fixture.liftedPadId);
+    }
+
+    private interface InstalledNegativeConstruction {
+        void construct();
+    }
+
+    private static void expectInstalledRejection(String expectedMessage,
+            InstalledNegativeConstruction construction, String label) {
+        String actualMessage = null;
+        try {
+            construction.construct();
+        } catch (IllegalArgumentException expected) {
+            actualMessage = expected.getMessage();
+        }
+        require(expectedMessage.equals(actualMessage),
+            "Installed negative canary had the wrong failure reason for " + label +
+                ": expected " + expectedMessage + ", got " + actualMessage);
+    }
+
     private static void verifyConnectedAndLiftedProbeSemantics(CirSim sim,
             PcbWorkbenchRenderer renderer) {
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
+        InstalledLeadCandidate candidate = findMountedLeadCandidate(instance, sim
+            .getBoardModificationController());
+        if (candidate != null) {
+            verifyInstalledLeadLifecycle(sim, renderer, candidate, 0);
+            verifyInstalledLeadLifecycle(sim, renderer, candidate, 1);
+            return;
+        }
+        verifyRemovedLeadState(sim, renderer);
+    }
+
+    private static InstalledLeadCandidate findMountedLeadCandidate(
+            GeneratedBoardInstance instance, BoardModificationController modifications) {
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        Vector<String> componentIds = instance.getBoard().getComponentIds();
+        Collections.sort(componentIds);
+        InstalledLeadCandidate nonCapacitorFallback = null;
+        InstalledLeadCandidate resistorFallback = null;
+        InstalledLeadCandidate capacitorFallback = null;
+        for (String componentId : componentIds) {
+            BoardComponent component = instance.getBoard().getComponent(componentId);
+            Vector<GeneratedComponentConnectionBinding> bindings = instance
+                .getConnectionBindings().getForComponentOrEmpty(componentId);
+            if (component == null || component.getPhysicalPackage().getTerminalCount() != 2 ||
+                    bindings.size() != 2 || runtime.getMutationProvider(componentId) == null ||
+                    modifications.getComponentState(componentId) != ComponentPhysicalState.INSTALLED)
+                continue;
+            PhysicalPart<?> part = runtime.getInstalledPart(componentId);
+            if (!isPhysicallyMounted(runtime, componentId, part))
+                continue;
+            InstalledLeadCandidate found = new InstalledLeadCandidate(componentId, bindings, part);
+            if (!isCapacitorPackage(component.getPhysicalPackage())) {
+                if (resistorFallback == null && PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(
+                        component.getPhysicalPackage()))
+                    resistorFallback = found;
+                if (nonCapacitorFallback == null)
+                    nonCapacitorFallback = found;
+            }
+            if ("C1".equals(componentId))
+                capacitorFallback = found;
+        }
+        return resistorFallback != null ? resistorFallback :
+            (nonCapacitorFallback != null ? nonCapacitorFallback : capacitorFallback);
+    }
+
+    private static boolean isPhysicallyMounted(PhysicalBoardRuntime runtime,
+            String componentId, PhysicalPart<?> part) {
+        PhysicalBoardSlot slot = runtime.getSlot(componentId);
+        return part != null && part.isInstalled() && slot != null &&
+            slot.getInstalledPart() == part && part.getBoardSlot() == slot;
+    }
+
+    private static boolean isCapacitorPackage(PhysicalPackage physicalPackage) {
+        return PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR.isEquivalentTo(physicalPackage) ||
+            PhysicalPackages.RADIAL_CERAMIC_CAPACITOR.isEquivalentTo(physicalPackage);
+    }
+
+    private static void verifyRemovedLeadState(CirSim sim, PcbWorkbenchRenderer renderer) {
+        GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
+        BoardModificationController modifications = sim.getBoardModificationController();
+        RemovedLeadCandidate candidate = findRemovedLeadCandidate(instance, modifications);
+        require(candidate != null,
+            "No mounted lead candidate and no physically removed lead owned by the loose projection");
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        PhysicalBoardSlot slot = runtime.getSlot(candidate.componentId);
+        require(slot != null && slot.getInstalledPart() == null && !candidate.part.isInstalled() &&
+                candidate.part.getBoardSlot() == null &&
+                modifications.getComponentState(candidate.componentId) ==
+                    ComponentPhysicalState.REMOVED,
+            "Removed lead canary did not observe an empty physical slot: " +
+                candidate.componentId);
+        PhysicalPartRenderGeometry geometry = renderer
+            .getInstalledGeometryForDeveloperVerification(candidate.componentId);
+        for (GeneratedComponentConnectionBinding binding : candidate.bindings) {
+            Point padPoint = renderer.getPadPoint(binding.getPadId());
+            require(padPoint != null, "Removed-state board pad has no rendered point: " +
+                binding.getPadId());
+            ProbeTarget boardTarget = renderer.findProbeTarget(sim, padPoint.x, padPoint.y);
+            require(boardTarget instanceof BoardPadProbeTarget && boardTarget.isValid() &&
+                    binding.getPadId().equals(((BoardPadProbeTarget) boardTarget).getPadId()),
+                "Removed-state board pad no longer resolved as a board target: " +
+                    binding.getPadId());
+            PhysicalPartRenderTerminal terminal = findTerminal(geometry, binding.getPadId());
+            require(terminal != null && renderer.getComponentLeadPoint(candidate.componentId,
+                    binding.getPadId()) == null,
+                "Removed-state component still exposed an installed lead point: " +
+                    binding.getPadId());
+            Point componentPoint = terminal.getComponentLeadPoint();
+            Rectangle boardProbe = terminal.getBoardPadProbeBounds();
+            Rectangle componentProbe = terminal.getComponentLeadProbeBounds();
+            require(componentPoint != null && boardProbe != null && componentProbe != null &&
+                    componentProbe.contains(componentPoint.x, componentPoint.y) &&
+                    !componentProbe.intersects(boardProbe) &&
+                    !boardProbe.contains(componentPoint.x, componentPoint.y),
+                "Removed-state provider geometry overlaps its board-pad surface: " +
+                    binding.getPadId());
+            require(renderer.findProbeTarget(sim, componentPoint.x, componentPoint.y) == null,
+                "Removed-state installed lead point remained reachable: " + binding.getPadId());
+        }
+        verifyRemovedLooseCarrier(renderer, candidate.part,
+            candidate.part.getGeometryRealization());
+        verifyRemovedLooseProbeOwnership(sim, renderer, candidate.part);
+    }
+
+    private static RemovedLeadCandidate findRemovedLeadCandidate(
+            GeneratedBoardInstance instance, BoardModificationController modifications) {
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        Vector<String> componentIds = instance.getBoard().getComponentIds();
+        Collections.sort(componentIds);
+        for (String componentId : componentIds) {
+            BoardComponent component = instance.getBoard().getComponent(componentId);
+            Vector<GeneratedComponentConnectionBinding> bindings = instance
+                .getConnectionBindings().getForComponentOrEmpty(componentId);
+            PhysicalBoardSlot slot = runtime.getSlot(componentId);
+            PhysicalSlotMutationProvider provider = runtime.getMutationProvider(componentId);
+            if (component == null || component.getPhysicalPackage().getTerminalCount() != 2 ||
+                    bindings.size() != 2 || provider == null || slot == null ||
+                    slot.getInstalledPart() != null || modifications.getComponentState(componentId) !=
+                        ComponentPhysicalState.REMOVED)
+                continue;
+            WorkbenchPartsProvider partsProvider = runtime.getWorkbenchPartsProvider(componentId);
+            PhysicalPart<?> part = findLoosePart(partsProvider, component.getPhysicalPackage());
+            if (part != null)
+                return new RemovedLeadCandidate(componentId, bindings, part);
+        }
+        return null;
+    }
+
+    private static PhysicalPart<?> findLoosePart(WorkbenchPartsProvider provider,
+            PhysicalPackage physicalPackage) {
+        if (provider == null)
+            return null;
+        PhysicalPart<?> fallback = null;
+        for (PhysicalPart<?> part : provider.getLooseParts()) {
+            if (part == null || part.isInstalled() ||
+                    !physicalPackage.isEquivalentTo(part.getPackage()))
+                continue;
+            if (part.isOriginal())
+                return part;
+            if (fallback == null)
+                fallback = part;
+        }
+        return fallback;
+    }
+
+    private static void verifyInstalledLeadLifecycle(CirSim sim,
+            PcbWorkbenchRenderer renderer, InstalledLeadCandidate candidate,
+            int terminalPosition) {
+        GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
         BoardModificationController modifications = sim.getBoardModificationController();
         PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
-        GeneratedComponentConnectionBinding candidate = null;
-        PhysicalPart<?> part = null;
-        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getAll()) {
-            PhysicalPart<?> installed = instance.getPhysicalBoardRuntime().getInstalledPart(
-                binding.getComponentId());
-            if (installed != null && installed.isInstalled() &&
-                    runtime.getMutationProvider(binding.getComponentId()) != null &&
-                    modifications.getComponentState(binding.getComponentId()) ==
-                        ComponentPhysicalState.INSTALLED) {
-                candidate = binding;
-                part = installed;
-                break;
-            }
-        }
-        require(candidate != null && part != null,
-            "No installed named lead was available for render probe semantics");
         PhysicalSlotMutationProvider mutationProvider = runtime.getMutationProvider(
-            candidate.getComponentId());
-        PhysicalBoardSlot slot = runtime.getSlot(candidate.getComponentId());
-        require(mutationProvider != null && slot != null && slot.getInstalledPart() == part,
-            "Render probe lifecycle canary has no physical slot provider");
+            candidate.componentId);
+        PhysicalBoardSlot slot = runtime.getSlot(candidate.componentId);
+        GeneratedComponentConnectionBinding binding = candidate.bindings.get(terminalPosition);
+        require(mutationProvider != null && slot != null && slot.getInstalledPart() == candidate.part &&
+                isPhysicallyMounted(runtime, candidate.componentId, candidate.part),
+            "Render probe lifecycle canary has no mounted physical slot: " +
+                candidate.componentId);
 
-        Point padPoint = renderer.getPadPoint(candidate.getPadId());
+        Point padPoint = renderer.getPadPoint(binding.getPadId());
         require(padPoint != null, "Candidate board pad has no rendered point: " +
-            candidate.getPadId());
+            binding.getPadId());
         ProbeTarget connectedPad = renderer.findProbeTarget(sim, padPoint.x, padPoint.y);
         require(connectedPad instanceof BoardPadProbeTarget && connectedPad.isValid() &&
-                candidate.getPadId().equals(((BoardPadProbeTarget) connectedPad).getPadId()),
-            "Connected board pad did not resolve as a board target: " + candidate.getPadId());
+                binding.getPadId().equals(((BoardPadProbeTarget) connectedPad).getPadId()),
+            "Connected board pad did not resolve as a board target: " + binding.getPadId());
 
+        PhysicalPartRenderGeometry connectedGeometry = renderer
+            .getInstalledGeometryForDeveloperVerification(candidate.componentId);
+        PhysicalPartRenderTerminal connectedTerminal = findTerminal(connectedGeometry,
+            binding.getPadId());
+        require(connectedTerminal != null && renderer.getComponentLeadPoint(candidate.componentId,
+                binding.getPadId()) == null,
+            "Connected two-terminal part exposed an installed component target: " +
+                binding.getPadId());
+        Point connectedComponentPoint = connectedTerminal.getComponentLeadPoint();
+        Rectangle connectedBoardProbe = connectedTerminal.getBoardPadProbeBounds();
+        Rectangle connectedComponentProbe = connectedTerminal.getComponentLeadProbeBounds();
+        require(connectedComponentPoint != null && connectedBoardProbe != null &&
+                connectedComponentProbe != null && connectedComponentProbe.contains(
+                    connectedComponentPoint.x, connectedComponentPoint.y) &&
+                !connectedComponentProbe.intersects(connectedBoardProbe) &&
+                !connectedBoardProbe.contains(connectedComponentPoint.x,
+                    connectedComponentPoint.y) &&
+                renderer.findProbeTarget(sim, connectedComponentPoint.x,
+                    connectedComponentPoint.y) == null,
+            "Connected component-side probe surface was reachable or overlapped the board pad: " +
+                binding.getPadId());
         ComponentLeadProbeTarget connectedLead = new ComponentLeadProbeTarget(sim, instance,
-            candidate.getComponentId(), candidate.getPadId(), renderer, part.getId(),
-            candidate.getComponentEndpoint());
+            candidate.componentId, binding.getPadId(), renderer, candidate.part.getId(),
+            binding.getComponentEndpoint());
         require(!connectedLead.isValid(),
-            "Connected named lead was accepted as a component-side target");
+            "Connected named lead was accepted as a component-side target: " + binding.getPadId());
 
         BoardPowerController power = sim.getBoardPowerController();
         BoardPowerState savedPower = power.getState();
-        PhysicalGeometryRealization carrier = part.getGeometryRealization();
-        PhysicalPartTerminal stableTerminal = findPartTerminal(part,
-            instance.getBoard().getPad(candidate.getPadId()).getTerminalId());
-        require(carrier != null && stableTerminal != null,
-            "Render probe lifecycle canary lost physical identity before mutation");
-        String stablePartId = part.getId();
+        PhysicalGeometryRealization carrier = candidate.part.getGeometryRealization();
+        BoardPad boardPad = instance.getBoard().getPad(binding.getPadId());
+        PhysicalPartTerminal stableTerminal = findPartTerminal(candidate.part,
+            boardPad == null ? null : boardPad.getTerminalId());
+            require(carrier != null && stableTerminal != null &&
+                sameCircuitPostEndpoint(binding.getComponentEndpoint(),
+                    stableTerminal.getEndpoint()),
+            "Render probe lifecycle canary lost physical terminal identity before mutation: " +
+                binding.getPadId());
+        String stablePartId = candidate.part.getId();
         CircuitMeasurementEndpoint stableEndpoint = stableTerminal.getEndpoint();
         try {
             if (!power.isElectricallyUnpowered())
                 power.setState(BoardPowerState.UNPOWERED);
             require(power.isElectricallyUnpowered(),
                 "Render probe canary could not establish safe unpowered mutation state");
-            require(modifications.liftLead(candidate.getComponentId(), candidate.getPadId()),
-                "Render probe canary could not lift named lead");
+            require(modifications.liftLead(candidate.componentId, binding.getPadId()),
+                "Render probe canary could not lift named lead: " + binding.getPadId());
 
             PhysicalPartRenderGeometry geometry = renderer
-                .getInstalledGeometryForDeveloperVerification(candidate.getComponentId());
-            PhysicalPartRenderTerminal terminal = findTerminal(geometry, candidate.getPadId());
-            require(terminal != null && renderer.getComponentLeadPoint(candidate.getComponentId(),
-                    candidate.getPadId()) != null,
-                "Lifted named lead lost its package component-side geometry");
+                .getInstalledGeometryForDeveloperVerification(candidate.componentId);
+            PhysicalPartRenderTerminal terminal = findTerminal(geometry, binding.getPadId());
+            require(terminal != null && renderer.getComponentLeadPoint(candidate.componentId,
+                    binding.getPadId()) != null,
+                "Lifted named lead lost its package component-side geometry: " +
+                    binding.getPadId());
             Point componentSide = terminal.getComponentLeadPoint();
             Rectangle boardPadProbe = terminal.getBoardPadProbeBounds();
-            require(componentSide != null && terminal.getComponentLeadProbeBounds().contains(
-                    componentSide.x, componentSide.y) && (boardPadProbe == null ||
-                    !boardPadProbe.contains(componentSide.x, componentSide.y)) &&
+            Rectangle componentProbe = terminal.getComponentLeadProbeBounds();
+            require(componentSide != null && componentProbe != null && boardPadProbe != null &&
+                    componentProbe.contains(componentSide.x, componentSide.y) &&
+                    terminal.containsComponentProbe(componentSide.x, componentSide.y,
+                        boardPadProbe) && geometry.contains(componentSide.x, componentSide.y) &&
+                    !componentProbe.intersects(boardPadProbe) &&
+                    !boardPadProbe.contains(componentSide.x, componentSide.y) &&
                     pointEquals(componentSide, renderer.getComponentLeadPoint(
-                        candidate.getComponentId(), candidate.getPadId())),
-                "Lifted lead did not expose its exact detached component surface");
+                        candidate.componentId, binding.getPadId())),
+                "Lifted lead did not expose a distinct visible detached component surface: " +
+                    binding.getPadId());
             ProbeTarget liftedTarget = renderer.findProbeTarget(sim, componentSide.x,
                 componentSide.y);
-            require(liftedTarget instanceof ComponentLeadProbeTarget,
-                "Lifted named lead resolved as the wrong target: " +
-                    (liftedTarget == null ? "null" : liftedTarget.getClass().getName()));
-            require(liftedTarget.isValid(),
-                "Lifted named lead resolved to an invalid component target");
+            require(liftedTarget instanceof ComponentLeadProbeTarget &&
+                    liftedTarget.isValid(),
+                "Lifted named lead did not resolve as a valid component target: " +
+                    binding.getPadId());
             ComponentLeadProbeTarget componentTarget = (ComponentLeadProbeTarget) liftedTarget;
-            require(candidate.getComponentId().equals(
+            require(candidate.componentId.equals(
                     componentTarget.getComponentIdForDeveloperVerification()) &&
-                    candidate.getPadId().equals(componentTarget.getPadIdForDeveloperVerification()) &&
-                    part.getId().equals(componentTarget.getPhysicalPartIdForDeveloperVerification()) &&
+                    binding.getPadId().equals(componentTarget.getPadIdForDeveloperVerification()) &&
+                    stablePartId.equals(componentTarget.getPhysicalPartIdForDeveloperVerification()) &&
                     liftedTarget.getMeasurementEndpoint() == stableEndpoint &&
                     pointEquals(componentTarget.getMarkerPoint(), componentSide),
-                "Lifted component target changed stable physical or endpoint identity");
+                "Lifted component target changed stable physical or endpoint identity: " +
+                    binding.getPadId());
             ComponentLeadProbeTarget equivalent = new ComponentLeadProbeTarget(sim, instance,
-                candidate.getComponentId(), candidate.getPadId(), renderer, part.getId(),
-                candidate.getComponentEndpoint());
+                candidate.componentId, binding.getPadId(), renderer, stablePartId,
+                binding.getComponentEndpoint());
             require(componentTarget.isSameTarget(equivalent),
-                "Lifted component target identity was not stable");
+                "Lifted component target identity was not stable: " + binding.getPadId());
             ProbeTarget liftedPad = renderer.findProbeTarget(sim, padPoint.x, padPoint.y);
-            require(liftedPad instanceof BoardPadProbeTarget && liftedPad.isValid(),
-                "Lifted board pad no longer resolved as a board target");
+            require(liftedPad instanceof BoardPadProbeTarget && liftedPad.isValid() &&
+                    liftedPad.getMeasurementEndpoint() == binding.getBoardEndpoint() &&
+                    liftedPad.getMeasurementEndpoint() != componentTarget.getMeasurementEndpoint() &&
+                    !liftedPad.isSameTarget(componentTarget),
+                "Lifted board/component probe surfaces did not remain distinct: " +
+                    binding.getPadId());
 
-            require(modifications.reconnectLead(candidate.getComponentId(), candidate.getPadId()),
-                "Render probe canary could not reconnect named lead");
-            require(!componentTarget.isValid() && renderer.getComponentLeadPoint(
-                    candidate.getComponentId(), candidate.getPadId()) == null,
-                "Reconnected lead retained a component-side target");
+            GeneratedComponentConnectionBinding otherBinding = candidate.bindings.get(
+                terminalPosition == 0 ? 1 : 0);
+            ComponentLeadProbeTarget wrongPadTarget = new ComponentLeadProbeTarget(sim, instance,
+                candidate.componentId, otherBinding.getPadId(), renderer, stablePartId,
+                stableEndpoint);
+            require(!wrongPadTarget.isValid(),
+                "Component target accepted the wrong terminal binding: " + binding.getPadId());
+            ComponentLeadProbeTarget wrongComponentTarget = new ComponentLeadProbeTarget(sim,
+                instance, candidate.componentId + "_WRONG", binding.getPadId(), renderer,
+                stablePartId, stableEndpoint);
+            require(!wrongComponentTarget.isValid(),
+                "Component target accepted the wrong component binding: " + binding.getPadId());
+            require(modifications.reconnectLead(candidate.componentId, binding.getPadId()),
+                "Render probe canary could not reconnect named lead: " + binding.getPadId());
+            require(!componentTarget.isValid() && componentTarget.getMarkerPoint() == null &&
+                    renderer.getComponentLeadPoint(candidate.componentId,
+                        binding.getPadId()) == null && renderer.findProbeTarget(sim,
+                        componentSide.x, componentSide.y) == null,
+                "Reconnected lead retained a stale component-side target: " +
+                    binding.getPadId());
             ProbeTarget reconnectedPad = renderer.findProbeTarget(sim, padPoint.x, padPoint.y);
             require(reconnectedPad instanceof BoardPadProbeTarget && reconnectedPad.isValid(),
-                "Reconnected lead did not restore board-pad resolution");
+                "Reconnected lead did not restore board-pad resolution: " + binding.getPadId());
 
-            require(modifications.liftLead(candidate.getComponentId(), candidate.getPadId()),
-                "Render probe lifecycle canary could not re-lift before physical removal");
-            require(modifications.removeComponent(candidate.getComponentId()) &&
-                    modifications.getComponentState(candidate.getComponentId()) ==
-                        ComponentPhysicalState.REMOVED && slot.getInstalledPart() == part &&
-                    part.isInstalled() && renderer.getComponentLeadPoint(
-                        candidate.getComponentId(), candidate.getPadId()) != null &&
-                    candidate.getComponentId().equals(renderer.findComponentId(
-                        geometry.getBodyBounds().x + geometry.getBodyBounds().width / 2,
-                        geometry.getBodyBounds().y + geometry.getBodyBounds().height / 2)) &&
-                    liftedPad.isValid() && !componentTarget.isValid(),
-                "Graph-only removal was mistaken for final physical slot removal");
-            ProbeTarget graphRemovedTarget = renderer.findProbeTarget(sim, componentSide.x,
-                componentSide.y);
+            require(modifications.liftLead(candidate.componentId, binding.getPadId()),
+                "Render probe lifecycle canary could not re-lift before physical removal: " +
+                    binding.getPadId());
+            PhysicalPartRenderGeometry reliftedGeometry = renderer
+                .getInstalledGeometryForDeveloperVerification(candidate.componentId);
+            PhysicalPartRenderTerminal reliftedTerminal = findTerminal(reliftedGeometry,
+                binding.getPadId());
+            require(reliftedTerminal != null && renderer.getComponentLeadPoint(
+                    candidate.componentId, binding.getPadId()) != null,
+                "Relifted lead did not regain its mounted component-side surface: " +
+                    binding.getPadId());
+            Point reliftedPoint = reliftedTerminal.getComponentLeadPoint();
+            ProbeTarget beforeGraphRemoval = renderer.findProbeTarget(sim, reliftedPoint.x,
+                reliftedPoint.y);
+            require(beforeGraphRemoval instanceof ComponentLeadProbeTarget &&
+                    beforeGraphRemoval.isValid(),
+                "Relifted lead did not provide a target before graph-only removal: " +
+                    binding.getPadId());
+            require(modifications.removeComponent(candidate.componentId) &&
+                    modifications.getComponentState(candidate.componentId) ==
+                        ComponentPhysicalState.REMOVED && slot.getInstalledPart() == candidate.part &&
+                    candidate.part.isInstalled() && isPhysicallyMounted(runtime,
+                        candidate.componentId, candidate.part) && renderer.getComponentLeadPoint(
+                        candidate.componentId, binding.getPadId()) != null &&
+                    candidate.componentId.equals(renderer.findComponentId(
+                        reliftedGeometry.getBodyBounds().x + reliftedGeometry.getBodyBounds().width / 2,
+                        reliftedGeometry.getBodyBounds().y + reliftedGeometry.getBodyBounds().height / 2)) &&
+                    liftedPad.isValid() && !componentTarget.isValid() &&
+                    !beforeGraphRemoval.isValid(),
+                "Graph-only removal was mistaken for final physical slot removal: " +
+                    binding.getPadId());
+            ProbeTarget graphRemovedTarget = renderer.findProbeTarget(sim, reliftedPoint.x,
+                reliftedPoint.y);
             require(graphRemovedTarget instanceof ComponentLeadProbeTarget &&
-                    graphRemovedTarget.isValid(),
-                "Graph-only removal lost the still-mounted component-side target");
+                    graphRemovedTarget.isValid() && stablePartId.equals(
+                        ((ComponentLeadProbeTarget) graphRemovedTarget)
+                            .getPhysicalPartIdForDeveloperVerification()) &&
+                    graphRemovedTarget.getMeasurementEndpoint() == stableEndpoint,
+                "Graph-only removal lost the still-mounted component-side target: " +
+                    binding.getPadId());
             require(mutationProvider.removeInstalledPart() && slot.getInstalledPart() == null &&
-                    !part.isInstalled(),
-                "Physical removal did not reach final slot-empty state");
-            verifyRemovedLooseCarrier(renderer, part, carrier);
+                    !candidate.part.isInstalled() && candidate.part.getBoardSlot() == null,
+                "Physical removal did not reach final slot-empty state: " + binding.getPadId());
+            verifyRemovedLooseCarrier(renderer, candidate.part, carrier);
+            verifyRemovedLooseProbeOwnership(sim, renderer, candidate.part);
             require(liftedPad.isValid() && !componentTarget.isValid() &&
-                    !graphRemovedTarget.isValid() &&
-                    renderer.getComponentLeadPoint(candidate.getComponentId(),
-                        candidate.getPadId()) == null &&
-                    renderer.findComponentId(geometry.getBodyBounds().x +
-                        geometry.getBodyBounds().width / 2,
-                        geometry.getBodyBounds().y + geometry.getBodyBounds().height / 2) == null,
-                "Final physical removal did not preserve pad target and invalidate installed target");
+                    !graphRemovedTarget.isValid() && renderer.getComponentLeadPoint(
+                        candidate.componentId, binding.getPadId()) == null &&
+                    renderer.findProbeTarget(sim, reliftedPoint.x, reliftedPoint.y) == null &&
+                    renderer.findComponentId(reliftedGeometry.getBodyBounds().x +
+                        reliftedGeometry.getBodyBounds().width / 2,
+                        reliftedGeometry.getBodyBounds().y +
+                        reliftedGeometry.getBodyBounds().height / 2) == null,
+                "Final physical removal did not invalidate installed interaction: " +
+                    binding.getPadId());
 
-            require(mutationProvider.install(stablePartId) && slot.getInstalledPart() == part &&
-                    part.isInstalled() && part.getGeometryRealization() == carrier &&
-                    findPartTerminal(part, stableTerminal.getTerminalName()) == stableTerminal &&
-                    stableTerminal.getEndpoint() == stableEndpoint,
-                "Same-part physical reinstall changed stable physical identity");
-            require(!componentTarget.isValid() && modifications.getComponentState(
-                    candidate.getComponentId()) == ComponentPhysicalState.INSTALLED,
-                "Old detached target revived across same-part physical reinstall");
-            require(modifications.liftLead(candidate.getComponentId(), candidate.getPadId()),
-                "Render probe lifecycle canary could not lift after same-part reinstall");
+            require(mutationProvider.install(stablePartId) && slot.getInstalledPart() == candidate.part &&
+                    candidate.part.isInstalled() && candidate.part.getGeometryRealization() == carrier &&
+                    findPartTerminal(candidate.part, stableTerminal.getTerminalName()) == stableTerminal &&
+                    stableTerminal.getEndpoint() == stableEndpoint &&
+                    modifications.getComponentState(candidate.componentId) ==
+                        ComponentPhysicalState.INSTALLED,
+                "Same-part physical reinstall changed stable physical identity: " +
+                    binding.getPadId());
+            require(!componentTarget.isValid() && !graphRemovedTarget.isValid() &&
+                    renderer.getComponentLeadPoint(candidate.componentId,
+                        binding.getPadId()) == null,
+                "Old detached target revived across same-part physical reinstall: " +
+                    binding.getPadId());
+            ProbeTarget reinstalledPad = renderer.findProbeTarget(sim, padPoint.x, padPoint.y);
+            require(reinstalledPad instanceof BoardPadProbeTarget && reinstalledPad.isValid() &&
+                    renderer.getComponentLeadPoint(candidate.componentId,
+                        binding.getPadId()) == null,
+                "Connected reinstall did not expose board-side probing only: " +
+                    binding.getPadId());
+            require(modifications.liftLead(candidate.componentId, binding.getPadId()),
+                "Render probe lifecycle canary could not lift after same-part reinstall: " +
+                    binding.getPadId());
             PhysicalPartRenderGeometry reinstalledGeometry = renderer
-                .getInstalledGeometryForDeveloperVerification(candidate.getComponentId());
+                .getInstalledGeometryForDeveloperVerification(candidate.componentId);
             PhysicalPartRenderTerminal reinstalledTerminal = findTerminal(reinstalledGeometry,
-                candidate.getPadId());
+                binding.getPadId());
+            require(reinstalledTerminal != null, "Reinstalled provider omitted terminal: " +
+                binding.getPadId());
             Point reinstalledPoint = reinstalledTerminal.getComponentLeadPoint();
             ProbeTarget reinstalledTarget = renderer.findProbeTarget(sim, reinstalledPoint.x,
                 reinstalledPoint.y);
             require(reinstalledTarget instanceof ComponentLeadProbeTarget &&
-                    reinstalledTarget.isValid() &&
-                    stablePartId.equals(((ComponentLeadProbeTarget) reinstalledTarget)
-                        .getPhysicalPartIdForDeveloperVerification()) &&
+                    reinstalledTarget.isValid() && stablePartId.equals(
+                        ((ComponentLeadProbeTarget) reinstalledTarget)
+                            .getPhysicalPartIdForDeveloperVerification()) &&
                     reinstalledTarget.getMeasurementEndpoint() == stableEndpoint &&
                     pointEquals(reinstalledTarget.getMarkerPoint(), reinstalledPoint) &&
-                    !componentTarget.isSameTarget(reinstalledTarget),
-                        "Same-part reinstall did not recreate a distinct exact component target");
+                    !componentTarget.isSameTarget(reinstalledTarget) &&
+                    !graphRemovedTarget.isSameTarget(reinstalledTarget),
+                "Same-part reinstall did not recreate a distinct exact component target: " +
+                    binding.getPadId());
+
+            verifyReplacementEndpointInvalidation(sim,
+                renderer.getRenderRegistryForDeveloperVerification());
 
             ComponentLeadProbeTarget replacementIdentityTarget = new ComponentLeadProbeTarget(sim,
-                instance, candidate.getComponentId(), candidate.getPadId(), renderer,
+                instance, candidate.componentId, binding.getPadId(), renderer,
                 stablePartId + "_REPLACEMENT", stableEndpoint);
             require(!replacementIdentityTarget.isValid(),
-                "Component target accepted a replaced physical-part identity");
+                "Component target accepted a replaced physical-part identity: " +
+                    binding.getPadId());
         } finally {
             PhysicalPart<?> installed = slot.getInstalledPart();
-            if (installed != null && installed != part)
+            if (installed != null && installed != candidate.part)
                 mutationProvider.removeInstalledPart();
             if (slot.getInstalledPart() == null)
                 mutationProvider.install(stablePartId);
-            if (modifications.getComponentState(candidate.getComponentId()) !=
+            if (modifications.getComponentState(candidate.componentId) !=
                     ComponentPhysicalState.INSTALLED)
-                modifications.restoreComponent(candidate.getComponentId());
+                modifications.restoreComponent(candidate.componentId);
             if (savedPower == BoardPowerState.POWERED)
                 power.setState(BoardPowerState.POWERED);
             else
                 power.setState(BoardPowerState.UNPOWERED);
+        }
+    }
+
+    private static void verifyReplacementEndpointInvalidation(CirSim sim,
+            PhysicalPartRenderRegistry registry) {
+        GeneratedBoardInstance savedInstance = sim.generatedBoardInstance;
+        BoardModificationController savedModifications = sim.boardModificationController;
+        GeneratedChallengeController savedChallengeController = sim.generatedChallengeController;
+        PcbWorkbenchController savedWorkbench = sim.pcbWorkbenchController;
+        Vector<CircuitElm> savedElements = sim.elmList;
+        BoardPowerState savedPower = sim.getBoardPowerController().getState();
+        boolean savedAnalyzeFlag = sim.analyzeFlag;
+        boolean savedNeedsRepaint = sim.needsRepaint;
+        boolean savedVerificationPending = sim.generatedBoardVerificationPending;
+        boolean savedVerificationAnalyzed = sim.generatedBoardVerificationAnalyzed;
+        double savedVerificationStartTime = sim.generatedBoardVerificationStartTime;
+        GeneratedBoardInstance isolatedInstance = null;
+        BoardModificationController isolatedModifications = null;
+        PhysicalSlotMutationProvider isolatedMutationProvider = null;
+        PhysicalBoardSlot isolatedSlot = null;
+        sim.beginObservationalValidation();
+        try {
+            // Catalog acquisition is intentionally append-only in the production
+            // runtime.  Exercise the real provider on a disposable generated board
+            // so its acquired identity cannot enter the live board fingerprint.
+            isolatedInstance = new LedIndicatorGenerator().generateForFaultVerification(0,
+                GeneratedFaultType.RESISTOR_OPEN);
+            isolatedModifications = new BoardModificationController(sim, isolatedInstance);
+            sim.generatedBoardInstance = isolatedInstance;
+            sim.generatedChallengeController = null;
+            sim.boardModificationController = isolatedModifications;
+            sim.pcbWorkbenchController = null;
+            sim.elmList = isolatedInstance.getSimulationElements();
+            isolatedInstance.getPhysicalBoardRuntime().installRegisteredCapabilities(sim,
+                isolatedInstance, isolatedModifications, sim.t);
+
+            PcbWorkbenchRenderer isolatedRenderer = new PcbWorkbenchRenderer(isolatedInstance,
+                isolatedModifications, isolatedInstance.getPcbLayout(), registry);
+            InstalledLeadCandidate candidate = findMountedLeadCandidate(isolatedInstance,
+                isolatedModifications);
+            require(candidate != null && "R1".equals(candidate.componentId),
+                "Replacement endpoint canary has no isolated resistor candidate");
+            GeneratedComponentConnectionBinding binding = candidate.bindings.get(0);
+            PhysicalBoardRuntime runtime = isolatedInstance.getPhysicalBoardRuntime();
+            isolatedMutationProvider = runtime.getMutationProvider(candidate.componentId);
+            isolatedSlot = runtime.getSlot(candidate.componentId);
+            WorkbenchPartsProvider partsProvider = runtime.getWorkbenchPartsProvider(
+                candidate.componentId);
+            require(isolatedMutationProvider != null && isolatedSlot != null &&
+                    partsProvider != null && partsProvider.getCatalogEntries() != null &&
+                    !partsProvider.getCatalogEntries().isEmpty(),
+                "Replacement endpoint canary has no isolated catalog path");
+            require(isolatedModifications.liftLead(candidate.componentId, binding.getPadId()),
+                "Replacement endpoint canary could not lift the isolated original lead: " +
+                    binding.getPadId());
+            Point originalPoint = isolatedRenderer.getComponentLeadPoint(candidate.componentId,
+                binding.getPadId());
+            ProbeTarget originalTarget = originalPoint == null ? null :
+                isolatedRenderer.findProbeTarget(sim, originalPoint.x, originalPoint.y);
+            require(originalPoint != null && originalTarget instanceof ComponentLeadProbeTarget &&
+                    originalTarget.isValid(),
+                "Replacement endpoint canary did not start from a valid isolated target: " +
+                    binding.getPadId());
+
+            String originalPartId = candidate.part.getId();
+            BoardPad boardPad = isolatedInstance.getBoard().getPad(binding.getPadId());
+            PhysicalPartTerminal originalTerminal = findPartTerminal(candidate.part,
+                boardPad == null ? null : boardPad.getTerminalId());
+            require(originalTerminal != null,
+                "Replacement endpoint canary could not resolve the isolated original lead: " +
+                    binding.getPadId());
+            CircuitMeasurementEndpoint originalEndpoint = originalTerminal.getEndpoint();
+            WorkbenchCatalogEntry catalogEntry = partsProvider.getCatalogEntries().firstElement();
+            require(isolatedMutationProvider.removeInstalledPart(),
+                "Replacement endpoint canary could not remove the isolated original part: " +
+                    candidate.componentId);
+            require(isolatedMutationProvider.installNewFromCatalog(catalogEntry.getId()),
+                "Replacement endpoint canary could not install an isolated catalog part: " +
+                    candidate.componentId);
+            PhysicalPart<?> replacement = isolatedSlot.getInstalledPart();
+            require(replacement != null && replacement != candidate.part &&
+                    !originalPartId.equals(replacement.getId()) && replacement.isInstalled(),
+                "Replacement endpoint canary did not create a new isolated physical part: " +
+                    candidate.componentId);
+            PhysicalPartTerminal replacementTerminal = findPartTerminal(replacement,
+                boardPad == null ? null : boardPad.getTerminalId());
+            require(replacementTerminal != null && replacementTerminal.getEndpoint() !=
+                    originalEndpoint,
+                "Replacement endpoint canary did not create a distinct isolated endpoint: " +
+                    binding.getPadId());
+            require(!originalTarget.isValid() && originalTarget.getMarkerPoint() == null &&
+                    originalTarget.getMeasurementEndpoint() == originalEndpoint &&
+                    originalTarget.getMeasurementEndpoint() != replacementTerminal.getEndpoint() &&
+                    isolatedRenderer.getComponentLeadPoint(candidate.componentId,
+                        binding.getPadId()) == null &&
+                    isolatedRenderer.findProbeTarget(sim, originalPoint.x, originalPoint.y) == null,
+                "Installed target silently migrated to an isolated replacement endpoint: " +
+                    binding.getPadId());
+
+            require(isolatedModifications.liftLead(candidate.componentId, binding.getPadId()),
+                "Replacement endpoint canary could not lift the isolated replacement lead: " +
+                    binding.getPadId());
+            Point replacementPoint = isolatedRenderer.getComponentLeadPoint(
+                candidate.componentId, binding.getPadId());
+            require(replacementPoint != null,
+                "Replacement endpoint canary did not expose the isolated replacement lead: " +
+                    binding.getPadId());
+            ProbeTarget replacementTarget = isolatedRenderer.findProbeTarget(sim,
+                replacementPoint.x, replacementPoint.y);
+            require(replacementTarget instanceof ComponentLeadProbeTarget &&
+                    replacementTarget.isValid() && replacementTarget != originalTarget &&
+                    !replacementTarget.isSameTarget(originalTarget) &&
+                    replacement.getId().equals(((ComponentLeadProbeTarget) replacementTarget)
+                        .getPhysicalPartIdForDeveloperVerification()) &&
+                    replacementTarget.getMeasurementEndpoint() == replacementTerminal.getEndpoint() &&
+                    replacementTarget.getMeasurementEndpoint() != originalEndpoint,
+                "Replacement lead did not acquire a fresh isolated physical endpoint target: " +
+                    binding.getPadId());
+        } finally {
+            try {
+                if (isolatedMutationProvider != null && isolatedSlot != null &&
+                        isolatedSlot.getInstalledPart() != null)
+                    isolatedMutationProvider.removeInstalledPart();
+            } finally {
+                sim.generatedBoardInstance = savedInstance;
+                sim.generatedChallengeController = savedChallengeController;
+                sim.boardModificationController = savedModifications;
+                sim.pcbWorkbenchController = savedWorkbench;
+                sim.elmList = savedElements;
+                sim.analyzeFlag = savedAnalyzeFlag;
+                sim.needsRepaint = savedNeedsRepaint;
+                sim.generatedBoardVerificationPending = savedVerificationPending;
+                sim.generatedBoardVerificationAnalyzed = savedVerificationAnalyzed;
+                sim.generatedBoardVerificationStartTime = savedVerificationStartTime;
+                require(sim.getBoardPowerController().getState() == savedPower,
+                    "Isolated replacement canary changed live board power state");
+                sim.endObservationalValidation();
+            }
+        }
+    }
+
+    private static final class InstalledRenderNegativeFixture {
+        final String componentId;
+        final String liftedPadId;
+        final PhysicalPackage physicalPackage;
+        final PhysicalPart<?> part;
+        final GeneratedBoardInstance instance;
+        final BoardModificationController modifications;
+        final PcbBoardLayout layout;
+
+        private InstalledRenderNegativeFixture(String componentId, String liftedPadId,
+                PhysicalPackage physicalPackage, PhysicalPart<?> part,
+                GeneratedBoardInstance instance, BoardModificationController modifications,
+                PcbBoardLayout layout) {
+            this.componentId = componentId;
+            this.liftedPadId = liftedPadId;
+            this.physicalPackage = physicalPackage;
+            this.part = part;
+            this.instance = instance;
+            this.modifications = modifications;
+            this.layout = layout;
+        }
+
+        static InstalledRenderNegativeFixture create(CirSim sim) {
+            String componentId = "TASK43_INSTALLED_RENDER_NEGATIVE";
+            String liftedPadId = componentId + ".1";
+            PhysicalPackage physicalPackage = PhysicalPackages.AXIAL_RESISTOR;
+            TroubleshootBoard board = new TroubleshootBoard(componentId);
+            board.addNet(new BoardNet(componentId + ".NET.1"));
+            board.addNet(new BoardNet(componentId + ".NET.2"));
+            board.addComponent(new BoardComponent(componentId, "RESISTOR", physicalPackage));
+            board.addPad(new BoardPad(liftedPadId, componentId, "1", componentId + ".NET.1"));
+            board.addPad(new BoardPad(componentId + ".2", componentId, "2",
+                componentId + ".NET.2"));
+            board.validate();
+
+            PcbFootprint footprint = PcbFootprint.fromPhysicalPackage(
+                board.getComponent(componentId), 180, 120);
+            PcbBoardLayout layout = new PcbBoardLayout(900, 600,
+                new Rectangle(20, 20, 700, 500), new Rectangle(740, 20, 140, 500));
+            layout.addComponent(footprint.getPlacement());
+            for (PcbPadPlacement pad : footprint.getPads())
+                layout.addPad(pad);
+            layout.validateAgainst(board);
+
+            PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(board);
+            PhysicalBoardSlot slot = runtime.createSlot(componentId);
+            LooseRenderCanaryPart part = LooseRenderCanaryPart.create(componentId + "_PART",
+                physicalPackage, false);
+            slot.install(part);
+            runtime.bindGeometryRealizations(layout);
+
+            Vector<CircuitElm> simulationElements = new Vector<CircuitElm>();
+            Vector<CircuitElm> partElements = part.getElectricalBacking().getCircuitElements();
+            simulationElements.addAll(partElements);
+            GeneratedComponentBindings componentBindings = new GeneratedComponentBindings(board);
+            componentBindings.bindComponentElements(componentId, partElements);
+            GeneratedComponentConnectionBindings connectionBindings =
+                new GeneratedComponentConnectionBindings(board);
+            for (int index = 0; index < physicalPackage.getTerminalCount(); index++) {
+                String padId = componentId + "." + physicalPackage.getTerminalIds().get(index);
+                WireElm boardWire = new WireElm(700 + index * 80, 1000);
+                boardWire.drag(716 + index * 80, 1000);
+                CircuitPostMeasurementEndpoint boardEndpoint =
+                    new CircuitPostMeasurementEndpoint(boardWire, 0);
+                board.getSimulationBindings().bindPad(padId, boardEndpoint);
+                CircuitMeasurementEndpoint componentEndpoint = part.getTerminal(index)
+                    .getEndpoint();
+                require(componentEndpoint instanceof CircuitPostMeasurementEndpoint,
+                    "Installed negative canary part endpoint is not a CircuitJS post");
+                CircuitPostMeasurementEndpoint componentPost =
+                    (CircuitPostMeasurementEndpoint) componentEndpoint;
+                Point boardPoint = boardEndpoint.getElement().getPost(boardEndpoint.getPostIndex());
+                Point componentPoint = componentPost.getElement().getPost(
+                    componentPost.getPostIndex());
+                WireElm connection = new WireElm(boardPoint.x, boardPoint.y);
+                connection.setPosition(boardPoint.x, boardPoint.y, componentPoint.x,
+                    componentPoint.y);
+                simulationElements.add(boardWire);
+                simulationElements.add(connection);
+                connectionBindings.bind(componentId, padId, boardEndpoint, componentEndpoint,
+                    connection);
+            }
+            board.validate();
+            runtime.validate();
+
+            BoardPhysicalSpecifications specifications = new BoardPhysicalSpecifications();
+            specifications.addPhysicalDefinition(componentId, part.getSpecification(),
+                part.getPlayerVisibleNameplate(), physicalPackage);
+            GeneratedExternalPowerBindings powerBindings =
+                new GeneratedExternalPowerBindings(board);
+            GeneratedChallengeBehaviorContract behavior =
+                new GeneratedChallengeBehaviorContract() {
+                    public void verifyHealthy(GeneratedBoardInstance instance,
+                            BoardPowerState powerState) { }
+                    public void verifyFaulted(GeneratedBoardInstance instance,
+                            BoardModificationController modifications,
+                            BoardPowerState powerState) { }
+                    public GeneratedRepairStatus getRepairStatus(
+                            GeneratedBoardInstance instance,
+                            BoardModificationController modifications,
+                            BoardPowerState powerState, boolean activeMeasurementOverlay) {
+                        return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+                    }
+                    public boolean isFunctionallyRepaired(GeneratedBoardInstance instance,
+                            BoardModificationController modifications,
+                            BoardPowerState powerState, boolean activeMeasurementOverlay) {
+                        return false;
+                    }
+                };
+            GeneratedBoardInstance instance = new GeneratedBoardInstance(board,
+                simulationElements, 43L, QuickPlayFamilyRegistry.LED_INDICATOR,
+                componentId, "Installed render negative canary", componentBindings,
+                powerBindings, connectionBindings, behavior, layout, specifications, null,
+                null, null, null, runtime, null, false,
+                new Vector<GeneratedFaultCandidate>());
+            BoardModificationController modifications = new InstalledNegativeModificationController(
+                sim, instance, componentId, liftedPadId);
+            return new InstalledRenderNegativeFixture(componentId, liftedPadId, physicalPackage,
+                part, instance, modifications, layout);
+        }
+    }
+
+    private static final class InstalledNegativeModificationController
+            extends BoardModificationController {
+        private final String liftedComponentId;
+        private final String liftedPadId;
+
+        InstalledNegativeModificationController(CirSim sim, GeneratedBoardInstance instance,
+                String liftedComponentId, String liftedPadId) {
+            super(sim, instance);
+            this.liftedComponentId = liftedComponentId;
+            this.liftedPadId = liftedPadId;
+        }
+
+        @Override
+        boolean isLeadConnected(String componentId, String padId) {
+            if (liftedComponentId.equals(componentId) && liftedPadId.equals(padId))
+                return false;
+            return super.isLeadConnected(componentId, padId);
+        }
+
+        @Override
+        ComponentPhysicalState getComponentState(String componentId) {
+            if (liftedComponentId.equals(componentId))
+                return ComponentPhysicalState.LEAD_LIFTED;
+            return super.getComponentState(componentId);
+        }
+    }
+
+    private static final class InstalledOverlapProjectionProvider
+            implements PhysicalPartRenderProvider {
+        private final PhysicalPartRenderProvider delegate;
+        private final int terminalIndex;
+
+        InstalledOverlapProjectionProvider(PhysicalPartRenderProvider delegate,
+                int terminalIndex) {
+            this.delegate = delegate;
+            this.terminalIndex = terminalIndex;
+        }
+
+        public PhysicalPartRenderer getRenderer(PhysicalPart<?> part) {
+            PhysicalPartRenderer renderer = delegate.getRenderer(part);
+            return renderer == null ? null : new InstalledOverlapProjectionRenderer(renderer,
+                terminalIndex);
+        }
+    }
+
+    private static final class InstalledOverlapProjectionRenderer
+            implements PhysicalPartRenderer {
+        private final PhysicalPartRenderer delegate;
+        private final int terminalIndex;
+
+        InstalledOverlapProjectionRenderer(PhysicalPartRenderer delegate, int terminalIndex) {
+            this.delegate = delegate;
+            this.terminalIndex = terminalIndex;
+        }
+
+        public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext context) {
+            PhysicalPartRenderGeometry source = delegate.getInstalledGeometry(context);
+            Vector<PhysicalPartRenderTerminal> terminals = source.getTerminals();
+            PhysicalPartRenderTerminal sourceTerminal = terminals.get(terminalIndex);
+            Point boardPoint = sourceTerminal.getBoardPadPoint();
+            Rectangle boardProbe = sourceTerminal.getBoardPadProbeBounds();
+            if (boardPoint == null || boardProbe == null)
+                throw new IllegalStateException(
+                    "Installed overlap canary source omitted its board-pad surface");
+            terminals.set(terminalIndex, new PhysicalPartRenderTerminal(
+                sourceTerminal.getTerminalIndex(), sourceTerminal.getTerminalId(),
+                sourceTerminal.getBoardPadId(), boardPoint, boardProbe, boardPoint, boardProbe,
+                sourceTerminal.getPadBounds(), boardPoint, boardProbe,
+                sourceTerminal.getLeadBodyPoint(), sourceTerminal.getLeadEndPoint(),
+                sourceTerminal.getLeadBounds()));
+            return new PhysicalPartRenderGeometry(terminals, source.getHitRegions(),
+                source.getSelectionBounds(), source.getBodyBounds(), source.getLeadBounds(),
+                source.getDragBounds());
+        }
+
+        public PhysicalPartRenderGeometry getLooseGeometry(PhysicalPartRenderContext context) {
+            return delegate.getLooseGeometry(context);
+        }
+
+        public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            delegate.drawInstalled(graphics, context, geometry, selected);
+        }
+
+        public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
+                PhysicalPartRenderGeometry geometry, boolean selected) {
+            delegate.drawLoose(graphics, context, geometry, selected);
+        }
+
+        public ProbeTarget createInstalledProbeTarget(CirSim sim,
+                PhysicalPartRenderContext context, int terminal) {
+            return delegate.createInstalledProbeTarget(sim, context, terminal);
+        }
+
+        public ProbeTarget createLooseProbeTarget(CirSim sim,
+                PhysicalPartRenderContext context, int terminal) {
+            return delegate.createLooseProbeTarget(sim, context, terminal);
+        }
+    }
+
+    private static void verifyRemovedLooseProbeOwnership(CirSim sim,
+            PcbWorkbenchRenderer renderer, PhysicalPart<?> part) {
+        int savedPage = renderer.getTrayPage();
+        boolean found = false;
+        try {
+            for (int page = 0; page < renderer.getTrayPageCount(); page++) {
+                renderer.setTrayPage(page);
+                Vector<PhysicalPart<?>> visible = renderer.getVisibleLoosePhysicalParts();
+                for (int index = 0; index < visible.size(); index++) {
+                    if (visible.get(index) != part)
+                        continue;
+                    PhysicalPartRenderProvider provider = renderer
+                        .getRenderRegistryForDeveloperVerification().getProvider(part.getPackage());
+                    require(provider != null, "Removed part lost its loose render provider: " +
+                        part.getId());
+                    PhysicalPartRenderContext context = new PhysicalPartRenderContext(renderer,
+                        null, part, part.getPackage(), index, true);
+                    PhysicalPartRenderGeometry geometry = provider.getRenderer(part)
+                        .getLooseGeometry(context);
+                    for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+                        Point point = terminal.getPoint();
+                        ProbeTarget target = renderer.findProbeTarget(sim, point.x, point.y);
+                        require(target != null && target.isValid() &&
+                                !(target instanceof BoardPadProbeTarget) &&
+                                !(target instanceof ComponentLeadProbeTarget) &&
+                                target.getMeasurementEndpoint() == part.getTerminal(
+                                    terminal.getTerminalIndex()).getEndpoint() &&
+                                target.getMarkerPoint() != null,
+                            "Removed part loose ownership did not provide a fresh target: " +
+                                part.getId() + "." + terminal.getTerminalIndex());
+                        found = true;
+                    }
+                }
+            }
+        } finally {
+            renderer.setTrayPage(savedPage);
+        }
+        require(found, "Removed part was not owned by a visible loose projection: " + part.getId());
+    }
+
+    private static class InstalledLeadCandidate {
+        final String componentId;
+        final Vector<GeneratedComponentConnectionBinding> bindings;
+        final PhysicalPart<?> part;
+
+        InstalledLeadCandidate(String componentId,
+                Vector<GeneratedComponentConnectionBinding> bindings, PhysicalPart<?> part) {
+            this.componentId = componentId;
+            this.bindings = new Vector<GeneratedComponentConnectionBinding>(bindings);
+            this.part = part;
+        }
+    }
+
+    private static final class RemovedLeadCandidate extends InstalledLeadCandidate {
+        RemovedLeadCandidate(String componentId,
+                Vector<GeneratedComponentConnectionBinding> bindings, PhysicalPart<?> part) {
+            super(componentId, bindings, part);
         }
     }
 
@@ -1541,5 +2335,19 @@ final class PhysicalPartRenderDeveloperVerifier {
 
     private static boolean pointEquals(Point first, Point second) {
         return first != null && second != null && first.x == second.x && first.y == second.y;
+    }
+
+    /** Binding wrappers may be reallocated around the same CircuitJS post. */
+    private static boolean sameCircuitPostEndpoint(CircuitMeasurementEndpoint first,
+            CircuitMeasurementEndpoint second) {
+        if (first == second)
+            return true;
+        if (!(first instanceof CircuitPostMeasurementEndpoint) ||
+                !(second instanceof CircuitPostMeasurementEndpoint))
+            return false;
+        CircuitPostMeasurementEndpoint firstPost = (CircuitPostMeasurementEndpoint) first;
+        CircuitPostMeasurementEndpoint secondPost = (CircuitPostMeasurementEndpoint) second;
+        return firstPost.getElement() == secondPost.getElement() &&
+            firstPost.getPostIndex() == secondPost.getPostIndex();
     }
 }

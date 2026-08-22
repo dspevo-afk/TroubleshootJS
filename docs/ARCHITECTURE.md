@@ -1672,3 +1672,110 @@ next unstarted acceptance/regression/cleanup milestone. The existing RC
 electrical/stored-energy browser route may still report the accepted renderer
 boundary for the disconnected C1 positive component-side lead; that is outside
 this fixed-layout acceptance proof.
+
+## Task 43R-4D — detached installed lead renderer/probe corrective closure
+
+43R-4D classifies the remaining `Renderer omitted disconnected component-side
+lead: C1.+` failure as an `IMPLEMENTATION_FAILURE` in the generic developer
+render verifier's state dispatch. It is not a renderer geometry, package,
+target-construction, endpoint, RC route, or electrical defect. A lifted lead
+disconnects its CircuitJS connection while `PhysicalCapacitorPart` remains in
+its `PhysicalBoardSlot`; `part.isInstalled()` and
+`PhysicalPartRenderContext.isInstalledPartMounted()` therefore remain true.
+Physical removal is a later slot operation: the installed part becomes null
+and uninstalled, while the original part is projected through the loose/tray
+provider. `ComponentPhysicalState.REMOVED` by itself is graph state and is not
+physical mount authority.
+
+The generic installed projection contract is now verified with the following
+state distinction:
+
+| State | Physical authority | Installed interaction |
+| --- | --- | --- |
+| `CONNECTED` | slot owns the installed part and the part is mounted | connected lead pose; `BoardPadProbeTarget`; no component-side target |
+| `LEAD_LIFTED` | the same slot/part identity remains mounted while one or more electrical leads are disconnected | package-declared lifted pose; board pad remains probeable; detached lead exposes a distinct `ComponentLeadProbeTarget` and physical terminal endpoint |
+| `REMOVED` | slot is empty and the part is uninstalled | installed component-side point/target/hit is absent; board pads remain; loose provider owns a fresh tray target |
+| `REINSTALLED` | the same part/carrier/terminal/endpoint may be mounted again | stale installed targets remain invalid; a fresh projection target is required; fully connected reinstall exposes board-side targets only |
+
+The candidate `PhysicalPartRenderDeveloperVerifier` derives mounted state from runtime
+installed-part identity, slot identity, `part.isInstalled()`, and
+`part.getBoardSlot()` independently of electrical connection state. Its
+removed-state branch explicitly rejects an installed component-side point or
+hit and then checks loose ownership. Its lifecycle canary prefers a
+deterministically selected installed two-terminal resistor/non-capacitor (the
+generated LED family's real `R1` path when available), with `C1` as the RC
+fallback. The same helper exercises both terminal positions, including the
+explicit RC `C1.+` regression while C1 remains mounted and lifted.
+
+The canary preserves positive connected/lifted/reconnected/graph-only-removed
+behavior and checks board-pad precedence, provider point/bounds and marker
+agreement, non-overlapping board/component probe surfaces, target-class and
+endpoint distinction, physical-part identity, stale-target invalidation,
+physical removal and loose transfer, same-part reinstall freshness, wrong
+physical identity, wrong component/pad binding, and replacement-endpoint
+rejection. The replacement negative uses the existing generic catalog mutation
+provider: the old lifted target must retain its original physical endpoint and
+be invalid after a new physical part is installed, while the replacement gets
+a new physical-part/terminal target. `BoardPadProbeTarget` continues to
+represent the stable board endpoint; `ComponentLeadProbeTarget` represents the
+mounted physical terminal endpoint. No production
+renderer/context/provider/geometry/target class changed, and no synthetic
+geometry or endpoint was introduced.
+
+The verifier now also runs exactly two installed-path adversarial negatives from
+a detached one-component fixture. `verifyInstalledProbeOverlapNegative` wraps
+the standard installed provider with a mutable terminal copy whose same-
+terminal board-pad and detached component probe surfaces completely collapse,
+then invokes the real installed geometry and `PcbWorkbenchRenderer` hit path
+over the collapsed surface. Every hit must remain a valid `BoardPadProbeTarget`
+for the declared `boardPadId`; no valid component-side target may be exposed.
+`verifyInstalledDetachedMarkerNegative` obtains the real installed projection
+and exercises `PhysicalPartRenderTerminal` with a mutable copy whose detached
+marker is outside its declared component-lead probe, requiring the exact
+`Physical render component probe omits its center` rejection. The fixture swaps
+only its detached instance/modification view for the duration and restores the
+live simulation state; canonical package geometry and the live registry/tray,
+selection, and power state are untouched.
+
+This is an unaccepted Task 43 recovery correction candidate only. The source
+build/link and static renderer-boundary check pass, but the mandatory
+compiled-preview runtime routes could not run because the Edge harness was
+blocked by WMI access denial and the in-app preview remained a blank GWT shell.
+The initial independent final review identified the two installed-path negative
+fixtures; this correction adds them, but no runtime acceptance is claimed and
+no commit or push was authorized.
+RC routing, electrical topology,
+measurement/fault/stress/replacement behavior, NPN/NMOS routes, and Task 44
+remain untouched. The production compile/link and static renderer-boundary
+check pass in the current candidate; the compiled-preview route result could
+not be claimed in this environment because the Edge harness's WMI process
+inspection is denied and the in-app local preview remained at a blank GWT
+bootstrap shell.
+
+### Current 43R-4D acceptance evidence update — 2026-08-22
+
+The preceding paragraph records the earlier blocked harness attempt. A clean
+compiled `war/` was subsequently served at `127.0.0.1:3000` and exercised by
+the supported in-app Browser. The final source/build and renderer-boundary
+checks passed; the Task 43 route returned `PASS:task43`, the layout route
+returned `PASS:layout`, RC returned `PASS:rc` for seeds 0/2/3, stored-energy
+returned `PASS:stored-energy` for seeds 0/2/3, and the combined RC/stored-energy
+route returned `PASS:rc`. No Browser error logs were observed. Visible
+normal-player interaction also observed power toggle, R1 selection, lead-lift,
+and reconnect state transitions.
+
+The replacement-endpoint verifier negative is isolated to a disposable
+generated board so catalog-acquired replacement parts cannot alter the live
+board identity or inventory. 43R-4D remains pending the fresh independent
+final Luna MAX review; no acceptance or commit is claimed by this update.
+
+### 43R-4D final acceptance — 2026-08-22
+
+The fresh independent read-only Luna MAX review returned `PASS`, so the
+43R-4D installed renderer/probe closure is accepted. The final JDK 8/GWT
+build, renderer boundary, Task 43 installed positive/negative verifier,
+layout, RC seeds 0/2/3, stored-energy seeds 0/2/3, and combined RC/stored
+runtime lanes passed through the clean supported in-app Browser route. Visible
+normal-player power, selection, lead-lift, and reconnect transitions also
+passed with no Browser error logs. 43R-8 remains held and unstarted, and Task
+44 remains blocked and unstarted.
