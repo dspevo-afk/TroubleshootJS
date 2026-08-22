@@ -59,6 +59,7 @@ class LedPhysicalDeveloperVerifier {
         require(reversed != original && reversed.isReversedInstallation(),
             "Reversed LED acquisition lost identity or polarity");
         verifyRuntimeAllocatedIdentities(instance, replacementResistor, reversed);
+        verifyReversedInstalledComponentTargets(sim, instance);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(!challenge.isCompleted() && !instance.getOperationalStates().isIlluminated("LED1") &&
@@ -66,6 +67,7 @@ class LedPhysicalDeveloperVerifier {
             "Reversed LED behaved as a repaired forward indicator");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         require(leds.removeInstalledPart(), "Could not remove reversed LED");
+        settleAfterMutation(sim);
         verifyHealthyDiode(sim, looseProbe(sim, instance, reversed, 0),
             looseProbe(sim, instance, reversed, 1), "loose reversed-installation LED");
 
@@ -79,6 +81,7 @@ class LedPhysicalDeveloperVerifier {
             healthy.getElement() != original.getElement() && healthy.getElement() != reversed.getElement(),
             "Repeated LED acquisition reused physical identity or backing LEDElm");
         require(leds.removeInstalledPart(), "Could not isolate correct LED replacement");
+        settleAfterMutation(sim);
         verifyHealthyDiode(sim, looseProbe(sim, instance, healthy, 0),
             looseProbe(sim, instance, healthy, 1), "loose correct LED replacement");
         require(leds.install(healthy.getId()), "Could not reinstall measured LED replacement");
@@ -91,6 +94,7 @@ class LedPhysicalDeveloperVerifier {
         verifyCatalogAcquisition(secondHealthy, correctCatalog);
         PhysicalCatalogAcquisitionDeveloperVerifier.verifySameSpecification(healthy, secondHealthy);
         require(leds.removeInstalledPart(), "Could not remove second healthy LED acquisition");
+        settleAfterMutation(sim);
         verifyHealthyDiode(sim, looseProbe(sim, instance, secondHealthy, 0),
             looseProbe(sim, instance, secondHealthy, 1), "loose second correct LED replacement");
         require(leds.install(secondHealthy.getId()),
@@ -170,6 +174,7 @@ class LedPhysicalDeveloperVerifier {
 
     private static void verifyHealthyDiode(CirSim sim, ProbeTarget anode, ProbeTarget cathode,
             String label) {
+        requireDiodeMeasurementReady(sim, anode, cathode, label + " forward");
         sim.instrumentController.setDiodeProbesForDeveloperVerification(anode, cathode);
         double voltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
         double current = sim.instrumentController.getLatestDiodeCurrentForDeveloperVerification();
@@ -177,10 +182,47 @@ class LedPhysicalDeveloperVerifier {
             voltage >= 1.2 && voltage < InstrumentController.DIODE_COMPLIANCE_THRESHOLD &&
             current >= InstrumentController.DIODE_MINIMUM_CURRENT,
             label + " forward result was not solver-derived: " + voltage + " V, " + current + " A");
+        requireDiodeMeasurementReady(sim, cathode, anode, label + " reverse");
         sim.instrumentController.setDiodeProbesForDeveloperVerification(cathode, anode);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             label + " reverse result was not OL");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+    }
+
+    private static void requireDiodeMeasurementReady(CirSim sim, ProbeTarget red,
+            ProbeTarget black, String label) {
+        require(red != null && black != null && red.isValid() && black.isValid(),
+            label + " diode targets were not valid before measurement");
+        CircuitMeasurementEndpoint redEndpoint = red.getMeasurementEndpoint();
+        CircuitMeasurementEndpoint blackEndpoint = black.getMeasurementEndpoint();
+        require(redEndpoint instanceof CircuitPostMeasurementEndpoint &&
+            blackEndpoint instanceof CircuitPostMeasurementEndpoint,
+            label + " diode targets did not expose CircuitJS posts");
+        require(sim.getActiveMeasurementReadiness((CircuitPostMeasurementEndpoint) redEndpoint,
+            (CircuitPostMeasurementEndpoint) blackEndpoint) == ActiveMeasurementReadiness.READY,
+            label + " diode measurement was not ready");
+    }
+
+    private static void verifyReversedInstalledComponentTargets(CirSim sim,
+            GeneratedBoardInstance instance) {
+        require(sim.getBoardModificationController().liftLead("LED1", "LED1.A"),
+            "Could not lift reversed LED anode lead");
+        require(sim.getBoardModificationController().liftLead("LED1", "LED1.K"),
+            "Could not lift reversed LED cathode lead");
+        settleAfterMutation(sim);
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        ProbeTarget boardAnode = new ComponentLeadProbeTarget(sim, instance, "LED1", "LED1.A",
+            renderer);
+        ProbeTarget boardCathode = new ComponentLeadProbeTarget(sim, instance, "LED1", "LED1.K",
+            renderer);
+        require(boardAnode.isValid() && boardCathode.isValid(),
+            "Reversed LED installed component-side targets were not valid");
+        verifyHealthyDiode(sim, boardCathode, boardAnode,
+            "reversed installed component-side LED");
+        require(sim.getBoardModificationController().reconnectLead("LED1", "LED1.A"),
+            "Could not reconnect reversed LED anode lead");
+        require(sim.getBoardModificationController().reconnectLead("LED1", "LED1.K"),
+            "Could not reconnect reversed LED cathode lead");
     }
 
     private static void verifyOpenDiode(CirSim sim, ProbeTarget anode, ProbeTarget cathode,
@@ -245,6 +287,11 @@ class LedPhysicalDeveloperVerifier {
         sim.analyzeCircuit();
         for (int index = 0; index < 8; index++) sim.runCircuit(true);
         sim.verifyGeneratedBoard();
+    }
+
+    private static void settleAfterMutation(CirSim sim) {
+        sim.updateCircuit();
+        settle(sim);
     }
 
     private static void require(boolean condition, String message) {

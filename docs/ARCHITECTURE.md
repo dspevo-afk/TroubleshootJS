@@ -77,7 +77,11 @@ and component-side endpoint at hit-test time. It remains valid only while that
 same part is installed and the lead remains physically exposed, and target
 identity includes the physical-part ID. Removing or replacing the part therefore
 clears the old probe instead of silently migrating it to another resistor in the
-same R1 slot. Board-side pad endpoints remain fixed and physically distinct.
+same R1 slot. The component-side endpoint supplied by the current connection
+binding is authoritative; target validation checks that endpoint's membership in
+the installed physical part rather than inferring polarity from board-pad or
+terminal-name equality. Board-side pad endpoints remain fixed and physically
+distinct, including for reversed polarized LED and diode installations.
 
 Continuity is a policy over the same simulated resistance transaction, not a
 separate connectivity shortcut or stimulus. CONT uses the temporary $1 V$ /
@@ -1468,6 +1472,10 @@ selection is also cleared when the selected component is no longer the exact
 part mounted in its slot. Same-part reinstall preserves the stable physical
 part, terminal, and endpoint identities but produces a fresh target for the
 new projection epoch; a replacement part has a distinct physical identity.
+The binding endpoint remains authoritative across orientation-aware replacement
+retargeting, so an installed reversed LED or diode can still be isolated and
+measured through its component-side targets without a name-based endpoint
+re-resolution.
 
 `PhysicalPartRenderGeometry` returns defensive copies of mutable rectangles,
 and the focused Task 43 verifier covers provider dispatch, connected/lifted

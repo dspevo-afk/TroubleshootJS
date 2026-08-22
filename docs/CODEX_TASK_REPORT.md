@@ -1,3 +1,125 @@
+# Task 43R-8A candidate report — existing-family replacement and measurement recovery
+
+## Roadmap milestone
+
+Task 43 recovery correction **43R-8A — recover existing-family replacement and
+measurement regressions found by 43R-8** is implemented in a bounded
+candidate. It is not yet accepted: focused source/build checks pass and
+supported Edge normal-player evidence is recorded, but the focused
+developer-route result and fresh independent review remain pending. It does
+not claim final Task 43 acceptance, 43R-8B, or Task 44.
+
+## Starting state and reconciliation
+
+- Branch: `codex/task43-recovery-integration`.
+- Starting HEAD: `b4d67c4401473e2ba354e90705e52406f9e88626`,
+  `Reconcile Task 43R-4D acceptance state`.
+- The worktree was clean before implementation.
+- Three required read-only `gpt-5.6-luna` MAX investigations completed before
+  the writer: LED/diode target tracing, parallel replacement tracing, and a
+  shared lifecycle/measurement audit. The single writer was delegated only
+  after the primary architect froze the design.
+- The investigations classified one current implementation failure and found
+  no reproducible current parallel replacement failure. The LED/diode defect
+  was introduced by Task 43R-3's installed-target validation and affected
+  reversed catalog parts after lead isolation.
+
+## Root cause
+
+`LedSlotController` and `DiodeSlotController` already retarget component-side
+bindings through each physical part's orientation-aware
+`getTerminalForBoardPad(...)` mapping. `ComponentLeadProbeTarget` then replaced
+that authoritative endpoint by matching the board pad terminal name to a
+physical terminal name. For a reversed LED or diode, board pad A correctly
+bound to the physical K endpoint, but target construction re-resolved A to the
+physical A endpoint. The endpoint comparison invalidated the target before the
+CircuitJS measurement adapter ran, leaving the meter at `--- V`/`--- Ohm`.
+
+This was a target-lifecycle failure, not a solver, fault-ownership, catalog,
+replacement-identity, or hard-coded-reading failure. Board-pad and loose-part
+measurements remained solver-backed. The current parallel normal-player path
+was separately exercised for seeds 0, 2, and 3 and passed replacement and
+customer retest; no parallel production change was justified.
+
+## Implementation
+
+`ComponentLeadProbeTarget` now retains the component endpoint supplied by the
+active connection binding and validates only that the endpoint is a member of
+the currently installed physical part's terminal endpoints. Existing checks for
+board/component identity, physical-part identity, package compatibility, slot
+mount state, lifecycle identity, lead exposure, and renderer geometry remain in
+place. Terminal-name endpoint re-resolution was removed, preserving stable
+board/component/pad/net IDs and the existing orientation-aware electrical graph.
+
+The LED and diode developer verifiers now use the real mutation and measurement
+paths to lift both leads of a reversed catalog replacement, create both
+installed component-side targets, measure the isolated physical diode in both
+directions through CircuitJS diode stimulus, and reconnect both leads before
+the powered reversed-part negative check. The diode helper was generalized only
+to share the same solver-backed assertion for loose and installed targets.
+
+## Validation evidence
+
+- Fresh JDK 8 production build/link:
+  `.\scripts\build.ps1 -JavaHome .tools\jdk8-download\jdk8u502-b07 -Style OBF -Target Compile`
+  — passed all five GWT permutations and production linking.
+- `.\scripts\verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
+- `git diff --check` — passed after the bounded three-file source change.
+- The static compiled preview served `war/circuitjs.html` over HTTP 200.
+- The supported in-app Browser was opened and kept visible for the required
+  player-facing check, but both `127.0.0.1:8899` and `localhost:8899` were
+  blocked before page load with `net::ERR_BLOCKED_BY_CLIENT`.
+- The compiled-preview harness attempts for `-LedParts -Seeds 4`,
+  `-Diode -Seeds 0`, `-Parallel -Seeds 0`, `-Task39`, `-Task40`, and `-Task41`
+  did not reach application routes. Edge's GPU process exited and the harness
+  could not inspect Edge processes because managed WMI returned `Access denied`.
+  These are recorded as external blockers, not product passes or failures.
+- Required-investigation normal-player evidence independently observed the
+  existing parallel replacement/retest path for seeds 0, 2, and 3, plus LED
+  and diode replacement/retest flows, with no Browser console errors. That
+  evidence did not substitute for the blocked focused reversed-target route.
+- After the user authorized Edge, the compiled preview was exercised through
+  visible normal-player interaction in Microsoft Edge. LED seed 4 passed the
+  remove/reversed-replacement-negative/forward-replacement/power/retest flow;
+  diode seed 0 passed the remove/reversed-catalog-orientation/forward-
+  replacement/power/retest flow; and parallel seed 3 passed the remove/R1,
+  1000-ohm replacement, power, and customer-retest flow. Each final state
+  reported the expected repair verification and disabled the retest control.
+  The public diode UI allowed one lifted lead at a time and the attempted
+  visible component-side reading remained `--- V`; this is recorded as an
+  observation, not as a public measurement pass. The focused canary remains
+  source/build evidence until its developer-route result is observable.
+- Source review confirms existing stale-target invalidation, original-reinstall
+  negatives, distinct replacement identity, power/mutation cleanup, package
+  rejection, and wrong-owner paths remain unchanged. The new focused canaries
+  specifically prevent the discovered reversed-target regression.
+
+## Scope and deferrals
+
+Only these three source files were changed for implementation:
+
+- `src/com/lushprojects/circuitjs1/client/ComponentLeadProbeTarget.java`
+- `src/com/lushprojects/circuitjs1/client/LedPhysicalDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/DiodeFamilyDeveloperVerifier.java`
+
+The handoff documentation records the endpoint-ownership correction. NPN
+stale deferrals, forced-negative Task 43 shell behavior, package/geometry
+redesign, routing, CircuitJS internals, parallel production code, final Task 43
+acceptance, 43R-8B, and Task 44 were not started.
+
+## Review and publication gate
+
+Primary source review found the candidate bounded and consistent with the
+orientation-aware binding contract. The first fresh independent read-only Luna
+MAX review found no source defect but returned `BLOCKERS` because the focused
+developer routes had not reached the application. The later visible Edge
+normal-player results are now recorded above; a fresh independent review must
+still decide whether that evidence satisfies the runtime gate. Until then,
+the candidate is not staged, committed, or pushed, and no completion-
+notification attempt has been made.
+
+---
+
 # Task 43R-5A completion report — RC fixed-layout acceptance-proof closure
 
 ## Roadmap milestone

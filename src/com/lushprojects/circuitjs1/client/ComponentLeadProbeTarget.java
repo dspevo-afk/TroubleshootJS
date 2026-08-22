@@ -33,7 +33,7 @@ class ComponentLeadProbeTarget implements ProbeTarget {
         this.padId = padId;
         this.renderer = renderer;
         this.physicalPartId = physicalPartId;
-        this.endpoint = resolvePhysicalEndpoint(instance, componentId, padId, endpoint);
+        this.endpoint = endpoint;
         this.lifecycleIdentity = lifecycleIdentity;
     }
 
@@ -62,7 +62,7 @@ class ComponentLeadProbeTarget implements ProbeTarget {
                     !component.getPhysicalPackage().isEquivalentTo(part.getPackage()) ||
                     !sameEndpoint(binding.getComponentEndpoint(), endpoint) ||
                     !padId.equals(boardPad.getId()) ||
-                    !hasStablePartTerminal(part, boardPad.getTerminalId(), endpoint) ||
+                    !hasPartEndpoint(part, endpoint) ||
                     sim.getBoardModificationController().isLeadConnected(componentId, padId) ||
                     sim.getBoardModificationController().getComponentState(componentId) ==
                         ComponentPhysicalState.INSTALLED ||
@@ -93,29 +93,12 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     String getComponentIdForDeveloperVerification() { return componentId; }
     String getPadIdForDeveloperVerification() { return padId; }
 
-    private static boolean hasStablePartTerminal(PhysicalPart<?> part, String terminalId,
+    private static boolean hasPartEndpoint(PhysicalPart<?> part,
             CircuitMeasurementEndpoint endpoint) {
         for (PhysicalPartTerminal terminal : part.getTerminals())
-            if (terminalId != null && terminalId.equals(terminal.getTerminalName()) &&
-                    sameEndpoint(terminal.getEndpoint(), endpoint))
+            if (sameEndpoint(terminal.getEndpoint(), endpoint))
                 return true;
         return false;
-    }
-
-    private static CircuitMeasurementEndpoint resolvePhysicalEndpoint(
-            GeneratedBoardInstance instance, String componentId, String padId,
-            CircuitMeasurementEndpoint fallback) {
-        if (instance == null || componentId == null || padId == null)
-            return fallback;
-        BoardPad boardPad = instance.getBoard().getPad(padId);
-        PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
-        if (boardPad == null || part == null)
-            return fallback;
-        for (PhysicalPartTerminal terminal : part.getTerminals())
-            if (boardPad.getTerminalId() != null &&
-                    boardPad.getTerminalId().equals(terminal.getTerminalName()))
-                return terminal.getEndpoint();
-        return fallback;
     }
 
     private static boolean sameEndpoint(CircuitMeasurementEndpoint first,
