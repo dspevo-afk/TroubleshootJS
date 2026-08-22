@@ -1,407 +1,476 @@
-# TASK 43 — Physical Package and Interaction Envelope Contract
+# TASK 43 RECOVERY — 43R-3 CORRECTIVE RETURN
 
-Repository:
-TroubleshootJS
+## Title
+Repair 43R-3 Lifted Component Endpoint Identity Before Resuming 43R-8B
 
-Starting point:
-Latest master after Task 42:
-`c0eb342b29165b8218a4b97b16fb8554fee42aff`
-"Add LED diagnostic fault diversity proof"
+43R-8B IS BLOCKED.
 
-## GOAL
+Observed failure:
 
-Make every current physical package expose one authoritative geometric contract so that:
+`FAIL:Lifted component target changed stable physical or endpoint identity: R1.1`
 
-- footprint/pad positions
-- rendered body
-- rendered leads
-- routing courtyard / keepout
-- selection hit area
-- drag hit area
-- probe hit area
+Exit code: `1`
 
-all agree in the same package-local coordinate system.
+This occurs in the unchanged `PhysicalPartRenderDeveloperVerifier` BEFORE the 43R-8B forced-negative canary.
 
-This task is architectural groundwork for Task 44 routing keepouts/corridor policy.
+The current 43R-8B candidate changes are uncommitted in exactly these four files:
 
-Do NOT change electrical behavior.
-Do NOT begin Task 44 routing-policy work.
-Do NOT replace existing detailed component artwork with generic rectangles.
+- `PcbLayoutDeveloperVerifier.java`
+- `CirSim.java`
+- `Task43DeveloperVerifier.java`
+- `verify-browser.ps1`
 
-## BEFORE IMPLEMENTING
+JDK 8 / GWT build and general Layout validation passed for the candidate work, but forced-negative validation and final review could not proceed.
 
-Read and obey:
+No documentation update, commit, push, final Task 43 acceptance, or Task 44 work is permitted.
 
-- AGENTS.md
-- DEVELOPMENT.md
-- docs/ARCHITECTURE.md
-- docs/ROADMAP.md
-- docs/CODEX_TASK_REPORT.md
+---
 
-Then inspect the existing implementations and registries involved in:
+# OWNERSHIP DECISION
 
-- PhysicalPackage
-- PhysicalPackages
-- footprint/provider registry
-- physical-package render providers
-- PCB/board renderer
-- PCB placement transforms
-- router geometry consumers
-- selection hit testing
-- drag hit testing
-- probe/pad hit testing
-- physical board runtime/slots
-- developer verifier infrastructure
+THIS FAILURE RETURNS TO 43R-3.
 
-Do not create a second parallel geometry system if an existing abstraction can be cleanly extended.
+43R-3 owns:
 
-Prefer extending the current package/provider boundary rather than stuffing more geometry calculations into CirSim or the board renderer.
+- installed component rendering;
+- lifted component-lead interaction;
+- board-side versus component-side probing;
+- stable physical target identity;
+- correct measurement endpoint identity;
+- lifecycle invalidation for lifted installed targets.
 
-## PRODUCTION PACKAGES THAT MUST BE COVERED
+43R-4 owns later loose/removal/reinstallation lifecycle behavior and MUST be rerun as a regression after the 43R-3 corrective pass, but this specific failure occurs while the part is still mounted with a lifted lead.
 
-At minimum, the four current production package families must have authored package-aware geometry:
+43R-8B DOES NOT OWN THIS DEFECT.
 
-1. RESISTOR_AXIAL
-2. LED_RADIAL
-3. ELECTROLYTIC_RADIAL
-4. CONNECTOR_2P
+Do not patch this inside 43R-8B.
 
-All other current registered packages/canary packages must also produce a valid geometry contract so the registry remains internally consistent.
+---
 
-Developer-only canary packages do not need elaborate artwork, but they must participate correctly in the geometry/verifier model.
+# FIRST: PRESERVE THE 43R-8B CANDIDATE WORK
 
-## REQUIRED IMPLEMENTATION
+Before investigating or editing the lifecycle defect:
 
-### 1. AUTHORITATIVE PACKAGE GEOMETRY CONTRACT
+1. Inspect git status and diff.
+2. Verify the only intended uncommitted 43R-8B changes are the four files listed above.
+3. Preserve those exact changes safely in a named stash or equivalent isolated patch.
+4. Do NOT discard them.
+5. Do NOT commit them.
+6. Restore a clean working tree before beginning the corrective 43R-3 investigation.
 
-Introduce or extend an appropriate immutable geometry abstraction owned by the physical-package / footprint / render-provider layer.
+The preserved 43R-8B work will be reapplied ONLY after this earlier lifecycle frontier is independently accepted.
 
-For each package, the authoritative geometry must expose or deterministically resolve:
+If unrelated changes exist, STOP and report them instead of hiding or combining them.
 
-- terminal/pad coordinates
-- pad hit regions where appropriate
-- body bounds
-- lead geometry or lead bounds
-- routing courtyard / keepout
-- selection envelope
-- drag interaction envelope if separate from selection
-- probe interaction envelope
+---
 
-Use one explicit package-local coordinate system.
+# ABSOLUTELY MANDATORY AGENT ORDERING
 
-Placement on the PCB must transform that authoritative local geometry into board coordinates.
+EVERY SINGLE SUBAGENT YOU SPAWN MUST USE MAX REASONING.
 
-Do not duplicate magic pad offsets independently in:
+MAX.
 
-- renderer
-- router
-- selection code
-- probe code
+NOT "EXTRA HIGH."
+NOT "HIGH."
+NOT SOMETHING YOU DECIDE TO CALL "MAX."
 
-If two subsystems need the same physical coordinate, they must ultimately derive it from the same authoritative package geometry.
+ACTUAL MAX REASONING.
 
-### 2. PRESERVE PROVIDER OWNERSHIP
+This applies to investigators, reviewers, and any eventual coder.
 
-Keep responsibilities clean:
+MORE IMPORTANTLY:
 
-Physical package / footprint layer:
-- authoritative physical geometry and package contract
+YOU ARE ABSOLUTELY FORBIDDEN FROM SPAWNING A WRITE-CAPABLE CODER WHILE ANY READ-ONLY INVESTIGATOR IS STILL WORKING.
 
-Render provider:
-- package-specific visual body detail
-- lead/body/silkscreen artwork
+THIS IS NOT A SUGGESTION.
 
-Board renderer:
-- consumes authoritative placement and geometry
-- invokes/render providers
-- does not invent alternative package dimensions
+DO NOT:
 
-Router:
-- may consume authoritative routing courtyard / keepout geometry
-- must NOT own component artwork
+1. spawn investigators;
+2. immediately spawn a coder using only the information already in this inbox;
+3. receive investigator findings later;
+4. drip-feed those findings into an already-working coder.
 
-Interaction system:
-- consumes authoritative selection/probe envelopes
+THAT WORKFLOW IS FUCKING UNACCEPTABLE AND DEFEATS THE ENTIRE PURPOSE OF THE INVESTIGATION PHASE.
 
-Do not move renderer-specific drawing logic into the router.
-Do not move electrical behavior into physical geometry classes.
+The required order is:
 
-### 3. BODY / LEAD / SILKSCREEN CONTAINMENT
+1. Spawn all approved READ-ONLY MAX investigators.
+2. LET THEM FINISH.
+3. Receive ALL investigator reports.
+4. Reconcile their findings yourself.
+5. Produce ONE complete architectural diagnosis and implementation contract.
+6. Review that contract for contradictions.
+7. ONLY THEN spawn ONE write-capable MAX coder with the COMPLETE reconciled specification.
 
-The rendered geometry of each production package must be compatible with its declared physical contract.
+The coder must receive the final answer, not participate in discovering what the answer is.
 
-At minimum verify that:
+---
 
-- body geometry fits within the package/courtyard contract
-- lead geometry reaches the intended pads
-- leads do not use unrelated hard-coded pad coordinates
-- silkscreen/body decoration does not imply a radically different physical position from the actual footprint
-- pad locations remain the actual electrical terminal locations
+# ARCHITECT BEHAVIOR WHILE SUBAGENTS WORK
 
-A future artwork modification that puts a resistor body 40 pixels away from its real pads must fail deterministic verification instead of silently creating a graphical/electrical disagreement.
+Once investigators are running, LEAVE THEM ALONE.
 
-### 4. AUTHORED INTERACTION ENVELOPES
+Do not constantly post status messages.
+Do not narrate that they are still working.
+Do not repeatedly inspect partial output.
+Do not poll git status, timestamps, logs, process lists, or their progress just to prove they are alive.
+Do not interrupt them with new instructions unless genuine new evidence makes the existing assignment invalid.
 
-Update component selection and dragging so supported generated-board parts use the package's authored interaction envelope rather than a generic package rectangle wherever practical.
+Sit idle and let them work.
 
-Update probe hit testing so package-aware pad/probe geometry is authoritative.
+Your job in this phase is:
 
-Requirements:
+- delegate clearly;
+- wait;
+- receive completed reports;
+- reconcile them;
+- perform the architect review.
 
-- visible component body should be selectable where expected
-- selectable space must remain reasonably close to the visible body
-- probe hit areas must remain reasonably close to the actual visible pad/lead location
-- invisible giant clickable rectangles are not acceptable
-- clicking near one pad must not silently resolve to an unrelated terminal
-- probing a pad must still resolve to the same stable BoardPad ID and electrical binding as before
-- selection geometry must not change electrical identity
+That is it unless an actual blocker requires intervention.
 
-A clearly documented generic fallback may remain only for genuinely unsupported/legacy cases.
+Constant narration burns credits while contributing nothing.
 
-Current generated production boards must not depend on a generic fallback for the four required production package families.
+Also: treat the subagents professionally. They are doing the detailed investigation and implementation work. Do not bark at them, badger them, or act as though completion speed matters more than correctness.
 
-### 5. ROUTING COURTYARD / KEEPOUT CONTRACT
+---
 
-Expose package routing courtyard / keepout information in a form that the router can consume.
+# KNOWN TECHNICAL EVIDENCE TO INVESTIGATE
 
-Task 43 should establish the contract and validate it.
+The current committed code already exposes a specific suspicious seam.
 
-Do NOT implement Task 44's routing corridor policy, obstacle negotiation, or unrouted-net failure behavior yet.
+`PhysicalPartRenderDeveloperVerifier`:
 
-Do not substantially rewrite the router merely to consume this data.
+1. Locates the real `PhysicalPartTerminal` corresponding to the binding.
+2. Captures:
 
-Existing routing behavior should remain stable unless a currently incorrect component/pad coordinate must be corrected.
+   `stablePartId = candidate.part.getId()`
 
-### 6. STABLE IDENTITY MUST NOT CHANGE
+   `stableEndpoint = stableTerminal.getEndpoint()`
 
-This is physical geometry work only.
+3. Before mutation, it establishes that:
 
-Preserve:
+   `binding.getComponentEndpoint()`
 
-- BoardComponent IDs
-- BoardPad IDs
-- BoardNet IDs
-- GeneratedComponentBindings
-- physical slot ownership
-- replacement semantics
-- probe electrical bindings
-- CircuitJS elements/bindings except where a purely geometric endpoint correction is genuinely required
+and
 
-Never use CircuitJS analyzed node numbers as persistent geometry or interaction identity.
+   `stableTerminal.getEndpoint()`
 
-CircuitJS remains the electrical source of truth.
+refer to the same underlying CircuitJS element/post.
 
-### 7. REMOVE / INSTALL / REPLACE MUST STILL WORK
+4. After lifting the lead, it acquires the actual target through:
 
-The geometry changes must not break physical modification flows.
+   `renderer.findProbeTarget(...)`
 
-Verify current supported behavior including:
+5. It then requires:
 
-- select component
-- remove component
-- inspect loose component
-- reinstall original component
-- install catalog replacement
-- probe installed component pads
-- probe loose-component terminals where currently supported
+   - correct component ID;
+   - correct pad ID;
+   - same stable physical part ID;
+   - `liftedTarget.getMeasurementEndpoint() == stableEndpoint`;
+   - correct component-side marker position.
 
-Task 42's LED fault ownership behavior must remain intact.
+The failure occurs at this composite invariant for `R1.1`.
 
-Do not special-case Task 42 faults inside the geometry system.
+Meanwhile, the committed `PcbWorkbenchRenderer` component-side target construction currently creates `ComponentLeadProbeTarget` using:
 
-### 8. DETERMINISTIC GEOMETRY VERIFICATION
+`binding.getComponentEndpoint()`
 
-Add a Task43DeveloperVerifier or equivalent deterministic verifier coverage.
+rather than explicitly obtaining the endpoint from the mounted `PhysicalPartTerminal`.
 
-It must inspect the registered package/provider geometry rather than merely checking that classes exist.
+`ComponentLeadProbeTarget.isValid()` accepts endpoints that are not object-identical when they refer to the same `CircuitPostMeasurementEndpoint` element/post.
 
-For every current registered package, verify appropriate invariants such as:
+`GeneratedComponentConnectionBinding.componentEndpoint` is mutable.
 
-- valid finite dimensions
-- valid nonempty geometry
-- expected terminal count
-- every terminal has a resolvable pad position
-- body bounds are sane
-- routing courtyard is sane
-- selection envelope is sane
-- probe/pad envelopes are sane
-- body/lead geometry satisfies declared containment rules
-- interaction envelopes are not absurdly displaced from the visible package/pads
+`PhysicalPartTerminal.endpoint` is immutable for the lifetime of that physical terminal.
 
-The verifier must contain at least one deliberate synthetic BAD geometry canary proving that it detects contract violations.
+THEREFORE A STRONG CURRENT HYPOTHESIS IS:
 
-Examples of intentional verifier failures:
+The lifted target is electrically pointing at the correct CircuitJS post but is carrying a different `CircuitMeasurementEndpoint` object from the endpoint identity owned by the physical part terminal.
 
-- body placed outside declared courtyard
-- terminal/pad placed outside the package contract
-- selection envelope displaced far away from body
-- probe envelope displaced far away from its terminal
-- lead terminating somewhere other than its declared pad
+That would explain why ordinary electrical equivalence succeeds while the stable physical endpoint identity canary fails.
 
-Do not write a verifier that merely confirms the production providers return whatever values they themselves declared. It must enforce meaningful cross-property invariants.
+THIS IS A HYPOTHESIS, NOT PERMISSION TO PATCH IT BLINDLY.
 
-### 9. SEEDED / PLACEMENT STABILITY
+---
 
-Verify that package-local geometry is deterministic.
+# PHASE A: READ-ONLY INVESTIGATION
 
-For identical package + placement inputs, geometry must resolve identically.
+Spawn 2 or 3 READ-ONLY MAX investigators with distinct responsibilities.
 
-Board placement transforms may translate/rotate geometry if supported, but must not alter:
+## Investigator A: Endpoint ownership and lifecycle
 
-- terminal identity
-- relative pad geometry
-- package dimensions
-- interaction semantics
+Determine:
 
-If current boards do not support rotation, do not invent a major rotation system merely for this task.
+- What object is supposed to own component-side physical terminal endpoint identity?
+- Is `PhysicalPartTerminal.getEndpoint()` the canonical stable endpoint for the lifetime of a physical part?
+- Why does `GeneratedComponentConnectionBinding` also retain a `componentEndpoint`?
+- Why is `GeneratedComponentConnectionBinding.componentEndpoint` mutable?
+- Under what legitimate operations does `setComponentEndpoint()` run?
+- Should a `ComponentLeadProbeTarget` created for a physical lead carry:
+  - the binding endpoint;
+  - the `PhysicalPartTerminal` endpoint;
+  - another canonical endpoint identity?
+- Does lifting a lead intentionally replace electrical infrastructure while preserving the physical terminal endpoint?
+- Would using the physical terminal endpoint preserve real CircuitJS electrical truth?
 
-## REQUIRED REGRESSION VALIDATION
+## Investigator B: Full 43R-3 interaction/lifecycle regression
 
-Run the normal JDK8 build:
+Trace the exact lifecycle for:
 
-`.\scripts\build.ps1`
+- connected R1.1;
+- lift R1.1;
+- component-side probe acquisition;
+- board-side probe acquisition;
+- reconnect;
+- relift;
+- graph-only removal if applicable;
+- final physical removal.
 
-Run the existing generated-board/seed verification suite.
+Determine whether the failure is isolated to endpoint-object identity or whether any:
 
-Run the currently relevant developer verifiers, especially the diagnostic/repair paths touched by Tasks 40-42.
+- physical part ID;
+- terminal ID;
+- lifecycle token;
+- marker geometry;
+- component state;
+- endpoint backing;
+- target invalidation
 
-At minimum confirm that the existing generated LED and RC board families still:
+also changes incorrectly.
 
-- generate deterministically
-- render
-- route
-- select components
-- accept probe placement
-- remove parts
-- reinstall parts
-- install replacements
-- preserve stable pad identities
-- preserve measurement behavior
-- complete their existing diagnostic/repair verification
+## Investigator C: Coupling/adversarial review
 
-Task 42 LED_OPEN must still pass its explicit forced diagnostic/repair route.
+Inspect every consumer of:
 
-The new geometry verifier must also pass.
+- `GeneratedComponentConnectionBinding.getComponentEndpoint()`
+- `GeneratedComponentConnectionBinding.setComponentEndpoint()`
+- `PhysicalPartTerminal.getEndpoint()`
+- `ComponentLeadProbeTarget` constructors
+- `ComponentLeadProbeTarget.getMeasurementEndpoint()`
+- `ComponentLeadProbeTarget.isValid()`
+- `ComponentLeadProbeTarget.isSameTarget()`
 
-## BROWSER / PRODUCTION UI SMOKE TEST
+Determine whether changing target endpoint sourcing would break:
 
-Use the real production board UI, not only internal object tests.
+- resistance;
+- voltage;
+- continuity;
+- diode testing;
+- lifted-lead measurement;
+- fault infrastructure;
+- removal;
+- replacement;
+- Task 39;
+- Task 40;
+- Task 41;
+- 43R-4 loose-part lifecycle.
 
-Exercise representative generated LED and RC boards.
+ALL INVESTIGATORS MUST FINISH BEFORE A CODER EXISTS.
 
-Visually/behaviorally confirm:
+---
 
-- resistor body aligns with its pads/leads
-- LED body aligns with its pads/leads
-- electrolytic body aligns with its pads/leads
-- connector body aligns with its terminals
-- traces terminate at the intended visible pads
-- selecting the visible body selects the intended part
-- dragging/selecting does not depend on a large invisible offset box
-- probing visible pads resolves to the intended terminal
-- remove/reinstall/replace still operates from the visible component
-- no obvious artwork jump or trace/pad disconnect was introduced
+# PRIMARY ARCHITECT SYNTHESIS
 
-Record specific seeds and observations in CODEX_TASK_REPORT.md.
+After ALL investigators finish, reconcile their evidence.
 
-## ARCHITECTURAL CONSTRAINTS
+Classify the defect as exactly one of:
 
-Preserve all existing project rules, particularly:
+- `IMPLEMENTATION_FAILURE`
+- `REALIZATION_INFEASIBLE`
+- `ARCHITECTURAL_CONTRADICTION`
+- `EXTERNAL_BLOCKER`
 
-- CircuitJS remains simulation source of truth.
-- Stable board identities never use analyzed solver node numbers.
-- Physical package geometry must remain separate from electrical simulation behavior.
-- GeneratedBoardInstance remains family-agnostic.
-- Family-specific behavior stays with its family.
-- External simulation infrastructure is not a PCB component.
-- Seeded generation remains reproducible.
-- Avoid broad upstream CircuitJS refactors.
-- Keep this incremental and modular.
+Current provisional classification is `IMPLEMENTATION_FAILURE`, but you must prove it.
 
-## NON-GOALS
+Produce a complete written ownership statement answering:
 
-Do NOT:
+1. Which object owns stable physical-terminal endpoint identity?
+2. Which object owns mutable board/component connection state?
+3. Whether electrical equivalence and physical endpoint identity are intentionally different concepts.
+4. Which endpoint a `ComponentLeadProbeTarget` must return.
+5. What must remain stable across lift/reconnect.
+6. What must become invalid when lifecycle state changes.
+7. Why the proposed repair preserves CircuitJS as electrical source of truth.
+8. Exact files the coder may change.
+9. Exact regression matrix.
+10. Exact negative canaries.
 
-- build production/manufacturing DRC
-- implement Task 44 routing corridor policy
-- implement unrouted-net UI/failure policy
-- replace detailed vector component rendering with generic rectangles
-- change component electrical models
-- change generated fault behavior
-- change meter electrical behavior
-- add new component families
-- implement SMD
-- implement multilayer routing
-- redesign the PCB UI
-- perform a large CirSim refactor
+ONLY AFTER THIS SYNTHESIS IS COMPLETE MAY YOU SPAWN ONE MAX CODER.
 
-## ACCEPTANCE CRITERIA
+---
 
-Task 43 is complete only if:
+# DO NOT WEAKEN THE CANARY
 
-1. RESISTOR_AXIAL, LED_RADIAL, ELECTROLYTIC_RADIAL, and CONNECTOR_2P expose package-aware authoritative geometry covering:
-   - pads
-   - body
-   - leads
-   - routing courtyard/keepout
-   - selection envelope
-   - probe envelope
+The following shortcut is FORBIDDEN unless the investigators prove the existing contract itself is wrong:
 
-2. All current registered packages have a valid geometry contract.
+Changing:
 
-3. Renderer, interaction logic, and future router consumers derive physical coordinates from that authoritative contract rather than independently duplicated generic rectangles/offsets.
+`liftedTarget.getMeasurementEndpoint() == stableEndpoint`
 
-4. Body/lead geometry is validated against the package/courtyard contract.
+into a looser:
 
-5. Selection and probe areas remain physically close to the visible body/pads.
+`sameCircuitPostEndpoint(...)`
 
-6. Deterministic verifier coverage catches deliberately malformed package/interaction geometry.
+or equivalent merely to make the verifier green.
 
-7. Existing generated LED and RC boards still render, route, select, probe, remove, reinstall, replace, inspect, and diagnose correctly.
+The entire point of the canary is stable PHYSICAL endpoint identity.
 
-8. Task 42 LED_OPEN electrical ownership and repair behavior remains unchanged.
+Do not convert an identity invariant into electrical equivalence because the implementation currently fails it.
 
-9. All required builds/verifiers pass.
+Similarly forbidden:
 
-10. No Task 44 routing policy has been implemented prematurely.
+- deleting the assertion;
+- special-casing R1.1;
+- accepting either endpoint;
+- rebuilding the endpoint during every probe;
+- changing target equality to hide the drift;
+- changing the verifier before proving the verifier contract wrong.
 
-## TASK COMPLETION PROTOCOL
+---
 
-When implementation is complete:
+# PHASE B: ONE COHERENT IMPLEMENTATION
 
-1. Run all required builds and verifiers.
-2. Perform the production UI smoke tests above.
-3. Inspect git diff and git status carefully.
-4. Overwrite docs/CODEX_TASK_REPORT.md with:
-   - task
-   - summary
-   - architectural decisions
-   - geometry contract introduced/extended
-   - packages covered
-   - files changed
-   - validation commands/results
-   - tested seeds
-   - production UI observations
-   - verifier canaries used
-   - known limitations/concerns
-   - recommended next step
-   - intended commit message
-5. Update docs/ROADMAP.md to mark Task 43 complete only if all acceptance criteria genuinely pass.
-6. Preserve Task 44 as the next roadmap task:
-   "Routing Keepouts, Corridor Policy, and Unrouted-Net Failure Contract"
-7. Stage only intended changes.
-8. Run:
-   `git diff --cached --check`
-9. Commit with a concise descriptive message.
-10. Push the completed task commit to the current remote working branch.
-11. Verify the remote branch points at the exact completed commit.
-12. Do not begin Task 44 or any later roadmap milestone.
+After the investigation is complete and the architect approves the design:
 
-Standing project rule: after every successfully completed future task, commit and push the validated task unless the user explicitly instructs otherwise. A task is not considered fully complete until the push has been verified.
+Spawn ONE write-capable MAX coder.
 
-If any required validation fails:
-- do not commit
-- do not push
-- leave the worktree intact
-- report the failure precisely in your final response
-- do not claim Task 43 complete.
+The coder receives the COMPLETE reconciled design.
+
+The coder must implement one coherent repair only.
+
+Likely relevant systems may include, depending on the approved design:
+
+- `PcbWorkbenchRenderer`
+- `ComponentLeadProbeTarget`
+- `PhysicalPart` / `PhysicalPartTerminal` endpoint lookup
+- `GeneratedComponentConnectionBinding` only if ownership analysis proves it necessary
+- `PhysicalPartRenderDeveloperVerifier` only for genuinely missing positive/negative coverage
+
+Do not modify unrelated Task 43 architecture.
+
+Do not touch:
+
+- fixed RC/NPN/NMOS routing;
+- package geometry unless investigators prove an architectural contradiction;
+- Task 43 final verifier candidate files currently preserved from 43R-8B;
+- Task 44;
+- `AGENTS.md`.
+
+---
+
+# 43R-3 CORRECTIVE VALIDATION
+
+At minimum prove:
+
+## CONNECTED
+
+- R1.1 resolves only as board-side target.
+- No component-side target is exposed.
+
+## LIFTED
+
+- board-side target remains valid.
+- component-side target becomes independently reachable.
+- physical part ID is unchanged.
+- component ID is unchanged.
+- pad ID is unchanged.
+- physical terminal identity is unchanged.
+- component-side target returns the canonical stable physical-terminal endpoint.
+- marker point is the detached component-side surface.
+- board-side and component-side endpoints remain correctly distinct electrically.
+
+## RECONNECT
+
+- old component-side target becomes invalid.
+- marker disappears.
+- board-side target remains correct.
+
+## RELIFT
+
+- newly acquired component target refers to the same physical terminal identity as required by the approved lifecycle contract.
+- stale target remains stale.
+
+## REMOVAL
+
+- installed interaction invalidates correctly.
+
+## REINSTALL / 43R-4 REGRESSION
+
+- physical part ID behavior remains correct.
+- terminal IDs remain correct.
+- endpoint lifecycle follows the previously accepted 43R-4 contract.
+- loose target behavior remains correct.
+- page lifecycle remains correct.
+
+Also run all existing 43R-3 / `PhysicalPartRenderDeveloperVerifier` positive and negative canaries.
+
+Run relevant Task 39/40/41 regressions.
+
+Run JDK 8 / GWT validation required by the recovery roadmap.
+
+---
+
+# INDEPENDENT REVIEW
+
+After the coder finishes and validation passes:
+
+Spawn an independent READ-ONLY MAX reviewer.
+
+The reviewer must determine:
+
+- whether endpoint ownership is now coherent;
+- whether the verifier was improperly weakened;
+- whether target identity survives lift correctly;
+- whether stale targets invalidate correctly;
+- whether 43R-4 lifecycle behavior remains intact;
+- whether electrical behavior changed;
+- whether the repair exceeded owning scope.
+
+Reviewer returns:
+
+`PASS`
+
+or
+
+`BLOCKERS` with exact evidence.
+
+Reviewer makes NO edits.
+
+---
+
+# CORRECTIVE CHECKPOINT
+
+Only after reviewer PASS:
+
+- update the appropriate task report/evidence;
+- inspect git diff/status;
+- stage ONLY the corrective milestone files;
+- run `git diff --cached --check`;
+- commit the 43R-3 corrective repair as its own checkpoint.
+
+Do not mix the preserved 43R-8B candidate into this commit.
+
+Do not push.
+
+---
+
+# RESUME 43R-8B
+
+ONLY after the corrective checkpoint is independently accepted:
+
+1. Reapply the preserved 43R-8B candidate changes.
+2. Resolve conflicts semantically, not mechanically.
+3. Re-run JDK 8 / GWT build.
+4. Re-run general Layout validation.
+5. Re-run the complete `PhysicalPartRenderDeveloperVerifier`.
+6. Confirm the R1.1 lifecycle failure is gone.
+7. Continue the originally planned 43R-8B forced-negative canary.
+8. Perform final review only if every preceding gate passes.
+
+If another earlier lifecycle failure appears, STOP again and return it to its owning milestone.
+
+Do not patch earlier-contract failures inside final acceptance.
+
+Do not push.
+Do not begin Task 44.
