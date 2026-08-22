@@ -1207,10 +1207,8 @@ milestone and was not started.
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
 **Status:** [~] RECOVERY IN PROGRESS — 43R-1, 43R-2, 43R-2C, 43R-3,
-43R-4, 43R-5, 43R-5A, 43R-6, 43R-7, and 43R-4D accepted; 43R-8A is an
-implementation candidate with normal-player runtime evidence, held pending
-focused developer-route acceptance and fresh independent review. 43R-8B is
-not started.
+43R-4, 43R-5, 43R-5A, 43R-6, 43R-7, 43R-4D, and 43R-8A accepted; 43R-8B
+is not started.
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1264,10 +1262,9 @@ architecture prerequisite.
 - `[x]` 43R-5A — corrective RC fixed-layout acceptance-proof closure; complete.
 - `[x]` 43R-6 — NPN fixed-layout reconstruction; complete.
 - `[x]` 43R-7 — NMOS fixed-layout reconstruction; complete.
-- `[>]` 43R-8A — implementation candidate for the existing-family replacement
-  and installed component-side measurement regression for reversed LED/diode
-  parts; source/build and focused-canary checks pass, while the required
-  focused developer-route result and final independent acceptance remain held.
+- `[x]` 43R-8A — existing-family replacement and installed component-side
+  measurement recovery for reversed LED/diode parts; source/build, focused
+  developer routes, visible normal-player flows, and independent review pass.
 - `[ ]` 43R-8B — final Task 43 acceptance, regression, and cleanup remains
   unstarted and is not eligible until 43R-8A is accepted.
 
@@ -1279,17 +1276,20 @@ offsets. `RcFixedLayoutDeveloperVerifier` passes the exact 36-case
 fixed-layout deferrals are removed. Task 43 remains in recovery and 43R-8 is
 still the next unstarted acceptance/regression/cleanup milestone.
 
-43R-8A candidate status: the installed component-side probe target now
+43R-8A completion status: the installed component-side probe target now
 preserves the orientation-aware endpoint supplied by the active connection
 binding and only requires endpoint membership in the mounted physical part.
 LED and diode developer verifiers lift both leads on reversed catalog
 replacements, measure through the installed component-side targets using
 CircuitJS diode stimulus, and reconnect before the existing powered
-negative-path checks. Supported Edge normal-player runs visibly passed LED
-seed 4, diode seed 0, and parallel seed 3 replacement/retest flows. The
-focused developer-route result remains unconfirmed because the earlier
-automation could not reach the application, so 43R-8A remains held pending
-that runtime gate and fresh independent review; no 43R-8B work has started.
+negative-path checks. The lifted-healthy diode canary uses the connected
+board-pad endpoint for `D1.A` and the detached component-side endpoint for
+`D1.K`, with settled CircuitJS posts before both measurements. Supported Edge
+normal-player runs visibly passed LED seed 4, diode seed 0, and parallel seed 3
+replacement/retest flows. The exact focused Edge developer routes for LED seed
+4 and diode seed 0 ended in `Repair verified. Indicator operating normally.`;
+the fresh independent Luna MAX review returned `PASS`. No 43R-8B work has
+started.
 
 43R-3 completion: installed board rendering, selection, hit testing, and
 board-pad/component-side probing now consume the exact package placement and
@@ -3193,15 +3193,12 @@ converted into unrun acceptance claims.
 
 # Immediate Next Milestone
 
-**43R-8A — focused runtime/review gate for existing-family recovery**
+**43R-8B — final Task 43 acceptance, regression, and cleanup**
 
-Current state: Task 43 RECOVERY IN PROGRESS. Recovery slice 43R-4D is
-ACCEPTED/COMPLETE with the already recorded final supported in-app Browser
-runtime and independent Luna MAX review evidence. Recovery slice 43R-8A has a
-bounded source/build candidate and supported Edge normal-player evidence for
-LED seed 4, diode seed 0, and parallel seed 3, but its focused developer-route
-result and fresh independent acceptance are still pending. 43R-8B remains
-held/unstarted and covers final Task 43 acceptance/regression/cleanup. Task 44
+Current state: Task 43 RECOVERY IN PROGRESS. Recovery slices 43R-4D and 43R-8A
+are ACCEPTED/COMPLETE with their recorded runtime and independent review
+evidence. Recovery slice 43R-8B is the next eligible milestone and remains
+unstarted; it covers final Task 43 acceptance, regression, and cleanup. Task 44
 is BLOCKED BY TASK 43 and remains unstarted. Relay Driver remains deferred and
 transformed into Task 66.
 
@@ -3224,3 +3221,12 @@ returned `PASS` after the source, installed-path, runtime, scope, and
 documentation gates passed. The immediate follow-on 43R-8 is next eligible
 and remains unstarted; Task 44 remains blocked and unstarted. No later
 milestone was begun automatically.
+
+### 43R-8A final milestone status — 2026-08-22
+
+43R-8A is complete and independently accepted: the final focused LED and diode
+developer routes passed visibly in Edge after the bounded diode lifted-lead
+correction, the required normal-player LED/diode/parallel flows passed, and the
+fresh independent Luna MAX reviewer returned `PASS`. 43R-8B is now the next
+eligible milestone and remains unstarted; Task 44 remains blocked and
+unstarted. No later milestone was begun automatically.

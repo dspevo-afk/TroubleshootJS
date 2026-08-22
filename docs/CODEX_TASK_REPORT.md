@@ -1,13 +1,12 @@
-# Task 43R-8A candidate report — existing-family replacement and measurement recovery
+# Task 43R-8A completion report — existing-family replacement and measurement recovery
 
 ## Roadmap milestone
 
 Task 43 recovery correction **43R-8A — recover existing-family replacement and
-measurement regressions found by 43R-8** is implemented in a bounded
-candidate. It is not yet accepted: focused source/build checks pass and
-supported Edge normal-player evidence is recorded, but the focused
-developer-route result and fresh independent review remain pending. It does
-not claim final Task 43 acceptance, 43R-8B, or Task 44.
+measurement regressions found by 43R-8** is implemented and accepted in its
+bounded scope. Focused source/build checks, visible Edge developer routes,
+supported Edge normal-player evidence, and a fresh independent review all
+passed. It does not claim final Task 43 acceptance, 43R-8B, or Task 44.
 
 ## Starting state and reconciliation
 
@@ -58,13 +57,20 @@ directions through CircuitJS diode stimulus, and reconnect both leads before
 the powered reversed-part negative check. The diode helper was generalized only
 to share the same solver-backed assertion for loose and installed targets.
 
+The final diode-only correction preserves the intended lifted-lead topology:
+after lifting `D1.K`, the connected `D1.A` is measured through its board-pad
+target while the detached `D1.K` is measured through its component-side target.
+Both directions assert valid `CircuitPost` endpoints after the mutation settles.
+This avoids constructing an invalid component-side target for the still-connected
+anode, which had produced the pre-correction `NaN` developer-route failure.
+
 ## Validation evidence
 
 - Fresh JDK 8 production build/link:
   `.\scripts\build.ps1 -JavaHome .tools\jdk8-download\jdk8u502-b07 -Style OBF -Target Compile`
   — passed all five GWT permutations and production linking.
 - `.\scripts\verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
-- `git diff --check` — passed after the bounded three-file source change.
+- `git diff --check` — passed after the bounded correction and handoff update.
 - The static compiled preview served `war/circuitjs.html` over HTTP 200.
 - The supported in-app Browser was opened and kept visible for the required
   player-facing check, but both `127.0.0.1:8899` and `localhost:8899` were
@@ -87,8 +93,19 @@ to share the same solver-backed assertion for loose and installed targets.
   reported the expected repair verification and disabled the retest control.
   The public diode UI allowed one lifted lead at a time and the attempted
   visible component-side reading remained `--- V`; this is recorded as an
-  observation, not as a public measurement pass. The focused canary remains
-  source/build evidence until its developer-route result is observable.
+  observation, not as a public measurement pass.
+- The exact focused developer routes were then exercised visibly in Edge on the
+  final branch state:
+  - LED seed 4: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=4&tsjVerifyLedParts=true`
+    ended with `Board Power: ON` and `Repair verified. Indicator operating
+    normally.`
+  - Diode seed 0: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=diode&seed=0&tsjVerifyDiode=true`
+    ended with `Board Power: ON` and `Repair verified. Indicator operating
+    normally.` The earlier lifted-healthy `NaN` exception was not observed after
+    the correction.
+- Curated final-state screenshots are stored at
+  `docs/task-evidence/task-43/task43r8a-led-edge.jpg` and
+  `docs/task-evidence/task-43/task43r8a-diode-edge.jpg`.
 - Source review confirms existing stale-target invalidation, original-reinstall
   negatives, distinct replacement identity, power/mutation cleanup, package
   rejection, and wrong-owner paths remain unchanged. The new focused canaries
@@ -109,14 +126,15 @@ acceptance, 43R-8B, and Task 44 were not started.
 
 ## Review and publication gate
 
-Primary source review found the candidate bounded and consistent with the
-orientation-aware binding contract. The first fresh independent read-only Luna
-MAX review found no source defect but returned `BLOCKERS` because the focused
-developer routes had not reached the application. The later visible Edge
-normal-player results are now recorded above; a fresh independent review must
-still decide whether that evidence satisfies the runtime gate. Until then,
-the candidate is not staged, committed, or pushed, and no completion-
-notification attempt has been made.
+Primary source review found the correction bounded and consistent with the
+orientation-aware binding contract. The fresh independent read-only Luna MAX
+reviewer returned `PASS` after inspecting the final source, lifecycle,
+measurement, scope, and runtime evidence. The earlier review blocker was the
+pre-route harness limitation and is superseded by the visible final Edge
+developer-route results. The user's earlier Escape interruption is recorded as
+operator-only and was not treated as a product, verifier, or environment
+failure. The final Task 43 completion protocol is performed after this report
+and the roadmap are updated; 43R-8B and Task 44 remain untouched.
 
 ---
 

@@ -127,13 +127,16 @@ class DiodeFamilyDeveloperVerifier {
             "Healthy replacement does not use the declared default silicon model");
         require(sim.getBoardModificationController().liftLead("D1", "D1.K"),
             "Could not lift healthy D1 cathode");
+        settleAfterMutation(sim);
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
-        ProbeTarget anode = new ComponentLeadProbeTarget(sim, instance, "D1", "D1.A", renderer);
+        ProbeTarget anode = boardProbe(sim, instance, "D1.A");
         ProbeTarget cathode = new ComponentLeadProbeTarget(sim, instance, "D1", "D1.K", renderer);
+        requireDiodeMeasurementReady(sim, anode, cathode, "Lifted healthy D1 forward");
         sim.instrumentController.setDiodeProbesForDeveloperVerification(anode, cathode);
         double voltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
         require(voltage >= .45 && voltage <= .95,
             "Lifted healthy D1 did not retain its forward diode response: " + voltage);
+        requireDiodeMeasurementReady(sim, cathode, anode, "Lifted healthy D1 reverse");
         sim.instrumentController.setDiodeProbesForDeveloperVerification(cathode, anode);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Lifted healthy D1 reverse response was not OL");
@@ -294,8 +297,25 @@ class DiodeFamilyDeveloperVerifier {
 
     private static ProbeTarget looseProbe(CirSim sim, GeneratedBoardInstance instance,
             PhysicalDiodePart part, int terminal) {
-        return new PhysicalDiodePartProbeTarget(sim, instance, part.getId(), terminal,
-            sim.pcbWorkbenchController.getRenderer());
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        selectLoosePartPage(instance, part.getId(), renderer);
+        return new PhysicalDiodePartProbeTarget(sim, instance, part.getId(), terminal, renderer);
+    }
+
+    private static void selectLoosePartPage(GeneratedBoardInstance instance, String partId,
+            PcbWorkbenchRenderer renderer) {
+        int index = 0;
+        for (WorkbenchPartsProvider provider : instance.getPhysicalBoardRuntime()
+                .getWorkbenchPartsProviders())
+            for (PhysicalPart<?> part : provider.getLooseParts()) {
+                if (partId.equals(part.getId())) {
+                    renderer.setTrayPage(index / renderer.getPartsPerTrayPage());
+                    return;
+                }
+                index++;
+            }
+        throw new IllegalStateException("Requested loose diode part was not in the workbench: " +
+            partId);
     }
 
     private static ProbeTarget boardProbe(CirSim sim, GeneratedBoardInstance instance, String padId) {

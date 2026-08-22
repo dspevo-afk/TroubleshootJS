@@ -244,8 +244,25 @@ class LedPhysicalDeveloperVerifier {
 
     private static ProbeTarget looseProbe(CirSim sim, GeneratedBoardInstance instance,
             PhysicalLedPart part, int terminal) {
-        return new PhysicalLedPartProbeTarget(sim, instance, part.getId(), terminal,
-            sim.pcbWorkbenchController.getRenderer());
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        selectLoosePartPage(instance, part.getId(), renderer);
+        return new PhysicalLedPartProbeTarget(sim, instance, part.getId(), terminal, renderer);
+    }
+
+    private static void selectLoosePartPage(GeneratedBoardInstance instance, String partId,
+            PcbWorkbenchRenderer renderer) {
+        int index = 0;
+        for (WorkbenchPartsProvider provider : instance.getPhysicalBoardRuntime()
+                .getWorkbenchPartsProviders())
+            for (PhysicalPart<?> part : provider.getLooseParts()) {
+                if (partId.equals(part.getId())) {
+                    renderer.setTrayPage(index / renderer.getPartsPerTrayPage());
+                    return;
+                }
+                index++;
+            }
+        throw new IllegalStateException("Requested loose LED part was not in the workbench: " +
+            partId);
     }
 
     private static void verifyPartTopology(CirSim sim, GeneratedBoardInstance instance) {
