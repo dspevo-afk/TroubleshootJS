@@ -79,15 +79,7 @@ class PcbLayoutDeveloperVerifier {
             RuntimeException failure) {
         String message = failure.getMessage();
         String evidence = null;
-        if ("RC_DELAY".equals(familyId) && message != null &&
-                message.indexOf("Silkscreen label overlaps copper: component:C2 / GND") >= 0)
-            evidence = "DEFERRED R-5 fixed RC layout: " + message;
-        else if ("RC_DELAY".equals(familyId) && message != null &&
-                message.equals("PCB trace passes through component routing courtyard: VIN / C2 " +
-                    "segment 296,210 -> 296,370 keepOut=Rect(281,340,80,90) " +
-                    "startPad=J1.1@216,230 endPad=C2.1@296,370"))
-            evidence = "DEFERRED R-2 fixed RC layout: " + message;
-        else if ("NPN_LOW_SIDE_SWITCH".equals(familyId) && message != null &&
+        if ("NPN_LOW_SIDE_SWITCH".equals(familyId) && message != null &&
                 message.indexOf("PCB trace passes through component routing courtyard: " +
                     "LOAD_SUPPLY / RLOAD") >= 0)
             evidence = "DEFERRED R-6 fixed NPN layout: " + message;

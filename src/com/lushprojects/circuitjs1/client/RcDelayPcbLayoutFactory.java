@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Random;
+
 /**
  * A compact, deterministic one-sided layout for the first RC proof family.
  * It consumes only stable board pads/nets and typed package geometry; the
@@ -9,12 +11,27 @@ final class RcDelayPcbLayoutFactory {
     private RcDelayPcbLayoutFactory() { }
 
     static PcbBoardLayout create(TroubleshootBoard board, long seed) {
+        int variationMode = variationMode(seed);
+        return createLayout(board, variationMode, seed, null, null);
+    }
+
+    /** Developer-only finite matrix path; it never searches for a route. */
+    static PcbBoardLayout createForDeveloperVerification(TroubleshootBoard board,
+            int variationMode, String r1VariantKey, String r2VariantKey) {
+        requireVariationMode(variationMode);
+        requireResistorVariantKey(r1VariantKey);
+        requireResistorVariantKey(r2VariantKey);
+        return createLayout(board, variationMode, variationMode, r1VariantKey, r2VariantKey);
+    }
+
+    private static PcbBoardLayout createLayout(TroubleshootBoard board, int variationMode,
+            long seed, String r1VariantKey, String r2VariantKey) {
+        requireVariationMode(variationMode);
         PcbBoardLayout layout = new PcbBoardLayout(1400, 800,
             new Rectangle(40, 30, 770, 430), new Rectangle(850, 125, 150, 255));
-        addComponents(layout, board, seed);
+        addComponents(layout, board, seed, r1VariantKey, r2VariantKey);
         addTraces(layout);
         addLabels(layout);
-        int variationMode = (int) ((seed % 4 + 4) % 4);
         layout.compactToContent(40 + variationMode * 10,
             30 + (variationMode % 2) * 10, 26);
         layout.positionPartsTrayDisjointFromBoard();
@@ -22,19 +39,60 @@ final class RcDelayPcbLayoutFactory {
         return layout;
     }
 
-    private static void addComponents(PcbBoardLayout layout, TroubleshootBoard board, long seed) {
+    private static int variationMode(long seed) {
+        return (int) (((seed % 4) + 4) % 4);
+    }
+
+    private static void requireVariationMode(int variationMode) {
+        if (variationMode < 0 || variationMode > 3)
+            throw new IllegalArgumentException("RC variation mode must be 0..3: " +
+                variationMode);
+    }
+
+    private static void requireResistorVariantKey(String key) {
+        if (!"SPAN_220".equals(key) && !"SPAN_240".equals(key) &&
+                !"SPAN_260".equals(key))
+            throw new IllegalArgumentException("Unknown canonical RC resistor variant: " + key);
+    }
+
+    private static void addComponents(PcbBoardLayout layout, TroubleshootBoard board, long seed,
+            String r1VariantKey, String r2VariantKey) {
         addProviderFootprint(layout, board.getComponent("J1"), 50, 150, seed);
-        addProviderFootprint(layout, board.getComponent("R1"), 200, 90, seed + 1);
+        addResistorFootprint(layout, board.getComponent("R1"), 200, 90, seed + 1,
+            r1VariantKey);
         addProviderFootprint(layout, board.getComponent("C1"), 700, 70, seed + 2);
         addProviderFootprint(layout, board.getComponent("J2"), 900, 160, seed + 3);
-        addProviderFootprint(layout, board.getComponent("R2"), 500, 290, seed + 4);
+        addResistorFootprint(layout, board.getComponent("R2"), 500, 290, seed + 4,
+            r2VariantKey);
         addProviderFootprint(layout, board.getComponent("C2"), 200, 300, seed + 5);
     }
 
     private static void addProviderFootprint(PcbBoardLayout layout, BoardComponent component,
             int x, int y, long seed) {
         PcbFootprint footprint = StandardPcbFootprintProviders.createRegistry().create(
-            component, x, y, new java.util.Random(seed), layout.getBoardOutline());
+            component, x, y, new Random(seed), layout.getBoardOutline());
+        addFootprint(layout, footprint);
+    }
+
+    private static void addResistorFootprint(PcbBoardLayout layout, BoardComponent component,
+            int x, int y, long seed, String explicitVariantKey) {
+        if (explicitVariantKey == null) {
+            addProviderFootprint(layout, component, x, y, seed);
+            return;
+        }
+        if (component.getPhysicalPackage() != PhysicalPackages.AXIAL_RESISTOR)
+            throw new IllegalStateException("RC resistor does not use the axial package: " +
+                component.getId());
+        PhysicalPackage.GeometryVariant variant = component.getPhysicalPackage()
+            .getGeometryVariant(explicitVariantKey);
+        if (variant == null)
+            throw new IllegalArgumentException("RC resistor catalog lacks variant: " +
+                explicitVariantKey);
+        addFootprint(layout, PcbFootprint.fromPhysicalPackage(component, x, y,
+            variant.getGeometry()));
+    }
+
+    private static void addFootprint(PcbBoardLayout layout, PcbFootprint footprint) {
         layout.addComponent(footprint.getPlacement());
         for (PcbPadPlacement pad : footprint.getPads())
             layout.addPad(pad);

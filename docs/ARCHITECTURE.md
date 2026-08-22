@@ -1410,11 +1410,11 @@ the canonical package object rather than merely an equivalent package value.
 `PcbR2DeveloperVerifier` provides positive canaries for two-, three-, branch-,
 perpendicular-, transitive-package-, compaction-, and generated LED/diode/
 parallel-family layouts, plus negative canaries for the rejected physical
-contacts and surfaces above. `PcbLayoutDeveloperVerifier` keeps the existing
-fixed route factories out of this recovery slice: only exact known RC/NPN/
-NMOS geometry signatures are recorded as deferred layout failures. No fixed
-route coordinates, renderer, tray, electrical graph, fault, stress/damage,
-probe, or Task 44 work is included in 43R-2.
+contacts and surfaces above. `PcbLayoutDeveloperVerifier` keeps the remaining
+NPN authored-route signatures as deferred failures while the completed RC and
+NMOS fixed-layout proofs are hard gates. No fixed route coordinates, renderer,
+tray, electrical graph, fault, stress/damage, probe, or Task 44 work is
+included in 43R-2.
 
 ## Task 43R-2C — production escape geometry recovery correction
 
@@ -1642,3 +1642,33 @@ The normal in-app developer results are `PASS:NMOS_FIXED_LAYOUT_MATRIX`,
 `PASS:layout`, `PASS:task43`, and `PASS:nmos` for the existing nine NMOS
 electrical/control/mutation checks. 43R-8 is now the next eligible milestone;
 it was not started here.
+
+## Task 43R-5A — RC fixed-layout acceptance-proof closure
+
+43R-5A is a corrective acceptance-proof slice, not a route reconstruction.
+`RcDelayPcbLayoutFactory.create(TroubleshootBoard,long)` and the new
+developer-only `createForDeveloperVerification` seam share one live private
+`createLayout` path. Production retains the real seed and null resistor keys;
+the finite developer path selects `SPAN_220`, `SPAN_240`, or `SPAN_260` for R1
+and R2 while passing the variation mode as its seed for the unchanged
+non-resistor provider choices. All six existing RC anchors, board dimensions,
+trace coordinates, labels, compaction, parts-tray placement, and the final
+`validateGeometry` call are unchanged. Explicit resistor realization uses only
+the canonical `AXIAL_RESISTOR` package geometry variants.
+
+`RcFixedLayoutDeveloperVerifier` is a hard Task 43 gate over exactly
+`3 x 3 x 4 = 36` live cases. It validates the live RC board before the matrix,
+the canonical package/variant/transform and physical surface identities, the
+ordered nine-trace VIN/RC_OUT/GND witness, exact logical memberships, physical
+union through the generic layout oracle, escape metadata, route quality,
+deterministic full fingerprints, normalized origin-class geometry, seam
+negative canaries, and production parity for seeds 0–3. Its successful result
+is `PASS:RC_FIXED_LAYOUT_MATRIX:cases=36/36;variantTuples=9;originClasses=4`.
+The two RC-specific deferred failures were removed from
+`PcbLayoutDeveloperVerifier`; the existing NPN deferrals remain unchanged.
+
+This correction does not claim Task 43 or 43R-8 complete. 43R-8 remains the
+next unstarted acceptance/regression/cleanup milestone. The existing RC
+electrical/stored-energy browser route may still report the accepted renderer
+boundary for the disconnected C1 positive component-side lead; that is outside
+this fixed-layout acceptance proof.

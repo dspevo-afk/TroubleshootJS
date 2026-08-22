@@ -1,3 +1,94 @@
+# Task 43R-5A completion report — RC fixed-layout acceptance-proof closure
+
+## Roadmap milestone
+
+Task 43 recovery correction **43R-5A — RC fixed-layout acceptance-proof
+closure** is implemented and validated in the working tree. It does not claim
+Task 43 or 43R-8 complete; 43R-8 remains the next unstarted
+acceptance/regression/cleanup milestone. Task 44 was not touched.
+
+## Starting state and scope
+
+- Branch: `codex/task43-recovery-integration`.
+- Starting handoff: `88fbe3daf007721bfdd31853fab94d5c5317f3bb`.
+- Accepted production checkpoint: `c306556d3d387e4ad7d20353a73a6b703e58c477`.
+- Phase A had already established that the existing RC route structurally
+  supports all 3 × 3 × 4 combinations; this slice adds the acceptance proof
+  and seam integration without changing that route.
+- Only the requested RC factory/verifier/aggregation and three handoff
+  documents were edited. No commit or push was performed.
+
+## Implementation
+
+`RcDelayPcbLayoutFactory.create` now normalizes its seed to variation mode and
+shares one private `createLayout` with the developer-only
+`createForDeveloperVerification` seam. Production passes the real seed and
+null resistor keys. The developer seam passes `seed=variationMode` and
+explicitly selects only canonical `SPAN_220`, `SPAN_240`, or `SPAN_260` axial
+resistor geometries. The existing J1/R1/C1/J2/R2/C2 seed offsets are retained.
+
+The production RC board dimensions, six component anchors, trace route and
+copper coordinates, labels, compaction, parts-tray placement, and final
+`validateGeometry` call are unchanged. R1/R2 explicit selection uses the live
+`AXIAL_RESISTOR` package object and its canonical `GeometryVariant`; no second
+route builder or package geometry was added.
+
+`RcFixedLayoutDeveloperVerifier` uses one live
+`RcDelayGenerator().generateForFaultVerification(0, CAPACITOR_OPEN)` fixture,
+validates the board before the matrix, and executes exactly 36 cases:
+`SPAN_220/SPAN_240/SPAN_260` × `SPAN_220/SPAN_240/SPAN_260` × four origin
+classes. Each case checks canonical package/geometry/transform identity for
+all six components, the ordered nine-trace endpoint/net witness, exact VIN,
+RC_OUT, and GND logical memberships, physical endpoint representation and
+rooted branches, package-declared escape metadata/directions, route quality
+and clearance, deterministic full fingerprints, and normalized full geometry
+across origin classes. Seam canaries reject null, `SPAN_230`, unknown keys,
+and out-of-range variation modes. Production parity reconstructs seeds 0–3
+from their selected live R1/R2 keys and requires full geometry and realization
+parity.
+
+`Task43DeveloperVerifier` invokes the RC proof before NPN and NMOS. The two
+RC-specific deferred-failure branches were removed from
+`PcbLayoutDeveloperVerifier`; both existing NPN deferrals remain untouched.
+
+## Validation evidence
+
+- JDK 8 production compile/link:
+  `.\scripts\build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
+  — passed all five GWT permutations and production linking.
+- Compiled-preview Task 43 route:
+  `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -Task43 -TimeoutSeconds 90`
+  — `PASS task43 physical package geometry contract`. This route executes
+  the RC verifier first; its successful matrix evidence is
+  `PASS:RC_FIXED_LAYOUT_MATRIX:cases=36/36;variantTuples=9;originClasses=4`.
+- Compiled-preview general layout route:
+  `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -Layout -TimeoutSeconds 90 -PlayerSeed 3`
+  — `PASS procedural-layout`; RC deferrals no longer absorb failures.
+- Existing stored-energy route, seeds 0, 2, and 3:
+  `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -StoredEnergy -TimeoutSeconds 90 -Seeds 0,2,3`
+  — all three routes passed.
+- Existing RC behavioral route, seeds 0, 2, and 3, reaches the accepted
+  43R-4C renderer boundary and reports
+  `Renderer omitted disconnected component-side lead: C1.+`; no RC layout
+  failure was reported. This remains outside 43R-5A.
+- The in-app Browser runtime was unavailable (`agent.browsers.list()` returned
+  no browser surfaces), so no normal-player visible-browser evidence is
+  claimed. The successful results above are compiled-preview harness evidence.
+- Final `git diff --check` is clean. The candidate remains uncommitted and
+  unpushed.
+
+## Changed files
+
+- `src/com/lushprojects/circuitjs1/client/RcDelayPcbLayoutFactory.java`
+- `src/com/lushprojects/circuitjs1/client/RcFixedLayoutDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/Task43DeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/PcbLayoutDeveloperVerifier.java`
+- `docs/ARCHITECTURE.md`
+- `docs/ROADMAP.md`
+- `docs/CODEX_TASK_REPORT.md`
+
+---
+
 # Task 43R-7 completion report — NMOS fixed-layout reconstruction
 
 ## Roadmap milestone
