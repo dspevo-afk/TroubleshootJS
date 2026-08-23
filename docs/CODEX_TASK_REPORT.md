@@ -1,12 +1,86 @@
-# Task 43R-3 corrective return — lifted component endpoint identity
+# Task 43R-8B acceptance-infrastructure closure — forced-negative process integrity
 
 ## Status
 
-Task 43 recovery correction **43R-3 corrective return** is accepted in its
+Task 43 recovery slice **43R-8B — acceptance infrastructure** is accepted in
+its bounded scope. This closes the stale-deferral and forced-negative
+process-integrity gates; it does **not** claim final integrated Task 43
+acceptance. Task 43 remains `RECOVERY IN PROGRESS`, final integrated 43R-8 is
+`NEXT ELIGIBLE / UNSTARTED`, and Task 44 remains `BLOCKED / UNSTARTED`.
+
+## Scope and implementation
+
+The candidate was preserved before the required 43R-3 corrective return and
+reapplied only after that checkpoint was independently accepted. The accepted
+43R-3 lifecycle correction remains in commit `23330da`; no lifecycle canary,
+production target, binding, physical-terminal, or measurement behavior was
+changed by 43R-8B.
+
+The 43R-8B implementation is limited to four files:
+
+- `scripts/verify-browser.ps1`
+- `src/com/lushprojects/circuitjs1/client/CirSim.java`
+- `src/com/lushprojects/circuitjs1/client/PcbLayoutDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/Task43DeveloperVerifier.java`
+
+The two stale general-layout NPN deferrals were removed: `DEFERRED R-2 fixed
+NPN layout` and `DEFERRED R-6 fixed NPN layout`, including the deferred
+catch-and-continue path. The accepted direct NPN matrix remains hard-red and
+reports `PASS:NPN_FIXED_LAYOUT_MATRIX:cases=108/108;variantTuples=27;originClasses=4`.
+
+The browser verifier now has a developer-only, transient forced-negative Task
+43 route. It requires the real application DOM state
+`FAIL:task43-forced-negative-canary` and accepts only the anchored deliberate
+CDP diagnostic for that canary. Arbitrary console text, unexpected application
+failures, timeouts, and infrastructure failures remain rejected. The forced
+seam is gated by verification query state and does not affect normal player
+runs.
+
+## Validation and review
+
+- JDK 8/GWT OBF compile/link using `.tools/jdk8-download/jdk8u502-b07` — all
+  five permutations and link passed.
+- `scripts/verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
+- `scripts/verify-browser.ps1 -Layout` — `PASS procedural-layout`, exit `0`.
+- Direct NPN fixed-layout evidence —
+  `PASS:NPN_FIXED_LAYOUT_MATRIX:cases=108/108;variantTuples=27;originClasses=4`.
+- `scripts/verify-browser.ps1 -Task39` — all six routes passed; `-Task40` and
+  `-Task41` passed.
+- Ordinary `scripts/verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -Task43
+  -TimeoutSeconds 120` — `PASS task43 physical package geometry contract`,
+  child exit `0`.
+- Forced `scripts/verify-browser.ps1 -BaseUrl http://127.0.0.1:8898
+  -Task43ForcedNegative -TimeoutSeconds 120` — the real application published
+  `data-tsj-verification=FAIL:task43-forced-negative-canary`, emitted the
+  deliberate `IllegalStateException` canary, printed `EXPECTED FAILURE
+  task43 forced-negative canary - FAIL:task43-forced-negative-canary`, and the
+  child exit was exactly `1`.
+- Forced missing-browser infrastructure check — child exit exactly `2`.
+- Ordinary Task 43 immediately after the forced route — `PASS task43 physical
+  package geometry contract`, child exit `0`.
+- PowerShell parse and `git diff --check` — passed; no stale `DEFERRED` paths
+  remain in the general layout verifier.
+- Review history: the first independent reviewer identified the CDP diagnostic
+  mismatch; the first correction was independently reviewed and rejected for a
+  broad substring fallback; the second correction removed that fallback; the
+  fresh independent Luna MAX reviewer returned `PASS`. No escalation review was
+  required.
+
+The primary architect performed the final actual-diff and validation review
+and reached `FINAL PASS` after the two bounded correction passes. No candidate
+commit or push had occurred at this point.
+
+---
+
+# Historical Task 43R-3 corrective return — lifted component endpoint identity
+
+## Status
+
+Task 43 recovery correction **43R-3 corrective return** was accepted in its
 bounded scope after the required read-only MAX investigation, one-writer
-implementation, validation, and independent MAX review. It unblocks the
-previously blocked 43R-8B candidate, but 43R-8B has not been resumed or
-accepted. Task 44 remains untouched.
+implementation, validation, and independent MAX review. It unblocked the
+then-blocked 43R-8B candidate. The later 43R-8B acceptance-infrastructure
+closure is recorded above; Task 44 remains untouched.
 
 ## Starting state and ownership
 

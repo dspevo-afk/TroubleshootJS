@@ -32,6 +32,7 @@ param(
     [switch]$Task40,
     [switch]$Task41,
     [switch]$Task43,
+    [switch]$Task43ForcedNegative,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -203,15 +204,29 @@ function navigateAndWaitForDocument($socket, [ref]$nextId, [string]$url,
     return evaluateCdp $socket $nextId 'performance.timeOrigin' $failures
 }
 
+function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
+        [string]$expectedFailure) {
+    if ($expectedFailure -ne 'FAIL:task43-forced-negative-canary') { return $false }
+    return $failure -match '^Console failure: exception in runCircuit ' +
+        'java\.lang\.IllegalStateException: Generated board verification failed for ' +
+        '[^,]+, seed 3: task43-forced-negative-canary$'
+}
+
 function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debugPort,
-        [string]$expectedComplaint = '') {
+        [string]$expectedComplaint = '', [string]$expectedFailure = '') {
     $profile = Join-Path $env:TEMP ("tsj-browser-" + [Guid]::NewGuid().ToString('N'))
-    $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
-        '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
-    $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $browser = $null
     $socket = $null
     $success = $false
+    $expectedFailureObserved = $false
+    if ($expectedFailure) {
+        $script:task43ExpectedFailureObserved = $false
+        $script:task43ExpectedFailureRoutePassed = $false
+    }
     try {
+        $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+            '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
+        $browser = Start-Process -FilePath $BrowserPath -ArgumentList $arguments -PassThru -WindowStyle Hidden
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
         do {
             Start-Sleep -Milliseconds 200
@@ -240,11 +255,27 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
                 expression = "document.documentElement.getAttribute('data-tsj-verification') || ''"; returnByValue = $true
             } ([ref]$failures)
             $verificationResult = [string]$response.result.result.value
-            if ($verificationResult.StartsWith('FAIL:')) { throw $verificationResult }
+            if ($verificationResult.StartsWith('FAIL:')) {
+                if ($expectedFailure -and $verificationResult -eq $expectedFailure) {
+                    $expectedFailureObserved = $true
+                    $script:task43ExpectedFailureObserved = $true
+                    break
+                }
+                throw "unexpected application failure: $verificationResult"
+            }
+            if ($expectedFailure -and $verificationResult -eq $expected) {
+                throw "unexpected application success: $verificationResult"
+            }
             if ($verificationResult -eq $expected) { break }
             Start-Sleep -Milliseconds 250
         } while ([DateTime]::UtcNow -lt $deadline)
-        if ($verificationResult -ne $expected) {
+        if ($expectedFailure -and -not $expectedFailureObserved) {
+            $diagnostic = evaluateCdp $socket ([ref]$nextId) "({status:document.documentElement.getAttribute('data-tsj-verification')||'',body:(document.body&&document.body.innerText||'').slice(-900)})" ([ref]$failures)
+            Write-Host ("VERIFIER DIAGNOSTIC status=$($diagnostic.status) body=$($diagnostic.body.Replace("`n", ' | '))")
+            if ($failures.Count -gt 0) { Write-Host ("VERIFIER CDP FAILURES: " + ($failures -join '; ')) }
+            throw "timed out waiting for expected application failure '$expectedFailure'"
+        }
+        if (-not $expectedFailure -and $verificationResult -ne $expected) {
             $diagnostic = evaluateCdp $socket ([ref]$nextId) "({status:document.documentElement.getAttribute('data-tsj-verification')||'',body:(document.body&&document.body.innerText||'').slice(-900)})" ([ref]$failures)
             Write-Host ("VERIFIER DIAGNOSTIC status=$($diagnostic.status) body=$($diagnostic.body.Replace("`n", ' | '))")
             if ($failures.Count -gt 0) { Write-Host ("VERIFIER CDP FAILURES: " + ($failures -join '; ')) }
@@ -272,12 +303,23 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory ("parallel-seed-" + $Matches[1] + ".png")) ([ref]$failures)
         }
-        if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+        if ($failures.Count -gt 0) {
+            $unexpectedFailures = @($failures | Where-Object {
+                -not $expectedFailureObserved -or
+                    -not (isExpectedTask43ForcedFailureDiagnostic $_ $expectedFailure)
+            })
+            if ($unexpectedFailures.Count -gt 0) { throw ($unexpectedFailures -join '; ') }
+        }
         cleanupBrowser $browser $socket $profile
         $socket = $null
         $browser = $null
-        Write-Host "PASS $name"
+        if ($expectedFailureObserved) {
+            Write-Host "EXPECTED FAILURE $name - $expectedFailure"
+        } else {
+            Write-Host "PASS $name"
+        }
         $success = $true
+        if ($expectedFailureObserved) { $script:task43ExpectedFailureRoutePassed = $true }
     } catch {
         Write-Host "FAIL $name - $($_.Exception.Message)"
     } finally {
@@ -1456,7 +1498,13 @@ $nmosValidationSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } e
 $npnNormalPlayerSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
     @(0, 1, 2)
 }
-if (-not (Test-Path $BrowserPath -PathType Leaf)) { throw "Browser not found: $BrowserPath" }
+if (-not (Test-Path $BrowserPath -PathType Leaf)) {
+    if ($Task43ForcedNegative) {
+        Write-Host "FAIL task43 forced-negative canary - verifier infrastructure: Browser not found: $BrowserPath"
+        exit 2
+    }
+    throw "Browser not found: $BrowserPath"
+}
 if ($QuickPlay) {
     $selectorPassed = verifyRoute 'quick-play selector/session' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play' 9495 | Select-Object -Last 1
     if (-not $selectorPassed) { exit 1 }
@@ -1568,8 +1616,26 @@ if ($Task41) {
     if (-not (verifyRoute 'task41 diagnostic solvability' "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=0&tsjVerifyTask41=true&running=true" 'PASS:task41' 9720)) { exit 1 }
     exit 0
 }
+if ($Task43ForcedNegative) {
+    try {
+        $script:task43ExpectedFailureObserved = $false
+        $script:task43ExpectedFailureRoutePassed = $false
+        [void](verifyRoute 'task43 forced-negative canary' `
+            "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43=true&tsjTask43ForcedFailure=true&running=true" `
+            'PASS:task43' 9731 '' 'FAIL:task43-forced-negative-canary')
+    } catch {
+        Write-Host "FAIL task43 forced-negative canary - verifier infrastructure: $($_.Exception.Message)"
+        exit 2
+    }
+    if ($script:task43ExpectedFailureObserved -ne $true -or
+            $script:task43ExpectedFailureRoutePassed -ne $true) { exit 2 }
+    exit 1
+}
 if ($Task43) {
-    if (-not (verifyRoute 'task43 physical package geometry contract' "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43=true&running=true" 'PASS:task43' 9730)) { exit 1 }
+    $task43Results = @(verifyRoute 'task43 physical package geometry contract' `
+        "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43=true&running=true" `
+        'PASS:task43' 9730 | Where-Object { $_ -is [bool] })
+    if ($task43Results.Count -ne 1 -or $task43Results[0] -ne $true) { exit 1 }
     exit 0
 }
 if ($WrongRepair) {

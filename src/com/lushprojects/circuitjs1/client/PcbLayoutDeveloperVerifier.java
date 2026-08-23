@@ -18,79 +18,49 @@ class PcbLayoutDeveloperVerifier {
     }
 
     private static void verifyFamily(String familyId) {
-        try {
-            GeneratedBoardInstance seed0Board = generate(familyId, 0);
-            GeneratedBoardInstance seed0RepeatBoard = generate(familyId, 0);
-            GeneratedBoardInstance seed2Board = generate(familyId, 2);
-            GeneratedBoardInstance seed2RepeatBoard = generate(familyId, 2);
-            GeneratedBoardInstance seed3Board = generate(familyId, 3);
-            GeneratedBoardInstance seed3RepeatBoard = generate(familyId, 3);
-            PcbBoardLayout seed0 = seed0Board.getPcbLayout();
-            PcbBoardLayout seed0Repeat = seed0RepeatBoard.getPcbLayout();
-            PcbBoardLayout seed2 = seed2Board.getPcbLayout();
-            PcbBoardLayout seed2Repeat = seed2RepeatBoard.getPcbLayout();
-            PcbBoardLayout seed3 = seed3Board.getPcbLayout();
-            PcbBoardLayout seed3Repeat = seed3RepeatBoard.getPcbLayout();
-            verifyRouteQuality(seed0, seed0Board.getBoard());
-            verifyRouteQuality(seed2, seed2Board.getBoard());
-            verifyRouteQuality(seed3, seed3Board.getBoard());
-            verifyLabels(seed0, seed0Board.getBoard());
-            verifyLabels(seed2, seed2Board.getBoard());
-            verifyLabels(seed3, seed3Board.getBoard());
-            if ("PARALLEL_DUAL_INDICATOR".equals(familyId)) {
-                verifyMultiPadNets(seed0, seed0Board.getBoard());
-                verifyMultiPadNets(seed2, seed2Board.getBoard());
-                verifyMultiPadNets(seed3, seed3Board.getBoard());
-            }
-            if ("NPN_LOW_SIDE_SWITCH".equals(familyId))
-                verifyNpnFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
-            if ("NMOS_LOW_SIDE_SWITCH".equals(familyId)) {
-                verifyNmosFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
-                verifyNmosControlRouting(seed0, seed0Board.getBoard());
-            }
-            if ("LED_INDICATOR".equals(familyId))
-                verifySeedThreeLedEndpointRegression(seed3);
-            require(seed0.geometryFingerprint().equals(seed0Repeat.geometryFingerprint()),
-                familyId + " seed 0 is not reproducible");
-            require(seed2.geometryFingerprint().equals(seed2Repeat.geometryFingerprint()),
-                familyId + " seed 2 is not reproducible");
-            require(seed3.geometryFingerprint().equals(seed3Repeat.geometryFingerprint()),
-                familyId + " seed 3 is not reproducible");
-            require(meaningfulDifferences(seed0, seed2) >= 2,
-                familyId + " seeds 0 and 2 lack meaningful geometry variation");
-            require(meaningfulDifferences(seed0, seed3) >= 2,
-                familyId + " seeds 0 and 3 lack meaningful geometry variation");
-            require(meaningfulDifferences(seed2, seed3) >= 2,
-                familyId + " seeds 2 and 3 lack meaningful geometry variation");
-        } catch (RuntimeException failure) {
-            if (!recordDeferredFixedLayoutFailure(familyId, failure))
-                throw failure;
+        GeneratedBoardInstance seed0Board = generate(familyId, 0);
+        GeneratedBoardInstance seed0RepeatBoard = generate(familyId, 0);
+        GeneratedBoardInstance seed2Board = generate(familyId, 2);
+        GeneratedBoardInstance seed2RepeatBoard = generate(familyId, 2);
+        GeneratedBoardInstance seed3Board = generate(familyId, 3);
+        GeneratedBoardInstance seed3RepeatBoard = generate(familyId, 3);
+        PcbBoardLayout seed0 = seed0Board.getPcbLayout();
+        PcbBoardLayout seed0Repeat = seed0RepeatBoard.getPcbLayout();
+        PcbBoardLayout seed2 = seed2Board.getPcbLayout();
+        PcbBoardLayout seed2Repeat = seed2RepeatBoard.getPcbLayout();
+        PcbBoardLayout seed3 = seed3Board.getPcbLayout();
+        PcbBoardLayout seed3Repeat = seed3RepeatBoard.getPcbLayout();
+        verifyRouteQuality(seed0, seed0Board.getBoard());
+        verifyRouteQuality(seed2, seed2Board.getBoard());
+        verifyRouteQuality(seed3, seed3Board.getBoard());
+        verifyLabels(seed0, seed0Board.getBoard());
+        verifyLabels(seed2, seed2Board.getBoard());
+        verifyLabels(seed3, seed3Board.getBoard());
+        if ("PARALLEL_DUAL_INDICATOR".equals(familyId)) {
+            verifyMultiPadNets(seed0, seed0Board.getBoard());
+            verifyMultiPadNets(seed2, seed2Board.getBoard());
+            verifyMultiPadNets(seed3, seed3Board.getBoard());
         }
-    }
-
-    /**
-     * R-2 keeps the strict geometry contract authoritative.  These are the
-     * authored-route failures reserved for the remaining R-2/R-5/R-6 slices;
-     * only their exact fixed signatures are deferred here. All other layout
-     * failures, including the completed NMOS frontier, remain hard verifier
-     * failures.
-     */
-    private static boolean recordDeferredFixedLayoutFailure(String familyId,
-            RuntimeException failure) {
-        String message = failure.getMessage();
-        String evidence = null;
-        if ("NPN_LOW_SIDE_SWITCH".equals(familyId) && message != null &&
-                message.indexOf("PCB trace passes through component routing courtyard: " +
-                    "LOAD_SUPPLY / RLOAD") >= 0)
-            evidence = "DEFERRED R-6 fixed NPN layout: " + message;
-        else if ("NPN_LOW_SIDE_SWITCH".equals(familyId) && message != null &&
-                message.indexOf("PCB trace segment has zero length: 1050,230") >= 0)
-            evidence = "DEFERRED R-2 fixed NPN layout: " + message;
-        if (evidence == null)
-            return false;
-        CirSim.console(evidence);
-        System.out.println(evidence);
-        return true;
+        if ("NPN_LOW_SIDE_SWITCH".equals(familyId))
+            verifyNpnFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
+        if ("NMOS_LOW_SIDE_SWITCH".equals(familyId)) {
+            verifyNmosFootprint(seed0, seed0Board.getBoard(), seed0Board.getSeed());
+            verifyNmosControlRouting(seed0, seed0Board.getBoard());
+        }
+        if ("LED_INDICATOR".equals(familyId))
+            verifySeedThreeLedEndpointRegression(seed3);
+        require(seed0.geometryFingerprint().equals(seed0Repeat.geometryFingerprint()),
+            familyId + " seed 0 is not reproducible");
+        require(seed2.geometryFingerprint().equals(seed2Repeat.geometryFingerprint()),
+            familyId + " seed 2 is not reproducible");
+        require(seed3.geometryFingerprint().equals(seed3Repeat.geometryFingerprint()),
+            familyId + " seed 3 is not reproducible");
+        require(meaningfulDifferences(seed0, seed2) >= 2,
+            familyId + " seeds 0 and 2 lack meaningful geometry variation");
+        require(meaningfulDifferences(seed0, seed3) >= 2,
+            familyId + " seeds 0 and 3 lack meaningful geometry variation");
+        require(meaningfulDifferences(seed2, seed3) >= 2,
+            familyId + " seeds 2 and 3 lack meaningful geometry variation");
     }
 
     private static void verifyRouteQuality(PcbBoardLayout layout, TroubleshootBoard board) {

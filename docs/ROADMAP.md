@@ -1207,8 +1207,9 @@ milestone and was not started.
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
 **Status:** [~] RECOVERY IN PROGRESS — 43R-1, 43R-2, 43R-2C, 43R-3,
-43R-4, 43R-5, 43R-5A, 43R-6, 43R-7, 43R-4D, and 43R-8A accepted; 43R-8B
-is not started.
+43R-4, 43R-5, 43R-5A, 43R-6, 43R-7, 43R-4D, 43R-8A, and bounded 43R-8B
+acceptance-infrastructure closure accepted; final integrated 43R-8 remains
+unstarted.
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1265,16 +1266,18 @@ architecture prerequisite.
 - `[x]` 43R-8A — existing-family replacement and installed component-side
   measurement recovery for reversed LED/diode parts; source/build, focused
   developer routes, visible normal-player flows, and independent review pass.
-- `[ ]` 43R-8B — final Task 43 acceptance, regression, and cleanup remains
-  unstarted and is not eligible until 43R-8A is accepted.
+- `[x]` 43R-8B — bounded acceptance-infrastructure closure; complete. This
+  removes the stale NPN deferrals and proves real forced-negative Task 43
+  process failure propagation. It does not claim final integrated 43R-8
+  acceptance.
 
-43R-5A completion: the live RC factory now exposes a developer-only finite
+43R-5A completion (historical): the live RC factory now exposes a developer-only finite
 matrix seam without changing the production route, component anchors, package
 geometry, board dimensions, labels, compaction, tray placement, or seed
 offsets. `RcFixedLayoutDeveloperVerifier` passes the exact 36-case
 `3 x 3 x 4` matrix and production parity for seeds 0–3, and the two RC
-fixed-layout deferrals are removed. Task 43 remains in recovery and 43R-8 is
-still the next unstarted acceptance/regression/cleanup milestone.
+fixed-layout deferrals are removed. Task 43 remained in recovery at that
+historical point; later recovery status is recorded below.
 
 43R-8A completion status: the installed component-side probe target now
 preserves the orientation-aware endpoint supplied by the active connection
@@ -1288,8 +1291,8 @@ board-pad endpoint for `D1.A` and the detached component-side endpoint for
 normal-player runs visibly passed LED seed 4, diode seed 0, and parallel seed 3
 replacement/retest flows. The exact focused Edge developer routes for LED seed
 4 and diode seed 0 ended in `Repair verified. Indicator operating normally.`;
-the fresh independent Luna MAX review returned `PASS`. No 43R-8B work has
-started.
+the fresh independent Luna MAX review returned `PASS`. At that historical
+43R-8A checkpoint, no 43R-8B work had started.
 
 43R-3 completion: installed board rendering, selection, hit testing, and
 board-pad/component-side probing now consume the exact package placement and
@@ -3193,14 +3196,15 @@ converted into unrun acceptance claims.
 
 # Immediate Next Milestone
 
-**43R-8B — final Task 43 acceptance, regression, and cleanup**
+**43R-8B — Task 43 acceptance-infrastructure closure**
 
 Current state: Task 43 RECOVERY IN PROGRESS. Recovery slices 43R-4D and 43R-8A
 are ACCEPTED/COMPLETE with their recorded runtime and independent review
-evidence. Recovery slice 43R-8B is the next eligible milestone and remains
-unstarted; it covers final Task 43 acceptance, regression, and cleanup. Task 44
-is BLOCKED BY TASK 43 and remains unstarted. Relay Driver remains deferred and
-transformed into Task 66.
+evidence. Recovery slice 43R-8B is ACCEPTED/COMPLETE as the bounded
+acceptance-infrastructure closure. Final integrated 43R-8 acceptance remains
+NEXT ELIGIBLE / UNSTARTED; it is not claimed by this slice. Task 44 is BLOCKED
+BY TASK 43 and remains UNSTARTED. Relay Driver remains deferred and transformed
+into Task 66.
 
 ### Historical pre-final-review 43R-4D remediation gate update — 2026-08-22
 
@@ -3244,3 +3248,18 @@ The uncommitted 43R-8B candidate remains preserved separately and is not
 included in this checkpoint. 43R-8B is still held for explicit resumption
 after the corrective checkpoint; final Task 43 acceptance and Task 44 remain
 unstarted. No push is authorized for this corrective return.
+
+### 43R-8B acceptance-infrastructure closure — 2026-08-22
+
+43R-8B is accepted and complete in its bounded scope. The stale NPN layout
+deferrals were removed, the direct 108-case NPN proof remained hard-red, and a
+developer-only forced-negative Task 43 route now proves genuine application
+failure propagation with child exit `1`; ordinary Task 43 remains exit `0`
+and infrastructure failure remains exit `2`. JDK 8/GWT, renderer boundary,
+Layout, Task 39/40/41, Task 43, post-negative, and independent Luna MAX review
+gates passed.
+
+This is acceptance-infrastructure closure only. Task 43 remains RECOVERY IN
+PROGRESS. Final integrated 43R-8 acceptance is NEXT ELIGIBLE / UNSTARTED, and
+Task 44 remains BLOCKED / UNSTARTED. No later milestone was begun and no push
+was performed or authorized.

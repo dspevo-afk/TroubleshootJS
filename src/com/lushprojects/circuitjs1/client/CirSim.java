@@ -390,6 +390,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask40Verification;
 	boolean troubleshootTask41Verification;
 	boolean troubleshootTask43Verification;
+	boolean troubleshootTask43ForcedFailure;
 	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
@@ -480,6 +481,8 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootTask40Verification = qp.getBooleanValue("tsjVerifyTask40", false);
 	    troubleshootTask41Verification = qp.getBooleanValue("tsjVerifyTask41", false);
 	    troubleshootTask43Verification = qp.getBooleanValue("tsjVerifyTask43", false);
+	    troubleshootTask43ForcedFailure = troubleshootTask43Verification &&
+		qp.getBooleanValue("tsjTask43ForcedFailure", false);
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
@@ -4707,6 +4710,10 @@ MouseOutHandler, MouseWheelHandler {
 		generatedBoardInstance.getSeed() + ": " + e.getMessage(), e);
 	}
     }
+
+	boolean isTask43ForcedFailureActive() {
+	return troubleshootTask43ForcedFailure;
+	}
 
     private static native void publishBrowserVerificationResult(String result) /*-{
 	$doc.documentElement.setAttribute("data-tsj-verification", result);

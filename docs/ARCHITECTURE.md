@@ -1788,7 +1788,7 @@ normal-player power, selection, lead-lift, and reconnect transitions also
 passed with no Browser error logs. 43R-8 is next eligible and remains
 unstarted, and Task 44 remains blocked and unstarted.
 
-## Task 43R-3 corrective return — lifted component endpoint identity
+## Historical Task 43R-3 corrective return — lifted component endpoint identity
 
 The 43R-3 corrective return closes a verifier boundary defect exposed before
 43R-8B. A mounted physical part owns stable `PhysicalPartTerminal` and
@@ -1812,4 +1812,30 @@ lifecycle behavior changed.
 The corrective source/build, renderer-boundary, complete Task 43,
 Task 39/40/41 regression routes, and independent read-only Luna MAX review
 passed. The 43R-8B candidate remains preserved separately and is not part of
-this correction; 43R-8B and Task 44 remain unstarted.
+this correction. At that historical checkpoint, 43R-8B and Task 44 remained
+unstarted; the later 43R-8B closure is documented below.
+
+## Task 43R-8B — acceptance-infrastructure closure
+
+43R-8B closes two acceptance-infrastructure gaps without changing the
+electrical, lifecycle, or player-facing architecture. The general layout
+verifier no longer swallows the two superseded NPN fixed-layout failures as
+`DEFERRED`; current NPN geometry is a hard failure, while the independent
+`NpnFixedLayoutDeveloperVerifier` remains the authoritative finite 108-case
+proof.
+
+The browser verifier includes a developer-only forced-negative Task 43 route
+used to prove process integrity. After the real Task 43 aggregate runs, the
+route deliberately publishes the normal
+`FAIL:task43-forced-negative-canary` DOM state. The shell accepts only the
+anchored, deliberate CDP diagnostic associated with that exact state, reports
+`EXPECTED FAILURE`, and exits nonzero. Unexpected console or application
+failures remain rejected, infrastructure failures remain distinct, and the
+forced query is not a normal-player path or persistent board state. Ordinary
+Task 43 remains a `PASS` route with exit `0`.
+
+The acceptance-infrastructure build, renderer boundary, layout, NPN matrix,
+Task 39/40/41, ordinary Task 43, forced-negative, post-negative, and
+independent Luna MAX review gates passed. This section does not mark final
+integrated 43R-8 acceptance complete; that remains the next eligible recovery
+slice, and Task 44 remains blocked and unstarted.
