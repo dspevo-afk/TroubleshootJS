@@ -41,8 +41,19 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
-$CdpReceiveTimeoutMilliseconds = 30000
+# Allow synchronous developer-proof gaps to exceed one CDP receive while the route deadline remains authoritative.
+$CdpReceiveTimeoutMilliseconds = 60000
 $CdpSendTimeoutMilliseconds = 5000
+$script:CdpRouteDeadline = [DateTime]::MinValue
+
+function resolveCdpRouteDeadline([DateTime]$deadline) {
+    $activeDeadline = $script:CdpRouteDeadline
+    if ($activeDeadline -eq [DateTime]::MinValue) { return $deadline }
+    if ($deadline -eq [DateTime]::MinValue -or $activeDeadline -lt $deadline) {
+        return $activeDeadline
+    }
+    return $deadline
+}
 
 function sendCdp($socket, [int]$id, [string]$method, $parameters) {
     $message = @{ id = $id; method = $method; params = $parameters } | ConvertTo-Json -Compress -Depth 8
@@ -145,12 +156,20 @@ function cleanupBrowser($browser, $socket, [string]$profile) {
     }
 }
 
-function receiveCdp($socket, [int]$wantedId, [ref]$failures) {
+function receiveCdp($socket, [int]$wantedId, [ref]$failures,
+        [DateTime]$deadline = [DateTime]::MinValue) {
+    $deadline = resolveCdpRouteDeadline $deadline
     while ($true) {
         $stream = New-Object IO.MemoryStream
         do {
             $buffer = New-Object byte[] 65536
-            $receiveTimeout = New-Object Threading.CancellationTokenSource $CdpReceiveTimeoutMilliseconds
+            $receiveTimeoutMilliseconds = $CdpReceiveTimeoutMilliseconds
+            if ($deadline -ne [DateTime]::MinValue) {
+                $remainingMilliseconds = ($deadline - [DateTime]::UtcNow).TotalMilliseconds
+                $receiveTimeoutMilliseconds = [int][Math]::Max(0, [Math]::Min(
+                    $CdpReceiveTimeoutMilliseconds, [Math]::Floor($remainingMilliseconds)))
+            }
+            $receiveTimeout = New-Object Threading.CancellationTokenSource $receiveTimeoutMilliseconds
             try {
                 $result = $socket.ReceiveAsync((New-Object ArraySegment[byte] -ArgumentList (,$buffer)),
                     $receiveTimeout.Token).GetAwaiter().GetResult()
@@ -187,11 +206,12 @@ function receiveCdp($socket, [int]$wantedId, [ref]$failures) {
     }
 }
 
-function invokeCdp($socket, [ref]$nextId, [string]$method, $parameters, [ref]$failures) {
+function invokeCdp($socket, [ref]$nextId, [string]$method, $parameters, [ref]$failures,
+        [DateTime]$deadline = [DateTime]::MinValue) {
     $id = $nextId.Value
     $nextId.Value++
     [void](sendCdp $socket $id $method $parameters)
-    return receiveCdp $socket $id $failures
+    return receiveCdp $socket $id $failures (resolveCdpRouteDeadline $deadline)
 }
 
 function navigateAndWaitForDocument($socket, [ref]$nextId, [string]$url,
@@ -199,10 +219,10 @@ function navigateAndWaitForDocument($socket, [ref]$nextId, [string]$url,
     $marker = [Guid]::NewGuid().ToString('N')
     $separator = if ($url.IndexOf('?') -ge 0) { '&' } else { '?' }
     $navigationUrl = $url + $separator + 'tsjVerifierNavigation=' + $marker
-    [void](invokeCdp $socket $nextId 'Page.navigate' @{ url = $navigationUrl } $failures)
+    [void](invokeCdp $socket $nextId 'Page.navigate' @{ url = $navigationUrl } $failures $deadline)
     $escapedMarker = $marker.Replace("'", "\\'")
     waitForCdp $socket $nextId "location.href.includes('$escapedMarker')&&document.readyState==='complete'" $deadline $failures 'synchronized page navigation'
-    return evaluateCdp $socket $nextId 'performance.timeOrigin' $failures
+    return evaluateCdp $socket $nextId 'performance.timeOrigin' $failures $deadline
 }
 
 function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
@@ -243,8 +263,9 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             [Threading.CancellationToken]::None).GetAwaiter().GetResult()
         $nextId = 1
         $failures = @()
-        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures))
-        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures))
+        $script:CdpRouteDeadline = $deadline
+        [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures) $deadline)
+        [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures) $deadline)
         [void](navigateAndWaitForDocument $socket ([ref]$nextId) $url $deadline ([ref]$failures))
         if ($expectedComplaint) {
             $escapedComplaint = $expectedComplaint.Replace("'", "\\'")
@@ -254,7 +275,7 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
         do {
             $response = invokeCdp $socket ([ref]$nextId) 'Runtime.evaluate' @{
                 expression = "document.documentElement.getAttribute('data-tsj-verification') || ''"; returnByValue = $true
-            } ([ref]$failures)
+            } ([ref]$failures) $deadline
             $verificationResult = [string]$response.result.result.value
             if ($verificationResult.StartsWith('FAIL:')) {
                 if ($expectedFailure -and $verificationResult -eq $expectedFailure) {
@@ -271,7 +292,7 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             Start-Sleep -Milliseconds 250
         } while ([DateTime]::UtcNow -lt $deadline)
         if ($expectedFailure -and -not $expectedFailureObserved) {
-            $diagnostic = evaluateCdp $socket ([ref]$nextId) "({status:document.documentElement.getAttribute('data-tsj-verification')||'',body:(document.body&&document.body.innerText||'').slice(-900)})" ([ref]$failures)
+            $diagnostic = evaluateCdp $socket ([ref]$nextId) "({status:document.documentElement.getAttribute('data-tsj-verification')||'',body:(document.body&&document.body.innerText||'').slice(-900)})" ([ref]$failures) $deadline
             Write-Host ("VERIFIER DIAGNOSTIC status=$($diagnostic.status) body=$($diagnostic.body.Replace("`n", ' | '))")
             if ($failures.Count -gt 0) { Write-Host ("VERIFIER CDP FAILURES: " + ($failures -join '; ')) }
             throw "timed out waiting for expected application failure '$expectedFailure'"
@@ -285,29 +306,29 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             }
         }
         if (-not $expectedFailure -and $verificationResult -ne $expected) {
-            $diagnostic = evaluateCdp $socket ([ref]$nextId) "({status:document.documentElement.getAttribute('data-tsj-verification')||'',body:(document.body&&document.body.innerText||'').slice(-900)})" ([ref]$failures)
+            $diagnostic = evaluateCdp $socket ([ref]$nextId) "({status:document.documentElement.getAttribute('data-tsj-verification')||'',body:(document.body&&document.body.innerText||'').slice(-900)})" ([ref]$failures) $deadline
             Write-Host ("VERIFIER DIAGNOSTIC status=$($diagnostic.status) body=$($diagnostic.body.Replace("`n", ' | '))")
             if ($failures.Count -gt 0) { Write-Host ("VERIFIER CDP FAILURES: " + ($failures -join '; ')) }
             throw "timed out waiting for '$expected'"
         }
         if ($name -eq 'quick-play selector/session') {
-            $quickPlayReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-quick-play-report') || ''" ([ref]$failures)
+            $quickPlayReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-quick-play-report') || ''" ([ref]$failures) $deadline
             if ($quickPlayReport -ne 'unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated') {
                 throw "Quick Play focused report was incomplete: $quickPlayReport"
             }
         }
         if ($name -eq 'seed=3 stress-damage') {
-            $stressReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-stress-report') || ''" ([ref]$failures)
+            $stressReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-stress-report') || ''" ([ref]$failures) $deadline
             if (-not $stressReport) { throw 'stress verifier did not publish its developer electrical report' }
             Write-Host "TASK34 ELECTRICAL REPORT: $stressReport"
         }
         if ($name -like 'npn-*') {
-            $npnElectricalReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-npn-electrical-report') || ''" ([ref]$failures)
+            $npnElectricalReport = evaluateCdp $socket ([ref]$nextId) "document.documentElement.getAttribute('data-tsj-npn-electrical-report') || ''" ([ref]$failures) $deadline
             if (-not $npnElectricalReport) { throw 'NPN verifier did not publish its developer electrical report' }
             Write-Host "NPN ELECTRICAL REPORT: $npnElectricalReport"
         }
         Start-Sleep -Milliseconds 100
-        [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures))
+        [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures) $deadline)
         if ($EvidenceDirectory -and $name -match '^seed=(0|2) parallel$') {
             [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
             captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory ("parallel-seed-" + $Matches[1] + ".png")) ([ref]$failures)
@@ -333,14 +354,17 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
         Write-Host "FAIL $name - $($_.Exception.Message)"
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
     return $success
 }
 
-function evaluateCdp($socket, [ref]$nextId, [string]$expression, [ref]$failures) {
+function evaluateCdp($socket, [ref]$nextId, [string]$expression, [ref]$failures,
+        [DateTime]$deadline = [DateTime]::MinValue) {
+    $deadline = resolveCdpRouteDeadline $deadline
     $response = invokeCdp $socket $nextId 'Runtime.evaluate' @{
         expression = $expression; returnByValue = $true
-    } $failures
+    } $failures $deadline
     if ($response.result.PSObject.Properties['exceptionDetails']) {
         throw $response.result.exceptionDetails.text
     }
@@ -349,8 +373,9 @@ function evaluateCdp($socket, [ref]$nextId, [string]$expression, [ref]$failures)
 
 function waitForCdp($socket, [ref]$nextId, [string]$expression, [DateTime]$deadline,
         [ref]$failures, [string]$description) {
+    $deadline = resolveCdpRouteDeadline $deadline
     do {
-        if (evaluateCdp $socket $nextId $expression $failures) { return }
+        if (evaluateCdp $socket $nextId $expression $failures $deadline) { return }
         Start-Sleep -Milliseconds 200
     } while ([DateTime]::UtcNow -lt $deadline)
     throw "timed out waiting for $description"
@@ -608,6 +633,7 @@ function verifyQuickPlayNormalPlayer([string]$url, [int]$debugPort, [bool]$finis
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -655,6 +681,7 @@ function verifyQuickPlayNormalPlayer([string]$url, [int]$debugPort, [bool]$finis
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
@@ -666,6 +693,7 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -764,6 +792,7 @@ function verifyNormalPlayer([string]$url, [int]$debugPort) {
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
@@ -775,6 +804,7 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -898,6 +928,7 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
@@ -909,6 +940,7 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -1027,6 +1059,7 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
@@ -1038,6 +1071,7 @@ function verifyWrongRepairNormalPlayer([string]$url, [int]$debugPort) {
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -1127,6 +1161,7 @@ function verifyWrongRepairNormalPlayer([string]$url, [int]$debugPort) {
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
@@ -1138,6 +1173,7 @@ function verifyStressDamageNormalPlayer([string]$url, [int]$debugPort) {
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -1224,6 +1260,7 @@ function verifyStressDamageNormalPlayer([string]$url, [int]$debugPort) {
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
@@ -1235,6 +1272,7 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -1362,6 +1400,7 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
@@ -1373,6 +1412,7 @@ function verifyRcNormalPlayer([string]$url, [int]$debugPort) {
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -1435,6 +1475,7 @@ function verifyRcNormalPlayer([string]$url, [int]$debugPort) {
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
@@ -1447,6 +1488,7 @@ function verifyTask39NormalPlayer([string]$url, [int]$debugPort,
     $socket = $null
     try {
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $script:CdpRouteDeadline = $deadline
         do {
             Start-Sleep -Milliseconds 200
             try {
@@ -1495,6 +1537,7 @@ function verifyTask39NormalPlayer([string]$url, [int]$debugPort,
         return $false
     } finally {
         cleanupBrowser $browser $socket $profile
+        $script:CdpRouteDeadline = [DateTime]::MinValue
     }
 }
 
