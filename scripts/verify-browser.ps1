@@ -33,6 +33,7 @@ param(
     [switch]$Task41,
     [switch]$Task43,
     [switch]$Task43ForcedNegative,
+    [switch]$Task43Integrated,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence
@@ -275,6 +276,14 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
             if ($failures.Count -gt 0) { Write-Host ("VERIFIER CDP FAILURES: " + ($failures -join '; ')) }
             throw "timed out waiting for expected application failure '$expectedFailure'"
         }
+        if ($expectedFailureObserved) {
+            $expectedFailureDiagnostics = @($failures | Where-Object {
+                isExpectedTask43ForcedFailureDiagnostic ([string]$_) $expectedFailure
+            })
+            if ($expectedFailureDiagnostics.Count -eq 0) {
+                throw "expected application failure '$expectedFailure' had no anchored Java console diagnostic"
+            }
+        }
         if (-not $expectedFailure -and $verificationResult -ne $expected) {
             $diagnostic = evaluateCdp $socket ([ref]$nextId) "({status:document.documentElement.getAttribute('data-tsj-verification')||'',body:(document.body&&document.body.innerText||'').slice(-900)})" ([ref]$failures)
             Write-Host ("VERIFIER DIAGNOSTIC status=$($diagnostic.status) body=$($diagnostic.body.Replace("`n", ' | '))")
@@ -314,7 +323,7 @@ function verifyRoute([string]$name, [string]$url, [string]$expected, [int]$debug
         $socket = $null
         $browser = $null
         if ($expectedFailureObserved) {
-            Write-Host "EXPECTED FAILURE $name - $expectedFailure"
+            Write-Host "EXPECTED FAILURE $name - $expectedFailure (anchored Java console diagnostic observed)"
         } else {
             Write-Host "PASS $name"
         }
@@ -1489,6 +1498,86 @@ function verifyTask39NormalPlayer([string]$url, [int]$debugPort,
     }
 }
 
+function getIntegratedPowerShellExecutable() {
+    $commandName = if ($PSVersionTable.PSEdition -eq 'Core') { 'pwsh.exe' } else {
+        'powershell.exe'
+    }
+    $command = Get-Command $commandName -ErrorAction Stop
+    $path = [string]$command.Path
+    if (-not $path) { $path = [string]$command.Source }
+    if (-not $path) { throw "Could not resolve integrated child host '$commandName'" }
+    return $path
+}
+
+function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
+        [int]$expectedExit = 0, [string]$childBrowserPath = '') {
+    if (-not $childBrowserPath) { $childBrowserPath = $BrowserPath }
+    try {
+        $hostExecutable = getIntegratedPowerShellExecutable
+    } catch {
+        Write-Host "FAIL integrated child $label - verifier infrastructure: $($_.Exception.Message)"
+        exit 2
+    }
+    $quotePowerShellArgument = {
+        param([string]$value)
+        if ($null -eq $value) { return "''" }
+        return "'" + $value.Replace("'", "''") + "'"
+    }
+    $commandParts = @('&', (& $quotePowerShellArgument $PSCommandPath),
+        '-BaseUrl', (& $quotePowerShellArgument $BaseUrl),
+        '-TimeoutSeconds', (& $quotePowerShellArgument ([string]$TimeoutSeconds)),
+        '-BrowserPath', (& $quotePowerShellArgument $childBrowserPath))
+    for ($argumentIndex = 0; $argumentIndex -lt $routeArguments.Count; $argumentIndex++) {
+        $routeArgument = [string]$routeArguments[$argumentIndex]
+        if ($routeArgument -eq '-Seeds') {
+            if ($argumentIndex + 1 -ge $routeArguments.Count) {
+                throw "Integrated child $label has -Seeds without a value"
+            }
+            $argumentIndex++
+            $seedExpression = [string]$routeArguments[$argumentIndex]
+            if ($seedExpression -notmatch '^\d+(,\d+)*$') {
+                throw "Integrated child $label has unsupported -Seeds expression '$seedExpression'"
+            }
+            # Keep numeric comma lists as PowerShell expressions so [int[]]$Seeds
+            # receives every value instead of one string that coerces to 23.
+            $commandParts += @('-Seeds', $seedExpression)
+        } elseif ($routeArgument.StartsWith('-')) {
+            $commandParts += $routeArgument
+        } else {
+            $commandParts += (& $quotePowerShellArgument $routeArgument)
+        }
+    }
+    $childArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command',
+        ($commandParts -join ' '))
+    Write-Host ("INTEGRATED CHILD START $label expected-exit=$expectedExit")
+    try {
+        $childOutput = @(& $hostExecutable @childArguments 6>&1 2>&1)
+        $childExit = [int]$LASTEXITCODE
+    } catch {
+        Write-Host "FAIL integrated child $label - verifier infrastructure: $($_.Exception.Message)"
+        exit 2
+    }
+    foreach ($line in $childOutput) { Write-Host ([string]$line) }
+    if ($expectedExit -eq 0 -and $childExit -eq 0) {
+        $printedFailures = @($childOutput | Where-Object {
+            ([string]$_) -match '(?i)(^|\s)FAIL(?::|\s)'
+        })
+        if ($printedFailures.Count -gt 0) {
+            Write-Host "FAIL integrated child $label - child printed FAIL but returned 0"
+            exit 1
+        }
+    }
+    if ($childExit -ne $expectedExit) {
+        Write-Host "FAIL integrated child $label - expected-exit=$expectedExit actual-exit=$childExit"
+        # Preserve the child's application (1) versus infrastructure (2)
+        # contract.  A zero exit here is never accepted for an expected
+        # failure, even if the child printed a failure-looking line.
+        if ($childExit -eq 0) { exit 1 }
+        exit $childExit
+    }
+    Write-Host ("PASS integrated child $label exit=$childExit")
+}
+
 $npnValidationSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
     @(0, 1, 2, 3)
 }
@@ -1499,11 +1588,56 @@ $npnNormalPlayerSeeds = if ($PSBoundParameters.ContainsKey('Seeds')) { $Seeds } 
     @(0, 1, 2)
 }
 if (-not (Test-Path $BrowserPath -PathType Leaf)) {
-    if ($Task43ForcedNegative) {
-        Write-Host "FAIL task43 forced-negative canary - verifier infrastructure: Browser not found: $BrowserPath"
-        exit 2
+    $missingBrowserRoute = if ($Task43ForcedNegative) { 'task43 forced-negative canary' }
+        elseif ($Task43Integrated) { 'task43 integrated' }
+        elseif ($Task43) { 'task43' }
+        else { 'browser verifier' }
+    Write-Host "FAIL $missingBrowserRoute - verifier infrastructure: Browser not found: $BrowserPath"
+    exit 2
+}
+if ($Task43Integrated) {
+    # This is the scripted regression authority, not built-in Browser evidence.
+    # Each positive lane is a separate child process and must return 0.  The
+    # final three children prove the process contract: a real forced negative
+    # returns 1 only with its exact DOM marker plus anchored Java diagnostic;
+    # missing-browser infrastructure returns 2; ordinary Task43 then returns 0.
+    $integratedRoutes = @(
+        @{ Label = '-Task43'; Args = @('-Task43') },
+        @{ Label = '-Layout -PlayerSeed 3'; Args = @('-Layout', '-PlayerSeed', '3') },
+        @{ Label = '-Task39'; Args = @('-Task39') },
+        @{ Label = '-Task40'; Args = @('-Task40') },
+        @{ Label = '-Task41'; Args = @('-Task41') },
+        @{ Label = '-Rc -Seeds 0,2,3'; Args = @('-Rc', '-Seeds', '0,2,3') },
+        @{ Label = '-StoredEnergy -Seeds 0,2,3'; Args = @('-StoredEnergy', '-Seeds', '0,2,3') },
+        @{ Label = '-Rc -StoredEnergy -Seeds 3'; Args = @('-Rc', '-StoredEnergy', '-Seeds', '3') },
+        @{ Label = '-Npn -Seeds 0,1,2,3'; Args = @('-Npn', '-Seeds', '0,1,2,3') },
+        @{ Label = '-NpnNatural'; Args = @('-NpnNatural') },
+        @{ Label = '-Nmos -Seeds 0,1,2'; Args = @('-Nmos', '-Seeds', '0,1,2') },
+        @{ Label = '-NmosNatural'; Args = @('-NmosNatural') },
+        @{ Label = '-LedParts -Seeds 0,2,3,4'; Args = @('-LedParts', '-Seeds', '0,2,3,4') },
+        @{ Label = '-Diode -Seeds 0,2,3'; Args = @('-Diode', '-Seeds', '0,2,3') },
+        @{ Label = '-DiodeShort -Seeds 0,2,3'; Args = @('-DiodeShort', '-Seeds', '0,2,3') },
+        @{ Label = '-Parallel -Seeds 0,2,3'; Args = @('-Parallel', '-Seeds', '0,2,3') },
+        @{ Label = 'legacy default -Seeds 0,2,3'; Args = @('-Seeds', '0,2,3') },
+        @{ Label = '-WrongRepair'; Args = @('-WrongRepair') },
+        @{ Label = '-QuickPlay'; Args = @('-QuickPlay') },
+        @{ Label = '-NormalPlayer -PlayerSeed 3'; Args = @('-NormalPlayer', '-PlayerSeed', '3') },
+        @{ Label = '-WrongRepairNormalPlayer'; Args = @('-WrongRepairNormalPlayer') },
+        @{ Label = '-LedNormalPlayer -PlayerSeed 4'; Args = @('-LedNormalPlayer', '-PlayerSeed', '4') },
+        @{ Label = '-DiodeNormalPlayer -PlayerSeed 0'; Args = @('-DiodeNormalPlayer', '-PlayerSeed', '0') },
+        @{ Label = '-ParallelNormalPlayer'; Args = @('-ParallelNormalPlayer') },
+        @{ Label = '-RcNormalPlayer -PlayerSeed 0'; Args = @('-RcNormalPlayer', '-PlayerSeed', '0') }
+    )
+    foreach ($integratedRoute in $integratedRoutes) {
+        invokeIntegratedChild $integratedRoute.Label $integratedRoute.Args 0
     }
-    throw "Browser not found: $BrowserPath"
+    invokeIntegratedChild '-Task43ForcedNegative (expected exit 1)' @('-Task43ForcedNegative') 1
+    $missingBrowserPath = Join-Path $env:TEMP (
+        'tsj-browser-missing-' + [Guid]::NewGuid().ToString('N') + '.exe')
+    invokeIntegratedChild '-Task43 missing BrowserPath (expected exit 2)' @('-Task43') 2 $missingBrowserPath
+    invokeIntegratedChild '-Task43 post-process-contract' @('-Task43') 0
+    Write-Host 'Integrated Task 43 browser/regression orchestration passed.'
+    exit 0
 }
 if ($QuickPlay) {
     $selectorPassed = verifyRoute 'quick-play selector/session' "$BaseUrl/circuitjs.html?tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestSeed=3" 'PASS:quick-play' 9495 | Select-Object -Last 1

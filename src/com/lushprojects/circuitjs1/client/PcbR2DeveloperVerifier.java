@@ -187,6 +187,28 @@ final class PcbR2DeveloperVerifier {
             "Unrelated PCB pads share copper");
         expectFailure("insufficient clearance", buildNearClearanceFixture(),
             "PCB traces violate copper clearance");
+        expectFailure("wrong escape direction", buildRouteQualityFixture(
+            250, 350, 300, 350, 300, 250, 1050, 250, 1050, 350, 1100, 350),
+            "PCB trace passes through component routing courtyard");
+        expectFailure("zero-length/consecutive duplicate segment", buildRouteQualityFixture(
+            250, 350, 200, 350, 200, 250, 1050, 250, 1050, 250, 1050, 350, 1100, 350),
+            "PCB trace segment has zero length");
+        expectFailure("repeated/overlapping route segment", buildRouteQualityFixture(
+            250, 350, 200, 350, 200, 250, 1000, 250, 900, 250, 1050, 250,
+            1050, 350, 1100, 350),
+            "PCB trace has repeated or overlapping segments");
+        expectFailure("self-intersecting route", buildRouteQualityFixture(
+            250, 350, 200, 350, 200, 250, 1050, 250, 1050, 300, 600, 300,
+            600, 200, 900, 200, 900, 350, 1050, 350, 1100, 350),
+            "PCB trace self-intersects");
+        expectFailure("component-body overlap", buildBodyOverlapFixture(),
+            "PCB component bodies overlap");
+        expectFailure("silkscreen/body overlap", buildSilkscreenOverlapFixture("BODY"),
+            "Silkscreen label overlaps component");
+        expectFailure("silkscreen/pad overlap", buildSilkscreenOverlapFixture("PAD"),
+            "Silkscreen label overlaps pad");
+        expectFailure("silkscreen/copper overlap", buildSilkscreenOverlapFixture("COPPER"),
+            "Silkscreen label overlaps copper");
 
         expectFailure("body outside", buildSurfaceOutsideFixture("BODY"),
             "PCB component R1 leaves board outline");
@@ -529,6 +551,65 @@ final class PcbR2DeveloperVerifier {
         addLabel(layout, "component:C", "C", 250, 480, 18, 14, null);
         addLabel(layout, "component:D", "D", 750, 480, 18, 14, null);
         return new Fixture(board, layout);
+    }
+
+    /** Uses two distant single-pad packages so route-quality failures stay below the detour gate. */
+    private static Fixture buildRouteQualityFixture(int... points) {
+        TroubleshootBoard board = new TroubleshootBoard("TASK43_R2_ROUTE_QUALITY");
+        board.addNet(new BoardNet("ROUTE_QUALITY_NET"));
+        PhysicalPackage physicalPackage = singlePadPackage("TASK43_R2_ROUTE_QUALITY_PACKAGE");
+        addSinglePadBoardComponent(board, "A", physicalPackage, "ROUTE_QUALITY_NET");
+        addSinglePadBoardComponent(board, "B", physicalPackage, "ROUTE_QUALITY_NET");
+        board.validate();
+
+        PcbBoardLayout layout = new PcbBoardLayout(1600, 700,
+            new Rectangle(100, 100, 1300, 500), new Rectangle(1430, 100, 120, 200));
+        addSinglePadFootprint(layout, board.getComponent("A"), 220, 300);
+        addSinglePadFootprint(layout, board.getComponent("B"), 1070, 300);
+        addTrace(layout, "ROUTE_QUALITY_NET", "A.1", "B.1", points);
+        addLabel(layout, "board-title", "R2 ROUTE QUALITY", 120, 120, 140, 14, null);
+        addLabel(layout, "component:A", "A", 290, 410, 18, 14, null);
+        addLabel(layout, "component:B", "B", 1090, 410, 18, 14, null);
+        return new Fixture(board, layout);
+    }
+
+    private static Fixture buildBodyOverlapFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("TASK43_R2_BODY_OVERLAP");
+        board.addNet(new BoardNet("BODY_OVERLAP_NET"));
+        PhysicalPackage physicalPackage = singlePadPackage("TASK43_R2_BODY_OVERLAP_PACKAGE");
+        addSinglePadBoardComponent(board, "A", physicalPackage, "BODY_OVERLAP_NET");
+        addSinglePadBoardComponent(board, "B", physicalPackage, "BODY_OVERLAP_NET");
+        board.validate();
+
+        PcbBoardLayout layout = new PcbBoardLayout(800, 500,
+            new Rectangle(250, 150, 400, 250), new Rectangle(680, 150, 100, 160));
+        addSinglePadFootprint(layout, board.getComponent("A"), 300, 200);
+        addSinglePadFootprint(layout, board.getComponent("B"), 340, 200);
+        addTrace(layout, "BODY_OVERLAP_NET", "A.1", "B.1", 330, 250, 300, 250,
+            300, 200, 400, 200, 400, 250, 370, 250);
+        addLabel(layout, "board-title", "R2 BODY OVERLAP", 270, 160, 130, 14, null);
+        addLabel(layout, "component:A", "A", 280, 300, 18, 14, null);
+        addLabel(layout, "component:B", "B", 400, 300, 18, 14, null);
+        return new Fixture(board, layout);
+    }
+
+    private static Fixture buildSilkscreenOverlapFixture(String surface) {
+        Fixture fixture = buildTwoPadFixture(false, 0);
+        if ("BODY".equals(surface)) {
+            Rectangle body = fixture.layout.getComponent("R1").getBodyBounds();
+            addLabel(fixture.layout, "overlap-body", "BODY", body.x + 5, body.y + 5,
+                20, 14, null);
+        } else if ("PAD".equals(surface)) {
+            Rectangle pad = fixture.layout.getPad("R1.1").getPadBounds();
+            addLabel(fixture.layout, "overlap-pad", "PAD", pad.x + 2, pad.y + 2,
+                20, 14, null);
+        } else if ("COPPER".equals(surface)) {
+            addLabel(fixture.layout, "overlap-copper", "COPPER", 350, 205,
+                20, 14, null);
+        } else {
+            throw new IllegalArgumentException("Unknown silkscreen overlap surface: " + surface);
+        }
+        return fixture;
     }
 
     private static Fixture buildSurfaceOutsideFixture(String surface) {
