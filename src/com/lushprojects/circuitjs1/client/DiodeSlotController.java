@@ -97,7 +97,7 @@ class DiodeSlotController implements PhysicalSlotMutationProvider {
         DiodeComponentSlot slot = capability.getSlot();
         if (slot.isEmpty())
             return false;
-        modifications.removeComponent(slot.getComponentId());
+        modifications.removeComponentDeferredRefresh(slot.getComponentId());
         slot.clear();
         finishMutation();
         return true;

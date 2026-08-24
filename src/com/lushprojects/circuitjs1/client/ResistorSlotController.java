@@ -102,7 +102,7 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
         if (slot.isEmpty())
             return false;
         PhysicalResistorPart part = slot.getInstalledPart();
-        modifications.removeComponent(slot.getComponentId());
+        modifications.removeComponentDeferredRefresh(slot.getComponentId());
         slot.clear();
         finishMutation();
         return true;

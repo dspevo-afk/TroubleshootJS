@@ -24,12 +24,20 @@ class BoardModificationController {
     }
 
     boolean removeComponent(String componentId) {
+        return removeComponent(componentId, true);
+    }
+
+    boolean removeComponentDeferredRefresh(String componentId) {
+        return removeComponent(componentId, false);
+    }
+
+    private boolean removeComponent(String componentId, boolean refreshControls) {
         requireSafeMutation();
         boolean changed = false;
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId)) {
             changed |= setConnection(binding, false);
         }
-        finishMutation(changed);
+        finishMutation(changed, refreshControls);
         return changed;
     }
 
@@ -151,12 +159,17 @@ class BoardModificationController {
     }
 
     private void finishMutation(boolean changed) {
+        finishMutation(changed, true);
+    }
+
+    private void finishMutation(boolean changed, boolean refreshControls) {
         if (!changed)
             return;
         sim.needAnalyze();
         sim.requestGeneratedBoardVerification();
 	if (sim.getGeneratedChallengeController() != null)
 	    sim.getGeneratedChallengeController().invalidateCustomerRetest();
-	sim.refreshBoardModificationControls();
+	if (refreshControls)
+	    sim.refreshBoardModificationControls();
     }
 }

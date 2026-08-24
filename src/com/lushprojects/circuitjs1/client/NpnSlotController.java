@@ -95,7 +95,7 @@ final class NpnSlotController implements PhysicalSlotMutationProvider {
     public boolean removeInstalledPart() {
         requireSafeMutation();
         if (capability.getSlot().isEmpty()) return false;
-        modifications.removeComponent("Q1");
+        modifications.removeComponentDeferredRefresh("Q1");
         capability.getSlot().clear();
         finishMutation();
         return true;

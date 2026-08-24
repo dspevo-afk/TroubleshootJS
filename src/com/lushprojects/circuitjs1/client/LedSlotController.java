@@ -95,7 +95,7 @@ class LedSlotController implements PhysicalSlotMutationProvider {
         requireSafeMutation();
         LedComponentSlot slot = capability.getSlot();
         if (slot.isEmpty()) return false;
-        modifications.removeComponent(slot.getComponentId());
+        modifications.removeComponentDeferredRefresh(slot.getComponentId());
         slot.clear();
         finishMutation();
         return true;
