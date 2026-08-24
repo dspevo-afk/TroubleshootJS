@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-24_
 
 ## Purpose
 
@@ -1206,10 +1206,9 @@ milestone and was not started.
 
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
-**Status:** [~] RECOVERY IN PROGRESS — 43R-1, 43R-2, 43R-2C, 43R-3,
-43R-4, 43R-5, 43R-5A, 43R-6, 43R-7, 43R-4D, 43R-8A, and bounded 43R-8B
-acceptance-infrastructure closure accepted; final integrated 43R-8 remains
-unstarted.
+**Status:** [x] Complete — recovery slices 43R-1 through 43R-8, including final
+integrated 43R-8 acceptance, passed their bounded validation and review gates.
+Task 44 remains explicitly blocked and unstarted.
 
 **Purpose:** Reconcile the physical geometry that routing, drawing, selection,
 and probing currently describe independently.
@@ -1270,6 +1269,10 @@ architecture prerequisite.
   removes the stale NPN deferrals and proves real forced-negative Task 43
   process failure propagation. It does not claim final integrated 43R-8
   acceptance.
+- `[x]` 43R-8 — final integrated Task 43 acceptance; complete. The full browser
+  matrix, Task 41/diode-short regressions, strict forced-negative exit-1,
+  missing-browser infrastructure exit-2, and natural-success exit-0 process
+  contract all passed.
 
 43R-5A completion (historical): the live RC factory now exposes a developer-only finite
 matrix seam without changing the production route, component anchors, package
@@ -1320,7 +1323,8 @@ started.
 
 ## Task 44 — Functional Block Descriptor and Stable Namespace Contract
 
-**Status:** [!] BLOCKED BY TASK 43
+**Status:** [!] BLOCKED / UNSTARTED — explicitly held after Task 43R-8
+acceptance; no Task 44 work is authorized by this task.
 
 **Purpose:** Define the smallest reusable generation unit above the existing
 leaf-family runtime.
@@ -3196,15 +3200,13 @@ converted into unrun acceptance claims.
 
 # Immediate Next Milestone
 
-**43R-8B — Task 43 acceptance-infrastructure closure**
+**Task 44 — Functional Block Descriptor and Stable Namespace Contract**
 
-Current state: Task 43 RECOVERY IN PROGRESS. Recovery slices 43R-4D and 43R-8A
-are ACCEPTED/COMPLETE with their recorded runtime and independent review
-evidence. Recovery slice 43R-8B is ACCEPTED/COMPLETE as the bounded
-acceptance-infrastructure closure. Final integrated 43R-8 acceptance remains
-NEXT ELIGIBLE / UNSTARTED; it is not claimed by this slice. Task 44 is BLOCKED
-BY TASK 43 and remains UNSTARTED. Relay Driver remains deferred and transformed
-into Task 66.
+Current state: Task 43 recovery is COMPLETE, including final integrated 43R-8.
+Task 44 is the next roadmap milestone identified for future work, but remains
+BLOCKED / UNSTARTED by the explicit hold in the accepted task instructions.
+Relay Driver remains deferred and transformed into Task 66. No later milestone
+was begun.
 
 ### Historical pre-final-review 43R-4D remediation gate update — 2026-08-22
 
@@ -3263,3 +3265,22 @@ This is acceptance-infrastructure closure only. Task 43 remains RECOVERY IN
 PROGRESS. Final integrated 43R-8 acceptance is NEXT ELIGIBLE / UNSTARTED, and
 Task 44 remains BLOCKED / UNSTARTED. No later milestone was begun and no push
 was performed or authorized.
+
+### Final integrated 43R-8 acceptance — 2026-08-24
+
+Final integrated 43R-8 is complete and independently accepted. The primary
+architect ran the full elevated browser matrix against the compiled local
+preview and received `Integrated Task 43 browser/regression orchestration
+passed.` The matrix covered Task 43, layout, Tasks 39–41, RC/stored-energy,
+NPN/NMOS, LED/diode/parallel, legacy routes, Quick Play, all normal-player
+flows, and the physical RC/diode/LED repair flows.
+
+The matrix also proved the process contract: the forced-negative application
+canary returned expected exit `1`, missing BrowserPath returned infrastructure
+exit `2`, and the post-process natural fall-through returned expected exit
+`0`. Focused direct runs passed `-DiodeShort -Seeds 0,2,3` for all three seeds
+and `-Task41` with `PASS task41 diagnostic solvability`. The committed Task 41
+production fix remains the narrow `includeDeveloperShort` propagation in
+`DiodeProtectedIndicatorGenerator`; no verifier exception, PCB change, or
+Task 44 work was introduced. Fresh Luna MAX review and final Sol ULTRA
+inspection returned `PASS`. No push was performed.

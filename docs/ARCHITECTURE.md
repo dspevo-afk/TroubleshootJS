@@ -1839,3 +1839,31 @@ Task 39/40/41, ordinary Task 43, forced-negative, post-negative, and
 independent Luna MAX review gates passed. This section does not mark final
 integrated 43R-8 acceptance complete; that remains the next eligible recovery
 slice, and Task 44 remains blocked and unstarted.
+
+## Task 43R-8 — final integrated acceptance
+
+Final integrated 43R-8 closes the remaining Task 43 recovery orchestration
+without changing the production electrical, PCB, package, or player-facing
+architecture. The committed Task 41 correction remains the narrow production
+contract repair: the developer-only diode-short generator path propagates
+`includeDeveloperShort` into the generated scenario and candidate accounting.
+Normal diode generation remains unchanged, and Task 41 continues to derive its
+counts from admitted candidates rather than from a verifier-side exception.
+
+The uncommitted acceptance candidate is verifier-only. Its integrated child
+wrapper preserves the existing quoted nested PowerShell command and captures
+the child success flag and numeric `$LASTEXITCODE` immediately after the child
+command. A successful child, including natural script fall-through, maps to
+exit `0`; an unsuccessful child with an explicit numeric exit preserves `1` or
+`2`; an unsuccessful child with no numeric status maps to infrastructure exit
+`2`. Expected-exit matching and positive-route `FAIL` rejection remain strict.
+This keeps the forced-negative application canary distinct from missing-browser
+infrastructure and prevents a successful child from being misclassified.
+
+The final acceptance matrix passed the compiled local preview across the
+geometry, layout, Task 39/40/41, RC/stored-energy, NPN/NMOS, LED/diode/parallel,
+legacy, Quick Play, and normal-player routes. It included the forced-negative
+expected exit `1`, missing BrowserPath expected exit `2`, and post-process
+natural-success expected exit `0` canaries. Direct Task 41 and diode-short
+regressions passed for the requested seeds. No Task 44 implementation was
+started; Task 44 remains blocked and unstarted.

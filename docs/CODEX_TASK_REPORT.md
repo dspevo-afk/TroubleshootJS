@@ -1,4 +1,74 @@
-# Task 43R-8B acceptance-infrastructure closure — forced-negative process integrity
+# Task 43R-8 final integrated acceptance — 2026-08-24
+
+## Status
+
+Task 43 recovery slice **43R-8 — final integrated acceptance** is complete.
+The full browser/regression orchestration matrix passed, the Task 41
+developer-only diode-short contract was independently revalidated, and the
+required implementation/review gates returned `PASS`. Task 44 remains
+`BLOCKED / UNSTARTED`; no Task 44 work was started. No push was performed.
+
+## Scope and root-cause repair
+
+The original blocker was a narrow Task 41 production-contract mismatch:
+`DiodeProtectedIndicatorGenerator` passed `false` for the developer-only
+diode-short route's `includeDeveloperShort` flag, so live Task 41 compared
+incompatible admission-candidate counts. Three independent read-only MAX
+investigations confirmed that diagnosis before the one-writer repair. The
+production correction is already preserved in the committed Task 41
+checkpoint; it changes only that contract propagation and does not redesign
+Task 41, alter PCB routing, change package geometry, or weaken the acceptance
+verifier.
+
+During final 43R-8 integration, the only remaining blocker was in the verifier
+orchestration wrapper. A successful child script that naturally fell through
+without an explicit `exit 0` left `$LASTEXITCODE` unset, while the previous
+wrapper mapped unset status to infrastructure exit `2`. Three independent
+read-only MAX investigations confirmed the smallest general repair. The single
+coder changed only `scripts/verify-browser.ps1` so the nested wrapper captures
+`$?` and `$LASTEXITCODE` immediately: success maps to `0`, explicit numeric
+failure preserves `1`/`2`, and no-status failure maps to `2`. Existing strict
+expected-exit and `FAIL`-diagnostic checks remain unchanged.
+
+## Validation and review
+
+- PowerShell 5.1 parse, pwsh parse, `git diff --check`, and direct wrapper
+  propagation probes passed for natural success `0`, explicit exits `1` and
+  `2`, and missing child infrastructure `2`.
+- Direct `.\scripts\verify-browser.ps1 -BaseUrl
+  http://127.0.0.1:8898 -DiodeShort -Seeds 0,2,3 -TimeoutSeconds 180` passed
+  seeds 0, 2, and 3.
+- Direct `.\scripts\verify-browser.ps1 -BaseUrl
+  http://127.0.0.1:8898 -Task41 -TimeoutSeconds 180` returned `PASS task41
+  diagnostic solvability`.
+- The full elevated run
+  `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898
+  -Task43Integrated -TimeoutSeconds 180` ended with
+  `Integrated Task 43 browser/regression orchestration passed.` It covered
+  Task 43, layout, Tasks 39–41, RC/stored-energy, NPN/NMOS, LED/diode/parallel,
+  legacy, Quick Play, WrongRepair, all requested normal-player routes, and
+  the final exit-contract canaries.
+- The integrated matrix explicitly passed forced-negative expected exit `1`,
+  missing BrowserPath expected exit `2`, and post-process natural-success
+  expected exit `0`.
+- Final post-matrix Luna MAX reviewer: `PASS`.
+- Final Sol ULTRA Inspector: `PASS`, with no blocker, follow-up, or backlog
+  finding.
+
+## Final scope and handoff
+
+The final implementation candidate modifies only `scripts/verify-browser.ps1`
+plus this handoff documentation. The Task 41 production repair remains in its
+earlier committed checkpoint; no production, PCB, routing, package geometry,
+or Task 44 files were changed by final integrated 43R-8. The next roadmap
+milestone is Task 44 by identity, but it remains explicitly blocked and
+unstarted. The primary architect must stage only the intended verifier and
+documentation, run `git diff --cached --check`, and commit locally. Push is
+not authorized.
+
+---
+
+# Historical Task 43R-8B acceptance-infrastructure closure — forced-negative process integrity
 
 ## Status
 

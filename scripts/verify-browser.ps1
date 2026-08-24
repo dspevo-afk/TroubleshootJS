@@ -538,11 +538,41 @@ function getResistorBandColors($socket, [ref]$nextId, [string]$firstPad,
         'return r.width>100&&r.height>100}),r=c.getBoundingClientRect(),g=c.getContext("2d"),' +
         'points=window.__tsjPcbGeometry.points,a=points["' + $first + '"],b=points["' + $second + '"],' +
         'x1=Math.min(a.x,b.x),x2=Math.max(a.x,b.x),y=(a.y+b.y)/2,colors={brown:"125,74,45",' +
-        'black:"34,34,34",red:"181,35,45",gold:"199,163,59"},found={};' +
+        'black:"34,34,34",red:"181,35,45",orange:"204,108,43",blue:"53,92,170",' +
+        'gray:"115,119,123",gold:"199,163,59"},found={};' +
         'for(let x=x1;x<=x2;x++){const p=[...g.getImageData(Math.round(x*c.width/r.width),' +
         'Math.round(y*c.height/r.height),1,1).data].slice(0,3).join(",");for(const name in colors)' +
         'if(p===colors[name])found[name]=true;}return found;})()'
     return evaluateCdp $socket $nextId $expression $failures
+}
+
+function getResistorBandSequence($socket, [ref]$nextId, [string]$firstPad,
+        [string]$secondPad, [ref]$failures) {
+    $first = $firstPad.Replace('"', '\"')
+    $second = $secondPad.Replace('"', '\"')
+    $expression = '(()=>{const c=[...document.querySelectorAll("canvas")].find(x=>{const r=x.getBoundingClientRect();' +
+        'return r.width>100&&r.height>100}),r=c.getBoundingClientRect(),g=c.getContext("2d"),' +
+        'points=window.__tsjPcbGeometry.points,a=points["' + $first + '"],b=points["' + $second + '"],' +
+        'x1=Math.min(a.x,b.x),x2=Math.max(a.x,b.x),y=(a.y+b.y)/2,colors={brown:"125,74,45",' +
+        'black:"34,34,34",red:"181,35,45",orange:"204,108,43",blue:"53,92,170",' +
+        'gray:"115,119,123",gold:"199,163,59"},hits=[];' +
+        'for(let x=x1;x<=x2;x++){const p=[...g.getImageData(Math.round(x*c.width/r.width),' +
+        'Math.round(y*c.height/r.height),1,1).data].slice(0,3).join(","),' +
+        'name=Object.keys(colors).find(candidate=>p===colors[candidate]);' +
+        'if(name!==undefined)hits.push({x:x,name:name});}' +
+        'const bands=[],last={x:null,name:null};for(const hit of hits)' +
+        'if(last.x===null||hit.x-last.x>8||hit.name!==last.name){bands.push(hit.name);last.x=hit.x;last.name=hit.name;}' +
+        'return bands;})()'
+    return evaluateCdp $socket $nextId $expression $failures
+}
+
+function getDiodeNormalPlayerExpectation([int]$playerSeed) {
+    switch ($playerSeed) {
+        0 { return @{ Value = '330'; Bands = @('orange', 'orange', 'brown', 'gold') } }
+        2 { return @{ Value = '680'; Bands = @('blue', 'gray', 'brown', 'gold') } }
+        3 { return @{ Value = '1000'; Bands = @('brown', 'black', 'red', 'gold') } }
+        default { throw "unsupported diode normal-player seed: $playerSeed (expected 0, 2, or 3)" }
+    }
 }
 
 function sendKey($socket, [ref]$nextId, [string]$key, [int]$code, [ref]$failures) {
@@ -932,7 +962,10 @@ function verifyNormalParallelPlayer([string]$url, [int]$debugPort) {
     }
 }
 
-function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
+function verifyNormalDiodePlayer([string]$url, [int]$debugPort, [int]$playerSeed = 3) {
+    $diodeExpectation = getDiodeNormalPlayerExpectation $playerSeed
+    $diodeValue = [string]$diodeExpectation.Value
+    $expectedDiodeBands = @($diodeExpectation.Bands)
     $profile = Join-Path $env:TEMP ("tsj-diode-player-" + [Guid]::NewGuid().ToString('N'))
     $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
         '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
@@ -964,22 +997,32 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
             throw 'initial diode workbench, catalog, tray, or vague complaint was incorrect'
         }
         $diodeR1Bands = getResistorBandColors $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures)
-        foreach ($band in @('brown', 'black', 'red', 'gold')) {
-            if (-not ($diodeR1Bands.PSObject.Properties.Name -contains $band)) {
-                throw "diode-family R1 color band was not visible: $($diodeR1Bands | ConvertTo-Json -Compress)"
+        $diodeR1Sequence = @(getResistorBandSequence $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures))
+        $sequenceMatches = $diodeR1Sequence.Count -eq $expectedDiodeBands.Count
+        if ($sequenceMatches) {
+            for ($bandIndex = 0; $bandIndex -lt $expectedDiodeBands.Count; $bandIndex++) {
+                if ($diodeR1Sequence[$bandIndex] -ne $expectedDiodeBands[$bandIndex]) {
+                    $sequenceMatches = $false
+                    break
+                }
             }
+        }
+        if (-not $sequenceMatches) {
+            $observed = if ($diodeR1Sequence.Count -eq 0) { '<none>' } else { $diodeR1Sequence -join ', ' }
+            throw "diode-family R1 bands did not match seed=$playerSeed value=$diodeValue Ohm; expected [$($expectedDiodeBands -join ', ')] but observed [$observed]; recognized pixels=$($diodeR1Bands | ConvertTo-Json -Compress)"
         }
         $diodeR1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $diodeR1 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Markings: Color bands')" $deadline ([ref]$failures) 'diode-family original R1 markings'
         $diodeR1Panel = evaluateCdp $socket ([ref]$nextId) "document.querySelectorAll('.tsj-component-panel')[1].innerText" ([ref]$failures)
         if (-not ($diodeR1Panel -match 'R1' -and $diodeR1Panel -match 'Type: resistor' -and
-                $diodeR1Panel -match 'State: Installed' -and $diodeR1Panel -notmatch 'Value: 1000 Ohm')) {
-            throw "diode-family original R1 panel did not preserve identity without its numeric value: $diodeR1Panel"
+                $diodeR1Panel -match 'State: Installed' -and
+                $diodeR1Panel -notmatch ('Value: ' + [regex]::Escape($diodeValue) + ' Ohm'))) {
+            throw "diode-family original R1 panel did not preserve identity without its numeric value for seed=${playerSeed}: $diodeR1Panel"
         }
-        $diodeR1Leak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) '1000' ([ref]$failures)
+        $diodeR1Leak = getPlayerValueLeakDiagnostics $socket ([ref]$nextId) $diodeValue ([ref]$failures)
         if (-not $diodeR1Leak.safe) {
-            throw "diode-family original R1 value leaked into ordinary UI: $($diodeR1Leak | ConvertTo-Json -Compress)"
+            throw "diode-family original R1 value=$diodeValue leaked into ordinary UI for seed=${playerSeed}: $($diodeR1Leak | ConvertTo-Json -Compress)"
         }
         if ($EvidenceDirectory) {
             [IO.Directory]::CreateDirectory($EvidenceDirectory) | Out-Null
@@ -1045,10 +1088,10 @@ function verifyNormalDiodePlayer([string]$url, [int]$debugPort) {
         cleanupBrowser $browser $socket $profile
         $socket = $null
         $browser = $null
-        Write-Host "PASS diode-normal-player seed=3 terminal=mutation-free"
+        Write-Host "PASS diode-normal-player seed=$playerSeed terminal=mutation-free"
         return $true
     } catch {
-        Write-Host "FAIL diode-normal-player seed=3 - $($_.Exception.Message)"
+        Write-Host "FAIL diode-normal-player seed=$playerSeed - $($_.Exception.Message)"
         if ($null -ne $socket) {
             try {
                 $snapshot = evaluateCdp $socket ([ref]$nextId) "document.body.innerText" ([ref]$failures)
@@ -1108,7 +1151,12 @@ function verifyWrongRepairNormalPlayer([string]$url, [int]$debugPort) {
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'board power off before R1 removal'
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('R1_ORIGINAL - Removed resistor')" $deadline ([ref]$failures) 'faulted original R1 removal'
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '2200 Ohm +/-5%' ([ref]$failures)
-        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new resistor' "document.body.innerText.includes('Value: 2200 Ohm +/-5%')" $deadline ([ref]$failures) '2.2 kOhm physical resistor installation'
+        clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
+        waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+        $installed2200Point = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
+        if ($null -eq $installed2200Point) { throw 'component:R1 geometry target unavailable after 2200 Ohm installation' }
+        clickPoint $socket ([ref]$nextId) $installed2200Point 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Value: 2200 Ohm +/-5%')" $deadline ([ref]$failures) '2.2 kOhm physical resistor installation'
         waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
         $wrongBands = getResistorBandColors $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures)
         $wrongBandNames = if ($null -eq $wrongBands) { @() } else { @($wrongBands.PSObject.Properties | ForEach-Object { $_.Name }) }
@@ -1129,7 +1177,12 @@ function verifyWrongRepairNormalPlayer([string]$url, [int]$debugPort) {
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'board power off before wrong replacement removal'
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('R1_CATALOG_PART_0 - 2200 Ohm +/-5%')" $deadline ([ref]$failures) '2.2 kOhm replacement removal'
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '1000 Ohm +/-5%' ([ref]$failures)
-        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new resistor' "document.body.innerText.includes('Value: 1000 Ohm +/-5%')" $deadline ([ref]$failures) '1 kOhm physical resistor installation'
+        clickButton $socket ([ref]$nextId) 'Install new resistor' ([ref]$failures)
+        waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+        $installed1000Point = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
+        if ($null -eq $installed1000Point) { throw 'component:R1 geometry target unavailable after 1000 Ohm installation' }
+        clickPoint $socket ([ref]$nextId) $installed1000Point 'left' ([ref]$failures)
+        waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Value: 1000 Ohm +/-5%')" $deadline ([ref]$failures) '1 kOhm physical resistor installation'
         waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
         $correctBands = getResistorBandColors $socket ([ref]$nextId) 'pad:R1.1' 'pad:R1.2' ([ref]$failures)
         $correctBandNames = if ($null -eq $correctBands) { @() } else { @($correctBands.PSObject.Properties | ForEach-Object { $_.Name }) }
@@ -1264,7 +1317,7 @@ function verifyStressDamageNormalPlayer([string]$url, [int]$debugPort) {
     }
 }
 
-function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
+function verifyNormalLedPlayer([string]$url, [int]$debugPort, [int]$playerSeed = 3) {
     $profile = Join-Path $env:TEMP ("tsj-led-player-" + [Guid]::NewGuid().ToString('N'))
     $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
         '--window-size=1440,1000', "--user-data-dir=$profile", "--remote-debugging-port=$debugPort", 'about:blank')
@@ -1327,13 +1380,42 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         $originalCathode = getCanvasPoint $socket ([ref]$nextId) 'loose:LED1_ORIGINAL:1' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalAnode 'left' ([ref]$failures)
         clickPoint $socket ([ref]$nextId) $originalCathode 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- V';})()" $deadline ([ref]$failures) 'loose original LED forward drop'
-        $forward = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
-        clickPoint $socket ([ref]$nextId) $originalCathode 'left' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!=='$forward'" $deadline ([ref]$failures) 'LED probe reversal transition'
-        clickPoint $socket ([ref]$nextId) $originalAnode 'right' ([ref]$failures)
-        waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'loose original LED reverse OL'
+        if ($playerSeed -eq 4) {
+            waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'loose original LED_OPEN forward OL'
+            clickPoint $socket ([ref]$nextId) $originalCathode 'left' ([ref]$failures)
+            waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!=='OL'" $deadline ([ref]$failures) 'LED_OPEN probe reversal transition'
+            clickPoint $socket ([ref]$nextId) $originalAnode 'right' ([ref]$failures)
+            waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'loose original LED_OPEN reverse OL'
+        } else {
+            waitForCdp $socket ([ref]$nextId) "(()=>{const t=document.querySelector('.tsj-meter-display').innerText;return t!=='OL'&&t!=='--- V';})()" $deadline ([ref]$failures) 'loose original LED forward drop'
+            $forward = evaluateCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText" ([ref]$failures)
+            clickPoint $socket ([ref]$nextId) $originalCathode 'left' ([ref]$failures)
+            waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText!=='$forward'" $deadline ([ref]$failures) 'LED probe reversal transition'
+            clickPoint $socket ([ref]$nextId) $originalAnode 'right' ([ref]$failures)
+            waitForCdp $socket ([ref]$nextId) "document.querySelector('.tsj-meter-display').innerText==='OL'" $deadline ([ref]$failures) 'loose original LED reverse OL'
+        }
         clickButton $socket ([ref]$nextId) 'DIODE' ([ref]$failures)
+
+        if ($playerSeed -eq 4) {
+            clickButton $socket ([ref]$nextId) 'Install new LED' ([ref]$failures)
+            clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: OFF' "document.body.innerText.includes('Board Power: ON')" $deadline ([ref]$failures) 'LED_OPEN replacement power on'
+            clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Retest Customer' "document.body.innerText.includes('Repair verified. Indicator operating normally.')" $deadline ([ref]$failures) 'LED_OPEN customer retest'
+            $terminal = evaluateCdp $socket ([ref]$nextId) "(()=>{const b=document.body.innerText||'',buttons=[...document.querySelectorAll('button')];const power=buttons.find(x=>x.innerText.includes('Board Power:'));const retest=buttons.find(x=>x.innerText.trim()==='Retest Customer');return {completed:b.includes('Repair verified. Indicator operating normally.'),powerDisabled:!!power&&power.disabled,retestDisabled:!!retest&&retest.disabled};})()" ([ref]$failures)
+            if (-not ($terminal.completed -and $terminal.powerDisabled -and $terminal.retestDisabled)) {
+                throw "completed LED_OPEN challenge did not enter the physical terminal state: $($terminal | ConvertTo-Json -Compress)"
+            }
+            waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
+            if ($EvidenceDirectory) {
+                captureBrowserScreenshot $socket ([ref]$nextId) (Join-Path $EvidenceDirectory 'repaired-board.png') ([ref]$failures)
+            }
+            Write-Host "LED PLAYER repair verified; physical state is terminal seed=$playerSeed"
+            if ($failures.Count -gt 0) { throw ($failures -join '; ') }
+            cleanupBrowser $browser $socket $profile
+            $socket = $null
+            $browser = $null
+            Write-Host "PASS led-normal-player seed=$playerSeed terminal=mutation-free"
+            return $true
+        }
 
         clickButton $socket ([ref]$nextId) 'Install new LED' ([ref]$failures)
         clickButton $socket ([ref]$nextId) 'Board Power: OFF' ([ref]$failures)
@@ -1386,10 +1468,10 @@ function verifyNormalLedPlayer([string]$url, [int]$debugPort) {
         cleanupBrowser $browser $socket $profile
         $socket = $null
         $browser = $null
-        Write-Host "PASS led-normal-player seed=3 terminal=mutation-free"
+        Write-Host "PASS led-normal-player seed=$playerSeed terminal=mutation-free"
         return $true
     } catch {
-        Write-Host "FAIL led-normal-player seed=3 - $($_.Exception.Message)"
+        Write-Host "FAIL led-normal-player seed=$playerSeed - $($_.Exception.Message)"
         if ($null -ne $socket) {
             try {
                 $snapshot = evaluateCdp $socket ([ref]$nextId) "document.body.innerText" ([ref]$failures)
@@ -1443,7 +1525,7 @@ function verifyRcNormalPlayer([string]$url, [int]$debugPort) {
         clickPoint $socket ([ref]$nextId) $c1 'left' ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Remove component')&&document.body.innerText.includes('C1')" $deadline ([ref]$failures) 'RC capacitor controls'
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Board Power: ON' "document.body.innerText.includes('Board Power: OFF')" $deadline ([ref]$failures) 'power off RC board'
-        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('C1_ORIGINAL - Electrolytic capacitor')&&document.body.innerText.includes('State: C1 slot empty')" $deadline ([ref]$failures) 'remove fault-owning C1'
+        clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Remove component' "document.body.innerText.includes('C1_ORIGINAL - Electrolytic capacitor')&&!document.body.innerText.includes('No removed parts')" $deadline ([ref]$failures) 'remove fault-owning C1'
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry.points['loose:C1_ORIGINAL:0']&&!!window.__tsjPcbGeometry.points['loose:C1_ORIGINAL:1']" $deadline ([ref]$failures) 'loose capacitor geometry and probes'
         selectOptionWithKeyboard $socket ([ref]$nextId) 0 '33 uF 16 V' ([ref]$failures)
         clickButtonAndWaitForPredicate $socket ([ref]$nextId) 'Install new capacitor' "!document.body.innerText.includes('State: C1 slot empty')&&document.body.innerText.includes('C1_ORIGINAL - Electrolytic capacitor')" $deadline ([ref]$failures) 'install RC replacement'
@@ -1591,7 +1673,7 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
         }
     }
     $childArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command',
-        ($commandParts -join ' '))
+        (($commandParts -join ' ') + '; $tsjChildSuccess = $?; $tsjChildExit = $LASTEXITCODE; if ($tsjChildSuccess) { exit 0 } elseif ($null -ne $tsjChildExit) { exit $tsjChildExit } else { exit 2 }'))
     Write-Host ("INTEGRATED CHILD START $label expected-exit=$expectedExit")
     try {
         $childOutput = @(& $hostExecutable @childArguments 6>&1 2>&1)
@@ -1836,7 +1918,7 @@ if ($StressDamageNormalPlayer) {
     exit 0
 }
 if ($DiodeNormalPlayer) {
-    if (-not (verifyNormalDiodePlayer "$BaseUrl/circuitjs.html?tsjChallenge=diode&seed=$PlayerSeed&tsjVerifyGeometry=true" 9460)) { exit 1 }
+    if (-not (verifyNormalDiodePlayer "$BaseUrl/circuitjs.html?tsjChallenge=diode&seed=$PlayerSeed&tsjVerifyGeometry=true" 9460 $PlayerSeed)) { exit 1 }
     exit 0
 }
 if ($ParallelNormalPlayer) {
@@ -1844,7 +1926,7 @@ if ($ParallelNormalPlayer) {
     exit 0
 }
 if ($LedNormalPlayer) {
-    if (-not (verifyNormalLedPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyGeometry=true" 9470)) { exit 1 }
+    if (-not (verifyNormalLedPlayer "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=$PlayerSeed&tsjVerifyGeometry=true" 9470 $PlayerSeed)) { exit 1 }
     exit 0
 }
 if ($RcNormalPlayer) {
