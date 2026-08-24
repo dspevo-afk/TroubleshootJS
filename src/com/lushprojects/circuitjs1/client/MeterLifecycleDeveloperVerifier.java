@@ -48,26 +48,25 @@ class MeterLifecycleDeveloperVerifier {
         require(sim.getBoardModificationController().liftLead("R1", liftedPadId),
             "Could not lift " + liftedPadId);
         sim.updateCircuit();
-        ProbeTarget componentLead1 = hitLead(sim, renderer, "R1.1");
-        ProbeTarget componentLead2 = hitLead(sim, renderer, "R1.2");
+        ProbeTarget liftedComponentLead = hitLead(sim, renderer, liftedPadId);
         ProbeTarget boardLiftedPad = hitPad(sim, renderer, liftedPadId);
         ProbeTarget boardAttachedPad = hitPad(sim, renderer, attachedPadId);
-        require(!componentLead1.isSameTarget(componentLead2) &&
-            !componentLead2.isSameTarget(boardLiftedPad),
+        require(!liftedComponentLead.isSameTarget(boardLiftedPad) &&
+            !liftedComponentLead.isSameTarget(boardAttachedPad) &&
+            !boardLiftedPad.isSameTarget(boardAttachedPad),
             "Lifted component lead and PCB pad were not distinct physical targets");
-        placeProbes(sim, componentLead1, componentLead2);
-		requireLiftedResistance(sim, instance, componentLead1, componentLead2, expected, tolerance,
-		    "forward " + liftedPadId);
-        placeProbes(sim, componentLead2, componentLead1);
-		requireLiftedResistance(sim, instance, componentLead2, componentLead1, expected, tolerance,
-		    "reverse " + liftedPadId);
-        placeProbes(sim, componentLead2, boardLiftedPad);
+        // The attached terminal is intentionally represented by its board pad.
+        // Measuring the resistor through that pad keeps the physical connection
+        // assertion while respecting connected-lead surface suppression.
+        placeProbes(sim, liftedComponentLead, boardAttachedPad);
+		requireLiftedResistance(sim, instance, liftedComponentLead, boardAttachedPad, expected, tolerance,
+		    "forward " + liftedPadId + " through attached board pad");
+        placeProbes(sim, boardAttachedPad, liftedComponentLead);
+		requireLiftedResistance(sim, instance, boardAttachedPad, liftedComponentLead, expected, tolerance,
+		    "reverse " + liftedPadId + " through attached board pad");
+        placeProbes(sim, liftedComponentLead, boardLiftedPad);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Lifted lead gap did not measure OL");
-        ProbeTarget attachedLead = "R1.1".equals(attachedPadId) ? componentLead1 : componentLead2;
-        placeProbes(sim, attachedLead, boardAttachedPad);
-        requireApproximately(0, sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(),
-            .001, "Still-attached lead was not connected to its PCB pad");
         require(sim.getBoardModificationController().reconnectLead("R1", liftedPadId),
             "Could not reconnect " + liftedPadId);
         sim.setBoardPowerState(BoardPowerState.POWERED);

@@ -215,8 +215,6 @@ class ReplacementDeveloperVerifier {
         PhysicalResistorPart part = resistorInventory(instance).get(partId);
         CircuitPostProbeTarget ground = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.2"));
         CircuitPostProbeTarget boardPad2 = getProbe(sim, instance.getSimulationBindings().getEndpoint("R1.2"));
-        ProbeTarget liftedLead2 = new ComponentLeadProbeTarget(sim, instance, "R1", "R1.2",
-            sim.pcbWorkbenchController.getRenderer());
         require(!resistorSlot(instance).isEmpty() &&
             resistorSlot(instance).getInstalledPart() == part,
             "Correct replacement was not installed before lifted-lead voltage check");
@@ -226,6 +224,10 @@ class ReplacementDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.POWERED);
         sim.analyzeCircuit();
         sim.runCircuit(true);
+        ProbeTarget liftedLead2 = new ComponentLeadProbeTarget(sim, instance, "R1", "R1.2",
+            sim.pcbWorkbenchController.getRenderer());
+        require(liftedLead2.isValid(),
+            "Fresh lifted replacement lead target was not valid after the solve");
         double nominalVin = instance.getPhysicalSpecifications().getPowerInputNameplate("VIN_INPUT")
             .getNominalVoltage();
         double expectedLiftedVoltage = nominalVin * DcVoltageMeasurementStimulus.INPUT_RESISTANCE /
@@ -253,18 +255,66 @@ class ReplacementDeveloperVerifier {
         CircuitPostProbeTarget vin = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.1"));
         CircuitPostProbeTarget ground = getProbe(sim, instance.getSimulationBindings().getEndpoint("J1.2"));
         requireApproximately(0, measureDc(sim, vin, ground), .001, "Unpowered VIN DC measurement");
-        ProbeTarget healthyLead1 = new PhysicalResistorPartProbeTarget(sim, instance, healthyPartId, 0,
-            sim.pcbWorkbenchController.getRenderer());
-        ProbeTarget healthyLead2 = new PhysicalResistorPartProbeTarget(sim, instance, healthyPartId, 1,
-            sim.pcbWorkbenchController.getRenderer());
-        ProbeTarget failedLead1 = new PhysicalResistorPartProbeTarget(sim, instance, original.getId(), 0,
-            sim.pcbWorkbenchController.getRenderer());
-        ProbeTarget failedLead2 = new PhysicalResistorPartProbeTarget(sim, instance, original.getId(), 1,
-            sim.pcbWorkbenchController.getRenderer());
-        requireApproximately(0, measureDc(sim, healthyLead1, healthyLead2), .001,
-            "Loose healthy resistor DC measurement");
-        requireApproximately(0, measureDc(sim, failedLead1, failedLead2), .001,
-            "Loose failed resistor DC measurement");
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        int savedTrayPage = renderer.getTrayPage();
+        try {
+            PhysicalResistorPart healthy = resistorInventory(instance).get(healthyPartId);
+            selectLoosePartPage(instance, healthyPartId, renderer);
+            ProbeTarget healthyLead1 = new PhysicalResistorPartProbeTarget(sim, instance,
+                healthyPartId, 0, renderer);
+            ProbeTarget healthyLead2 = new PhysicalResistorPartProbeTarget(sim, instance,
+                healthyPartId, 1, renderer);
+            requireLooseResistorTargets(healthy, healthyLead1, healthyLead2,
+                "healthy loose resistor");
+            requireApproximately(0, measureDc(sim, healthyLead1, healthyLead2), .001,
+                "Loose healthy resistor DC measurement");
+
+            require(renderer.getTrayPageCount() >= 2,
+                "Loose projection negative canary requires multiple tray pages");
+            int offPage = renderer.getTrayPage() == 0 ? 1 : 0;
+            renderer.setTrayPage(offPage);
+            require(!healthyLead1.isValid() && !healthyLead2.isValid() &&
+                Double.isNaN(measureDc(sim, healthyLead1, healthyLead2)),
+                "Off-page loose resistor target remained measurable after page change");
+
+            selectLoosePartPage(instance, original.getId(), renderer);
+            ProbeTarget failedLead1 = new PhysicalResistorPartProbeTarget(sim, instance,
+                original.getId(), 0, renderer);
+            ProbeTarget failedLead2 = new PhysicalResistorPartProbeTarget(sim, instance,
+                original.getId(), 1, renderer);
+            requireLooseResistorTargets(original, failedLead1, failedLead2,
+                "failed loose resistor");
+            requireApproximately(0, measureDc(sim, failedLead1, failedLead2), .001,
+                "Loose failed resistor DC measurement");
+        } finally {
+            renderer.setTrayPage(savedTrayPage);
+        }
+    }
+
+    private static void requireLooseResistorTargets(PhysicalResistorPart part,
+            ProbeTarget first, ProbeTarget second, String label) {
+        require(part != null && !part.isInstalled() && first != null && second != null &&
+            first.isValid() && second.isValid(),
+            "Fresh " + label + " targets were not valid on the selected tray page");
+        require(first.getMeasurementEndpoint() == part.getTerminal(0).getEndpoint() &&
+            second.getMeasurementEndpoint() == part.getTerminal(1).getEndpoint(),
+            "Fresh " + label + " targets did not preserve physical terminal identity");
+    }
+
+    private static void selectLoosePartPage(GeneratedBoardInstance instance, String partId,
+            PcbWorkbenchRenderer renderer) {
+        int index = 0;
+        for (WorkbenchPartsProvider provider : instance.getPhysicalBoardRuntime()
+                .getWorkbenchPartsProviders())
+            for (PhysicalPart<?> part : provider.getLooseParts()) {
+                if (partId.equals(part.getId())) {
+                    renderer.setTrayPage(index / renderer.getPartsPerTrayPage());
+                    return;
+                }
+                index++;
+            }
+        throw new IllegalStateException("Requested loose resistor part was not in the workbench: " +
+            partId);
     }
 
     private static double measureDc(CirSim sim, ProbeTarget red, ProbeTarget black) {
