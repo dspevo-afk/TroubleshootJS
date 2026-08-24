@@ -1,782 +1,164 @@
-# Task 43R-8 final integrated acceptance — 2026-08-24
+# Post-Task-43 Roadmap Redesign
 
 ## Status
 
-Task 43 recovery slice **43R-8 — final integrated acceptance** is complete.
-The full browser/regression orchestration matrix passed, the Task 41
-developer-only diode-short contract was independently revalidated, and the
-required implementation/review gates returned `PASS`. Task 44 remains
-`BLOCKED / UNSTARTED`; no Task 44 work was started. No push was performed.
-
-## Scope and root-cause repair
-
-The original blocker was a narrow Task 41 production-contract mismatch:
-`DiodeProtectedIndicatorGenerator` passed `false` for the developer-only
-diode-short route's `includeDeveloperShort` flag, so live Task 41 compared
-incompatible admission-candidate counts. Three independent read-only MAX
-investigations confirmed that diagnosis before the one-writer repair. The
-production correction is already preserved in the committed Task 41
-checkpoint; it changes only that contract propagation and does not redesign
-Task 41, alter PCB routing, change package geometry, or weaken the acceptance
-verifier.
-
-During final 43R-8 integration, the only remaining blocker was in the verifier
-orchestration wrapper. A successful child script that naturally fell through
-without an explicit `exit 0` left `$LASTEXITCODE` unset, while the previous
-wrapper mapped unset status to infrastructure exit `2`. Three independent
-read-only MAX investigations confirmed the smallest general repair. The single
-coder changed only `scripts/verify-browser.ps1` so the nested wrapper captures
-`$?` and `$LASTEXITCODE` immediately: success maps to `0`, explicit numeric
-failure preserves `1`/`2`, and no-status failure maps to `2`. Existing strict
-expected-exit and `FAIL`-diagnostic checks remain unchanged.
-
-## Validation and review
-
-- PowerShell 5.1 parse, pwsh parse, `git diff --check`, and direct wrapper
-  propagation probes passed for natural success `0`, explicit exits `1` and
-  `2`, and missing child infrastructure `2`.
-- Direct `.\scripts\verify-browser.ps1 -BaseUrl
-  http://127.0.0.1:8898 -DiodeShort -Seeds 0,2,3 -TimeoutSeconds 180` passed
-  seeds 0, 2, and 3.
-- Direct `.\scripts\verify-browser.ps1 -BaseUrl
-  http://127.0.0.1:8898 -Task41 -TimeoutSeconds 180` returned `PASS task41
-  diagnostic solvability`.
-- The full elevated run
-  `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898
-  -Task43Integrated -TimeoutSeconds 180` ended with
-  `Integrated Task 43 browser/regression orchestration passed.` It covered
-  Task 43, layout, Tasks 39–41, RC/stored-energy, NPN/NMOS, LED/diode/parallel,
-  legacy, Quick Play, WrongRepair, all requested normal-player routes, and
-  the final exit-contract canaries.
-- The integrated matrix explicitly passed forced-negative expected exit `1`,
-  missing BrowserPath expected exit `2`, and post-process natural-success
-  expected exit `0`.
-- Final post-matrix Luna MAX reviewer: `PASS`.
-- Final Sol ULTRA Inspector: `PASS`, with no blocker, follow-up, or backlog
-  finding.
-
-## Final scope and handoff
-
-The final implementation candidate modifies only `scripts/verify-browser.ps1`
-plus this handoff documentation. The Task 41 production repair remains in its
-earlier committed checkpoint; no production, PCB, routing, package geometry,
-or Task 44 files were changed by final integrated 43R-8. The next roadmap
-milestone is Task 44 by identity, but it remains explicitly blocked and
-unstarted. The primary architect must stage only the intended verifier and
-documentation, run `git diff --cached --check`, and commit locally. Push is
-not authorized.
-
----
-
-# Historical Task 43R-8B acceptance-infrastructure closure — forced-negative process integrity
-
-## Status
-
-Task 43 recovery slice **43R-8B — acceptance infrastructure** is accepted in
-its bounded scope. This closes the stale-deferral and forced-negative
-process-integrity gates; it does **not** claim final integrated Task 43
-acceptance. Task 43 remains `RECOVERY IN PROGRESS`, final integrated 43R-8 is
-`NEXT ELIGIBLE / UNSTARTED`, and Task 44 remains `BLOCKED / UNSTARTED`.
-
-## Scope and implementation
-
-The candidate was preserved before the required 43R-3 corrective return and
-reapplied only after that checkpoint was independently accepted. The accepted
-43R-3 lifecycle correction remains in commit `23330da`; no lifecycle canary,
-production target, binding, physical-terminal, or measurement behavior was
-changed by 43R-8B.
-
-The 43R-8B implementation is limited to four files:
-
-- `scripts/verify-browser.ps1`
-- `src/com/lushprojects/circuitjs1/client/CirSim.java`
-- `src/com/lushprojects/circuitjs1/client/PcbLayoutDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/Task43DeveloperVerifier.java`
-
-The two stale general-layout NPN deferrals were removed: `DEFERRED R-2 fixed
-NPN layout` and `DEFERRED R-6 fixed NPN layout`, including the deferred
-catch-and-continue path. The accepted direct NPN matrix remains hard-red and
-reports `PASS:NPN_FIXED_LAYOUT_MATRIX:cases=108/108;variantTuples=27;originClasses=4`.
-
-The browser verifier now has a developer-only, transient forced-negative Task
-43 route. It requires the real application DOM state
-`FAIL:task43-forced-negative-canary` and accepts only the anchored deliberate
-CDP diagnostic for that canary. Arbitrary console text, unexpected application
-failures, timeouts, and infrastructure failures remain rejected. The forced
-seam is gated by verification query state and does not affect normal player
-runs.
-
-## Validation and review
-
-- JDK 8/GWT OBF compile/link using `.tools/jdk8-download/jdk8u502-b07` — all
-  five permutations and link passed.
-- `scripts/verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
-- `scripts/verify-browser.ps1 -Layout` — `PASS procedural-layout`, exit `0`.
-- Direct NPN fixed-layout evidence —
-  `PASS:NPN_FIXED_LAYOUT_MATRIX:cases=108/108;variantTuples=27;originClasses=4`.
-- `scripts/verify-browser.ps1 -Task39` — all six routes passed; `-Task40` and
-  `-Task41` passed.
-- Ordinary `scripts/verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -Task43
-  -TimeoutSeconds 120` — `PASS task43 physical package geometry contract`,
-  child exit `0`.
-- Forced `scripts/verify-browser.ps1 -BaseUrl http://127.0.0.1:8898
-  -Task43ForcedNegative -TimeoutSeconds 120` — the real application published
-  `data-tsj-verification=FAIL:task43-forced-negative-canary`, emitted the
-  deliberate `IllegalStateException` canary, printed `EXPECTED FAILURE
-  task43 forced-negative canary - FAIL:task43-forced-negative-canary`, and the
-  child exit was exactly `1`.
-- Forced missing-browser infrastructure check — child exit exactly `2`.
-- Ordinary Task 43 immediately after the forced route — `PASS task43 physical
-  package geometry contract`, child exit `0`.
-- PowerShell parse and `git diff --check` — passed; no stale `DEFERRED` paths
-  remain in the general layout verifier.
-- Review history: the first independent reviewer identified the CDP diagnostic
-  mismatch; the first correction was independently reviewed and rejected for a
-  broad substring fallback; the second correction removed that fallback; the
-  fresh independent Luna MAX reviewer returned `PASS`. No escalation review was
-  required.
-
-The primary architect performed the final actual-diff and validation review
-and reached `FINAL PASS` after the two bounded correction passes. No candidate
-commit or push had occurred at this point.
-
----
-
-# Historical Task 43R-3 corrective return — lifted component endpoint identity
-
-## Status
-
-Task 43 recovery correction **43R-3 corrective return** was accepted in its
-bounded scope after the required read-only MAX investigation, one-writer
-implementation, validation, and independent MAX review. It unblocked the
-then-blocked 43R-8B candidate. The later 43R-8B acceptance-infrastructure
-closure is recorded above; Task 44 remains untouched.
-
-## Starting state and ownership
-
-The 43R-8B candidate was uncommitted in exactly four files and was preserved
-before this corrective return in the named stash
-`43R-8B candidate preserved before 43R-3 corrective return`. The worktree was
-then restored clean before lifecycle investigation. The observed failure was
-`FAIL:Lifted component target changed stable physical or endpoint identity:
-R1.1`, before the 43R-8B forced-negative canary.
-
-The failure belongs to 43R-3: the part and physical terminal remain mounted
-through lead lift, while the installed component-side target must preserve
-physical/lifecycle identity and the active electrical binding. 43R-4 loose,
-removal, and reinstallation behavior remains a regression gate, not the owner
-of this mounted-lead defect.
-
-## Reconciled diagnosis and implementation
-
-The classification is `IMPLEMENTATION_FAILURE` in the verifier's comparison
-boundary. `PhysicalPartTerminal` owns immutable physical-terminal identity for
-one physical part. `GeneratedComponentConnectionBinding` owns the mutable,
-orientation-aware component-side electrical endpoint used by replacement and
-reversed LED/diode retargeting. `ComponentLeadProbeTarget` intentionally
-captures that binding endpoint and retains it across invalidation.
-
-Initial generated R1.1 creates separate `CircuitPostMeasurementEndpoint`
-wrappers in the physical part and the binding for the same CircuitJS
-element/post. The old canary compared those wrappers with Java reference
-identity before any lifecycle mutation. The corrective change is limited to
-`PhysicalPartRenderDeveloperVerifier.java`: cross-owner binding/physical
-endpoint comparisons use the existing semantic `(CircuitElm, postIndex)`
-helper, while exact target-to-current-binding, physical part/terminal,
-carrier, slot, board-pad, lifecycle, stale-target, and replacement identity
-checks remain strict. No production target, renderer, binding, physical
-terminal, measurement, fault, or loose-lifecycle code changed.
-
-This preserves CircuitJS as the electrical source of truth and preserves the
-43R-8A binding-authoritative orientation contract; it does not accept arbitrary
-endpoints or special-case R1.1.
-
-## Validation and review
-
-- JDK 8/GWT production compile/link — passed all five permutations and link.
-- `scripts/verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
-- `scripts/verify-browser.ps1 -Task43` — `PASS:task43`, including the complete
-  installed physical-render/lifecycle positive and negative canaries.
-- `scripts/verify-browser.ps1 -Task39` — all six developer/regression routes
-  passed.
-- `scripts/verify-browser.ps1 -Task40` — passed.
-- `scripts/verify-browser.ps1 -Task41` — passed.
-- `git diff --check` — passed.
-- Independent read-only Luna MAX review — `PASS`.
-
-The corrective checkpoint is separate from the preserved 43R-8B candidate.
-No push is authorized by the current recovery instructions. 43R-8B remains
-held for reapplication only after this checkpoint, and Task 44 remains
-unstarted.
-
----
-
-# Task 43R-8A completion report — existing-family replacement and measurement recovery
-
-## Roadmap milestone
-
-Task 43 recovery correction **43R-8A — recover existing-family replacement and
-measurement regressions found by 43R-8** is implemented and accepted in its
-bounded scope. Focused source/build checks, visible Edge developer routes,
-supported Edge normal-player evidence, and a fresh independent review all
-passed. It does not claim final Task 43 acceptance, 43R-8B, or Task 44.
-
-## Starting state and reconciliation
-
-- Branch: `codex/task43-recovery-integration`.
-- Starting HEAD: `b4d67c4401473e2ba354e90705e52406f9e88626`,
-  `Reconcile Task 43R-4D acceptance state`.
-- The worktree was clean before implementation.
-- Three required read-only `gpt-5.6-luna` MAX investigations completed before
-  the writer: LED/diode target tracing, parallel replacement tracing, and a
-  shared lifecycle/measurement audit. The single writer was delegated only
-  after the primary architect froze the design.
-- The investigations classified one current implementation failure and found
-  no reproducible current parallel replacement failure. The LED/diode defect
-  was introduced by Task 43R-3's installed-target validation and affected
-  reversed catalog parts after lead isolation.
-
-## Root cause
-
-`LedSlotController` and `DiodeSlotController` already retarget component-side
-bindings through each physical part's orientation-aware
-`getTerminalForBoardPad(...)` mapping. `ComponentLeadProbeTarget` then replaced
-that authoritative endpoint by matching the board pad terminal name to a
-physical terminal name. For a reversed LED or diode, board pad A correctly
-bound to the physical K endpoint, but target construction re-resolved A to the
-physical A endpoint. The endpoint comparison invalidated the target before the
-CircuitJS measurement adapter ran, leaving the meter at `--- V`/`--- Ohm`.
-
-This was a target-lifecycle failure, not a solver, fault-ownership, catalog,
-replacement-identity, or hard-coded-reading failure. Board-pad and loose-part
-measurements remained solver-backed. The current parallel normal-player path
-was separately exercised for seeds 0, 2, and 3 and passed replacement and
-customer retest; no parallel production change was justified.
-
-## Implementation
-
-`ComponentLeadProbeTarget` now retains the component endpoint supplied by the
-active connection binding and validates only that the endpoint is a member of
-the currently installed physical part's terminal endpoints. Existing checks for
-board/component identity, physical-part identity, package compatibility, slot
-mount state, lifecycle identity, lead exposure, and renderer geometry remain in
-place. Terminal-name endpoint re-resolution was removed, preserving stable
-board/component/pad/net IDs and the existing orientation-aware electrical graph.
-
-The LED and diode developer verifiers now use the real mutation and measurement
-paths to lift both leads of a reversed catalog replacement, create both
-installed component-side targets, measure the isolated physical diode in both
-directions through CircuitJS diode stimulus, and reconnect both leads before
-the powered reversed-part negative check. The diode helper was generalized only
-to share the same solver-backed assertion for loose and installed targets.
-
-The final diode-only correction preserves the intended lifted-lead topology:
-after lifting `D1.K`, the connected `D1.A` is measured through its board-pad
-target while the detached `D1.K` is measured through its component-side target.
-Both directions assert valid `CircuitPost` endpoints after the mutation settles.
-This avoids constructing an invalid component-side target for the still-connected
-anode, which had produced the pre-correction `NaN` developer-route failure.
-
-## Validation evidence
-
-- Fresh JDK 8 production build/link:
-  `.\scripts\build.ps1 -JavaHome .tools\jdk8-download\jdk8u502-b07 -Style OBF -Target Compile`
-  — passed all five GWT permutations and production linking.
-- `.\scripts\verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
-- `git diff --check` — passed after the bounded correction and handoff update.
-- The static compiled preview served `war/circuitjs.html` over HTTP 200.
-- The supported in-app Browser was opened and kept visible for the required
-  player-facing check, but both `127.0.0.1:8899` and `localhost:8899` were
-  blocked before page load with `net::ERR_BLOCKED_BY_CLIENT`.
-- The compiled-preview harness attempts for `-LedParts -Seeds 4`,
-  `-Diode -Seeds 0`, `-Parallel -Seeds 0`, `-Task39`, `-Task40`, and `-Task41`
-  did not reach application routes. Edge's GPU process exited and the harness
-  could not inspect Edge processes because managed WMI returned `Access denied`.
-  These are recorded as external blockers, not product passes or failures.
-- Required-investigation normal-player evidence independently observed the
-  existing parallel replacement/retest path for seeds 0, 2, and 3, plus LED
-  and diode replacement/retest flows, with no Browser console errors. That
-  evidence did not substitute for the blocked focused reversed-target route.
-- After the user authorized Edge, the compiled preview was exercised through
-  visible normal-player interaction in Microsoft Edge. LED seed 4 passed the
-  remove/reversed-replacement-negative/forward-replacement/power/retest flow;
-  diode seed 0 passed the remove/reversed-catalog-orientation/forward-
-  replacement/power/retest flow; and parallel seed 3 passed the remove/R1,
-  1000-ohm replacement, power, and customer-retest flow. Each final state
-  reported the expected repair verification and disabled the retest control.
-  The public diode UI allowed one lifted lead at a time and the attempted
-  visible component-side reading remained `--- V`; this is recorded as an
-  observation, not as a public measurement pass.
-- The exact focused developer routes were then exercised visibly in Edge on the
-  final branch state:
-  - LED seed 4: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=4&tsjVerifyLedParts=true`
-    ended with `Board Power: ON` and `Repair verified. Indicator operating
-    normally.`
-  - Diode seed 0: `http://127.0.0.1:8899/circuitjs.html?tsjChallenge=diode&seed=0&tsjVerifyDiode=true`
-    ended with `Board Power: ON` and `Repair verified. Indicator operating
-    normally.` The earlier lifted-healthy `NaN` exception was not observed after
-    the correction.
-- Curated final-state screenshots are stored at
-  `docs/task-evidence/task-43/task43r8a-led-edge.jpg` and
-  `docs/task-evidence/task-43/task43r8a-diode-edge.jpg`.
-- Source review confirms existing stale-target invalidation, original-reinstall
-  negatives, distinct replacement identity, power/mutation cleanup, package
-  rejection, and wrong-owner paths remain unchanged. The new focused canaries
-  specifically prevent the discovered reversed-target regression.
-
-## Scope and deferrals
-
-Only these three source files were changed for implementation:
-
-- `src/com/lushprojects/circuitjs1/client/ComponentLeadProbeTarget.java`
-- `src/com/lushprojects/circuitjs1/client/LedPhysicalDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/DiodeFamilyDeveloperVerifier.java`
-
-The handoff documentation records the endpoint-ownership correction. NPN
-stale deferrals, forced-negative Task 43 shell behavior, package/geometry
-redesign, routing, CircuitJS internals, parallel production code, final Task 43
-acceptance, 43R-8B, and Task 44 were not started.
-
-## Review and publication gate
-
-Primary source review found the correction bounded and consistent with the
-orientation-aware binding contract. The fresh independent read-only Luna MAX
-reviewer returned `PASS` after inspecting the final source, lifecycle,
-measurement, scope, and runtime evidence. The earlier review blocker was the
-pre-route harness limitation and is superseded by the visible final Edge
-developer-route results. The user's earlier Escape interruption is recorded as
-operator-only and was not treated as a product, verifier, or environment
-failure. The final Task 43 completion protocol is performed after this report
-and the roadmap are updated; 43R-8B and Task 44 remain untouched.
-
----
-
-# Task 43R-5A completion report — RC fixed-layout acceptance-proof closure
-
-## Roadmap milestone
-
-Task 43 recovery correction **43R-5A — RC fixed-layout acceptance-proof
-closure** is implemented and validated in the working tree. It does not claim
-Task 43 or 43R-8 complete; 43R-8 remains the next unstarted
-acceptance/regression/cleanup milestone. Task 44 was not touched.
-
-## Starting state and scope
-
-- Branch: `codex/task43-recovery-integration`.
-- Starting handoff: `88fbe3daf007721bfdd31853fab94d5c5317f3bb`.
-- Accepted production checkpoint: `c306556d3d387e4ad7d20353a73a6b703e58c477`.
-- Phase A had already established that the existing RC route structurally
-  supports all 3 × 3 × 4 combinations; this slice adds the acceptance proof
-  and seam integration without changing that route.
-- Only the requested RC factory/verifier/aggregation and three handoff
-  documents were edited. No commit or push was performed.
-
-## Implementation
-
-`RcDelayPcbLayoutFactory.create` now normalizes its seed to variation mode and
-shares one private `createLayout` with the developer-only
-`createForDeveloperVerification` seam. Production passes the real seed and
-null resistor keys. The developer seam passes `seed=variationMode` and
-explicitly selects only canonical `SPAN_220`, `SPAN_240`, or `SPAN_260` axial
-resistor geometries. The existing J1/R1/C1/J2/R2/C2 seed offsets are retained.
-
-The production RC board dimensions, six component anchors, trace route and
-copper coordinates, labels, compaction, parts-tray placement, and final
-`validateGeometry` call are unchanged. R1/R2 explicit selection uses the live
-`AXIAL_RESISTOR` package object and its canonical `GeometryVariant`; no second
-route builder or package geometry was added.
-
-`RcFixedLayoutDeveloperVerifier` uses one live
-`RcDelayGenerator().generateForFaultVerification(0, CAPACITOR_OPEN)` fixture,
-validates the board before the matrix, and executes exactly 36 cases:
-`SPAN_220/SPAN_240/SPAN_260` × `SPAN_220/SPAN_240/SPAN_260` × four origin
-classes. Each case checks canonical package/geometry/transform identity for
-all six components, the ordered nine-trace endpoint/net witness, exact VIN,
-RC_OUT, and GND logical memberships, physical endpoint representation and
-rooted branches, package-declared escape metadata/directions, route quality
-and clearance, deterministic full fingerprints, and normalized full geometry
-across origin classes. Seam canaries reject null, `SPAN_230`, unknown keys,
-and out-of-range variation modes. Production parity reconstructs seeds 0–3
-from their selected live R1/R2 keys and requires full geometry and realization
-parity.
-
-`Task43DeveloperVerifier` invokes the RC proof before NPN and NMOS. The two
-RC-specific deferred-failure branches were removed from
-`PcbLayoutDeveloperVerifier`; both existing NPN deferrals remain untouched.
-
-## Validation evidence
-
-- JDK 8 production compile/link:
-  `.\scripts\build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
-  — passed all five GWT permutations and production linking.
-- Compiled-preview Task 43 route:
-  `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -Task43 -TimeoutSeconds 90`
-  — `PASS task43 physical package geometry contract`. This route executes
-  the RC verifier first; its successful matrix evidence is
-  `PASS:RC_FIXED_LAYOUT_MATRIX:cases=36/36;variantTuples=9;originClasses=4`.
-- Compiled-preview general layout route:
-  `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -Layout -TimeoutSeconds 90 -PlayerSeed 3`
-  — `PASS procedural-layout`; RC deferrals no longer absorb failures.
-- Existing stored-energy route, seeds 0, 2, and 3:
-  `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -StoredEnergy -TimeoutSeconds 90 -Seeds 0,2,3`
-  — all three routes passed.
-- Existing RC behavioral route, seeds 0, 2, and 3, reaches the accepted
-  43R-4C renderer boundary and reports
-  `Renderer omitted disconnected component-side lead: C1.+`; no RC layout
-  failure was reported. This remains outside 43R-5A.
-- The in-app Browser runtime was unavailable (`agent.browsers.list()` returned
-  no browser surfaces), so no normal-player visible-browser evidence is
-  claimed. The successful results above are compiled-preview harness evidence.
-- Final `git diff --check` is clean. The candidate remains uncommitted and
-  unpushed.
-
-## Changed files
-
-- `src/com/lushprojects/circuitjs1/client/RcDelayPcbLayoutFactory.java`
-- `src/com/lushprojects/circuitjs1/client/RcFixedLayoutDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/Task43DeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/PcbLayoutDeveloperVerifier.java`
-- `docs/ARCHITECTURE.md`
-- `docs/ROADMAP.md`
-- `docs/CODEX_TASK_REPORT.md`
-
----
-
-# Task 43R-7 completion report — NMOS fixed-layout reconstruction
-
-## Roadmap milestone
-
-Task 43 recovery milestone **43R-7 — NMOS fixed-layout reconstruction** is
-implemented and validated in the working tree. 43R-8 is now the next eligible
-milestone and was not started. Task 44 was not touched.
-
-## Starting state and scope
-
-- Branch: `codex/task43-recovery-integration`.
-- The required initial branch/worktree check was clean and matched the branch
-  requested by the task. Accepted 43R-6 was `e7a93f47b5f21bb911aa902f8e03836b30e103d2`
-  (HEAD and ancestor); `master` and `origin/master` remained
-  `c0eb342b29165b8218a4b97b16fb8554fee42aff`.
-- Primary production source: `NmosLowSideSwitchPcbLayoutFactory.java`.
-- Authorized support changes: the NMOS fixed-layout developer verifier,
-  NMOS-specific layout-verifier deferral removal, Task 43 aggregation, and the
-  three 43R-7 handoff documents.
-- No commit, push, merge, or completion notification was performed during the
-  delegated implementation phase. The final commit SHA and publication result
-  are intentionally recorded in the final task response rather than embedded
-  in this pre-commit report.
-
-## Implementation
-
-`NmosLowSideSwitchPcbLayoutFactory` now has the frozen deterministic route for
-the live version-3 package geometry. The fixed anchors remain J1 `(80+s,80)`,
-J2 `(80+s,400)`, RLOAD `(350+s,200)`, RPD `(300+s,320)`, LED1 `(500+s,70)`,
-and Q1 `(900+s,100)` before compaction, with `s=10*m` for four origin classes.
-RLOAD and RPD are independently selected from the canonical axial variants
-`SPAN_220`, `SPAN_240`, and `SPAN_260` in the developer-only overload.
-
-The factory replaces the prior NMOS copper with exactly these eight ordered
-traces:
-
-- `LOAD_SUPPLY`: J1.1 → RLOAD.1;
-- `LOAD_NODE`: RLOAD.2 → LED1.A;
-- `DRAIN`: LED1.K → Q1.D;
-- `CONTROL_INPUT`: J2.1 → RPD.1;
-- `CONTROL_INPUT`: J2.1 → Q1.G;
-- `GND`: J1.2 → J2.2;
-- `GND`: J1.2 → RPD.2;
-- `GND`: J1.2 → Q1.S.
-
-The route derives pad centers and package escapes from the actual footprint
-objects, keeps the dynamic DRAIN lane 20 units right of the LOAD_NODE resistor
-escape lane, applies `compactToContent(40+s, 30+(m%2)*10, 26)`, positions the
-parts tray, and runs the real geometry validator.
-
-`NmosFixedLayoutDeveloperVerifier` uses one live NMOS generator fixture and
-enumerates exactly 9 resistor tuples × 4 origin classes = 36 cases. Each case
-checks the exact coordinate and endpoint witness, all five logical memberships,
-the rooted CONTROL_INPUT copper branches and real physical-union validator,
-Q1 provider/package parity, package escape directions, route quality, copper
-clearance, deterministic duplicate fingerprints, and normalized geometry
-equivalence across origin classes. `Task43DeveloperVerifier` aggregates this
-matrix without changing RC/NPN aggregation or claiming 43R-8.
+The documentation and planning work is complete in the working tree. No
+implementation milestone began. Task 44, Gate A, Gate B, and Task 43P remain
+unstarted; the exact next gate is Post-Task-43 Gate A.
+
+## Baseline and branch
+
+- Final accepted Task 43 SHA used: `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`.
+- Accepted implementation source branch: `codex/task43-recovery-integration`.
+- Live remote confirmation: `origin/codex/task43-recovery-integration` points
+  to the same SHA.
+- Roadmap redesign branch: `codex/post43-roadmap-redesign`, based directly on
+  that accepted SHA.
+- Package geometry-contract version: 3.
 
 ## Files changed
 
-- `src/com/lushprojects/circuitjs1/client/NmosLowSideSwitchPcbLayoutFactory.java`
-- `src/com/lushprojects/circuitjs1/client/NmosFixedLayoutDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/PcbLayoutDeveloperVerifier.java`
-- `src/com/lushprojects/circuitjs1/client/Task43DeveloperVerifier.java`
-- `docs/ARCHITECTURE.md`
 - `docs/ROADMAP.md`
 - `docs/CODEX_TASK_REPORT.md`
+- `docs/task-evidence/task-43/recovery-history.md`
 
-No `PhysicalPackage`, `PhysicalPackageGeometry`, generic footprint/geometry,
-generic validator, `SeededPcbLayoutGenerator`, RC/NPN route, NMOS electrical
-generator/topology, measurement/fault/stress/replacement behavior, AGENTS.md,
-or Task 44 file was changed.
+No production Java, scripts, verifiers, `AGENTS.md`, or branch-cleanup files
+were changed.
 
-## Validation evidence
+## Roadmap changes
 
-Final production build command:
+### Task 43 compression
 
-`.\scripts\build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
+The active Task 43 entry is now a concise accepted completion record covering
+package-owned geometry, explicit variants, geometry versioning, package-backed
+footprints, exact pad/probe geometry, compaction/containment, physical
+same-net validation, installed/lifted/loose interaction, RC/NPN/NMOS fixed
+layouts, integrated regression, forced-negative process integrity, and the
+final accepted SHA. Detailed recovery chronology was moved to
+`docs/task-evidence/task-43/recovery-history.md`.
 
-Result: bundled JDK 8 accepted; all five GWT permutations compiled; production
-linking succeeded.
+### Post-Task-43 gates
 
-In-app developer validation against the compiled production preview:
+- Gate A is the single immediate next gate for mainline consolidation and
+  evidence preservation.
+- Gate B follows Gate A and establishes isolated ports, profiles, temporary
+  state, evidence paths, failure classes, CI checks, and mainline protection.
+- Task 43P follows Gate B and reproduces or falsifies historical lifecycle and
+  verification-integrity findings against the final SHA. It creates correction
+  milestones only for proven open blockers.
+- The Owner Review Gate follows Task 43P and requires explicit owner approval
+  before Task 44. Task 44 must not begin automatically.
+- The Composition Entry Gate is the hard runtime-integrity wall before Task 47.
 
-- `PASS:NMOS_FIXED_LAYOUT_MATRIX:cases=36/36;variantTuples=9;originClasses=4`;
-- `PASS:layout` from the general `PcbLayoutDeveloperVerifier`;
-- `PASS:task43` from the Task 43 aggregate;
-- `PASS:nmos` for all nine existing NMOS electrical/control/mutation cases:
-  seeds 0, 2, and 3 × `NMOS_DS_OPEN`, `NMOS_DS_SHORT`, and
-  `NMOS_GATE_OPEN`.
+### Tasks 44–48
 
-PowerShell's `System.Net.HttpListener` constructor is unsupported. A temporary
-local static server was used only to serve the already-built `war/`; it is not
-part of the candidate. The coder reported that the supported in-app browser
-loaded the same compiled preview and produced all results listed above. In the
-primary architect session, the required visible in-app Browser smoke attempt
-was blocked before page load with `ERR_BLOCKED_BY_CLIENT` for loopback URLs, so
-no independent normal-player screenshot is claimed. The separate Edge harness
-was blocked at its first route by the host's GPU-process crash and WMI cleanup
-`Access denied` behavior. These are environment limitations, not production
-validation failures; no DOM shortcut or desktop automation was substituted.
+Task 44 remains an immutable block descriptor/stable namespace contract and is
+blocked by Task 43P plus explicit owner review. It does not implement CircuitJS
+assembly, PCB generation, mutation, runtime composition, or same-owner
+snapshotting. Task 45 remains typed electrical-domain/port preflight, with
+CircuitJS as final electrical truth. Task 46 remains the versioned descriptor,
+named-seed, and typed-constraint contract; it may define immutable replay
+contracts when Task 43P allows, but it does not authorize Task 47. Task 47 is
+blocked by Tasks 44–46 and the Composition Entry Gate and now carries explicit
+owner, settlement, stale-callback, exception, proof-boundary, and no-duplicate-
+architecture requirements. Task 48 remains the first small real composed proof
+and now requires independent physical correspondence, visible player-control
+proof, deterministic replay, isolation evidence, and monolithic leaf fixtures.
 
-The Edge run therefore did not reach the separate Task 39, Task 40, or Task 41
-browser routes in this session. Their production paths were unchanged; this
-limitation is recorded separately from the successful build, source review,
-and coder-reported compiled-preview verifier results.
+### Preserved sequence and conditional work
 
-`git diff --check` was clean after the implementation and review pass.
+Tasks 49–65 remain substantially in their prior order; Task 52 remains after
+the first composed proof. Tasks 54–56 and 56(A) remain evidence-gated. Task 66
+now distinguishes hard dependencies from preferred sequence: Task 65 is not a
+universal architectural prerequisite and becomes hard only if continuous LED
+intensity is required by the relay challenge. Tasks 71–73 and later damage,
+thermal, history, scoring, persistence, sharing, and multi-fault work remain in
+their existing long-term positions.
 
-## Multi-agent implementation and review
+Task 80 now admits HARD by an explicit advertised capability bundle rather than
+requiring every Task 66–78 feature. The bundle must be defined at planning time
+and include legitimate multi-block reasoning, plausible owners, domains,
+purposeful support, isolation/repair reasoning, readable physical complexity,
+solver-backed retest, deterministic replay, and a legal diagnostic plan. Task
+80(A) validates only the advertised beta surface and does not automatically
+require PSYCHOTIC, multiple faults, economy, mobile, every future block, or
+every future instrument.
 
-- Phase A investigators: Descartes, Herschel, and Einstein; parallel,
-  read-only `gpt-5.6-luna` MAX workers. Their reports were reconciled into the
-  frozen eight-trace witness before implementation.
-- Coder: Laplace; the single write-capable `gpt-5.6-luna` MAX worker. No other
-  write-capable Task 43 agent overlapped the implementation phase.
-- Primary architect review: one post-coder diff/scope/route review; **PASS**.
-- Independent reviewer: Popper; fresh read-only `gpt-5.6-luna` MAX worker;
-  **PASS**, with the loopback/Edge host limitations above.
-- Escalation architect: not required.
+### Cross-cutting runtime composition rules
 
-## Completion protocol
+The roadmap now records future entry/acceptance requirements for visible-player
+proof, independent physical correspondence, verifier independence, mutation
+settlement/rollback, exception-safe measurement cleanup, stale async identity,
+fresh-candidate versus same-owner proof boundaries, distinct reset semantics,
+causal fault/damage separation, isolated browser automation, and CircuitJS
+truth/stable identity.
 
-- Intended commit message: `Reconstruct Task 43 NMOS fixed routing`.
-- Branch/upstream: `codex/task43-recovery-integration` /
-  `origin/codex/task43-recovery-integration`.
-- The final SHA, verified push result, and completion-notification attempt are
-  established after this report is staged and committed, and are reported in
-  the final task response.
-- 43R-8 was marked next eligible but was not started. Task 44 was not started.
+## History preservation
 
-# Historical pre-acceptance report — Task 43R-4D implementation report — detached installed lead renderer/probe closure
+The completed Task 1–43 ledger remains intact. The historical lifecycle and
+verification-integrity audits are explicitly treated as older-baseline
+findings/hypotheses. The recovery file preserves the 43R chronology, including
+failed attempts, corrective returns, fixed-layout evidence, the preserved
+43R-8B stash disposition, and final 43R-8 acceptance facts.
 
-## Roadmap milestone
+## Validation performed
 
-Task 43 recovery correction **43R-4D — detached installed lead renderer/probe
-closure** is implemented in the bounded candidate, but remains unaccepted.
-It is a corrective closure candidate only; it does not claim Task 43 or 43R-8
-complete. 43R-8 remains held and unstarted pending independent 43R-4D
-acceptance, and Task 44 remains unstarted.
+- Verified the final integrated Task 43 report, commit, diff, and accepted
+  review evidence before editing.
+- Verified live remote presence with `git ls-remote`:
+  `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`.
+- Verified the redesign branch starts at that exact SHA.
+- Inspected all listed worktrees; each was clean before roadmap editing.
+- Inspected the sole stash. Its production verifier files match accepted HEAD;
+  its older script candidate is superseded by later accepted integration
+  commits and remains preserved as historical evidence.
+- Read `AGENTS.md`, `docs/ROADMAP.md`, `docs/ARCHITECTURE.md`, the prior task
+  report, current research, and historical lifecycle/verification/recovery
+  reports from their repository branches.
+- Production Java/GWT build was **not run**. This is a documentation-only task,
+  and the task instructions explicitly say not to spend time running a full
+  production build when no production source changes occur.
+- `git diff --check` passed; Git emitted only the expected LF-to-CRLF working-
+  copy warnings.
+- Markdown major-heading uniqueness passed; repeated generic `### Goal`,
+  `### Requirements`, and completion headings are intentional task templates.
+- Task-heading continuity passed for Tasks 28–89, including 34(A), 35(A), and
+  80(A), with no renumbering.
+- Local Markdown link/reference validation passed, including the new recovery
+  history file.
+- Stale-baseline searches passed: no Task 38/92df240 current-baseline claim,
+  obsolete 43R-8/43R-8B next-state claim, unblocked Task 44 claim, universal
+  Task 65→66 hard dependency, or all-features Task 80 claim remains.
+- Status consistency passed: one active `[>]` gate, one Immediate Next
+  Milestone heading, one Task 43 heading, and no duplicate major headings.
+- A focused roadmap acceptance script passed for the final SHA, geometry
+  version, Gate A/B/43P/Owner/Composition entries, Task 44/47/48 blockers,
+  Task 66 preferred-sequence language, Task 80 capability bundle, Task 80(A)
+  scope, recovery history, report content, and file scope.
+- Intended-scope inspection passed: only the two existing roadmap/report files
+  and the new Task 43 recovery-history file are changed.
 
-## Starting state and scope
+## Known uncertainties and intentionally deferred work
 
-- Branch: `codex/task43-recovery-integration`.
-- HEAD: `14afe84be8d0c6bad64965b5f0e6627f428bfa35`, the accepted checkpoint.
-- `master` and `origin/master`: `c0eb342b29165b8218a4b97b16fb8554fee42aff`.
-- The worktree was clean before implementation. No commit, push, merge, reset,
-  or publication was performed.
-- The reconciled Phase-A classification was `IMPLEMENTATION_FAILURE`: the
-  generic verifier used electrical disconnected state as installed-mount state
-  after C1 had been physically removed. Slot/part mounting identity remains
-  the authority; production renderer/context/provider/geometry/target code was
-  not changed.
+- Gate A mainline consolidation has not begun; no branches or stashes were
+  cleaned up by this task.
+- Gate B verifier isolation and branch-protection configuration remain future
+  work; owner-only GitHub settings may require an external action.
+- Task 43P has not yet determined which historical findings remain open on the
+  final SHA. No correction milestone was pre-invented.
+- The current preserved stash is historical evidence, not a current accepted
+  implementation baseline.
+- No post-Task-43 production capability is claimed complete.
 
-## Implementation
+## Completion handoff
 
-`PhysicalPartRenderDeveloperVerifier` now computes physical mounting from the
-runtime installed part, slot ownership, `part.isInstalled()`, and
-`part.getBoardSlot()` independently of lead connection state. Its package
-geometry checks remain active, while mounted connected/lifted assertions and
-an explicit physically-removed branch dispatch separately. The removed branch
-rejects installed component-side point/target/hit reachability, preserves
-board-pad targets, and checks loose-provider ownership.
-
-The generic installed lifecycle canary now uses both terminal positions of the
-same two-terminal part. It deterministically prefers an installed non-capacitor
-resistor path (the generated LED-family `R1` path when present), with `C1` as
-the RC fallback. The same helper checks connected board-only probing, first and
-second lead lifts, package point/bounds/marker agreement, distinct
-`BoardPadProbeTarget` versus `ComponentLeadProbeTarget` classes and endpoint
-identities, physical-part/terminal identity, board-pad precedence, reconnect
-invalidation, graph-only removal preserving mounted interaction, physical
-removal invalidation and loose transfer, same-part reinstall with a fresh
-target, and wrong physical identity/component-pad rejection. Its endpoint
-negative performs a real generic catalog replacement: the old target must
-retain the original endpoint and invalidate, while the replacement acquires a
-new physical-part/terminal target. Thus the RC path explicitly exercises
-`C1.+` while C1 remains mounted and lifted, and the LED-family path exercises a
-representative non-capacitor binding.
-
-The installed pre-mutation binding check now uses a verifier-local semantic
-comparison for `CircuitPostMeasurementEndpoint` wrappers (same element and
-post index) only when comparing the generated binding endpoint with the
-physical terminal endpoint. Exact endpoint identity checks remain in the
-target-stability, reinstall, and replacement distinctions.
-
-The correction adds exactly two installed-path adversarial canaries. The
-`verifyInstalledProbeOverlapNegative` canary creates a detached one-component
-fixture, wraps the real package provider with a mutable installed terminal copy
-whose same-terminal board-pad and detached component probe surfaces completely
-collapse, and invokes the real installed geometry/provider/renderer hit path.
-Every point in the collapsed surface must resolve to the valid declared
-`BoardPadProbeTarget` with board-pad precedence and never to a valid ambiguous
-component-side target. The `verifyInstalledDetachedMarkerNegative` canary
-obtains the real installed projection, copies its installed surfaces, moves the
-detached marker outside its declared component-lead probe, and exercises the
-`PhysicalPartRenderTerminal` constructor boundary, requiring the specific
-`Physical render component probe omits its center` rejection. Both remain
-installed-mode checks with a `boardPadId`; the detached fixture's temporary
-instance/modification view is restored and no canonical package geometry or
-live tray/selection/power state is mutated.
-
-The lifecycle outcomes represented by the verifier are:
-
-- connected: mounted part, board-pad target, no component-side target;
-- lead-lifted: same mounted part, board pad plus distinct physical-terminal
-  component target;
-- removed: empty slot, no installed component interaction, fresh loose target;
-- reinstalled: same part/carrier/terminal/endpoint identity, stale target still
-  invalid, fresh target only after a real new lift.
-
-## Validation evidence and limitations
-
-- `.\scripts\build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
-  — passed all five GWT permutations and production linking.
-- `.\scripts\verify-renderer-boundary.ps1` — `PASS:renderer-provider-boundary`.
-- A temporary local static preview served the compiled `war/` and returned
-  HTTP 200 for `circuitjs.html` and the active GWT bootstrap resource.
-- `.\scripts\verify-browser.ps1 -BaseUrl http://127.0.0.1:8898 -Task43 -TimeoutSeconds 90`
-  — could not produce a verifier result: the host denied the harness's WMI
-  Edge-process inspection (`Access denied`) after its browser connection
-  failed. The in-app browser loaded only a blank GWT bootstrap shell and did
-  not expose a `data-tsj-verification` result. Therefore no `PASS:task43` or
-  RC behavioral PASS is claimed here.
-- The required `-Layout`, `-StoredEnergy -Seeds 0,2,3`, and `-Rc -Seeds 0,2,3`
-  harness lanes were also attempted and stopped at the same browser-target/WMI
-  `Access denied` failure; no route PASS is inferred.
-- Task 43 result: no browser verifier result was obtained in this environment;
-  no Task 43 PASS is claimed from source compilation.
-- C1.+ regression result: the RC-mounted/lifted branch now checks the real
-  renderer point and hit path for `C1.+`; a live route PASS could not be
-  observed because the browser verification environment remained blocked.
-- Representative non-capacitor result: the generic canary deterministically
-  selects the generated LED-family `R1` when present and covers both terminal
-  positions; its live route PASS is likewise unclaimed here.
-- RC fixed-layout matrix result: not rerun by this corrective verifier task;
-  prior accepted matrix evidence is unchanged and not re-claimed here.
-- RC stored-energy result: not rerun by this corrective verifier task; no new
-  stored-energy PASS is inferred.
-- Final `git diff --check` is clean and final scope inspection shows only the
-  four authorized files listed below. No runtime route result is inferred from
-  source compilation.
-
-The remediation source gate was rerun with
-`.\scripts\build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile`
-using the bundled JDK 8; all five GWT permutations and production linking
-passed. No compiled-war in-app Browser result was run or claimed by this
-remediation writer; the primary architect must obtain that runtime evidence
-and perform final review before accepting 43R-4D.
-
-## Historical pre-final-review acceptance disposition
-
-The fresh read-only Luna MAX final reviewer returned `BLOCKERS`, so the
-candidate is not a final pass. The external blocker is the unavailable
-mandatory browser/runtime lane described above. The reviewer also identified
-an installed-path validation gap. This remediation adds the two explicit
-installed negatives described above. The candidate remains unaccepted pending
-the primary architect's runtime evidence and final review.
-
-Because mandatory validation and final review did not pass, no staging, commit,
-push, or completion email was performed. The four-file candidate remains in
-the working tree for a later correction/acceptance run.
-
-## Changed files
-
-- `src/com/lushprojects/circuitjs1/client/PhysicalPartRenderDeveloperVerifier.java`
-- `docs/ARCHITECTURE.md`
-- `docs/ROADMAP.md`
-- `docs/CODEX_TASK_REPORT.md`
-
-No RC layout, electrical topology, measurement, fault, stress, replacement,
-scoring, NPN/NMOS route, package catalog, AGENTS.md, scripts, or Task 44 file
-was edited.
-
-## Historical pre-final-review 43R-4D remediation runtime closure update — 2026-08-22
-
-The earlier WMI/Edge harness failure is retained as harness history, but it is
-not the final runtime result. After the verifier-only fixture corrections, the
-compiled `war/` was served from a clean local static origin at
-`http://127.0.0.1:3000` and exercised through the supported in-app Browser.
-
-- Final JDK 8 production build/link: passed all five GWT permutations.
-- Final renderer boundary check: `PASS:renderer-provider-boundary`.
-- Clean Browser `tsjVerifyTask43=true`: `PASS:task43`; this includes the
-  installed overlap and detached-marker negative canaries.
-- Clean Browser layout lane: `PASS:layout`.
-- Clean Browser RC lane: `PASS:rc` for seeds 0, 2, and 3.
-- Clean Browser stored-energy lane: `PASS:stored-energy` for seeds 0, 2, and
-  3; combined RC/stored-energy seed 3: `PASS:rc`.
-- Visible normal-player Browser interaction selected R1, toggled board power,
-  lifted lead 1, observed `State: Lead Lifted`, reconnected it, and observed
-  `State: Installed`; Browser error logs were empty.
-- `git diff --check`: clean. The candidate remains unstaged and uncommitted
-  pending the required fresh independent final review and acceptance gates.
-
-The replacement-endpoint lifecycle negative now runs its real catalog
-mutation on a disposable generated board and restores the live simulation
-references and verification flags, preventing acquired replacement inventory
-from contaminating the production board identity. 43R-4D is still not marked
-accepted until the fresh independent Luna MAX reviewer returns `PASS`.
-
-## Final acceptance — Task 43R-4D — 2026-08-22
-
-43R-4D is accepted. The fresh independent read-only Luna MAX reviewer returned
-`PASS` after inspecting the final four-file diff, installed positive and
-negative coverage, isolated replacement cleanup, runtime evidence, scope, and
-documentation.
-
-- Primary architect final result: `FINAL PASS`.
-- Source/build gates: JDK 8 build/link passed all five GWT permutations;
-  renderer boundary returned `PASS:renderer-provider-boundary`.
-- Runtime gates on the clean supported in-app Browser route returned
-  `PASS:task43`, `PASS:layout`, RC `PASS:rc` for seeds 0/2/3,
-  `PASS:stored-energy` for seeds 0/2/3, and combined RC/stored-energy
-  `PASS:rc`.
-- Normal-player Browser interaction visibly exercised power toggle, R1
-  selection, lead lift, and reconnect; expected states were observed and no
-  Browser error logs were recorded.
-- `git diff --check` passed. 43R-8 is next eligible and remains unstarted;
-  Task 44 remains blocked and unstarted.
-- Escalation architect: not required.
-
-The final changed files are exactly the three handoff documents and
-`PhysicalPartRenderDeveloperVerifier.java`. No production renderer,
-package/geometry, electrical, measurement, fault, replacement, NPN/NMOS,
-43R-8, or Task 44 work was started.
-
-Intended commit message: `Close Task 43R-4D installed-path acceptance`.
-Configured remote/upstream: `origin`, branch
-`codex/task43-recovery-integration` tracking
-`origin/codex/task43-recovery-integration`.
-Notification destination: `dspevock@stateofthearcelectric.com`.
-Intended subject: `TroubleshootJS: Task 43R-4D installed-path acceptance pushed`.
-
-The authoritative final commit SHA, verified push result, and notification
-result are established after this report is written and are available from
-repository history and the final Codex task response.
+- Exact next gate: **Post-Task-43 Gate A — Mainline Consolidation and Evidence
+  Preservation**.
+- Task 44 is not next and remains unstarted.
+- No implementation milestone began.
+- The roadmap redesign commit SHA and verified push result are established after
+  the final commit and publication; this report is intentionally written before
+  that self-referential commit SHA exists.
+- Post-push Gmail notification is attempted only after verified publication and
+  only if the connected capability is available; its result must be reported
+  truthfully.

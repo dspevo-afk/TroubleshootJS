@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-24_
+_Last updated: 2026-08-24 — post-Task-43 roadmap redesign_
 
 ## Purpose
 
@@ -58,6 +58,23 @@ CircuitJS remains the electrical source of truth.
 - `[ ]` Planned.
 - `[~]` Exploratory / timing intentionally flexible.
 - `[!]` Blocked by an earlier dependency.
+
+## Dependency terminology
+
+Roadmap dependencies use three deliberately different concepts:
+
+- **Hard dependency:** a system or accepted contract without which a later
+  task would be invalid, unsafe, or architecturally impossible.
+- **Preferred sequence:** the desired ordering for product, presentation, or
+  workflow reasons, but not a technical prerequisite.
+- **Evidence entry condition:** a task that begins only when measured evidence
+  demonstrates that the capability is needed.
+
+Only genuine hard dependencies belong under **Dependencies**. Preferred
+sequence belongs in its own labeled section, and conditional work must state
+an explicit entry condition. Dependency chains are not decorative bureaucracy;
+an unrelated delayed feature must not block technically valid work merely
+because its task number is lower.
 
 ## Milestone selection
 
@@ -173,15 +190,43 @@ TroubleshootJS has already moved well beyond a stock CircuitJS fork.
 - [x] SHOP is explicitly a local mock with no board connection; RESOURCES and
   SETTINGS are visible placeholders. They are not yet gameplay systems.
 
-The current accepted implementation baseline is **Task 38: NMOS Low-Side
-Switch Family**, including the physical gate-topology correction and the
-subsequent integration of the four architecture audits and workbench shell.
-The local master and origin/master baseline used for this redesign was
-92df240.
+The current accepted implementation baseline is the final integrated **Task 43
+acceptance** at SHA
+`8245c79990647f6c40f53bc1dd9330ec2ccd22b4`, published on
+`origin/codex/task43-recovery-integration`. The package-backed PCB geometry
+contract is version 3. No post-Task-43 implementation is claimed here.
+
+The accepted baseline currently includes:
+
+- implemented CircuitJS-backed families: LED indicator,
+  diode-protected indicator, parallel dual indicator, RC delay/charge, NPN
+  low-side switch, and NMOS low-side switch;
+- a PCB-primary workbench with DC voltage, resistance, continuity, and diode
+  test modes, real board-power isolation, player-operable family inputs,
+  customer retest, lead lift/reconnect, removal, loose-part measurement,
+  catalog replacement, and solver-backed Finish Job;
+- diagnostic admission through the Task 39 player-operation contract, Task 40
+  physical fault-locus/serviceability admission, Task 41 solvability evidence,
+  and Task 42 existing-family owner diversity. The current normal corpus is 14
+  admitted routes: LED 3, diode 1, parallel 2, RC 2, NPN 3, and NMOS 3;
+  developer-only diode-short and NPN load-path candidates remain outside normal
+  admission;
+- package-owned physical variants with exact pad/lead/probe geometry,
+  compaction and containment, physical same-net connectivity validation,
+  installed-versus-lifted-versus-loose interaction, and fixed RC/NPN/NMOS
+  layout witnesses; and
+- the final integrated Task 43 regression authority: the
+  `-Task43Integrated` browser/regression orchestration, including the strict
+  application-failure, infrastructure-failure, and natural-success exit
+  contract.
+
+The final accepted Task 43 SHA is the implementation baseline for this
+roadmap redesign. Task 44 and all later work remain planned or blocked below;
+none is already implemented by this document.
 
 ## Completed milestone ledger
 
-This ledger preserves the completed Task 1–38 history. Tasks 28–38 retain
+This ledger preserves the completed Task 1–43 history. Tasks 28–43 retain
 their detailed completion records below; the earlier rows summarize the
 accepted history recorded by repository commits and rolling task reports.
 
@@ -227,6 +272,11 @@ accepted history recorded by repository commits and rolling task reports.
 | 36 | Capacitor foundation, stored-energy safety, and RC temporal family. |
 | 37 | NPN low-side switch family and corrected control/state/layout behavior. |
 | 38 | NMOS low-side switch family and corrected physical control/gate topology. |
+| 39 | Player-operable functional inputs and solver-backed customer retest contract. |
+| 40 | Physical fault-locus and serviceability admission for the normal corpus. |
+| 41 | Diagnostic solvability verifier and deterministic complexity evidence. |
+| 42 | Existing-family diagnostic diversity proof with a second LED physical owner. |
+| 43 | Versioned package geometry and physical interaction-envelope contract, including final integrated acceptance. |
 
 ---
 
@@ -843,7 +893,8 @@ before and after restoration, and scenario/fault/repair validation uses a
 solver-backed observational boundary with deliberate NPN presentation state.
 The DC meter verifier covers stable NPN control/collector readings and the
 cross-family LED/RC paths without placeholder flicker. Fresh independent review
-passed; Task 38 remains unstarted.
+passed; at this historical Task 37 checkpoint, Task 38 was not yet started.
+Its accepted result is recorded in the next section.
 
 ---
 
@@ -910,22 +961,21 @@ PASS`. No post-Task-38 production milestone has started.
 
 ---
 
-# Audit-Driven Future Roadmap Reset
+# Post-Task-43 Roadmap Direction
 
-The future roadmap below was redesigned on 2026-08-18 from the accepted Task
-38 implementation, the permanent project laws, the current architecture and
-handoff report, all four completed architecture audits, recent repository
-history, and the integrated workbench shell.
+The future roadmap below was redesigned from the final accepted Task 43
+baseline, the current architecture and handoff report, the completed
+architecture audits, the historical lifecycle and verification-integrity
+audits, and the final Task 43 recovery history. Those older audits are treated
+as findings to reproduce or falsify, not as automatic current truth.
 
-Completed Task 1–38 identities and history remain unchanged. The former
-provisional Task 39–69 sequence had not started, so those future numbers are
-reassigned below. The migration table near the end records where every former
-future item moved, split, combined, or became conditional. Historical reports
-that called Relay Driver “Task 39” describe the old provisional queue; they do
-not override this reset.
+Completed Task 1–43 identities and history remain unchanged. Tasks 44–89 keep
+their numbers and broad product direction; the bounded post-Task-43 gates
+below make the runtime-composition wall explicit without turning every later
+feature into a prerequisite for every other feature.
 
-Exactly one milestone is immediately eligible: Task 39. Later milestones are
-not authority to continue automatically.
+Exactly one milestone is immediately eligible: Post-Task-43 Gate A. Later
+milestones are not authority to continue automatically.
 
 ## Governing architecture gates
 
@@ -1206,116 +1256,217 @@ milestone and was not started.
 
 ## Task 43 — Physical Package and Interaction Envelope Contract
 
-**Status:** [x] Complete — recovery slices 43R-1 through 43R-8, including final
-integrated 43R-8 acceptance, passed their bounded validation and review gates.
-Task 44 remains explicitly blocked and unstarted.
+**Status:** `[x] Complete` — final integrated Task 43/43R-8 acceptance passed.
 
-**Purpose:** Reconcile the physical geometry that routing, drawing, selection,
-and probing currently describe independently.
+**Purpose:** Establish one authoritative physical package and
+interaction-envelope contract for routing, rendering, selection, and probing.
 
-**Dependencies:** Existing package/footprint/render provider registries; the
-chosen roadmap order also requires Tasks 39–42 complete.
+**Final outcome:**
+
+- package-owned physical geometry with explicit package variants and geometry
+  contract versioning;
+- package-backed footprints, exact pad and probe geometry, compaction, and
+  containment;
+- physical same-net connectivity validation independent of decorative drawing;
+- installed rendering and interaction with board-side versus lifted
+  component-side probing and coherent loose-part pose/lifecycle;
+- RC fixed-layout reconstruction, NPN fixed-layout reconstruction, and NMOS
+  fixed-layout reconstruction;
+- integrated regression orchestration, forced-negative process-integrity
+  validation, and the final accepted SHA
+  `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`.
+
+**Preserved evidence:** Git history; `docs/task-evidence/task-43/`; final task
+reports; and `docs/task-evidence/task-43/recovery-history.md`. The detailed
+43R recovery chronology, obsolete intermediate statuses, corrective-return
+narratives, and debugging history live in that evidence file rather than in
+the active roadmap.
+
+**Architectural invariants:** CircuitJS remains electrical truth; package
+geometry does not decide electrical behavior; stable semantic and physical
+identity does not depend on solver node numbers.
+
+**Unlocks:** Post-Task-43 Gate A only. Task 44 is not thereby authorized.
+
+---
+
+## Post-Task-43 Gate A — Mainline Consolidation and Evidence Preservation
+
+**Status:** `[>] IMMEDIATE NEXT GATE`
+
+**Purpose:** Establish one canonical accepted repository state after Task 43
+and preserve unique audit/recovery evidence before further architecture work.
+
+**Hard dependencies:** Final Task 43 accepted; final Task 43 SHA available
+remotely.
 
 **Bounded goals:**
 
-- Let each registered package declare pad geometry, visible body/lead envelope,
-  body keep-out, routing courtyard, selection/hit envelope, and probe terminals
-  in one coordinate system while keeping those concepts distinct.
-- Add canaries for every current package, especially electrolytic, ceramic,
-  TO-92 NPN, and TO-92 NMOS.
-- Include declared installed geometry in compaction and layout containment.
-- Preserve provider ownership; the router must not call renderer drawing code.
+- establish `master` at the accepted post-Task-43 implementation baseline;
+- reconcile branch ancestry and record final repository branch/evidence state;
+- preserve unique audit reports and Task 43 recovery evidence;
+- inspect dirty worktrees and stashes;
+- archive or delete obsolete branches only after proving unique work will not be
+  lost; and
+- prevent old inbox/prompt branches from being mistaken for accepted
+  implementation.
 
-**Explicit non-goals:** No relay package, cosmetic redesign, new routing
-algorithm, electrical change, SMD, rotation system, or multilayer model.
+**Explicit non-goals:** No gameplay feature, Task 44 implementation,
+production refactor, history rewrite, force-push, verifier redesign, or
+automatic beginning of Gate B.
 
-**Acceptance criteria:** Every current package passes envelope containment,
-body/copper/silkscreen separation, selection/probe agreement, terminal identity,
-and board-outline canaries across representative seeds. Existing electrical
-behavior and stable layout identity remain unchanged unless a documented
-geometry-version bump is necessary.
+**Acceptance criteria:**
 
-**Architectural invariants:** Draw-only effects do not imply probeability;
-footprint geometry does not decide electrical behavior.
+- one canonical post-Task-43 mainline exists;
+- no unique production or forensic content becomes unreachable;
+- every old branch has a documented disposition;
+- archive tags exist where appropriate;
+- remaining branches and worktrees are documented;
+- the final baseline SHA is recorded; and
+- Task 44 remains unstarted.
 
-**Addresses:** PCB scalability and component-visual-realism audits’ shared
-architecture prerequisite.
+**Unlocks:** Post-Task-43 Gate B only.
 
-**Unlocks:** Task 44 and safe later package expansion.
+---
 
-**Recovery slices:**
+## Post-Task-43 Gate B — Verification Isolation and Mainline Protection Baseline
 
-- `[x]` 43R-1 — package realization verifier and geometry identity.
-- `[x]` 43R-2 — board geometry consumers, compaction, containment, and
-  physical net connectivity.
-- `[x]` 43R-2C — corrected impossible production full-width package escapes
-  and versioned the live geometry contract before RC routing.
-- `[x]` 43R-3 — installed geometry consumers for rendering, selection, and
-  board/component probing; complete.
-- `[x]` 43R-4 — loose-part pose/render/hit/probe baseline retained; 43R-4C
-  accepted the loose projection lifecycle correction.
-- `[x]` 43R-4D — corrective detached installed-lead rendering/probe verifier
-  complete/accepted with the recorded final runtime and independent-review
-  evidence. Its verifier-only remediation adds the two installed-path negative
-  canaries identified by review. This is not Task 43 or 43R-8 completion.
-- `[x]` 43R-5 — RC fixed-layout reconstruction; complete.
-- `[x]` 43R-5A — corrective RC fixed-layout acceptance-proof closure; complete.
-- `[x]` 43R-6 — NPN fixed-layout reconstruction; complete.
-- `[x]` 43R-7 — NMOS fixed-layout reconstruction; complete.
-- `[x]` 43R-8A — existing-family replacement and installed component-side
-  measurement recovery for reversed LED/diode parts; source/build, focused
-  developer routes, visible normal-player flows, and independent review pass.
-- `[x]` 43R-8B — bounded acceptance-infrastructure closure; complete. This
-  removes the stale NPN deferrals and proves real forced-negative Task 43
-  process failure propagation. It does not claim final integrated 43R-8
-  acceptance.
-- `[x]` 43R-8 — final integrated Task 43 acceptance; complete. The full browser
-  matrix, Task 41/diode-short regressions, strict forced-negative exit-1,
-  missing-browser infrastructure exit-2, and natural-success exit-0 process
-  contract all passed.
+**Status:** `[!] BLOCKED BY POST-TASK-43 GATE A`
 
-43R-5A completion (historical): the live RC factory now exposes a developer-only finite
-matrix seam without changing the production route, component anchors, package
-geometry, board dimensions, labels, compaction, tray placement, or seed
-offsets. `RcFixedLayoutDeveloperVerifier` passes the exact 36-case
-`3 x 3 x 4` matrix and production parity for seeds 0–3, and the two RC
-fixed-layout deferrals are removed. Task 43 remained in recovery at that
-historical point; later recovery status is recorded below.
+**Purpose:** Make automated validation safe for multiple worktrees, browser
+processes, and autonomous coding sessions before the next architecture phase
+depends on it.
 
-43R-8A completion status: the installed component-side probe target now
-preserves the orientation-aware endpoint supplied by the active connection
-binding and only requires endpoint membership in the mounted physical part.
-LED and diode developer verifiers lift both leads on reversed catalog
-replacements, measure through the installed component-side targets using
-CircuitJS diode stimulus, and reconnect before the existing powered
-negative-path checks. The lifted-healthy diode canary uses the connected
-board-pad endpoint for `D1.A` and the detached component-side endpoint for
-`D1.K`, with settled CircuitJS posts before both measurements. Supported Edge
-normal-player runs visibly passed LED seed 4, diode seed 0, and parallel seed 3
-replacement/retest flows. The exact focused Edge developer routes for LED seed
-4 and diode seed 0 ended in `Repair verified. Indicator operating normally.`;
-the fresh independent Luna MAX review returned `PASS`. At that historical
-43R-8A checkpoint, no 43R-8B work had started.
+**Hard dependencies:** Gate A complete and canonical post-Task-43 mainline
+established.
 
-43R-3 completion: installed board rendering, selection, hit testing, and
-board-pad/component-side probing now consume the exact package placement and
-physical-part projection. Connected leads expose board-pad surfaces; lifted
-leads expose the detached component-side surface as a separate target. Physical
-removal and replacement invalidate mounted selection/targets, while same-part
-reinstallation preserves stable part/terminal/endpoint identity and creates a
-fresh target. No electrical, routing, measurement, or controller behavior was
-changed.
+**Bounded goals:**
 
-The following records the externally reviewed 43R-4 baseline; its pagination
-claim is superseded by the accepted 43R-4C correction described above.
+- isolate browser debugging ports and allocate them explicitly;
+- use unique browser profiles, evidence directories, and temporary
+  server/process state;
+- make cleanup worktree-safe;
+- distinguish product failure from verifier-infrastructure failure;
+- establish a CI baseline for JDK 8/GWT production build, source checks, and
+  deterministic nonvisual verifiers;
+- document master branch-protection and required-check status; and
+- prove representative verifier processes cannot corrupt one another when run
+  concurrently.
 
-43R-4 baseline completion: loose physical parts now use one immutable package-owned pose
-for rendering, selection, hit testing, probing, and tray pagination. Bound
-physical realizations remain the source of loose geometry; unbound parts use an
-explicit package default. The full registered provider matrix and negative
-interaction canaries pass, and the R3 installed/lifecycle identity contract is
-preserved. No electrical, routing, measurement, or future-milestone work was
-started.
+**Explicit non-goals:** No gameplay or electrical change, broad testing
+framework rewrite, replacement of required visible Browser validation with
+headless testing, or Task 44 implementation.
+
+**Acceptance criteria:** Representative concurrent verifier runs use isolated
+ports, profiles, temporary state, and evidence paths; exit codes distinguish
+application failure from infrastructure failure; JDK 8 production build has an
+explicit mainline validation path; mainline protection status is documented;
+and any owner-only GitHub configuration remains an explicit external action.
+Task 44 remains unstarted.
+
+**Unlocks:** Task 43P only.
+
+---
+
+## Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation
+
+**Status:** `[!] BLOCKED BY POST-TASK-43 GATE B`
+
+**Purpose:** Re-run material historical lifecycle and verification-integrity
+findings against the final Task 43 SHA before runtime composition begins.
+
+**Hard dependencies:** Task 43 complete; Gates A and B complete; historical
+audit reports preserved.
+
+**Bounded goals:**
+
+- reproduce or disprove every material historical finding against the final
+  SHA;
+- run an independently authored physical-correspondence falsification for raw
+  copper endpoints, rendered pad/lead locations, and solver-bound terminals;
+- mutate renderer-only pad displacement and require accepted verification to
+  detect it;
+- disable a required public action and require normal-player acceptance to fail
+  even if direct controller dispatch remains possible;
+- run omitted-state/snapshot canaries using a deterministic owner/session
+  digest;
+- exercise paused mutation followed by Retest and Finish, pending CircuitJS
+  analysis, pending generated verification, and rapid mutation/power/meter-mode/
+  retest/Finish sequencing;
+- determine whether `READY` is truly settled and actionable, whether board/
+  session/request epochs are required, and whether active-measurement cleanup is
+  exception-safe;
+- distinguish simulation reset from a genuinely fresh challenge owner and
+  original generated fault from secondary-damage causality;
+- confirm Gate B's browser/process isolation; and
+- classify every inherited finding as `CLOSED`, `OPEN BLOCKER`, `FOLLOW-UP`, or
+  `STALE OR SUPERSEDED`.
+
+Create bounded correction milestones only when final-SHA evidence proves an
+`OPEN BLOCKER` exists. Decide and document the Task 41 proof boundary: fresh-
+candidate/detached-owner isolation only, or complete same-owner transaction/
+snapshot support.
+
+**Explicit non-goals:** No Task 44 implementation, block composition, new
+circuit family, giant transaction framework, broad verifier rewrite, or
+production fix inside the reconciliation task. Do not assume historical
+findings remain valid or that Task 43 fixed them automatically.
+
+**Acceptance criteria:** Every historical finding has final-SHA evidence; all
+required falsification cases were exercised; no finding is closed merely
+because production and verifier consume the same metadata; every `OPEN BLOCKER`
+has a reproduction, owner, affected path, bounded correction milestone, and
+acceptance criteria; independent review passes; and results are presented to
+the owner before Task 44 becomes eligible.
+
+**Unlocks:** Owner Review Gate. Task 44 requires explicit owner approval, and
+runtime composition remains blocked until relevant open blockers are resolved.
+
+---
+
+## Owner Review Gate — Post-Task-43 Roadmap Confirmation
+
+**Status:** `[!] BLOCKED BY TASK 43P`
+
+**Purpose:** Require the owner and architect to inspect the final Task 43
+implementation, Task 43P evidence, and this updated roadmap before Task 44.
+
+**Acceptance criteria:** The Task 43P report is complete; every historical
+finding has a disposition; corrective milestones are visible; the dependency
+graph has been reviewed; and the owner explicitly approves Task 44 or requests
+additional roadmap changes.
+
+**Unlocks:** Task 44 only. **Task 44 MUST NOT BEGIN AUTOMATICALLY.**
+
+---
+
+# Cross-Cutting Entry Conditions for Runtime Composition
+
+The following are future entry and acceptance requirements wherever they are
+not already implemented; they are not claims about the current baseline:
+
+1. Internal capability proof is not automatically public-player proof.
+2. Visible player controls must be visibly exercised where player-facing
+   behavior is claimed.
+3. Raw layout, rendered geometry, and solver-terminal mapping require
+   independent correspondence validation.
+4. A verifier is not independent if it merely reads the same production
+   metadata it is meant to challenge.
+5. Runtime mutation needs coherent completion or validated rollback/rebuild.
+6. Active-measurement cleanup must be exception-safe.
+7. Temporary graph elements may never survive failed measurement cleanup.
+8. `READY` must not imply actionability while required settlement is pending.
+9. Board/session/request identity must reject stale asynchronous work.
+10. Fresh-candidate isolation and same-owner transaction support are different
+    claims.
+11. Simulation reset and fresh challenge reset are different operations.
+12. Original fault, wrong repair, and secondary damage retain separate
+    causality.
+13. Browser automation isolates ports, profiles, processes, and evidence paths.
+14. Headless/CDP automation supplements rather than replaces required visible
+    Browser evidence.
+15. CircuitJS remains the electrical source of truth.
+16. Stable semantic/physical identity must not use analyzed solver node numbers.
 
 ---
 
@@ -1323,20 +1474,24 @@ started.
 
 ## Task 44 — Functional Block Descriptor and Stable Namespace Contract
 
-**Status:** [!] BLOCKED / UNSTARTED — explicitly held after Task 43R-8
-acceptance; no Task 44 work is authorized by this task.
+**Status:** `[!] BLOCKED BY TASK 43P AND THE EXPLICIT OWNER REVIEW GATE —
+UNSTARTED`
 
 **Purpose:** Define the smallest reusable generation unit above the existing
 leaf-family runtime.
 
-**Dependencies:** Stable board/runtime identities and diagnostic-operation
-contracts.
+**Dependencies (hard):** Task 43 accepted; Task 43P complete with no relevant
+open runtime-composition blocker; and the explicit Owner Review Gate approval.
+
+**Preferred sequence:** Gate A, Gate B, Task 43P, Owner Review Gate, then this
+immutable contract task. Preferred sequence is not a substitute for the hard
+dependencies above.
 
 **Bounded goals:**
 
 - Define block type/schema version, stable instance key, deterministic
-  parameters, local component/pad/net/endpoint IDs, required/optional roles,
-  and declared ports.
+  parameters, local component/pad/net/endpoint identities, required/optional
+  roles, and declared ports.
 - Define global ID derivation from device schema, stable block instance key,
   entity kind, and local ID.
 - Keep optional-block insertion from renumbering existing entities.
@@ -1344,13 +1499,15 @@ contracts.
   device intent owns wiring; the assembler alone owns global allocation and
   net merging.
 
-**Explicit non-goals:** No CircuitJS composition, PCB, general random netlist,
-new family, or rewrite of current generators.
+**Explicit non-goals:** No CircuitJS assembly, PCB generation, mutation,
+runtime owner composition, same-owner snapshot implementation, general random
+netlist, new family, or broad leaf-family rewrite.
 
-**Acceptance criteria:** Two in-memory block descriptors validate local identity,
-stable namespace behavior, role declarations, and insertion stability. No ID
-depends on insertion index, coordinate, solver node, collection order, or
-random UUID.
+**Acceptance criteria:** Two in-memory block descriptors validate local
+identity, stable namespace behavior, role declarations, and insertion
+stability. No ID depends on insertion index, coordinate, solver node,
+collection order, or random UUID. The result is an immutable contract only;
+runtime composition remains gated by the Composition Entry Gate.
 
 **Architectural invariants:** A block is not a GeneratedBoardInstance and
 physical part identity remains distinct from logical component identity.
@@ -1364,12 +1521,12 @@ findings.
 
 ## Task 45 — Typed Electrical Domains and Port Compatibility Preflight
 
-**Status:** [!] Blocked by Task 44
+**Status:** `[!] BLOCKED BY TASK 44`
 
 **Purpose:** Prevent semantically nonsensical block connections before building
 an expensive solver candidate.
 
-**Dependencies:** Task 44 port contract.
+**Dependencies (hard):** Task 44 port contract.
 
 **Bounded goals:**
 
@@ -1392,8 +1549,8 @@ deterministically before CircuitJS graph construction; representative voltage,
 direction, reference, and isolation mismatches are rejected; current leaves
 still generate and solve unchanged.
 
-**Architectural invariants:** Semantic compatibility is a preflight only;
-CircuitJS remains the final electrical truth.
+**Architectural invariants:** Semantic domain checking is a preflight layer,
+not a second solver. CircuitJS remains the final electrical truth.
 
 **Addresses:** Procedural-generation and troubleshooting audits’ multi-domain
 composition risk.
@@ -1404,13 +1561,14 @@ composition risk.
 
 ## Task 46 — Versioned Challenge Descriptor, Named Sub-Seeds, and Constraint Input
 
-**Status:** [!] Blocked by Tasks 41, 44, and 45
+**Status:** `[!] BLOCKED BY TASK 45`
 
 **Purpose:** Make challenge identity replayable and prevent one subsystem’s
 evolution from scrambling every unrelated result.
 
-**Dependencies:** Stable block keys, diagnostic evidence dimensions, and typed
-ports/domains.
+**Dependencies (hard):** Task 45 and the accepted Task 44 identity/port
+contract. Task 41 evidence remains an input dimension, not a reason to invent
+runtime composition.
 
 **Bounded goals:**
 
@@ -1424,6 +1582,10 @@ ports/domains.
   do not enable the four player presets yet.
 - Preserve or explicitly version the current leaf replay behavior.
 
+Task 46 may define immutable challenge/replay contracts even if runtime-
+composition correction work remains outstanding when Task 43P permits that
+scope. It does not by itself authorize Task 47.
+
 **Explicit non-goals:** No menu, share link, four difficulty labels, composed
 board, or silent promise that future algorithm changes preserve old geometry.
 
@@ -1433,8 +1595,10 @@ unrelated block values/fault/scenario streams; debug mode can report root seed,
 versions, named seeds, and rejection reason without exposing them in ordinary
 play.
 
-**Architectural invariants:** No ordinary object hash, map iteration order, or
-live Random consumption defines durable identity.
+**Architectural invariants:** Durable identity never depends on collection
+iteration order, insertion index, object hash, coordinates, transient solver
+nodes, or the mutable sequence of `Random` calls. No ordinary object hash, map
+iteration order, or live Random consumption defines durable identity.
 
 **Addresses:** Both generation and PCB audits’ deterministic-partitioning
 finding and the product shell’s seed-replay prerequisite.
@@ -1443,15 +1607,50 @@ finding and the product shell’s seed-replay prerequisite.
 
 ---
 
+## Composition Entry Gate — Runtime Integrity Required Before Task 47
+
+**Status:** `[!] BLOCKED BY TASKS 44–46 AND ALL OPEN TASK 43P RUNTIME BLOCKERS`
+
+**Purpose:** Prevent descriptor/schema work from being mistaken for proof that
+runtime composition itself is safe.
+
+**Dependencies (hard):** Tasks 44, 45, and 46 complete; every Task 43P blocker
+relevant to runtime composition resolved; and any required correction
+milestones independently accepted.
+
+**Acceptance criteria:**
+
+- player interaction cannot proceed while required analysis, verification,
+  mutation settlement, or active-measurement cleanup remains pending;
+- stale callbacks cannot operate on an older board/session owner;
+- Task 41 proof/snapshot boundaries are explicitly documented;
+- same-owner restoration is forbidden unless an accepted complete transaction
+  contract exists;
+- physical mutation has coherent prepare/commit/abort behavior or an accepted
+  validated rebuild boundary;
+- active-measurement cleanup is exception-safe and temporary electrical
+  elements cannot survive forced failure;
+- raw layout, rendered geometry, and solver-terminal correspondence have an
+  independent oracle;
+- required player controls are proven through visible player interaction;
+- direct controller dispatch alone is not player-acceptance evidence;
+- simulation reset and fresh challenge reset are distinct;
+- original fault and secondary-damage causality remain distinct;
+- runtime owner-level state validation covers the surfaces composition uses; and
+- independent review passes.
+
+**Unlocks:** Task 47 only.
+
+---
+
 ## Task 47 — Bounded Assembler and Composed Contribution Contracts
 
-**Status:** [!] Blocked by Tasks 44–46
+**Status:** `[!] BLOCKED BY TASKS 44–46 AND THE COMPOSITION ENTRY GATE`
 
 **Purpose:** Assemble reusable blocks into the existing runtime without
 creating a parallel architecture.
 
-**Dependencies:** Descriptor, domain, identity, seed, input/retest, and
-solvability contracts.
+**Dependencies (hard):** Tasks 44–46 and the Composition Entry Gate.
 
 **Bounded goals:**
 
@@ -1471,7 +1670,12 @@ generator, auxiliary system, or broad leaf-family rewrite.
 **Acceptance criteria:** A bounded two-block canary produces one structurally
 valid global logical/solver/runtime envelope with stable local-to-global maps,
 and every owned solver element, slot, binding, fault effect, and physical part
-has exactly one authoritative owner.
+has exactly one authoritative owner. There is no nested
+`GeneratedBoardInstance`, second fault engine, second inventory, renderer-owned
+connectivity, stale callback into an earlier board/session, or unsupported
+same-owner snapshot assumption. Every mutable owner has explicit
+settlement/validation semantics, and exception paths cannot leave a
+half-composed runtime. Task 41 proof-boundary rules are obeyed.
 
 **Architectural invariants:** No nested GeneratedBoardInstance, second fault
 engine, second inventory, or renderer-owned connectivity.
@@ -1484,12 +1688,13 @@ engine, second inventory, or renderer-owned connectivity.
 
 ## Task 48 — First Two-Block Composed Controlled-Indicator Challenge
 
-**Status:** [!] Blocked by Tasks 41 and 43–47
+**Status:** `[!] BLOCKED BY TASK 47 AND THE COMPOSITION ENTRY GATE`
 
 **Purpose:** Prove the new contracts immediately with a small real playable
 challenge.
 
-**Dependencies:** All composition-kernel gates and existing NMOS/LED physics.
+**Dependencies (hard):** Task 47, the Composition Entry Gate, and existing
+NMOS/LED physics.
 
 **Bounded goals:**
 
@@ -1512,7 +1717,14 @@ medium-board router, multiple faults, or rewrite of all existing families.
 **Acceptance criteria:** Deterministic replay reaches one global board and
 runtime; healthy/faulted/diagnostic/repair/retest/privacy/layout checks pass;
 normal-player Browser validation proves the complete control-to-repair loop;
-the implementation does not copy a complete family generator under a new name.
+the implementation does not copy a complete family generator under a new name;
+raw copper, rendered pads/leads, and solver terminals agree through an
+independent correspondence oracle; disabling a required public control causes
+normal-player acceptance to fail; proof/snapshot isolation leaves expected
+state intact; deterministic replay works from the versioned descriptor; no
+block owns the entire PCB; and monolithic leaf families remain
+regression/parity fixtures. Direct controller dispatch alone does not count as
+player acceptance evidence.
 
 **Architectural invariants:** CircuitJS owns all voltages/currents and stable
 identity survives composition and repair.
@@ -1793,11 +2005,12 @@ renaming two disconnected segments as one magical net.
 **Addresses:** PCB audit’s evidence-gated link recommendation.
 
 **Unlocks:** Task 57. If a supported corpus still fails solely from unavoidable
-crossings after the capped link policy, insert a bounded Task 56(A) two-sided
-through-hole prototype before Task 57. That prototype must include front/back
-copper, explicit vias, layer-aware clearance, visible board-side interaction,
-and probe semantics together. Do not create invisible backside connectivity or
-more than two layers.
+crossings after the capped link policy, the evidence entry condition for a
+bounded Task 56(A) two-sided through-hole prototype is met. That prototype must
+include front/back copper, explicit vias, layer-aware clearance, visible
+board-side interaction, and probe semantics together. Do not create invisible
+backside connectivity or more than two layers. Without that measured failure,
+Task 56(A) remains deferred and does not block unrelated work.
 
 ---
 
@@ -2130,7 +2343,8 @@ lens color; renderer owns presentation only.
 
 **Addresses:** Visual audit’s continuous/dynamic LED recommendation.
 
-**Unlocks:** Task 66.
+**Unlocks:** Task 66 by preferred sequence only; Task 66's hard dependencies
+are defined in the Task 66 entry.
 
 ---
 
@@ -2138,14 +2352,20 @@ lens color; renderer owns presentation only.
 
 ## Task 66 — Relay Driver Reusable Block and Composed Load Proof
 
-**Status:** [!] Blocked by Tasks 43, 45, 49, 51, 57, and 65
+**Status:** `[!] BLOCKED BY ITS HARD DEPENDENCIES`
 
 **Purpose:** Transform the former Relay Driver family into the first post-proof
 reusable electromechanical block.
 
-**Dependencies:** Composition, domains, values/ratings, diagnostic admission,
-physical envelope, supported layout, and the completed Task 64–65 post-alpha
-visual sequence.
+**Dependencies (hard):** Physical package/interaction contract; typed
+electrical domains; value/rating synthesis; composed acceptance pipeline;
+supported physical scalability; and source/load semantics where the relay
+challenge requires them.
+
+**Preferred sequence:** Task 66 currently follows Tasks 64–65 so the first
+post-alpha reusable block benefits from the accepted visual sequence. Task 65
+is a hard dependency only if the relay challenge actually relies on continuous
+LED intensity as a required diagnostic or presentation contract.
 
 **Bounded goals:** Model coil, contacts, driver, flyback protection, control and
 switched-load domains, physical relay package, player input/retest, and
@@ -2557,13 +2777,28 @@ diagnostic plan.
 
 ## Task 80 — HARD Profile Calibration and Admission
 
-**Status:** [!] Blocked by Tasks 58, 66–78 and the Task 79 decision
+**Status:** `[!] BLOCKED BY HARD CAPABILITY BUNDLE AND TASK 58/63/51/57`
 
 **Purpose:** Enable Hard only after multi-block, multi-rail, repair, and dynamic
 capabilities provide legitimate difficulty knobs.
 
-**Dependencies:** Updated diagnostic/layout corpus and every feature requested
-by the proposed Hard profile.
+**Dependencies (hard):** Task 58 difficulty foundation; accepted Task 63 alpha
+gate; Task 51 composed acceptance pipeline; Task 57 supported physical
+scalability; versioned challenge/replay identity; updated diagnostic/layout
+corpus; and every specific capability actually required by the proposed HARD
+profile.
+
+**HARD Capability Bundle:** Define this bundle at planning time. It must include
+at least one legitimate multi-block challenge, multiple plausible physical
+fault owners, multiple subsystems or electrical domains, purposeful healthy
+support circuitry, meaningful isolation/state-transition/advanced-repair
+reasoning, readable/probeable physical complexity, solver-backed customer
+retest, deterministic replay, and a legal diagnostic plan. Dynamic or temporal
+instruments are prerequisites only when the advertised HARD challenges require
+them. Capacitance is a prerequisite only when HARD content requires capacitance
+measurement. Relay, regulator, sensor, jumper, trace, bench-power, scope,
+timer, oscillator, and frequency support become hard prerequisites only when
+included in the advertised HARD surface.
 
 **Bounded goals:** Calibrate Hard around composed subsystems, multiple rails,
 purposeful auxiliaries, controlled inputs, required isolation/repair, and
@@ -2572,9 +2807,12 @@ bounded temporal/instrument demands.
 **Explicit non-goals:** No Psychotic label, unavailable instrument, unreadable
 routing, forced secondary damage, or multi-fault requirement.
 
-**Acceptance criteria:** Requested Hard constraints and computed assessment
-agree across the versioned corpus; every Hard route remains fair, repairable,
-and player-retestable.
+**Acceptance criteria:** Requested HARD constraints and computed assessment
+agree across the versioned corpus; every HARD route remains fair, repairable,
+and player-retestable; and no lower-numbered delayed feature blocks admission
+unless the advertised HARD Capability Bundle actually uses it. A delayed
+oscillator must not block a valid hard multi-rail transistor challenge merely
+because oscillator work has a lower task number.
 
 **Architectural invariants:** Hard means deeper honest reasoning, not less
 physical truth.
@@ -2592,9 +2830,10 @@ physical truth.
 **Purpose:** Decide whether the supported desktop product has progressed from
 an honest alpha into a stable, externally testable beta surface.
 
-**Dependencies:** Accepted Task 63 alpha evidence, admitted EASY/MEDIUM/HARD
-profiles, and completed or explicitly skipped evidence-conditional decisions
-through Task 80.
+**Dependencies:** Accepted Task 63 alpha evidence, the advertised EASY,
+MEDIUM, and HARD profiles, and the capabilities actually advertised by the
+beta surface. Evidence-conditional decisions through Task 80 are included
+only when the advertised surface needs them.
 
 **Bounded goals:** Run and record one beta admission matrix across the
 advertised profiles, reusable blocks, repair actions, instruments, product
@@ -2607,14 +2846,19 @@ multilayer, appliance-scale devices, or a public hosted release.
 
 **Acceptance criteria:**
 
-- EASY, MEDIUM, and HARD each pass their versioned diagnostic, physical,
-  replay, repair, and player-retest corpora at documented support bounds.
-- Every advertised block, repair action, instrument, Shop/catalog operation,
-  Resource, and Setting uses its authoritative contract and fails safely.
+- The advertised EASY/MEDIUM/HARD profiles pass their versioned diagnostic,
+  physical, replay, repair, and player-retest corpora at documented support
+  bounds.
+- Every advertised reusable block, repair action, instrument, authoritative
+  Shop/catalog operation, Resource, and Setting uses its real contract and
+  fails safely.
 - Menu-to-results flow, seed/replay, generation rejection, privacy, keyboard/
   focus basics, and normal-player browser workflows pass a beta checklist.
 - Supported desktop/browser scope, known limitations, generator/layout
   versions, failure telemetry, and bug-report identity are documented.
+- Beta does not require PSYCHOTIC, multiple simultaneous faults, economy,
+  mobile, every future block, or every future instrument unless those are
+  explicitly advertised.
 
 **Architectural invariants:** A release label cannot waive CircuitJS truth,
 diagnostic fairness, stable identity, deterministic replay, physical
@@ -3038,86 +3282,90 @@ All former entries below were unstarted.
 
 # Revised Dependency Map
 
-    COMPLETED TASKS 1–38
+    COMPLETED TASKS 1–43
             |
             v
-    PLAYER INPUT + CUSTOMER RETEST (39)
+    POST-TASK-43 GATE A
+    MAINLINE / EVIDENCE CONSOLIDATION
             |
             v
-    PHYSICAL FAULT LOCUS (40)
+    POST-TASK-43 GATE B
+    VERIFIER ISOLATION / MAINLINE PROTECTION
             |
             v
-    DIAGNOSTIC SOLVABILITY + EVIDENCE (41)
+    TASK 43P
+    CROSS-BOUNDARY INTEGRITY RECONCILIATION
             |
-            +----> EXISTING-FAMILY DIVERSITY (42)
-            |           |
-            |           v
-            |      PHYSICAL ENVELOPES (43)
+            v
+    OWNER REVIEW GATE
             |
-            +----> BLOCK IDENTITY / PORTS (44)
-                        |
-                        v
-                 TYPED DOMAINS (45)
-                        |
-                        v
-                 VERSIONED SEEDS / CONSTRAINTS (46)
-                        |
-                        v
-                 ASSEMBLER CONTRACTS (47)
-                        |
-                        v
-                 TWO-BLOCK REAL PROOF (48)
-                        |
-                        v
-                 INTENT VALUES + SUPPORT + ACCEPTANCE (49–51)
-                        |
-             +----------+-----------+
-             |                      |
-             v                      v
-      LAYOUT CORPUS (52)     DIAGNOSTIC/LAYOUT METRICS
-             |                      |
-             v                      |
-      REGION / CONDITIONAL ROUTING (53–56)
-             |                      |
-             v                      |
-      PHYSICAL SCALABILITY GATE (57)
-             +----------+-----------+
-                        |
-                        v
-              DIFFICULTY CONTRACT (58)
-                        |
-                        v
-                 EASY + MEDIUM (59)
-                        |
-                        v
-            RESOURCES / SETTINGS / MENU (60–62)
-                        |
-                        v
-                 DESKTOP ALPHA GATE (63)
-                        |
-                        v
-             STATIC VISUAL / PCB POLISH (64)
-                        |
-                        v
-            CONTINUOUS LED VISUAL STATE (65)
-                        |
-                        v
-        BLOCK / REPAIR / INSTRUMENT EXPANSION (66–79)
-                        |
-                        v
-             HARD + DESKTOP BETA GATE (80 / 80A)
-                        |
-                        v
-       INTERMITTENCY / DAMAGE / HISTORY (81–84)
-                        |
-                        v
-                  PSYCHOTIC (85)
-                        |
-                        v
-             OPTIONAL MULTI-FAULT GATE (86)
-                        |
-                        v
-              SCORE / SAVE / SHARE (87–89)
+            v
+    TASK 44
+    BLOCK DESCRIPTOR / STABLE NAMESPACE
+            |
+            v
+    TASK 45
+    TYPED DOMAINS / PORT PREFLIGHT
+            |
+            v
+    TASK 46
+    VERSIONED DESCRIPTOR / NAMED SEEDS
+            |
+            +----------------------------+
+            |                            |
+            v                            v
+    TASK 43P CORRECTIONS           CONTRACTS 44–46
+    ONLY IF REQUIRED               COMPLETE
+            |                            |
+            +-------------+--------------+
+                          |
+                          v
+                  COMPOSITION ENTRY GATE
+                          |
+                          v
+                       TASK 47
+                  BOUNDED ASSEMBLER
+                          |
+                          v
+                       TASK 48
+                FIRST COMPOSED PROOF
+                          |
+                          v
+                     TASKS 49–51
+                          |
+                          v
+                     TASKS 52–57
+                          |
+                          v
+                     TASKS 58–63
+                          |
+                          v
+                    DESKTOP ALPHA
+                          |
+                          v
+                     TASKS 64–65
+                          |
+                          v
+          REUSABLE BLOCK / REPAIR /
+           INSTRUMENT EXPANSION 66–79
+                          |
+                          v
+              HARD CAPABILITY ADMISSION
+                       TASK 80
+                          |
+                          v
+                    BETA GATE
+                     TASK 80(A)
+                          |
+                          v
+                     TASKS 81–89
+
+Task 43P correction tasks are conditional. Tasks 44–46 may define immutable
+contracts before runtime correction work finishes only when Task 43P permits
+that scope. Task 47 is the hard runtime-composition wall; composition cannot
+cross it until the Composition Entry Gate passes. Tasks 54–56 and 56(A), Task
+79, and Task 86 remain evidence-conditional rather than automatic prerequisites
+for unrelated work.
 
 The sequencing rule remains:
 
@@ -3130,157 +3378,45 @@ The sequencing rule remains:
 
 Update this roadmap when a milestone completes or a decision gate resolves.
 
-1. Preserve the completed Task 1–38 ledger and detailed completed history.
-2. Mark exactly one immediate next milestone [>] when practical.
-3. For Tasks 54–56, 79, and 86, record the evidence-based start/skip decision.
-4. Record generator/profile/layout version consequences when deterministic
-   behavior changes.
-5. Do not claim planned block/domain/difficulty/menu architecture is already
-   implemented; current implementation truth remains in docs/ARCHITECTURE.md.
-6. Record task evidence, limitations, review, commit, and publication in
-   docs/CODEX_TASK_REPORT.md.
-7. Complete the permanent `AGENTS.md` Task Completion Protocol through verified
-   publication and the post-push notification attempt, then STOP. Never begin
-   the newly unlocked task automatically.
+1. Keep exactly one current accepted implementation baseline.
+2. Keep exactly one immediate next gate or milestone.
+3. Preserve the completed Task 1–43 ledger and detailed completed history.
+4. Completed incident chronology belongs in task evidence and Git history,
+   rather than repeated live roadmap paragraphs.
+5. Historical audit findings must state the baseline they audited; historical
+   findings are not automatically current truth.
+6. Branch-only evidence must eventually be integrated, archived, or explicitly
+   rejected.
+7. Prompt/inbox branches are not accepted implementation architecture.
+8. Hard dependencies, preferred sequence, and evidence entry conditions are
+   different concepts; conditional tasks begin only when their entry condition
+   is satisfied.
+9. Do not renumber Tasks 44–89 merely to insert bounded gates.
+10. Do not claim planned block/domain/difficulty/menu architecture is already
+    implemented; current implementation truth remains in
+    `docs/ARCHITECTURE.md`.
+11. Record task evidence, limitations, review, commit, and publication in
+    `docs/CODEX_TASK_REPORT.md`.
+12. Never automatically begin the next milestone; explicit owner-review gates
+    are real blockers.
+13. Release labels may never waive CircuitJS truth, diagnostic fairness, stable
+    identity, physical readability, or deterministic replay.
+14. Complete the permanent `AGENTS.md` Task Completion Protocol through
+    verified publication and the post-push notification attempt, then STOP.
 
 ---
 
-## Historical pre-acceptance record — Task 43R-4D — detached installed lead renderer/probe corrective closure
+## Historical Task 43 recovery details
 
-The 43R-4D candidate addresses the generic verifier state-dispatch defect exposed by the RC
-`C1.+` lead-lift regression. The failure was an `IMPLEMENTATION_FAILURE`, not
-a package geometry, renderer production path, target endpoint, RC routing, or
-electrical-topology defect: electrical disconnection left the original part
-mounted in its slot, while the verifier treated disconnected state as an
-installed lift even after physical slot removal. Runtime slot/part mounting
-identity is authoritative for the installed-versus-loose decision. The
-candidate remains unaccepted because mandatory runtime evidence is still
-required; the verifier-only installed-path negative remediation described below
-has been added without changing production render, target, or geometry code.
-
-The verifier records one explicit lifecycle table: connected means a mounted
-part with board-pad probing only; lead-lifted means that same mounted part with
-the board pad and a distinct detached component-side target; removed means an
-empty slot with no installed component-side point/target/hit and loose/tray
-ownership; reinstalled means the same physical identity can return with a
-fresh projection target and board-side-only probing until another real lift.
-The generic canary covers both terminal positions, prefers an installed
-two-terminal non-capacitor (the generated LED-family `R1` path when present),
-and uses `C1` only as the RC fallback. It checks the positive C1.+ path,
-representative non-capacitor path, endpoint/class/identity distinction,
-provider geometry/marker agreement, board-pad precedence, reconnect and
-physical-removal invalidation, graph-only removal preservation, loose transfer,
-same-part reinstall freshness, and wrong identity/binding rejection. Its
-replacement negative uses the existing catalog mutation boundary to prove an
-old component target retains its original endpoint and does not migrate to a
-new physical part.
-
-The correction also adds exactly two installed-path adversarial canaries in
-`PhysicalPartRenderDeveloperVerifier`: `verifyInstalledProbeOverlapNegative`
-uses a detached fixture and a mutable installed terminal copy to collapse one
-terminal's board-pad and detached component probe surfaces, then verifies the
-real renderer resolves every point to a valid board-pad target with board-pad
-precedence and no valid component-side target;
-`verifyInstalledDetachedMarkerNegative` passes a mutable installed terminal copy
-with its detached marker outside the declared component-lead probe to the real
-terminal constructor and requires the specific
-`Physical render component probe omits its center` rejection. Both remain
-installed-mode checks with a `boardPadId`; the fixture's temporary instance and
-modification view are restored before return.
-
-Only `PhysicalPartRenderDeveloperVerifier.java` and the three handoff
-documents were changed for this correction. No RC route, electrical/topology,
-measurement, fault, stress, replacement, scoring, NPN/NMOS route, or Task 44
-work was started. 43R-8 remains the next eligible milestone and is identified
-only; it was not started by 43R-4D. Runtime route limitations and the pending
-review blockers are recorded in `docs/CODEX_TASK_REPORT.md` rather than
-converted into unrun acceptance claims.
-
----
+The detailed 43R chronology, corrective-return narratives, obsolete interim
+statuses, and debugging history are preserved in
+`docs/task-evidence/task-43/recovery-history.md`.
 
 # Immediate Next Milestone
 
-**Task 44 — Functional Block Descriptor and Stable Namespace Contract**
+**Post-Task-43 Gate A — Mainline Consolidation and Evidence Preservation**
 
-Current state: Task 43 recovery is COMPLETE, including final integrated 43R-8.
-Task 44 is the next roadmap milestone identified for future work, but remains
-BLOCKED / UNSTARTED by the explicit hold in the accepted task instructions.
-Relay Driver remains deferred and transformed into Task 66. No later milestone
-was begun.
-
-### Historical pre-final-review 43R-4D remediation gate update — 2026-08-22
-
-The WMI/blank-shell statement above is historical for the first harness
-attempt. The corrected candidate now has a clean supported in-app Browser
-runtime record from the compiled `war/` on `127.0.0.1:3000`: `PASS:task43`,
-`PASS:layout`, RC `PASS:rc` for seeds 0/2/3, stored-energy
-`PASS:stored-energy` for seeds 0/2/3, and combined RC/stored-energy `PASS:rc`.
-Source/build, renderer-boundary, installed positive, and installed negative
-gates also pass. A fresh independent Luna MAX review is still pending, so
-43R-4D is not yet marked accepted. 43R-8 remains held and unstarted; Task 44
-remains blocked and unstarted.
-
-### 43R-4D final milestone status — 2026-08-22
-
-43R-4D is complete and independently accepted: the final Luna MAX reviewer
-returned `PASS` after the source, installed-path, runtime, scope, and
-documentation gates passed. The immediate follow-on 43R-8 is next eligible
-and remains unstarted; Task 44 remains blocked and unstarted. No later
-milestone was begun automatically.
-
-### 43R-8A final milestone status — 2026-08-22
-
-43R-8A is complete and independently accepted: the final focused LED and diode
-developer routes passed visibly in Edge after the bounded diode lifted-lead
-correction, the required normal-player LED/diode/parallel flows passed, and the
-fresh independent Luna MAX reviewer returned `PASS`. 43R-8B is now the next
-eligible milestone and remains unstarted; Task 44 remains blocked and
-unstarted. No later milestone was begun automatically.
-
-### 43R-3 corrective return — 2026-08-22
-
-The 43R-3 corrective return is complete and independently accepted. It repairs
-the verifier's pre-mutation R1.1 endpoint-wrapper comparison while preserving
-the binding-authoritative installed target contract and strict physical,
-lifecycle, stale-target, board-pad, replacement, and loose-part checks. JDK 8
-/ GWT, renderer-boundary, complete Task 43, and Task 39/40/41 regression
-routes passed, and the independent Luna MAX reviewer returned `PASS`.
-
-The uncommitted 43R-8B candidate remains preserved separately and is not
-included in this checkpoint. 43R-8B is still held for explicit resumption
-after the corrective checkpoint; final Task 43 acceptance and Task 44 remain
-unstarted. No push is authorized for this corrective return.
-
-### 43R-8B acceptance-infrastructure closure — 2026-08-22
-
-43R-8B is accepted and complete in its bounded scope. The stale NPN layout
-deferrals were removed, the direct 108-case NPN proof remained hard-red, and a
-developer-only forced-negative Task 43 route now proves genuine application
-failure propagation with child exit `1`; ordinary Task 43 remains exit `0`
-and infrastructure failure remains exit `2`. JDK 8/GWT, renderer boundary,
-Layout, Task 39/40/41, Task 43, post-negative, and independent Luna MAX review
-gates passed.
-
-This is acceptance-infrastructure closure only. Task 43 remains RECOVERY IN
-PROGRESS. Final integrated 43R-8 acceptance is NEXT ELIGIBLE / UNSTARTED, and
-Task 44 remains BLOCKED / UNSTARTED. No later milestone was begun and no push
-was performed or authorized.
-
-### Final integrated 43R-8 acceptance — 2026-08-24
-
-Final integrated 43R-8 is complete and independently accepted. The primary
-architect ran the full elevated browser matrix against the compiled local
-preview and received `Integrated Task 43 browser/regression orchestration
-passed.` The matrix covered Task 43, layout, Tasks 39–41, RC/stored-energy,
-NPN/NMOS, LED/diode/parallel, legacy routes, Quick Play, all normal-player
-flows, and the physical RC/diode/LED repair flows.
-
-The matrix also proved the process contract: the forced-negative application
-canary returned expected exit `1`, missing BrowserPath returned infrastructure
-exit `2`, and the post-process natural fall-through returned expected exit
-`0`. Focused direct runs passed `-DiodeShort -Seeds 0,2,3` for all three seeds
-and `-Task41` with `PASS task41 diagnostic solvability`. The committed Task 41
-production fix remains the narrow `includeDeveloperShort` propagation in
-`DiodeProtectedIndicatorGenerator`; no verifier exception, PCB change, or
-Task 44 work was introduced. Fresh Luna MAX review and final Sol ULTRA
-inspection returned `PASS`. No push was performed.
+Task 44 is **not** next. Gate B follows Gate A, Task 43P follows Gate B, and
+the Owner Review Gate follows Task 43P. The owner reviews this roadmap before
+Task 44; Task 44 remains unstarted. Do not begin Gate A during this
+roadmap-editing task.
