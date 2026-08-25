@@ -1,164 +1,146 @@
-# Post-Task-43 Roadmap Redesign
+# Post-Task-43 Gate A — Mainline Consolidation and Evidence Preservation
 
 ## Status
 
-The documentation and planning work is complete in the working tree. No
-implementation milestone began. Task 44, Gate A, Gate B, and Task 43P remain
-unstarted; the exact next gate is Post-Task-43 Gate A.
+Gate A is complete in scope as a documentation/evidence-only consolidation.
+The roadmap marks Gate A complete and Gate B as the immediate next gate, but
+Gate B, Task 43P, the Owner Review Gate, and Task 44 have not begun. The
+Coder, independent Reviewer, Foreman, and Sol ULTRA Inspector all passed. This
+self-referential report records the final review disposition; its own full
+commit SHA and the resulting live publication checks are reported from
+repository state in the completion packet.
 
 ## Baseline and branch
 
-- Final accepted Task 43 SHA used: `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`.
-- Accepted implementation source branch: `codex/task43-recovery-integration`.
-- Live remote confirmation: `origin/codex/task43-recovery-integration` points
-  to the same SHA.
-- Roadmap redesign branch: `codex/post43-roadmap-redesign`, based directly on
-  that accepted SHA.
-- Package geometry-contract version: 3.
+- Accepted Task 43 implementation baseline:
+  `8245c79990647f6c40f53bc1dd9330ec2ccd22b4` on
+  `codex/task43-recovery-integration` and its matching origin ref.
+- Clean authoring `HEAD` before this candidate:
+  `acd2c265a91908cb2656d7306936c13c2ddd96ea` on
+  `codex/post43-roadmap-redesign`, with matching
+  `origin/codex/post43-roadmap-redesign`.
+- Local and origin `master` both started at
+  `c0eb342b29165b8218a4b97b16fb8554fee42aff`.
+- `master` is an ancestor of the clean authoring tip. The pre-change distance
+  is exactly 29 commits (`git rev-list --count master..HEAD`).
+- The requested `codex/post43-mainline-consolidation` branch pointer was
+  created at exactly
+  `acd2c265a91908cb2656d7306936c13c2ddd96ea`; the shared worktree was not
+  switched.
+- The final form is one Gate A documentation/evidence commit on top of
+  `acd2c265a91908cb2656d7306936c13c2ddd96ea`. Because this report is part of
+  that commit, its own full SHA is obtained from repository history rather than
+  repeated inside the report. Archive-tag, remote-publication, master
+  fast-forward, and notification results are verified separately after the
+  commit and reported in the completion packet.
+
+## Implementation summary
+
+- Imported three historical files with Git-native exact-file restores and
+  verified their normalized blobs against the source branches:
+  `STATE_LIFECYCLE_INTEGRITY_AUDIT.md`,
+  `VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md`, and
+  `task-43/recovery-assessment.md`.
+- Added `docs/research/AUDIT_STATUS.md`, which records each original branch,
+  SHA, audited baseline, known date, historical-hypothesis boundary, and the
+  required future Task 43P reconciliation.
+- Added the precise repository evidence record at
+  `docs/task-evidence/repository/post-task-43-branch-consolidation.md`.
+- Updated only the Gate A/Gate B status and immediate-next wording in
+  `docs/ROADMAP.md`; the completed Task 1–43 history and later blockers remain
+  intact.
+- Replaced this rolling report with a Gate A candidate handoff. It records
+  baseline, branch, evidence, validation, limitations, and review handoff
+  facts without inventing final publication results.
+- No screenshots, unrelated cleanup, production Java, CircuitJS, scripts,
+  verifiers, `AGENTS.md`, or `docs/ARCHITECTURE.md` were changed.
 
 ## Files changed
 
-- `docs/ROADMAP.md`
-- `docs/CODEX_TASK_REPORT.md`
-- `docs/task-evidence/task-43/recovery-history.md`
+- `docs/research/STATE_LIFECYCLE_INTEGRITY_AUDIT.md` — exact preserved import.
+- `docs/research/VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md` — exact preserved
+  import.
+- `docs/task-evidence/task-43/recovery-assessment.md` — exact preserved import.
+- `docs/research/AUDIT_STATUS.md` — new historical/current truth boundary and
+  disposition record.
+- `docs/task-evidence/repository/post-task-43-branch-consolidation.md` — new
+  Gate A repository evidence record.
+- `docs/ROADMAP.md` — Gate A complete; Gate B immediate next; 43P, Owner Review,
+  and Task 44 remain blocked/unstarted.
+- `docs/CODEX_TASK_REPORT.md` — this candidate report.
 
-No production Java, scripts, verifiers, `AGENTS.md`, or branch-cleanup files
-were changed.
+## Evidence and validation
 
-## Roadmap changes
+- Read `AGENTS.md`, `docs/ROADMAP.md`, `docs/ARCHITECTURE.md`, and the prior
+  `docs/CODEX_TASK_REPORT.md` before editing. The current user-provided
+  reconciled Gate A brief was used as the authoritative attached prompt; no
+  separate tracked Gate A prompt file was found.
+- Verified the starting worktree was clean and the active branch was exactly
+  `codex/post43-roadmap-redesign` at
+  `acd2c265a91908cb2656d7306936c13c2ddd96ea`.
+- Verified all eight listed active worktrees were clean and documented their
+  paths and branch dispositions.
+- `git fetch --no-tags origin` exited `0`; live `git ls-remote` confirmed the
+  expected origin heads, `origin/master` at
+  `c0eb342b29165b8218a4b97b16fb8554fee42aff`, and the roadmap branch at
+  `acd2c265a91908cb2656d7306936c13c2ddd96ea`.
+- Verified the three imported normalized blob hashes exactly:
+  `989a9bd968825e6506c01280f2e6d9e698d0f864`,
+  `1cbf7e4c277c254c549861c406366eee2201ec6c`, and
+  `b4f6a3974a46a17868a86c66d9fa1e8ba452075d`.
+- Verified the pre-change local fast-forward proof: `master` is an ancestor
+  of the authoring tip and the distance is 29 commits. The intended Gate A
+  authoring delta is one uncommitted review candidate commit.
+- Inspected the complete branch inventory, unique branch deltas, planned
+  archive targets, active worktrees, stash, and unreachable Git objects.
+- Recorded stash `ca6857049e92dfe7c5457d4069cb22470d48b935`, its two parents and
+  four changed paths, with explicit KEEP/NO APPLY/NO DROP disposition.
+- `git fsck --full --unreachable --no-reflogs` reported 11 unreachable commits
+  and 68 unreachable blobs. Ten commits are WIP/index residue; one is an exact
+  patch-id duplicate of reachable `7abba4a`. No Task 43 binary-only evidence
+  was found. No GC or prune was run.
+- Live GitHub API evidence: the public repository metadata endpoint returned
+  200; workflows and runs both returned `total_count: 0`; the master
+  protection endpoint returned 401 and is deferred to Gate B/owner action.
+- `git status --short --branch` shows only the two intended modified Markdown
+  files and five intended untracked Markdown files; no non-document status
+  line, screenshot, source, script, or verifier path is present.
+- `git diff --check` passed with only the expected LF/CRLF checkout warnings;
+  path existence, trailing-whitespace, NUL-byte, and local-Markdown-link checks
+  passed with zero findings.
+- Roadmap assertions passed: Gate A is complete, Gate B is the single immediate
+  next gate, 43P and Owner Review remain blocked, Task 44 remains unstarted,
+  and the completed Task 1–43 ledger remains present.
+- The complete tracked diff and all five authored/untracked Markdown records
+  were inspected for scope, exact facts, and preservation boundaries.
+- No production diff exists relative to
+  `acd2c265a91908cb2656d7306936c13c2ddd96ea`; no Task 44 source path exists;
+  no archive tag was created.
+- No production build is required or run for this documentation/evidence-only
+  change.
 
-### Task 43 compression
+## Review and completion protocol
 
-The active Task 43 entry is now a concise accepted completion record covering
-package-owned geometry, explicit variants, geometry versioning, package-backed
-footprints, exact pad/probe geometry, compaction/containment, physical
-same-net validation, installed/lifted/loose interaction, RC/NPN/NMOS fixed
-layouts, integrated regression, forced-negative process integrity, and the
-final accepted SHA. Detailed recovery chronology was moved to
-`docs/task-evidence/task-43/recovery-history.md`.
-
-### Post-Task-43 gates
-
-- Gate A is the single immediate next gate for mainline consolidation and
-  evidence preservation.
-- Gate B follows Gate A and establishes isolated ports, profiles, temporary
-  state, evidence paths, failure classes, CI checks, and mainline protection.
-- Task 43P follows Gate B and reproduces or falsifies historical lifecycle and
-  verification-integrity findings against the final SHA. It creates correction
-  milestones only for proven open blockers.
-- The Owner Review Gate follows Task 43P and requires explicit owner approval
-  before Task 44. Task 44 must not begin automatically.
-- The Composition Entry Gate is the hard runtime-integrity wall before Task 47.
-
-### Tasks 44–48
-
-Task 44 remains an immutable block descriptor/stable namespace contract and is
-blocked by Task 43P plus explicit owner review. It does not implement CircuitJS
-assembly, PCB generation, mutation, runtime composition, or same-owner
-snapshotting. Task 45 remains typed electrical-domain/port preflight, with
-CircuitJS as final electrical truth. Task 46 remains the versioned descriptor,
-named-seed, and typed-constraint contract; it may define immutable replay
-contracts when Task 43P allows, but it does not authorize Task 47. Task 47 is
-blocked by Tasks 44–46 and the Composition Entry Gate and now carries explicit
-owner, settlement, stale-callback, exception, proof-boundary, and no-duplicate-
-architecture requirements. Task 48 remains the first small real composed proof
-and now requires independent physical correspondence, visible player-control
-proof, deterministic replay, isolation evidence, and monolithic leaf fixtures.
-
-### Preserved sequence and conditional work
-
-Tasks 49–65 remain substantially in their prior order; Task 52 remains after
-the first composed proof. Tasks 54–56 and 56(A) remain evidence-gated. Task 66
-now distinguishes hard dependencies from preferred sequence: Task 65 is not a
-universal architectural prerequisite and becomes hard only if continuous LED
-intensity is required by the relay challenge. Tasks 71–73 and later damage,
-thermal, history, scoring, persistence, sharing, and multi-fault work remain in
-their existing long-term positions.
-
-Task 80 now admits HARD by an explicit advertised capability bundle rather than
-requiring every Task 66–78 feature. The bundle must be defined at planning time
-and include legitimate multi-block reasoning, plausible owners, domains,
-purposeful support, isolation/repair reasoning, readable physical complexity,
-solver-backed retest, deterministic replay, and a legal diagnostic plan. Task
-80(A) validates only the advertised beta surface and does not automatically
-require PSYCHOTIC, multiple faults, economy, mobile, every future block, or
-every future instrument.
-
-### Cross-cutting runtime composition rules
-
-The roadmap now records future entry/acceptance requirements for visible-player
-proof, independent physical correspondence, verifier independence, mutation
-settlement/rollback, exception-safe measurement cleanup, stale async identity,
-fresh-candidate versus same-owner proof boundaries, distinct reset semantics,
-causal fault/damage separation, isolated browser automation, and CircuitJS
-truth/stable identity.
-
-## History preservation
-
-The completed Task 1–43 ledger remains intact. The historical lifecycle and
-verification-integrity audits are explicitly treated as older-baseline
-findings/hypotheses. The recovery file preserves the 43R chronology, including
-failed attempts, corrective returns, fixed-layout evidence, the preserved
-43R-8B stash disposition, and final 43R-8 acceptance facts.
-
-## Validation performed
-
-- Verified the final integrated Task 43 report, commit, diff, and accepted
-  review evidence before editing.
-- Verified live remote presence with `git ls-remote`:
-  `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`.
-- Verified the redesign branch starts at that exact SHA.
-- Inspected all listed worktrees; each was clean before roadmap editing.
-- Inspected the sole stash. Its production verifier files match accepted HEAD;
-  its older script candidate is superseded by later accepted integration
-  commits and remains preserved as historical evidence.
-- Read `AGENTS.md`, `docs/ROADMAP.md`, `docs/ARCHITECTURE.md`, the prior task
-  report, current research, and historical lifecycle/verification/recovery
-  reports from their repository branches.
-- Production Java/GWT build was **not run**. This is a documentation-only task,
-  and the task instructions explicitly say not to spend time running a full
-  production build when no production source changes occur.
-- `git diff --check` passed; Git emitted only the expected LF-to-CRLF working-
-  copy warnings.
-- Markdown major-heading uniqueness passed; repeated generic `### Goal`,
-  `### Requirements`, and completion headings are intentional task templates.
-- Task-heading continuity passed for Tasks 28–89, including 34(A), 35(A), and
-  80(A), with no renumbering.
-- Local Markdown link/reference validation passed, including the new recovery
-  history file.
-- Stale-baseline searches passed: no Task 38/92df240 current-baseline claim,
-  obsolete 43R-8/43R-8B next-state claim, unblocked Task 44 claim, universal
-  Task 65→66 hard dependency, or all-features Task 80 claim remains.
-- Status consistency passed: one active `[>]` gate, one Immediate Next
-  Milestone heading, one Task 43 heading, and no duplicate major headings.
-- A focused roadmap acceptance script passed for the final SHA, geometry
-  version, Gate A/B/43P/Owner/Composition entries, Task 44/47/48 blockers,
-  Task 66 preferred-sequence language, Task 80 capability bundle, Task 80(A)
-  scope, recovery history, report content, and file scope.
-- Intended-scope inspection passed: only the two existing roadmap/report files
-  and the new Task 43 recovery-history file are changed.
-
-## Known uncertainties and intentionally deferred work
-
-- Gate A mainline consolidation has not begun; no branches or stashes were
-  cleaned up by this task.
-- Gate B verifier isolation and branch-protection configuration remain future
-  work; owner-only GitHub settings may require an external action.
-- Task 43P has not yet determined which historical findings remain open on the
-  final SHA. No correction milestone was pre-invented.
-- The current preserved stash is historical evidence, not a current accepted
-  implementation baseline.
-- No post-Task-43 production capability is claimed complete.
-
-## Completion handoff
-
-- Exact next gate: **Post-Task-43 Gate A — Mainline Consolidation and Evidence
-  Preservation**.
-- Task 44 is not next and remains unstarted.
-- No implementation milestone began.
-- The roadmap redesign commit SHA and verified push result are established after
-  the final commit and publication; this report is intentionally written before
-  that self-referential commit SHA exists.
-- Post-push Gmail notification is attempted only after verified publication and
-  only if the connected capability is available; its result must be reported
-  truthfully.
+- Coder: **COMPLETE**. The sole implementation owner changed only the seven
+  listed Markdown paths; no production behavior or architecture changed.
+- Reviewer: **PASS** after the final exact-SHA and deletion-guard correction.
+- Foreman: **PASS** after independent read-only architectural review.
+- Inspector: **PASS** with no blocking or minor findings.
+- Primary architect final disposition: **PASS**. No escalation architect was
+  required.
+- Completion notification destination: `dspevock@stateofthearcelectric.com`.
+  Subject: `TroubleshootJS: Post-Task-43 Gate A consolidation pushed`.
+- The final candidate commit SHA, archive-tag creation, `master` publication,
+  remote deletion disposition, and post-push notification result are verified
+  from repository/service state after this report is committed and are
+  reported in the completion packet rather than invented here.
+- The preserved historical audits have not been reconciled against final Task
+  43. Task 43P is required to reproduce or falsify them independently.
+- Gate B verification isolation/protection work, Task 43P, Owner Review, and
+  Task 44 remain future work. No gameplay, electrical, or Task 43 behavior was
+  changed.
+- The only external configuration uncertainty recorded is the unreadable
+  GitHub master-protection endpoint (HTTP 401), deferred to Gate B/owner.
+- The unreachable-object residue remains in the object database without new
+  durable refs; no GC or prune is authorized by Gate A. The sole stash remains
+  KEEP / NO APPLY / NO DROP, and Gate A performs no branch or remote deletion.

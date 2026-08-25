@@ -974,7 +974,7 @@ their numbers and broad product direction; the bounded post-Task-43 gates
 below make the runtime-composition wall explicit without turning every later
 feature into a prerequisite for every other feature.
 
-Exactly one milestone is immediately eligible: Post-Task-43 Gate A. Later
+Exactly one milestone is immediately eligible: Post-Task-43 Gate B. Later
 milestones are not authority to continue automatically.
 
 ## Governing architecture gates
@@ -1292,7 +1292,7 @@ identity does not depend on solver node numbers.
 
 ## Post-Task-43 Gate A — Mainline Consolidation and Evidence Preservation
 
-**Status:** `[>] IMMEDIATE NEXT GATE`
+**Status:** `[x] COMPLETE`
 
 **Purpose:** Establish one canonical accepted repository state after Task 43
 and preserve unique audit/recovery evidence before further architecture work.
@@ -1331,7 +1331,7 @@ automatic beginning of Gate B.
 
 ## Post-Task-43 Gate B — Verification Isolation and Mainline Protection Baseline
 
-**Status:** `[!] BLOCKED BY POST-TASK-43 GATE A`
+**Status:** `[>] IMMEDIATE NEXT GATE`
 
 **Purpose:** Make automated validation safe for multiple worktrees, browser
 processes, and autonomous coding sessions before the next architecture phase
@@ -3414,9 +3414,9 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Post-Task-43 Gate A — Mainline Consolidation and Evidence Preservation**
+**Post-Task-43 Gate B — Verification Isolation and Mainline Protection Baseline**
 
 Task 44 is **not** next. Gate B follows Gate A, Task 43P follows Gate B, and
 the Owner Review Gate follows Task 43P. The owner reviews this roadmap before
-Task 44; Task 44 remains unstarted. Do not begin Gate A during this
-roadmap-editing task.
+Task 44; Task 44 remains unstarted. Do not begin Gate B during this Gate A
+candidate task.
