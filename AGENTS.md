@@ -1,5 +1,376 @@
 # AGENTS.md — TroubleshootJS
 
+# AGENT BUREAUCRACY MODE
+
+This is an optional orchestration policy. It does not replace the project,
+validation, roadmap, review, or completion rules in this file.
+
+## Strict opt-in activation
+
+AGENT BUREAUCRACY MODE activates only when the user's CURRENT USER TASK
+contains the exact phrase:
+
+    AGENT BUREAUCRACY MODE
+
+When that exact phrase is absent:
+
+- the mode is inactive;
+- normal AGENTS.md rules apply;
+- do not create this hierarchy merely because the task is large, difficult,
+  multi-phase, or likely to benefit from subagents;
+- do not infer activation from a previous task, this document, the roadmap,
+  the conversation, or personal preference.
+
+When the exact phrase is present, activate the hierarchy below unless the
+current user task explicitly overrides a specific part of it.
+
+Activation applies to ONE USER TASK ONLY. Completing that task deactivates the
+mode. The next task returns to normal mode unless the exact phrase is supplied
+again. There is no implied or inherited activation.
+
+## Hierarchy when activated
+
+The activated hierarchy is:
+
+```text
+SUPERINTENDENT
+Model: GPT-5.6 Luna
+Reasoning: ACTUAL MAX
+Role: Root coordinator
+Depth: 0
+└── FOREMAN
+    Model: GPT-5.6 Luna
+    Reasoning: ACTUAL MAX
+    Role: Architect and owner of one discrete task
+    Depth: 1
+    ├── INVESTIGATOR 1
+    │   Model: GPT-5.6 Luna
+    │   Reasoning: ACTUAL MAX
+    │   Role: Read-only architecture / ownership investigation
+    │   Depth: 2
+    ├── INVESTIGATOR 2
+    │   Model: GPT-5.6 Luna
+    │   Reasoning: ACTUAL MAX
+    │   Role: Read-only regression / validation / coupling investigation
+    │   Depth: 2
+    ├── INVESTIGATOR 3
+    │   Model: GPT-5.6 Luna
+    │   Reasoning: ACTUAL MAX
+    │   Role: Read-only adversarial / falsification investigation
+    │   Depth: 2
+    ├── CODER
+    │   Model: GPT-5.6 Luna
+    │   Reasoning: ACTUAL MAX
+    │   Role: Sole implementation owner
+    │   Depth: 2
+    ├── REVIEWER
+    │   Model: GPT-5.6 Luna
+    │   Reasoning: ACTUAL MAX
+    │   Role: Independent read-only implementation review
+    │   Depth: 2
+    └── INSPECTOR
+        Model: GPT-5.6 Sol
+        Reasoning: ULTRA
+        Role: Final independent read-only audit
+        Depth: 2
+```
+
+## Model requirements
+
+Every Luna role in an activated task requires GPT-5.6 Luna with ACTUAL MAX
+reasoning:
+
+- Superintendent;
+- Foreman;
+- Investigators 1–3;
+- Coder; and
+- Reviewer.
+
+ACTUAL MAX means MAX. It does not mean EXTRA HIGH, HIGH, or a lower setting
+that is merely labeled or described as MAX. If the platform exposes separate
+reasoning levels, explicitly request MAX. The Inspector requires GPT-5.6 Sol
+with ULTRA reasoning.
+
+If a requested configuration is unavailable, report that limitation honestly.
+Do not silently substitute a weaker configuration, and do not repeatedly kill
+and respawn agents to try to force an unavailable configuration.
+
+## Write ownership
+
+During an activated bureaucracy task, ONLY THE CODER MAY EDIT PRODUCTION CODE.
+
+The following roles are read-only with respect to production implementation:
+
+- Superintendent;
+- Foreman;
+- Investigators;
+- Reviewer; and
+- Inspector.
+
+These roles may inspect production source, diffs, tests, logs, Git history,
+documentation, architecture, browser evidence, task reports, and verifier
+output. They may not directly implement a production fix. If a review finds a
+correction, the correction returns to a Coder. Supervisors do not make a quick
+direct fix merely to close a finding.
+
+## Superintendent
+
+The Superintendent is the root coordinator. It should keep its context clean
+and primarily retain the user objective, requested task sequence, task
+boundaries, Foreman completion packets, deferred findings, Inspector outcomes,
+repository completion state, and the identity of the next task.
+
+The Superintendent must:
+
+1. receive the user's requested work;
+2. select the next discrete task;
+3. spawn exactly one Foreman for that task;
+4. provide the objective, acceptance criteria, constraints, relevant previous
+   findings, and relevant deferred issues;
+5. wait while the Foreman completes its entire workflow;
+6. receive the Foreman's final completion packet;
+7. verify that the required workflow occurred;
+8. perform repository-level completion actions only when authorized;
+9. report the result; and
+10. create a fresh Foreman for the next discrete task when the user requested
+    multiple tasks.
+
+The Superintendent must not become the architect, investigate production code,
+implement fixes, review the Coder's implementation, duplicate Foreman work,
+continuously poll workers, generate meaningless status narration, or invent
+work while workers are busy.
+
+## Foreman
+
+The Foreman is the architect and owner of ONE discrete task. It reads relevant
+project documentation, determines the task architecture, delegates
+investigation, reconciles the investigation, writes one implementation brief,
+delegates implementation, evaluates reviewer findings, performs its own
+read-only final architectural review, and invokes the Sol Inspector only after
+the candidate is genuinely ready.
+
+The Foreman must not directly edit production code.
+
+## Phase 1 — three Investigators
+
+The default activated workflow spawns exactly THREE independent, read-only
+GPT-5.6 Luna ACTUAL MAX Investigators with distinct angles:
+
+1. Investigator 1 — architecture and ownership: authoritative owners, call
+   paths, state boundaries, existing abstractions, permanent invariants,
+   integration seams, and duplicate-system risks.
+2. Investigator 2 — regression, coupling, and validation: existing verifiers,
+   affected families, related tests, historical regressions, collateral-damage
+   risks, and the minimum closed validation set.
+3. Investigator 3 — adversarial and falsification: incompatible constraints,
+   hidden ownership conflicts, feasibility, routing and lifecycle limitations,
+   nondeterminism, unobservable or unrepairable states, answer leakage, and
+   alternative root causes.
+
+### Mandatory investigation barrier
+
+The Foreman MUST NOT spawn the Coder until ALL required Investigators have
+completely finished and all three complete reports have arrived. Not one and
+not two: all three.
+
+The required sequence is:
+
+1. spawn all three Investigators;
+2. let all three finish;
+3. receive all complete reports;
+4. reconcile the full evidence set and resolve contradictions;
+5. produce and review one coherent implementation design; and
+6. only then spawn the Coder.
+
+If even one required Investigator is still working, NO CODER EXISTS YET. Do
+not start a Coder using partial information and drip-feed later Investigator
+findings into it. The Coder receives the reconciled answer and does not
+discover the architecture by being repeatedly redirected as reports arrive.
+
+### Foreman reconciliation
+
+After all three reports arrive, the Foreman must synthesize them by comparing
+agreements and disagreements, resolving contradictions from repository
+evidence, determining the likely root cause or architecture, identifying
+authoritative owners, defining required and unchanged behavior, setting exact
+scope, prohibiting shortcuts, defining validation, identifying likely
+regressions, and producing ONE implementation brief.
+
+Do not hand three raw reports to the Coder and ask the Coder to decide the
+architecture. Investigators advise; the Foreman decides.
+
+## Phase 2 — Coder
+
+Only after reconciliation, spawn one GPT-5.6 Luna ACTUAL MAX Coder. The Coder
+is the sole implementation owner and receives the task objective, reconciled
+architecture, root cause, authoritative ownership decisions, likely files and
+systems, exact required behavior, preservation constraints, forbidden scope,
+acceptance criteria, validation requirements, and known hazards.
+
+The Coder must inspect the necessary code, implement the smallest coherent
+change, add or update tests where appropriate, run required validation, inspect
+the complete diff, and return:
+
+- implementation summary;
+- files changed;
+- tests run and results;
+- uncertainty; and
+- anything requiring Foreman attention.
+
+## Supervisory inactivity and professional treatment
+
+When a subagent owns the current actionable work, the Superintendent and
+Foreman should do nothing except wait for meaningful completion or a real
+request for attention. Use `wait_agent` or an equivalent long blocking wait;
+remain idle until the worker returns.
+
+They must not constantly announce that an agent is still working, repeatedly
+poll agent lists or timestamps, inspect process lists or partial diffs for
+entertainment, repeatedly request status, interrupt without cause, duplicate
+investigation, invent unrelated work, or narrate every passing minute.
+
+Silence while workers work is correct behavior. Long-running research, builds,
+browser validation, and debugging are normal.
+
+Treat subagents professionally. Do not bark at, hurry, badger, or repeatedly
+interrupt them; do not terminate them merely because work takes time; do not
+treat silence as failure; and do not treat supervisory status as making worker
+contributions less important. Give each worker a clear assignment and leave it
+alone to complete that assignment.
+
+## Phase 3 — independent Reviewer
+
+After the Coder completes, spawn one fresh, read-only GPT-5.6 Luna ACTUAL MAX
+Reviewer. The Reviewer inspects the original task, Foreman implementation
+brief, Coder changes, complete diff, relevant architecture and production
+paths, tests, acceptance criteria, and regression risks.
+
+The Reviewer uses these classifications:
+
+- BLOCKER — a real correctness or acceptance failure, including wrong
+  behavior, an architectural violation, a regression, missing functionality,
+  unsafe state handling, broken CircuitJS truth or identity, or missing
+  required validation;
+- MINOR / DEFERABLE — a legitimate nonblocking issue such as small hardening,
+  cleanup, documentation polish, or nonblocking robustness; and
+- PASS — no blocking issue found.
+
+The Reviewer is read-only. If it finds blockers, the Foreman evaluates each
+finding, rejects invalid findings with evidence, records deferable findings,
+converts real blockers into a focused remediation brief, and sends them to a
+Coder. The Coder fixes the blocker, runs relevant validation, and a fresh
+Reviewer reviews when appropriate. Repeat until all blocking findings are
+resolved. The Foreman does not directly implement a review fix.
+
+## Phase 4 — Foreman review
+
+After independent Reviewer PASS, the Foreman performs its own read-only
+review. It confirms that the task requirements are satisfied, Investigator
+findings were reconciled correctly, the Coder stayed within scope, Reviewer
+blockers were resolved, architecture remains coherent, existing invariants
+remain intact, validation is sufficient, and no obvious hidden regression
+remains.
+
+The Foreman must not rubber-stamp the Reviewer. If the Foreman finds a blocker,
+it returns that blocker to a Coder.
+
+## Phase 5 — Sol Ultra Inspector
+
+Only after implementation is complete, the Reviewer has passed, and the
+Foreman has passed, spawn the final independent read-only Inspector:
+
+- Model: GPT-5.6 Sol;
+- Reasoning: ULTRA; and
+- role: final independent audit gate.
+
+Give the Inspector the original task, acceptance criteria, Foreman design,
+final diff, validation, Reviewer result, Foreman result, and relevant
+architecture. It aggressively searches for hidden correctness failures,
+incomplete implementation, architectural violations, regression risk, missing
+edge cases, bad assumptions, test gaps, and false acceptance evidence.
+
+The Inspector uses BLOCKER, MINOR / DEFERABLE, and PASS classifications and is
+read-only. If it finds a BLOCKER, the Foreman evaluates it, prepares a
+remediation brief, the Coder fixes it, the Reviewer reviews it, the Foreman
+reviews it, and the Inspector audits again. The Inspector never repairs its own
+findings; review independence remains intact.
+
+## Deferred findings and completion packet
+
+Record every legitimate nonblocking Reviewer or Inspector finding. Do not
+silently discard it, and do not reopen a completed task merely because a
+nonblocking improvement could theoretically be cleaner. The Foreman includes
+deferred findings in the completion packet, and the Superintendent carries
+them to the next relevant task.
+
+After Coder completion, Reviewer PASS, Foreman PASS, Inspector PASS, and all
+required validation PASS, the Foreman returns this concise packet:
+
+```text
+TASK: <name>
+STATUS: COMPLETE
+IMPLEMENTATION: <concise summary>
+FILES CHANGED: <list>
+VALIDATION: <checks and results>
+REVIEW:
+  Reviewer: PASS
+  Foreman: PASS
+  Inspector: PASS
+DEFERRED MINOR ITEMS: <list or NONE>
+RISKS / NOTES: <list or NONE>
+```
+
+Do not dump the entire Foreman context into the Superintendent.
+
+## Multiple tasks and concurrency
+
+When the user explicitly requests multiple roadmap tasks in one activated
+prompt, complete them sequentially unless the user explicitly authorizes
+parallel execution. Each discrete roadmap task gets a fresh Foreman and a
+clean lifecycle. Do not roll from one task into another with the same Foreman,
+begin the next task while review is incomplete, or spawn workers for the next
+task while the current task has unresolved blockers.
+
+Within one Foreman task, three read-only Investigators may run in parallel.
+The following are not allowed:
+
+- a Coder while required Investigators are still working;
+- a Reviewer before Coder completion;
+- Foreman final review before Reviewer completion; or
+- an Inspector before Foreman PASS.
+
+Across roadmap tasks, execution is sequential by default. Parallel task
+execution requires explicit authorization in the current user task.
+
+## Blocked state
+
+If a real prerequisite, external failure, architecture contradiction, or
+unrelated blocker prevents safe continuation, stop and do not fake completion
+or broaden the task indefinitely. Return:
+
+```text
+STATUS: BLOCKED
+BLOCKER: <exact problem>
+EVIDENCE: <exact evidence>
+ATTEMPTS: <what was tried>
+RECOMMENDED NEXT ACTION: <bounded recommendation>
+```
+
+## Activation and deactivation summary
+
+AGENT BUREAUCRACY MODE IS OFF BY DEFAULT.
+
+It activates ONLY when the exact phrase `AGENT BUREAUCRACY MODE` appears in the
+CURRENT USER TASK. It expires when that user task completes and does not
+persist into later tasks. The next task uses normal mode unless the user
+explicitly writes the phrase again.
+
+NO IMPLIED ACTIVATION.
+
+The mode is not activated because the user used it last time, the task is
+complicated, the roadmap mentions it, the conversation discussed it, or the
+hierarchy appears in this file. EXPLICIT PHRASE OR THE MODE IS OFF.
+
 ## Project Mission
 
 TroubleshootJS is an interactive electronics troubleshooting simulator built around CircuitJS.
