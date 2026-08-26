@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-24 — post-Task-43 roadmap redesign_
+_Last updated: 2026-08-26 — Post-Task-43 Gate B complete; Task 43P next eligible but not started_
 
 ## Purpose
 
@@ -56,7 +56,8 @@ CircuitJS remains the electrical source of truth.
 - `[x]` Complete and validated.
 - `[>]` Next planned milestone.
 - `[ ]` Planned.
-- `[~]` Exploratory / timing intentionally flexible.
+- `[~]` Exploratory, conditional, or pending final acceptance/publication;
+  not complete.
 - `[!]` Blocked by an earlier dependency.
 
 ## Dependency terminology
@@ -190,11 +191,14 @@ TroubleshootJS has already moved well beyond a stock CircuitJS fork.
 - [x] SHOP is explicitly a local mock with no board connection; RESOURCES and
   SETTINGS are visible placeholders. They are not yet gameplay systems.
 
-The current accepted implementation baseline is the final integrated **Task 43
+The accepted Task 43 implementation remains the final integrated **Task 43
 acceptance** at SHA
-`8245c79990647f6c40f53bc1dd9330ec2ccd22b4`, published on
-`origin/codex/task43-recovery-integration`. The package-backed PCB geometry
-contract is version 3. No post-Task-43 implementation is claimed here.
+`8245c79990647f6c40f53bc1dd9330ec2ccd22b4`. Gate A then established the
+canonical post-Task-43 mainline baseline at
+`9dc06141190da3a44ebe12015a4f5656f0f40ef5` on
+`codex/post43-mainline-consolidation`; Gate B is now the accepted and published
+verification/CI/docs baseline on top of that state. The package-backed PCB
+geometry contract is version 3.
 
 The accepted baseline currently includes:
 
@@ -974,8 +978,9 @@ their numbers and broad product direction; the bounded post-Task-43 gates
 below make the runtime-composition wall explicit without turning every later
 feature into a prerequisite for every other feature.
 
-Exactly one milestone is immediately eligible: Post-Task-43 Gate B. Later
-milestones are not authority to continue automatically.
+Task 43P is the next planned milestone after Gate B is finally validated,
+published, and explicitly unlocked. It remains unstarted; no later milestone
+is authority to continue automatically.
 
 ## Governing architecture gates
 
@@ -1322,16 +1327,18 @@ automatic beginning of Gate B.
 - every old branch has a documented disposition;
 - archive tags exist where appropriate;
 - remaining branches and worktrees are documented;
-- the final baseline SHA is recorded; and
+- the final canonical baseline SHA `9dc06141190da3a44ebe12015a4f5656f0f40ef5`
+  is recorded; and
 - Task 44 remains unstarted.
 
 **Unlocks:** Post-Task-43 Gate B only.
 
 ---
 
-## Post-Task-43 Gate B — Verification Isolation and Mainline Protection Baseline
+## Post-Task-43 Gate B — Verification Isolation and Mainline Protection
 
-**Status:** `[>] IMMEDIATE NEXT GATE`
+**Status:** `[x] COMPLETE — implementation, validation, independent review,
+publication, and final evidence passed.`
 
 **Purpose:** Make automated validation safe for multiple worktrees, browser
 processes, and autonomous coding sessions before the next architecture phase
@@ -1362,21 +1369,45 @@ ports, profiles, temporary state, and evidence paths; exit codes distinguish
 application failure from infrastructure failure; JDK 8 production build has an
 explicit mainline validation path; mainline protection status is documented;
 and any owner-only GitHub configuration remains an explicit external action.
-Task 44 remains unstarted.
+These checks are implemented by the shared verifier run context, the
+deterministic Gate B canary, its bounded fixed-point browser drain, and the
+Windows workflow. Browser ownership uses
+one resolver across PATH, 64-bit Program Files, and Program Files (x86); the
+source canary covers root-only markers, mandatory and missing descendant
+`ExecutablePath`, markerless same-executable Edge ancestry, and
+reparent/PID-replacement rejection. The default driver used by the protected
+workflow is deterministic and nonvisual and intentionally excludes the live
+Edge lane. A supplemental live Edge canary is available only through the
+explicit `-GateBRealEdgeOwnershipProbe` opt-in and proves exact
+helper/profile/claim/listener/evidence cleanup when WMI is available. The
+accepted baseline also bounds the developer preview's Java version and optional
+JDK8/GWT build subprocesses. Deterministic and elevated WMI-backed canaries
+provide evidence for child termination/cleanup, global claim contention,
+listener/profile ownership, and shared Windows PowerShell argument quoting.
+The supplemental real-Edge ownership proof returns infrastructure exit `2` on
+this host because Edge exits before its root identity can be proven; that
+separate supplemental result is not a required default-driver PASS and is
+retained as truthful evidence rather than converted to success. The final
+Reviewer, Foreman, and Sol Inspector gates passed, and Gate B was published
+without claiming branch protection, JDK8 execution on this host, or visible
+Browser validation. Task 43P is the next eligible milestone but remains
+unstarted; Task 44 remains blocked and unstarted.
 
-**Unlocks:** Task 43P only.
+**Unlocks:** Task 43P is now the next eligible milestone after Gate B
+acceptance and publication, but it must not begin automatically. The owner/admin
+mainline-protection action remains external and is documented below.
 
 ---
 
 ## Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation
 
-**Status:** `[!] BLOCKED BY POST-TASK-43 GATE B`
+**Status:** `[>] NEXT ELIGIBLE AFTER GATE B — NOT STARTED`
 
 **Purpose:** Re-run material historical lifecycle and verification-integrity
 findings against the final Task 43 SHA before runtime composition begins.
 
-**Hard dependencies:** Task 43 complete; Gates A and B complete; historical
-audit reports preserved.
+**Hard dependencies:** Task 43 complete; Gates A and B accepted and published;
+historical audit reports preserved. This task has not begun.
 
 **Bounded goals:**
 
@@ -3414,9 +3445,10 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Post-Task-43 Gate B — Verification Isolation and Mainline Protection Baseline**
+**Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation
+(next eligible; not started)**
 
-Task 44 is **not** next. Gate B follows Gate A, Task 43P follows Gate B, and
-the Owner Review Gate follows Task 43P. The owner reviews this roadmap before
-Task 44; Task 44 remains unstarted. Do not begin Gate B during this Gate A
-candidate task.
+Gate B is complete and published. Task 43P is the next eligible milestone but
+remains explicitly unstarted; the Owner Review Gate follows it. Task 44 is
+**not** next, remains blocked and unstarted, and requires the explicit owner
+review described above. Do not begin Task 43P or Task 44 automatically.

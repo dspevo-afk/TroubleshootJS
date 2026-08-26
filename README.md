@@ -280,8 +280,9 @@ challenge:
 .\scripts\start-preview.ps1 -Challenge nmos -Seed 0 -OpenBrowser
 ```
 
-The detached preview defaults to port 8899 and prints the URL it is using. To
-stop the preview managed by the repository scripts:
+The detached preview defaults to port 8899 and prints separate `Preview root
+URL` and `Preview page URL` lines. To stop the preview managed by the
+repository scripts:
 
 ```powershell
 .\scripts\stop-preview.ps1
@@ -289,11 +290,21 @@ stop the preview managed by the repository scripts:
 
 ### Checks for contributors
 
-With the production preview running, the main browser regression matrix is:
+The browser verifier allocates isolated run state by default. Omit `-BaseUrl`
+for a run-owned preview, or pass an explicitly started preview root URL to use
+a caller-owned server after its worktree identity handshake:
 
 ```powershell
 .\scripts\verify-browser.ps1
 ```
+
+When reusing a caller-owned preview, pass the exact Preview root URL printed by
+`start-preview.ps1` to `-BaseUrl`; the Preview page URL is not a verifier BaseUrl.
+The page URL contains `/circuitjs.html?...` and is only for opening the
+page. Do not guess or treat the detached preview's convenience port as a
+verifier allocation default. The verifier also excludes the ordinary developer
+ports `8888`, `8898`, `8899`, and `9876` from allocation and never uses an
+ordinary port as ownership evidence or a fallback.
 
 The normal-player replacement flow can be run separately:
 

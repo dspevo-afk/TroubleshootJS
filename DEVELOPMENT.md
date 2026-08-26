@@ -201,8 +201,25 @@ Stop the development server with `Ctrl+C` in its terminal.
 
 ## Automated browser regression verification
 
-With the production preview running, execute the complete 15-route matrix in an
-installed Microsoft Edge browser:
+The verifier is isolated by default: when `-BaseUrl` is omitted it allocates a
+run-owned preview, CDP port, browser profile, temporary state, and evidence
+directory. To reuse a detached preview, pass the exact Preview root URL
+printed by `start-preview.ps1`; the verifier accepts it only after the preview
+identity handshake proves the same worktree:
+
+```powershell
+.\scripts\verify-browser.ps1 -BaseUrl '<paste the Preview root URL printed by start-preview.ps1>'
+```
+
+The Preview page URL is not a verifier BaseUrl; it contains
+`/circuitjs.html?...` and is only the page-opening URL. The printed root URL is
+guidance, not a verifier allocator default. Do not replace it with a guessed
+shared port; the identity handshake must match this worktree, and a
+caller-owned preview is never adopted or stopped by the verifier. The verifier
+excludes ordinary developer ports `8888`, `8898`, `8899`, and `9876` from
+allocation and never treats one as ownership evidence or an isolation fallback.
+
+Execute the complete 15-route matrix in an installed Microsoft Edge browser:
 
 ```powershell
 .\scripts\verify-browser.ps1
@@ -235,9 +252,9 @@ The diode-family electrical verifier and real-input normal-player flow are:
 The first command covers seeds 0, 2, and 3. The second uses visible workbench
 controls and canvas probe geometry to remove the open original D1, install a
 healthy diode, verify functional repair, and confirm forward/OL polarity on the
-separate loose physical parts. Every route uses a unique temporary Edge profile;
-cleanup closes Edge through DevTools and removes that profile with bounded
-retries.
+separate loose physical parts. Every route uses a unique temporary Edge profile
+and CDP port; cleanup closes the owned CDP session and removes only the
+process/profile whose run and start identities still match.
 
 Run the Task 27 electrical and normal-player paths with:
 

@@ -1867,3 +1867,349 @@ expected exit `1`, missing BrowserPath expected exit `2`, and post-process
 natural-success expected exit `0` canaries. Direct Task 41 and diode-short
 regressions passed for the requested seeds. No Task 44 implementation was
 started; Task 44 remains blocked and unstarted.
+
+## Post-Task-43 Gate B — verifier isolation and mainline protection
+
+The accepted Gate B implementation is the verifier-isolation and mainline-CI
+baseline on top of the canonical post-Task-43 baseline
+`9dc06141190da3a44ebe12015a4f5656f0f40ef5`. It is a
+validation/infrastructure boundary only: CircuitJS remains electrical truth,
+generated topology and PCB behavior remain unchanged, and no second solver or
+synthetic meter/browser result was introduced. The implementation passed the
+independent Reviewer, Foreman, and Sol Inspector gates and was published with
+the completed Gate B task. Task 43P is next eligible but remains unstarted.
+
+### Per-run ownership model
+
+`scripts/VerifierIsolation.psm1` is the single ownership implementation used by
+all `scripts/verify-browser.ps1` route families, including the specialized
+normal-player routes and `-Task43Integrated` child routes. Each invocation
+creates a context with:
+
+- an opaque GUID `runId` and a repository identity derived from the absolute
+  script/repository root;
+- a unique `%TEMP%\TroubleshootJS\verify\<repository>\<runId>` run root and
+  manifest;
+- a unique evidence directory, including a `run-<runId>` child when an
+  explicit `-EvidenceDirectory` is supplied;
+- collision-safe loopback port leases, with a global per-port named mutex and a
+  run-scoped claim record held through bind and exact cleanup; ordinary ports
+  `8888`, `8898`, `8899`, and `9876` are excluded from verifier allocation and
+  are never treated as ownership evidence or allocator fallbacks;
+- run-owned preview state/logs, process start identity, script/port identity,
+  and the `/__tsj/verify-identity` handshake; or an explicitly supplied
+  caller-owned preview that must prove the repository root, preview script,
+  web root, protocol, and loopback port;
+- a unique CDP port lease, profile below the run root, route/run markers,
+  bounded target attachment including a route-deadline-bound WebSocket
+  handshake, and recorded PID/start identity; and
+- manifest records for ownership, PID/start identity, port, profile, target,
+  evidence, leases, logs, and cleanup results.
+
+Cleanup stops or deletes only resources whose run identity, path, process start
+identity, command/script identity, and port/profile ownership remain provable.
+It never broad-kills Edge, adopts a foreign preview, removes another run's
+profile/evidence, or falls back to a shared fixed port/profile when allocation
+or ownership proof fails. Unsafe ownership, target/port/profile mismatch,
+timeout, tool, and cleanup errors are retained in the run manifest/evidence
+and classified as verifier infrastructure failure.
+
+Port allocation is an atomic retained claim, not an ephemeral-port probe. The
+allocator first holds the candidate loopback bind while it acquires a global
+per-port named mutex and creates an exact run-scoped claim record containing the
+worktree, run, and claiming verifier PID/start identity. The mutex remains held
+through the external preview/Edge bind and is released only by the same owner
+after exact cleanup. A successful preview identity or CDP target bind changes
+the manifest claim state to `bound`, records the exact listener PID/start
+identity, and rejects a foreign listener. A competing process in another
+worktree cannot acquire the requested port while that claim is held; an
+abandoned or mismatched claim is never adopted. Claim-file and manifest
+failures roll back the exact file, map entry, mutex ownership, and handle before
+returning infrastructure failure; partial claim data is not adopted.
+
+The Gate B competing-worktree canary launches a real Windows PowerShell child
+with `System.Diagnostics.Process` stream capture. It waits, refreshes, proves
+`HasExited`, and reads `ExitCode` using the Windows PowerShell 5.1-compatible
+path; an unavailable exit code is infrastructure failure rather than a
+contract pass. Expected infrastructure exit `2` with an observed `0` or `1`
+is also infrastructure failure. The child reports a structured cleanup record
+covering its manifest, lease ledger, profiles, claim paths, and exact-port
+absence. Captured child output remains in the canary evidence until all owned
+cleanup succeeds.
+
+All verifier-started processes use the shared
+`ConvertTo-VerifierWindowsArgument`/`Start-VerifierProcess` path (or the
+equivalent redirected `ProcessStartInfo` path using the same argument
+builder). This is the Windows PowerShell 5.1 command-line boundary for browser,
+preview, and child-script/profile paths. The deterministic canary performs an
+actual launch from temporary worktree and profile paths containing spaces and
+proves termination before deleting that exact temporary root.
+
+The shared command-line parser keeps exact Windows token boundaries for all
+ownership markers. After a token is matched, path-valued identity values such
+as `--user-data-dir` and `-File` are compared as absolute Windows paths with
+separator, `.`/`..`, trailing-separator, and case differences normalized.
+Opaque repository identity values remain ordinary exact values. The same
+canonical path key is used for repository identity hashing, worktree/script/
+profile/claim/run comparisons, preview state validation, stale-claim recovery,
+and stop-preview checks. The final profile-quiescence scan uses that key, so a
+late differently named helper using an equivalent foreign profile path blocks
+deletion and lease release.
+
+Listener inspection returns an explicit success/known/has-listeners result.
+Nonzero, empty, malformed, or error-text netstat output, incomplete listener
+records, and unknown listener PID/start identity are infrastructure failures;
+they are never interpreted as proof that a port is free. A claim is released
+only after exact loopback-listener absence is positively known. Browser profile
+cleanup scopes the Win32 process snapshot to relevant browser executable
+candidates and exact readable run/profile/remote-port markers. Irrelevant
+PID-zero, null-command, or unrelated transient records do not invalidate the
+run; every relevant candidate must still provide PID, parent PID, readable
+command line, and current start identity. Missing, stale, inaccessible, or
+changed relevant data retains the profile and claim, including when the
+recorded browser PID is zero or gone. A PPID relationship alone never authorizes
+termination: `Complete-VerifierBrowserSession` first establishes the canonical
+session/run root and one immutable owner-root record; the browser root must
+match the resolved `BrowserPath` by exact
+current executable name and nonblank canonical `ExecutablePath`; an inferred
+descendant must also expose a nonblank current `ExecutablePath` that canonically
+matches the configured browser executable identity, the verified current
+PID/start/parent ancestry, and any
+root-owned markers that it actually carries. Real Chromium/Edge renderer,
+utility, GPU, and helper descendants are not required to repeat every root-only
+verifier switch; markerless helpers are admissible only through that complete
+ancestry plus executable proof. A different executable, reparented/PID-reused
+node, unknown identity, or conflicting marker is left running and the run is
+retained as infrastructure failure. Once an owned root is being traversed, the
+candidate graph is built from the complete process snapshot, so differently
+named helpers cannot be filtered out before their exact identity is checked.
+Immediately before each termination, the verifier re-queries the exact current
+`Win32_Process` record and compares PID, parent PID, command line,
+run/profile/remote-port markers, executable identity, and current start identity
+with the discovery record. It stops only the revalidated process object; a PID
+disappearance, replacement, access failure, or mismatch retains the run and
+returns infrastructure failure.
+
+The browser cleanup drain keeps the verified root alive while it repeatedly
+captures a complete current process snapshot, expands exact root ancestry,
+and stops verified descendants deepest-first. It requires a bounded fixed
+point of empty graphs before stopping the root, then rechecks the complete
+post-stop graph and exact children of every known parent. A late,
+markerless, reparented, inaccessible, or otherwise unknown descendant blocks
+release and retains the profile, claim, manifest, evidence, and run root; the
+profile-bearing quiescence scan is never the sole cleanup proof. The
+WMI-backed late-markerless canary creates a same-executable helper only after
+the initial empty graph capture and asserts either fixed-point cleanup or a
+retained typed infrastructure result. The root-alive markerless-helper and
+root-gone retention canaries remain separate proofs.
+
+Root disappearance is fail-closed. A two-view absence of the recorded browser
+root is not a termination or descendant-cleanup proof: if the root is gone
+before its complete descendant graph has been revalidated, the verifier skips
+profile/claim/root deletion, marks the lease blocked, retains the manifest,
+evidence, profile, and claim, and returns typed infrastructure exit `2`. The
+only release path is a separately proven exact recovery after all owned
+processes and listeners are absent; the verifier never broadens cleanup to
+profile guesses or reused PIDs. The WMI-backed root-gone canary launches a
+root plus a differently named markerless helper, signals the root to exit,
+asserts that the helper and resources remain retained through the failed
+cleanup/drain, and then recovers the fixture only after the helper's natural
+exit. The normal root-alive canary separately preserves markerless
+same-executable helper cleanup.
+
+`Resolve-VerifierBrowserPath` is the one browser resolver used by the verifier
+and the opt-in supplemental live ownership canary. It checks an explicit configured path, PATH,
+`ProgramW6432`, `ProgramFiles`, `ProgramFiles (x86)`, and the supported local
+Edge installation location. Missing browser or inaccessible process inspection
+is infrastructure exit `2`, never a skipped or fabricated ownership pass. The
+deterministic default driver proves markerless same-executable ancestry,
+requires a nonblank descendant `ExecutablePath`, and rejects the missing-path,
+different-name, reparented, and PID-replacement records. The separate opt-in
+supplemental real-Edge canary launches the resolved Edge executable and proves
+helper, profile, claim, listener, evidence, and run-root cleanup when WMI is
+available. It returns typed infrastructure `2` without printing PASS when Edge
+or WMI is unavailable. This canary supplements and does not replace required
+visible Browser validation.
+
+Every run-owned browser root and its paired CDP ledger entry carries a mandatory
+nonblank, canonical resolved `BrowserPath` executable identity. The resolver is
+threaded into the initial lease/manifest write and parent/child ledgers; a
+missing, stale, or mismatched value fails infrastructure exit `2` before root
+ownership, adoption, or termination can be attempted. The integrated ledger
+reader independently requires the same identity on both sides of each browser
+lease/profile relation. Caller-owned previews remain a separate verified,
+non-owned class and do not acquire this browser-root cleanup obligation.
+
+Run-owned previews receive both the run ID and a unique nonce. The identity
+endpoint must echo both values, the recorded PID/start identity, and the port;
+the verifier also checks the recorded command line for the exact script, run,
+nonce, and port before it will stop the process. The process handle/PID is
+recorded immediately after launch, before fallible start-identity capture. If
+identity or delayed-bind proof is uncertain, cleanup refuses lease release and
+retains the process record, claim, manifest, and evidence unless exact process
+termination/absence and listener absence are proven. An explicitly supplied
+caller-owned preview must be identity-verified but has no run ownership or
+cleanup fields and is never adopted or killed. Its ledger and manifest proof
+fields are checked as exact JSON Booleans: `identityVerified` and `callerOwned`
+must be `true`, while the non-owned process/termination/listener proof fields
+must carry their explicit not-applicable values; strings such as `"false"` or
+`"true"`, numbers, and other truthy values are infrastructure failures. CDP transport/protocol errors,
+deadline expiration, target/attach failures, and verifier harness failures use
+the infrastructure classification; only a verified application `FAIL` or the
+deliberate Task 43 negative marker uses application exit `1`.
+The WebSocket handshake itself is cancellation-bound to the route deadline and
+its socket is aborted/disposed on timeout or protocol failure. Explicit verifier
+result data carrying `VerifierExitCode=2` is also infrastructure even if a
+producer omitted the typed failure-kind marker; exit severity remains monotonic.
+
+Context, evidence, lease, and initial-manifest setup is also inside the
+infrastructure classification path. When a run root exists but setup cannot
+finish, a minimal `setup-failure.json` is retained there when possible, and
+cleanup refuses to touch paths whose ownership cannot be proven. Browser
+profile cleanup always scans all process command lines for the exact profile,
+including when the recorded browser PID is zero or stale; inspection failure
+or a referencing process retains the profile/claim and returns infrastructure
+failure. A final lease-ledger walk retries every still-owned lease after
+partial startup/cleanup.
+
+`Complete-VerifierRun` reports unsuccessful cleanup results instead of
+swallowing them and drains every still-owned lease record. Port release first
+persists a durable `releasing`/`os-released` state, then releases and disposes
+the named mutex, and persists a `complete` + `delete-pending` tombstone before
+removing the exact claim file. Only after exact deletion is proven does it
+persist terminal `complete` + `released` state. After `os-released` or
+`complete` is durable, recovery validates and removes only the exact old claim;
+it does not require the port to be currently absent, because a newer legitimate
+run may already have rebound it. Recovery with a missing claim plus the durable
+marker is likewise idempotent and never deletes a newer claim.
+injected release, disposal, post-delete interruption, final-manifest, or
+claim-delete failures retain the tombstone for retry/diagnosis and cannot
+report complete. Gate B canaries
+retain their run roots, manifests, logs, and evidence whenever a cleanup
+exception, uncertain ownership, live listener, or unreleased claim remains.
+Listener startup/stop paths use exact PID/start and post-stop listener proof;
+an uncertain child/process cleanup prevents recursive deletion. Recursive
+canary-root deletion occurs only after the exact claim/profile/listener and
+lease-ledger proofs succeed; the deterministic cleanup-retention canary
+exercises a live-listener failure followed by a safe retry. Integrated child
+routes receive a parent-visible ledger containing the child run root, manifest,
+claim/profile ledger, and cleanup state. A timeout proves only the exact child
+PID termination; if the child finally cannot be proven, its owned resources and
+ledger remain retained rather than being broad-killed or recursively deleted.
+For every normally terminated child, including a child whose expected result is
+infrastructure exit `2`, the parent requires ledger state `completed` with
+complete cleanup and released leases/profiles. The ledger reader requires
+canonical run-root/manifest/evidence paths under the parent namespace, matching
+run/worktree/repository identities in the child manifest, positive listener
+absence for every released claim, no claim files, absent profiles, and complete
+run-owned-server termination proof. It rejects malformed, foreign-path,
+stale-claim, cleanup-failed, and completed-zero-resource ledgers unless the
+zero-resource case has the real canonical manifest/evidence proof. Only the
+explicit parent-timeout path may accept `started`/`resource-started` state, and
+that path validates retained canonical manifest/evidence/claims/profiles before
+returning infrastructure failure; it can never report success from an
+incomplete ledger.
+Completion flags are not accepted as proof: for every completed lease/server/
+profile the reader independently re-queries the recorded PID/start/parent/
+command identity where present, the exact loopback listener records, and the
+relevant run/profile process graph. A missing, replaced, inaccessible, or
+inconsistent query is infrastructure failure; a newer listener is treated as
+port reuse only after the old identity is positively distinguished and is never
+adopted or deleted. Ledger leases are limited to `preview`/`cdp`, use the exact
+global mutex derived from a port in the `1..65535` range and the canonical
+`<port>-<leaseId>.lease` claim path, and every active/nonterminal lease and
+retained claim must carry a positive owner PID/start identity. Duplicate live
+ports or derived mutexes are rejected even when IDs and claim paths differ;
+same-port reuse is accepted only after a durable terminal release and no live
+claim. Every browser profile is paired bijectively with a `cdp` lease (never a
+`preview` lease) with the exact canonical profile, port, and run identity.
+Run-owned server records must use `scripts\\preview.ps1`, the exact
+`http://127.0.0.1:<port>` root, and direct `runRoot\\server` stdout/stderr logs.
+An explicitly supplied caller-owned server is accepted only as a verified
+non-owned record with exact repository root, `war` web root, identity protocol,
+loopback root, and no process/lease/cleanup claim; it is never adopted or
+killed. The deterministic ledger canary creates a real released lease, rejects
+mutated cleanup flags, and exercises retained server records plus duplicate
+live-port, invalid-port, owner-identity, wrong-profile-kind, caller-owned,
+strict-Boolean ledger/manifest, custom-mutex, wrong-script,
+non-loopback/path/query, wrong-port, and foreign-log variants.
+Verifier and Gate B child/subprocess paths use bounded asynchronous
+output/termination runners. The listener fallback routes `netstat.exe` through
+a redirected, exact-PID runner; `build.ps1` uses its equivalent bounded
+`ProcessStartInfo` wrapper for JDK/GWT while retaining stdout/stderr streaming
+and logs. Successful exit/timeout canary assertions remove only their exact
+temporary process namespaces; unexpected failures retain those logs/evidence.
+A workflow-level timeout remains only a backstop.
+
+The normal single-run developer workflow remains compatible: omit `-BaseUrl`
+for an isolated run-owned preview, or pass the exact Preview root URL printed
+by a running preview for an explicitly verified caller-owned server. The
+Preview page URL is not a verifier BaseUrl; it is only the page-opening URL.
+The legacy singleton
+preview scripts remain caller-owned developer conveniences on their documented
+ordinary ports; those ports are neither verifier allocator defaults nor proof
+of ownership. The Gate B verifier does not adopt or stop caller-owned state.
+
+### Exit and integrated-child contract
+
+The verifier preserves the existing contract:
+
+| Result | Process exit |
+| --- | ---: |
+| Verified application failure, including a genuine forced-negative Task 43 canary | `1` |
+| Verified positive route | `0` |
+| Browser/tool/port/profile/target/timeout/ownership/cleanup/toolchain infrastructure failure | `2` |
+
+`-Task43Integrated` preserves expected child `0`, forced-negative child `1`,
+and missing-browser/tool child `2`. A positive child that prints a `FAIL`
+marker while exiting `0` is rejected as application failure. A child with an
+unknown or unavailable failure status is infrastructure failure. The parent
+does not convert a real application failure into a pass.
+
+### CI and visible Browser boundary
+
+`.github/workflows/windows-gate-b.yml` is the Windows mainline lane. It
+explicitly selects Temurin JDK 8, verifies both `java` and `javac` report
+version 8, runs the pinned GWT 2.7.0 compile path, asserts the generated
+bootstrap/permutation artifacts, runs the renderer/provider boundary check,
+and runs the parser, GWT XML, isolation, and 0/1/2 contract checks in
+`scripts/verify-gate-b.ps1`. The exact job check name is
+`Gate B Windows JDK8 deterministic verification`.
+
+The default `verify-gate-b.ps1` invocation used by this job is deterministic
+and nonvisual: it includes the deterministic isolation/ownership and contract
+checks but intentionally does not invoke the live-Edge ownership canary. The
+live-Edge proof is available only through the explicit
+`-GateBRealEdgeOwnershipProbe` opt-in as a separate supplemental WMI/Edge
+lane; its infrastructure exit `2` remains truthful and is not required to
+make this deterministic check green. Neither lane replaces visible Browser
+validation.
+
+The workflow intentionally does not claim browser-bound visual verification
+as headless or nonvisual CI. Required normal-player validation remains real,
+visible Browser interaction through the supported in-app Browser boundary;
+the CDP routes are supporting developer/regression evidence only. On a host
+that denies Windows process command-line inspection, the profile ownership
+canary reports an infrastructure limitation rather than fabricating a pass.
+The Gate B driver maps required JDK selection, process/listener inspection,
+setup, timeout, and harness failures to exit `2`; `-SkipJdkCheck` skips only the
+JDK probe and does not waive the remaining infrastructure gates. Gate B is
+accepted and published. Owner/admin configuration of `master` protection
+remains an explicit external action and is not claimed here.
+
+### Mainline protection — OWNER ACTION REQUIRED
+
+The repository owner/admin must configure and then verify protection for
+`master`: disallow force-push and branch deletion, require pull requests as
+appropriate, and require the exact check
+`Gate B Windows JDK8 deterministic verification` before merge. After the
+workflow has produced a check, the owner must confirm that this exact job is
+listed as required on a test pull request and record any GitHub-renamed check
+context if the UI presents one. The Foreman observed that the current live
+protection read was unavailable (`403 Resource not accessible by integration`);
+preserved historical Gate A evidence records a separate earlier `401
+Unauthorized` protection-read observation. These are time-separated evidence
+observations, not a fabricated setting or an inference that protection exists.
+The live workflows read was `404/not present`, master had no tracked workflow
+at baseline, and recorded Actions runs were zero. No remote protection setting
+was fabricated or mutated by Gate B.

@@ -1,0 +1,74 @@
+name: Gate B Windows JDK8 verification
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate-b:
+    name: Gate B Windows JDK8 deterministic verification
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Select JDK 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+
+      - name: Verify selected java and javac are JDK 8
+        shell: pwsh
+        run: |
+          $java = Join-Path $env:JAVA_HOME 'bin\java.exe'
+          $javac = Join-Path $env:JAVA_HOME 'bin\javac.exe'
+          $javaVersion = (& $java -version 2>&1 | Out-String)
+          $javaExit = $LASTEXITCODE
+          $javacVersion = (& $javac -version 2>&1 | Out-String)
+          $javacExit = $LASTEXITCODE
+          if ($javaExit -ne 0 -or $javaVersion -notmatch 'version\s+"1\.8\.') {
+            throw "java is not JDK 8: $($javaVersion.Trim())"
+          }
+          if ($javacExit -ne 0 -or $javacVersion -notmatch 'javac\s+1\.8\.') {
+            throw "javac is not JDK 8: $($javacVersion.Trim())"
+          }
+          Write-Host "Selected JDK: $($javaVersion.Trim()) / $($javacVersion.Trim())"
+
+      - name: Compile pinned GWT 2.7.0 mainline artifact
+        shell: pwsh
+        run: .\scripts\build.ps1 -JavaHome $env:JAVA_HOME -Target Compile -Style OBF
+
+      - name: Assert compiled GWT artifacts
+        shell: pwsh
+        run: |
+          $nocache = 'war\circuitjs1\circuitjs1.nocache.js'
+          $cacheFiles = @(Get-ChildItem 'war\circuitjs1' -Filter '*.cache.js' -File -ErrorAction SilentlyContinue)
+          if (-not (Test-Path -LiteralPath $nocache -PathType Leaf)) {
+            throw "Missing compiled GWT bootstrap: $nocache"
+          }
+          if ($cacheFiles.Count -eq 0) {
+            throw 'No compiled GWT permutation cache artifact was produced.'
+          }
+          Write-Host "GWT artifacts: bootstrap=$nocache permutations=$($cacheFiles.Count)"
+
+      - name: Verify renderer/provider boundary
+        shell: pwsh
+        run: .\scripts\verify-renderer-boundary.ps1
+
+      - name: Run deterministic Gate B isolation and Task 43 contract checks (nonvisual; live-Edge opt-in excluded)
+        shell: pwsh
+        run: .\scripts\verify-gate-b.ps1 -JavaHome $env:JAVA_HOME
+
+      # The default driver intentionally excludes the opt-in live-Edge
+      # ownership lane. Run `-GateBRealEdgeOwnershipProbe` separately for
+      # supplemental WMI/Edge evidence; it is not this protected deterministic
+      # check and does not replace visible Browser validation.
+      # Player-facing visible Browser validation remains a separate required/manual lane.
