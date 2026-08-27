@@ -33,6 +33,23 @@ this evidence packet; it does not accept or unlock Task 43P.
 Owner Review remains blocked, Task 43P is not accepted, and Task 44 has not
 started.
 
+### Task Completion Protocol metadata
+
+- **Roadmap milestone/task:** Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation.
+- **Summary:** Forensic-only reconciliation of preserved lifecycle, verification, and recovery evidence against current evidence; no production behavior changed. Dispositions remain `FOLLOW-UP`, `STALE OR SUPERSEDED`, or `CLOSED`; no proven current `OPEN BLOCKER` was found.
+- **Architectural decisions:** CircuitJS remains electrical truth; the supported Task 41 boundary is fresh-candidate/detached-owner-only Option A; same-owner transactional Option B is unsupported. The independent physical triad, runtime A-I lanes, and Owner Review remain unresolved prerequisites.
+- **Current six-file candidate scope:** `AGENTS.md`; `docs/research/AUDIT_STATUS.md`; `docs/ROADMAP.md`; `docs/ARCHITECTURE.md`; `docs/CODEX_TASK_REPORT.md`; `docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`.
+- **Validation and limitations:** JDK8/GWT build, renderer boundary, and minimal Gate B relevance checks exited 0. Primary D5 preview stop exited 2 because orphan-parent identity was unproven; separate exact command-line/PID-verified fallback and post-stop port check exited 0 with no owned residual. Visible `@Browser` routes recorded `PASS:task39`, `PASS:task43`, `PASS:meter`, and `PASS:stress`; external CDP and missing A-I lanes remain infrastructure/evidence limits.
+- **Coder result:** PASS — current evidence packet and status documentation prepared without production edits.
+- **Reviewer result:** PASS for the repaired evidence packet.
+- **Primary architect/Foreman review:** 1 bounded round; FINAL PASS for the evidence packet. Task 43P acceptance and unlock remain pending.
+- **Escalation-architect review:** Not required; no escalation-architect invocation. The Terra Inspector was the required independent final gate for this candidate, was not the escalation architect, and its targeted reinspection returned `PASS`.
+- **Next roadmap milestone:** Task 44 — blocked and unstarted pending Task 43P acceptance and Owner Review.
+- **Intended commit message:** `Reconcile post-Task-43 integrity evidence`.
+- **Remote/upstream:** configured remote `origin`; branch/upstream `codex/post43-mainline-consolidation` tracking `origin/codex/post43-mainline-consolidation`.
+- **Notification:** destination `dspevock@stateofthearcelectric.com`; intended subject `TroubleshootJS: Task 43P integrity reconciliation pushed`.
+- **Publication boundary:** This report is written before publication. The authoritative final commit SHA, push result, and notification result are established after the report is written and are available from repository history and the final Codex task response. No final SHA, push result, or notification result is claimed here.
+
 ## Historical Gate B closure status
 
 Gate B is COMPLETE and published on `codex/post43-mainline-consolidation`.
