@@ -53,7 +53,7 @@ Depth: 0
     │   Reasoning: ACTUAL MAX
     │   Role: Read-only regression / validation / coupling investigation
     │   Depth: 2
-    ├── INVESTIGATOR 3
+    ├── INVESTIGATOR 3 (optional for approved high-risk exceptions)
     │   Model: GPT-5.6 Luna
     │   Reasoning: ACTUAL MAX
     │   Role: Read-only adversarial / falsification investigation
@@ -69,27 +69,30 @@ Depth: 0
     │   Role: Independent read-only implementation review
     │   Depth: 2
     └── INSPECTOR
-        Model: GPT-5.6 Sol
-        Reasoning: ULTRA
+        Model: GPT-5.6 Terra
+        Reasoning: MAX
         Role: Final independent read-only audit
         Depth: 2
 ```
 
 ## Model requirements
 
-Every Luna role in an activated task requires GPT-5.6 Luna with ACTUAL MAX
-reasoning:
+Every default Luna role in an activated task requires GPT-5.6 Luna with
+ACTUAL MAX reasoning:
 
 - Superintendent;
 - Foreman;
-- Investigators 1–3;
+- Investigators 1–2;
 - Coder; and
 - Reviewer.
 
 ACTUAL MAX means MAX. It does not mean EXTRA HIGH, HIGH, or a lower setting
 that is merely labeled or described as MAX. If the platform exposes separate
-reasoning levels, explicitly request MAX. The Inspector requires GPT-5.6 Sol
-with ULTRA reasoning.
+reasoning levels, explicitly request MAX. The default Inspector requires
+GPT-5.6 Terra with MAX reasoning. A third Investigator is conditional under
+the Lean Context Bureaucracy Protocol below. Sol is reserved for a justified
+escalation or an explicit user request; never silently substitute a weaker or
+different configuration.
 
 If a requested configuration is unavailable, report that limitation honestly.
 Do not silently substitute a weaker configuration, and do not repeatedly kill
@@ -146,15 +149,21 @@ The Foreman is the architect and owner of ONE discrete task. It reads relevant
 project documentation, determines the task architecture, delegates
 investigation, reconciles the investigation, writes one implementation brief,
 delegates implementation, evaluates reviewer findings, performs its own
-read-only final architectural review, and invokes the Sol Inspector only after
-the candidate is genuinely ready.
+bounded read-only final architectural review, and invokes the Terra Inspector
+only after the candidate is genuinely ready.
 
 The Foreman must not directly edit production code.
 
-## Phase 1 — three Investigators
+## Phase 1 — required Investigators
 
-The default activated workflow spawns exactly THREE independent, read-only
-GPT-5.6 Luna ACTUAL MAX Investigators with distinct angles:
+The default activated workflow spawns exactly TWO independent, read-only
+GPT-5.6 Luna ACTUAL MAX Investigators with distinct angles. Use a third only
+for electrical truth / solver correctness, board or topology-generation
+invariants, verifier ownership or concurrency architecture,
+persistence/state-corruption risk, major gameplay-state architecture, three
+or more genuinely independent subsystems, or a material disagreement between
+the first two. A narrow blocker repair does not automatically receive new
+Investigators. A task-specific current-user instruction may require a third.
 
 1. Investigator 1 — architecture and ownership: authoritative owners, call
    paths, state boundaries, existing abstractions, permanent invariants,
@@ -162,21 +171,20 @@ GPT-5.6 Luna ACTUAL MAX Investigators with distinct angles:
 2. Investigator 2 — regression, coupling, and validation: existing verifiers,
    affected families, related tests, historical regressions, collateral-damage
    risks, and the minimum closed validation set.
-3. Investigator 3 — adversarial and falsification: incompatible constraints,
-   hidden ownership conflicts, feasibility, routing and lifecycle limitations,
-   nondeterminism, unobservable or unrepairable states, answer leakage, and
-   alternative root causes.
+3. Optional Investigator 3 — adversarial or otherwise specifically named
+   independent question, only when one of the approved exceptions applies.
 
 ### Mandatory investigation barrier
 
 The Foreman MUST NOT spawn the Coder until ALL required Investigators have
-completely finished and all three complete reports have arrived. Not one and
-not two: all three.
+completely finished and every required report has arrived. This means both
+default Investigators, or all three when a documented exception or explicit
+task requirement activates the third.
 
 The required sequence is:
 
-1. spawn all three Investigators;
-2. let all three finish;
+1. spawn all required Investigators;
+2. let all required Investigators finish;
 3. receive all complete reports;
 4. reconcile the full evidence set and resolve contradictions;
 5. produce and review one coherent implementation design; and
@@ -189,23 +197,24 @@ discover the architecture by being repeatedly redirected as reports arrive.
 
 ### Foreman reconciliation
 
-After all three reports arrive, the Foreman must synthesize them by comparing
-agreements and disagreements, resolving contradictions from repository
-evidence, determining the likely root cause or architecture, identifying
-authoritative owners, defining required and unchanged behavior, setting exact
-scope, prohibiting shortcuts, defining validation, identifying likely
-regressions, and producing ONE implementation brief.
+After all required reports arrive, the Foreman must synthesize them by
+comparing agreements and disagreements, resolving contradictions from
+repository evidence, determining the likely root cause or architecture,
+identifying authoritative owners, defining required and unchanged behavior,
+setting exact scope, prohibiting shortcuts, defining validation, identifying
+likely regressions, and producing ONE implementation brief.
 
-Do not hand three raw reports to the Coder and ask the Coder to decide the
-architecture. Investigators advise; the Foreman decides.
+Do not hand raw Investigator reports to the Coder and ask the Coder to decide
+the architecture. Investigators advise; the Foreman decides.
 
 ## Phase 2 — Coder
 
-Only after reconciliation, spawn one GPT-5.6 Luna ACTUAL MAX Coder. The Coder
-is the sole implementation owner and receives the task objective, reconciled
-architecture, root cause, authoritative ownership decisions, likely files and
-systems, exact required behavior, preservation constraints, forbidden scope,
-acceptance criteria, validation requirements, and known hazards.
+Only after reconciliation, spawn one GPT-5.6 Luna ACTUAL MAX Coder. Exactly one
+Coder owns implementation for the task. The Coder receives the task objective,
+reconciled architecture, root cause, authoritative ownership decisions, likely
+files and systems, exact required behavior, preservation constraints,
+forbidden scope, acceptance criteria, validation requirements, and known
+hazards. Use a compact handoff rather than full prior reports or transcripts.
 
 The Coder must inspect the necessary code, implement the smallest coherent
 change, add or update tests where appropriate, run required validation, inspect
@@ -245,6 +254,15 @@ Reviewer. The Reviewer inspects the original task, Foreman implementation
 brief, Coder changes, complete diff, relevant architecture and production
 paths, tests, acceptance criteria, and regression risks.
 
+The first review is a full task-level audit. A repair review is delta-focused:
+it covers the prior blocker, the repair diff since the last reviewed
+candidate, affected ownership/exit/electrical/gameplay invariants, nearby
+interaction surfaces, and relevant regression evidence. Request a new full
+task audit only when the repair changes architecture, enters a new subsystem,
+reveals systemic misunderstanding, reaches three repair loops since the last
+full audit, or invalidates prior evidence. Reviewer reports should be concise
+and normally no longer than 1,200 words.
+
 The Reviewer uses these classifications:
 
 - BLOCKER — a real correctness or acceptance failure, including wrong
@@ -264,36 +282,52 @@ resolved. The Foreman does not directly implement a review fix.
 
 ## Phase 4 — Foreman review
 
-After independent Reviewer PASS, the Foreman performs its own read-only
-review. It confirms that the task requirements are satisfied, Investigator
-findings were reconciled correctly, the Coder stayed within scope, Reviewer
-blockers were resolved, architecture remains coherent, existing invariants
-remain intact, validation is sufficient, and no obvious hidden regression
-remains.
+After independent Reviewer PASS, the Foreman performs a bounded read-only
+review. It confirms the open acceptance criteria, current diff and status,
+required exit contracts, latest tests/canaries, CI and visible Browser
+evidence, scope, and resolution of Reviewer blockers. It does not repeat a
+complete forensic archaeology unless evidence conflicts.
 
 The Foreman must not rubber-stamp the Reviewer. If the Foreman finds a blocker,
 it returns that blocker to a Coder.
 
-## Phase 5 — Sol Ultra Inspector
+## Phase 5 — Terra Max Inspector
 
 Only after implementation is complete, the Reviewer has passed, and the
 Foreman has passed, spawn the final independent read-only Inspector:
 
-- Model: GPT-5.6 Sol;
-- Reasoning: ULTRA; and
+- Model: GPT-5.6 Terra;
+- Reasoning: MAX; and
 - role: final independent audit gate.
 
-Give the Inspector the original task, acceptance criteria, Foreman design,
-final diff, validation, Reviewer result, Foreman result, and relevant
-architecture. It aggressively searches for hidden correctness failures,
+Before the Inspector is spawned, the Coder must be complete; the latest
+Reviewer and Foreman must have passed; deterministic source, contract, and
+local checks must be complete; supported JDK8/GWT CI terminal evidence and
+visible @Browser validation must be complete wherever required; known
+infrastructure blockers must be resolved or explicitly permitted; and the
+candidate must otherwise be publication-ready. The Inspector receives only a
+compact handoff: acceptance criteria, baseline/current SHA, changed-file map,
+latest Reviewer PASS, Foreman PASS, final canary/CI/visible-Browser evidence,
+and open or deferred minors. Do not forward the full Gate B transcript or
+large logs.
+
+The Inspector aggressively searches for hidden correctness failures,
 incomplete implementation, architectural violations, regression risk, missing
 edge cases, bad assumptions, test gaps, and false acceptance evidence.
 
 The Inspector uses BLOCKER, MINOR / DEFERABLE, and PASS classifications and is
-read-only. If it finds a BLOCKER, the Foreman evaluates it, prepares a
-remediation brief, the Coder fixes it, the Reviewer reviews it, the Foreman
-reviews it, and the Inspector audits again. The Inspector never repairs its own
-findings; review independence remains intact.
+read-only. If Terra finds a BLOCKER, the Foreman evaluates it, prepares a
+remediation brief, the Coder fixes it, a fresh delta Reviewer reviews it, the
+Foreman reviews it, and Terra performs a targeted reinspection. The targeted
+reinspection covers the blocker, repair delta, regression, affected
+invariants, and refreshed evidence. Do not run a new full Inspector audit
+unless the repair changes architecture or invalidates broad prior proof.
+Sol may be used only when Terra explicitly cannot resolve an important
+ambiguity, materially disagrees with Reviewer/Foreman, electrical truth or
+solver correctness remains disputed, contradictory Browser/CI evidence
+remains, a high-risk ownership/destructive-process issue cannot be resolved,
+or the user explicitly requests Sol. A clean Terra PASS ends the Inspector
+gate.
 
 ## Deferred findings and completion packet
 
@@ -331,7 +365,8 @@ clean lifecycle. Do not roll from one task into another with the same Foreman,
 begin the next task while review is incomplete, or spawn workers for the next
 task while the current task has unresolved blockers.
 
-Within one Foreman task, three read-only Investigators may run in parallel.
+Within one Foreman task, the required read-only Investigators may run in
+parallel.
 The following are not allowed:
 
 - a Coder while required Investigators are still working;
@@ -370,6 +405,123 @@ NO IMPLIED ACTIVATION.
 The mode is not activated because the user used it last time, the task is
 complicated, the roadmap mentions it, the conversation discussed it, or the
 hierarchy appears in this file. EXPLICIT PHRASE OR THE MODE IS OFF.
+
+## Lean Context Bureaucracy Protocol
+
+When Agent Bureaucracy Mode is activated, this section is an orchestration
+optimization. It preserves the existing engineering, safety, electrical-truth,
+false-pass, cleanup, exit-code, and visible-`@Browser` quality floor; it does
+not waive a required check or a real blocker. It applies to future tasks and
+does not reopen Gate B or duplicate completed work.
+
+1. **Context isolation.** The repository, current diff, tests, CI, roadmap,
+   governing instructions, and compact handoff are authoritative. Do not
+   forward the full Gate B chronology, full child transcripts, giant logs, or
+   role-by-role archaeology. Search history only for a specific unresolved
+   contradiction. Resolved blockers remain in Git history and task reports.
+
+2. **Compact handoff.** At every role or context rotation, use no more than
+   approximately 1,500 words and include only:
+
+   ```text
+   TASK / GATE:
+   BASELINE SHA:
+   CANDIDATE SHA:
+   OBJECTIVE:
+   NON-NEGOTIABLE INVARIANTS:
+   FILES/SCRIPTS IN SCOPE:
+   OPEN BLOCKERS:
+   RESOLVED BLOCKERS STILL RELEVANT:
+   CURRENT EXIT-CODE CONTRACT:
+   CURRENT VALIDATION:
+   EXTERNAL / VISIBLE-BROWSER EVIDENCE:
+   ENVIRONMENT LIMITATIONS:
+   DEFERRED MINORS:
+   NEXT ACTION:
+   ```
+
+   Use paths, symbols, commands, run IDs, and short error excerpts instead of
+   narrative history or pasted logs.
+
+3. **Safe Foreman rotation.** Never interrupt an active Coder or Reviewer.
+   At the next clean checkpoint after a review/repair result, the outgoing
+   Foreman writes the compact handoff and the Superintendent may intentionally
+   spawn a fresh Foreman. Thereafter rotate only after a major gate/task
+   closure or two substantial repair loops. This is planned context
+   compaction, not replacement for inactivity. Never rotate mid-edit or while
+   an unresolved child result still needs reconciliation.
+
+4. **Investigator budget.** The default is exactly two independent,
+   read-only GPT-5.6 Luna MAX Investigators. Add a third only for electrical
+   truth/solver correctness, board or topology-generation invariants, verifier
+   ownership/concurrency architecture, persistence/state corruption, major
+   gameplay-state architecture, three or more independent subsystems, or a
+   material disagreement between the first two. A narrow blocker repair does
+   not automatically receive new Investigators. All required Investigators
+   must finish before the single Coder exists.
+
+5. **One Coder.** Exactly one GPT-5.6 Luna MAX Coder owns implementation for
+   an activated task. It receives the open blocker or bounded objective,
+   affected invariant, exact files, required regressions, and validation
+   requirements—not the full prior history. The Coder report should normally
+   be no longer than 1,200 words.
+
+6. **Delta-focused review.** Every candidate still receives an independent
+   Luna MAX Reviewer. The first review is task-level. A repair review covers
+   the prior blocker, repair delta, affected ownership/exit/electrical/
+   gameplay invariants, nearby interaction surfaces, and relevant regression
+   evidence. Start a new full audit only when repair changes architecture,
+   enters a new subsystem, reveals systemic misunderstanding, reaches three
+   repair loops since the last full audit, or invalidates prior evidence.
+   Reviewer reports should normally be no longer than 1,200 words.
+
+7. **Bounded Foreman review.** After Reviewer PASS, check open acceptance
+   criteria, current diff/status, required exit contracts, latest tests and
+   canaries, CI/visible Browser evidence, scope, and blocker resolution. Do
+   not repeat complete forensic archaeology unless evidence conflicts.
+
+8. **Inspector readiness.** Do not spawn an Inspector for CI or environment
+   triage. Before the Inspector, the Coder is complete, the latest Reviewer
+   and Foreman passed, deterministic source/contract/local checks are done,
+   supported JDK8/GWT terminal evidence is green where required, visible
+   `@Browser` validation is complete where required, known infrastructure
+   blockers are resolved or explicitly permitted, and the candidate is
+   publication-ready.
+
+9. **Terra default.** The final Inspector is GPT-5.6 Terra with MAX reasoning
+   and receives only the compact handoff, acceptance contract, baseline/current
+   SHA, changed-file map, latest review results, final canary/CI/visible-
+   Browser evidence, and open/deferred minors. Its report should normally be
+   no longer than 1,500 words. A Terra blocker returns through the same Coder,
+   delta Reviewer, bounded Foreman review, and targeted Terra reinspection.
+
+10. **Sol escalation.** Use GPT-5.6 Sol only when Terra cannot resolve an
+    important ambiguity, materially disagrees with the Reviewer or Foreman,
+    electrical truth/solver correctness remains disputed, contradictory
+    Browser/CI evidence remains, a high-risk ownership/destructive-process
+    issue cannot be resolved confidently, or the user explicitly requests
+    Sol. A clean Terra PASS ends the Inspector gate; allow at most one Sol
+    escalation per gate/task unless the user authorizes more.
+
+11. **Sacred contracts.** Preserve verified positive exit `0`, verified
+    application failure or expected forced-negative exit `1` where specified,
+    and verifier/tool/browser/CDP/timeout/ownership/cleanup/infrastructure
+    uncertainty exit `2`. Preserve false-pass detection, forced-negative
+    markers, recovery, exact owned-resource cleanup, no broad process killing,
+    CircuitJS electrical truth, and the requirement that deterministic checks
+    never replace required visible `@Browser` evidence.
+
+12. **Output discipline.** Reports reference file/line or symbol, exit code,
+    short canary result, commit SHA, CI job/run, and Browser evidence path.
+    Keep Investigator reports preferably under 800 words, Coder and Reviewer
+    reports under 1,200 words, and Inspector reports under 1,500 words. Do not
+    copy other agents' reports verbatim.
+
+13. **Quality floor.** Never waive a real blocker, let a Coder self-review,
+    fake visible Browser proof, weaken electrical truth or cleanup checks,
+    restart completed Gate B work, start Task 43P while Gate B is incomplete,
+    start Task 44 before prerequisites, or replace an active agent merely for
+    timeout, silence, or inactivity.
 
 ## Project Mission
 
@@ -1413,17 +1565,13 @@ Parallel work is encouraged for independent activities such as:
 - independent review of distinct concerns
 - browser/test evidence analysis
 
-Multiple write-capable coder subagents MAY work in parallel only when their
-ownership boundaries are explicitly separated and their edits cannot reasonably
-conflict.
-
-Examples of safe parallel implementation:
-
-- one coder modifies production code while another adds isolated tests
-- coders modify separate modules with clearly defined interfaces
-- one coder implements a new isolated class while another updates an
-  unrelated verifier or fixture
-- independent fixes in files/subsystems with no overlapping ownership
+The activated bureaucracy workflow retains exactly one Coder for the task.
+Multiple write-capable coder subagents are not used within that workflow; one
+Coder owns the implementation and any required correction loop. In normal
+mode, multiple write-capable coders remain permissible only when ownership is
+explicitly separated and edits cannot reasonably conflict, such as independent
+fixes in files or subsystems with no overlapping ownership, and only when the
+task instructions explicitly authorize that parallelism.
 
 Do NOT run multiple write-capable agents in parallel when:
 

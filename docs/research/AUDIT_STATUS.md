@@ -11,18 +11,21 @@ current tree.
 The accepted Task 43 implementation baseline is
 `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`. The Gate A documentation candidate
 starts from `acd2c265a91908cb2656d7306936c13c2ddd96ea`; it changes no
-production behavior. Task 43P is the required future reproduction and
-falsification pass against the final Task 43 state. Until Task 43P runs, no
-historical finding below is classified as an open blocker, closed finding, or
-current implementation defect.
+production behavior. Gate B is the accepted and published verification/CI/docs
+baseline at `9dc06141190da3a44ebe12015a4f5656f0f40ef5`, while the current
+evidence packet is [recorded here](POST_TASK_43_INTEGRITY_RECONCILIATION.md) at
+tested baseline `9853f1e5fd311830d14d671d0ba380c51018a658`. The packet records
+current-evidence dispositions but does not constitute Task 43P acceptance or
+unlock Owner Review or Task 44. Acceptance remains pending because runtime A-I
+and independent physical-triad evidence is missing.
 
 ## Preserved historical reports
 
 | Preserved file | Original branch and report commit | Original audited baseline | Audit date when known | Reconciled against final Task 43? | Current disposition |
 | --- | --- | --- | --- | --- | --- |
-| `docs/research/STATE_LIFECYCLE_INTEGRITY_AUDIT.md` | `codex/state-lifecycle-integrity-audit` at `792a6da80e9eca3750c74803ba72bc3b0fbdc2f4`; blob `989a9bd968825e6506c01280f2e6d9e698d0f864` | `2ccc3b6fb3c6197b5dcadc12cdd63f6ab0ef6ca6`, the then-current `origin/master` at audit start | `2026-08-19` from the audit branch/report activity; no separate date heading is present in the report | **No.** Task 43P must reproduce or falsify it against final Task 43. | Preserved unchanged as a historical lifecycle-integrity audit. Its settlement, epoch, rollback, snapshot, and cleanup observations are historical hypotheses, not current truth. |
-| `docs/research/VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md` | `codex/verification-integrity-audit` at `14d97a6652e5158fc80006b0da8d71b5a514c54c`; blob `1cbf7e4c277c254c549861c406366eee2201ec6c` | `2ccc3b6fb3c6197b5dcadc12cdd63f6ab0ef6ca6`, `origin/master` at the audit's accepted starting point | `2026-08-19` | **No.** Task 43P must independently test its physical-correspondence, visible-player, oracle-independence, and state-digest hypotheses against final Task 43. | Preserved unchanged as a historical verification-integrity/false-pass audit. Its verdict is not a current acceptance result. |
-| `docs/task-evidence/task-43/recovery-assessment.md` | `codex/task43-recovery-assessment` at `4d39242817effa7f01711ea74f845a0189d7affc`; blob `b4f6a3974a46a17868a86c66d9fa1e8ba452075d` | `c0eb342b29165b8218a4b97b16fb8554fee42aff`, the accepted pre-Task-43 baseline (`Add LED diagnostic fault diversity proof`) | `2026-08-20` | **No.** Task 43P and the final owner review must determine which recovery concerns, if any, survive final Task 43. | Preserved unchanged as historical recovery evidence. Its classifications of candidate route work, verifier risk, and reconstruction are not a current production or acceptance claim. |
+| `docs/research/STATE_LIFECYCLE_INTEGRITY_AUDIT.md` | `codex/state-lifecycle-integrity-audit` at `792a6da80e9eca3750c74803ba72bc3b0fbdc2f4`; blob `989a9bd968825e6506c01280f2e6d9e698d0f864` | `2ccc3b6fb3c6197b5dcadc12cdd63f6ab0ef6ca6`, the then-current `origin/master` at audit start | `2026-08-19` from the audit branch/report activity; no separate date heading is present in the report | **Recorded in current packet as S:R1–R10.** Acceptance remains pending because runtime A-I and independent physical-triad evidence is missing. | Preserved unchanged as a historical lifecycle-integrity audit. Its settlement, epoch, rollback, snapshot, and cleanup observations are historical hypotheses, not current truth. |
+| `docs/research/VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md` | `codex/verification-integrity-audit` at `14d97a6652e5158fc80006b0da8d71b5a514c54c`; blob `1cbf7e4c277c254c549861c406366eee2201ec6c` | `2ccc3b6fb3c6197b5dcadc12cdd63f6ab0ef6ca6`, `origin/master` at the audit's accepted starting point | `2026-08-19` | **Recorded in current packet as V:R-01..R-09/M1–M5.** Acceptance remains pending because runtime A-I and independent physical-triad evidence is missing. | Preserved unchanged as a historical verification-integrity/false-pass audit. Its verdict is not a current acceptance result. |
+| `docs/task-evidence/task-43/recovery-assessment.md` | `codex/task43-recovery-assessment` at `4d39242817effa7f01711ea74f845a0189d7affc`; blob `b4f6a3974a46a17868a86c66d9fa1e8ba452075d` | `c0eb342b29165b8218a4b97b16fb8554fee42aff`, the accepted pre-Task-43 baseline (`Add LED diagnostic fault diversity proof`) | `2026-08-20` | **Recorded in current packet as A: recovery findings #1–#12.** Acceptance remains pending because runtime A-I and independent physical-triad evidence is missing. | Preserved unchanged as historical recovery evidence. Its classifications of candidate route work, verifier risk, and reconstruction are not a current production or acceptance claim. |
 
 The three imported blobs above are verified against their original Git
 objects. Their working-tree line endings may follow the repository's normal
@@ -36,15 +39,20 @@ recommendations, and recovery classifications. Those are useful inputs to
 Task 43P, but they are not evidence that the same behavior exists at the
 accepted Task 43 baseline or at the Gate A documentation candidate.
 
-Current truth for this Gate A candidate is narrower:
+Current truth for this status index is:
 
 - Task 43 remains the accepted production baseline at
   `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`.
-- The Gate A change is documentation/evidence-only. No Java, CircuitJS,
-  script, verifier, gameplay, or electrical behavior was changed.
-- The historical lifecycle and verification-integrity reports are preserved,
-  not re-run. Task 43P is the required future reproduction boundary.
-- Gate B, Task 43P, the Owner Review Gate, and Task 44 have not begun.
+- Gate B is the accepted and published verification/CI/docs baseline at
+  `9dc06141190da3a44ebe12015a4f5656f0f40ef5`.
+- The current [Task 43P evidence packet](POST_TASK_43_INTEGRITY_RECONCILIATION.md)
+  is recorded at tested baseline
+  `9853f1e5fd311830d14d671d0ba380c51018a658`. No production behavior changed;
+  historical reports remain preserved, and current dispositions are in that
+  packet.
+- Task 43P acceptance remains pending because runtime A-I and independent
+  physical-triad evidence is missing. Owner Review is blocked; Task 44 remains
+  blocked and unstarted. The packet is not an acceptance or unlock.
 
 ## Already-contained evidence
 
@@ -88,9 +96,11 @@ No separate tracked Gate A prompt file was found by the repository filename and
 content search. This candidate therefore follows the reconciled Gate A brief
 provided in the current user task as its authoritative prompt.
 
-## Required future disposition
+## Remaining 43P follow-up
 
-Task 43P must cite these exact preserved paths, state each original baseline,
-run independent final-SHA reproductions, and classify every inherited finding
-as `CLOSED`, `OPEN BLOCKER`, `FOLLOW-UP`, or `STALE OR SUPERSEDED`. A future
-correction may be created only for a proven final-SHA `OPEN BLOCKER`.
+The current packet records the final-SHA evidence classification for the exact
+preserved paths above, including S:R1–R10, V:R-01..R-09/M1–M5, and recovery
+findings #1–#12. It is prepared for review, not Task 43P acceptance or an
+unlock. Missing runtime A-I lanes and independent physical-triad evidence
+remain required before Owner Review. Only a proven final-SHA `OPEN BLOCKER` may
+authorize a bounded correction; none is invented here.

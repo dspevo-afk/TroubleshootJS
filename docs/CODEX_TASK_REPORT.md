@@ -1,11 +1,45 @@
 # POST-TASK-43 GATE B — Verification Isolation and Mainline Protection Baseline
 
-## Status
+## Current Task 43P handoff — post-inspection
+
+**Status:** Evidence reconciliation has been performed and recorded for
+current evidence; Task 43P acceptance remains incomplete and pending. Missing
+runtime A-I lanes and the independent physical triad block Owner Review. Task
+44 remains blocked and unstarted.
+
+**Evidence packet:**
+[`docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`](research/POST_TASK_43_INTEGRITY_RECONCILIATION.md)
+at tested baseline `9853f1e5fd311830d14d671d0ba380c51018a658`.
+
+**Coder evidence:** JDK8/GWT build, renderer boundary, and minimal current
+Gate B relevance checks returned exit 0; visible in-app Browser observations
+covered `PASS:task39`, `PASS:task43`, `PASS:meter`, and `PASS:stress`.
+External CDP lanes returned infrastructure uncertainty, and all temporary
+source mutations were restored. No production Java/script behavior changed.
+
+**Review handoff:** The first independent Reviewer returned a BLOCKER for
+non-auditable provenance, fault/secondary-damage classification, incomplete
+A-I status, and missing visible-artifact qualification. The Coder repaired the
+reconciliation report with exact baselines, IDs, manifests, lane limits, and
+preservation proof. The delta Reviewer returned PASS, and the bounded Foreman
+review returned PASS for the evidence packet. Terra Inspector then returned a
+BLOCKER for stale status/publication wording and the D5 exit summary. The
+documentation-only repairs corrected those contradictions; fresh delta Reviewer
+checks passed, the bounded Foreman review passed, and Terra targeted reinspection
+returned PASS. That Inspector PASS is limited to the integrity and provenance of
+this evidence packet; it does not accept or unlock Task 43P.
+
+**Current decision:** The evidence packet is not acceptance or an unlock.
+Owner Review remains blocked, Task 43P is not accepted, and Task 44 has not
+started.
+
+## Historical Gate B closure status
 
 Gate B is COMPLETE and published on `codex/post43-mainline-consolidation`.
 The publication commit containing this report was independently verified after
-the Reviewer, Foreman, and Sol Inspector gates passed. Task 43P is next
-eligible but remains unstarted; Task 44 remains blocked and unstarted.
+the Reviewer, Foreman, and Sol Inspector gates passed. At that publication
+checkpoint, Task 43P was next eligible; its subsequent evidence reconciliation
+is recorded above. Task 44 remains blocked and unstarted.
 
 ## Baseline
 

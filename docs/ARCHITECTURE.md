@@ -1877,7 +1877,8 @@ validation/infrastructure boundary only: CircuitJS remains electrical truth,
 generated topology and PCB behavior remain unchanged, and no second solver or
 synthetic meter/browser result was introduced. The implementation passed the
 independent Reviewer, Foreman, and Sol Inspector gates and was published with
-the completed Gate B task. Task 43P is next eligible but remains unstarted.
+the completed Gate B task. At that historical publication checkpoint, Task 43P
+was next eligible; current status is recorded in the section below.
 
 ### Per-run ownership model
 
@@ -2213,3 +2214,20 @@ observations, not a fabricated setting or an inference that protection exists.
 The live workflows read was `404/not present`, master had no tracked workflow
 at baseline, and recorded Actions runs were zero. No remote protection setting
 was fabricated or mutated by Gate B.
+
+## Current Task 43P evidence status
+
+The evidence-only reconciliation pass is recorded in
+[`docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`](research/POST_TASK_43_INTEGRITY_RECONCILIATION.md).
+No production behavior changed in that pass. The supported Task 41 proof
+boundary is Option A: evaluate fresh candidate boards with the original
+workbench detached and restore the original owner. Option B, same-owner
+nested transactional mutation, is unsupported.
+
+Lifecycle settlement/epoch behavior, the independent physical
+raw-copper/rendered-pad/solver triad, multi-owner rollback, active-measurement
+cleanup, public-action reachability versus direct dispatch, and a complete
+owner/state digest remain follow-ups. The evidence packet is not an acceptance
+or unlock: missing runtime A-I lanes and the independent physical triad block
+Owner Review; Task 43P acceptance is pending, and Task 44 remains blocked and
+unstarted.

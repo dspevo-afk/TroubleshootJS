@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-26 — Post-Task-43 Gate B complete; Task 43P next eligible but not started_
+_Last updated: 2026-08-26 — Post-Task-43 Gate B complete; Task 43P evidence reconciliation performed for current evidence; Owner Review pending_
 
 ## Purpose
 
@@ -978,9 +978,11 @@ their numbers and broad product direction; the bounded post-Task-43 gates
 below make the runtime-composition wall explicit without turning every later
 feature into a prerequisite for every other feature.
 
-Task 43P is the next planned milestone after Gate B is finally validated,
-published, and explicitly unlocked. It remains unstarted; no later milestone
-is authority to continue automatically.
+Task 43P is the next planned milestone after Gate B validation and publication.
+Its evidence reconciliation pass has been performed and recorded for current
+evidence, but Task 43P acceptance remains incomplete and pending. Missing
+runtime A-I lanes and the independent physical triad block Owner Review; no
+later milestone is authority to continue automatically.
 
 ## Governing architecture gates
 
@@ -1390,8 +1392,10 @@ separate supplemental result is not a required default-driver PASS and is
 retained as truthful evidence rather than converted to success. The final
 Reviewer, Foreman, and Sol Inspector gates passed, and Gate B was published
 without claiming branch protection, JDK8 execution on this host, or visible
-Browser validation. Task 43P is the next eligible milestone but remains
-unstarted; Task 44 remains blocked and unstarted.
+Browser validation. At that Gate B publication checkpoint, Task 43P was the
+next eligible milestone. Its subsequent evidence reconciliation is recorded in
+the Task 43P section below; Owner Review remains blocked and Task 44 remains
+blocked and unstarted.
 
 **Unlocks:** Task 43P is now the next eligible milestone after Gate B
 acceptance and publication, but it must not begin automatically. The owner/admin
@@ -1401,13 +1405,17 @@ mainline-protection action remains external and is documented below.
 
 ## Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation
 
-**Status:** `[>] NEXT ELIGIBLE AFTER GATE B — NOT STARTED`
+**Status:** `[~] EVIDENCE RECONCILIATION PERFORMED — ACCEPTANCE PENDING`
 
 **Purpose:** Re-run material historical lifecycle and verification-integrity
 findings against the final Task 43 SHA before runtime composition begins.
 
 **Hard dependencies:** Task 43 complete; Gates A and B accepted and published;
-historical audit reports preserved. This task has not begun.
+historical audit reports preserved. The evidence reconciliation pass has been
+performed and recorded for current evidence in
+[`docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`](research/POST_TASK_43_INTEGRITY_RECONCILIATION.md),
+but acceptance is incomplete and pending. Missing runtime A-I lanes and the
+independent physical triad block the Owner Review Gate.
 
 **Bounded goals:**
 
@@ -1450,8 +1458,9 @@ has a reproduction, owner, affected path, bounded correction milestone, and
 acceptance criteria; independent review passes; and results are presented to
 the owner before Task 44 becomes eligible.
 
-**Unlocks:** Owner Review Gate. Task 44 requires explicit owner approval, and
-runtime composition remains blocked until relevant open blockers are resolved.
+**Unlocks:** None yet. Owner Review remains blocked pending completion of the
+missing runtime A-I lanes and independent physical triad. Task 44 remains
+blocked and unstarted and requires explicit owner approval.
 
 ---
 
@@ -3446,9 +3455,12 @@ statuses, and debugging history are preserved in
 # Immediate Next Milestone
 
 **Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation
-(next eligible; not started)**
+(evidence reconciliation performed; acceptance pending)**
 
-Gate B is complete and published. Task 43P is the next eligible milestone but
-remains explicitly unstarted; the Owner Review Gate follows it. Task 44 is
-**not** next, remains blocked and unstarted, and requires the explicit owner
-review described above. Do not begin Task 43P or Task 44 automatically.
+The historical Gate B result is published.
+The current-evidence reconciliation pass is
+recorded in [`docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`](research/POST_TASK_43_INTEGRITY_RECONCILIATION.md),
+but Task 43P acceptance remains pending: missing runtime A-I lanes and the
+independent physical triad block the Owner Review Gate. Task 44 is **not**
+next; it remains blocked and unstarted and requires the explicit owner review
+described above. Do not begin Task 44 automatically.
