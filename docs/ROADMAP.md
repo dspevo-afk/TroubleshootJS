@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-26 — Post-Task-43 Gate B complete; Task 43P evidence reconciliation performed for current evidence; Owner Review pending_
+_Last updated: 2026-08-28 — Post-Task-43 Gate B complete; Task 43P developer evidence candidate added; Owner Review pending_
 
 ## Purpose
 
@@ -1461,6 +1461,15 @@ the owner before Task 44 becomes eligible.
 **Unlocks:** None yet. Owner Review remains blocked pending completion of the
 missing runtime A-I lanes and independent physical triad. Task 44 remains
 blocked and unstarted and requires explicit owner approval.
+
+**2026-08-28 Coder candidate:** A query-gated developer-only Task 43P route,
+independently authored physical-triad verifier, structured evidence capture,
+and anchored forced-negative wrapper route are present in the uncommitted
+candidate at baseline HEAD `3bfaab093f85247fc20aec068824c83dc3d214c8`. The
+documented JDK8/GWT compile and static checks pass. Browser startup/cleanup
+ownership was blocked by WMI `Access denied` before page execution, so no A-I
+or triad runtime lane is accepted, Owner Review is not complete, and Task 44
+remains blocked/unstarted.
 
 ---
 

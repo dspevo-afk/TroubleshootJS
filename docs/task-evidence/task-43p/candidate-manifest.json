@@ -1,0 +1,62 @@
+{
+  "protocol": "troubleshootjs-task43p-candidate-manifest-v1",
+  "baselineSha": "3bfaab093f85247fc20aec068824c83dc3d214c8",
+  "headSha": "3bfaab093f85247fc20aec068824c83dc3d214c8",
+  "candidateState": "uncommitted-working-tree",
+  "developerOnly": true,
+  "sourceVerifierDigest": "fdf74536fdbca10ac8b95c6601af4e969bea8d28368bdffb7bd6046b65007e83",
+  "sourceVerifierFileCount": 854,
+  "positiveRoute": {
+    "switch": "-Task43P",
+    "families": ["led", "diode", "rc", "npn", "nmos", "parallel"],
+    "defaultSeeds": [0, 2, 3],
+    "expectedResult": "UNPROVEN:task43p",
+    "expectedExit": 2,
+    "observedExit": 2,
+    "observedStatus": "infrastructure-unproven",
+    "observation": "Browser startup and exact cleanup ownership stopped at WMI Access denied before the page executed."
+  },
+  "forcedNegativeRoute": {
+    "switch": "-Task43PForcedNegative",
+    "expectedApplicationExit": 1,
+    "observedExit": 2,
+    "observedStatus": "not-reached",
+    "observation": "The anchored Java canary was not reached because browser ownership could not be proven."
+  },
+  "lanes": {
+    "A": "PARTIAL",
+    "B": "PARTIAL",
+    "C": "PARTIAL",
+    "D": "PARTIAL",
+    "E": "PARTIAL_OR_UNPROVEN_BY_FAMILY",
+    "F": "PARTIAL",
+    "G": "PARTIAL",
+    "H": "UNPROVEN",
+    "I": "UNPROVEN"
+  },
+  "physicalTriad": {
+    "manifestAuthoring": "independent",
+    "families": ["LED_INDICATOR", "DIODE_PROTECTED_INDICATOR", "RC_DELAY", "NPN_LOW_SIDE_SWITCH", "NMOS_LOW_SIDE_SWITCH", "PARALLEL_DUAL_INDICATOR"],
+    "negativeCanaries": [
+      "renderer-only-pad-offset",
+      "raw-endpoint-displacement-gap",
+      "raw-endpoint-wrong-net",
+      "solver-binding-post-swap",
+      "mirror-transform-mismatch",
+      "internally-self-consistent-wrong-mapping"
+    ],
+    "productionMutation": "none",
+    "experimentResidue": "in_memory_only",
+    "runtimeStatus": "UNPROVEN"
+  },
+  "validation": {
+    "jdk8GwtObfCompile": {"exit": 0, "jdk": "1.8.0_502", "gwtPermutations": 5},
+    "powershellParser": {"exit": 0},
+    "rendererBoundary": {"exit": 0},
+    "gitDiffCheck": {"exit": 0}
+  },
+  "visibleBrowser": {"status": "not-run", "owner": "Foreman"},
+  "ownerReview": "incomplete",
+  "task44": "blocked-unstarted",
+  "openProductBlockers": []
+}

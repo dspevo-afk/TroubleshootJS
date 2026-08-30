@@ -2231,3 +2231,26 @@ owner/state digest remain follow-ups. The evidence packet is not an acceptance
 or unlock: missing runtime A-I lanes and the independent physical triad block
 Owner Review; Task 43P acceptance is pending, and Task 44 remains blocked and
 unstarted.
+
+### Task 43P developer-only candidate route
+
+The 2026-08-28 uncommitted candidate adds a narrow query-gated route,
+`tsjVerifyTask43P`, at the existing generated-board verification settlement
+seam. `Task43PDeveloperVerifier` reads current lifecycle/owner state and
+publishes bounded structured evidence; it does not become a runtime owner and
+does not add a request, board, or session epoch. Its owner digest is evidence
+of current state, not a rollback or transaction guarantee.
+
+`Task43PPhysicalTruthDeveloperVerifier` is intentionally authored outside the
+production board-binding and renderer metadata. Its manifest checks raw
+`PcbTraceGeometry` endpoints, board/component/part identity, rendered
+`PhysicalPartRenderTerminal` surfaces and hit targets, and live CircuitJS
+element/post values. Its negative canaries are in-memory observations only.
+The wrapper captures the DOM evidence attribute into a run-owned manifest and
+checks direct source/verifier byte digests before and after capture.
+
+The route emits explicit `PARTIAL`/`UNPROVEN` A-I statuses and returns exit 2
+until the missing runtime sequences are independently proven. The current
+Coder run could not reach the page because WMI denied exact browser ownership
+and cleanup inspection; no runtime evidence is claimed. This developer route
+is supplemental regression evidence, not visible built-in `@Browser` proof.

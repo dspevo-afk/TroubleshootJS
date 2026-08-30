@@ -35,6 +35,8 @@ param(
     [switch]$Task41,
     [switch]$Task43,
     [switch]$Task43ForcedNegative,
+    [switch]$Task43P,
+    [switch]$Task43PForcedNegative,
     [switch]$Task43Integrated,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
@@ -454,6 +456,99 @@ function getVerifierEvidencePath([string]$fileName) {
     return $path
 }
 
+function Get-Task43PRepositoryState() {
+    $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+    $safeRepositoryRoot = $repositoryRoot.Replace('\', '/')
+    $headArgs = @('-c', "safe.directory=$safeRepositoryRoot", '-C', $repositoryRoot,
+        'rev-parse', 'HEAD')
+    $head = (& git @headArgs 2>$null | Out-String).Trim()
+    if ($LASTEXITCODE -ne 0 -or $head -notmatch '^[0-9a-fA-F]{40}$') {
+        Throw-VerifierInfrastructure ("Task43P could not prove repository HEAD: " + $head)
+    }
+    $statusArgs = @('-c', "safe.directory=$safeRepositoryRoot", '-C', $repositoryRoot,
+        'status', '--porcelain=v1', '--untracked-files=all')
+    $status = (& git @statusArgs 2>$null | Out-String).Trim()
+    if ($LASTEXITCODE -ne 0) {
+        Throw-VerifierInfrastructure 'Task43P could not prove repository worktree status.'
+    }
+    # Hash source and verifier files directly.  This includes untracked Task43P
+    # files and avoids treating Git's platform-specific line-ending warnings as
+    # evidence or as a route result.
+    $fileRecords = New-Object Collections.Generic.List[string]
+    foreach ($relativeRoot in @('src', 'scripts')) {
+        $root = Join-Path $repositoryRoot $relativeRoot
+        if (-not (Test-Path -LiteralPath $root -PathType Container)) {
+            Throw-VerifierInfrastructure "Task43P could not inspect source root: $root"
+        }
+        foreach ($file in @(Get-ChildItem -LiteralPath $root -Recurse -File -ErrorAction Stop |
+                Sort-Object FullName)) {
+            $relativePath = $file.FullName.Substring($repositoryRoot.Length).TrimStart('\', '/')
+            $fileHash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            [void]$fileRecords.Add($relativePath.Replace('\', '/') + '=' + $fileHash)
+        }
+    }
+    $hasher = [Security.Cryptography.SHA256]::Create()
+    try {
+        $bytes = [Text.UTF8Encoding]::new($false).GetBytes(($fileRecords -join "`n"))
+        $digest = [BitConverter]::ToString($hasher.ComputeHash($bytes)).Replace('-', '').ToLowerInvariant()
+    } finally {
+        $hasher.Dispose()
+    }
+    return [ordered]@{
+        headSha = $head.ToLowerInvariant()
+        worktreeDigest = $digest
+        dirty = -not [String]::IsNullOrWhiteSpace($status)
+        hashedFileCount = $fileRecords.Count
+    }
+}
+
+function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
+        [ref]$failures, [string]$routeName, [string]$expected, [string]$observed,
+        $repositoryBefore) {
+    $payload = [string](evaluateCdp $socket ([ref]$nextId) `
+        "document.documentElement.getAttribute('data-tsj-task43p-evidence') || ''" `
+        ([ref]$failures) $deadline)
+    if ([String]::IsNullOrWhiteSpace($payload)) {
+        Throw-VerifierInfrastructure "Task43P route '$routeName' did not publish structured evidence."
+    }
+    try {
+        $parsed = $payload | ConvertFrom-Json -Depth 30 -ErrorAction Stop
+    } catch {
+        Throw-VerifierInfrastructure ("Task43P route '$routeName' published invalid JSON evidence: " +
+            (Get-VerifierErrorMessage $_))
+    }
+    $repositoryAfter = Get-Task43PRepositoryState
+    if ($repositoryBefore.headSha -ne $repositoryAfter.headSha -or
+            $repositoryBefore.worktreeDigest -ne $repositoryAfter.worktreeDigest) {
+        Throw-VerifierInfrastructure ("Task43P route '$routeName' changed repository state while " +
+            'running developer evidence: before=' + $repositoryBefore.worktreeDigest +
+            ' after=' + $repositoryAfter.worktreeDigest)
+    }
+    $safeRouteName = $routeName -replace '[^A-Za-z0-9._-]', '-'
+    $record = [ordered]@{
+        protocol = 'troubleshootjs-task43p-evidence-capture-v1'
+        route = $routeName
+        expected = $expected
+        observed = $observed
+        capturedUtc = [DateTime]::UtcNow.ToString('o', [Globalization.CultureInfo]::InvariantCulture)
+        runId = $script:VerifierContext.RunId
+        routeId = $script:VerifierCurrentRouteId
+        baselineSha = '3bfaab093f85247fc20aec068824c83dc3d214c8'
+        currentHeadSha = $repositoryAfter.headSha
+        worktreeDigestBefore = $repositoryBefore.worktreeDigest
+        worktreeDigestAfter = $repositoryAfter.worktreeDigest
+        worktreeDirty = $repositoryAfter.dirty
+        hashedFileCount = $repositoryAfter.hashedFileCount
+        evidence = $parsed
+    }
+    $path = getVerifierEvidencePath ('task43p-' + $safeRouteName + '.json')
+    [IO.File]::WriteAllText($path, ($record | ConvertTo-Json -Depth 30),
+        [Text.UTF8Encoding]::new($false))
+    Register-VerifierEvidenceArtifact $script:VerifierContext $path
+    Write-Host ("TASK43P EVIDENCE $routeName path=$path head=$($repositoryAfter.headSha) " +
+        "worktreeDigest=$($repositoryAfter.worktreeDigest)")
+}
+
 function receiveCdp($socket, [int]$wantedId, [ref]$failures,
         [DateTime]$deadline = [DateTime]::MinValue) {
     $deadline = resolveCdpRouteDeadline $deadline
@@ -562,10 +657,12 @@ function navigateAndWaitForDocument($socket, [ref]$nextId, [string]$url,
 
 function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
         [string]$expectedFailure) {
-    if ($expectedFailure -ne 'FAIL:task43-forced-negative-canary') { return $false }
+    if ($expectedFailure -ne 'FAIL:task43-forced-negative-canary' -and
+            $expectedFailure -ne 'FAIL:task43p-forced-negative-canary') { return $false }
+    $marker = [regex]::Escape($expectedFailure.Substring(5))
     return $failure -match '^Console failure: exception in runCircuit ' +
         'java\.lang\.IllegalStateException: Generated board verification failed for ' +
-        '[^,]+, seed 3: task43-forced-negative-canary$'
+        '[^,]+, seed [^:]+: ' + $marker + '$'
 }
 
 function verifyRoute([string]$name, [string]$url, [string]$expected,
@@ -576,6 +673,10 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
     $session = $null
     $success = $false
     $expectedFailureObserved = $false
+    $task43pRepositoryBefore = $null
+    if ($name -like 'task43p *') {
+        $task43pRepositoryBefore = Get-Task43PRepositoryState
+    }
     if ($expectedFailure) {
         $script:task43ExpectedFailureObserved = $false
         $script:task43ExpectedFailureRoutePassed = $false
@@ -652,6 +753,10 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
             if (-not $npnElectricalReport) { throw 'NPN verifier did not publish its developer electrical report' }
             Write-Host "NPN ELECTRICAL REPORT: $npnElectricalReport"
         }
+        if ($name -like 'task43p *') {
+            Capture-Task43PEvidence $socket ([ref]$nextId) $deadline ([ref]$failures) `
+                $name $expected $verificationResult $task43pRepositoryBefore
+        }
         Start-Sleep -Milliseconds 100
         [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures) $deadline)
         if ($script:VerifierEvidenceDirectory -and $name -match '^seed=(0|2) parallel$') {
@@ -669,6 +774,8 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
         $browser = $null
         if ($expectedFailureObserved) {
             Write-Host "EXPECTED FAILURE $name - $expectedFailure (anchored Java console diagnostic observed)"
+        } elseif ($verificationResult.StartsWith('UNPROVEN:')) {
+            Write-Host "UNPROVEN $name - $verificationResult (typed evidence recorded)"
         } else {
             Write-Host "PASS $name"
         }
@@ -3756,7 +3863,9 @@ $npnNormalPlayerSeeds = if ($script:VerifierBoundParameters.ContainsKey('Seeds')
     @(0, 1, 2)
 }
 if (-not (Test-Path -LiteralPath $script:VerifierResolvedBrowserPath -PathType Leaf)) {
-    $missingBrowserRoute = if ($Task43ForcedNegative) { 'task43 forced-negative canary' }
+    $missingBrowserRoute = if ($Task43PForcedNegative) { 'task43p forced-negative canary' }
+        elseif ($Task43P) { 'task43p' }
+        elseif ($Task43ForcedNegative) { 'task43 forced-negative canary' }
         elseif ($Task43Integrated) { 'task43 integrated' }
         elseif ($Task43) { 'task43' }
         else { 'browser verifier' }
@@ -3916,6 +4025,41 @@ if ($Task40) {
 if ($Task41) {
     if (-not (verifyRoute 'task41 diagnostic solvability' "$BaseUrl/circuitjs.html?tsjChallenge=npn&seed=0&tsjVerifyTask41=true&running=true" 'PASS:task41')) { return (Get-VerifierRouteFailureExitCode) }
     return 0
+}
+if ($Task43PForcedNegative) {
+    try {
+        $script:task43ExpectedFailureObserved = $false
+        $script:task43ExpectedFailureRoutePassed = $false
+        [void](verifyRoute 'task43p forced-negative canary' `
+            "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43P=true&tsjTask43PForcedFailure=true&running=true" `
+            'UNPROVEN:task43p' '' 'FAIL:task43p-forced-negative-canary')
+    } catch {
+        Write-Host "FAIL task43p forced-negative canary - verifier infrastructure: $($_.Exception.Message)"
+        return 2
+    }
+    if ($script:task43ExpectedFailureObserved -ne $true -or
+            $script:task43ExpectedFailureRoutePassed -ne $true) { return 2 }
+    return 1
+}
+if ($Task43P) {
+    $task43pSeeds = if ($script:VerifierBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
+        @(0, 2, 3)
+    }
+    $task43pFamilies = @('led', 'diode', 'rc', 'npn', 'nmos', 'parallel')
+    foreach ($task43pFamily in $task43pFamilies) {
+        foreach ($seed in $task43pSeeds) {
+            $task43pRoute = "$BaseUrl/circuitjs.html?tsjChallenge=$task43pFamily&seed=$seed&" +
+                'tsjVerifyTask43P=true&running=true'
+            if (-not (verifyRoute "task43p $task43pFamily seed $seed" $task43pRoute `
+                    'UNPROVEN:task43p')) {
+                return (Get-VerifierRouteFailureExitCode)
+            }
+        }
+    }
+    # The positive route deliberately carries exit 2 until all A-I runtime
+    # settlement/epoch claims have independently been closed.  Its structured
+    # evidence and all caught negative canaries are still durable evidence.
+    return 2
 }
 if ($Task43ForcedNegative) {
     try {

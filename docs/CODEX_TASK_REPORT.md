@@ -1,6 +1,6 @@
 # POST-TASK-43 GATE B — Verification Isolation and Mainline Protection Baseline
 
-## Current Task 43P handoff — post-inspection
+## Historical Task 43P handoff — post-inspection (pre-Coder candidate)
 
 **Status:** Evidence reconciliation has been performed and recorded for
 current evidence; Task 43P acceptance remains incomplete and pending. Missing
@@ -38,7 +38,7 @@ started.
 - **Roadmap milestone/task:** Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation.
 - **Summary:** Forensic-only reconciliation of preserved lifecycle, verification, and recovery evidence against current evidence; no production behavior changed. Dispositions remain `FOLLOW-UP`, `STALE OR SUPERSEDED`, or `CLOSED`; no proven current `OPEN BLOCKER` was found.
 - **Architectural decisions:** CircuitJS remains electrical truth; the supported Task 41 boundary is fresh-candidate/detached-owner-only Option A; same-owner transactional Option B is unsupported. The independent physical triad, runtime A-I lanes, and Owner Review remain unresolved prerequisites.
-- **Current six-file candidate scope:** `AGENTS.md`; `docs/research/AUDIT_STATUS.md`; `docs/ROADMAP.md`; `docs/ARCHITECTURE.md`; `docs/CODEX_TASK_REPORT.md`; `docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`.
+- **Historical six-file candidate scope:** `AGENTS.md`; `docs/research/AUDIT_STATUS.md`; `docs/ROADMAP.md`; `docs/ARCHITECTURE.md`; `docs/CODEX_TASK_REPORT.md`; `docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`.
 - **Validation and limitations:** JDK8/GWT build, renderer boundary, and minimal Gate B relevance checks exited 0. Primary D5 preview stop exited 2 because orphan-parent identity was unproven; separate exact command-line/PID-verified fallback and post-stop port check exited 0 with no owned residual. Visible `@Browser` routes recorded `PASS:task39`, `PASS:task43`, `PASS:meter`, and `PASS:stress`; external CDP and missing A-I lanes remain infrastructure/evidence limits.
 - **Coder result:** PASS — current evidence packet and status documentation prepared without production edits.
 - **Reviewer result:** PASS for the repaired evidence packet.
@@ -373,3 +373,65 @@ was fabricated or mutated.
   branch deletion, require the exact deterministic check, and verify it on a
   test pull request. This report does not claim that owner-only settings were
   configured.
+
+## Task 43P Coder handoff — 2026-08-28
+
+**Task:** Post-Task-43 Cross-Boundary Integrity Reconciliation
+
+**Status:** IMPLEMENTED, ACCEPTANCE PENDING
+
+**Baseline/current HEAD:** `3bfaab093f85247fc20aec068824c83dc3d214c8`; working
+tree intentionally uncommitted.
+
+**Implementation:** Added the query-gated developer-only
+`Task43PDeveloperVerifier` and independent physical-triad
+`Task43PPhysicalTruthDeveloperVerifier`. Added structured DOM evidence and
+direct source/verifier digest capture to `scripts/verify-browser.ps1`, with
+`-Task43P` and `-Task43PForcedNegative` routes. The verifier records an
+explicit A-I matrix, current lifecycle/owner/part/terminal/solver evidence,
+read-only digest checks, and in-memory negative canary results. No gameplay,
+electrical model, CircuitJS physics, transaction, or epoch behavior changed.
+
+**Files changed:**
+
+- `src/com/lushprojects/circuitjs1/client/CirSim.java`
+- `src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java`
+- `src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java`
+- `scripts/verify-browser.ps1`
+- relevant Task 43P status/report/evidence documentation, including
+  `docs/task-evidence/task-43p/README.md`
+
+**Validation:**
+
+- `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF` — exit `0`, JDK `1.8.0_502`, GWT link succeeded.
+- PowerShell parser — exit `0`.
+- `git diff --check` — exit `0`.
+- Task43P positive (`-Seeds 0`, port `8768`) and forced-negative (port `8769`)
+  routes, plus direct Task43 (port `8770`) and Task43Integrated (port `8771`),
+  returned exit `2`; typed infrastructure/ownership failure blocked page
+  startup. No runtime JSON artifact is claimed.
+- After the Task43P attempts, direct `-Task39`, `-Task40`, `-Task41`,
+  `-QuickPlay`, `-Rc -Seeds 3`, `-StoredEnergy`, `-StressDamage`, and
+  `-StressDamageNormalPlayer` attempts were made against caller-owned port
+  `8773`/`8774`. Each stopped before page execution at the same WMI
+  `Get-CimInstance Win32_Process` `Access denied` ownership/cleanup boundary;
+  none is counted as a pass. The multi-seed stored-energy and RC attempt also
+  retained typed cleanup uncertainty. The Foreman still owns the complete
+  closed regression set.
+
+**A-I matrix:** A, B, C, D, F, and G emit bounded `PARTIAL` checks; E emits
+`PARTIAL` for temporal candidates and `UNPROVEN` otherwise; H and I emit
+`UNPROVEN`. The current one-flag pending-verification and absent request/
+board/session epoch are recorded, not strengthened.
+
+**Physical triad/negative canaries:** independently authored manifest and
+six in-memory canaries are implemented. Runtime triad execution and expected
+forced-negative exit `1` were not proven because browser startup/cleanup
+ownership returned WMI `Access denied`; no canary PASS is claimed.
+
+**Visible browser:** not performed by the Coder; the Foreman must perform
+visible built-in `@Browser` validation. **OPEN BLOCKER:** none reproduced as a
+current product defect. The host ownership failure is infrastructure exit `2`.
+
+**Next gate:** Foreman review and visible `@Browser` execution. Do not mark
+Owner Review complete or start Task 44 from this candidate.

@@ -87,4 +87,100 @@ Reconciliation is complete for current evidence; missing runtime lanes/physical 
 
 `git worktree add --detach .worktrees/task43p-integrity-falsification HEAD` failed exit 1 because `.git/worktrees` was not writable. A disposable copy was used and removed. Four source-only mutations were applied with `apply_patch`, canary-checked, and restored: `PcbWorkbenchRenderer.getPadPoint` J1.1 `+20px` (`D2` exit 0); disabled public Remove while direct dispatch remained (canary exit 0); omitted `lastResistanceTestCurrent` restore (canary exit 0); and omitted `NpnSlotController.replaceSingleElement` (canary exit 0). Final all-`src`/`scripts` byte identity was `D4` exit 0; no mutation remains.
 
-Pre-status-document checks: before the later status-document updates, `git -c safe.directory=C:/Users/david/Desktop/TroubleshootJS status --short` showed only ` M AGENTS.md` and this report; `git diff --check` and report-format/word-count checks exited 0. Production Java/scripts, preserved reports, and `AGENTS.md` were unchanged at that checkpoint; `AGENTS.md` SHA-256 was `3A1C101F7C013FF3D0C46981CDBDD094E4CC38845C4B07C9674F5BD392362E69`. The later final candidate scope is `AGENTS.md` plus `docs/research/AUDIT_STATUS.md`, `docs/ROADMAP.md`, `docs/ARCHITECTURE.md`, `docs/CODEX_TASK_REPORT.md`, and this report.
+Pre-status-document checks: before the later status-document updates, `git -c safe.directory=C:/Users/david/Desktop/TroubleshootJS status --short` showed only ` M AGENTS.md` and this report; `git diff --check` and report-format/word-count checks exited 0. Production Java/scripts, preserved reports, and `AGENTS.md` were unchanged at that historical checkpoint; `AGENTS.md` SHA-256 was `3A1C101F7C013FF3D0C46981CDBDD094E4CC38845C4B07C9674F5BD392362E69`. The status-document candidate at that checkpoint was `AGENTS.md` plus `docs/research/AUDIT_STATUS.md`, `docs/ROADMAP.md`, `docs/ARCHITECTURE.md`, `docs/CODEX_TASK_REPORT.md`, and this report; the current Task 43P Coder candidate is documented separately below.
+
+## Task 43P Coder candidate — developer-only cross-boundary route
+
+Date: 2026-08-28. This uncommitted candidate starts at and still has HEAD
+`3bfaab093f85247fc20aec068824c83dc3d214c8` on
+`codex/post43-mainline-consolidation`. No commit, push, branch/worktree
+mutation, Task 44 work, normal gameplay behavior, or CircuitJS physics change
+was made.
+
+### Implementation boundary
+
+- `Task43PDeveloperVerifier` runs from the existing generated-board
+  verification settlement hook only when `tsjVerifyTask43P=true`. It records
+  the existing challenge/lifecycle state, a bounded owner/part/lead/binding
+  digest, early `Finish Job` rejection, cleanup fields, and explicit A-I
+  statuses. It does not add a transaction owner, request epoch, board epoch,
+  session epoch, alternate solver, or fake reading.
+- `Task43PPhysicalTruthDeveloperVerifier` has a separately authored manifest
+  for LED, diode, RC, NPN, NMOS, and parallel boards. It joins board pad/net
+  identity, raw trace endpoints, installed physical part/slot identity,
+  rendered terminal/hit surface, and live CircuitJS element/post readings.
+  Renderer-only offset, raw endpoint displacement/gap, wrong net, solver post
+  swap, mirror/transform mismatch, and internally self-consistent wrong
+  mapping are disposable in-memory negative fixtures. Production mutation is
+  reported as `none` and fixture residue as `in_memory_only`.
+- `scripts/verify-browser.ps1` adds `-Task43P` and
+  `-Task43PForcedNegative`. Reached positive routes capture
+  `data-tsj-task43p-evidence` as run-owned JSON and compare a direct
+  `src`/`scripts` worktree digest before/after capture. The forced-negative
+  route preserves the anchored application/canary exit-1 contract; browser,
+  CDP, timeout, ownership, cleanup, and unproven conditions remain exit 2.
+
+### A-I falsification matrix in the candidate route
+
+The route emits every lane explicitly. `PARTIAL` means a real bounded check
+ran but the complete sequence is not claimed; `UNPROVEN` means the current
+owner/epoch boundary or required runtime sequence cannot be proven by this
+route. These are not positive acceptance results.
+
+| Lane | Candidate check | Honest status |
+| --- | --- | --- |
+| A | Early Finish is rejected before repair; same-owner isolation/repair and wrong-repair round trip are not invoked by the read-only route. | `PARTIAL` |
+| B | Current stable slot/part/terminal identities participate in the digest and triad; replacement A/B invalidation and stale-probe checks are not invoked. | `PARTIAL` |
+| C | Fault locus and private physical runtime ownership are recorded; solver-derived secondary-damage causality is not inferred. | `PARTIAL` |
+| D | Entry digest and active-overlay/pending-power fields are checked; rapid meter/power/mode actions and exception cleanup are not synthesized. | `PARTIAL` |
+| E | Temporal owner presence is recorded for RC-capable candidates; charge/off/residual/decay/readiness mutation is not claimed by a non-temporal route. | `PARTIAL` or `UNPROVEN` |
+| F | Installed board/component identity, render target, and live solver/net join are checked; lift/reconnect/remove/reinstall/loose transitions are not invoked. | `PARTIAL` |
+| G | Early Finish cannot latch; paused/pending settlement followed by correct repair, retest, and terminal Finish is not claimed. | `PARTIAL` |
+| H | No fresh-session or route-order permutation is performed; Task 41 remains its narrower fresh-candidate/detached-owner proof. | `UNPROVEN` |
+| I | The route records that request/board/session epochs are absent and does not manufacture a stale callback result. | `UNPROVEN` |
+
+This matrix deliberately does not promote the existing single pending flag or
+Task 41 snapshot into a stronger same-owner transaction claim. A complete
+runtime A-I closure therefore remains pending.
+
+### Validation and runtime boundary
+
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1
+  -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`:
+  exit `0`; JDK `1.8.0_502`, five GWT permutations, link succeeded.
+- PowerShell parser for `scripts/verify-browser.ps1`: exit `0`.
+- `git diff --check`: exit `0` (Git only reported the repository's normal
+  LF/CRLF warning for touched files).
+- The attempted `-Task43P -Seeds 0` (caller-owned port `8768`),
+  `-Task43PForcedNegative` (port `8769`), `-Task43` (port `8770`), and
+  `-Task43Integrated` (port `8771`) routes each returned exit `2`. Edge/browser
+  startup and exact cleanup ownership failed with WMI `Access denied`; the
+  caller-owned preview handshake itself was not enough to prove the browser
+  process claim. These are exit-2 infrastructure outcomes, not application
+  passes or current product defects. No runtime Task43P JSON artifact is
+  claimed because the DOM evidence attribute was never reached.
+- The retained infrastructure manifests for those attempts are
+  `C:\Users\david\AppData\Local\Temp\TroubleshootJS\verify\20cd7fcd353094d844fb\f32917bf63874747af44672a344c84e5\manifest.json`
+  (Task43P),
+  `...\53bc9b915a2e49248fa5d608fd92e999\manifest.json` (forced negative),
+  `...\1ccf41fb5fc0407e875e2f23c9513577\manifest.json` (Task43), and
+  `...\90351553cb5741c3aa3702fad6bb38bd\manifest.json` (integrated). They
+  record `artifacts: []` and the exact cleanup/ownership uncertainty; they
+  are supplemental infrastructure evidence, not player-facing proof.
+- After the Task43P attempts, direct `-Task39`, `-Task40`, `-Task41`,
+  `-QuickPlay`, `-Rc -Seeds 3`, `-StoredEnergy`, `-StressDamage`, and
+  `-StressDamageNormalPlayer` attempts were made against caller-owned port
+  `8773`/`8774`. Every route stopped before page execution at the same WMI
+  `Get-CimInstance Win32_Process` `Access denied` ownership/cleanup boundary;
+  no route is counted as a pass. The multi-seed stored-energy and RC attempt
+  also retained typed cleanup uncertainty. These are regression attempts, not
+  replacement evidence for the Foreman's complete closed set.
+- Built-in visible `@Browser` validation was not performed by the Coder; it is
+  reserved for the Foreman as required by the project boundary.
+
+Current Task 43P disposition: implementation and evidence plumbing are
+present, but acceptance remains pending. No final-SHA product `OPEN BLOCKER`
+was reproduced; the missing runtime evidence is an infrastructure limitation
+and the known absent epoch contract remains an explicit unproven result, not a
+repair performed inside 43P. Owner Review remains incomplete and Task 44 was
+not started.

@@ -104,3 +104,28 @@ findings #1–#12. It is prepared for review, not Task 43P acceptance or an
 unlock. Missing runtime A-I lanes and independent physical-triad evidence
 remain required before Owner Review. Only a proven final-SHA `OPEN BLOCKER` may
 authorize a bounded correction; none is invented here.
+
+## Current Task 43P Coder candidate — 2026-08-28
+
+The uncommitted candidate at HEAD `3bfaab093f85247fc20aec068824c83dc3d214c8`
+adds only developer-only Task 43P evidence plumbing:
+`Task43PDeveloperVerifier`, an independently authored
+`Task43PPhysicalTruthDeveloperVerifier`, and `-Task43P`/
+`-Task43PForcedNegative` wrapper routes. The route captures stable board,
+component, part, terminal, owner, solver post/live-reading, lifecycle,
+digest, mutation/cleanup, and explicit A-I fields when a browser run reaches
+the page. It does not claim a same-owner transaction or request/board/session
+epoch.
+
+Deterministic validation: JDK8/GWT OBF compile exit `0` with JDK `1.8.0_502`;
+PowerShell parser exit `0`; `git diff --check` exit `0`. Browser/CDP direct
+routes were attempted with a caller-owned loopback preview but stopped before
+the application because exact Edge/browser ownership and cleanup proof hit WMI
+`Access denied`. Therefore no Task43P runtime JSON is presented as a pass;
+the A-I matrix and physical-triad negative results remain unproven until the
+Foreman repeats them with visible built-in `@Browser` evidence and a host that
+can prove ownership. Owner Review is still incomplete and Task 44 remains
+blocked/unstarted. No current product `OPEN BLOCKER` was reproduced. Follow-up
+direct Task39/40/41, QuickPlay, RC, stored-energy, and stress attempts also
+stopped before page execution at the same WMI ownership/cleanup boundary and
+were not counted as passes.

@@ -391,6 +391,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask41Verification;
 	boolean troubleshootTask43Verification;
 	boolean troubleshootTask43ForcedFailure;
+	boolean troubleshootTask43PVerification;
+	boolean troubleshootTask43PForcedFailure;
 	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
@@ -409,6 +411,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask40VerificationComplete;
 	boolean troubleshootTask41VerificationComplete;
 	boolean troubleshootTask43VerificationComplete;
+	boolean troubleshootTask43PVerificationComplete;
 	boolean troubleshootStoredEnergyVerificationComplete;
 		boolean developerVerifierRunning;
 	boolean troubleshootDebug;
@@ -483,6 +486,9 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootTask43Verification = qp.getBooleanValue("tsjVerifyTask43", false);
 	    troubleshootTask43ForcedFailure = troubleshootTask43Verification &&
 		qp.getBooleanValue("tsjTask43ForcedFailure", false);
+	    troubleshootTask43PVerification = qp.getBooleanValue("tsjVerifyTask43P", false);
+	    troubleshootTask43PForcedFailure = troubleshootTask43PVerification &&
+		qp.getBooleanValue("tsjTask43PForcedFailure", false);
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
@@ -911,7 +917,7 @@ MouseOutHandler, MouseWheelHandler {
 	    return new LedIndicatorGenerator().generate(seed);
 	} catch (RuntimeException failure) {
 	    console("led_generator_failure: " + failure.getMessage());
-	    if (troubleshootTask43Verification)
+	    if (troubleshootTask43Verification || troubleshootTask43PVerification)
 		publishBrowserVerificationResult("FAIL:task43-generator:" + failure.getMessage());
 	    throw failure;
 	}
@@ -4690,6 +4696,19 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootTask43PVerification &&
+		!troubleshootTask43PVerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		(generatedChallengeController == null || generatedChallengeController.isReady())) {
+		developerVerifierRunning = true;
+		try {
+		    publishBrowserVerificationResult("RUNNING:task43p");
+		    troubleshootTask43PVerificationComplete = true;
+		    Task43PDeveloperVerifier.verify(this);
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	} catch (RuntimeException e) {
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootWrongRepairVerification ||
@@ -4702,7 +4721,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
 		    troubleshootNmosVerification || troubleshootTask39Verification ||
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
-		    troubleshootTask43Verification)
+		    troubleshootTask43Verification || troubleshootTask43PVerification)
 		publishBrowserVerificationResult("FAIL:" + e.getMessage());
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
@@ -4713,6 +4732,10 @@ MouseOutHandler, MouseWheelHandler {
 
 	boolean isTask43ForcedFailureActive() {
 	return troubleshootTask43ForcedFailure;
+	}
+
+	boolean isTask43PForcedFailureActive() {
+	return troubleshootTask43PForcedFailure;
 	}
 
     private static native void publishBrowserVerificationResult(String result) /*-{
@@ -4807,6 +4830,20 @@ MouseOutHandler, MouseWheelHandler {
 
 	private static native void publishQuickPlayVerificationReport(String result) /*-{
 	$doc.documentElement.setAttribute("data-tsj-quick-play-report", result);
+	}-*/;
+
+	void publishTask43PEvidenceForDeveloperVerification(String result) {
+	    if (troubleshootTask43PVerification)
+		publishBrowserTask43PEvidence(result);
+	}
+
+	void publishTask43PResultForDeveloperVerification(String result) {
+	    if (troubleshootTask43PVerification)
+		publishBrowserVerificationResult(result);
+	}
+
+	private static native void publishBrowserTask43PEvidence(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-task43p-evidence", result);
 	}-*/;
 
 	boolean isQuickPlayMode() { return quickPlayActive; }
