@@ -184,3 +184,195 @@ was reproduced; the missing runtime evidence is an infrastructure limitation
 and the known absent epoch contract remains an explicit unproven result, not a
 repair performed inside 43P. Owner Review remains incomplete and Task 44 was
 not started.
+
+## Task 43P verifier false-pass repair — Coder handoff 2026-08-29
+
+The focused repair starts from published baseline
+`20f83535163070a0688fcc0958715e6bc827d445`. The prior in-memory DTO-copy
+canaries are retired as runtime proof. `Task43PPhysicalTruthDeveloperVerifier`
+now gathers independent raw logical-board, raw PCB-layout/copper, renderer,
+physical-package, and solver-post observations into disposable source
+snapshots. Positive validation and every negative fixture call one
+set-based-completeness-first canonical validator. The negative set includes
+renderer-only `J1.1 +20px`, raw-copper endpoint gap, raw-net mismatch,
+solver element/post mismatch, mirrored-package transform mismatch, an
+internally self-consistent wrong mapping, and omitted-terminal.
+
+The NPN manifest's known `J1.1` exception is corrected to the generator's
+`WireElm` post `0`. The solver oracle no longer calls
+`BoardSimulationBindings.getNetIdForEndpoint()`; expected net membership comes
+from the independent manifest and raw logical-board snapshot, while actual
+`CircuitPostMeasurementEndpoint` element identity/class/post and finite live
+readings remain checked. The independent package catalog accepts the current
+connector realization pair `DEFAULT_MIRRORED_X`/`MIRROR_X` exactly.
+
+Java/GWT evidence emits no repository baseline, HEAD, dirty-state, source
+digest, file-count, or evidence-path claims. `scripts/verify-browser.ps1`
+owns those claims, rejects forbidden Java fields, compares HEAD/status/source
+SHA-256/file count before and after capture, and binds forced-negative
+diagnostics to the run-owned browser route and repair baseline. The route
+continues to report `UNPROVEN:task43p` and exit `2` until A-I and visible
+built-in `@Browser` evidence are complete.
+
+The new
+`scripts/verify-task43p-source-experiments.ps1` harness applies the three
+source/extraction-path mutations only in disposable copies: renderer
+projection, raw `PcbTraceGeometry` endpoint data at the
+`GeneratedBoardInstance` producer seam, and solver endpoint lookup at the
+`BoardSimulationBindings` producer seam. It records exact before/after/restore
+SHA-256 values, attempts the five-permutation compile, runs a bounded compiled
+extraction attempt, and verifies the committed-tree HEAD/status/source
+digest/count are unchanged. The latest separate renderer, raw-copper, and
+solver records each returned exit `2`/`UNPROVEN`: compile exit `0`, runtime
+attempted, preview stopped, exact source restoration proven, and repository
+state unchanged. Runtime mutation acceptance remains unproven because this
+host cannot construct `System.Net.HttpListener`; none of these source
+experiments is visible-browser acceptance proof.
+
+The final wrapper-owned repository audit after the repair checks retained the
+published baseline HEAD, source/verifier digest
+`77d722d6ae2787ba7ed80bd3f28c9728f7bb0f2ec741ee18d4579c94fb01f3bf`, and file
+count `855`; the candidate's pre-existing dirty status and expected paths were
+unchanged.
+
+## Task 43P delta remediation loop — 2026-08-30
+
+The same candidate received one focused repair loop for the delta-review
+blockers. `scripts/verify-task43p-source-experiments.ps1` now requires each
+disposable preview's repository/script/web identity to match and passes that
+execution-root triplet to `scripts/verify-browser.ps1`; the repository-root
+wrapper remains the owner of actual checkout HEAD/status/source digest and
+file-count claims. The three producer mutations remain isolated and are
+restored by exact bytes and SHA-256 before disposable cleanup.
+
+`Task43PPhysicalTruthDeveloperVerifier` now rejects any observed raw logical
+net-ID set that differs from the independent manifest net set, including an
+empty extra net. Its solver negative selects an incompatible endpoint by
+class/post/node rather than vector position, with a deterministic invalid
+source-node fallback. The wrapper's Java payload boundary is an exact nested
+schema allowlist that rejects null/array/malformed payloads and unknown or
+aliased repository-authority properties before persistence. Java state
+fingerprints use verifier-design names rather than repository digest names.
+
+The latest combined renderer, raw-copper, and solver source-experiment record
+is `task43p-source-experiments-be4175476c5f465cbbad9747853a7daa.json`. Each
+entry compiled all five OBF permutations with exit `0`, attempted runtime
+extraction against the still-mutated disposable source (`runtimeAgainstMutatedSource=true`),
+and returned exit `2`/`UNPROVEN` because this host cannot construct
+`System.Net.HttpListener` before preview identity completion. Each proves
+exact source restoration, preview stop, and unchanged repository state; none
+proves runtime mutation rejection or visible `@Browser` acceptance. No
+gameplay, electrical, generator, or `CirSim.java` source change was made in
+this loop.
+
+## Final solver identity delta — 2026-08-30
+
+The Task 43P solver validator now joins each live
+BoardSimulationBindings.getEndpoint(padId) result to the immutable board
+endpoint retained by the exact GeneratedComponentConnectionBinding for
+detachable pads or by the matching fixed-generated physical-part terminal for
+fixed pads. It requires exact element identity and post equality, direct
+CircuitJS node and finite-reading checks, and the actual post point touching
+the owned detachable connection element when a detachable binding exists. A
+missing/malformed binding or fixed part is a verifier failure. The negative
+source snapshot deterministically prefers the same-node/different-element
+collision before using other independent class/post/node mismatches.
+
+The refreshed combined source record is
+task43p-source-experiments-1ee260b7a3c94b609830e475f3dc4491.json. Its three
+producer-path mutations compiled with exit 0, attempted runtime extraction
+against their matching disposable roots, and returned exit 2/UNPROVEN because
+this host cannot construct System.Net.HttpListener. Exact source bytes, HEAD,
+status, source/verifier digest, and file count were restored and matched. No
+runtime rejection or visible @Browser proof is claimed.
+
+## Task 43P final remediation corpus and NPN audit — 2026-08-30
+
+The NPN manifest was re-audited against the generator and now records all
+fifteen terminals without the prior contradiction: `J1.1` is
+`LOAD_SUPPLY / WireElm / 0`, `LED1.K` is `COLLECTOR / WireElm / 0`, and the
+remaining NPN entries match the current board, package, and solver bindings.
+Across the six families, the independent manifest contains 64 terminals in
+total (`6 + 8 + 12 + 15 + 13 + 10`). No generator or CircuitJS source was
+changed.
+
+The disposable source harness now records nine distinct real producer-path
+experiments: renderer pad offset, renderer lead offset, raw-copper endpoint
+gap, raw logical-net mismatch, fixed solver identity redirect, detachable
+solver identity redirect, package/mirror transform mismatch, internally
+self-consistent logical-pad remapping, and omitted manifest terminal. Each
+case uses its own disposable root, compiles the mutated source through all
+five OBF permutations, and records the exact mutation bytes/SHA-256 before,
+after, and after restoration.
+
+The combined record is
+`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-027ac10835a24e31a91625b9bbcfee85.json`.
+All nine compile exits are `0`; all nine runtime exits are `2`/`UNPROVEN`
+because the host cannot construct `System.Net.HttpListener` before preview
+identity and wrapper extraction. All nine records show
+`runtimeAgainstMutatedSource=true`, exact source restoration, unchanged
+repository HEAD/status/source digest/file count, stopped preview proof, and
+zero cleanup errors. No compile-only case is acceptance evidence.
+
+The repository wrapper's HEAD/status/file enumeration, hashing, and count
+computation are now enclosed in a typed infrastructure boundary, with
+standard file/process/transport/timeout errors also fail-closed when surfaced
+through route catches. Strict nested Java schema validation rejects unknown
+or aliased repository-authority fields before evidence persistence. Visible
+`@Browser`, WMI ownership, and runtime mutation rejection remain unproven and
+do not authorize acceptance or publication.
+
+## Task 43P fixed-part solver endpoint boundary — 2026-08-30
+
+The solver boundary now has a valid retained endpoint for both ownership
+models. Detachable pads use the board endpoint from the exact
+`GeneratedComponentConnectionBinding`; fixed pads use the endpoint retained by
+the matching installed `FIXED_GENERATED` physical-part terminal (foundation
+parts are constructed through `PhysicalFoundationPartFactory`, while the
+other fixed-generated part classes retain the same terminal endpoint boundary).
+The fixed path requires `FIXED_GENERATED` provenance, mounted slot/component
+identity, and exact manifest/package/terminal identity, and rejects mutable
+replacements or missing parts. Live
+simulation endpoints are compared with the retained endpoint by exact
+CircuitElm identity and post index. Independent manifest/raw-board class,
+post, net, node, ownership, finite-reading, and distinct-net checks remain
+active; detachable geometry is checked only where a detachable binding exists.
+
+The solver source experiment preserves the first J1.1 `BoardSimulationBindings`
+read used to construct the fixed terminal and redirects a later live read to a
+different endpoint. Thus its retained expected endpoint cannot be copied from
+the mutated live lookup. The experiment remains exit `2`/UNPROVEN on this host
+because the disposable preview cannot construct `System.Net.HttpListener`; it
+compiled, restored exact bytes, and proved repository state unchanged, but did
+not claim runtime rejection or visible `@Browser` acceptance.
+
+The refreshed record is
+`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a1e8de2ba420464086e03d52a6b70147.json`.
+The solver mutation preserves the first J1.1 read used by fixed-part
+construction before redirecting a later live binding read, so the retained
+endpoint remains independent of the mutation. The runtime result is still
+exit `2`/UNPROVEN; no browser/solver mutation rejection is claimed.
+
+## Latest Task 43P endpoint-oracle correction — 2026-08-30
+
+The prior universal fixed-terminal expectation was removed. At generated-board
+composition, `GeneratedBoardInstance` now retains an immutable
+`GeneratedBoardEndpointOracle` copied directly from the authoritative board
+binding map, before the developer-verification-ready live lookup seam. The
+solver validator compares every live pad endpoint to that oracle by exact
+`CircuitElm` object and post. Detachable pads additionally cross-check the
+exact `GeneratedComponentConnectionBinding` board endpoint and its detachable
+connection geometry. Non-detachable pads use the oracle and only use installed
+`FIXED_GENERATED` parts for package/terminal/fixed-boundary checks; foundation
+`FixedPhysicalPart` terminals are cross-checked where they semantically are the
+board endpoint. This keeps internal NPN/NMOS LED/resistor component terminals
+from being mistaken for intermediate board WireElm/GroundElm endpoints.
+
+The real detachable solver case is `C1.+` in RC, which has the actual
+detachable binding; fixed J1.1 remains separate. The nine-case source record is
+`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`.
+All nine OBF compiles exit `0`; all nine runtime attempts exit `2`/UNPROVEN
+because the host cannot construct `System.Net.HttpListener` before preview
+identity. Exact source restoration, unchanged baseline HEAD/status/source
+digest/file count, stopped preview, and zero cleanup errors were recorded. No
+runtime mutation rejection or visible `@Browser` proof is claimed.

@@ -110,7 +110,7 @@ function testHealthyPreview {
 }
 
 function getProcessStartTicks($process) {
-    return $process.StartTime.ToUniversalTime().Ticks
+    return [long](Get-VerifierProcessStartTicks $process)
 }
 
 function getPreviewCommandProcess([int]$processId, [int]$expectedPort = $Port,

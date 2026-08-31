@@ -41,13 +41,20 @@ param(
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence,
+    [switch]$GateBListenerProofProbe,
     [switch]$GateBContractProbe,
     [switch]$GateBContractProbeFailure,
     [switch]$GateBExplicitExit2Probe,
     [switch]$GateBExplicitExit2TypedProbe,
     [switch]$GateBHangAfterContext,
     [string]$ParentLedgerPath = '',
-    [string]$ParentNamespaceRoot = ''
+    [string]$ParentNamespaceRoot = '',
+    [AllowEmptyString()]
+    [string]$ExecutionRepositoryRoot = '',
+    [AllowEmptyString()]
+    [string]$ExecutionWebRoot = '',
+    [AllowEmptyString()]
+    [string]$ExecutionScriptRoot = ''
 )
 
 Set-StrictMode -Version Latest
@@ -101,6 +108,47 @@ try {
         (Get-VerifierEarlySetupMessage $_))
     exit 2
 }
+
+# All evidence I/O after module initialization is verifier infrastructure. Keep
+# these wrappers at the script boundary so directory/file failures cannot be
+# reclassified as an application assertion by a later generic catch.
+function New-VerifierEvidenceDirectory([string]$Path, [string]$Description,
+        [switch]$Force) {
+    try {
+        if ($Force) {
+            New-Item -ItemType Directory -Path $Path -Force -ErrorAction Stop | Out-Null
+        } else {
+            New-Item -ItemType Directory -Path $Path -ErrorAction Stop | Out-Null
+        }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ("Could not create $Description directory '$Path': " +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
+function Write-VerifierEvidenceText([string]$Path, [string]$Text,
+        [string]$Description) {
+    try {
+        [IO.File]::WriteAllText($Path, $Text, [Text.UTF8Encoding]::new($false))
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ("Could not write $Description '$Path': " +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
+function Write-VerifierEvidenceBytes([string]$Path, [byte[]]$Bytes,
+        [string]$Description) {
+    try {
+        [IO.File]::WriteAllBytes($Path, $Bytes)
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ("Could not write $Description '$Path': " +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
 $script:VerifierContext = $null
 $script:VerifierEvidenceDirectory = ''
 $script:VerifierFailureExitCode = 0
@@ -108,16 +156,202 @@ $script:VerifierFailureMessage = ''
 $script:VerifierFailureKind = ''
 $script:VerifierCurrentRouteId = ''
 $script:VerifierResolvedBrowserPath = ''
+$script:Task43PPublishedBaselineSha =
+    '20f83535163070a0688fcc0958715e6bc827d445'
+$script:Task43ForcedNegativeProof = [pscustomobject]@{
+    Invocation = $false
+    ExpectedMarker = ''
+    ExpectedRoute = ''
+    RunId = ''
+    RouteId = ''
+    MarkerObserved = $false
+    ObservedMarker = ''
+    MarkerRunId = ''
+    MarkerRouteId = ''
+    MarkerExpectedMarker = ''
+    AnchoredDiagnosticProven = $false
+    AnchoredJavaDiagnostic = ''
+    DiagnosticExpectedMarker = ''
+    DiagnosticRunId = ''
+    DiagnosticRouteId = ''
+    DiagnosticBaselineHead = ''
+    RoutePassedAfterCleanup = $false
+    FinalCleanupProven = $false
+    Invalidated = $false
+}
+$script:task43ExpectedFailureObserved = $false
+$script:task43ExpectedFailureRoutePassed = $false
+$script:Task43PExecutionRepositoryRoot = ''
+$script:Task43PExecutionWebRoot = ''
+$script:Task43PExecutionScriptRoot = ''
+$script:Task43PExecutionPreviewScript = ''
 $script:VerifierParentLedgerWritten = $false
 # Allow synchronous developer-proof gaps to exceed one CDP receive while the route deadline remains authoritative.
 $CdpReceiveTimeoutMilliseconds = 60000
 $CdpSendTimeoutMilliseconds = 5000
 $script:CdpRouteDeadline = [DateTime]::MinValue
 
-function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') {
+function Resolve-Task43PExecutionRoots() {
+    $provided = @(
+        foreach ($rootValue in @($ExecutionRepositoryRoot, $ExecutionWebRoot,
+                $ExecutionScriptRoot)) {
+            if (-not [String]::IsNullOrWhiteSpace([string]$rootValue)) {
+                [string]$rootValue
+            }
+        }
+    )
+    $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+    if ($provided.Count -ne 0 -and $provided.Count -ne 3) {
+        Throw-VerifierInfrastructure 'Task43P execution roots must provide repository, web, and script roots together.'
+    }
+    if ($provided.Count -ne 0 -and -not ($Task43P -or $Task43PForcedNegative)) {
+        Throw-VerifierInfrastructure 'Explicit Task43P execution roots are developer-only and require a Task43P route.'
+    }
+    if ($provided.Count -eq 3) {
+        # The repository wrapper remains the provenance owner. These explicit
+        # roots only select the isolated compiled source/extraction surface and
+        # must describe one disposable tree whose conventional war/scripts
+        # children are the exact paths served by its preview identity.
+        $repositoryRoot = Get-VerifierFullPath $ExecutionRepositoryRoot
+        $webRoot = Get-VerifierFullPath $ExecutionWebRoot
+        $scriptRoot = Get-VerifierFullPath $ExecutionScriptRoot
+    } else {
+        $repositoryRoot = Get-VerifierFullPath $repositoryRoot
+        $webRoot = Get-VerifierFullPath (Join-Path $repositoryRoot 'war')
+        $scriptRoot = Get-VerifierFullPath (Join-Path $repositoryRoot 'scripts')
+    }
+    $expectedWebRoot = Get-VerifierFullPath (Join-Path $repositoryRoot 'war')
+    $expectedScriptRoot = Get-VerifierFullPath (Join-Path $repositoryRoot 'scripts')
+    if (-not (Test-VerifierCanonicalWindowsPathValue $webRoot $expectedWebRoot) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $scriptRoot $expectedScriptRoot)) {
+        Throw-VerifierInfrastructure 'Task43P execution web/script roots did not match the selected repository root.'
+    }
+    if (-not (Test-Path -LiteralPath $repositoryRoot -PathType Container) -or
+            -not (Test-Path -LiteralPath $webRoot -PathType Container) -or
+            -not (Test-Path -LiteralPath $scriptRoot -PathType Container)) {
+        Throw-VerifierInfrastructure 'Task43P execution roots were not existing directories.'
+    }
+    $sourceRoot = Get-VerifierFullPath (Join-Path $repositoryRoot 'src')
+    $previewScript = Get-VerifierFullPath (Join-Path $scriptRoot 'preview.ps1')
+    if (-not (Test-Path -LiteralPath $sourceRoot -PathType Container) -or
+            -not (Test-Path -LiteralPath $previewScript -PathType Leaf)) {
+        Throw-VerifierInfrastructure 'Task43P execution roots did not contain source and preview inputs.'
+    }
+    Assert-VerifierNoReparseAncestors $repositoryRoot
+    [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $sourceRoot -ValidateTree)
+    [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $webRoot -ValidateTree)
+    [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $scriptRoot -ValidateTree)
+    [void](Assert-VerifierPhysicalOwnedPath $scriptRoot $previewScript)
+    return [pscustomobject]@{
+        RepositoryRoot = $repositoryRoot
+        WebRoot = $webRoot
+        ScriptRoot = $scriptRoot
+        PreviewScript = $previewScript
+        Explicit = ($provided.Count -eq 3)
+    }
+}
+
+function Get-VerifierDurableBooleanValue($Object, [string]$Name,
+        [string]$Label, [switch]$AllowNull) {
+    if ($null -eq $Object -or [String]::IsNullOrWhiteSpace($Name) -or
+            $null -eq $Object.PSObject.Properties[$Name]) {
+        Throw-VerifierInfrastructure "Durable record omitted required Boolean field '$Label'."
+    }
+    $value = $Object.PSObject.Properties[$Name].Value
+    if ($null -eq $value) {
+        if ($AllowNull) { return $null }
+        Throw-VerifierInfrastructure "Durable record field '$Label' was null instead of an exact Boolean."
+    }
+    if ($value.GetType() -ne [bool]) {
+        Throw-VerifierInfrastructure "Durable record field '$Label' was not an exact Boolean."
+    }
+    return ,$value
+}
+
+function Assert-VerifierParentLedgerListenerOwnerTuple($Lease,
+        [string]$Label = 'integrated child lease') {
+    if ($null -eq $Lease) {
+        Throw-VerifierInfrastructure "$Label was null before durable serialization."
+    }
+    foreach ($propertyName in @('ListenerProcessId', 'ListenerProcessStartTicks',
+            'ListenerOwnerKind', 'ListenerOwnerProof', 'ListenerOwnerEvidence')) {
+        if ($null -eq $Lease.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted required durable listener owner field '$propertyName'."
+        }
+    }
+    # The module owns the security policy. Keep this wrapper responsible only
+    # for the parent-ledger field boundary and delegate tuple semantics.
+    Assert-VerifierDurableListenerOwnerTuple $Lease $Label
+}
+
+function Assert-VerifierParentLedgerContextComplete($Context) {
+    if ($null -eq $Context) {
+        Throw-VerifierInfrastructure 'Integrated child ledger context was null before durable serialization.'
+    }
+    foreach ($propertyName in @('RunId', 'RepositoryIdentity', 'WorktreeRoot',
+            'RunRoot', 'ManifestPath', 'EvidenceDirectory', 'CleanupState')) {
+        $property = $Context.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictStringValue $property.Value)) {
+            Throw-VerifierInfrastructure "Integrated child ledger context omitted or malformed '$propertyName'."
+        }
+    }
+    foreach ($collectionName in @('Artifacts', 'BrowserSessions', 'CleanupErrors',
+            'LeaseRecords')) {
+        $property = $Context.PSObject.Properties[$collectionName]
+        if ($null -eq $property -or $null -eq $property.Value -or
+                $property.Value -is [string] -or
+                -not ($property.Value -is [System.Collections.IEnumerable])) {
+            Throw-VerifierInfrastructure "Integrated child ledger context omitted or malformed collection '$collectionName'."
+        }
+    }
+    $serverProperty = $Context.PSObject.Properties['Server']
+    if ($null -eq $serverProperty) {
+        Throw-VerifierInfrastructure 'Integrated child ledger context omitted its explicit Server owner state.'
+    }
+    # A null Server is the explicit ownerless/caller-free state.  A non-null
+    # server is always validated by the module before it can be projected.
+    Assert-VerifierDurableServerLease $Context -AllowMissing
+    foreach ($lease in @($Context.LeaseRecords)) {
+        Assert-VerifierDurableLeaseRecord $lease $Context 'integrated child lease'
+    }
+    foreach ($artifact in @($Context.Artifacts)) {
+        if ($null -eq $artifact -or -not (Test-VerifierStrictStringValue $artifact)) {
+            Throw-VerifierInfrastructure 'Integrated child ledger carried a malformed evidence artifact entry.'
+        }
+    }
+    foreach ($session in @($Context.BrowserSessions)) {
+        # Durable session schema and lease association are owned by the
+        # module. The integrated ledger must consume the same strict validator
+        # instead of maintaining a weaker parallel projection contract.
+        Assert-VerifierDurableBrowserSession $session $Context `
+            'integrated child browser session'
+    }
+    foreach ($errorItem in @($Context.CleanupErrors)) {
+        if ($null -eq $errorItem -or -not (Test-VerifierStrictStringValue $errorItem)) {
+            Throw-VerifierInfrastructure 'Integrated child ledger carried a malformed cleanup error entry.'
+        }
+    }
+}
+
+function Write-VerifierParentLedger($State, $ErrorMessage = '') {
     if ([String]::IsNullOrWhiteSpace($ParentLedgerPath) -or
             $null -eq $script:VerifierContext) { return }
     try {
+        if (-not (Test-VerifierStrictStringValue $State) -or
+                -not (Test-VerifierStrictStringValue $ErrorMessage)) {
+            Throw-VerifierInfrastructure 'Integrated child ledger writer received malformed lifecycle text.'
+        }
+        Assert-VerifierParentLedgerContextComplete $script:VerifierContext
+        foreach ($lease in @($script:VerifierContext.LeaseRecords)) {
+            Assert-VerifierParentLedgerListenerOwnerTuple $lease 'integrated child lease'
+        }
+        if ($null -ne $script:VerifierContext.Server -and
+                $script:VerifierContext.Server.PSObject.Properties['Lease'] -and
+                $null -ne $script:VerifierContext.Server.Lease) {
+            Assert-VerifierParentLedgerListenerOwnerTuple `
+                $script:VerifierContext.Server.Lease 'integrated child server lease'
+        }
         $ledgerPath = Get-VerifierFullPath $ParentLedgerPath
         $verifyRoot = Get-VerifierFullPath (Join-Path -Path ([IO.Path]::GetTempPath()) `
             -ChildPath 'TroubleshootJS\verify')
@@ -144,17 +378,23 @@ function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') 
                 worktreeRoot = $script:VerifierContext.WorktreeRoot
                 leaseId = $_.LeaseId; path = $_.Path; kind = $_.Kind; port = $_.Port
                 claimName = $_.ClaimName; status = $_.Status
-                claimState = if ($_.PSObject.Properties['ClaimState']) { $_.ClaimState } else { 'active' }
-                  releaseState = if ($_.PSObject.Properties['ReleaseState']) { $_.ReleaseState } else { 'active' }
-                  releaseJournalState = if ($_.PSObject.Properties['ReleaseJournalState']) { $_.ReleaseJournalState } else { $null }
-                  browserPath = if ($_.PSObject.Properties['BrowserPath']) { $_.BrowserPath } else { '' }
-                  claimOwnerPid = if ($_.PSObject.Properties['ClaimOwnerPid']) { $_.ClaimOwnerPid } else { 0 }
-                  claimOwnerStartTicks = if ($_.PSObject.Properties['ClaimOwnerStartTicks']) { $_.ClaimOwnerStartTicks } else { 0 }
-                  mutexReleased = if ($_.PSObject.Properties['MutexReleased']) { [bool]$_.MutexReleased } else { $false }
-                  boundProcessId = if ($_.PSObject.Properties['BoundProcessId']) { $_.BoundProcessId } else { 0 }
-                 boundProcessStartTicks = if ($_.PSObject.Properties['BoundProcessStartTicks']) { $_.BoundProcessStartTicks } else { 0 }
-                 listenerProcessId = if ($_.PSObject.Properties['ListenerProcessId']) { $_.ListenerProcessId } else { 0 }
-                 listenerProcessStartTicks = if ($_.PSObject.Properties['ListenerProcessStartTicks']) { $_.ListenerProcessStartTicks } else { 0 }
+                registered = Get-VerifierDurableBooleanValue $_ 'Registered' 'lease registered'
+                releaseBlocked = Get-VerifierDurableBooleanValue $_ 'ReleaseBlocked' 'lease releaseBlocked'
+                releaseBlockReason = $_.ReleaseBlockReason
+                claimState = $_.ClaimState
+                  releaseState = $_.ReleaseState
+                  releaseJournalState = $_.ReleaseJournalState
+                  browserPath = $_.BrowserPath
+                  claimOwnerPid = $_.ClaimOwnerPid
+                  claimOwnerStartTicks = $_.ClaimOwnerStartTicks
+                  mutexReleased = Get-VerifierDurableBooleanValue $_ 'MutexReleased' 'lease mutexReleased'
+                 boundProcessId = $_.BoundProcessId
+                 boundProcessStartTicks = $_.BoundProcessStartTicks
+                 listenerProcessId = $_.ListenerProcessId
+                 listenerProcessStartTicks = $_.ListenerProcessStartTicks
+                 listenerOwnerKind = $_.ListenerOwnerKind
+                 listenerOwnerProof = $_.ListenerOwnerProof
+                 listenerOwnerEvidence = $_.ListenerOwnerEvidence
                 claim = [ordered]@{
                     protocol = 'troubleshootjs-verifier-port-claim-v1'
                     runId = $script:VerifierContext.RunId
@@ -162,21 +402,27 @@ function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') 
                     worktreeRoot = $script:VerifierContext.WorktreeRoot
                     leaseId = $_.LeaseId; path = $_.Path; kind = $_.Kind; port = $_.Port
                     mutexName = $_.ClaimName
-                    ownerPid = if ($_.PSObject.Properties['ClaimOwnerPid']) { $_.ClaimOwnerPid } else { 0 }
-                    ownerStartTicks = if ($_.PSObject.Properties['ClaimOwnerStartTicks']) { $_.ClaimOwnerStartTicks } else { 0 }
+                    ownerPid = $_.ClaimOwnerPid
+                    ownerStartTicks = $_.ClaimOwnerStartTicks
                 }
-                 profile = if ($_.PSObject.Properties['ProfilePath']) { $_.ProfilePath } else { '' }
-                 processTerminationProven = if ($_.PSObject.Properties['ProcessTerminationProven']) {
-                     [bool]$_.ProcessTerminationProven
-                 } else { $false }
-                 processAbsent = if ($_.PSObject.Properties['ProcessAbsent']) {
-                     [bool]$_.ProcessAbsent
-                 } else { $false }
-                 listenerInspectionSuccess = if ($_.PSObject.Properties['ListenerInspectionSuccess']) { $_.ListenerInspectionSuccess } else { $false }
-                listenerInspectionKnown = if ($_.PSObject.Properties['ListenerInspectionKnown']) { $_.ListenerInspectionKnown } else { $false }
-                listenerHasListeners = if ($_.PSObject.Properties['ListenerHasListeners']) { $_.ListenerHasListeners } else { $null }
-                listenerAbsent = if ($_.PSObject.Properties['ListenerAbsent']) { $_.ListenerAbsent } else { $null }
-                processProofRequired = if ($_.PSObject.Properties['ProcessProofRequired']) { $_.ProcessProofRequired } else { $null }
+                bindValidatedUtc = $_.BindValidatedUtc
+                releasedUtc = $_.ReleasedUtc
+                 profile = $_.ProfilePath
+                 processTerminationProven = Get-VerifierDurableBooleanValue $_ `
+                     'ProcessTerminationProven' 'lease processTerminationProven'
+                 processAbsent = Get-VerifierDurableBooleanValue $_ 'ProcessAbsent' `
+                     'lease processAbsent'
+                 listenerInspectionSuccess = Get-VerifierDurableBooleanValue $_ `
+                     'ListenerInspectionSuccess' 'lease listenerInspectionSuccess'
+                listenerInspectionKnown = Get-VerifierDurableBooleanValue $_ `
+                    'ListenerInspectionKnown' 'lease listenerInspectionKnown'
+                listenerInspectionUtc = $_.ListenerInspectionUtc
+                listenerHasListeners = Get-VerifierDurableBooleanValue $_ `
+                    'ListenerHasListeners' 'lease listenerHasListeners' -AllowNull
+                listenerAbsent = Get-VerifierDurableBooleanValue $_ `
+                    'ListenerAbsent' 'lease listenerAbsent' -AllowNull
+                processProofRequired = Get-VerifierDurableBooleanValue $_ `
+                    'ProcessProofRequired' 'lease processProofRequired'
             }
         })
         $profiles = @($script:VerifierContext.BrowserSessions | ForEach-Object {
@@ -187,16 +433,26 @@ function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') 
                 profile = $_.Profile; cdpLeasePath = $_.Lease.Path
                  cdpPort = $_.CdpPort; processId = $_.ProcessId
                  processStartTicks = $_.ProcessStartTicks
-                 processParentProcessId = if ($_.PSObject.Properties['ProcessParentProcessId']) { $_.ProcessParentProcessId } else { 0 }
-                 processParentProcessStartTicks = if ($_.PSObject.Properties['ProcessParentProcessStartTicks']) { $_.ProcessParentProcessStartTicks } else { 0 }
-                 processCommandLine = if ($_.PSObject.Properties['ProcessCommandLine']) { $_.ProcessCommandLine } else { '' }
-                 browserPath = if ($_.PSObject.Properties['BrowserPath']) { $_.BrowserPath } else { '' }
-                 status = $_.Status; cleanupResult = $_.CleanupResult
+                processParentProcessId = $_.ProcessParentProcessId
+                processParentProcessStartTicks = $_.ProcessParentProcessStartTicks
+                processCommandLine = $_.ProcessCommandLine
+                browserPath = $_.BrowserPath
+                routeId = $_.RouteId; routeName = $_.RouteName
+                targetId = $_.TargetId; expectedUrl = $_.ExpectedUrl
+                expectedRunMarker = 'tsjVerifierRun=' + $_.RunId
+                expectedRouteMarker = 'tsjVerifierRoute=' + $_.RouteId
+                status = $_.Status; cleanupResult = $_.CleanupResult
+                profileProcessScanCompleted = Get-VerifierDurableBooleanValue $_ `
+                    'ProfileProcessScanCompleted' 'profile process scan completed'
+                profileInspectionFailed = Get-VerifierDurableBooleanValue $_ `
+                    'ProfileInspectionFailed' 'profile inspection failed'
+                error = $_.Error
             }
         })
         $ledger = [ordered]@{
             protocol = 'troubleshootjs-integrated-child-ledger-v1'
             state = $State
+            forcedNegativeProof = Get-Task43ForcedNegativeProofRecord
             runId = $script:VerifierContext.RunId
             repositoryIdentity = $script:VerifierContext.RepositoryIdentity
             worktreeRoot = $script:VerifierContext.WorktreeRoot
@@ -213,32 +469,18 @@ function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') 
                      baseUrl = $script:VerifierContext.Server.BaseUrl
                      repositoryIdentity = $script:VerifierContext.RepositoryIdentity
                      worktreeRoot = $script:VerifierContext.WorktreeRoot
-                     repositoryRoot = if ($script:VerifierContext.Server.PSObject.Properties['RepositoryRoot']) {
-                         $script:VerifierContext.Server.RepositoryRoot
-                     } else { $script:VerifierContext.WorktreeRoot }
-                     webRoot = if ($script:VerifierContext.Server.PSObject.Properties['WebRoot']) {
-                         $script:VerifierContext.Server.WebRoot
-                     } else { '' }
-                     identityProtocol = if ($script:VerifierContext.Server.PSObject.Properties['IdentityProtocol']) {
-                         $script:VerifierContext.Server.IdentityProtocol
-                     } else { '' }
-                     identityVerified = if ($script:VerifierContext.Server.PSObject.Properties['IdentityVerified']) {
-                         [bool]$script:VerifierContext.Server.IdentityVerified
-                     } else { $false }
-                     callerOwned = if ($script:VerifierContext.Server.PSObject.Properties['CallerOwned']) {
-                         [bool]$script:VerifierContext.Server.CallerOwned
-                     } else { $false }
+                     repositoryRoot = $script:VerifierContext.Server.RepositoryRoot
+                     webRoot = $script:VerifierContext.Server.WebRoot
+                     identityProtocol = $script:VerifierContext.Server.IdentityProtocol
+                     identityVerified = Get-VerifierDurableBooleanValue `
+                         $script:VerifierContext.Server 'IdentityVerified' 'server identityVerified'
+                     callerOwned = Get-VerifierDurableBooleanValue `
+                         $script:VerifierContext.Server 'CallerOwned' 'server callerOwned'
                      processId = $script:VerifierContext.Server.ProcessId
                     processStartTicks = $script:VerifierContext.Server.ProcessStartTicks
-                    processParentProcessId = if ($script:VerifierContext.Server.PSObject.Properties['ProcessParentProcessId']) {
-                        $script:VerifierContext.Server.ProcessParentProcessId
-                    } else { 0 }
-                    processParentProcessStartTicks = if ($script:VerifierContext.Server.PSObject.Properties['ProcessParentProcessStartTicks']) {
-                        $script:VerifierContext.Server.ProcessParentProcessStartTicks
-                    } else { 0 }
-                     processCommandLine = if ($script:VerifierContext.Server.PSObject.Properties['ProcessCommandLine']) {
-                         $script:VerifierContext.Server.ProcessCommandLine
-                     } else { '' }
+                    processParentProcessId = $script:VerifierContext.Server.ProcessParentProcessId
+                    processParentProcessStartTicks = $script:VerifierContext.Server.ProcessParentProcessStartTicks
+                     processCommandLine = $script:VerifierContext.Server.ProcessCommandLine
                      leaseId = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
                              $null -ne $script:VerifierContext.Server.Lease) {
                          $script:VerifierContext.Server.Lease.LeaseId
@@ -259,9 +501,8 @@ function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') 
                              $null -ne $script:VerifierContext.Server.Lease) {
                          $script:VerifierContext.Server.Lease.ReleaseState
                      } else { '' }
-                     leaseReleaseJournalState = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
-                             $null -ne $script:VerifierContext.Server.Lease -and
-                             $script:VerifierContext.Server.Lease.PSObject.Properties['ReleaseJournalState']) {
+                    leaseReleaseJournalState = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
+                             $null -ne $script:VerifierContext.Server.Lease) {
                          $script:VerifierContext.Server.Lease.ReleaseJournalState
                      } else { '' }
                      leaseOwnerPid = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
@@ -283,27 +524,41 @@ function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') 
                         $script:VerifierContext.Server.Lease.Path
                     } else { '' }
                     leaseListenerAbsent = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
-                            $null -ne $script:VerifierContext.Server.Lease -and
-                            $script:VerifierContext.Server.Lease.PSObject.Properties['ListenerAbsent']) {
-                        $script:VerifierContext.Server.Lease.ListenerAbsent
+                            $null -ne $script:VerifierContext.Server.Lease) {
+                        Get-VerifierDurableBooleanValue $script:VerifierContext.Server.Lease `
+                            'ListenerAbsent' 'server lease listenerAbsent' -AllowNull
                     } else { $null }
-                    leaseProcessProofRequired = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
-                            $null -ne $script:VerifierContext.Server.Lease -and
-                            $script:VerifierContext.Server.Lease.PSObject.Properties['ProcessProofRequired']) {
-                        $script:VerifierContext.Server.Lease.ProcessProofRequired
-                    } else { $null }
+                     leaseProcessProofRequired = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
+                             $null -ne $script:VerifierContext.Server.Lease) {
+                         Get-VerifierDurableBooleanValue $script:VerifierContext.Server.Lease `
+                             'ProcessProofRequired' 'server lease processProofRequired'
+                     } else { $null }
+                     leaseListenerOwnerKind = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
+                             $null -ne $script:VerifierContext.Server.Lease) {
+                         $script:VerifierContext.Server.Lease.ListenerOwnerKind
+                     } else { 'none' }
+                     leaseListenerOwnerProof = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
+                             $null -ne $script:VerifierContext.Server.Lease) {
+                         $script:VerifierContext.Server.Lease.ListenerOwnerProof
+                     } else { '' }
+                     leaseListenerOwnerEvidence = if ($script:VerifierContext.Server.PSObject.Properties['Lease'] -and
+                             $null -ne $script:VerifierContext.Server.Lease) {
+                         $script:VerifierContext.Server.Lease.ListenerOwnerEvidence
+                     } else { '' }
                     state = $script:VerifierContext.Server.State
                     cleanupResult = $script:VerifierContext.Server.CleanupResult
-                    processIdentityKnown = if ($script:VerifierContext.Server.PSObject.Properties['ProcessIdentityKnown']) {
-                        [bool]$script:VerifierContext.Server.ProcessIdentityKnown
-                    } else { $false }
-                    ownershipUncertain = if ($script:VerifierContext.Server.PSObject.Properties['OwnershipUncertain']) {
-                        [bool]$script:VerifierContext.Server.OwnershipUncertain
-                    } else { $false }
-                    processTerminationProven = $script:VerifierContext.Server.ProcessTerminationProven
-                    processAbsent = $script:VerifierContext.Server.ProcessAbsent
-                    listenerInspectionProven = $script:VerifierContext.Server.ListenerInspectionProven
-                    listenerAbsent = $script:VerifierContext.Server.ListenerAbsent
+                    processIdentityKnown = Get-VerifierDurableBooleanValue `
+                        $script:VerifierContext.Server 'ProcessIdentityKnown' 'server processIdentityKnown'
+                    ownershipUncertain = Get-VerifierDurableBooleanValue `
+                        $script:VerifierContext.Server 'OwnershipUncertain' 'server ownershipUncertain'
+                    processTerminationProven = Get-VerifierDurableBooleanValue `
+                        $script:VerifierContext.Server 'ProcessTerminationProven' 'server processTerminationProven'
+                    processAbsent = Get-VerifierDurableBooleanValue `
+                        $script:VerifierContext.Server 'ProcessAbsent' 'server processAbsent'
+                    listenerInspectionProven = Get-VerifierDurableBooleanValue `
+                        $script:VerifierContext.Server 'ListenerInspectionProven' 'server listenerInspectionProven'
+                    listenerAbsent = Get-VerifierDurableBooleanValue `
+                        $script:VerifierContext.Server 'ListenerAbsent' 'server listenerAbsent' -AllowNull
                 }
             } else { $null }
             cleanupState = $script:VerifierContext.CleanupState
@@ -315,8 +570,8 @@ function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') 
         try {
             [void](Assert-VerifierPhysicalOwnedPath $ledgerParent $temporary)
             [void](Assert-VerifierPhysicalOwnedPath $ledgerParent $ledgerPath)
-            [IO.File]::WriteAllText($temporary, ($ledger | ConvertTo-Json -Depth 12),
-                [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $temporary ($ledger | ConvertTo-Json -Depth 12) `
+                'integrated child ledger temporary evidence'
             [void](Assert-VerifierPhysicalOwnedPath $ledgerParent $temporary)
             [void](Assert-VerifierPhysicalOwnedPath $ledgerParent $ledgerPath)
             Move-Item -LiteralPath $temporary -Destination $ledgerPath -Force -ErrorAction Stop
@@ -334,6 +589,261 @@ function Write-VerifierParentLedger([string]$State, [string]$ErrorMessage = '') 
         Throw-VerifierInfrastructure ('Could not persist integrated child ledger: ' +
             (Get-VerifierErrorMessage $_))
     }
+}
+
+function Invoke-VerifierParentLedgerWriterTupleCanary($ValidLease) {
+    $priorContext = $script:VerifierContext
+    $priorLedgerPath = $script:ParentLedgerPath
+    $priorNamespaceRoot = $script:ParentNamespaceRoot
+    $priorParentLedgerWritten = $script:VerifierParentLedgerWritten
+    $canaryRoot = Get-VerifierFullPath (Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\verify\parent-writer-tuple-' + [Guid]::NewGuid().ToString('N')))
+    $canaryPath = Join-Path $canaryRoot 'ledger.json'
+    try {
+        New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
+        $validLease = $ValidLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        Add-Member -InputObject $validLease -MemberType NoteProperty `
+            -Name LeaseId -Value 'gate-b-parent-writer-lease' -Force
+        Add-Member -InputObject $validLease -MemberType NoteProperty `
+            -Name Path -Value (Join-Path (Split-Path -Parent $canaryPath) 'gate-b-parent-writer.lease') -Force
+        Add-Member -InputObject $validLease -MemberType NoteProperty `
+            -Name ClaimName -Value (Get-VerifierPortMutexName $null 40192) -Force
+        # The parent writer canary is intentionally a complete durable lease,
+        # not merely a listener-tuple fixture.  Missing fields must fail before
+        # any temporary ledger file is created.
+        $canaryWorktree = Get-VerifierFullPath (Join-Path $PSScriptRoot '..')
+        $durableLeaseFields = [ordered]@{
+            Kind = 'cdp'; Port = 40192; RunId = 'gate-b-parent-writer-run'
+            RepositoryIdentity = 'gate-b-parent-writer-repository'
+            WorktreeRoot = $canaryWorktree; Status = 'released'
+            ClaimState = 'released'; ProfilePath = ''; BrowserPath = ''
+            BindValidatedUtc = ''; ReleasedUtc = ''; ReleaseState = 'complete'
+            ReleaseJournalState = 'complete'; ReleaseBlockReason = ''
+            ListenerInspectionUtc = ''
+            ClaimOwnerPid = [int]$PID
+            ClaimOwnerStartTicks = [long](Get-VerifierProcessStartTicks (Get-Process -Id $PID))
+            BoundProcessId = [int]$PID; BoundProcessStartTicks = [long](Get-VerifierProcessStartTicks (Get-Process -Id $PID))
+            Registered = $true; ReleaseBlocked = $false; MutexReleased = $true
+        }
+        foreach ($field in $durableLeaseFields.GetEnumerator()) {
+            Add-Member -InputObject $validLease -MemberType NoteProperty `
+                -Name $field.Key -Value $field.Value -Force
+        }
+        $validContext = [pscustomobject]@{
+            RunId = 'gate-b-parent-writer-run'
+            RepositoryIdentity = 'gate-b-parent-writer-repository'
+            WorktreeRoot = Get-VerifierFullPath (Join-Path $PSScriptRoot '..')
+            RunRoot = (Split-Path -Parent $canaryPath)
+            ManifestPath = (Join-Path (Split-Path -Parent $canaryPath) 'manifest.json')
+            EvidenceDirectory = (Split-Path -Parent $canaryPath)
+            Artifacts = @(); BrowserSessions = @(); CleanupState = 'pending'
+            CleanupErrors = @(); LeaseRecords = @($validLease); Server = $null
+        }
+        $script:VerifierContext = $validContext
+        $script:ParentLedgerPath = $canaryPath
+        $script:ParentNamespaceRoot = ''
+        $validWriterError = $null
+        try { Write-VerifierParentLedger 'started' } catch {
+            $validWriterError = $_
+        }
+        if ($null -ne $validWriterError -or -not (Test-Path -LiteralPath $canaryPath)) {
+            throw 'parent ledger writer rejected the valid durable listener tuple or did not write its ledger.'
+        }
+        $validLedger = Get-Content -LiteralPath $canaryPath -Raw -ErrorAction Stop | ConvertFrom-Json
+        if ($validLedger.leases.Count -ne 1 -or
+                $validLedger.leases[0].listenerOwnerKind -cne 'user-process' -or
+                $validLedger.leases[0].listenerOwnerProof -cne 'diagnostics-process-start-v1' -or
+                $validLedger.leases[0].listenerOwnerEvidence -cne 'system-diagnostics-process-starttime') {
+            throw 'parent ledger writer did not preserve the valid durable listener tuple.'
+        }
+        Remove-VerifierOwnedTree (Get-VerifierFullPath (Join-Path ([IO.Path]::GetTempPath()) `
+            'TroubleshootJS\verify')) (Get-VerifierFullPath $canaryPath)
+
+        foreach ($missingField in @('ClaimState', 'ReleaseState',
+                'ClaimOwnerPid', 'BoundProcessId', 'BrowserPath',
+                'ProcessProofRequired')) {
+            $incompleteLease = $validLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+            [void]$incompleteLease.PSObject.Properties.Remove($missingField)
+            $script:VerifierContext = $validContext | Select-Object *
+            $script:VerifierContext.LeaseRecords = @($incompleteLease)
+            $script:ParentLedgerPath = $canaryPath
+            $rejected = $false
+            try { Write-VerifierParentLedger 'started' } catch {
+                $rejected = Test-VerifierInfrastructureError $_
+            }
+            $temporaryLedgerFiles = @(Get-ChildItem -LiteralPath $canaryRoot `
+                -Filter ((Split-Path -Leaf $canaryPath) + '.*.tmp') -File `
+                -ErrorAction SilentlyContinue)
+            if (-not $rejected -or (Test-Path -LiteralPath $canaryPath) -or
+                    $temporaryLedgerFiles.Count -ne 0) {
+                throw "parent ledger writer accepted incomplete durable field '$missingField' or wrote before rejection."
+            }
+        }
+        $script:VerifierContext = $validContext
+
+        $malformedArtifactContext = $validContext | Select-Object *
+        $malformedArtifactContext.Artifacts = @([pscustomobject]@{ Path = 'not-an-artifact-string' })
+        $script:VerifierContext = $malformedArtifactContext
+        $script:ParentLedgerPath = $canaryPath
+        $rejected = $false
+        try { Write-VerifierParentLedger 'started' } catch {
+            $rejected = Test-VerifierInfrastructureError $_
+        }
+        $temporaryLedgerFiles = @(Get-ChildItem -LiteralPath $canaryRoot `
+            -Filter ((Split-Path -Leaf $canaryPath) + '.*.tmp') -File `
+            -ErrorAction SilentlyContinue)
+        if (-not $rejected -or (Test-Path -LiteralPath $canaryPath) -or
+                $temporaryLedgerFiles.Count -ne 0) {
+            throw 'parent ledger writer accepted a malformed evidence artifact or wrote before rejection.'
+        }
+        $script:VerifierContext = $validContext
+
+        $malformedLease = $ValidLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        [void]$malformedLease.PSObject.Properties.Remove('listenerOwnerKind')
+        $script:VerifierContext = [pscustomobject]@{
+            LeaseRecords = @($malformedLease); Server = $null
+        }
+        $script:ParentLedgerPath = $canaryPath
+        $script:ParentNamespaceRoot = ''
+        $rejected = $false
+        try { Write-VerifierParentLedger 'started' } catch {
+            $rejected = Test-VerifierInfrastructureError $_
+        }
+        if (-not $rejected -or (Test-Path -LiteralPath $canaryPath)) {
+            throw 'parent ledger writer accepted malformed owner tuple or wrote before rejection.'
+        }
+        $missingServerLease = [pscustomobject]@{
+            Owner = 'run'; CallerOwned = $false
+        }
+        $script:VerifierContext = [pscustomobject]@{
+            LeaseRecords = @($ValidLease); Server = $missingServerLease
+        }
+        $rejected = $false
+        try { Write-VerifierParentLedger 'started' } catch {
+            $rejected = Test-VerifierInfrastructureError $_
+        }
+        $canaryParent = Split-Path -Parent $canaryPath
+        $temporaryLedgerFiles = @(Get-ChildItem -LiteralPath $canaryParent `
+            -Filter ((Split-Path -Leaf $canaryPath) + '.*.tmp') -File `
+            -ErrorAction SilentlyContinue)
+        if (-not $rejected -or (Test-Path -LiteralPath $canaryPath) -or
+                $temporaryLedgerFiles.Count -ne 0) {
+            throw 'parent ledger writer accepted or wrote a run-owned server without Server.Lease.'
+        }
+    } finally {
+        if (Test-Path -LiteralPath $canaryRoot) {
+            try {
+                Remove-VerifierOwnedTree (Get-VerifierFullPath (Join-Path ([IO.Path]::GetTempPath()) `
+                    'TroubleshootJS\verify')) (Get-VerifierFullPath $canaryRoot)
+            } catch { }
+        }
+        $script:VerifierContext = $priorContext
+        $script:ParentLedgerPath = $priorLedgerPath
+        $script:ParentNamespaceRoot = $priorNamespaceRoot
+        $script:VerifierParentLedgerWritten = $priorParentLedgerWritten
+    }
+}
+
+function Invoke-VerifierCleanupArrayReaderCanary() {
+    $validLedger = [pscustomobject]@{ cleanupErrors = @() }
+    $validManifest = [pscustomobject]@{ errors = @() }
+    $validPair = Assert-VerifierDurableArrayPair $validLedger $validManifest `
+        'cleanupErrors' 'errors' 'cleanup error reader' -CompareItems
+    if ($validPair.Ledger.GetType() -ne $validPair.Manifest.GetType() -or
+            $validPair.Ledger.Count -ne 0) {
+        throw 'paired explicit empty cleanup-error arrays were not retained as valid arrays.'
+    }
+    foreach ($variantDefinition in @(
+            [pscustomobject]@{ Name = 'missing ledger cleanupErrors'; Side = 'ledger'; Value = $null; Remove = $true }
+            [pscustomobject]@{ Name = 'null ledger cleanupErrors'; Side = 'ledger'; Value = $null; Remove = $false }
+            [pscustomobject]@{ Name = 'scalar ledger cleanupErrors'; Side = 'ledger'; Value = 'none'; Remove = $false }
+            [pscustomobject]@{ Name = 'missing manifest cleanup errors'; Side = 'manifest'; Value = $null; Remove = $true }
+            [pscustomobject]@{ Name = 'null manifest cleanup errors'; Side = 'manifest'; Value = $null; Remove = $false }
+            [pscustomobject]@{ Name = 'scalar manifest cleanup errors'; Side = 'manifest'; Value = 'none'; Remove = $false }
+            [pscustomobject]@{ Name = 'mismatched cleanup arrays'; Side = 'ledger'; Value = @('retained-error'); Remove = $false }
+        )) {
+        $ledgerVariant = $validLedger | Select-Object *
+        $manifestVariant = $validManifest | Select-Object *
+        if ($variantDefinition.Side -eq 'ledger') {
+            if ($variantDefinition.Remove) {
+                [void]$ledgerVariant.PSObject.Properties.Remove('cleanupErrors')
+            } else { $ledgerVariant.cleanupErrors = $variantDefinition.Value }
+        } else {
+            if ($variantDefinition.Remove) {
+                [void]$manifestVariant.PSObject.Properties.Remove('errors')
+            } else { $manifestVariant.errors = $variantDefinition.Value }
+        }
+        $rejected = $false
+        try {
+            [void](Assert-VerifierDurableArrayPair $ledgerVariant $manifestVariant `
+                'cleanupErrors' 'errors' 'cleanup error reader' -CompareItems)
+        } catch { $rejected = Test-VerifierInfrastructureError $_ }
+        if (-not $rejected) {
+            throw "durable cleanup array reader accepted $($variantDefinition.Name)."
+        }
+    }
+    Write-Host 'PASS:paired cleanup-error reader requires explicit actual arrays and rejects missing/null/scalar/mismatched copies'
+}
+
+function Invoke-VerifierDurableReaderSchemaCanary() {
+    $validLedger = [pscustomobject]@{
+        protocol = 'troubleshootjs-integrated-child-ledger-v1'; state = 'completed'
+        runId = 'reader-schema-canary-run'; repositoryIdentity = 'reader-schema-canary-repository'
+        worktreeRoot = 'C:\reader-schema-canary'; parentNamespaceRoot = 'C:\reader-schema-canary\parent'
+        runRoot = 'C:\reader-schema-canary\parent\run'
+        manifestPath = 'C:\reader-schema-canary\parent\run\manifest.json'
+        evidenceDirectory = 'C:\reader-schema-canary\parent\run\evidence'
+        cleanupState = 'complete'; error = ''; updatedUtc = '2026-08-31T00:00:00.0000000Z'
+        forcedNegativeProof = $null; evidence = @(); leases = @(); profiles = @(); server = $null
+    }
+    $validManifest = [pscustomobject]@{
+        protocol = 'troubleshootjs-verifier-run-v1'; runId = $validLedger.runId
+        repositoryIdentity = $validLedger.repositoryIdentity
+        worktreeRoot = $validLedger.worktreeRoot; runRoot = $validLedger.runRoot
+        evidenceDirectory = $validLedger.evidenceDirectory
+        manifestPath = $validLedger.manifestPath
+        runNamespaceRoot = $validLedger.parentNamespaceRoot
+        evidenceNamespaceRoot = $validLedger.runRoot
+        createdUtc = '2026-08-31T00:00:00.0000000Z'; baseUrl = ''
+        previewNonce = 'reader-schema-canary-nonce'
+        leases = @(); browserSessions = @(); artifacts = @()
+        server = $null
+        cleanup = [pscustomobject]@{ state = 'complete'; completedUtc = ''; errors = @() }
+    }
+    $ledgerJson = $validLedger | ConvertTo-Json -Depth 16 -Compress
+    $manifestJson = $validManifest | ConvertTo-Json -Depth 16 -Compress
+    Assert-VerifierIntegratedDurableReaderSchema $validLedger $validManifest `
+        $ledgerJson $manifestJson
+    foreach ($variantDefinition in @(
+            [pscustomobject]@{ Name = 'missing baseUrl'; Field = 'baseUrl'; Value = $null; Remove = $true }
+            [pscustomobject]@{ Name = 'null baseUrl'; Field = 'baseUrl'; Value = $null; Remove = $false }
+            [pscustomobject]@{ Name = 'wrong-type baseUrl'; Field = 'baseUrl'; Value = 123; Remove = $false }
+            [pscustomobject]@{ Name = 'missing previewNonce'; Field = 'previewNonce'; Value = $null; Remove = $true }
+            [pscustomobject]@{ Name = 'null previewNonce'; Field = 'previewNonce'; Value = $null; Remove = $false }
+            [pscustomobject]@{ Name = 'wrong-type previewNonce'; Field = 'previewNonce'; Value = 123; Remove = $false }
+            [pscustomobject]@{ Name = 'missing cleanup completedUtc'; Field = 'completedUtc'; Value = $null; Remove = $true }
+            [pscustomobject]@{ Name = 'null cleanup completedUtc'; Field = 'completedUtc'; Value = $null; Remove = $false }
+            [pscustomobject]@{ Name = 'wrong-type cleanup completedUtc'; Field = 'completedUtc'; Value = 123; Remove = $false }
+        )) {
+        $manifestVariant = $manifestJson | ConvertFrom-Json
+        if ($variantDefinition.Field -eq 'completedUtc') {
+            if ($variantDefinition.Remove) {
+                [void]$manifestVariant.cleanup.PSObject.Properties.Remove('completedUtc')
+            } else { $manifestVariant.cleanup.completedUtc = $variantDefinition.Value }
+        } elseif ($variantDefinition.Remove) {
+            [void]$manifestVariant.PSObject.Properties.Remove($variantDefinition.Field)
+        } else { $manifestVariant.($variantDefinition.Field) = $variantDefinition.Value }
+        $variantJson = $manifestVariant | ConvertTo-Json -Depth 16 -Compress
+        $rejected = $false
+        try {
+            Assert-VerifierIntegratedDurableReaderSchema $validLedger $manifestVariant `
+                $ledgerJson $variantJson
+        } catch { $rejected = Test-VerifierInfrastructureError $_ }
+        if (-not $rejected) {
+            throw "integrated durable reader accepted $($variantDefinition.Name)."
+        }
+    }
+    Write-Host 'PASS:paired durable reader requires typed manifest baseUrl, previewNonce, and cleanup completedUtc fields'
 }
 
 function resolveCdpRouteDeadline([DateTime]$deadline) {
@@ -362,7 +872,21 @@ function sendCdp($socket, [int]$id, [string]$method, $parameters) {
 
 function Set-VerifierFailure($ErrorRecord, [string]$Scope, [switch]$Quiet) {
     $message = Get-VerifierErrorMessage $ErrorRecord
-    $isInfrastructure = Test-VerifierInfrastructureError $ErrorRecord
+    $forcedNegativeInvocation = ($null -ne $script:Task43ForcedNegativeProof -and
+        $script:Task43ForcedNegativeProof.Invocation -eq $true)
+    if ($forcedNegativeInvocation) {
+        # Once a forced-negative route has any later failure, its earlier
+        # marker/diagnostic observation is evidence only.  The route cannot
+        # retain a success claim, and an untyped boundary error is uncertainty
+        # for this route rather than an application exit.
+        Invalidate-Task43ForcedNegativeProof
+    }
+    # Preserve the ordinary verifier's existing typed application-versus-
+    # infrastructure classification.  Only an active forced-negative route
+    # gets the stricter monotonic uncertainty rule.
+    $isInfrastructure = if ($forcedNegativeInvocation) { $true } else {
+        Test-VerifierInfrastructureError $ErrorRecord
+    }
     $newExitCode = Merge-VerifierFailureExitCode $script:VerifierFailureExitCode $isInfrastructure
     if ($newExitCode -eq 2 -and $script:VerifierFailureExitCode -ne 2) {
         $script:VerifierFailureKind = 'infrastructure'
@@ -437,6 +961,7 @@ function startVerifierBrowser([string]$routeName, [string]$url) {
     $session = New-VerifierBrowserSession $script:VerifierContext $routeName $url `
         $script:VerifierResolvedBrowserPath $TimeoutSeconds
     $script:VerifierCurrentRouteId = $session.RouteId
+    Set-Task43ForcedNegativeRouteIdentity
     return $session
 }
 
@@ -457,48 +982,473 @@ function getVerifierEvidencePath([string]$fileName) {
 }
 
 function Get-Task43PRepositoryState() {
-    $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-    $safeRepositoryRoot = $repositoryRoot.Replace('\', '/')
-    $headArgs = @('-c', "safe.directory=$safeRepositoryRoot", '-C', $repositoryRoot,
-        'rev-parse', 'HEAD')
-    $head = (& git @headArgs 2>$null | Out-String).Trim()
-    if ($LASTEXITCODE -ne 0 -or $head -notmatch '^[0-9a-fA-F]{40}$') {
-        Throw-VerifierInfrastructure ("Task43P could not prove repository HEAD: " + $head)
-    }
-    $statusArgs = @('-c', "safe.directory=$safeRepositoryRoot", '-C', $repositoryRoot,
-        'status', '--porcelain=v1', '--untracked-files=all')
-    $status = (& git @statusArgs 2>$null | Out-String).Trim()
-    if ($LASTEXITCODE -ne 0) {
-        Throw-VerifierInfrastructure 'Task43P could not prove repository worktree status.'
-    }
-    # Hash source and verifier files directly.  This includes untracked Task43P
-    # files and avoids treating Git's platform-specific line-ending warnings as
-    # evidence or as a route result.
-    $fileRecords = New-Object Collections.Generic.List[string]
-    foreach ($relativeRoot in @('src', 'scripts')) {
-        $root = Join-Path $repositoryRoot $relativeRoot
-        if (-not (Test-Path -LiteralPath $root -PathType Container)) {
-            Throw-VerifierInfrastructure "Task43P could not inspect source root: $root"
-        }
-        foreach ($file in @(Get-ChildItem -LiteralPath $root -Recurse -File -ErrorAction Stop |
-                Sort-Object FullName)) {
-            $relativePath = $file.FullName.Substring($repositoryRoot.Length).TrimStart('\', '/')
-            $fileHash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
-            [void]$fileRecords.Add($relativePath.Replace('\', '/') + '=' + $fileHash)
-        }
-    }
-    $hasher = [Security.Cryptography.SHA256]::Create()
     try {
-        $bytes = [Text.UTF8Encoding]::new($false).GetBytes(($fileRecords -join "`n"))
-        $digest = [BitConverter]::ToString($hasher.ComputeHash($bytes)).Replace('-', '').ToLowerInvariant()
-    } finally {
-        $hasher.Dispose()
+        $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+        $safeRepositoryRoot = $repositoryRoot.Replace('\', '/')
+        $headArgs = @('-c', "safe.directory=$safeRepositoryRoot", '-C', $repositoryRoot,
+            'rev-parse', 'HEAD')
+        $head = (& git @headArgs 2>$null | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or $head -notmatch '^[0-9a-fA-F]{40}$') {
+            Throw-VerifierInfrastructure ("Task43P could not prove repository HEAD: " + $head)
+        }
+        $statusArgs = @('-c', "safe.directory=$safeRepositoryRoot", '-C', $repositoryRoot,
+            'status', '--porcelain=v1', '--untracked-files=all')
+        $status = (& git @statusArgs 2>$null | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0) {
+            Throw-VerifierInfrastructure 'Task43P could not prove repository worktree status.'
+        }
+        # Hash source and verifier files directly.  This includes untracked Task43P
+        # files and avoids treating Git's platform-specific line-ending warnings as
+        # evidence or as a route result.
+        $fileRecords = New-Object Collections.Generic.List[string]
+        foreach ($relativeRoot in @('src', 'scripts')) {
+            $root = Join-Path $repositoryRoot $relativeRoot
+            if (-not (Test-Path -LiteralPath $root -PathType Container -ErrorAction Stop)) {
+                Throw-VerifierInfrastructure "Task43P could not inspect source root: $root"
+            }
+            foreach ($file in @(Get-ChildItem -LiteralPath $root -Recurse -File -ErrorAction Stop |
+                    Sort-Object FullName)) {
+                $relativePath = $file.FullName.Substring($repositoryRoot.Length).TrimStart('\', '/')
+                $fileHash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256 -ErrorAction Stop).Hash.ToLowerInvariant()
+                [void]$fileRecords.Add($relativePath.Replace('\', '/') + '=' + $fileHash)
+            }
+        }
+        $hasher = [Security.Cryptography.SHA256]::Create()
+        try {
+            $bytes = [Text.UTF8Encoding]::new($false).GetBytes(($fileRecords -join "`n"))
+            $digest = [BitConverter]::ToString($hasher.ComputeHash($bytes)).Replace('-', '').ToLowerInvariant()
+        } finally {
+            $hasher.Dispose()
+        }
+        return [ordered]@{
+            # This object is wrapper-owned repository evidence.  Java/GWT never
+            # receives or emits these claims.
+            headSha = $head.ToLowerInvariant()
+            sourceVerifierDigest = $digest
+            dirty = -not [String]::IsNullOrWhiteSpace($status)
+            sourceVerifierFileCount = $fileRecords.Count
+            statusText = $status
+        }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Task43P repository state read failed closed: ' +
+            (Get-VerifierErrorMessage $_))
     }
-    return [ordered]@{
-        headSha = $head.ToLowerInvariant()
-        worktreeDigest = $digest
-        dirty = -not [String]::IsNullOrWhiteSpace($status)
-        hashedFileCount = $fileRecords.Count
+}
+
+function Assert-Task43PJavaEvidenceObject($Value, [string]$Path,
+        [string[]]$AllowedProperties) {
+    if ($null -eq $Value -or $Value -is [System.Array] -or
+            $Value -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure ("Task43P Java evidence expected an object at $Path.")
+    }
+    foreach ($property in @($Value.PSObject.Properties)) {
+        $propertyName = [string]$property.Name
+        # This exact allowlist is the Java evidence schema. It is deliberately
+        # fail-closed: repository authority aliases in any case or formatting
+        # cannot be persisted because unknown names are rejected at every
+        # nested object, rather than relying on an incomplete deny-list.
+        if ($AllowedProperties -cnotcontains $propertyName) {
+            Throw-VerifierInfrastructure ("Task43P Java evidence contained an unknown field " +
+                "'$propertyName' at $Path; repository authority is wrapper-owned.")
+        }
+    }
+}
+
+function Assert-Task43PJavaEvidenceRequired($Value, [string]$Path,
+        [string[]]$RequiredProperties) {
+    foreach ($propertyName in $RequiredProperties) {
+        if ($null -eq $Value.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure ("Task43P Java evidence omitted required field " +
+                "'$propertyName' at $Path.")
+        }
+    }
+}
+
+function Assert-Task43PJavaEvidenceString($Value, [string]$Path,
+        [switch]$AllowNull) {
+    if ($AllowNull -and $null -eq $Value) { return }
+    if ($Value -isnot [string] -or [String]::IsNullOrWhiteSpace([string]$Value)) {
+        Throw-VerifierInfrastructure ("Task43P Java evidence expected a non-empty string at $Path.")
+    }
+}
+
+function Assert-Task43PJavaEvidenceBoolean($Value, [string]$Path) {
+    if ($Value -isnot [bool]) {
+        Throw-VerifierInfrastructure ("Task43P Java evidence expected a Boolean at $Path.")
+    }
+}
+
+function Assert-Task43PJavaEvidenceNumber($Value, [string]$Path) {
+    if ($null -eq $Value -or $Value -is [string] -or $Value -is [bool] -or
+            $Value -isnot [ValueType]) {
+        Throw-VerifierInfrastructure ("Task43P Java evidence expected a JSON number at $Path.")
+    }
+}
+
+function Assert-Task43PJavaEvidenceStringArray($Value, [string]$Path) {
+    if ($Value -isnot [System.Array]) {
+        Throw-VerifierInfrastructure ("Task43P Java evidence expected a string array at $Path.")
+    }
+    $index = 0
+    foreach ($item in @($Value)) {
+        Assert-Task43PJavaEvidenceString $item ($Path + '[' + $index + ']')
+        $index++
+    }
+}
+
+function Assert-Task43PJavaEvidencePoint($Value, [string]$Path) {
+    if ($Value -isnot [System.Array] -or @($Value).Count -ne 2) {
+        Throw-VerifierInfrastructure ("Task43P Java evidence expected a two-number point at $Path.")
+    }
+    for ($index = 0; $index -lt 2; $index++) {
+        Assert-Task43PJavaEvidenceNumber @($Value)[$index] ($Path + '[' + $index + ']')
+    }
+}
+
+function Assert-Task43PJavaEvidenceProvenance($Value, [string]$Path = 'root') {
+    $rootProperties = @(
+        'protocol', 'status', 'developerOnly', 'forcedNegativeRequested', 'family',
+        'topology', 'seed', 'fault', 'faultType', 'faultOwner', 'faultApplied',
+        'earlyFinishBlocked', 'state', 'ready', 'completed', 'repairStatus',
+        'retestPresent', 'generatedVerificationPending',
+        'generatedVerificationAnalyzed', 'developerVerifierRunning', 'lifecycle',
+        'verifierDesignStateBefore', 'verifierDesignStateAfter', 'mutationCleanup',
+        'lanes', 'epochContract', 'triad'
+    )
+    Assert-Task43PJavaEvidenceObject $Value $Path $rootProperties
+    Assert-Task43PJavaEvidenceRequired $Value $Path $rootProperties
+    foreach ($name in @('protocol', 'status', 'family', 'topology', 'fault',
+            'faultType', 'state', 'repairStatus', 'verifierDesignStateBefore',
+            'verifierDesignStateAfter')) {
+        Assert-Task43PJavaEvidenceString $Value.$name ($Path + '.' + $name)
+    }
+    Assert-Task43PJavaEvidenceString $Value.faultOwner ($Path + '.faultOwner') -AllowNull
+    Assert-Task43PJavaEvidenceNumber $Value.seed ($Path + '.seed')
+    foreach ($name in @('developerOnly', 'forcedNegativeRequested', 'faultApplied',
+            'earlyFinishBlocked', 'ready', 'completed', 'retestPresent',
+            'generatedVerificationPending', 'generatedVerificationAnalyzed',
+            'developerVerifierRunning')) {
+        Assert-Task43PJavaEvidenceBoolean $Value.$name ($Path + '.' + $name)
+    }
+
+    $lifecyclePath = $Path + '.lifecycle'
+    $lifecycleProperties = @('healthyInstalled', 'healthyAnalyzed', 'faultApplied',
+        'faultAnalyzed', 'faultValidated', 'readyAfterValidation')
+    Assert-Task43PJavaEvidenceObject $Value.lifecycle $lifecyclePath $lifecycleProperties
+    Assert-Task43PJavaEvidenceRequired $Value.lifecycle $lifecyclePath $lifecycleProperties
+    foreach ($name in $lifecycleProperties) {
+        Assert-Task43PJavaEvidenceBoolean $Value.lifecycle.$name ($lifecyclePath + '.' + $name)
+    }
+
+    $cleanupPath = $Path + '.mutationCleanup'
+    $cleanupProperties = @('readOnly', 'activeMeasurementOverlay',
+        'pendingBoardPowerState', 'temporarySolverRestored', 'fullyRestoredAtEntry')
+    Assert-Task43PJavaEvidenceObject $Value.mutationCleanup $cleanupPath $cleanupProperties
+    Assert-Task43PJavaEvidenceRequired $Value.mutationCleanup $cleanupPath $cleanupProperties
+    foreach ($name in @('readOnly', 'activeMeasurementOverlay', 'temporarySolverRestored',
+            'fullyRestoredAtEntry')) {
+        Assert-Task43PJavaEvidenceBoolean $Value.mutationCleanup.$name ($cleanupPath + '.' + $name)
+    }
+    Assert-Task43PJavaEvidenceString $Value.mutationCleanup.pendingBoardPowerState `
+        ($cleanupPath + '.pendingBoardPowerState') -AllowNull
+
+    $lanesPath = $Path + '.lanes'
+    $laneIds = @('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I')
+    Assert-Task43PJavaEvidenceObject $Value.lanes $lanesPath $laneIds
+    Assert-Task43PJavaEvidenceRequired $Value.lanes $lanesPath $laneIds
+    foreach ($laneId in $laneIds) {
+        $lanePath = $lanesPath + '.' + $laneId
+        Assert-Task43PJavaEvidenceObject $Value.lanes.$laneId $lanePath @('status', 'observation')
+        Assert-Task43PJavaEvidenceRequired $Value.lanes.$laneId $lanePath @('status', 'observation')
+        Assert-Task43PJavaEvidenceString $Value.lanes.$laneId.status ($lanePath + '.status')
+        Assert-Task43PJavaEvidenceString $Value.lanes.$laneId.observation ($lanePath + '.observation')
+    }
+
+    $epochPath = $Path + '.epochContract'
+    $epochProperties = @('requestEpoch', 'boardEpoch', 'sessionEpoch')
+    Assert-Task43PJavaEvidenceObject $Value.epochContract $epochPath $epochProperties
+    Assert-Task43PJavaEvidenceRequired $Value.epochContract $epochPath $epochProperties
+    foreach ($name in $epochProperties) {
+        Assert-Task43PJavaEvidenceBoolean $Value.epochContract.$name ($epochPath + '.' + $name)
+    }
+
+    $triadPath = $Path + '.triad'
+    $triadProperties = @(
+        'status', 'validator', 'manifestAuthoring', 'observationSources', 'family',
+        'topology', 'seed', 'fault', 'faultType', 'faultOwner', 'terminalCount',
+        'rawTraceChecks', 'renderedSurfaceChecks', 'solverChecks',
+        'negativeFixtureScope', 'liveReadings', 'negativeFixtures', 'terminals'
+    )
+    Assert-Task43PJavaEvidenceObject $Value.triad $triadPath $triadProperties
+    Assert-Task43PJavaEvidenceRequired $Value.triad $triadPath $triadProperties
+    foreach ($name in @('status', 'validator', 'manifestAuthoring', 'family',
+            'topology', 'fault', 'faultType', 'negativeFixtureScope')) {
+        Assert-Task43PJavaEvidenceString $Value.triad.$name ($triadPath + '.' + $name)
+    }
+    Assert-Task43PJavaEvidenceString $Value.triad.faultOwner ($triadPath + '.faultOwner') -AllowNull
+    Assert-Task43PJavaEvidenceNumber $Value.triad.seed ($triadPath + '.seed')
+    foreach ($name in @('terminalCount', 'rawTraceChecks', 'renderedSurfaceChecks',
+            'solverChecks')) {
+        Assert-Task43PJavaEvidenceNumber $Value.triad.$name ($triadPath + '.' + $name)
+    }
+    Assert-Task43PJavaEvidenceStringArray $Value.triad.observationSources `
+        ($triadPath + '.observationSources')
+    Assert-Task43PJavaEvidenceStringArray $Value.triad.liveReadings `
+        ($triadPath + '.liveReadings')
+
+    $fixtureProperties = @('id', 'sourceMutation', 'caught')
+    $fixtureIndex = 0
+    if ($Value.triad.negativeFixtures -isnot [System.Array]) {
+        Throw-VerifierInfrastructure "Task43P Java evidence expected a negative-fixture array."
+    }
+    foreach ($fixture in @($Value.triad.negativeFixtures)) {
+        $fixturePath = $triadPath + '.negativeFixtures[' + $fixtureIndex + ']'
+        Assert-Task43PJavaEvidenceObject $fixture $fixturePath $fixtureProperties
+        Assert-Task43PJavaEvidenceRequired $fixture $fixturePath $fixtureProperties
+        Assert-Task43PJavaEvidenceString $fixture.id ($fixturePath + '.id')
+        Assert-Task43PJavaEvidenceString $fixture.sourceMutation ($fixturePath + '.sourceMutation')
+        Assert-Task43PJavaEvidenceBoolean $fixture.caught ($fixturePath + '.caught')
+        $fixtureIndex++
+    }
+
+    $terminalProperties = @(
+        'padId', 'rawNetId', 'rawEndpoint', 'renderedPadId', 'renderedTerminalId',
+        'renderedPadPoint', 'packageId', 'variant', 'transform', 'solverOracleNetId',
+        'solverClass', 'solverPost', 'solverNode'
+    )
+    $terminalIndex = 0
+    if ($Value.triad.terminals -isnot [System.Array]) {
+        Throw-VerifierInfrastructure "Task43P Java evidence expected a terminal array."
+    }
+    foreach ($terminal in @($Value.triad.terminals)) {
+        $terminalPath = $triadPath + '.terminals[' + $terminalIndex + ']'
+        Assert-Task43PJavaEvidenceObject $terminal $terminalPath $terminalProperties
+        Assert-Task43PJavaEvidenceRequired $terminal $terminalPath $terminalProperties
+        foreach ($name in @('padId', 'rawNetId', 'renderedPadId', 'renderedTerminalId',
+                'packageId', 'variant', 'transform', 'solverOracleNetId', 'solverClass')) {
+            Assert-Task43PJavaEvidenceString $terminal.$name ($terminalPath + '.' + $name)
+        }
+        Assert-Task43PJavaEvidencePoint $terminal.rawEndpoint ($terminalPath + '.rawEndpoint')
+        Assert-Task43PJavaEvidencePoint $terminal.renderedPadPoint `
+            ($terminalPath + '.renderedPadPoint')
+        Assert-Task43PJavaEvidenceNumber $terminal.solverPost ($terminalPath + '.solverPost')
+        Assert-Task43PJavaEvidenceNumber $terminal.solverNode ($terminalPath + '.solverNode')
+        $terminalIndex++
+    }
+}
+
+function Assert-Task43PJavaEvidencePayload($Value, [string]$RouteName,
+        [string]$Expected, [string]$Observed) {
+    # Re-run the exact Java schema at the persistence boundary as well as at
+    # the caller. This keeps future call sites fail-closed before any file is
+    # created, even if they forget the separate provenance call.
+    Assert-Task43PJavaEvidenceProvenance $Value
+    if ($null -eq $Value -or $Value -is [System.Array] -or
+            $Value -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a null, array, " +
+            'or non-object evidence payload.')
+    }
+    foreach ($required in @('protocol', 'status', 'developerOnly',
+            'forcedNegativeRequested', 'family', 'topology', 'seed', 'fault',
+            'faultType', 'faultApplied', 'earlyFinishBlocked', 'state', 'ready',
+            'completed', 'repairStatus', 'retestPresent', 'generatedVerificationPending',
+            'generatedVerificationAnalyzed', 'developerVerifierRunning', 'lifecycle',
+            'verifierDesignStateBefore', 'verifierDesignStateAfter', 'mutationCleanup',
+            'lanes', 'epochContract', 'triad')) {
+        if (-not $Value.PSObject.Properties[$required]) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' omitted required evidence " +
+                "property '$required'.")
+        }
+    }
+    if ($Value.protocol -isnot [string] -or
+            [string]::IsNullOrWhiteSpace([string]$Value.protocol) -or
+            [string]$Value.protocol -cne 'TSJ-TASK43P-2') {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published an unexpected " +
+            "protocol: $($Value.protocol)")
+    }
+    if ($Value.status -isnot [string] -or
+            [string]::IsNullOrWhiteSpace([string]$Value.status) -or
+            [string]$Value.status -cne 'UNPROVEN') {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a malformed or " +
+            "contradictory status: $($Value.status)")
+    }
+    if ($Value.developerOnly -isnot [bool] -or [bool]$Value.developerOnly -ne $true) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' did not prove developer-only " +
+            'evidence ownership.')
+    }
+    $forcedRoute = $RouteName -like '*forced-negative*'
+    if ($Value.forcedNegativeRequested -isnot [bool] -or
+            [bool]$Value.forcedNegativeRequested -ne $forcedRoute) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a contradictory " +
+            'forced-negative marker.')
+    }
+    if (-not $forcedRoute -and $Expected -eq 'UNPROVEN:task43p' -and
+            $Expected -ne $Observed) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published observed result " +
+            "'$Observed' instead of '$Expected'.")
+    }
+    foreach ($identityProperty in @('family', 'topology', 'fault', 'faultType',
+            'state', 'repairStatus', 'verifierDesignStateBefore',
+            'verifierDesignStateAfter')) {
+        if ($Value.$identityProperty -isnot [string] -or
+                [string]::IsNullOrWhiteSpace([string]$Value.$identityProperty)) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' published an empty or " +
+                "non-string '$identityProperty' field.")
+        }
+    }
+    foreach ($booleanProperty in @('faultApplied', 'earlyFinishBlocked', 'ready', 'completed',
+            'retestPresent', 'generatedVerificationPending',
+            'generatedVerificationAnalyzed', 'developerVerifierRunning')) {
+        if ($Value.$booleanProperty -isnot [bool]) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a non-Boolean " +
+                "'$booleanProperty' field.")
+        }
+    }
+    foreach ($objectProperty in @('lifecycle', 'mutationCleanup', 'lanes', 'epochContract')) {
+        if ($Value.$objectProperty -is [System.Array] -or
+                $Value.$objectProperty -isnot [pscustomobject]) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a malformed " +
+                "'$objectProperty' object.")
+        }
+    }
+    if ([string]::IsNullOrWhiteSpace([string]$Value.family) -or
+            [string]::IsNullOrWhiteSpace([string]$Value.topology) -or
+            [string]::IsNullOrWhiteSpace([string]$Value.fault)) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published empty board identity " +
+            'fields.')
+    }
+    if ($Value.triad -is [System.Array] -or $Value.triad -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a malformed triad " +
+            'object.')
+    }
+    foreach ($requiredTriad in @('status', 'validator', 'manifestAuthoring',
+            'terminalCount', 'rawTraceChecks', 'renderedSurfaceChecks', 'solverChecks',
+            'liveReadings', 'negativeFixtures', 'terminals')) {
+        if (-not $Value.triad.PSObject.Properties[$requiredTriad]) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' triad omitted required " +
+                "property '$requiredTriad'.")
+        }
+    }
+    if ($Value.triad.status -isnot [string] -or
+            $Value.triad.validator -isnot [string] -or
+            $Value.triad.manifestAuthoring -isnot [string] -or
+            [string]$Value.triad.status -cne 'PASS' -or
+            [string]$Value.triad.validator -cne 'canonical-source-observations-v2' -or
+            [string]$Value.triad.manifestAuthoring -cne 'independent') {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a malformed or " +
+            'contradictory triad status.')
+    }
+    $expectedObservationSources = @('raw-logical-board', 'raw-pcb-layout-copper',
+        'renderer', 'physical-package', 'solver-post')
+    $observedObservationSources = @($Value.triad.observationSources)
+    if ($observedObservationSources.Count -ne $expectedObservationSources.Count) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published an incomplete " +
+            'observation-source schema.')
+    }
+    $observationSourceSet = [Collections.Generic.HashSet[string]]::new(
+        [StringComparer]::Ordinal)
+    foreach ($source in $observedObservationSources) {
+        if (-not $observationSourceSet.Add([string]$source)) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' published duplicate " +
+                "observation source '$source'.")
+        }
+    }
+    foreach ($expectedSource in $expectedObservationSources) {
+        if (-not $observationSourceSet.Contains($expectedSource)) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' omitted observation " +
+                "source '$expectedSource'.")
+        }
+    }
+    $terminalCount = 0
+    if (-not [int]::TryParse([string]$Value.triad.terminalCount,
+            [Globalization.NumberStyles]::Integer,
+            [Globalization.CultureInfo]::InvariantCulture, [ref]$terminalCount)) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published an invalid terminal " +
+            'count.')
+    }
+    $terminals = @($Value.triad.terminals)
+    if ($terminalCount -le 0 -or $terminals.Count -ne $terminalCount) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published incomplete terminal " +
+            "evidence: count=$terminalCount entries=$($terminals.Count).")
+    }
+    $rawTraceChecks = 0
+    $renderedSurfaceChecks = 0
+    $solverChecks = 0
+    if (-not [int]::TryParse([string]$Value.triad.rawTraceChecks,
+            [Globalization.NumberStyles]::Integer,
+            [Globalization.CultureInfo]::InvariantCulture, [ref]$rawTraceChecks) -or
+            -not [int]::TryParse([string]$Value.triad.renderedSurfaceChecks,
+                [Globalization.NumberStyles]::Integer,
+                [Globalization.CultureInfo]::InvariantCulture, [ref]$renderedSurfaceChecks) -or
+            -not [int]::TryParse([string]$Value.triad.solverChecks,
+                [Globalization.NumberStyles]::Integer,
+                [Globalization.CultureInfo]::InvariantCulture, [ref]$solverChecks) -or
+            $rawTraceChecks -le 0 -or
+            $renderedSurfaceChecks -ne $terminalCount -or
+            $solverChecks -ne $terminalCount -or
+            @($Value.triad.liveReadings).Count -ne $terminalCount) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published incomplete positive " +
+            'triad checks.')
+    }
+    foreach ($reading in @($Value.triad.liveReadings)) {
+        if ($reading -isnot [string] -or [string]::IsNullOrWhiteSpace([string]$reading)) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' published malformed live " +
+                'reading evidence.')
+        }
+    }
+    foreach ($terminal in $terminals) {
+        if ($null -eq $terminal -or $terminal -is [System.Array] -or
+                $terminal -isnot [pscustomobject] -or
+                $terminal.padId -isnot [string] -or
+                $terminal.renderedPadId -isnot [string] -or
+                $terminal.solverClass -isnot [string] -or
+                [string]::IsNullOrWhiteSpace([string]$terminal.padId) -or
+                [string]::IsNullOrWhiteSpace([string]$terminal.renderedPadId) -or
+                [string]::IsNullOrWhiteSpace([string]$terminal.solverClass)) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' published incomplete terminal " +
+                'evidence.')
+        }
+    }
+    $fixtures = @($Value.triad.negativeFixtures)
+    $expectedFixtureIds = @(
+        'renderer-only-pad-offset',
+        'renderer-only-lead-offset',
+        'raw-copper-endpoint-gap',
+        'raw-net-mismatch',
+        'solver-binding-post-mismatch',
+        'raw-empty-unmanifested-net',
+        'mirror-transform-mismatch',
+        'internally-self-consistent-wrong-mapping',
+        'omitted-terminal'
+    )
+    if ($fixtures.Count -ne $expectedFixtureIds.Count) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published too few canonical " +
+            "negative fixtures: $($fixtures.Count).")
+    }
+    $observedFixtureIds = [Collections.Generic.HashSet[string]]::new(
+        [StringComparer]::Ordinal)
+    foreach ($fixture in $fixtures) {
+        if ($null -eq $fixture -or $fixture -is [System.Array] -or
+                $fixture -isnot [pscustomobject] -or
+                $fixture.id -isnot [string] -or
+                $fixture.sourceMutation -isnot [string] -or
+                [string]::IsNullOrWhiteSpace([string]$fixture.id) -or
+                [string]::IsNullOrWhiteSpace([string]$fixture.sourceMutation) -or
+                $fixture.caught -isnot [bool] -or [bool]$fixture.caught -ne $true) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' published an incomplete or " +
+                'uncaught negative fixture.')
+        }
+        if (-not $observedFixtureIds.Add([string]$fixture.id)) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' published duplicate " +
+                "negative fixture '$($fixture.id)'.")
+        }
+    }
+    foreach ($expectedFixtureId in $expectedFixtureIds) {
+        if (-not $observedFixtureIds.Contains($expectedFixtureId)) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' omitted required negative " +
+                "fixture '$expectedFixtureId'.")
+        }
     }
 }
 
@@ -517,36 +1467,62 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
         Throw-VerifierInfrastructure ("Task43P route '$routeName' published invalid JSON evidence: " +
             (Get-VerifierErrorMessage $_))
     }
+    Assert-Task43PJavaEvidenceProvenance $parsed
+    Assert-Task43PJavaEvidencePayload $parsed $routeName $expected $observed
+    if ($routeName -notlike '*forced-negative*' -and $expected -eq 'UNPROVEN:task43p' -and
+            $expected -like 'UNPROVEN:*' -and $expected -ne $observed) {
+        Throw-VerifierInfrastructure ("Task43P route '$routeName' published evidence for " +
+            "observed result '$observed' rather than the expected route result '$expected'.")
+    }
+    if ($expected -eq 'UNPROVEN:task43p' -and
+            $expected -like 'UNPROVEN:*' -and $routeName -like '*forced-negative*') {
+        if (-not $parsed.PSObject.Properties['forcedNegativeRequested'] -or
+                [bool]$parsed.forcedNegativeRequested -ne $true) {
+            Throw-VerifierInfrastructure ("Task43P forced-negative route '$routeName' did not " +
+                'publish its run-request marker.')
+        }
+    }
     $repositoryAfter = Get-Task43PRepositoryState
+    if ($null -eq $repositoryBefore -or
+            $repositoryBefore.headSha -ne $script:Task43PPublishedBaselineSha) {
+        Throw-VerifierInfrastructure ("Task43P route '$routeName' did not start from the " +
+            "published repair baseline $script:Task43PPublishedBaselineSha.")
+    }
     if ($repositoryBefore.headSha -ne $repositoryAfter.headSha -or
-            $repositoryBefore.worktreeDigest -ne $repositoryAfter.worktreeDigest) {
+            $repositoryBefore.sourceVerifierDigest -ne $repositoryAfter.sourceVerifierDigest -or
+            $repositoryBefore.sourceVerifierFileCount -ne $repositoryAfter.sourceVerifierFileCount -or
+            $repositoryBefore.dirty -ne $repositoryAfter.dirty -or
+            $repositoryBefore.statusText -ne $repositoryAfter.statusText) {
         Throw-VerifierInfrastructure ("Task43P route '$routeName' changed repository state while " +
-            'running developer evidence: before=' + $repositoryBefore.worktreeDigest +
-            ' after=' + $repositoryAfter.worktreeDigest)
+            'running developer evidence: before=' + $repositoryBefore.sourceVerifierDigest +
+            ' after=' + $repositoryAfter.sourceVerifierDigest)
     }
-    $safeRouteName = $routeName -replace '[^A-Za-z0-9._-]', '-'
-    $record = [ordered]@{
-        protocol = 'troubleshootjs-task43p-evidence-capture-v1'
-        route = $routeName
-        expected = $expected
-        observed = $observed
-        capturedUtc = [DateTime]::UtcNow.ToString('o', [Globalization.CultureInfo]::InvariantCulture)
-        runId = $script:VerifierContext.RunId
-        routeId = $script:VerifierCurrentRouteId
-        baselineSha = '3bfaab093f85247fc20aec068824c83dc3d214c8'
-        currentHeadSha = $repositoryAfter.headSha
-        worktreeDigestBefore = $repositoryBefore.worktreeDigest
-        worktreeDigestAfter = $repositoryAfter.worktreeDigest
-        worktreeDirty = $repositoryAfter.dirty
-        hashedFileCount = $repositoryAfter.hashedFileCount
-        evidence = $parsed
+    try {
+        $safeRouteName = $routeName -replace '[^A-Za-z0-9._-]', '-'
+        $path = getVerifierEvidencePath ('task43p-' + $safeRouteName + '.json')
+        $record = [ordered]@{
+            protocol = 'troubleshootjs-task43p-evidence-capture-v2'
+            route = $routeName
+            expected = $expected
+            observed = $observed
+            capturedUtc = [DateTime]::UtcNow.ToString('o', [Globalization.CultureInfo]::InvariantCulture)
+            runId = $script:VerifierContext.RunId
+            routeId = $script:VerifierCurrentRouteId
+            baselineSha = $script:Task43PPublishedBaselineSha
+            repositoryBefore = $repositoryBefore
+            repositoryAfter = $repositoryAfter
+            evidencePath = $path
+            evidence = $parsed
+        }
+        Write-VerifierEvidenceText $path ($record | ConvertTo-Json -Depth 30) `
+            'Task43P route evidence'
+        Register-VerifierEvidenceArtifact $script:VerifierContext $path
+    } catch {
+        Throw-VerifierInfrastructure ("Task43P route '$routeName' evidence persistence failed: " +
+            (Get-VerifierErrorMessage $_))
     }
-    $path = getVerifierEvidencePath ('task43p-' + $safeRouteName + '.json')
-    [IO.File]::WriteAllText($path, ($record | ConvertTo-Json -Depth 30),
-        [Text.UTF8Encoding]::new($false))
-    Register-VerifierEvidenceArtifact $script:VerifierContext $path
     Write-Host ("TASK43P EVIDENCE $routeName path=$path head=$($repositoryAfter.headSha) " +
-        "worktreeDigest=$($repositoryAfter.worktreeDigest)")
+        "sourceVerifierDigest=$($repositoryAfter.sourceVerifierDigest)")
 }
 
 function receiveCdp($socket, [int]$wantedId, [ref]$failures,
@@ -655,14 +1631,276 @@ function navigateAndWaitForDocument($socket, [ref]$nextId, [string]$url,
     return evaluateCdp $socket $nextId 'performance.timeOrigin' $failures $deadline
 }
 
-function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
-        [string]$expectedFailure) {
-    if ($expectedFailure -ne 'FAIL:task43-forced-negative-canary' -and
-            $expectedFailure -ne 'FAIL:task43p-forced-negative-canary') { return $false }
-    $marker = [regex]::Escape($expectedFailure.Substring(5))
-    return $failure -match '^Console failure: exception in runCircuit ' +
+function Get-Task43ForcedNegativeExpectedMarker() {
+    if ($Task43PForcedNegative) { return 'FAIL:task43p-forced-negative-canary' }
+    if ($Task43ForcedNegative) { return 'FAIL:task43-forced-negative-canary' }
+    return ''
+}
+
+function Get-Task43ForcedNegativeExpectedRoute([string]$ExpectedMarker) {
+    if ($ExpectedMarker -eq 'FAIL:task43p-forced-negative-canary') {
+        return 'task43p forced-negative canary'
+    }
+    if ($ExpectedMarker -eq 'FAIL:task43-forced-negative-canary') {
+        return 'task43 forced-negative canary'
+    }
+    return ''
+}
+
+function Test-Task43ForcedFailureDiagnosticText([string]$Failure,
+        [string]$ExpectedFailure) {
+    if ($ExpectedFailure -ne 'FAIL:task43-forced-negative-canary' -and
+            $ExpectedFailure -ne 'FAIL:task43p-forced-negative-canary') { return $false }
+    if ([String]::IsNullOrWhiteSpace($Failure)) { return $false }
+    $marker = [regex]::Escape($ExpectedFailure.Substring(5))
+    # Keep this a complete-string match.  A substring or a diagnostic with a
+    # trailing error line is not positive proof of the Java forced-negative
+    # boundary.
+    $pattern = '\AConsole failure: exception in runCircuit ' +
         'java\.lang\.IllegalStateException: Generated board verification failed for ' +
-        '[^,]+, seed [^:]+: ' + $marker + '$'
+        '[^,\r\n]+, seed \d+: ' + $marker + '\z'
+    return [regex]::IsMatch($Failure, $pattern)
+}
+
+function Reset-Task43ForcedNegativeProof([string]$ExpectedMarker,
+        [string]$RouteName) {
+    if ($ExpectedMarker -ne 'FAIL:task43-forced-negative-canary' -and
+            $ExpectedMarker -ne 'FAIL:task43p-forced-negative-canary') {
+        Throw-VerifierInfrastructure 'Forced-negative proof reset received an unsupported expected marker.'
+    }
+    $runId = if ($null -ne $script:VerifierContext) {
+        [string]$script:VerifierContext.RunId
+    } else { '' }
+    $script:Task43ForcedNegativeProof = [pscustomobject]@{
+        Invocation = $true
+        ExpectedMarker = $ExpectedMarker
+        ExpectedRoute = $RouteName
+        RunId = $runId
+        RouteId = ''
+        MarkerObserved = $false
+        ObservedMarker = ''
+        MarkerRunId = ''
+        MarkerRouteId = ''
+        MarkerExpectedMarker = ''
+        AnchoredDiagnosticProven = $false
+        AnchoredJavaDiagnostic = ''
+        DiagnosticExpectedMarker = ''
+        DiagnosticRunId = ''
+        DiagnosticRouteId = ''
+        DiagnosticBaselineHead = ''
+        RoutePassedAfterCleanup = $false
+        FinalCleanupProven = $false
+        Invalidated = $false
+    }
+    $script:task43ExpectedFailureObserved = $false
+    $script:task43ExpectedFailureRoutePassed = $false
+}
+
+function Set-Task43ForcedNegativeRouteIdentity() {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true) { return }
+    if ($null -eq $script:VerifierContext -or
+            [String]::IsNullOrWhiteSpace([string]$script:VerifierCurrentRouteId)) {
+        Throw-VerifierInfrastructure 'Forced-negative route did not establish a run/route identity.'
+    }
+    if ([String]::IsNullOrWhiteSpace([string]$proof.RunId)) {
+        $proof.RunId = [string]$script:VerifierContext.RunId
+    }
+    if ([string]$proof.RunId -ne [string]$script:VerifierContext.RunId) {
+        Throw-VerifierInfrastructure 'Forced-negative route run identity changed after proof reset.'
+    }
+    $proof.RouteId = [string]$script:VerifierCurrentRouteId
+}
+
+function Set-Task43ForcedNegativeMarkerObserved([string]$Marker) {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true) { return }
+    if ($Marker -ne [string]$proof.ExpectedMarker) {
+        Throw-VerifierInfrastructure 'Forced-negative route observed a marker different from its expected marker.'
+    }
+    Set-Task43ForcedNegativeRouteIdentity
+    $proof.MarkerObserved = $true
+    $proof.ObservedMarker = $Marker
+    $proof.MarkerRunId = [string]$proof.RunId
+    $proof.MarkerRouteId = [string]$proof.RouteId
+    $proof.MarkerExpectedMarker = $Marker
+    $script:task43ExpectedFailureObserved = $true
+}
+
+function Set-Task43ForcedNegativeAnchoredDiagnostic([string]$Diagnostic,
+        [string]$BaselineHead = '') {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true) { return }
+    if (-not $proof.MarkerObserved -or
+            -not (Test-Task43ForcedFailureDiagnosticText $Diagnostic `
+                ([string]$proof.ExpectedMarker))) {
+        Throw-VerifierInfrastructure 'Forced-negative route did not prove its exact anchored Java diagnostic.'
+    }
+    if ($proof.ExpectedMarker -eq 'FAIL:task43p-forced-negative-canary' -and
+            $BaselineHead -ne $script:Task43PPublishedBaselineSha) {
+        Throw-VerifierInfrastructure 'Task43P forced-negative route did not retain the published baseline identity.'
+    }
+    Set-Task43ForcedNegativeRouteIdentity
+    $proof.AnchoredDiagnosticProven = $true
+    $proof.AnchoredJavaDiagnostic = $Diagnostic
+    $proof.DiagnosticExpectedMarker = [string]$proof.ExpectedMarker
+    $proof.DiagnosticRunId = [string]$proof.RunId
+    $proof.DiagnosticRouteId = [string]$proof.RouteId
+    $proof.DiagnosticBaselineHead = [string]$BaselineHead
+}
+
+function Set-Task43ForcedNegativeRoutePassedAfterCleanup() {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true) { return }
+    if ($proof.Invalidated -eq $true -or
+            -not $proof.MarkerObserved -or
+            -not $proof.AnchoredDiagnosticProven -or
+            [String]::IsNullOrWhiteSpace([string]$proof.RouteId)) {
+        Throw-VerifierInfrastructure 'Forced-negative route bookkeeping was incomplete before cleanup success.'
+    }
+    $proof.RoutePassedAfterCleanup = $true
+    $script:task43ExpectedFailureRoutePassed = $true
+}
+
+function Invalidate-Task43ForcedNegativeProof() {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true) { return }
+    # Preserve marker/diagnostic observations for evidence, but never preserve
+    # a success claim after any later route, cleanup, or ledger uncertainty.
+    $proof.RoutePassedAfterCleanup = $false
+    $proof.FinalCleanupProven = $false
+    $proof.Invalidated = $true
+    $script:task43ExpectedFailureRoutePassed = $false
+}
+
+function Set-Task43ForcedNegativeFinalCleanupProven([bool]$Proven) {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true) { return }
+    if (-not $Proven -or $proof.Invalidated -eq $true -or
+            $proof.RoutePassedAfterCleanup -ne $true) {
+        Invalidate-Task43ForcedNegativeProof
+        return
+    }
+    $proof.FinalCleanupProven = $true
+}
+
+function Get-Task43ForcedNegativeProofRecord() {
+    $proof = $script:Task43ForcedNegativeProof
+    $invocation = if ($null -ne $proof -and $proof.Invocation -eq $true) {
+        $true
+    } else { [bool]($Task43ForcedNegative -or $Task43PForcedNegative) }
+    $expectedMarker = if ($null -ne $proof -and
+            -not [String]::IsNullOrWhiteSpace([string]$proof.ExpectedMarker)) {
+        [string]$proof.ExpectedMarker
+    } else { Get-Task43ForcedNegativeExpectedMarker }
+    $expectedRoute = if ($null -ne $proof -and
+            -not [String]::IsNullOrWhiteSpace([string]$proof.ExpectedRoute)) {
+        [string]$proof.ExpectedRoute
+    } else { Get-Task43ForcedNegativeExpectedRoute $expectedMarker }
+    return [ordered]@{
+        protocol = 'troubleshootjs-forced-negative-proof-v1'
+        invocation = $invocation
+        expectedMarker = $expectedMarker
+        expectedRoute = $expectedRoute
+        runId = if ($null -ne $proof) { [string]$proof.RunId } else { '' }
+        routeId = if ($null -ne $proof) { [string]$proof.RouteId } else { '' }
+        markerObserved = if ($null -ne $proof) { [bool]$proof.MarkerObserved } else { $false }
+        observedMarker = if ($null -ne $proof) { [string]$proof.ObservedMarker } else { '' }
+        markerRunId = if ($null -ne $proof) { [string]$proof.MarkerRunId } else { '' }
+        markerRouteId = if ($null -ne $proof) { [string]$proof.MarkerRouteId } else { '' }
+        markerExpectedMarker = if ($null -ne $proof) { [string]$proof.MarkerExpectedMarker } else { '' }
+        anchoredDiagnosticProven = if ($null -ne $proof) { [bool]$proof.AnchoredDiagnosticProven } else { $false }
+        anchoredJavaDiagnostic = if ($null -ne $proof) { [string]$proof.AnchoredJavaDiagnostic } else { '' }
+        diagnosticExpectedMarker = if ($null -ne $proof) { [string]$proof.DiagnosticExpectedMarker } else { '' }
+        diagnosticRunId = if ($null -ne $proof) { [string]$proof.DiagnosticRunId } else { '' }
+        diagnosticRouteId = if ($null -ne $proof) { [string]$proof.DiagnosticRouteId } else { '' }
+        diagnosticBaselineHead = if ($null -ne $proof) { [string]$proof.DiagnosticBaselineHead } else { '' }
+        # Keep the descriptive fields above for local diagnostics and emit the
+        # compact contract names as durable child-ledger fields.  The reader
+        # validates both copies, so neither name can become an unchecked alias.
+        routePassedAfterCleanup = if ($null -ne $proof) { [bool]$proof.RoutePassedAfterCleanup } else { $false }
+        finalCleanupProven = if ($null -ne $proof) { [bool]$proof.FinalCleanupProven } else { $false }
+        routePassed = if ($null -ne $proof) { [bool]$proof.RoutePassedAfterCleanup } else { $false }
+        cleanupProven = if ($null -ne $proof) { [bool]$proof.FinalCleanupProven } else { $false }
+        invalidated = if ($null -ne $proof) { [bool]$proof.Invalidated } else { $false }
+    }
+}
+
+function Test-Task43ForcedNegativeProof([string]$ExpectedMarker,
+        [switch]$RequireFinalCleanup) {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true -or
+            [string]$proof.ExpectedMarker -ne $ExpectedMarker -or
+            [string]$proof.ExpectedRoute -ne
+                (Get-Task43ForcedNegativeExpectedRoute $ExpectedMarker) -or
+            $proof.Invalidated -eq $true -or
+            $proof.MarkerObserved -ne $true -or
+            [string]$proof.ObservedMarker -ne $ExpectedMarker -or
+            [string]$proof.MarkerExpectedMarker -ne $ExpectedMarker -or
+            $proof.AnchoredDiagnosticProven -ne $true -or
+            [String]::IsNullOrWhiteSpace([string]$proof.AnchoredJavaDiagnostic) -or
+            -not (Test-Task43ForcedFailureDiagnosticText `
+                ([string]$proof.AnchoredJavaDiagnostic) $ExpectedMarker) -or
+            [string]$proof.DiagnosticExpectedMarker -ne $ExpectedMarker -or
+            [String]::IsNullOrWhiteSpace([string]$proof.RunId) -or
+            [String]::IsNullOrWhiteSpace([string]$proof.RouteId) -or
+            [string]$proof.MarkerRunId -ne [string]$proof.RunId -or
+            [string]$proof.MarkerRouteId -ne [string]$proof.RouteId -or
+            [string]$proof.DiagnosticRunId -ne [string]$proof.RunId -or
+            [string]$proof.DiagnosticRouteId -ne [string]$proof.RouteId -or
+            $proof.RoutePassedAfterCleanup -ne $true) {
+        return $false
+    }
+    if ($ExpectedMarker -eq 'FAIL:task43p-forced-negative-canary' -and
+            [string]$proof.DiagnosticBaselineHead -ne
+                $script:Task43PPublishedBaselineSha) {
+        return $false
+    }
+    if ($null -ne $script:VerifierContext -and
+            [string]$script:VerifierContext.RunId -ne [string]$proof.RunId) {
+        return $false
+    }
+    if ($script:VerifierFailureExitCode -ne 0 -or
+            -not [String]::IsNullOrWhiteSpace([string]$script:VerifierFailureKind) -or
+            -not [String]::IsNullOrWhiteSpace([string]$script:VerifierFailureMessage)) {
+        return $false
+    }
+    if ($RequireFinalCleanup -and $proof.FinalCleanupProven -ne $true) {
+        return $false
+    }
+    return $true
+}
+
+function Get-Task43ForcedNegativeRouteExitCode([string]$ExpectedMarker) {
+    if (Test-Task43ForcedNegativeProof $ExpectedMarker) { return 1 }
+    Invalidate-Task43ForcedNegativeProof
+    return 2
+}
+
+function Resolve-Task43ForcedNegativeTopLevelExitCode([int]$CandidateExitCode,
+        [string]$ExpectedMarker) {
+    if ($CandidateExitCode -eq 1 -and
+            (Test-Task43ForcedNegativeProof $ExpectedMarker -RequireFinalCleanup)) {
+        return 1
+    }
+    Invalidate-Task43ForcedNegativeProof
+    return 2
+}
+
+function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
+        [string]$expectedFailure, [string]$runId = '', [string]$routeId = '',
+        [string]$baselineHead = '') {
+    if (-not (Test-Task43ForcedFailureDiagnosticText $failure $expectedFailure)) {
+        return $false
+    }
+    if ([String]::IsNullOrWhiteSpace($runId) -or
+            [String]::IsNullOrWhiteSpace($routeId) -or
+            $null -eq $script:VerifierContext -or
+            $script:VerifierContext.RunId -ne $runId -or
+            $script:VerifierCurrentRouteId -ne $routeId) { return $false }
+    if ($expectedFailure -eq 'FAIL:task43p-forced-negative-canary' -and
+            $baselineHead -ne $script:Task43PPublishedBaselineSha) { return $false }
+    return $true
 }
 
 function verifyRoute([string]$name, [string]$url, [string]$expected,
@@ -674,12 +1912,18 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
     $success = $false
     $expectedFailureObserved = $false
     $task43pRepositoryBefore = $null
+    $isTask43ForcedRoute = ($expectedFailure -eq 'FAIL:task43-forced-negative-canary' -or
+        $expectedFailure -eq 'FAIL:task43p-forced-negative-canary')
+    if ($isTask43ForcedRoute) {
+        # This is the only reset point for the route proof.  Later failures
+        # invalidate it; they never create a fresh success state.
+        Reset-Task43ForcedNegativeProof $expectedFailure $name
+    }
     if ($name -like 'task43p *') {
         $task43pRepositoryBefore = Get-Task43PRepositoryState
     }
-    if ($expectedFailure) {
-        $script:task43ExpectedFailureObserved = $false
-        $script:task43ExpectedFailureRoutePassed = $false
+    $task43pBaselineHead = if ($null -eq $task43pRepositoryBefore) { '' } else {
+        [string]$task43pRepositoryBefore.headSha
     }
     try {
         $session = startVerifierBrowser $name $url
@@ -706,7 +1950,9 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
             if ($verificationResult.StartsWith('FAIL:')) {
                 if ($expectedFailure -and $verificationResult -eq $expectedFailure) {
                     $expectedFailureObserved = $true
-                    $script:task43ExpectedFailureObserved = $true
+                    if ($isTask43ForcedRoute) {
+                        Set-Task43ForcedNegativeMarkerObserved $verificationResult
+                    }
                     break
                 }
                 throw "unexpected application failure: $verificationResult"
@@ -725,10 +1971,16 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
         }
         if ($expectedFailureObserved) {
             $expectedFailureDiagnostics = @($failures | Where-Object {
-                isExpectedTask43ForcedFailureDiagnostic ([string]$_) $expectedFailure
+                isExpectedTask43ForcedFailureDiagnostic ([string]$_) $expectedFailure `
+                    $script:VerifierContext.RunId $script:VerifierCurrentRouteId `
+                    $task43pBaselineHead
             })
             if ($expectedFailureDiagnostics.Count -eq 0) {
                 throw "expected application failure '$expectedFailure' had no anchored Java console diagnostic"
+            }
+            if ($isTask43ForcedRoute) {
+                Set-Task43ForcedNegativeAnchoredDiagnostic `
+                    ([string]$expectedFailureDiagnostics[0]) $task43pBaselineHead
             }
         }
         if (-not $expectedFailure -and $verificationResult -ne $expected) {
@@ -765,13 +2017,18 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
         if ($failures.Count -gt 0) {
             $unexpectedFailures = @($failures | Where-Object {
                 -not $expectedFailureObserved -or
-                    -not (isExpectedTask43ForcedFailureDiagnostic $_ $expectedFailure)
+                    -not (isExpectedTask43ForcedFailureDiagnostic ([string]$_) $expectedFailure `
+                        $script:VerifierContext.RunId $script:VerifierCurrentRouteId `
+                        $task43pBaselineHead)
             })
             if ($unexpectedFailures.Count -gt 0) { throw ($unexpectedFailures -join '; ') }
         }
         cleanupBrowser $browser $socket $profile
         $socket = $null
         $browser = $null
+        if ($isTask43ForcedRoute) {
+            Set-Task43ForcedNegativeRoutePassedAfterCleanup
+        }
         if ($expectedFailureObserved) {
             Write-Host "EXPECTED FAILURE $name - $expectedFailure (anchored Java console diagnostic observed)"
         } elseif ($verificationResult.StartsWith('UNPROVEN:')) {
@@ -780,7 +2037,6 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
             Write-Host "PASS $name"
         }
         $success = $true
-        if ($expectedFailureObserved) { $script:task43ExpectedFailureRoutePassed = $true }
     } catch {
         Set-VerifierFailure $_ $name
     } finally {
@@ -789,6 +2045,9 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
         } catch {
             Set-VerifierFailure $_ ($name + ' cleanup')
             $success = $false
+        }
+        if ($isTask43ForcedRoute -and -not $success) {
+            Invalidate-Task43ForcedNegativeProof
         }
         $script:CdpRouteDeadline = [DateTime]::MinValue
     }
@@ -1107,7 +2366,8 @@ function captureBrowserScreenshot($socket, [ref]$nextId, [string]$path, [ref]$fa
         format = 'png'; fromSurface = $true; captureBeyondViewport = $false
     } $failures
     try {
-        [IO.File]::WriteAllBytes($path, [Convert]::FromBase64String($result.result.data))
+        Write-VerifierEvidenceBytes $path [Convert]::FromBase64String($result.result.data) `
+            'screenshot evidence'
     } catch {
         Throw-VerifierInfrastructure "Could not write screenshot evidence '$path': $(Get-VerifierErrorMessage $_)"
     }
@@ -1651,7 +2911,7 @@ function verifyStressDamageNormalPlayer([string]$url) {
         waitForCdp $socket ([ref]$nextId) "document.body&&document.body.innerText.includes('Indicator does not light.')" $deadline ([ref]$failures) 'ready LED stress challenge'
         waitForCdp $socket ([ref]$nextId) "!!window.__tsjPcbGeometry&&!!window.__tsjPcbGeometry.points" $deadline ([ref]$failures) 'stress PCB geometry bridge'
         $evidence = $script:VerifierEvidenceDirectory
-        [IO.Directory]::CreateDirectory($evidence) | Out-Null
+        New-VerifierEvidenceDirectory $evidence 'stress-damage evidence' -Force
         captureBrowserScreenshot $socket ([ref]$nextId) (getVerifierEvidencePath 'initial-board.png') ([ref]$failures)
 
         $r1 = getCanvasPoint $socket ([ref]$nextId) 'component:R1' ([ref]$failures)
@@ -2017,20 +3277,15 @@ function Resolve-VerifierIntegratedChildExitCode([bool]$TerminationProven,
     if (-not $TerminationProven) {
         Throw-VerifierInfrastructure 'Integrated child termination was not proven before exit classification.'
     }
-    if ($null -eq $RawExitCode -or
-            [String]::IsNullOrWhiteSpace([string]$RawExitCode)) {
-        Throw-VerifierInfrastructure 'Integrated child returned no verifiable numeric exit code.'
+    # This is the raw Process.ExitCode boundary. Do not stringify or parse:
+    # strings, fractions, booleans, arrays, and null are not exact child
+    # process evidence and must be infrastructure failures.
+    if (-not (Test-VerifierStrictIntegralValue $RawExitCode 0 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Integrated child returned a malformed non-integral exit code.'
     }
-    $numericExitCode = 0
-    $rawText = [string]$RawExitCode
-    if (-not [int]::TryParse($rawText,
-            [Globalization.NumberStyles]::Integer,
-            [Globalization.CultureInfo]::InvariantCulture,
-            [ref]$numericExitCode)) {
-        Throw-VerifierInfrastructure "Integrated child returned an unparseable exit code: '$rawText'."
-    }
+    $numericExitCode = [int]$RawExitCode
     if ($numericExitCode -eq 0) {
-        return (Resolve-VerifierChildExitCode $true 0)
+        return (Resolve-VerifierChildExitCode $true $numericExitCode)
     }
     return (Resolve-VerifierChildExitCode $false $numericExitCode)
 }
@@ -2065,8 +3320,8 @@ function Stop-VerifierIntegratedChildExact($Process) {
         $Process.Refresh()
         if (-not [bool]$Process.HasExited) {
             $current = Get-Process -Id ([int]$Process.Id) -ErrorAction Stop
-            $expectedStart = [long]$Process.StartTime.ToUniversalTime().Ticks
-            $actualStart = [long]$current.StartTime.ToUniversalTime().Ticks
+            $expectedStart = [long](Get-VerifierProcessStartTicks $Process)
+            $actualStart = [long](Get-VerifierProcessStartTicks $current)
             if ($expectedStart -ne $actualStart) {
                 Throw-VerifierInfrastructure "Refusing to stop integrated child PID $($Process.Id): start identity changed."
             }
@@ -2099,9 +3354,50 @@ function Stop-VerifierIntegratedChildExact($Process) {
     }
 }
 
+function Resolve-VerifierIntegratedChildShellStatus([bool]$ShellSuccess,
+        $RawLastExitCode) {
+    # This helper models only the suffix that runs when the invoked PowerShell
+    # script returns to its parent shell.  A non-success or nonzero
+    # LASTEXITCODE in that situation is ambiguous (it may be stale), so it is
+    # infrastructure.  A direct child `exit 1/2` terminates the child host and
+    # is classified from the outer Process.ExitCode instead.
+    if (-not $ShellSuccess) { return 2 }
+    if ($null -eq $RawLastExitCode -or
+            [String]::IsNullOrWhiteSpace([string]$RawLastExitCode)) { return 0 }
+    $numericExitCode = 0
+    if (-not [int]::TryParse([string]$RawLastExitCode,
+            [Globalization.NumberStyles]::Integer,
+            [Globalization.CultureInfo]::InvariantCulture,
+            [ref]$numericExitCode)) { return 2 }
+    if ($numericExitCode -eq 0) { return 0 }
+    return 2
+}
+
+function Get-VerifierIntegratedChildShellStatusTail() {
+    return '; $tsjChildSuccess = [bool]$?; $tsjChildExit = $LASTEXITCODE; ' +
+        'if (-not $tsjChildSuccess) { exit 2 } ' +
+        'elseif ($null -ne $tsjChildExit -and $tsjChildExit -ne 0) { exit 2 } ' +
+        'else { exit 0 }'
+}
+
 function Assert-IntegratedChildOutputContract([string]$label, [int]$expectedExit,
-        [int]$childExit, [string[]]$childOutput) {
+        [int]$childExit, [string[]]$childOutput, $ChildLedger = $null,
+        [string]$ExpectedForcedMarker = '') {
     $printedFailures = @()
+    $forcedNegativeExpectedFailure = ($expectedExit -eq 1 -and
+        -not [String]::IsNullOrWhiteSpace($ExpectedForcedMarker))
+    if ($forcedNegativeExpectedFailure) {
+        # The generic child contract maps expected 1/actual 0 to application
+        # exit 1.  Forced-negative children have a stricter boundary: prove
+        # the exact child exit and durable Java proof before any generic
+        # mismatch can select an application exit.
+        if ($childExit -ne 1) {
+            Throw-VerifierInfrastructure ("integrated forced-negative child $label " +
+                "expected exact application exit 1 but returned $childExit")
+        }
+        Assert-VerifierIntegratedForcedNegativeProof $ChildLedger $expectedExit `
+            $ExpectedForcedMarker
+    }
     if ($expectedExit -eq 0 -and $childExit -eq 0) {
         $printedFailures = @($childOutput | Where-Object {
             ([string]$_) -match '(?i)(^|\s)FAIL(?::|\s)'
@@ -2121,6 +3417,13 @@ function Assert-IntegratedChildOutputContract([string]$label, [int]$expectedExit
         # contract. A zero exit here is never accepted for an expected failure.
         Throw-VerifierExit $contract.ExitCode "integrated child contract failed: $($contract.Reason)"
     }
+    if ($forcedNegativeExpectedFailure) {
+        # Generic 0/1/2 classification is intentionally insufficient for the
+        # forced-negative child.  Exit 1 is accepted only with the durable
+        # proof emitted by the child after its route and final cleanup.
+        Assert-VerifierIntegratedForcedNegativeProof $ChildLedger $expectedExit `
+            $ExpectedForcedMarker
+    }
 }
 
 function New-VerifierIntegratedChildLedger([string]$Label, [int]$ExpectedExit) {
@@ -2133,7 +3436,7 @@ function New-VerifierIntegratedChildLedger([string]$Label, [int]$ExpectedExit) {
                 ('TroubleshootJS\verify\integrated-parent-' + [Guid]::NewGuid().ToString('N'))
             $parentRoot
         }
-        New-Item -ItemType Directory -Path $ledgerRoot -Force -ErrorAction Stop | Out-Null
+        New-VerifierEvidenceDirectory $ledgerRoot 'integrated child ledger' -Force
         $ledgerRoot = Get-VerifierFullPath $ledgerRoot
         $ledgerParent = Get-VerifierFullPath (Split-Path -Parent $ledgerRoot)
         Assert-VerifierNoReparseAncestors $ledgerParent
@@ -2153,8 +3456,8 @@ function New-VerifierIntegratedChildLedger([string]$Label, [int]$ExpectedExit) {
             parentNamespaceRoot = $ledgerRoot
             createdUtc = [DateTime]::UtcNow.ToString('o', [Globalization.CultureInfo]::InvariantCulture)
         }
-        [IO.File]::WriteAllText($ledgerPath, ($record | ConvertTo-Json -Depth 8),
-            [Text.UTF8Encoding]::new($false))
+        Write-VerifierEvidenceText $ledgerPath ($record | ConvertTo-Json -Depth 8) `
+            'integrated child ledger'
         return $ledgerPath
     } catch {
         if (Test-VerifierInfrastructureError $_) { throw }
@@ -2163,7 +3466,25 @@ function New-VerifierIntegratedChildLedger([string]$Label, [int]$ExpectedExit) {
     }
 }
 
-function Get-VerifierLedgerProperty($Object, [string]$Name, $Default = $null) {
+function Get-VerifierLedgerProperty($Object, [string]$Name, $IgnoredDefault) {
+    if ($null -eq $Object -or [String]::IsNullOrWhiteSpace($Name)) {
+        Throw-VerifierInfrastructure "Durable ledger omitted required field '$Name'."
+    }
+    if ($Object -is [System.Collections.IDictionary]) {
+        if (-not $Object.Contains($Name)) {
+            Throw-VerifierInfrastructure "Durable ledger omitted required field '$Name'."
+        }
+        return $Object[$Name]
+    }
+    $property = $Object.PSObject.Properties[$Name]
+    if ($null -eq $property) {
+        Throw-VerifierInfrastructure "Durable ledger omitted required field '$Name'."
+    }
+    return $property.Value
+}
+
+function Get-VerifierCanaryLedgerProperty($Object, [string]$Name,
+        $Default = $null) {
     if ($null -eq $Object) { return $Default }
     if ($Object -is [System.Collections.IDictionary]) {
         if (-not $Object.Contains($Name)) { return $Default }
@@ -2173,9 +3494,19 @@ function Get-VerifierLedgerProperty($Object, [string]$Name, $Default = $null) {
     return $Object.PSObject.Properties[$Name].Value
 }
 
-function Get-VerifierLedgerPath([string]$Path, [string]$Label, [string]$Root,
+function Get-VerifierRequiredLedgerProperty($Object, [string]$Name,
+        [string]$Label) {
+    if ($null -eq $Object -or [String]::IsNullOrWhiteSpace($Name) -or
+            $null -eq $Object.PSObject.Properties[$Name]) {
+        Throw-VerifierInfrastructure "$Label omitted required durable field '$Name'."
+    }
+    return $Object.PSObject.Properties[$Name].Value
+}
+
+function Get-VerifierLedgerPath($Path, [string]$Label, [string]$Root,
         [switch]$AllowRoot) {
-    if ([String]::IsNullOrWhiteSpace($Path)) {
+    if (-not (Test-VerifierStrictStringValue $Path) -or
+            [String]::IsNullOrWhiteSpace($Path)) {
         Throw-VerifierInfrastructure "Integrated child ledger omitted its $Label path."
     }
     $canonical = Get-VerifierCanonicalWindowsPath $Path
@@ -2200,7 +3531,145 @@ function Test-VerifierStrictBooleanProperty($Object, [string]$Name, [bool]$Expec
     }
     $value = $Object.PSObject.Properties[$Name].Value
     if ($null -eq $value -or $value.GetType() -ne [bool]) { return $false }
-    return ([bool]$value -eq $Expected)
+    return $value -eq $Expected
+}
+
+function Assert-VerifierDurableBooleanPair($LedgerValue, $ManifestValue,
+        [string]$Name, [switch]$AllowNull) {
+    $ledgerBoolean = Get-VerifierDurableBooleanValue $LedgerValue $Name `
+        ('ledger ' + $Name) -AllowNull
+    $manifestBoolean = Get-VerifierDurableBooleanValue $ManifestValue $Name `
+        ('manifest ' + $Name) -AllowNull
+    if (-not $AllowNull -and ($null -eq $ledgerBoolean -or $null -eq $manifestBoolean)) {
+        Throw-VerifierInfrastructure "Durable Boolean pair '$Name' was null instead of an exact Boolean."
+    }
+    if (($null -eq $ledgerBoolean) -xor ($null -eq $manifestBoolean) -or
+            ($null -ne $ledgerBoolean -and $ledgerBoolean -ne $manifestBoolean)) {
+        Throw-VerifierInfrastructure "Durable ledger and manifest disagreed on exact Boolean field '$Name'."
+    }
+}
+
+function Assert-VerifierDurableStringPair($LedgerValue, $ManifestValue,
+        [string]$Name) {
+    foreach ($copy in @(
+            [pscustomobject]@{ Label = 'ledger'; Value = $LedgerValue }
+            [pscustomobject]@{ Label = 'manifest'; Value = $ManifestValue }
+        )) {
+        $property = if ($null -eq $copy.Value) { $null } else {
+            $copy.Value.PSObject.Properties[$Name]
+        }
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictStringProperty $copy.Value $Name)) {
+            Throw-VerifierInfrastructure "Durable $($copy.Label) '$Name' was missing or was not an exact string."
+        }
+    }
+    $ledgerValue = $LedgerValue.PSObject.Properties[$Name].Value
+    $manifestValue = $ManifestValue.PSObject.Properties[$Name].Value
+    if ($ledgerValue.GetType() -ne $manifestValue.GetType() -or
+            -not [String]::Equals($ledgerValue, $manifestValue,
+                [StringComparison]::Ordinal)) {
+        Throw-VerifierInfrastructure "Durable ledger and manifest disagreed on exact string field '$Name'."
+    }
+    return $ledgerValue
+}
+
+function Get-VerifierDurableArrayProperty($Object, [string]$Name,
+        [string]$Label, [string]$RawJson = '') {
+    if ($null -eq $Object -or [String]::IsNullOrWhiteSpace($Name) -or
+            $null -eq $Object.PSObject.Properties[$Name]) {
+        Throw-VerifierInfrastructure "$Label omitted its required array '$Name'."
+    }
+    $value = $Object.PSObject.Properties[$Name].Value
+    if ($null -eq $value) {
+        Throw-VerifierInfrastructure "$Label carried a non-array '$Name'; only an explicit empty array may represent absence."
+    }
+    if (-not ($value -is [array])) {
+        # Windows PowerShell materializes a one-element JSON array as the
+        # element object.  Accept that representation only when the original
+        # JSON syntax proves the property was an array, then normalize to an
+        # actual collection without inventing a missing/default value.
+        if (-not (Test-VerifierRawJsonArrayProperty $RawJson $Name)) {
+            Throw-VerifierInfrastructure "$Label carried a scalar '$Name' where the durable JSON did not prove an array."
+        }
+        return ,@($value)
+    }
+    return ,$value
+}
+
+function Assert-VerifierDurableArrayPair($LedgerValue, $ManifestValue,
+        [string]$LedgerName, [string]$ManifestName, [string]$Label,
+        [switch]$CompareItems, [string]$LedgerJson = '',
+        [string]$ManifestJson = '') {
+    $ledgerArray = Get-VerifierDurableArrayProperty $LedgerValue $LedgerName `
+        ('ledger ' + $Label) $LedgerJson
+    $manifestArray = Get-VerifierDurableArrayProperty $ManifestValue $ManifestName `
+        ('manifest ' + $Label) $ManifestJson
+    if ($ledgerArray.GetType() -ne $manifestArray.GetType() -or
+            $ledgerArray.Count -ne $manifestArray.Count) {
+        Throw-VerifierInfrastructure "Durable ledger and manifest disagreed on the exact '$Label' array shape."
+    }
+    if ($CompareItems) {
+        for ($index = 0; $index -lt $ledgerArray.Count; $index++) {
+            $ledgerItem = $ledgerArray[$index]
+            $manifestItem = $manifestArray[$index]
+            if (($null -eq $ledgerItem) -xor ($null -eq $manifestItem) -or
+                    ($null -ne $ledgerItem -and
+                     ($ledgerItem.GetType() -ne $manifestItem.GetType() -or
+                      -not $ledgerItem.Equals($manifestItem)))) {
+                Throw-VerifierInfrastructure "Durable ledger and manifest disagreed on exact '$Label' array value at index $index."
+            }
+        }
+    }
+    return [pscustomobject]@{ Ledger = $ledgerArray; Manifest = $manifestArray }
+}
+
+function Assert-VerifierDurableIntegralPair($LedgerValue, $ManifestValue,
+        [string]$Name, [long]$Minimum = [long]::MinValue,
+        [long]$Maximum = [long]::MaxValue) {
+    foreach ($copy in @(
+            [pscustomobject]@{ Label = 'ledger'; Value = $LedgerValue }
+            [pscustomobject]@{ Label = 'manifest'; Value = $ManifestValue }
+        )) {
+        $property = if ($null -eq $copy.Value) { $null } else {
+            $copy.Value.PSObject.Properties[$Name]
+        }
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictNonnegativeIntegerProperty $copy.Value $Name)) {
+            Throw-VerifierInfrastructure "Durable $($copy.Label) '$Name' was missing or was not an exact integral value."
+        }
+        $value = $property.Value
+        try {
+            $inRange = ([long]$value -ge $Minimum -and [long]$value -le $Maximum)
+        } catch { $inRange = $false }
+        if (-not $inRange) {
+            Throw-VerifierInfrastructure "Durable $($copy.Label) '$Name' was outside its allowed integral range."
+        }
+    }
+    $ledgerProperty = $LedgerValue.PSObject.Properties[$Name]
+    $manifestProperty = $ManifestValue.PSObject.Properties[$Name]
+    if ($ledgerProperty.Value.GetType() -ne $manifestProperty.Value.GetType() -or
+            -not $ledgerProperty.Value.Equals($manifestProperty.Value)) {
+        Throw-VerifierInfrastructure "Durable ledger and manifest disagreed on exact integral field '$Name'."
+    }
+    return $ledgerProperty.Value
+}
+
+function Assert-VerifierDurableIntegralProperty($Object, [string]$Name,
+        [long]$Minimum = [long]::MinValue, [long]$Maximum = [long]::MaxValue) {
+    if ($null -eq $Object -or
+            -not (Test-VerifierStrictNonnegativeIntegerProperty $Object $Name)) {
+        Throw-VerifierInfrastructure "Durable '$Name' was missing or was not an exact integral value."
+    }
+    $property = $Object.PSObject.Properties[$Name]
+    try {
+        if ([long]$property.Value -lt $Minimum -or [long]$property.Value -gt $Maximum) {
+            Throw-VerifierInfrastructure "Durable '$Name' was outside its allowed integral range."
+        }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure "Durable '$Name' was outside its allowed integral range."
+    }
+    return $property.Value
 }
 
 function Test-VerifierStrictNonnegativeIntegerProperty($Object, [string]$Name) {
@@ -2221,79 +3690,513 @@ function Test-VerifierStrictNonnegativeIntegerProperty($Object, [string]$Name) {
     try { return ([long]$value -ge 0) } catch { return $false }
 }
 
-function Test-VerifierIntegratedLeaseTerminal($Lease, [string]$ClaimPath) {
-    if ($null -eq $Lease -or [String]::IsNullOrWhiteSpace($ClaimPath)) { return $false }
-    if ([string](Get-VerifierLedgerProperty $Lease 'status' '') -ne 'released' -or
-            [string](Get-VerifierLedgerProperty $Lease 'claimState' '') -ne 'released' -or
-            [string](Get-VerifierLedgerProperty $Lease 'releaseState' '') -ne 'complete') {
+function Test-VerifierStrictStringProperty($Object, [string]$Name) {
+    if ($null -eq $Object -or [String]::IsNullOrWhiteSpace($Name) -or
+            $null -eq $Object.PSObject.Properties[$Name]) { return $false }
+    $value = $Object.PSObject.Properties[$Name].Value
+    return ($null -ne $value -and $value.GetType() -eq [string])
+}
+
+function Test-VerifierRawJsonArrayProperty([string]$Json, [string]$Name) {
+    if ([String]::IsNullOrWhiteSpace($Json) -or [String]::IsNullOrWhiteSpace($Name)) {
         return $false
     }
-    try {
-        if (Test-Path -LiteralPath $ClaimPath -PathType Leaf -ErrorAction Stop) { return $false }
-    } catch {
-        Throw-VerifierInfrastructure ('Could not prove terminal lease claim absence: ' +
-            (Get-VerifierErrorMessage $_))
+    $depth = 0
+    $inString = $false
+    $escaped = $false
+    $matches = 0
+    $arrayMatch = $false
+    $nonArrayMatch = $false
+    for ($index = 0; $index -lt $Json.Length; $index++) {
+        $character = $Json[$index]
+        if ($inString) {
+            if ($escaped) { $escaped = $false }
+            elseif ($character -eq '\') { $escaped = $true }
+            elseif ($character -eq '"') { $inString = $false }
+            continue
+        }
+        if ($character -eq '"') {
+            if ($depth -ge 1) {
+                $keyStart = $index + 1
+                $keyEnd = $keyStart
+                $keyEscaped = $false
+                for (; $keyEnd -lt $Json.Length; $keyEnd++) {
+                    $keyCharacter = $Json[$keyEnd]
+                    if ($keyEscaped) { $keyEscaped = $false; continue }
+                    if ($keyCharacter -eq '\') { $keyEscaped = $true; continue }
+                    if ($keyCharacter -eq '"') { break }
+                }
+                if ($keyEnd -ge $Json.Length) { return $false }
+                $key = $Json.Substring($keyStart, $keyEnd - $keyStart)
+                $valueIndex = $keyEnd + 1
+                while ($valueIndex -lt $Json.Length -and
+                        [Char]::IsWhiteSpace($Json[$valueIndex])) { $valueIndex++ }
+                if ($valueIndex -ge $Json.Length -or $Json[$valueIndex] -ne ':') {
+                    $index = $keyEnd
+                    continue
+                }
+                $valueIndex++
+                while ($valueIndex -lt $Json.Length -and
+                        [Char]::IsWhiteSpace($Json[$valueIndex])) { $valueIndex++ }
+                if ($key -ceq $Name) {
+                    $matches++
+                    if ($valueIndex -lt $Json.Length -and $Json[$valueIndex] -eq '[') {
+                        $arrayMatch = $true
+                    } else {
+                        $nonArrayMatch = $true
+                    }
+                }
+                $index = $keyEnd
+                continue
+            }
+            $inString = $true
+            continue
+        }
+        if ($character -eq '{') { $depth++; continue }
+        if ($character -eq '}') { $depth--; continue }
     }
-    if (-not (Test-VerifierStrictBooleanProperty $Lease 'mutexReleased' $true) -or
-            -not (Test-VerifierStrictBooleanProperty $Lease 'listenerInspectionSuccess' $true) -or
-            -not (Test-VerifierStrictBooleanProperty $Lease 'listenerInspectionKnown' $true) -or
-            -not (Test-VerifierStrictBooleanProperty $Lease 'listenerHasListeners' $false) -or
-            -not (Test-VerifierStrictBooleanProperty $Lease 'listenerAbsent' $true)) {
-        return $false
+    return ($matches -eq 1 -and $arrayMatch -and -not $nonArrayMatch)
+}
+
+function Test-VerifierIntegratedServerListenerOwnerSchema($Server, $Lease = $null) {
+    # The canonical module boundary owns Test-VerifierListenerOwnerTuple and
+    # all serialized server/lease association checks.
+    return Test-VerifierSerializedListenerOwnerSchema $Lease $Server
+}
+
+function Test-VerifierIntegratedListenerOwnerSchema($Lease, $Server = $null) {
+    # The canonical module boundary owns Test-VerifierListenerOwnerTuple and
+    # all serialized lease/server association checks.
+    return Test-VerifierSerializedListenerOwnerSchema $Lease $Server
+}
+
+function Test-VerifierIntegratedLeaseTerminal($Lease, $ClaimPath,
+        $Server = $null, [string]$ExpectedRunId = '',
+        [string]$ExpectedRepositoryIdentity = '',
+        [string]$ExpectedWorktreeRoot = '') {
+    $runtimeLeaseProperty = if ($null -eq $Lease) { $null } else {
+        @($Lease.PSObject.Properties | Where-Object { $_.Name -ceq 'LeaseId' })
     }
-    if ($null -eq $Lease.PSObject.Properties['releaseJournalState'] -or
-            [string]$Lease.PSObject.Properties['releaseJournalState'].Value -ne 'complete') {
-        return $false
-    }
-    foreach ($numericProperty in @('boundProcessId', 'boundProcessStartTicks',
-            'listenerProcessId', 'listenerProcessStartTicks')) {
-        if (-not (Test-VerifierStrictNonnegativeIntegerProperty $Lease $numericProperty)) {
+    if ($null -ne $Lease -and @($runtimeLeaseProperty).Count -eq 1) {
+        if (-not (Test-VerifierStrictStringValue $ClaimPath) -or
+                [String]::IsNullOrWhiteSpace($ClaimPath) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $ClaimPath $Lease.Path)) {
             return $false
         }
+        if ((-not [String]::IsNullOrWhiteSpace($ExpectedRunId) -and
+                $Lease.RunId -cne $ExpectedRunId) -or
+                (-not [String]::IsNullOrWhiteSpace($ExpectedRepositoryIdentity) -and
+                $Lease.RepositoryIdentity -cne $ExpectedRepositoryIdentity) -or
+                (-not [String]::IsNullOrWhiteSpace($ExpectedWorktreeRoot) -and
+                -not (Test-VerifierCanonicalWindowsPathValue $Lease.WorktreeRoot $ExpectedWorktreeRoot))) {
+            return $false
+        }
+        try {
+            [void](Assert-VerifierDurableLeaseTerminal $Lease)
+        } catch {
+            throw
+        }
+        return $true
     }
-    $boundPid = [int](Get-VerifierLedgerProperty $Lease 'boundProcessId' 0)
-    $boundStart = [long](Get-VerifierLedgerProperty $Lease 'boundProcessStartTicks' 0)
-    $listenerPid = [int](Get-VerifierLedgerProperty $Lease 'listenerProcessId' 0)
-    $listenerStart = [long](Get-VerifierLedgerProperty $Lease 'listenerProcessStartTicks' 0)
-    if (($boundPid -eq 0 -and $boundStart -ne 0) -or
-            ($boundPid -gt 0 -and $boundStart -le 0) -or
-            ($listenerPid -eq 0 -and $listenerStart -ne 0) -or
-            ($listenerPid -gt 0 -and $listenerStart -le 0)) {
-        return $false
+    return Test-VerifierSerializedLeaseTerminal $Lease $ClaimPath $Server `
+        $ExpectedRunId $ExpectedRepositoryIdentity $ExpectedWorktreeRoot
+}
+
+function Assert-VerifierIntegratedForcedNegativeProof($Proof,
+        [int]$ExpectedExit, [string]$ExpectedMarker = '') {
+    if ($ExpectedExit -ne 1) { return }
+    if ($null -eq $Proof -or $Proof -is [System.Array]) {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 child omitted its forced-negative proof record.'
     }
-    $processProofProperty = $Lease.PSObject.Properties['processProofRequired']
-    if ($null -eq $processProofProperty -or
-            $null -eq $processProofProperty.Value -or
-            $processProofProperty.Value.GetType() -ne [bool]) {
-        return $false
+    foreach ($stringProperty in @('protocol', 'expectedMarker', 'expectedRoute',
+            'runId', 'routeId', 'observedMarker', 'markerExpectedMarker',
+            'markerRunId', 'markerRouteId', 'diagnosticExpectedMarker',
+            'diagnosticRunId', 'diagnosticRouteId', 'anchoredJavaDiagnostic',
+            'diagnosticBaselineHead')) {
+        $property = $Proof.PSObject.Properties[$stringProperty]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictStringValue $property.Value)) {
+            Throw-VerifierInfrastructure "Integrated expected-exit-1 child proof omitted or malformed '$stringProperty'."
+        }
     }
-    $processProofRequired = [bool]$processProofProperty.Value
-    $requiresProcessProof = [bool]$processProofRequired -or $boundPid -gt 0 -or $listenerPid -gt 0
-    if (($boundPid -gt 0 -or $listenerPid -gt 0) -and -not $processProofRequired) {
-        return $false
+    if ((Get-VerifierLedgerProperty $Proof 'protocol') -ne
+            'troubleshootjs-forced-negative-proof-v1') {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 child carried an invalid forced-negative proof protocol.'
     }
-    # A terminal bound lease must retain both sides of its proof: the process
-    # that was launched and the exact listener observed on the leased port.
-    # The listener may be an owned descendant, so these PIDs need not be
-    # equal, but either missing identity makes the tombstone incomplete.
-    if ($processProofRequired -and ($boundPid -le 0 -or $listenerPid -le 0)) {
-        return $false
+    $proofExpectedMarker = Get-VerifierLedgerProperty $Proof 'expectedMarker'
+    if ([String]::IsNullOrWhiteSpace($ExpectedMarker)) {
+        $ExpectedMarker = $proofExpectedMarker
     }
-    if ($requiresProcessProof -and
-            (-not (Test-VerifierStrictBooleanProperty $Lease 'processTerminationProven' $true) -or
-             -not (Test-VerifierStrictBooleanProperty $Lease 'processAbsent' $true))) {
-        return $false
+    if ($ExpectedMarker -notin @('FAIL:task43-forced-negative-canary',
+            'FAIL:task43p-forced-negative-canary') -or
+            $proofExpectedMarker -ne $ExpectedMarker) {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 child carried an unsupported or mismatched expected marker.'
     }
-    if (-not $requiresProcessProof -and
-            (-not (Test-VerifierStrictBooleanProperty $Lease 'processTerminationProven' $false) -or
-             -not (Test-VerifierStrictBooleanProperty $Lease 'processAbsent' $false))) {
-        return $false
+    $expectedRoute = Get-Task43ForcedNegativeExpectedRoute $ExpectedMarker
+    if ((Get-VerifierLedgerProperty $Proof 'expectedRoute') -ne $expectedRoute) {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 child carried the wrong forced-negative route identity.'
     }
-    return $true
+    foreach ($requiredTrue in @('invocation', 'markerObserved',
+            'anchoredDiagnosticProven', 'routePassedAfterCleanup',
+            'finalCleanupProven', 'routePassed', 'cleanupProven')) {
+        if (-not (Test-VerifierStrictBooleanProperty $Proof $requiredTrue $true)) {
+            Throw-VerifierInfrastructure "Integrated expected-exit-1 child did not prove forced-negative $requiredTrue."
+        }
+    }
+    if (-not (Test-VerifierStrictBooleanProperty $Proof 'invalidated' $false)) {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 child carried an invalidated forced-negative proof.'
+    }
+    $runId = Get-VerifierLedgerProperty $Proof 'runId'
+    $routeId = Get-VerifierLedgerProperty $Proof 'routeId'
+    if ([String]::IsNullOrWhiteSpace($runId) -or
+            [String]::IsNullOrWhiteSpace($routeId) -or
+            (Get-VerifierLedgerProperty $Proof 'observedMarker') -ne $ExpectedMarker -or
+            (Get-VerifierLedgerProperty $Proof 'markerExpectedMarker') -ne $ExpectedMarker -or
+            (Get-VerifierLedgerProperty $Proof 'markerRunId') -ne $runId -or
+            (Get-VerifierLedgerProperty $Proof 'markerRouteId') -ne $routeId -or
+            (Get-VerifierLedgerProperty $Proof 'diagnosticExpectedMarker') -ne $ExpectedMarker -or
+            (Get-VerifierLedgerProperty $Proof 'diagnosticRunId') -ne $runId -or
+            (Get-VerifierLedgerProperty $Proof 'diagnosticRouteId') -ne $routeId) {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 child forced-negative marker/diagnostic run or route identity was incomplete.'
+    }
+    $diagnostic = Get-VerifierLedgerProperty $Proof 'anchoredJavaDiagnostic'
+    if (-not (Test-Task43ForcedFailureDiagnosticText $diagnostic $ExpectedMarker)) {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 child omitted the exact anchored Java forced-negative diagnostic.'
+    }
+    $baselineHead = Get-VerifierLedgerProperty $Proof 'diagnosticBaselineHead'
+    if ($ExpectedMarker -eq 'FAIL:task43p-forced-negative-canary' -and
+            $baselineHead -ne $script:Task43PPublishedBaselineSha) {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 Task43P child did not prove the published baseline identity.'
+    }
+    if ($ExpectedMarker -eq 'FAIL:task43-forced-negative-canary' -and
+            -not [String]::IsNullOrWhiteSpace($baselineHead)) {
+        Throw-VerifierInfrastructure 'Integrated legacy forced-negative child carried an unexpected Task43P baseline field.'
+    }
+}
+
+function Assert-VerifierIntegratedLedgerString($Object, [string]$Name,
+        [string]$Label) {
+    $property = if ($null -eq $Object) { $null } else {
+        $Object.PSObject.Properties[$Name]
+    }
+    if ($null -eq $property -or
+            -not (Test-VerifierStrictStringValue $property.Value)) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed exact string '$Name'."
+    }
+    return $property.Value
+}
+
+function Assert-VerifierIntegratedLedgerIntegral($Object, [string]$Name,
+        [long]$Minimum, [long]$Maximum, [string]$Label) {
+    $property = if ($null -eq $Object) { $null } else {
+        $Object.PSObject.Properties[$Name]
+    }
+    if ($null -eq $property -or
+            -not (Test-VerifierStrictIntegralValue $property.Value $Minimum $Maximum)) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed exact integral '$Name'."
+    }
+    return $property.Value
+}
+
+function Assert-VerifierIntegratedLedgerBoolean($Object, [string]$Name,
+        [string]$Label, [switch]$AllowNull) {
+    $property = if ($null -eq $Object) { $null } else {
+        $Object.PSObject.Properties[$Name]
+    }
+    if ($null -eq $property) {
+        Throw-VerifierInfrastructure "$Label omitted required Boolean '$Name'."
+    }
+    if ($null -eq $property.Value) {
+        if ($AllowNull) { return }
+        Throw-VerifierInfrastructure "$Label carried null Boolean '$Name'."
+    }
+    if (-not (Test-VerifierStrictBooleanValue $property.Value)) {
+        Throw-VerifierInfrastructure "$Label carried malformed Boolean '$Name'."
+    }
+}
+
+function Assert-VerifierIntegratedDurableLeaseSchema($Lease, [string]$Label) {
+    Assert-VerifierSerializedLeaseRecord $Lease $Label
+}
+
+function Read-VerifierIntegratedClaimRecord($Claim, $Lease, [string]$ClaimPath,
+        [string]$ExpectedRunId, [string]$ExpectedRepositoryIdentity,
+        [string]$ExpectedWorktreeRoot,
+        [string]$Label = 'integrated claim') {
+    # This is the only integrated timeout/ledger claim reader.  It validates
+    # the raw JSON object and its paired durable lease before any cast,
+    # comparison, path use, absence decision, or cleanup decision is allowed.
+    Assert-VerifierIntegratedDurableLeaseSchema $Lease ($Label + ' lease')
+    if ($null -eq $Claim -or $Claim -is [array] -or
+            $Claim -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure "$Label was not an exact durable claim object."
+    }
+    if (-not (Test-VerifierStrictStringValue $ClaimPath) -or
+            [String]::IsNullOrWhiteSpace($ClaimPath) -or
+            -not (Test-VerifierStrictStringValue $ExpectedRunId) -or
+            [String]::IsNullOrWhiteSpace($ExpectedRunId) -or
+            -not (Test-VerifierStrictStringValue $ExpectedRepositoryIdentity) -or
+            [String]::IsNullOrWhiteSpace($ExpectedRepositoryIdentity) -or
+            -not (Test-VerifierStrictStringValue $ExpectedWorktreeRoot) -or
+            [String]::IsNullOrWhiteSpace($ExpectedWorktreeRoot)) {
+        Throw-VerifierInfrastructure "$Label was given malformed association inputs."
+    }
+    foreach ($name in @('protocol', 'runId', 'repositoryIdentity',
+            'worktreeRoot', 'leaseId', 'path', 'kind', 'mutexName')) {
+        [void](Assert-VerifierIntegratedLedgerString $Claim $name $Label)
+    }
+    foreach ($number in @(
+            [pscustomobject]@{ Name = 'port'; Minimum = 1L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'ownerPid'; Minimum = 1L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ownerStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+        )) {
+        [void](Assert-VerifierIntegratedLedgerIntegral $Claim $number.Name `
+            $number.Minimum $number.Maximum $Label)
+    }
+
+    $claimProtocol = $Claim.PSObject.Properties['protocol'].Value
+    $claimRunId = $Claim.PSObject.Properties['runId'].Value
+    $claimRepositoryIdentity = $Claim.PSObject.Properties['repositoryIdentity'].Value
+    $claimWorktreeRoot = $Claim.PSObject.Properties['worktreeRoot'].Value
+    $claimLeaseId = $Claim.PSObject.Properties['leaseId'].Value
+    $claimPath = $Claim.PSObject.Properties['path'].Value
+    $claimKind = $Claim.PSObject.Properties['kind'].Value
+    $claimMutexName = $Claim.PSObject.Properties['mutexName'].Value
+    $leaseRunId = $Lease.PSObject.Properties['runId'].Value
+    $leaseRepositoryIdentity = $Lease.PSObject.Properties['repositoryIdentity'].Value
+    $leaseWorktreeRoot = $Lease.PSObject.Properties['worktreeRoot'].Value
+    $leaseId = $Lease.PSObject.Properties['leaseId'].Value
+    $leasePath = $Lease.PSObject.Properties['path'].Value
+    $leaseKind = $Lease.PSObject.Properties['kind'].Value
+    $leaseClaimName = $Lease.PSObject.Properties['claimName'].Value
+    $leasePort = $Lease.PSObject.Properties['port'].Value
+    $leaseOwnerPid = $Lease.PSObject.Properties['claimOwnerPid'].Value
+    $leaseOwnerStart = $Lease.PSObject.Properties['claimOwnerStartTicks'].Value
+    $claimPort = $Claim.PSObject.Properties['port'].Value
+    $claimOwnerPid = $Claim.PSObject.Properties['ownerPid'].Value
+    $claimOwnerStart = $Claim.PSObject.Properties['ownerStartTicks'].Value
+
+    if ($claimProtocol -cne 'troubleshootjs-verifier-port-claim-v1' -or
+            $claimKind -notin @('cdp', 'preview') -or
+            $claimKind -cne $leaseKind -or
+            $claimRunId -cne $leaseRunId -or $claimRunId -cne $ExpectedRunId -or
+            $claimRepositoryIdentity -cne $leaseRepositoryIdentity -or
+            $claimRepositoryIdentity -cne $ExpectedRepositoryIdentity -or
+            $claimLeaseId -cne $leaseId -or
+            $claimMutexName -cne $leaseClaimName -or
+            -not $claimPort.Equals($leasePort) -or
+            -not $claimOwnerPid.Equals($leaseOwnerPid) -or
+            -not $claimOwnerStart.Equals($leaseOwnerStart)) {
+        Throw-VerifierInfrastructure "$Label was foreign, stale, or mismatched with its durable lease."
+    }
+
+    $claimCanonicalPath = Get-VerifierCanonicalWindowsPath $claimPath
+    $leaseCanonicalPath = Get-VerifierCanonicalWindowsPath $leasePath
+    $claimRoot = Get-VerifierCanonicalWindowsPath $claimWorktreeRoot
+    $leaseRoot = Get-VerifierCanonicalWindowsPath $leaseWorktreeRoot
+    $expectedClaimPath = Get-VerifierCanonicalWindowsPath $ClaimPath
+    $expectedRoot = Get-VerifierCanonicalWindowsPath $ExpectedWorktreeRoot
+    if ([String]::IsNullOrWhiteSpace($claimCanonicalPath) -or
+            [String]::IsNullOrWhiteSpace($leaseCanonicalPath) -or
+            [String]::IsNullOrWhiteSpace($claimRoot) -or
+            [String]::IsNullOrWhiteSpace($leaseRoot) -or
+            [String]::IsNullOrWhiteSpace($expectedClaimPath) -or
+            [String]::IsNullOrWhiteSpace($expectedRoot) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $claimCanonicalPath $expectedClaimPath) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $claimCanonicalPath $leaseCanonicalPath) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $claimRoot $leaseRoot) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $claimRoot $expectedRoot)) {
+        Throw-VerifierInfrastructure "$Label path or worktree association was not exact."
+    }
+
+    # All raw scalar and association checks precede these typed values.  The
+    # mutex name is derived only from the already validated durable port.
+    $typedPort = [int]$claimPort
+    if ($claimMutexName -cne (Get-VerifierPortMutexName $null $typedPort)) {
+        Throw-VerifierInfrastructure "$Label did not carry the canonical mutex name for its leased port."
+    }
+    return [pscustomobject]@{
+        Protocol = $claimProtocol
+        RunId = $claimRunId
+        RepositoryIdentity = $claimRepositoryIdentity
+        WorktreeRoot = $claimWorktreeRoot
+        LeaseId = $claimLeaseId
+        Path = $claimCanonicalPath
+        Kind = $claimKind
+        MutexName = $claimMutexName
+        Port = $typedPort
+        OwnerPid = [int]$claimOwnerPid
+        OwnerStartTicks = [long]$claimOwnerStart
+    }
+}
+
+function Assert-VerifierIntegratedDurableProfileSchema($Profile,
+        [string]$Label) {
+    Assert-VerifierSerializedBrowserSessionRecord $Profile $Label
+}
+
+function Assert-VerifierIntegratedDurableServerSchema($Server,
+        [string]$Label) {
+    Assert-VerifierSerializedServerRecord $Server $Label
+}
+
+function Assert-VerifierIntegratedLedgerCopySchema($Ledger, [string]$LedgerJson) {
+    if ($null -eq $Ledger -or $Ledger -is [array] -or
+            $Ledger -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure 'Integrated child ledger was not an exact durable object.'
+    }
+    foreach ($name in @('protocol', 'state', 'runId', 'repositoryIdentity',
+            'worktreeRoot', 'parentNamespaceRoot', 'runRoot', 'manifestPath',
+            'evidenceDirectory', 'cleanupState', 'error', 'updatedUtc')) {
+        [void](Assert-VerifierIntegratedLedgerString $Ledger $name 'integrated child ledger')
+    }
+    $proofProperty = $Ledger.PSObject.Properties['forcedNegativeProof']
+    if ($null -eq $proofProperty) {
+        Throw-VerifierInfrastructure 'Integrated child ledger omitted its explicit forced-negative proof state.'
+    }
+    if ($null -ne $proofProperty.Value) {
+        $proof = $proofProperty.Value
+        if ($proof -is [array] -or $proof -isnot [pscustomobject]) {
+            Throw-VerifierInfrastructure 'Integrated child ledger forced-negative proof was not an exact object or explicit null.'
+        }
+        foreach ($name in @('protocol', 'expectedMarker', 'expectedRoute', 'runId',
+                'routeId', 'observedMarker', 'markerExpectedMarker', 'markerRunId',
+                'markerRouteId', 'anchoredJavaDiagnostic', 'diagnosticExpectedMarker',
+                'diagnosticRunId', 'diagnosticRouteId', 'diagnosticBaselineHead')) {
+            [void](Assert-VerifierIntegratedLedgerString $proof $name `
+                'integrated child forced-negative proof')
+        }
+        foreach ($name in @('invocation', 'markerObserved', 'anchoredDiagnosticProven',
+                'routePassedAfterCleanup', 'finalCleanupProven', 'routePassed',
+                'cleanupProven', 'invalidated')) {
+            Assert-VerifierIntegratedLedgerBoolean $proof $name `
+                'integrated child forced-negative proof'
+        }
+    }
+    $ledgerLeases = Get-VerifierDurableArrayProperty $Ledger 'leases' `
+        'integrated child ledger leases' $LedgerJson
+    foreach ($lease in @($ledgerLeases)) {
+        Assert-VerifierIntegratedDurableLeaseSchema $lease 'integrated child ledger lease'
+    }
+    $ledgerProfiles = Get-VerifierDurableArrayProperty $Ledger 'profiles' `
+        'integrated child ledger profiles' $LedgerJson
+    foreach ($profile in @($ledgerProfiles)) {
+        Assert-VerifierIntegratedDurableProfileSchema $profile 'integrated child ledger profile'
+    }
+    $arrayProperty = $Ledger.PSObject.Properties['evidence']
+    if ($null -eq $arrayProperty -or $null -eq $arrayProperty.Value) {
+        Throw-VerifierInfrastructure "integrated child ledger evidence omitted its required array 'evidence'."
+    }
+    $items = $arrayProperty.Value
+    if (-not ($items -is [array])) {
+        if (-not (Test-VerifierRawJsonArrayProperty $LedgerJson 'evidence')) {
+            Throw-VerifierInfrastructure 'integrated child ledger evidence carried a scalar evidence value where the durable JSON did not prove an array.'
+        }
+        $items = ,@($items)
+    }
+    foreach ($item in @($items)) {
+        if (-not (Test-VerifierStrictStringValue $item)) {
+            Throw-VerifierInfrastructure 'integrated child ledger evidence carried a non-string retained artifact entry.'
+        }
+    }
+    $serverProperty = $Ledger.PSObject.Properties['server']
+    if ($null -eq $serverProperty) {
+        Throw-VerifierInfrastructure 'Integrated child ledger omitted its explicit server state.'
+    }
+    if ($null -ne $serverProperty.Value) {
+        Assert-VerifierIntegratedDurableServerSchema $serverProperty.Value 'integrated child ledger server'
+    }
+}
+
+function Assert-VerifierIntegratedManifestCopySchema($Manifest, [string]$ManifestJson) {
+    if ($null -eq $Manifest -or $Manifest -is [array] -or
+            $Manifest -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure 'Integrated child manifest was not an exact durable object.'
+    }
+    foreach ($name in @('protocol', 'runId', 'repositoryIdentity',
+            'worktreeRoot', 'runRoot', 'evidenceDirectory', 'manifestPath',
+            'evidenceNamespaceRoot', 'runNamespaceRoot', 'createdUtc',
+            'baseUrl', 'previewNonce')) {
+        [void](Assert-VerifierIntegratedLedgerString $Manifest $name 'integrated child manifest')
+    }
+    $manifestPreviewNonce = Assert-VerifierIntegratedLedgerString $Manifest `
+        'previewNonce' 'integrated child manifest'
+    if ([String]::IsNullOrWhiteSpace($manifestPreviewNonce)) {
+        Throw-VerifierInfrastructure 'Integrated child manifest omitted its non-empty previewNonce.'
+    }
+    $manifestLeases = Get-VerifierDurableArrayProperty $Manifest 'leases' `
+        'integrated child manifest leases' $ManifestJson
+    foreach ($lease in @($manifestLeases)) {
+        Assert-VerifierIntegratedDurableLeaseSchema $lease 'integrated child manifest lease'
+    }
+    $manifestProfiles = Get-VerifierDurableArrayProperty $Manifest 'browserSessions' `
+        'integrated child manifest browser sessions' $ManifestJson
+    foreach ($profile in @($manifestProfiles)) {
+        Assert-VerifierIntegratedDurableProfileSchema $profile 'integrated child manifest browser session'
+    }
+    $arrayProperty = $Manifest.PSObject.Properties['artifacts']
+    if ($null -eq $arrayProperty -or $null -eq $arrayProperty.Value) {
+        Throw-VerifierInfrastructure "integrated child manifest artifacts omitted its required array 'artifacts'."
+    }
+    $items = $arrayProperty.Value
+    if (-not ($items -is [array])) {
+        if (-not (Test-VerifierRawJsonArrayProperty $ManifestJson 'artifacts')) {
+            Throw-VerifierInfrastructure 'integrated child manifest artifacts carried a scalar artifacts value where the durable JSON did not prove an array.'
+        }
+        $items = ,@($items)
+    }
+    foreach ($item in @($items)) {
+        if (-not (Test-VerifierStrictStringValue $item)) {
+            Throw-VerifierInfrastructure 'integrated child manifest artifacts carried a non-string retained artifact entry.'
+        }
+    }
+    $cleanupProperty = $Manifest.PSObject.Properties['cleanup']
+    if ($null -eq $cleanupProperty -or $null -eq $cleanupProperty.Value -or
+            $cleanupProperty.Value -is [array] -or
+            $cleanupProperty.Value -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure 'Integrated child manifest omitted an exact cleanup object.'
+    }
+    $cleanup = $cleanupProperty.Value
+    [void](Assert-VerifierIntegratedLedgerString $cleanup 'state' `
+        'integrated child manifest cleanup')
+    [void](Assert-VerifierIntegratedLedgerString $cleanup 'completedUtc' `
+        'integrated child manifest cleanup')
+    $cleanupErrors = Get-VerifierDurableArrayProperty $cleanup 'errors' `
+        'integrated child manifest cleanup' $ManifestJson
+    foreach ($errorItem in @($cleanupErrors)) {
+        if (-not (Test-VerifierStrictStringValue $errorItem)) {
+            Throw-VerifierInfrastructure 'Integrated child manifest cleanup errors carried a non-string entry.'
+        }
+    }
+    $serverProperty = $Manifest.PSObject.Properties['server']
+    if ($null -eq $serverProperty) {
+        Throw-VerifierInfrastructure 'Integrated child manifest omitted its explicit server state.'
+    }
+    if ($null -ne $serverProperty.Value) {
+        Assert-VerifierIntegratedDurableServerSchema $serverProperty.Value 'integrated child manifest server'
+    }
+}
+
+function Assert-VerifierIntegratedDurableReaderSchema($Ledger, $Manifest,
+        [string]$LedgerJson, [string]$ManifestJson) {
+    Assert-VerifierIntegratedLedgerCopySchema $Ledger $LedgerJson
+    Assert-VerifierIntegratedManifestCopySchema $Manifest $ManifestJson
+    $serverProperty = $Ledger.PSObject.Properties['server']
+    $manifestServerProperty = $Manifest.PSObject.Properties['server']
+    if ($null -eq $serverProperty -or $null -eq $manifestServerProperty) {
+        Throw-VerifierInfrastructure 'Integrated child durable copies omitted their explicit server state.'
+    }
+    if (($null -eq $serverProperty.Value) -xor ($null -eq $manifestServerProperty.Value)) {
+        Throw-VerifierInfrastructure 'Integrated child durable copies disagreed on explicit server absence.'
+    }
+    if ($null -ne $serverProperty.Value) {
+        Assert-VerifierIntegratedDurableServerSchema $serverProperty.Value 'integrated child ledger server'
+        Assert-VerifierIntegratedDurableServerSchema $manifestServerProperty.Value 'integrated child manifest server'
+    }
 }
 
 function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedExit,
-        [switch]$AllowIncomplete) {
+        [switch]$AllowIncomplete, [string]$ExpectedForcedMarker = '') {
     $expectedWorktree = if ($null -ne $script:VerifierContext) {
         [string]$script:VerifierContext.WorktreeRoot
     } else { Get-VerifierFullPath (Join-Path $PSScriptRoot '..') }
@@ -2303,16 +4206,23 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
     if (-not (Test-Path -LiteralPath $canonicalLedger -PathType Leaf)) {
         Throw-VerifierInfrastructure "Integrated child ledger was not produced: $canonicalLedger"
     }
-    try { $ledger = Get-Content -LiteralPath $canonicalLedger -Raw | ConvertFrom-Json } catch {
+    try {
+        $ledgerJson = Get-Content -LiteralPath $canonicalLedger -Raw
+        $ledger = $ledgerJson | ConvertFrom-Json
+    } catch {
         Throw-VerifierInfrastructure ('Integrated child ledger was not valid JSON: ' +
             (Get-VerifierErrorMessage $_))
     }
+    # The child ledger is untrusted input.  Establish the complete typed
+    # schema immediately after parsing, before lifecycle decisions, casts,
+    # path resolution, or filesystem queries can consume any field.
+    Assert-VerifierIntegratedLedgerCopySchema $ledger $ledgerJson
     $state = [string](Get-VerifierLedgerProperty $ledger 'state' '')
-    if ([string](Get-VerifierLedgerProperty $ledger 'protocol' '') -ne 'troubleshootjs-integrated-child-ledger-v1' -or
-            $state -notin @('started', 'resource-started', 'incomplete', 'cleanup-failed', 'completed')) {
+    if ([string](Get-VerifierLedgerProperty $ledger 'protocol' '') -cne 'troubleshootjs-integrated-child-ledger-v1' -or
+            $state -cnotin @('started', 'resource-started', 'incomplete', 'cleanup-failed', 'completed')) {
         Throw-VerifierInfrastructure 'Integrated child ledger had an invalid protocol or lifecycle state.'
     }
-    $incompleteState = ($state -ne 'completed')
+    $incompleteState = ($state -cne 'completed')
     if (-not $AllowIncomplete -and $incompleteState) {
         Throw-VerifierInfrastructure "Integrated child ledger did not prove cleanup for expected exit $ExpectedExit."
     }
@@ -2356,10 +4266,21 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             -not (Test-Path -LiteralPath $evidenceDirectory -PathType Container)) {
         Throw-VerifierInfrastructure 'Integrated child ledger did not retain canonical manifest/evidence resources.'
     }
-    try { $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json } catch {
+    try {
+        $manifestJson = Get-Content -LiteralPath $manifestPath -Raw
+        $manifest = $manifestJson | ConvertFrom-Json
+    } catch {
         Throw-VerifierInfrastructure ('Integrated child manifest was not valid JSON: ' +
             (Get-VerifierErrorMessage $_))
     }
+    # Apply the same boundary to the second durable copy before any manifest
+    # field is projected into a path, lifecycle comparison, or proof decision.
+    Assert-VerifierIntegratedManifestCopySchema $manifest $manifestJson
+    # Prove every ownership/process/lifecycle scalar and collection in both
+    # durable copies before any legacy projection or comparison below.  The
+    # reader never uses a default to manufacture a proof field.
+    Assert-VerifierIntegratedDurableReaderSchema $ledger $manifest `
+        $ledgerJson $manifestJson
     $manifestRunRoot = Get-VerifierLedgerPath ([string](Get-VerifierLedgerProperty $manifest 'runRoot' '')) `
         'manifest run root' $namespaceRoot
     $manifestEvidence = Get-VerifierLedgerPath `
@@ -2375,10 +4296,35 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             Throw-VerifierInfrastructure 'Integrated child manifest identity or ownership paths were inconsistent.'
     }
 
-    $manifestArtifactsValue = Get-VerifierLedgerProperty $manifest 'artifacts' $null
-    $ledgerEvidenceValue = Get-VerifierLedgerProperty $ledger 'evidence' $null
-    $manifestArtifacts = if ($null -eq $manifestArtifactsValue) { @() } else { @($manifestArtifactsValue) }
-    $ledgerEvidence = if ($null -eq $ledgerEvidenceValue) { @() } else { @($ledgerEvidenceValue) }
+    $manifestCleanup = Get-VerifierRequiredLedgerProperty $manifest 'cleanup' `
+        'integrated child manifest cleanup'
+    if ($null -eq $manifestCleanup -or $manifestCleanup -is [array] -or
+            $manifestCleanup -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure 'Integrated child manifest cleanup was not an exact object.'
+    }
+    $ledgerCleanupState = Get-VerifierRequiredLedgerProperty $ledger 'cleanupState' `
+        'integrated child ledger cleanup'
+    if ($null -eq $ledgerCleanupState -or
+            $ledgerCleanupState.GetType() -ne [string]) {
+        Throw-VerifierInfrastructure 'Integrated child ledger cleanupState was missing or was not an exact string.'
+    }
+    $manifestCleanupState = Get-VerifierRequiredLedgerProperty $manifestCleanup 'state' `
+        'integrated child manifest cleanup'
+    if ($null -eq $manifestCleanupState -or
+            $manifestCleanupState.GetType() -ne [string] -or
+            $manifestCleanupState -cne $ledgerCleanupState) {
+        Throw-VerifierInfrastructure 'Integrated child ledger and manifest cleanup states differed or were not exact strings.'
+    }
+    $cleanupArrays = Assert-VerifierDurableArrayPair $ledger $manifestCleanup `
+        'cleanupErrors' 'errors' 'cleanup error ledger' -CompareItems `
+        -LedgerJson $ledgerJson -ManifestJson $manifestJson
+    $cleanupErrors = $cleanupArrays.Ledger
+
+    $evidenceArrays = Assert-VerifierDurableArrayPair $manifest $ledger `
+        'artifacts' 'evidence' 'evidence ledger' -CompareItems `
+        -LedgerJson $manifestJson -ManifestJson $ledgerJson
+    $manifestArtifacts = $evidenceArrays.Ledger
+    $ledgerEvidence = $evidenceArrays.Manifest
     if (@($manifestArtifacts).Count -ne @($ledgerEvidence).Count) {
         Throw-VerifierInfrastructure 'Integrated child ledger and manifest evidence ledgers differed.'
     }
@@ -2417,12 +4363,14 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
         Throw-VerifierInfrastructure 'Integrated child evidence resource set was not bijective.'
     }
 
-    $manifestLeasesValue = Get-VerifierLedgerProperty $manifest 'leases' $null
-    $ledgerLeasesValue = Get-VerifierLedgerProperty $ledger 'leases' $null
-    $manifestLeases = if ($null -eq $manifestLeasesValue) { @() } else { @($manifestLeasesValue) }
-    $ledgerLeases = if ($null -eq $ledgerLeasesValue) { @() } else { @($ledgerLeasesValue) }
-    $earlyManifestProfilesValue = Get-VerifierLedgerProperty $manifest 'browserSessions' $null
-    $earlyLedgerProfilesValue = Get-VerifierLedgerProperty $ledger 'profiles' $null
+    $leaseArrays = Assert-VerifierDurableArrayPair $manifest $ledger `
+        'leases' 'leases' 'lease ledger' -LedgerJson $manifestJson -ManifestJson $ledgerJson
+    $manifestLeases = $leaseArrays.Ledger
+    $ledgerLeases = $leaseArrays.Manifest
+    $earlyManifestProfilesValue = Get-VerifierDurableArrayProperty $manifest `
+        'browserSessions' 'manifest browser session ledger' $manifestJson
+    $earlyLedgerProfilesValue = Get-VerifierDurableArrayProperty $ledger `
+        'profiles' 'ledger browser profile ledger' $ledgerJson
     $requiresBrowserExecutableIdentity = $false
     foreach ($earlyLease in @($manifestLeases) + @($ledgerLeases)) {
         if ([string](Get-VerifierLedgerProperty $earlyLease 'kind' '') -eq 'cdp') {
@@ -2465,7 +4413,14 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
     $manifestLeaseByPort = @{}
     $manifestLeaseByMutex = @{}
     foreach ($manifestLeaseCandidate in $manifestLeases) {
-        $candidateId = [string](Get-VerifierLedgerProperty $manifestLeaseCandidate 'leaseId' '')
+        $candidateIdProperty = if ($null -eq $manifestLeaseCandidate) { $null } else {
+            $manifestLeaseCandidate.PSObject.Properties['leaseId']
+        }
+        if ($null -eq $candidateIdProperty -or
+                -not (Test-VerifierStrictStringProperty $manifestLeaseCandidate 'leaseId')) {
+            Throw-VerifierInfrastructure 'Integrated child manifest lease ledger omitted or malformed its exact string leaseId.'
+        }
+        $candidateId = $candidateIdProperty.Value
         if ([String]::IsNullOrWhiteSpace($candidateId) -or $manifestLeaseById.ContainsKey($candidateId)) {
             Throw-VerifierInfrastructure 'Integrated child manifest lease ledger contained a duplicate or empty lease identity.'
         }
@@ -2480,7 +4435,9 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 Throw-VerifierInfrastructure "Integrated child manifest cdp lease $candidateId omitted or mismatched its resolved BrowserPath."
             }
         }
-        $candidatePort = [int](Get-VerifierLedgerProperty $manifestLeaseCandidate 'port' 0)
+        $candidatePortValue = Assert-VerifierDurableIntegralProperty $manifestLeaseCandidate `
+            'port' 1 65535
+        $candidatePort = [int]$candidatePortValue
         if ($candidatePort -lt 1 -or $candidatePort -gt 65535) {
             Throw-VerifierInfrastructure "Integrated child manifest lease $candidateId had an invalid port $candidatePort; expected 1..65535."
         }
@@ -2488,8 +4445,12 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             Throw-VerifierInfrastructure "Integrated child manifest lease $candidateId used an ordinary developer port that is excluded from verifier claims."
         }
         $candidateMutex = Get-VerifierPortMutexName $null $candidatePort
-        $candidateOwnerPid = [int](Get-VerifierLedgerProperty $manifestLeaseCandidate 'claimOwnerPid' 0)
-        $candidateOwnerStart = [long](Get-VerifierLedgerProperty $manifestLeaseCandidate 'claimOwnerStartTicks' 0)
+        $candidateOwnerPidValue = Assert-VerifierDurableIntegralProperty $manifestLeaseCandidate `
+            'claimOwnerPid' 1 ([int]::MaxValue)
+        $candidateOwnerStartValue = Assert-VerifierDurableIntegralProperty $manifestLeaseCandidate `
+            'claimOwnerStartTicks' 1
+        $candidateOwnerPid = [int]$candidateOwnerPidValue
+        $candidateOwnerStart = [long]$candidateOwnerStartValue
         if ($candidateOwnerPid -le 0 -or $candidateOwnerStart -le 0) {
             Throw-VerifierInfrastructure "Integrated child manifest lease $candidateId omitted a positive claim owner PID/start identity."
         }
@@ -2527,7 +4488,14 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
     $ledgerLeaseByPort = @{}
     $ledgerLeaseByMutex = @{}
     foreach ($lease in $ledgerLeases) {
-        $leaseId = [string](Get-VerifierLedgerProperty $lease 'leaseId' '')
+        $leaseIdProperty = if ($null -eq $lease) { $null } else {
+            $lease.PSObject.Properties['leaseId']
+        }
+        if ($null -eq $leaseIdProperty -or
+                -not (Test-VerifierStrictStringProperty $lease 'leaseId')) {
+            Throw-VerifierInfrastructure 'Integrated child ledger lease omitted or malformed its exact string leaseId.'
+        }
+        $leaseId = $leaseIdProperty.Value
         if ([String]::IsNullOrWhiteSpace($leaseId) -or $ledgerLeaseIds.ContainsKey($leaseId)) {
             Throw-VerifierInfrastructure ('Integrated child ledger lease ledger contained a duplicate or empty lease identity: ' +
                 ([string]($lease | ConvertTo-Json -Compress -Depth 6)))
@@ -2544,7 +4512,8 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 Throw-VerifierInfrastructure "Integrated child cdp lease $leaseId omitted or mismatched its resolved BrowserPath."
             }
         }
-        $ledgerPort = [int](Get-VerifierLedgerProperty $lease 'port' 0)
+        $ledgerPortValue = Assert-VerifierDurableIntegralProperty $lease 'port' 1 65535
+        $ledgerPort = [int]$ledgerPortValue
         if ($ledgerPort -lt 1 -or $ledgerPort -gt 65535) {
             Throw-VerifierInfrastructure "Integrated child lease $leaseId had an invalid port $ledgerPort; expected 1..65535."
         }
@@ -2552,8 +4521,12 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             Throw-VerifierInfrastructure "Integrated child lease $leaseId used an ordinary developer port that is excluded from verifier claims."
         }
         $ledgerMutex = Get-VerifierPortMutexName $null $ledgerPort
-        $ledgerOwnerPid = [int](Get-VerifierLedgerProperty $lease 'claimOwnerPid' 0)
-        $ledgerOwnerStart = [long](Get-VerifierLedgerProperty $lease 'claimOwnerStartTicks' 0)
+        $ledgerOwnerPidValue = Assert-VerifierDurableIntegralProperty $lease `
+            'claimOwnerPid' 1 ([int]::MaxValue)
+        $ledgerOwnerStartValue = Assert-VerifierDurableIntegralProperty $lease `
+            'claimOwnerStartTicks' 1
+        $ledgerOwnerPid = [int]$ledgerOwnerPidValue
+        $ledgerOwnerStart = [long]$ledgerOwnerStartValue
         if ($ledgerOwnerPid -le 0 -or $ledgerOwnerStart -le 0) {
             Throw-VerifierInfrastructure "Integrated child lease $leaseId omitted a positive claim owner PID/start identity."
         }
@@ -2591,23 +4564,79 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 $manifestLeasePathByPath[$claimPath.ToLowerInvariant()] -ne $leaseId) {
             Throw-VerifierInfrastructure "Integrated child lease $leaseId claim path was omitted or mapped to another lease."
         }
-        foreach ($identityProperty in @('runId', 'repositoryIdentity', 'kind', 'browserPath', 'claimName',
-                'status', 'claimState', 'releaseState', 'claimOwnerPid',
-                'claimOwnerStartTicks', 'mutexReleased', 'releaseJournalState',
-                'listenerAbsent', 'processProofRequired')) {
-            if ([string](Get-VerifierLedgerProperty $lease $identityProperty '') -ne
-                    [string](Get-VerifierLedgerProperty $ml $identityProperty '')) {
-                Throw-VerifierInfrastructure "Integrated child lease $leaseId disagreed with the manifest on $identityProperty."
+        foreach ($numericProperty in @(
+                [pscustomobject]@{ Name = 'port'; Minimum = 1L; Maximum = 65535L }
+                [pscustomobject]@{ Name = 'claimOwnerPid'; Minimum = 1L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'claimOwnerStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+                [pscustomobject]@{ Name = 'boundProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'boundProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+                [pscustomobject]@{ Name = 'listenerProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            )) {
+            [void](Assert-VerifierDurableIntegralPair $lease $ml $numericProperty.Name `
+                $numericProperty.Minimum $numericProperty.Maximum)
+        }
+        foreach ($identityProperty in @('leaseId', 'runId', 'repositoryIdentity', 'worktreeRoot',
+                'kind', 'browserPath', 'profile', 'claimName', 'path', 'status',
+                'claimState', 'releaseState', 'releaseJournalState',
+                'bindValidatedUtc', 'releasedUtc', 'releaseBlockReason',
+                'listenerInspectionUtc')) {
+            [void](Assert-VerifierDurableStringPair $lease $ml $identityProperty)
+        }
+        foreach ($numericProperty in @(
+                [pscustomobject]@{ Name = 'claimOwnerPid'; Minimum = 1L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'claimOwnerStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+            )) {
+            [void](Assert-VerifierDurableIntegralPair $lease $ml $numericProperty.Name `
+                $numericProperty.Minimum $numericProperty.Maximum)
+        }
+        foreach ($durableBoolean in @(
+                [pscustomobject]@{ Name = 'registered'; AllowNull = $false }
+                [pscustomobject]@{ Name = 'releaseBlocked'; AllowNull = $false }
+                [pscustomobject]@{ Name = 'mutexReleased'; AllowNull = $false }
+                [pscustomobject]@{ Name = 'listenerInspectionSuccess'; AllowNull = $false }
+                [pscustomobject]@{ Name = 'listenerInspectionKnown'; AllowNull = $false }
+                [pscustomobject]@{ Name = 'listenerHasListeners'; AllowNull = $true }
+                [pscustomobject]@{ Name = 'listenerAbsent'; AllowNull = $true }
+                [pscustomobject]@{ Name = 'processProofRequired'; AllowNull = $false }
+                [pscustomobject]@{ Name = 'processTerminationProven'; AllowNull = $false }
+                [pscustomobject]@{ Name = 'processAbsent'; AllowNull = $false }
+            )) {
+            Assert-VerifierDurableBooleanPair $lease $ml $durableBoolean.Name `
+                -AllowNull:$durableBoolean.AllowNull
+        }
+        if (-not (Test-VerifierIntegratedListenerOwnerSchema $lease) -or
+                -not (Test-VerifierIntegratedListenerOwnerSchema $ml)) {
+            Throw-VerifierInfrastructure "Integrated child lease $leaseId omitted or malformed its listener owner kind/proof/evidence in one durable ledger copy."
+        }
+        foreach ($listenerOwnerProperty in @('listenerProcessId',
+                'listenerProcessStartTicks', 'listenerOwnerKind',
+                'listenerOwnerProof', 'listenerOwnerEvidence')) {
+            $ledgerProperty = $lease.PSObject.Properties[$listenerOwnerProperty]
+            $manifestProperty = $ml.PSObject.Properties[$listenerOwnerProperty]
+            if ($null -eq $ledgerProperty -or $null -eq $manifestProperty) {
+                Throw-VerifierInfrastructure "Integrated child lease $leaseId omitted $listenerOwnerProperty from one durable ledger copy."
+            }
+            $ledgerValue = $ledgerProperty.Value
+            $manifestValue = $manifestProperty.Value
+            if ($listenerOwnerProperty -eq 'listenerProcessStartTicks' -and
+                    $null -eq $ledgerValue -and $null -eq $manifestValue) {
+                continue
+            }
+            if (($null -eq $ledgerValue) -xor ($null -eq $manifestValue) -or
+                    ($null -ne $ledgerValue -and
+                     ($ledgerValue.GetType() -ne $manifestValue.GetType() -or
+                      -not $ledgerValue.Equals($manifestValue)))) {
+                Throw-VerifierInfrastructure "Integrated child lease $leaseId disagreed with the manifest on $listenerOwnerProperty."
             }
         }
+        $leasePortForIdentity = [int](Assert-VerifierDurableIntegralProperty $lease 'port' 1 65535)
+        $manifestPortForIdentity = [int](Assert-VerifierDurableIntegralProperty $ml 'port' 1 65535)
         if ([string](Get-VerifierLedgerProperty $lease 'runId' '') -ne $runId -or
                 [string](Get-VerifierLedgerProperty $lease 'repositoryIdentity' '') -ne $repositoryIdentity -or
                 -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $lease 'worktreeRoot' '')) $worktreeRoot) -or
                 -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $ml 'worktreeRoot' '')) $worktreeRoot) -or
-                [int](Get-VerifierLedgerProperty $lease 'port' 0) -lt 1 -or
-                [int](Get-VerifierLedgerProperty $lease 'port' 0) -gt 65535 -or
-                [int](Get-VerifierLedgerProperty $lease 'port' 0) -in @(8888, 8898, 8899, 9876) -or
-                [int](Get-VerifierLedgerProperty $ml 'port' 0) -ne [int](Get-VerifierLedgerProperty $lease 'port' 0) -or
+                $leasePortForIdentity -in @(8888, 8898, 8899, 9876) -or
+                $manifestPortForIdentity -ne $leasePortForIdentity -or
                 -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $ml 'path' '')) $claimPath)) {
             Throw-VerifierInfrastructure "Integrated child lease $leaseId had foreign, incomplete, or mismatched identity fields."
         }
@@ -2615,7 +4644,7 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
         if ($leaseKind -notin @('preview', 'cdp')) {
             Throw-VerifierInfrastructure "Integrated child lease $leaseId used an unsupported lease kind '$leaseKind'."
         }
-        $leasePortForPath = [int](Get-VerifierLedgerProperty $lease 'port' 0)
+        $leasePortForPath = $leasePortForIdentity
         $expectedMutexName = Get-VerifierPortMutexName $null $leasePortForPath
         $expectedClaimPath = Get-VerifierFullPath (Join-Path $claimDirectory ($leasePortForPath.ToString() + '-' + $leaseId + '.lease'))
         if ([string](Get-VerifierLedgerProperty $lease 'claimName' '') -ne $expectedMutexName -or
@@ -2630,6 +4659,36 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
         }
         foreach ($claimProperty in @('protocol', 'runId', 'repositoryIdentity',
                 'leaseId', 'kind', 'port', 'mutexName', 'ownerPid', 'ownerStartTicks')) {
+            if ($claimProperty -in @('port', 'ownerPid', 'ownerStartTicks')) {
+                $claimRange = if ($claimProperty -eq 'port') {
+                    [pscustomobject]@{ Minimum = 1L; Maximum = 65535L }
+                } elseif ($claimProperty -eq 'ownerPid') {
+                    [pscustomobject]@{ Minimum = 1L; Maximum = [int]::MaxValue }
+                } else {
+                    [pscustomobject]@{ Minimum = 1L; Maximum = [long]::MaxValue }
+                }
+                $claimValue = Assert-VerifierDurableIntegralProperty $claimDescriptor `
+                    $claimProperty $claimRange.Minimum $claimRange.Maximum
+                $manifestClaimValue = Assert-VerifierDurableIntegralProperty `
+                    $manifestClaimDescriptor $claimProperty $claimRange.Minimum $claimRange.Maximum
+                if ($claimValue.GetType() -ne $manifestClaimValue.GetType() -or
+                        -not $claimValue.Equals($manifestClaimValue)) {
+                    Throw-VerifierInfrastructure "Integrated child lease $leaseId manifest claim descriptor disagreed on exact integral field $claimProperty."
+                }
+                $expectedValue = if ($claimProperty -eq 'port') {
+                    Assert-VerifierDurableIntegralProperty $lease 'port' 1 65535
+                } elseif ($claimProperty -eq 'ownerPid') {
+                    Assert-VerifierDurableIntegralProperty $lease 'claimOwnerPid' 1 ([int]::MaxValue)
+                } else {
+                    Assert-VerifierDurableIntegralProperty $lease 'claimOwnerStartTicks' 1
+                }
+                if ([long]$claimValue -ne [long]$expectedValue) {
+                    Throw-VerifierInfrastructure "Integrated child lease $leaseId claim descriptor disagreed on $claimProperty."
+                }
+                continue
+            }
+            [void](Assert-VerifierDurableStringPair $claimDescriptor `
+                $manifestClaimDescriptor $claimProperty)
             if ($claimProperty -eq 'protocol') {
                 $claimExpected = 'troubleshootjs-verifier-port-claim-v1'
             } elseif ($claimProperty -eq 'runId') {
@@ -2640,14 +4699,8 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 $claimExpected = $leaseId
             } elseif ($claimProperty -eq 'kind') {
                 $claimExpected = [string](Get-VerifierLedgerProperty $lease 'kind' '')
-            } elseif ($claimProperty -eq 'port') {
-                $claimExpected = [int](Get-VerifierLedgerProperty $lease 'port' 0)
             } elseif ($claimProperty -eq 'mutexName') {
                 $claimExpected = [string](Get-VerifierLedgerProperty $lease 'claimName' '')
-            } elseif ($claimProperty -eq 'ownerPid') {
-                $claimExpected = [int](Get-VerifierLedgerProperty $lease 'claimOwnerPid' 0)
-            } else {
-                $claimExpected = [long](Get-VerifierLedgerProperty $lease 'claimOwnerStartTicks' 0)
             }
             if ([string](Get-VerifierLedgerProperty $claimDescriptor $claimProperty '') -ne [string]$claimExpected) {
                 Throw-VerifierInfrastructure "Integrated child lease $leaseId claim descriptor disagreed on $claimProperty."
@@ -2657,6 +4710,10 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 Throw-VerifierInfrastructure "Integrated child lease $leaseId manifest claim descriptor disagreed on $claimProperty."
             }
         }
+        foreach ($claimStringProperty in @('worktreeRoot', 'path')) {
+            [void](Assert-VerifierDurableStringPair $claimDescriptor `
+                $manifestClaimDescriptor $claimStringProperty)
+        }
         if (-not (Test-VerifierCanonicalWindowsPathValue `
                 ([string](Get-VerifierLedgerProperty $claimDescriptor 'worktreeRoot' '')) $worktreeRoot) -or
                 -not (Test-VerifierCanonicalWindowsPathValue `
@@ -2665,30 +4722,42 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                  [string](Get-VerifierLedgerProperty $manifestClaimDescriptor 'mutexName' '') -ne $expectedMutexName) {
             Throw-VerifierInfrastructure "Integrated child lease $leaseId claim descriptor had foreign or mismatched ownership paths."
         }
-        $descriptorOwnerPid = [int](Get-VerifierLedgerProperty $claimDescriptor 'ownerPid' 0)
-        $descriptorOwnerStart = [long](Get-VerifierLedgerProperty $claimDescriptor 'ownerStartTicks' 0)
-        if ($descriptorOwnerPid -le 0 -or $descriptorOwnerStart -le 0 -or
-                [int](Get-VerifierLedgerProperty $claimDescriptor 'port' 0) -lt 1 -or
-                [int](Get-VerifierLedgerProperty $claimDescriptor 'port' 0) -gt 65535 -or
-                [int](Get-VerifierLedgerProperty $manifestClaimDescriptor 'ownerPid' 0) -le 0 -or
-                [long](Get-VerifierLedgerProperty $manifestClaimDescriptor 'ownerStartTicks' 0) -le 0) {
-            Throw-VerifierInfrastructure "Integrated child lease $leaseId claim descriptor omitted a valid port or positive owner identity."
-        }
+        $descriptorOwnerPid = [int](Assert-VerifierDurableIntegralProperty $claimDescriptor `
+            'ownerPid' 1 ([int]::MaxValue))
+        $descriptorOwnerStart = [long](Assert-VerifierDurableIntegralProperty `
+            $claimDescriptor 'ownerStartTicks' 1)
+        [void](Assert-VerifierDurableIntegralProperty $claimDescriptor 'port' 1 65535)
+        [void](Assert-VerifierDurableIntegralProperty $manifestClaimDescriptor `
+            'ownerPid' 1 ([int]::MaxValue))
+        [void](Assert-VerifierDurableIntegralProperty $manifestClaimDescriptor `
+            'ownerStartTicks' 1)
+        [void](Assert-VerifierDurableIntegralProperty $manifestClaimDescriptor `
+            'port' 1 65535)
         $claimState = [string](Get-VerifierLedgerProperty $lease 'claimState' '')
         $releaseState = [string](Get-VerifierLedgerProperty $lease 'releaseState' '')
         $completedLease = ($state -eq 'completed')
+        $terminalServer = if ([string](Get-VerifierLedgerProperty $lease 'kind' '') -eq 'preview') {
+            Get-VerifierLedgerProperty $ledger 'server' $null
+        } else { $null }
+        # A released-looking incomplete record is not terminal evidence. Use the
+        # same strict release/proof predicate for both completed and retained
+        # child ledgers, so registration, release blocking, journal, mutex, and
+        # process/listener proof cannot be bypassed by three lifecycle strings.
+        $terminalLeaseReleased = Test-VerifierIntegratedLeaseTerminal $lease $claimPath `
+            $terminalServer $runId $repositoryIdentity $worktreeRoot
+        $terminalManifestReleased = Test-VerifierIntegratedLeaseTerminal $ml $claimPath `
+            $terminalServer $runId $repositoryIdentity $worktreeRoot
+        $terminalReleased = ($terminalLeaseReleased -and $terminalManifestReleased)
         if ($completedLease) {
-            if (-not (Test-VerifierIntegratedLeaseTerminal $lease $claimPath) -or
+            if (-not $terminalReleased -or
                     -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $ml 'path' '')) $claimPath) -or
-                    [int](Get-VerifierLedgerProperty $ml 'port' 0) -ne [int](Get-VerifierLedgerProperty $lease 'port' 0) -or
+                    $manifestPortForIdentity -ne $leasePortForIdentity -or
                     [string](Get-VerifierLedgerProperty $ml 'status' '') -ne 'released' -or
-                    [string](Get-VerifierLedgerProperty $ml 'releaseState' '') -ne 'complete' -or
-                    -not (Test-VerifierIntegratedLeaseTerminal $ml $claimPath)) {
+                    [string](Get-VerifierLedgerProperty $ml 'releaseState' '') -ne 'complete') {
                 Throw-VerifierInfrastructure 'Completed integrated child lease did not prove release, claim absence, and listener absence.'
             }
         } else {
-            $leaseReleased = ([string](Get-VerifierLedgerProperty $lease 'status' '') -eq 'released' -and
-                $claimState -eq 'released' -and $releaseState -eq 'complete')
+            $leaseReleased = $terminalReleased
             if ([String]::IsNullOrWhiteSpace($claimState) -or
                     (Test-Path -LiteralPath $claimPath -PathType Leaf) -ne (-not $leaseReleased)) {
                 Throw-VerifierInfrastructure 'Incomplete integrated child lease did not retain exactly the expected claim resource.'
@@ -2697,23 +4766,9 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 try { $claim = Get-Content -LiteralPath $claimPath -Raw | ConvertFrom-Json } catch {
                     Throw-VerifierInfrastructure 'Incomplete integrated child claim was not readable evidence.'
                 }
-                if ([string](Get-VerifierLedgerProperty $claim 'protocol' '') -ne 'troubleshootjs-verifier-port-claim-v1' -or
-                        [string](Get-VerifierLedgerProperty $claim 'runId' '') -ne $runId -or
-                        [string](Get-VerifierLedgerProperty $claim 'repositoryIdentity' '') -ne $repositoryIdentity -or
-                        -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $claim 'worktreeRoot' '')) $worktreeRoot) -or
-                        [string](Get-VerifierLedgerProperty $claim 'leaseId' '') -ne $leaseId -or
-                        [string](Get-VerifierLedgerProperty $claim 'kind' '') -ne [string](Get-VerifierLedgerProperty $lease 'kind' '') -or
-                        -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $claim 'path' '')) $claimPath) -or
-                        [int](Get-VerifierLedgerProperty $claim 'port' 0) -ne [int](Get-VerifierLedgerProperty $lease 'port' 0) -or
-                        [string](Get-VerifierLedgerProperty $claim 'mutexName' '') -ne [string](Get-VerifierLedgerProperty $lease 'claimName' '') -or
-                         [int](Get-VerifierLedgerProperty $claim 'ownerPid' 0) -ne [int](Get-VerifierLedgerProperty $lease 'claimOwnerPid' 0) -or
-                         [long](Get-VerifierLedgerProperty $claim 'ownerStartTicks' 0) -ne [long](Get-VerifierLedgerProperty $lease 'claimOwnerStartTicks' 0) -or
-                         [int](Get-VerifierLedgerProperty $claim 'port' 0) -lt 1 -or
-                         [int](Get-VerifierLedgerProperty $claim 'port' 0) -gt 65535 -or
-                         [int](Get-VerifierLedgerProperty $claim 'ownerPid' 0) -le 0 -or
-                         [long](Get-VerifierLedgerProperty $claim 'ownerStartTicks' 0) -le 0) {
-                    Throw-VerifierInfrastructure 'Incomplete integrated child claim was foreign, stale, or mismatched.'
-                }
+                [void](Read-VerifierIntegratedClaimRecord $claim $lease $claimPath `
+                    $runId $repositoryIdentity $worktreeRoot `
+                    ('integrated child lease ' + $leaseId + ' claim'))
             }
         }
     }
@@ -2738,10 +4793,21 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
         Throw-VerifierInfrastructure 'Completed integrated child retained an unrecorded port claim.'
     }
 
-    $manifestProfilesValue = Get-VerifierLedgerProperty $manifest 'browserSessions' $null
-    $ledgerProfilesValue = Get-VerifierLedgerProperty $ledger 'profiles' $null
-    $manifestProfiles = if ($null -eq $manifestProfilesValue) { @() } else { @($manifestProfilesValue) }
-    $ledgerProfiles = if ($null -eq $ledgerProfilesValue) { @() } else { @($ledgerProfilesValue) }
+    $profileArrays = Assert-VerifierDurableArrayPair $manifest $ledger `
+        'browserSessions' 'profiles' 'browser profile ledger' `
+        -LedgerJson $manifestJson -ManifestJson $ledgerJson
+    $manifestProfiles = $profileArrays.Ledger
+    $ledgerProfiles = $profileArrays.Manifest
+    # ConvertFrom-Json exposes a one-item JSON array as a scalar in some
+    # PowerShell versions. The raw JSON shape was already proven above; retain
+    # that proof for bounded timeout cleanup readers without making a missing
+    # or null property look like an explicit empty array.
+    $manifest.artifacts = [object[]]$manifestArtifacts
+    $ledger.evidence = [object[]]$ledgerEvidence
+    $manifest.leases = [object[]]$manifestLeases
+    $ledger.leases = [object[]]$ledgerLeases
+    $manifest.browserSessions = [object[]]$manifestProfiles
+    $ledger.profiles = [object[]]$ledgerProfiles
     if (@($manifestProfiles).Count -ne @($ledgerProfiles).Count) {
         Throw-VerifierInfrastructure 'Integrated child ledger and manifest profile ledgers differed.'
     }
@@ -2785,16 +4851,29 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
         }
         $ledgerProfileByLeasePath[$ledgerLeasePath.ToLowerInvariant()] = $profileKey
         foreach ($identityProperty in @('owner', 'runId', 'repositoryIdentity',
-                'cdpPort', 'processId', 'processStartTicks', 'processParentProcessId',
-                'processParentProcessStartTicks',
-                'processCommandLine', 'browserPath', 'status', 'cleanupResult')) {
-            if ([string](Get-VerifierLedgerProperty $profile $identityProperty '') -ne
-                    [string](Get-VerifierLedgerProperty $matchedProfile $identityProperty '')) {
-                Throw-VerifierInfrastructure "Integrated child profile $profilePath disagreed with the manifest on $identityProperty."
-            }
+                'worktreeRoot', 'routeId', 'routeName', 'profile', 'cdpLeasePath',
+                'processCommandLine', 'browserPath', 'targetId', 'expectedUrl',
+                'expectedRunMarker', 'expectedRouteMarker', 'status',
+                'cleanupResult', 'error')) {
+            [void](Assert-VerifierDurableStringPair $profile $matchedProfile $identityProperty)
         }
-        if (-not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $profile 'worktreeRoot' '')) $worktreeRoot) -or
-                -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $matchedProfile 'worktreeRoot' '')) $worktreeRoot)) {
+        foreach ($numericProperty in @(
+                [pscustomobject]@{ Name = 'cdpPort'; Minimum = 1L; Maximum = 65535L }
+                [pscustomobject]@{ Name = 'processId'; Minimum = 0L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'processStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+                [pscustomobject]@{ Name = 'processParentProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'processParentProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            )) {
+            [void](Assert-VerifierDurableIntegralPair $profile $matchedProfile $numericProperty.Name `
+                $numericProperty.Minimum $numericProperty.Maximum)
+        }
+        foreach ($profileBooleanProperty in @('profileProcessScanCompleted',
+                'profileInspectionFailed')) {
+            Assert-VerifierDurableBooleanPair $profile $matchedProfile `
+                $profileBooleanProperty
+        }
+        if (-not (Test-VerifierCanonicalWindowsPathValue $profile.worktreeRoot $worktreeRoot) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $matchedProfile.worktreeRoot $worktreeRoot)) {
                 Throw-VerifierInfrastructure 'Integrated child profile worktree identity was foreign or incomplete.'
         }
         $browserRoot = Get-VerifierFullPath (Join-Path $runRoot 'browser')
@@ -2802,45 +4881,53 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             Throw-VerifierInfrastructure "Integrated child browser profile '$profilePath' was not directly owned by its browser run namespace."
         }
         foreach ($browserPathValue in @(
-                [string](Get-VerifierLedgerProperty $profile 'browserPath' ''),
-                [string](Get-VerifierLedgerProperty $matchedProfile 'browserPath' ''))) {
+                $profile.browserPath,
+                $matchedProfile.browserPath)) {
             if ([String]::IsNullOrWhiteSpace($browserPathValue) -or
                     [String]::IsNullOrWhiteSpace((Get-VerifierCanonicalWindowsPath $browserPathValue)) -or
                     -not (Test-VerifierCanonicalWindowsPathValue $browserPathValue $expectedBrowserPath)) {
                 Throw-VerifierInfrastructure 'Integrated child browser profile omitted or mismatched its resolved BrowserPath.'
             }
         }
-        $manifestLeasePath = Get-VerifierLedgerPath ([string](Get-VerifierLedgerProperty $matchedProfile 'cdpLeasePath' '')) `
+        $manifestLeasePath = Get-VerifierLedgerPath $matchedProfile.cdpLeasePath `
             'manifest browser lease' $claimDirectory
         if (-not (Test-VerifierCanonicalWindowsPathValue $ledgerLeasePath $manifestLeasePath)) {
             Throw-VerifierInfrastructure 'Integrated child profile lease identity was not bijective.'
         }
         $profileLease = $ledgerLeaseByPath[$ledgerLeasePath.ToLowerInvariant()]
         $profileLeaseKind = [string](Get-VerifierLedgerProperty $profileLease 'kind' '')
-        $profilePort = [int](Get-VerifierLedgerProperty $profile 'cdpPort' 0)
+        $profilePort = [int](Assert-VerifierDurableIntegralProperty $profile 'cdpPort' 1 65535)
+        $matchedProfilePort = [int](Assert-VerifierDurableIntegralProperty `
+            $matchedProfile 'cdpPort' 1 65535)
+        $profileLeasePort = [int](Assert-VerifierDurableIntegralProperty `
+            $profileLease 'port' 1 65535)
         if ([string](Get-VerifierLedgerProperty $profile 'owner' '') -ne 'run' -or
                 $profileLeaseKind -ne 'cdp' -or
                 [string](Get-VerifierLedgerProperty $profileLease 'kind' '') -ne 'cdp' -or
-                [int](Get-VerifierLedgerProperty $matchedProfile 'cdpPort' 0) -lt 1 -or
-                [int](Get-VerifierLedgerProperty $matchedProfile 'cdpPort' 0) -gt 65535 -or
-                $profilePort -lt 1 -or $profilePort -gt 65535 -or
-                $profilePort -ne
-                    [int](Get-VerifierLedgerProperty $profileLease 'port' 0)) {
+                $matchedProfilePort -ne $profilePort -or
+                $profilePort -ne $profileLeasePort) {
             Throw-VerifierInfrastructure 'Integrated child profile did not identify its exact run-owned cdp lease and valid port.'
         }
-        if (-not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $profile 'profile' '')) $profilePath) -or
-                -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $matchedProfile 'profile' '')) $profilePath) -or
-                -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $profile 'cdpLeasePath' '')) $ledgerLeasePath) -or
-                -not (Test-VerifierCanonicalWindowsPathValue ([string](Get-VerifierLedgerProperty $matchedProfile 'cdpLeasePath' '')) $ledgerLeasePath) -or
-                [string](Get-VerifierLedgerProperty $profile 'runId' '') -ne $runId -or
-                [string](Get-VerifierLedgerProperty $matchedProfile 'runId' '') -ne $runId) {
+        if (-not (Test-VerifierCanonicalWindowsPathValue $profile.profile $profilePath) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $matchedProfile.profile $profilePath) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $profile.cdpLeasePath $ledgerLeasePath) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $matchedProfile.cdpLeasePath $ledgerLeasePath) -or
+                $profile.runId -ne $runId -or
+                $matchedProfile.runId -ne $runId) {
             Throw-VerifierInfrastructure 'Integrated child browser profile path, lease path, or run identity was not canonical and exact.'
         }
-        $profileProcessId = [int](Get-VerifierLedgerProperty $profile 'processId' 0)
+        $profileProcessId = [int](Assert-VerifierDurableIntegralProperty $profile `
+            'processId' 0 ([int]::MaxValue))
+        $profileProcessStart = [long](Assert-VerifierDurableIntegralProperty $profile `
+            'processStartTicks' 0)
+        $profileParentProcessId = [int](Assert-VerifierDurableIntegralProperty $profile `
+            'processParentProcessId' 0 ([int]::MaxValue))
+        $profileParentProcessStart = [long](Assert-VerifierDurableIntegralProperty `
+            $profile 'processParentProcessStartTicks' 0)
         if ($profileProcessId -gt 0 -and
-                ([long](Get-VerifierLedgerProperty $profile 'processStartTicks' 0) -le 0 -or
-                 [int](Get-VerifierLedgerProperty $profile 'processParentProcessId' 0) -le 0 -or
-                 [long](Get-VerifierLedgerProperty $profile 'processParentProcessStartTicks' 0) -le 0 -or
+                ($profileProcessStart -le 0 -or
+                 $profileParentProcessId -le 0 -or
+                 $profileParentProcessStart -le 0 -or
                  [String]::IsNullOrWhiteSpace([string](Get-VerifierLedgerProperty $profile 'processCommandLine' '')))) {
             Throw-VerifierInfrastructure 'Integrated child browser profile omitted its recorded root parent/start/command identity.'
         }
@@ -2915,12 +5002,14 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             Throw-VerifierInfrastructure "Cdp lease $leaseId profile inverse was omitted or foreign."
         }
         $inverseProfile = $ledgerProfileByPath[$leaseProfilePath.ToLowerInvariant()]
+        $inverseProfilePort = [int](Assert-VerifierDurableIntegralProperty $inverseProfile `
+            'cdpPort' 1 65535)
+        $inverseLeasePort = [int](Assert-VerifierDurableIntegralProperty $lease 'port' 1 65535)
         if (-not (Test-VerifierCanonicalWindowsPathValue `
                 ([string](Get-VerifierLedgerProperty $inverseProfile 'profile' '')) $leaseProfilePath) -or
                 -not (Test-VerifierCanonicalWindowsPathValue `
                 ([string](Get-VerifierLedgerProperty $inverseProfile 'cdpLeasePath' '')) $leasePath) -or
-                [int](Get-VerifierLedgerProperty $inverseProfile 'cdpPort' 0) -ne
-                    [int](Get-VerifierLedgerProperty $lease 'port' 0) -or
+                $inverseProfilePort -ne $inverseLeasePort -or
                 [string](Get-VerifierLedgerProperty $inverseProfile 'runId' '') -ne $runId -or
                 [string](Get-VerifierLedgerProperty $inverseProfile 'repositoryIdentity' '') -ne $repositoryIdentity) {
             Throw-VerifierInfrastructure "Cdp lease $leaseId and browser profile inverse did not match exactly."
@@ -2957,26 +5046,86 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             @($server).Count -ne 1 -or @($manifestServer).Count -ne 1) {
         Throw-VerifierInfrastructure 'Integrated child ledger and manifest did not both record the server resource.'
     }
-    $serverOwner = [string](Get-VerifierLedgerProperty $server 'owner' '')
-    $manifestServerOwner = [string](Get-VerifierLedgerProperty $manifestServer 'owner' '')
+    foreach ($serverProofStringProperty in @(
+            'owner', 'baseUrl', 'repositoryIdentity', 'worktreeRoot',
+            'repositoryRoot', 'webRoot', 'identityProtocol',
+            'processCommandLine', 'script', 'runId', 'nonce', 'leaseId',
+            'leaseKind', 'leaseClaimName', 'leaseClaimState',
+            'leaseReleaseState', 'leaseReleaseJournalState', 'leasePath',
+             'state', 'cleanupResult', 'stdoutLog', 'stderrLog', 'error')) {
+        [void](Assert-VerifierDurableStringPair $server $manifestServer `
+            $serverProofStringProperty)
+    }
+    $serverOwner = $server.owner
+    $manifestServerOwner = $manifestServer.owner
     if ($serverOwner -notin @('none', 'run', 'caller') -or $serverOwner -ne $manifestServerOwner) {
         Throw-VerifierInfrastructure 'Integrated child server ownership was missing, foreign, or differed between ledgers.'
     }
     foreach ($serverProperty in @('owner', 'baseUrl', 'repositoryIdentity', 'worktreeRoot', 'repositoryRoot',
-            'webRoot', 'identityProtocol', 'identityVerified', 'callerOwned', 'port', 'processId',
-            'processStartTicks', 'processParentProcessId', 'processParentProcessStartTicks',
+            'webRoot', 'identityProtocol',
             'processCommandLine',
             'script', 'runId', 'nonce', 'leaseId', 'leaseKind', 'leaseClaimName',
             'leaseClaimState', 'leaseReleaseState', 'leaseReleaseJournalState',
-            'leaseOwnerPid',
-            'leaseOwnerStartTicks', 'leasePath', 'stdoutLog', 'stderrLog',
-            'state', 'cleanupResult',
-            'processIdentityKnown', 'ownershipUncertain', 'processTerminationProven',
-            'processAbsent', 'listenerInspectionProven', 'listenerAbsent',
+            'leasePath', 'stdoutLog', 'stderrLog',
+            'state', 'cleanupResult', 'error',
             'leaseListenerAbsent', 'leaseProcessProofRequired')) {
+        if ($null -eq $server.PSObject.Properties[$serverProperty] -or
+                $null -eq $manifestServer.PSObject.Properties[$serverProperty]) {
+            Throw-VerifierInfrastructure "Integrated child server omitted $serverProperty from one durable ledger copy."
+        }
         if ([string](Get-VerifierLedgerProperty $server $serverProperty '') -ne
                 [string](Get-VerifierLedgerProperty $manifestServer $serverProperty '')) {
             Throw-VerifierInfrastructure "Integrated child server ledger differed from the manifest on $serverProperty."
+        }
+    }
+    foreach ($numericProperty in @(
+            [pscustomobject]@{ Name = 'port'; Minimum = 0L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'processId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'processStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'processParentProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'processParentProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'leaseOwnerPid'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'leaseOwnerStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+        )) {
+        [void](Assert-VerifierDurableIntegralPair $server $manifestServer $numericProperty.Name `
+            $numericProperty.Minimum $numericProperty.Maximum)
+    }
+    foreach ($durableBoolean in @(
+            [pscustomobject]@{ Name = 'identityVerified'; AllowNull = $false }
+            [pscustomobject]@{ Name = 'callerOwned'; AllowNull = $false }
+            [pscustomobject]@{ Name = 'processIdentityKnown'; AllowNull = $false }
+            [pscustomobject]@{ Name = 'ownershipUncertain'; AllowNull = $false }
+            [pscustomobject]@{ Name = 'processTerminationProven'; AllowNull = $false }
+            [pscustomobject]@{ Name = 'processAbsent'; AllowNull = $false }
+            [pscustomobject]@{ Name = 'listenerInspectionProven'; AllowNull = $false }
+            [pscustomobject]@{ Name = 'listenerAbsent'; AllowNull = $true }
+            [pscustomobject]@{ Name = 'leaseListenerAbsent'; AllowNull = $true }
+            [pscustomobject]@{ Name = 'leaseProcessProofRequired'; AllowNull = $true }
+        )) {
+        Assert-VerifierDurableBooleanPair $server $manifestServer $durableBoolean.Name `
+            -AllowNull:$durableBoolean.AllowNull
+    }
+    if (-not (Test-VerifierIntegratedServerListenerOwnerSchema $server) -or
+            -not (Test-VerifierIntegratedServerListenerOwnerSchema $manifestServer)) {
+        Throw-VerifierInfrastructure 'Integrated child server omitted or malformed its explicit listener owner tuple.'
+    }
+    foreach ($serverListenerOwnerProperty in @('leaseListenerOwnerKind',
+            'leaseListenerOwnerProof', 'leaseListenerOwnerEvidence')) {
+        $ledgerProperty = $server.PSObject.Properties[$serverListenerOwnerProperty]
+        $manifestProperty = $manifestServer.PSObject.Properties[$serverListenerOwnerProperty]
+        if ($ledgerProperty.Value.GetType() -ne $manifestProperty.Value.GetType() -or
+                -not $ledgerProperty.Value.Equals($manifestProperty.Value)) {
+            Throw-VerifierInfrastructure "Integrated child server disagreed on $serverListenerOwnerProperty."
+        }
+    }
+    if ($serverOwner -ne 'run') {
+        foreach ($serverOwnerCopy in @($server, $manifestServer)) {
+            if (-not (Test-VerifierListenerOwnerTuple `
+                    $serverOwnerCopy.leaseListenerOwnerKind `
+                    $serverOwnerCopy.leaseListenerOwnerProof `
+                    $serverOwnerCopy.leaseListenerOwnerEvidence 0 0L $true)) {
+                Throw-VerifierInfrastructure 'Integrated child ownerless/caller-owned server carried a noncanonical listener owner tuple.'
+            }
         }
     }
     if ([string](Get-VerifierLedgerProperty $server 'repositoryIdentity' '') -ne $repositoryIdentity -or
@@ -2984,8 +5133,8 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 ([string](Get-VerifierLedgerProperty $server 'worktreeRoot' '')) $worktreeRoot)) {
         Throw-VerifierInfrastructure 'Integrated child server repository/worktree identity was foreign or incomplete.'
     }
-    $serverScript = [string](Get-VerifierLedgerProperty $server 'script' '')
-    $manifestScript = [string](Get-VerifierLedgerProperty $manifestServer 'script' '')
+    $serverScript = $server.script
+    $manifestScript = $manifestServer.script
     if (-not [String]::IsNullOrWhiteSpace($serverScript)) {
         $serverScript = Get-VerifierFullPath $serverScript
         if (-not (Test-VerifierChildPath $worktreeRoot $serverScript)) {
@@ -3010,8 +5159,11 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
     $expectedStdoutLog = Get-VerifierFullPath (Join-Path $serverLogRoot 'stdout.log')
     $expectedStderrLog = Get-VerifierFullPath (Join-Path $serverLogRoot 'stderr.log')
     foreach ($serverLogProperty in @('stdoutLog', 'stderrLog')) {
-        $serverLog = [string](Get-VerifierLedgerProperty $server $serverLogProperty '')
-        $manifestLog = [string](Get-VerifierLedgerProperty $manifestServer $serverLogProperty '')
+        # The strict ordinal pair check above is the only accepted boundary for
+        # these durable paths. Do not coerce malformed JSON values before using
+        # them for path ownership or equality checks.
+        $serverLog = $server.PSObject.Properties[$serverLogProperty].Value
+        $manifestLog = $manifestServer.PSObject.Properties[$serverLogProperty].Value
         if ($serverOwner -eq 'run' -and [String]::IsNullOrWhiteSpace($serverLog)) {
             Throw-VerifierInfrastructure "Integrated child run-owned server omitted its $serverLogProperty path."
         }
@@ -3029,8 +5181,7 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 Throw-VerifierInfrastructure "Integrated child run-owned server $serverLogProperty was not the canonical direct log child."
             }
         }
-        if (-not [String]::IsNullOrWhiteSpace($manifestLog) -and
-                -not (Test-VerifierCanonicalWindowsPathValue $manifestLog $serverLog)) {
+        if ($serverOwner -eq 'run' -and -not (Test-VerifierCanonicalWindowsPathValue $manifestLog $serverLog)) {
             Throw-VerifierInfrastructure "Integrated child server $serverLogProperty path was not canonical and bijective."
         }
     }
@@ -3153,6 +5304,11 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             Throw-VerifierInfrastructure 'Integrated child caller-owned preview carried an owned-process or cleanup claim.'
         }
     } else {
+        $serverLeaseProcessProof = Get-VerifierDurableBooleanValue $server `
+            'leaseProcessProofRequired' 'run-owned server lease processProofRequired' -AllowNull
+        if ($null -eq $serverLeaseProcessProof) {
+            Throw-VerifierInfrastructure 'Integrated child run-owned server omitted its exact lease process-proof Boolean.'
+        }
         if ([String]::IsNullOrWhiteSpace([string](Get-VerifierLedgerProperty $server 'runId' '')) -or
                 [string](Get-VerifierLedgerProperty $server 'runId' '') -ne $runId -or
                 [String]::IsNullOrWhiteSpace([string](Get-VerifierLedgerProperty $server 'nonce' '')) -or
@@ -3228,6 +5384,10 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 $serverLeasePort -ne [int](Get-VerifierLedgerProperty $server 'port' 0)) {
             Throw-VerifierInfrastructure 'Integrated child run-owned server lease kind, mutex, or port was not canonical.'
         }
+        if (-not (Test-VerifierIntegratedListenerOwnerSchema $serverLease[0] $server) -or
+                -not (Test-VerifierIntegratedServerListenerOwnerSchema $manifestServer $serverLease[0])) {
+            Throw-VerifierInfrastructure 'Integrated child run-owned server and lease owner tuples were not exact and mutually consistent.'
+        }
         if ($state -eq 'completed') {
             if ([string](Get-VerifierLedgerProperty $server 'cleanupResult' '') -ne 'complete' -or
                     [string](Get-VerifierLedgerProperty $server 'state' '') -ne 'cleaned' -or
@@ -3261,10 +5421,29 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             $leasePort = [int](Get-VerifierLedgerProperty $lease 'port' 0)
             $boundPid = [int](Get-VerifierLedgerProperty $lease 'boundProcessId' 0)
             $boundStart = [long](Get-VerifierLedgerProperty $lease 'boundProcessStartTicks' 0)
-            $listenerPid = [int](Get-VerifierLedgerProperty $lease 'listenerProcessId' 0)
-            $listenerStart = [long](Get-VerifierLedgerProperty $lease 'listenerProcessStartTicks' 0)
-            $expectedPid = if ($listenerPid -gt 0) { $listenerPid } else { $boundPid }
-            $expectedStart = if ($listenerPid -gt 0) { $listenerStart } else { $boundStart }
+            $leaseKindForOwner = [string](Get-VerifierLedgerProperty $lease 'kind' '')
+            $ownerServer = if ($leaseKindForOwner -eq 'preview') { $server } else { $null }
+            if (-not (Test-VerifierIntegratedListenerOwnerSchema $lease $ownerServer)) {
+                Throw-VerifierInfrastructure 'Completed integrated child lease omitted or malformed its listener owner proof before revalidation.'
+            }
+            $listenerPid = [int]$lease.PSObject.Properties['listenerProcessId'].Value
+            $listenerOwnerKind = $lease.PSObject.Properties['listenerOwnerKind'].Value
+            $kernelTransport = ($listenerOwnerKind -ceq 'kernel-transport')
+            $expectedPid = if ($kernelTransport) { 0 } elseif ($listenerPid -gt 0) {
+                $listenerPid
+            } else { $boundPid }
+            $expectedStart = $boundStart
+            if (-not $kernelTransport -and $listenerPid -gt 0) {
+                $listenerStartProperty = $lease.PSObject.Properties['listenerProcessStartTicks']
+                if ($null -eq $listenerStartProperty -or $null -eq $listenerStartProperty.Value) {
+                    Throw-VerifierInfrastructure 'Completed integrated child user-process listener omitted its start identity.'
+                }
+                if (-not (Test-VerifierStrictNonnegativeIntegerProperty $lease `
+                        'listenerProcessStartTicks')) {
+                    Throw-VerifierInfrastructure 'Completed integrated child user-process listener carried a malformed start identity.'
+                }
+                $expectedStart = [long]$listenerStartProperty.Value
+            }
             $leaseProfile = [string](Get-VerifierLedgerProperty $lease 'profile' '')
             $leaseProcess = [pscustomobject]@{
                 ProcessId = $boundPid
@@ -3273,14 +5452,14 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             $leaseProcessProof = Confirm-VerifierRecordedProcessAbsent $leaseProcess `
                 ('completed lease ' + [string](Get-VerifierLedgerProperty $lease 'leaseId' '')) `
                 '' $leasePort '' $runId '' $leaseProfile
-            if (-not [bool]$leaseProcessProof.QueryProven -or
-                    -not [bool]$leaseProcessProof.Absent) {
+            if (-not (Test-VerifierStrictBooleanProperty $leaseProcessProof 'QueryProven' $true) -or
+                    -not (Test-VerifierStrictBooleanProperty $leaseProcessProof 'Absent' $true)) {
                 Throw-VerifierInfrastructure 'Completed integrated child lease owner process was still present or not independently proven absent.'
             }
             $leaseListenerProof = Confirm-VerifierReleasedListener $leasePort $expectedPid `
                 $expectedStart '' 0 '' $runId '' $leaseProfile
-            if (-not [bool]$leaseListenerProof.QueryProven -or
-                    -not [bool]$leaseListenerProof.OldOwnerAbsent) {
+            if (-not (Test-VerifierStrictBooleanProperty $leaseListenerProof 'QueryProven' $true) -or
+                    -not (Test-VerifierStrictBooleanProperty $leaseListenerProof 'OldOwnerAbsent' $true)) {
                 Throw-VerifierInfrastructure 'Completed integrated child lease listener absence was not independently proven.'
             }
         }
@@ -3301,8 +5480,8 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 ('completed browser profile ' + $profilePath) `
                 ([string](Get-VerifierLedgerProperty $profile 'processCommandLine' '')) `
                 ([int](Get-VerifierLedgerProperty $profile 'cdpPort' 0)) '' $runId '' $profilePath
-            if (-not [bool]$profileProof.QueryProven -or
-                    -not [bool]$profileProof.Absent) {
+            if (-not (Test-VerifierStrictBooleanProperty $profileProof 'QueryProven' $true) -or
+                    -not (Test-VerifierStrictBooleanProperty $profileProof 'Absent' $true)) {
                 Throw-VerifierInfrastructure "Completed integrated browser profile process for '$profilePath' was not independently proven absent."
             }
             $profileSnapshot = @(Get-VerifierBrowserProcessSnapshot $profileBrowserPath $profilePath `
@@ -3326,20 +5505,29 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                 ([string](Get-VerifierLedgerProperty $server 'processCommandLine' '')) `
                 $serverPort $serverScript $runId `
                 ([string](Get-VerifierLedgerProperty $server 'nonce' '')) ''
-            if (-not [bool]$serverProcessProof.QueryProven -or
-                    -not [bool]$serverProcessProof.Absent) {
+            if (-not (Test-VerifierStrictBooleanProperty $serverProcessProof 'QueryProven' $true) -or
+                    -not (Test-VerifierStrictBooleanProperty $serverProcessProof 'Absent' $true)) {
                 Throw-VerifierInfrastructure 'Completed integrated run-owned preview server process was still present or not independently proven absent.'
             }
-            $serverListenerProof = Confirm-VerifierReleasedListener $serverPort `
-                ([int](Get-VerifierLedgerProperty $server 'processId' 0)) `
-                ([long](Get-VerifierLedgerProperty $server 'processStartTicks' 0)) `
-                ([string](Get-VerifierLedgerProperty $server 'processCommandLine' '')) `
-                ([int](Get-VerifierLedgerProperty $server 'processParentProcessId' 0)) `
-                $serverScript $runId `
-                ([string](Get-VerifierLedgerProperty $server 'nonce' '')) '' `
-                ([long](Get-VerifierLedgerProperty $server 'processParentProcessStartTicks' 0))
-            if (-not [bool]$serverListenerProof.QueryProven -or
-                    -not [bool]$serverListenerProof.OldOwnerAbsent) {
+            $serverKernelTransport = ([string](Get-VerifierLedgerProperty $server `
+                'leaseListenerOwnerKind' '') -eq 'kernel-transport')
+            $serverListenerProof = if ($serverKernelTransport) {
+                # A kernel transport owner has no process start identity. The
+                # independent released-listener check is absence-only; any
+                # remaining PID 4 listener is rejected by the shared query.
+                Confirm-VerifierReleasedListener $serverPort 0 0 '' 0 '' $runId '' '' 0
+            } else {
+                Confirm-VerifierReleasedListener $serverPort `
+                    ([int](Get-VerifierLedgerProperty $server 'processId' 0)) `
+                    ([long](Get-VerifierLedgerProperty $server 'processStartTicks' 0)) `
+                    ([string](Get-VerifierLedgerProperty $server 'processCommandLine' '')) `
+                    ([int](Get-VerifierLedgerProperty $server 'processParentProcessId' 0)) `
+                    $serverScript $runId `
+                    ([string](Get-VerifierLedgerProperty $server 'nonce' '')) '' `
+                    ([long](Get-VerifierLedgerProperty $server 'processParentProcessStartTicks' 0))
+            }
+            if (-not (Test-VerifierStrictBooleanProperty $serverListenerProof 'QueryProven' $true) -or
+                    -not (Test-VerifierStrictBooleanProperty $serverListenerProof 'OldOwnerAbsent' $true)) {
                 Throw-VerifierInfrastructure 'Completed integrated run-owned preview listener absence was not independently proven.'
             }
             # Listener absence alone does not prove that a preview helper or
@@ -3354,17 +5542,21 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             }
         }
     }
-    $cleanup = Get-VerifierLedgerProperty $ledger 'cleanupState' ''
     if ($state -eq 'completed') {
-        if ([string]$cleanup -ne 'complete' -or
-                @(Get-VerifierLedgerProperty $ledger 'cleanupErrors' @()).Count -ne 0) {
+        if ($ledgerCleanupState -cne 'complete' -or
+                $cleanupErrors.Count -ne 0) {
             Throw-VerifierInfrastructure 'Integrated child ledger claimed completion with cleanup errors.'
         }
     } elseif ($AllowIncomplete -and $state -eq 'cleanup-failed' -and
-            @(Get-VerifierLedgerProperty $ledger 'cleanupErrors' @()).Count -eq 0) {
+            $cleanupErrors.Count -eq 0) {
         Throw-VerifierInfrastructure 'Incomplete cleanup-failed child ledger omitted the required retained cleanup error/evidence record.'
     } elseif (-not $AllowIncomplete) {
         Throw-VerifierInfrastructure 'Only the explicit parent-timeout path may accept an incomplete child ledger.'
+    }
+    $forcedNegativeProof = Get-VerifierLedgerProperty $ledger 'forcedNegativeProof' $null
+    if ($ExpectedExit -eq 1) {
+        Assert-VerifierIntegratedForcedNegativeProof $forcedNegativeProof $ExpectedExit `
+            $ExpectedForcedMarker
     }
     return $ledger
 }
@@ -3392,27 +5584,30 @@ function Invoke-VerifierIntegratedTimeoutResourceProof($Ledger,
         # Profiles are retained on a parent timeout. The parent may stop only a
         # process whose current WMI record, start identity, parent, and exact
         # run/profile/port markers still match the child ledger.
-        foreach ($profile in @(
-                if ($null -eq (Get-VerifierLedgerProperty $Ledger 'profiles' $null)) {
-                    @()
-                } else { @(Get-VerifierLedgerProperty $Ledger 'profiles' @()) }
-        )) {
+        $timeoutProfiles = Get-VerifierDurableArrayProperty $Ledger 'profiles' `
+            'integrated timeout browser profile ledger'
+        foreach ($profile in $timeoutProfiles) {
+            $profileIdentity = Assert-VerifierDurableProcessIdentityTuple $profile `
+                -ProcessIdPropertyName 'processId' `
+                -ProcessStartPropertyName 'processStartTicks' `
+                -ParentProcessIdPropertyName 'processParentProcessId' `
+                -ParentProcessStartPropertyName 'processParentProcessStartTicks' `
+                -CommandLinePropertyName 'processCommandLine' `
+                -Label 'integrated timeout browser profile process identity'
             $profilePath = Get-VerifierLedgerPath ([string](Get-VerifierLedgerProperty $profile 'profile' '')) `
                 'timeout browser profile' $runRoot
             if (-not (Test-Path -LiteralPath $profilePath -PathType Container)) {
                 Throw-VerifierInfrastructure "Integrated timeout browser profile was not retained: $profilePath"
             }
             Assert-VerifierNoReparseTree $profilePath
-            $profilePid = [int](Get-VerifierLedgerProperty $profile 'processId' 0)
-            $profileStart = [long](Get-VerifierLedgerProperty $profile 'processStartTicks' 0)
-            $profileParent = [int](Get-VerifierLedgerProperty $profile 'processParentProcessId' 0)
-            $profileParentStart = [long](Get-VerifierLedgerProperty $profile 'processParentProcessStartTicks' 0)
-            $profileCommand = [string](Get-VerifierLedgerProperty $profile 'processCommandLine' '')
+            $profilePid = $profileIdentity.ProcessId
+            $profileStart = $profileIdentity.ProcessStartTicks
+            $profileParent = $profileIdentity.ParentProcessId
+            $profileParentStart = $profileIdentity.ParentProcessStartTicks
+            $profileCommand = $profileIdentity.CommandLine
             $profilePort = [int](Get-VerifierLedgerProperty $profile 'cdpPort' 0)
             $profileBrowserPath = [string](Get-VerifierLedgerProperty $profile 'browserPath' '')
-            if ($profilePid -gt 0 -and ($profileStart -le 0 -or $profileParent -le 0 -or
-                    $profileParentStart -le 0 -or
-                    [String]::IsNullOrWhiteSpace($profileCommand) -or $profilePort -lt 1 -or
+            if ($profilePid -gt 0 -and ($profilePort -lt 1 -or
                     $profilePort -gt 65535)) {
                 Throw-VerifierInfrastructure 'Integrated timeout browser profile omitted a complete process/port identity.'
             }
@@ -3578,11 +5773,9 @@ function Invoke-VerifierIntegratedTimeoutResourceProof($Ledger,
         # Claims remain durable evidence after a parent timeout. Re-read each
         # exact descriptor and positively prove the old port is not listening;
         # never remove a claim or a newer run's mutex/port resource here.
-        foreach ($lease in @(
-                if ($null -eq (Get-VerifierLedgerProperty $Ledger 'leases' $null)) {
-                    @()
-                } else { @(Get-VerifierLedgerProperty $Ledger 'leases' @()) }
-        )) {
+        $timeoutLeases = Get-VerifierDurableArrayProperty $Ledger 'leases' `
+            'integrated timeout lease ledger'
+        foreach ($lease in $timeoutLeases) {
             $leaseId = [string](Get-VerifierLedgerProperty $lease 'leaseId' '')
             $leasePath = Get-VerifierLedgerPath ([string](Get-VerifierLedgerProperty $lease 'path' '')) `
                 ('timeout lease ' + $leaseId) $claimDirectory
@@ -3590,26 +5783,19 @@ function Invoke-VerifierIntegratedTimeoutResourceProof($Ledger,
                 Throw-VerifierInfrastructure "Integrated timeout lease $leaseId was not retained as exact evidence."
             }
             $claim = Get-Content -LiteralPath $leasePath -Raw -ErrorAction Stop | ConvertFrom-Json
-            $leasePort = [int](Get-VerifierLedgerProperty $lease 'port' 0)
-            if ([string](Get-VerifierLedgerProperty $claim 'runId' '') -ne $runId -or
-                    [string](Get-VerifierLedgerProperty $claim 'leaseId' '') -ne $leaseId -or
-                    [int](Get-VerifierLedgerProperty $claim 'port' 0) -ne $leasePort -or
-                    [string](Get-VerifierLedgerProperty $claim 'mutexName' '') -ne
-                        (Get-VerifierPortMutexName $null $leasePort)) {
-                Throw-VerifierInfrastructure "Integrated timeout lease $leaseId claim identity changed or was foreign."
-            }
-            $claimOwnerPid = [int](Get-VerifierLedgerProperty $claim 'ownerPid' 0)
-            $claimOwnerStart = [long](Get-VerifierLedgerProperty $claim 'ownerStartTicks' 0)
-            if ($claimOwnerPid -le 0 -or $claimOwnerStart -le 0) {
-                Throw-VerifierInfrastructure "Integrated timeout lease $leaseId omitted its positive owner identity."
-            }
+            $claimRecord = Read-VerifierIntegratedClaimRecord $claim $lease $leasePath `
+                $runId $repositoryIdentity $worktreeRoot `
+                ('integrated timeout lease ' + $leaseId + ' claim')
+            $leasePort = $claimRecord.Port
+            $claimOwnerPid = $claimRecord.OwnerPid
+            $claimOwnerStart = $claimRecord.OwnerStartTicks
             $claimOwnerProof = Confirm-VerifierRecordedProcessAbsent `
                 ([pscustomobject]@{
                     ProcessId = $claimOwnerPid
                     ProcessStartTicks = $claimOwnerStart
                 }) ('timeout lease ' + $leaseId + ' claim owner')
-            if (-not [bool]$claimOwnerProof.QueryProven -or
-                    -not [bool]$claimOwnerProof.Absent) {
+            if (-not (Test-VerifierStrictBooleanProperty $claimOwnerProof 'QueryProven' $true) -or
+                    -not (Test-VerifierStrictBooleanProperty $claimOwnerProof 'Absent' $true)) {
                 Throw-VerifierInfrastructure "Integrated timeout lease $leaseId owner process remained present or was not proven absent."
             }
             $inspection = Get-VerifierLoopbackListenerRecords $leasePort
@@ -3641,6 +5827,16 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
         $hostExecutable = getIntegratedPowerShellExecutable
     } catch {
         Throw-VerifierExit 2 "FAIL integrated child $label - verifier infrastructure: $($_.Exception.Message)"
+    }
+    $expectedForcedMarker = ''
+    if ($expectedExit -eq 1) {
+        if ($routeArguments -contains '-Task43PForcedNegative') {
+            $expectedForcedMarker = 'FAIL:task43p-forced-negative-canary'
+        } elseif ($routeArguments -contains '-Task43ForcedNegative') {
+            $expectedForcedMarker = 'FAIL:task43-forced-negative-canary'
+        } else {
+            Throw-VerifierInfrastructure "Integrated child $label expected exit 1 but did not select a forced-negative route."
+        }
     }
     $childLedgerPath = New-VerifierIntegratedChildLedger $label $expectedExit
     $quotePowerShellArgument = {
@@ -3674,8 +5870,10 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
             $commandParts += (& $quotePowerShellArgument $routeArgument)
         }
     }
+    $childShellCommand = ($commandParts -join ' ') +
+        (Get-VerifierIntegratedChildShellStatusTail)
     $childArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command',
-        (($commandParts -join ' ') + '; $tsjChildSuccess = $?; $tsjChildExit = $LASTEXITCODE; if ($tsjChildSuccess) { exit 0 } elseif ($tsjChildExit -eq 1 -or $tsjChildExit -eq 2) { exit $tsjChildExit } else { exit 2 }'))
+        $childShellCommand)
     Write-Host ("INTEGRATED CHILD START $label expected-exit=$expectedExit")
     $childProcess = $null
     $terminationProven = $false
@@ -3690,6 +5888,7 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
     $stdout = ''
     $stderr = ''
     $outputCaptured = $false
+    $childLedger = $null
     try {
         $childProcess = Start-VerifierIntegratedChildProcess $hostExecutable $childArguments
         $stdoutTask = $childProcess.StandardOutput.ReadToEndAsync()
@@ -3786,7 +5985,8 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
                     # each exact child process/profile/listener/claim resource;
                     # claims and evidence remain retained for recovery.
                     $timeoutLedger = Read-VerifierIntegratedChildLedger `
-                        $childLedgerPath $expectedExit -AllowIncomplete
+                        $childLedgerPath $expectedExit -AllowIncomplete `
+                        -ExpectedForcedMarker $expectedForcedMarker
                     $timeoutResourceProof = Invoke-VerifierIntegratedTimeoutResourceProof `
                         $timeoutLedger 5000
                 } catch {
@@ -3808,7 +6008,8 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
                 # prove that the child left its manifest/evidence/active claims
                 # behind for diagnosis.  This path always throws infrastructure
                 # below; it can never turn a timeout into success.
-                [void](Read-VerifierIntegratedChildLedger $childLedgerPath $expectedExit -AllowIncomplete)
+                [void](Read-VerifierIntegratedChildLedger $childLedgerPath $expectedExit `
+                    -AllowIncomplete -ExpectedForcedMarker $expectedForcedMarker)
             } catch {
                 $cleanupFailure += '; retained timeout ledger proof: ' +
                     (Get-VerifierErrorMessage $_)
@@ -3824,7 +6025,7 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
         try {
             if ($parentTimeoutPath) {
                 $retainedLedger = Read-VerifierIntegratedChildLedger $childLedgerPath `
-                    $expectedExit -AllowIncomplete
+                    $expectedExit -AllowIncomplete -ExpectedForcedMarker $expectedForcedMarker
                 if ([string]$retainedLedger.state -ne 'completed') {
                     Write-Host ("INTEGRATED CHILD TIMEOUT EVIDENCE RETAINED $label ledger=$childLedgerPath " +
                         "runRoot=$($retainedLedger.runRoot) resourceProof=$([bool]($null -ne $timeoutResourceProof))")
@@ -3833,7 +6034,8 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
                 # A process that terminated (even with expected infrastructure
                 # exit 2) must have completed its own ledger cleanup before the
                 # parent accepts its result.
-                [void](Read-VerifierIntegratedChildLedger $childLedgerPath $expectedExit)
+                [void](Read-VerifierIntegratedChildLedger $childLedgerPath $expectedExit `
+                    -ExpectedForcedMarker $expectedForcedMarker)
             }
         } catch {
             Throw-VerifierInfrastructure ('Integrated child status failure lacked the required parent ledger proof: ' +
@@ -3843,10 +6045,12 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
         Throw-VerifierInfrastructure ('Integrated child status could not be proven: ' +
             (Get-VerifierErrorMessage $failure))
     }
-    $childLedger = Read-VerifierIntegratedChildLedger $childLedgerPath $expectedExit
+    $childLedger = Read-VerifierIntegratedChildLedger $childLedgerPath $expectedExit `
+        -ExpectedForcedMarker $expectedForcedMarker
     Write-Host ("INTEGRATED CHILD LEDGER $label state=$($childLedger.state) path=$childLedgerPath")
     foreach ($line in $childOutput) { Write-Host ([string]$line) }
-    Assert-IntegratedChildOutputContract $label $expectedExit $childExit $childOutput
+    Assert-IntegratedChildOutputContract $label $expectedExit $childExit $childOutput `
+        $childLedger $expectedForcedMarker
     Write-Host ("PASS integrated child $label exit=$childExit")
 }
 
@@ -4028,18 +6232,16 @@ if ($Task41) {
 }
 if ($Task43PForcedNegative) {
     try {
-        $script:task43ExpectedFailureObserved = $false
-        $script:task43ExpectedFailureRoutePassed = $false
         [void](verifyRoute 'task43p forced-negative canary' `
             "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43P=true&tsjTask43PForcedFailure=true&running=true" `
             'UNPROVEN:task43p' '' 'FAIL:task43p-forced-negative-canary')
     } catch {
+        Invalidate-Task43ForcedNegativeProof
         Write-Host "FAIL task43p forced-negative canary - verifier infrastructure: $($_.Exception.Message)"
         return 2
     }
-    if ($script:task43ExpectedFailureObserved -ne $true -or
-            $script:task43ExpectedFailureRoutePassed -ne $true) { return 2 }
-    return 1
+    return (Get-Task43ForcedNegativeRouteExitCode `
+        'FAIL:task43p-forced-negative-canary')
 }
 if ($Task43P) {
     $task43pSeeds = if ($script:VerifierBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
@@ -4063,18 +6265,16 @@ if ($Task43P) {
 }
 if ($Task43ForcedNegative) {
     try {
-        $script:task43ExpectedFailureObserved = $false
-        $script:task43ExpectedFailureRoutePassed = $false
         [void](verifyRoute 'task43 forced-negative canary' `
             "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43=true&tsjTask43ForcedFailure=true&running=true" `
             'PASS:task43' '' 'FAIL:task43-forced-negative-canary')
     } catch {
+        Invalidate-Task43ForcedNegativeProof
         Write-Host "FAIL task43 forced-negative canary - verifier infrastructure: $($_.Exception.Message)"
         return 2
     }
-    if ($script:task43ExpectedFailureObserved -ne $true -or
-            $script:task43ExpectedFailureRoutePassed -ne $true) { return 2 }
-    return 1
+    return (Get-Task43ForcedNegativeRouteExitCode `
+        'FAIL:task43-forced-negative-canary')
 }
 if ($Task43) {
     $task43Results = @(verifyRoute 'task43 physical package geometry contract' `
@@ -4174,14 +6374,793 @@ Write-Host "All $expectedCount browser verifier routes passed."
 return 0
 }
 
+function Invoke-GateBListenerProofCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) { throw 'VerifierIsolation module was unavailable for listener proof canary.' }
+    $kernelPreviewMutex = $null
+    $kernelPreviewMutexHeld = $false
+    $kernelPreviewClaimName = ''
+    try {
+    $repositoryRoot = Get-VerifierFullPath (Join-Path $PSScriptRoot '..')
+    $previewScript = Get-VerifierFullPath (Join-Path $repositoryRoot 'scripts\preview.ps1')
+    $webRoot = Get-VerifierFullPath (Join-Path $repositoryRoot 'war')
+    $repositoryIdentity = 'gate-b-listener-proof-repository'
+    $runId = 'gate-b-listener-proof-run'
+    $nonce = 'gate-b-listener-proof-nonce'
+    $userClaimPath = Get-VerifierFullPath (Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\verify\listener-proof-user-' + [Guid]::NewGuid().ToString('N') + '.lease'))
+    $kernelClaimPath = Get-VerifierFullPath (Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\verify\listener-proof-kernel-' + [Guid]::NewGuid().ToString('N') + '.lease'))
+    $userProcess = Get-Process -Id $PID -ErrorAction Stop
+    $userProcessStartTicks = [long](Get-VerifierProcessStartTicks $userProcess)
+    $userPreviewContext = [pscustomobject]@{
+        Server = $null; WorktreeRoot = $repositoryRoot
+        RepositoryIdentity = $repositoryIdentity; RunId = $runId
+        PreviewNonce = $nonce
+    }
+    $userDirectOwner = [pscustomobject]@{
+        DirectProcessOwner = $true; Process = $userProcess; ProcessId = $PID
+        ProcessStartTicks = $userProcessStartTicks
+        IdentityProof = 'retained-process-object-v1'
+    }
+    $createTerminalLease = {
+        param([string]$Kind, [int]$ListenerProcessId, $ListenerStart,
+            [string]$ListenerOwnerKind, [string]$ListenerOwnerProof,
+            [string]$ListenerOwnerEvidence, [int]$BoundProcessId,
+            [long]$BoundProcessStartTicks, [int]$Port)
+        $claimPath = if ($Kind -eq 'preview') { $kernelClaimPath } else { $userClaimPath }
+        return [pscustomobject]([ordered]@{
+            leaseId = 'gate-b-listener-proof-' + $Kind + '-' + [string]$Port
+            kind = $Kind; port = $Port; path = $claimPath
+            runId = $runId; repositoryIdentity = $repositoryIdentity
+            worktreeRoot = $repositoryRoot
+            status = 'released'; claimName = Get-VerifierPortMutexName $null $Port
+            claimState = 'released'; releaseState = 'complete'
+            releaseJournalState = 'complete'; mutexReleased = $true
+            profile = ''; profilePath = ''; browserPath = ''
+            bindValidatedUtc = ''; releasedUtc = ''; releaseBlockReason = ''
+            listenerInspectionSuccess = $true; listenerInspectionKnown = $true
+            listenerHasListeners = $false; listenerAbsent = $true
+            boundProcessId = $BoundProcessId
+            boundProcessStartTicks = $BoundProcessStartTicks
+            listenerProcessId = $ListenerProcessId
+            listenerProcessStartTicks = $ListenerStart
+            listenerOwnerKind = $ListenerOwnerKind
+            listenerOwnerProof = $ListenerOwnerProof
+            listenerOwnerEvidence = $ListenerOwnerEvidence
+            listenerInspectionUtc = ''
+            claimOwnerPid = [int]$PID
+            claimOwnerStartTicks = [long]$userProcessStartTicks
+            registered = $true; releaseBlocked = $false
+            processProofRequired = $true
+             processTerminationProven = $true; processAbsent = $true
+             ClaimMutex = $null
+             claim = [ordered]@{
+                protocol = 'troubleshootjs-verifier-port-claim-v1'
+                runId = $runId; repositoryIdentity = $repositoryIdentity
+                worktreeRoot = $repositoryRoot
+                leaseId = 'gate-b-listener-proof-' + $Kind + '-' + [string]$Port
+                path = $claimPath; kind = $Kind; port = $Port
+                mutexName = Get-VerifierPortMutexName $null $Port
+                ownerPid = [int]$PID; ownerStartTicks = [long]$userProcessStartTicks
+            }
+        })
+    }
+    $userPort = 40192
+    $userLease = & $createTerminalLease 'cdp' 0 0L `
+        'none' '' '' $PID $userProcessStartTicks $userPort
+    $userPositiveInspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Source = 'Get-NetTCPConnection'
+        Listeners = @([pscustomobject]@{
+            LocalAddress = '127.0.0.1'; Port = $userPort; ProcessId = $PID
+            ProcessStartTicks = $userProcessStartTicks; Source = 'Get-NetTCPConnection'
+             ListenerOwnerKind = 'user-process'
+             ListenerOwnerProof = 'diagnostics-process-start-v1'
+             ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+         })
+         ListenerOwnerKind = 'user-process'
+         ListenerOwnerProof = 'diagnostics-process-start-v1'
+         ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+         Error = ''
+    }
+    $absenceInspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $false
+        Source = 'Get-NetTCPConnection'
+        Listeners = @()
+         ListenerOwnerKind = 'none'; ListenerOwnerProof = ''
+         ListenerOwnerEvidence = ''; Error = ''
+    }
+    $staleUserLease = $userLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $staleUserInspection = $userPositiveInspection | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $staleUserInspection.Listeners[0].ProcessStartTicks = $userProcessStartTicks + 1L
+    $staleBefore = $staleUserLease | ConvertTo-Json -Depth 16 -Compress
+    $staleRejected = $false
+    try {
+        & $module[0] {
+            param($targetLease, $inspection, $previewContext, $previewOwner,
+                $processId, $processStartTicks)
+            Set-VerifierLeaseListenerInspection $targetLease $inspection `
+                $previewContext $previewOwner $processId $processStartTicks
+        } $staleUserLease $staleUserInspection $userPreviewContext `
+            $userDirectOwner $PID $userProcessStartTicks
+    } catch {
+        $staleRejected = Test-VerifierInfrastructureError $_
+    }
+    if (-not $staleRejected -or
+            ($staleUserLease | ConvertTo-Json -Depth 16 -Compress) -ne $staleBefore) {
+        throw 'stale user-process listener Set path did not fail closed before mutation.'
+    }
+    & $module[0] {
+        param($targetLease, $inspection, $previewContext, $previewOwner,
+            $processId, $processStartTicks)
+        Set-VerifierLeaseListenerInspection $targetLease $inspection `
+            $previewContext $previewOwner $processId $processStartTicks
+    } $userLease $userPositiveInspection $userPreviewContext $userDirectOwner `
+        $PID $userProcessStartTicks
+    if ([string]$userLease.listenerOwnerKind -ne 'user-process' -or
+            [string]$userLease.listenerOwnerProof -ne 'diagnostics-process-start-v1' -or
+            [string]$userLease.listenerOwnerEvidence -ne 'system-diagnostics-process-starttime') {
+        throw 'user-process positive listener bind did not retain its exact owner proof.'
+    }
+    Invoke-VerifierParentLedgerWriterTupleCanary $userLease
+    Invoke-VerifierCleanupArrayReaderCanary
+    Invoke-VerifierDurableReaderSchemaCanary
+    & $module[0] {
+        param($targetLease, $inspection)
+        Set-VerifierLeaseListenerInspection $targetLease $inspection
+    } $userLease $absenceInspection
+    if ([string]$userLease.listenerOwnerKind -ne 'user-process' -or
+            [string]$userLease.listenerOwnerProof -ne 'diagnostics-process-start-v1' -or
+            [string]$userLease.listenerOwnerEvidence -ne 'system-diagnostics-process-starttime') {
+        throw 'user-process listener proof was erased by the pre-completion absence observation.'
+    }
+    $identityContext = [pscustomobject]@{
+        RunId = $runId; RepositoryIdentity = $repositoryIdentity
+        WorktreeRoot = $repositoryRoot; LeaseRecords = @($userLease)
+    }
+    $validSession = [pscustomobject]@{
+        RunId = $runId; RepositoryIdentity = $repositoryIdentity
+        WorktreeRoot = $repositoryRoot; RouteId = 'gate-b-listener-proof-route'
+        RouteName = 'listener-proof'; BrowserPath = $previewScript
+        Profile = (Join-Path $repositoryRoot 'gate-b-listener-proof-profile')
+        CdpPort = $userPort; ProcessId = 0; ProcessStartTicks = 0
+        ProcessParentProcessId = 0; ProcessParentProcessStartTicks = 0
+        ProcessCommandLine = ''; TargetId = ''; ExpectedUrl = ''
+        Status = 'cleaned'; CleanupResult = 'complete'; Error = ''
+        ProfileInspectionFailed = $false; ProfileProcessScanCompleted = $true
+        Lease = $userLease
+    }
+    $absenceIdentity = Assert-VerifierDurableProcessIdentityTuple $validSession `
+        -ProcessIdPropertyName 'ProcessId' `
+        -ProcessStartPropertyName 'ProcessStartTicks' `
+        -ParentProcessIdPropertyName 'ProcessParentProcessId' `
+        -ParentProcessStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandLinePropertyName 'ProcessCommandLine' `
+        -Label 'listener-proof absent browser session'
+    if ($absenceIdentity.State -cne 'absent') {
+        throw 'durable browser session explicit absence identity was not accepted.'
+    }
+    Assert-VerifierDurableBrowserSession $validSession $identityContext `
+        'listener-proof absent browser session'
+    $positiveSession = $validSession | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $positiveSession.ProcessId = $PID
+    $positiveSession.ProcessStartTicks = $userProcessStartTicks
+    $positiveSession.ProcessParentProcessId = $PID
+    $positiveSession.ProcessParentProcessStartTicks = $userProcessStartTicks
+    $positiveSession.ProcessCommandLine = 'powershell.exe -NoProfile'
+    $positiveSession.Lease = $userLease
+    $positiveIdentity = Assert-VerifierDurableProcessIdentityTuple $positiveSession `
+        -ProcessIdPropertyName 'ProcessId' `
+        -ProcessStartPropertyName 'ProcessStartTicks' `
+        -ParentProcessIdPropertyName 'ProcessParentProcessId' `
+        -ParentProcessStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandLinePropertyName 'ProcessCommandLine' `
+        -Label 'listener-proof positive browser session'
+    if ($positiveIdentity.State -cne 'positive') {
+        throw 'durable browser session positive identity was not accepted.'
+    }
+    Assert-VerifierDurableBrowserSession $positiveSession $identityContext `
+        'listener-proof positive browser session'
+    $malformedCompletionSession = $validSession | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $malformedCompletionSession.ProfileProcessScanCompleted = $false
+    $malformedCompletionBefore = $malformedCompletionSession | ConvertTo-Json -Depth 16 -Compress
+    $malformedCompletionRejected = $false
+    try {
+        Assert-VerifierDurableBrowserSession $malformedCompletionSession $identityContext `
+            'listener-proof malformed completion session'
+    } catch { $malformedCompletionRejected = Test-VerifierInfrastructureError $_ }
+    if (-not $malformedCompletionRejected -or
+            ($malformedCompletionSession | ConvertTo-Json -Depth 16 -Compress) -ne
+            $malformedCompletionBefore) {
+        throw 'malformed browser-session completion was not rejected without mutation.'
+    }
+    $validProfile = [pscustomobject]@{
+        owner = 'run'; runId = $runId; repositoryIdentity = $repositoryIdentity
+        worktreeRoot = $repositoryRoot; routeId = 'gate-b-listener-proof-route'
+        routeName = 'listener-proof'; profile = $validSession.Profile
+        cdpLeasePath = $userClaimPath; browserPath = $previewScript
+        processCommandLine = ''; targetId = ''; expectedUrl = ''
+        expectedRunMarker = 'tsjVerifierRun=' + $runId
+        expectedRouteMarker = 'tsjVerifierRoute=gate-b-listener-proof-route'
+        status = 'cleaned'; cleanupResult = 'complete'; error = ''
+        cdpPort = $userPort; processId = 0; processStartTicks = 0
+        processParentProcessId = 0; processParentProcessStartTicks = 0
+        profileProcessScanCompleted = $true; profileInspectionFailed = $false
+    }
+    Assert-VerifierIntegratedDurableProfileSchema $validProfile `
+        'listener-proof absent integrated browser profile'
+    $positiveProfile = $validProfile | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $positiveProfile.processId = $PID
+    $positiveProfile.processStartTicks = $userProcessStartTicks
+    $positiveProfile.processParentProcessId = $PID
+    $positiveProfile.processParentProcessStartTicks = $userProcessStartTicks
+    $positiveProfile.processCommandLine = 'powershell.exe -NoProfile'
+    Assert-VerifierIntegratedDurableProfileSchema $positiveProfile `
+        'listener-proof positive integrated browser profile'
+    foreach ($identityVariant in @(
+            [pscustomobject]@{ Name = 'absent PID with positive start'; ProcessId = 0; ProcessStartTicks = 123L }
+            [pscustomobject]@{ Name = 'positive PID with absent start'; ProcessId = 123; ProcessStartTicks = 0L }
+            [pscustomobject]@{ Name = 'positive PID with absent parent'; ProcessId = 123; ProcessStartTicks = 123L; ProcessParentProcessId = 0; ProcessParentProcessStartTicks = 0L; ProcessCommandLine = '' }
+        )) {
+        $sessionVariant = $validSession | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        $sessionVariant.ProcessId = $identityVariant.ProcessId
+        $sessionVariant.ProcessStartTicks = $identityVariant.ProcessStartTicks
+        if ($identityVariant.PSObject.Properties['ProcessParentProcessId']) {
+            $sessionVariant.ProcessParentProcessId = $identityVariant.ProcessParentProcessId
+            $sessionVariant.ProcessParentProcessStartTicks = $identityVariant.ProcessParentProcessStartTicks
+            $sessionVariant.ProcessCommandLine = $identityVariant.ProcessCommandLine
+        }
+        $sessionRejected = $false
+        try {
+            Assert-VerifierDurableBrowserSession $sessionVariant $identityContext `
+                ('listener-proof malformed ' + $identityVariant.Name)
+        } catch { $sessionRejected = Test-VerifierInfrastructureError $_ }
+        if (-not $sessionRejected) {
+            throw "durable browser session accepted $($identityVariant.Name)."
+        }
+        $profileVariant = $validProfile | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        $profileVariant.processId = $identityVariant.ProcessId
+        $profileVariant.processStartTicks = $identityVariant.ProcessStartTicks
+        if ($identityVariant.PSObject.Properties['ProcessParentProcessId']) {
+            $profileVariant.processParentProcessId = $identityVariant.ProcessParentProcessId
+            $profileVariant.processParentProcessStartTicks = $identityVariant.ProcessParentProcessStartTicks
+            $profileVariant.processCommandLine = $identityVariant.ProcessCommandLine
+        }
+        $profileRejected = $false
+        try {
+            Assert-VerifierIntegratedDurableProfileSchema $profileVariant `
+                ('listener-proof malformed integrated ' + $identityVariant.Name)
+        } catch { $profileRejected = Test-VerifierInfrastructureError $_ }
+        if (-not $profileRejected) {
+            throw "integrated browser profile accepted $($identityVariant.Name)."
+        }
+    }
+    $terminalInvariantVariants = @(
+        [pscustomobject]@{ Name = 'unregistered'; Field = 'registered'; Value = $false }
+        [pscustomobject]@{ Name = 'release blocked'; Field = 'releaseBlocked'; Value = $true }
+        [pscustomobject]@{ Name = 'incomplete release journal'; Field = 'releaseJournalState'; Value = 'pre-delete' }
+        [pscustomobject]@{ Name = 'mutex not released'; Field = 'mutexReleased'; Value = $false }
+        [pscustomobject]@{ Name = 'listener inspection incomplete'; Field = 'listenerInspectionKnown'; Value = $false }
+        [pscustomobject]@{ Name = 'process proof incomplete'; Field = 'processTerminationProven'; Value = $false }
+        [pscustomobject]@{ Name = 'release block reason retained'; Field = 'releaseBlockReason'; Value = 'ownership uncertain' }
+        [pscustomobject]@{ Name = 'pathless terminal record'; Field = 'path'; Value = '' }
+    )
+    foreach ($identityVariant in $terminalInvariantVariants) {
+        $terminalVariant = $userLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        $terminalVariant.($identityVariant.Field) = $identityVariant.Value
+        $terminalBefore = $terminalVariant | ConvertTo-Json -Depth 16 -Compress
+        if (Test-VerifierIntegratedLeaseTerminal $terminalVariant $userClaimPath) {
+            throw "strict terminal predicate accepted $($identityVariant.Name)."
+        }
+        if (($terminalVariant | ConvertTo-Json -Depth 16 -Compress) -ne $terminalBefore) {
+            throw "strict terminal predicate mutated $($identityVariant.Name)."
+        }
+    }
+    $userTerminalSerializedLease = $userLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    if (-not (Test-VerifierIntegratedLeaseTerminal $userTerminalSerializedLease $userClaimPath)) {
+        throw 'completed user-process listener lease did not validate after proof-preserving absence.'
+    }
+
+    $forgedPid4UserLease = $userLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $forgedPid4UserLease.listenerProcessId = 4
+    $forgedPid4UserLease.listenerProcessStartTicks = $userProcessStartTicks
+    foreach ($copyName in @('ledger', 'manifest')) {
+        if (Test-VerifierIntegratedListenerOwnerSchema $forgedPid4UserLease) {
+            throw "paired $copyName reader accepted a forged user-process PID 4 owner tuple."
+        }
+        if (Test-VerifierIntegratedLeaseTerminal $forgedPid4UserLease $userClaimPath) {
+            throw "paired $copyName terminal reader accepted a forged user-process PID 4 owner tuple."
+        }
+    }
+
+    $terminalReleaseLease = $userLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $terminalReleaseLease.listenerProcessId = 4
+    $terminalReleaseLease.listenerProcessStartTicks = $userProcessStartTicks
+    $terminalReleaseBefore = $terminalReleaseLease | ConvertTo-Json -Depth 16 -Compress
+    $terminalReleaseRejected = $false
+    try {
+        Release-VerifierPortLease $null $terminalReleaseLease
+    } catch {
+        $terminalReleaseRejected = Test-VerifierInfrastructureError $_
+    }
+    if (-not $terminalReleaseRejected -or
+            ($terminalReleaseLease | ConvertTo-Json -Depth 16 -Compress) -ne $terminalReleaseBefore) {
+        throw 'terminal release accepted or mutated a malformed user-process PID 4 owner tuple.'
+    }
+    $releaseBoundaryContext = [pscustomobject]@{
+        RunId = $runId; RepositoryIdentity = $repositoryIdentity
+        WorktreeRoot = $repositoryRoot; PortLeaseRoot = $repositoryRoot
+    }
+    foreach ($releaseVariantDefinition in @(
+            [pscustomobject]@{ Name = 'pathless'; Field = 'path'; Value = '' }
+            [pscustomobject]@{ Name = 'release-blocked'; Field = 'releaseBlocked'; Value = $true }
+        )) {
+        $releaseVariant = $userTerminalSerializedLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        $releaseVariant.($releaseVariantDefinition.Field) = $releaseVariantDefinition.Value
+        $releaseVariantBefore = $releaseVariant | ConvertTo-Json -Depth 16 -Compress
+        $releaseVariantRejected = $false
+        try {
+            Release-VerifierPortLease $releaseBoundaryContext $releaseVariant
+        } catch { $releaseVariantRejected = Test-VerifierInfrastructureError $_ }
+        if (-not $releaseVariantRejected -or
+                ($releaseVariant | ConvertTo-Json -Depth 16 -Compress) -ne $releaseVariantBefore -or
+                -not (Test-VerifierLeaseNeedsCleanup $releaseVariant)) {
+            throw "terminal $($releaseVariantDefinition.Name) release did not fail closed without mutation or retained cleanup need."
+        }
+    }
+
+    $kernelPort = 40193
+    $kernelPreviewClaimName = Get-VerifierPortMutexName $null $kernelPort
+    $kernelPreviewMutex = [Threading.Mutex]::new($false, $kernelPreviewClaimName)
+    $kernelPreviewMutexHeld = $kernelPreviewMutex.WaitOne(0)
+    if (-not $kernelPreviewMutexHeld) {
+        Throw-VerifierInfrastructure 'listener proof canary could not acquire its kernel preview mutex.'
+    }
+    & $module[0] {
+        param($claimName, $ownerRunId, $mutex)
+        $script:VerifierHeldPortClaims[$claimName] = $ownerRunId
+        $script:VerifierHeldPortMutexes[$claimName] = $mutex
+    } $kernelPreviewClaimName $runId $kernelPreviewMutex
+    $kernelCommandLine = 'powershell.exe -File "' + $previewScript + '" -Port ' +
+        [string]$kernelPort + ' -VerifierRunId ' + $runId + ' -VerifierNonce ' + $nonce
+    $kernelPreviewLease = [pscustomobject]@{
+        Kind = 'preview'; Port = $kernelPort; Status = 'bound'; ClaimState = 'bound'
+        RunId = $runId; RepositoryIdentity = $repositoryIdentity
+        WorktreeRoot = $repositoryRoot
+        LeaseId = 'gate-b-listener-proof-kernel-lease'
+        ClaimName = Get-VerifierPortMutexName $null $kernelPort
+        Path = $kernelClaimPath
+        ProfilePath = ''; BrowserPath = ''; BindValidatedUtc = ''; ReleasedUtc = ''
+        ReleaseState = 'active'; ReleaseJournalState = 'active'
+        ReleaseBlocked = $false; ReleaseBlockReason = ''; MutexReleased = $false
+        Registered = $true
+        ClaimOwnerPid = $PID; ClaimOwnerStartTicks = $userProcessStartTicks
+        BoundProcessId = $PID; BoundProcessStartTicks = $userProcessStartTicks
+        ListenerProcessId = 4; ListenerProcessStartTicks = $null
+        ListenerOwnerKind = 'kernel-transport'
+        ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+        ListenerOwnerEvidence = 'pid-4-system-http-sys'
+        ListenerInspectionSuccess = $true; ListenerInspectionKnown = $true
+        ListenerHasListeners = $true; ListenerAbsent = $false
+        ListenerInspectionUtc = ''
+        ProcessProofRequired = $true
+        ProcessTerminationProven = $false; ProcessAbsent = $false
+        ClaimMutex = $kernelPreviewMutex
+    }
+    $kernelPreviewContext = [pscustomobject]@{
+        Server = $null; WorktreeRoot = $repositoryRoot
+        RepositoryIdentity = $repositoryIdentity; RunId = $runId
+        PreviewNonce = $nonce
+    }
+    $kernelPreviewOwner = [pscustomobject]([ordered]@{
+        Owner = 'run'; BaseUrl = 'http://127.0.0.1:' + [string]$kernelPort
+         Port = $kernelPort; ProcessId = $PID; ProcessStartTicks = (Get-VerifierProcessStartTicks (Get-Process -Id $PID))
+        ProcessParentProcessId = 65403; ProcessParentProcessStartTicks = 234503L
+        ProcessCommandLine = $kernelCommandLine; Script = $previewScript
+        RepositoryRoot = $repositoryRoot; WebRoot = $webRoot
+        IdentityProtocol = 'troubleshootjs-preview-identity-v1'
+        IdentityVerified = $true; CallerOwned = $false
+        RunId = $runId; Nonce = $nonce; State = 'run-owned-verified'
+        Lease = $kernelPreviewLease; Process = (Get-Process -Id $PID)
+        StdoutLog = (Join-Path $repositoryRoot 'gate-b-listener-proof-kernel-stdout.log')
+        StderrLog = (Join-Path $repositoryRoot 'gate-b-listener-proof-kernel-stderr.log')
+        CleanupResult = 'pending'; Error = ''
+        ProcessIdentityKnown = $true; OwnershipUncertain = $false
+        ProcessTerminationProven = $false; ProcessAbsent = $false
+        ListenerInspectionProven = $true; ListenerAbsent = $false
+    })
+    $kernelPreviewContext.Server = $kernelPreviewOwner
+    $kernelTerminalLease = & $createTerminalLease 'preview' 4 $null `
+        'kernel-transport' 'run-owned-preview-http-sys-v1' 'pid-4-system-http-sys' `
+        65402 234502L $kernelPort
+    $kernelLease = & $createTerminalLease 'preview' 0 0L `
+        'none' '' '' 65402 234502L $kernelPort
+    $kernelPositiveInspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Source = 'Get-NetTCPConnection'
+        Listeners = @([pscustomobject]@{
+            LocalAddress = '127.0.0.1'; Port = $kernelPort; ProcessId = 4
+            ProcessStartTicks = $null; Source = 'Get-NetTCPConnection'
+             ListenerOwnerKind = 'kernel-transport'
+             ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+             ListenerOwnerEvidence = 'pid-4-system-http-sys'
+         })
+         ListenerOwnerKind = 'kernel-transport'
+         ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+         ListenerOwnerEvidence = 'pid-4-system-http-sys'
+         Error = ''
+    }
+    & $module[0] {
+        param($targetLease, $inspection, $previewContext, $previewOwner)
+        Set-VerifierLeaseListenerInspection $targetLease $inspection `
+            $previewContext $previewOwner
+    } $kernelLease $kernelPositiveInspection $kernelPreviewContext $kernelPreviewOwner
+    if ([string]$kernelLease.listenerOwnerKind -ne 'kernel-transport' -or
+            [string]$kernelLease.listenerOwnerProof -ne 'run-owned-preview-http-sys-v1' -or
+            [string]$kernelLease.listenerOwnerEvidence -ne 'pid-4-system-http-sys' -or
+            $null -ne $kernelLease.listenerProcessStartTicks) {
+        throw 'kernel transport positive listener bind did not retain its null-start owner proof.'
+    }
+    & $module[0] {
+        param($targetLease, $inspection)
+        Set-VerifierLeaseListenerInspection $targetLease $inspection
+    } $kernelLease $absenceInspection
+    if ([string]$kernelLease.listenerOwnerKind -ne 'kernel-transport' -or
+            [string]$kernelLease.listenerOwnerProof -ne 'run-owned-preview-http-sys-v1' -or
+            [string]$kernelLease.listenerOwnerEvidence -ne 'pid-4-system-http-sys' -or
+            $null -ne $kernelLease.listenerProcessStartTicks) {
+        throw 'kernel transport listener proof was erased by a positive absence observation.'
+    }
+    $kernelServer = [pscustomobject]([ordered]@{
+        owner = 'run'; baseUrl = 'http://127.0.0.1:' + [string]$kernelPort
+        repositoryIdentity = $repositoryIdentity; worktreeRoot = $repositoryRoot
+        repositoryRoot = $repositoryRoot; webRoot = $webRoot
+        identityProtocol = 'troubleshootjs-preview-identity-v1'
+        identityVerified = $true; callerOwned = $false
+        port = $kernelPort; processId = 65402; processStartTicks = 234502L
+        processParentProcessId = 65403; processParentProcessStartTicks = 234503L
+        processCommandLine = $kernelCommandLine; script = $previewScript
+        runId = $runId; nonce = $nonce; state = 'cleaned'
+        cleanupResult = 'complete'
+        stdoutLog = ''; stderrLog = ''; error = ''
+        leaseId = $kernelTerminalLease.leaseId
+        leaseKind = 'preview'
+        leaseClaimName = $kernelTerminalLease.claimName
+        leaseClaimState = 'released'
+        leaseReleaseState = 'complete'
+        leaseReleaseJournalState = 'complete'
+        leasePath = $kernelClaimPath
+        leaseOwnerPid = [int]$PID
+        leaseOwnerStartTicks = [long]$userProcessStartTicks
+        leaseListenerAbsent = $true
+        leaseProcessProofRequired = $true
+        leaseListenerOwnerKind = 'kernel-transport'
+        leaseListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+        leaseListenerOwnerEvidence = 'pid-4-system-http-sys'
+        processIdentityKnown = $true; ownershipUncertain = $false
+        processTerminationProven = $true; processAbsent = $true
+        listenerInspectionProven = $true; listenerAbsent = $true
+    })
+    $kernelTerminalSerializedLease = $kernelTerminalLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    if (-not (Test-VerifierIntegratedLeaseTerminal $kernelTerminalSerializedLease $kernelClaimPath `
+            $kernelServer $runId $repositoryIdentity $repositoryRoot)) {
+        throw 'completed kernel-transport listener lease did not validate after proof-preserving absence.'
+    }
+
+    foreach ($remainingLease in @($userLease, $kernelLease)) {
+        $remainingVariant = $remainingLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        $remainingVariant.listenerHasListeners = $true
+        $remainingVariant.listenerAbsent = $false
+        $remainingPath = if ([int]$remainingVariant.listenerProcessId -eq 4) {
+            $kernelClaimPath
+        } else { $userClaimPath }
+        $remainingServer = if ([int]$remainingVariant.listenerProcessId -eq 4) {
+            $kernelServer
+        } else { $null }
+        if (Test-VerifierIntegratedLeaseTerminal $remainingVariant $remainingPath `
+                $remainingServer $runId $repositoryIdentity $repositoryRoot) {
+            throw 'terminal validation accepted a remaining listener claim.'
+        }
+    }
+
+    $ownerProofFields = @('listenerOwnerKind', 'listenerOwnerProof',
+        'listenerOwnerEvidence')
+    foreach ($copyName in @('ledger', 'manifest')) {
+        foreach ($ownerProofField in $ownerProofFields) {
+            $userVariant = $userLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+            [void]$userVariant.PSObject.Properties.Remove($ownerProofField)
+            if (Test-VerifierIntegratedLeaseTerminal $userVariant $userClaimPath) {
+                throw "terminal validation accepted $copyName user-process copy missing $ownerProofField."
+            }
+            $kernelVariant = $kernelLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+            [void]$kernelVariant.PSObject.Properties.Remove($ownerProofField)
+            if (Test-VerifierIntegratedLeaseTerminal $kernelVariant $kernelClaimPath `
+                    $kernelServer $runId $repositoryIdentity $repositoryRoot) {
+                throw "terminal validation accepted $copyName kernel-transport copy missing $ownerProofField."
+            }
+        }
+    }
+    foreach ($variantDefinition in @(
+        [pscustomobject]@{ Name = 'scalar-array owner kind'; Field = 'listenerOwnerKind'; Value = @('user-process') },
+        [pscustomobject]@{ Name = 'legacy user proof'; Field = 'listenerOwnerProof'; Value = 'legacy-proof' },
+        [pscustomobject]@{ Name = 'scalar-array listener start'; Field = 'listenerProcessStartTicks'; Value = @([long]234501) },
+        [pscustomobject]@{ Name = 'user/kernel tuple mismatch'; Field = 'listenerOwnerProof'; Value = 'run-owned-preview-http-sys-v1' }
+    )) {
+        $userVariant = $userLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        $userVariant.($variantDefinition.Field) = $variantDefinition.Value
+        if (Test-VerifierIntegratedLeaseTerminal $userVariant $userClaimPath) {
+            throw "terminal validation accepted $($variantDefinition.Name)."
+        }
+    }
+    foreach ($variantDefinition in @(
+        [pscustomobject]@{ Name = 'kernel wrong PID'; Field = 'listenerProcessId'; Value = 5 },
+        [pscustomobject]@{ Name = 'kernel fabricated start'; Field = 'listenerProcessStartTicks'; Value = 1L },
+        [pscustomobject]@{ Name = 'kernel owner kind changed'; Field = 'listenerOwnerKind'; Value = 'user-process' }
+    )) {
+        $kernelVariant = $kernelLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+        $kernelVariant.($variantDefinition.Field) = $variantDefinition.Value
+        if (Test-VerifierIntegratedLeaseTerminal $kernelVariant $kernelClaimPath `
+                $kernelServer $runId $repositoryIdentity $repositoryRoot) {
+            throw "terminal validation accepted $($variantDefinition.Name)."
+        }
+    }
+    $serverTupleVariant = $kernelServer | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $serverTupleVariant.leaseListenerOwnerKind = 'user-process'
+    if (Test-VerifierIntegratedLeaseTerminal $kernelTerminalSerializedLease $kernelClaimPath `
+            $serverTupleVariant $runId $repositoryIdentity $repositoryRoot) {
+        throw 'terminal validation accepted a server/lease owner tuple mismatch.'
+    }
+    foreach ($pairDefinition in @(
+        [pscustomobject]@{ Name = 'RunId'; Field = 'runId'; Value = 'gate-b-string-pair-run'; Mismatch = 'Gate-b-string-pair-run' }
+        [pscustomobject]@{ Name = 'protocol'; Field = 'protocol'; Value = 'troubleshootjs-verifier-port-claim-v1'; Mismatch = 'Troubleshootjs-verifier-port-claim-v1' }
+        [pscustomobject]@{ Name = 'lifecycle'; Field = 'releaseState'; Value = 'complete'; Mismatch = 'Complete' }
+        [pscustomobject]@{ Name = 'owner'; Field = 'owner'; Value = 'run'; Mismatch = 'Run' }
+        [pscustomobject]@{ Name = 'listener owner kind'; Field = 'listenerOwnerKind'; Value = 'user-process'; Mismatch = 'User-process' }
+    )) {
+        $ledgerPair = [pscustomobject]@{}
+        $manifestPair = [pscustomobject]@{}
+        Add-Member -InputObject $ledgerPair -MemberType NoteProperty `
+            -Name $pairDefinition.Field -Value $pairDefinition.Value
+        Add-Member -InputObject $manifestPair -MemberType NoteProperty `
+            -Name $pairDefinition.Field -Value $pairDefinition.Mismatch
+        $pairRejected = $false
+        try {
+            [void](Assert-VerifierDurableStringPair $ledgerPair $manifestPair `
+                $pairDefinition.Field)
+        } catch {
+            $pairRejected = Test-VerifierInfrastructureError $_
+        }
+        if (-not $pairRejected) {
+            throw "durable string pair accepted a case-only $($pairDefinition.Name) mismatch."
+        }
+    }
+    foreach ($typeDefinition in @(
+        [pscustomobject]@{ Name = 'numeric'; Value = 7 }
+        [pscustomobject]@{ Name = 'array'; Value = @('gate-b-string-pair-run') }
+        [pscustomobject]@{ Name = 'object'; Value = [pscustomobject]@{ Value = 'gate-b-string-pair-run' } }
+    )) {
+        $ledgerPair = [pscustomobject]@{ runId = 'gate-b-string-pair-run' }
+        $manifestPair = [pscustomobject]@{ runId = $typeDefinition.Value }
+        $pairRejected = $false
+        try {
+            [void](Assert-VerifierDurableStringPair $ledgerPair $manifestPair 'runId')
+        } catch {
+            $pairRejected = Test-VerifierInfrastructureError $_
+        }
+        if (-not $pairRejected) {
+            throw "durable string pair accepted a $($typeDefinition.Name) type mismatch."
+        }
+    }
+    Write-Host 'PASS:listener owner proof bind/absence preservation, user/kernel terminal validation, paired forged user/PID4 rejection, malformed terminal release fail-closed/no-mutation, canonical delegation, remaining-listener fail-closed behavior, paired tuple equality, and malformed scalar/legacy/mismatch rejection'
+    } finally {
+        if ($kernelPreviewClaimName -and $null -ne $kernelPreviewMutex) {
+            & $module[0] {
+                param($claimName, $ownerRunId, $mutex)
+                if ($script:VerifierHeldPortClaims.ContainsKey($claimName) -and
+                        [string]$script:VerifierHeldPortClaims[$claimName] -eq $ownerRunId) {
+                    [void]$script:VerifierHeldPortClaims.Remove($claimName)
+                }
+                if ($script:VerifierHeldPortMutexes.ContainsKey($claimName) -and
+                        [object]::ReferenceEquals($script:VerifierHeldPortMutexes[$claimName], $mutex)) {
+                    [void]$script:VerifierHeldPortMutexes.Remove($claimName)
+                }
+            } $kernelPreviewClaimName $runId $kernelPreviewMutex
+        }
+        if ($kernelPreviewMutexHeld) {
+            try { [void]$kernelPreviewMutex.ReleaseMutex() } catch { }
+        }
+        if ($null -ne $kernelPreviewMutex) {
+            try { $kernelPreviewMutex.Dispose() } catch { }
+        }
+    }
+}
+
+function Invoke-Task43ForcedNegativeContractCanaries() {
+    $priorContext = $script:VerifierContext
+    $priorRouteId = $script:VerifierCurrentRouteId
+    $priorProof = $script:Task43ForcedNegativeProof
+    $priorObserved = $script:task43ExpectedFailureObserved
+    $priorRoutePassed = $script:task43ExpectedFailureRoutePassed
+    $priorFailureExit = $script:VerifierFailureExitCode
+    $priorFailureKind = $script:VerifierFailureKind
+    $priorFailureMessage = $script:VerifierFailureMessage
+    $legacyMarker = 'FAIL:task43-forced-negative-canary'
+    $task43pMarker = 'FAIL:task43p-forced-negative-canary'
+    $runId = 'gate-b-forced-negative-run'
+    $routeId = 'gate-b-forced-negative-route'
+    $script:VerifierContext = [pscustomobject]@{ RunId = $runId }
+
+    $reset = {
+        param([string]$Marker)
+        $script:VerifierFailureExitCode = 0
+        $script:VerifierFailureKind = ''
+        $script:VerifierFailureMessage = ''
+        Reset-Task43ForcedNegativeProof $Marker `
+            (Get-Task43ForcedNegativeExpectedRoute $Marker)
+        $script:VerifierCurrentRouteId = $routeId
+        Set-Task43ForcedNegativeRouteIdentity
+    }
+    $setValid = {
+        param([string]$Marker, [string]$Diagnostic, [string]$BaselineHead)
+        & $reset $Marker
+        Set-Task43ForcedNegativeMarkerObserved $Marker
+        if (-not (isExpectedTask43ForcedFailureDiagnostic $Diagnostic $Marker `
+                $runId $routeId $BaselineHead)) {
+            throw "deterministic exact forced-negative diagnostic canary did not match: $Marker"
+        }
+        Set-Task43ForcedNegativeAnchoredDiagnostic $Diagnostic $BaselineHead
+        Set-Task43ForcedNegativeRoutePassedAfterCleanup
+    }
+    try {
+        if ((Resolve-VerifierIntegratedChildShellStatus $true 1) -ne 2 -or
+                (Resolve-VerifierIntegratedChildShellStatus $false 1) -ne 2 -or
+                (Resolve-VerifierIntegratedChildShellStatus $true 'stale') -ne 2 -or
+                (Resolve-VerifierIntegratedChildShellStatus $true 0) -ne 0 -or
+                (Resolve-VerifierIntegratedChildShellStatus $true $null) -ne 0) {
+            throw 'integrated child $?/$LASTEXITCODE ambiguity did not remain infrastructure.'
+        }
+        Write-Host 'PASS:integrated child $?/$LASTEXITCODE stale-status ambiguity -> exit 2'
+        $task43pDiagnostic = 'Console failure: exception in runCircuit java.lang.IllegalStateException: ' +
+            'Generated board verification failed for led/controlled-indicator, seed 3: ' +
+            $task43pMarker.Substring(5)
+        & $setValid $task43pMarker $task43pDiagnostic $script:Task43PPublishedBaselineSha
+        if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 1) {
+            throw 'exact anchored Task43P proof did not resolve to application exit 1.'
+        }
+        Set-Task43ForcedNegativeFinalCleanupProven $true
+        if ((Resolve-Task43ForcedNegativeTopLevelExitCode 1 $task43pMarker) -ne 1) {
+            throw 'exact anchored Task43P proof did not survive the independent top-level gate.'
+        }
+        $validLedgerProof = Get-Task43ForcedNegativeProofRecord | ConvertTo-Json -Depth 8 | ConvertFrom-Json
+        Assert-IntegratedChildOutputContract 'Gate B forced-negative proof' 1 1 `
+            @('EXPECTED FAILURE task43p forced-negative canary') $validLedgerProof $task43pMarker
+        Write-Host 'PASS:forced-negative exact anchored Java proof and expected-route ledger -> exit 1'
+
+        & $reset $task43pMarker
+        try { Throw-VerifierInfrastructure 'synthetic preview died before application' } catch {
+            Set-VerifierFailure $_ 'Gate B forced-negative preview startup' -Quiet
+        }
+        if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 2 -or
+                (Resolve-Task43ForcedNegativeTopLevelExitCode 1 $task43pMarker) -ne 2) {
+            throw 'preview-before-application forced-negative uncertainty was not exit 2.'
+        }
+        Write-Host 'PASS:forced-negative preview-before-application uncertainty -> exit 2'
+
+        foreach ($uncertainty in @(
+            [pscustomobject]@{ Name = 'browser identity unavailable'; Message = 'synthetic browser identity unavailable' }
+            [pscustomobject]@{ Name = 'WMI/CIM uncertainty'; Message = 'synthetic WMI/CIM process identity uncertainty' }
+        )) {
+            & $reset $task43pMarker
+            try {
+                $uncertain = [System.UnauthorizedAccessException]::new($uncertainty.Message)
+                throw $uncertain
+            } catch {
+                Set-VerifierFailure $_ ('Gate B forced-negative ' + $uncertainty.Name) -Quiet
+            }
+            if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 2) {
+                throw "$($uncertainty.Name) was not dominant over forced-negative application exit."
+            }
+            Write-Host ("PASS:forced-negative $($uncertainty.Name) -> exit 2")
+        }
+
+        & $reset $task43pMarker
+        if (isExpectedTask43ForcedFailureDiagnostic '' $task43pMarker $runId $routeId `
+                $script:Task43PPublishedBaselineSha) {
+            throw 'missing forced-negative marker was accepted as expected proof.'
+        }
+        if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 2) {
+            throw 'missing forced-negative marker did not resolve to exit 2.'
+        }
+        Write-Host 'PASS:forced-negative marker missing -> nonexpected/exit 2'
+
+        & $reset $task43pMarker
+        Set-Task43ForcedNegativeMarkerObserved $task43pMarker
+        $wrongDiagnostic = $task43pDiagnostic.Replace($task43pMarker.Substring(5), 'wrong-java-text')
+        if (isExpectedTask43ForcedFailureDiagnostic $wrongDiagnostic $task43pMarker `
+                $runId $routeId $script:Task43PPublishedBaselineSha) {
+            throw 'wrong Java forced-negative text was accepted as anchored proof.'
+        }
+        if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 2) {
+            throw 'wrong Java forced-negative text did not resolve to exit 2.'
+        }
+        Write-Host 'PASS:forced-negative wrong Java text -> not expected success/exit 2'
+
+        $legacyDiagnostic = 'Console failure: exception in runCircuit java.lang.IllegalStateException: ' +
+            'Generated board verification failed for led/controlled-indicator, seed 3: ' +
+            $legacyMarker.Substring(5)
+        & $setValid $legacyMarker $legacyDiagnostic ''
+        if ((Get-Task43ForcedNegativeRouteExitCode $legacyMarker) -ne 1) {
+            throw 'ordinary Task43ForcedNegative exact proof did not resolve to exit 1.'
+        }
+        Set-Task43ForcedNegativeFinalCleanupProven $true
+        if ((Resolve-Task43ForcedNegativeTopLevelExitCode 1 $legacyMarker) -ne 1) {
+            throw 'ordinary Task43ForcedNegative exact proof failed the top-level gate.'
+        }
+        Write-Host 'PASS:ordinary Task43ForcedNegative exact proof -> exit 1'
+
+        & $setValid $legacyMarker $legacyDiagnostic ''
+        try { Throw-VerifierInfrastructure 'synthetic cleanup uncertainty after marker' } catch {
+            Set-VerifierFailure $_ 'Gate B forced-negative later cleanup' -Quiet
+        }
+        if ($script:Task43ForcedNegativeProof.RoutePassedAfterCleanup -eq $true -or
+                $script:Task43ForcedNegativeProof.FinalCleanupProven -eq $true -or
+                (Get-Task43ForcedNegativeRouteExitCode $legacyMarker) -ne 2 -or
+                (Resolve-Task43ForcedNegativeTopLevelExitCode 1 $legacyMarker) -ne 2) {
+            throw 'forced-negative marker followed by cleanup uncertainty retained a success claim.'
+        }
+        Write-Host 'PASS:forced-negative marker then later infrastructure/cleanup -> exit 2'
+
+        foreach ($withoutProofCase in @(
+            [pscustomobject]@{ Name = 'actual-exit-0'; Exit = 0 }
+            [pscustomobject]@{ Name = 'actual-exit-1'; Exit = 1 }
+        )) {
+            $integratedWithoutProof = $false
+            try {
+                Assert-IntegratedChildOutputContract `
+                    ('Gate B forced-negative ' + $withoutProofCase.Name + ' without proof') `
+                    1 $withoutProofCase.Exit `
+                    @('EXPECTED FAILURE task43 forced-negative canary') $null $legacyMarker
+            } catch {
+                $integratedWithoutProof = Test-VerifierInfrastructureError $_
+            }
+            if (-not $integratedWithoutProof) {
+                throw ('integrated expected-exit-1 ' + $withoutProofCase.Name +
+                    ' without durable forced proof was accepted.')
+            }
+            Write-Host ('PASS:integrated expected-exit-1 ' + $withoutProofCase.Name +
+                ' without forced proof -> infrastructure exit 2')
+        }
+    } finally {
+        $script:VerifierContext = $priorContext
+        $script:VerifierCurrentRouteId = $priorRouteId
+        $script:Task43ForcedNegativeProof = $priorProof
+        $script:task43ExpectedFailureObserved = $priorObserved
+        $script:task43ExpectedFailureRoutePassed = $priorRoutePassed
+        $script:VerifierFailureExitCode = $priorFailureExit
+        $script:VerifierFailureKind = $priorFailureKind
+        $script:VerifierFailureMessage = $priorFailureMessage
+    }
+}
+
 # A deterministic developer-only probe used by Gate B.  It exercises the same
 # wait/invoke classification functions without requiring a browser or a
 # fabricated application result.
+if ($GateBListenerProofProbe) {
+    try {
+        Invoke-GateBListenerProofCanary
+        exit 0
+    } catch {
+        [Console]::Error.WriteLine('FAIL:listener proof canary - ' + $_.Exception.Message)
+        exit 2
+    }
+}
 if ($GateBContractProbe) {
     try {
         if ($GateBContractProbeFailure) {
             Throw-VerifierInfrastructure 'deterministic Gate B CDP contract-probe failure'
         }
+        Invoke-Task43ForcedNegativeContractCanaries
         function evaluateCdp {
             param($socket, [ref]$nextId, [string]$expression, [ref]$failures,
                 [DateTime]$deadline = [DateTime]::MinValue)
@@ -4317,7 +7296,16 @@ if ($GateBContractProbe) {
         if (-not $integratedExplicitExit2Observed) {
             throw 'Task43Integrated explicit child exit 2 was not preserved as infrastructure.'
         }
-        foreach ($invalidChildStatus in @($null, '', 'not-a-number')) {
+        $invalidChildStatuses = New-Object Collections.ArrayList
+        [void]$invalidChildStatuses.Add($null)
+        [void]$invalidChildStatuses.Add('')
+        [void]$invalidChildStatuses.Add('not-a-number')
+        [void]$invalidChildStatuses.Add('1')
+        [void]$invalidChildStatuses.Add(1.5)
+        [void]$invalidChildStatuses.Add($true)
+        [void]$invalidChildStatuses.Add(@(1, 2))
+        [void]$invalidChildStatuses.Add([pscustomobject]@{ Value = 1 })
+        foreach ($invalidChildStatus in @($invalidChildStatuses)) {
             $invalidStatusObserved = $false
             try {
                 [void](Resolve-VerifierIntegratedChildExitCode $true $invalidChildStatus)
@@ -4349,6 +7337,7 @@ if ($GateBContractProbe) {
         if (-not $falsePassObserved) {
             throw 'integrated child false-pass probe was accepted.'
         }
+        Invoke-GateBListenerProofCanary
         # Normally terminated children, including expected infrastructure
         # failures, must publish a completed ledger whose paths and resources
         # are real and owned. Only a parent timeout may accept a retained
@@ -4357,7 +7346,7 @@ if ($GateBContractProbe) {
             ('TroubleshootJS\verify\ledger-completion-' + [Guid]::NewGuid().ToString('N')))
         $ledgerCanaryFailure = $null
         try {
-            New-Item -ItemType Directory -Path $ledgerCanaryRoot -Force -ErrorAction Stop | Out-Null
+            New-VerifierEvidenceDirectory $ledgerCanaryRoot 'Gate B ledger canary' -Force
             function Write-GateBLedger($Context, [string]$Path, [string]$State,
                     $Leases, $Profiles, $Server, [string]$CleanupState) {
                 $normalizedLeases = @()
@@ -4386,46 +7375,66 @@ if ($GateBContractProbe) {
                      if ([String]::IsNullOrWhiteSpace($profileValue)) {
                          $profileValue = [string](Get-VerifierLedgerProperty $candidate 'ProfilePath' '')
                      }
-                      $ownerPid = [int](Get-VerifierLedgerProperty $candidate 'claimOwnerPid' $PID)
+                     $ownerPid = [int](Get-VerifierLedgerProperty $candidate 'claimOwnerPid' $PID)
                      $ownerStart = [long](Get-VerifierLedgerProperty $candidate 'claimOwnerStartTicks' 1)
-                     $mutexReleased = $false
-                     if ($candidate.PSObject.Properties['MutexReleased']) {
-                         $mutexReleased = [bool]$candidate.MutexReleased
-                     } elseif ($candidate.PSObject.Properties['mutexReleased']) {
-                         $mutexReleased = [bool]$candidate.mutexReleased
-                     }
+                     $mutexReleased = Get-VerifierDurableBooleanValue $candidate `
+                         'MutexReleased' ('canary lease ' + $leaseId + ' mutexReleased')
+                     $candidateListenerPid = [int](Get-VerifierLedgerProperty $candidate 'listenerProcessId' 0)
+                     $listenerStartProperty = $candidate.PSObject.Properties['listenerProcessStartTicks']
+                     $listenerStartValue = if ($null -ne $listenerStartProperty) {
+                         $listenerStartProperty.Value
+                     } else { $null }
+                     $listenerOwnerKindValue = if ($candidate.PSObject.Properties['listenerOwnerKind']) {
+                         [string]$candidate.listenerOwnerKind
+                     } else { $null }
+                     $listenerOwnerProofValue = if ($candidate.PSObject.Properties['listenerOwnerProof']) {
+                         [string]$candidate.listenerOwnerProof
+                     } else { $null }
+                     $listenerOwnerEvidenceValue = if ($candidate.PSObject.Properties['listenerOwnerEvidence']) {
+                         [string]$candidate.listenerOwnerEvidence
+                     } else { $null }
                      $normalizedLeases += [pscustomobject]([ordered]@{
                         runId = $Context.RunId; repositoryIdentity = $Context.RepositoryIdentity
                         worktreeRoot = $Context.WorktreeRoot; leaseId = $leaseId
                         path = [string](Get-VerifierLedgerProperty $candidate 'path' '')
                         kind = $kind; port = $port; claimName = $claimName
                         status = [string](Get-VerifierLedgerProperty $candidate 'status' 'held')
+                          registered = Get-VerifierDurableBooleanValue $candidate `
+                              'Registered' ('canary lease ' + $leaseId + ' registered')
+                          releaseBlocked = Get-VerifierDurableBooleanValue $candidate `
+                              'ReleaseBlocked' ('canary lease ' + $leaseId + ' releaseBlocked')
+                          releaseBlockReason = Get-VerifierLedgerProperty $candidate 'releaseBlockReason' ''
                           claimState = [string](Get-VerifierLedgerProperty $candidate 'claimState' 'held')
                           releaseState = [string](Get-VerifierLedgerProperty $candidate 'releaseState' 'active')
                           releaseJournalState = Get-VerifierLedgerProperty $candidate 'releaseJournalState' $null
+                          bindValidatedUtc = [string](Get-VerifierLedgerProperty $candidate 'bindValidatedUtc' '')
+                          releasedUtc = [string](Get-VerifierLedgerProperty $candidate 'releasedUtc' '')
                           claimOwnerPid = $ownerPid; claimOwnerStartTicks = $ownerStart
                           mutexReleased = $mutexReleased
                           profile = $profileValue
                           browserPath = $browserPath
-                         processTerminationProven = if ($candidate.PSObject.Properties['ProcessTerminationProven']) {
-                             [bool]$candidate.ProcessTerminationProven
-                         } elseif ($candidate.PSObject.Properties['processTerminationProven']) {
-                             [bool]$candidate.processTerminationProven
-                         } else { $false }
-                         processAbsent = if ($candidate.PSObject.Properties['ProcessAbsent']) {
-                             [bool]$candidate.ProcessAbsent
-                         } elseif ($candidate.PSObject.Properties['processAbsent']) {
-                             [bool]$candidate.processAbsent
-                         } else { $false }
-                         boundProcessId = [int](Get-VerifierLedgerProperty $candidate 'boundProcessId' 0)
+                         processTerminationProven = Get-VerifierDurableBooleanValue $candidate `
+                             'ProcessTerminationProven' ('canary lease ' + $leaseId + ' processTerminationProven')
+                         processAbsent = Get-VerifierDurableBooleanValue $candidate `
+                             'ProcessAbsent' ('canary lease ' + $leaseId + ' processAbsent')
+                        boundProcessId = [int](Get-VerifierLedgerProperty $candidate 'boundProcessId' 0)
                         boundProcessStartTicks = [long](Get-VerifierLedgerProperty $candidate 'boundProcessStartTicks' 0)
-                        listenerProcessId = [int](Get-VerifierLedgerProperty $candidate 'listenerProcessId' 0)
-                        listenerProcessStartTicks = [long](Get-VerifierLedgerProperty $candidate 'listenerProcessStartTicks' 0)
-                          listenerInspectionSuccess = [bool](Get-VerifierLedgerProperty $candidate 'listenerInspectionSuccess' $false)
-                          listenerInspectionKnown = [bool](Get-VerifierLedgerProperty $candidate 'listenerInspectionKnown' $false)
-                          listenerHasListeners = Get-VerifierLedgerProperty $candidate 'listenerHasListeners' $null
-                          listenerAbsent = Get-VerifierLedgerProperty $candidate 'listenerAbsent' $null
-                          processProofRequired = Get-VerifierLedgerProperty $candidate 'processProofRequired' $null
+                        listenerProcessId = $candidateListenerPid
+                        listenerProcessStartTicks = $listenerStartValue
+                        listenerOwnerKind = $listenerOwnerKindValue
+                        listenerOwnerProof = $listenerOwnerProofValue
+                        listenerOwnerEvidence = $listenerOwnerEvidenceValue
+                          listenerInspectionSuccess = Get-VerifierDurableBooleanValue $candidate `
+                              'ListenerInspectionSuccess' ('canary lease ' + $leaseId + ' listenerInspectionSuccess')
+                          listenerInspectionKnown = Get-VerifierDurableBooleanValue $candidate `
+                              'ListenerInspectionKnown' ('canary lease ' + $leaseId + ' listenerInspectionKnown')
+                          listenerInspectionUtc = Get-VerifierLedgerProperty $candidate 'listenerInspectionUtc' ''
+                          listenerHasListeners = Get-VerifierDurableBooleanValue $candidate `
+                              'ListenerHasListeners' ('canary lease ' + $leaseId + ' listenerHasListeners') -AllowNull
+                          listenerAbsent = Get-VerifierDurableBooleanValue $candidate `
+                              'ListenerAbsent' ('canary lease ' + $leaseId + ' listenerAbsent') -AllowNull
+                          processProofRequired = Get-VerifierDurableBooleanValue $candidate `
+                              'ProcessProofRequired' ('canary lease ' + $leaseId + ' processProofRequired')
                           claim = [ordered]@{
                             protocol = 'troubleshootjs-verifier-port-claim-v1'
                             runId = $Context.RunId; repositoryIdentity = $Context.RepositoryIdentity
@@ -4455,18 +7464,30 @@ if ($GateBContractProbe) {
                         cdpLeasePath = [string](Get-VerifierLedgerProperty $candidate 'cdpLeasePath' '')
                         cdpPort = [int](Get-VerifierLedgerProperty $candidate 'cdpPort' 0)
                          browserPath = $profileBrowserPath
+                        routeId = [string](Get-VerifierLedgerProperty $candidate 'routeId' '')
+                        routeName = [string](Get-VerifierLedgerProperty $candidate 'routeName' '')
                         processId = [int](Get-VerifierLedgerProperty $candidate 'processId' 0)
                         processStartTicks = [long](Get-VerifierLedgerProperty $candidate 'processStartTicks' 0)
                         processParentProcessId = [int](Get-VerifierLedgerProperty $candidate 'processParentProcessId' 0)
                         processParentProcessStartTicks = [long](Get-VerifierLedgerProperty $candidate 'processParentProcessStartTicks' 0)
                         processCommandLine = [string](Get-VerifierLedgerProperty $candidate 'processCommandLine' '')
+                        targetId = [string](Get-VerifierLedgerProperty $candidate 'targetId' '')
+                        expectedUrl = [string](Get-VerifierLedgerProperty $candidate 'expectedUrl' '')
+                        expectedRunMarker = 'tsjVerifierRun=' + $Context.RunId
+                        expectedRouteMarker = 'tsjVerifierRoute=' + [string](Get-VerifierLedgerProperty $candidate 'routeId' '')
                         status = [string](Get-VerifierLedgerProperty $candidate 'status' 'startup-failed')
                         cleanupResult = [string](Get-VerifierLedgerProperty $candidate 'cleanupResult' 'infrastructure-failure')
+                        profileProcessScanCompleted = Get-VerifierDurableBooleanValue $candidate `
+                            'ProfileProcessScanCompleted' 'canary profile process scan completed'
+                        profileInspectionFailed = Get-VerifierDurableBooleanValue $candidate `
+                            'ProfileInspectionFailed' 'canary profile inspection failed'
+                        error = [string](Get-VerifierLedgerProperty $candidate 'error' '')
                     })
                 }
                 $manifestForLedger = Get-Content -LiteralPath $Context.ManifestPath -Raw | ConvertFrom-Json
                 $record = [ordered]@{
                     protocol = 'troubleshootjs-integrated-child-ledger-v1'; state = $State
+                    forcedNegativeProof = $null
                     runId = $Context.RunId; repositoryIdentity = $Context.RepositoryIdentity
                     worktreeRoot = $Context.WorktreeRoot
                     parentNamespaceRoot = $Context.RunNamespaceRoot
@@ -4477,10 +7498,10 @@ if ($GateBContractProbe) {
                     profiles = $normalizedProfiles
                     server = if ($null -ne $Server) { $Server } else { $manifestForLedger.server }
                     cleanupState = $CleanupState
-                    cleanupErrors = @(); updatedUtc = Get-VerifierUtcText
+                    cleanupErrors = @(); error = ''; updatedUtc = Get-VerifierUtcText
                 }
-                [IO.File]::WriteAllText($Path, ($record | ConvertTo-Json -Depth 12),
-                    [Text.UTF8Encoding]::new($false))
+                Write-VerifierEvidenceText $Path ($record | ConvertTo-Json -Depth 12) `
+                    'Gate B ledger canary'
             }
             function Set-GateBManifestResources($Context, $Leases, $Profiles, $Server = $null) {
                 $manifest = Get-Content -LiteralPath $Context.ManifestPath -Raw | ConvertFrom-Json
@@ -4502,8 +7523,8 @@ if ($GateBContractProbe) {
                 }
                 $manifest.browserSessions = @($Profiles)
                 if ($null -ne $Server) { $manifest.server = $Server }
-                [IO.File]::WriteAllText($Context.ManifestPath,
-                    ($manifest | ConvertTo-Json -Depth 12), [Text.UTF8Encoding]::new($false))
+                Write-VerifierEvidenceText $Context.ManifestPath `
+                    ($manifest | ConvertTo-Json -Depth 12) 'Gate B manifest canary'
             }
             $repoForLedger = Get-VerifierFullPath (Join-Path $PSScriptRoot '..')
             # Every run-owned browser/paired cdp resource must carry the same
@@ -4534,9 +7555,9 @@ if ($GateBContractProbe) {
             try {
                 $missingBrowserPathManifest = $missingBrowserPathManifestText | ConvertFrom-Json
                 $missingBrowserPathManifest.leases[0].browserPath = ''
-                [IO.File]::WriteAllText($realResourceContext.ManifestPath,
-                    ($missingBrowserPathManifest | ConvertTo-Json -Depth 16),
-                    [Text.UTF8Encoding]::new($false))
+                Write-VerifierEvidenceText $realResourceContext.ManifestPath `
+                    ($missingBrowserPathManifest | ConvertTo-Json -Depth 16) `
+                    'Gate B missing-browser-path manifest canary'
                 $missingBrowserPathLedger = [ordered]@{
                     protocol = 'troubleshootjs-integrated-child-ledger-v1'
                     state = 'completed'; runId = $realResourceContext.RunId
@@ -4550,9 +7571,9 @@ if ($GateBContractProbe) {
                     profiles = @(); server = $null; cleanupState = 'complete'
                     cleanupErrors = @(); updatedUtc = Get-VerifierUtcText
                 }
-                [IO.File]::WriteAllText($missingBrowserPathPath,
-                    ($missingBrowserPathLedger | ConvertTo-Json -Depth 16),
-                    [Text.UTF8Encoding]::new($false))
+                Write-VerifierEvidenceText $missingBrowserPathPath `
+                    ($missingBrowserPathLedger | ConvertTo-Json -Depth 16) `
+                    'Gate B missing-browser-path ledger canary'
                 try { [void](Read-VerifierIntegratedChildLedger $missingBrowserPathPath 2) } catch {
                     $missingBrowserPathRejected = Test-VerifierInfrastructureError $_
                 }
@@ -4561,11 +7582,11 @@ if ($GateBContractProbe) {
                 }
                 Write-Host 'INFO:missing-configured-BrowserPath ledger rejected before ownership cleanup'
             } finally {
-                [IO.File]::WriteAllText($realResourceContext.ManifestPath,
-                    $missingBrowserPathManifestText, [Text.UTF8Encoding]::new($false))
+                Write-VerifierEvidenceText $realResourceContext.ManifestPath `
+                    $missingBrowserPathManifestText 'Gate B manifest canary restoration'
             }
             $realResourceProfile = Get-VerifierFullPath (Join-Path $realResourceContext.RunRoot 'browser\real\profile')
-            New-Item -ItemType Directory -Path $realResourceProfile -Force -ErrorAction Stop | Out-Null
+            New-VerifierEvidenceDirectory $realResourceProfile 'Gate B browser profile canary' -Force
             $realResourceLease.ProfilePath = $realResourceProfile
             $realResourceLease.OwnerType = 'browser'
             $realResourceLease.BrowserPath = $ledgerBrowserPath
@@ -4590,6 +7611,180 @@ if ($GateBContractProbe) {
             Write-GateBLedger $realResourceContext $realResourceLedgerPath 'completed' `
                 -Leases @($realResourceLease) -Profiles @($realResourceProfileRecord) `
                 -Server $null -CleanupState 'complete'
+            # A user-process tuple must never accept PID zero merely because its
+            # retained start/proof fields look plausible. Mutate both durable
+            # copies together so this exercises the paired reader boundary.
+            $zeroUserListenerManifestBaseline = [IO.File]::ReadAllText($realResourceContext.ManifestPath)
+            $zeroUserListenerPath = Get-VerifierFullPath (Join-Path $realResourceParent 'zero-user-listener.json')
+            try {
+                $zeroUserListenerManifest = $zeroUserListenerManifestBaseline | ConvertFrom-Json
+                $zeroUserListenerManifestLease = @($zeroUserListenerManifest.leases)[0]
+                $zeroUserListenerManifestLease.listenerProcessId = 0
+                $zeroUserListenerManifestLease.listenerProcessStartTicks = 234501L
+                $zeroUserListenerManifestLease.listenerOwnerKind = 'user-process'
+                $zeroUserListenerManifestLease.listenerOwnerProof = 'diagnostics-process-start-v1'
+                $zeroUserListenerManifestLease.listenerOwnerEvidence = 'system-diagnostics-process-starttime'
+                Write-VerifierEvidenceText $realResourceContext.ManifestPath `
+                    ($zeroUserListenerManifest | ConvertTo-Json -Depth 16) `
+                    'Gate B zero-user-listener manifest canary'
+                $zeroUserListenerLedger = Get-Content -LiteralPath $realResourceLedgerPath -Raw | ConvertFrom-Json
+                $zeroUserListenerLedgerLease = @($zeroUserListenerLedger.leases)[0]
+                $zeroUserListenerLedgerLease.listenerProcessId = 0
+                $zeroUserListenerLedgerLease.listenerProcessStartTicks = 234501L
+                $zeroUserListenerLedgerLease.listenerOwnerKind = 'user-process'
+                $zeroUserListenerLedgerLease.listenerOwnerProof = 'diagnostics-process-start-v1'
+                $zeroUserListenerLedgerLease.listenerOwnerEvidence = 'system-diagnostics-process-starttime'
+                Write-VerifierEvidenceText $zeroUserListenerPath `
+                    ($zeroUserListenerLedger | ConvertTo-Json -Depth 16) `
+                    'Gate B zero-user-listener ledger canary'
+                $zeroUserListenerRejected = $false
+                try { [void](Read-VerifierIntegratedChildLedger $zeroUserListenerPath 2) } catch {
+                    $zeroUserListenerRejected = Test-VerifierInfrastructureError $_
+                }
+                if (-not $zeroUserListenerRejected) {
+                    throw 'paired durable reader accepted a user-process listener with PID zero.'
+                }
+            } finally {
+                Write-VerifierEvidenceText $realResourceContext.ManifestPath `
+                    $zeroUserListenerManifestBaseline 'Gate B zero-user-listener manifest restoration'
+            }
+
+            # Missing/null durable collections and typed identity coercion must
+            # fail closed in either durable copy. These variants deliberately
+            # damage one copy at a time and restore the manifest after each
+            # reader call.
+            $durableCopyBaseline = [IO.File]::ReadAllText($realResourceContext.ManifestPath)
+            $assertDamagedDurableCopyRejected = {
+                param([string]$Name, [scriptblock]$LedgerMutation,
+                    [scriptblock]$ManifestMutation = $null)
+                $variantPath = Get-VerifierFullPath (Join-Path $realResourceParent ($Name + '.json'))
+                try {
+                    if ($null -ne $ManifestMutation) {
+                        $manifestVariant = $durableCopyBaseline | ConvertFrom-Json
+                        & $ManifestMutation $manifestVariant
+                        Write-VerifierEvidenceText $realResourceContext.ManifestPath `
+                            ($manifestVariant | ConvertTo-Json -Depth 16) `
+                            ('Gate B ' + $Name + ' manifest canary')
+                    }
+                    $ledgerVariant = Get-Content -LiteralPath $realResourceLedgerPath -Raw | ConvertFrom-Json
+                    & $LedgerMutation $ledgerVariant
+                    Write-VerifierEvidenceText $variantPath `
+                        ($ledgerVariant | ConvertTo-Json -Depth 16) `
+                        ('Gate B ' + $Name + ' ledger canary')
+                    $rejected = $false
+                    try { [void](Read-VerifierIntegratedChildLedger $variantPath 2) } catch {
+                        $rejected = Test-VerifierInfrastructureError $_
+                    }
+                    if (-not $rejected) {
+                        throw "durable-copy canary '$Name' was accepted despite damaged ownership evidence."
+                    }
+                } finally {
+                    Write-VerifierEvidenceText $realResourceContext.ManifestPath `
+                        $durableCopyBaseline ('Gate B ' + $Name + ' manifest restoration')
+                }
+            }
+            & $assertDamagedDurableCopyRejected 'missing-ledger-evidence' {
+                param($ledgerVariant)
+                [void]$ledgerVariant.PSObject.Properties.Remove('evidence')
+            }
+            & $assertDamagedDurableCopyRejected 'null-ledger-leases' {
+                param($ledgerVariant)
+                $ledgerVariant.leases = $null
+            }
+            & $assertDamagedDurableCopyRejected 'missing-ledger-profiles' {
+                param($ledgerVariant)
+                [void]$ledgerVariant.PSObject.Properties.Remove('profiles')
+            }
+            & $assertDamagedDurableCopyRejected 'missing-manifest-artifacts' {
+                param($ledgerVariant)
+            } {
+                param($manifestVariant)
+                [void]$manifestVariant.PSObject.Properties.Remove('artifacts')
+            }
+            & $assertDamagedDurableCopyRejected 'null-manifest-browser-sessions' {
+                param($ledgerVariant)
+            } {
+                param($manifestVariant)
+                $manifestVariant.browserSessions = $null
+            }
+            & $assertDamagedDurableCopyRejected 'string-ledger-port' {
+                param($ledgerVariant)
+                $ledgerVariant.leases[0].port = [string]$ledgerVariant.leases[0].port
+            }
+            & $assertDamagedDurableCopyRejected 'numeric-ledger-lease-id' {
+                param($ledgerVariant)
+                $ledgerVariant.leases[0].leaseId = 12345
+            }
+            & $assertDamagedDurableCopyRejected 'array-ledger-lease-id' {
+                param($ledgerVariant)
+                $ledgerVariant.leases[0].leaseId = @([string]$ledgerVariant.leases[0].leaseId)
+            }
+            & $assertDamagedDurableCopyRejected 'object-ledger-lease-id' {
+                param($ledgerVariant)
+                $ledgerVariant.leases[0].leaseId = [pscustomobject]@{
+                    Value = [string]$ledgerVariant.leases[0].leaseId
+                }
+            }
+            & $assertDamagedDurableCopyRejected 'null-ledger-lease-id' {
+                param($ledgerVariant)
+                $ledgerVariant.leases[0].leaseId = $null
+            }
+            & $assertDamagedDurableCopyRejected 'missing-ledger-lease-id' {
+                param($ledgerVariant)
+                [void]$ledgerVariant.leases[0].PSObject.Properties.Remove('leaseId')
+            }
+            & $assertDamagedDurableCopyRejected 'numeric-manifest-lease-id' {
+                param($ledgerVariant)
+            } {
+                param($manifestVariant)
+                $manifestVariant.leases[0].leaseId = 12345
+            }
+            & $assertDamagedDurableCopyRejected 'array-manifest-lease-id' {
+                param($ledgerVariant)
+            } {
+                param($manifestVariant)
+                $manifestVariant.leases[0].leaseId = @([string]$manifestVariant.leases[0].leaseId)
+            }
+            & $assertDamagedDurableCopyRejected 'object-manifest-lease-id' {
+                param($ledgerVariant)
+            } {
+                param($manifestVariant)
+                $manifestVariant.leases[0].leaseId = [pscustomobject]@{
+                    Value = [string]$manifestVariant.leases[0].leaseId
+                }
+            }
+            & $assertDamagedDurableCopyRejected 'null-manifest-lease-id' {
+                param($ledgerVariant)
+            } {
+                param($manifestVariant)
+                $manifestVariant.leases[0].leaseId = $null
+            }
+            & $assertDamagedDurableCopyRejected 'missing-manifest-lease-id' {
+                param($ledgerVariant)
+            } {
+                param($manifestVariant)
+                [void]$manifestVariant.leases[0].PSObject.Properties.Remove('leaseId')
+            }
+            $leaseIdCaseBaseline = Get-Content -LiteralPath $realResourceLedgerPath -Raw | ConvertFrom-Json
+            $leaseIdCaseBase = [string]$leaseIdCaseBaseline.leases[0].leaseId
+            $leaseIdCaseVariant = $leaseIdCaseBase.ToUpperInvariant()
+            if ($leaseIdCaseVariant -ceq $leaseIdCaseBase) {
+                $leaseIdCaseVariant = $leaseIdCaseBase.ToLowerInvariant()
+            }
+            if ($leaseIdCaseVariant -ceq $leaseIdCaseBase) {
+                $leaseIdCaseVariant = 'case-' + $leaseIdCaseBase
+            }
+            & $assertDamagedDurableCopyRejected 'case-mismatched-ledger-lease-id' {
+                param($ledgerVariant)
+                $ledgerVariant.leases[0].leaseId = $leaseIdCaseVariant
+            }
+            & $assertDamagedDurableCopyRejected 'case-mismatched-manifest-lease-id' {
+                param($ledgerVariant)
+            } {
+                param($manifestVariant)
+                $manifestVariant.leases[0].leaseId = $leaseIdCaseVariant
+            }
+            Write-Host 'PASS:paired durable leaseId fields require present exact strings and ordinal equality in both copies'
             $realResourceAccepted = Read-VerifierIntegratedChildLedger $realResourceLedgerPath 2
             if ([string]$realResourceAccepted.state -ne 'completed') {
                 throw 'real completed lease resource ledger was not accepted after independent release proof.'
@@ -4601,8 +7796,9 @@ if ($GateBContractProbe) {
             $missingTerminalLedger = Get-Content -LiteralPath $realResourceLedgerPath -Raw | ConvertFrom-Json
             $missingTerminalLedger.leases[0].PSObject.Properties.Remove('listenerAbsent')
             $missingTerminalPath = Get-VerifierFullPath (Join-Path $realResourceParent 'terminal-missing-proof.json')
-            [IO.File]::WriteAllText($missingTerminalPath,
-                ($missingTerminalLedger | ConvertTo-Json -Depth 16), [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $missingTerminalPath `
+                ($missingTerminalLedger | ConvertTo-Json -Depth 16) `
+                'Gate B missing-terminal ledger canary'
             $missingTerminalRejected = $false
             try { [void](Read-VerifierIntegratedChildLedger $missingTerminalPath 2) } catch {
                 $missingTerminalRejected = Test-VerifierInfrastructureError $_
@@ -4613,8 +7809,9 @@ if ($GateBContractProbe) {
             $liveTerminalLedger = Get-Content -LiteralPath $realResourceLedgerPath -Raw | ConvertFrom-Json
             $liveTerminalLedger.leases[0].listenerAbsent = $false
             $liveTerminalPath = Get-VerifierFullPath (Join-Path $realResourceParent 'terminal-live-listener.json')
-            [IO.File]::WriteAllText($liveTerminalPath,
-                ($liveTerminalLedger | ConvertTo-Json -Depth 16), [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $liveTerminalPath `
+                ($liveTerminalLedger | ConvertTo-Json -Depth 16) `
+                'Gate B live-terminal ledger canary'
             $liveTerminalRejected = $false
             try { [void](Read-VerifierIntegratedChildLedger $liveTerminalPath 2) } catch {
                 $liveTerminalRejected = Test-VerifierInfrastructureError $_
@@ -4625,8 +7822,9 @@ if ($GateBContractProbe) {
             $falseCleanupLedger = Get-Content -LiteralPath $realResourceLedgerPath -Raw | ConvertFrom-Json
             $falseCleanupLedger.leases[0].listenerHasListeners = $true
             $falseCleanupPath = Get-VerifierFullPath (Join-Path $realResourceParent 'false-cleanup-flags.json')
-            [IO.File]::WriteAllText($falseCleanupPath, ($falseCleanupLedger | ConvertTo-Json -Depth 16),
-                [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $falseCleanupPath `
+                ($falseCleanupLedger | ConvertTo-Json -Depth 16) `
+                'Gate B false-cleanup ledger canary'
             $falseCleanupRejected = $false
             try { [void](Read-VerifierIntegratedChildLedger $falseCleanupPath 2) } catch {
                 $falseCleanupRejected = Test-VerifierInfrastructureError $_
@@ -4711,12 +7909,12 @@ if ($GateBContractProbe) {
                             throw ('caller manifest proof fixture omitted ' + $callerProofTypeCase.Name)
                         }
                         $callerManifestProperty.Value = $callerProofTypeCase.Value
-                        [IO.File]::WriteAllText($callerCanaryContext.ManifestPath,
-                            ($callerManifestVariant | ConvertTo-Json -Depth 16),
-                            [Text.UTF8Encoding]::new($false))
-                        [IO.File]::WriteAllText($callerVariantPath,
-                            ($callerLedgerVariant | ConvertTo-Json -Depth 16),
-                            [Text.UTF8Encoding]::new($false))
+                        Write-VerifierEvidenceText $callerCanaryContext.ManifestPath `
+                            ($callerManifestVariant | ConvertTo-Json -Depth 16) `
+                            'Gate B caller manifest canary'
+                        Write-VerifierEvidenceText $callerVariantPath `
+                            ($callerLedgerVariant | ConvertTo-Json -Depth 16) `
+                            'Gate B caller ledger canary'
                         $callerVariantRejected = $false
                         try {
                             [void](Read-VerifierIntegratedChildLedger $callerVariantPath 0)
@@ -4728,8 +7926,8 @@ if ($GateBContractProbe) {
                                 ' was accepted despite a malformed ledger/manifest Boolean.')
                         }
                     } finally {
-                        [IO.File]::WriteAllText($callerCanaryContext.ManifestPath,
-                            $callerManifestBaseline, [Text.UTF8Encoding]::new($false))
+                        Write-VerifierEvidenceText $callerCanaryContext.ManifestPath `
+                            $callerManifestBaseline 'Gate B caller manifest restoration'
                     }
                 }
                 Write-Host 'PASS:caller-owned ledger/manifest strict Boolean proof negative cases'
@@ -4757,8 +7955,9 @@ if ($GateBContractProbe) {
             $normalIncompleteLedger = Get-Content -LiteralPath $zeroLedgerPath -Raw | ConvertFrom-Json
             $normalIncompleteLedger.state = 'resource-started'
             $normalIncompleteLedger.cleanupState = 'infrastructure-failure'
-            [IO.File]::WriteAllText($normalIncompletePath,
-                ($normalIncompleteLedger | ConvertTo-Json -Depth 12), [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $normalIncompletePath `
+                ($normalIncompleteLedger | ConvertTo-Json -Depth 12) `
+                'Gate B incomplete-ledger canary'
             $normalIncompleteRejected = $false
             try { [void](Read-VerifierIntegratedChildLedger $normalIncompletePath 2) } catch {
                 $normalIncompleteRejected = Test-VerifierInfrastructureError $_
@@ -4768,19 +7967,52 @@ if ($GateBContractProbe) {
             }
 
             $malformedPath = Join-Path $zeroParent 'malformed.json'
-            [IO.File]::WriteAllText($malformedPath, '{"protocol":"troubleshootjs-integrated-child-ledger-v1","state":"completed"}',
-                [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $malformedPath `
+                '{"protocol":"troubleshootjs-integrated-child-ledger-v1","state":"completed"}' `
+                'Gate B malformed-ledger canary'
             $malformedRejected = $false
             try { [void](Read-VerifierIntegratedChildLedger $malformedPath 2) } catch {
                 $malformedRejected = Test-VerifierInfrastructureError $_
             }
             if (-not $malformedRejected) { throw 'malformed/pathless child ledger was accepted.' }
 
+            # A malformed lifecycle scalar must be rejected by the copy schema
+            # before the reader asks its legacy-property accessor for state or
+            # any later path/lifecycle projection.
+            $malformedStatePath = Join-Path $zeroParent 'malformed-state.json'
+            $malformedStateLedger = Get-Content -LiteralPath $zeroLedgerPath -Raw | ConvertFrom-Json
+            $malformedStateLedger.state = 0
+            Write-VerifierEvidenceText $malformedStatePath `
+                ($malformedStateLedger | ConvertTo-Json -Depth 12) `
+                'Gate B malformed-state ordering canary'
+            $oldLedgerPropertyFunction = (Get-Command Get-VerifierLedgerProperty `
+                -CommandType Function -ErrorAction Stop).ScriptBlock
+            try {
+                $script:IntegratedReaderLegacyAccessorObserved = $false
+                Set-Item Function:\Get-VerifierLedgerProperty -Force -Value {
+                    $script:IntegratedReaderLegacyAccessorObserved = $true
+                    return $null
+                }
+                $malformedStateRejected = $false
+                try { [void](Read-VerifierIntegratedChildLedger $malformedStatePath 2) } catch {
+                    $malformedStateRejected = Test-VerifierInfrastructureError $_
+                }
+                if (-not $malformedStateRejected -or
+                        [bool]$script:IntegratedReaderLegacyAccessorObserved) {
+                    throw 'malformed reader state was not rejected before legacy access.'
+                }
+            } finally {
+                Set-Item Function:\Get-VerifierLedgerProperty -Force `
+                    -Value $oldLedgerPropertyFunction
+                Remove-Variable -Name IntegratedReaderLegacyAccessorObserved -Scope Script `
+                    -Force -ErrorAction SilentlyContinue
+            }
+
             $foreignPath = Join-Path $zeroParent 'foreign.json'
             $foreignLedger = Get-Content -LiteralPath $zeroLedgerPath -Raw | ConvertFrom-Json
             $foreignLedger.runRoot = Get-VerifierFullPath (Join-Path $ledgerCanaryRoot 'foreign-run-root')
-            [IO.File]::WriteAllText($foreignPath, ($foreignLedger | ConvertTo-Json -Depth 12),
-                [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $foreignPath `
+                ($foreignLedger | ConvertTo-Json -Depth 12) 'Gate B foreign-ledger canary'
             $foreignRejected = $false
             try { [void](Read-VerifierIntegratedChildLedger $foreignPath 2) } catch {
                 $foreignRejected = Test-VerifierInfrastructureError $_
@@ -4791,8 +8023,8 @@ if ($GateBContractProbe) {
             $failedLedger = Get-Content -LiteralPath $zeroLedgerPath -Raw | ConvertFrom-Json
             $failedLedger.state = 'cleanup-failed'
             $failedLedger.cleanupState = 'infrastructure-failure'
-            [IO.File]::WriteAllText($failedPath, ($failedLedger | ConvertTo-Json -Depth 12),
-                [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $failedPath `
+                ($failedLedger | ConvertTo-Json -Depth 12) 'Gate B failed-ledger canary'
             $failedRejected = $false
             try { [void](Read-VerifierIntegratedChildLedger $failedPath 2 -AllowIncomplete) } catch {
                 $failedRejected = Test-VerifierInfrastructureError $_
@@ -4805,8 +8037,9 @@ if ($GateBContractProbe) {
             $staleClaimPath = Get-VerifierFullPath (Join-Path $staleContext.PortLeaseRoot ('40123-' + $staleLeaseId + '.lease'))
             $staleClaimName = Get-VerifierPortMutexName $null 40123
             $staleClaim = [ordered]@{ protocol='troubleshootjs-verifier-port-claim-v1'; runId=$staleContext.RunId; repositoryIdentity=$staleContext.RepositoryIdentity; worktreeRoot=$staleContext.WorktreeRoot; leaseId=$staleLeaseId; path=$staleClaimPath; kind='cdp'; port=40123; mutexName=$staleClaimName; ownerPid=$PID; ownerStartTicks=1 }
-            $staleLease = [ordered]@{ runId=$staleContext.RunId; repositoryIdentity=$staleContext.RepositoryIdentity; worktreeRoot=$staleContext.WorktreeRoot; leaseId=$staleLeaseId; path=$staleClaimPath; kind='cdp'; port=40123; claimName=$staleClaimName; browserPath=$ledgerBrowserPath; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='released'; claimState='released'; releaseState='complete'; mutexReleased=$false; profile=''; listenerInspectionSuccess=$true; listenerInspectionKnown=$true; listenerHasListeners=$false; boundProcessId=0; boundProcessStartTicks=0; listenerProcessId=0; listenerProcessStartTicks=0; claim=$staleClaim }
-            [IO.File]::WriteAllText($staleClaimPath, ($staleClaim | ConvertTo-Json -Depth 8), [Text.UTF8Encoding]::new($false))
+            $staleLease = [ordered]@{ runId=$staleContext.RunId; repositoryIdentity=$staleContext.RepositoryIdentity; worktreeRoot=$staleContext.WorktreeRoot; leaseId=$staleLeaseId; path=$staleClaimPath; kind='cdp'; port=40123; claimName=$staleClaimName; browserPath=$ledgerBrowserPath; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='released'; claimState='released'; releaseState='complete'; mutexReleased=$false; profile=''; listenerInspectionSuccess=$true; listenerInspectionKnown=$true; listenerHasListeners=$false; boundProcessId=0; boundProcessStartTicks=0; listenerProcessId=0; listenerProcessStartTicks=0; listenerOwnerKind='none'; listenerOwnerProof=''; listenerOwnerEvidence=''; claim=$staleClaim }
+            Write-VerifierEvidenceText $staleClaimPath `
+                ($staleClaim | ConvertTo-Json -Depth 8) 'Gate B stale-claim canary'
             Set-GateBManifestResources $staleContext -Leases @($staleLease) -Profiles @()
             $staleLedgerPath = Get-VerifierFullPath (Join-Path $staleParent 'stale-claim.json')
             Write-GateBLedger $staleContext $staleLedgerPath 'completed' `
@@ -4822,20 +8055,23 @@ if ($GateBContractProbe) {
             $retainedLeaseId = [Guid]::NewGuid().ToString('N')
             $retainedClaimPath = Get-VerifierFullPath (Join-Path $retainedContext.PortLeaseRoot ('40125-' + $retainedLeaseId + '.lease'))
             $retainedProfile = Get-VerifierFullPath (Join-Path $retainedContext.RunRoot 'browser\retained\profile')
-            New-Item -ItemType Directory -Path $retainedProfile -Force -ErrorAction Stop | Out-Null
+            New-VerifierEvidenceDirectory $retainedProfile 'Gate B retained browser profile canary' -Force
             $retainedServerLeaseId = [Guid]::NewGuid().ToString('N')
             $retainedServerClaimPath = Get-VerifierFullPath (Join-Path $retainedContext.PortLeaseRoot ('40124-' + $retainedServerLeaseId + '.lease'))
             $retainedServerClaimName = Get-VerifierPortMutexName $null 40124
             $retainedServerClaim = [ordered]@{ protocol='troubleshootjs-verifier-port-claim-v1'; runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedServerLeaseId; path=$retainedServerClaimPath; kind='preview'; port=40124; mutexName=$retainedServerClaimName; ownerPid=$PID; ownerStartTicks=1 }
-            $retainedServerLease = [ordered]@{ runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedServerLeaseId; path=$retainedServerClaimPath; kind='preview'; port=40124; claimName=$retainedServerClaimName; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='held'; claimState='held'; releaseState='active'; mutexReleased=$false; profile=''; listenerInspectionSuccess=$false; listenerInspectionKnown=$false; listenerHasListeners=$null; boundProcessId=54321; boundProcessStartTicks=12345L; listenerProcessId=54321; listenerProcessStartTicks=12345L; processParentProcessStartTicks=12344L; claim=$retainedServerClaim }
-            [IO.File]::WriteAllText($retainedServerClaimPath, ($retainedServerClaim | ConvertTo-Json -Depth 8), [Text.UTF8Encoding]::new($false))
+            $retainedServerLease = [ordered]@{ runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedServerLeaseId; path=$retainedServerClaimPath; kind='preview'; port=40124; claimName=$retainedServerClaimName; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='held'; claimState='held'; releaseState='active'; releaseJournalState='active'; registered=$true; releaseBlocked=$false; releaseBlockReason=''; listenerInspectionUtc=''; bindValidatedUtc=''; releasedUtc=''; browserPath=$ledgerBrowserPath; mutexReleased=$false; profile=''; listenerInspectionSuccess=$false; listenerInspectionKnown=$false; listenerHasListeners=$null; listenerAbsent=$false; processTerminationProven=$false; processAbsent=$false; processProofRequired=$true; boundProcessId=54321; boundProcessStartTicks=12345L; listenerProcessId=54321; listenerProcessStartTicks=12345L; listenerOwnerKind='user-process'; listenerOwnerProof='diagnostics-process-start-v1'; listenerOwnerEvidence='system-diagnostics-process-starttime'; processParentProcessStartTicks=12344L; claim=$retainedServerClaim }
+            Write-VerifierEvidenceText $retainedServerClaimPath `
+                ($retainedServerClaim | ConvertTo-Json -Depth 8) `
+                'Gate B retained preview claim canary'
             $retainedClaimName = Get-VerifierPortMutexName $null 40125
             $retainedClaim = [ordered]@{ protocol='troubleshootjs-verifier-port-claim-v1'; runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedLeaseId; path=$retainedClaimPath; kind='cdp'; port=40125; mutexName=$retainedClaimName; ownerPid=$PID; ownerStartTicks=1 }
-            $retainedLease = [ordered]@{ runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedLeaseId; path=$retainedClaimPath; kind='cdp'; port=40125; claimName=$retainedClaimName; browserPath=$ledgerBrowserPath; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='held'; claimState='held'; releaseState='active'; mutexReleased=$false; profile=$retainedProfile; listenerInspectionSuccess=$false; listenerInspectionKnown=$false; listenerHasListeners=$null; boundProcessId=0; boundProcessStartTicks=0; listenerProcessId=0; listenerProcessStartTicks=0; claim=$retainedClaim }
-            [IO.File]::WriteAllText($retainedClaimPath, ($retainedClaim | ConvertTo-Json -Depth 8), [Text.UTF8Encoding]::new($false))
-            $retainedProfileRecord = [ordered]@{ owner='run'; runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; profile=$retainedProfile; cdpLeasePath=$retainedClaimPath; cdpPort=40125; browserPath=$ledgerBrowserPath; processId=0; processStartTicks=0; processParentProcessId=0; processParentProcessStartTicks=0; processCommandLine=''; status='startup-failed'; cleanupResult='infrastructure-failure' }
+            $retainedLease = [ordered]@{ runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedLeaseId; path=$retainedClaimPath; kind='cdp'; port=40125; claimName=$retainedClaimName; browserPath=$ledgerBrowserPath; bindValidatedUtc=''; releasedUtc=''; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='held'; claimState='held'; releaseState='active'; releaseJournalState='active'; registered=$true; releaseBlocked=$false; releaseBlockReason=''; listenerInspectionUtc=''; mutexReleased=$false; profile=$retainedProfile; listenerInspectionSuccess=$false; listenerInspectionKnown=$false; listenerHasListeners=$null; listenerAbsent=$null; processTerminationProven=$false; processAbsent=$false; processProofRequired=$false; boundProcessId=0; boundProcessStartTicks=0; listenerProcessId=0; listenerProcessStartTicks=0; listenerOwnerKind='none'; listenerOwnerProof=''; listenerOwnerEvidence=''; claim=$retainedClaim }
+            Write-VerifierEvidenceText $retainedClaimPath `
+                ($retainedClaim | ConvertTo-Json -Depth 8) 'Gate B retained CDP claim canary'
+            $retainedProfileRecord = [ordered]@{ owner='run'; runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; routeId='retained-timeout'; routeName='retained-timeout'; profile=$retainedProfile; cdpLeasePath=$retainedClaimPath; cdpPort=40125; browserPath=$ledgerBrowserPath; processId=0; processStartTicks=0; processParentProcessId=0; processParentProcessStartTicks=0; processCommandLine=''; targetId=''; expectedUrl=''; expectedRunMarker='tsjVerifierRun=' + $retainedContext.RunId; expectedRouteMarker='tsjVerifierRoute=retained-timeout'; status='startup-failed'; cleanupResult='infrastructure-failure'; profileProcessScanCompleted=$false; profileInspectionFailed=$false; error='retained timeout' }
             $retainedServerRoot = Get-VerifierFullPath (Join-Path $retainedContext.RunRoot 'server')
-            New-Item -ItemType Directory -Path $retainedServerRoot -Force -ErrorAction Stop | Out-Null
+            New-VerifierEvidenceDirectory $retainedServerRoot 'Gate B retained preview server canary' -Force
             $retainedServerScript = Get-VerifierFullPath (Join-Path $repoForLedger 'scripts\preview.ps1')
             $retainedServerCommand = 'powershell.exe ' + (ConvertTo-VerifierArgumentString @(
                 '-File', $retainedServerScript, '-Port', '40124',
@@ -4855,20 +8091,26 @@ if ($GateBContractProbe) {
                 OwnershipUncertain=$false; ProcessTerminationProven=$false; ProcessAbsent=$false
                 ListenerInspectionProven=$false; ListenerAbsent=$false
             }
-            [IO.File]::WriteAllText($retainedServer.StdoutLog, 'retained server evidence', [Text.UTF8Encoding]::new($false))
-            [IO.File]::WriteAllText($retainedServer.StderrLog, '', [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $retainedServer.StdoutLog 'retained server evidence' `
+                'Gate B retained preview stdout canary'
+            Write-VerifierEvidenceText $retainedServer.StderrLog '' `
+                'Gate B retained preview stderr canary'
             $retainedContext.Server = $retainedServer
             $retainedServerLedger = [ordered]@{
                 owner='run'; baseUrl='http://127.0.0.1:40124'; repositoryIdentity=$retainedContext.RepositoryIdentity
                 worktreeRoot=$retainedContext.WorktreeRoot; port=40124; processId=54321; processStartTicks=12345L
                 processParentProcessId=54320; processParentProcessStartTicks=12344; processCommandLine=$retainedServerCommand; script=$retainedServerScript
                 runId=$retainedContext.RunId; nonce=$retainedContext.PreviewNonce
+                identityProtocol='troubleshootjs-preview-identity-v1'
                 leaseId=$retainedServerLeaseId; leaseKind='preview'; leaseClaimName=$retainedServerClaimName
                 leaseClaimState='held'; leaseReleaseState='active'; leaseOwnerPid=$PID; leaseOwnerStartTicks=1
                 leasePath=$retainedServerClaimPath; state='started'
                 stdoutLog=$retainedServer.StdoutLog; stderrLog=$retainedServer.StderrLog
-                cleanupResult='infrastructure-failure'; processIdentityKnown=$true; ownershipUncertain=$false
+                cleanupResult='infrastructure-failure'; error='synthetic retained timeout'; processIdentityKnown=$true; ownershipUncertain=$false
                 processTerminationProven=$false; processAbsent=$false; listenerInspectionProven=$false; listenerAbsent=$false
+                leaseListenerAbsent=$false; leaseProcessProofRequired=$true
+                leaseListenerOwnerKind='user-process'; leaseListenerOwnerProof='diagnostics-process-start-v1'
+                leaseListenerOwnerEvidence='system-diagnostics-process-starttime'
             }
             Set-GateBManifestResources $retainedContext -Leases @($retainedServerLease, $retainedLease) `
                 -Profiles @($retainedProfileRecord) -Server $retainedServerLedger
@@ -4896,12 +8138,13 @@ if ($GateBContractProbe) {
                     if ($null -ne $ManifestMutation) {
                         $manifestVariant = Get-Content -LiteralPath $retainedContext.ManifestPath -Raw | ConvertFrom-Json
                         & $ManifestMutation $manifestVariant
-                        [IO.File]::WriteAllText($retainedContext.ManifestPath,
-                            ($manifestVariant | ConvertTo-Json -Depth 16), [Text.UTF8Encoding]::new($false))
+                        Write-VerifierEvidenceText $retainedContext.ManifestPath `
+                            ($manifestVariant | ConvertTo-Json -Depth 16) `
+                            'Gate B retained manifest variant'
                     }
                     if ($null -ne $ClaimMutation) { & $ClaimMutation }
-                    [IO.File]::WriteAllText($variantPath, ($Variant | ConvertTo-Json -Depth 16),
-                        [Text.UTF8Encoding]::new($false))
+                    Write-VerifierEvidenceText $variantPath `
+                        ($Variant | ConvertTo-Json -Depth 16) 'Gate B retained ledger variant'
                     $rejected = $false
                     try {
                         [void](Read-VerifierIntegratedChildLedger $variantPath 2 -AllowIncomplete)
@@ -4916,11 +8159,59 @@ if ($GateBContractProbe) {
                     # manifest only for the duration of their reader call.
                     if ($null -ne $ClaimRestore) { & $ClaimRestore }
                     if (Test-Path -LiteralPath $retainedContext.ManifestPath -PathType Leaf) {
-                        [IO.File]::WriteAllText($retainedContext.ManifestPath,
-                            $retainedManifestBaseline, [Text.UTF8Encoding]::new($false))
+                        Write-VerifierEvidenceText $retainedContext.ManifestPath `
+                            $retainedManifestBaseline 'Gate B retained manifest restoration'
                     }
                 }
             }
+
+            # Server log paths are security-sensitive paired strings. Exercise
+            # both durable copies for missing, non-string, and ordinal-mismatch
+            # values so the reader cannot fall through to path normalization or
+            # string coercion.
+            foreach ($logField in @('stdoutLog', 'stderrLog')) {
+                $logFieldCases = @(
+                    [pscustomobject]@{ Name = 'missing-' + $logField; Mode = 'missing'; Value = $null }
+                    [pscustomobject]@{ Name = 'numeric-' + $logField; Mode = 'value'; Value = 0 }
+                    [pscustomobject]@{ Name = 'array-' + $logField; Mode = 'value'; Value = @('malformed-log') }
+                    [pscustomobject]@{ Name = 'object-' + $logField; Mode = 'value'; Value = [pscustomobject]@{ path = 'malformed-log' } }
+                    [pscustomobject]@{ Name = 'case-mismatch-' + $logField; Mode = 'case-mismatch'; Value = $null }
+                )
+                foreach ($logFieldCase in $logFieldCases) {
+                    $logVariant = Get-Content -LiteralPath $retainedLedgerPath -Raw | ConvertFrom-Json
+                    $logProperty = $logVariant.server.PSObject.Properties[$logField]
+                    if ($null -eq $logProperty) {
+                        throw "retained ledger omitted its baseline $logField fixture"
+                    }
+                    if ($logFieldCase.Mode -eq 'missing') {
+                        [void]$logVariant.server.PSObject.Properties.Remove($logField)
+                    } elseif ($logFieldCase.Mode -eq 'case-mismatch') {
+                        $logProperty.Value = [string]$logProperty.Value + '.CASE'
+                    } else {
+                        $logProperty.Value = $logFieldCase.Value
+                    }
+                    $capturedLogField = $logField
+                    $capturedLogCase = $logFieldCase
+                    $logManifestMutation = {
+                        param($manifestVariant)
+                        $manifestProperty = $manifestVariant.server.PSObject.Properties[$capturedLogField]
+                        if ($null -eq $manifestProperty) {
+                            throw "retained manifest omitted its baseline $capturedLogField fixture"
+                        }
+                        if ($capturedLogCase.Mode -eq 'missing') {
+                            [void]$manifestVariant.server.PSObject.Properties.Remove($capturedLogField)
+                        } elseif ($capturedLogCase.Mode -eq 'case-mismatch') {
+                            $manifestProperty.Value = [string]$manifestProperty.Value + '.CASE'
+                        } else {
+                            $manifestProperty.Value = $capturedLogCase.Value
+                        }
+                    }.GetNewClosure()
+                    Assert-GateBLedgerVariantRejected $logVariant $logFieldCase.Name `
+                        $logManifestMutation
+                }
+            }
+            Write-Host 'PASS:durable server stdout/stderr log pairs require exact strings and ordinal equality'
+
             $duplicateLeaseLedger = Get-Content -LiteralPath $retainedLedgerPath -Raw | ConvertFrom-Json
             $duplicateLeaseLedger.leases = @($duplicateLeaseLedger.leases) + @($duplicateLeaseLedger.leases[0])
             Assert-GateBLedgerVariantRejected $duplicateLeaseLedger 'duplicate-claim'
@@ -4933,8 +8224,9 @@ if ($GateBContractProbe) {
             $duplicateClaimPathManifestLease = $duplicateClaimPathManifest.leases[0] | ConvertTo-Json -Depth 16 | ConvertFrom-Json
             $duplicateClaimPathManifestLease.leaseId = [string]$duplicateClaimPathLease.leaseId
             $duplicateClaimPathManifest.leases = @($duplicateClaimPathManifest.leases) + @($duplicateClaimPathManifestLease)
-            [IO.File]::WriteAllText($retainedContext.ManifestPath,
-                ($duplicateClaimPathManifest | ConvertTo-Json -Depth 16), [Text.UTF8Encoding]::new($false))
+            Write-VerifierEvidenceText $retainedContext.ManifestPath `
+                ($duplicateClaimPathManifest | ConvertTo-Json -Depth 16) `
+                'Gate B duplicate-claim-path manifest canary'
             Assert-GateBLedgerVariantRejected $duplicateClaimPathLedger 'duplicate-claim-path'
             Set-GateBManifestResources $retainedContext -Leases @($retainedServerLease, $retainedLease) `
                 -Profiles @($retainedProfileRecord) -Server $retainedServerLedger
@@ -4967,8 +8259,9 @@ if ($GateBContractProbe) {
                 $manifestDuplicate.claim.path = $duplicateLiveClaimPath
                 $manifestVariant.leases = @($manifestVariant.leases) + @($manifestDuplicate)
             } {
-                [IO.File]::WriteAllText($duplicateLiveClaimPath,
-                    ($duplicateLiveLease.claim | ConvertTo-Json -Depth 8), [Text.UTF8Encoding]::new($false))
+                Write-VerifierEvidenceText $duplicateLiveClaimPath `
+                    ($duplicateLiveLease.claim | ConvertTo-Json -Depth 8) `
+                    'Gate B duplicate-live-port claim canary'
             } {
                 if (Test-Path -LiteralPath $duplicateLiveClaimPath) {
                     Remove-VerifierOwnedTree $retainedContext.PortLeaseRoot $duplicateLiveClaimPath
@@ -5028,11 +8321,12 @@ if ($GateBContractProbe) {
             } {
                 $wrongProfileKindClaim = Get-Content -LiteralPath $retainedClaimPath -Raw | ConvertFrom-Json
                 $wrongProfileKindClaim.kind = 'preview'
-                [IO.File]::WriteAllText($retainedClaimPath,
-                    ($wrongProfileKindClaim | ConvertTo-Json -Depth 8), [Text.UTF8Encoding]::new($false))
+                Write-VerifierEvidenceText $retainedClaimPath `
+                    ($wrongProfileKindClaim | ConvertTo-Json -Depth 8) `
+                    'Gate B wrong-profile-kind claim canary'
             } {
-                [IO.File]::WriteAllText($retainedClaimPath, $wrongProfileKindClaimBaseline,
-                    [Text.UTF8Encoding]::new($false))
+                Write-VerifierEvidenceText $retainedClaimPath $wrongProfileKindClaimBaseline `
+                    'Gate B wrong-profile-kind claim restoration'
             }
 
             $duplicateProfileLedger = Get-Content -LiteralPath $retainedLedgerPath -Raw | ConvertFrom-Json
@@ -5138,10 +8432,17 @@ if ($GateBContractProbe) {
 # application result; infrastructure exceptions and cleanup failures are
 # promoted here to the verifier's exit-2 contract.
 $script:VerifierBoundParameters = $PSBoundParameters
+$forcedNegativeInvocation = [bool]($Task43ForcedNegative -or $Task43PForcedNegative)
+$forcedNegativeExpectedMarker = Get-Task43ForcedNegativeExpectedMarker
 $requestedExitCode = 2
 $cleanupResult = $null
 try {
-    $worktreeRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+    $executionRoots = Resolve-Task43PExecutionRoots
+    $script:Task43PExecutionRepositoryRoot = $executionRoots.RepositoryRoot
+    $script:Task43PExecutionWebRoot = $executionRoots.WebRoot
+    $script:Task43PExecutionScriptRoot = $executionRoots.ScriptRoot
+    $script:Task43PExecutionPreviewScript = $executionRoots.PreviewScript
+    $worktreeRoot = $executionRoots.RepositoryRoot
     $script:VerifierContext = New-VerifierRunContext $worktreeRoot $EvidenceDirectory $ParentNamespaceRoot
     $script:VerifierEvidenceDirectory = $script:VerifierContext.EvidenceDirectory
     if (-not [String]::IsNullOrWhiteSpace($ParentLedgerPath)) {
@@ -5181,7 +8482,7 @@ try {
         $script:VerifierResolvedBrowserPath = Resolve-VerifierBrowserPath $BrowserPath
         if ([String]::IsNullOrWhiteSpace($BaseUrl)) {
             $BaseUrl = [string](Start-VerifierOwnedPreview $script:VerifierContext `
-                (Join-Path $worktreeRoot 'scripts\preview.ps1') $TimeoutSeconds)
+                $script:Task43PExecutionPreviewScript $TimeoutSeconds)
         } else {
             $BaseUrl = [string](Set-VerifierCallerOwnedPreview $script:VerifierContext $BaseUrl)
         }
@@ -5234,6 +8535,14 @@ try {
             }
             $requestedExitCode = 2
         }
+        if ($forcedNegativeInvocation) {
+            if (-not $cleanupExceptionCaught -and $null -ne $cleanupResult -and
+                    [bool]$cleanupResult.Success) {
+                Set-Task43ForcedNegativeFinalCleanupProven $true
+            } else {
+                Invalidate-Task43ForcedNegativeProof
+            }
+        }
         if (-not [String]::IsNullOrWhiteSpace($ParentLedgerPath)) {
             try {
                 $ledgerState = if ($cleanupResult -and [bool]$cleanupResult.Success) {
@@ -5250,7 +8559,19 @@ try {
         }
     }
 }
-if ($script:VerifierFailureExitCode -eq 2 -and $requestedExitCode -ne 2) {
+$infrastructureFailureRecorded = ($script:VerifierFailureExitCode -eq 2 -or
+    $script:VerifierFailureKind -eq 'infrastructure' -or
+    ([string]$script:VerifierFailureMessage).IndexOf(
+        'VERIFIER_INFRASTRUCTURE:', [StringComparison]::OrdinalIgnoreCase) -ge 0 -or
+    ($null -ne $cleanupResult -and -not [bool]$cleanupResult.Success))
+if ($forcedNegativeInvocation) {
+    # A requested exit of 1 is independently revalidated after all run-owned
+    # cleanup and parent-ledger writes.  No generic exception classification
+    # or stale route flag may authorize the application-failure exit.
+    $requestedExitCode = Resolve-Task43ForcedNegativeTopLevelExitCode `
+        $requestedExitCode $forcedNegativeExpectedMarker
+}
+if ($infrastructureFailureRecorded -and $requestedExitCode -ne 2) {
     $requestedExitCode = 2
 }
 exit ([int]$requestedExitCode)

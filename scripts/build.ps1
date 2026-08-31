@@ -178,7 +178,7 @@ function Stop-BuildProcessExactly($Process, [long]$ExpectedStartTicks,
             if ($null -eq $current) {
                 Throw-BuildInfrastructure "Build process PID $($Process.Id) disappeared before termination was proven."
             }
-            $currentTicks = [long]$current.StartTime.ToUniversalTime().Ticks
+            $currentTicks = [long](Get-VerifierProcessStartTicks $current)
             if ($currentTicks -ne $ExpectedStartTicks) {
                 Throw-BuildInfrastructure "Refusing to terminate reused build process PID $($Process.Id)."
             }
@@ -205,7 +205,7 @@ function Stop-BuildProcessExactly($Process, [long]$ExpectedStartTicks,
             $verifiedCurrent = Get-Process -Id ([int]$Process.Id) -ErrorAction Stop
             $verifiedCurrent.Refresh()
             if ([bool]$verifiedCurrent.HasExited -or
-                    ([long]$verifiedCurrent.StartTime.ToUniversalTime().Ticks -ne $ExpectedStartTicks)) {
+                    ([long](Get-VerifierProcessStartTicks $verifiedCurrent) -ne $ExpectedStartTicks)) {
                 Throw-BuildInfrastructure "Build process PID $($Process.Id) changed or exited after current identity validation."
             }
             $buildCurrentRecord = [pscustomobject]@{
@@ -279,7 +279,7 @@ function Invoke-BuildBoundedProcess([string]$FilePath, [string[]]$Arguments,
         $process.BeginOutputReadLine()
         $process.BeginErrorReadLine()
         try {
-            $startTicks = [long]$process.StartTime.ToUniversalTime().Ticks
+            $startTicks = [long](Get-VerifierProcessStartTicks $process)
         } catch {
             if (-not $process.WaitForExit($TimeoutMilliseconds)) {
                 Throw-BuildInfrastructure "Could not capture build process identity and PID $processId did not exit within the bound."

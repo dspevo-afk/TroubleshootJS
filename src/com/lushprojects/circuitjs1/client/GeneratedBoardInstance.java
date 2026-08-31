@@ -13,6 +13,7 @@ class GeneratedBoardInstance {
     private final GeneratedComponentBindings componentBindings;
     private final GeneratedExternalPowerBindings externalPowerBindings;
     private final GeneratedComponentConnectionBindings connectionBindings;
+    private final GeneratedBoardEndpointOracle developerBoardEndpointOracle;
     private final GeneratedChallengeBehaviorContract behaviorContract;
     private final PcbBoardLayout pcbLayout;
     private final BoardPhysicalSpecifications physicalSpecifications;
@@ -88,6 +89,8 @@ class GeneratedBoardInstance {
             PhysicalBoardRuntime physicalRuntime, GeneratedTemporalBehavior temporalBehavior,
             boolean developerOnlyFaultRoute, Vector<GeneratedFaultCandidate> faultCandidates) {
         this.board = board;
+        this.developerBoardEndpointOracle = board.getSimulationBindings()
+            .captureGeneratedBoardEndpointOracle();
         this.simulationElements = new Vector<CircuitElm>(simulationElements);
         this.seed = seed;
         this.circuitFamilyId = circuitFamilyId;
@@ -123,6 +126,7 @@ class GeneratedBoardInstance {
             .forGeneratedBoard(circuitFamilyId, topologyVariantId, seed, this.faultCandidates);
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
+        board.getSimulationBindings().markDeveloperVerificationReady();
     }
 
     TroubleshootBoard getBoard() {
@@ -141,6 +145,11 @@ class GeneratedBoardInstance {
 
     BoardSimulationBindings getSimulationBindings() {
         return board.getSimulationBindings();
+    }
+
+    /** Developer-only retained board endpoint truth; never a live binding lookup. */
+    GeneratedBoardEndpointOracle getDeveloperBoardEndpointOracle() {
+        return developerBoardEndpointOracle;
     }
 
     long getSeed() {

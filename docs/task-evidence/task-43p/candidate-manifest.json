@@ -1,62 +1,135 @@
 {
-  "protocol": "troubleshootjs-task43p-candidate-manifest-v1",
-  "baselineSha": "3bfaab093f85247fc20aec068824c83dc3d214c8",
-  "headSha": "3bfaab093f85247fc20aec068824c83dc3d214c8",
-  "candidateState": "uncommitted-working-tree",
+  "protocol": "troubleshootjs-task43p-candidate-manifest-v2",
+  "repairBaselineSha": "20f83535163070a0688fcc0958715e6bc827d445",
+  "repositoryProvenanceOwner": "PowerShell-wrapper",
   "developerOnly": true,
-  "sourceVerifierDigest": "fdf74536fdbca10ac8b95c6601af4e969bea8d28368bdffb7bd6046b65007e83",
-  "sourceVerifierFileCount": 854,
   "positiveRoute": {
     "switch": "-Task43P",
     "families": ["led", "diode", "rc", "npn", "nmos", "parallel"],
     "defaultSeeds": [0, 2, 3],
     "expectedResult": "UNPROVEN:task43p",
     "expectedExit": 2,
-    "observedExit": 2,
-    "observedStatus": "infrastructure-unproven",
-    "observation": "Browser startup and exact cleanup ownership stopped at WMI Access denied before the page executed."
+    "acceptance": "UNPROVEN until A-I and visible built-in @Browser evidence are complete"
   },
   "forcedNegativeRoute": {
     "switch": "-Task43PForcedNegative",
     "expectedApplicationExit": 1,
-    "observedExit": 2,
-    "observedStatus": "not-reached",
-    "observation": "The anchored Java canary was not reached because browser ownership could not be proven."
-  },
-  "lanes": {
-    "A": "PARTIAL",
-    "B": "PARTIAL",
-    "C": "PARTIAL",
-    "D": "PARTIAL",
-    "E": "PARTIAL_OR_UNPROVEN_BY_FAMILY",
-    "F": "PARTIAL",
-    "G": "PARTIAL",
-    "H": "UNPROVEN",
-    "I": "UNPROVEN"
+    "diagnostic": "run/route-bound anchored Java forced-negative marker",
+    "infrastructureExit": 2
   },
   "physicalTriad": {
     "manifestAuthoring": "independent",
-    "families": ["LED_INDICATOR", "DIODE_PROTECTED_INDICATOR", "RC_DELAY", "NPN_LOW_SIDE_SWITCH", "NMOS_LOW_SIDE_SWITCH", "PARALLEL_DUAL_INDICATOR"],
-    "negativeCanaries": [
-      "renderer-only-pad-offset",
-      "raw-endpoint-displacement-gap",
-      "raw-endpoint-wrong-net",
-      "solver-binding-post-swap",
-      "mirror-transform-mismatch",
-      "internally-self-consistent-wrong-mapping"
+    "families": [
+      "LED_INDICATOR",
+      "DIODE_PROTECTED_INDICATOR",
+      "RC_DELAY",
+      "NPN_LOW_SIDE_SWITCH",
+      "NMOS_LOW_SIDE_SWITCH",
+      "PARALLEL_DUAL_INDICATOR"
     ],
-    "productionMutation": "none",
-    "experimentResidue": "in_memory_only",
+    "observationSources": [
+      "raw-logical-board",
+      "raw-pcb-layout-copper",
+      "renderer",
+      "physical-package",
+      "solver-post"
+    ],
+    "canonicalValidator": "validateCanonical",
+    "solverIdentityBoundary": "live BoardSimulationBindings endpoint must match the immutable GeneratedBoardEndpointOracle captured by GeneratedBoardInstance at composition completion: detachable pads cross-check GeneratedComponentConnectionBinding.getBoardEndpoint() and its connection geometry; non-detachable pads use the oracle while installed FIXED_GENERATED parts provide only package/terminal consistency and foundation-terminal cross-checks",
+    "negativeFixtures": [
+      "renderer-only-pad-offset",
+      "raw-copper-endpoint-gap",
+      "raw-net-mismatch",
+      "solver-binding-post-mismatch",
+      "raw-empty-unmanifested-net",
+      "mirror-transform-mismatch",
+      "internally-self-consistent-wrong-mapping",
+      "omitted-terminal",
+      "renderer-only-lead-offset"
+    ],
+    "fixtureScope": "same-canonical-path-source-snapshot; not runtime source-mutation proof",
+    "productionTreeMutation": false,
     "runtimeStatus": "UNPROVEN"
   },
-  "validation": {
-    "jdk8GwtObfCompile": {"exit": 0, "jdk": "1.8.0_502", "gwtPermutations": 5},
-    "powershellParser": {"exit": 0},
-    "rendererBoundary": {"exit": 0},
-    "gitDiffCheck": {"exit": 0}
+  "disposableSourceExperiments": {
+    "command": "scripts/verify-task43p-source-experiments.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+    "targetedCommands": [
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId renderer-only-j1-1-plus-20px -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId renderer-only-j1-1-lead-plus-20px -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId raw-copper-j1-1-endpoint-gap -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId raw-net-mismatch -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId solver-binding-j1-1-post-mismatch -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId solver-detachable-c1-plus-identity-mismatch -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId package-mirror-mismatch -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId internally-self-consistent-wrong-mapping -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900",
+      "scripts/verify-task43p-source-experiments.ps1 -ExperimentId omitted-manifest-terminal -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900"
+    ],
+    "experiments": [
+      "renderer-only-j1-1-plus-20px",
+      "renderer-only-j1-1-lead-plus-20px",
+      "raw-copper-j1-1-endpoint-gap",
+      "raw-net-mismatch",
+      "solver-binding-j1-1-post-mismatch",
+      "solver-detachable-c1-plus-identity-mismatch",
+      "package-mirror-mismatch",
+      "internally-self-consistent-wrong-mapping",
+      "omitted-manifest-terminal"
+    ],
+    "mutationPaths": {
+      "renderer-only-j1-1-plus-20px": "PcbWorkbenchRenderer.java renderer source projection",
+      "renderer-only-j1-1-lead-plus-20px": "PhysicalPartRenderTerminal.java renderer lead-end projection",
+      "raw-copper-j1-1-endpoint-gap": "GeneratedBoardInstance.java raw PcbTraceGeometry endpoint arrays",
+      "raw-net-mismatch": "GeneratedBoardInstance.java raw logical-board producer adds an empty unmanifested net before canonical extraction",
+      "solver-binding-j1-1-post-mismatch": "BoardSimulationBindings.java producer endpoint lookup; after GeneratedBoardInstance captures the retained fixed board-endpoint oracle and completes composition, redirects later live J1.1 reads to a different endpoint, preferring R1.1/RLOAD.1 before J1.2 fallback",
+      "solver-detachable-c1-plus-identity-mismatch": "BoardSimulationBindings.java producer endpoint lookup; after the retained board-endpoint oracle and detachable C1.+ binding are composed, redirects live C1.+ reads to RC J2.1 first, the same-node WireElm/post on a different element",
+      "package-mirror-mismatch": "PcbComponentPlacement.java package transform producer accessor returns a transform outside the independent accepted catalog for J1",
+      "internally-self-consistent-wrong-mapping": "LedIndicatorGenerator.java logical-board producer swaps R1.1/R1.2 net assignments before layout/binding extraction",
+      "omitted-manifest-terminal": "Task43PPhysicalTruthDeveloperVerifier.java manifest producer omits the LED1.K terminal before canonical validation"
+    },
+    "requiredRestoration": "exact target bytes plus repository HEAD/status/source SHA-256/file count",
+    "executionRootHandoff": "wrapper receives explicit disposable RepositoryRoot/WebRoot/ScriptRoot and requires them to match the preview identity before extraction; repository provenance remains the real checkout",
+    "runtimeStatus": "UNPROVEN",
+    "visibleBrowserRequired": true,
+    "latestRun": {
+      "evidencePaths": [
+        "C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json"
+      ],
+      "exit": 2,
+      "repositoryUnchanged": true,
+      "sourceVerifierDigest": "e1a30e2b16648e5c56caaf6318a96bf0a65e19fc1158aff365c948f336498baa",
+      "sourceVerifierFileCount": 856,
+      "disposableCompileExitCodes": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "runtimeExtraction": "all nine independent producer-path mutations compiled and attempted through the explicit disposable-root handoff; each returned exit 2/UNPROVEN before preview identity because System.Net.HttpListener is unsupported on this host",
+      "runtimeAgainstMutatedSource": [true, true, true, true, true, true, true, true, true],
+      "runtimeExecutionRootsValidated": [false, false, false, false, false, false, false, false, false],
+      "sourceBytesRestoredExactly": true,
+      "runtimePreviewStopped": true
+    }
   },
-  "visibleBrowser": {"status": "not-run", "owner": "Foreman"},
+  "validation": {
+    "jdk8GwtObfCompile": {
+      "command": "scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF",
+      "exit": 0,
+      "jdk": "1.8.0_502",
+      "gwtPermutations": 5
+    },
+    "powershellParser": { "exit": 0 },
+    "rendererBoundary": { "exit": 0 },
+    "gitDiffCheck": { "exit": 0 },
+    "finalCandidateRepositoryState": {
+      "headSha": "20f83535163070a0688fcc0958715e6bc827d445",
+      "sourceVerifierDigest": "e1a30e2b16648e5c56caaf6318a96bf0a65e19fc1158aff365c948f336498baa",
+      "sourceVerifierFileCount": 856,
+      "dirty": true
+    }
+  },
+  "visibleBrowser": {
+    "status": "blocked-or-not-run",
+    "owner": "Foreman",
+    "required": true
+  },
   "ownerReview": "incomplete",
   "task44": "blocked-unstarted",
-  "openProductBlockers": []
+  "openProductBlockers": [],
+  "interpretation": "This manifest records a repair candidate and validation boundaries; it is not Task43P acceptance evidence."
 }

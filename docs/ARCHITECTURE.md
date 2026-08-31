@@ -2234,23 +2234,162 @@ unstarted.
 
 ### Task 43P developer-only candidate route
 
-The 2026-08-28 uncommitted candidate adds a narrow query-gated route,
+The 2026-08-29 uncommitted repair candidate starts from published baseline
+`20f83535163070a0688fcc0958715e6bc827d445` and retains a narrow query-gated route,
 `tsjVerifyTask43P`, at the existing generated-board verification settlement
 seam. `Task43PDeveloperVerifier` reads current lifecycle/owner state and
 publishes bounded structured evidence; it does not become a runtime owner and
-does not add a request, board, or session epoch. Its owner digest is evidence
-of current state, not a rollback or transaction guarantee.
+does not add a request, board, or session epoch. Its verifier-design state
+fingerprint is evidence of current state, not a repository claim, rollback, or
+transaction guarantee.
 
 `Task43PPhysicalTruthDeveloperVerifier` is intentionally authored outside the
-production board-binding and renderer metadata. Its manifest checks raw
-`PcbTraceGeometry` endpoints, board/component/part identity, rendered
-`PhysicalPartRenderTerminal` surfaces and hit targets, and live CircuitJS
-element/post values. Its negative canaries are in-memory observations only.
+production board-binding and renderer metadata. It gathers independent raw
+logical-board, raw `PcbTraceGeometry`, package, renderer, and live CircuitJS
+post observations into source snapshots. One canonical validator performs
+set-based completeness first, checks every trace endpoint, checks exact
+package terminals/catalog pairs (including the mirrored connector realization),
+and derives solver net membership from the independent manifest/raw board
+rather than the binding-table net resolver. Positive observations and all
+negative fixtures, including omitted-terminal, use that same validator.
 The wrapper captures the DOM evidence attribute into a run-owned manifest and
-checks direct source/verifier byte digests before and after capture.
+owns the actual baseline/HEAD, dirty state, source SHA-256, file count, and
+evidence path; Java/GWT repository-provenance fields are rejected.
+
+`scripts/verify-task43p-source-experiments.ps1` mutates only isolated
+disposable copies for renderer-only `J1.1 +20px`, raw-copper endpoint-gap
+through the `GeneratedBoardInstance`/`PcbTraceGeometry` layout data, and
+solver-binding/post redirection through `BoardSimulationBindings`. It records
+exact byte hashes and restoration plus repository-state identity, compiles all
+five GWT permutations, and attempts the compiled extraction route. The latest
+three targeted runs each compiled with exit `0`, attempted runtime extraction,
+and returned exit `2` because this host cannot construct
+`System.Net.HttpListener`; the disposable preview was stopped and no
+repository mutation remained. Browser-blocked experiments remain
+`UNPROVEN`; disposable outcomes are not visible-browser acceptance evidence.
+
+After the final wrapper hardening and validation, its repository-state audit
+still showed the published baseline HEAD, source/verifier digest
+`77d722d6ae2787ba7ed80bd3f28c9728f7bb0f2ec741ee18d4579c94fb01f3bf`, and
+file count `855`; no committed-tree mutation was introduced.
 
 The route emits explicit `PARTIAL`/`UNPROVEN` A-I statuses and returns exit 2
 until the missing runtime sequences are independently proven. The current
 Coder run could not reach the page because WMI denied exact browser ownership
 and cleanup inspection; no runtime evidence is claimed. This developer route
 is supplemental regression evidence, not visible built-in `@Browser` proof.
+
+### Task 43P delta remediation — disposable ownership and fail-closed schema
+
+The source-experiment harness now starts and identifies each disposable
+preview from the same isolated compiled tree whose source mutation produced
+the `war` output. It passes the disposable repository, web, and script roots
+explicitly to the repository wrapper; the wrapper uses those roots only for
+the execution surface and continues to own actual checkout provenance.
+Renderer, raw-copper, and solver producer mutations remain separate,
+byte-restored experiments.
+
+The physical validator compares raw logical net-ID sets before terminal
+iteration, including empty extra nets. Its solver phase re-fetches each live
+simulation endpoint and requires exact element/post identity with the retained
+detachable binding endpoint or fixed-generated physical-part terminal endpoint;
+detachable-connection geometry is required only for detachable pads. The
+negative sorts source observations and prefers a same-node/different-element
+collision before using independent class/post/node incompatibility. Java
+Task 43P evidence is accepted only through a complete exact nested schema,
+so unknown repository-authority aliases fail before persistence. The current
+host still prevents all three runtime experiments at the unsupported
+`System.Net.HttpListener` preview boundary, before disposable identity
+completion. Their records prove the runtime call was paired with the mutated
+source bytes, but their compile/runtime-attempt and restoration results remain
+`UNPROVEN`/exit `2`, not acceptance evidence. The latest combined record is
+`task43p-source-experiments-1ee260b7a3c94b609830e475f3dc4491.json`.
+
+## Task 43P final remediation corpus and NPN audit — 2026-08-30
+
+The NPN physical manifest was re-audited against the current generator and
+records all 15 terminals: `J1.1` is `LOAD_SUPPLY / WireElm / 0` and `LED1.K`
+is `COLLECTOR / WireElm / 0`, with the other 13 NPN terminals unchanged and
+reconciled to board, package, and solver bindings. Across the six families,
+the independent manifest contains 64 terminals in total (`6 + 8 + 12 + 15 +
+13 + 10`). No generator, CircuitJS, gameplay, or repair behavior was changed.
+
+The disposable source harness now covers nine separately recorded producer
+paths: renderer pad offset, renderer lead offset, raw-copper endpoint gap,
+raw logical-net mismatch, fixed and detachable solver identity redirects,
+package/mirror transform mismatch, internally self-consistent logical-pad
+remapping, and omitted manifest terminal. Each case compiles all five OBF
+permutations and attempts the matching disposable-root runtime route while
+the mutated source is present. The combined record is
+`task43p-source-experiments-027ac10835a24e31a91625b9bbcfee85.json`.
+
+All nine compile results are exit `0`; all nine runtime results are exit
+`2`/`UNPROVEN` before preview identity because this host cannot construct
+`System.Net.HttpListener`. Each case records exact source-byte restoration,
+unchanged wrapper-owned HEAD/status/source digest/file count, and stopped
+preview proof with zero cleanup errors. The wrapper's repository-state scan
+and route-failure boundary now convert repository/evidence file, process,
+transport, timeout, and ownership uncertainty to typed infrastructure exit
+`2`; strict nested Java evidence schema validation rejects unknown or aliased
+repository-authority properties before persistence. No runtime mutation
+rejection or visible `@Browser` acceptance is claimed.
+
+## Task 43P fixed-part solver endpoint boundary — 2026-08-30
+
+The solver proof now resolves a retained producer endpoint for every manifest
+pad. A detachable pad uses
+`GeneratedComponentConnectionBinding.getBoardEndpoint()` from the exact
+component/pad binding and retains the existing detachable connection-element
+ownership/geometry check. A pad without a detachable binding uses the installed
+`FIXED_GENERATED` physical part and its `PhysicalPartTerminal` endpoint (the
+foundation factory captures this endpoint for fixed foundation parts); it
+requires fixed-generated provenance, the expected mounted component slot, and
+exact manifest/package/terminal identity. A mutable replacement cannot satisfy
+this no-binding path.
+
+Each live `BoardSimulationBindings.getEndpoint(padId)` result is compared with
+that retained endpoint by exact `CircuitElm` identity and post index. The
+independent manifest/raw-board class, post, net, node, ownership, and finite
+reading checks remain in force, as does distinct-net node separation. Fixed
+pads do not fabricate detachable geometry. The disposable solver mutation
+preserves the first J1.1 read used by fixed-part construction and redirects a
+later live binding read, so its expected endpoint remains the retained
+producer object rather than an alias of the mutation.
+
+The refreshed source record is
+`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a1e8de2ba420464086e03d52a6b70147.json`.
+Its renderer, raw-copper, and solver mutations each compiled with exit `0`,
+attempted the matching disposable-root runtime route, and returned exit `2` /
+`UNPROVEN` at the unsupported `System.Net.HttpListener` preview boundary.
+Exact source restoration and unchanged repository state were proven; no
+runtime mutation rejection or visible `@Browser` acceptance is claimed.
+
+## Task 43P retained board-endpoint oracle correction — 2026-08-30
+
+`GeneratedBoardInstance` now captures a separate immutable
+`GeneratedBoardEndpointOracle` directly from the authoritative board binding
+map at the generated-board composition boundary. The capture occurs before
+composition validation marks the instance ready for the developer-only live
+lookup experiment seam. It is not a Git, source, or repository claim and is
+not used by normal gameplay or CircuitJS behavior. Every Task 43P solver pad
+uses this retained board endpoint as the expected identity. Detachable pads
+must also match the exact `GeneratedComponentConnectionBinding` board endpoint
+and its connection-element geometry. Non-detachable pads use the board oracle;
+their installed `FIXED_GENERATED` part is checked for mounted component,
+package, and terminal identity, with an endpoint cross-check only for
+`FixedPhysicalPart` foundation parts. Internal fixed NPN/NMOS LED and resistor
+terminals therefore remain component-side checks rather than board-endpoint
+substitutes.
+
+The source corpus's detachable solver case targets actual RC `C1.+`, not fixed
+RC `R1.1`; fixed J1.1 remains a separate identity mutation. The live
+`BoardSimulationBindings` redirect is enabled only after the retained oracle
+has been captured and composition validation has completed, so a reachable
+runtime would exercise the canonical verifier against a genuinely independent
+expected endpoint. The latest nine-case record is
+`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`:
+all nine OBF compiles exit `0`, all nine runtime attempts exit `2`/UNPROVEN at
+the unsupported `System.Net.HttpListener` preview boundary, and every case
+records exact restoration, unchanged HEAD/status/source digest/file count,
+stopped preview cleanup, and zero cleanup errors. No runtime or visible
+`@Browser` acceptance is claimed.

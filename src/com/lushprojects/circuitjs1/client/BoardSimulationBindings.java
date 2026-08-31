@@ -7,6 +7,7 @@ class BoardSimulationBindings {
     private final TroubleshootBoard board;
     private final HashMap<String, CircuitMeasurementEndpoint> padEndpoints =
         new HashMap<String, CircuitMeasurementEndpoint>();
+    private boolean developerVerificationReady;
 
     BoardSimulationBindings(TroubleshootBoard board) {
         this.board = board;
@@ -24,6 +25,32 @@ class BoardSimulationBindings {
 
     CircuitMeasurementEndpoint getEndpoint(String padId) {
         return padEndpoints.get(padId);
+    }
+
+    /**
+     * Captures the authoritative generated pad map without going through the
+     * live lookup method.  GeneratedBoardInstance calls this exactly at its
+     * composition boundary so developer-only source experiments can mutate
+     * later observation lookups without changing the retained oracle.
+     */
+    GeneratedBoardEndpointOracle captureGeneratedBoardEndpointOracle() {
+        HashMap<String, CircuitMeasurementEndpoint> captured =
+            new HashMap<String, CircuitMeasurementEndpoint>();
+        for (String boardPadId : board.getPadIds()) {
+            CircuitMeasurementEndpoint endpoint = padEndpoints.get(boardPadId);
+            if (endpoint != null)
+                captured.put(boardPadId, endpoint);
+        }
+        return GeneratedBoardEndpointOracle.fromGeneratedBoardBindings(captured);
+    }
+
+    /** Marks the end of board composition for the developer-only verifier seam. */
+    void markDeveloperVerificationReady() {
+        developerVerificationReady = true;
+    }
+
+    boolean isDeveloperVerificationReady() {
+        return developerVerificationReady;
     }
 
     /**

@@ -9,9 +9,6 @@ import java.util.Vector;
  * not add a gameplay transaction, epoch, or alternate electrical model.
  */
 final class Task43PDeveloperVerifier {
-    private static final String BASELINE_SHA =
-        "3bfaab093f85247fc20aec068824c83dc3d214c8";
-
     private Task43PDeveloperVerifier() { }
 
     static void verify(CirSim sim) {
@@ -24,18 +21,18 @@ final class Task43PDeveloperVerifier {
         if (instance.getPcbLayout() == null || sim.pcbWorkbenchController == null)
             throw new IllegalStateException("task43p-missing-physical-runtime");
 
-        String beforeDigest = ownerStateDigest(sim, instance, challenge);
+        String beforeState = verifierDesignState(sim, instance, challenge);
         boolean earlyFinish = challenge.finishJob();
-        String afterEarlyFinishDigest = ownerStateDigest(sim, instance, challenge);
-        if (earlyFinish || !beforeDigest.equals(afterEarlyFinishDigest))
+        String afterEarlyFinishState = verifierDesignState(sim, instance, challenge);
+        if (earlyFinish || !beforeState.equals(afterEarlyFinishState))
             throw new IllegalStateException("task43p-early-finish-latched-or-mutated-state");
 
         String physicalEvidence = Task43PPhysicalTruthDeveloperVerifier.verify(sim);
-        String afterDigest = ownerStateDigest(sim, instance, challenge);
-        if (!beforeDigest.equals(afterDigest))
+        String afterState = verifierDesignState(sim, instance, challenge);
+        if (!beforeState.equals(afterState))
             throw new IllegalStateException("task43p-read-only-evidence-mutated-owner-state");
 
-        String evidence = buildEvidence(sim, instance, challenge, beforeDigest, afterDigest,
+        String evidence = buildEvidence(sim, instance, challenge, beforeState, afterState,
             earlyFinish, physicalEvidence);
         sim.publishTask43PEvidenceForDeveloperVerification(evidence);
         if (sim.isTask43PForcedFailureActive())
@@ -47,16 +44,15 @@ final class Task43PDeveloperVerifier {
     }
 
     private static String buildEvidence(CirSim sim, GeneratedBoardInstance instance,
-            GeneratedChallengeController challenge, String beforeDigest, String afterDigest,
+            GeneratedChallengeController challenge, String beforeState, String afterState,
             boolean earlyFinish, String physicalEvidence) {
         GeneratedFault fault = challenge.getDefinition().getFault();
         GeneratedFaultLocus locus = instance.getFaultLocus();
         GeneratedChallengeLifecycleEvidence lifecycle = challenge.getLifecycleEvidence();
         StringBuilder result = new StringBuilder();
-        result.append("{\"protocol\":\"TSJ-TASK43P-1\",\"status\":\"UNPROVEN\",");
-        result.append("\"developerOnly\":true,\"baselineSha\":").append(q(BASELINE_SHA))
-            .append(",\"currentSha\":").append(q(BASELINE_SHA))
-            .append(",\"candidateState\":\"uncommitted-working-tree\",");
+        result.append("{\"protocol\":\"TSJ-TASK43P-2\",\"status\":\"UNPROVEN\",");
+        result.append("\"developerOnly\":true,\"forcedNegativeRequested\":")
+            .append(sim.isTask43PForcedFailureActive()).append(',');
         result.append("\"family\":").append(q(instance.getCircuitFamilyId()))
             .append(",\"topology\":").append(q(instance.getTopologyVariantId()))
             .append(",\"seed\":").append(instance.getSeed())
@@ -84,8 +80,8 @@ final class Task43PDeveloperVerifier {
             .append(",\"faultValidated\":").append(lifecycle.selectedFaultValidated)
             .append(",\"readyAfterValidation\":").append(lifecycle.readyAfterValidation)
             .append("},");
-        result.append("\"ownerStateDigestBefore\":").append(q(beforeDigest))
-            .append(",\"ownerStateDigestAfter\":").append(q(afterDigest))
+        result.append("\"verifierDesignStateBefore\":").append(q(beforeState))
+            .append(",\"verifierDesignStateAfter\":").append(q(afterState))
             .append(",\"mutationCleanup\":{\"readOnly\":true,\"activeMeasurementOverlay\":")
             .append(sim.activeMeasurementOverlay)
             .append(",\"pendingBoardPowerState\":")
@@ -121,7 +117,7 @@ final class Task43PDeveloperVerifier {
             .append(",\"observation\":").append(q(observation)).append('}');
     }
 
-    private static String ownerStateDigest(CirSim sim, GeneratedBoardInstance instance,
+    private static String verifierDesignState(CirSim sim, GeneratedBoardInstance instance,
             GeneratedChallengeController challenge) {
         StringBuilder result = new StringBuilder();
         result.append("board=").append(instance.getBoard().getId())
@@ -135,7 +131,7 @@ final class Task43PDeveloperVerifier {
             .append("|overlay=").append(sim.activeMeasurementOverlay)
             .append("|pendingVerification=").append(sim.generatedBoardVerificationPending)
             .append("|analyzed=").append(sim.generatedBoardVerificationAnalyzed);
-        Vector<String> componentIds = instance.getBoard().getComponentIds();
+        Vector<String> componentIds = new Vector<String>(instance.getBoard().getComponentIds());
         Collections.sort(componentIds);
         for (String componentId : componentIds) {
             PhysicalBoardSlot slot = instance.getPhysicalBoardRuntime().getSlot(componentId);
@@ -161,7 +157,9 @@ final class Task43PDeveloperVerifier {
             result.append("|part=").append(partId).append(':').append(part.isInstalled())
                 .append(':').append(part.isOriginal()).append(':').append(part.isFaulted());
         }
-        Vector<GeneratedComponentConnectionBinding> bindings = instance.getConnectionBindings().getAll();
+        Vector<GeneratedComponentConnectionBinding> bindings =
+            new Vector<GeneratedComponentConnectionBinding>(
+                instance.getConnectionBindings().getAll());
         Collections.sort(bindings, new java.util.Comparator<GeneratedComponentConnectionBinding>() {
             public int compare(GeneratedComponentConnectionBinding first,
                     GeneratedComponentConnectionBinding second) {

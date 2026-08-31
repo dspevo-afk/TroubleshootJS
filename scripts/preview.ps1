@@ -49,7 +49,8 @@ if (-not (Assert-VerifierPhysicalOwnedPath $webRoot `
 
 $processStartTicks = 0L
 try {
-    $processStartTicks = [long]((Get-Process -Id $PID -ErrorAction Stop).StartTime.ToUniversalTime().Ticks)
+    $processStartTicks = [long](Get-VerifierProcessStartTicks (
+        Get-Process -Id $PID -ErrorAction Stop))
 } catch {
     if (-not [String]::IsNullOrWhiteSpace($VerifierRunId)) {
         throw "Could not record run-owned preview process start identity: $($_.Exception.Message)"

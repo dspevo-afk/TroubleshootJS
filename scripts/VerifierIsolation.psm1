@@ -1,6 +1,13 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $script:VerifierHeldPortClaims = @{}
+$script:VerifierHeldPortMutexes = @{}
+$script:VerifierKernelTransportOwnerKind = 'kernel-transport'
+$script:VerifierKernelTransportOwnerProof = 'run-owned-preview-http-sys-v1'
+$script:VerifierKernelTransportOwnerEvidence = 'pid-4-system-http-sys'
+$script:VerifierUserProcessOwnerKind = 'user-process'
+$script:VerifierUserProcessOwnerProof = 'diagnostics-process-start-v1'
+$script:VerifierUserProcessOwnerEvidence = 'system-diagnostics-process-starttime'
 
 function Get-VerifierErrorMessage($ErrorRecord) {
     if ($null -eq $ErrorRecord) { return '' }
@@ -155,13 +162,169 @@ function Resolve-VerifierBrowserPath([string]$RequestedPath = '') {
     Throw-VerifierInfrastructure "Could not resolve the configured browser executable '$description' from PATH, Program Files, or Program Files (x86)."
 }
 
-function Get-VerifierProcessStartTicks($Process) {
+function Get-VerifierProcessStartTicks {
+    param(
+        [Parameter(Position = 0)]
+        $Process,
+        # This is an accessor-boundary test seam only. Production callers omit
+        # it, so the default path below reads the retained Process.StartTime.
+        # The Process object is still required to be a live real Process.
+        [Parameter(Position = 1)]
+        [scriptblock]$StartTimeAccessor = $null
+    )
+
+    if ($null -eq $Process) {
+        Throw-VerifierInfrastructure 'Could not read process start identity from a null process object.'
+    }
+    if (-not ($Process -is [System.Diagnostics.Process])) {
+        Throw-VerifierInfrastructure 'Could not read process start identity from a non-System.Diagnostics.Process object.'
+    }
+
+    $processId = 0
     try {
-        return [long]$Process.StartTime.ToUniversalTime().Ticks
+        $processId = [int]$Process.Id
     } catch {
-        Throw-VerifierInfrastructure ("Could not read process start identity: " +
+        Throw-VerifierInfrastructure ('Could not read process PID while establishing start identity: ' +
             (Get-VerifierErrorMessage $_))
     }
+    if ($processId -le 0) {
+        Throw-VerifierInfrastructure 'Could not read process start identity because the retained process PID was not positive.'
+    }
+
+    $maxAttempts = 5
+    $maxMilliseconds = 250
+    $retryDelayMilliseconds = 25
+    $stopwatchFrequency = [double][Diagnostics.Stopwatch]::Frequency
+    if ($stopwatchFrequency -le 0) {
+        Throw-VerifierInfrastructure 'Could not establish a monotonic clock for bounded process identity capture.'
+    }
+    $startedTimestamp = [Diagnostics.Stopwatch]::GetTimestamp()
+    $lastFailure = ''
+
+    for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+        # Refresh and liveness checks operate on this exact retained object.
+        # No PID lookup is permitted inside the retry loop: a replacement
+        # process must never become the identity of the original handle.
+        try {
+            [void]$Process.Refresh()
+        } catch {
+            Throw-VerifierInfrastructure ("Could not refresh retained process PID $processId before start-identity capture: " +
+                (Get-VerifierErrorMessage $_))
+        }
+        try {
+            if ([bool]$Process.HasExited) {
+                Throw-VerifierInfrastructure "Retained process PID $processId exited before its start identity was established."
+            }
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ("Could not confirm retained process PID $processId was alive before start-identity capture: " +
+                (Get-VerifierErrorMessage $_))
+        }
+
+        $lastFailure = ''
+        $identityReadSucceeded = $false
+        $retryableUnavailable = $false
+
+        # Keep raw accessor acquisition separate from validation. Only a
+        # null/unavailable result is retryable; a thrown accessor error is an
+        # immediate typed infrastructure failure because its cause is not
+        # safely classifiable at this boundary.
+        try {
+            $startTimeValues = if ($null -ne $StartTimeAccessor) {
+                @(& $StartTimeAccessor $Process)
+            } else {
+                @($Process.StartTime)
+            }
+        } catch {
+            Throw-VerifierInfrastructure ("Could not read retained process PID $processId StartTime: " +
+                (Get-VerifierErrorMessage $_))
+        }
+
+        $startTimeValueCount = @($startTimeValues).Count
+        if ($startTimeValueCount -eq 0) {
+            # PowerShell represents a scriptblock that emitted only $null as
+            # no pipeline output. Treat that representation as unavailable.
+            $retryableUnavailable = $true
+            $lastFailure = 'the retained process returned no StartTime value'
+        } elseif ($startTimeValueCount -ne 1) {
+            Throw-VerifierInfrastructure "The retained process returned $startTimeValueCount StartTime values instead of exactly one."
+        } else {
+            $startTime = @($startTimeValues)[0]
+            if ($null -eq $startTime) {
+                # An explicit one-element null array is the other supported
+                # PowerShell representation of an unavailable accessor value.
+                $retryableUnavailable = $true
+                $lastFailure = 'the retained process returned a null StartTime value'
+            } elseif (-not ($startTime -is [DateTime])) {
+                Throw-VerifierInfrastructure 'The retained process returned a malformed non-DateTime StartTime value.'
+            } else {
+                try {
+                    $utcStartTime = $startTime.ToUniversalTime()
+                } catch {
+                    Throw-VerifierInfrastructure ("Could not convert retained process PID $processId StartTime to UTC: " +
+                        (Get-VerifierErrorMessage $_))
+                }
+                if ($null -eq $utcStartTime -or -not ($utcStartTime -is [DateTime])) {
+                    Throw-VerifierInfrastructure 'The retained process returned a malformed UTC StartTime value.'
+                }
+                try {
+                    $startTicks = [long]$utcStartTime.Ticks
+                } catch {
+                    Throw-VerifierInfrastructure ("Could not convert retained process PID $processId UTC StartTime to ticks: " +
+                        (Get-VerifierErrorMessage $_))
+                }
+                if ($startTicks -le 0) {
+                    Throw-VerifierInfrastructure 'The retained process returned a non-positive StartTime identity.'
+                }
+                $identityReadSucceeded = $true
+            }
+        }
+
+        if ($identityReadSucceeded) {
+            try {
+                [void]$Process.Refresh()
+                if ([bool]$Process.HasExited) {
+                    Throw-VerifierInfrastructure "Retained process PID $processId exited before its start identity could be returned."
+                }
+            } catch {
+                if (Test-VerifierInfrastructureError $_) { throw }
+                Throw-VerifierInfrastructure ("Could not confirm retained process PID $processId remained alive after start-identity capture: " +
+                    (Get-VerifierErrorMessage $_))
+            }
+            return [long]$startTicks
+        }
+
+        if (-not $retryableUnavailable) {
+            Throw-VerifierInfrastructure "Retained process PID $processId did not provide a retryable unavailable StartTime result."
+        }
+        if ($attempt -ge $maxAttempts) { break }
+        $elapsedMilliseconds = (([double]([Diagnostics.Stopwatch]::GetTimestamp() -
+            $startedTimestamp)) * 1000.0) / $stopwatchFrequency
+        if ($elapsedMilliseconds -ge $maxMilliseconds) { break }
+
+        # A failed accessor read is retryable only after the same object has
+        # again proved alive. Refreshing this object cannot authorize a PID
+        # replacement and keeps transient StartTime availability bounded.
+        try {
+            [void]$Process.Refresh()
+            if ([bool]$Process.HasExited) {
+                Throw-VerifierInfrastructure "Retained process PID $processId exited while its start identity was unavailable."
+            }
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ("Could not confirm retained process PID $processId remained alive for a bounded identity retry: " +
+                (Get-VerifierErrorMessage $_))
+        }
+        $remainingMilliseconds = [Math]::Max(1, [int][Math]::Floor(
+            $maxMilliseconds - $elapsedMilliseconds))
+        Start-Sleep -Milliseconds ([Math]::Min($retryDelayMilliseconds, $remainingMilliseconds))
+    }
+
+    $detail = if ([String]::IsNullOrWhiteSpace($lastFailure)) {
+        'the retained process identity was unavailable'
+    } else { $lastFailure }
+    Throw-VerifierInfrastructure ("Could not establish a positive start identity for retained process PID $processId " +
+        "within $maxAttempts attempts/$maxMilliseconds ms: $detail")
 }
 
 function Get-VerifierRepositoryIdentity([string]$WorktreeRoot) {
@@ -798,9 +961,17 @@ function Start-VerifierProcess([string]$FilePath, [string[]]$Arguments,
     }
 }
 
-function Stop-VerifierBoundedProcessExactly($Process, [long]$ExpectedStartTicks,
-        [int]$WaitMilliseconds = 5000) {
-    if ($null -eq $Process -or [int]$Process.Id -le 0) {
+function Stop-VerifierBoundedProcessExactly($Process, $ExpectedStartTicks,
+        $WaitMilliseconds = 5000) {
+    # Keep all bounded-process scalars raw until the exact-type boundary.  A
+    # coercive parameter declaration or method call must never turn a string,
+    # Boolean, fraction, collection, or null into a usable timeout.
+    if (-not (Test-VerifierStrictIntegralValue $ExpectedStartTicks 1 ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $WaitMilliseconds 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'A bounded verifier process requires exact positive start identity and wait-bound scalars.'
+    }
+    if ($null -eq $Process -or $Process.GetType() -ne [Diagnostics.Process] -or
+            -not (Test-VerifierStrictIntegralValue $Process.Id 1 ([int]::MaxValue))) {
         Throw-VerifierInfrastructure 'A bounded verifier process had no valid process identity.'
     }
     try {
@@ -813,10 +984,14 @@ function Stop-VerifierBoundedProcessExactly($Process, [long]$ExpectedStartTicks,
 }
 
 function Invoke-VerifierBoundedProcess([string]$FilePath, [string[]]$Arguments,
-        [int]$TimeoutMilliseconds = 5000) {
-    if ($TimeoutMilliseconds -lt 1) {
-        Throw-VerifierInfrastructure 'A bounded process timeout must be positive.'
+        $TimeoutMilliseconds = 5000) {
+    # This is the raw caller boundary.  Validate the timeout before creating
+    # its log directory or starting the child; PowerShell must not coerce a
+    # numeric string, Boolean, fraction, array, object, or null into an int.
+    if (-not (Test-VerifierStrictIntegralValue $TimeoutMilliseconds 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'A bounded process timeout must be one exact positive integral scalar.'
     }
+    $TimeoutMilliseconds = [int]$TimeoutMilliseconds
     $processRoot = Join-Path ([IO.Path]::GetTempPath()) `
         ('TroubleshootJS\verify-process-' + [Guid]::NewGuid().ToString('N'))
     $stdoutLog = Join-Path $processRoot 'stdout.log'
@@ -888,13 +1063,11 @@ function Invoke-VerifierBoundedProcess([string]$FilePath, [string[]]$Arguments,
         [IO.File]::WriteAllText($stdoutLog, $stdout, [Text.UTF8Encoding]::new($false))
         [IO.File]::WriteAllText($stderrLog, $stderr, [Text.UTF8Encoding]::new($false))
         $rawExitCode = $process.ExitCode
-        $exitText = if ($null -eq $rawExitCode) { '' } else { [string]$rawExitCode }
-        if ([String]::IsNullOrWhiteSpace($exitText) -or $exitText -notmatch '^-?\d+$') {
-            Throw-VerifierInfrastructure "Bounded process '$FilePath' did not expose a numeric exit code."
+        if (-not (Test-VerifierStrictIntegralValue $rawExitCode `
+                ([int]::MinValue) ([int]::MaxValue))) {
+            Throw-VerifierInfrastructure "Bounded process '$FilePath' did not expose an exact integral exit code."
         }
-        try { $exitCode = [int]$exitText } catch {
-            Throw-VerifierInfrastructure "Bounded process '$FilePath' exposed an out-of-range exit code '$exitText'."
-        }
+        $exitCode = [int]$rawExitCode
         $terminationProven = $true
         $result = [pscustomobject]@{
             FilePath = $FilePath
@@ -1000,7 +1173,10 @@ function Invoke-VerifierBoundedProcess([string]$FilePath, [string[]]$Arguments,
     }
 }
 
-function Get-VerifierPortMutexName($Context, [int]$Port) {
+function Get-VerifierPortMutexName($Context, $Port) {
+    if (-not (Test-VerifierStrictIntegralValue $Port 1 65535)) {
+        Throw-VerifierInfrastructure 'Port mutex derivation requires an exact integral port in the valid TCP range.'
+    }
     # The mutex is intentionally independent of repository/worktree identity.
     # Worktree/run metadata belongs in the claim record; the OS-level claim must
     # serialize the same loopback port across every worktree and process.
@@ -1012,42 +1188,1770 @@ function Test-VerifierLoopbackAddress([string]$Address) {
     return $normalized -in @('127.0.0.1', '0.0.0.0', '::1', '::')
 }
 
-function Get-VerifierListenerProcessRecord([int]$ProcessId, [string]$LocalAddress,
-        [int]$Port, [string]$Source) {
-    if ($ProcessId -le 0) {
+function Test-VerifierStrictStringValue($Value) {
+    return ($null -ne $Value -and $Value.GetType() -eq [string])
+}
+
+function Test-VerifierStrictBooleanValue($Value) {
+    return ($null -ne $Value -and $Value.GetType() -eq [bool])
+}
+
+function Test-VerifierRawNetTcpListenState($Value) {
+    if ($null -eq $Value) { return $false }
+    $type = $Value.GetType()
+    if ($type -eq [string]) {
+        return $Value -cmatch '^(?i:Listen|Listening)$'
+    }
+    # Get-NetTCPConnection returns the CDXML-generated State enum on supported
+    # Windows hosts.  Permit that exact scalar OS type, but do not coerce an
+    # arbitrary number/object into a state string.
+    if (-not $type.IsEnum -or
+            $type.FullName -cne 'Microsoft.PowerShell.Cmdletization.GeneratedTypes.NetTCPConnection.State') {
+        return $false
+    }
+    try {
+        return ([string]$Value) -ceq 'Listen'
+    } catch { return $false }
+}
+
+function Get-VerifierRequiredBooleanValue($Object, [string]$Name,
+        [string]$Label) {
+    if ($null -eq $Object -or [String]::IsNullOrWhiteSpace($Name) -or
+            $null -eq $Object.PSObject.Properties[$Name] -or
+            -not (Test-VerifierStrictBooleanValue $Object.PSObject.Properties[$Name].Value)) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed its required Boolean '$Name'."
+    }
+    return $Object.PSObject.Properties[$Name].Value
+}
+
+function Test-VerifierStrictIntegralValue($Value, [long]$Minimum = [long]::MinValue,
+        [long]$Maximum = [long]::MaxValue) {
+    if ($null -eq $Value) { return $false }
+    $type = $Value.GetType()
+    if ($type -notin @([byte], [sbyte], [int16], [uint16], [int32], [uint32],
+            [int64], [uint64])) {
+        return $false
+    }
+    try {
+        $number = [long]$Value
+        return ($number -ge $Minimum -and $number -le $Maximum)
+    } catch { return $false }
+}
+
+function Assert-VerifierRawProcessRecord($Record,
+        [string]$Label = 'process record', [switch]$RequirePositiveIdentity,
+        [switch]$RequireCommandLine) {
+    if ($null -eq $Record -or $Record -is [array]) {
+        Throw-VerifierInfrastructure "$Label was null or an array before process identity validation."
+    }
+    foreach ($propertyName in @('ProcessId', 'ParentProcessId')) {
+        if ($null -eq $Record.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted '$propertyName' before process identity validation."
+        }
+    }
+    $pidProperty = $Record.PSObject.Properties['ProcessId']
+    $parentProperty = $Record.PSObject.Properties['ParentProcessId']
+    $commandProperty = $Record.PSObject.Properties['CommandLine']
+    $pidMinimum = if ($RequirePositiveIdentity) { 1L } else { 0L }
+    $parentMinimum = if ($RequirePositiveIdentity) { 1L } else { 0L }
+    if (-not (Test-VerifierStrictIntegralValue $pidProperty.Value $pidMinimum ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $parentProperty.Value $parentMinimum ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure "$Label carried malformed raw PID or parent PID identity."
+    }
+    if ($RequireCommandLine -and $null -eq $Record.PSObject.Properties['CommandLine']) {
+        Throw-VerifierInfrastructure "$Label omitted command-line identity."
+    }
+    if ($null -ne $commandProperty -and $null -ne $commandProperty.Value -and
+            -not (Test-VerifierStrictStringValue $commandProperty.Value)) {
+        Throw-VerifierInfrastructure "$Label carried malformed raw command-line identity."
+    }
+    if ($RequireCommandLine -and
+            [String]::IsNullOrWhiteSpace($commandProperty.Value)) {
+        Throw-VerifierInfrastructure "$Label carried an empty raw command-line identity."
+    }
+    foreach ($propertyName in @('ProcessStartTicks', 'ParentProcessStartTicks')) {
+        $property = $Record.PSObject.Properties[$propertyName]
+        if ($null -ne $property -and
+                -not (Test-VerifierStrictIntegralValue $property.Value 0 ([long]::MaxValue))) {
+            Throw-VerifierInfrastructure "$Label carried malformed raw '$propertyName' identity."
+        }
+    }
+    foreach ($propertyName in @('Name', 'ExecutablePath')) {
+        $property = $Record.PSObject.Properties[$propertyName]
+        if ($null -ne $property -and $null -ne $property.Value -and
+                -not (Test-VerifierStrictStringValue $property.Value)) {
+            Throw-VerifierInfrastructure "$Label carried malformed '$propertyName' identity."
+        }
+    }
+    $depthProperty = $Record.PSObject.Properties['VerifierDepth']
+    if ($null -ne $depthProperty -and
+            -not (Test-VerifierStrictIntegralValue $depthProperty.Value 0 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure "$Label carried malformed ancestry depth."
+    }
+    return $Record
+}
+
+function Assert-VerifierRawProcessId($Record,
+        [string]$Label = 'process owner record') {
+    if ($null -eq $Record -or $Record -is [array] -or
+            $null -eq $Record.PSObject.Properties['ProcessId'] -or
+            -not (Test-VerifierStrictIntegralValue $Record.PSObject.Properties['ProcessId'].Value `
+                1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure "$Label omitted or carried a malformed positive raw PID."
+    }
+    return $Record
+}
+
+function Assert-VerifierRawProcessIdentityRecord($Record,
+        [string]$Label = 'process identity',
+        [string]$ParentPropertyName = 'ParentProcessId',
+        [string]$StartPropertyName = 'ProcessStartTicks',
+        [string]$ParentStartPropertyName = 'ParentProcessStartTicks',
+        [string]$CommandPropertyName = 'CommandLine',
+        [switch]$RequireParentStart) {
+    if ($null -eq $Record -or $Record -is [array]) {
+        Throw-VerifierInfrastructure "$Label was null or an array before process identity validation."
+    }
+    foreach ($propertyName in @('ProcessId', $StartPropertyName,
+            $ParentPropertyName, $CommandPropertyName)) {
+        if ([String]::IsNullOrWhiteSpace($propertyName) -or
+                $null -eq $Record.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted '$propertyName' before process identity validation."
+        }
+    }
+    if (-not (Test-VerifierStrictIntegralValue $Record.PSObject.Properties['ProcessId'].Value `
+                1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $Record.PSObject.Properties[$StartPropertyName].Value `
+                1 ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $Record.PSObject.Properties[$ParentPropertyName].Value `
+                1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictStringValue $Record.PSObject.Properties[$CommandPropertyName].Value) -or
+            [String]::IsNullOrWhiteSpace($Record.PSObject.Properties[$CommandPropertyName].Value)) {
+        Throw-VerifierInfrastructure "$Label carried malformed positive PID, parent, start, or command-line identity."
+    }
+    $parentStartProperty = $Record.PSObject.Properties[$ParentStartPropertyName]
+    if ($null -eq $parentStartProperty) {
+        if ($RequireParentStart) {
+            Throw-VerifierInfrastructure "$Label omitted its required parent start identity."
+        }
+    } elseif (-not (Test-VerifierStrictIntegralValue $parentStartProperty.Value 0 ([long]::MaxValue)) -or
+            ($RequireParentStart -and [long]$parentStartProperty.Value -le 0)) {
+        Throw-VerifierInfrastructure "$Label carried malformed parent start identity."
+    }
+    return $Record
+}
+
+function Assert-VerifierDurableProcessIdentityTuple($Record,
+        [string]$ProcessIdPropertyName = 'ProcessId',
+        [string]$ProcessStartPropertyName = 'ProcessStartTicks',
+        [string]$ParentProcessIdPropertyName = 'ParentProcessId',
+        [string]$ParentProcessStartPropertyName = 'ParentProcessStartTicks',
+        [string]$CommandLinePropertyName = 'CommandLine',
+        [string]$Label = 'durable process identity') {
+    if ($null -eq $Record -or $Record -is [array]) {
+        Throw-VerifierInfrastructure "$Label was null or an array before durable identity validation."
+    }
+    foreach ($propertyName in @($ProcessIdPropertyName, $ProcessStartPropertyName,
+            $ParentProcessIdPropertyName, $ParentProcessStartPropertyName,
+            $CommandLinePropertyName)) {
+        if ([String]::IsNullOrWhiteSpace($propertyName) -or
+                $null -eq $Record.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted '$propertyName' before durable identity validation."
+        }
+    }
+    $processId = $Record.PSObject.Properties[$ProcessIdPropertyName].Value
+    $processStart = $Record.PSObject.Properties[$ProcessStartPropertyName].Value
+    $parentProcessId = $Record.PSObject.Properties[$ParentProcessIdPropertyName].Value
+    $parentProcessStart = $Record.PSObject.Properties[$ParentProcessStartPropertyName].Value
+    $commandLine = $Record.PSObject.Properties[$CommandLinePropertyName].Value
+    if (-not (Test-VerifierStrictIntegralValue $processId 0 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $processStart 0 ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $parentProcessId 0 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $parentProcessStart 0 ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictStringValue $commandLine)) {
+        Throw-VerifierInfrastructure "$Label carried malformed raw PID/start/parent/command identity fields."
+    }
+    if ([long]$processId -eq 0) {
+        if ([long]$processStart -ne 0 -or [long]$parentProcessId -ne 0 -or
+                [long]$parentProcessStart -ne 0 -or $commandLine -cne '') {
+            Throw-VerifierInfrastructure "$Label carried a mixed identity instead of the exact explicit absent tuple."
+        }
+        $identityState = 'absent'
+    } else {
+        if ([long]$processStart -le 0 -or [long]$parentProcessId -le 0 -or
+                [long]$parentProcessStart -le 0 -or
+                [String]::IsNullOrWhiteSpace($commandLine)) {
+            Throw-VerifierInfrastructure "$Label carried an incomplete positive PID/start/parent/command identity tuple."
+        }
+        $identityState = 'positive'
+    }
+    return [pscustomobject]@{
+        State = $identityState
+        ProcessId = [int]$processId
+        ProcessStartTicks = [long]$processStart
+        ParentProcessId = [int]$parentProcessId
+        ParentProcessStartTicks = [long]$parentProcessStart
+        CommandLine = [string]$commandLine
+    }
+}
+
+function Assert-VerifierLiveClaimMutex($Lease, $Context = $null,
+        [string]$Label = 'verifier lease') {
+    if ($null -eq $Lease) {
+        Throw-VerifierInfrastructure "$Label was null before live claim-mutex validation."
+    }
+    if ($null -ne $Context) {
+        [void](Assert-VerifierContextPreflight $Context ($Label + ' context') `
+            -RequiredProperties @('RunId'))
+    }
+    $claimMutexProperty = $Lease.PSObject.Properties['ClaimMutex']
+    if ($null -eq $claimMutexProperty) {
+        Throw-VerifierInfrastructure "$Label omitted its live ClaimMutex field."
+    }
+
+    foreach ($propertyName in @('Status', 'ClaimState', 'ReleaseState',
+            'ReleaseJournalState', 'MutexReleased')) {
+        if ($null -eq $Lease.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted '$propertyName' before live ClaimMutex association validation."
+        }
+    }
+    if (-not (Test-VerifierStrictStringValue $Lease.Status) -or
+            -not (Test-VerifierStrictStringValue $Lease.ClaimState) -or
+            -not (Test-VerifierStrictStringValue $Lease.ReleaseState) -or
+            -not (Test-VerifierStrictStringValue $Lease.ReleaseJournalState) -or
+            -not (Test-VerifierStrictBooleanValue $Lease.MutexReleased)) {
+        Throw-VerifierInfrastructure "$Label carried malformed lifecycle state before live ClaimMutex association validation."
+    }
+
+    foreach ($propertyName in @('ClaimName', 'Port')) {
+        if ($null -eq $Lease.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted '$propertyName' before live ClaimMutex association validation."
+        }
+    }
+    if (-not (Test-VerifierStrictStringValue $Lease.ClaimName) -or
+            [String]::IsNullOrWhiteSpace($Lease.ClaimName) -or
+            -not (Test-VerifierStrictIntegralValue $Lease.Port 1 65535)) {
+        Throw-VerifierInfrastructure "$Label carried malformed claim identity before live ClaimMutex association validation."
+    }
+    $claimName = $Lease.ClaimName
+    if ($claimName -cne (Get-VerifierPortMutexName $null ([int]$Lease.Port))) {
+        Throw-VerifierInfrastructure "$Label ClaimMutex was not associated with the canonical leased-port mutex name."
+    }
+
+    $claimMutex = $claimMutexProperty.Value
+    if ($null -eq $claimMutex) {
+        # A null handle is the only valid post-disposal representation.  It is
+        # accepted only after the exact durable terminal/release state has been
+        # established; an active lease may never silently lose its mutex.
+        if (-not $Lease.MutexReleased -or
+                $Lease.Status -notin @('releasing', 'released') -or
+                $Lease.ClaimState -notin @('os-released', 'delete-pending', 'released') -or
+                $Lease.ReleaseState -notin @('os-released', 'complete', 'claim-delete-failed') -or
+                $Lease.ReleaseJournalState -notin @('os-released', 'pre-delete',
+                    'post-delete-pending', 'claim-delete-failed', 'complete')) {
+            Throw-VerifierInfrastructure "$Label carried a null ClaimMutex outside an exact released lifecycle state."
+        }
+        return
+    }
+
+    if ($claimMutex.GetType() -ne [Threading.Mutex]) {
+        Throw-VerifierInfrastructure "$Label carried a malformed live ClaimMutex handle."
+    }
+    if (-not $script:VerifierHeldPortMutexes.ContainsKey($claimName) -or
+            $null -eq $script:VerifierHeldPortMutexes[$claimName] -or
+            $script:VerifierHeldPortMutexes[$claimName].GetType() -ne [Threading.Mutex] -or
+            -not [object]::ReferenceEquals($script:VerifierHeldPortMutexes[$claimName], $claimMutex)) {
+        Throw-VerifierInfrastructure "$Label ClaimMutex was not the exact mutex instance acquired for this claim."
+    }
+    if ($null -ne $Context) {
+        if ($null -eq $Context.PSObject.Properties['RunId'] -or
+                -not (Test-VerifierStrictStringValue $Context.RunId) -or
+                ($script:VerifierHeldPortClaims.ContainsKey($claimName) -and
+                    [string]$script:VerifierHeldPortClaims[$claimName] -cne [string]$Context.RunId) -or
+                ((-not $script:VerifierHeldPortClaims.ContainsKey($claimName)) -and
+                    (-not $Lease.MutexReleased -or
+                     $Lease.Status -notin @('releasing', 'released') -or
+                     $Lease.ClaimState -notin @('os-released', 'delete-pending', 'released') -or
+                     $Lease.ReleaseState -notin @('os-released', 'complete', 'claim-delete-failed')))) {
+            Throw-VerifierInfrastructure "$Label ClaimMutex was not associated with the exact verifier run."
+        }
+    }
+}
+
+function Test-VerifierListenerOwnerTuple($OwnerKind, $OwnerProof,
+        $OwnerEvidence, $ProcessId, $ProcessStartTicks, [bool]$AllowNone = $false) {
+    if (-not (Test-VerifierStrictStringValue $OwnerKind) -or
+            -not (Test-VerifierStrictStringValue $OwnerProof) -or
+            -not (Test-VerifierStrictStringValue $OwnerEvidence) -or
+            -not (Test-VerifierStrictIntegralValue $ProcessId 0 ([int]::MaxValue))) {
+        return $false
+    }
+    $pid = [long]$ProcessId
+    if ($OwnerKind -ceq 'none') {
+        return ($AllowNone -and $OwnerProof.Length -eq 0 -and
+            $OwnerEvidence.Length -eq 0 -and $pid -eq 0 -and
+            (Test-VerifierStrictIntegralValue $ProcessStartTicks 0 0))
+    }
+    if ($OwnerKind -ceq $script:VerifierUserProcessOwnerKind) {
+        return ($pid -gt 0 -and $pid -ne 4 -and
+            $OwnerProof -ceq $script:VerifierUserProcessOwnerProof -and
+            $OwnerEvidence -ceq $script:VerifierUserProcessOwnerEvidence -and
+            (Test-VerifierStrictIntegralValue $ProcessStartTicks 1))
+    }
+    if ($OwnerKind -ceq $script:VerifierKernelTransportOwnerKind) {
+        return ($pid -eq 4 -and $null -eq $ProcessStartTicks -and
+            $OwnerProof -ceq $script:VerifierKernelTransportOwnerProof -and
+            $OwnerEvidence -ceq $script:VerifierKernelTransportOwnerEvidence)
+    }
+    return $false
+}
+
+function Assert-VerifierDurableListenerOwnerTuple($Lease,
+        [string]$Label = 'verifier lease') {
+    if ($null -eq $Lease) {
+        Throw-VerifierInfrastructure "$Label was null before durable serialization."
+    }
+    foreach ($propertyName in @('ListenerProcessId', 'ListenerProcessStartTicks',
+            'ListenerOwnerKind', 'ListenerOwnerProof', 'ListenerOwnerEvidence')) {
+        if ($null -eq $Lease.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted required durable listener owner field '$propertyName'."
+        }
+    }
+    $listenerProcessId = $Lease.PSObject.Properties['ListenerProcessId'].Value
+    $listenerProcessStartTicks = $Lease.PSObject.Properties['ListenerProcessStartTicks'].Value
+    $listenerOwnerKind = $Lease.PSObject.Properties['ListenerOwnerKind'].Value
+    $listenerOwnerProof = $Lease.PSObject.Properties['ListenerOwnerProof'].Value
+    $listenerOwnerEvidence = $Lease.PSObject.Properties['ListenerOwnerEvidence'].Value
+    if (-not (Test-VerifierListenerOwnerTuple $listenerOwnerKind $listenerOwnerProof `
+            $listenerOwnerEvidence $listenerProcessId $listenerProcessStartTicks $true)) {
+        Throw-VerifierInfrastructure "$Label did not contain an exact canonical durable listener owner tuple."
+    }
+}
+
+function Assert-VerifierContextPreflight($Context,
+        [string]$Label = 'verifier context',
+        [string[]]$RequiredProperties = @(), [switch]$RequireDurable) {
+    # This is the side-effect-free context boundary.  It deliberately reads
+    # only exact in-memory fields: no path canonicalization, OS query,
+    # filesystem query, mutation, persistence, or cleanup may occur before it
+    # succeeds.  Consumers that need the complete durable graph call their
+    # corresponding schema validator after this preflight.
+    if ($null -eq $Context -or $Context -is [array] -or
+            $Context -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure "$Label was not an exact verifier context object."
+    }
+    $requiredPropertiesForUse = @('WorktreeRoot') + @($RequiredProperties)
+    foreach ($propertyName in @($requiredPropertiesForUse | Select-Object -Unique)) {
+        $property = $Context.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictStringValue $property.Value)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact string '$propertyName'."
+        }
+    }
+    foreach ($requiredString in @($requiredPropertiesForUse | Select-Object -Unique)) {
+        if ([String]::IsNullOrWhiteSpace(
+                $Context.PSObject.Properties[$requiredString].Value)) {
+            Throw-VerifierInfrastructure "$Label omitted a non-empty run identity string '$requiredString'."
+        }
+    }
+
+    # Optional fields are still schema-bound when present, so a partial
+    # preview-authorization context cannot smuggle a malformed durable field
+    # past this boundary. Full manifest consumers opt into the complete set.
+    foreach ($propertyName in @('Protocol', 'RunRoot', 'RunNamespaceRoot',
+            'EvidenceDirectory', 'EvidenceNamespaceRoot', 'ManifestPath',
+            'CreatedUtc', 'BaseUrl', 'CleanupState', 'CleanupCompletedUtc')) {
+        $property = $Context.PSObject.Properties[$propertyName]
+        if ($null -ne $property -and
+                -not (Test-VerifierStrictStringValue $property.Value)) {
+            Throw-VerifierInfrastructure "$Label carried a malformed exact string '$propertyName'."
+        }
+    }
+    foreach ($collectionName in @('LeaseRecords', 'BrowserSessions',
+            'Artifacts', 'CleanupErrors')) {
+        $property = $Context.PSObject.Properties[$collectionName]
+        if ($null -ne $property -and ($null -eq $property.Value -or
+                $property.Value -is [string] -or
+                -not ($property.Value -is [System.Collections.IEnumerable]))) {
+            Throw-VerifierInfrastructure "$Label carried a malformed collection '$collectionName'."
+        }
+    }
+    if ($RequireDurable) {
+        $protocolProperty = $Context.PSObject.Properties['Protocol']
+        if ($null -eq $protocolProperty -or
+                -not (Test-VerifierStrictStringValue $protocolProperty.Value) -or
+                $protocolProperty.Value -cne 'troubleshootjs-verifier-run-v1') {
+            Throw-VerifierInfrastructure "$Label carried an unknown durable protocol."
+        }
+        foreach ($requiredString in @('RunRoot', 'RunNamespaceRoot',
+                'EvidenceDirectory', 'EvidenceNamespaceRoot', 'ManifestPath',
+                'CreatedUtc')) {
+            $property = $Context.PSObject.Properties[$requiredString]
+            if ($null -eq $property -or
+                    -not (Test-VerifierStrictStringValue $property.Value) -or
+                    [String]::IsNullOrWhiteSpace($property.Value)) {
+                Throw-VerifierInfrastructure "$Label omitted or malformed its durable string '$requiredString'."
+            }
+        }
+        foreach ($collectionName in @('LeaseRecords', 'BrowserSessions',
+                'Artifacts', 'CleanupErrors')) {
+            $property = $Context.PSObject.Properties[$collectionName]
+            if ($null -eq $property -or $null -eq $property.Value -or
+                    $property.Value -is [string] -or
+                    -not ($property.Value -is [System.Collections.IEnumerable])) {
+                Throw-VerifierInfrastructure "$Label omitted or malformed collection '$collectionName'."
+            }
+        }
+        if ($null -eq $Context.PSObject.Properties['Server']) {
+            Throw-VerifierInfrastructure "$Label omitted its explicit Server owner state."
+        }
+    }
+    return $Context
+}
+
+function Assert-VerifierDurableLeaseRecord($Lease, $Context,
+        [string]$Label = 'verifier lease record', [switch]$Serialized) {
+    if ($null -eq $Lease) {
+        Throw-VerifierInfrastructure "$Label was null before durable validation."
+    }
+    if ($null -ne $Context) {
+        [void](Assert-VerifierContextPreflight $Context ($Label + ' context') `
+            -RequiredProperties @('RunId', 'RepositoryIdentity'))
+    }
+    foreach ($propertyName in @(
+            'LeaseId', 'Kind', 'Path', 'RunId', 'RepositoryIdentity',
+            'WorktreeRoot', 'Status', 'ClaimName', 'ClaimState',
+            'ProfilePath', 'BrowserPath', 'BindValidatedUtc', 'ReleasedUtc',
+            'ReleaseState', 'ReleaseJournalState', 'ReleaseBlockReason',
+            'ListenerInspectionUtc')) {
+        if ($null -eq $Lease.PSObject.Properties[$propertyName] -or
+                -not (Test-VerifierStrictStringValue $Lease.PSObject.Properties[$propertyName].Value)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact string '$propertyName'."
+        }
+    }
+    foreach ($numericProperty in @(
+            [pscustomobject]@{ Name = 'Port'; Minimum = 1L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'ClaimOwnerPid'; Minimum = 1L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ClaimOwnerStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'BoundProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'BoundProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'ListenerProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+        )) {
+        if ($null -eq $Lease.PSObject.Properties[$numericProperty.Name] -or
+                -not (Test-VerifierStrictIntegralValue $Lease.PSObject.Properties[$numericProperty.Name].Value `
+                    $numericProperty.Minimum $numericProperty.Maximum)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact integral '$($numericProperty.Name)'."
+        }
+    }
+    foreach ($booleanProperty in @(
+            'Registered', 'ReleaseBlocked', 'MutexReleased',
+            'ListenerInspectionSuccess', 'ListenerInspectionKnown',
+            'ProcessProofRequired', 'ProcessTerminationProven', 'ProcessAbsent')) {
+        [void](Get-VerifierRequiredBooleanValue $Lease $booleanProperty $Label)
+    }
+    # The live handle is part of the complete lease preflight even though it is
+    # deliberately omitted from durable JSON.  Run this before any context
+    # association/path work so arbitrary strings or mutexes cannot reach a
+    # listener, process, or cleanup consumer.  A serialized snapshot uses a
+    # canonical null handle after the raw JSON fields have been validated.
+    if ($Serialized) {
+        $claimMutexProperty = $Lease.PSObject.Properties['ClaimMutex']
+        if ($null -eq $claimMutexProperty -or $null -ne $claimMutexProperty.Value) {
+            Throw-VerifierInfrastructure "$Label serialized lease did not carry the exact absent ClaimMutex representation."
+        }
+    } else {
+        Assert-VerifierLiveClaimMutex $Lease $Context $Label
+    }
+    foreach ($nullableBooleanProperty in @('ListenerHasListeners', 'ListenerAbsent')) {
+        $property = $Lease.PSObject.Properties[$nullableBooleanProperty]
+        if ($null -eq $property -or ($null -ne $property.Value -and
+                -not (Test-VerifierStrictBooleanValue $property.Value))) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its nullable Boolean '$nullableBooleanProperty'."
+        }
+    }
+    $listenerStartProperty = $Lease.PSObject.Properties['ListenerProcessStartTicks']
+    if ($null -eq $listenerStartProperty -or ($null -ne $listenerStartProperty.Value -and
+            -not (Test-VerifierStrictIntegralValue $listenerStartProperty.Value 0))) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed its listener start identity."
+    }
+    $hasListeners = $Lease.PSObject.Properties['ListenerHasListeners'].Value
+    $listenerAbsent = $Lease.PSObject.Properties['ListenerAbsent'].Value
+    if (($null -eq $hasListeners) -xor ($null -eq $listenerAbsent) -or
+            ($null -ne $hasListeners -and $listenerAbsent -eq $hasListeners)) {
+        Throw-VerifierInfrastructure "$Label carried inconsistent listener presence flags."
+    }
+    if ($Lease.Status -cnotin @('leased', 'bound', 'releasing', 'released') -or
+            $Lease.ClaimState -cnotin @('held', 'bound', 'releasing', 'os-released',
+                'delete-pending', 'released') -or
+            $Lease.ReleaseState -cnotin @('active', 'releasing', 'os-released',
+                'complete', 'claim-delete-failed') -or
+            $Lease.ReleaseJournalState -cnotin @('active', 'releasing', 'os-released',
+                'pre-delete', 'post-delete-pending', 'claim-delete-failed', 'complete')) {
+        Throw-VerifierInfrastructure "$Label carried an unknown durable lifecycle state."
+    }
+    Assert-VerifierDurableListenerOwnerTuple $Lease $Label
+    if ($null -ne $Context) {
+        if ($null -eq $Context.PSObject.Properties['RunId'] -or
+                -not (Test-VerifierStrictStringValue $Context.RunId) -or
+                $Lease.RunId -cne $Context.RunId -or
+                $null -eq $Context.PSObject.Properties['RepositoryIdentity'] -or
+                -not (Test-VerifierStrictStringValue $Context.RepositoryIdentity) -or
+                $Lease.RepositoryIdentity -cne $Context.RepositoryIdentity -or
+                $null -eq $Context.PSObject.Properties['WorktreeRoot'] -or
+                -not (Test-VerifierCanonicalWindowsPathValue $Lease.WorktreeRoot `
+                    $Context.WorktreeRoot)) {
+            Throw-VerifierInfrastructure "$Label did not match the exact verifier run identity."
+        }
+    }
+}
+
+function Assert-VerifierDurableListenerOwnerTuples($Context) {
+    # Preserve the historical entry point while routing it through the single
+    # complete durable-context validator used by manifest projection/writes.
+    Assert-VerifierDurableManifestContext $Context
+}
+
+function Assert-VerifierDurableLeaseTerminalFields($Lease, $Context = $null,
+        [string]$Label = 'verifier terminal lease') {
+    # This is the one terminal-state predicate for both live cleanup and
+    # serialized integrated-child readers.  It deliberately performs only
+    # exact in-memory validation; claim absence is proved by the caller after
+    # this boundary succeeds.
+    Assert-VerifierDurableLeaseRecord $Lease $Context $Label
+    foreach ($propertyName in @('LeaseId', 'Kind', 'Path', 'ClaimName')) {
+        $property = $Lease.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictStringValue $property.Value) -or
+                [String]::IsNullOrWhiteSpace($property.Value)) {
+            Throw-VerifierInfrastructure "$Label omitted its non-empty exact claim association '$propertyName'."
+        }
+    }
+    if ($Lease.Kind -cnotin @('cdp', 'preview') -or
+            $Lease.ClaimName -cne (Get-VerifierPortMutexName $null ([int]$Lease.Port))) {
+        Throw-VerifierInfrastructure "$Label did not carry a finite lease kind and canonical claim association."
+    }
+    foreach ($propertyName in @('Registered', 'ReleaseBlocked', 'MutexReleased',
+            'ListenerInspectionSuccess', 'ListenerInspectionKnown',
+            'ProcessProofRequired', 'ProcessTerminationProven', 'ProcessAbsent')) {
+        [void](Get-VerifierRequiredBooleanValue $Lease $propertyName $Label)
+    }
+    if (-not $Lease.Registered -or $Lease.ReleaseBlocked -or
+            -not $Lease.MutexReleased -or
+            $Lease.Status -cne 'released' -or
+            $Lease.ClaimState -cne 'released' -or
+            $Lease.ReleaseState -cne 'complete' -or
+            $Lease.ReleaseJournalState -cne 'complete' -or
+            -not $Lease.ListenerInspectionSuccess -or
+            -not $Lease.ListenerInspectionKnown -or
+            $null -eq $Lease.ListenerHasListeners -or
+            -not (Test-VerifierStrictBooleanValue $Lease.ListenerHasListeners) -or
+            $Lease.ListenerHasListeners -or
+            $null -eq $Lease.ListenerAbsent -or
+            -not (Test-VerifierStrictBooleanValue $Lease.ListenerAbsent) -or
+            -not $Lease.ListenerAbsent -or
+            $Lease.ReleaseBlockReason -cne '') {
+        Throw-VerifierInfrastructure "$Label did not carry the exact released lifecycle and listener-absence proof."
+    }
+    $claimMutexProperty = $Lease.PSObject.Properties['ClaimMutex']
+    if ($null -eq $claimMutexProperty -or $null -ne $claimMutexProperty.Value) {
+        Throw-VerifierInfrastructure "$Label retained a live or missing ClaimMutex after release."
+    }
+    $requiresProcessProof = $Lease.ProcessProofRequired -or
+        [int]$Lease.BoundProcessId -gt 0 -or
+        [int]$Lease.ListenerProcessId -gt 0
+    if ($Lease.ProcessProofRequired -and
+            ([int]$Lease.BoundProcessId -le 0 -or
+             [int]$Lease.ListenerProcessId -le 0)) {
+        Throw-VerifierInfrastructure "$Label required process proof without both exact positive process identities."
+    }
+    if (($Lease.BoundProcessId -gt 0 -or $Lease.ListenerProcessId -gt 0) -and
+            -not $Lease.ProcessProofRequired) {
+        Throw-VerifierInfrastructure "$Label carried a positive process/listener identity without ProcessProofRequired."
+    }
+    if ($requiresProcessProof) {
+        if (-not $Lease.ProcessTerminationProven -or -not $Lease.ProcessAbsent) {
+            Throw-VerifierInfrastructure "$Label did not retain positive process termination and absence proof."
+        }
+    } elseif ($Lease.ProcessTerminationProven -or $Lease.ProcessAbsent) {
+        Throw-VerifierInfrastructure "$Label carried process proof for an explicitly absent process identity."
+    }
+    return $Lease
+}
+
+function Assert-VerifierDurableLeaseTerminal($Lease, $Context = $null,
+        [string]$Label = 'verifier terminal lease') {
+    [void](Assert-VerifierDurableLeaseTerminalFields $Lease $Context $Label)
+    $claimPath = [string]$Lease.Path
+    try {
+        if ($null -ne $Context -and $Context.PSObject.Properties['PortLeaseRoot']) {
+            [void](Assert-VerifierPhysicalOwnedPath $Context.PortLeaseRoot $claimPath)
+        } else {
+            Assert-VerifierNoReparseAncestors $claimPath
+        }
+        if (Test-Path -LiteralPath $claimPath -PathType Leaf -ErrorAction Stop) {
+            Throw-VerifierInfrastructure "$Label retained its exact claim path '$claimPath'."
+        }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure "$Label claim absence was not positively proven: $(Get-VerifierErrorMessage $_)"
+    }
+    return $Lease
+}
+
+function Test-VerifierDurableLeaseTerminal($Lease, $Context = $null,
+        [string]$Label = 'verifier terminal lease') {
+    try {
+        [void](Assert-VerifierDurableLeaseTerminal $Lease $Context $Label)
+        return $true
+    } catch {
+        $message = Get-VerifierErrorMessage $_
+        if ($message -match 'claim absence was not positively proven|retained its exact claim path|Could not inspect|Could not find an existing ancestor|physical namespace|reparse') {
+            throw
+        }
+        return $false
+    }
+}
+
+function Assert-VerifierSerializedObject($Object, [string]$Label) {
+    if ($null -eq $Object -or $Object -is [array] -or
+            $Object -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure "$Label was not an exact serialized verifier object."
+    }
+}
+
+function Assert-VerifierSerializedString($Object, [string]$Name,
+        [string]$Label, [bool]$AllowEmpty = $false) {
+    $property = if ($null -eq $Object) { $null } else {
+        $Object.PSObject.Properties[$Name]
+    }
+    if ($null -eq $property -or
+            -not (Test-VerifierStrictStringValue $property.Value) -or
+            (-not $AllowEmpty -and [String]::IsNullOrWhiteSpace($property.Value))) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed serialized string '$Name'."
+    }
+    return $property.Value
+}
+
+function Assert-VerifierSerializedIntegral($Object, [string]$Name,
+        [long]$Minimum, [long]$Maximum, [string]$Label) {
+    $property = if ($null -eq $Object) { $null } else {
+        $Object.PSObject.Properties[$Name]
+    }
+    if ($null -eq $property -or
+            -not (Test-VerifierStrictIntegralValue $property.Value $Minimum $Maximum)) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed serialized integral '$Name'."
+    }
+    return $property.Value
+}
+
+function Assert-VerifierSerializedBoolean($Object, [string]$Name,
+        [string]$Label, [switch]$AllowNull) {
+    $property = if ($null -eq $Object) { $null } else {
+        $Object.PSObject.Properties[$Name]
+    }
+    if ($null -eq $property) {
+        Throw-VerifierInfrastructure "$Label omitted serialized Boolean '$Name'."
+    }
+    if ($null -eq $property.Value) {
+        if ($AllowNull) { return $null }
+        Throw-VerifierInfrastructure "$Label carried null serialized Boolean '$Name'."
+    }
+    if (-not (Test-VerifierStrictBooleanValue $property.Value)) {
+        Throw-VerifierInfrastructure "$Label carried malformed serialized Boolean '$Name'."
+    }
+    return $property.Value
+}
+
+function ConvertFrom-VerifierSerializedLeaseRecord($Lease,
+        [string]$Label = 'serialized verifier lease') {
+    Assert-VerifierSerializedObject $Lease $Label
+    foreach ($name in @('leaseId', 'kind', 'path', 'runId',
+            'repositoryIdentity', 'worktreeRoot', 'claimName', 'status',
+            'claimState', 'releaseState', 'releaseJournalState', 'profile',
+            'browserPath', 'bindValidatedUtc', 'releasedUtc',
+            'releaseBlockReason', 'listenerInspectionUtc')) {
+        $allowEmpty = $name -in @('profile', 'browserPath', 'bindValidatedUtc',
+            'releasedUtc', 'releaseBlockReason', 'listenerInspectionUtc')
+        [void](Assert-VerifierSerializedString $Lease $name $Label -AllowEmpty $allowEmpty)
+    }
+    foreach ($number in @(
+            [pscustomobject]@{ Name = 'port'; Minimum = 1L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'claimOwnerPid'; Minimum = 1L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'claimOwnerStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'boundProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'boundProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'listenerProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+        )) {
+        [void](Assert-VerifierSerializedIntegral $Lease $number.Name $number.Minimum $number.Maximum $Label)
+    }
+    $listenerStart = $Lease.PSObject.Properties['listenerProcessStartTicks']
+    if ($null -eq $listenerStart -or ($null -ne $listenerStart.Value -and
+            -not (Test-VerifierStrictIntegralValue $listenerStart.Value 0 ([long]::MaxValue)))) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed serialized listenerProcessStartTicks."
+    }
+    foreach ($name in @('registered', 'releaseBlocked', 'mutexReleased',
+            'listenerInspectionSuccess', 'listenerInspectionKnown',
+            'processProofRequired', 'processTerminationProven', 'processAbsent')) {
+        [void](Assert-VerifierSerializedBoolean $Lease $name $Label)
+    }
+    foreach ($name in @('listenerHasListeners', 'listenerAbsent')) {
+        [void](Assert-VerifierSerializedBoolean $Lease $name $Label -AllowNull)
+    }
+    if (-not (Test-VerifierListenerOwnerTuple $Lease.PSObject.Properties['listenerOwnerKind'].Value $Lease.PSObject.Properties['listenerOwnerProof'].Value $Lease.PSObject.Properties['listenerOwnerEvidence'].Value $Lease.PSObject.Properties['listenerProcessId'].Value $Lease.PSObject.Properties['listenerProcessStartTicks'].Value $true)) {
+        Throw-VerifierInfrastructure "$Label carried a noncanonical serialized listener owner tuple."
+    }
+    $claimProperty = $Lease.PSObject.Properties['claim']
+    if ($null -eq $claimProperty -or $null -eq $claimProperty.Value) {
+        Throw-VerifierInfrastructure "$Label omitted its exact serialized claim descriptor."
+    }
+    $claim = $claimProperty.Value
+    Assert-VerifierSerializedObject $claim ($Label + ' claim')
+    foreach ($name in @('protocol', 'runId', 'repositoryIdentity',
+            'worktreeRoot', 'leaseId', 'path', 'kind', 'mutexName')) {
+        [void](Assert-VerifierSerializedString $claim $name ($Label + ' claim'))
+    }
+    foreach ($number in @(
+            [pscustomobject]@{ Name = 'port'; Minimum = 1L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'ownerPid'; Minimum = 1L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ownerStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+        )) {
+        [void](Assert-VerifierSerializedIntegral $claim $number.Name $number.Minimum $number.Maximum ($Label + ' claim'))
+    }
+
+    # Every raw scalar above is exact before any typed projection or
+    # association comparison is performed.
+    $leasePort = $Lease.PSObject.Properties['port'].Value
+    $claimPort = $claim.PSObject.Properties['port'].Value
+    foreach ($pair in @(
+            [pscustomobject]@{ Lease = 'leaseId'; Claim = 'leaseId' }
+            [pscustomobject]@{ Lease = 'runId'; Claim = 'runId' }
+            [pscustomobject]@{ Lease = 'repositoryIdentity'; Claim = 'repositoryIdentity' }
+            [pscustomobject]@{ Lease = 'worktreeRoot'; Claim = 'worktreeRoot' }
+            [pscustomobject]@{ Lease = 'path'; Claim = 'path' }
+            [pscustomobject]@{ Lease = 'kind'; Claim = 'kind' }
+            [pscustomobject]@{ Lease = 'claimName'; Claim = 'mutexName' }
+        )) {
+        if ($Lease.PSObject.Properties[$pair.Lease].Value -cne
+                $claim.PSObject.Properties[$pair.Claim].Value) {
+            Throw-VerifierInfrastructure "$Label and its claim descriptor disagreed on '$($pair.Lease)'."
+        }
+    }
+    if ($claim.protocol -cne 'troubleshootjs-verifier-port-claim-v1' -or
+            $Lease.kind -cnotin @('cdp', 'preview') -or
+            [int]$claimPort -ne [int]$leasePort -or
+            $claim.mutexName -cne (Get-VerifierPortMutexName $null ([int]$leasePort)) -or
+            [long]$claim.ownerPid -ne [long]$Lease.claimOwnerPid -or
+            [long]$claim.ownerStartTicks -ne [long]$Lease.claimOwnerStartTicks) {
+        Throw-VerifierInfrastructure "$Label carried a mismatched or unsupported serialized claim association."
+    }
+    $canonical = [pscustomobject]@{
+        LeaseId = [string]$Lease.leaseId; Kind = [string]$Lease.kind
+        Port = [int]$Lease.port; Path = [string]$Lease.path
+        RunId = [string]$Lease.runId
+        RepositoryIdentity = [string]$Lease.repositoryIdentity
+        WorktreeRoot = [string]$Lease.worktreeRoot
+        Status = [string]$Lease.status; Registered = [bool]$Lease.registered
+        ClaimName = [string]$Lease.claimName; ClaimState = [string]$Lease.claimState
+        ClaimOwnerPid = [int]$Lease.claimOwnerPid
+        ClaimOwnerStartTicks = [long]$Lease.claimOwnerStartTicks
+        BoundProcessId = [int]$Lease.boundProcessId
+        BoundProcessStartTicks = [long]$Lease.boundProcessStartTicks
+        ListenerProcessId = [int]$Lease.listenerProcessId
+        ListenerProcessStartTicks = $Lease.listenerProcessStartTicks
+        ListenerOwnerKind = [string]$Lease.listenerOwnerKind
+        ListenerOwnerProof = [string]$Lease.listenerOwnerProof
+        ListenerOwnerEvidence = [string]$Lease.listenerOwnerEvidence
+        BindValidatedUtc = [string]$Lease.bindValidatedUtc
+        ReleasedUtc = [string]$Lease.releasedUtc
+        ReleaseState = [string]$Lease.releaseState
+        ReleaseJournalState = [string]$Lease.releaseJournalState
+        ReleaseBlocked = [bool]$Lease.releaseBlocked
+        ReleaseBlockReason = [string]$Lease.releaseBlockReason
+        MutexReleased = [bool]$Lease.mutexReleased
+        ListenerInspectionSuccess = [bool]$Lease.listenerInspectionSuccess
+        ListenerInspectionKnown = [bool]$Lease.listenerInspectionKnown
+        ListenerHasListeners = $Lease.listenerHasListeners
+        ListenerAbsent = $Lease.listenerAbsent
+        ListenerInspectionUtc = [string]$Lease.listenerInspectionUtc
+        ProcessProofRequired = [bool]$Lease.processProofRequired
+        ProcessTerminationProven = [bool]$Lease.processTerminationProven
+        ProcessAbsent = [bool]$Lease.processAbsent
+        ProfilePath = [string]$Lease.profile
+        BrowserPath = [string]$Lease.browserPath
+        ClaimMutex = $null
+    }
+    [void](Assert-VerifierDurableLeaseRecord $canonical $null $Label -Serialized)
+    return $canonical
+}
+
+function Assert-VerifierSerializedLeaseRecord($Lease,
+        [string]$Label = 'serialized verifier lease') {
+    [void](ConvertFrom-VerifierSerializedLeaseRecord $Lease $Label)
+}
+
+function Assert-VerifierSerializedBrowserSessionRecord($Session,
+        [string]$Label = 'serialized verifier browser session') {
+    Assert-VerifierSerializedObject $Session $Label
+    foreach ($name in @('owner', 'runId', 'repositoryIdentity',
+            'worktreeRoot', 'routeId', 'routeName', 'profile', 'cdpLeasePath',
+            'browserPath', 'processCommandLine', 'targetId', 'expectedUrl',
+            'expectedRunMarker', 'expectedRouteMarker', 'status',
+            'cleanupResult', 'error')) {
+        $allowEmpty = $name -in @('processCommandLine', 'targetId', 'expectedUrl', 'error')
+        [void](Assert-VerifierSerializedString $Session $name $Label -AllowEmpty $allowEmpty)
+    }
+    foreach ($number in @(
+            [pscustomobject]@{ Name = 'cdpPort'; Minimum = 1L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'processId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'processStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'processParentProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'processParentProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+        )) {
+        [void](Assert-VerifierSerializedIntegral $Session $number.Name $number.Minimum $number.Maximum $Label)
+    }
+    foreach ($name in @('profileProcessScanCompleted', 'profileInspectionFailed')) {
+        [void](Assert-VerifierSerializedBoolean $Session $name $Label)
+    }
+    $canonicalIdentity = [pscustomobject]@{
+        ProcessId = $Session.processId
+        ProcessStartTicks = $Session.processStartTicks
+        ProcessParentProcessId = $Session.processParentProcessId
+        ProcessParentProcessStartTicks = $Session.processParentProcessStartTicks
+        ProcessCommandLine = $Session.processCommandLine
+    }
+    [void](Assert-VerifierDurableProcessIdentityTuple $canonicalIdentity `
+        -ProcessIdPropertyName 'ProcessId' `
+        -ProcessStartPropertyName 'ProcessStartTicks' `
+        -ParentProcessIdPropertyName 'ProcessParentProcessId' `
+        -ParentProcessStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandLinePropertyName 'ProcessCommandLine' `
+        -Label ($Label + ' process identity'))
+    if ($Session.owner -cne 'run' -or
+            [String]::IsNullOrWhiteSpace($Session.runId) -or
+            [String]::IsNullOrWhiteSpace($Session.repositoryIdentity) -or
+            [String]::IsNullOrWhiteSpace($Session.worktreeRoot) -or
+            [String]::IsNullOrWhiteSpace($Session.profile) -or
+            [String]::IsNullOrWhiteSpace($Session.cdpLeasePath) -or
+            [String]::IsNullOrWhiteSpace($Session.browserPath)) {
+        Throw-VerifierInfrastructure "$Label did not carry the exact run-owned browser identity strings."
+    }
+    if ($Session.cleanupResult -ceq 'complete' -and
+            ($Session.status -cne 'cleaned' -or
+             -not $Session.profileProcessScanCompleted -or
+             $Session.profileInspectionFailed)) {
+        Throw-VerifierInfrastructure "$Label marked completion without retained profile cleanup proof."
+    }
+}
+
+function Assert-VerifierSerializedServerRecord($Server,
+        [string]$Label = 'serialized verifier server') {
+    Assert-VerifierSerializedObject $Server $Label
+    foreach ($name in @('owner', 'baseUrl', 'repositoryIdentity',
+            'worktreeRoot', 'repositoryRoot', 'webRoot', 'identityProtocol',
+            'processCommandLine', 'script', 'runId', 'nonce', 'leaseId',
+            'leaseKind', 'leaseClaimName', 'leaseClaimState',
+            'leaseReleaseState', 'leaseReleaseJournalState', 'leasePath',
+            'state', 'stdoutLog', 'stderrLog', 'cleanupResult',
+            'leaseListenerOwnerKind', 'leaseListenerOwnerProof',
+            'leaseListenerOwnerEvidence', 'error')) {
+        $allowEmpty = $name -in @('baseUrl', 'processCommandLine', 'script', 'runId',
+            'nonce', 'leaseId', 'leaseKind', 'leaseClaimName',
+            'leaseClaimState', 'leaseReleaseState',
+            'leaseReleaseJournalState', 'leasePath', 'stdoutLog',
+            'stderrLog', 'identityProtocol', 'leaseListenerOwnerKind',
+            'leaseListenerOwnerProof', 'leaseListenerOwnerEvidence', 'error')
+        [void](Assert-VerifierSerializedString $Server $name $Label -AllowEmpty $allowEmpty)
+    }
+    foreach ($number in @(
+            [pscustomobject]@{ Name = 'port'; Minimum = 0L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'processId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'processStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'processParentProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'processParentProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'leaseOwnerPid'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'leaseOwnerStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+        )) {
+        [void](Assert-VerifierSerializedIntegral $Server $number.Name $number.Minimum $number.Maximum $Label)
+    }
+    foreach ($name in @('identityVerified', 'callerOwned',
+            'processIdentityKnown', 'ownershipUncertain',
+            'processTerminationProven', 'processAbsent',
+            'listenerInspectionProven')) {
+        [void](Assert-VerifierSerializedBoolean $Server $name $Label)
+    }
+    foreach ($name in @('listenerAbsent', 'leaseListenerAbsent',
+            'leaseProcessProofRequired')) {
+        [void](Assert-VerifierSerializedBoolean $Server $name $Label -AllowNull)
+    }
+    if ($Server.owner -cnotin @('none', 'caller', 'run')) {
+        Throw-VerifierInfrastructure "$Label carried an unknown serialized owner kind '$($Server.owner)'."
+    }
+    if ($Server.owner -ceq 'none' -and
+            -not [String]::IsNullOrWhiteSpace($Server.identityProtocol)) {
+        Throw-VerifierInfrastructure "$Label ownerless server carried an identity protocol."
+    }
+    if ($Server.owner -cin @('caller', 'run') -and
+            $Server.identityProtocol -cne 'troubleshootjs-preview-identity-v1') {
+        Throw-VerifierInfrastructure "$Label owned server carried a noncanonical identity protocol."
+    }
+    if ($Server.owner -eq 'run') {
+        if ($Server.leaseListenerOwnerKind -ceq 'user-process') {
+            if ($Server.leaseListenerOwnerProof -cne 'diagnostics-process-start-v1' -or
+                    $Server.leaseListenerOwnerEvidence -cne 'system-diagnostics-process-starttime') {
+                Throw-VerifierInfrastructure "$Label run-owned server carried a noncanonical user-process listener proof."
+            }
+        } elseif ($Server.leaseListenerOwnerKind -ceq 'kernel-transport') {
+            if ($Server.leaseListenerOwnerProof -cne 'run-owned-preview-http-sys-v1' -or
+                    $Server.leaseListenerOwnerEvidence -cne 'pid-4-system-http-sys') {
+                Throw-VerifierInfrastructure "$Label run-owned server carried a noncanonical kernel-transport listener proof."
+            }
+        } else {
+            Throw-VerifierInfrastructure "$Label run-owned server carried an unknown listener owner kind."
+        }
+    } elseif (-not (Test-VerifierListenerOwnerTuple `
+            $Server.leaseListenerOwnerKind $Server.leaseListenerOwnerProof `
+            $Server.leaseListenerOwnerEvidence 0 0L $true)) {
+        Throw-VerifierInfrastructure "$Label ownerless/caller-owned server carried a noncanonical listener owner tuple."
+    }
+    $canonicalIdentity = [pscustomobject]@{
+        ProcessId = $Server.processId
+        ProcessStartTicks = $Server.processStartTicks
+        ProcessParentProcessId = $Server.processParentProcessId
+        ProcessParentProcessStartTicks = $Server.processParentProcessStartTicks
+        ProcessCommandLine = $Server.processCommandLine
+    }
+    [void](Assert-VerifierDurableProcessIdentityTuple $canonicalIdentity `
+        -ProcessIdPropertyName 'ProcessId' `
+        -ProcessStartPropertyName 'ProcessStartTicks' `
+        -ParentProcessIdPropertyName 'ProcessParentProcessId' `
+        -ParentProcessStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandLinePropertyName 'ProcessCommandLine' `
+        -Label ($Label + ' process identity'))
+    if ($Server.owner -cne 'run' -and -not (Test-VerifierListenerOwnerTuple `
+            $Server.leaseListenerOwnerKind $Server.leaseListenerOwnerProof `
+            $Server.leaseListenerOwnerEvidence 0 0L $true)) {
+        Throw-VerifierInfrastructure "$Label carried a noncanonical ownerless listener tuple."
+    }
+    if ($Server.owner -ceq 'run' -and $null -eq $Server.leaseProcessProofRequired) {
+        Throw-VerifierInfrastructure "$Label omitted its run-owned lease process-proof Boolean."
+    }
+}
+
+function Test-VerifierSerializedListenerOwnerSchema($Lease,
+        $Server = $null) {
+    try {
+        $canonicalLease = $null
+        if ($null -ne $Lease) {
+            $canonicalLease = ConvertFrom-VerifierSerializedLeaseRecord $Lease `
+                'serialized listener lease'
+        }
+        if ($null -ne $Server) {
+            Assert-VerifierSerializedServerRecord $Server 'serialized listener server'
+            if ($null -eq $canonicalLease -and $Server.owner -ceq 'run') {
+                return $false
+            }
+            if ($null -ne $canonicalLease -and
+                    ($Server.leaseListenerOwnerKind -cne $canonicalLease.ListenerOwnerKind -or
+                     $Server.leaseListenerOwnerProof -cne $canonicalLease.ListenerOwnerProof -or
+                     $Server.leaseListenerOwnerEvidence -cne $canonicalLease.ListenerOwnerEvidence)) {
+                return $false
+            }
+        }
+        return ($null -eq $canonicalLease -or
+            (Test-VerifierListenerOwnerTuple $canonicalLease.ListenerOwnerKind `
+                $canonicalLease.ListenerOwnerProof $canonicalLease.ListenerOwnerEvidence `
+                $canonicalLease.ListenerProcessId $canonicalLease.ListenerProcessStartTicks $true))
+    } catch { return $false }
+}
+
+function Test-VerifierSerializedLeaseTerminal($Lease, $ClaimPath,
+        $Server = $null, [string]$ExpectedRunId = '',
+        [string]$ExpectedRepositoryIdentity = '',
+        [string]$ExpectedWorktreeRoot = '') {
+    $canonicalLease = $null
+    try {
+        $canonicalLease = ConvertFrom-VerifierSerializedLeaseRecord $Lease `
+            'serialized terminal lease'
+        [void](Assert-VerifierDurableLeaseTerminalFields $canonicalLease $null `
+            'serialized terminal lease')
+        if (-not (Test-VerifierStrictStringValue $ClaimPath) -or
+                [String]::IsNullOrWhiteSpace($ClaimPath)) {
+            return $false
+        }
+        $expectedRun = if ([String]::IsNullOrWhiteSpace($ExpectedRunId)) {
+            [string]$Lease.runId
+        } else { $ExpectedRunId }
+        $expectedRepository = if ([String]::IsNullOrWhiteSpace($ExpectedRepositoryIdentity)) {
+            [string]$Lease.repositoryIdentity
+        } else { $ExpectedRepositoryIdentity }
+        $expectedWorktree = if ([String]::IsNullOrWhiteSpace($ExpectedWorktreeRoot)) {
+            [string]$Lease.worktreeRoot
+        } else { $ExpectedWorktreeRoot }
+        if (-not (Test-VerifierStrictStringValue $expectedRun) -or
+                -not (Test-VerifierStrictStringValue $expectedRepository) -or
+                -not (Test-VerifierStrictStringValue $expectedWorktree) -or
+                [String]::IsNullOrWhiteSpace($expectedRun) -or
+                [String]::IsNullOrWhiteSpace($expectedRepository) -or
+                [String]::IsNullOrWhiteSpace($expectedWorktree) -or
+                $Lease.runId -cne $expectedRun -or
+                $Lease.repositoryIdentity -cne $expectedRepository -or
+                -not (Test-VerifierCanonicalWindowsPathValue $Lease.worktreeRoot $expectedWorktree) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $ClaimPath $Lease.path)) {
+            return $false
+        }
+        if ($null -ne $Server) {
+            Assert-VerifierSerializedServerRecord $Server 'serialized terminal server'
+            if ($Server.owner -cne 'run' -or
+                    $Server.port -ne $Lease.port -or
+                    $Server.baseUrl -cne ('http://127.0.0.1:' + [string]$Server.port) -or
+                    $Server.leaseKind -cne 'preview' -or
+                    $Server.leaseListenerOwnerKind -cne $Lease.listenerOwnerKind -or
+                    $Server.leaseListenerOwnerProof -cne $Lease.listenerOwnerProof -or
+                    $Server.leaseListenerOwnerEvidence -cne $Lease.listenerOwnerEvidence -or
+                    $Server.identityProtocol -cne 'troubleshootjs-preview-identity-v1' -or
+                    $Server.runId -cne $expectedRun -or
+                    $Server.repositoryIdentity -cne $expectedRepository -or
+                    -not (Test-VerifierCanonicalWindowsPathValue $Server.worktreeRoot $expectedWorktree) -or
+                    -not (Test-VerifierCanonicalWindowsPathValue $Server.repositoryRoot $expectedWorktree) -or
+                    -not (Test-VerifierCanonicalWindowsPathValue $Server.webRoot (Join-Path $expectedWorktree 'war')) -or
+                    -not (Test-VerifierCanonicalWindowsPathValue $Server.script (Join-Path $expectedWorktree 'scripts\preview.ps1')) -or
+                    [String]::IsNullOrWhiteSpace($Server.nonce) -or
+                    $Server.processId -ne $Lease.boundProcessId -or
+                    $Server.processStartTicks -ne $Lease.boundProcessStartTicks -or
+                    [String]::IsNullOrWhiteSpace($Server.processCommandLine) -or
+                    -not (Test-VerifierCommandLinePath $Server.processCommandLine $Server.script) -or
+                    -not (Test-VerifierCommandLineSwitch $Server.processCommandLine '-Port' ([string]$Server.port)) -or
+                    -not (Test-VerifierCommandLineSwitch $Server.processCommandLine '-VerifierRunId' $expectedRun) -or
+                    -not (Test-VerifierCommandLineSwitch $Server.processCommandLine '-VerifierNonce' $Server.nonce) -or
+                     $Server.state -cne 'cleaned' -or $Server.cleanupResult -cne 'complete' -or
+                    -not $Server.identityVerified -or $Server.callerOwned -or
+                    -not $Server.processIdentityKnown -or $Server.ownershipUncertain -or
+                    -not $Server.processTerminationProven -or -not $Server.processAbsent -or
+                    -not $Server.listenerInspectionProven -or $Server.listenerAbsent -ne $true -or
+                    $Server.leaseId -cne $Lease.leaseId -or
+                    $Server.leaseClaimName -cne $Lease.claimName -or
+                     $Server.leaseClaimState -cne $Lease.claimState -or
+                     $Server.leaseReleaseState -cne $Lease.releaseState -or
+                     $Server.leaseReleaseJournalState -cne $Lease.releaseJournalState -or
+                    -not (Test-VerifierCanonicalWindowsPathValue $Server.leasePath $Lease.path) -or
+                    $Server.leaseOwnerPid -ne $Lease.claimOwnerPid -or
+                    $Server.leaseOwnerStartTicks -ne $Lease.claimOwnerStartTicks) {
+                return $false
+            }
+        }
+    } catch {
+        return $false
+    }
+    try {
+        Assert-VerifierNoReparseAncestors $ClaimPath
+        if (Test-Path -LiteralPath $ClaimPath -PathType Leaf -ErrorAction Stop) {
+            return $false
+        }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not prove serialized terminal lease claim absence: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+    return $true
+}
+
+function Assert-VerifierDurableServerLease($Context,
+        [string]$Label = 'verifier server state', [switch]$AllowMissing) {
+    [void](Assert-VerifierContextPreflight $Context $Label `
+        -RequiredProperties @('RunId', 'RepositoryIdentity'))
+    if ($null -eq $Context) {
+        if ($AllowMissing) { return }
+        Throw-VerifierInfrastructure "$Label omitted its context."
+    }
+    $serverProperty = $Context.PSObject.Properties['Server']
+    if ($null -eq $serverProperty -or $null -eq $serverProperty.Value) {
+        if ($AllowMissing) { return }
+        Throw-VerifierInfrastructure "$Label omitted its run-owned Server record."
+    }
+    $server = $serverProperty.Value
+    # A run-owned server carries the live lease used by every preview/listener
+    # operation.  Validate that association before reading server paths or
+    # process identity fields; durable serialization below repeats the same
+    # complete check through Assert-VerifierDurableLeaseRecord.
+    $earlyServerLeaseProperty = $server.PSObject.Properties['Lease']
+    if ($null -ne $earlyServerLeaseProperty -and
+            $null -ne $earlyServerLeaseProperty.Value) {
+        Assert-VerifierLiveClaimMutex $earlyServerLeaseProperty.Value $Context `
+            ($Label + ' live lease')
+    }
+    foreach ($propertyName in @(
+            'Owner', 'BaseUrl', 'ProcessCommandLine', 'Script', 'State',
+            'RepositoryRoot', 'WebRoot', 'IdentityProtocol', 'StdoutLog',
+            'StderrLog', 'CleanupResult', 'Error', 'RunId', 'Nonce')) {
+        if ($null -eq $server.PSObject.Properties[$propertyName] -or
+                -not (Test-VerifierStrictStringValue $server.PSObject.Properties[$propertyName].Value)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact string '$propertyName'."
+        }
+    }
+    foreach ($numericProperty in @(
+            [pscustomobject]@{ Name = 'Port'; Minimum = 0L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'ProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'ProcessParentProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ProcessParentProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+        )) {
+        if ($null -eq $server.PSObject.Properties[$numericProperty.Name] -or
+                -not (Test-VerifierStrictIntegralValue $server.PSObject.Properties[$numericProperty.Name].Value `
+                    $numericProperty.Minimum $numericProperty.Maximum)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact integral '$($numericProperty.Name)'."
+        }
+    }
+    foreach ($booleanProperty in @(
+            'IdentityVerified', 'CallerOwned', 'ProcessIdentityKnown',
+            'OwnershipUncertain', 'ProcessTerminationProven', 'ProcessAbsent',
+            'ListenerInspectionProven')) {
+        [void](Get-VerifierRequiredBooleanValue $server $booleanProperty $Label)
+    }
+    $listenerAbsentProperty = $server.PSObject.Properties['ListenerAbsent']
+    if ($null -eq $listenerAbsentProperty -or ($null -ne $listenerAbsentProperty.Value -and
+            -not (Test-VerifierStrictBooleanValue $listenerAbsentProperty.Value))) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed its nullable Boolean 'ListenerAbsent'."
+    }
+    if (-not (Test-VerifierCanonicalWindowsPathValue $server.RepositoryRoot `
+            $Context.WorktreeRoot) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $server.WebRoot `
+                (Join-Path $Context.WorktreeRoot 'war'))) {
+        Throw-VerifierInfrastructure "$Label carried a foreign repository or web-root path."
+    }
+    $callerOwned = Get-VerifierRequiredBooleanValue $server 'CallerOwned' $Label
+    $hasLeaseProperty = $null -ne $server.PSObject.Properties['Lease']
+    $lease = if ($hasLeaseProperty) { $server.Lease } else { $null }
+    if ($server.Owner -ceq 'none') {
+        if ($callerOwned -or ($hasLeaseProperty -and $null -ne $lease) -or
+                $server.BaseUrl -cne '' -or $server.Port -ne 0 -or
+                $server.ProcessId -ne 0 -or $server.ProcessStartTicks -ne 0 -or
+                $server.ProcessParentProcessId -ne 0 -or
+                $server.ProcessParentProcessStartTicks -ne 0 -or
+                $server.ProcessCommandLine -cne '' -or $server.Script -cne '' -or
+                $server.IdentityProtocol -cne '' -or $server.IdentityVerified -or
+                -not [String]::IsNullOrWhiteSpace($server.RunId) -or
+                -not [String]::IsNullOrWhiteSpace($server.Nonce) -or
+                -not [String]::IsNullOrWhiteSpace($server.StdoutLog) -or
+                -not [String]::IsNullOrWhiteSpace($server.StderrLog) -or
+                $server.State -cne 'not-started' -or
+                $server.CleanupResult -cne 'not-applicable' -or
+                $server.ProcessIdentityKnown -or $server.OwnershipUncertain -or
+                $server.ProcessTerminationProven -or $server.ProcessAbsent -or
+                $server.ListenerInspectionProven -or $null -ne $listenerAbsentProperty.Value) {
+            Throw-VerifierInfrastructure "$Label was not a validated ownerless server state."
+        }
+        return
+    }
+    if ($server.Owner -ceq 'caller') {
+        $expectedCallerBaseUrl = 'http://127.0.0.1:' + [string]$server.Port
+        $expectedCallerScript = Get-VerifierFullPath (Join-Path $Context.WorktreeRoot 'scripts\preview.ps1')
+        $expectedCallerWebRoot = Get-VerifierFullPath (Join-Path $Context.WorktreeRoot 'war')
+        if (-not $callerOwned -or ($hasLeaseProperty -and $null -ne $lease) -or
+                $server.Port -lt 1 -or $server.BaseUrl -cne $expectedCallerBaseUrl -or
+                $server.IdentityProtocol -cne 'troubleshootjs-preview-identity-v1' -or
+                -not $server.IdentityVerified -or
+                -not (Test-VerifierCanonicalWindowsPathValue $server.Script $expectedCallerScript) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $server.WebRoot $expectedCallerWebRoot) -or
+                $server.ProcessId -ne 0 -or $server.ProcessStartTicks -ne 0 -or
+                $server.ProcessParentProcessId -ne 0 -or
+                $server.ProcessParentProcessStartTicks -ne 0 -or
+                $server.ProcessCommandLine -cne '' -or
+                -not [String]::IsNullOrWhiteSpace($server.RunId) -or
+                -not [String]::IsNullOrWhiteSpace($server.Nonce) -or
+                -not [String]::IsNullOrWhiteSpace($server.StdoutLog) -or
+                -not [String]::IsNullOrWhiteSpace($server.StderrLog) -or
+                $server.State -cne 'caller-verified' -or
+                $server.CleanupResult -cne 'not-owned' -or
+                $server.ProcessIdentityKnown -or $server.OwnershipUncertain -or
+                $server.ProcessTerminationProven -or -not $server.ProcessAbsent -or
+                $server.ListenerInspectionProven -or $null -eq $listenerAbsentProperty.Value -or
+                $listenerAbsentProperty.Value) {
+            Throw-VerifierInfrastructure "$Label was not a validated caller-owned server state."
+        }
+        return
+    }
+    if ($server.Owner -ceq 'run') {
+        if ($callerOwned -or -not $hasLeaseProperty -or $null -eq $lease) {
+            Throw-VerifierInfrastructure "$Label omitted its required run-owned Server.Lease."
+        }
+        if (-not (Test-VerifierStrictStringValue $Context.RunId) -or
+                -not (Test-VerifierStrictStringValue $Context.PreviewNonce) -or
+                $server.Port -lt 1 -or
+                $server.BaseUrl -cne ('http://127.0.0.1:' + [string]$server.Port) -or
+                $server.RunId -cne $Context.RunId -or
+                $server.Nonce -cne $Context.PreviewNonce -or
+                -not (Test-VerifierCanonicalWindowsPathValue $server.Script `
+                    (Join-Path $Context.WorktreeRoot 'scripts\preview.ps1')) -or
+                [String]::IsNullOrWhiteSpace($server.StdoutLog) -or
+                [String]::IsNullOrWhiteSpace($server.StderrLog)) {
+            Throw-VerifierInfrastructure "$Label was not a complete run-owned server state."
+        }
+        if ($server.ProcessId -eq 0 -and ($server.ProcessStartTicks -ne 0 -or
+                $server.ProcessParentProcessId -ne 0 -or
+                $server.ProcessParentProcessStartTicks -ne 0 -or
+                -not [String]::IsNullOrWhiteSpace($server.ProcessCommandLine))) {
+            Throw-VerifierInfrastructure "$Label carried a process identity without a positive server PID."
+        }
+        if ($server.ProcessIdentityKnown -and ($server.ProcessId -le 0 -or
+                $server.ProcessStartTicks -le 0 -or
+                $server.ProcessParentProcessId -le 0 -or
+                $server.ProcessParentProcessStartTicks -le 0 -or
+                [String]::IsNullOrWhiteSpace($server.ProcessCommandLine))) {
+            Throw-VerifierInfrastructure "$Label claimed a complete process identity without all exact fields."
+        }
+        Assert-VerifierDurableLeaseRecord $lease $Context ($Label + ' lease')
+        if ([long]$lease.Port -ne [long]$server.Port -or
+                -not [object]::ReferenceEquals($Context.Server.Lease, $lease)) {
+            Throw-VerifierInfrastructure "$Label server and lease records did not identify the same exact port lease."
+        }
+        return
+    }
+    Throw-VerifierInfrastructure "$Label used an unknown exact Owner value '$($server.Owner)'."
+}
+
+function Assert-VerifierDurableBrowserSession($Session, $Context,
+        [string]$Label = 'verifier browser session') {
+    if ($null -eq $Session) {
+        Throw-VerifierInfrastructure "$Label was null before durable serialization."
+    }
+    if ($null -eq $Context) {
+        Throw-VerifierInfrastructure "$Label omitted its verifier context."
+    }
+    [void](Assert-VerifierContextPreflight $Context ($Label + ' context') `
+        -RequiredProperties @('RunId', 'RepositoryIdentity'))
+    foreach ($propertyName in @('RunId', 'RepositoryIdentity', 'WorktreeRoot',
+            'RouteId', 'RouteName', 'BrowserPath', 'Profile', 'ProcessCommandLine',
+            'TargetId', 'ExpectedUrl', 'Status', 'CleanupResult', 'Error')) {
+        $property = $Session.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictStringValue $property.Value)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact string '$propertyName'."
+        }
+    }
+    foreach ($requiredString in @('RunId', 'RepositoryIdentity', 'WorktreeRoot',
+            'RouteId', 'RouteName', 'BrowserPath', 'Profile')) {
+        if ([String]::IsNullOrWhiteSpace($Session.PSObject.Properties[$requiredString].Value)) {
+            Throw-VerifierInfrastructure "$Label omitted a non-empty run-owned identity string '$requiredString'."
+        }
+    }
+    foreach ($numericProperty in @(
+            [pscustomobject]@{ Name = 'CdpPort'; Minimum = 1L; Maximum = 65535L }
+        )) {
+        $property = $Session.PSObject.Properties[$numericProperty.Name]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictIntegralValue $property.Value `
+                    $numericProperty.Minimum $numericProperty.Maximum)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact integral '$($numericProperty.Name)'."
+        }
+    }
+    [void](Assert-VerifierDurableProcessIdentityTuple $Session `
+        -ProcessIdPropertyName 'ProcessId' `
+        -ProcessStartPropertyName 'ProcessStartTicks' `
+        -ParentProcessIdPropertyName 'ProcessParentProcessId' `
+        -ParentProcessStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandLinePropertyName 'ProcessCommandLine' `
+        -Label ($Label + ' process identity'))
+    foreach ($booleanProperty in @('ProfileInspectionFailed',
+            'ProfileProcessScanCompleted')) {
+        [void](Get-VerifierRequiredBooleanValue $Session $booleanProperty $Label)
+    }
+    if ($null -ne $Context -and
+            ($Session.RunId -cne $Context.RunId -or
+             $Session.RepositoryIdentity -cne $Context.RepositoryIdentity -or
+             -not (Test-VerifierCanonicalWindowsPathValue $Session.WorktreeRoot `
+                 $Context.WorktreeRoot))) {
+        Throw-VerifierInfrastructure "$Label carried foreign run identity."
+    }
+    $leaseProperty = $Session.PSObject.Properties['Lease']
+    if ($null -eq $leaseProperty -or $null -eq $leaseProperty.Value) {
+        Throw-VerifierInfrastructure "$Label omitted its exact durable lease record."
+    }
+    Assert-VerifierDurableLeaseRecord $leaseProperty.Value $Context `
+        ($Label + ' lease')
+    if ($null -ne $Context -and $null -ne $Context.PSObject.Properties['LeaseRecords'] -and
+            -not (@($Context.LeaseRecords) -contains $leaseProperty.Value)) {
+        Throw-VerifierInfrastructure "$Label did not reference a lease in the exact run lease ledger."
+    }
+    if ($Session.CleanupResult -ceq 'complete') {
+        if ($Session.Status -cne 'cleaned' -or
+                -not $Session.ProfileProcessScanCompleted -or
+                $Session.ProfileInspectionFailed) {
+            Throw-VerifierInfrastructure "$Label marked completion without retained profile cleanup proof."
+        }
+        [void](Assert-VerifierDurableLeaseTerminal $leaseProperty.Value $Context `
+            ($Label + ' completion lease'))
+        try {
+            Assert-VerifierNoReparseAncestors ([string]$Session.Profile)
+            if (Test-Path -LiteralPath ([string]$Session.Profile) -ErrorAction Stop) {
+                Throw-VerifierInfrastructure "$Label retained its browser profile after completion."
+            }
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure "$Label profile deletion was not positively proven: $(Get-VerifierErrorMessage $_)"
+        }
+    }
+}
+
+function Assert-VerifierDurableManifestContext($Context) {
+    [void](Assert-VerifierContextPreflight $Context 'verifier manifest context' -RequireDurable)
+    $serverProperty = $Context.PSObject.Properties['Server']
+    Assert-VerifierDurableServerLease $Context -AllowMissing
+    foreach ($lease in @($Context.LeaseRecords)) {
+        Assert-VerifierDurableLeaseRecord $lease $Context 'verifier lease record'
+    }
+    foreach ($session in @($Context.BrowserSessions)) {
+        Assert-VerifierDurableBrowserSession $session $Context
+    }
+    foreach ($artifact in @($Context.Artifacts)) {
+        if (-not (Test-VerifierStrictStringValue $artifact)) {
+            Throw-VerifierInfrastructure 'Verifier manifest context carried a malformed evidence artifact entry.'
+        }
+    }
+    foreach ($errorItem in @($Context.CleanupErrors)) {
+        if (-not (Test-VerifierStrictStringValue $errorItem)) {
+            Throw-VerifierInfrastructure 'Verifier manifest context carried a malformed cleanup error entry.'
+        }
+    }
+}
+
+function Test-VerifierListenerInspectionSchema($Inspection,
+        $PreviewContext = $null, $PreviewOwner = $null) {
+    if ($null -ne $PreviewContext) {
+        try { [void](Assert-VerifierContextPreflight $PreviewContext 'listener inspection schema context') }
+        catch { return $false }
+    }
+    if ($null -eq $Inspection) { return $false }
+    foreach ($propertyName in @('Success', 'Known', 'HasListeners', 'Listeners',
+            'ListenerOwnerKind', 'ListenerOwnerProof', 'ListenerOwnerEvidence',
+            'Source', 'Error')) {
+        if (-not $Inspection.PSObject.Properties[$propertyName]) { return $false }
+    }
+    foreach ($propertyName in @('Success', 'Known')) {
+        if (-not (Test-VerifierStrictBooleanValue $Inspection.$propertyName) -or
+                -not $Inspection.$propertyName) { return $false }
+    }
+    if (-not (Test-VerifierStrictBooleanValue $Inspection.HasListeners)) { return $false }
+    if ($null -eq $Inspection.Listeners -or -not ($Inspection.Listeners -is [array]) -or
+            -not (Test-VerifierStrictStringValue $Inspection.Source) -or
+            $Inspection.Source -cnotin @('netstat', 'Get-NetTCPConnection') -or
+            -not (Test-VerifierStrictStringValue $Inspection.Error) -or
+            -not (Test-VerifierStrictStringValue $Inspection.ListenerOwnerKind) -or
+            -not (Test-VerifierStrictStringValue $Inspection.ListenerOwnerProof) -or
+            -not (Test-VerifierStrictStringValue $Inspection.ListenerOwnerEvidence)) {
+        return $false
+    }
+    $listeners = @($Inspection.Listeners)
+    if ([bool]$Inspection.HasListeners -ne ($listeners.Count -gt 0)) { return $false }
+    if (-not $Inspection.HasListeners) {
+        return (Test-VerifierListenerOwnerTuple $Inspection.ListenerOwnerKind `
+            $Inspection.ListenerOwnerProof $Inspection.ListenerOwnerEvidence `
+            0 0L $true)
+    }
+
+    $endpoints = @{}
+    $identities = @{}
+    foreach ($listener in $listeners) {
+        if (-not (Test-VerifierListenerRecordSchema $listener $PreviewContext $PreviewOwner)) {
+            return $false
+        }
+        $endpoint = ([string]$listener.LocalAddress).ToLowerInvariant() + '|' +
+            [string]$listener.Port
+        $identity = [string]$listener.ProcessId + '|' +
+            $(if ($null -eq $listener.ProcessStartTicks) { '<null>' } else {
+                [string]$listener.ProcessStartTicks })
+        if ($endpoints.ContainsKey($endpoint) -or $identities.ContainsKey($identity)) {
+            return $false
+        }
+        $endpoints[$endpoint] = $true
+        $identities[$identity] = $true
+        if ($listener.ListenerOwnerKind -cne $Inspection.ListenerOwnerKind -or
+                $listener.ListenerOwnerProof -cne $Inspection.ListenerOwnerProof -or
+                $listener.ListenerOwnerEvidence -cne $Inspection.ListenerOwnerEvidence) {
+            return $false
+        }
+    }
+    $firstListener = $listeners[0]
+    return (Test-VerifierListenerOwnerTuple $Inspection.ListenerOwnerKind `
+        $Inspection.ListenerOwnerProof $Inspection.ListenerOwnerEvidence `
+        $firstListener.ProcessId $firstListener.ProcessStartTicks)
+}
+
+function Test-VerifierRunOwnedPreviewHttpSysAuthorization($Context, $OwnerRecord,
+        $Port) {
+    if ($null -eq $Context -or $null -eq $OwnerRecord) { return $false }
+    try { [void](Assert-VerifierContextPreflight $Context 'preview authorization context' `
+            -RequiredProperties @('RunId', 'RepositoryIdentity', 'PreviewNonce')) }
+    catch { return $false }
+    if (-not (Test-VerifierStrictIntegralValue $Port 1 65535)) { return $false }
+    if (-not $Context.PSObject.Properties['Server'] -or
+            -not [object]::ReferenceEquals($Context.Server, $OwnerRecord)) {
+        return $false
+    }
+    # This is the kernel transport trust boundary.  Validate the complete
+    # server/lease association before inspecting the retained process object
+    # or accepting any PID 4 listener evidence.  The durable validator owns
+    # all raw scalar bounds and lifecycle/identity relationships.
+    try {
+        Assert-VerifierDurableServerLease $Context 'run-owned preview HTTP.sys authorization'
+    } catch { return $false }
+    foreach ($propertyName in @('WorktreeRoot', 'RepositoryIdentity',
+            'RunId', 'PreviewNonce')) {
+        if (-not $Context.PSObject.Properties[$propertyName] -or
+                -not (Test-VerifierStrictStringValue $Context.$propertyName) -or
+                [String]::IsNullOrWhiteSpace($Context.$propertyName)) {
+            return $false
+        }
+    }
+    foreach ($propertyName in @('Owner', 'BaseUrl', 'Port', 'ProcessId',
+            'ProcessStartTicks', 'ProcessParentProcessId',
+            'ProcessParentProcessStartTicks', 'ProcessCommandLine', 'Script',
+            'RepositoryRoot', 'WebRoot', 'IdentityProtocol',
+            'IdentityVerified', 'CallerOwned', 'RunId', 'Nonce', 'State',
+            'Lease', 'Process', 'ProcessIdentityKnown', 'OwnershipUncertain')) {
+        if (-not $OwnerRecord.PSObject.Properties[$propertyName]) { return $false }
+    }
+    foreach ($propertyName in @('Owner', 'State', 'IdentityProtocol', 'RunId',
+            'Nonce', 'ProcessCommandLine', 'Script', 'RepositoryRoot', 'WebRoot')) {
+        if (-not (Test-VerifierStrictStringValue $OwnerRecord.$propertyName)) {
+            return $false
+        }
+    }
+    foreach ($propertyName in @('IdentityVerified', 'CallerOwned',
+            'ProcessIdentityKnown', 'OwnershipUncertain')) {
+        if (-not (Test-VerifierStrictBooleanValue $OwnerRecord.$propertyName)) {
+            return $false
+        }
+    }
+    foreach ($numericProperty in @(
+            [pscustomobject]@{ Name = 'Port'; Minimum = 1L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'ProcessId'; Minimum = 1L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ProcessStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'ProcessParentProcessId'; Minimum = 1L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ProcessParentProcessStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+        )) {
+        if (-not (Test-VerifierStrictIntegralValue $OwnerRecord.$($numericProperty.Name) `
+                $numericProperty.Minimum $numericProperty.Maximum)) {
+            return $false
+        }
+    }
+    if ($OwnerRecord.Owner -cne 'run' -or
+            $OwnerRecord.State -cne 'run-owned-verified' -or
+            $OwnerRecord.IdentityProtocol -cne 'troubleshootjs-preview-identity-v1' -or
+            -not $OwnerRecord.IdentityVerified -or $OwnerRecord.CallerOwned -or
+            -not $OwnerRecord.ProcessIdentityKnown -or $OwnerRecord.OwnershipUncertain -or
+            [long]$OwnerRecord.Port -ne $Port -or [long]$OwnerRecord.ProcessId -le 0 -or
+            [long]$OwnerRecord.ProcessId -eq 4 -or
+            [long]$OwnerRecord.ProcessStartTicks -le 0 -or
+            [long]$OwnerRecord.ProcessParentProcessId -le 0 -or
+            [long]$OwnerRecord.ProcessParentProcessStartTicks -le 0 -or
+            [String]::IsNullOrWhiteSpace($OwnerRecord.ProcessCommandLine) -or
+            [String]::IsNullOrWhiteSpace($OwnerRecord.Script) -or
+            [String]::IsNullOrWhiteSpace($OwnerRecord.RunId) -or
+            [String]::IsNullOrWhiteSpace($OwnerRecord.Nonce) -or
+            -not ($OwnerRecord.Process -is [System.Diagnostics.Process])) {
+        return $false
+    }
+    # The preview server is already the validated Context.Server above.  A
+    # CDP/browser owner is not valid for this handshake, but if a caller adds
+    # that shape it must still cross the same complete durable session gate.
+    if ($OwnerRecord.PSObject.Properties['CdpPort']) {
+        try {
+            Assert-VerifierDurableBrowserSession $OwnerRecord $Context `
+                'run-owned preview HTTP.sys browser owner'
+        } catch { return $false }
+    }
+    try {
+        if ([bool]$OwnerRecord.Process.HasExited -or
+                [int]$OwnerRecord.Process.Id -ne [int]$OwnerRecord.ProcessId -or
+                (Get-VerifierProcessStartTicks $OwnerRecord.Process) -ne
+                    [long]$OwnerRecord.ProcessStartTicks) {
+            return $false
+        }
+    } catch { return $false }
+    $lease = $OwnerRecord.Lease
+    if ($null -eq $lease -or
+            -not $lease.PSObject.Properties['Kind'] -or
+            -not $lease.PSObject.Properties['Port'] -or
+            -not $lease.PSObject.Properties['Status'] -or
+            -not $lease.PSObject.Properties['ClaimState'] -or
+            -not $lease.PSObject.Properties['LeaseId'] -or
+            -not $lease.PSObject.Properties['ClaimName'] -or
+            -not $lease.PSObject.Properties['Path'] -or
+            -not (Test-VerifierStrictStringValue $lease.Kind) -or
+            -not (Test-VerifierStrictIntegralValue $lease.Port 1 65535) -or
+            -not (Test-VerifierStrictStringValue $lease.Status) -or
+            -not (Test-VerifierStrictStringValue $lease.ClaimState) -or
+            -not (Test-VerifierStrictStringValue $lease.LeaseId) -or
+            -not (Test-VerifierStrictStringValue $lease.ClaimName) -or
+            -not (Test-VerifierStrictStringValue $lease.Path) -or
+            [String]::IsNullOrWhiteSpace($lease.LeaseId) -or
+            [String]::IsNullOrWhiteSpace($lease.ClaimName) -or
+            [String]::IsNullOrWhiteSpace($lease.Path) -or
+            $lease.Kind -cne 'preview' -or [long]$lease.Port -ne $Port -or
+            $lease.Status -ceq 'released' -or
+            $lease.ClaimState -cin @('released', 'os-released')) {
+        return $false
+    }
+    if (-not $OwnerRecord.PSObject.Properties['Lease'] -or
+            -not [object]::ReferenceEquals($OwnerRecord.Lease, $lease) -or
+            $lease.ClaimName -cne (Get-VerifierPortMutexName $Context ([int]$Port))) {
+        return $false
+    }
+    foreach ($propertyName in @('RunId', 'RepositoryIdentity', 'WorktreeRoot')) {
+        if (-not $lease.PSObject.Properties[$propertyName] -or
+                -not (Test-VerifierStrictStringValue $lease.$propertyName)) {
+            return $false
+        }
+    }
+    if ($lease.RunId -cne $Context.RunId -or
+            $lease.RepositoryIdentity -cne $Context.RepositoryIdentity -or
+            $lease.WorktreeRoot -cne $Context.WorktreeRoot -or
+            $OwnerRecord.RunId -cne $Context.RunId -or
+            $OwnerRecord.Nonce -cne $Context.PreviewNonce -or
+            -not (Test-VerifierCanonicalWindowsPathValue `
+                $OwnerRecord.RepositoryRoot $Context.WorktreeRoot)) {
+        return $false
+    }
+    if ($Context.PSObject.Properties['PortLeaseRoot'] -and
+            (Test-VerifierStrictStringValue $Context.PortLeaseRoot) -and
+            -not [String]::IsNullOrWhiteSpace($Context.PortLeaseRoot)) {
+        try {
+            $expectedClaimPath = Get-VerifierFullPath (Join-Path $Context.PortLeaseRoot `
+                ($Port.ToString() + '-' + $lease.LeaseId + '.lease'))
+            if (-not (Test-VerifierCanonicalWindowsPathValue $lease.Path $expectedClaimPath)) {
+                return $false
+            }
+        } catch { return $false }
+    }
+    try {
+        $expectedScript = Get-VerifierFullPath (Join-Path $Context.WorktreeRoot 'scripts\preview.ps1')
+        $expectedWebRoot = Get-VerifierFullPath (Join-Path $Context.WorktreeRoot 'war')
+        if (-not (Test-VerifierStrictStringValue $OwnerRecord.BaseUrl) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $OwnerRecord.Script $expectedScript) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $OwnerRecord.WebRoot $expectedWebRoot) -or
+                $OwnerRecord.BaseUrl -cne ('http://127.0.0.1:' + [string]$Port) -or
+                -not (Test-VerifierCommandLinePath $OwnerRecord.ProcessCommandLine $OwnerRecord.Script) -or
+                -not (Test-VerifierCommandLineSwitch $OwnerRecord.ProcessCommandLine '-Port' ([string]$Port)) -or
+                -not (Test-VerifierCommandLineSwitch $OwnerRecord.ProcessCommandLine '-VerifierRunId' $OwnerRecord.RunId) -or
+                -not (Test-VerifierCommandLineSwitch $OwnerRecord.ProcessCommandLine '-VerifierNonce' $OwnerRecord.Nonce)) {
+            return $false
+        }
+    } catch {
+        return $false
+    }
+    return $true
+}
+
+function Test-VerifierListenerRecordSchema($Listener, $PreviewContext = $null,
+        $PreviewOwner = $null) {
+    if ($null -ne $PreviewContext) {
+        try { [void](Assert-VerifierContextPreflight $PreviewContext 'listener record context') }
+        catch { return $false }
+    }
+    if ($null -eq $Listener) { return $false }
+    foreach ($propertyName in @('LocalAddress', 'Port', 'ProcessId',
+            'ProcessStartTicks', 'Source', 'ListenerOwnerKind',
+            'ListenerOwnerProof', 'ListenerOwnerEvidence')) {
+        if (-not $Listener.PSObject.Properties[$propertyName]) { return $false }
+    }
+    if (-not (Test-VerifierStrictStringValue $Listener.LocalAddress) -or
+            -not (Test-VerifierStrictStringValue $Listener.Source) -or
+            -not (Test-VerifierStrictStringValue $Listener.ListenerOwnerKind) -or
+            -not (Test-VerifierStrictStringValue $Listener.ListenerOwnerProof) -or
+            -not (Test-VerifierStrictStringValue $Listener.ListenerOwnerEvidence) -or
+            -not (Test-VerifierStrictIntegralValue $Listener.Port 1 65535) -or
+            -not (Test-VerifierStrictIntegralValue $Listener.ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierLoopbackAddress $Listener.LocalAddress) -or
+            $Listener.Source -cnotin @('netstat', 'Get-NetTCPConnection')) {
+        return $false
+    }
+    if (-not (Test-VerifierListenerOwnerTuple $Listener.ListenerOwnerKind `
+            $Listener.ListenerOwnerProof $Listener.ListenerOwnerEvidence `
+            $Listener.ProcessId $Listener.ProcessStartTicks)) {
+        return $false
+    }
+    if ($Listener.ListenerOwnerKind -ceq $script:VerifierKernelTransportOwnerKind) {
+        if ($null -eq $PreviewContext -or $null -eq $PreviewOwner) {
+            return $false
+        }
+        try {
+            return (Test-VerifierRunOwnedPreviewHttpSysAuthorization $PreviewContext `
+                $PreviewOwner ([int]$Listener.Port))
+        } catch { return $false }
+    }
+    return $true
+}
+
+function Test-VerifierKernelTransportListenerRecord($Listener,
+        $PreviewContext = $null, $PreviewOwner = $null) {
+    if (-not (Test-VerifierListenerRecordSchema $Listener $PreviewContext $PreviewOwner)) {
+        return $false
+    }
+    return ($Listener.ListenerOwnerKind -ceq
+        $script:VerifierKernelTransportOwnerKind)
+}
+
+function Test-VerifierRunOwnedPreviewHttpSysListener($Context, $OwnerRecord,
+        $Listener) {
+    if (-not (Test-VerifierKernelTransportListenerRecord $Listener $Context $OwnerRecord)) {
+        return $false
+    }
+    return (Test-VerifierRunOwnedPreviewHttpSysAuthorization $Context $OwnerRecord `
+        ([int]$Listener.Port))
+}
+
+function New-VerifierKernelTransportListenerRecord($LocalAddress, $Port, $Source,
+        $PreviewContext = $null,
+        $PreviewOwner = $null) {
+    if (-not (Test-VerifierStrictStringValue $LocalAddress) -or
+            -not (Test-VerifierStrictIntegralValue $Port 1 65535) -or
+            -not (Test-VerifierStrictStringValue $Source) -or
+            $Source -cnotin @('netstat', 'Get-NetTCPConnection') -or
+            -not (Test-VerifierLoopbackAddress $LocalAddress)) {
+        Throw-VerifierInfrastructure 'The kernel transport listener record did not come from a validated loopback listener query.'
+    }
+    # PID 4 is the Windows System process that owns HTTP.sys listeners on this
+    # path. Read only the OS process name here; never read StartTime or create
+    # a process identity for this non-process transport owner.
+    $systemProcesses = @(Get-Process -Id 4 -ErrorAction SilentlyContinue)
+    if ($systemProcesses.Count -ne 1 -or $null -eq $systemProcesses[0]) {
+        Throw-VerifierInfrastructure "Loopback port $Port reported PID 4 but the OS System process could not be validated."
+    }
+    $systemProcess = $systemProcesses[0]
+    $systemNameProperty = $systemProcess.PSObject.Properties['ProcessName']
+    if ($null -eq $systemNameProperty) {
+        $systemNameProperty = $systemProcess.PSObject.Properties['Name']
+    }
+    if ($null -eq $systemNameProperty -or
+            -not (Test-VerifierStrictStringValue $systemNameProperty.Value)) {
+        Throw-VerifierInfrastructure "Loopback port $Port reported PID 4 without an exact OS System process name."
+    }
+    $systemName = $systemNameProperty.Value
+    if (-not $systemName.Equals('System', [StringComparison]::OrdinalIgnoreCase)) {
+        Throw-VerifierInfrastructure "Loopback port $Port reported PID 4 without OS System/HTTP.sys ownership evidence."
+    }
+    $record = [pscustomobject]@{
+        LocalAddress = $LocalAddress
+        Port = $Port
+        ProcessId = 4
+        ProcessStartTicks = $null
+        ListenerOwnerKind = $script:VerifierKernelTransportOwnerKind
+        ListenerOwnerProof = $script:VerifierKernelTransportOwnerProof
+        ListenerOwnerEvidence = $script:VerifierKernelTransportOwnerEvidence
+        Source = $Source
+    }
+    if (-not (Test-VerifierKernelTransportListenerRecord $record `
+            $PreviewContext $PreviewOwner)) {
+        Throw-VerifierInfrastructure "Loopback port $Port produced an invalid kernel transport listener record."
+    }
+    return $record
+}
+
+function Get-VerifierListenerProcessRecord($ProcessId, $LocalAddress, $Port, $Source,
+        $PreviewContext = $null,
+        $PreviewOwner = $null) {
+    if ($null -ne $PreviewContext) {
+        [void](Assert-VerifierContextPreflight $PreviewContext 'listener process-record context')
+    }
+    if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictStringValue $LocalAddress) -or
+            -not (Test-VerifierStrictIntegralValue $Port 1 65535) -or
+            -not (Test-VerifierStrictStringValue $Source) -or
+            $Source -cnotin @('netstat', 'Get-NetTCPConnection') -or
+            -not (Test-VerifierLoopbackAddress $LocalAddress)) {
         Throw-VerifierInfrastructure "Loopback listener query returned an invalid PID for port $Port."
+    }
+    if ($ProcessId -eq 4) {
+        if (-not (Test-VerifierRunOwnedPreviewHttpSysAuthorization `
+                $PreviewContext $PreviewOwner $Port)) {
+            Throw-VerifierInfrastructure "Loopback port $Port is owned by PID 4/System HTTP.sys; only an exact run-owned preview identity handshake may authorize this non-process transport owner."
+        }
+        return (New-VerifierKernelTransportListenerRecord $LocalAddress $Port $Source `
+            $PreviewContext $PreviewOwner)
     }
     $process = Get-Process -Id $ProcessId -ErrorAction SilentlyContinue
     if ($null -eq $process) {
         Throw-VerifierInfrastructure "Loopback port $Port is listening under a process that no longer exists; ownership is not provable."
     }
     $startTicks = Get-VerifierProcessStartTicks $process
-    return [pscustomobject]@{
+    $record = [pscustomobject]@{
         LocalAddress = $LocalAddress
         Port = $Port
         ProcessId = $ProcessId
         ProcessStartTicks = $startTicks
+        ListenerOwnerKind = $script:VerifierUserProcessOwnerKind
+        ListenerOwnerProof = $script:VerifierUserProcessOwnerProof
+        ListenerOwnerEvidence = $script:VerifierUserProcessOwnerEvidence
         Source = $Source
     }
+    if (-not (Test-VerifierListenerRecordSchema $record)) {
+        Throw-VerifierInfrastructure "Loopback port $Port produced an invalid user-process listener record."
+    }
+    return $record
 }
 
-function New-VerifierListenerInspection([bool]$Success, [bool]$Known,
-        [object[]]$Listeners, [string]$Source, [string]$ErrorMessage = '') {
+function New-VerifierListenerInspection($Success, $Known, $Listeners, $Source,
+        $ErrorMessage = '',
+        $PreviewContext = $null, $PreviewOwner = $null) {
+    if ($null -ne $PreviewContext) {
+        [void](Assert-VerifierContextPreflight $PreviewContext 'listener inspection context')
+    }
+    if (-not (Test-VerifierStrictBooleanValue $Success) -or -not $Success -or
+            -not (Test-VerifierStrictBooleanValue $Known) -or -not $Known -or
+            $null -eq $Listeners -or -not ($Listeners -is [array]) -or
+            -not (Test-VerifierStrictStringValue $Source) -or
+            -not (Test-VerifierStrictStringValue $ErrorMessage)) {
+        Throw-VerifierInfrastructure 'Listener inspection used a malformed success, source, error, or listener collection field.'
+    }
+    # `$null` is not an observation. Only a caller that explicitly supplied an
+    # empty array may prove listener absence.
     $normalized = @($Listeners)
-    return [pscustomobject]@{
+    foreach ($listener in $normalized) {
+        if ($null -eq $listener -or
+                -not (Test-VerifierListenerRecordSchema $listener $PreviewContext $PreviewOwner)) {
+            Throw-VerifierInfrastructure "Listener inspection '$Source' returned a malformed or unauthorized listener owner record."
+        }
+    }
+    $ownerKind = if ($normalized.Count -eq 0) { 'none' } else {
+        $normalized[0].ListenerOwnerKind
+    }
+    $ownerProof = if ($normalized.Count -eq 0) { '' } else {
+        $normalized[0].ListenerOwnerProof
+    }
+    $ownerEvidenceValue = if ($normalized.Count -eq 0) { '' } else {
+        $normalized[0].ListenerOwnerEvidence
+    }
+    $inspection = [pscustomobject]@{
         Success = $Success
         Known = $Known
         HasListeners = ($normalized.Count -gt 0)
         Listeners = $normalized
+        ListenerOwnerKind = $ownerKind
+        ListenerOwnerProof = $ownerProof
+        ListenerOwnerEvidence = $ownerEvidenceValue
         Source = $Source
         Error = $ErrorMessage
     }
+    if (-not (Test-VerifierListenerInspectionSchema $inspection $PreviewContext $PreviewOwner)) {
+        Throw-VerifierInfrastructure "Listener inspection '$Source' returned a malformed, inconsistent, duplicate, or unauthorized result."
+    }
+    return $inspection
 }
 
-function Parse-VerifierNetstatListenerOutput([int]$Port, [object[]]$Output,
-        [int]$ExitCode = 0) {
-    if ($Port -le 0 -or $Port -gt 65535) {
+function Parse-VerifierNetstatListenerOutput($Port, [object[]]$Output,
+        $ExitCode = 0, $PreviewContext = $null,
+        $PreviewOwner = $null) {
+    if ($null -ne $PreviewContext) {
+        [void](Assert-VerifierContextPreflight $PreviewContext 'netstat listener context')
+    }
+    if (-not (Test-VerifierStrictIntegralValue $Port 1 65535)) {
         Throw-VerifierInfrastructure "Cannot inspect invalid loopback port $Port."
+    }
+    # Keep the process exit result raw at this boundary.  PowerShell parameter
+    # binding must not turn a numeric string, fraction, Boolean, array, object,
+    # or null into an apparently valid integral exit code.
+    if (-not (Test-VerifierStrictIntegralValue $ExitCode 0 0)) {
+        Throw-VerifierInfrastructure "netstat.exe returned a malformed non-integral exit code while inspecting loopback port $Port."
     }
     if ($ExitCode -ne 0) {
         Throw-VerifierInfrastructure "netstat.exe returned exit code $ExitCode while inspecting loopback port $Port."
@@ -1058,11 +2962,18 @@ function Parse-VerifierNetstatListenerOutput([int]$Port, [object[]]$Output,
     }
     $records = New-Object Collections.ArrayList
     $sawDataLine = $false
+    $sawTableHeader = $false
     foreach ($rawLine in $lines) {
-        $line = ([string]$rawLine).Trim()
+        if ($null -eq $rawLine -or $rawLine.GetType() -ne [string]) {
+            Throw-VerifierInfrastructure "netstat.exe returned a non-string output record while inspecting loopback port $Port."
+        }
+        $line = $rawLine.Trim()
         if ([String]::IsNullOrWhiteSpace($line)) { continue }
-        if ($line -match '^(?i:Active Connections)$' -or
-                $line -match '^(?i:Proto\s+Local Address\s+Foreign Address\s+State(?:\s+PID)?)$') {
+        if ($line -match '^(?i:Active Connections)$') {
+            continue
+        }
+        if ($line -match '^(?i:Proto\s+Local Address\s+Foreign Address\s+State(?:\s+PID)?)$') {
+            $sawTableHeader = $true
             continue
         }
         if ($line -match '(?i)error|access denied|not recognized|invalid|failed|cannot') {
@@ -1076,23 +2987,51 @@ function Parse-VerifierNetstatListenerOutput([int]$Port, [object[]]$Output,
         if (-not $match.Success) {
             Throw-VerifierInfrastructure "netstat.exe returned a malformed TCP record while inspecting loopback port ${Port}: $line"
         }
+        $localPortText = $match.Groups['localPort'].Value
+        $foreignPortText = $match.Groups['foreignPort'].Value
+        $pidText = $match.Groups['pid'].Value
+        $localPort = 0
+        $foreignPort = 0
+        $listenerPid = 0
+        if (-not [int]::TryParse($localPortText,
+                [Globalization.NumberStyles]::Integer,
+                [Globalization.CultureInfo]::InvariantCulture, [ref]$localPort) -or
+            -not [int]::TryParse($foreignPortText,
+                [Globalization.NumberStyles]::Integer,
+                [Globalization.CultureInfo]::InvariantCulture, [ref]$foreignPort) -or
+            -not [int]::TryParse($pidText,
+                [Globalization.NumberStyles]::Integer,
+                [Globalization.CultureInfo]::InvariantCulture, [ref]$listenerPid) -or
+            $localPort -lt 1 -or $localPort -gt 65535 -or
+            $foreignPort -lt 0 -or $foreignPort -gt 65535 -or
+            $listenerPid -lt 0 -or $listenerPid -gt [int]::MaxValue) {
+            Throw-VerifierInfrastructure "netstat.exe returned an out-of-range integral TCP field while inspecting loopback port ${Port}: $line"
+        }
         $sawDataLine = $true
-        if ([int]$match.Groups['localPort'].Value -ne $Port -or
+        if ($localPort -ne $Port -or
                 $match.Groups['state'].Value -notmatch '^(?i:LISTENING)$') { continue }
         $address = $match.Groups['local'].Value
         if (-not (Test-VerifierLoopbackAddress $address)) { continue }
+        if ($listenerPid -le 0) {
+            Throw-VerifierInfrastructure "netstat.exe returned a listening TCP record without a positive owning PID while inspecting loopback port ${Port}: $line"
+        }
         [void]$records.Add((Get-VerifierListenerProcessRecord `
-            ([int]$match.Groups['pid'].Value) $address $Port 'netstat'))
+            $listenerPid $address $Port 'netstat' `
+            $PreviewContext $PreviewOwner))
     }
-    if (-not $sawDataLine) {
+    if (-not $sawDataLine -and -not $sawTableHeader) {
         Throw-VerifierInfrastructure "netstat.exe returned no complete TCP records while inspecting loopback port $Port."
     }
-    $unique = @($records | Sort-Object ProcessId, LocalAddress -Unique)
-    return (New-VerifierListenerInspection $true $true $unique 'netstat')
+    return (New-VerifierListenerInspection $true $true @($records) 'netstat' '' `
+        $PreviewContext $PreviewOwner)
 }
 
-function Get-VerifierLoopbackListenerRecords([int]$Port) {
-    if ($Port -le 0 -or $Port -gt 65535) {
+function Get-VerifierLoopbackListenerRecords($Port,
+        $PreviewContext = $null, $PreviewOwner = $null) {
+    if ($null -ne $PreviewContext) {
+        [void](Assert-VerifierContextPreflight $PreviewContext 'loopback listener context')
+    }
+    if (-not (Test-VerifierStrictIntegralValue $Port 1 65535)) {
         Throw-VerifierInfrastructure "Cannot inspect invalid loopback port $Port."
     }
     $records = New-Object Collections.ArrayList
@@ -1107,32 +3046,59 @@ function Get-VerifierLoopbackListenerRecords([int]$Port) {
             $netConnectionError = Get-VerifierErrorMessage $_
         }
     }
-    if ($netConnectionSucceeded -and $connections.Count -gt 0) {
+    if ($netConnectionSucceeded) {
+        if ($connections.Count -eq 0) {
+            # Get-NetTCPConnection is an authoritative successful OS query on
+            # hosts where it is available.  Its exact empty result is explicit
+            # listener absence; do not require a second, less authoritative
+            # query to turn that absence into proof.
+            return (New-VerifierListenerInspection $true $true @() `
+                'Get-NetTCPConnection' '' $PreviewContext $PreviewOwner)
+        }
         foreach ($connection in $connections) {
-            if ($null -eq $connection -or
-                    -not $connection.PSObject.Properties['LocalAddress'] -or
-                    -not $connection.PSObject.Properties['LocalPort'] -or
-                    -not $connection.PSObject.Properties['OwningProcess'] -or
-                    -not $connection.PSObject.Properties['State']) {
+            if ($null -eq $connection) {
                 Throw-VerifierInfrastructure "Get-NetTCPConnection returned an incomplete listener record for port $Port."
             }
-            if ([int]$connection.LocalPort -ne $Port -or
-                    [string]$connection.State -notmatch '^(?i:Listen|Listening)$') {
+            $localAddressProperty = $connection.PSObject.Properties['LocalAddress']
+            $localPortProperty = $connection.PSObject.Properties['LocalPort']
+            $owningProcessProperty = $connection.PSObject.Properties['OwningProcess']
+            $stateProperty = $connection.PSObject.Properties['State']
+            if ($null -eq $localAddressProperty -or
+                    $null -eq $localPortProperty -or
+                    $null -eq $owningProcessProperty -or
+                    $null -eq $stateProperty) {
+                Throw-VerifierInfrastructure "Get-NetTCPConnection returned an incomplete listener record for port $Port."
+            }
+            # Keep the OS query boundary untyped.  Validate the raw scalar
+            # values before comparing/casting them or looking up the owning
+            # process; an implicit cast would turn a fractional or string port
+            # into an apparently valid listener identity.
+            $rawLocalAddress = $localAddressProperty.Value
+            $rawLocalPort = $localPortProperty.Value
+            $rawOwningProcess = $owningProcessProperty.Value
+            $rawState = $stateProperty.Value
+            if (-not (Test-VerifierStrictStringValue $rawLocalAddress) -or
+                    -not (Test-VerifierStrictIntegralValue $rawLocalPort 1 65535) -or
+                    -not (Test-VerifierStrictIntegralValue $rawOwningProcess 1 ([int]::MaxValue)) -or
+                    -not (Test-VerifierRawNetTcpListenState $rawState)) {
+                Throw-VerifierInfrastructure "Get-NetTCPConnection returned malformed raw listener scalar fields for port $Port."
+            }
+            if ([long]$rawLocalPort -ne [long]$Port -or
+                    ([string]$rawState) -cnotmatch '^(?i:Listen|Listening)$') {
                 Throw-VerifierInfrastructure "Get-NetTCPConnection returned an inconsistent listener record for port $Port."
             }
-            $address = ([string]$connection.LocalAddress).Trim()
+            $address = $rawLocalAddress.Trim()
+            $parsedAddress = $null
+            if (-not [Net.IPAddress]::TryParse($address, [ref]$parsedAddress)) {
+                Throw-VerifierInfrastructure "Get-NetTCPConnection returned a malformed LocalAddress for port $Port."
+            }
             if (-not (Test-VerifierLoopbackAddress $address)) { continue }
-            [void]$records.Add((Get-VerifierListenerProcessRecord $connection.OwningProcess `
-                $address $Port 'Get-NetTCPConnection'))
+            [void]$records.Add((Get-VerifierListenerProcessRecord $rawOwningProcess `
+                $address $Port 'Get-NetTCPConnection' $PreviewContext $PreviewOwner))
         }
-        $unique = @($records | Sort-Object ProcessId, LocalAddress -Unique)
-        return (New-VerifierListenerInspection $true $true $unique 'Get-NetTCPConnection')
+        return (New-VerifierListenerInspection $true $true @($records) 'Get-NetTCPConnection' '' `
+            $PreviewContext $PreviewOwner)
     }
-
-    # A successful query with no records is still not accepted as a free-port
-    # proof at this boundary. Fall through to the complete netstat output so
-    # headers/data-line integrity is checked and a malformed/empty result is
-    # classified as unknown infrastructure rather than absence.
 
     # Get-NetTCPConnection is access-controlled on some Windows hosts. The
     # netstat PID table is a narrower fallback, but malformed, empty, or
@@ -1156,7 +3122,8 @@ function Get-VerifierLoopbackListenerRecords([int]$Port) {
         [void]$netstatOutputList.Add($line)
     }
     try {
-        return (Parse-VerifierNetstatListenerOutput $Port @($netstatOutputList) $netstatResult.ExitCode)
+        return (Parse-VerifierNetstatListenerOutput $Port @($netstatOutputList) $netstatResult.ExitCode `
+            $PreviewContext $PreviewOwner)
     } catch {
         if (Test-VerifierInfrastructureError $_) { throw }
         $detail = if ($netConnectionError) { " Previous query: $netConnectionError." } else { '' }
@@ -1169,20 +3136,28 @@ function Test-VerifierChildPath([string]$Root, [string]$Candidate) {
     return Test-VerifierPhysicalChildPath $Root $Candidate
 }
 
-function Get-VerifierManifestBooleanValue($Object, [string]$Name, $Default = $null) {
+function Get-VerifierManifestBooleanValue($Object, [string]$Name,
+        [switch]$AllowNull) {
     if ($null -eq $Object -or [String]::IsNullOrWhiteSpace($Name) -or
             $null -eq $Object.PSObject.Properties[$Name]) {
-        return $Default
+        Throw-VerifierInfrastructure "Verifier manifest source omitted required Boolean field '$Name'."
     }
     $value = $Object.PSObject.Properties[$Name].Value
-    # Preserve null/non-Boolean values in the durable view.  Casting a null
-    # to [bool] would manufacture `false` and allow a terminal tombstone to
-    # look as though listener/process proof had actually been recorded.
-    if ($null -eq $value -or $value.GetType() -ne [bool]) { return $null }
-    return [bool]$value
+    if ($null -eq $value) {
+        if ($AllowNull) { return $null }
+        Throw-VerifierInfrastructure "Verifier manifest source field '$Name' was null instead of an exact Boolean."
+    }
+    if ($value.GetType() -ne [bool]) {
+        Throw-VerifierInfrastructure "Verifier manifest source field '$Name' was not an exact Boolean."
+    }
+    return $value
 }
 
 function Get-VerifierManifestView($Context) {
+    # Manifest fields are durable ownership evidence.  Validate the complete
+    # tuple before projecting any lease into JSON; missing legacy fields must
+    # never become serialized nulls.
+    Assert-VerifierDurableManifestContext $Context
     $leases = @($Context.LeaseRecords | ForEach-Object {
         [ordered]@{
             leaseId = $_.LeaseId
@@ -1197,8 +3172,8 @@ function Get-VerifierManifestView($Context) {
             claimState = $_.ClaimState
             claimOwnerPid = $_.ClaimOwnerPid
             claimOwnerStartTicks = $_.ClaimOwnerStartTicks
-            profile = if ($_.PSObject.Properties['ProfilePath']) { $_.ProfilePath } else { '' }
-            browserPath = if ($_.PSObject.Properties['BrowserPath']) { $_.BrowserPath } else { '' }
+             profile = $_.ProfilePath
+             browserPath = $_.BrowserPath
             claim = [ordered]@{
                 protocol = 'troubleshootjs-verifier-port-claim-v1'
                 runId = $Context.RunId
@@ -1212,38 +3187,29 @@ function Get-VerifierManifestView($Context) {
                 ownerPid = $_.ClaimOwnerPid
                 ownerStartTicks = $_.ClaimOwnerStartTicks
             }
-            registered = Get-VerifierManifestBooleanValue $_ 'Registered' $false
+            registered = Get-VerifierManifestBooleanValue $_ 'Registered'
             boundProcessId = $_.BoundProcessId
             boundProcessStartTicks = $_.BoundProcessStartTicks
-            listenerProcessId = if ($_.PSObject.Properties['ListenerProcessId']) {
-                $_.ListenerProcessId
-            } else { 0 }
-            listenerProcessStartTicks = if ($_.PSObject.Properties['ListenerProcessStartTicks']) {
-                $_.ListenerProcessStartTicks
-            } else { 0 }
+            listenerProcessId = $_.ListenerProcessId
+            listenerProcessStartTicks = $_.ListenerProcessStartTicks
+            listenerOwnerKind = $_.ListenerOwnerKind
+            listenerOwnerProof = $_.ListenerOwnerProof
+            listenerOwnerEvidence = $_.ListenerOwnerEvidence
             bindValidatedUtc = $_.BindValidatedUtc
              releasedUtc = $_.ReleasedUtc
-             releaseState = if ($_.PSObject.Properties['ReleaseState']) {
-                 $_.ReleaseState
-             } else { 'active' }
-             releaseJournalState = if ($_.PSObject.Properties['ReleaseJournalState']) {
-                 $_.ReleaseJournalState
-             } else { $null }
-             releaseBlocked = Get-VerifierManifestBooleanValue $_ 'ReleaseBlocked' $false
-             releaseBlockReason = if ($_.PSObject.Properties['ReleaseBlockReason']) {
-                 $_.ReleaseBlockReason
-             } else { '' }
-             mutexReleased = Get-VerifierManifestBooleanValue $_ 'MutexReleased' $false
-             listenerInspectionSuccess = Get-VerifierManifestBooleanValue $_ 'ListenerInspectionSuccess' $false
-             listenerInspectionKnown = Get-VerifierManifestBooleanValue $_ 'ListenerInspectionKnown' $false
-             listenerHasListeners = Get-VerifierManifestBooleanValue $_ 'ListenerHasListeners' $null
-             listenerAbsent = Get-VerifierManifestBooleanValue $_ 'ListenerAbsent' $null
-             listenerInspectionUtc = if ($_.PSObject.Properties['ListenerInspectionUtc']) {
-                 $_.ListenerInspectionUtc
-             } else { '' }
-             processTerminationProven = Get-VerifierManifestBooleanValue $_ 'ProcessTerminationProven' $false
-             processAbsent = Get-VerifierManifestBooleanValue $_ 'ProcessAbsent' $false
-             processProofRequired = Get-VerifierManifestBooleanValue $_ 'ProcessProofRequired' $null
+             releaseState = $_.ReleaseState
+             releaseJournalState = $_.ReleaseJournalState
+             releaseBlocked = Get-VerifierManifestBooleanValue $_ 'ReleaseBlocked'
+              releaseBlockReason = $_.ReleaseBlockReason
+             mutexReleased = Get-VerifierManifestBooleanValue $_ 'MutexReleased'
+             listenerInspectionSuccess = Get-VerifierManifestBooleanValue $_ 'ListenerInspectionSuccess'
+             listenerInspectionKnown = Get-VerifierManifestBooleanValue $_ 'ListenerInspectionKnown'
+             listenerHasListeners = Get-VerifierManifestBooleanValue $_ 'ListenerHasListeners' -AllowNull
+             listenerAbsent = Get-VerifierManifestBooleanValue $_ 'ListenerAbsent' -AllowNull
+              listenerInspectionUtc = $_.ListenerInspectionUtc
+             processTerminationProven = Get-VerifierManifestBooleanValue $_ 'ProcessTerminationProven'
+             processAbsent = Get-VerifierManifestBooleanValue $_ 'ProcessAbsent'
+             processProofRequired = Get-VerifierManifestBooleanValue $_ 'ProcessProofRequired'
          }
     })
     $sessions = @($Context.BrowserSessions | ForEach-Object {
@@ -1255,32 +3221,29 @@ function Get-VerifierManifestView($Context) {
             routeId = $_.RouteId
             routeName = $_.RouteName
              cdpPort = $_.CdpPort
-             browserPath = if ($_.PSObject.Properties['BrowserPath']) { $_.BrowserPath } else { '' }
+              browserPath = $_.BrowserPath
              cdpLeasePath = $_.Lease.Path
              profile = $_.Profile
              processId = $_.ProcessId
              processStartTicks = $_.ProcessStartTicks
-             processParentProcessId = if ($_.PSObject.Properties['ProcessParentProcessId']) {
-                 $_.ProcessParentProcessId
-             } else { 0 }
-             processParentProcessStartTicks = if ($_.PSObject.Properties['ProcessParentProcessStartTicks']) {
-                 $_.ProcessParentProcessStartTicks
-             } else { 0 }
-            processCommandLine = if ($_.PSObject.Properties['ProcessCommandLine']) {
-                $_.ProcessCommandLine
-            } else { '' }
+              processParentProcessId = $_.ProcessParentProcessId
+              processParentProcessStartTicks = $_.ProcessParentProcessStartTicks
+             processCommandLine = $_.ProcessCommandLine
             targetId = $_.TargetId
             expectedUrl = $_.ExpectedUrl
             expectedRunMarker = 'tsjVerifierRun=' + $_.RunId
             expectedRouteMarker = 'tsjVerifierRoute=' + $_.RouteId
             status = $_.Status
             cleanupResult = $_.CleanupResult
-            profileProcessScanCompleted = Get-VerifierManifestBooleanValue $_ 'ProfileProcessScanCompleted' $false
-            profileInspectionFailed = Get-VerifierManifestBooleanValue $_ 'ProfileInspectionFailed' $false
+            profileProcessScanCompleted = Get-VerifierManifestBooleanValue $_ 'ProfileProcessScanCompleted'
+            profileInspectionFailed = Get-VerifierManifestBooleanValue $_ 'ProfileInspectionFailed'
             error = $_.Error
         }
     })
     $server = if ($null -eq $Context.Server) { $null } else {
+        $serverLease = if ($Context.Server.PSObject.Properties['Lease']) {
+            $Context.Server.Lease
+        } else { $null }
         [ordered]@{
             owner = $Context.Server.Owner
             baseUrl = $Context.Server.BaseUrl
@@ -1289,87 +3252,52 @@ function Get-VerifierManifestView($Context) {
             port = $Context.Server.Port
              processId = $Context.Server.ProcessId
              processStartTicks = $Context.Server.ProcessStartTicks
-             repositoryRoot = if ($Context.Server.PSObject.Properties['RepositoryRoot']) {
-                 $Context.Server.RepositoryRoot
-             } else { $Context.WorktreeRoot }
-             webRoot = if ($Context.Server.PSObject.Properties['WebRoot']) {
-                 $Context.Server.WebRoot
-             } else { '' }
-             identityProtocol = if ($Context.Server.PSObject.Properties['IdentityProtocol']) {
-                 $Context.Server.IdentityProtocol
-             } else { '' }
-             identityVerified = Get-VerifierManifestBooleanValue $Context.Server 'IdentityVerified' $false
-             callerOwned = Get-VerifierManifestBooleanValue $Context.Server 'CallerOwned' $false
-              processParentProcessId = if ($Context.Server.PSObject.Properties['ProcessParentProcessId']) {
-                  $Context.Server.ProcessParentProcessId
-              } else { 0 }
-              processParentProcessStartTicks = if ($Context.Server.PSObject.Properties['ProcessParentProcessStartTicks']) {
-                  $Context.Server.ProcessParentProcessStartTicks
-              } else { 0 }
-            processCommandLine = if ($Context.Server.PSObject.Properties['ProcessCommandLine']) {
-                $Context.Server.ProcessCommandLine
-            } else { '' }
+              repositoryRoot = $Context.Server.RepositoryRoot
+              webRoot = $Context.Server.WebRoot
+              identityProtocol = $Context.Server.IdentityProtocol
+             identityVerified = Get-VerifierManifestBooleanValue $Context.Server 'IdentityVerified'
+             callerOwned = Get-VerifierManifestBooleanValue $Context.Server 'CallerOwned'
+               processParentProcessId = $Context.Server.ProcessParentProcessId
+               processParentProcessStartTicks = $Context.Server.ProcessParentProcessStartTicks
+             processCommandLine = $Context.Server.ProcessCommandLine
              script = $Context.Server.Script
              runId = $Context.Server.RunId
              nonce = $Context.Server.Nonce
-             leaseId = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease) {
-                 $Context.Server.Lease.LeaseId
-             } else { '' }
-             leaseKind = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease) {
-                 $Context.Server.Lease.Kind
-             } else { '' }
-             leaseClaimName = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease) {
-                 $Context.Server.Lease.ClaimName
-             } else { '' }
-             leaseClaimState = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease) {
-                 $Context.Server.Lease.ClaimState
-             } else { '' }
-             leaseReleaseState = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease) {
-                 $Context.Server.Lease.ReleaseState
-             } else { '' }
-             leaseReleaseJournalState = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease -and
-                     $Context.Server.Lease.PSObject.Properties['ReleaseJournalState']) {
-                 $Context.Server.Lease.ReleaseJournalState
-             } else { '' }
-             leaseOwnerPid = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease) {
-                 $Context.Server.Lease.ClaimOwnerPid
-             } else { 0 }
-             leaseOwnerStartTicks = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease) {
-                 $Context.Server.Lease.ClaimOwnerStartTicks
-             } else { 0 }
-             leasePath = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease) {
-                $Context.Server.Lease.Path
-            } else { '' }
-             leaseListenerAbsent = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease -and
-                     $Context.Server.Lease.PSObject.Properties['ListenerAbsent']) {
-                 $Context.Server.Lease.ListenerAbsent
-             } else { $null }
-             leaseProcessProofRequired = if ($Context.Server.PSObject.Properties['Lease'] -and
-                     $null -ne $Context.Server.Lease -and
-                     $Context.Server.Lease.PSObject.Properties['ProcessProofRequired']) {
-                 $Context.Server.Lease.ProcessProofRequired
-             } else { $null }
+              leaseId = if ($null -ne $serverLease) { $serverLease.LeaseId } else { '' }
+              leaseKind = if ($null -ne $serverLease) { $serverLease.Kind } else { '' }
+              leaseClaimName = if ($null -ne $serverLease) { $serverLease.ClaimName } else { '' }
+              leaseClaimState = if ($null -ne $serverLease) { $serverLease.ClaimState } else { '' }
+              leaseReleaseState = if ($null -ne $serverLease) { $serverLease.ReleaseState } else { '' }
+              leaseReleaseJournalState = if ($null -ne $serverLease) { $serverLease.ReleaseJournalState } else { '' }
+              leaseOwnerPid = if ($null -ne $serverLease) { $serverLease.ClaimOwnerPid } else { 0 }
+              leaseOwnerStartTicks = if ($null -ne $serverLease) { $serverLease.ClaimOwnerStartTicks } else { 0 }
+              leasePath = if ($null -ne $serverLease) { $serverLease.Path } else { '' }
+              leaseListenerAbsent = if ($null -ne $serverLease) {
+                  Get-VerifierManifestBooleanValue $serverLease 'ListenerAbsent' -AllowNull
+              } else { $null }
+              leaseProcessProofRequired = if ($null -ne $serverLease) {
+                  Get-VerifierManifestBooleanValue $serverLease 'ProcessProofRequired'
+              } else { $null }
+              leaseListenerOwnerKind = if ($null -ne $serverLease) {
+                  $serverLease.ListenerOwnerKind
+              } else { 'none' }
+              leaseListenerOwnerProof = if ($null -ne $serverLease) {
+                  $serverLease.ListenerOwnerProof
+              } else { '' }
+              leaseListenerOwnerEvidence = if ($null -ne $serverLease) {
+                  $serverLease.ListenerOwnerEvidence
+              } else { '' }
             state = $Context.Server.State
             stdoutLog = $Context.Server.StdoutLog
             stderrLog = $Context.Server.StderrLog
              cleanupResult = $Context.Server.CleanupResult
              error = $Context.Server.Error
-             processIdentityKnown = Get-VerifierManifestBooleanValue $Context.Server 'ProcessIdentityKnown' $false
-             ownershipUncertain = Get-VerifierManifestBooleanValue $Context.Server 'OwnershipUncertain' $false
-             processTerminationProven = Get-VerifierManifestBooleanValue $Context.Server 'ProcessTerminationProven' $false
-             processAbsent = Get-VerifierManifestBooleanValue $Context.Server 'ProcessAbsent' $false
-             listenerInspectionProven = Get-VerifierManifestBooleanValue $Context.Server 'ListenerInspectionProven' $false
-             listenerAbsent = Get-VerifierManifestBooleanValue $Context.Server 'ListenerAbsent' $false
+             processIdentityKnown = Get-VerifierManifestBooleanValue $Context.Server 'ProcessIdentityKnown'
+             ownershipUncertain = Get-VerifierManifestBooleanValue $Context.Server 'OwnershipUncertain'
+             processTerminationProven = Get-VerifierManifestBooleanValue $Context.Server 'ProcessTerminationProven'
+             processAbsent = Get-VerifierManifestBooleanValue $Context.Server 'ProcessAbsent'
+             listenerInspectionProven = Get-VerifierManifestBooleanValue $Context.Server 'ListenerInspectionProven'
+             listenerAbsent = Get-VerifierManifestBooleanValue $Context.Server 'ListenerAbsent' -AllowNull
          }
     }
     return [ordered]@{
@@ -1378,13 +3306,9 @@ function Get-VerifierManifestView($Context) {
         repositoryIdentity = $Context.RepositoryIdentity
         worktreeRoot = $Context.WorktreeRoot
             runRoot = $Context.RunRoot
-        runNamespaceRoot = if ($Context.PSObject.Properties['RunNamespaceRoot']) {
-            $Context.RunNamespaceRoot
-        } else { $Context.RunRoot }
+        runNamespaceRoot = $Context.RunNamespaceRoot
         evidenceDirectory = $Context.EvidenceDirectory
-        evidenceNamespaceRoot = if ($Context.PSObject.Properties['EvidenceNamespaceRoot']) {
-            $Context.EvidenceNamespaceRoot
-        } else { $Context.RunRoot }
+        evidenceNamespaceRoot = $Context.EvidenceNamespaceRoot
         manifestPath = $Context.ManifestPath
         createdUtc = $Context.CreatedUtc
         baseUrl = $Context.BaseUrl
@@ -1402,9 +3326,7 @@ function Get-VerifierManifestView($Context) {
 }
 
 function Assert-VerifierContextPhysicalResources($Context) {
-    if ($null -eq $Context) {
-        Throw-VerifierInfrastructure 'Cannot validate physical verifier resources without a context.'
-    }
+    [void](Assert-VerifierContextPreflight $Context 'verifier physical-resource context' -RequireDurable)
     [void](Assert-VerifierPhysicalOwnedPath $Context.WorktreeRoot $Context.WorktreeRoot `
         -AllowRoot)
     [void](Assert-VerifierPhysicalOwnedPath $Context.RunNamespaceRoot $Context.RunRoot `
@@ -1484,9 +3406,14 @@ function Assert-VerifierContextPhysicalResources($Context) {
 }
 
 function Write-VerifierManifest($Context) {
+    [void](Assert-VerifierContextPreflight $Context 'verifier manifest context')
     if ($null -eq $Context -or [String]::IsNullOrWhiteSpace([string]$Context.RunRoot)) {
         Throw-VerifierInfrastructure 'Cannot persist a verifier manifest without a run root.'
     }
+    # Reject malformed owner evidence before deriving a temporary path or
+    # entering the write/rename transaction.  The view repeats this guard for
+    # callers that consume it directly.
+    Assert-VerifierDurableManifestContext $Context
     # Revalidate the physical namespace immediately before every manifest
     # write.  This catches a junction/reparse replacement between setup and a
     # later lifecycle operation instead of following it with Move-Item.
@@ -1530,6 +3457,14 @@ function Write-VerifierManifest($Context) {
                 [string]$Context.ManifestWritePhase -eq 'lease-post-delete') {
             $Context.TestHooks.FailNextPostDeleteFinalManifestWrite = $false
             Throw-VerifierInfrastructure 'Injected post-delete final lease-manifest failure.'
+        }
+        if ($Context.PSObject.Properties['TestHooks'] -and
+                $Context.TestHooks.PSObject.Properties['FailNextPostDeleteJournalWrite'] -and
+                [bool]$Context.TestHooks.FailNextPostDeleteJournalWrite -and
+                $Context.PSObject.Properties['ManifestWritePhase'] -and
+                [string]$Context.ManifestWritePhase -eq 'lease-post-delete-journal') {
+            $Context.TestHooks.FailNextPostDeleteJournalWrite = $false
+            Throw-VerifierInfrastructure 'Injected post-delete journal lease-manifest failure.'
         }
         $json = $manifest | ConvertTo-Json -Depth 12
         if (-not (Test-VerifierPhysicalChildPath $Context.RunRoot $temporaryPath) -or
@@ -1687,9 +3622,10 @@ function New-VerifierRunContext([string]$WorktreeRoot, [string]$EvidenceParent =
                  FailNextClaimWrite = $false
                  FailNextLeaseRelease = $false
                  FailNextLeaseMutexDispose = $false
-                 FailNextFinalManifestWrite = $false
-                 FailNextPostDeleteFinalManifestWrite = $false
-                 FailNextPostDeleteBeforeFinalState = $false
+                  FailNextFinalManifestWrite = $false
+                  FailNextPostDeleteFinalManifestWrite = $false
+                  FailNextPostDeleteJournalWrite = $false
+                  FailNextPostDeleteBeforeFinalState = $false
                  FailNextPreviewIdentityCapture = $false
                  BrowserDrainAfterInitialGraphSignalPath = ''
                  BrowserDrainAfterInitialGraphReadyPath = ''
@@ -1719,6 +3655,9 @@ function New-VerifierRunContext([string]$WorktreeRoot, [string]$EvidenceParent =
 function Write-VerifierLeaseRollbackRecord($Context, [string]$LeaseId,
         [string]$ClaimPath, [string]$Reason, $CleanupErrors) {
     try {
+        if ($null -ne $Context) {
+            [void](Assert-VerifierContextPreflight $Context 'lease rollback context')
+        }
         $base = if ($Context -and (Test-Path -LiteralPath $Context.EvidenceDirectory -PathType Container)) {
             $Context.EvidenceDirectory
         } elseif ($Context -and (Test-Path -LiteralPath $Context.RunRoot -PathType Container)) {
@@ -1756,8 +3695,16 @@ function Write-VerifierLeaseRollbackRecord($Context, [string]$LeaseId,
     } catch { }
 }
 
-function New-VerifierPortLease($Context, [string]$Kind, [int]$RequestedPort = 0,
-        [string]$BrowserPath = '') {
+function New-VerifierPortLease($Context, $Kind, $RequestedPort = 0,
+        $BrowserPath = '') {
+    [void](Assert-VerifierContextPreflight $Context 'port lease context' `
+        -RequiredProperties @('RunId', 'RepositoryIdentity', 'PortLeaseRoot'))
+    if (-not (Test-VerifierStrictStringValue $Kind) -or
+            [String]::IsNullOrWhiteSpace($Kind) -or
+            -not (Test-VerifierStrictIntegralValue $RequestedPort 0 65535) -or
+            -not (Test-VerifierStrictStringValue $BrowserPath)) {
+        Throw-VerifierInfrastructure 'A port lease request carried a malformed kind, requested port, or BrowserPath before allocation.'
+    }
     if ($Kind -eq 'cdp') {
         if ([String]::IsNullOrWhiteSpace($BrowserPath)) {
             $BrowserPath = Resolve-VerifierBrowserPath ''
@@ -1782,6 +3729,7 @@ function New-VerifierPortLease($Context, [string]$Kind, [int]$RequestedPort = 0,
         $rollbackLeaseId = 'unknown'
         $claimFileOwned = $false
         $mapRegistered = $false
+        $mutexMapRegistered = $false
         $retry = $false
         $rollbackErrors = New-Object Collections.ArrayList
         $rollbackReason = ''
@@ -1887,11 +3835,14 @@ function New-VerifierPortLease($Context, [string]$Kind, [int]$RequestedPort = 0,
             $leaseRecord = [pscustomobject]@{
                 LeaseId = $leaseId; Kind = $Kind; Port = $port; Path = $claimPath
                 RunId = $Context.RunId; RepositoryIdentity = $Context.RepositoryIdentity
+                WorktreeRoot = $Context.WorktreeRoot
                 Status = 'leased'; Registered = $false; ClaimName = $claimName
                 ClaimState = 'held'; ClaimOwnerPid = [int]$PID
                 ClaimOwnerStartTicks = $claimOwnerStartTicks
                 BoundProcessId = 0; BoundProcessStartTicks = 0
-                 ListenerProcessId = 0; ListenerProcessStartTicks = 0
+             ListenerProcessId = 0; ListenerProcessStartTicks = 0
+                 ListenerOwnerKind = 'none'; ListenerOwnerProof = ''
+                 ListenerOwnerEvidence = ''
                  BindValidatedUtc = ''; ReleasedUtc = ''; ClaimMutex = $mutex
                  ProfilePath = ''; OwnerType = 'none'; ProfileInspectionFailed = $false
                   BrowserPath = [string]$BrowserPath; ReleaseState = 'active'; ReleaseBlocked = $false
@@ -1904,6 +3855,8 @@ function New-VerifierPortLease($Context, [string]$Kind, [int]$RequestedPort = 0,
              }
             [void]$Context.LeaseRecords.Add($leaseRecord)
             $script:VerifierHeldPortClaims[$claimName] = $Context.RunId
+            $script:VerifierHeldPortMutexes[$claimName] = $mutex
+            $mutexMapRegistered = $true
             $mapRegistered = $true
             try {
                 Write-VerifierManifest $Context
@@ -1938,6 +3891,11 @@ function New-VerifierPortLease($Context, [string]$Kind, [int]$RequestedPort = 0,
                 if ($mapRegistered -and $script:VerifierHeldPortClaims.ContainsKey($claimName) -and
                         [string]$script:VerifierHeldPortClaims[$claimName] -eq [string]$Context.RunId) {
                     [void]$script:VerifierHeldPortClaims.Remove($claimName)
+                }
+                if ($mutexMapRegistered -and
+                        $script:VerifierHeldPortMutexes.ContainsKey($claimName) -and
+                        [object]::ReferenceEquals($script:VerifierHeldPortMutexes[$claimName], $mutex)) {
+                    [void]$script:VerifierHeldPortMutexes.Remove($claimName)
                 }
                 if ($claimFileOwned -and $claimPath) {
                     try {
@@ -1977,25 +3935,130 @@ function New-VerifierPortLease($Context, [string]$Kind, [int]$RequestedPort = 0,
 }
 
 function Test-VerifierPreviewProcessIdentity($PreviewRecord, $Snapshot) {
-    if ($null -eq $PreviewRecord -or [int]$PreviewRecord.ProcessId -le 0) { return $false }
-    $commandRecord = @($Snapshot | Where-Object {
-        [int]$_.ProcessId -eq [int]$PreviewRecord.ProcessId
-    } | Select-Object -First 1)
-    if ($commandRecord.Count -eq 0 -or
-            -not $commandRecord[0].PSObject.Properties['CommandLine'] -or
-            [String]::IsNullOrWhiteSpace([string]$commandRecord[0].CommandLine)) { return $false }
-    $command = $commandRecord[0].CommandLine
-    return (Test-VerifierCommandLinePath $command ([string]$PreviewRecord.Script)) -and
+    if ($null -eq $PreviewRecord -or $null -eq $Snapshot) { return $false }
+    foreach ($propertyName in @('ProcessId', 'ProcessStartTicks', 'Script',
+            'Port', 'RunId', 'Nonce')) {
+        if ($null -eq $PreviewRecord.PSObject.Properties[$propertyName]) {
+            return $false
+        }
+    }
+    if (-not (Test-VerifierStrictIntegralValue $PreviewRecord.ProcessId `
+            1 ([int]::MaxValue)) -or
+            [int]$PreviewRecord.ProcessId -eq 4 -or
+            -not (Test-VerifierStrictIntegralValue $PreviewRecord.ProcessStartTicks 1) -or
+            -not (Test-VerifierStrictIntegralValue $PreviewRecord.Port 1 65535) -or
+            -not (Test-VerifierStrictStringValue $PreviewRecord.Script) -or
+            [String]::IsNullOrWhiteSpace($PreviewRecord.Script) -or
+            -not (Test-VerifierStrictStringValue $PreviewRecord.RunId) -or
+            [String]::IsNullOrWhiteSpace($PreviewRecord.RunId) -or
+            -not (Test-VerifierStrictStringValue $PreviewRecord.Nonce) -or
+            [String]::IsNullOrWhiteSpace($PreviewRecord.Nonce)) {
+        return $false
+    }
+
+    $previewPid = [int]$PreviewRecord.ProcessId
+    $previewStart = [long]$PreviewRecord.ProcessStartTicks
+    $matches = New-Object Collections.ArrayList
+    foreach ($candidate in @($Snapshot)) {
+        if ($null -eq $candidate -or
+                $null -eq $candidate.PSObject.Properties['ProcessId'] -or
+                -not (Test-VerifierStrictIntegralValue $candidate.ProcessId `
+                    0 ([int]::MaxValue))) {
+            return $false
+        }
+        $candidatePid = [int]$candidate.ProcessId
+        # Complete OS snapshots legitimately include System Idle (PID 0) and
+        # System (PID 4). Neither may be the selected user-process preview
+        # owner, but unrelated records must not invalidate the full snapshot.
+        if ($candidatePid -eq 0 -or $candidatePid -eq 4) { continue }
+        $candidateStartProperty = $candidate.PSObject.Properties['ProcessStartTicks']
+        if ($null -ne $candidateStartProperty -and
+                ($null -eq $candidateStartProperty.Value -or
+                 -not (Test-VerifierStrictIntegralValue $candidateStartProperty.Value 1))) {
+            return $false
+        }
+        if ($candidatePid -ne $previewPid) { continue }
+        if (($null -ne $candidateStartProperty -and
+             [long]$candidateStartProperty.Value -ne $previewStart) -or
+                $null -eq $candidate.PSObject.Properties['CommandLine'] -or
+                -not (Test-VerifierStrictStringValue $candidate.CommandLine) -or
+                [String]::IsNullOrWhiteSpace($candidate.CommandLine)) {
+            return $false
+        }
+        [void]$matches.Add($candidate)
+    }
+    if ($matches.Count -ne 1) { return $false }
+
+    # PID and command-line markers are only supporting evidence. Re-read the
+    # retained real process identity so stale/fabricated WMI records cannot
+    # authorize the preview owner.
+    $process = Get-VerifierProcessById $previewPid
+    if ($null -eq $process) { return $false }
+    try {
+        if ([bool]$process.HasExited -or
+                (Get-VerifierProcessStartTicks $process) -ne $previewStart) {
+            return $false
+        }
+    } catch { return $false }
+    $command = $matches[0].CommandLine
+    return (Test-VerifierCommandLinePath $command $PreviewRecord.Script) -and
         (Test-VerifierCommandLineSwitch $command '-Port' ([string]$PreviewRecord.Port)) -and
-        (Test-VerifierCommandLineSwitch $command '-VerifierRunId' ([string]$PreviewRecord.RunId)) -and
-        (Test-VerifierCommandLineSwitch $command '-VerifierNonce' ([string]$PreviewRecord.Nonce))
+        (Test-VerifierCommandLineSwitch $command '-VerifierRunId' $PreviewRecord.RunId) -and
+        (Test-VerifierCommandLineSwitch $command '-VerifierNonce' $PreviewRecord.Nonce)
 }
 
 function Test-VerifierListenerBelongsToOwner($OwnerRecord, $Listener,
-        [int]$ProcessId, [long]$ProcessStartTicks, $Snapshot) {
+        $ProcessId, $ProcessStartTicks, $Snapshot) {
+    if (-not (Test-VerifierListenerRecordSchema $Listener)) {
+        return $false
+    }
+    if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ProcessStartTicks 1)) {
+        return $false
+    }
+    # Kernel transport ownership is never a process identity and must be
+    # handled only by the explicit run-owned preview proof at the caller.
+    if ($Listener.ListenerOwnerKind -ne $script:VerifierUserProcessOwnerKind -or
+            $null -eq $OwnerRecord) {
+        return $false
+    }
+    $listenerStartProperty = $Listener.PSObject.Properties['ProcessStartTicks']
+    if ($null -eq $listenerStartProperty.Value) { return $false }
+    if (-not (Test-VerifierStrictIntegralValue $listenerStartProperty.Value 1)) { return $false }
+    $listenerStart = [long]$listenerStartProperty.Value
+
+    # A direct owner record is an explicit, testable identity proof. It is
+    # intentionally stricter than PID/start equality: the retained object must
+    # be a real live Process whose identity is re-read at this boundary.
+    if ($OwnerRecord.PSObject.Properties['DirectProcessOwner']) {
+        if (-not (Test-VerifierStrictBooleanValue $OwnerRecord.DirectProcessOwner) -or
+                -not $OwnerRecord.DirectProcessOwner -or
+                -not $OwnerRecord.PSObject.Properties['Process'] -or
+                -not ($OwnerRecord.Process -is [System.Diagnostics.Process]) -or
+                -not $OwnerRecord.PSObject.Properties['ProcessId'] -or
+                -not $OwnerRecord.PSObject.Properties['ProcessStartTicks'] -or
+                -not $OwnerRecord.PSObject.Properties['IdentityProof'] -or
+                -not (Test-VerifierStrictStringValue $OwnerRecord.IdentityProof) -or
+                $OwnerRecord.IdentityProof -cne 'retained-process-object-v1' -or
+                -not (Test-VerifierStrictIntegralValue $OwnerRecord.ProcessId 1 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $OwnerRecord.ProcessStartTicks 1)) {
+            return $false
+        }
+        try {
+            if ([bool]$OwnerRecord.Process.HasExited -or
+                    [int]$OwnerRecord.Process.Id -ne [int]$OwnerRecord.ProcessId -or
+                    (Get-VerifierProcessStartTicks $OwnerRecord.Process) -ne
+                        [long]$OwnerRecord.ProcessStartTicks) {
+                return $false
+            }
+        } catch { return $false }
+        return ([int]$Listener.ProcessId -eq [int]$ProcessId -and
+            $listenerStart -eq [long]$ProcessStartTicks -and
+            [int]$OwnerRecord.ProcessId -eq [int]$ProcessId -and
+            [long]$OwnerRecord.ProcessStartTicks -eq [long]$ProcessStartTicks)
+    }
     if ([int]$Listener.ProcessId -eq $ProcessId -and
-            [long]$Listener.ProcessStartTicks -eq $ProcessStartTicks) {
-        if ($null -eq $OwnerRecord) { return $true }
+            $listenerStart -eq $ProcessStartTicks) {
         if ($OwnerRecord.PSObject.Properties['Profile']) {
             return (Test-VerifierProcessIdentity $OwnerRecord $Snapshot)
         }
@@ -2004,7 +4067,10 @@ function Test-VerifierListenerBelongsToOwner($OwnerRecord, $Listener,
         }
         return $false
     }
-    if ($null -eq $OwnerRecord -or [int]$OwnerRecord.ProcessId -le 0) { return $false }
+    if (-not $OwnerRecord.PSObject.Properties['ProcessId'] -or
+            -not (Test-VerifierStrictIntegralValue $OwnerRecord.ProcessId 1 ([int]::MaxValue))) {
+        return $false
+    }
     $rootIsOwned = if ($OwnerRecord.PSObject.Properties['Profile']) {
         Test-VerifierProcessIdentity $OwnerRecord $Snapshot
     } elseif ($OwnerRecord.PSObject.Properties['Script']) {
@@ -2014,7 +4080,7 @@ function Test-VerifierListenerBelongsToOwner($OwnerRecord, $Listener,
     $descendants = @(Get-VerifierDescendantProcessRecords $OwnerRecord $Snapshot)
     $candidate = @($descendants | Where-Object {
         [int]$_.ProcessId -eq [int]$Listener.ProcessId -and
-            [long]$_.ProcessStartTicks -eq [long]$Listener.ProcessStartTicks
+            [long]$_.ProcessStartTicks -eq $listenerStart
     } | Select-Object -First 1)
     if ($candidate.Count -eq 0) { return $false }
     $command = [string]$candidate[0].CommandLine
@@ -2033,52 +4099,278 @@ function Test-VerifierListenerBelongsToOwner($OwnerRecord, $Listener,
     return $false
 }
 
-function Set-VerifierLeaseListenerInspection($Lease, $Inspection) {
-    if ($null -eq $Lease -or $null -eq $Inspection) { return }
-    if ($Lease.PSObject.Properties['ListenerInspectionSuccess']) {
-        $Lease.ListenerInspectionSuccess = [bool]$Inspection.Success
+function Test-VerifierPreviewOwnerPortFields($OwnerRecord) {
+    if ($null -eq $OwnerRecord) { return $true }
+    $portValues = New-Object Collections.Generic.List[long]
+    foreach ($propertyName in @('CdpPort', 'Port')) {
+        $property = $OwnerRecord.PSObject.Properties[$propertyName]
+        if ($null -eq $property) { continue }
+        if (-not (Test-VerifierStrictIntegralValue $property.Value 1 65535)) {
+            return $false
+        }
+        [void]$portValues.Add([long]$property.Value)
     }
-    if ($Lease.PSObject.Properties['ListenerInspectionKnown']) {
-        $Lease.ListenerInspectionKnown = [bool]$Inspection.Known
+    if ($portValues.Count -gt 1 -and $portValues[0] -ne $portValues[1]) {
+        return $false
     }
-    if ($Lease.PSObject.Properties['ListenerHasListeners']) {
-        $Lease.ListenerHasListeners = if ($Inspection.PSObject.Properties['HasListeners']) {
-            [bool]$Inspection.HasListeners
-        } else { $null }
+    return $true
+}
+
+function Test-VerifierLiveListenerInspectionAuthorization($Inspection,
+        $PreviewContext, $PreviewOwner, $AuthorizedProcessId,
+        $AuthorizedProcessStartTicks) {
+    # Validate preview-owner port fields before the inspection schema can
+    # delegate a kernel record into its preview authorization path.  This keeps
+    # every caller-level CdpPort/Port cast behind the same raw scalar gate.
+    if ($null -eq $Inspection -or
+            -not (Test-VerifierPreviewOwnerPortFields $PreviewOwner) -or
+            -not (Test-VerifierListenerInspectionSchema $Inspection `
+                $PreviewContext $PreviewOwner)) {
+        return $false
     }
-    if ($Lease.PSObject.Properties['ListenerAbsent']) {
-        $Lease.ListenerAbsent = if ($Inspection.PSObject.Properties['HasListeners']) {
-            [bool](-not [bool]$Inspection.HasListeners)
-        } else { $null }
+    if (-not $Inspection.HasListeners) {
+        return $true
+    }
+    if ($null -eq $PreviewContext -or $null -eq $PreviewOwner) {
+        return $false
+    }
+    $listeners = @($Inspection.Listeners)
+    if ($Inspection.ListenerOwnerKind -eq $script:VerifierKernelTransportOwnerKind) {
+        # PID 4 is transport ownership, not a process identity.  Its positive
+        # write is authorized only by the exact run-owned preview handshake.
+        return (Test-VerifierRunOwnedPreviewHttpSysAuthorization $PreviewContext `
+            $PreviewOwner ([int]$listeners[0].Port))
+    }
+    if ($Inspection.ListenerOwnerKind -ne $script:VerifierUserProcessOwnerKind -or
+            -not (Test-VerifierStrictIntegralValue $AuthorizedProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $AuthorizedProcessStartTicks 1)) {
+        return $false
+    }
+
+    $snapshot = $null
+    if ($PreviewOwner.PSObject.Properties['Profile'] -or
+            $PreviewOwner.PSObject.Properties['Script']) {
+        try {
+            $ownerBrowserPath = if ($PreviewOwner.PSObject.Properties['BrowserPath']) {
+                [string]$PreviewOwner.BrowserPath
+            } else { '' }
+            $ownerProfile = if ($PreviewOwner.PSObject.Properties['Profile']) {
+                [string]$PreviewOwner.Profile
+            } else { '' }
+            $ownerRunId = if ($PreviewOwner.PSObject.Properties['RunId']) {
+                [string]$PreviewOwner.RunId
+            } else { '' }
+            $ownerRepository = if ($PreviewOwner.PSObject.Properties['RepositoryIdentity']) {
+                [string]$PreviewOwner.RepositoryIdentity
+            } else { '' }
+            $ownerPort = if ($PreviewOwner.PSObject.Properties['CdpPort']) {
+                [int]$PreviewOwner.CdpPort
+            } elseif ($PreviewOwner.PSObject.Properties['Port']) {
+                [int]$PreviewOwner.Port
+            } else { 0 }
+            $ownerScript = if ($PreviewOwner.PSObject.Properties['Script']) {
+                [string]$PreviewOwner.Script
+            } else { '' }
+            $ownerNonce = if ($PreviewOwner.PSObject.Properties['Nonce']) {
+                [string]$PreviewOwner.Nonce
+            } else { '' }
+            $snapshot = @(Get-VerifierBrowserOwnershipSnapshot `
+                $ownerBrowserPath $ownerProfile $ownerRunId $ownerRepository `
+                $ownerPort $ownerScript $ownerNonce)
+        } catch { return $false }
+    }
+    foreach ($listener in $listeners) {
+        if (-not (Test-VerifierListenerBelongsToOwner $PreviewOwner $listener `
+                $AuthorizedProcessId $AuthorizedProcessStartTicks $snapshot)) {
+            return $false
+        }
+    }
+    return $true
+}
+
+function Set-VerifierLeaseListenerInspection($Lease, $Inspection,
+        $PreviewContext = $null, $PreviewOwner = $null,
+        $AuthorizedProcessId = $null, $AuthorizedProcessStartTicks = $null) {
+    if ($null -eq $Lease -or $null -eq $Inspection) {
+        Throw-VerifierInfrastructure 'Cannot persist a missing listener lease inspection.'
+    }
+    if ($null -ne $PreviewContext) {
+        [void](Assert-VerifierContextPreflight $PreviewContext 'listener inspection mutation context')
+    }
+    # This setter is itself a durable-state boundary.  Validate the complete
+    # lease and, when supplied, the complete server association before reading
+    # listener state or assigning any durable listener fields.  A later
+    # Write-VerifierManifest check cannot undo an earlier in-memory mutation.
+    Assert-VerifierDurableLeaseRecord $Lease $PreviewContext `
+        'listener inspection lease'
+    if ($null -ne $PreviewContext) {
+        Assert-VerifierDurableServerLease $PreviewContext `
+            'listener inspection server' -AllowMissing
+    }
+    if (-not (Test-VerifierPreviewOwnerPortFields $PreviewOwner)) {
+        Throw-VerifierInfrastructure 'Listener inspection owner carried a malformed or mismatched raw port.'
+    }
+    if (-not (Test-VerifierListenerInspectionSchema $Inspection $PreviewContext $PreviewOwner)) {
+        Throw-VerifierInfrastructure 'Cannot persist a malformed, inconsistent, duplicate, or unauthorized listener inspection.'
+    }
+    foreach ($listener in @($Inspection.Listeners)) {
+        if (-not (Test-VerifierListenerRecordSchema $listener $PreviewContext $PreviewOwner)) {
+            Throw-VerifierInfrastructure 'Cannot persist a listener inspection containing an unauthorized listener record.'
+        }
+    }
+    $leasePortProperty = $Lease.PSObject.Properties['Port']
+    if ($null -eq $leasePortProperty -or
+            -not (Test-VerifierStrictIntegralValue $leasePortProperty.Value 1 65535)) {
+        Throw-VerifierInfrastructure 'Lease listener inspection carried a missing or malformed lease port.'
+    }
+    $leasePort = $leasePortProperty.Value
+    foreach ($listener in @($Inspection.Listeners)) {
+        $listenerPortProperty = $listener.PSObject.Properties['Port']
+        if ($null -eq $listenerPortProperty -or
+                -not (Test-VerifierStrictIntegralValue $listenerPortProperty.Value 1 65535) -or
+                [long]$listenerPortProperty.Value -ne [long]$leasePort) {
+            Throw-VerifierInfrastructure 'Listener inspection port did not match the exact leased port.'
+        }
+    }
+    foreach ($propertyName in @('ListenerProcessId', 'ListenerProcessStartTicks',
+            'ListenerOwnerKind', 'ListenerOwnerProof', 'ListenerOwnerEvidence',
+            'ListenerInspectionSuccess', 'ListenerInspectionKnown',
+            'ListenerHasListeners', 'ListenerAbsent')) {
+        if (-not $Lease.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "Lease omitted required listener state field '$propertyName'."
+        }
+    }
+    if (-not (Test-VerifierStrictIntegralValue $Lease.ListenerProcessId 0 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictStringValue $Lease.ListenerOwnerKind) -or
+            -not (Test-VerifierStrictStringValue $Lease.ListenerOwnerProof) -or
+            -not (Test-VerifierStrictStringValue $Lease.ListenerOwnerEvidence) -or
+            -not (Test-VerifierStrictBooleanValue $Lease.ListenerInspectionSuccess) -or
+            -not (Test-VerifierStrictBooleanValue $Lease.ListenerInspectionKnown)) {
+        Throw-VerifierInfrastructure 'Lease listener state contained malformed typed fields.'
+    }
+    $leaseStart = $Lease.ListenerProcessStartTicks
+    if ($null -ne $leaseStart -and
+            -not (Test-VerifierStrictIntegralValue $leaseStart 0)) {
+        Throw-VerifierInfrastructure 'Lease listener start identity was malformed.'
+    }
+    if (-not (Test-VerifierListenerOwnerTuple $Lease.ListenerOwnerKind `
+            $Lease.ListenerOwnerProof $Lease.ListenerOwnerEvidence `
+            $Lease.ListenerProcessId $leaseStart $true)) {
+        Throw-VerifierInfrastructure 'Lease listener owner state was not an exact canonical tuple.'
+    }
+    foreach ($propertyName in @('ListenerHasListeners', 'ListenerAbsent')) {
+        $value = $Lease.PSObject.Properties[$propertyName].Value
+        if ($null -ne $value -and -not (Test-VerifierStrictBooleanValue $value)) {
+            Throw-VerifierInfrastructure "Lease field '$propertyName' was not Boolean or null."
+        }
+    }
+    if (($null -eq $Lease.ListenerHasListeners) -xor ($null -eq $Lease.ListenerAbsent) -or
+            ($null -ne $Lease.ListenerHasListeners -and
+             $Lease.ListenerAbsent -eq $Lease.ListenerHasListeners)) {
+        Throw-VerifierInfrastructure 'Lease listener presence flags were inconsistent.'
+    }
+    if ($Inspection.HasListeners -and
+            -not (Test-VerifierLiveListenerInspectionAuthorization $Inspection `
+                $PreviewContext $PreviewOwner $AuthorizedProcessId `
+                $AuthorizedProcessStartTicks)) {
+        Throw-VerifierInfrastructure 'Positive listener inspection lacked canonical live owner authorization.'
+    }
+
+    $hasListeners = $Inspection.HasListeners
+    $ownerKind = $Inspection.ListenerOwnerKind
+    $ownerProof = $Inspection.ListenerOwnerProof
+    $ownerEvidence = $Inspection.ListenerOwnerEvidence
+    # All validation is complete before any field is assigned. An absence
+    # observation changes only proof-of-inspection flags and never erases a
+    # retained positive owner tuple.
+    $Lease.ListenerInspectionSuccess = $Inspection.Success
+    $Lease.ListenerInspectionKnown = $Inspection.Known
+    $Lease.ListenerHasListeners = $hasListeners
+    $Lease.ListenerAbsent = -not $hasListeners
+    if ($hasListeners) {
+        $first = @($Inspection.Listeners)[0]
+        $Lease.ListenerProcessId = $first.ProcessId
+        $Lease.ListenerProcessStartTicks = $first.ProcessStartTicks
+        $Lease.ListenerOwnerKind = $ownerKind
+        $Lease.ListenerOwnerProof = $ownerProof
+        $Lease.ListenerOwnerEvidence = $ownerEvidence
     }
     if ($Lease.PSObject.Properties['ListenerInspectionUtc']) {
         $Lease.ListenerInspectionUtc = Get-VerifierUtcText
     }
 }
 
-function Confirm-VerifierPortLeaseBound($Context, $Lease, [int]$ProcessId,
-        [long]$ProcessStartTicks, $OwnerRecord = $null) {
-    if ($null -eq $Lease -or $Lease.Status -eq 'released') {
-        Throw-VerifierInfrastructure 'Cannot validate a missing or released port claim.'
+function Confirm-VerifierPortLeaseBound($Context, $Lease, $ProcessId,
+        $ProcessStartTicks, $OwnerRecord = $null) {
+    [void](Assert-VerifierContextPreflight $Context 'port lease bind context' `
+        -RequiredProperties @('RunId', 'RepositoryIdentity', 'PortLeaseRoot'))
+    # Complete all raw context/server/lease/owner fields before any listener
+    # query, process lookup, or durable mutation.  These validators are the
+    # single trust boundary for bind ownership and lifecycle state.
+    Assert-VerifierDurableServerLease $Context 'port lease bind server'
+    Assert-VerifierDurableLeaseRecord $Lease $Context 'port lease bind'
+    if (-not (Test-VerifierPreviewOwnerPortFields $OwnerRecord)) {
+        Throw-VerifierInfrastructure 'Port lease bind owner carried a malformed or mismatched raw port.'
     }
-    if ([int]$Lease.ClaimOwnerPid -ne [int]$PID -or
+    if ($null -ne $OwnerRecord -and
+            $OwnerRecord.PSObject.Properties['CdpPort']) {
+        Assert-VerifierDurableBrowserSession $OwnerRecord $Context `
+            'port lease bind browser owner'
+    }
+    if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ProcessStartTicks 1)) {
+        Throw-VerifierInfrastructure 'Port lease bind process identity used malformed numeric fields.'
+    }
+    $claimMutexProperty = $Lease.PSObject.Properties['ClaimMutex']
+    if ($null -eq $claimMutexProperty -or
+            $null -eq $claimMutexProperty.Value -or
+            $claimMutexProperty.Value.GetType() -ne [Threading.Mutex]) {
+        Throw-VerifierInfrastructure 'Port lease bind omitted its exact live ClaimMutex handle.'
+    }
+    if ($Lease.Status -cne 'leased' -or $Lease.ClaimState -cne 'held' -or
+            $Lease.ReleaseState -cne 'active' -or
+            $Lease.ReleaseJournalState -cne 'active' -or
+            -not $Lease.Registered -or $Lease.ReleaseBlocked -or
+            $Lease.MutexReleased -or
+            $Lease.ClaimName -cne (Get-VerifierPortMutexName $Context ([int]$Lease.Port)) -or
+            -not $script:VerifierHeldPortClaims.ContainsKey([string]$Lease.ClaimName) -or
+            [string]$script:VerifierHeldPortClaims[[string]$Lease.ClaimName] -cne
+                [string]$Context.RunId) {
+        Throw-VerifierInfrastructure 'Port lease bind did not carry the exact held claim lifecycle or mutex identity.'
+    }
+    if ([long]$Lease.ClaimOwnerPid -ne [int]$PID -or
             [long]$Lease.ClaimOwnerStartTicks -ne (Get-VerifierCurrentProcessStartTicks)) {
         Throw-VerifierInfrastructure "Verifier port claim $($Lease.Port) is not held by this run process."
     }
-    if ($ProcessId -le 0 -or $ProcessStartTicks -le 0) {
-        Throw-VerifierInfrastructure "Owned port $($Lease.Port) did not provide a valid bound process identity."
+    $previewListenerOwner = $null
+    if ($null -ne $OwnerRecord -and $OwnerRecord.PSObject.Properties['Script'] -and
+            (Test-VerifierRunOwnedPreviewHttpSysAuthorization $Context $OwnerRecord `
+                ([int]$Lease.Port))) {
+        $previewListenerOwner = $OwnerRecord
     }
-    $inspection = Get-VerifierLoopbackListenerRecords ([int]$Lease.Port)
-    Set-VerifierLeaseListenerInspection $Lease $inspection
-    if (-not $inspection.Success -or -not $inspection.Known) {
+    $inspection = if ($null -ne $previewListenerOwner) {
+        Get-VerifierLoopbackListenerRecords ([int]$Lease.Port) $Context $previewListenerOwner
+    } else {
+        Get-VerifierLoopbackListenerRecords ([int]$Lease.Port)
+    }
+    if (-not (Test-VerifierListenerInspectionSchema $inspection $Context $previewListenerOwner) -or
+            -not $inspection.Success -or -not $inspection.Known) {
         Throw-VerifierInfrastructure "Could not positively determine listener state for owned port $($Lease.Port)."
     }
     $listeners = @($inspection.Listeners)
     if (-not $inspection.HasListeners) {
         Throw-VerifierInfrastructure "Owned port $($Lease.Port) has no exact loopback listener; bind was not proven."
     }
+    foreach ($listener in $listeners) {
+        if (-not (Test-VerifierStrictIntegralValue $listener.Port 1 65535) -or
+                [long]$listener.Port -ne [long]$Lease.Port) {
+            Throw-VerifierInfrastructure "Owned port $($Lease.Port) returned a listener on a different port."
+        }
+    }
     $snapshot = $null
-    if ($null -ne $OwnerRecord) {
+    if ($null -ne $OwnerRecord -and
+            ($OwnerRecord.PSObject.Properties['Profile'] -or
+             $OwnerRecord.PSObject.Properties['Script'])) {
         try {
             $ownerBrowserPath = if ($OwnerRecord.PSObject.Properties['BrowserPath']) {
                 [string]$OwnerRecord.BrowserPath
@@ -2112,16 +4404,46 @@ function Confirm-VerifierPortLeaseBound($Context, $Lease, [int]$ProcessId,
         }
     }
     foreach ($listener in $listeners) {
+        if (-not (Test-VerifierListenerRecordSchema $listener $Context `
+                $previewListenerOwner)) {
+            Throw-VerifierInfrastructure "Loopback port $($Lease.Port) returned a malformed or unauthorized listener owner record."
+        }
+        $listenerKind = $listener.ListenerOwnerKind
+        if ($listenerKind -eq $script:VerifierKernelTransportOwnerKind) {
+            if (-not (Test-VerifierRunOwnedPreviewHttpSysListener $Context $OwnerRecord $listener)) {
+                Throw-VerifierInfrastructure ("Loopback port $($Lease.Port) reported a kernel transport listener " +
+                    'without the exact run-owned preview identity handshake.')
+            }
+            continue
+        }
+        if ($listenerKind -ne 'user-process') {
+            Throw-VerifierInfrastructure "Loopback port $($Lease.Port) returned an unsupported listener owner kind '$listenerKind'."
+        }
+        $listenerStartProperty = $listener.PSObject.Properties['ProcessStartTicks']
+        if ($null -eq $listenerStartProperty -or $null -eq $listenerStartProperty.Value) {
+            Throw-VerifierInfrastructure "Loopback port $($Lease.Port) returned a user-process listener without a positive start identity."
+        }
+        if (-not (Test-VerifierStrictIntegralValue $listenerStartProperty.Value 1)) {
+            Throw-VerifierInfrastructure "Loopback port $($Lease.Port) returned a non-positive user-process listener start identity."
+        }
+        $listenerStart = [long]$listenerStartProperty.Value
         if (-not (Test-VerifierListenerBelongsToOwner $OwnerRecord $listener `
                 $ProcessId $ProcessStartTicks $snapshot)) {
             Throw-VerifierInfrastructure ("Loopback port $($Lease.Port) is listening under foreign " +
-                "PID $($listener.ProcessId)/start $($listener.ProcessStartTicks), not the recorded owner.")
+                "PID $($listener.ProcessId)/start $listenerStart, not the recorded owner.")
         }
     }
+    # Ownership and the complete inspection were proven before this durable
+    # mutation. The setter repeats the schema check as defense in depth.
+    Set-VerifierLeaseListenerInspection $Lease $inspection $Context $OwnerRecord `
+        $ProcessId $ProcessStartTicks
     $Lease.BoundProcessId = $ProcessId
     $Lease.BoundProcessStartTicks = $ProcessStartTicks
-    $Lease.ListenerProcessId = [int]$listeners[0].ProcessId
-    $Lease.ListenerProcessStartTicks = [long]$listeners[0].ProcessStartTicks
+    $Lease.ListenerProcessId = $listeners[0].ProcessId
+    $Lease.ListenerProcessStartTicks = if ($listeners[0].ListenerOwnerKind -eq
+        $script:VerifierKernelTransportOwnerKind) { $null } else {
+        $listeners[0].ProcessStartTicks
+    }
     $Lease.BindValidatedUtc = Get-VerifierUtcText
     $Lease.ClaimState = 'bound'
     $Lease.Status = 'bound'
@@ -2132,7 +4454,159 @@ function Confirm-VerifierPortLeaseBound($Context, $Lease, [int]$ProcessId,
 }
 
 function Release-VerifierPortLease($Context, $Lease) {
-    if ($null -eq $Lease) { return }
+    [void](Assert-VerifierContextPreflight $Context 'port lease release context' `
+        -RequiredProperties @('RunId', 'RepositoryIdentity', 'PortLeaseRoot'))
+    if ($null -eq $Lease) {
+        Throw-VerifierInfrastructure 'Port lease release omitted its cleanup authority lease.'
+    }
+    if ($null -ne $Context) {
+        # Validate the complete server association before inspecting claim
+        # state or changing any in-memory lifecycle field.  A malformed server
+        # record must not be able to reach a release write/delete path.
+        $serverProperty = $Context.PSObject.Properties['Server']
+        $server = if ($null -eq $serverProperty) { $null } else { $serverProperty.Value }
+        $runOwnedServer = ($null -ne $server -and
+            $server.PSObject.Properties['Owner'] -and
+            (Test-VerifierStrictStringValue $server.Owner) -and
+            $server.Owner -ceq 'run')
+        $previewLease = ($Lease.PSObject.Properties['Kind'] -and
+            (Test-VerifierStrictStringValue $Lease.Kind) -and
+            $Lease.Kind -ceq 'preview')
+        if ($runOwnedServer -or $previewLease -or $null -ne $serverProperty) {
+            Assert-VerifierDurableServerLease $Context 'port lease release server'
+        } else {
+            # Explicit ownerless/caller-owned cdp recovery can carry no Server
+            # object.  Missing server state is never accepted for preview or a
+            # context that claims a run-owned server.
+            Assert-VerifierDurableServerLease $Context 'port lease release server' -AllowMissing
+        }
+    }
+    Assert-VerifierDurableLeaseRecord $Lease $Context 'port lease release'
+    # Every successful release path, including durable terminal recovery,
+    # must begin from the exact canonical listener owner tuple.  Do not let a
+    # terminal state or a missing claim bypass owner-proof validation.
+    Assert-VerifierDurableListenerOwnerTuple $Lease 'port lease release'
+    foreach ($booleanProperty in @('ReleaseBlocked', 'MutexReleased',
+            'ProcessProofRequired', 'ProcessTerminationProven', 'ProcessAbsent',
+            'ListenerInspectionSuccess', 'ListenerInspectionKnown')) {
+        [void](Get-VerifierRequiredBooleanValue $Lease $booleanProperty 'port lease lifecycle')
+    }
+    foreach ($nullableBooleanProperty in @('ListenerHasListeners', 'ListenerAbsent')) {
+        $nullableProperty = $Lease.PSObject.Properties[$nullableBooleanProperty]
+        if ($null -eq $nullableProperty -or
+                ($null -ne $nullableProperty.Value -and
+                 -not (Test-VerifierStrictBooleanValue $nullableProperty.Value))) {
+            Throw-VerifierInfrastructure "Port lease lifecycle carried a missing or malformed Boolean '$nullableBooleanProperty'."
+        }
+    }
+    # This is the release boundary for every lifecycle, including recovery of
+    # a durable tombstone.  It must precede the terminal fast path so a blocked,
+    # pathless, or ambiguously-associated record cannot silently return.
+    foreach ($identityProperty in @('LeaseId', 'Kind', 'Path', 'ClaimName')) {
+        $identity = $Lease.PSObject.Properties[$identityProperty]
+        if ($null -eq $identity -or
+                -not (Test-VerifierStrictStringValue $identity.Value) -or
+                [String]::IsNullOrWhiteSpace($identity.Value)) {
+            Throw-VerifierInfrastructure "Port lease release omitted its non-empty exact claim association '$identityProperty'."
+        }
+    }
+    if ($Lease.ClaimName -cne (Get-VerifierPortMutexName $null ([int]$Lease.Port))) {
+        Throw-VerifierInfrastructure 'Port lease release carried a noncanonical claim mutex association.'
+    }
+    if ($Lease.ReleaseBlocked) {
+        Throw-VerifierInfrastructure "Port $($Lease.Port) release is blocked because ownership remains uncertain: $($Lease.ReleaseBlockReason)"
+    }
+    try {
+        [void](Assert-VerifierPhysicalOwnedPath $Context.PortLeaseRoot $Lease.Path)
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure "Could not prove port $($Lease.Port) claim ownership before release: $(Get-VerifierErrorMessage $_)"
+    }
+    $terminalLifecycle = ($Lease.Status -ceq 'released' -and
+        $Lease.ClaimState -ceq 'released' -and
+        $Lease.ReleaseState -ceq 'complete' -and
+        $Lease.ReleaseJournalState -ceq 'complete')
+    if ($terminalLifecycle) {
+        if ($Lease.Kind -cnotin @('cdp', 'preview')) {
+            Throw-VerifierInfrastructure 'Port lease terminal release carried an unsupported lease kind.'
+        }
+        [void](Assert-VerifierDurableLeaseTerminalFields $Lease $Context `
+            'port lease terminal release')
+        try {
+            if (-not (Test-Path -LiteralPath $Lease.Path -PathType Leaf -ErrorAction Stop)) {
+                [void](Assert-VerifierDurableLeaseTerminal $Lease $Context `
+                    'port lease terminal release')
+                if ($script:VerifierHeldPortClaims.ContainsKey([string]$Lease.ClaimName) -and
+                        [string]$script:VerifierHeldPortClaims[[string]$Lease.ClaimName] -eq [string]$Context.RunId) {
+                    [void]$script:VerifierHeldPortClaims.Remove([string]$Lease.ClaimName)
+                }
+                return
+            }
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure "Could not prove port $($Lease.Port) terminal claim state: $(Get-VerifierErrorMessage $_)"
+        }
+    }
+    foreach ($stateProperty in @('Status', 'ClaimState', 'ReleaseState',
+            'ReleaseJournalState')) {
+        if ($null -eq $Lease.PSObject.Properties[$stateProperty] -or
+                -not (Test-VerifierStrictStringValue $Lease.PSObject.Properties[$stateProperty].Value)) {
+            Throw-VerifierInfrastructure "Port lease lifecycle omitted or malformed its state '$stateProperty'."
+        }
+    }
+    foreach ($identityProperty in @('Kind', 'LeaseId', 'ClaimName', 'RunId',
+            'RepositoryIdentity', 'WorktreeRoot', 'Path')) {
+        if ($null -eq $Lease.PSObject.Properties[$identityProperty] -or
+                -not (Test-VerifierStrictStringValue $Lease.PSObject.Properties[$identityProperty].Value)) {
+            Throw-VerifierInfrastructure "Port lease lifecycle omitted or malformed its identity '$identityProperty'."
+        }
+    }
+    foreach ($numericProperty in @(
+            [pscustomobject]@{ Name = 'Port'; Minimum = 1L; Maximum = 65535L }
+            [pscustomobject]@{ Name = 'ClaimOwnerPid'; Minimum = 1L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ClaimOwnerStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'BoundProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'BoundProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            [pscustomobject]@{ Name = 'ListenerProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+        )) {
+        if (-not (Test-VerifierStrictIntegralValue $Lease.PSObject.Properties[$numericProperty.Name].Value `
+                $numericProperty.Minimum $numericProperty.Maximum)) {
+            Throw-VerifierInfrastructure "Port lease lifecycle omitted or malformed its integral '$($numericProperty.Name)'."
+        }
+    }
+    $listenerStartProperty = $Lease.PSObject.Properties['ListenerProcessStartTicks']
+    if ($null -eq $listenerStartProperty -or
+            ($null -ne $listenerStartProperty.Value -and
+             -not (Test-VerifierStrictIntegralValue $listenerStartProperty.Value 0))) {
+        Throw-VerifierInfrastructure 'Port lease lifecycle omitted or malformed its listener start identity.'
+    }
+    # ClaimMutex is a live ownership handle, not durable JSON. Validate its
+    # exact runtime type before consulting the claim path or changing any
+    # lifecycle field. A malformed replacement (for example a string) must
+    # leave both memory and the manifest untouched.
+    $claimMutexProperty = $Lease.PSObject.Properties['ClaimMutex']
+    if ($null -eq $claimMutexProperty) {
+        if (-not $Lease.MutexReleased) {
+            Throw-VerifierInfrastructure 'Port lease lifecycle omitted its live claim mutex before OS release.'
+        }
+    } elseif ($null -ne $claimMutexProperty.Value -and
+            $claimMutexProperty.Value.GetType() -ne [Threading.Mutex]) {
+        Throw-VerifierInfrastructure 'Port lease lifecycle carried a malformed live claim mutex handle.'
+    } elseif ($null -eq $claimMutexProperty.Value -and -not $Lease.MutexReleased) {
+        Throw-VerifierInfrastructure 'Port lease lifecycle carried no live claim mutex before OS release.'
+    }
+    # Validate the complete run-owned server/lease association before any
+    # release state or journal field is changed.  Write-VerifierManifest has
+    # the same guard, but reaching it after an in-memory mutation would leave a
+    # caller-visible lease in a state that was never durably written.
+    if ($null -ne $Context -and $Context.PSObject.Properties['Server'] -and
+            $null -ne $Context.Server) {
+        Assert-VerifierDurableServerLease $Context 'port lease release server'
+        if ($Context.Server.Owner -ceq 'run' -and
+                -not [object]::ReferenceEquals($Context.Server.Lease, $Lease)) {
+            Throw-VerifierInfrastructure 'Port lease release target did not match the run-owned Server.Lease.'
+        }
+    }
     $claimRemains = $false
     if ($Lease.PSObject.Properties['Path'] -and
             -not [String]::IsNullOrWhiteSpace([string]$Lease.Path)) {
@@ -2142,67 +4616,19 @@ function Release-VerifierPortLease($Context, $Lease) {
             $claimRemains = $true
         }
     }
-    $liveHandleRemains = ($Lease.PSObject.Properties['ClaimMutex'] -and
-        $null -ne $Lease.ClaimMutex)
-    $releaseState = if ($Lease.PSObject.Properties['ReleaseState']) {
-        [string]$Lease.ReleaseState
-    } else { 'active' }
+    $liveHandleRemains = ($null -ne $claimMutexProperty -and
+        $null -ne $claimMutexProperty.Value)
+    $releaseState = $Lease.ReleaseState
     # Once the manifest durably records that this exact lease's OS mutex was
     # released, a later run may legitimately have rebound the same port. A
     # recovery retry may therefore skip only the *current listener absence*
     # check after exact claim validation; it must never skip claim identity or
     # profile ownership checks and must never remove a different claim.
     $durableOsRelease = (-not $liveHandleRemains -and
-        $Lease.PSObject.Properties['MutexReleased'] -and
-        [bool]$Lease.MutexReleased -and
+        $Lease.MutexReleased -and
         $releaseState -in @('os-released', 'complete', 'claim-delete-failed'))
 
-    # `complete` is the durable pre-delete/final journal state.  A claim may
-    # still be present when the process was interrupted between the journal
-    # write and claim deletion; it is still safe to finish only after exact
-    # claim validation below.  A missing claim with this state is already
-    # complete, and recovery only needs to persist the terminal ClaimState.
-    if ($Lease.Status -eq 'released' -and
-            $Lease.PSObject.Properties['ReleaseState'] -and
-            [string]$Lease.ReleaseState -eq 'complete') {
-        if ($liveHandleRemains) {
-            Throw-VerifierInfrastructure "Port $($Lease.Port) is marked complete but still retains a live claim handle."
-        }
-        if (-not $claimRemains) {
-            if (-not $Lease.PSObject.Properties['ClaimState'] -or
-                    [string]$Lease.ClaimState -ne 'released' -or
-                    -not $Lease.PSObject.Properties['ReleaseJournalState'] -or
-                    [string]$Lease.ReleaseJournalState -ne 'complete') {
-                try {
-                    $Lease.Status = 'released'
-                    $Lease.ClaimState = 'released'
-                    $Lease.MutexReleased = $true
-                    if ($Lease.PSObject.Properties['ReleaseJournalState']) {
-                        $Lease.ReleaseJournalState = 'complete'
-                    }
-                    $Context.ManifestWritePhase = 'lease-post-delete'
-                    Write-VerifierManifest $Context
-                } catch {
-                    if (Test-VerifierInfrastructureError $_) { throw }
-                    Throw-VerifierInfrastructure (Get-VerifierErrorMessage $_)
-                } finally {
-                    $Context.ManifestWritePhase = ''
-                }
-            }
-            if ($script:VerifierHeldPortClaims.ContainsKey([string]$Lease.ClaimName) -and
-                    [string]$script:VerifierHeldPortClaims[[string]$Lease.ClaimName] -eq [string]$Context.RunId) {
-                [void]$script:VerifierHeldPortClaims.Remove([string]$Lease.ClaimName)
-            }
-            return
-        }
-        # A durable claim left behind despite the complete marker is repaired
-        # through the exact claim validation path below; never delete by path
-        # or PID alone.
-    }
     try {
-        if ($Lease.PSObject.Properties['ReleaseBlocked'] -and [bool]$Lease.ReleaseBlocked) {
-            Throw-VerifierInfrastructure "Port $($Lease.Port) release is blocked because ownership remains uncertain: $($Lease.ReleaseBlockReason)"
-        }
         if (-not (Test-VerifierPhysicalChildPath $Context.PortLeaseRoot $Lease.Path)) {
             Throw-VerifierInfrastructure "Refusing to release a port lease outside this run's lease directory."
         }
@@ -2237,18 +4663,38 @@ function Release-VerifierPortLease($Context, $Lease) {
             Throw-VerifierInfrastructure 'Port claim physical ownership changed before identity read.'
         }
         $claim = Get-Content -LiteralPath $Lease.Path -Raw | ConvertFrom-Json
-        if ([string]$claim.protocol -ne 'troubleshootjs-verifier-port-claim-v1' -or
-                [string]$claim.runId -ne [string]$Context.RunId -or
-                [string]$claim.repositoryIdentity -ne [string]$Context.RepositoryIdentity -or
-                -not (Test-VerifierCanonicalWindowsPathValue ([string]$claim.worktreeRoot) `
-                    ([string]$Context.WorktreeRoot)) -or
-                 [string]$claim.kind -ne [string]$Lease.Kind -or
-                 [string]$claim.leaseId -ne [string]$Lease.LeaseId -or
-                 -not (Test-VerifierCanonicalWindowsPathValue ([string]$claim.path) `
-                     ([string]$Lease.Path)) -or
-                 [int]$claim.port -ne [int]$Lease.Port -or
-                [string]$claim.mutexName -ne [string]$Lease.ClaimName -or
-                [int]$claim.ownerPid -ne [int]$Lease.ClaimOwnerPid -or
+        foreach ($claimIdentityProperty in @('protocol', 'runId',
+                'repositoryIdentity', 'worktreeRoot', 'kind', 'leaseId',
+                'path', 'mutexName')) {
+            if ($null -eq $claim.PSObject.Properties[$claimIdentityProperty] -or
+                    -not (Test-VerifierStrictStringValue $claim.PSObject.Properties[$claimIdentityProperty].Value)) {
+                Throw-VerifierInfrastructure "Port claim '$($Lease.Path)' omitted or malformed its identity '$claimIdentityProperty'."
+            }
+        }
+        foreach ($claimNumericProperty in @(
+                [pscustomobject]@{ Name = 'port'; Minimum = 1L; Maximum = 65535L }
+                [pscustomobject]@{ Name = 'ownerPid'; Minimum = 1L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'ownerStartTicks'; Minimum = 1L; Maximum = [long]::MaxValue }
+            )) {
+            $claimProperty = $claim.PSObject.Properties[$claimNumericProperty.Name]
+            if ($null -eq $claimProperty -or
+                    -not (Test-VerifierStrictIntegralValue $claimProperty.Value `
+                        $claimNumericProperty.Minimum $claimNumericProperty.Maximum)) {
+                Throw-VerifierInfrastructure "Port claim '$($Lease.Path)' omitted or malformed its integral '$($claimNumericProperty.Name)'."
+            }
+        }
+        if ($claim.protocol -ne 'troubleshootjs-verifier-port-claim-v1' -or
+                $claim.runId -ne $Context.RunId -or
+                $claim.repositoryIdentity -ne $Context.RepositoryIdentity -or
+                -not (Test-VerifierCanonicalWindowsPathValue $claim.worktreeRoot `
+                    $Context.WorktreeRoot) -or
+                $claim.kind -ne $Lease.Kind -or
+                $claim.leaseId -ne $Lease.LeaseId -or
+                -not (Test-VerifierCanonicalWindowsPathValue $claim.path `
+                    $Lease.Path) -or
+                [long]$claim.port -ne [long]$Lease.Port -or
+                $claim.mutexName -ne $Lease.ClaimName -or
+                [long]$claim.ownerPid -ne [long]$Lease.ClaimOwnerPid -or
                 [long]$claim.ownerStartTicks -ne [long]$Lease.ClaimOwnerStartTicks) {
             Throw-VerifierInfrastructure "Port claim '$($Lease.Path)' is owned by another run or claim identity."
         }
@@ -2274,8 +4720,21 @@ function Release-VerifierPortLease($Context, $Lease) {
             }
         }
         if (-not $durableOsRelease) {
-            $inspection = Get-VerifierLoopbackListenerRecords ([int]$Lease.Port)
-            Set-VerifierLeaseListenerInspection $Lease $inspection
+            $releasePreviewOwner = $null
+            if ($null -ne $Context -and $Context.PSObject.Properties['Server'] -and
+                    $null -ne $Context.Server -and
+                    $Context.Server.PSObject.Properties['Lease'] -and
+                    [object]::ReferenceEquals($Context.Server.Lease, $Lease) -and
+                    (Test-VerifierRunOwnedPreviewHttpSysAuthorization $Context `
+                        $Context.Server ([int]$Lease.Port))) {
+                $releasePreviewOwner = $Context.Server
+            }
+            $inspection = if ($null -ne $releasePreviewOwner) {
+                Get-VerifierLoopbackListenerRecords ([int]$Lease.Port) $Context $releasePreviewOwner
+            } else {
+                Get-VerifierLoopbackListenerRecords ([int]$Lease.Port)
+            }
+            Set-VerifierLeaseListenerInspection $Lease $inspection $Context $releasePreviewOwner
             if (-not $inspection.Success -or -not $inspection.Known) {
                 Throw-VerifierInfrastructure "Could not positively prove that leased port $($Lease.Port) is no longer listening."
             }
@@ -2290,7 +4749,8 @@ function Release-VerifierPortLease($Context, $Lease) {
         }
 
         if ($releaseState -eq 'active' -or $releaseState -eq 'releasing') {
-            if ($null -eq $Lease.ClaimMutex -and -not [bool]$Lease.MutexReleased) {
+            if (($null -eq $claimMutexProperty -or
+                    $null -eq $claimMutexProperty.Value) -and -not $Lease.MutexReleased) {
                 Throw-VerifierInfrastructure "Port $($Lease.Port) has no live claim handle; refusing unsafe release."
             }
             # The releasing tombstone is durable before any OS ownership change.
@@ -2304,7 +4764,7 @@ function Release-VerifierPortLease($Context, $Lease) {
             Write-VerifierManifest $Context
             $Context.ManifestWritePhase = ''
 
-            if (-not [bool]$Lease.MutexReleased) {
+            if (-not $Lease.MutexReleased) {
                 try { $Lease.ClaimMutex.ReleaseMutex() } catch {
                     Throw-VerifierInfrastructure "Could not release the owned port $($Lease.Port) claim: $(Get-VerifierErrorMessage $_)"
                 }
@@ -2336,16 +4796,22 @@ function Release-VerifierPortLease($Context, $Lease) {
                 try { $Lease.ClaimMutex.Dispose() } catch {
                     Throw-VerifierInfrastructure "Could not dispose the owned port $($Lease.Port) claim handle: $(Get-VerifierErrorMessage $_)"
                 }
+                $disposedClaimMutex = $Lease.ClaimMutex
                 $Lease.ClaimMutex = $null
+                if ($script:VerifierHeldPortMutexes.ContainsKey([string]$Lease.ClaimName) -and
+                        [object]::ReferenceEquals($script:VerifierHeldPortMutexes[[string]$Lease.ClaimName],
+                            $disposedClaimMutex)) {
+                    [void]$script:VerifierHeldPortMutexes.Remove([string]$Lease.ClaimName)
+                }
             }
-            $releaseState = [string]$Lease.ReleaseState
+            $releaseState = $Lease.ReleaseState
         } elseif ($releaseState -notin @('os-released', 'claim-delete-failed', 'manifested')) {
             if ($releaseState -ne 'complete') {
                 Throw-VerifierInfrastructure "Port $($Lease.Port) has an unrecognized durable release state '$releaseState'."
             }
         }
 
-        if ($null -ne $Lease.ClaimMutex -and [bool]$Lease.MutexReleased) {
+        if ($null -ne $Lease.ClaimMutex -and $Lease.MutexReleased) {
             if ($Context.TestHooks.PSObject.Properties['FailNextLeaseMutexDispose'] -and
                     [bool]$Context.TestHooks.FailNextLeaseMutexDispose) {
                 $Context.TestHooks.FailNextLeaseMutexDispose = $false
@@ -2354,7 +4820,13 @@ function Release-VerifierPortLease($Context, $Lease) {
             try { $Lease.ClaimMutex.Dispose() } catch {
                 Throw-VerifierInfrastructure "Could not dispose the owned port $($Lease.Port) claim handle: $(Get-VerifierErrorMessage $_)"
             }
+            $disposedClaimMutex = $Lease.ClaimMutex
             $Lease.ClaimMutex = $null
+            if ($script:VerifierHeldPortMutexes.ContainsKey([string]$Lease.ClaimName) -and
+                    [object]::ReferenceEquals($script:VerifierHeldPortMutexes[[string]$Lease.ClaimName],
+                        $disposedClaimMutex)) {
+                [void]$script:VerifierHeldPortMutexes.Remove([string]$Lease.ClaimName)
+            }
         }
 
         # Persist a durable pre-delete tombstone.  `complete` means that the
@@ -2362,9 +4834,10 @@ function Release-VerifierPortLease($Context, $Lease) {
         # passed, while ClaimState=delete-pending means the exact claim still
         # has to be removed.  A crash in the following window is therefore
         # recoverable without contradictory ownership state.
-        $oldStatus = [string]$Lease.Status
-        $oldClaimState = [string]$Lease.ClaimState
-        $oldReleaseState = [string]$Lease.ReleaseState
+        $oldStatus = $Lease.Status
+        $oldClaimState = $Lease.ClaimState
+        $oldReleaseState = $Lease.ReleaseState
+        $oldReleaseJournalState = $Lease.ReleaseJournalState
         $oldReleasedUtc = [string]$Lease.ReleasedUtc
         $Lease.Status = 'released'
         $Lease.ClaimState = 'delete-pending'
@@ -2382,6 +4855,7 @@ function Release-VerifierPortLease($Context, $Lease) {
             $Lease.Status = $oldStatus
             $Lease.ClaimState = $oldClaimState
             $Lease.ReleaseState = $oldReleaseState
+            $Lease.ReleaseJournalState = $oldReleaseJournalState
             $Lease.ReleasedUtc = $oldReleasedUtc
             throw
         } finally {
@@ -2418,6 +4892,19 @@ function Release-VerifierPortLease($Context, $Lease) {
         try {
             $Context.ManifestWritePhase = 'lease-post-delete-journal'
             Write-VerifierManifest $Context
+        } catch {
+            # The pre-delete journal is the last durable state if this write
+            # fails.  Keep the in-memory lease at that exact state; the claim
+            # is physically gone, but a retry can finish the tombstone without
+            # claiming that the post-delete journal was durably committed.
+            $Lease.Status = 'released'
+            $Lease.ClaimState = 'delete-pending'
+            $Lease.ReleaseState = 'complete'
+            $Lease.MutexReleased = $true
+            if ($Lease.PSObject.Properties['ReleaseJournalState']) {
+                $Lease.ReleaseJournalState = 'pre-delete'
+            }
+            throw
         } finally {
             $Context.ManifestWritePhase = ''
         }
@@ -2447,7 +4934,14 @@ function Release-VerifierPortLease($Context, $Lease) {
             $Context.ManifestWritePhase = 'lease-post-delete'
             Write-VerifierManifest $Context
         } catch {
+            # The post-delete journal is the last durable truth.  If the
+            # terminal write fails, retain exactly that state in memory so a
+            # retry cannot report a terminal lease that was never durably
+            # committed.
+            $Lease.Status = 'released'
             $Lease.ClaimState = 'delete-pending'
+            $Lease.ReleaseState = 'complete'
+            $Lease.MutexReleased = $true
             if ($Lease.PSObject.Properties['ReleaseJournalState']) {
                 $Lease.ReleaseJournalState = 'post-delete-pending'
             }
@@ -2468,6 +4962,7 @@ function Release-VerifierPortLease($Context, $Lease) {
 }
 
 function New-VerifierBrowserLease($Context, [string]$RouteName, [string]$BrowserPath = '') {
+    [void](Assert-VerifierContextPreflight $Context 'browser lease context' -RequireDurable)
     if ([String]::IsNullOrWhiteSpace($BrowserPath)) {
         $BrowserPath = Resolve-VerifierBrowserPath ''
     } else {
@@ -2509,9 +5004,24 @@ function New-VerifierBrowserLease($Context, [string]$RouteName, [string]$Browser
     return $browserLeaseSessionRecord
 }
 
-function Select-VerifierRelevantProcessRecords($Snapshot, [string]$BrowserPath = '',
-        [string]$Profile = '', [string]$RunId = '', [string]$RepositoryIdentity = '',
-        [int]$Port = 0, [string]$Script = '', [string]$Nonce = '') {
+function Select-VerifierRelevantProcessRecords($Snapshot, $BrowserPath = '',
+        $Profile = '', $RunId = '', $RepositoryIdentity = '',
+        $Port = 0, $Script = '', $Nonce = '') {
+    foreach ($inputString in @(
+            [pscustomobject]@{ Name = 'BrowserPath'; Value = $BrowserPath }
+            [pscustomobject]@{ Name = 'Profile'; Value = $Profile }
+            [pscustomobject]@{ Name = 'RunId'; Value = $RunId }
+            [pscustomobject]@{ Name = 'RepositoryIdentity'; Value = $RepositoryIdentity }
+            [pscustomobject]@{ Name = 'Script'; Value = $Script }
+            [pscustomobject]@{ Name = 'Nonce'; Value = $Nonce }
+        )) {
+        if (-not (Test-VerifierStrictStringValue $inputString.Value)) {
+            Throw-VerifierInfrastructure "Process ownership query carried a malformed $($inputString.Name) before OS records were inspected."
+        }
+    }
+    if (-not (Test-VerifierStrictIntegralValue $Port 0 65535)) {
+        Throw-VerifierInfrastructure 'Process ownership query carried a malformed port before OS records were inspected.'
+    }
     $executableName = ''
     if (-not [String]::IsNullOrWhiteSpace($BrowserPath)) {
         try { $executableName = [IO.Path]::GetFileName($BrowserPath) } catch {
@@ -2521,16 +5031,37 @@ function Select-VerifierRelevantProcessRecords($Snapshot, [string]$BrowserPath =
     $selected = New-Object Collections.ArrayList
     $seen = @{}
     foreach ($item in @($Snapshot)) {
-        # PID 0/System Idle and records with no usable PID are irrelevant until
-        # a readable exact marker identifies them as a browser candidate. This
-        # keeps transient unrelated WMI records from invalidating a healthy run.
-        if ($null -eq $item -or -not $item.PSObject.Properties['ProcessId']) { continue }
-        $processId = 0
-        try { $processId = [int]$item.ProcessId } catch { continue }
-        if ($processId -le 0) { continue }
-        $name = if ($item.PSObject.Properties['Name']) { [string]$item.Name } else { '' }
-        $command = if ($item.PSObject.Properties['CommandLine'] -and
-                $null -ne $item.CommandLine) { [string]$item.CommandLine } else { '' }
+        # PID 0/System Idle and records with no usable PID are irrelevant only
+        # after their raw fields have been checked.  Never let PowerShell turn
+        # malformed WMI values into a selectable identity.
+        if ($null -eq $item) { continue }
+        $processIdProperty = $item.PSObject.Properties['ProcessId']
+        $nameProperty = $item.PSObject.Properties['Name']
+        $commandProperty = $item.PSObject.Properties['CommandLine']
+        if ($null -ne $nameProperty -and $null -ne $nameProperty.Value -and
+                -not (Test-VerifierStrictStringValue $nameProperty.Value)) {
+            Throw-VerifierInfrastructure 'A process ownership record carried a malformed Name field.'
+        }
+        if ($null -ne $commandProperty -and $null -ne $commandProperty.Value -and
+                -not (Test-VerifierStrictStringValue $commandProperty.Value)) {
+            Throw-VerifierInfrastructure 'A process ownership record carried a malformed CommandLine field.'
+        }
+        $name = if ($null -ne $nameProperty -and $null -ne $nameProperty.Value) {
+            $nameProperty.Value
+        } else { '' }
+        $command = if ($null -ne $commandProperty -and $null -ne $commandProperty.Value) {
+            $commandProperty.Value
+        } else { '' }
+        if ($null -eq $processIdProperty) {
+            # A marker-bearing record without a PID cannot be safely owned;
+            # an unrelated record remains ignorable.
+            $processId = 0
+        } elseif (-not (Test-VerifierStrictIntegralValue $processIdProperty.Value `
+                0 ([int]::MaxValue))) {
+            Throw-VerifierInfrastructure 'A process ownership record carried a malformed ProcessId field.'
+        } else {
+            $processId = [int]$processIdProperty.Value
+        }
         $nameMatch = (-not [String]::IsNullOrWhiteSpace($executableName) -and
             $name -ieq $executableName)
         $profileMatch = (-not [String]::IsNullOrWhiteSpace($Profile) -and
@@ -2550,21 +5081,25 @@ function Select-VerifierRelevantProcessRecords($Snapshot, [string]$BrowserPath =
         $identityMatch = ($profileMatch -and $runMatch) -or
             ($runMatch -and $portMatch) -or ($scriptMatch -and $portMatch) -or
             ($scriptMatch -and $nonceMatch)
+        if ($null -ne $nameProperty -and $null -eq $nameProperty.Value -and
+                ($profileMatch -or $runMatch -or $scriptMatch -or $nonceMatch)) {
+            Throw-VerifierInfrastructure 'A relevant browser candidate carried an explicit null Name field.'
+        }
         if (-not ($nameMatch -or $profileMatch -or $identityMatch)) { continue }
-        if (-not $item.PSObject.Properties['CommandLine'] -or
+        if ($processId -le 0) {
+            Throw-VerifierInfrastructure 'A relevant browser candidate omitted a positive ProcessId.'
+        }
+        if (-not $commandProperty -or
                 [String]::IsNullOrWhiteSpace($command)) {
             Throw-VerifierInfrastructure "A relevant browser candidate PID $processId had an inaccessible command line."
         }
-        if (-not $item.PSObject.Properties['ParentProcessId'] -or
-                [String]::IsNullOrWhiteSpace([string]$item.ParentProcessId)) {
+        $parentProperty = $item.PSObject.Properties['ParentProcessId']
+        if ($null -eq $parentProperty -or $null -eq $parentProperty.Value) {
             Throw-VerifierInfrastructure "A relevant browser candidate PID $processId had an inaccessible parent PID."
         }
-        $parentProcessId = 0
-        try { $parentProcessId = [int]$item.ParentProcessId } catch {
+        if (-not (Test-VerifierStrictIntegralValue $parentProperty.Value `
+                0 ([int]::MaxValue))) {
             Throw-VerifierInfrastructure "A relevant browser candidate PID $processId had an invalid parent PID."
-        }
-        if ($parentProcessId -lt 0) {
-            Throw-VerifierInfrastructure "A relevant browser candidate PID $processId had an invalid parent identity."
         }
         if ($seen.ContainsKey($processId)) {
             Throw-VerifierInfrastructure "The relevant browser snapshot contained duplicate PID $processId."
@@ -2584,14 +5119,15 @@ function Assert-VerifierProcessSnapshotComplete($Snapshot, [string]$Purpose) {
                 -not $item.PSObject.Properties['CommandLine']) {
             Throw-VerifierInfrastructure "The $Purpose process snapshot omitted required identity data."
         }
-        $processId = 0
-        try { $processId = [int]$item.ProcessId } catch {
+        if (-not (Test-VerifierStrictIntegralValue $item.ProcessId `
+                1 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $item.ParentProcessId `
+                    0 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictStringValue $item.CommandLine) -or
+                [String]::IsNullOrWhiteSpace($item.CommandLine)) {
             Throw-VerifierInfrastructure "The $Purpose process snapshot contained an invalid PID record."
         }
-        if ($processId -le 0 -or [int]$item.ParentProcessId -lt 0 -or
-                [String]::IsNullOrWhiteSpace([string]$item.CommandLine)) {
-            Throw-VerifierInfrastructure "The $Purpose process snapshot contained incomplete identity data for PID $processId."
-        }
+        $processId = [int]$item.ProcessId
         if ($seen.ContainsKey($processId)) {
             Throw-VerifierInfrastructure "The $Purpose process snapshot contained duplicate PID $processId."
         }
@@ -2612,9 +5148,12 @@ function Assert-VerifierProcessSnapshotComplete($Snapshot, [string]$Purpose) {
 }
 
 function Get-VerifierBrowserProcessSnapshot([string]$BrowserPath = '', [string]$Profile = '',
-        [string]$RunId = '', [string]$RepositoryIdentity = '', [int]$Port = 0,
+        [string]$RunId = '', [string]$RepositoryIdentity = '', $Port = 0,
         [string]$Script = '', [string]$Nonce = '') {
     try {
+        if (-not (Test-VerifierStrictIntegralValue $Port 0 65535)) {
+            Throw-VerifierInfrastructure 'Relevant browser ownership query requires an exact integral port before OS inspection.'
+        }
         $snapshot = @(Get-CimInstance Win32_Process -ErrorAction Stop)
         $relevant = @(Select-VerifierRelevantProcessRecords $snapshot $BrowserPath $Profile `
             $RunId $RepositoryIdentity $Port $Script $Nonce)
@@ -2628,9 +5167,12 @@ function Get-VerifierBrowserProcessSnapshot([string]$BrowserPath = '', [string]$
 }
 
 function Get-VerifierBrowserOwnershipSnapshot([string]$BrowserPath = '', [string]$Profile = '',
-        [string]$RunId = '', [string]$RepositoryIdentity = '', [int]$Port = 0,
+        [string]$RunId = '', [string]$RepositoryIdentity = '', $Port = 0,
         [string]$Script = '', [string]$Nonce = '') {
     try {
+        if (-not (Test-VerifierStrictIntegralValue $Port 0 65535)) {
+            Throw-VerifierInfrastructure 'Complete browser ownership query requires an exact integral port before OS inspection.'
+        }
         # The relevant snapshot remains the admission/identity check for
         # unrelated OS records. Once an owned root is being cleaned, however,
         # PPID traversal must use the complete WMI candidate set so a helper
@@ -2647,14 +5189,26 @@ function Get-VerifierBrowserOwnershipSnapshot([string]$BrowserPath = '', [string
     }
 }
 
-function Get-VerifierProcessById([int]$ProcessId) {
-    return Get-Process -Id $ProcessId -ErrorAction SilentlyContinue
+function Get-VerifierProcessById($ProcessId) {
+    if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Process lookup requires an exact positive PID.'
+    }
+    $processes = @(Get-Process -Id ([int]$ProcessId) -ErrorAction SilentlyContinue)
+    if ($processes.Count -gt 1) {
+        Throw-VerifierInfrastructure "Process lookup for PID $ProcessId was ambiguous."
+    }
+    if ($processes.Count -eq 0 -or $null -eq $processes[0]) { return $null }
+    if ($processes[0].GetType() -ne [Diagnostics.Process]) {
+        Throw-VerifierInfrastructure "Process lookup for PID $ProcessId returned a malformed process object."
+    }
+    return $processes[0]
 }
 
-function Get-VerifierCurrentProcessRecordById([int]$ProcessId) {
-    if ($ProcessId -le 0) {
+function Get-VerifierCurrentProcessRecordById($ProcessId) {
+    if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue))) {
         Throw-VerifierInfrastructure 'Current process inspection requires a positive PID.'
     }
+    $ProcessId = [int]$ProcessId
     $processes = @()
     try {
         $processes = @(Get-Process -Id $ProcessId -ErrorAction Stop)
@@ -2684,6 +5238,9 @@ function Get-VerifierCurrentProcessRecordById([int]$ProcessId) {
         Throw-VerifierInfrastructure "Current process PID $ProcessId was missing or ambiguous."
     }
     $process = $processes[0]
+    if ($process.GetType() -ne [Diagnostics.Process]) {
+        Throw-VerifierInfrastructure "Current process PID $ProcessId returned a malformed process object."
+    }
     try { $process.Refresh() } catch {
         Throw-VerifierInfrastructure "Could not refresh current process PID ${ProcessId}: $(Get-VerifierErrorMessage $_)"
     }
@@ -2723,31 +5280,44 @@ function Get-VerifierCurrentProcessRecordById([int]$ProcessId) {
             Throw-VerifierInfrastructure "Current process PID $ProcessId omitted $property."
         }
     }
-    $parentId = 0
-    try { $parentId = [int]$currentWmiRecord.ParentProcessId } catch {
-        Throw-VerifierInfrastructure "Current process PID $ProcessId had an invalid parent identity."
-    }
-    if ([int]$currentWmiRecord.ProcessId -ne $ProcessId -or $parentId -le 0 -or
-            [String]::IsNullOrWhiteSpace([string]$currentWmiRecord.CommandLine)) {
+    if (-not (Test-VerifierStrictIntegralValue $currentWmiRecord.ProcessId `
+            1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $currentWmiRecord.ParentProcessId `
+                1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictStringValue $currentWmiRecord.CommandLine) -or
+            [String]::IsNullOrWhiteSpace($currentWmiRecord.CommandLine)) {
         Throw-VerifierInfrastructure "Current process PID $ProcessId had incomplete command, parent, or PID identity."
+    }
+    if ([int]$currentWmiRecord.ProcessId -ne $ProcessId) {
+        Throw-VerifierInfrastructure "Current process PID $ProcessId had a mismatched WMI PID identity."
+    }
+    $parentId = [int]$currentWmiRecord.ParentProcessId
+    foreach ($optionalProperty in @('Name', 'ExecutablePath')) {
+        $optional = $currentWmiRecord.PSObject.Properties[$optionalProperty]
+        if ($null -ne $optional -and $null -ne $optional.Value -and
+                -not (Test-VerifierStrictStringValue $optional.Value)) {
+            Throw-VerifierInfrastructure "Current process PID $ProcessId had a malformed $optionalProperty field."
+        }
     }
     return [pscustomobject]@{
         Process = $process
         ProcessId = [int]$currentWmiRecord.ProcessId
         ParentProcessId = $parentId
         ProcessStartTicks = [long]$startTicks
-        CommandLine = [string]$currentWmiRecord.CommandLine
-        Name = if ($currentWmiRecord.PSObject.Properties['Name']) { [string]$currentWmiRecord.Name } else { '' }
+        CommandLine = $currentWmiRecord.CommandLine
+        Name = if ($currentWmiRecord.PSObject.Properties['Name'] -and
+            $null -ne $currentWmiRecord.Name) { $currentWmiRecord.Name } else { '' }
         ExecutablePath = if ($currentWmiRecord.PSObject.Properties['ExecutablePath']) {
-            [string]$currentWmiRecord.ExecutablePath
+            if ($null -ne $currentWmiRecord.ExecutablePath) { $currentWmiRecord.ExecutablePath } else { '' }
         } else { '' }
     }
 }
 
-function Get-VerifierCurrentParentStartTicks([int]$ParentProcessId) {
-    if ($ParentProcessId -le 0) {
+function Get-VerifierCurrentParentStartTicks($ParentProcessId) {
+    if (-not (Test-VerifierStrictIntegralValue $ParentProcessId 1 ([int]::MaxValue))) {
         Throw-VerifierInfrastructure 'Parent-process start proof requires a positive parent PID.'
     }
+    $ParentProcessId = [int]$ParentProcessId
     $parentProcess = Get-VerifierProcessById $ParentProcessId
     if ($null -eq $parentProcess) {
         Throw-VerifierInfrastructure "Parent process PID $ParentProcessId disappeared during ownership proof."
@@ -2768,6 +5338,8 @@ function Get-VerifierCurrentParentStartTicks([int]$ParentProcessId) {
     }
     if ($parentRecords.Count -ne 1 -or
             -not $parentRecords[0].PSObject.Properties['ProcessId'] -or
+            -not (Test-VerifierStrictIntegralValue $parentRecords[0].ProcessId `
+                1 ([int]::MaxValue)) -or
             [int]$parentRecords[0].ProcessId -ne $ParentProcessId) {
         Throw-VerifierInfrastructure "Parent process PID $ParentProcessId was missing or ambiguous during ownership proof."
     }
@@ -2779,8 +5351,11 @@ function Get-VerifierCurrentParentStartTicks([int]$ParentProcessId) {
 }
 
 function Test-VerifierCurrentProcessCarriesOwnership($Current,
-        [string]$ExpectedCommandLine = '', [string]$Script = '', [int]$Port = 0,
+        [string]$ExpectedCommandLine = '', [string]$Script = '', $Port = 0,
         [string]$RunId = '', [string]$Nonce = '', [string]$Profile = '') {
+    if (-not (Test-VerifierStrictIntegralValue $Port 0 65535)) {
+        return $false
+    }
     if ($null -eq $Current -or
             [String]::IsNullOrWhiteSpace([string]$Current.CommandLine)) {
         return $false
@@ -2816,17 +5391,59 @@ function Test-VerifierCurrentProcessCarriesOwnership($Current,
 }
 
 function Confirm-VerifierRecordedProcessAbsent($Recorded, [string]$Role = 'owned process',
-        [string]$ExpectedCommandLine = '', [int]$Port = 0, [string]$Script = '',
+        [string]$ExpectedCommandLine = '', $Port = 0, [string]$Script = '',
         [string]$RunId = '', [string]$Nonce = '', [string]$Profile = '') {
-    if ($null -eq $Recorded -or -not $Recorded.PSObject.Properties['ProcessId'] -or
-            [int]$Recorded.ProcessId -le 0) {
+    # Null is the explicit no-record absence state.  Any non-null record must
+    # carry exact raw PID and start-identity scalars before it can enter the
+    # absence/process lookup path; PowerShell casts here would turn malformed
+    # cleanup evidence into a forged zero/absence.
+    if ($null -eq $Recorded) {
         return [pscustomobject]@{ QueryProven = $true; Absent = $true; Replaced = $false; Current = $null }
     }
-    if (-not $Recorded.PSObject.Properties['ProcessStartTicks'] -or
-            [long]$Recorded.ProcessStartTicks -le 0) {
+    if (-not (Test-VerifierStrictIntegralValue $Port 0 65535)) {
+        Throw-VerifierInfrastructure "$Role carried a malformed exact port before process absence inspection."
+    }
+    $processIdProperty = $Recorded.PSObject.Properties['ProcessId']
+    $processStartProperty = $Recorded.PSObject.Properties['ProcessStartTicks']
+    if ($null -eq $processIdProperty -or $null -eq $processStartProperty -or
+            -not (Test-VerifierStrictIntegralValue $processIdProperty.Value 0 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $processStartProperty.Value 0 ([long]::MaxValue))) {
+        Throw-VerifierInfrastructure "$Role omitted or malformed its exact raw PID/start identity."
+    }
+    $recordedProcessId = [long]$processIdProperty.Value
+    $recordedProcessStartTicks = [long]$processStartProperty.Value
+    foreach ($optionalProperty in @(
+            [pscustomobject]@{ Name = 'ParentProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+            [pscustomobject]@{ Name = 'ParentProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+        )) {
+        $property = $Recorded.PSObject.Properties[$optionalProperty.Name]
+        if ($null -ne $property -and
+                -not (Test-VerifierStrictIntegralValue $property.Value `
+                    $optionalProperty.Minimum $optionalProperty.Maximum)) {
+            Throw-VerifierInfrastructure "$Role carried a malformed optional process identity '$($optionalProperty.Name)'."
+        }
+    }
+    $commandLineProperty = $Recorded.PSObject.Properties['CommandLine']
+    if ($null -ne $commandLineProperty -and
+            -not (Test-VerifierStrictStringValue $commandLineProperty.Value)) {
+        Throw-VerifierInfrastructure "$Role carried a malformed optional process command line."
+    }
+    if ($recordedProcessId -eq 0) {
+        if ($recordedProcessStartTicks -ne 0 -or
+                ($commandLineProperty -and
+                 -not [String]::IsNullOrWhiteSpace([string]$commandLineProperty.Value)) -or
+                ($Recorded.PSObject.Properties['ParentProcessId'] -and
+                 [long]$Recorded.ParentProcessId -ne 0) -or
+                ($Recorded.PSObject.Properties['ParentProcessStartTicks'] -and
+                 [long]$Recorded.ParentProcessStartTicks -ne 0)) {
+            Throw-VerifierInfrastructure "$Role recorded explicit absence with mismatched process identity fields."
+        }
+        return [pscustomobject]@{ QueryProven = $true; Absent = $true; Replaced = $false; Current = $null }
+    }
+    if ($recordedProcessStartTicks -le 0) {
         Throw-VerifierInfrastructure "$Role recorded a PID without a positive start identity."
     }
-    $current = Get-VerifierCurrentProcessRecordById ([int]$Recorded.ProcessId)
+    $current = Get-VerifierCurrentProcessRecordById ([int]$recordedProcessId)
     if ($null -eq $current) {
         return [pscustomobject]@{ QueryProven = $true; Absent = $true; Replaced = $false; Current = $null }
     }
@@ -2835,7 +5452,7 @@ function Confirm-VerifierRecordedProcessAbsent($Recorded, [string]$Role = 'owned
         $current | Add-Member -NotePropertyName ParentProcessStartTicks `
             -NotePropertyValue (Get-VerifierCurrentParentStartTicks ([int]$current.ParentProcessId)) -Force
     }
-    if ([long]$current.ProcessStartTicks -ne [long]$Recorded.ProcessStartTicks) {
+    if ([long]$current.ProcessStartTicks -ne $recordedProcessStartTicks) {
         if (Test-VerifierCurrentProcessCarriesOwnership $current $ExpectedCommandLine $Script `
                 $Port $RunId $Nonce $Profile) {
             Throw-VerifierInfrastructure "$Role PID $($Recorded.ProcessId) was reused by a process carrying the old ownership identity."
@@ -2860,38 +5477,58 @@ function Confirm-VerifierRecordedProcessAbsent($Recorded, [string]$Role = 'owned
     Throw-VerifierInfrastructure "$Role PID $($Recorded.ProcessId) was present but its ownership markers were incomplete."
 }
 
-function Confirm-VerifierReleasedListener([int]$Port, [int]$ExpectedProcessId = 0,
-        [long]$ExpectedStartTicks = 0, [string]$ExpectedCommandLine = '',
-        [int]$ExpectedParentProcessId = 0, [string]$Script = '',
-        [string]$RunId = '', [string]$Nonce = '', [string]$Profile = '',
-        [long]$ExpectedParentProcessStartTicks = 0) {
-    if ($Port -le 0 -or $Port -gt 65535) {
+function Confirm-VerifierReleasedListener($Port, $ExpectedProcessId = 0,
+        $ExpectedStartTicks = 0, $ExpectedCommandLine = '',
+        $ExpectedParentProcessId = 0, $Script = '', $RunId = '',
+        $Nonce = '', $Profile = '', $ExpectedParentProcessStartTicks = 0) {
+    if (-not (Test-VerifierStrictIntegralValue $Port 1 65535) -or
+            -not (Test-VerifierStrictIntegralValue $ExpectedProcessId 0 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ExpectedStartTicks 0) -or
+            -not (Test-VerifierStrictIntegralValue $ExpectedParentProcessId 0 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ExpectedParentProcessStartTicks 0) -or
+            -not (Test-VerifierStrictStringValue $ExpectedCommandLine) -or
+            -not (Test-VerifierStrictStringValue $Script) -or
+            -not (Test-VerifierStrictStringValue $RunId) -or
+            -not (Test-VerifierStrictStringValue $Nonce) -or
+            -not (Test-VerifierStrictStringValue $Profile)) {
         Throw-VerifierInfrastructure 'Released listener proof requires a valid port.'
     }
-    if ($ExpectedProcessId -gt 0 -and $ExpectedStartTicks -le 0) {
+    if (($ExpectedProcessId -gt 0 -and $ExpectedStartTicks -le 0) -or
+            ($ExpectedProcessId -eq 0 -and $ExpectedStartTicks -ne 0)) {
         Throw-VerifierInfrastructure "Released listener proof for port $Port omitted the expected process start identity."
     }
     $inspection = Get-VerifierLoopbackListenerRecords $Port
-    if ($null -eq $inspection -or -not [bool]$inspection.Success -or
-            -not [bool]$inspection.Known) {
+    # Release proof is a strict consumer too. In particular, a remaining
+    # kernel/PID4 record cannot be interpreted as a process or killed; without
+    # the preview context it is simply an infrastructure failure.
+    if (-not (Test-VerifierListenerInspectionSchema $inspection) -or
+            -not $inspection.Success -or -not $inspection.Known) {
         Throw-VerifierInfrastructure "Loopback listener inspection for released port $Port was not positively proven."
     }
     $replacementObserved = $false
     foreach ($listener in @($inspection.Listeners)) {
-        if ($null -eq $listener -or [int]$listener.Port -ne $Port -or
-                [int]$listener.ProcessId -le 0 -or
-                [long]$listener.ProcessStartTicks -le 0) {
+        if ($null -eq $listener) {
+            Throw-VerifierInfrastructure "Loopback listener inspection for port $Port returned a null listener record."
+        }
+        if (-not (Test-VerifierListenerRecordSchema $listener) -or
+                $listener.ListenerOwnerKind -ne $script:VerifierUserProcessOwnerKind) {
+            Throw-VerifierInfrastructure "Loopback listener inspection for port $Port returned a malformed or unauthorized listener owner record."
+        }
+        if ([long]$listener.Port -ne [long]$Port -or
+                -not (Test-VerifierStrictIntegralValue $listener.ProcessId 1 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $listener.ProcessStartTicks 1)) {
             Throw-VerifierInfrastructure "Loopback listener inspection for port $Port returned an incomplete listener identity."
         }
         $current = Get-VerifierCurrentProcessRecordById ([int]$listener.ProcessId)
         if ($null -eq $current -or
+                -not (Test-VerifierStrictIntegralValue $current.ProcessStartTicks 1) -or
                 [long]$current.ProcessStartTicks -ne [long]$listener.ProcessStartTicks) {
             Throw-VerifierInfrastructure "Loopback listener process identity for port $Port changed during independent proof."
         }
         if ($ExpectedProcessId -le 0) {
             Throw-VerifierInfrastructure "Port $Port has a listener but the completed ledger recorded no bound owner identity."
         }
-        if ([int]$current.ProcessId -eq $ExpectedProcessId -and
+        if ([int]$current.ProcessId -eq [int]$ExpectedProcessId -and
                 [long]$current.ProcessStartTicks -eq $ExpectedStartTicks) {
             if ($ExpectedParentProcessId -gt 0 -and
                     [int]$current.ParentProcessId -ne $ExpectedParentProcessId) {
@@ -2909,7 +5546,7 @@ function Confirm-VerifierReleasedListener([int]$Port, [int]$ExpectedProcessId = 
             }
             Throw-VerifierInfrastructure "The recorded owner for released port $Port is still listening."
         }
-        if ([int]$current.ProcessId -eq $ExpectedProcessId) {
+        if ([int]$current.ProcessId -eq [int]$ExpectedProcessId) {
             $replacementObserved = $true
         }
         if (Test-VerifierCurrentProcessCarriesOwnership $current $ExpectedCommandLine $Script `
@@ -2920,7 +5557,7 @@ function Confirm-VerifierReleasedListener([int]$Port, [int]$ExpectedProcessId = 
     return [pscustomobject]@{
         QueryProven = $true
         OldOwnerAbsent = $true
-        PortReused = ([bool]$inspection.HasListeners)
+        PortReused = $inspection.HasListeners
         PidReused = $replacementObserved
         Inspection = $inspection
     }
@@ -2954,16 +5591,22 @@ function Assert-VerifierProfileSnapshotQuiescent($Snapshot, [string]$Profile) {
 
 function Assert-VerifierBrowserProfileIsQuiescent([string]$Profile,
         [string]$BrowserPath = '', [string]$RunId = '',
-        [string]$RepositoryIdentity = '', [int]$Port = 0) {
+        [string]$RepositoryIdentity = '', $Port = 0) {
     if ([String]::IsNullOrWhiteSpace($Profile)) {
         Throw-VerifierInfrastructure 'Cannot prove ownership of an empty browser profile path.'
+    }
+    if (-not (Test-VerifierStrictIntegralValue $Port 0 65535)) {
+        Throw-VerifierInfrastructure 'Browser profile ownership query requires an exact integral port before OS inspection.'
     }
     $snapshot = @(Get-VerifierBrowserProcessSnapshot $BrowserPath $Profile $RunId `
         $RepositoryIdentity $Port)
     Assert-VerifierProfileSnapshotQuiescent $snapshot $Profile
 }
 
-function Test-VerifierPortInUse([int]$Port) {
+function Test-VerifierPortInUse($Port) {
+    if (-not (Test-VerifierStrictIntegralValue $Port 1 65535)) {
+        Throw-VerifierInfrastructure 'Port-in-use inspection requires an exact integral port in the valid TCP range.'
+    }
     $inspection = Get-VerifierLoopbackListenerRecords $Port
     if (-not $inspection.Success -or -not $inspection.Known) {
         Throw-VerifierInfrastructure "Could not positively determine whether loopback port $Port is in use."
@@ -3001,8 +5644,40 @@ function Test-VerifierConfiguredExecutableIdentity($ExpectedBrowserPath,
 }
 
 function Test-VerifierProcessIdentity($ProcessRecord, $Snapshot = $null,
-        [string]$ExpectedBrowserPath = '') {
-    if ($null -eq $ProcessRecord -or [int]$ProcessRecord.ProcessId -le 0) { return $false }
+        $ExpectedBrowserPath = '') {
+    if ($null -eq $ProcessRecord -or
+            -not (Test-VerifierStrictStringValue $ExpectedBrowserPath) -or
+            -not $ProcessRecord.PSObject.Properties['ProcessId'] -or
+            -not $ProcessRecord.PSObject.Properties['ProcessStartTicks'] -or
+            -not (Test-VerifierStrictIntegralValue $ProcessRecord.ProcessId `
+                1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ProcessRecord.ProcessStartTicks 1)) {
+        return $false
+    }
+    foreach ($identityProperty in @('Profile', 'RunId', 'RepositoryIdentity')) {
+        if (-not $ProcessRecord.PSObject.Properties[$identityProperty] -or
+                -not (Test-VerifierStrictStringValue $ProcessRecord.PSObject.Properties[$identityProperty].Value) -or
+                [String]::IsNullOrWhiteSpace($ProcessRecord.PSObject.Properties[$identityProperty].Value)) {
+            return $false
+        }
+    }
+    if (-not $ProcessRecord.PSObject.Properties['CdpPort'] -or
+            -not (Test-VerifierStrictIntegralValue $ProcessRecord.CdpPort 1 65535)) {
+        return $false
+    }
+    foreach ($optionalProperty in @('ProcessParentProcessId',
+            'ProcessParentProcessStartTicks')) {
+        $property = $ProcessRecord.PSObject.Properties[$optionalProperty]
+        if ($null -ne $property -and $null -ne $property.Value -and
+                -not (Test-VerifierStrictIntegralValue $property.Value 0 ([long]::MaxValue))) {
+            return $false
+        }
+    }
+    $browserPathProperty = $ProcessRecord.PSObject.Properties['BrowserPath']
+    if ($null -ne $browserPathProperty -and $null -ne $browserPathProperty.Value -and
+            -not (Test-VerifierStrictStringValue $browserPathProperty.Value)) {
+        return $false
+    }
     $process = Get-VerifierProcessById ([int]$ProcessRecord.ProcessId)
     if ($null -eq $process) { return $false }
     try {
@@ -3015,19 +5690,35 @@ function Test-VerifierProcessIdentity($ProcessRecord, $Snapshot = $null,
             $Snapshot = @(Get-CimInstance Win32_Process -Filter "ProcessId = $($ProcessRecord.ProcessId)" -ErrorAction Stop)
         } catch { return $false }
     }
-    $command = $Snapshot | Where-Object { [int]$_.ProcessId -eq [int]$ProcessRecord.ProcessId } |
-        Select-Object -First 1
+    $commands = @()
+    foreach ($candidate in @($Snapshot)) {
+        if ($null -eq $candidate -or -not $candidate.PSObject.Properties['ProcessId']) {
+            return $false
+        }
+        if (-not (Test-VerifierStrictIntegralValue $candidate.ProcessId `
+                1 ([int]::MaxValue))) { return $false }
+        if ([int]$candidate.ProcessId -eq [int]$ProcessRecord.ProcessId) {
+            $commands += $candidate
+        }
+    }
+    if ($commands.Count -ne 1) { return $false }
+    $command = $commands[0]
     if ($null -eq $command -or
             -not $command.PSObject.Properties['CommandLine'] -or
-            [String]::IsNullOrWhiteSpace([string]$command.CommandLine)) { return $false }
+            -not (Test-VerifierStrictStringValue $command.CommandLine) -or
+            [String]::IsNullOrWhiteSpace($command.CommandLine)) { return $false }
+    if (-not $command.PSObject.Properties['ParentProcessId'] -or
+            -not (Test-VerifierStrictIntegralValue $command.ParentProcessId `
+                1 ([int]::MaxValue))) { return $false }
     $line = $command.CommandLine
     if ($ProcessRecord.PSObject.Properties['ProcessParentProcessId'] -and
-            [int]$ProcessRecord.ProcessParentProcessId -gt 0 -and
+            [long]$ProcessRecord.ProcessParentProcessId -gt 0 -and
             (-not $command.PSObject.Properties['ParentProcessId'] -or
              [int]$command.ParentProcessId -ne [int]$ProcessRecord.ProcessParentProcessId)) {
         return $false
     }
     if ($ProcessRecord.PSObject.Properties['ProcessParentProcessStartTicks'] -and
+            $null -ne $ProcessRecord.ProcessParentProcessStartTicks -and
             [long]$ProcessRecord.ProcessParentProcessStartTicks -gt 0) {
         if (-not $command.PSObject.Properties['ParentProcessId'] -or
                 [int]$command.ParentProcessId -le 0) {
@@ -3046,8 +5737,8 @@ function Test-VerifierProcessIdentity($ProcessRecord, $Snapshot = $null,
     }
     $configuredBrowserPath = if (-not [String]::IsNullOrWhiteSpace($ExpectedBrowserPath)) {
         $ExpectedBrowserPath
-    } elseif ($ProcessRecord.PSObject.Properties['BrowserPath']) {
-        [string]$ProcessRecord.BrowserPath
+    } elseif ($null -ne $browserPathProperty) {
+        $browserPathProperty.Value
     } else { '' }
     # A browser root is never identifiable from run/profile/port markers alone.
     # An absent configured executable path is an unproven ownership state and
@@ -3069,6 +5760,31 @@ function Test-VerifierCurrentProcessRecordMatches($Recorded, $Current) {
         if (-not $Recorded.PSObject.Properties[$property] -or
                 -not $Current.PSObject.Properties[$property]) { return $false }
     }
+    foreach ($record in @($Recorded, $Current)) {
+        if (-not (Test-VerifierStrictIntegralValue $record.ProcessId `
+                1 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $record.ParentProcessId `
+                    1 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $record.ProcessStartTicks 1) -or
+                -not (Test-VerifierStrictStringValue $record.CommandLine) -or
+                [String]::IsNullOrWhiteSpace($record.CommandLine)) {
+            return $false
+        }
+        foreach ($optionalProperty in @('ParentProcessStartTicks')) {
+            $property = $record.PSObject.Properties[$optionalProperty]
+            if ($null -ne $property -and $null -ne $property.Value -and
+                    -not (Test-VerifierStrictIntegralValue $property.Value 0)) {
+                return $false
+            }
+        }
+        foreach ($optionalProperty in @('Name', 'ExecutablePath')) {
+            $property = $record.PSObject.Properties[$optionalProperty]
+            if ($null -ne $property -and $null -ne $property.Value -and
+                    -not (Test-VerifierStrictStringValue $property.Value)) {
+                return $false
+            }
+        }
+    }
     if ($Recorded.PSObject.Properties['Name'] -and
             -not [String]::IsNullOrWhiteSpace([string]$Recorded.Name)) {
         if (-not $Current.PSObject.Properties['Name'] -or
@@ -3087,13 +5803,11 @@ function Test-VerifierCurrentProcessRecordMatches($Recorded, $Current) {
             return $false
         }
     }
-    if ([int]$Recorded.ProcessId -le 0 -or
-            [int]$Current.ProcessId -ne [int]$Recorded.ProcessId -or
+    if ([int]$Current.ProcessId -ne [int]$Recorded.ProcessId -or
             [int]$Current.ParentProcessId -ne [int]$Recorded.ParentProcessId -or
-            [long]$Recorded.ProcessStartTicks -le 0 -or
             [long]$Current.ProcessStartTicks -ne [long]$Recorded.ProcessStartTicks -or
-            [String]::IsNullOrWhiteSpace([string]$Recorded.CommandLine) -or
-            [String]::IsNullOrWhiteSpace([string]$Current.CommandLine)) {
+            [String]::IsNullOrWhiteSpace($Recorded.CommandLine) -or
+            [String]::IsNullOrWhiteSpace($Current.CommandLine)) {
         return $false
     }
     if ($Recorded.PSObject.Properties['ParentProcessStartTicks'] -and
@@ -3109,9 +5823,17 @@ function Test-VerifierCurrentProcessRecordMatches($Recorded, $Current) {
 }
 
 function Get-VerifierCurrentOwnedProcess($OwnerRecord, $Recorded, [switch]$Root) {
-    if ($null -eq $Recorded -or [int]$Recorded.ProcessId -le 0) {
-        Throw-VerifierInfrastructure 'Cannot revalidate an owned process without a positive PID.'
+    [void](Assert-VerifierRawProcessId $OwnerRecord 'owned process owner')
+    if ($Root) {
+        [void](Assert-VerifierRawProcessIdentityRecord $OwnerRecord `
+            'owned process root owner' `
+            -ParentPropertyName 'ProcessParentProcessId' `
+            -ParentStartPropertyName 'ProcessParentProcessStartTicks' `
+            -CommandPropertyName 'ProcessCommandLine' -RequireParentStart)
     }
+    [void](Assert-VerifierRawProcessIdentityRecord $Recorded `
+        'owned process record' -RequireParentStart
+    )
     $pidValue = [int]$Recorded.ProcessId
     $process = Get-VerifierProcessById $pidValue
     if ($null -eq $process) {
@@ -3128,13 +5850,10 @@ function Get-VerifierCurrentOwnedProcess($OwnerRecord, $Recorded, [switch]$Root)
     if ($records.Count -ne 1) {
         Throw-VerifierInfrastructure "Current process identity for PID $pidValue was missing or ambiguous before termination."
     }
-    $currentWmi = $records[0]
-    if (-not $currentWmi.PSObject.Properties['ProcessId'] -or
-            -not $currentWmi.PSObject.Properties['ParentProcessId'] -or
-            -not $currentWmi.PSObject.Properties['CommandLine'] -or
-            [String]::IsNullOrWhiteSpace([string]$currentWmi.CommandLine)) {
-        Throw-VerifierInfrastructure "Current process record for PID $pidValue was incomplete before termination."
-    }
+        $currentWmi = $records[0]
+    [void](Assert-VerifierRawProcessRecord $currentWmi `
+        "current process record for owned PID $pidValue" `
+        -RequirePositiveIdentity -RequireCommandLine)
     $currentParentStartTicks = 0L
     if ($Recorded.PSObject.Properties['ParentProcessStartTicks'] -and
             [long]$Recorded.ParentProcessStartTicks -gt 0) {
@@ -3200,13 +5919,25 @@ function Get-VerifierCurrentOwnedProcess($OwnerRecord, $Recorded, [switch]$Root)
     return [pscustomobject]@{ Process = $verifiedProcess; Record = $current }
 }
 
-function Stop-VerifierVerifiedProcessExactly($Process, [long]$ExpectedStartTicks,
-        [int]$WaitMilliseconds = 5000, $ExpectedRecord = $null) {
-    if ($null -eq $Process -or [int]$Process.Id -le 0 -or
-            $ExpectedStartTicks -le 0 -or $WaitMilliseconds -lt 1) {
-        Throw-VerifierInfrastructure 'Exact process termination requires a process object, positive start identity, and positive wait bound.'
+function Stop-VerifierVerifiedProcessExactly($Process, $ExpectedStartTicks,
+        $WaitMilliseconds = 5000, $ExpectedRecord = $null) {
+    if (-not (Test-VerifierStrictIntegralValue $ExpectedStartTicks 1 ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $WaitMilliseconds 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Exact process termination requires exact positive start identity and wait-bound scalars.'
+    }
+    if ($null -eq $Process -or
+            $Process.GetType() -ne [Diagnostics.Process] -or
+            -not (Test-VerifierStrictIntegralValue $Process.Id 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Exact process termination requires a valid retained process identity.'
+    }
+    if ($null -ne $ExpectedRecord) {
+        [void](Assert-VerifierRawProcessIdentityRecord $ExpectedRecord `
+            'exact process termination record')
     }
     $pidValue = [int]$Process.Id
+    if ($pidValue -eq 4) {
+        Throw-VerifierInfrastructure 'Refusing to terminate PID 4, which is reserved for the System/HTTP.sys kernel transport owner.'
+    }
     try {
         $Process.Refresh()
         if ([bool]$Process.HasExited) {
@@ -3248,13 +5979,12 @@ function Stop-VerifierVerifiedProcessExactly($Process, [long]$ExpectedStartTicks
         if ($null -ne $ExpectedRecord) {
             $currentWmiRecords = @(Get-CimInstance Win32_Process `
                 -Filter "ProcessId = $pidValue" -ErrorAction Stop)
-            if ($currentWmiRecords.Count -ne 1 -or
-                    -not $currentWmiRecords[0].PSObject.Properties['ProcessId'] -or
-                    -not $currentWmiRecords[0].PSObject.Properties['ParentProcessId'] -or
-                    -not $currentWmiRecords[0].PSObject.Properties['CommandLine'] -or
-                    [String]::IsNullOrWhiteSpace([string]$currentWmiRecords[0].CommandLine)) {
+            if ($currentWmiRecords.Count -ne 1) {
                 Throw-VerifierInfrastructure "Process PID $pidValue current identity was incomplete at the termination boundary."
             }
+            [void](Assert-VerifierRawProcessRecord $currentWmiRecords[0] `
+                "current termination record for PID $pidValue" `
+                -RequirePositiveIdentity -RequireCommandLine)
             $currentWmiRecord = [pscustomobject]@{
                 ProcessId = [int]$currentWmiRecords[0].ProcessId
                 ParentProcessId = [int]$currentWmiRecords[0].ParentProcessId
@@ -3302,12 +6032,28 @@ function Stop-VerifierVerifiedProcessExactly($Process, [long]$ExpectedStartTicks
     }
 }
 
-function Get-VerifierCurrentProcessIdentity([int]$ProcessId,
-        [long]$ExpectedStartTicks = 0, [int]$ExpectedParentProcessId = 0,
-        [string]$ExpectedCommandLine = '', [string]$Script = '',
-        [int]$Port = 0, [string]$RunId = '', [string]$Nonce = '',
-        [long]$ExpectedParentProcessStartTicks = 0,
-        [string]$ExpectedBrowserPath = '') {
+function Get-VerifierCurrentProcessIdentity($ProcessId,
+        $ExpectedStartTicks = 0, $ExpectedParentProcessId = 0,
+        $ExpectedCommandLine = '', $Script = '', $Port = 0,
+        $RunId = '', $Nonce = '', $ExpectedParentProcessStartTicks = 0,
+        $ExpectedBrowserPath = '') {
+    if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ExpectedStartTicks 0 ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ExpectedParentProcessId 0 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $Port 0 65535) -or
+            -not (Test-VerifierStrictIntegralValue $ExpectedParentProcessStartTicks 0 ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictStringValue $ExpectedCommandLine) -or
+            -not (Test-VerifierStrictStringValue $Script) -or
+            -not (Test-VerifierStrictStringValue $RunId) -or
+            -not (Test-VerifierStrictStringValue $Nonce) -or
+            -not (Test-VerifierStrictStringValue $ExpectedBrowserPath)) {
+        Throw-VerifierInfrastructure 'Current process identity carried malformed raw PID, parent, port, or identity fields.'
+    }
+    $ProcessId = [int]$ProcessId
+    $ExpectedStartTicks = [long]$ExpectedStartTicks
+    $ExpectedParentProcessId = [int]$ExpectedParentProcessId
+    $Port = [int]$Port
+    $ExpectedParentProcessStartTicks = [long]$ExpectedParentProcessStartTicks
     if ($ProcessId -le 0) {
         Throw-VerifierInfrastructure 'A current process identity requires a positive PID.'
     }
@@ -3341,10 +6087,21 @@ function Get-VerifierCurrentProcessIdentity([int]$ProcessId,
             Throw-VerifierInfrastructure "Current process PID $ProcessId identity omitted $property."
         }
     }
-    if ([int]$wmi.ProcessId -ne $ProcessId -or
-            [int]$wmi.ParentProcessId -le 0 -or
-            [String]::IsNullOrWhiteSpace([string]$wmi.CommandLine)) {
+    if (-not (Test-VerifierStrictIntegralValue $wmi.ProcessId `
+            1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $wmi.ParentProcessId `
+                1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictStringValue $wmi.CommandLine) -or
+            [String]::IsNullOrWhiteSpace($wmi.CommandLine) -or
+            [int]$wmi.ProcessId -ne $ProcessId) {
         Throw-VerifierInfrastructure "Current process PID $ProcessId identity was incomplete."
+    }
+    foreach ($optionalProperty in @('Name', 'ExecutablePath')) {
+        $optional = $wmi.PSObject.Properties[$optionalProperty]
+        if ($null -ne $optional -and $null -ne $optional.Value -and
+                -not (Test-VerifierStrictStringValue $optional.Value)) {
+            Throw-VerifierInfrastructure "Current process PID $ProcessId identity had a malformed $optionalProperty field."
+        }
     }
     if ($ExpectedParentProcessId -gt 0 -and
             [int]$wmi.ParentProcessId -ne $ExpectedParentProcessId) {
@@ -3402,9 +6159,9 @@ function Get-VerifierCurrentProcessIdentity([int]$ProcessId,
         ProcessStartTicks = [long]$currentStartTicks
         CommandLine = $commandLine
         ParentProcessStartTicks = $parentStartTicks
-        Name = if ($wmi.PSObject.Properties['Name']) { [string]$wmi.Name } else { '' }
+        Name = if ($wmi.PSObject.Properties['Name'] -and $null -ne $wmi.Name) { $wmi.Name } else { '' }
         ExecutablePath = if ($wmi.PSObject.Properties['ExecutablePath']) {
-            [string]$wmi.ExecutablePath
+            if ($null -ne $wmi.ExecutablePath) { $wmi.ExecutablePath } else { '' }
         } else { '' }
     }
     if (-not [String]::IsNullOrWhiteSpace($ExpectedBrowserPath) -and
@@ -3488,11 +6245,19 @@ function Test-VerifierDescendantOwnership($RootOwnerRecord, $CandidateChildRecor
     # against its own identity.
     $rootOwner = $RootOwnerRecord
     $candidateChild = $CandidateChildRecord
-    if ($null -eq $rootOwner -or $null -eq $candidateChild -or
-            [int]$candidateChild.ProcessId -le 0 -or
-            [int]$candidateChild.ParentProcessId -le 0 -or
-            [long]$candidateChild.ProcessStartTicks -le 0 -or
-            [String]::IsNullOrWhiteSpace([string]$candidateChild.CommandLine)) {
+    if ($null -eq $rootOwner -or $null -eq $candidateChild) {
+        return $false
+    }
+    [void](Assert-VerifierRawProcessRecord $candidateChild `
+        'descendant ownership candidate' -RequirePositiveIdentity -RequireCommandLine)
+    $candidateStartProperty = $candidateChild.PSObject.Properties['ProcessStartTicks']
+    if ($null -eq $candidateStartProperty -or
+            -not (Test-VerifierStrictIntegralValue $candidateStartProperty.Value 0 ([long]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Descendant ownership candidate omitted or carried a malformed raw start identity.'
+    }
+    if ([long]$candidateStartProperty.Value -le 0) {
+        # Zero is an explicit stale/unavailable identity, not an ownership
+        # proof. It is validated above and must remain a non-owned candidate.
         return $false
     }
     $expectedParent = if ($ExpectedParentProcessId -gt 0) {
@@ -3542,28 +6307,22 @@ function Test-VerifierDescendantOwnership($RootOwnerRecord, $CandidateChildRecor
 
 function Get-VerifierDescendantCandidateRecords($RootOwnerRecord, $Snapshot,
         [bool]$QueryOwnedParents = $false) {
-    if ($null -eq $Snapshot) {
+    if ($null -eq $RootOwnerRecord -or $null -eq $Snapshot) {
         Throw-VerifierInfrastructure 'Cannot inspect browser descendants without a complete process snapshot.'
     }
+    [void](Assert-VerifierRawProcessId $RootOwnerRecord 'browser descendant cleanup root')
     $byParent = @{}
     foreach ($item in @($Snapshot)) {
-        if ($null -eq $item -or -not $item.PSObject.Properties['ParentProcessId']) {
-            # A record without a usable parent cannot be associated with an
-            # owned root from this snapshot. Exact child queries below remain
-            # authoritative for every owned parent and fail closed if they
-            # return such an incomplete record.
-            continue
-        }
+        [void](Assert-VerifierRawProcessRecord $item 'browser descendant snapshot record')
         $parent = 0
-        try { $parent = [int]$item.ParentProcessId } catch { continue }
+        $parent = [int]$item.ParentProcessId
         if ($parent -le 0) { continue }
         if (-not $byParent.ContainsKey($parent)) {
             $byParent[$parent] = New-Object Collections.ArrayList
         }
-        # Keep even a malformed PID/command record in the parent bucket. If
-        # that bucket is reachable from an owned PID, it is not unrelated
-        # data anymore and must become an infrastructure failure rather than
-        # silently disappearing from the ownership proof.
+        # Keep a raw-typed record in the parent bucket. If that bucket is
+        # reachable from an owned PID, command-line completeness is checked
+        # before the candidate can enter the ownership proof.
         [void]$byParent[$parent].Add($item)
     }
     $queue = New-Object Collections.Generic.Queue[int]
@@ -3585,18 +6344,11 @@ function Get-VerifierDescendantCandidateRecords($RootOwnerRecord, $Snapshot,
         $childIds = @{}
         if ($byParent.ContainsKey($parent)) {
             foreach ($child in $byParent[$parent]) {
-                if ($null -eq $child -or
-                        -not $child.PSObject.Properties['ProcessId'] -or
-                        -not $child.PSObject.Properties['ParentProcessId'] -or
-                        -not $child.PSObject.Properties['CommandLine'] -or
-                        [String]::IsNullOrWhiteSpace([string]$child.CommandLine)) {
-                    Throw-VerifierInfrastructure "Browser descendant record under owned PID $parent was incomplete."
-                }
-                $childId = 0
-                try { $childId = [int]$child.ProcessId } catch {
-                    Throw-VerifierInfrastructure "Browser descendant under owned PID $parent had an invalid PID."
-                }
-                if ($childId -le 0 -or [int]$child.ParentProcessId -ne $parent) {
+                [void](Assert-VerifierRawProcessRecord $child `
+                    "browser descendant record under owned PID $parent" `
+                    -RequirePositiveIdentity -RequireCommandLine)
+                $childId = [int]$child.ProcessId
+                if ([int]$child.ParentProcessId -ne $parent) {
                     Throw-VerifierInfrastructure "Browser descendant record under owned PID $parent had an invalid PID/parent identity."
                 }
                 if ($childIds.ContainsKey($childId)) {
@@ -3617,18 +6369,11 @@ function Get-VerifierDescendantCandidateRecords($RootOwnerRecord, $Snapshot,
                     [string]$parent + ': ' + (Get-VerifierErrorMessage $_))
             }
             foreach ($child in $queriedChildren) {
-                if ($null -eq $child -or
-                        -not $child.PSObject.Properties['ProcessId'] -or
-                        -not $child.PSObject.Properties['ParentProcessId'] -or
-                        -not $child.PSObject.Properties['CommandLine'] -or
-                        [String]::IsNullOrWhiteSpace([string]$child.CommandLine)) {
-                    Throw-VerifierInfrastructure "Exact browser descendant query under owned PID $parent returned an incomplete record."
-                }
-                $childId = 0
-                try { $childId = [int]$child.ProcessId } catch {
-                    Throw-VerifierInfrastructure "Exact browser descendant query under owned PID $parent returned an invalid PID."
-                }
-                if ($childId -le 0 -or [int]$child.ParentProcessId -ne $parent) {
+                [void](Assert-VerifierRawProcessRecord $child `
+                    "exact browser descendant query under owned PID $parent" `
+                    -RequirePositiveIdentity -RequireCommandLine)
+                $childId = [int]$child.ProcessId
+                if ([int]$child.ParentProcessId -ne $parent) {
                     Throw-VerifierInfrastructure "Exact browser descendant query under owned PID $parent returned an invalid PID/parent identity."
                 }
                 if ($childIds.ContainsKey($childId)) {
@@ -3642,6 +6387,9 @@ function Get-VerifierDescendantCandidateRecords($RootOwnerRecord, $Snapshot,
             }
         }
         foreach ($child in $children) {
+                [void](Assert-VerifierRawProcessRecord $child `
+                    "browser descendant candidate under owned PID $parent" `
+                    -RequirePositiveIdentity -RequireCommandLine)
                 $id = [int]$child.ProcessId
                 if ($seen.ContainsKey($id)) {
                     # A PID appearing under a second parent is not a harmless
@@ -3687,6 +6435,11 @@ function Get-VerifierDescendantProcessRecords($RootOwnerRecord, $Snapshot) {
     # Preserve the root owner under a name that cannot collide with a child
     # local in PowerShell's case-insensitive variable scope.
     $rootOwner = $RootOwnerRecord
+    [void](Assert-VerifierRawProcessIdentityRecord $rootOwner `
+        'browser descendant cleanup root' `
+        -ParentPropertyName 'ProcessParentProcessId' `
+        -ParentStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandPropertyName 'ProcessCommandLine' -RequireParentStart)
     $ownerPid = [int]$rootOwner.ProcessId
     $ownerStart = [long]$rootOwner.ProcessStartTicks
     $ownerParent = if ($rootOwner.PSObject.Properties['ProcessParentProcessId']) {
@@ -3734,6 +6487,8 @@ function Get-VerifierDescendantProcessRecords($RootOwnerRecord, $Snapshot) {
     $verifiedRecordByPid = @{}
     $verifiedStartByPid[$ownerPid] = $ownerStart
     foreach ($child in $candidates) {
+        [void](Assert-VerifierRawProcessRecord $child `
+            'browser descendant candidate' -RequirePositiveIdentity -RequireCommandLine)
         $id = [int]$child.ProcessId
         $parent = [int]$child.ParentProcessId
         if (-not $verifiedStartByPid.ContainsKey($parent)) {
@@ -3803,6 +6558,8 @@ function Get-VerifierDescendantProcessRecords($RootOwnerRecord, $Snapshot) {
 }
 
 function Remove-VerifierBrowserProfile($Context, $ProfileRecord) {
+    [void](Assert-VerifierContextPreflight $Context 'browser profile cleanup context' `
+        -RequiredProperties @('RunId', 'RepositoryIdentity', 'RunRoot'))
     [void](Assert-VerifierPhysicalOwnedPath $Context.RunRoot $ProfileRecord.Profile -ValidateTree)
     if (-not (Test-Path -LiteralPath $ProfileRecord.Profile)) { return }
     try {
@@ -3882,14 +6639,22 @@ function Get-VerifierBrowserRootRecordFromSnapshot($OwnerRoot, $Snapshot) {
     if ($null -eq $OwnerRoot -or $null -eq $Snapshot) {
         Throw-VerifierInfrastructure 'Browser cleanup cannot validate a missing root ownership snapshot.'
     }
+    [void](Assert-VerifierRawProcessIdentityRecord $OwnerRoot `
+        'browser cleanup root owner' `
+        -ParentPropertyName 'ProcessParentProcessId' `
+        -ParentStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandPropertyName 'ProcessCommandLine' -RequireParentStart)
     $rootPid = [int]$OwnerRoot.ProcessId
     if ($rootPid -le 0) {
         Throw-VerifierInfrastructure 'Browser cleanup cannot validate a root without a positive PID.'
     }
-    $rootCandidates = @($Snapshot | Where-Object {
-        $null -ne $_ -and $_.PSObject.Properties['ProcessId'] -and
-            [int]$_.ProcessId -eq $rootPid
-    })
+    $rootCandidates = New-Object Collections.ArrayList
+    foreach ($candidate in @($Snapshot)) {
+        [void](Assert-VerifierRawProcessRecord $candidate 'browser cleanup snapshot record')
+        if ([int]$candidate.ProcessId -eq $rootPid) {
+            [void]$rootCandidates.Add($candidate)
+        }
+    }
     if ($rootCandidates.Count -eq 0) {
         # A complete snapshot followed by a second-view absence still cannot
         # prove that a markerless child did not outlive the root.  Keep the
@@ -3904,6 +6669,9 @@ function Get-VerifierBrowserRootRecordFromSnapshot($OwnerRoot, $Snapshot) {
         Throw-VerifierInfrastructure "Browser root PID $rootPid was ambiguous in the complete process snapshot."
     }
     $rootCandidate = $rootCandidates[0]
+    [void](Assert-VerifierRawProcessRecord $rootCandidate `
+        "browser cleanup root snapshot record for PID $rootPid" `
+        -RequirePositiveIdentity -RequireCommandLine)
     if (-not (Test-VerifierProcessIdentity $OwnerRoot $Snapshot)) {
         $currentMismatchedRoot = Get-VerifierCurrentProcessRecordById $rootPid
         if ($null -ne $currentMismatchedRoot) {
@@ -3946,6 +6714,13 @@ function Assert-VerifierNoResidualBrowserDescendants($OwnerRoot, $RootRecord,
     if ($null -eq $OwnerRoot -or $null -eq $RootRecord -or $null -eq $Snapshot) {
         Throw-VerifierInfrastructure 'Post-stop browser ownership proof omitted the root, known graph, or complete snapshot.'
     }
+    [void](Assert-VerifierRawProcessIdentityRecord $OwnerRoot `
+        'post-stop browser owner root' `
+        -ParentPropertyName 'ProcessParentProcessId' `
+        -ParentStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandPropertyName 'ProcessCommandLine' -RequireParentStart)
+    [void](Assert-VerifierRawProcessIdentityRecord $RootRecord `
+        'post-stop browser root record' -RequireParentStart)
     $rootPid = [int]$RootRecord.ProcessId
     if ($rootPid -le 0) {
         Throw-VerifierInfrastructure 'Post-stop browser ownership proof omitted a positive root PID.'
@@ -3956,11 +6731,8 @@ function Assert-VerifierNoResidualBrowserDescendants($OwnerRoot, $RootRecord,
     # A changed/reused PID is not equivalent to absence and therefore blocks
     # release even if the replacement no longer carries verifier markers.
     foreach ($knownDescendant in @($KnownDescendantRecords)) {
-        if ($null -eq $knownDescendant -or
-                -not $knownDescendant.PSObject.Properties['ProcessId'] -or
-                -not $knownDescendant.PSObject.Properties['ProcessStartTicks']) {
-            Throw-VerifierInfrastructure 'The retained browser descendant graph contained an incomplete process record.'
-        }
+        [void](Assert-VerifierRawProcessIdentityRecord $knownDescendant `
+            'retained browser descendant record' -RequireParentStart)
         $knownPid = [int]$knownDescendant.ProcessId
         if ($knownPid -le 0 -or [long]$knownDescendant.ProcessStartTicks -le 0) {
             Throw-VerifierInfrastructure 'The retained browser descendant graph contained an invalid process identity.'
@@ -3988,20 +6760,12 @@ function Assert-VerifierNoResidualBrowserDescendants($OwnerRoot, $RootRecord,
     # record under a known parent is a late/unknown descendant, regardless of
     # executable name or marker content.
     foreach ($candidate in @($Snapshot)) {
-        if ($null -eq $candidate -or
-                -not $candidate.PSObject.Properties['ParentProcessId']) {
-            continue
-        }
-        $candidateParent = 0
-        try { $candidateParent = [int]$candidate.ParentProcessId } catch {
-            continue
-        }
+        [void](Assert-VerifierRawProcessRecord $candidate 'post-stop browser snapshot record')
+        $candidateParent = [int]$candidate.ParentProcessId
         if (-not $ownedPidSet.ContainsKey($candidateParent)) { continue }
-        if (-not $candidate.PSObject.Properties['ProcessId'] -or
-                -not $candidate.PSObject.Properties['CommandLine'] -or
-                [String]::IsNullOrWhiteSpace([string]$candidate.CommandLine)) {
-            Throw-VerifierInfrastructure "A residual browser descendant under owned PID $candidateParent had incomplete identity data."
-        }
+        [void](Assert-VerifierRawProcessRecord $candidate `
+            "residual browser descendant under owned PID $candidateParent" `
+            -RequirePositiveIdentity -RequireCommandLine)
         Throw-VerifierInfrastructure "A late or unknown browser descendant PID $($candidate.ProcessId) remained under owned PID $candidateParent after root termination."
     }
 
@@ -4019,19 +6783,11 @@ function Assert-VerifierNoResidualBrowserDescendants($OwnerRoot, $RootRecord,
                 [string]$ownedParentPid + ': ' + (Get-VerifierErrorMessage $_))
         }
         foreach ($lateChild in $lateChildren) {
-            if ($null -eq $lateChild -or
-                    -not $lateChild.PSObject.Properties['ProcessId'] -or
-                    -not $lateChild.PSObject.Properties['ParentProcessId'] -or
-                    -not $lateChild.PSObject.Properties['CommandLine'] -or
-                    [String]::IsNullOrWhiteSpace([string]$lateChild.CommandLine)) {
-                Throw-VerifierInfrastructure "Exact post-stop child inspection under owned PID $ownedParentPid was incomplete."
-            }
-            $lateChildPid = 0
-            try { $lateChildPid = [int]$lateChild.ProcessId } catch {
-                Throw-VerifierInfrastructure "Exact post-stop child inspection under owned PID $ownedParentPid returned an invalid PID."
-            }
-            if ($lateChildPid -le 0 -or
-                    [int]$lateChild.ParentProcessId -ne [int]$ownedParentPid) {
+            [void](Assert-VerifierRawProcessRecord $lateChild `
+                "exact post-stop child under owned PID $ownedParentPid" `
+                -RequirePositiveIdentity -RequireCommandLine)
+            $lateChildPid = [int]$lateChild.ProcessId
+            if ([int]$lateChild.ParentProcessId -ne [int]$ownedParentPid) {
                 Throw-VerifierInfrastructure "Exact post-stop child inspection under owned PID $ownedParentPid returned an invalid parent identity."
             }
             Throw-VerifierInfrastructure "A late or unknown browser descendant PID $lateChildPid was found by exact post-stop parent inspection."
@@ -4041,10 +6797,17 @@ function Assert-VerifierNoResidualBrowserDescendants($OwnerRoot, $RootRecord,
 
 function Stop-VerifierBrowserProcessTreeToFixedPoint($Context, $OwnerRoot,
         [int]$DrainMilliseconds = 15000) {
+    [void](Assert-VerifierContextPreflight $Context 'browser process-tree cleanup context' `
+        -RequiredProperties @('RunId', 'RepositoryIdentity', 'RunRoot'))
     if ($null -eq $Context -or $null -eq $OwnerRoot -or
             $DrainMilliseconds -lt 1) {
         Throw-VerifierInfrastructure 'Browser cleanup requires a bounded root-anchored process drain.'
     }
+    [void](Assert-VerifierRawProcessIdentityRecord $OwnerRoot `
+        'browser drain root owner' `
+        -ParentPropertyName 'ProcessParentProcessId' `
+        -ParentStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandPropertyName 'ProcessCommandLine' -RequireParentStart)
     $drainDeadline = [DateTime]::UtcNow.AddMilliseconds($DrainMilliseconds)
     $knownByPid = @{}
     $knownDescendants = New-Object Collections.ArrayList
@@ -4064,6 +6827,8 @@ function Stop-VerifierBrowserProcessTreeToFixedPoint($Context, $OwnerRoot,
         $children = @(Get-VerifierDescendantProcessRecords $OwnerRoot $snapshot $true)
 
         foreach ($child in $children) {
+            [void](Assert-VerifierRawProcessIdentityRecord $child `
+                'browser drain descendant record' -RequireParentStart)
             $childPid = [int]$child.ProcessId
             if ($childPid -le 0 -or [long]$child.ProcessStartTicks -le 0) {
                 Throw-VerifierInfrastructure 'Browser descendant drain discovered an invalid child identity.'
@@ -4154,7 +6919,12 @@ function Stop-VerifierBrowserProcessTreeToFixedPoint($Context, $OwnerRoot,
 }
 
 function Complete-VerifierBrowserSession($Context, $SessionRecord) {
-    if ($null -eq $SessionRecord) { return }
+    # Durable validation is the cleanup entry boundary.  This must run before
+    # even reading CleanupResult: a malformed terminal-looking record is not a
+    # no-op and cannot authorize skipping process, profile, or lease proof.
+    Assert-VerifierDurableManifestContext $Context
+    Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+        'browser cleanup session'
     $cleanupErrors = New-Object Collections.ArrayList
     $processTerminationProven = $false
     # Establish the exact filesystem/session owner before any process
@@ -4260,7 +7030,12 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
             # proof: Chromium/Edge helpers may appear after any snapshot.
             $drainResult = Stop-VerifierBrowserProcessTreeToFixedPoint `
                 $Context $ownerRoot 15000
-            $processTerminationProven = [bool]$drainResult.ProcessTerminationProven
+            if ($null -eq $drainResult -or
+                    $null -eq $drainResult.PSObject.Properties['ProcessTerminationProven'] -or
+                    -not (Test-VerifierStrictBooleanValue $drainResult.ProcessTerminationProven)) {
+                Throw-VerifierInfrastructure 'Browser cleanup received a missing or malformed process-termination proof.'
+            }
+            $processTerminationProven = $drainResult.ProcessTerminationProven
         }
 
         try {
@@ -4277,8 +7052,8 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
         # inspection while the profile still exists. Only after the claim is
         # safely released may the owned profile be deleted; an inspection
         # failure therefore always preserves the profile and evidence.
-        $SessionRecord.Lease.ProcessTerminationProven = [bool]$processTerminationProven
-        $SessionRecord.Lease.ProcessAbsent = [bool]$processTerminationProven
+        $SessionRecord.Lease.ProcessTerminationProven = $processTerminationProven
+        $SessionRecord.Lease.ProcessAbsent = $processTerminationProven
         Release-VerifierPortLease $Context $SessionRecord.Lease
         Remove-VerifierBrowserProfile $Context ([pscustomobject]@{
             Profile = $ownerRoot.Profile
@@ -4325,6 +7100,7 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
 
 function New-VerifierBrowserSession($Context, [string]$RouteName, [string]$Url,
         [string]$BrowserPath, [int]$TimeoutSeconds) {
+    [void](Assert-VerifierContextPreflight $Context 'browser session context' -RequireDurable)
     if ([String]::IsNullOrWhiteSpace($BrowserPath)) {
         $BrowserPath = Resolve-VerifierBrowserPath ''
     } else {
@@ -4409,6 +7185,7 @@ function New-VerifierBrowserSession($Context, [string]$RouteName, [string]$Url,
 }
 
 function Register-VerifierEvidenceArtifact($Context, [string]$Path) {
+    [void](Assert-VerifierContextPreflight $Context 'evidence artifact context' -RequireDurable)
     Assert-VerifierNoReparseAncestors $Context.EvidenceDirectory
     $canonicalPath = Get-VerifierFullPath $Path
     if (-not (Test-VerifierPhysicalChildPath $Context.EvidenceDirectory $canonicalPath)) {
@@ -4421,7 +7198,33 @@ function Register-VerifierEvidenceArtifact($Context, [string]$Path) {
     }
 }
 
+function Assert-VerifierPreviewIdentitySchema($Identity) {
+    if ($null -eq $Identity -or $Identity -is [array] -or
+            $Identity -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure 'Preview identity response was not an exact JSON object.'
+    }
+    foreach ($propertyName in @('protocol', 'repositoryRoot', 'previewScript',
+            'webRoot', 'verifierRunId', 'verifierNonce')) {
+        if ($null -eq $Identity.PSObject.Properties[$propertyName] -or
+                -not (Test-VerifierStrictStringValue $Identity.PSObject.Properties[$propertyName].Value)) {
+            Throw-VerifierInfrastructure "Preview identity omitted or malformed its exact string '$propertyName'."
+        }
+    }
+    foreach ($propertyName in @('previewPort', 'processId', 'processStartTicks')) {
+        if ($null -eq $Identity.PSObject.Properties[$propertyName] -or
+                -not (Test-VerifierStrictIntegralValue $Identity.PSObject.Properties[$propertyName].Value `
+                    0 ([int]::MaxValue))) {
+            Throw-VerifierInfrastructure "Preview identity omitted or malformed its exact integral '$propertyName'."
+        }
+    }
+    $previewPort = $Identity.PSObject.Properties['previewPort'].Value
+    if (-not (Test-VerifierStrictIntegralValue $previewPort 1 65535)) {
+        Throw-VerifierInfrastructure 'Preview identity carried an invalid exact preview port.'
+    }
+}
+
 function Set-VerifierCallerOwnedPreview($Context, [string]$BaseUrl) {
+    [void](Assert-VerifierContextPreflight $Context 'caller-owned preview context' -RequireDurable)
     try {
          $uri = [Uri]$BaseUrl
         if ($uri.Scheme -ne 'http' -or $uri.Host -notin @('127.0.0.1', 'localhost')) {
@@ -4442,32 +7245,33 @@ function Set-VerifierCallerOwnedPreview($Context, [string]$BaseUrl) {
          Assert-VerifierNoReparseAncestors $Context.WorktreeRoot
          $identityResponse = Invoke-WebRequest -UseBasicParsing -Uri ($identityRequestRoot + '/__tsj/verify-identity') -TimeoutSec 5
          $identity = $identityResponse.Content | ConvertFrom-Json
+         Assert-VerifierPreviewIdentitySchema $identity
          $expectedScript = Get-VerifierFullPath (Join-Path $Context.WorktreeRoot 'scripts\preview.ps1')
          $expectedWebRoot = Get-VerifierFullPath (Join-Path $Context.WorktreeRoot 'war')
         [void](Assert-VerifierPhysicalOwnedPath $Context.WorktreeRoot $expectedScript)
         [void](Assert-VerifierPhysicalOwnedPath $Context.WorktreeRoot $expectedWebRoot -ValidateTree)
-        if ([string]$identity.protocol -ne 'troubleshootjs-preview-identity-v1' -or
-                -not (Test-VerifierCanonicalWindowsPathValue ([string]$identity.repositoryRoot) $Context.WorktreeRoot) -or
-                -not (Test-VerifierCanonicalWindowsPathValue ([string]$identity.previewScript) $expectedScript) -or
-                -not (Test-VerifierCanonicalWindowsPathValue ([string]$identity.webRoot) $expectedWebRoot) -or
-                [int]$identity.previewPort -ne [int]$uri.Port) {
+        if ($identity.protocol -cne 'troubleshootjs-preview-identity-v1' -or
+                -not (Test-VerifierCanonicalWindowsPathValue $identity.repositoryRoot $Context.WorktreeRoot) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $identity.previewScript $expectedScript) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $identity.webRoot $expectedWebRoot) -or
+                $identity.previewPort -ne $uri.Port) {
             Throw-VerifierInfrastructure "Caller-owned preview identity does not match this worktree."
         }
         $runOwnedHandshake = ($Context.Server.Owner -eq 'run' -and
             $Context.Server.BaseUrl -eq $normalized)
-        $identityRunId = [string]$identity.verifierRunId
-        $identityNonce = [string]$identity.verifierNonce
+        $identityRunId = $identity.verifierRunId
+        $identityNonce = $identity.verifierNonce
         if ($runOwnedHandshake) {
-            if ($identityRunId -ne [string]$Context.RunId -or
-                    $identityNonce -ne [string]$Context.PreviewNonce -or
-                    [int]$identity.processId -ne [int]$Context.Server.ProcessId -or
-                    [long]$identity.processStartTicks -ne [long]$Context.Server.ProcessStartTicks -or
-                    [int]$identity.previewPort -ne [int]$Context.Server.Port) {
+            if ($identityRunId -cne $Context.RunId -or
+                    $identityNonce -cne $Context.PreviewNonce -or
+                    $identity.processId -ne $Context.Server.ProcessId -or
+                    $identity.processStartTicks -ne $Context.Server.ProcessStartTicks -or
+                    $identity.previewPort -ne $Context.Server.Port) {
                 Throw-VerifierInfrastructure "Run-owned preview identity did not match its recorded run, process, nonce, or port."
             }
-            $recordedProcess = Get-VerifierProcessById ([int]$Context.Server.ProcessId)
+            $recordedProcess = Get-VerifierProcessById $Context.Server.ProcessId
             if ($null -eq $recordedProcess -or
-                    (Get-VerifierProcessStartTicks $recordedProcess) -ne [long]$Context.Server.ProcessStartTicks) {
+                    (Get-VerifierProcessStartTicks $recordedProcess) -ne $Context.Server.ProcessStartTicks) {
                 Throw-VerifierInfrastructure "Run-owned preview identity process PID $($Context.Server.ProcessId) was not the recorded process instance."
             }
             $snapshot = @(Get-CimInstance Win32_Process -Filter "ProcessId = $($Context.Server.ProcessId)" -ErrorAction Stop)
@@ -4503,6 +7307,9 @@ function Set-VerifierCallerOwnedPreview($Context, [string]$BaseUrl) {
                  IdentityProtocol = [string]$identity.protocol; IdentityVerified = $true
                  CallerOwned = $true
                  RunId = ''; Nonce = ''; Lease = $null; Process = $null
+                ProcessParentProcessId = 0; ProcessParentProcessStartTicks = 0
+                ProcessCommandLine = ''
+                ProcessIdentityKnown = $false; OwnershipUncertain = $false
                 State = 'caller-verified'; StdoutLog = ''; StderrLog = ''
                 CleanupResult = 'not-owned'; Error = ''
                 ProcessTerminationProven = $false; ProcessAbsent = $true
@@ -4519,6 +7326,7 @@ function Set-VerifierCallerOwnedPreview($Context, [string]$BaseUrl) {
 }
 
 function Start-VerifierOwnedPreview($Context, [string]$PreviewScript, [int]$TimeoutSeconds) {
+    [void](Assert-VerifierContextPreflight $Context 'owned preview context' -RequireDurable)
     $lease = New-VerifierPortLease $Context 'preview'
     $canonicalPreviewScript = Get-VerifierFullPath $PreviewScript
     $serverRoot = Join-Path $Context.RunRoot 'server'
@@ -4608,9 +7416,13 @@ function Start-VerifierOwnedPreview($Context, [string]$PreviewScript, [int]$Time
     } catch {
         $Context.Server.State = 'startup-failed'
         $Context.Server.Error = Get-VerifierErrorMessage $_
-        if ([int]$Context.Server.ProcessId -gt 0 -and
-                (-not $Context.Server.PSObject.Properties['ProcessIdentityKnown'] -or
-                 -not [bool]$Context.Server.ProcessIdentityKnown)) {
+        $failureProcessIdKnown = ($Context.Server.PSObject.Properties['ProcessId'] -and
+            (Test-VerifierStrictIntegralValue $Context.Server.PSObject.Properties['ProcessId'].Value `
+                0 ([int]::MaxValue)))
+        $failureIdentityKnown = ($Context.Server.PSObject.Properties['ProcessIdentityKnown'] -and
+            (Test-VerifierStrictBooleanValue $Context.Server.PSObject.Properties['ProcessIdentityKnown'].Value) -and
+            $Context.Server.ProcessIdentityKnown)
+        if (-not $failureProcessIdKnown -or -not $failureIdentityKnown) {
             $Context.Server.OwnershipUncertain = $true
             $Context.Server.Lease.ReleaseBlocked = $true
             $Context.Server.Lease.ReleaseBlockReason = 'owned preview process identity/startup was not proven'
@@ -4622,28 +7434,55 @@ function Start-VerifierOwnedPreview($Context, [string]$PreviewScript, [int]$Time
 }
 
 function Test-VerifierPreviewCleanupReadiness($Server,
-        [bool]$ProcessTerminationProven, [bool]$ListenerInspectionProven,
-        [bool]$ListenerAbsent) {
+        $ProcessTerminationProven, $ListenerInspectionProven,
+        $ListenerAbsent) {
     if ($null -eq $Server) { return $false }
+    foreach ($proofValue in @($ProcessTerminationProven, $ListenerInspectionProven,
+            $ListenerAbsent)) {
+        if (-not (Test-VerifierStrictBooleanValue $proofValue)) { return $false }
+    }
+    if ($null -eq $Server.PSObject.Properties['ProcessIdentityKnown'] -or
+            -not (Test-VerifierStrictBooleanValue $Server.ProcessIdentityKnown) -or
+            $null -eq $Server.PSObject.Properties['ProcessId'] -or
+            -not (Test-VerifierStrictIntegralValue $Server.ProcessId 0 ([int]::MaxValue)) -or
+            $null -eq $Server.PSObject.Properties['ProcessStartTicks'] -or
+            -not (Test-VerifierStrictIntegralValue $Server.ProcessStartTicks 0)) {
+        return $false
+    }
     $identityKnown = ($Server.PSObject.Properties['ProcessIdentityKnown'] -and
-        [bool]$Server.ProcessIdentityKnown -and
+        $Server.ProcessIdentityKnown -and
         [long]$Server.ProcessStartTicks -gt 0)
     if ([int]$Server.ProcessId -gt 0 -and
-            (-not $identityKnown) -and -not $ProcessTerminationProven) {
+        (-not $identityKnown) -and -not $ProcessTerminationProven) {
         return $false
     }
     return $ProcessTerminationProven -and $ListenerInspectionProven -and $ListenerAbsent
 }
 
 function Complete-VerifierPreview($Context) {
-    if ($null -eq $Context.Server -or $Context.Server.Owner -ne 'run' -or
-            $Context.Server.CleanupResult -eq 'complete') { return }
+    # Cleanup must reject malformed durable context, server, lease, lifecycle,
+    # and ClaimMutex state before process fields are cast or any side effect is
+    # attempted. Keep this preflight outside the mutation catch block so a
+    # malformed record cannot be rewritten as cleanup-failed evidence.
+    Assert-VerifierDurableManifestContext $Context
+    Assert-VerifierDurableServerLease $Context 'owned preview cleanup server' -AllowMissing
+    if ($null -eq $Context.Server) { return }
+    if ($Context.Server.Owner -cne 'run' -or
+            $Context.Server.CleanupResult -ceq 'complete') { return }
     try {
-        $processTerminationProven = ([int]$Context.Server.ProcessId -le 0)
+        if ($null -eq $Context.Server.PSObject.Properties['ProcessIdentityKnown'] -or
+                -not (Test-VerifierStrictBooleanValue $Context.Server.ProcessIdentityKnown) -or
+                $null -eq $Context.Server.PSObject.Properties['ProcessId'] -or
+                -not (Test-VerifierStrictIntegralValue $Context.Server.ProcessId 0 ([int]::MaxValue)) -or
+                $null -eq $Context.Server.PSObject.Properties['ProcessStartTicks'] -or
+                -not (Test-VerifierStrictIntegralValue $Context.Server.ProcessStartTicks 0)) {
+            Throw-VerifierInfrastructure 'Owned preview cleanup encountered missing or malformed process identity proof fields.'
+        }
         $processId = [int]$Context.Server.ProcessId
+        $processTerminationProven = ($processId -le 0)
         if ($processId -gt 0) {
             $identityKnown = ($Context.Server.PSObject.Properties['ProcessIdentityKnown'] -and
-                [bool]$Context.Server.ProcessIdentityKnown -and
+                $Context.Server.ProcessIdentityKnown -and
                 [long]$Context.Server.ProcessStartTicks -gt 0)
             if (-not $identityKnown) {
                 # A process that was started but never received a trustworthy
@@ -4730,7 +7569,8 @@ function Complete-VerifierPreview($Context) {
                 }
             }
         }
-        $previewInspection = Get-VerifierLoopbackListenerRecords ([int]$Context.Server.Port)
+        $previewInspection = Get-VerifierLoopbackListenerRecords `
+            ([int]$Context.Server.Port) $Context $Context.Server
         if (-not $previewInspection.Success -or -not $previewInspection.Known) {
             Throw-VerifierInfrastructure "Could not positively inspect owned preview port $($Context.Server.Port) during cleanup."
         }
@@ -4744,15 +7584,15 @@ function Complete-VerifierPreview($Context) {
                     -Name $proofProperty -Value $false
             }
         }
-        $Context.Server.ProcessTerminationProven = [bool]$processTerminationProven
+        $Context.Server.ProcessTerminationProven = $processTerminationProven
         $Context.Server.ProcessAbsent = ($processId -le 0 -or
             $null -eq (Get-VerifierProcessById $processId))
-        $Context.Server.ListenerInspectionProven = ([bool]$previewInspection.Success -and
-            [bool]$previewInspection.Known)
-        $Context.Server.ListenerAbsent = (-not [bool]$previewInspection.HasListeners)
+        $Context.Server.ListenerInspectionProven = ($previewInspection.Success -and
+            $previewInspection.Known)
+        $Context.Server.ListenerAbsent = (-not $previewInspection.HasListeners)
         if (-not (Test-VerifierPreviewCleanupReadiness $Context.Server $processTerminationProven `
-                ([bool]$previewInspection.Success -and [bool]$previewInspection.Known) `
-                (-not [bool]$previewInspection.HasListeners))) {
+                ($previewInspection.Success -and $previewInspection.Known) `
+                (-not $previewInspection.HasListeners))) {
             Throw-VerifierInfrastructure 'Owned preview cleanup did not prove process termination and listener absence.'
         }
         # An earlier identity-capture failure remains blocking until this exact
@@ -4763,17 +7603,20 @@ function Complete-VerifierPreview($Context) {
         $Context.Server.Lease.ReleaseBlockReason = ''
         $Context.Server.State = 'cleaned'
         $Context.Server.CleanupResult = 'complete'
-        $Context.Server.Lease.ProcessTerminationProven = [bool]$processTerminationProven
-        $Context.Server.Lease.ProcessAbsent = [bool]$Context.Server.ProcessAbsent
+        $Context.Server.Lease.ProcessTerminationProven = $processTerminationProven
+        $Context.Server.Lease.ProcessAbsent = $Context.Server.ProcessAbsent
         Release-VerifierPortLease $Context $Context.Server.Lease
         Write-VerifierManifest $Context
     } catch {
         $Context.Server.State = 'cleanup-failed'
         $Context.Server.CleanupResult = 'infrastructure-failure'
         $Context.Server.Error = Get-VerifierErrorMessage $_
-        if ([int]$Context.Server.ProcessId -gt 0 -and
-                (-not $Context.Server.PSObject.Properties['ProcessIdentityKnown'] -or
-                 -not [bool]$Context.Server.ProcessIdentityKnown)) {
+        $failureProcessIdKnown = ($Context.Server.PSObject.Properties['ProcessId'] -and
+            (Test-VerifierStrictIntegralValue $Context.Server.ProcessId 0 ([int]::MaxValue)))
+        $failureIdentityKnown = ($Context.Server.PSObject.Properties['ProcessIdentityKnown'] -and
+            (Test-VerifierStrictBooleanValue $Context.Server.ProcessIdentityKnown) -and
+            $Context.Server.ProcessIdentityKnown)
+        if (-not $failureProcessIdKnown -or -not $failureIdentityKnown) {
             $Context.Server.OwnershipUncertain = $true
             $Context.Server.Lease.ReleaseBlocked = $true
             $Context.Server.Lease.ReleaseBlockReason = 'preview cleanup could not prove process survival/identity'
@@ -4785,40 +7628,59 @@ function Complete-VerifierPreview($Context) {
 }
 
 function Test-VerifierLeaseNeedsCleanup($Lease) {
-    if ($null -eq $Lease) { return $false }
-    if ([string]$Lease.Status -ne 'released') { return $true }
-    if ($Lease.PSObject.Properties['ReleaseState'] -and
-            [string]$Lease.ReleaseState -ne 'complete') { return $true }
-    if ($Lease.PSObject.Properties['ReleaseJournalState'] -and
-            [string]$Lease.ReleaseJournalState -ne 'complete') { return $true }
+    if ($null -eq $Lease) {
+        Throw-VerifierInfrastructure 'Cleanup authority was missing its lease record.'
+    }
+    foreach ($stateProperty in @('Status', 'ReleaseState',
+            'ReleaseJournalState', 'ClaimState')) {
+        if ($null -eq $Lease.PSObject.Properties[$stateProperty] -or
+                -not (Test-VerifierStrictStringValue $Lease.PSObject.Properties[$stateProperty].Value)) {
+            # Missing/malformed lifecycle state is not terminal evidence. Keep
+            # the record on the cleanup path, where Release-VerifierPortLease
+            # will fail closed instead of allowing cleanup to be skipped.
+            return $true
+        }
+    }
+    foreach ($booleanProperty in @('ReleaseBlocked', 'MutexReleased')) {
+        $property = $Lease.PSObject.Properties[$booleanProperty]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictBooleanValue $property.Value)) {
+            # An untrusted lifecycle record remains on the cleanup path.  The
+            # release boundary will retain evidence and fail closed instead of
+            # allowing an invalid record to be mistaken for terminal absence.
+            return $true
+        }
+    }
+    if ($Lease.ReleaseBlocked) { return $true }
+    if ($Lease.Status -ne 'released') { return $true }
+    if ($Lease.ReleaseState -ne 'complete') { return $true }
+    if ($Lease.ReleaseJournalState -ne 'complete') { return $true }
     # The durable pre-delete tombstone is intentionally incomplete until the
     # claim has been removed and the final released state has been persisted.
     # This also makes recovery after a process interruption idempotent.
-    if ($Lease.PSObject.Properties['ClaimState'] -and
-            [string]$Lease.ClaimState -ne 'released') { return $true }
+    if ($Lease.ClaimState -ne 'released') { return $true }
     if ($Lease.PSObject.Properties['ClaimMutex'] -and $null -ne $Lease.ClaimMutex) {
         return $true
     }
     # A persisted released/manifested tombstone can outlive the process that
-    # wrote it. The exact claim path is still owned evidence until deletion is
-    # proven, so never let Status alone make Complete-VerifierRun skip it.
-    if ($Lease.PSObject.Properties['Path'] -and
-            -not [String]::IsNullOrWhiteSpace([string]$Lease.Path)) {
-        try {
-            if (Test-Path -LiteralPath $Lease.Path -PathType Leaf -ErrorAction Stop) {
-                return $true
-            }
-        } catch {
-            return $true
-        }
+    # wrote it. Only the shared terminal predicate may prove that all release,
+    # listener/process, ClaimMutex, association, and claim-absence evidence is
+    # complete; otherwise keep it on the cleanup path.
+    try {
+        return -not (Test-VerifierDurableLeaseTerminal $Lease $null `
+            'lease cleanup terminal proof')
+    } catch {
+        return $true
     }
-    return $false
 }
 
 function Complete-VerifierRun($Context) {
-    if ($null -eq $Context) {
-        return [pscustomobject]@{ Success = $true; Errors = @() }
-    }
+    [void](Assert-VerifierContextPreflight $Context 'verifier cleanup context')
+    # Completion is the last cleanup authority.  Validate the complete live
+    # context, including every lease's exact ClaimMutex association, before
+    # inspecting paths, lifecycle fields, processes, listeners, or mutating
+    # any cleanup state.
+    Assert-VerifierDurableManifestContext $Context
     $pendingLeases = @($Context.LeaseRecords | Where-Object {
         Test-VerifierLeaseNeedsCleanup $_
     })
@@ -4913,14 +7775,21 @@ function Complete-VerifierRun($Context) {
             }
         }
         $skipCurrentListenerCheck = $false
-        if ($lease.PSObject.Properties['MutexReleased'] -and
-                [bool]$lease.MutexReleased -and
+        $mutexReleasedValid = ($lease.PSObject.Properties['MutexReleased'] -and
+            (Test-VerifierStrictBooleanValue $lease.MutexReleased))
+        if (-not $mutexReleasedValid) {
+            [void]$errors.Add("Port $($lease.Port) carried a missing or malformed MutexReleased lifecycle proof.")
+        }
+        if ($mutexReleasedValid -and $lease.MutexReleased -and
                 $lease.PSObject.Properties['ReleaseState'] -and
-                [string]$lease.ReleaseState -in @('os-released', 'complete', 'claim-delete-failed') -and
+                (Test-VerifierStrictStringValue $lease.ReleaseState) -and
+                $lease.ReleaseState -in @('os-released', 'complete', 'claim-delete-failed') -and
                 $lease.PSObject.Properties['ReleaseJournalState'] -and
-                [string]$lease.ReleaseJournalState -eq 'complete' -and
+                (Test-VerifierStrictStringValue $lease.ReleaseJournalState) -and
+                $lease.ReleaseJournalState -eq 'complete' -and
                 $lease.PSObject.Properties['ClaimState'] -and
-                [string]$lease.ClaimState -eq 'released' -and
+                (Test-VerifierStrictStringValue $lease.ClaimState) -and
+                $lease.ClaimState -eq 'released' -and
                 $claimAbsenceKnown -and $claimAbsent) {
             # The old run's exact OS claim is durably released and its exact
             # tombstone is absent. A newer legitimate run may now be listening
@@ -4930,7 +7799,19 @@ function Complete-VerifierRun($Context) {
         }
         if (-not $skipCurrentListenerCheck) {
             try {
-                $finalInspection = Get-VerifierLoopbackListenerRecords ([int]$lease.Port)
+                $finalPreviewOwner = $null
+                if ($null -ne $Context.Server -and
+                        $Context.Server.PSObject.Properties['Lease'] -and
+                        [object]::ReferenceEquals($Context.Server.Lease, $lease) -and
+                        (Test-VerifierRunOwnedPreviewHttpSysAuthorization $Context `
+                            $Context.Server ([int]$lease.Port))) {
+                    $finalPreviewOwner = $Context.Server
+                }
+                $finalInspection = if ($null -ne $finalPreviewOwner) {
+                    Get-VerifierLoopbackListenerRecords ([int]$lease.Port) $Context $finalPreviewOwner
+                } else {
+                    Get-VerifierLoopbackListenerRecords ([int]$lease.Port)
+                }
                 if (-not $finalInspection.Success -or -not $finalInspection.Known -or
                         $finalInspection.HasListeners) {
                     [void]$errors.Add("Port $($lease.Port) listener absence was not positively proven after cleanup.")
@@ -4955,10 +7836,16 @@ function Complete-VerifierRun($Context) {
 }
 
 function Resolve-VerifierChildExitCode([bool]$InvocationSucceeded, $LastExitCode) {
-    if ($InvocationSucceeded) { return 0 }
-    if ($null -ne $LastExitCode -and ([int]$LastExitCode -eq 1 -or [int]$LastExitCode -eq 2)) {
-        return [int]$LastExitCode
+    # ExitCode is an observed Process.ExitCode value. Keep this boundary raw
+    # and exact: numeric strings, fractions, booleans, and arbitrary objects
+    # are not process exit evidence and must remain infrastructure failures.
+    if (-not (Test-VerifierStrictIntegralValue $LastExitCode 0 ([int]::MaxValue))) {
+        return 2
     }
+    $exitCode = [int]$LastExitCode
+    if ($exitCode -eq 2) { return 2 }
+    if ($exitCode -eq 1) { return 1 }
+    if ($exitCode -eq 0 -and $InvocationSucceeded) { return 0 }
     return 2
 }
 
@@ -4998,6 +7885,23 @@ Export-ModuleMember -Function @(
     'Remove-VerifierOwnedTree',
     'Get-VerifierRepositoryIdentity', 'Get-VerifierUtcText',
     'Get-VerifierPortMutexName',
+    'Test-VerifierStrictStringValue', 'Test-VerifierStrictBooleanValue',
+    'Test-VerifierStrictIntegralValue',
+    'Assert-VerifierDurableProcessIdentityTuple',
+    'Test-VerifierListenerOwnerTuple',
+    'Assert-VerifierDurableListenerOwnerTuple',
+    'Assert-VerifierDurableLeaseRecord',
+    'Assert-VerifierDurableLeaseTerminalFields',
+    'Assert-VerifierDurableLeaseTerminal',
+    'Test-VerifierDurableLeaseTerminal',
+    'Assert-VerifierDurableServerLease',
+    'Assert-VerifierDurableBrowserSession',
+    'Assert-VerifierSerializedLeaseRecord',
+    'Assert-VerifierSerializedBrowserSessionRecord',
+    'Assert-VerifierSerializedServerRecord',
+    'Test-VerifierSerializedListenerOwnerSchema',
+    'Test-VerifierSerializedLeaseTerminal',
+    'Assert-VerifierDurableManifestContext',
     'ConvertTo-VerifierWindowsArgument', 'ConvertTo-VerifierArgumentString',
     'Start-VerifierProcess', 'Invoke-VerifierBoundedProcess',
     'New-VerifierRunContext', 'New-VerifierPortLease',
@@ -5029,6 +7933,9 @@ Export-ModuleMember -Function @(
     'Confirm-VerifierRecordedProcessAbsent',
     'Confirm-VerifierReleasedListener',
     'Get-VerifierLoopbackListenerRecords', 'Parse-VerifierNetstatListenerOutput',
+    'Test-VerifierRunOwnedPreviewHttpSysAuthorization',
+    'Test-VerifierKernelTransportListenerRecord',
+    'Test-VerifierRunOwnedPreviewHttpSysListener',
     'Write-VerifierManifest', 'Test-VerifierCanonicalWindowsPathValue',
     'Get-VerifierProfileReferenceRecords', 'Assert-VerifierProfileSnapshotQuiescent',
     'Assert-VerifierBrowserProfileIsQuiescent'
