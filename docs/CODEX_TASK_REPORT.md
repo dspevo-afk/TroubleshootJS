@@ -1,6 +1,135 @@
 # TroubleshootJS — Current Task Report
 
-## Current checkpoint — Task 43P committed-candidate verification — 2026-09-05
+## Current checkpoint — Task 44 accepted contract — 2026-09-05
+
+- **Entry/authorization:** The owner explicitly authorized the attached Tasks
+  44–45 prompt after the final Task 43P handoff. Approved baseline and clean
+  starting HEAD: `a5e8efa775b52914a87269103a316c10669a5305`, branch
+  `codex/task43p-final-recovery`, tracking the matching branch on `origin`
+  (`dspevo-afk/TroubleshootJS`). Remote HEAD equality was checked. No pre-existing
+  tracked or untracked changes. Accepted C1/C2 and candidate-identity corrections
+  are retained; historical reports below describe their original approval state.
+- **Scope/state:** Task 44 accepted: immutable block descriptions, validated
+  local relationships, restricted/versioned stable namespace and two in-memory
+  examples. Focused tests, final production build and independent review pass.
+  Task 45 implementation awaits only this checkpoint's verified publication.
+  Task 46 and runtime
+  composition remain unstarted. This batch does not certify runtime composition.
+- **Ownership:** Astra owns design, integration, tests, documentation and
+  publication. Luna `task44_descriptors` completed the four new descriptor/
+  namespace/example/validation Java files and reconciled its scratch. Luna
+  `contract_test_infrastructure` completed both read-only investigations. Fresh
+  read-only Luna `task44_review` passed the integrated candidate with no findings.
+  All worker ownership is reconciled. Requested worker settings are
+  `gpt-5.6-luna` / `max`; the supported spawn interface exposes no speed control.
+  No task-owned browser or preview has been launched; the completed bounded
+  build/test children exited and cleaned their execution scratch. Root retains
+  a unique OS-temp evidence directory for this batch's build/publication receipts.
+- **CI preparation:** The existing workflow is absent from `origin`'s default
+  `master` branch (contents API returned 404). Its current branch copy is present.
+  Default-branch integration is separate from these contract tasks; local
+  acceptance must use the actual supported repository commands.
+- **Gates:** JDK8 `1.8.0_502` direct source-7/target-7 harness PASS, exit `0`,
+  nine groups / 247 assertions and exact cleanup. Final JDK8/pinned GWT2.7 OBF
+  production build PASS, exit `0`, five permutations (compile 37.114 s; link
+  1.487 s). Fresh independent Luna review PASS; independent focused rerun and
+  whitespace/scope checks pass. The worker's preliminary JDK21 compile
+  was diagnostic only; root supplied the actual required JDK8 proof. No prior
+  runtime result is relabeled a new descriptor/port-contract result.
+- **Evidence/publication:** The [Task 44 acceptance packet](task-evidence/task-44/README.md)
+  records exact commands, tested source hashes and limits. This enclosing commit
+  identifies the accepted checkpoint. Astra performs final staged inspection,
+  normal upstream push, remote-SHA equality and the authorized post-push Gmail
+  attempt; their exact receipts follow publication without changing the SHA
+  being qualified. After verified publication continue to Task 45 automatically.
+
+### Frozen bounded design and acceptance set
+
+Task 44 introduces final, package-local immutable descriptions, independent of
+`TroubleshootBoard`, `GeneratedBoardInstance`, CircuitJS and physical runtime
+ownership. `FunctionalBlockDescriptor` owns typed parameters, components with
+declared terminal IDs, endpoint-to-component/terminal relationships, pads mapping
+endpoints to local nets, role declarations and ports. Parameters support only
+boolean, signed 32-bit integer, finite double and immutable text values. Inputs
+are copied; nested values are final and returned collections are immutable and
+canonically ordered. Duplicate declarations, unresolved references, duplicate
+component-terminal endpoints, contradictory role declarations and invalid port
+attachments fail explicitly with a stable validation code and field identity.
+
+Roles declare REQUIRED or OPTIONAL contributions: required roles have at least
+one local member; optional roles may be empty. Every member resolves locally.
+A port names a declared role and a PAD, NET or ENDPOINT attachment that is a
+member of that role. Required here describes the local role contribution; it
+does not silently introduce a runtime wiring/connection-count policy.
+
+`BlockNamespace` validates unique block instance keys within one device schema
+and derives IDs without allocating or merging live nets. Encoding version 1 is
+`tsj-block-v1/<device-schema>@<positive-schema-version>/<instance>/<kind>/<local>`.
+Each input identifier uses the validated ASCII grammar
+`[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}`; no slash, at-sign, percent escape, whitespace
+or Unicode normalization is accepted. Kind tokens are fixed lowercase words.
+Thus segments cannot overlap. Schema version and encoding version are explicit;
+block type/version and parameter values remain descriptor metadata rather than
+construction-order identity. The API resolves declared IDs only. Optional block
+insertion/removal/reordering cannot change any unchanged tuple. Logical IDs are
+neither acquired physical-part IDs nor runtime-owner authorization tokens.
+
+Two small descriptor fixtures describe an NMOS low-side driver and a resistor/
+LED indicator load using explicit local terminals/nets/roles. They are examples
+only. Device intent will own proposed interblock wiring, and a later assembler
+alone will own global allocation and net merging. Task 44's immutable port ID,
+role and local attachment are the seam for Task 45's separate typed electrical
+metadata; Task 45 does not mutate the Task 44 descriptor or repurpose BoardNet.
+
+Task 45 v1 will separate functional role, block-relative direction, electrical
+source/sink/passive behavior, reference/domain, drive/loading, isolation/merge
+policy and declared accessibility. Known, unknown and not-applicable evidence
+are distinct. Its pure group preflight will require full source-range containment
+in receiver limits, adequate digital high/low guarantees and loading/capacity
+where applicable, compatible direction/drive, scoped references, and explicit
+reference-join permission. Multiple stiff drivers fail even at equal nominal
+voltages. Low-side sinks are not positive supplies. Isolated domains stay
+separate across explicit adapter input/output contracts; a direct merge cannot
+stand in for a regulator, divider, level shifter, relay or isolation barrier.
+Results distinguish malformed input, incompatibility, insufficient/unsupported
+evidence and a supported semantic-policy pass using stable reason and field IDs.
+No nominal value supplies an invented range, tolerance, threshold or capacity.
+Read-only external-input adaptation will consume current metadata and preserve
+the independent NPN/NMOS control/load boundary and nominal-only nameplates.
+
+| Gate / production path | Oracle and explicit fixtures | Verifier / environment |
+| --- | --- | --- |
+| Task 44 namespace and descriptor validation | Literal expected IDs; reversed declarations; repeated local IDs across instances/kinds; optional block insert/remove/reorder; invalid delimiter/Unicode/empty IDs; duplicate instances, locals and roles; dangling references and invalid port attachments | Focused JDK8 Java harness against actual production classes, no solver/browser |
+| Task 44 immutability/purity | Mutate constructor collections and nested members; attempt output mutation; repeat validation/derivation; both in-memory examples | Same harness, isolated OS-temp classes; explicit source compilation |
+| Task 44 final Java candidate | All five OBF permutations plus direct new-code execution | Repository `scripts/build.ps1`, selected JDK8/pinned GWT; focused harness |
+| Task 45 supported positives | Fully declared rail/load; permitted common reference; passive/load; digital/control levels; explicit adapter and isolated domains; nominal-only legacy adaptation | Focused JDK8 contract harness; frozen policy and literal expected reasons |
+| Task 45 required negatives | Mismatch and overlapping-not-contained voltage; direction/drive; equal-voltage conflicting drivers; three-port conflict; unrelated GND references; forbidden isolated merge; insufficient digital levels; missing/invalid declarations; NaN/infinite/inverted ranges; magic adapter bypass; unmet declared accessibility | Same harness, connection/port/field-specific expected outcomes |
+| Task 45 determinism/purity | Reordered declarations/groups; repeated calls; immutable input/output snapshots; new generic in-memory example; Task 44 suite rerun | Same harness, no CircuitJS candidate for classification |
+| Task 45 legacy parity | Explicit six-family cases, distinct input values and NPN/NMOS independent control/load states; stable IDs/mappings, determinism and electrical behavior | Applicable existing leaf verifiers with accepted browser route/settings; exact command set follows infrastructure inspection |
+| Task 45 final Java candidate | Fresh all-five-permutation build and both contract suites | Repository JDK8/GWT build and direct harness |
+| Each task's review/publication | Integrated diff, acceptance evidence and scope/dependency audit | Fresh independent read-only Luna MAX review; root staged inspection, commit, normal upstream push, SHA equality and authorized Gmail attempt |
+
+The infrastructure investigation confirmed there is no existing Java unit-test
+runner. The small same-package `tests/contracts/FunctionalBlockContractTest.java`
+main and `scripts/verify-block-contracts.ps1` compile the actual four production
+files explicitly with JDK8 `-source 7 -target 7 -encoding UTF-8` and empty
+source/class paths. This both exercises code beyond GWT's transitive reachability
+and rejects accidental runtime dependencies. The runner reuses existing bounded
+process and exact owned-temp cleanup helpers without changing them. Final build
+command per task: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File
+scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile
+-Style OBF`. Focused command: `powershell.exe -NoProfile -ExecutionPolicy Bypass
+-File scripts/verify-block-contracts.ps1 -JavaHome
+.tools/jdk8-download/jdk8u502-b07`.
+
+The closed set excludes historical 43R/43P full recovery matrices, source
+falsifiers, Gate B process recertification and fabricated screenshots for these
+nonvisual contracts. Unchanged runtime evidence retains its original limits;
+any actual protected-boundary change requires its affected checks. No new family,
+live composition, solver, PCB/layout, inventory, fault engine, player control,
+same-owner lifecycle framework, random stream or challenge descriptor is in scope.
+
+## Prior checkpoint — Task 43P committed-candidate verification — 2026-09-05
 
 - **Status/scope:** REVIEWED CANDIDATE — bounded candidate-identity correction in the
   source-experiment, browser and Gate B scripts, their shared identity helper,

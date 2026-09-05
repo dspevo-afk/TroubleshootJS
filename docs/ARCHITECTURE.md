@@ -4,6 +4,50 @@ CircuitJS remains the electrical simulation engine. TroubleshootJS layers its
 challenge, board, and instrument behavior around that engine rather than
 replacing its electrical results.
 
+## Functional block descriptions and namespaces — Task 44
+
+`FunctionalBlockDescriptor` is an immutable local contribution description,
+separate from `TroubleshootBoard`, `GeneratedBoardInstance`, live CircuitJS
+elements and physical runtime ownership. It declares a block type/schema version,
+stable instance key, typed deterministic parameters (boolean, 32-bit integer,
+finite double or text), components and terminals, endpoints, pads, local nets,
+roles and ports. Each component terminal has one endpoint; a pad maps an endpoint
+to a local net. Unpadded internal endpoints are allowed. Every reference resolves
+within the descriptor; an endpoint cannot acquire competing pad/net mappings.
+
+Roles declare required or optional local contributions. Required roles contain
+at least one member; optional roles may be empty. A port names a role and a
+PAD, NET or ENDPOINT attachment included in that role. These declarations do not
+specify runtime connection counts or create wiring. All input collections,
+including nested terminal/member lists, are copied into canonical immutable
+collections. `BlockContractException` identifies malformed IDs, duplicates,
+missing declarations, dangling references, contradictory roles and invalid
+attachments with stable codes and field/entity IDs.
+
+`BlockNamespace` owns only immutable lookup and local-to-global ID derivation for
+one device schema. Encoding version 1 is
+`tsj-block-v1/<device-schema>@<positive-schema-version>/<instance>/<kind>/<local>`.
+All input IDs match `[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}`; the separators, escapes,
+whitespace and Unicode are rejected. Kind tokens are `component`, `pad`, `net`,
+`endpoint`, `port`, and `role`. The grammar makes the tuple unambiguous. The
+device schema version explicitly distinguishes namespace schemas; the block
+type version and parameter values do not silently rename local entities. A new
+encoding requires a new prefix. Duplicate instance keys fail; there is no
+suffixing, allocation counter or global UUID. Insertion, removal and reordering
+of optional blocks leave every unchanged tuple's ID intact.
+
+Blocks own these local descriptions and ports. Device intent owns proposed
+interblock wiring; the future assembler alone owns runtime allocation and net
+merging. Semantic IDs are distinct from solver nodes, acquired physical-part
+identity and owner authorization. `FunctionalBlockExamples` contains only small
+NMOS driver and resistor/LED load descriptor fixtures. They create no playable
+block or board. Task 45 adds separate electrical metadata at the immutable port
+ID/attachment seam; runtime composition remains gated by the later roadmap.
+
+The focused Java contract harness explicitly compiles and exercises these
+otherwise-unreferenced production classes without the solver/GWT runtime. The
+normal five-permutation JDK8/GWT build remains a separate production gate.
+
 `ProbeTarget` describes where a user placed a probe: validity, semantic target
 identity, marker position, and resolution to a `CircuitMeasurementEndpoint`.
 It does not perform a measurement. `CircuitPostProbeTarget` identifies a
@@ -2359,7 +2403,8 @@ build, Gate B, forced-first, A–I, eighteen physical fixtures, eleven compiled
 falsifiers and visible LED3 proof, including reviewed dependency reuse. Failed
 invocations retain their original status and separate cleanup dispositions.
 Final packet review passed for the authorized publication and Owner Review handoff.
-Owner approval has not occurred; Task 44 remains unstarted.
+The owner subsequently approved `a5e8efa` and the bounded Tasks 44–45 sequence
+on 2026-09-05. That approval does not certify runtime composition.
 
 ## Earlier Task 43P evidence status — before final runtime qualification
 

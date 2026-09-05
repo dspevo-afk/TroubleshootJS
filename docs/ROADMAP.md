@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-09-05 — Task 43P acceptance complete; ready for Owner Review; Task 44 unstarted_
+_Last updated: 2026-09-05 — Task 44 contract accepted; Task 45 authorized after verified Task 44 publication; Task 46 unstarted_
 
 ## Purpose
 
@@ -1618,7 +1618,13 @@ preserves the detached-original boundary.
 
 ## Owner Review Gate — Post-Task-43 Roadmap Confirmation
 
-**Status:** `[>] READY — OWNER REVIEW AND APPROVAL NOT PERFORMED`
+**Status:** `[x] APPROVED — 2026-09-05`
+
+The owner accepted the final Task 43P handoff at
+`a5e8efa775b52914a87269103a316c10669a5305` and explicitly authorized Task 44,
+then Task 45 under the supplied two-task prompt. Task 44 must pass validation,
+independent review and publication before Task 45 implementation. Stop before
+Task 46. The historical pre-approval handoffs retain their original status.
 
 **Purpose:** Require the owner and architect to inspect the final Task 43
 implementation, Task 43P evidence, and this updated roadmap before Task 44.
@@ -1628,7 +1634,8 @@ finding has a disposition; corrective milestones are visible; the dependency
 graph has been reviewed; and the owner explicitly approves Task 44 or requests
 additional roadmap changes.
 
-**Unlocks:** Task 44 only. **Task 44 MUST NOT BEGIN AUTOMATICALLY.**
+**Unlocks:** Task 44 under this explicit approval; the supplied prompt authorizes
+continuing to Task 45 after Task 44 acceptance, then stopping.
 
 ---
 
@@ -1666,8 +1673,12 @@ not already implemented; they are not claims about the current baseline:
 
 ## Task 44 — Functional Block Descriptor and Stable Namespace Contract
 
-**Status:** `[!] BLOCKED BY THE EXPLICIT OWNER REVIEW GATE —
-UNSTARTED`
+**Status:** `[x] COMPLETE — CONTRACT ACCEPTED`
+
+The [Task 44 packet](task-evidence/task-44/README.md) records the immutable
+descriptor/namespace implementation, nine focused groups / 247 JDK8 assertions,
+final all-five-permutation JDK8/GWT build and fresh independent Luna review.
+This contract creates no live board and does not certify runtime composition.
 
 **Purpose:** Define the smallest reusable generation unit above the existing
 leaf-family runtime.
@@ -1713,7 +1724,7 @@ findings.
 
 ## Task 45 — Typed Electrical Domains and Port Compatibility Preflight
 
-**Status:** `[!] BLOCKED BY TASK 44`
+**Status:** `[>] AUTHORIZED — IMPLEMENT AFTER VERIFIED TASK 44 PUBLICATION`
 
 **Purpose:** Prevent semantically nonsensical block connections before building
 an expensive solver candidate.
@@ -3606,10 +3617,12 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Owner Review Gate — Post-Task-43 Roadmap Confirmation (not performed)**
+**Task 45 — Typed Electrical Domains and Port Compatibility Preflight**
 
 C1/C2, the authorized efficiency work and Task 43P acceptance are complete.
 The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
 records the accepted composition, historical failures, reuse and remaining
-limits. Owner approval is still required before Task 44 becomes eligible.
-Task 44 is unstarted; do not begin it automatically.
+limits. The owner approved the final `a5e8efa` handoff and explicitly authorized
+Tasks 44 then 45. Task 44's contract, focused tests, final build and independent
+review pass. After its verified publication, implement Task 45 under the same
+authorization; after Task 45, stop before the unstarted Task 46.
