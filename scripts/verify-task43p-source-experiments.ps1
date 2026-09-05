@@ -8,7 +8,8 @@ param(
     [AllowEmptyString()]
     [string]$EvidenceDirectory = '',
     [switch]$IdentityCanary,
-    [switch]$ContractProbe
+    [switch]$ContractProbe,
+    [switch]$MutationPreflight
 )
 
 Set-StrictMode -Version Latest
@@ -27,7 +28,7 @@ try {
     exit 2
 }
 
-$publishedBaselineSha = 'a5b253873c2b25a54d7c393b118e3f2e1831a4d8'
+$publishedBaselineSha = '8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7'
 $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $tempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())
 $runId = [Guid]::NewGuid().ToString('N')
@@ -982,19 +983,249 @@ function Test-SourceExperimentCaught($ErrorText, $Compile, $Runtime,
         $RuntimeAgainstMutatedSource -and $Restored -and $RepositoryUnchanged
 }
 
+function Get-ExactTextAnchorCount([string]$Text, [string]$Needle) {
+    if ($null -eq $Text -or $null -eq $Needle -or
+            [String]::IsNullOrEmpty($Needle)) {
+        return 0
+    }
+    $count = 0
+    $offset = 0
+    while ($offset -le $Text.Length) {
+        $index = $Text.IndexOf($Needle, $offset, [StringComparison]::Ordinal)
+        if ($index -lt 0) { break }
+        $count++
+        # Advance one character so overlapping occurrences are counted too.
+        # A duplicate overlapping anchor is just as ambiguous as two
+        # separated anchors and must fail closed.
+        $offset = $index + 1
+    }
+    return $count
+}
+
 function Invoke-ExactTextReplacement([string]$Path, [string]$Needle, [string]$Replacement) {
     try {
         $text = [IO.File]::ReadAllText($Path)
     } catch {
         Throw-SourceExperimentInfrastructure "Could not read source mutation target '$Path'." $_
     }
-    $first = $text.IndexOf($Needle, [StringComparison]::Ordinal)
-    if ($first -lt 0 -or $first -ne $text.LastIndexOf($Needle, [StringComparison]::Ordinal)) {
-        throw "Expected exactly one source mutation anchor in $Path."
+    $anchorCount = Get-ExactTextAnchorCount $text $Needle
+    if ($anchorCount -ne 1) {
+        throw "Expected exactly one source mutation anchor in $Path; found $anchorCount."
     }
+    $first = $text.IndexOf($Needle, [StringComparison]::Ordinal)
     $updated = $text.Substring(0, $first) + $Replacement +
         $text.Substring($first + $Needle.Length)
     Write-SourceExperimentText $Path $updated 'source mutation'
+    return [pscustomobject]@{ AnchorCount = $anchorCount }
+}
+
+function Invoke-MutationPreflightCase($Definition, [string]$PreflightRoot) {
+    $id = [string]$Definition.id
+    $relativePath = [string]$Definition.relativePath
+    $sourcePath = Join-Path $repositoryRoot $relativePath
+    $targetPath = Join-Path $PreflightRoot ($id + '.source')
+    $beforeBytes = $null
+    $afterBytes = $null
+    $restoredBytes = $null
+    $anchorCount = 0
+    $restoreError = ''
+    $errorText = ''
+    $mutationApplied = $false
+    $restoredExactly = $false
+    try {
+        $canonicalSource = Get-ExperimentCanonicalPath $sourcePath
+        $canonicalRepository = Get-ExperimentCanonicalPath $repositoryRoot
+        if (-not (Test-VerifierPhysicalChildPath $canonicalRepository $canonicalSource) -or
+                -not (Test-Path -LiteralPath $canonicalSource -PathType Leaf -ErrorAction Stop)) {
+            Throw-SourceExperimentInfrastructure "Mutation preflight source '$relativePath' was not a physical repository file."
+        }
+        $canonicalTarget = Get-ExperimentCanonicalPath $targetPath
+        if (-not (Test-VerifierPhysicalChildPath $PreflightRoot $canonicalTarget)) {
+            Throw-SourceExperimentInfrastructure "Mutation preflight target '$targetPath' escaped its task-owned namespace."
+        }
+        $beforeBytes = [IO.File]::ReadAllBytes($canonicalSource)
+        $beforeHash = Get-BytesHash $beforeBytes
+        # This is the only disposable file used by the case.  It is created
+        # from bytes so BOMs and mixed line endings survive the restore path.
+        Write-SourceExperimentBytes $canonicalTarget $beforeBytes 'mutation preflight disposable source'
+        $targetBeforeBytes = [IO.File]::ReadAllBytes($canonicalTarget)
+        if (-not (Test-ByteArraysEqual $beforeBytes $targetBeforeBytes)) {
+            Throw-SourceExperimentInfrastructure "Mutation preflight disposable source did not match repository bytes for $id."
+        }
+        $text = [IO.File]::ReadAllText($canonicalTarget)
+        $anchorCount = Get-ExactTextAnchorCount $text ([string]$Definition.needle)
+        if ($anchorCount -ne 1) {
+            throw "Expected exactly one source mutation anchor in $canonicalSource; found $anchorCount."
+        }
+        [void](Invoke-ExactTextReplacement $canonicalTarget ([string]$Definition.needle) `
+            ([string]$Definition.replacement))
+        $mutationApplied = $true
+        $afterBytes = [IO.File]::ReadAllBytes($canonicalTarget)
+        if (Test-ByteArraysEqual $beforeBytes $afterBytes) {
+            throw "Mutation preflight did not change bytes for $id."
+        }
+    } catch {
+        $errorText = Get-ExperimentErrorMessage $_
+    } finally {
+        if ($null -ne $beforeBytes -and (Test-Path -LiteralPath $targetPath -PathType Leaf)) {
+            try {
+                Write-SourceExperimentBytes $targetPath $beforeBytes 'mutation preflight source restoration'
+                $restoredBytes = [IO.File]::ReadAllBytes($targetPath)
+                $restoredExactly = Test-ByteArraysEqual $beforeBytes $restoredBytes
+                if (-not $restoredExactly) {
+                    throw "Mutation preflight restore bytes differed for $id."
+                }
+            } catch {
+                $restoreError = Get-ExperimentErrorMessage $_
+                $restoredExactly = $false
+            }
+        } elseif ($null -ne $beforeBytes) {
+            $restoreError = "Mutation preflight disposable source was missing during restore for $id."
+        }
+    }
+    $beforeHash = if ($null -eq $beforeBytes) { '' } else { Get-BytesHash $beforeBytes }
+    $afterHash = if ($null -eq $afterBytes) { '' } else { Get-BytesHash $afterBytes }
+    $restoredHash = if ($null -eq $restoredBytes) { '' } else { Get-BytesHash $restoredBytes }
+    $passed = $anchorCount -eq 1 -and $mutationApplied -and
+        $null -ne $afterBytes -and -not (Test-ByteArraysEqual $beforeBytes $afterBytes) -and
+        $restoredExactly -and [String]::IsNullOrWhiteSpace($restoreError) -and
+        [String]::IsNullOrWhiteSpace($errorText)
+    $exit = if ($passed) { 0 } else { 2 }
+    $result = [ordered]@{
+        id = $id
+        relativePath = $relativePath
+        anchorCount = [int]$anchorCount
+        beforeSha256 = [string]$beforeHash
+        afterSha256 = [string]$afterHash
+        restoredSha256 = [string]$restoredHash
+        beforeByteLength = if ($null -eq $beforeBytes) { 0 } else { [int]$beforeBytes.Length }
+        afterByteLength = if ($null -eq $afterBytes) { 0 } else { [int]$afterBytes.Length }
+        restoredExactly = [bool]$restoredExactly
+        restoreError = [string]$restoreError
+        error = [string]$errorText
+        exit = [int]$exit
+    }
+    Write-Host ("MUTATION_PREFLIGHT id=$id anchorCount=$($result.anchorCount) " +
+        "beforeSha256=$($result.beforeSha256) afterSha256=$($result.afterSha256) " +
+        "restoredSha256=$($result.restoredSha256) exit=$($result.exit)")
+    return [pscustomobject]$result
+}
+
+function Invoke-MutationPreflightCanaries([string]$PreflightRoot) {
+    $cases = @(
+        [pscustomobject]@{ Name = 'zero-anchor'; Text = 'present'; Needle = 'missing'; Replacement = 'changed'; WithBom = $false; ExpectedCount = 0; Reject = $true },
+        [pscustomobject]@{ Name = 'duplicate-anchor'; Text = "needle`r`nneedle`n"; Needle = 'needle'; Replacement = 'changed'; WithBom = $false; ExpectedCount = 2; Reject = $true },
+        [pscustomobject]@{ Name = 'overlapping-anchor'; Text = 'aaaa'; Needle = 'aaa'; Replacement = 'b'; WithBom = $false; ExpectedCount = 2; Reject = $true },
+        [pscustomobject]@{ Name = 'positive-bom-mixed-restore'; Text = "before`r`nneedle`nafter`r`n"; Needle = 'needle'; Replacement = 'changed'; WithBom = $true; ExpectedCount = 1; Reject = $false }
+    )
+    $results = @()
+    foreach ($case in $cases) {
+        $path = Join-Path $PreflightRoot ('__canary-' + $case.Name + '.source')
+        $encoding = [Text.UTF8Encoding]::new($false)
+        $payload = $encoding.GetBytes([string]$case.Text)
+        if ($case.WithBom) {
+            $preamble = ([Text.UTF8Encoding]::new($true)).GetPreamble()
+            $bytes = New-Object byte[] ($preamble.Length + $payload.Length)
+            [Array]::Copy($preamble, 0, $bytes, 0, $preamble.Length)
+            [Array]::Copy($payload, 0, $bytes, $preamble.Length, $payload.Length)
+        } else {
+            $bytes = $payload
+        }
+        $sourceHadBom = $bytes.Length -ge 3 -and
+            $bytes[0] -eq 0xef -and $bytes[1] -eq 0xbb -and $bytes[2] -eq 0xbf
+        $beforeHash = Get-BytesHash $bytes
+        $rejectionText = ''
+        $restoreError = ''
+        $anchorCount = Get-ExactTextAnchorCount ([string]$case.Text) ([string]$case.Needle)
+        $mutationApplied = $false
+        $afterBytes = $null
+        try {
+            Write-SourceExperimentBytes $path $bytes ("mutation preflight $($case.Name) canary")
+            [void](Invoke-ExactTextReplacement $path ([string]$case.Needle) ([string]$case.Replacement))
+            $mutationApplied = $true
+            $afterBytes = [IO.File]::ReadAllBytes($path)
+        } catch {
+            $rejectionText = Get-ExperimentErrorMessage $_
+        } finally {
+            try {
+                if (Test-Path -LiteralPath $path -PathType Leaf) {
+                    Write-SourceExperimentBytes $path $bytes ("mutation preflight $($case.Name) canary restore")
+                } else {
+                    $restoreError = 'canary disposable source was missing during restore'
+                }
+            } catch {
+                $restoreError = Get-ExperimentErrorMessage $_
+            }
+        }
+        $restoredBytes = if (Test-Path -LiteralPath $path -PathType Leaf) {
+            [IO.File]::ReadAllBytes($path)
+        } else { $null }
+        $restored = $null -ne $restoredBytes -and
+            (Test-ByteArraysEqual $bytes $restoredBytes)
+        $expectedRejection = "Expected exactly one source mutation anchor in $path; found $($case.ExpectedCount)."
+        $rejectionReasonMatched = $rejectionText -ceq $expectedRejection
+        $mutationChanged = $mutationApplied -and $null -ne $afterBytes -and
+            -not (Test-ByteArraysEqual $bytes $afterBytes)
+        $behaviorProven = if ($case.Reject) {
+            -not $mutationApplied -and $rejectionReasonMatched
+        } else {
+            $mutationChanged -and [String]::IsNullOrWhiteSpace($rejectionText)
+        }
+        $passed = $sourceHadBom -eq [bool]$case.WithBom -and
+            $anchorCount -eq [int]$case.ExpectedCount -and $behaviorProven -and
+            $restored -and [String]::IsNullOrWhiteSpace($restoreError)
+        $exit = if ($passed) { 0 } else { 2 }
+        $result = [pscustomobject][ordered]@{
+            name = [string]$case.Name
+            anchorCount = [int]$anchorCount
+            expectedAnchorCount = [int]$case.ExpectedCount
+            beforeSha256 = $beforeHash
+            afterSha256 = if ($null -eq $afterBytes) { '' } else { Get-BytesHash $afterBytes }
+            restoredSha256 = if ($null -eq $restoredBytes) { '' } else { Get-BytesHash $restoredBytes }
+            withBom = [bool]$sourceHadBom
+            mutationChanged = [bool]$mutationChanged
+            rejectionReasonMatched = [bool]$rejectionReasonMatched
+            restoredExactly = [bool]$restored
+            rejectionError = [string]$rejectionText
+            restoreError = [string]$restoreError
+            exit = [int]$exit
+        }
+        Write-Host ("MUTATION_PREFLIGHT_CANARY name=$($result.name) " +
+            "anchorCount=$($result.anchorCount) beforeSha256=$($result.beforeSha256) " +
+            "afterSha256=$($result.afterSha256) restoredSha256=$($result.restoredSha256) " +
+            "exit=$($result.exit)")
+        $results += $result
+    }
+    return @($results)
+}
+
+function Invoke-MutationPreflight($Definitions, [string]$PreflightRoot) {
+    if ($null -eq $Definitions -or @($Definitions).Count -ne 11) {
+        Throw-SourceExperimentInfrastructure 'Mutation preflight requires exactly the full 11 source experiment definitions.'
+    }
+    New-SourceExperimentDirectory $PreflightRoot 'mutation preflight disposable root' -Force
+    Assert-VerifierNoReparseAncestors $PreflightRoot
+    if (-not (Test-VerifierPhysicalChildPath $tempRoot $PreflightRoot)) {
+        Throw-SourceExperimentInfrastructure 'Mutation preflight root escaped the task-owned temp namespace.'
+    }
+    $results = @()
+    foreach ($definition in @($Definitions)) {
+        $results += Invoke-MutationPreflightCase $definition $PreflightRoot
+    }
+    $canaries = @(Invoke-MutationPreflightCanaries $PreflightRoot)
+    $passed = @($results).Count -eq 11 -and
+        @($results | Where-Object { $_.exit -ne 0 }).Count -eq 0 -and
+        @($canaries | Where-Object { $_.exit -ne 0 }).Count -eq 0
+    Write-Host ("TASK43P MUTATION PREFLIGHT " +
+        $(if ($passed) { 'PREFLIGHT_PASS' } else { 'PREFLIGHT_FAILED' }) +
+        " definitions=$(@($results).Count) canaries=$(@($canaries).Count) exit=$(if ($passed) { 0 } else { 2 })")
+    return [pscustomobject]@{
+        requested = $true
+        passed = [bool]$passed
+        exit = if ($passed) { 0 } else { 2 }
+        definitions = @($results)
+        canaries = @($canaries)
+    }
 }
 
 function Copy-DisposableBuildTree([string]$Destination) {
@@ -1410,7 +1641,7 @@ function Invoke-SourceExperiment($Definition, [string]$SelectedJavaHome,
         Copy-Item -LiteralPath $repositorySourcePath -Destination $sourcePath -Force -ErrorAction Stop | Out-Null
         $beforeBytes = [IO.File]::ReadAllBytes($sourcePath)
         $beforeHash = Get-BytesHash $beforeBytes
-        Invoke-ExactTextReplacement $sourcePath $Definition.needle $Definition.replacement
+        [void](Invoke-ExactTextReplacement $sourcePath $Definition.needle $Definition.replacement)
         $afterBytes = [IO.File]::ReadAllBytes($sourcePath)
         $afterHash = Get-BytesHash $afterBytes
         if ($beforeHash -eq $afterHash) {
@@ -1819,13 +2050,11 @@ $definitions = @(
         seed = 0
         expectedMarker = 'FAIL:task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2]'
         mutationKind = 'manifest-source-terminal-omission'
-        needle = @"
-            addTerminal(result, "LED1.A", "LED1", "A", "LED_NODE", "WireElm", 1);
-            addTerminal(result, "LED1.K", "LED1", "K", "GND", "GroundElm", 0);
-"@
-        replacement = @"
-            addTerminal(result, "LED1.A", "LED1", "A", "LED_NODE", "WireElm", 1);
-"@
+        # The repository source uses LF here while this script is retained
+        # with mixed line endings.  Anchor the exact terminal line so the
+        # omission semantics remain identical without normalizing the file.
+        needle = '            addTerminal(result, "LED1.K", "LED1", "K", "GND", "GroundElm", 0);'
+        replacement = ''
     }
     [ordered]@{
         id = 'snapshot-restore-resistance-current-omitted'
@@ -1833,7 +2062,7 @@ $definitions = @(
         family = 'LED_INDICATOR'
         topology = 'DIRECT_SERIES'
         seed = 0
-        expectedMarker = 'FAIL:task43p-H-snapshot-resistance-current-did-not-round-trip'
+        expectedMarker = 'FAIL:Task 41 restore changed lastResistanceTestCurrent'
         mutationKind = 'snapshot-source-restoration-field-omission'
         needle = '        sim.lastResistanceTestCurrent = lastResistanceTestCurrent;'
         replacement = '        // Task43P disposable falsifier: omit resistance-current restoration.'
@@ -1846,17 +2075,14 @@ $definitions = @(
         seed = 3
         expectedMarker = 'FAIL:task43p-public-remove-direct-control-passed'
         mutationKind = 'public-remove-button-disabled'
-        needle = @"
-        addAction(operationLabel(part, operation, "Remove component"),
-            disabled || !isOperationAvailable(part, operation),
-"@
-        replacement = @"
-        addAction(operationLabel(part, operation, "Remove component"),
-            true,
-"@
+        # Anchor one unchanged line so mixed LF/CRLF source cannot hide the
+        # real disabled-button mutation behind a pre-compilation mismatch.
+        needle = '        addAction(operationLabel(part, operation, "Remove component"),'
+        replacement = '        addAction(operationLabel(part, operation, "Remove component"), true ||'
     }
 )
 
+$allDefinitions = @($definitions)
 $selectionError = ''
 if (-not [String]::IsNullOrWhiteSpace($ExperimentId)) {
     $definitions = @($definitions | Where-Object { $_.id -eq $ExperimentId })
@@ -1872,6 +2098,8 @@ $overallExit = 2
 $runRootRetained = $true
 $runRootRemoved = $false
 $evidenceWritten = $false
+$mutationPreflightResult = $null
+$mutationPreflightPassed = $false
 try {
     $repositoryBefore = Get-RepositoryState
     if (-not [String]::IsNullOrWhiteSpace($selectionError)) {
@@ -1896,26 +2124,37 @@ try {
             (Test-VerifierPhysicalChildPath $runRoot $canonicalEvidenceRoot)) {
         Throw-SourceExperimentInfrastructure 'Source-negative child evidence must remain outside the disposable build namespace.'
     }
-    foreach ($definition in $definitions) {
-        Write-Host ("SOURCE_STAGE " + $definition.id + " experiment-start")
-        $experiment = Invoke-SourceExperiment $definition $selectedJavaHome $repositoryBefore
-        $experiments += $experiment
-        Write-Host ("SOURCE_STAGE " + $definition.id + " experiment-done")
-        if ($experiment.exit -ne 1 -or
-                $experiment.runtimeExit -ne 1 -or
-                $experiment.runtimeUnderlyingExit -ne 1 -or
-                $experiment.childExit -ne 1 -or
-                $experiment.runtimeStatus -cne 'CAUGHT' -or
-                -not [String]::IsNullOrWhiteSpace([string]$experiment.runtimeReason) -or
-                -not $experiment.childProofAccepted -or
-                -not $experiment.runtimePreviewProcessAbsentProven -or
-                -not $experiment.runtimePreviewListenerAbsenceProven -or
-                -not $experiment.runtimePreviewStopped) {
-            $script:cleanupErrors += "Stopped before next source case after an unproven child/proof/cleanup result for $($definition.id)."
-            break
-        }
+    $mutationPreflightResult = Invoke-MutationPreflight $allDefinitions `
+        (Join-Path $runRoot 'mutation-preflight')
+    $mutationPreflightPassed = [bool]$mutationPreflightResult.passed
+    if (-not $mutationPreflightPassed) {
+        throw 'Mutation preflight failed closed; no source build or compiled experiment was started.'
     }
-    Write-Host 'SOURCE_STAGE all-experiments-done'
+    if (-not $MutationPreflight) {
+        foreach ($definition in $definitions) {
+            Write-Host ("SOURCE_STAGE " + $definition.id + " experiment-start")
+            $experiment = Invoke-SourceExperiment $definition $selectedJavaHome $repositoryBefore
+            $experiments += $experiment
+            Write-Host ("SOURCE_STAGE " + $definition.id + " experiment-done")
+            if ($experiment.exit -ne 1 -or
+                    $experiment.runtimeExit -ne 1 -or
+                    $experiment.runtimeUnderlyingExit -ne 1 -or
+                    $experiment.childExit -ne 1 -or
+                    $experiment.runtimeStatus -cne 'CAUGHT' -or
+                    -not [String]::IsNullOrWhiteSpace([string]$experiment.runtimeReason) -or
+                    -not $experiment.childProofAccepted -or
+                    -not $experiment.runtimePreviewProcessAbsentProven -or
+                    -not $experiment.runtimePreviewListenerAbsenceProven -or
+                    -not $experiment.runtimePreviewStopped) {
+                $script:cleanupErrors += "Stopped before next source case after an unproven child/proof/cleanup result for $($definition.id)."
+                break
+            }
+        }
+        Write-Host 'SOURCE_STAGE all-experiments-done'
+    } else {
+        $overallExit = 1
+        Write-Host 'SOURCE_STAGE mutation-preflight-only-done'
+    }
     $finalRepositoryState = Get-RepositoryState
     $allRestored = $true
     foreach ($experiment in $experiments) {
@@ -1954,18 +2193,27 @@ try {
     $finalRepositoryEqual = $null -ne $repositoryBefore -and
         $null -ne $finalRepositoryState -and
         (Test-RepositoryStateEqual $repositoryBefore $finalRepositoryState)
-    $allCaught = $experiments.Count -eq $definitions.Count -and
-        $experiments.Count -gt 0 -and
-        @($experiments | Where-Object {
-            $_.exit -ne 1 -or -not $_.childProofAccepted -or
-                -not $_.sourceBytesRestoredExactly -or
-                -not $_.runtimePreviewProcessAbsentProven -or
-                -not $_.runtimePreviewListenerAbsenceProven -or
-                -not $_.runtimePreviewStopped -or -not $_.repositoryUnchanged
-        }).Count -eq 0 -and $finalRepositoryEqual -and
-        $script:cleanupErrors.Count -eq 0
-    if ($allCaught) { $overallExit = 1 } else { $overallExit = 2 }
-    if ($overallExit -eq 1 -and (Test-Path -LiteralPath $runRoot)) {
+    $allCaught = if ($MutationPreflight) {
+        $mutationPreflightPassed -and $finalRepositoryEqual -and
+            $script:cleanupErrors.Count -eq 0
+    } else {
+        $experiments.Count -eq $definitions.Count -and
+            $experiments.Count -gt 0 -and
+            $mutationPreflightPassed -and
+            @($experiments | Where-Object {
+                $_.exit -ne 1 -or -not $_.childProofAccepted -or
+                    -not $_.sourceBytesRestoredExactly -or
+                    -not $_.runtimePreviewProcessAbsentProven -or
+                    -not $_.runtimePreviewListenerAbsenceProven -or
+                    -not $_.runtimePreviewStopped -or -not $_.repositoryUnchanged
+            }).Count -eq 0 -and $finalRepositoryEqual -and
+            $script:cleanupErrors.Count -eq 0
+    }
+    if ($allCaught) {
+        $overallExit = if ($MutationPreflight) { 0 } else { 1 }
+    } else { $overallExit = 2 }
+    if (($overallExit -eq 0 -or $overallExit -eq 1) -and
+            (Test-Path -LiteralPath $runRoot)) {
         try {
             Remove-SourceExperimentTree $runRoot 'disposable experiment root'
             $runRootRetained = $false
@@ -1989,17 +2237,30 @@ try {
             runRootRetained = [bool]$runRootRetained
             runRootRemoved = [bool]$runRootRemoved
             evidencePath = [string]$evidencePath
-            status = if ($overallExit -eq 1) { 'CAUGHT' } else { 'UNPROVEN' }
+            mutationPreflightRequested = [bool]$MutationPreflight
+            mutationPreflightPassed = [bool]$mutationPreflightPassed
+            mutationPreflight = $mutationPreflightResult
+            status = if ($MutationPreflight) {
+                if ($overallExit -eq 0) { 'PREFLIGHT_PASS' } else { 'PREFLIGHT_FAILED' }
+            } elseif ($overallExit -eq 1) { 'CAUGHT' } else { 'UNPROVEN' }
             exit = [int]$overallExit
             experiments = @($experiments | ForEach-Object {
                 ConvertTo-SourceExperimentEvidence $_
             })
             cleanupErrors = @($script:cleanupErrors | ForEach-Object { [string]$_ })
-            visibleBrowserRequired = $true
-            note = if ($overallExit -eq 1) {
-                'All selected producer-path source negatives were caught through the compiled disposable route with exact child proof and cleanup.'
+            visibleBrowserRequired = -not [bool]$MutationPreflight
+            note = if ($overallExit -eq 0 -or $overallExit -eq 1) {
+                if ($MutationPreflight) {
+                    'All 11 source mutation anchors changed disposable bytes and restored the original bytes exactly; no build or browser route was started.'
+                } else {
+                    'All selected producer-path source negatives were caught through the compiled disposable route with exact child proof and cleanup.'
+                }
             } else {
-                'One or more producer-path source negatives lacked complete compiled child proof or cleanup; acceptance remains unproven.'
+                if ($MutationPreflight) {
+                    'One or more source mutation preflight anchors or disposable restore checks failed; no build or browser route was started.'
+                } else {
+                    'One or more producer-path source negatives lacked complete compiled child proof or cleanup; acceptance remains unproven.'
+                }
             }
         }
         Write-SourceExperimentText $evidencePath ($record | ConvertTo-Json -Depth 30) `
@@ -2012,9 +2273,17 @@ try {
         $overallExit = 2
     }
 }
-Write-Host ("TASK43P SOURCE EXPERIMENTS " + $(if ($overallExit -eq 1) { 'CAUGHT' } else { 'UNPROVEN' }) +
-    " exit=$overallExit evidence=$evidencePath " +
-    "repositoryUnchanged=$([bool]($null -ne $repositoryBefore -and $null -ne $finalRepositoryState -and (Test-RepositoryStateEqual $repositoryBefore $finalRepositoryState)))")
+if ($MutationPreflight) {
+    Write-Host ("TASK43P MUTATION PREFLIGHT " +
+        $(if ($overallExit -eq 0) { 'PREFLIGHT_PASS' } else { 'PREFLIGHT_FAILED' }) +
+        " exit=$overallExit evidence=$evidencePath " +
+        "repositoryUnchanged=$([bool]($null -ne $repositoryBefore -and $null -ne $finalRepositoryState -and (Test-RepositoryStateEqual $repositoryBefore $finalRepositoryState)))")
+} else {
+    Write-Host ("TASK43P SOURCE EXPERIMENTS " +
+        $(if ($overallExit -eq 1) { 'CAUGHT' } else { 'UNPROVEN' }) +
+        " exit=$overallExit evidence=$evidencePath " +
+        "repositoryUnchanged=$([bool]($null -ne $repositoryBefore -and $null -ne $finalRepositoryState -and (Test-RepositoryStateEqual $repositoryBefore $finalRepositoryState)))")
+}
 if ($script:cleanupErrors.Count -gt 0) {
     Write-Host ('TASK43P SOURCE EXPERIMENT CLEANUP/PROOF ERRORS: ' +
         ($script:cleanupErrors -join '; '))

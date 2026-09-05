@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-09-05 — Task 43P runtime evidence recorded; C1/C2 corrections required; Owner Review and Task 44 blocked_
+_Last updated: 2026-09-05 — Task 43P acceptance complete; ready for Owner Review; Task 44 unstarted_
 
 ## Purpose
 
@@ -978,12 +978,16 @@ their numbers and broad product direction; the bounded post-Task-43 gates
 below make the runtime-composition wall explicit without turning every later
 feature into a prerequisite for every other feature.
 
-Task 43P's runtime and physical evidence is recorded in the
+Task 43P runtime and physical evidence is recorded in the
 [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md).
-Runtime acceptance remains blocked by demonstrated measurement-cleanup and
-snapshot-assertion defects. Bounded corrections 43P-C1 and 43P-C2 are required;
-Owner Review and Task 44 remain blocked. No later milestone authorizes an
-automatic continuation.
+C1/C2 repairs, the authorized efficiency work, the final exact-18 physical
+composition, and the final acceptance reconciliation are complete and ready for
+Owner Review. The unchanged production build, full Gate B, forced-first,
+dedicated A–I, compiled source, and physical correspondence gates retain their
+recorded exit semantics. The acceptance index records all six qualified family
+invocations, the fresh visible flow, exact packet and screenshot identities,
+and cleanup. Owner approval has not occurred; Task 44
+remains unstarted, and no later milestone authorizes automatic continuation.
 
 ## Governing architecture gates
 
@@ -1395,8 +1399,8 @@ Reviewer, Foreman, and Sol Inspector gates passed, and Gate B was published
 without claiming branch protection, JDK8 execution on this host, or visible
 Browser validation. At that Gate B publication checkpoint, Task 43P was the
 next eligible milestone. Its subsequent evidence reconciliation is recorded in
-the Task 43P section below; Owner Review remains blocked and Task 44 remains
-blocked and unstarted.
+the Task 43P section below. Task 43P is now complete and ready for Owner Review;
+Task 44 remains blocked by explicit owner approval and is unstarted.
 
 **Unlocks:** Task 43P is now the next eligible milestone after Gate B
 acceptance and publication, but it must not begin automatically. The owner/admin
@@ -1406,7 +1410,7 @@ mainline-protection action remains external and is documented below.
 
 ## Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation
 
-**Status:** `[~] IMPLEMENTED — RUNTIME ACCEPTANCE BLOCKED BY 43P-C1/C2`
+**Status:** `[x] COMPLETE — READY FOR OWNER REVIEW`
 
 **Purpose:** Re-run material historical lifecycle and verification-integrity
 findings against the final Task 43 SHA before runtime composition begins.
@@ -1416,8 +1420,13 @@ historical audit reports preserved. The final runtime reconciliation, individual
 physical/source results, visible evidence, and historical finding dispositions
 are recorded in the
 [current report](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md).
-Runtime acceptance remains blocked by 43P-C1/C2. No exit-2 invocation is counted
-as a complete pass, and no production correction is made by this evidence task.
+C1/C2 repairs and their acceptance are complete. Dedicated A–I returned `0`
+with no open observations; 18 qualified physical packets, 11 individual
+compiled falsifiers under reviewed dependency reuse, visible player input,
+the final five-permutation build, complete Gate B, and independent review
+cover the approved composition. No exit-2 invocation is counted as a complete
+pass. The current task explicitly authorized the bounded production C1 repair
+and verifier C2 repair after the preceding evidence-only checkpoint.
 
 **Bounded goals:**
 
@@ -1450,8 +1459,8 @@ snapshot support.
 
 **Explicit non-goals:** No Task 44 implementation, block composition, new
 circuit family, giant transaction framework, broad verifier rewrite, or
-production fix inside the reconciliation task. Do not assume historical
-findings remain valid or that Task 43 fixed them automatically.
+production fix beyond the explicitly authorized C1 boundary. Do not assume
+historical findings remain valid or that Task 43 fixed them automatically.
 
 **Acceptance criteria:** Every historical finding has final-SHA evidence; all
 required falsification cases were exercised; no finding is closed merely
@@ -1460,9 +1469,9 @@ has a reproduction, owner, affected path, bounded correction milestone, and
 acceptance criteria; independent review passes; and results are presented to
 the owner before Task 44 becomes eligible.
 
-**Unlocks:** The bounded 43P-C1/C2 correction tasks below. They are unstarted;
-Owner Review remains blocked pending their relevant acceptance evidence.
-Task 44 remains blocked and unstarted and requires explicit owner approval.
+**Unlocks:** Owner Review only. C1/C2 below are complete; the owner has not
+reviewed or approved the result. Task 44 remains blocked and unstarted and
+requires explicit owner approval.
 
 The dated candidate entries below retain earlier evidence boundaries. The
 2026-09-05 report is authoritative for current outcomes and reuse limits.
@@ -1556,11 +1565,11 @@ evidence is recorded in `docs/CODEX_TASK_REPORT.md`; acceptance remains pending.
 
 ## Task 43P-C1 — Temporary Measurement Exception Cleanup
 
-**Status:** `[>] NEXT — NOT STARTED`
+**Status:** `[x] COMPLETE — ACCEPTANCE QUALIFIED`
 
-**Evidence/owner:** OPEN BLOCKER / CODE, reproduced by runtime lane D.
+**Evidence/owner:** CLOSED / CODE, repaired and qualified by runtime lane D.
 CircuitJS adaptation and instrument lifecycle owner; affected path is
-`CircuitJsSimulationAdapter` → `CirSim.runTemporaryActiveMeasurement()`.
+`CircuitMeasurementAdapter` → `CirSim.runTemporaryActiveMeasurement()`.
 
 **Bounded scope:** Make temporary-measurement cleanup exception-safe across
 all real graph indexes, solver state, overlay, and queued power while
@@ -1579,10 +1588,11 @@ closure or Task 44 start.
 
 ## Task 43P-C2 — Supported Snapshot Restoration Assertion
 
-**Status:** `[ ] REQUIRED — NOT STARTED`
+**Status:** `[x] COMPLETE — ACCEPTANCE QUALIFIED`
 
-**Evidence/owner:** OPEN BLOCKER / TEST/TOOL, reproduced by snapshot
-calibration. Task41 snapshot-proof owner; affected path is
+**Evidence/owner:** CLOSED / TEST/TOOL, repaired and qualified by snapshot
+calibration and the compiled omitted-restore falsifier. Task41 snapshot-proof
+owner; affected path is
 `Task41SimulationSnapshot.assertRestored()`.
 
 **Bounded scope:** Assert the captured/restored `lastResistanceTestCurrent`
@@ -1594,14 +1604,15 @@ same-owner transactions remain unsupported.
 canary; preserve non-default exact round trips and original-owner
 identity/targets. Require fresh independent review, final build, and affected
 runtime gates. C1 and C2 both precede relevant runtime acceptance and Owner
-Review. Neither correction is implemented by the evidence collectors.
+Review. The supported inventory is asserted; the implemented correction
+preserves the detached-original boundary.
 
 ---
 
 
 ## Owner Review Gate — Post-Task-43 Roadmap Confirmation
 
-**Status:** `[!] BLOCKED BY TASK 43P`
+**Status:** `[>] READY — OWNER REVIEW AND APPROVAL NOT PERFORMED`
 
 **Purpose:** Require the owner and architect to inspect the final Task 43
 implementation, Task 43P evidence, and this updated roadmap before Task 44.
@@ -1649,7 +1660,7 @@ not already implemented; they are not claims about the current baseline:
 
 ## Task 44 — Functional Block Descriptor and Stable Namespace Contract
 
-**Status:** `[!] BLOCKED BY TASK 43P AND THE EXPLICIT OWNER REVIEW GATE —
+**Status:** `[!] BLOCKED BY THE EXPLICIT OWNER REVIEW GATE —
 UNSTARTED`
 
 **Purpose:** Define the smallest reusable generation unit above the existing
@@ -3589,10 +3600,10 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Task 43P-C1 — Temporary Measurement Exception Cleanup (not started)**
+**Owner Review Gate — Post-Task-43 Roadmap Confirmation (not performed)**
 
-Then complete 43P-C2 and affected runtime acceptance checks. The
-[current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
-records the two demonstrated blockers, their owners, reproductions, and bounded
-acceptance criteria. Owner Review and Task 44 remain blocked and unstarted.
-These milestones require a new task; do not begin them automatically.
+C1/C2, the authorized efficiency work and Task 43P acceptance are complete.
+The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
+records the accepted composition, historical failures, reuse and remaining
+limits. Owner approval is still required before Task 44 becomes eligible.
+Task 44 is unstarted; do not begin it automatically.

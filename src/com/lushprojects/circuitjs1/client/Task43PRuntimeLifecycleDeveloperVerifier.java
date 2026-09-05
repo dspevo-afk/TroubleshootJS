@@ -19,6 +19,7 @@ final class Task43PRuntimeLifecycleDeveloperVerifier {
             "task43p-runtime-original-owner-not-ready");
 
         Task41SimulationSnapshot snapshot = Task41SimulationSnapshot.capture(sim);
+        int cleanupSafetyCaseCount = Task43PMeasurementCleanupDeveloperVerifier.verify(sim);
         StringBuilder cases = new StringBuilder();
         boolean originalOwnerRestored = false;
         int caseCount = 0;
@@ -58,6 +59,7 @@ final class Task43PRuntimeLifecycleDeveloperVerifier {
                 "task43p-runtime-incomplete-case-corpus");
             return "{\"protocol\":\"TSJ-TASK43P-D-1\",\"status\":\"OBSERVED\",\"originalOwnerRestored\":" +
                 originalOwnerRestored + ",\"caseCount\":" + caseCount +
+                ",\"cleanupSafetyCaseCount\":" + cleanupSafetyCaseCount +
                 ",\"cases\":[" + cases.toString() + "]}";
         } finally {
             /* This also repairs the owner if an unexpected exception or a

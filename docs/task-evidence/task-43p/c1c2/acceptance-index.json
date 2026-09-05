@@ -1,0 +1,802 @@
+{
+    "protocol":  "TSJ-TASK43P-C1C2-ACCEPTANCE-2026-09-05",
+    "status":  "READY_FOR_OWNER_REVIEW",
+    "head":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+    "branch":  "codex/task43p-final-recovery",
+    "sourceVerifierDigest":  "9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663",
+    "finalSourceHashes":  [
+                              {
+                                  "path":  "scripts/VerifierIsolation.psm1",
+                                  "sha256":  "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701"
+                              },
+                              {
+                                  "path":  "scripts/verify-browser.ps1",
+                                  "sha256":  "477CF2F6BB8A38E43483A000EC596F56E0027D356AC82ECB0F7B99482C617495"
+                              },
+                              {
+                                  "path":  "scripts/verify-gate-b.ps1",
+                                  "sha256":  "04C9966C67AD454F2E0EBF4BCE9CA923F4B4B545A53760682BCDDADCD1DCF618"
+                              },
+                              {
+                                  "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                  "sha256":  "BD12253B8440A5937FB7B08AC19B46CE406350A673A05BEA51ECBF66A3DDB39C"
+                              },
+                              {
+                                  "path":  "scripts/Task43PRuntimeEvidence.ps1",
+                                  "sha256":  "06E08BD5F100A99614CBBCBF497FC778F3C1B3B38A23AF382F55D2DE0530FA0C"
+                              },
+                              {
+                                  "path":  "scripts/Task43PPublicActionEvidence.ps1",
+                                  "sha256":  "1E019764D2415B0C9700D77D39E83C77B0DDB3EC0090BF7CB8B590161BEED3E3"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+                                  "sha256":  "048DB79C3F4AE73AD4D1C1A02ACD1B49D9FDF33A9F814E9B2C966038D97291C7"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+                                  "sha256":  "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                                  "sha256":  "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+                                  "sha256":  "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+                                  "sha256":  "22476D1C4C4B0FAEDEEC58E1471DC7F3A51047158E1F16CD470BA16B75A9DF53"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+                                  "sha256":  "35BC5810EFA0DBEEE11FBE7189E8D69F69CDF4C1656787EC66C325012D49D2DB"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+                                  "sha256":  "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+                                  "sha256":  "0183E1C0DA284354C6E7DAB50892E30A975BF24A29A5284FE0D6D9FED5EB67FC"
+                              },
+                              {
+                                  "path":  "src/com/lushprojects/circuitjs1/client/Task43PMeasurementCleanupDeveloperVerifier.java",
+                                  "sha256":  "4036F1C59A4285EA517BF438ACFCA5F9DBF23C5F31A97EF5D4716EC896AD1F9C"
+                              }
+                          ],
+    "finalExecutionProvenance":  {
+                                     "Protocol":  "troubleshootjs-execution-provenance-v1",
+                                     "SourceDigest":  "3d3e78ed8bec13b3cfd2607cdca277925b63afd9116065838e15b63f0ec86f58",
+                                     "ScriptDigest":  "d0413739150af0b5333ae924e46411183ea34752ec299c3a40b4b0fca44a55ac",
+                                     "WebDigest":  "7f3c98108c904ace7ffbb472620ff4b29386991bb3958acce6cfd372f5dbfdf2",
+                                     "Digest":  "bf1664dc2dc28b5ba6ee99efc37763c75a90b871b80f8ec10222ed2d26fb8a3a",
+                                     "FileCount":  1250
+                                 },
+    "finalBomFixtureDelta":  {
+                                 "artifact":  "efficiency-validation.json",
+                                 "sourceReview":  "PASS",
+                                 "allPriorRuntimeAndCompiledProofsReused":  true,
+                                 "priorBrowserAndSourceDigest":  "a0abcf3d61cb95c2e07ae3ed3516bc391dc312359c6cde31262d080c2d26faea",
+                                 "priorBomCanaryClaimAccepted":  false
+                             },
+    "digestExecutionEnvironment":  "Windows PowerShell 5.1; native sorted-record ordering",
+    "build":  {
+                  "actualExit":  0,
+                  "permutations":  5,
+                  "jdk":  "1.8.0_502",
+                  "command":  "scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF",
+                  "log":  {
+                              "name":  "gwt-public-slot-final-9d10b65795344f7695018bae2846581b.log",
+                              "sha256":  "198E7BA1D65B181A5C39164F091C9B6C887243F010184AC065B6DF8619CF285D"
+                          },
+                  "exitRecord":  {
+                                     "name":  "gwt-public-slot-final-9d10b65795344f7695018bae2846581b-exit.json",
+                                     "sha256":  "D4CF8E87F623DC796D5701F800954FA607A69E71B6E423AAB5E76BAF0068C8C0"
+                                 },
+                  "sourceHashes":  [
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+                                           "sha256":  "048DB79C3F4AE73AD4D1C1A02ACD1B49D9FDF33A9F814E9B2C966038D97291C7"
+                                       },
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+                                           "sha256":  "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D"
+                                       },
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                                           "sha256":  "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353"
+                                       },
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+                                           "sha256":  "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C"
+                                       },
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+                                           "sha256":  "22476D1C4C4B0FAEDEEC58E1471DC7F3A51047158E1F16CD470BA16B75A9DF53"
+                                       },
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+                                           "sha256":  "35BC5810EFA0DBEEE11FBE7189E8D69F69CDF4C1656787EC66C325012D49D2DB"
+                                       },
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+                                           "sha256":  "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6"
+                                       },
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+                                           "sha256":  "0183E1C0DA284354C6E7DAB50892E30A975BF24A29A5284FE0D6D9FED5EB67FC"
+                                       },
+                                       {
+                                           "path":  "src/com/lushprojects/circuitjs1/client/Task43PMeasurementCleanupDeveloperVerifier.java",
+                                           "sha256":  "4036F1C59A4285EA517BF438ACFCA5F9DBF23C5F31A97EF5D4716EC896AD1F9C"
+                                       }
+                                   ]
+              },
+    "gateB":  {
+                  "actualExit":  0,
+                  "command":  "scripts/verify-gate-b.ps1 -SkipJdkCheck",
+                  "log":  {
+                              "name":  "gate-b-efficiency-e7b0424879544efd81eb1a119cfb8245.log",
+                              "sha256":  "D1F8C58F29073E9447895FF9E9FCE0FE803A6D6874D63794DC0537DF158DC381"
+                          },
+                  "exitRecord":  {
+                                     "name":  "gate-b-efficiency-e7b0424879544efd81eb1a119cfb8245-exit.json",
+                                     "sha256":  "602FB4A5FBD68B63F287723DAC7F77575DDDFD0C068EFE0FD4B959D8D32A95AA"
+                                 },
+                  "sourceHashes":  [
+                                       {
+                                           "path":  "scripts/verify-browser.ps1",
+                                           "sha256":  "477CF2F6BB8A38E43483A000EC596F56E0027D356AC82ECB0F7B99482C617495"
+                                       },
+                                       {
+                                           "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                           "sha256":  "BD12253B8440A5937FB7B08AC19B46CE406350A673A05BEA51ECBF66A3DDB39C"
+                                       },
+                                       {
+                                           "path":  "scripts/verify-gate-b.ps1",
+                                           "sha256":  "04C9966C67AD454F2E0EBF4BCE9CA923F4B4B545A53760682BCDDADCD1DCF618"
+                                       },
+                                       {
+                                           "path":  "scripts/Task43PRuntimeEvidence.ps1",
+                                           "sha256":  "06E08BD5F100A99614CBBCBF497FC778F3C1B3B38A23AF382F55D2DE0530FA0C"
+                                       },
+                                       {
+                                           "path":  "scripts/VerifierIsolation.psm1",
+                                           "sha256":  "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701"
+                                       }
+                                   ]
+              },
+    "forced":  {
+                   "invocation":  {
+                                      "actualExit":  1,
+                                      "unchanged":  true,
+                                      "utc":  "2026-09-05T18:08:42.8120300Z",
+                                      "log":  {
+                                                  "name":  "task43p-forced-current-2a9eca808db34a9ea76f350978b58175.log",
+                                                  "sha256":  "68E688576649B1801E202703C53BFBC56E5626BEA61FC57B855F3EE2FB02B734"
+                                              },
+                                      "exitRecord":  {
+                                                         "name":  "task43p-forced-current-2a9eca808db34a9ea76f350978b58175-exit.json",
+                                                         "sha256":  "F7BA1C4BD3B6B20B7937846A8CB7D673A7645F7858173BCCA68F258D058AE493"
+                                                     }
+                                  },
+                   "command":  "scripts/verify-browser.ps1 -Task43PForcedNegative -Task43PStartupSettleMilliseconds 30000 -TimeoutSeconds 90",
+                   "originalPacket":  {
+                                          "name":  "task43p-task43p-forced-negative-canary.json",
+                                          "sha256":  "C4B82FA52347E54BAEE07C6B16AAFC956D5AED8C2FFE8DECA0EA8B82BB79C8B7"
+                                      },
+                   "observed":  "FAIL:task43p-forced-negative-canary",
+                   "proof":  {
+                                 "requested":  true,
+                                 "nonce":  "72335239a4404226ab2e5393357a879f",
+                                 "routeId":  "a9e8f775578c461d992cd4c551cb9592",
+                                 "requestId":  "f6738440864c45de86ca4ed31c9de9aa",
+                                 "executionDigest":  "e95ce9073e1883e11f2783dabbc1472a167705cd8e4ef424130370f81026247d"
+                             },
+                   "cleanup":  {
+                                   "runId":  "89d83513cd0a4e9e84e9f8a92a98617f",
+                                   "manifest":  {
+                                                    "name":  "manifest.json",
+                                                    "sha256":  "96FA7DD2CCA7FDC56540F1C15812BE17E2E1399BCB066FF97077842B84C946F4"
+                                                },
+                                   "cleanup":  {
+                                                   "state":  "complete",
+                                                   "completedUtc":  "2026-09-05T18:08:41.8956507Z",
+                                                   "errors":  [
+
+                                                              ]
+                                               },
+                                   "server":  {
+                                                  "processId":  142052,
+                                                  "processStartTicks":  639242284138005734,
+                                                  "port":  61705,
+                                                  "state":  "cleaned",
+                                                  "cleanupResult":  "complete"
+                                              },
+                                   "browsers":  [
+                                                    {
+                                                        "routeId":  "a9e8f775578c461d992cd4c551cb9592",
+                                                        "processId":  171840,
+                                                        "processStartTicks":  639242284330110553,
+                                                        "cdpPort":  61722,
+                                                        "status":  "cleaned",
+                                                        "cleanupResult":  "complete"
+                                                    }
+                                                ],
+                                   "leaseCount":  2,
+                                   "residueAudit":  {
+                                                        "name":  "89d83513cd0a4e9e84e9f8a92a98617f-residue-audit.json",
+                                                        "sha256":  "7214E984667B8A07BC4D9F8DDD90573CDC1F40C19A70CD6850D9E243EB554576"
+                                                    },
+                                   "auditedUtc":  "2026-09-05T18:09:22.5060998Z",
+                                   "currentRelevantCount":  0,
+                                   "previewAbsent":  true,
+                                   "manualCleanupPerformed":  false
+                               }
+               },
+    "runtime":  {
+                    "invocation":  {
+                                       "actualExit":  0,
+                                       "unchanged":  true,
+                                       "utc":  "2026-09-05T18:30:50.9048553Z",
+                                       "log":  {
+                                                   "name":  "task43p-runtime-current-09d74e52e66b44e3ade73231234f6542.log",
+                                                   "sha256":  "8F6966D581D108B42C5EDE99AB3A13E1D685EC6611451EEB80BB96515E210048"
+                                               },
+                                       "exitRecord":  {
+                                                          "name":  "task43p-runtime-current-09d74e52e66b44e3ade73231234f6542-exit.json",
+                                                          "sha256":  "1FE895E7329E483691A6D8027662D9CE18485DBB573A6CD98B23CA4FFAC52E6F"
+                                                      }
+                                   },
+                    "openObservationCount":  0,
+                    "artifact":  "runtime-observations.json"
+                },
+    "physical":  {
+                     "invocationCount":  6,
+                     "triadCount":  18,
+                     "triadPassCount":  18,
+                     "artifact":  "physical-correspondence.json",
+                     "aggregateExits":  [
+                                            2,
+                                            2,
+                                            2,
+                                            2,
+                                            2,
+                                            2
+                                        ]
+                 },
+    "sourceExperiments":  {
+                              "qualifiedCaseCount":  11,
+                              "finalCandidateFresh":  0,
+                              "finalCandidateReused":  11,
+                              "anchorRepairsCompiledEarlier":  2,
+                              "earlierReusedPhysical":  8,
+                              "currentJavaSnapshot":  1,
+                              "artifact":  "source-falsification.json"
+                          },
+    "efficiency":  {
+                       "status":  "PASS",
+                       "artifact":  "efficiency-validation.json",
+                       "preflightDefinitions":  11,
+                       "preflightCanaries":  4,
+                       "fullGateBActualExit":  0
+                   },
+    "visible":  {
+                    "status":  "PASS",
+                    "family":  "LED_INDICATOR",
+                    "seed":  3,
+                    "inputRoute":  "Built-in Browser real mouse and keyboard",
+                    "query":  "tsjChallenge=led\u0026seed=3",
+                    "developerQuery":  false,
+                    "states":  [
+                                   "unrepaired retest rejected",
+                                   "power-off resistance red-left black-right",
+                                   "mode exit",
+                                   "original removed",
+                                   "2200 ohm retest rejected",
+                                   "1000 ohm completion and disabled controls"
+                               ],
+                    "domAudit":  {
+                                     "name":  "task43p-visible-dom-audit.json",
+                                     "sha256":  "D65CE7D866C296F8648F395C72B4E10A3ABE4054A40E812A129C014697DADB07"
+                                 },
+                    "stateSnapshots":  {
+                                           "name":  "task43p-visible-player-states.json",
+                                           "sha256":  "E65D4D535D3424571D8AB49A8527287737EF7F27CAA9810D57E8EE8CCBC986B5"
+                                       },
+                    "accessibleAttributes":  [
+                                                 {
+                                                     "alt":  null,
+                                                     "ariaDescription":  null,
+                                                     "ariaLabel":  "Workbench navigation",
+                                                     "tag":  "NAV",
+                                                     "title":  null
+                                                 }
+                                             ],
+                    "rootEvidenceAttributes":  [
+
+                                               ],
+                    "privacyScope":  "Exercised ordinary LED3 DOM/accessibility and real player input only.",
+                    "screenshots":  [
+                                        {
+                                            "artifact":  "visible-unrepaired-retest.png",
+                                            "raw":  {
+                                                        "name":  "task43p-visible-unrepaired-retest.png",
+                                                        "sha256":  "997C558853354706DC32DF26011DA09BF06757C3ED6CE82478747BA80B4BCAB3"
+                                                    },
+                                            "inspected":  true
+                                        },
+                                        {
+                                            "artifact":  "visible-resistance.png",
+                                            "raw":  {
+                                                        "name":  "task43p-visible-resistance.png",
+                                                        "sha256":  "29AD8B84BD0E0E6F751193E6CC5975E44FAB5C8ED4AA3D53997399CEBA2C0E40"
+                                                    },
+                                            "inspected":  true
+                                        },
+                                        {
+                                            "artifact":  "visible-removed.png",
+                                            "raw":  {
+                                                        "name":  "task43p-visible-removed.png",
+                                                        "sha256":  "9F5D741246E5C96B0CAB9ED5D36E324C7649094C1152432F9793AE4D28D6BA8A"
+                                                    },
+                                            "inspected":  true
+                                        },
+                                        {
+                                            "artifact":  "visible-wrong-repair.png",
+                                            "raw":  {
+                                                        "name":  "task43p-visible-wrong-repair.png",
+                                                        "sha256":  "001B32F3E56B1CD3CB61C1CFCB550523C267C27A77A63CCBFF59458C6C95245D"
+                                                    },
+                                            "inspected":  true
+                                        },
+                                        {
+                                            "artifact":  "visible-completed.png",
+                                            "raw":  {
+                                                        "name":  "task43p-visible-completed.png",
+                                                        "sha256":  "D26A5BE21EBD0E5FA5BC81D40DD879DEB2C5CDF7A1F05F1747357E12A78C2254"
+                                                    },
+                                            "inspected":  true
+                                        }
+                                    ],
+                    "exitRecord":  {
+                                       "name":  "visible-preview-2f39c0ee424b4816a228a0269cdb0829-exit.json",
+                                       "sha256":  "27535FACC351F14884328F2E77B17225DF8E8D0F51C13F6ECD536F958D4791AB"
+                                   },
+                    "cleanup":  {
+                                    "runId":  "bef8214139f7496dbd1d15980140ae04",
+                                    "manifest":  {
+                                                     "name":  "manifest.json",
+                                                     "sha256":  "0262D3D04DEE2451980CBCF4B034EC61520D292A59BECF6DB5BA0C3B28D87D49"
+                                                 },
+                                    "cleanup":  {
+                                                    "state":  "complete",
+                                                    "completedUtc":  "2026-09-05T19:21:00.0366409Z",
+                                                    "errors":  [
+
+                                                               ]
+                                                },
+                                    "server":  {
+                                                   "processId":  128500,
+                                                   "processStartTicks":  639242326493253258,
+                                                   "port":  61558,
+                                                   "state":  "cleaned",
+                                                   "cleanupResult":  "complete"
+                                               },
+                                    "browsers":  [
+
+                                                 ],
+                                    "leaseCount":  1,
+                                    "residueAudit":  {
+                                                         "name":  "bef8214139f7496dbd1d15980140ae04-residue-audit.json",
+                                                         "sha256":  "2452619EF0D38DFE67D5B073F0C10C8BA4A1794CB3558140BEE5DB6630661531"
+                                                     },
+                                    "auditedUtc":  "2026-09-05T19:21:18.8085419Z",
+                                    "currentRelevantCount":  0,
+                                    "previewAbsent":  true,
+                                    "manualCleanupPerformed":  false
+                                }
+                },
+    "review":  {
+                   "modelRequested":  "Luna",
+                   "reasoningRequested":  "MAX",
+                   "speed":  "Default; no speed control or effective speed metadata exposed",
+                   "integrated":  "PASS",
+                   "targetedDeltas":  "PASS",
+                   "dependencyReuse":  "PASS",
+                   "sourceAndRuntimeEvidence":  "PASS",
+                   "finalEvidence":  "PASS",
+                   "reviewer":  "Singer / source_proof_review",
+                   "implementationOrOracleAuthoredByReviewer":  false
+               },
+    "failedInvocations":  [
+                              {
+                                  "runId":  "5b0e262909b940b8933200c029181381",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "cause":  "Stale explicit published-baseline metadata rejected the diagnostic.",
+                                  "invocation":  {
+                                                     "actualExit":  2,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T15:39:19.0789581Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-forced-current-0bccdb5ffe7545439daa44346a846ef0.log",
+                                                                 "sha256":  "E114A9345E66C90778BE2CAC11E0158D52AEA5420593F311BA6EEC9A5CA31B89"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-forced-current-0bccdb5ffe7545439daa44346a846ef0-exit.json",
+                                                                        "sha256":  "CCE101F04520098D2CBB6A0FB6AB661EA453D5489360F7AC29AE84C34CBF4E8A"
+                                                                    }
+                                                 },
+                                  "cleanup":  {
+                                                  "runId":  "5b0e262909b940b8933200c029181381",
+                                                  "manifest":  {
+                                                                   "name":  "manifest.json",
+                                                                   "sha256":  "E1D5BCBC34F5EC245104C8FC4942865995272A0A71A85543277DF0CE9003D950"
+                                                               },
+                                                  "cleanup":  {
+                                                                  "state":  "complete",
+                                                                  "completedUtc":  "2026-09-05T15:39:18.2939074Z",
+                                                                  "errors":  [
+
+                                                                             ]
+                                                              },
+                                                  "server":  {
+                                                                 "processId":  215344,
+                                                                 "processStartTicks":  639242194736281661,
+                                                                 "port":  60175,
+                                                                 "state":  "cleaned",
+                                                                 "cleanupResult":  "complete"
+                                                             },
+                                                  "browsers":  [
+                                                                   {
+                                                                       "routeId":  "633bbf99666d4c25beffe7a7cf469237",
+                                                                       "processId":  283036,
+                                                                       "processStartTicks":  639242194871957572,
+                                                                       "cdpPort":  60181,
+                                                                       "status":  "cleaned",
+                                                                       "cleanupResult":  "complete"
+                                                                   }
+                                                               ],
+                                                  "leaseCount":  2,
+                                                  "residueAudit":  {
+                                                                       "name":  "5b0e262909b940b8933200c029181381-residue-audit.json",
+                                                                       "sha256":  "E4665D6AAC02FDB205998BD79335598F0C04EEFF1B399CECAC88AA7A3343253C"
+                                                                   },
+                                                  "auditedUtc":  "2026-09-05T15:40:23.0665668Z",
+                                                  "currentRelevantCount":  0,
+                                                  "previewAbsent":  true,
+                                                  "manualCleanupPerformed":  false
+                                              }
+                              },
+                              {
+                                  "runId":  "c0456896b97744e9b29d2979a9e45a57",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "acceptedPackets":  0,
+                                  "cause":  "Browser root/listener identity took 568 ms against 500 ms; descendant cleanup later exceeded its budget.",
+                                  "invocation":  {
+                                                     "actualExit":  2,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T16:24:22.5884500Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-triad-current-8b82fa897e4f4ac5993b30c5d64d2195.log",
+                                                                 "sha256":  "2D1563EE681B63D2D47EA5FE06573FB151B06B1F14A3E74E4D30FB11E8CF6C39"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-triad-current-8b82fa897e4f4ac5993b30c5d64d2195-exit.json",
+                                                                        "sha256":  "481CB61F34BA1C4BFC79CA3644220E0150A7F0954A056F0A0EF9DE624835A2C6"
+                                                                    }
+                                                 },
+                                  "ownershipInspection":  {
+                                                              "name":  "c045-failed-physical-process-inspection.json",
+                                                              "sha256":  "F0C91766C13AF6F42AD543265899A903B6C5D49C821866DC849B8F09043001B8"
+                                                          },
+                                  "manualRootStop":  {
+                                                         "name":  "c045-manual-root-stop.json",
+                                                         "sha256":  "E23AB397CF5B7A9F47674E817567ACBC2403557AB0E09EC617A169C25D273AD5"
+                                                     },
+                                  "separatePostManualAbsence":  {
+                                                                    "name":  "c045-post-manual-absence.json",
+                                                                    "sha256":  "207A9F09C8F1F708558228CE87127A2A11927C4D59D46B8C0DD13E3B8DFC30F1"
+                                                                },
+                                  "resourceDisposition":  "Exact recorded task root was revalidated and manually stopped; children exited naturally. Failed profile/claim/manifest retained; separate absence does not qualify failed cleanup."
+                              },
+                              {
+                                  "runId":  "c8db747966c34db0b14768ec4323602c",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "compileExit":  0,
+                                  "cause":  "Current process identity startup budget expired before a browser root was recorded; cleanup could not prove the missing root.",
+                                  "invocation":  {
+                                                     "actualExit":  2,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T16:40:49.3243883Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-source-current-d3c52574aac7488f9254f36d287b3456.log",
+                                                                 "sha256":  "C2E0B65DFA74D100982B580762241C7C32497569CC587F9291413EE3F26769CD"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-source-current-d3c52574aac7488f9254f36d287b3456-exit.json",
+                                                                        "sha256":  "888C6666F732975EF085FF42B0AB9E89063C6286A5A4036BDCD62D08FA1ED7EE"
+                                                                    }
+                                                 },
+                                  "separateManualOwnerProof":  {
+                                                                   "name":  "c8db-exact-manual-owner-proof.json",
+                                                                   "sha256":  "24A04ECF9D0F6D8F9716E25DAAEF35E3EAA17641BE191199E1A642166A71F661"
+                                                               },
+                                  "manualRootStop":  {
+                                                         "name":  "c8db-manual-root-stop.json",
+                                                         "sha256":  "3766589A24A728BD913D3C8FF9CBF203B2460E5C76FE2C5F340ADB2F5B2DCBD2"
+                                                     },
+                                  "separatePostManualAbsence":  {
+                                                                    "name":  "c8db-post-manual-absence.json",
+                                                                    "sha256":  "8FF13EEE3548180108C0DE306B3666F2BE2705BE4C25600B22D42FB7E4B22C80"
+                                                                },
+                                  "resourceDisposition":  "Persisted own parent claim and run lifetime plus exact current root identity supported separate manual root-only cleanup. Failed profile/claim/source copy retained; no verifier cleanup qualification."
+                              },
+                              {
+                                  "runId":  "10bf48ae6fa04ea8b49fcd26d51261cd",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "cause":  "Public Remove multiline anchor did not match LF source; rejected before compilation or browser launch.",
+                                  "invocation":  {
+                                                     "actualExit":  2,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T17:05:53.1191191Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-source-current-c873f89eda0043a5a0d9abd9809b7cc1.log",
+                                                                 "sha256":  "2BDDB3AE5C25873A553A8F158342D30BFB368D9CDD0FD3B4D3FE3903D020EBBB"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-source-current-c873f89eda0043a5a0d9abd9809b7cc1-exit.json",
+                                                                        "sha256":  "B50480820A60C1A308B22B9BADA398F6C031D28F2C648A144E2C500DAB6A5804"
+                                                                    }
+                                                 },
+                                  "sourceBytesRestoredExactly":  true,
+                                  "compileAttempted":  false,
+                                  "runtimeAttempted":  false
+                              },
+                              {
+                                  "runId":  "8aad0d6c2bb84be49b36ec95f0bf1196",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "cause":  "Transient relevant browser candidate had an inaccessible command line; descendant cleanup did not prove completion.",
+                                  "invocation":  {
+                                                     "actualExit":  2,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T17:20:58.8462429Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-runtime-current-8fa0d555cf6a41a9af31484d82d8b667.log",
+                                                                 "sha256":  "22FA98EF170C3E3C05F1E78D3DC418579FECE34A40A84FB17066A3B6DF83660D"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-runtime-current-8fa0d555cf6a41a9af31484d82d8b667-exit.json",
+                                                                        "sha256":  "45A4A6AE32A9DD64177B00411CE34473DDD9498B824ED209979D707665A78FE5"
+                                                                    }
+                                                 },
+                                  "applicationOutcomeObserved":  0,
+                                  "acceptedApplicationGate":  false,
+                                  "separatePostNaturalAbsence":  {
+                                                                     "name":  "8aad-post-natural-absence.json",
+                                                                     "sha256":  "66265D35C581C1378D38E801597751833FE2781DC1A0EAE161BB9946B5A49D08"
+                                                                 },
+                                  "resourceDisposition":  "Recorded browser/preview exited naturally; current process/listener absence proven separately. Failed profile and claim retained; no manual kill."
+                              },
+                              {
+                                  "runId":  "8d95563dcdae47a7b15eef5e1d2085c8",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "cause":  "CDP receive canceled after the observation packet was persisted; the final redundant read was subsequently moved before capture.",
+                                  "invocation":  {
+                                                     "actualExit":  2,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T17:26:58.7815590Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-runtime-current-ddba6ab51f4d4291ae98e20030a8c1b2.log",
+                                                                 "sha256":  "2727E4BDC6380253141EA308637253694B056BF63888C0C728B1662751444912"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-runtime-current-ddba6ab51f4d4291ae98e20030a8c1b2-exit.json",
+                                                                        "sha256":  "9AE2A30D1424F6E28494685F51003C2780A0E899F9948A90F9222C35133CE0ED"
+                                                                    }
+                                                 },
+                                  "applicationOutcomeObserved":  0,
+                                  "acceptedApplicationGate":  false,
+                                  "cleanup":  {
+                                                  "runId":  "8d95563dcdae47a7b15eef5e1d2085c8",
+                                                  "manifest":  {
+                                                                   "name":  "manifest.json",
+                                                                   "sha256":  "D0A340AC49ED93DF76AA5E38EA96BBE965187BF3A00D6CECBF7F7F150659FE15"
+                                                               },
+                                                  "cleanup":  {
+                                                                  "state":  "complete",
+                                                                  "completedUtc":  "2026-09-05T17:26:57.4008282Z",
+                                                                  "errors":  [
+
+                                                                             ]
+                                                              },
+                                                  "server":  {
+                                                                 "processId":  313080,
+                                                                 "processStartTicks":  639242258550976186,
+                                                                 "port":  64562,
+                                                                 "state":  "cleaned",
+                                                                 "cleanupResult":  "complete"
+                                                             },
+                                                  "browsers":  [
+                                                                   {
+                                                                       "routeId":  "b65ac6d77a714f32a8c9ab5519ecf131",
+                                                                       "processId":  15436,
+                                                                       "processStartTicks":  639242258706397002,
+                                                                       "cdpPort":  64618,
+                                                                       "status":  "cleaned",
+                                                                       "cleanupResult":  "complete"
+                                                                   }
+                                                               ],
+                                                  "leaseCount":  2,
+                                                  "residueAudit":  {
+                                                                       "name":  "8d95563dcdae47a7b15eef5e1d2085c8-residue-audit.json",
+                                                                       "sha256":  "0BB847A657D81D6891281D0D0D38F7BBB901521EBE0D23AB8A0E52499F7A2BDC"
+                                                                   },
+                                                  "auditedUtc":  "2026-09-05T17:28:04.6602203Z",
+                                                  "currentRelevantCount":  0,
+                                                  "previewAbsent":  true,
+                                                  "manualCleanupPerformed":  false
+                                              }
+                              },
+                              {
+                                  "runId":  "12fb1ad2d6254bd8a2ed9b2b2ee11d1c",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "cause":  "Application-result CDP receive canceled after the route deadline; cleanup and absence audit are separate.",
+                                  "invocation":  {
+                                                     "actualExit":  2,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T18:13:01.5740828Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-runtime-current-59861f884d2b45e093191aa22ff3e38a.log",
+                                                                 "sha256":  "7D6E0DED757D7F33477F1712E28903A86CE85FB93A240B5AF86E8AA527456F84"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-runtime-current-59861f884d2b45e093191aa22ff3e38a-exit.json",
+                                                                        "sha256":  "E1DC72312C3F388F46AFEB4C2ABB7736C9D4EB672E109EC99F8B1B2F97A3C951"
+                                                                    }
+                                                 },
+                                  "cleanup":  {
+                                                  "runId":  "12fb1ad2d6254bd8a2ed9b2b2ee11d1c",
+                                                  "manifest":  {
+                                                                   "name":  "manifest.json",
+                                                                   "sha256":  "49F1146CF6E45F561BAE28134184AE41ADD826F5556B066E21077DE6816CB5A8"
+                                                               },
+                                                  "cleanup":  {
+                                                                  "state":  "complete",
+                                                                  "completedUtc":  "2026-09-05T18:13:00.5838533Z",
+                                                                  "errors":  [
+
+                                                                             ]
+                                                              },
+                                                  "server":  {
+                                                                 "processId":  177044,
+                                                                 "processStartTicks":  639242286214340532,
+                                                                 "port":  50880,
+                                                                 "state":  "cleaned",
+                                                                 "cleanupResult":  "complete"
+                                                             },
+                                                  "browsers":  [
+                                                                   {
+                                                                       "routeId":  "78abe1bf4abd48969e4e2fac11dbe648",
+                                                                       "processId":  62848,
+                                                                       "processStartTicks":  639242286357551920,
+                                                                       "cdpPort":  50891,
+                                                                       "status":  "cleaned",
+                                                                       "cleanupResult":  "complete"
+                                                                   }
+                                                               ],
+                                                  "leaseCount":  2,
+                                                  "residueAudit":  {
+                                                                       "name":  "12fb1ad2d6254bd8a2ed9b2b2ee11d1c-residue-audit.json",
+                                                                       "sha256":  "B84B493F0ACB544660A2EF67B70428949CFAD8AC7D6EFB3067E2E19367397E89"
+                                                                   },
+                                                  "auditedUtc":  "2026-09-05T18:13:46.8508561Z",
+                                                  "currentRelevantCount":  0,
+                                                  "previewAbsent":  true,
+                                                  "manualCleanupPerformed":  false
+                                              }
+                              },
+                              {
+                                  "runId":  "8af393ca5e444ea081148987338cd30f",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "acceptedPackets":  0,
+                                  "cause":  "RC seed3 cleanup could not inspect a transient relevant process; descendant cleanup did not qualify.",
+                                  "invocation":  {
+                                                     "actualExit":  2,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T18:49:03.7541448Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-triad-rc-current-c8fa9bb64f3643bf8cf4970d7e8c0902.log",
+                                                                 "sha256":  "4410AC8B4A4A0BD8BEB37B505C05C5A2C5C64FB12A1BF59472BE1CF24218FD6F"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-triad-rc-current-c8fa9bb64f3643bf8cf4970d7e8c0902-exit.json",
+                                                                        "sha256":  "4E8E50D819D1AAA4865529AE8D8A52C129F87FBE5C49CDD014D537703E703AA2"
+                                                                    }
+                                                 },
+                                  "ownershipInspection":  {
+                                                              "name":  "8af393-failed-rc-process-inspection.json",
+                                                              "sha256":  "F505EAA5D1B37A3BA233FD4FE536D379EF840A66E5840BD10E649BFCD39441B7"
+                                                          },
+                                  "separatePostNaturalAbsence":  {
+                                                                     "name":  "8af393-post-natural-absence.json",
+                                                                     "sha256":  "6756E6B7F578447FE715F8B237B5A973714BCE7DDD6AA0887ED5513F8E3CF827"
+                                                                 },
+                                  "resourceDisposition":  "All recorded browser/preview processes exited naturally; all recorded ports absent. Failed profile/claim/manifest retained unchanged; no manual kill."
+                              },
+                              {
+                                  "runId":  "6650d8e1e5294e30837865de9e52fd5d",
+                                  "actualVerifierExit":  2,
+                                  "accepted":  false,
+                                  "cause":  "Visible preview startup ownership proof exceeded its bounded deadline; cleanup/audit are separate.",
+                                  "evidence":  {
+                                                   "name":  "visible-preview-22ef5e3dc8884b799d69ae117bd05209-exit.json",
+                                                   "sha256":  "726252F329A52C4BD5E65D0DA815DE69870F9184336C0CD1FB461010D006A8CE"
+                                               },
+                                  "cleanup":  {
+                                                  "runId":  "6650d8e1e5294e30837865de9e52fd5d",
+                                                  "manifest":  {
+                                                                   "name":  "manifest.json",
+                                                                   "sha256":  "2BA16F5DFA1AE2180345DB854457BC93DE069986D25A0B4D6DA5C2ADBAAD6700"
+                                                               },
+                                                  "cleanup":  {
+                                                                  "state":  "complete",
+                                                                  "completedUtc":  "2026-09-05T17:33:12.3167039Z",
+                                                                  "errors":  [
+
+                                                                             ]
+                                                              },
+                                                  "server":  {
+                                                                 "processId":  286860,
+                                                                 "processStartTicks":  639242263698413907,
+                                                                 "port":  63270,
+                                                                 "state":  "cleaned",
+                                                                 "cleanupResult":  "complete"
+                                                             },
+                                                  "browsers":  [
+
+                                                               ],
+                                                  "leaseCount":  1,
+                                                  "residueAudit":  {
+                                                                       "name":  "6650d8e1e5294e30837865de9e52fd5d-residue-audit.json",
+                                                                       "sha256":  "512623DCAB557D8EC046AC9CCAA72890BD25D18F8559555A74FE92ADE65F8CBF"
+                                                                   },
+                                                  "auditedUtc":  "2026-09-05T17:35:41.7454521Z",
+                                                  "currentRelevantCount":  0,
+                                                  "previewAbsent":  true,
+                                                  "manualCleanupPerformed":  false
+                                              }
+                              }
+                          ],
+    "closedBlockers":  [
+                           "43P-C1",
+                           "43P-C2"
+                       ],
+    "openBlockers":  [
+
+                     ],
+    "ownerApproval":  "NOT PERFORMED",
+    "task44":  "UNSTARTED",
+    "limits":  [
+                   "Explicit proof baseline pins tested 8bf4424 base plus diff; later-HEAD invocations require a reviewed baseline update.",
+                   "Fresh-candidate/detached-original snapshots; no deep same-owner rollback, generic epochs or timer identity.",
+                   "Original failed invocation exits remain unchanged; prior raw evidence retained.",
+                   "30000 ms CDP startup condition only; ordinary player privacy limited to exercised LED3 states."
+               ],
+    "followups":  [
+                      "READY/pending flags are not a general settlement contract.",
+                      "Synthetic healthy-before/pending schema and nullable installed-target envelope remain bounded TEST/TOOL follow-ups.",
+                      "Secondary-damage projections are not a full public-surface proof."
+                  ],
+    "next":  "Owner Review; Task 44 remains unstarted and requires explicit owner authorization."
+}

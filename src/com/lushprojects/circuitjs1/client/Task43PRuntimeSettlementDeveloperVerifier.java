@@ -478,10 +478,12 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
         GeneratedBoardInstance candidate = session.getInstance();
         boolean exactRoundTrip = false;
         boolean omissionRejected = false;
+        String rejectionReason = null;
         try {
             snapshot.beginProof(sim);
             installQuickPlaySession(sim, session);
             requireReady(sim, candidate, "H-omission");
+            int supportedInventoryCases = verifySupportedSnapshotInventory(sim);
             sim.lastResistanceTestCurrent = 123.456789;
             Task41SimulationSnapshot calibration = Task41SimulationSnapshot.capture(sim);
             sim.lastResistanceTestCurrent = -987.654321;
@@ -493,8 +495,11 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
             sim.lastResistanceTestCurrent = -456.789;
             try {
                 calibration.assertRestored(sim);
-            } catch (RuntimeException expected) {
-                omissionRejected = true;
+            } catch (IllegalStateException expected) {
+                rejectionReason = expected.getMessage();
+                omissionRejected = "Task 41 restore changed lastResistanceTestCurrent".equals(rejectionReason);
+                if (!omissionRejected)
+                    throw expected;
             }
             calibration.restore(sim);
             calibration.assertRestored(sim);
@@ -504,6 +509,8 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
                 ",\"runtimeSimulatedOmissionRejected\":" + omissionRejected +
                 ",\"task41AssertRestoredRejectedPostRestoreSentinel\":" + omissionRejected +
                 ",\"task41AssertRestoredAcceptedPostRestoreSentinel\":" + (!omissionRejected) +
+                ",\"rejectionReason\":" + q(rejectionReason) +
+                ",\"supportedInventoryCases\":" + supportedInventoryCases +
                 ",\"sourceMutation\":false,\"disposition\":" +
                 q(omissionRejected ? "CLOSED" : "OPEN_BLOCKER") + "}";
         } finally {
@@ -514,6 +521,72 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
             require(sim.getGeneratedBoardInstance() == originalOwner &&
                     sim.getGeneratedChallengeController() == originalChallenge,
                 "task43p-H-omission-owner-not-restored");
+        }
+    }
+
+    private static int verifySupportedSnapshotInventory(CirSim sim) {
+        Task41SimulationSnapshot baseline = Task41SimulationSnapshot.capture(sim);
+        try {
+            sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            sim.updateCircuit();
+            CircuitElm resistor = sim.getGeneratedBoardInstance().getComponentBindings().getSingleElement("R1");
+            CircuitPostProbeTarget red = new CircuitPostProbeTarget(sim, resistor, 0);
+            CircuitPostProbeTarget black = new CircuitPostProbeTarget(sim, resistor, 1);
+            sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+            sim.setSimRunning(false);
+            sim.mouseCursorX = -137;
+            sim.lastTime = 24681357;
+            sim.timeStepAccum = .03125;
+            sim.timeStepCount = 73;
+            sim.lastResistanceReferenceCurrent = Double.NaN;
+            sim.lastDiodeMeasurementCurrent = .0125;
+            sim.needsRepaint = false;
+            sim.analyzeFlag = false;
+            sim.circuitArea = new Rectangle(3, 5, 701, 409);
+            Task41SimulationSnapshot supported = Task41SimulationSnapshot.capture(sim);
+            sim.mouseCursorX = 7;
+            sim.lastTime = 9;
+            sim.timeStepAccum = 7;
+            sim.timeStepCount = 4;
+            sim.lastResistanceReferenceCurrent = 8;
+            sim.lastDiodeMeasurementCurrent = 9;
+            sim.instrumentController.clearTargets();
+            sim.setSimRunning(true);
+            supported.restore(sim);
+            supported.assertRestored(sim);
+            InstrumentController.DeveloperState state = sim.instrumentController.captureForDeveloperVerification();
+            require(sim.mouseCursorX == -137 && sim.lastTime == 24681357 &&
+                sim.timeStepAccum == .03125 && sim.timeStepCount == 73 &&
+                Double.isNaN(sim.lastResistanceReferenceCurrent) && sim.lastDiodeMeasurementCurrent == .0125 &&
+                !sim.simRunning && !sim.needsRepaint && !sim.analyzeFlag &&
+                sim.circuitArea.x == 3 && sim.circuitArea.y == 5 &&
+                sim.circuitArea.width == 701 && sim.circuitArea.height == 409 &&
+                state.redProbe == red && state.blackProbe == black,
+                "task43p-H-supported-snapshot-nondefault-round-trip-failed");
+            Task41SimulationSnapshot.verifyInjectedFailureStagesForDeveloperVerification(sim);
+            String[] groups = { "input", "render", "solver", "measurement/verification" };
+            for (int group = 0; group < groups.length; group++) {
+                if (group == 0) sim.mouseCursorX = 1;
+                if (group == 1) sim.lastTime = 1;
+                if (group == 2) sim.timeStepAccum = 1;
+                if (group == 3) sim.lastResistanceReferenceCurrent = 1;
+                boolean rejected = false;
+                try {
+                    supported.assertRestored(sim);
+                } catch (IllegalStateException expected) {
+                    rejected = ("Task 41 restore changed supported " + groups[group] + " state")
+                        .equals(expected.getMessage());
+                    if (!rejected)
+                        throw expected;
+                }
+                require(rejected, "task43p-H-supported-snapshot-accepted-" + groups[group]);
+                supported.restore(sim);
+                supported.assertRestored(sim);
+            }
+            return groups.length;
+        } finally {
+            baseline.restore(sim);
+            baseline.assertRestored(sim);
         }
     }
 

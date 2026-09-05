@@ -30,8 +30,15 @@ through `finally`. Resistance measurement uses a temporary $1 V$ DC source in
 series with a $1 kOhm$ internal resistor. CircuitJS solves the resulting
 current, and the meter derives $|V/I| - 1 kOhm$ from that solve. The temporary
 elements are not board metadata, export content, or undo/redo history; they are
-removed and the original graph is synchronously reanalyzed and solved in
-`finally` before the transaction completes. The temporary intermediate point is
+removed and the original graph is synchronously reanalyzed and solved before
+the transaction completes. Removal, reconstruction, queued power, and final
+time synchronization have separate exception handling. The original failure
+propagates with later cleanup failures retained as suppressed exceptions.
+Queued power is applied only after the temporary elements are absent from the
+element list, voltage-source index, and node links, with a valid restored
+solver. If restoration fails, the real external inputs are disconnected,
+solving stops, the latest power request remains pending, and the visible power
+control requires a board reload. The temporary intermediate point is
 allocated deterministically from occupied CircuitJS posts, so it cannot connect
 to either probe or an existing circuit endpoint. A temporary $1 TOhm$ resistor
 connects the black probe node to a separate remote ground point, giving the
@@ -1231,6 +1238,17 @@ transactional with best-effort exception recovery; eight injected restore
 stages are exercised by the developer verifier. Task 41 evidence is published
 only on an explicit developer verification route and never in normal-player UI.
 
+Task 43P-C2 checks the entire currently captured synchronous inventory,
+including the resistance test current, diagnostic values, solver flags,
+input/render bookkeeping, and measurement/verification state. It uses
+null-safe string/rectangle value comparisons and the existing paired-NaN
+double semantics. UI refresh and run/stop callbacks can alter geometry,
+repaint/analysis flags, and instrument state; those captured values are
+restored last before the immediate assertion. Scope-array identity is checked;
+scope internals, nested physical/challenge/renderer state, callback cancellation,
+and timer identity are not captured. This remains the detached-original-owner
+proof model, not a complete same-owner transaction.
+
 ## Task 40/41 contract-hardening correction
 
 The bounded correction after Task 41 keeps the accepted solver-backed proof and
@@ -2295,54 +2313,36 @@ was fabricated or mutated by Gate B.
 
 ## Current Task 43P evidence status
 
-The opt-in `-Task43P -Task43PRuntime` route starts from a fixed LED seed-3
-document. Four developer-only collectors exercise existing mutation/meter/
-stress/stored-energy paths, one-shot exceptions inside the real temporary
-measurement implementation, paused completion, fresh-session/reset ordering,
-and a real scheduled repaint across an owner switch. Observations are copied
-before restoring the detached original owner. The collectors introduce no
-production rollback owner or request/board/session epoch.
+C1 independently handles measurement removal, solver reconstruction, queued
+power and synchronization; it retains primary/suppressed failures and visibly
+isolates/stops an unproven graph. C2 asserts the supported Task41 snapshot
+inventory, including `lastResistanceTestCurrent` with NaN-aware comparison,
+and restores UI-sensitive captured values after refresh/restart.
 
-Java publishes the run/route-bound `TSJ-TASK43P-RUNTIME-1` observations.
-`Task43PRuntimeEvidence.ps1` validates the exact nested schema and derives
-the supported outcomes from raw fields. The wrapper owns repository and
-compiled execution provenance, persists evidence before assigning an outcome,
-and returns an application `1` for observed blockers. Missing/contradictory
-evidence or unproven cleanup returns `2`. Rejected runtime packets are retained
-as explicitly unvalidated diagnostics; they cannot assign a successful result.
+The dedicated A–I route returns legitimate `0` with no open observations. Four
+real measurement cases, seven cleanup canaries, non-default snapshot round trips,
+the exact field sentinel and compiled omitted-assignment proof qualify. The
+snapshot remains a fresh-candidate/detached-original proof; deep same-owner
+transactions, generic epochs, timer identity and deep renderer/scope internals
+are not covered.
 
-Current runtime evidence records three open observations with two root causes:
-post-removal measurement exceptions leave solver/overlay/power residue, and
-Task41's restoration assertion accepts a changed resistance-current scalar.
-These are documented correction milestones, not production repairs made by
-the collectors. A deferred resistance-reading refresh after queued power is
-ordinary cache state; cleanup still requires all graph, solver, overlay,
-power, and owner invariants.
+Source experiments preflight all eleven anchors before compiling a selected
+mutation. Gate B includes those eleven mutations and four restoration/rejection
+canaries. Task43P's final page diagnostic runs before evidence capture; phase,
+operation, timing and cleanup metadata diagnose failures without changing
+ownership, the 500 ms proof budget, route deadlines or exit semantics.
+The positive preflight BOM fixture verifies the actual `EF BB BF` bytes and
+exact restoration. Its final test-only correction has fresh preflight/Gate B
+proof; unchanged browser and compiled-source proof retains its original digests
+under a separate dependency audit.
 
-The independent physical verifier passed its six-family, three-seed corpus.
-Its separate legacy route keeps unproven A-I fields and therefore retains
-aggregate exit `2`; individual triad PASS is not a whole-route natural success.
-Compiled source falsifiers separately exercise renderer, copper/net, solver
-endpoint, package transform, manifest omission, snapshot omission, and public
-Remove failures. Public Remove evidence separates direct developer dispatch
-from actual mouse input on a fresh normal-player document. No generic shell
-failure is accepted as application proof. Exact compiled/run/request binding,
-source restoration, and verifier/harness cleanup remain required.
-
-The current report is
-[Task 43P runtime reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md),
-with [curated evidence](task-evidence/task-43p/README.md). Earlier reports below
-retain their historical candidate limits. Real built-in Browser evidence
-proves the bounded LED repair flow; it does not turn the separately failed
-legacy NormalPlayer CLI run into a pass.
-
-Task41's supported proof boundary remains Option A: evaluate fresh candidate
-boards with the original workbench detached, then restore that original owner.
-Option B, complete same-owner nested transactional mutation, is unsupported.
-Generic settlement/epoch, multi-owner rollback, broader geometry/seed coverage,
-and complete snapshot state remain follow-ups. Runtime acceptance and Owner
-Review remain blocked by the recorded correction gates; Task44 is unstarted.
-
+The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
+and [acceptance index](task-evidence/task-43p/c1c2/acceptance-index.json) record the
+build, Gate B, forced-first, A–I, eighteen physical fixtures, eleven compiled
+falsifiers and visible LED3 proof, including reviewed dependency reuse. Failed
+invocations retain their original status and separate cleanup dispositions.
+Final packet review passed for the authorized publication and Owner Review handoff.
+Owner approval has not occurred; Task 44 remains unstarted.
 
 ## Earlier Task 43P evidence status — before final runtime qualification
 
@@ -2525,7 +2525,7 @@ later live binding read, so its expected endpoint remains the retained
 producer object rather than an alias of the mutation.
 
 The refreshed source record is
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a1e8de2ba420464086e03d52a6b70147.json`.
+`<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a1e8de2ba420464086e03d52a6b70147.json`.
 Its renderer, raw-copper, and solver mutations each compiled with exit `0`,
 attempted the matching disposable-root runtime route, and returned exit `2` /
 `UNPROVEN` at the unsupported `System.Net.HttpListener` preview boundary.
@@ -2555,7 +2555,7 @@ RC `R1.1`; fixed J1.1 remains a separate identity mutation. The live
 has been captured and composition validation has completed, so a reachable
 runtime would exercise the canonical verifier against a genuinely independent
 expected endpoint. The latest nine-case record is
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`:
+`<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`:
 all nine OBF compiles exit `0`, all nine runtime attempts exit `2`/UNPROVEN at
 the unsupported `System.Net.HttpListener` preview boundary, and every case
 records exact restoration, unchanged HEAD/status/source digest/file count,

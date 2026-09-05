@@ -1,6 +1,26 @@
 # Task 43P Evidence
 
-## Current evidence — 2026-09-05
+## Current evidence — C1/C2 and final acceptance
+
+The [current C1/C2 packet](c1c2/README.md) contains the repaired runtime
+observations, eighteen physical fixtures, eleven compiled falsifiers, efficiency
+validation, exact reuse/cleanup records and five player screenshots.
+Dedicated A–I returned legitimate `0` with no open C1/C2 observations. The
+physical routes retain their legacy aggregate `2`; accepted compiled falsifiers
+retain their individual caught `1`. Final packet review passed for the authorized
+publication and Owner Review handoff. Owner approval has not occurred and Task 44
+is unstarted.
+
+Use the [acceptance index](c1c2/acceptance-index.json) and
+[current reconciliation](../../research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
+for current provenance and limits. The evidence and screenshots below describe
+the preceding blocked publication and are preserved under their original status.
+
+## Historical evidence — preceding publication 8bf4424
+
+The following evidence and screenshots describe the preceding blocked
+checkpoint. Its original results and dispositions are preserved; the current
+repair and acceptance outcome are linked above.
 
 Task 43P evidence is implemented; runtime acceptance remains blocked by
 43P-C1 (temporary-measurement exception cleanup) and 43P-C2 (snapshot assertion

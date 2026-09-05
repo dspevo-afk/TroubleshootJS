@@ -288,7 +288,7 @@ function Assert-Task43PRuntimeDCase($Value,[string]$Path) {
 
 function Assert-Task43PRuntimeMeasurement($Value, [string]$Path) {
     $properties = @('protocol', 'status', 'originalOwnerRestored',
-        'caseCount', 'cases')
+        'caseCount', 'cleanupSafetyCaseCount', 'cases')
     Assert-Task43PRuntimeObject $Value $Path $properties $properties
     if ($Value.protocol -cne 'TSJ-TASK43P-D-1') {
         Invoke-Task43PRuntimeInfrastructureError 'Task43P D protocol mismatch.'
@@ -299,6 +299,10 @@ function Assert-Task43PRuntimeMeasurement($Value, [string]$Path) {
         Invoke-Task43PRuntimeInfrastructureError 'Task43P D owner restoration was false.'
     }
     Assert-Task43PRuntimeInteger $Value.caseCount "$Path.caseCount"
+    Assert-Task43PRuntimeInteger $Value.cleanupSafetyCaseCount "$Path.cleanupSafetyCaseCount"
+    if ($Value.cleanupSafetyCaseCount -ne 7) {
+        Invoke-Task43PRuntimeInfrastructureError 'Task43P D cleanup safety corpus did not complete.'
+    }
     Assert-Task43PRuntimeArray $Value.cases "$Path.cases"
     if (@($Value.cases).Count -ne 4 -or [int]$Value.caseCount -ne 4) {
         Invoke-Task43PRuntimeInfrastructureError 'Task43P D corpus count mismatch.'
@@ -418,7 +422,7 @@ function Assert-Task43PRuntimeSettlement($Value, [string]$Path) {
         'task43pDetectorFieldComparison', 'runtimeSimulatedOmissionRejected',
         'task41AssertRestoredRejectedPostRestoreSentinel',
         'task41AssertRestoredAcceptedPostRestoreSentinel', 'sourceMutation',
-        'disposition')
+        'rejectionReason', 'supportedInventoryCases', 'disposition')
     Assert-Task43PRuntimeObject $Value.snapshotCalibration `
         "$Path.snapshotCalibration" $calProperties $calProperties
     foreach ($name in @('freshDetachedCandidate', 'exactRoundTrip',
@@ -434,6 +438,13 @@ function Assert-Task43PRuntimeSettlement($Value, [string]$Path) {
     Assert-Task43PRuntimeEnum $Value.snapshotCalibration.disposition `
         "$Path.snapshotCalibration.disposition" @('CLOSED', 'OPEN_BLOCKER')
     $calibration = $Value.snapshotCalibration
+    Assert-Task43PRuntimeInteger $calibration.supportedInventoryCases "$Path.snapshotCalibration.supportedInventoryCases"
+    if ($calibration.supportedInventoryCases -ne 4 -or
+            ($calibration.runtimeSimulatedOmissionRejected -and
+                $calibration.rejectionReason -cne 'Task 41 restore changed lastResistanceTestCurrent') -or
+            (-not $calibration.runtimeSimulatedOmissionRejected -and $null -ne $calibration.rejectionReason)) {
+        Invoke-Task43PRuntimeInfrastructureError 'Task43P snapshot calibration did not prove the intended assertion mismatch.'
+    }
     if (-not $calibration.freshDetachedCandidate -or
             $calibration.field -cne 'lastResistanceTestCurrent' -or
             -not $calibration.exactRoundTrip -or
@@ -692,9 +703,9 @@ function New-Task43PRuntimeContractProbeValue([string]$RunId,[string]$RouteId) {
     $rapid=[pscustomobject]@{family='LED_INDICATOR';seed=3;meterResistance=1000.0;modeBeforeExit=2;retestPassed=$false;finish=$false;pendingPower=$null;activeMeasurementOverlay=$false;targetsEmpty=$true;disposition='CLOSED'}
     function New-ProbeHCase($order,$family,$seed,$fingerprint) { [pscustomobject]@{order=$order;family=$family;seed=$seed;resetOwnerPreserved=$true;freshRetestEmpty=$true;freshCompletionEmpty=$true;freshInstrumentTargetsEmpty=$true;resetHadRetest=$true;resetHadTargets=$true;resetPreservedRetestReference=$true;resetPreservedProbeReferences=$true;modeAtFreshReady=0;fingerprint=$fingerprint} }
     $hcases=@((New-ProbeHCase 'forward' 'LED_INDICATOR' 3 'led'),(New-ProbeHCase 'forward' 'NPN_LOW_SIDE_SWITCH' 0 'npn'),(New-ProbeHCase 'forward' 'RC_DELAY' 2 'rc'),(New-ProbeHCase 'reverse' 'RC_DELAY' 2 'rc'),(New-ProbeHCase 'reverse' 'NPN_LOW_SIDE_SWITCH' 0 'npn'),(New-ProbeHCase 'reverse' 'LED_INDICATOR' 3 'led'))
-    $snapshot=[pscustomobject]@{freshDetachedCandidate=$true;field='lastResistanceTestCurrent';exactRoundTrip=$true;task43pDetectorFieldComparison=$true;runtimeSimulatedOmissionRejected=$true;task41AssertRestoredRejectedPostRestoreSentinel=$true;task41AssertRestoredAcceptedPostRestoreSentinel=$false;sourceMutation=$false;disposition='CLOSED'}
+    $snapshot=[pscustomobject]@{freshDetachedCandidate=$true;field='lastResistanceTestCurrent';rejectionReason='Task 41 restore changed lastResistanceTestCurrent';supportedInventoryCases=4;exactRoundTrip=$true;task43pDetectorFieldComparison=$true;runtimeSimulatedOmissionRejected=$true;task41AssertRestoredRejectedPostRestoreSentinel=$true;task41AssertRestoredAcceptedPostRestoreSentinel=$false;sourceMutation=$false;disposition='CLOSED'}
     $callback=[pscustomobject]@{protocol='TSJ-TASK43P-I-1';status='OBSERVED';actualScheduledCallback=$true;callbackSequence=1;scheduledFamily='LED_INDICATOR';scheduledSeed=3;currentFamily='NPN_LOW_SIDE_SWITCH';currentSeed=0;ownerAtEntryIsCurrent=$true;ownerAtExitIsCurrent=$true;pendingAfterSwitch=$true;analyzedAfterSwitch=$false;pendingAfterCallback=$true;analyzedAfterCallback=$false;oldTargetsInvalidAfterSwitch=$true;targetsClearedAfterSwitch=$true;noOldTargetsAfterCallback=$true;oldOwnerUnchanged=$true;oldOwnerBefore='fp';oldOwnerAtEntry='fp';oldOwnerAfter='fp';overlayAfterCallback=$false;disposition='CLOSED';originalOwnerRestored=$true}
-    return [pscustomobject]@{protocol='TSJ-TASK43P-RUNTIME-1';status='OBSERVED';developerOnly=$true;runId=$RunId;routeId=$RouteId;sameOwnerAfterSynchronousCases=$true;existing=[pscustomobject]@{protocol='TSJ-TASK43P-ABCEF-1';status='OBSERVED';caseCount=4;cases=$existingCases;originalOwnerRestored=$true};measurement=[pscustomobject]@{protocol='TSJ-TASK43P-D-1';status='OBSERVED';originalOwnerRestored=$true;caseCount=4;cases=$dcases};settlement=[pscustomobject]@{protocol='TSJ-TASK43P-GH-1';status='OBSERVED';originalOwnerRestored=$true;G=[pscustomobject]@{family='LED_INDICATOR';seed=3;candidateOwnerCurrent=$true;healthyPreRetestPassed=$true;healthyPreFinish=$true;naturalRetestPassed=$false;naturalFinish=$false;repeatedFinish=$false;repeatedRetestPassed=$false;states=$states;rapid=$rapid;disposition='CLOSED'};H=[pscustomobject]@{caseCount=6;cases=$hcases;forwardReverseExact=$true;disposition='CLOSED'};snapshotCalibration=$snapshot};callback=$callback}
+    return [pscustomobject]@{protocol='TSJ-TASK43P-RUNTIME-1';status='OBSERVED';developerOnly=$true;runId=$RunId;routeId=$RouteId;sameOwnerAfterSynchronousCases=$true;existing=[pscustomobject]@{protocol='TSJ-TASK43P-ABCEF-1';status='OBSERVED';caseCount=4;cases=$existingCases;originalOwnerRestored=$true};measurement=[pscustomobject]@{protocol='TSJ-TASK43P-D-1';status='OBSERVED';originalOwnerRestored=$true;caseCount=4;cleanupSafetyCaseCount=7;cases=$dcases};settlement=[pscustomobject]@{protocol='TSJ-TASK43P-GH-1';status='OBSERVED';originalOwnerRestored=$true;G=[pscustomobject]@{family='LED_INDICATOR';seed=3;candidateOwnerCurrent=$true;healthyPreRetestPassed=$true;healthyPreFinish=$true;naturalRetestPassed=$false;naturalFinish=$false;repeatedFinish=$false;repeatedRetestPassed=$false;states=$states;rapid=$rapid;disposition='CLOSED'};H=[pscustomobject]@{caseCount=6;cases=$hcases;forwardReverseExact=$true;disposition='CLOSED'};snapshotCalibration=$snapshot};callback=$callback}
 }
 
 if ($Task43PRuntimeEvidenceContractProbe) {
@@ -735,6 +746,10 @@ if ($Task43PRuntimeEvidenceContractProbe) {
         { param($v) $v.existing.cases[0].seed = 3.1 },
         { param($v) $v.existing.cases[0].lane = 'B/F' },
         { param($v) $v.measurement.cases = @($v.measurement.cases | Select-Object -First 3) },
+        { param($v) $v.measurement.cleanupSafetyCaseCount = 5 },
+        { param($v) $v.measurement.PSObject.Properties.Remove('cleanupSafetyCaseCount') },
+        { param($v) $v.settlement.snapshotCalibration.rejectionReason = 'unrelated failure' },
+        { param($v) $v.settlement.snapshotCalibration.supportedInventoryCases = 3 },
         { param($v) $v.runId = 'foreign-run' },
         { param($v) $v.measurement.cases[0].injectionCount = 2 },
         { param($v) $v.measurement.cases[0].injectionCount = 1.1 },
@@ -758,12 +773,14 @@ if ($Task43PRuntimeEvidenceContractProbe) {
     foreach($test in $tests){$copy=($valid | ConvertTo-Json -Depth 100 | ConvertFrom-Json);& $test $copy;try{[void](Assert-Task43PRuntimeEvidence $copy $run $route);Write-Error "contract probe accepted negative $index";exit 1}catch{if(-not (Test-VerifierInfrastructureError $_)){Write-Error "negative $index was not a typed infrastructure rejection";exit 1}};$index++}
     $open = ($valid | ConvertTo-Json -Depth 100 | ConvertFrom-Json)
     $open.settlement.snapshotCalibration.runtimeSimulatedOmissionRejected = $false
+    $open.settlement.snapshotCalibration.rejectionReason = $null
     $open.settlement.snapshotCalibration.task41AssertRestoredRejectedPostRestoreSentinel = $false
     $open.settlement.snapshotCalibration.task41AssertRestoredAcceptedPostRestoreSentinel = $true
     $open.settlement.snapshotCalibration.disposition = 'OPEN_BLOCKER'
     try { $openResult=Assert-Task43PRuntimeEvidence $open $run $route; if($openResult.ExitCode -ne 1 -or $openResult.OpenBlockerCount -lt 1){Write-Error 'contract probe did not preserve a truthful OPEN_BLOCKER as exit 1';exit 1} } catch { Write-Error ('contract probe truthful OPEN_BLOCKER failed: ' + $_.Exception.Message); exit 1 }
     $falsePass = ($valid | ConvertTo-Json -Depth 100 | ConvertFrom-Json)
     $falsePass.settlement.snapshotCalibration.runtimeSimulatedOmissionRejected = $false
+    $falsePass.settlement.snapshotCalibration.rejectionReason = $null
     $falsePass.settlement.snapshotCalibration.task41AssertRestoredRejectedPostRestoreSentinel = $false
     $falsePass.settlement.snapshotCalibration.task41AssertRestoredAcceptedPostRestoreSentinel = $true
     $falsePass.settlement.snapshotCalibration.disposition = 'CLOSED'

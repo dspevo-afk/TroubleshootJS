@@ -2,21 +2,25 @@
 
 ## Current disposition — 2026-09-05
 
-The [runtime reconciliation](TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
-supersedes missing-evidence claims only for the covered current cases. A-I,
-eighteen physical triads, eleven individually qualified compiled falsifiers,
-and the real LED3 player sequence are recorded with exact provenance. Aggregate
-exit-2 attempts remain unproven. Runtime acceptance and Owner Review are blocked
-by 43P-C1 (exception-unsafe measurement cleanup) and 43P-C2 (snapshot assertion
-omission); Task 44 is unstarted. Each historical row has a bounded disposition.
+Task 43P C1/C2 repairs, acceptance and final packet review are complete; the
+result is ready for the authorized publication and Owner Review handoff. The
+[current reconciliation](TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md) and
+[acceptance index](../task-evidence/task-43p/c1c2/acceptance-index.json) record
+legitimate A–I `0`, eighteen qualified physical triads, eleven compiled falsifiers,
+visible LED3 evidence, the final build, Gate B and reviewed dependency reuse.
+Legacy aggregate `2` and failed invocations keep their original meanings.
 
-The earlier M5 snapshot finding is **OPEN BLOCKER / TEST/TOOL** for C2, not
-stale: a working restore assignment does not prove the restoration assertion
-detects an omitted or changed field. Option A remains the supported Task41
-boundary; complete same-owner transactions and generic epochs are unsupported.
+C1/S:R4 is **CLOSED / CODE** by exception-safe measurement restoration and the
+four real injection cases plus seven canaries. C2/M5/V:R03 is **CLOSED / TEST/TOOL**
+by complete supported assertions, non-default round trips, exact post-restore
+sentinel rejection and the compiled omitted-restore proof. Option A remains the
+supported fresh-candidate/detached-owner boundary. Generic epochs, deep same-owner
+rollback, nullable-target/synthetic-settlement schema limitations and broader
+privacy remain bounded follow-ups. Owner approval is not performed; Task 44 is
+unstarted.
 
 The following sections preserve the Gate A and earlier Task43P checkpoints.
-Their dated baseline conclusions are not current runtime acceptance claims.
+Their dated conclusions are historical, not current acceptance claims.
 
 ## Historical purpose and truth boundary
 
@@ -30,20 +34,21 @@ The accepted Task 43 implementation baseline is
 `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`. The Gate A documentation candidate
 starts from `acd2c265a91908cb2656d7306936c13c2ddd96ea`; it changes no
 production behavior. Gate B is the accepted and published verification/CI/docs
-baseline at `9dc06141190da3a44ebe12015a4f5656f0f40ef5`, while the current
+baseline at `9dc06141190da3a44ebe12015a4f5656f0f40ef5`. The earlier
 evidence packet is [recorded here](POST_TASK_43_INTEGRITY_RECONCILIATION.md) at
-tested baseline `9853f1e5fd311830d14d671d0ba380c51018a658`. The packet records
-current-evidence dispositions but does not constitute Task 43P acceptance or
-unlock Owner Review or Task 44. Acceptance remains pending because runtime A-I
-and independent physical-triad evidence is missing.
+tested baseline `9853f1e5fd311830d14d671d0ba380c51018a658`. At that checkpoint,
+its dispositions did not constitute Task 43P acceptance or unlock Owner Review
+or Task 44: runtime A-I and independent physical-triad evidence were missing.
+The current disposition at the top supersedes that checkpoint's missing-proof
+status.
 
 ## Preserved historical reports
 
 | Preserved file | Original branch and report commit | Original audited baseline | Audit date when known | Reconciled against final Task 43? | Current disposition |
 | --- | --- | --- | --- | --- | --- |
-| `docs/research/STATE_LIFECYCLE_INTEGRITY_AUDIT.md` | `codex/state-lifecycle-integrity-audit` at `792a6da80e9eca3750c74803ba72bc3b0fbdc2f4`; blob `989a9bd968825e6506c01280f2e6d9e698d0f864` | `2ccc3b6fb3c6197b5dcadc12cdd63f6ab0ef6ca6`, the then-current `origin/master` at audit start | `2026-08-19` from the audit branch/report activity; no separate date heading is present in the report | **Recorded in current packet as S:R1–R10.** Acceptance remains pending because runtime A-I and independent physical-triad evidence is missing. | Preserved unchanged as a historical lifecycle-integrity audit. Its settlement, epoch, rollback, snapshot, and cleanup observations are historical hypotheses, not current truth. |
-| `docs/research/VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md` | `codex/verification-integrity-audit` at `14d97a6652e5158fc80006b0da8d71b5a514c54c`; blob `1cbf7e4c277c254c549861c406366eee2201ec6c` | `2ccc3b6fb3c6197b5dcadc12cdd63f6ab0ef6ca6`, `origin/master` at the audit's accepted starting point | `2026-08-19` | **Recorded in current packet as V:R-01..R-09/M1–M5.** Acceptance remains pending because runtime A-I and independent physical-triad evidence is missing. | Preserved unchanged as a historical verification-integrity/false-pass audit. Its verdict is not a current acceptance result. |
-| `docs/task-evidence/task-43/recovery-assessment.md` | `codex/task43-recovery-assessment` at `4d39242817effa7f01711ea74f845a0189d7affc`; blob `b4f6a3974a46a17868a86c66d9fa1e8ba452075d` | `c0eb342b29165b8218a4b97b16fb8554fee42aff`, the accepted pre-Task-43 baseline (`Add LED diagnostic fault diversity proof`) | `2026-08-20` | **Recorded in current packet as A: recovery findings #1–#12.** Acceptance remains pending because runtime A-I and independent physical-triad evidence is missing. | Preserved unchanged as historical recovery evidence. Its classifications of candidate route work, verifier risk, and reconstruction are not a current production or acceptance claim. |
+| `docs/research/STATE_LIFECYCLE_INTEGRITY_AUDIT.md` | `codex/state-lifecycle-integrity-audit` at `792a6da80e9eca3750c74803ba72bc3b0fbdc2f4`; blob `989a9bd968825e6506c01280f2e6d9e698d0f864` | `2ccc3b6fb3c6197b5dcadc12cdd63f6ab0ef6ca6`, the then-current `origin/master` at audit start | `2026-08-19` from the audit branch/report activity; no separate date heading is present in the report | **Recorded in checkpoint packet as S:R1–R10.** At that earlier checkpoint, acceptance was pending because runtime A-I and independent physical-triad evidence was missing. | Preserved unchanged as a historical lifecycle-integrity audit. Its settlement, epoch, rollback, snapshot, and cleanup observations are historical hypotheses, not current truth. |
+| `docs/research/VERIFICATION_INTEGRITY_FALSE_PASS_AUDIT.md` | `codex/verification-integrity-audit` at `14d97a6652e5158fc80006b0da8d71b5a514c54c`; blob `1cbf7e4c277c254c549861c406366eee2201ec6c` | `2ccc3b6fb3c6197b5dcadc12cdd63f6ab0ef6ca6`, `origin/master` at the audit's accepted starting point | `2026-08-19` | **Recorded in checkpoint packet as V:R-01..R-09/M1–M5.** At that earlier checkpoint, acceptance was pending because runtime A-I and independent physical-triad evidence was missing. | Preserved unchanged as a historical verification-integrity/false-pass audit. Its verdict is not a current acceptance result. |
+| `docs/task-evidence/task-43/recovery-assessment.md` | `codex/task43-recovery-assessment` at `4d39242817effa7f01711ea74f845a0189d7affc`; blob `b4f6a3974a46a17868a86c66d9fa1e8ba452075d` | `c0eb342b29165b8218a4b97b16fb8554fee42aff`, the accepted pre-Task-43 baseline (`Add LED diagnostic fault diversity proof`) | `2026-08-20` | **Recorded in checkpoint packet as A: recovery findings #1–#12.** At that earlier checkpoint, acceptance was pending because runtime A-I and independent physical-triad evidence was missing. | Preserved unchanged as historical recovery evidence. Its classifications of candidate route work, verifier risk, and reconstruction are not a current production or acceptance claim. |
 
 The three imported blobs above are verified against their original Git
 objects. Their working-tree line endings may follow the repository's normal
@@ -63,14 +68,14 @@ The recorded truth at the Gate A checkpoint was:
   `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`.
 - Gate B is the accepted and published verification/CI/docs baseline at
   `9dc06141190da3a44ebe12015a4f5656f0f40ef5`.
-- The current [Task 43P evidence packet](POST_TASK_43_INTEGRITY_RECONCILIATION.md)
-  is recorded at tested baseline
+- The checkpoint [Task 43P evidence packet](POST_TASK_43_INTEGRITY_RECONCILIATION.md)
+  was recorded at tested baseline
   `9853f1e5fd311830d14d671d0ba380c51018a658`. No production behavior changed;
-  historical reports remain preserved, and current dispositions are in that
+  historical reports remained preserved, and checkpoint dispositions were in that
   packet.
-- Task 43P acceptance remains pending because runtime A-I and independent
-  physical-triad evidence is missing. Owner Review is blocked; Task 44 remains
-  blocked and unstarted. The packet is not an acceptance or unlock.
+- At that checkpoint, Task 43P acceptance was pending because runtime A-I and
+  independent physical-triad evidence was missing. Owner Review and Task 44
+  were blocked and unstarted. That packet was not an acceptance or unlock.
 
 ## Already-contained evidence
 
@@ -116,12 +121,12 @@ provided in the current user task as its authoritative prompt.
 
 ## Remaining 43P follow-up at the earlier checkpoint
 
-The current packet records the final-SHA evidence classification for the exact
+The earlier packet recorded the final-SHA evidence classification for the exact
 preserved paths above, including S:R1–R10, V:R-01..R-09/M1–M5, and recovery
-findings #1–#12. It is prepared for review, not Task 43P acceptance or an
-unlock. Missing runtime A-I lanes and independent physical-triad evidence
-remain required before Owner Review. Only a proven final-SHA `OPEN BLOCKER` may
-authorize a bounded correction; none is invented here.
+findings #1–#12. At that checkpoint it was prepared for review without Task 43P
+acceptance or an unlock. Missing runtime A-I lanes and independent physical-triad
+evidence were still required before Owner Review. The current disposition above
+records the later qualified proof and C1/C2 corrections.
 
 ## Historical Task 43P Coder candidate — 2026-08-28
 

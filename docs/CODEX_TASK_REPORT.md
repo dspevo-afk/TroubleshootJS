@@ -1,6 +1,57 @@
 # TroubleshootJS — Current Task Report
 
-## Current checkpoint — Task 43P — 2026-09-05
+## Current checkpoint — Task 43P C1/C2 and efficiency work — 2026-09-05
+
+- **Status/scope:** COMPLETE — ready for Owner Review. C1/C2 and the authorized
+  efficiency work passed acceptance and independent review, including the final
+  BOM fixture and evidence delta. Owner approval has not occurred; Task 44 is
+  unstarted.
+- **Candidate:** `codex/task43p-final-recovery`, tested starting HEAD
+  `8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7` plus the intended diff. Source/verifier
+  digest `9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663`.
+  The enclosing commit identifies the final source, documentation and evidence.
+- **Changes:** C1 independently handles temporary-element removal, solver
+  reconstruction, queued power and synchronization while retaining primary and
+  suppressed failures. Unproven restoration visibly isolates/stops the board.
+  C2 asserts the supported snapshot inventory and restores UI-sensitive values
+  last. Seven cleanup canaries and exact non-default/sentinel checks cover both.
+- **Efficiency:** Dependency-based reuse is explicit in `AGENTS.md`; all eleven
+  source anchors and four preflight canaries run before selected compilation.
+  Task43P's page diagnostic runs before evidence capture. Phase, operation,
+  timing and cleanup diagnostics retain existing failure, deadline and ownership
+  semantics, including the 500 ms proof budget.
+- **Validation:** Final five-permutation JDK8/GWT build and full current Gate B
+  returned `0`. Forced-first qualified expected `1`; dedicated A–I returned
+  legitimate `0`, no open observations, all four real D cases closed, seven
+  canaries and exact H checks. Eighteen physical triads and nine negatives each
+  qualify across six families; their six legacy aggregates remain `2`.
+  Eleven compiled falsifiers qualify: two anchor repair cases, eight earlier
+  physical cases and one current-Java C2 case. All browser/compiled proof is
+  reused after the final test-only BOM delta under original digests; all eleven
+  mutation definitions and production/web bytes are unchanged. LED3 real input,
+  five inspected screenshots and bounded privacy checks
+  cover the player flow. Every accepted live run has qualified cleanup/audit.
+- **Review:** Independent Luna MAX integrated/delta, dependency-reuse, source,
+  runtime, physical and final packet reviews passed. The documentation wording
+  correction also passed targeted delta review. The final BOM source/reuse
+  delta and its updated evidence packet review passed.
+- **Limits/resources:** Failed invocations retain their actual exits and
+  separate manual/natural-exit dispositions. No active owned browser, preview,
+  listener or tab remains after final cleanup. Private raw diagnostics and
+  retained failed profiles/claims remain. Snapshots prove the supported
+  fresh-candidate/detached-owner boundary; generic epochs and deep same-owner
+  rollback remain follow-ups. Privacy covers the exercised LED3 states.
+- **Git/next:** Astra owns the authorized commit, normal push, remote-SHA check
+  and post-push Gmail attempt. Actual publication/notification outcomes are
+  reported in the final handoff. Stop at Owner Review; do not start Task 44.
+
+The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
+and [acceptance index](task-evidence/task-43p/c1c2/acceptance-index.json) contain
+the criterion mapping, exact commands, original identities/exits, source/build
+hashes, review provenance and cleanup. [Curated evidence and screenshots](task-evidence/task-43p/c1c2/README.md)
+are separate from the historical blocked checkpoint below.
+
+## Historical published checkpoint — Task 43P — 2026-09-05
 
 - **Status/scope:** IMPLEMENTED — VALIDATION BLOCKED. Verifier trust and
   forensic evidence are implemented; runtime acceptance is not granted.
@@ -923,7 +974,7 @@ is recorded above. Task 44 remains blocked and unstarted.
 - Successful canaries remove only exact namespaces after their ownership and
   quiescence proofs succeed. The separate opt-in real-Edge run intentionally
   retained the exact evidence namespace
-  `C:\Users\david\AppData\Local\Temp\TroubleshootJS\gate-b-real-edge-22245742a5dc401a8f53599e245cea53`
+  `<OS-temp>/TroubleshootJS\gate-b-real-edge-22245742a5dc401a8f53599e245cea53`
   because Edge exited before root identity/cleanup proof; its claim/profile
   were not guessed at or deleted. Earlier retained canary resources were
   recovered only through recorded ownership proofs; no wildcard or PID-only
@@ -1092,9 +1143,9 @@ the child process as generic nonzero.
   count `855`, and the pre-existing candidate worktree remained dirty with
   the same nine expected paths (eight tracked, one untracked harness).
 - Six-family static manifest audit and Java forbidden-provenance audit — PASS; no `BoardSimulationBindings.getNetIdForEndpoint()` use remains in the Task 43P physical verifier.
-- Three targeted `scripts/verify-task43p-source-experiments.ps1 -ExperimentId ... -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900` runs — each actual script exit `2`; final evidence paths are `C:\Users\david\AppData\Local\Temp\TroubleshootJS\verify\task43p-source-experiments\task43p-source-experiments-cd6119174f7f48819783b14c40f60526.json` (renderer), `...\task43p-source-experiments-9e4e4edfd0974ac89890c10558f8f81a.json` (raw copper), and `...\task43p-source-experiments-3d39d727ba5f4af2adf737066289e2ce.json` (solver). Each compiled all five GWT permutations with exit `0`, attempted the compiled extraction route, returned runtime exit `2` because this host cannot construct `System.Net.HttpListener`, stopped its disposable preview, restored exact source bytes, and proved unchanged HEAD/status/source digest/file count (`2b3b5419ad75f6ecad8aabcd4ec0647a80dfb40b74339302aead380343a21296`, `855`).
-- `powershell -NoProfile -Command '& { & powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\verify-browser.ps1 -Task43P -Seeds 0 -TimeoutSeconds 30; $code=$LASTEXITCODE; Write-Output ("SCRIPT_EXIT=" + $code); exit 0 }'` — actual verifier exit `2`; final retained manifest `C:\Users\david\AppData\Local\Temp\TroubleshootJS\verify\20cd7fcd353094d844fb\05d57eaac00c47989a59dbdefb2dbfe6\manifest.json`.
-- The equivalent `-Task43PForcedNegative -Seeds 0`, `-Task43 -Seeds 0`, and `-Task43Integrated -Seeds 0` commands — actual exits `2`; final forced-negative infrastructure evidence is retained at `C:\Users\david\AppData\Local\Temp\TroubleshootJS\verify\20cd7fcd353094d844fb\2a0c90d122194f4db714730bcb572f92\manifest.json`; the current regression loop also retained `8f3aed61108a49dfb33ff7a566f56ee6` for Task43 and `9cc9cddf54f44b64a2a0610dfdafe097` for the integrated parent. No DOM/runtime Task43P JSON was reached.
+- Three targeted `scripts/verify-task43p-source-experiments.ps1 -ExperimentId ... -JavaHome .tools/jdk8-download/jdk8u502-b07 -ProcessTimeoutSeconds 900` runs — each actual script exit `2`; final evidence paths are `<OS-temp>/TroubleshootJS\verify\task43p-source-experiments\task43p-source-experiments-cd6119174f7f48819783b14c40f60526.json` (renderer), `...\task43p-source-experiments-9e4e4edfd0974ac89890c10558f8f81a.json` (raw copper), and `...\task43p-source-experiments-3d39d727ba5f4af2adf737066289e2ce.json` (solver). Each compiled all five GWT permutations with exit `0`, attempted the compiled extraction route, returned runtime exit `2` because this host cannot construct `System.Net.HttpListener`, stopped its disposable preview, restored exact source bytes, and proved unchanged HEAD/status/source digest/file count (`2b3b5419ad75f6ecad8aabcd4ec0647a80dfb40b74339302aead380343a21296`, `855`).
+- `powershell -NoProfile -Command '& { & powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\verify-browser.ps1 -Task43P -Seeds 0 -TimeoutSeconds 30; $code=$LASTEXITCODE; Write-Output ("SCRIPT_EXIT=" + $code); exit 0 }'` — actual verifier exit `2`; final retained manifest `<OS-temp>/TroubleshootJS\verify\20cd7fcd353094d844fb\05d57eaac00c47989a59dbdefb2dbfe6\manifest.json`.
+- The equivalent `-Task43PForcedNegative -Seeds 0`, `-Task43 -Seeds 0`, and `-Task43Integrated -Seeds 0` commands — actual exits `2`; final forced-negative infrastructure evidence is retained at `<OS-temp>/TroubleshootJS\verify\20cd7fcd353094d844fb\2a0c90d122194f4db714730bcb572f92\manifest.json`; the current regression loop also retained `8f3aed61108a49dfb33ff7a566f56ee6` for Task43 and `9cc9cddf54f44b64a2a0610dfdafe097` for the integrated parent. No DOM/runtime Task43P JSON was reached.
 - The same nested-capture route commands for `-Task39`, `-Task40`, `-Task41`, `-QuickPlay`, `-Rc -Seeds 0`, `-StoredEnergy -Seeds 0`, `-StressDamage -Seeds 0`, and `-StressDamageNormalPlayer -Seeds 0` — each actual exit `2` before page execution at the WMI process-identity boundary. These are attempted regression routes, not passes.
 
 **Real mutation status:** The source harness ran each mutation in an isolated
@@ -1171,7 +1222,7 @@ infrastructure helpers, so persistence failures remain exit `2`.
 - Wrapper explicit-root contract against an unreachable loopback URL: captured
   child exit `2`, typed infrastructure failure, cleanup complete.
 - Combined renderer/raw-copper/solver producer record
-  `C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-be4175476c5f465cbbad9747853a7daa.json`:
+  `<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-be4175476c5f465cbbad9747853a7daa.json`:
   each mutation compiled with exit `0`, attempted runtime extraction, returned
   runtime exit `2`/UNPROVEN, restored exact target bytes, stopped its preview,
   and proved repository unchanged.
@@ -1228,7 +1279,7 @@ BoardSimulationBindings lookup path.
 - solver identity static audit and git diff --check: exit 0 (line-ending
   warnings only).
 - Refreshed source record
-  C:\Users\david\AppData\Local\Temp\TroubleshootJS\verify\task43p-source-experiments\task43p-source-experiments-1ee260b7a3c94b609830e475f3dc4491.json:
+  <OS-temp>/TroubleshootJS\verify\task43p-source-experiments\task43p-source-experiments-1ee260b7a3c94b609830e475f3dc4491.json:
   renderer, raw-copper, and solver producer mutations each compiled with exit
   0, attempted the matching disposable-root runtime route, and returned
   runtime exit 2/UNPROVEN before identity completion because
@@ -1250,7 +1301,7 @@ The final direct wrapper command was
 It failed closed as infrastructure exit `2` while proving preview process
 identity/cleanup (`Process PID 13600 disappeared before current-identity proof`;
 WMI `Access denied` while proving absence). Its retained run manifest is
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\20cd7fcd353094d844fb\\44068b4a89be4e2f91c13efeee006e98\\manifest.json`;
+`<OS-temp>/TroubleshootJS\\verify\\20cd7fcd353094d844fb\\44068b4a89be4e2f91c13efeee006e98\\manifest.json`;
 cleanup was deliberately not represented as complete.
 
 ## Task 43P fixed connector endpoint boundary — Coder handoff — 2026-08-30
@@ -1280,7 +1331,7 @@ compiled disposable root; no runtime rejection is claimed because this host
 still fails at the `System.Net.HttpListener` preview boundary (exit `2`).
 
 The refreshed source record is
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a1e8de2ba420464086e03d52a6b70147.json`.
+`<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a1e8de2ba420464086e03d52a6b70147.json`.
 All three isolated mutations compiled with exit `0`, attempted runtime
 extraction, returned exit `2`/UNPROVEN at the unsupported preview boundary,
 restored exact bytes, stopped their disposable previews, and proved unchanged
@@ -1315,7 +1366,7 @@ acceptance proof.
 
 **Final source-experiment evidence:**
 
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-027ac10835a24e31a91625b9bbcfee85.json`
+`<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-027ac10835a24e31a91625b9bbcfee85.json`
 
 - All nine disposable OBF compile exits: `0`.
 - All nine runtime results: exit `2` / `UNPROVEN`; the host cannot construct
@@ -1413,7 +1464,7 @@ redirect only live binding lookups after the retained oracle and composition
 validation are complete.
 
 The full nine-case source corpus record is
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`.
+`<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`.
 All nine compiled all five OBF permutations with exit `0` and attempted the
 matching disposable-root route against the mutated source. All nine returned
 exit `2`/`UNPROVEN` because this host cannot construct

@@ -455,13 +455,11 @@ final class Task41SimulationSnapshot {
 
         sim.refreshGeneratedUiForDeveloperVerification();
         sim.refreshChallengeInteractionState();
-        sim.instrumentController.restoreForDeveloperVerification(instrumentState);
-        sim.restoreMouseElmForDeveloperVerification(mouseElm);
-        restoreStaticCircuitElmState();
         maybeInjectRestoreFailure(RESTORE_FAILURE_UI_REFRESH);
 
         if (runningStateChanged)
             sim.setSimRunning(simRunning);
+        restoreAfterUiRefresh(sim);
         maybeInjectRestoreFailure(RESTORE_FAILURE_RESTART);
     }
 
@@ -508,18 +506,30 @@ final class Task41SimulationSnapshot {
             sim.refreshChallengeInteractionState();
         } catch (Throwable ignored) { }
         try {
-            sim.instrumentController.restoreForDeveloperVerification(instrumentState);
-        } catch (Throwable ignored) { }
-        try {
-            sim.restoreMouseElmForDeveloperVerification(mouseElm);
-        } catch (Throwable ignored) { }
-        try {
-            restoreStaticCircuitElmState();
-        } catch (Throwable ignored) { }
-        try {
             if (runningStateChanged || sim.simRunning != simRunning)
                 sim.setSimRunning(simRunning);
         } catch (Throwable ignored) { }
+        try {
+            restoreAfterUiRefresh(sim);
+        } catch (Throwable ignored) { }
+    }
+
+    private void restoreAfterUiRefresh(CirSim sim) {
+        // Refresh/restart may recompute geometry, queue repaint, and invalidate
+        // instrument state. Restore the supported synchronous values last.
+        // This does not capture or cancel browser callbacks or timer identity.
+        sim.circuitArea = copy(circuitArea);
+        sim.analyzeFlag = analyzeFlag;
+        sim.needsRepaint = needsRepaint;
+        try {
+            sim.instrumentController.restoreForDeveloperVerification(instrumentState);
+        } finally {
+            try {
+                sim.restoreMouseElmForDeveloperVerification(mouseElm);
+            } finally {
+                restoreStaticCircuitElmState();
+            }
+        }
     }
 
     private void restoreOwnerAndCollections(CirSim sim) {
@@ -695,6 +705,8 @@ final class Task41SimulationSnapshot {
     void assertRestored(CirSim sim) {
         assertOwner(sim);
         assertGraphRestored(sim);
+        if (!sameDouble(sim.lastResistanceTestCurrent, lastResistanceTestCurrent))
+            throw new IllegalStateException("Task 41 restore changed lastResistanceTestCurrent");
         if (sim.elmList != elmListReference || !sameIdentity(sim.elmList, elmContents))
             throw new IllegalStateException("Task 41 restore changed active element list/order");
         if (sim.adjustables != adjustableReference || !sameIdentity(sim.adjustables,
@@ -725,7 +737,7 @@ final class Task41SimulationSnapshot {
         if (sim.activeMeasurementOverlay)
             throw new IllegalStateException("Task 41 restore retained a measurement overlay");
         if (sim.getMouseElmForDeveloperVerification() != mouseElm ||
-                sim.simRunning != simRunning || sim.t != t ||
+                sim.simRunning != simRunning || !sameDouble(sim.t, t) ||
                 sim.myframes != myframes || sim.mytime != mytime ||
                 sim.myruntime != myruntime || sim.mydrawtime != mydrawtime ||
                 !sameDouble(CircuitElm.currentMult, currentMult) ||
@@ -741,6 +753,76 @@ final class Task41SimulationSnapshot {
         for (int index = 0; index < elmContents.size(); index++)
             if (elmContents.get(index).isSelected() != selectedStates.get(index).booleanValue())
                 throw new IllegalStateException("Task 41 restore changed element selection");
+        assertSupportedValuesRestored(sim);
+    }
+
+    /** Complete the current captured inventory; no deep same-owner rollback. */
+    private void assertSupportedValuesRestored(CirSim sim) {
+        if (sim.dragElm != dragElm || sim.menuElm != menuElm || sim.stopElm != stopElm ||
+                sim.plotXElm != plotXElm || sim.plotYElm != plotYElm ||
+                sim.heldSwitchElm != heldSwitchElm || !sameRectangle(sim.selectedArea, selectedArea) ||
+                sim.mousePost != mousePost || sim.draggingPost != draggingPost ||
+                sim.scopeCount != scopeCount || sim.scopes != scopes ||
+                !sameValues(sim.scopeColCount, scopeColCount) || sim.scopeSelected != scopeSelected ||
+                sim.menuScope != menuScope || sim.menuPlot != menuPlot || sim.hintType != hintType ||
+                sim.hintItem1 != hintItem1 || sim.hintItem2 != hintItem2 ||
+                sim.mouseMode != mouseMode || sim.tempMouseMode != tempMouseMode ||
+                !sameString(sim.mouseModeStr, mouseModeStr) || sim.dragging != dragging ||
+                sim.dragGridX != dragGridX || sim.dragGridY != dragGridY ||
+                sim.dragScreenX != dragScreenX || sim.dragScreenY != dragScreenY ||
+                sim.initDragGridX != initDragGridX || sim.initDragGridY != initDragGridY ||
+                sim.mouseDownTime != mouseDownTime || sim.zoomTime != zoomTime ||
+                sim.mouseCursorX != mouseCursorX || sim.mouseCursorY != mouseCursorY ||
+                !sameString(sim.lastCursorStyle, lastCursorStyle) ||
+                sim.mouseWasOverSplitter != mouseWasOverSplitter || sim.didSwitch != didSwitch)
+            throw new IllegalStateException("Task 41 restore changed supported input state");
+        if (sim.frames != frames || sim.steps != steps || sim.framerate != framerate ||
+                sim.steprate != steprate || sim.lastTime != lastTime ||
+                sim.lastFrameTime != lastFrameTime || sim.lastIterTime != lastIterTime ||
+                sim.secTime != secTime || sim.needsRepaint != needsRepaint ||
+                !sameRectangle(sim.circuitArea, circuitArea) || !sameValues(sim.transform, transform) ||
+                !sameString(sim.getCircuitTitleForDeveloperVerification(), titleText))
+            throw new IllegalStateException("Task 41 restore changed supported render state");
+        if (!sameDouble(sim.timeStep, timeStep) || !sameDouble(sim.maxTimeStep, maxTimeStep) ||
+                !sameDouble(sim.minTimeStep, minTimeStep) ||
+                !sameDouble(sim.timeStepAccum, timeStepAccum) || sim.timeStepCount != timeStepCount ||
+                sim.analyzeFlag != analyzeFlag || sim.dcAnalysisFlag != dcAnalysisFlag ||
+                sim.circuitNonLinear != circuitNonLinear || sim.voltageSourceCount != voltageSourceCount ||
+                sim.circuitMatrixSize != circuitMatrixSize ||
+                sim.circuitMatrixFullSize != circuitMatrixFullSize || sim.circuitNeedsMap != circuitNeedsMap ||
+                !sameString(sim.stopMessage, stopMessage) || sim.converged != converged ||
+                sim.subIterations != subIterations || sim.unsavedChanges != unsavedChanges)
+            throw new IllegalStateException("Task 41 restore changed supported solver state");
+        if (sim.activeMeasurementOverlay != activeMeasurementOverlay ||
+                sim.observationalValidationDepth != observationalValidationDepth ||
+                sim.analysisCountForDeveloperVerification != analysisCount ||
+                sim.generatedVerificationCountForDeveloperVerification != generatedVerificationCount ||
+                sim.pendingBoardPowerState != pendingBoardPowerState ||
+                sim.requestPowerOnDuringActiveMeasurementForDeveloperVerification != requestPowerOnDuringMeasurement ||
+                sim.lastActiveMeasurementStimulus != lastActiveMeasurementStimulus ||
+                sim.activeMeasurementSolverRestored != activeMeasurementSolverRestored ||
+                !sameString(sim.lastResistanceMeasurementDiagnostics, lastResistanceDiagnostics) ||
+                !sameDouble(sim.lastResistanceReferenceCurrent, lastResistanceReferenceCurrent) ||
+                !sameDouble(sim.lastDiodeMeasurementVoltage, lastDiodeMeasurementVoltage) ||
+                !sameDouble(sim.lastDiodeMeasurementCurrent, lastDiodeMeasurementCurrent) ||
+                sim.lastResistanceBlackProbeNode != lastResistanceBlackProbeNode ||
+                sim.lastResistanceReferenceGroundNode != lastResistanceReferenceGroundNode ||
+                sim.generatedBoardVerificationPending != generatedVerificationPending ||
+                sim.generatedBoardVerificationAnalyzed != generatedVerificationAnalyzed ||
+                !sameDouble(sim.generatedBoardVerificationStartTime, generatedVerificationStartTime) ||
+                sim.developerVerifierRunning != developerVerifierRunning ||
+                sim.troubleshootTask41VerificationComplete != task41VerificationComplete)
+            throw new IllegalStateException("Task 41 restore changed supported measurement/verification state");
+    }
+
+    private static boolean sameString(String actual, String expected) {
+        return actual == null ? expected == null : actual.equals(expected);
+    }
+
+    private static boolean sameRectangle(Rectangle actual, Rectangle expected) {
+        return actual == null || expected == null ? actual == expected :
+            actual.x == expected.x && actual.y == expected.y &&
+            actual.width == expected.width && actual.height == expected.height;
     }
 
     private void assertGraphRestored(CirSim sim) {

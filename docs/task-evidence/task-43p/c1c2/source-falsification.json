@@ -1,0 +1,1681 @@
+{
+    "qualifiedCaseCount":  11,
+    "finalCandidateFreshCaseCount":  0,
+    "finalCandidateReusedCaseCount":  11,
+    "anchorRepairCaseCount":  2,
+    "earlierReusedCaseCount":  9,
+    "earlierReusedPhysicalCaseCount":  8,
+    "currentJavaSnapshotCaseCount":  1,
+    "acceptedCandidateSourceVerifierDigest":  "9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663",
+    "finalBomFixtureReuse":  "All eleven compiled proofs retain their original identities; the final BOM fixture delta is audited in efficiency-validation.json.",
+    "snapshotC2":  {
+                       "id":  "snapshot-restore-resistance-current-omitted",
+                       "runId":  "87bcba0283734e5db8a97271aa8bdebb",
+                       "actualExit":  1,
+                       "digest":  "4dd2adc42803172b1c4f8902085a3b97e8cc21b8002264605a90bb72c19d697f",
+                       "expectedMarker":  "FAIL:Task 41 restore changed lastResistanceTestCurrent",
+                       "sourceMutationBeforeSha256":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                       "sourceMutationAfterSha256":  "4fc6c97ff3f885c83af19307aee3b3bdc3c540f47c3beb743f61b8b4a89bc6f1",
+                       "sourceMutationRestoredSha256":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                       "sourceBytesRestoredExactly":  true,
+                       "compiledExecutionDigest":  "1b66736bdd8217c411eb4a72772f820ebaf7945e983e1b90dec4eb93b13ea75c",
+                       "childRunId":  "5f10ae07a8444ae084e429a16b10cef0",
+                       "actualChildExit":  1,
+                       "disposableCompileExit":  0,
+                       "runtimeAgainstMutatedSource":  true,
+                       "originalEvidence":  {
+                                                "name":  "task43p-source-experiments-87bcba0283734e5db8a97271aa8bdebb.json",
+                                                "sha256":  "E7F654ED942582E7C2A83F471C714C620385A3A5083D8797FC91AFF4754C5996"
+                                            },
+                       "invocation":  {
+                                          "actualExit":  1,
+                                          "unchanged":  true,
+                                          "utc":  "2026-09-05T17:04:31.9601674Z",
+                                          "log":  {
+                                                      "name":  "task43p-source-current-5bbc80d0a0954752865193e537e4866c.log",
+                                                      "sha256":  "6F062C8A7E0C4094E9B5E5E733141C7AF1F4715104947145AC9800A916A516FD"
+                                                  },
+                                          "exitRecord":  {
+                                                             "name":  "task43p-source-current-5bbc80d0a0954752865193e537e4866c-exit.json",
+                                                             "sha256":  "4303E59F85A9B6F9C86FE32CA645E654F2445DCC015634FA54DC64E727912C8C"
+                                                         }
+                                      },
+                       "childProof":  {
+                                          "name":  "task43p-source-negative-proof.json",
+                                          "sha256":  "F26EBB1E25AEE57A7CB516EA5C7CFE85D9B5C8B3DD1D8099BA231E6B288676A8"
+                                      },
+                       "forcedNegativeProof":  {
+                                                   "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                   "invocation":  true,
+                                                   "expectedMarker":  "FAIL:Task 41 restore changed lastResistanceTestCurrent",
+                                                   "expectedRoute":  "task43p source-negative snapshot-restore-resistance-current-omitted",
+                                                   "runId":  "5f10ae07a8444ae084e429a16b10cef0",
+                                                   "routeId":  "3aef46fe66194a7f9a0a9ae496d904c5",
+                                                   "nonce":  "f9ad68efb0f94337b75e057f6d059f22",
+                                                   "requestId":  "e846f448a3dc4d3da690f99fd3483ff9",
+                                                   "executionDigest":  "1b66736bdd8217c411eb4a72772f820ebaf7945e983e1b90dec4eb93b13ea75c",
+                                                   "markerObserved":  true,
+                                                   "observedMarker":  "FAIL:Task 41 restore changed lastResistanceTestCurrent",
+                                                   "markerRunId":  "5f10ae07a8444ae084e429a16b10cef0",
+                                                   "markerRouteId":  "3aef46fe66194a7f9a0a9ae496d904c5",
+                                                   "markerExpectedMarker":  "FAIL:Task 41 restore changed lastResistanceTestCurrent",
+                                                   "anchoredDiagnosticProven":  true,
+                                                   "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: Task 41 restore changed lastResistanceTestCurrent nonce=f9ad68efb0f94337b75e057f6d059f22 route=3aef46fe66194a7f9a0a9ae496d904c5 request=e846f448a3dc4d3da690f99fd3483ff9 execution=1b66736bdd8217c411eb4a72772f820ebaf7945e983e1b90dec4eb93b13ea75c experiment=snapshot-restore-resistance-current-omitted run=5f10ae07a8444ae084e429a16b10cef0",
+                                                   "diagnosticExpectedMarker":  "FAIL:Task 41 restore changed lastResistanceTestCurrent",
+                                                   "diagnosticRunId":  "5f10ae07a8444ae084e429a16b10cef0",
+                                                   "diagnosticRouteId":  "3aef46fe66194a7f9a0a9ae496d904c5",
+                                                   "diagnosticBaselineHead":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                                                   "routePassedAfterCleanup":  true,
+                                                   "finalCleanupProven":  true,
+                                                   "routePassed":  true,
+                                                   "cleanupProven":  true,
+                                                   "invalidated":  false
+                                               },
+                       "cleanup":  {
+                                       "audit":  {
+                                                     "name":  "87bcba0283734e5db8a97271aa8bdebb-source-residue-audit.json",
+                                                     "sha256":  "29727F67DD5C722970052D4F6637B3ABC0A4B9B436B93558806DCCEB84026BFD"
+                                                 },
+                                       "auditedUtc":  "2026-09-05T17:05:24.3080473Z",
+                                       "currentRelevantCount":  0,
+                                       "manualCleanupPerformed":  false,
+                                       "case":  {
+                                                    "id":  "snapshot-restore-resistance-current-omitted",
+                                                    "childRunId":  "5f10ae07a8444ae084e429a16b10cef0",
+                                                    "manifestSha256":  "1CC91F84542A1CAA0C5113BD698136F7BCF72B0C1A559AFCFA79AAA248B17172",
+                                                    "cleanup":  {
+                                                                    "state":  "complete",
+                                                                    "completedUtc":  "2026-09-05T17:04:06.5847473Z",
+                                                                    "errors":  [
+
+                                                                               ]
+                                                                },
+                                                    "previewPid":  243960,
+                                                    "previewAbsent":  true,
+                                                    "previewListener":  {
+                                                                            "Success":  true,
+                                                                            "Known":  true,
+                                                                            "HasListeners":  false,
+                                                                            "Listeners":  [
+
+                                                                                          ],
+                                                                            "ListenerOwnerKind":  "none",
+                                                                            "ListenerOwnerProof":  "",
+                                                                            "ListenerOwnerEvidence":  "",
+                                                                            "Source":  "netstat",
+                                                                            "Error":  ""
+                                                                        },
+                                                    "browsers":  [
+                                                                     {
+                                                                         "routeId":  "3aef46fe66194a7f9a0a9ae496d904c5",
+                                                                         "pid":  57740,
+                                                                         "processStartTicks":  639242245724264118,
+                                                                         "currentAbsent":  true,
+                                                                         "listener":  {
+                                                                                          "Success":  true,
+                                                                                          "Known":  true,
+                                                                                          "HasListeners":  false,
+                                                                                          "Listeners":  [
+
+                                                                                                        ],
+                                                                                          "ListenerOwnerKind":  "none",
+                                                                                          "ListenerOwnerProof":  "",
+                                                                                          "ListenerOwnerEvidence":  "",
+                                                                                          "Source":  "netstat",
+                                                                                          "Error":  ""
+                                                                                      },
+                                                                         "profileAbsent":  true,
+                                                                         "leaseAbsent":  true,
+                                                                         "cleanup":  "complete"
+                                                                     }
+                                                                 ],
+                                                    "manualCleanupPerformed":  false
+                                                }
+                                   }
+                   },
+    "anchorRepairCases":  [
+                              {
+                                  "id":  "omitted-manifest-terminal",
+                                  "invocationRunId":  "b54ee4face5c4be98608659728b79e37",
+                                  "invocationActualExit":  1,
+                                  "childRunId":  "69407080f54c425ea229c961c4cd4043",
+                                  "status":  "CAUGHT",
+                                  "actualChildExit":  1,
+                                  "relativePath":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                                  "family":  "LED_INDICATOR",
+                                  "topology":  "DIRECT_SERIES",
+                                  "seed":  0,
+                                  "mutationKind":  "manifest-source-terminal-omission",
+                                  "expectedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2]",
+                                  "sourceMutationBeforeSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                  "sourceMutationAfterSha256":  "755a8e2c4cfcff44896a1b6d746d958ffbf4b162017e7a73dcb7c0ced64cd8e3",
+                                  "sourceMutationRestoredSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                  "sourceBytesRestoredExactly":  true,
+                                  "disposableCompileExit":  0,
+                                  "runtimeAgainstMutatedSource":  true,
+                                  "repositoryUnchanged":  true,
+                                  "sourceVerifierDigest":  "a0abcf3d61cb95c2e07ae3ed3516bc391dc312359c6cde31262d080c2d26faea",
+                                  "compiledExecutionDigest":  "87c1ef936f9aa2e16d298155969b12f567b01bbdbc6aa78104787922515275f3",
+                                  "childProof":  {
+                                                     "name":  "task43p-source-negative-proof.json",
+                                                     "sha256":  "10A2930793BD342D9D50C11E0297A353BBB34FE33E4BB5677FE2D1220E5A4E47"
+                                                 },
+                                  "forcedNegativeProof":  {
+                                                              "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                              "invocation":  true,
+                                                              "expectedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2]",
+                                                              "expectedRoute":  "task43p source-negative omitted-manifest-terminal",
+                                                              "runId":  "69407080f54c425ea229c961c4cd4043",
+                                                              "routeId":  "3ea3f08037dc45b593923ee8f5077b5a",
+                                                              "nonce":  "c1b7e222181b40309a3592dd5445c310",
+                                                              "requestId":  "bd4991ff6d7f4b7891604870d37b69a8",
+                                                              "executionDigest":  "87c1ef936f9aa2e16d298155969b12f567b01bbdbc6aa78104787922515275f3",
+                                                              "markerObserved":  true,
+                                                              "observedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2]",
+                                                              "markerRunId":  "69407080f54c425ea229c961c4cd4043",
+                                                              "markerRouteId":  "3ea3f08037dc45b593923ee8f5077b5a",
+                                                              "markerExpectedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2]",
+                                                              "anchoredDiagnosticProven":  true,
+                                                              "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2] nonce=c1b7e222181b40309a3592dd5445c310 route=3ea3f08037dc45b593923ee8f5077b5a request=bd4991ff6d7f4b7891604870d37b69a8 execution=87c1ef936f9aa2e16d298155969b12f567b01bbdbc6aa78104787922515275f3 experiment=omitted-manifest-terminal run=69407080f54c425ea229c961c4cd4043",
+                                                              "diagnosticExpectedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2]",
+                                                              "diagnosticRunId":  "69407080f54c425ea229c961c4cd4043",
+                                                              "diagnosticRouteId":  "3ea3f08037dc45b593923ee8f5077b5a",
+                                                              "diagnosticBaselineHead":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                                                              "routePassedAfterCleanup":  true,
+                                                              "finalCleanupProven":  true,
+                                                              "routePassed":  true,
+                                                              "cleanupProven":  true,
+                                                              "invalidated":  false
+                                                          },
+                                  "originalEvidence":  {
+                                                           "name":  "task43p-source-experiments-b54ee4face5c4be98608659728b79e37.json",
+                                                           "sha256":  "996B84ED85923626F0469B52CA47C2A96B19A93796B9DE94B4DA74EA51E8DCF5"
+                                                       },
+                                  "invocation":  {
+                                                     "actualExit":  1,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T18:23:36.8554325Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-source-current-fd970884c1524ca297d349566955336b.log",
+                                                                 "sha256":  "F17EA2613F7D1ED006D35DE1428F265725A6560A6778A5AA11844B1AD53508A2"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-source-current-fd970884c1524ca297d349566955336b-exit.json",
+                                                                        "sha256":  "6A735B2ED544284EABF170A7CB1CCD6715ED0E9EE83E1AEEA9BB842567CB0AE1"
+                                                                    }
+                                                 },
+                                  "cleanup":  {
+                                                  "audit":  {
+                                                                "name":  "b54ee4face5c4be98608659728b79e37-source-residue-audit.json",
+                                                                "sha256":  "BB0B05DFD19BFBEF3471E0CC3C89B9E7D4D5B782245A18EE09ABB8123B7C55C5"
+                                                            },
+                                                  "auditedUtc":  "2026-09-05T18:23:46.8450126Z",
+                                                  "currentRelevantCount":  0,
+                                                  "manualCleanupPerformed":  false,
+                                                  "case":  {
+                                                               "id":  "omitted-manifest-terminal",
+                                                               "childRunId":  "69407080f54c425ea229c961c4cd4043",
+                                                               "manifestSha256":  "30C49463D1BB93FAF0104E4E9D1882245AB9AA8947188505D7D345B4D70C6C58",
+                                                               "cleanup":  {
+                                                                               "state":  "complete",
+                                                                               "completedUtc":  "2026-09-05T18:23:10.4497792Z",
+                                                                               "errors":  [
+
+                                                                                          ]
+                                                                           },
+                                                               "previewPid":  84812,
+                                                               "previewAbsent":  true,
+                                                               "previewListener":  {
+                                                                                       "Success":  true,
+                                                                                       "Known":  true,
+                                                                                       "HasListeners":  false,
+                                                                                       "Listeners":  [
+
+                                                                                                     ],
+                                                                                       "ListenerOwnerKind":  "none",
+                                                                                       "ListenerOwnerProof":  "",
+                                                                                       "ListenerOwnerEvidence":  "",
+                                                                                       "Source":  "netstat",
+                                                                                       "Error":  ""
+                                                                                   },
+                                                               "browsers":  [
+                                                                                {
+                                                                                    "routeId":  "3ea3f08037dc45b593923ee8f5077b5a",
+                                                                                    "pid":  128544,
+                                                                                    "processStartTicks":  639242293188163243,
+                                                                                    "currentAbsent":  true,
+                                                                                    "listener":  {
+                                                                                                     "Success":  true,
+                                                                                                     "Known":  true,
+                                                                                                     "HasListeners":  false,
+                                                                                                     "Listeners":  [
+
+                                                                                                                   ],
+                                                                                                     "ListenerOwnerKind":  "none",
+                                                                                                     "ListenerOwnerProof":  "",
+                                                                                                     "ListenerOwnerEvidence":  "",
+                                                                                                     "Source":  "netstat",
+                                                                                                     "Error":  ""
+                                                                                                 },
+                                                                                    "profileAbsent":  true,
+                                                                                    "leaseAbsent":  true,
+                                                                                    "cleanup":  "complete"
+                                                                                }
+                                                                            ],
+                                                               "manualCleanupPerformed":  false
+                                                           }
+                                              }
+                              },
+                              {
+                                  "id":  "public-remove-action-disabled",
+                                  "invocationRunId":  "4f5cca393b8c4f3e9f3326ec77ece720",
+                                  "invocationActualExit":  1,
+                                  "childRunId":  "66498f37cdb149e788778496e08668b4",
+                                  "status":  "CAUGHT",
+                                  "actualChildExit":  1,
+                                  "relativePath":  "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java",
+                                  "family":  "LED_INDICATOR",
+                                  "topology":  "DIRECT_SERIES",
+                                  "seed":  3,
+                                  "mutationKind":  "public-remove-button-disabled",
+                                  "expectedMarker":  "FAIL:task43p-public-remove-direct-control-passed",
+                                  "sourceMutationBeforeSha256":  "5e1053ad490fc159b55e0302fa580e0c92ecaddf265e71d7291c80c8b2ea3849",
+                                  "sourceMutationAfterSha256":  "f7da4c113323e961f04e940c0f8036e1f7e5f5c4054a913eeed60f6af42e4489",
+                                  "sourceMutationRestoredSha256":  "5e1053ad490fc159b55e0302fa580e0c92ecaddf265e71d7291c80c8b2ea3849",
+                                  "sourceBytesRestoredExactly":  true,
+                                  "disposableCompileExit":  0,
+                                  "runtimeAgainstMutatedSource":  true,
+                                  "repositoryUnchanged":  true,
+                                  "sourceVerifierDigest":  "a0abcf3d61cb95c2e07ae3ed3516bc391dc312359c6cde31262d080c2d26faea",
+                                  "compiledExecutionDigest":  "3ad98a08a3812d1fb3a7b69a584ee622a4b926d787eeda9844b1ae69f707cf28",
+                                  "childProof":  {
+                                                     "name":  "task43p-source-negative-proof.json",
+                                                     "sha256":  "40E3DF775C6FF1332A4E12CED798844E981BECC9F0D4E9914E33FEFD63FFFD39"
+                                                 },
+                                  "forcedNegativeProof":  {
+                                                              "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                              "invocation":  true,
+                                                              "expectedMarker":  "FAIL:task43p-public-remove-direct-control-passed",
+                                                              "expectedRoute":  "task43p source-negative public-remove-action-disabled",
+                                                              "runId":  "66498f37cdb149e788778496e08668b4",
+                                                              "routeId":  "95d5c610a7ac407b94028a5c516d3829",
+                                                              "nonce":  "224fa10343604afb94d46a726be72f4e",
+                                                              "requestId":  "7ae4c8fe17c24f5d8785fc4a6d3650e7",
+                                                              "executionDigest":  "3ad98a08a3812d1fb3a7b69a584ee622a4b926d787eeda9844b1ae69f707cf28",
+                                                              "markerObserved":  true,
+                                                              "observedMarker":  "FAIL:task43p-public-remove-direct-control-passed",
+                                                              "markerRunId":  "66498f37cdb149e788778496e08668b4",
+                                                              "markerRouteId":  "95d5c610a7ac407b94028a5c516d3829",
+                                                              "markerExpectedMarker":  "FAIL:task43p-public-remove-direct-control-passed",
+                                                              "anchoredDiagnosticProven":  true,
+                                                              "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 3: task43p-public-remove-direct-control-passed nonce=224fa10343604afb94d46a726be72f4e route=95d5c610a7ac407b94028a5c516d3829 request=7ae4c8fe17c24f5d8785fc4a6d3650e7 execution=3ad98a08a3812d1fb3a7b69a584ee622a4b926d787eeda9844b1ae69f707cf28 experiment=public-remove-action-disabled run=66498f37cdb149e788778496e08668b4",
+                                                              "diagnosticExpectedMarker":  "FAIL:task43p-public-remove-direct-control-passed",
+                                                              "diagnosticRunId":  "66498f37cdb149e788778496e08668b4",
+                                                              "diagnosticRouteId":  "95d5c610a7ac407b94028a5c516d3829",
+                                                              "diagnosticBaselineHead":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                                                              "routePassedAfterCleanup":  true,
+                                                              "finalCleanupProven":  true,
+                                                              "routePassed":  true,
+                                                              "cleanupProven":  true,
+                                                              "invalidated":  false
+                                                          },
+                                  "originalEvidence":  {
+                                                           "name":  "task43p-source-experiments-4f5cca393b8c4f3e9f3326ec77ece720.json",
+                                                           "sha256":  "4C834944876B607A0563C2193D8DC5E9F2CF6EC62DD35ED25A120FBBCA2D707B"
+                                                       },
+                                  "invocation":  {
+                                                     "actualExit":  1,
+                                                     "unchanged":  true,
+                                                     "utc":  "2026-09-05T18:27:08.6561048Z",
+                                                     "log":  {
+                                                                 "name":  "task43p-source-current-c5e532897821432aa4348786a9de9a88.log",
+                                                                 "sha256":  "441CB2A961804F90E505297146DCED1DF6D049F36B97A2BB2622AEF82CE23E6E"
+                                                             },
+                                                     "exitRecord":  {
+                                                                        "name":  "task43p-source-current-c5e532897821432aa4348786a9de9a88-exit.json",
+                                                                        "sha256":  "FED2CEA8A3BA5B06E8AE387354B2EC9871E235E463994578B8FB684A10D98E8E"
+                                                                    }
+                                                 },
+                                  "cleanup":  {
+                                                  "audit":  {
+                                                                "name":  "4f5cca393b8c4f3e9f3326ec77ece720-source-residue-audit.json",
+                                                                "sha256":  "581EB632673F5B36EEF315455AA4D355CD7B5250D92A69AEBEA22BFA6C5665D9"
+                                                            },
+                                                  "auditedUtc":  "2026-09-05T18:27:24.6738532Z",
+                                                  "currentRelevantCount":  0,
+                                                  "manualCleanupPerformed":  false,
+                                                  "case":  {
+                                                               "id":  "public-remove-action-disabled",
+                                                               "childRunId":  "66498f37cdb149e788778496e08668b4",
+                                                               "manifestSha256":  "C3ECD8E4D6909BFB1B22B7312F727BF36B60381571394B1027DC3BEEB598CB8E",
+                                                               "cleanup":  {
+                                                                               "state":  "complete",
+                                                                               "completedUtc":  "2026-09-05T18:26:42.2457135Z",
+                                                                               "errors":  [
+
+                                                                                          ]
+                                                                           },
+                                                               "previewPid":  93824,
+                                                               "previewAbsent":  true,
+                                                               "previewListener":  {
+                                                                                       "Success":  true,
+                                                                                       "Known":  true,
+                                                                                       "HasListeners":  false,
+                                                                                       "Listeners":  [
+
+                                                                                                     ],
+                                                                                       "ListenerOwnerKind":  "none",
+                                                                                       "ListenerOwnerProof":  "",
+                                                                                       "ListenerOwnerEvidence":  "",
+                                                                                       "Source":  "netstat",
+                                                                                       "Error":  ""
+                                                                                   },
+                                                               "browsers":  [
+                                                                                {
+                                                                                    "routeId":  "95d5c610a7ac407b94028a5c516d3829",
+                                                                                    "pid":  122992,
+                                                                                    "processStartTicks":  639242295229829300,
+                                                                                    "currentAbsent":  true,
+                                                                                    "listener":  {
+                                                                                                     "Success":  true,
+                                                                                                     "Known":  true,
+                                                                                                     "HasListeners":  false,
+                                                                                                     "Listeners":  [
+
+                                                                                                                   ],
+                                                                                                     "ListenerOwnerKind":  "none",
+                                                                                                     "ListenerOwnerProof":  "",
+                                                                                                     "ListenerOwnerEvidence":  "",
+                                                                                                     "Source":  "netstat",
+                                                                                                     "Error":  ""
+                                                                                                 },
+                                                                                    "profileAbsent":  true,
+                                                                                    "leaseAbsent":  true,
+                                                                                    "cleanup":  "complete"
+                                                                                }
+                                                                            ],
+                                                               "manualCleanupPerformed":  false
+                                                           }
+                                              },
+                                  "publicRemove":  {
+                                                       "protocol":  "TSJ-TASK43P-PUBLIC-REMOVE-1",
+                                                       "runId":  "66498f37cdb149e788778496e08668b4",
+                                                       "routeId":  "95d5c610a7ac407b94028a5c516d3829",
+                                                       "navigationMarker":  "937a73c835534bc4a7fc78bad20678c0",
+                                                       "normalPlayerUrl":  "http://127.0.0.1:61441/circuitjs.html?tsjChallenge=led\u0026seed=3\u0026tsjVerifyGeometry=true\u0026tsjVerifierNavigation=937a73c835534bc4a7fc78bad20678c0\u0026tsjVerifierRun=66498f37cdb149e788778496e08668b4\u0026tsjVerifierRoute=95d5c610a7ac407b94028a5c516d3829",
+                                                       "inputMethod":  "Input.dispatchMouseEvent",
+                                                       "inputEventCount":  2,
+                                                       "directControllerPositive":  {
+                                                                                        "protocol":  "TSJ-TASK43P-PUBLIC-REMOVE-CONTROL-1",
+                                                                                        "method":  "PcbWorkbenchController.dispatch",
+                                                                                        "componentId":  "R1",
+                                                                                        "family":  "LED_INDICATOR",
+                                                                                        "seed":  3,
+                                                                                        "partId":  "R1_ORIGINAL",
+                                                                                        "availableBefore":  true,
+                                                                                        "dispatchReturned":  true,
+                                                                                        "removedAfter":  true,
+                                                                                        "cleanupDispatchReturned":  true,
+                                                                                        "restoredAfter":  true,
+                                                                                        "ownerRestored":  true,
+                                                                                        "runId":  "66498f37cdb149e788778496e08668b4",
+                                                                                        "routeId":  "95d5c610a7ac407b94028a5c516d3829",
+                                                                                        "nonce":  "224fa10343604afb94d46a726be72f4e",
+                                                                                        "requestId":  "7ae4c8fe17c24f5d8785fc4a6d3650e7",
+                                                                                        "executionDigest":  "3ad98a08a3812d1fb3a7b69a584ee622a4b926d787eeda9844b1ae69f707cf28"
+                                                                                    },
+                                                       "before":  {
+                                                                      "powerOff":  true,
+                                                                      "selectedInstalledR1":  true,
+                                                                      "emptyTray":  true,
+                                                                      "removedOriginalVisible":  false,
+                                                                      "removeButtonCount":  1,
+                                                                      "removeButtonDisabled":  true,
+                                                                      "removeButtonVisible":  true,
+                                                                      "removeButtonHitTest":  true,
+                                                                      "liftLeadEnabled":  true
+                                                                  },
+                                                       "after":  {
+                                                                     "powerOff":  true,
+                                                                     "selectedInstalledR1":  true,
+                                                                     "emptyTray":  true,
+                                                                     "removedOriginalVisible":  false,
+                                                                     "removeButtonCount":  1,
+                                                                     "removeButtonDisabled":  true,
+                                                                     "removeButtonVisible":  true,
+                                                                     "removeButtonHitTest":  true,
+                                                                     "liftLeadEnabled":  true
+                                                                 }
+                                                   }
+                              }
+                          ],
+    "reusedFromArtifact":  "../source-falsification.json",
+    "reusedArtifact":  {
+                           "name":  "source-falsification.json",
+                           "sha256":  "AB754F279FB4F7BDCB6D635E07D8E1D55C78FA82F538469876A7C50ADB9A0A4B"
+                       },
+    "reusedCases":  [
+                        {
+                            "id":  "renderer-only-j1-1-plus-20px",
+                            "invocationRunId":  "45ed8048759348a1b8c6f0cb8d0352b5",
+                            "invocationActualExit":  2,
+                            "childRunId":  "5eeee72bb9ff4360a1df2ebddc0b0310",
+                            "status":  "CAUGHT",
+                            "actualChildExit":  1,
+                            "relativePath":  "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+                            "family":  "LED_INDICATOR",
+                            "topology":  "DIRECT_SERIES",
+                            "seed":  0,
+                            "mutationKind":  "renderer-source-pad-projection",
+                            "expectedMarker":  "FAIL:task43p-renderer-pad-projection-mismatch:J1.1",
+                            "sourceMutationBeforeSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                            "sourceMutationAfterSha256":  "65ebf96a3cd5215f4d593c7f4ef4b52309adb75342739b413e4b029fbb682ee8",
+                            "sourceMutationRestoredSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                            "sourceBytesRestoredExactly":  true,
+                            "disposableCompileExit":  0,
+                            "runtimeAgainstMutatedSource":  true,
+                            "repositoryUnchanged":  true,
+                            "sourceVerifierDigest":  "aabfeb3e4bd00fead02c33a3dd1ec0ab1a30f633650befaa90617f63903c1f38",
+                            "compiledExecutionDigest":  "055cf869e95909ba496234b5b3444e8f4d0aac8385d02c1d6385fb66c99e8a4f",
+                            "childProof":  {
+                                               "name":  "task43p-source-negative-proof.json",
+                                               "sha256":  "9FDB3BE62D7BF2ACCAFE556E96C9A7FD80F2377113EC92FAD4FF9D53B16409A1"
+                                           },
+                            "forcedNegativeProof":  {
+                                                        "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                        "invocation":  true,
+                                                        "expectedMarker":  "FAIL:task43p-renderer-pad-projection-mismatch:J1.1",
+                                                        "expectedRoute":  "task43p source-negative renderer-only-j1-1-plus-20px",
+                                                        "runId":  "5eeee72bb9ff4360a1df2ebddc0b0310",
+                                                        "routeId":  "3862b584e5874e6898c47087547bd321",
+                                                        "nonce":  "484470dcdb7d41eb8de9bde5b93c160e",
+                                                        "requestId":  "71e90289a3d548f0a7cb87d147cb8cd2",
+                                                        "executionDigest":  "055cf869e95909ba496234b5b3444e8f4d0aac8385d02c1d6385fb66c99e8a4f",
+                                                        "markerObserved":  true,
+                                                        "observedMarker":  "FAIL:task43p-renderer-pad-projection-mismatch:J1.1",
+                                                        "markerRunId":  "5eeee72bb9ff4360a1df2ebddc0b0310",
+                                                        "markerRouteId":  "3862b584e5874e6898c47087547bd321",
+                                                        "markerExpectedMarker":  "FAIL:task43p-renderer-pad-projection-mismatch:J1.1",
+                                                        "anchoredDiagnosticProven":  true,
+                                                        "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-renderer-pad-projection-mismatch:J1.1 nonce=484470dcdb7d41eb8de9bde5b93c160e route=3862b584e5874e6898c47087547bd321 request=71e90289a3d548f0a7cb87d147cb8cd2 execution=055cf869e95909ba496234b5b3444e8f4d0aac8385d02c1d6385fb66c99e8a4f experiment=renderer-only-j1-1-plus-20px run=5eeee72bb9ff4360a1df2ebddc0b0310",
+                                                        "diagnosticExpectedMarker":  "FAIL:task43p-renderer-pad-projection-mismatch:J1.1",
+                                                        "diagnosticRunId":  "5eeee72bb9ff4360a1df2ebddc0b0310",
+                                                        "diagnosticRouteId":  "3862b584e5874e6898c47087547bd321",
+                                                        "diagnosticBaselineHead":  "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+                                                        "routePassedAfterCleanup":  true,
+                                                        "finalCleanupProven":  true,
+                                                        "routePassed":  true,
+                                                        "cleanupProven":  true,
+                                                        "invalidated":  false
+                                                    },
+                            "cleanup":  {
+                                            "id":  "renderer-only-j1-1-plus-20px",
+                                            "childRunId":  "5eeee72bb9ff4360a1df2ebddc0b0310",
+                                            "manifestSha256":  "FF684C6A6412B04E25EF981CDFBCBDF9955DC6E6AEB70D20B8A05F24DB06C7AC",
+                                            "cleanup":  {
+                                                            "state":  "complete",
+                                                            "completedUtc":  "2026-09-05T13:01:49.2286985Z",
+                                                            "errors":  [
+
+                                                                       ]
+                                                        },
+                                            "previewPid":  7916,
+                                            "previewAbsent":  true,
+                                            "previewListener":  {
+                                                                    "Success":  true,
+                                                                    "Known":  true,
+                                                                    "HasListeners":  false,
+                                                                    "Listeners":  [
+
+                                                                                  ],
+                                                                    "ListenerOwnerKind":  "none",
+                                                                    "ListenerOwnerProof":  "",
+                                                                    "ListenerOwnerEvidence":  "",
+                                                                    "Source":  "netstat",
+                                                                    "Error":  ""
+                                                                },
+                                            "browsers":  [
+                                                             {
+                                                                 "routeId":  "3862b584e5874e6898c47087547bd321",
+                                                                 "pid":  73536,
+                                                                 "processStartTicks":  639242100414008436,
+                                                                 "currentAbsent":  true,
+                                                                 "listener":  {
+                                                                                  "Success":  true,
+                                                                                  "Known":  true,
+                                                                                  "HasListeners":  false,
+                                                                                  "Listeners":  [
+
+                                                                                                ],
+                                                                                  "ListenerOwnerKind":  "none",
+                                                                                  "ListenerOwnerProof":  "",
+                                                                                  "ListenerOwnerEvidence":  "",
+                                                                                  "Source":  "netstat",
+                                                                                  "Error":  ""
+                                                                              },
+                                                                 "profileAbsent":  true,
+                                                                 "leaseAbsent":  true,
+                                                                 "cleanup":  "complete"
+                                                             }
+                                                         ],
+                                            "manualCleanupPerformed":  false
+                                        }
+                        },
+                        {
+                            "id":  "renderer-only-j1-1-lead-plus-20px",
+                            "invocationRunId":  "45ed8048759348a1b8c6f0cb8d0352b5",
+                            "invocationActualExit":  2,
+                            "childRunId":  "fe73a329c8fa49a598d27c09b64dfabc",
+                            "status":  "CAUGHT",
+                            "actualChildExit":  1,
+                            "relativePath":  "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderTerminal.java",
+                            "family":  "LED_INDICATOR",
+                            "topology":  "DIRECT_SERIES",
+                            "seed":  0,
+                            "mutationKind":  "renderer-source-lead-projection",
+                            "expectedMarker":  "FAIL:task43p-renderer-surface-mismatch:J1.1",
+                            "sourceMutationBeforeSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                            "sourceMutationAfterSha256":  "37d8e41c7f9128770c3281929f8ea2f3092d2702ac552911b40c1e7c8832ea79",
+                            "sourceMutationRestoredSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                            "sourceBytesRestoredExactly":  true,
+                            "disposableCompileExit":  0,
+                            "runtimeAgainstMutatedSource":  true,
+                            "repositoryUnchanged":  true,
+                            "sourceVerifierDigest":  "aabfeb3e4bd00fead02c33a3dd1ec0ab1a30f633650befaa90617f63903c1f38",
+                            "compiledExecutionDigest":  "bf4efbcf143927a37c592db25e7a51a721f76801e7b91cc5ead3e7104f68a7da",
+                            "childProof":  {
+                                               "name":  "task43p-source-negative-proof.json",
+                                               "sha256":  "AB3E811E91BE9AFBE273275895236F23C7AB2312857A835D6083C939C0C6420A"
+                                           },
+                            "forcedNegativeProof":  {
+                                                        "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                        "invocation":  true,
+                                                        "expectedMarker":  "FAIL:task43p-renderer-surface-mismatch:J1.1",
+                                                        "expectedRoute":  "task43p source-negative renderer-only-j1-1-lead-plus-20px",
+                                                        "runId":  "fe73a329c8fa49a598d27c09b64dfabc",
+                                                        "routeId":  "7ba97986ead64eceba4a933364ebd05b",
+                                                        "nonce":  "b6aff43018124142834873c7854dc153",
+                                                        "requestId":  "c7f83d8e7d254e25bd4b2ea4b09581f3",
+                                                        "executionDigest":  "bf4efbcf143927a37c592db25e7a51a721f76801e7b91cc5ead3e7104f68a7da",
+                                                        "markerObserved":  true,
+                                                        "observedMarker":  "FAIL:task43p-renderer-surface-mismatch:J1.1",
+                                                        "markerRunId":  "fe73a329c8fa49a598d27c09b64dfabc",
+                                                        "markerRouteId":  "7ba97986ead64eceba4a933364ebd05b",
+                                                        "markerExpectedMarker":  "FAIL:task43p-renderer-surface-mismatch:J1.1",
+                                                        "anchoredDiagnosticProven":  true,
+                                                        "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-renderer-surface-mismatch:J1.1 nonce=b6aff43018124142834873c7854dc153 route=7ba97986ead64eceba4a933364ebd05b request=c7f83d8e7d254e25bd4b2ea4b09581f3 execution=bf4efbcf143927a37c592db25e7a51a721f76801e7b91cc5ead3e7104f68a7da experiment=renderer-only-j1-1-lead-plus-20px run=fe73a329c8fa49a598d27c09b64dfabc",
+                                                        "diagnosticExpectedMarker":  "FAIL:task43p-renderer-surface-mismatch:J1.1",
+                                                        "diagnosticRunId":  "fe73a329c8fa49a598d27c09b64dfabc",
+                                                        "diagnosticRouteId":  "7ba97986ead64eceba4a933364ebd05b",
+                                                        "diagnosticBaselineHead":  "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+                                                        "routePassedAfterCleanup":  true,
+                                                        "finalCleanupProven":  true,
+                                                        "routePassed":  true,
+                                                        "cleanupProven":  true,
+                                                        "invalidated":  false
+                                                    },
+                            "cleanup":  {
+                                            "id":  "renderer-only-j1-1-lead-plus-20px",
+                                            "childRunId":  "fe73a329c8fa49a598d27c09b64dfabc",
+                                            "manifestSha256":  "3FE126E41834BCAEC024D2434AA9EB4988B7C1C27868CB4E94602732D2C2B15C",
+                                            "cleanup":  {
+                                                            "state":  "complete",
+                                                            "completedUtc":  "2026-09-05T13:04:13.4915692Z",
+                                                            "errors":  [
+
+                                                                       ]
+                                                        },
+                                            "previewPid":  181928,
+                                            "previewAbsent":  true,
+                                            "previewListener":  {
+                                                                    "Success":  true,
+                                                                    "Known":  true,
+                                                                    "HasListeners":  false,
+                                                                    "Listeners":  [
+
+                                                                                  ],
+                                                                    "ListenerOwnerKind":  "none",
+                                                                    "ListenerOwnerProof":  "",
+                                                                    "ListenerOwnerEvidence":  "",
+                                                                    "Source":  "netstat",
+                                                                    "Error":  ""
+                                                                },
+                                            "browsers":  [
+                                                             {
+                                                                 "routeId":  "7ba97986ead64eceba4a933364ebd05b",
+                                                                 "pid":  148440,
+                                                                 "processStartTicks":  639242101855651535,
+                                                                 "currentAbsent":  true,
+                                                                 "listener":  {
+                                                                                  "Success":  true,
+                                                                                  "Known":  true,
+                                                                                  "HasListeners":  false,
+                                                                                  "Listeners":  [
+
+                                                                                                ],
+                                                                                  "ListenerOwnerKind":  "none",
+                                                                                  "ListenerOwnerProof":  "",
+                                                                                  "ListenerOwnerEvidence":  "",
+                                                                                  "Source":  "netstat",
+                                                                                  "Error":  ""
+                                                                              },
+                                                                 "profileAbsent":  true,
+                                                                 "leaseAbsent":  true,
+                                                                 "cleanup":  "complete"
+                                                             }
+                                                         ],
+                                            "manualCleanupPerformed":  false
+                                        }
+                        },
+                        {
+                            "id":  "raw-copper-j1-1-endpoint-gap",
+                            "invocationRunId":  "45ed8048759348a1b8c6f0cb8d0352b5",
+                            "invocationActualExit":  2,
+                            "childRunId":  "c01401c0e40a41a2b4c880b751e5647f",
+                            "status":  "CAUGHT",
+                            "actualChildExit":  1,
+                            "relativePath":  "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java",
+                            "family":  "LED_INDICATOR",
+                            "topology":  "DIRECT_SERIES",
+                            "seed":  0,
+                            "mutationKind":  "raw-copper-producer-layout-endpoint",
+                            "expectedMarker":  "FAIL:task43p-raw-copper-start-gap:J1.1",
+                            "sourceMutationBeforeSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                            "sourceMutationAfterSha256":  "1fb4491893a1de9a1074eadc6c44afba4b81d8bc0d028a8102b4c3dbfe25d1df",
+                            "sourceMutationRestoredSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                            "sourceBytesRestoredExactly":  true,
+                            "disposableCompileExit":  0,
+                            "runtimeAgainstMutatedSource":  true,
+                            "repositoryUnchanged":  true,
+                            "sourceVerifierDigest":  "aabfeb3e4bd00fead02c33a3dd1ec0ab1a30f633650befaa90617f63903c1f38",
+                            "compiledExecutionDigest":  "a9c4dace91d345936db3a2516b9f52eaacbaa82890b96376fee7214a065f1eea",
+                            "childProof":  {
+                                               "name":  "task43p-source-negative-proof.json",
+                                               "sha256":  "44DA170526DE84B2138731F5C2E3991F4BE8E65E2A42CA4236E4CB26703E191E"
+                                           },
+                            "forcedNegativeProof":  {
+                                                        "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                        "invocation":  true,
+                                                        "expectedMarker":  "FAIL:task43p-raw-copper-start-gap:J1.1",
+                                                        "expectedRoute":  "task43p source-negative raw-copper-j1-1-endpoint-gap",
+                                                        "runId":  "c01401c0e40a41a2b4c880b751e5647f",
+                                                        "routeId":  "bf344e7d3d6e46bb913210e0892c149e",
+                                                        "nonce":  "7393ba6e87424f7b959d7ad415f7decc",
+                                                        "requestId":  "c4993bd172c7446c8338afb834c0bef7",
+                                                        "executionDigest":  "a9c4dace91d345936db3a2516b9f52eaacbaa82890b96376fee7214a065f1eea",
+                                                        "markerObserved":  true,
+                                                        "observedMarker":  "FAIL:task43p-raw-copper-start-gap:J1.1",
+                                                        "markerRunId":  "c01401c0e40a41a2b4c880b751e5647f",
+                                                        "markerRouteId":  "bf344e7d3d6e46bb913210e0892c149e",
+                                                        "markerExpectedMarker":  "FAIL:task43p-raw-copper-start-gap:J1.1",
+                                                        "anchoredDiagnosticProven":  true,
+                                                        "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-raw-copper-start-gap:J1.1 nonce=7393ba6e87424f7b959d7ad415f7decc route=bf344e7d3d6e46bb913210e0892c149e request=c4993bd172c7446c8338afb834c0bef7 execution=a9c4dace91d345936db3a2516b9f52eaacbaa82890b96376fee7214a065f1eea experiment=raw-copper-j1-1-endpoint-gap run=c01401c0e40a41a2b4c880b751e5647f",
+                                                        "diagnosticExpectedMarker":  "FAIL:task43p-raw-copper-start-gap:J1.1",
+                                                        "diagnosticRunId":  "c01401c0e40a41a2b4c880b751e5647f",
+                                                        "diagnosticRouteId":  "bf344e7d3d6e46bb913210e0892c149e",
+                                                        "diagnosticBaselineHead":  "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+                                                        "routePassedAfterCleanup":  true,
+                                                        "finalCleanupProven":  true,
+                                                        "routePassed":  true,
+                                                        "cleanupProven":  true,
+                                                        "invalidated":  false
+                                                    },
+                            "cleanup":  {
+                                            "id":  "raw-copper-j1-1-endpoint-gap",
+                                            "childRunId":  "c01401c0e40a41a2b4c880b751e5647f",
+                                            "manifestSha256":  "8C037AB6C4FCF8A66A2923C7E3B90B0364C8BDE0275E13A99410B25753CF3C81",
+                                            "cleanup":  {
+                                                            "state":  "complete",
+                                                            "completedUtc":  "2026-09-05T13:06:37.8405401Z",
+                                                            "errors":  [
+
+                                                                       ]
+                                                        },
+                                            "previewPid":  180328,
+                                            "previewAbsent":  true,
+                                            "previewListener":  {
+                                                                    "Success":  true,
+                                                                    "Known":  true,
+                                                                    "HasListeners":  false,
+                                                                    "Listeners":  [
+
+                                                                                  ],
+                                                                    "ListenerOwnerKind":  "none",
+                                                                    "ListenerOwnerProof":  "",
+                                                                    "ListenerOwnerEvidence":  "",
+                                                                    "Source":  "netstat",
+                                                                    "Error":  ""
+                                                                },
+                                            "browsers":  [
+                                                             {
+                                                                 "routeId":  "bf344e7d3d6e46bb913210e0892c149e",
+                                                                 "pid":  173040,
+                                                                 "processStartTicks":  639242103300763703,
+                                                                 "currentAbsent":  true,
+                                                                 "listener":  {
+                                                                                  "Success":  true,
+                                                                                  "Known":  true,
+                                                                                  "HasListeners":  false,
+                                                                                  "Listeners":  [
+
+                                                                                                ],
+                                                                                  "ListenerOwnerKind":  "none",
+                                                                                  "ListenerOwnerProof":  "",
+                                                                                  "ListenerOwnerEvidence":  "",
+                                                                                  "Source":  "netstat",
+                                                                                  "Error":  ""
+                                                                              },
+                                                                 "profileAbsent":  true,
+                                                                 "leaseAbsent":  true,
+                                                                 "cleanup":  "complete"
+                                                             }
+                                                         ],
+                                            "manualCleanupPerformed":  false
+                                        }
+                        },
+                        {
+                            "id":  "raw-net-mismatch",
+                            "invocationRunId":  "45ed8048759348a1b8c6f0cb8d0352b5",
+                            "invocationActualExit":  2,
+                            "childRunId":  "ff51f8db607b4f33be1f68fd8c151c08",
+                            "status":  "CAUGHT",
+                            "actualChildExit":  1,
+                            "relativePath":  "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java",
+                            "family":  "LED_INDICATOR",
+                            "topology":  "DIRECT_SERIES",
+                            "seed":  0,
+                            "mutationKind":  "raw-logical-board-producer-net",
+                            "expectedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board nets:expected=[GND, LED_NODE, VIN]:actual=[GND, LED_NODE, TASK43P_UNMANIFESTED_EMPTY, VIN]",
+                            "sourceMutationBeforeSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                            "sourceMutationAfterSha256":  "1b9a2693fda6f0a3f98bad6f4b2aa40da4b640f87f7ae70cf7af9d758e6b9920",
+                            "sourceMutationRestoredSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                            "sourceBytesRestoredExactly":  true,
+                            "disposableCompileExit":  0,
+                            "runtimeAgainstMutatedSource":  true,
+                            "repositoryUnchanged":  true,
+                            "sourceVerifierDigest":  "aabfeb3e4bd00fead02c33a3dd1ec0ab1a30f633650befaa90617f63903c1f38",
+                            "compiledExecutionDigest":  "5822d5e8cf693375787bcb330b7b495fc17e79056a408c05e820fab81c0fd1b9",
+                            "childProof":  {
+                                               "name":  "task43p-source-negative-proof.json",
+                                               "sha256":  "7120EF499FE696924B32AF409294F3E2B2592DEDF6401C2A66C0E999D4DE6D50"
+                                           },
+                            "forcedNegativeProof":  {
+                                                        "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                        "invocation":  true,
+                                                        "expectedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board nets:expected=[GND, LED_NODE, VIN]:actual=[GND, LED_NODE, TASK43P_UNMANIFESTED_EMPTY, VIN]",
+                                                        "expectedRoute":  "task43p source-negative raw-net-mismatch",
+                                                        "runId":  "ff51f8db607b4f33be1f68fd8c151c08",
+                                                        "routeId":  "dac8598b9f9d4120ab57ee874333c219",
+                                                        "nonce":  "3a846d8c8f5443d1b561e70433d2e82a",
+                                                        "requestId":  "d8ca0ae0f14542aa99fa7ce41c849880",
+                                                        "executionDigest":  "5822d5e8cf693375787bcb330b7b495fc17e79056a408c05e820fab81c0fd1b9",
+                                                        "markerObserved":  true,
+                                                        "observedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board nets:expected=[GND, LED_NODE, VIN]:actual=[GND, LED_NODE, TASK43P_UNMANIFESTED_EMPTY, VIN]",
+                                                        "markerRunId":  "ff51f8db607b4f33be1f68fd8c151c08",
+                                                        "markerRouteId":  "dac8598b9f9d4120ab57ee874333c219",
+                                                        "markerExpectedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board nets:expected=[GND, LED_NODE, VIN]:actual=[GND, LED_NODE, TASK43P_UNMANIFESTED_EMPTY, VIN]",
+                                                        "anchoredDiagnosticProven":  true,
+                                                        "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-set-mismatch:manifest/raw board nets:expected=[GND, LED_NODE, VIN]:actual=[GND, LED_NODE, TASK43P_UNMANIFESTED_EMPTY, VIN] nonce=3a846d8c8f5443d1b561e70433d2e82a route=dac8598b9f9d4120ab57ee874333c219 request=d8ca0ae0f14542aa99fa7ce41c849880 execution=5822d5e8cf693375787bcb330b7b495fc17e79056a408c05e820fab81c0fd1b9 experiment=raw-net-mismatch run=ff51f8db607b4f33be1f68fd8c151c08",
+                                                        "diagnosticExpectedMarker":  "FAIL:task43p-set-mismatch:manifest/raw board nets:expected=[GND, LED_NODE, VIN]:actual=[GND, LED_NODE, TASK43P_UNMANIFESTED_EMPTY, VIN]",
+                                                        "diagnosticRunId":  "ff51f8db607b4f33be1f68fd8c151c08",
+                                                        "diagnosticRouteId":  "dac8598b9f9d4120ab57ee874333c219",
+                                                        "diagnosticBaselineHead":  "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+                                                        "routePassedAfterCleanup":  true,
+                                                        "finalCleanupProven":  true,
+                                                        "routePassed":  true,
+                                                        "cleanupProven":  true,
+                                                        "invalidated":  false
+                                                    },
+                            "cleanup":  {
+                                            "id":  "raw-net-mismatch",
+                                            "childRunId":  "ff51f8db607b4f33be1f68fd8c151c08",
+                                            "manifestSha256":  "79B332083490C9772474E92C1E955A246C2D6FBDE946688D614A0AA394071091",
+                                            "cleanup":  {
+                                                            "state":  "complete",
+                                                            "completedUtc":  "2026-09-05T13:09:02.7585505Z",
+                                                            "errors":  [
+
+                                                                       ]
+                                                        },
+                                            "previewPid":  143420,
+                                            "previewAbsent":  true,
+                                            "previewListener":  {
+                                                                    "Success":  true,
+                                                                    "Known":  true,
+                                                                    "HasListeners":  false,
+                                                                    "Listeners":  [
+
+                                                                                  ],
+                                                                    "ListenerOwnerKind":  "none",
+                                                                    "ListenerOwnerProof":  "",
+                                                                    "ListenerOwnerEvidence":  "",
+                                                                    "Source":  "netstat",
+                                                                    "Error":  ""
+                                                                },
+                                            "browsers":  [
+                                                             {
+                                                                 "routeId":  "dac8598b9f9d4120ab57ee874333c219",
+                                                                 "pid":  157984,
+                                                                 "processStartTicks":  639242104747817850,
+                                                                 "currentAbsent":  true,
+                                                                 "listener":  {
+                                                                                  "Success":  true,
+                                                                                  "Known":  true,
+                                                                                  "HasListeners":  false,
+                                                                                  "Listeners":  [
+
+                                                                                                ],
+                                                                                  "ListenerOwnerKind":  "none",
+                                                                                  "ListenerOwnerProof":  "",
+                                                                                  "ListenerOwnerEvidence":  "",
+                                                                                  "Source":  "netstat",
+                                                                                  "Error":  ""
+                                                                              },
+                                                                 "profileAbsent":  true,
+                                                                 "leaseAbsent":  true,
+                                                                 "cleanup":  "complete"
+                                                             }
+                                                         ],
+                                            "manualCleanupPerformed":  false
+                                        }
+                        },
+                        {
+                            "id":  "solver-binding-j1-1-post-mismatch",
+                            "invocationRunId":  "45ed8048759348a1b8c6f0cb8d0352b5",
+                            "invocationActualExit":  2,
+                            "childRunId":  "a3ef13d43ebe41e3a968686ac17bce9e",
+                            "status":  "CAUGHT",
+                            "actualChildExit":  1,
+                            "relativePath":  "src/com/lushprojects/circuitjs1/client/BoardSimulationBindings.java",
+                            "family":  "LED_INDICATOR",
+                            "topology":  "DIRECT_SERIES",
+                            "seed":  0,
+                            "mutationKind":  "solver-producer-binding-endpoint-redirect-after-fixed-capture",
+                            "expectedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:J1.1",
+                            "sourceMutationBeforeSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                            "sourceMutationAfterSha256":  "1f57f638b2f85ee368585452be232d7c870a66594ce2468d1dc73fbe7b0991da",
+                            "sourceMutationRestoredSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                            "sourceBytesRestoredExactly":  true,
+                            "disposableCompileExit":  0,
+                            "runtimeAgainstMutatedSource":  true,
+                            "repositoryUnchanged":  true,
+                            "sourceVerifierDigest":  "aabfeb3e4bd00fead02c33a3dd1ec0ab1a30f633650befaa90617f63903c1f38",
+                            "compiledExecutionDigest":  "66f1cd1c71e2f3bedbefb444198df610ebddf63e8848ec53a4f9bd13ad0b2127",
+                            "childProof":  {
+                                               "name":  "task43p-source-negative-proof.json",
+                                               "sha256":  "8C5052F0C9181C6A7D06A3F0C9E512C266E48718D9094CFE7670486EE059CEBF"
+                                           },
+                            "forcedNegativeProof":  {
+                                                        "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                        "invocation":  true,
+                                                        "expectedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:J1.1",
+                                                        "expectedRoute":  "task43p source-negative solver-binding-j1-1-post-mismatch",
+                                                        "runId":  "a3ef13d43ebe41e3a968686ac17bce9e",
+                                                        "routeId":  "87d9ca034e8d4f81a5330daaf1352ad8",
+                                                        "nonce":  "e716d636b50248fcbe7edc85b5f0c57f",
+                                                        "requestId":  "b40f3b03133a4b88bd678d7b7bf0eaae",
+                                                        "executionDigest":  "66f1cd1c71e2f3bedbefb444198df610ebddf63e8848ec53a4f9bd13ad0b2127",
+                                                        "markerObserved":  true,
+                                                        "observedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:J1.1",
+                                                        "markerRunId":  "a3ef13d43ebe41e3a968686ac17bce9e",
+                                                        "markerRouteId":  "87d9ca034e8d4f81a5330daaf1352ad8",
+                                                        "markerExpectedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:J1.1",
+                                                        "anchoredDiagnosticProven":  true,
+                                                        "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-solver-binding-endpoint-identity-mismatch:J1.1 nonce=e716d636b50248fcbe7edc85b5f0c57f route=87d9ca034e8d4f81a5330daaf1352ad8 request=b40f3b03133a4b88bd678d7b7bf0eaae execution=66f1cd1c71e2f3bedbefb444198df610ebddf63e8848ec53a4f9bd13ad0b2127 experiment=solver-binding-j1-1-post-mismatch run=a3ef13d43ebe41e3a968686ac17bce9e",
+                                                        "diagnosticExpectedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:J1.1",
+                                                        "diagnosticRunId":  "a3ef13d43ebe41e3a968686ac17bce9e",
+                                                        "diagnosticRouteId":  "87d9ca034e8d4f81a5330daaf1352ad8",
+                                                        "diagnosticBaselineHead":  "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+                                                        "routePassedAfterCleanup":  true,
+                                                        "finalCleanupProven":  true,
+                                                        "routePassed":  true,
+                                                        "cleanupProven":  true,
+                                                        "invalidated":  false
+                                                    },
+                            "cleanup":  {
+                                            "id":  "solver-binding-j1-1-post-mismatch",
+                                            "childRunId":  "a3ef13d43ebe41e3a968686ac17bce9e",
+                                            "manifestSha256":  "B8D1225D52D928C10B9D81AB5A1E3700B033EA655A04623E23274A5AE54AEBAA",
+                                            "cleanup":  {
+                                                            "state":  "complete",
+                                                            "completedUtc":  "2026-09-05T13:11:27.450981Z",
+                                                            "errors":  [
+
+                                                                       ]
+                                                        },
+                                            "previewPid":  87632,
+                                            "previewAbsent":  true,
+                                            "previewListener":  {
+                                                                    "Success":  true,
+                                                                    "Known":  true,
+                                                                    "HasListeners":  false,
+                                                                    "Listeners":  [
+
+                                                                                  ],
+                                                                    "ListenerOwnerKind":  "none",
+                                                                    "ListenerOwnerProof":  "",
+                                                                    "ListenerOwnerEvidence":  "",
+                                                                    "Source":  "netstat",
+                                                                    "Error":  ""
+                                                                },
+                                            "browsers":  [
+                                                             {
+                                                                 "routeId":  "87d9ca034e8d4f81a5330daaf1352ad8",
+                                                                 "pid":  102272,
+                                                                 "processStartTicks":  639242106197669852,
+                                                                 "currentAbsent":  true,
+                                                                 "listener":  {
+                                                                                  "Success":  true,
+                                                                                  "Known":  true,
+                                                                                  "HasListeners":  false,
+                                                                                  "Listeners":  [
+
+                                                                                                ],
+                                                                                  "ListenerOwnerKind":  "none",
+                                                                                  "ListenerOwnerProof":  "",
+                                                                                  "ListenerOwnerEvidence":  "",
+                                                                                  "Source":  "netstat",
+                                                                                  "Error":  ""
+                                                                              },
+                                                                 "profileAbsent":  true,
+                                                                 "leaseAbsent":  true,
+                                                                 "cleanup":  "complete"
+                                                             }
+                                                         ],
+                                            "manualCleanupPerformed":  false
+                                        }
+                        },
+                        {
+                            "id":  "solver-detachable-c1-plus-identity-mismatch",
+                            "invocationRunId":  "302a40709aba43a69322370046f1bffe",
+                            "invocationActualExit":  1,
+                            "childRunId":  "241a69b0de9d40cd9ca221ec5c02f365",
+                            "status":  "CAUGHT",
+                            "actualChildExit":  1,
+                            "relativePath":  "src/com/lushprojects/circuitjs1/client/BoardSimulationBindings.java",
+                            "family":  "RC_DELAY",
+                            "topology":  "RC_CHARGE_DELAY",
+                            "seed":  0,
+                            "mutationKind":  "solver-producer-binding-endpoint-redirect-after-detachable-capture",
+                            "expectedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:C1.+",
+                            "sourceMutationBeforeSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                            "sourceMutationAfterSha256":  "6eb1457cde77a6ace645d46af94f9a2fc0e2226096ebcf522b4cfd7302cec9cd",
+                            "sourceMutationRestoredSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                            "sourceBytesRestoredExactly":  true,
+                            "disposableCompileExit":  0,
+                            "runtimeAgainstMutatedSource":  true,
+                            "repositoryUnchanged":  true,
+                            "sourceVerifierDigest":  "6b4e1541894eff75c6ff8a4b6c222e2fee5d9ff1ccf046f0299c8b2dd55f85fb",
+                            "compiledExecutionDigest":  "a75315c51ddd7fd39103aeb557edae6cccc58bbf8c8ac20dc4c9e5e834d0a828",
+                            "childProof":  {
+                                               "name":  "task43p-source-negative-proof.json",
+                                               "sha256":  "6DCB5E9906563BCF1471D9C8816737576A6B53CA1716270969F977ED50E76245"
+                                           },
+                            "forcedNegativeProof":  {
+                                                        "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                        "invocation":  true,
+                                                        "expectedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:C1.+",
+                                                        "expectedRoute":  "task43p source-negative solver-detachable-c1-plus-identity-mismatch",
+                                                        "runId":  "241a69b0de9d40cd9ca221ec5c02f365",
+                                                        "routeId":  "ffe59c1630384b689ef4759e9b6e3735",
+                                                        "nonce":  "9f5dc42178c742bda76ac82b8e7fadb9",
+                                                        "requestId":  "f57cf9cb1bd541cea34baa99e98ca0e2",
+                                                        "executionDigest":  "a75315c51ddd7fd39103aeb557edae6cccc58bbf8c8ac20dc4c9e5e834d0a828",
+                                                        "markerObserved":  true,
+                                                        "observedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:C1.+",
+                                                        "markerRunId":  "241a69b0de9d40cd9ca221ec5c02f365",
+                                                        "markerRouteId":  "ffe59c1630384b689ef4759e9b6e3735",
+                                                        "markerExpectedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:C1.+",
+                                                        "anchoredDiagnosticProven":  true,
+                                                        "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for RC_DELAY/RC_CHARGE_DELAY, seed 0: task43p-solver-binding-endpoint-identity-mismatch:C1.+ nonce=9f5dc42178c742bda76ac82b8e7fadb9 route=ffe59c1630384b689ef4759e9b6e3735 request=f57cf9cb1bd541cea34baa99e98ca0e2 execution=a75315c51ddd7fd39103aeb557edae6cccc58bbf8c8ac20dc4c9e5e834d0a828 experiment=solver-detachable-c1-plus-identity-mismatch run=241a69b0de9d40cd9ca221ec5c02f365",
+                                                        "diagnosticExpectedMarker":  "FAIL:task43p-solver-binding-endpoint-identity-mismatch:C1.+",
+                                                        "diagnosticRunId":  "241a69b0de9d40cd9ca221ec5c02f365",
+                                                        "diagnosticRouteId":  "ffe59c1630384b689ef4759e9b6e3735",
+                                                        "diagnosticBaselineHead":  "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+                                                        "routePassedAfterCleanup":  true,
+                                                        "finalCleanupProven":  true,
+                                                        "routePassed":  true,
+                                                        "cleanupProven":  true,
+                                                        "invalidated":  false
+                                                    },
+                            "cleanup":  {
+                                            "id":  "solver-detachable-c1-plus-identity-mismatch",
+                                            "childRunId":  "241a69b0de9d40cd9ca221ec5c02f365",
+                                            "manifestSha256":  "0ABE8AFB8B05F601E7174A0045E28E102E1EDD9BBBC07A44B58FA76443448813",
+                                            "cleanup":  {
+                                                            "state":  "complete",
+                                                            "completedUtc":  "2026-09-05T13:34:29.6470733Z",
+                                                            "errors":  [
+
+                                                                       ]
+                                                        },
+                                            "previewPid":  194164,
+                                            "previewAbsent":  true,
+                                            "previewListener":  {
+                                                                    "Success":  true,
+                                                                    "Known":  true,
+                                                                    "HasListeners":  false,
+                                                                    "Listeners":  [
+
+                                                                                  ],
+                                                                    "ListenerOwnerKind":  "none",
+                                                                    "ListenerOwnerProof":  "",
+                                                                    "ListenerOwnerEvidence":  "",
+                                                                    "Source":  "netstat",
+                                                                    "Error":  ""
+                                                                },
+                                            "browsers":  [
+                                                             {
+                                                                 "routeId":  "ffe59c1630384b689ef4759e9b6e3735",
+                                                                 "pid":  102844,
+                                                                 "processStartTicks":  639242120012157683,
+                                                                 "currentAbsent":  true,
+                                                                 "listener":  {
+                                                                                  "Success":  true,
+                                                                                  "Known":  true,
+                                                                                  "HasListeners":  false,
+                                                                                  "Listeners":  [
+
+                                                                                                ],
+                                                                                  "ListenerOwnerKind":  "none",
+                                                                                  "ListenerOwnerProof":  "",
+                                                                                  "ListenerOwnerEvidence":  "",
+                                                                                  "Source":  "netstat",
+                                                                                  "Error":  ""
+                                                                              },
+                                                                 "profileAbsent":  true,
+                                                                 "leaseAbsent":  true,
+                                                                 "cleanup":  "complete"
+                                                             }
+                                                         ],
+                                            "manualCleanupPerformed":  false
+                                        }
+                        },
+                        {
+                            "id":  "package-mirror-mismatch",
+                            "invocationRunId":  "8cefa0e64793486eb78b65a6d1b99dea",
+                            "invocationActualExit":  1,
+                            "childRunId":  "1e3f936c6a0b49fc8280ef3851c0819c",
+                            "status":  "CAUGHT",
+                            "actualChildExit":  1,
+                            "relativePath":  "src/com/lushprojects/circuitjs1/client/PcbComponentPlacement.java",
+                            "family":  "LED_INDICATOR",
+                            "topology":  "DIRECT_SERIES",
+                            "seed":  0,
+                            "mutationKind":  "package-source-transform-acceptance-catalog-mismatch",
+                            "expectedMarker":  "FAIL:task43p-physical-package-variant-mismatch:J1",
+                            "sourceMutationBeforeSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                            "sourceMutationAfterSha256":  "ac36cc666cf35437fa6a0bf62aba875dfcc4ca72a0af101d851d7f7d519e6dc4",
+                            "sourceMutationRestoredSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                            "sourceBytesRestoredExactly":  true,
+                            "disposableCompileExit":  0,
+                            "runtimeAgainstMutatedSource":  true,
+                            "repositoryUnchanged":  true,
+                            "sourceVerifierDigest":  "6b4e1541894eff75c6ff8a4b6c222e2fee5d9ff1ccf046f0299c8b2dd55f85fb",
+                            "compiledExecutionDigest":  "62e43281bf7397a105a36deb9c9ee414a59bebbba9f08fd53d90414e3e203bc3",
+                            "childProof":  {
+                                               "name":  "task43p-source-negative-proof.json",
+                                               "sha256":  "1D12D4822B7218AF4A40FE3E7A2377EA2E40AC4228E24442C9219F6FA20DDFCE"
+                                           },
+                            "forcedNegativeProof":  {
+                                                        "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                        "invocation":  true,
+                                                        "expectedMarker":  "FAIL:task43p-physical-package-variant-mismatch:J1",
+                                                        "expectedRoute":  "task43p source-negative package-mirror-mismatch",
+                                                        "runId":  "1e3f936c6a0b49fc8280ef3851c0819c",
+                                                        "routeId":  "36592efb4695440f8b51391a69f21974",
+                                                        "nonce":  "320cf919cf944a45828e94e6d8ca5253",
+                                                        "requestId":  "feed912475224b4e96996787a7606008",
+                                                        "executionDigest":  "62e43281bf7397a105a36deb9c9ee414a59bebbba9f08fd53d90414e3e203bc3",
+                                                        "markerObserved":  true,
+                                                        "observedMarker":  "FAIL:task43p-physical-package-variant-mismatch:J1",
+                                                        "markerRunId":  "1e3f936c6a0b49fc8280ef3851c0819c",
+                                                        "markerRouteId":  "36592efb4695440f8b51391a69f21974",
+                                                        "markerExpectedMarker":  "FAIL:task43p-physical-package-variant-mismatch:J1",
+                                                        "anchoredDiagnosticProven":  true,
+                                                        "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-physical-package-variant-mismatch:J1 nonce=320cf919cf944a45828e94e6d8ca5253 route=36592efb4695440f8b51391a69f21974 request=feed912475224b4e96996787a7606008 execution=62e43281bf7397a105a36deb9c9ee414a59bebbba9f08fd53d90414e3e203bc3 experiment=package-mirror-mismatch run=1e3f936c6a0b49fc8280ef3851c0819c",
+                                                        "diagnosticExpectedMarker":  "FAIL:task43p-physical-package-variant-mismatch:J1",
+                                                        "diagnosticRunId":  "1e3f936c6a0b49fc8280ef3851c0819c",
+                                                        "diagnosticRouteId":  "36592efb4695440f8b51391a69f21974",
+                                                        "diagnosticBaselineHead":  "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+                                                        "routePassedAfterCleanup":  true,
+                                                        "finalCleanupProven":  true,
+                                                        "routePassed":  true,
+                                                        "cleanupProven":  true,
+                                                        "invalidated":  false
+                                                    },
+                            "cleanup":  {
+                                            "id":  "package-mirror-mismatch",
+                                            "childRunId":  "1e3f936c6a0b49fc8280ef3851c0819c",
+                                            "manifestSha256":  "01EF74A3728836D74850E46D89708E31C2F922B1CAEF3938104E6D8526335388",
+                                            "cleanup":  {
+                                                            "state":  "complete",
+                                                            "completedUtc":  "2026-09-05T13:39:59.2510257Z",
+                                                            "errors":  [
+
+                                                                       ]
+                                                        },
+                                            "previewPid":  106640,
+                                            "previewAbsent":  true,
+                                            "previewListener":  {
+                                                                    "Success":  true,
+                                                                    "Known":  true,
+                                                                    "HasListeners":  false,
+                                                                    "Listeners":  [
+
+                                                                                  ],
+                                                                    "ListenerOwnerKind":  "none",
+                                                                    "ListenerOwnerProof":  "",
+                                                                    "ListenerOwnerEvidence":  "",
+                                                                    "Source":  "netstat",
+                                                                    "Error":  ""
+                                                                },
+                                            "browsers":  [
+                                                             {
+                                                                 "routeId":  "36592efb4695440f8b51391a69f21974",
+                                                                 "pid":  93240,
+                                                                 "processStartTicks":  639242123307530310,
+                                                                 "currentAbsent":  true,
+                                                                 "listener":  {
+                                                                                  "Success":  true,
+                                                                                  "Known":  true,
+                                                                                  "HasListeners":  false,
+                                                                                  "Listeners":  [
+
+                                                                                                ],
+                                                                                  "ListenerOwnerKind":  "none",
+                                                                                  "ListenerOwnerProof":  "",
+                                                                                  "ListenerOwnerEvidence":  "",
+                                                                                  "Source":  "netstat",
+                                                                                  "Error":  ""
+                                                                              },
+                                                                 "profileAbsent":  true,
+                                                                 "leaseAbsent":  true,
+                                                                 "cleanup":  "complete"
+                                                             }
+                                                         ],
+                                            "manualCleanupPerformed":  false
+                                        }
+                        },
+                        {
+                            "id":  "internally-self-consistent-wrong-mapping",
+                            "invocationRunId":  "773d2cd9b4f140e390b7e8181a904f04",
+                            "invocationActualExit":  1,
+                            "childRunId":  "44c52123c6c741e59e5fd53b1a515c7c",
+                            "status":  "CAUGHT",
+                            "actualChildExit":  1,
+                            "relativePath":  "src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java",
+                            "family":  "LED_INDICATOR",
+                            "topology":  "DIRECT_SERIES",
+                            "seed":  0,
+                            "mutationKind":  "logical-board-producer-pad-net-swap",
+                            "expectedMarker":  "FAIL:task43p-solver-oracle-net-mismatch:R1.1",
+                            "sourceMutationBeforeSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                            "sourceMutationAfterSha256":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                            "sourceMutationRestoredSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                            "sourceBytesRestoredExactly":  true,
+                            "disposableCompileExit":  0,
+                            "runtimeAgainstMutatedSource":  true,
+                            "repositoryUnchanged":  true,
+                            "sourceVerifierDigest":  "6b4e1541894eff75c6ff8a4b6c222e2fee5d9ff1ccf046f0299c8b2dd55f85fb",
+                            "compiledExecutionDigest":  "002bcbc17fc9d484610ecacac171574f8ee061a8c7f061cff1e2b68cc81edfee",
+                            "childProof":  {
+                                               "name":  "task43p-source-negative-proof.json",
+                                               "sha256":  "AFA75B2B434107A307A610F69C86FB217D29026D96A8A6FE6F2103526B4F5A63"
+                                           },
+                            "forcedNegativeProof":  {
+                                                        "protocol":  "troubleshootjs-forced-negative-proof-v1",
+                                                        "invocation":  true,
+                                                        "expectedMarker":  "FAIL:task43p-solver-oracle-net-mismatch:R1.1",
+                                                        "expectedRoute":  "task43p source-negative internally-self-consistent-wrong-mapping",
+                                                        "runId":  "44c52123c6c741e59e5fd53b1a515c7c",
+                                                        "routeId":  "10ebc812788d412e9ea5f5997334d7eb",
+                                                        "nonce":  "99bc37386db2401a87bb948d771bc8d6",
+                                                        "requestId":  "742ac5c0b117437d9cbb88a0137d3515",
+                                                        "executionDigest":  "002bcbc17fc9d484610ecacac171574f8ee061a8c7f061cff1e2b68cc81edfee",
+                                                        "markerObserved":  true,
+                                                        "observedMarker":  "FAIL:task43p-solver-oracle-net-mismatch:R1.1",
+                                                        "markerRunId":  "44c52123c6c741e59e5fd53b1a515c7c",
+                                                        "markerRouteId":  "10ebc812788d412e9ea5f5997334d7eb",
+                                                        "markerExpectedMarker":  "FAIL:task43p-solver-oracle-net-mismatch:R1.1",
+                                                        "anchoredDiagnosticProven":  true,
+                                                        "anchoredJavaDiagnostic":  "Console failure: exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-solver-oracle-net-mismatch:R1.1 nonce=99bc37386db2401a87bb948d771bc8d6 route=10ebc812788d412e9ea5f5997334d7eb request=742ac5c0b117437d9cbb88a0137d3515 execution=002bcbc17fc9d484610ecacac171574f8ee061a8c7f061cff1e2b68cc81edfee experiment=internally-self-consistent-wrong-mapping run=44c52123c6c741e59e5fd53b1a515c7c",
+                                                        "diagnosticExpectedMarker":  "FAIL:task43p-solver-oracle-net-mismatch:R1.1",
+                                                        "diagnosticRunId":  "44c52123c6c741e59e5fd53b1a515c7c",
+                                                        "diagnosticRouteId":  "10ebc812788d412e9ea5f5997334d7eb",
+                                                        "diagnosticBaselineHead":  "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+                                                        "routePassedAfterCleanup":  true,
+                                                        "finalCleanupProven":  true,
+                                                        "routePassed":  true,
+                                                        "cleanupProven":  true,
+                                                        "invalidated":  false
+                                                    },
+                            "cleanup":  {
+                                            "id":  "internally-self-consistent-wrong-mapping",
+                                            "childRunId":  "44c52123c6c741e59e5fd53b1a515c7c",
+                                            "manifestSha256":  "DE96EF7892A017CB862FC55C8399D09745EF5194EBC8D73FF9D671EBD58069B7",
+                                            "cleanup":  {
+                                                            "state":  "complete",
+                                                            "completedUtc":  "2026-09-05T13:42:56.4893236Z",
+                                                            "errors":  [
+
+                                                                       ]
+                                                        },
+                                            "previewPid":  155620,
+                                            "previewAbsent":  true,
+                                            "previewListener":  {
+                                                                    "Success":  true,
+                                                                    "Known":  true,
+                                                                    "HasListeners":  false,
+                                                                    "Listeners":  [
+
+                                                                                  ],
+                                                                    "ListenerOwnerKind":  "none",
+                                                                    "ListenerOwnerProof":  "",
+                                                                    "ListenerOwnerEvidence":  "",
+                                                                    "Source":  "netstat",
+                                                                    "Error":  ""
+                                                                },
+                                            "browsers":  [
+                                                             {
+                                                                 "routeId":  "10ebc812788d412e9ea5f5997334d7eb",
+                                                                 "pid":  178104,
+                                                                 "processStartTicks":  639242125085836842,
+                                                                 "currentAbsent":  true,
+                                                                 "listener":  {
+                                                                                  "Success":  true,
+                                                                                  "Known":  true,
+                                                                                  "HasListeners":  false,
+                                                                                  "Listeners":  [
+
+                                                                                                ],
+                                                                                  "ListenerOwnerKind":  "none",
+                                                                                  "ListenerOwnerProof":  "",
+                                                                                  "ListenerOwnerEvidence":  "",
+                                                                                  "Source":  "netstat",
+                                                                                  "Error":  ""
+                                                                              },
+                                                                 "profileAbsent":  true,
+                                                                 "leaseAbsent":  true,
+                                                                 "cleanup":  "complete"
+                                                             }
+                                                         ],
+                                            "manualCleanupPerformed":  false
+                                        }
+                        }
+                    ],
+    "reuseAudit":  {
+                       "name":  "physical-source-reuse-hashes.json",
+                       "sha256":  "396EE80189B299505DB0FA71110E378385D119777FC9C84F1415D62FF532317E"
+                   },
+    "reuseChecks":  [
+                        {
+                            "id":  "renderer-only-j1-1-plus-20px",
+                            "sourcePath":  "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+                            "testedOriginalHash":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                            "currentHash":  "5D51D4D5F2A7B10CAC6028F25EACD5D79A0D0FBFC0670AF1DC6E3C4630DC492F",
+                            "unchanged":  true,
+                            "originalInvocationExit":  2,
+                            "actualChildExit":  1,
+                            "compiledExit":  0,
+                            "cleanupProven":  true
+                        },
+                        {
+                            "id":  "renderer-only-j1-1-lead-plus-20px",
+                            "sourcePath":  "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderTerminal.java",
+                            "testedOriginalHash":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                            "currentHash":  "AB1EFF8BEBB3C58980A7F411FC4E6E1ED906442EE2B8E0927B50F8EE94A1C351",
+                            "unchanged":  true,
+                            "originalInvocationExit":  2,
+                            "actualChildExit":  1,
+                            "compiledExit":  0,
+                            "cleanupProven":  true
+                        },
+                        {
+                            "id":  "raw-copper-j1-1-endpoint-gap",
+                            "sourcePath":  "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java",
+                            "testedOriginalHash":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                            "currentHash":  "12E09401E695410B28CBFDC03934BC47B7E6D0F2E5248B6650B6F88F456FFB22",
+                            "unchanged":  true,
+                            "originalInvocationExit":  2,
+                            "actualChildExit":  1,
+                            "compiledExit":  0,
+                            "cleanupProven":  true
+                        },
+                        {
+                            "id":  "raw-net-mismatch",
+                            "sourcePath":  "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java",
+                            "testedOriginalHash":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                            "currentHash":  "12E09401E695410B28CBFDC03934BC47B7E6D0F2E5248B6650B6F88F456FFB22",
+                            "unchanged":  true,
+                            "originalInvocationExit":  2,
+                            "actualChildExit":  1,
+                            "compiledExit":  0,
+                            "cleanupProven":  true
+                        },
+                        {
+                            "id":  "solver-binding-j1-1-post-mismatch",
+                            "sourcePath":  "src/com/lushprojects/circuitjs1/client/BoardSimulationBindings.java",
+                            "testedOriginalHash":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                            "currentHash":  "7A7C717F8389BA8385424C332EBB72745E732FA46D69F92FFC85706F329DA794",
+                            "unchanged":  true,
+                            "originalInvocationExit":  2,
+                            "actualChildExit":  1,
+                            "compiledExit":  0,
+                            "cleanupProven":  true
+                        },
+                        {
+                            "id":  "solver-detachable-c1-plus-identity-mismatch",
+                            "sourcePath":  "src/com/lushprojects/circuitjs1/client/BoardSimulationBindings.java",
+                            "testedOriginalHash":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                            "currentHash":  "7A7C717F8389BA8385424C332EBB72745E732FA46D69F92FFC85706F329DA794",
+                            "unchanged":  true,
+                            "originalInvocationExit":  1,
+                            "actualChildExit":  1,
+                            "compiledExit":  0,
+                            "cleanupProven":  true
+                        },
+                        {
+                            "id":  "package-mirror-mismatch",
+                            "sourcePath":  "src/com/lushprojects/circuitjs1/client/PcbComponentPlacement.java",
+                            "testedOriginalHash":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                            "currentHash":  "F5C371EC351B46D340B1286CACD5045629556C2D3C6F258D58927C7CA1381510",
+                            "unchanged":  true,
+                            "originalInvocationExit":  1,
+                            "actualChildExit":  1,
+                            "compiledExit":  0,
+                            "cleanupProven":  true
+                        },
+                        {
+                            "id":  "internally-self-consistent-wrong-mapping",
+                            "sourcePath":  "src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java",
+                            "testedOriginalHash":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                            "currentHash":  "073B518817EECBD5F7F7525B88C96EE3F6D883781163ECF5E6AB1566AFCD51A8",
+                            "unchanged":  true,
+                            "originalInvocationExit":  1,
+                            "actualChildExit":  1,
+                            "compiledExit":  0,
+                            "cleanupProven":  true
+                        }
+                    ],
+    "dependencyAudit":  {
+                            "name":  "reuse-dependency-audit.json",
+                            "sha256":  "3D785905D43B396C7A207C6F8E4725192901820060455051D6F4F961EB0B06AE"
+                        },
+    "dependencies":  [
+                         {
+                             "path":  "scripts/VerifierIsolation.psm1",
+                             "baselineBlob":  "d4b513e75d93b6af4d19c10ee918a9be7dec155c",
+                             "currentBlob":  "d4b513e75d93b6af4d19c10ee918a9be7dec155c",
+                             "sha256":  "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "scripts/build.ps1",
+                             "baselineBlob":  "6a7021163a1125b586148f27d929bacf57a6d06d",
+                             "currentBlob":  "6a7021163a1125b586148f27d929bacf57a6d06d",
+                             "sha256":  "523935BCAED57796B8E78E36DF25D94A91C54464F21B1E32DCF877E83D81F5DD",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "scripts/preview.ps1",
+                             "baselineBlob":  "6bbbebe6202df918706efbdc75961661c9c02912",
+                             "currentBlob":  "6bbbebe6202df918706efbdc75961661c9c02912",
+                             "sha256":  "12C42FF229FF786AB7C7E7910347D19E4C23AE5F35F7A79D0613CFBCFFC5C9F1",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "scripts/Task43PPublicActionEvidence.ps1",
+                             "baselineBlob":  "f7bf3603d044875b07010afaab1a92a5fab79f82",
+                             "currentBlob":  "f7bf3603d044875b07010afaab1a92a5fab79f82",
+                             "sha256":  "1E019764D2415B0C9700D77D39E83C77B0DDB3EC0090BF7CB8B590161BEED3E3",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                             "baselineBlob":  "7b565ad1723796e90c43e042d1730b664355e863",
+                             "currentBlob":  "7b565ad1723796e90c43e042d1730b664355e863",
+                             "sha256":  "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+                             "baselineBlob":  "24e685817839efcd7b2c68662f0aaf4b6285ad1d",
+                             "currentBlob":  "24e685817839efcd7b2c68662f0aaf4b6285ad1d",
+                             "sha256":  "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+                             "baselineBlob":  "7a45edd3ab836bfcd11a0c0fa82af2a3547ac637",
+                             "currentBlob":  "7a45edd3ab836bfcd11a0c0fa82af2a3547ac637",
+                             "sha256":  "5D51D4D5F2A7B10CAC6028F25EACD5D79A0D0FBFC0670AF1DC6E3C4630DC492F",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderTerminal.java",
+                             "baselineBlob":  "79aeb9fa2f0a5c75e9232d74b86d7db684ac5cd3",
+                             "currentBlob":  "79aeb9fa2f0a5c75e9232d74b86d7db684ac5cd3",
+                             "sha256":  "AB1EFF8BEBB3C58980A7F411FC4E6E1ED906442EE2B8E0927B50F8EE94A1C351",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java",
+                             "baselineBlob":  "937e5e7a0d102a1c8b048782ecac4e8b20dedb98",
+                             "currentBlob":  "937e5e7a0d102a1c8b048782ecac4e8b20dedb98",
+                             "sha256":  "12E09401E695410B28CBFDC03934BC47B7E6D0F2E5248B6650B6F88F456FFB22",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "src/com/lushprojects/circuitjs1/client/BoardSimulationBindings.java",
+                             "baselineBlob":  "cae1c49c065ce6797aa22af252090163c9bdf1c3",
+                             "currentBlob":  "cae1c49c065ce6797aa22af252090163c9bdf1c3",
+                             "sha256":  "7A7C717F8389BA8385424C332EBB72745E732FA46D69F92FFC85706F329DA794",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "src/com/lushprojects/circuitjs1/client/PcbComponentPlacement.java",
+                             "baselineBlob":  "4a8a9773c616909c8cefeec0316ba50c4f7b8d79",
+                             "currentBlob":  "4a8a9773c616909c8cefeec0316ba50c4f7b8d79",
+                             "sha256":  "F5C371EC351B46D340B1286CACD5045629556C2D3C6F258D58927C7CA1381510",
+                             "unchanged":  true
+                         },
+                         {
+                             "path":  "src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java",
+                             "baselineBlob":  "af22f456f29bd57f259fbb87c45a078c3cc7862e",
+                             "currentBlob":  "af22f456f29bd57f259fbb87c45a078c3cc7862e",
+                             "sha256":  "073B518817EECBD5F7F7525B88C96EE3F6D883781163ECF5E6AB1566AFCD51A8",
+                             "unchanged":  true
+                         }
+                     ],
+    "toolchainAudit":  {
+                           "name":  "toolchain-reuse-audit.json",
+                           "sha256":  "75F772D7D67B42F3744294426E417377D8F5969DD4F5834D739FB87DB04C2673"
+                       },
+    "toolchain":  {
+                      "jdk":  "1.8.0_502",
+                      "jdkSelection":  ".tools/jdk8-download/jdk8u502-b07",
+                      "jdkEvidence":  "Same selected installation/version in original and current successful build logs; no installation was changed.",
+                      "gwt":  "2.7.0",
+                      "artifacts":  [
+                                        {
+                                            "file":  "gwt-dev-2.7.0.jar",
+                                            "pinnedSha256":  "C7321E367FC24E5C7AD97B74D1CF2980C45FBD7CBE1FD412F8A8BA128F685135",
+                                            "currentSha256":  "C7321E367FC24E5C7AD97B74D1CF2980C45FBD7CBE1FD412F8A8BA128F685135",
+                                            "matchesUnchangedBuildPin":  true
+                                        },
+                                        {
+                                            "file":  "gwt-user-2.7.0.jar",
+                                            "pinnedSha256":  "D3721BCDD7C6855A524801212DD74548967D8FB65CBC212A20890732FF2C6948",
+                                            "currentSha256":  "D3721BCDD7C6855A524801212DD74548967D8FB65CBC212A20890732FF2C6948",
+                                            "matchesUnchangedBuildPin":  true
+                                        },
+                                        {
+                                            "file":  "validation-api-1.0.0.GA.jar",
+                                            "pinnedSha256":  "E459F313EBC6DB2483F8CEAAD39AF07086361B474FA92E40F442E8DE5D9895DC",
+                                            "currentSha256":  "E459F313EBC6DB2483F8CEAAD39AF07086361B474FA92E40F442E8DE5D9895DC",
+                                            "matchesUnchangedBuildPin":  true
+                                        },
+                                        {
+                                            "file":  "validation-api-1.0.0.GA-sources.jar",
+                                            "pinnedSha256":  "A394D52A9B7FE2BB14F0718D2B3C8308FFE8F37E911956012398D55C9F9F9B54",
+                                            "currentSha256":  "A394D52A9B7FE2BB14F0718D2B3C8308FFE8F37E911956012398D55C9F9F9B54",
+                                            "matchesUnchangedBuildPin":  true
+                                        },
+                                        {
+                                            "file":  "asm-5.0.3.jar",
+                                            "pinnedSha256":  "71C4F78E437B8FDCD9CC0DFD2ABEA8C089EB677005A6A5CFF320206CC52B46CC",
+                                            "currentSha256":  "71C4F78E437B8FDCD9CC0DFD2ABEA8C089EB677005A6A5CFF320206CC52B46CC",
+                                            "matchesUnchangedBuildPin":  true
+                                        },
+                                        {
+                                            "file":  "asm-analysis-5.0.3.jar",
+                                            "pinnedSha256":  "E8FA2A63462C96557DCD36C25525E1264B77366FF851CF0B94EB7592B290849D",
+                                            "currentSha256":  "E8FA2A63462C96557DCD36C25525E1264B77366FF851CF0B94EB7592B290849D",
+                                            "matchesUnchangedBuildPin":  true
+                                        },
+                                        {
+                                            "file":  "asm-commons-5.0.3.jar",
+                                            "pinnedSha256":  "18C1E092230233C9D29E46F21943D769BDB48130CC279E4B0E663F423948C2DA",
+                                            "currentSha256":  "18C1E092230233C9D29E46F21943D769BDB48130CC279E4B0E663F423948C2DA",
+                                            "matchesUnchangedBuildPin":  true
+                                        },
+                                        {
+                                            "file":  "asm-tree-5.0.3.jar",
+                                            "pinnedSha256":  "347A7A9400F9964E87C91D3980E48EEBDC8D024BC3B36F7F22189C662853A51C",
+                                            "currentSha256":  "347A7A9400F9964E87C91D3980E48EEBDC8D024BC3B36F7F22189C662853A51C",
+                                            "matchesUnchangedBuildPin":  true
+                                        },
+                                        {
+                                            "file":  "asm-util-5.0.3.jar",
+                                            "pinnedSha256":  "2768EDBFA2681B5077F08151DE586A6D66B916703CDA3AB297E58B41AE8F2362",
+                                            "currentSha256":  "2768EDBFA2681B5077F08151DE586A6D66B916703CDA3AB297E58B41AE8F2362",
+                                            "matchesUnchangedBuildPin":  true
+                                        }
+                                    ]
+                  },
+    "preflight":  {
+                      "name":  "preflight-mutation-reuse-audit.json",
+                      "sha256":  "219C1623510886224894BCE78F617A896403EE909387BB3BE9B977A5972CF995"
+                  },
+    "mutationByteAudit":  {
+                              "name":  "source-eight-mutation-line-ending-audit.json",
+                              "sha256":  "883052E0F3070FD180BC61BBDA0128032CC4BA0866859E0E6E8DBCA9996C7699"
+                          },
+    "originalCompiledMutationChecks":  {
+                                           "utc":  "2026-09-05T17:59:34.4975469Z",
+                                           "baseline":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                                           "originalSourceEvidenceSha256":  "AB754F279FB4F7BDCB6D635E07D8E1D55C78FA82F538469876A7C50ADB9A0A4B",
+                                           "actualCurrentPreflightSha256":  "1445C020FD6F9DD7ED58CF333D9E2AE22C5014898E3195E16F2CDBD1034BB7EF",
+                                           "caseCount":  8,
+                                           "cases":  [
+                                                         {
+                                                             "id":  "renderer-only-j1-1-plus-20px",
+                                                             "originalProducerSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                                             "originalCompiledMutationSha256":  "65ebf96a3cd5215f4d593c7f4ef4b52309adb75342739b413e4b029fbb682ee8",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "60d0c0f152d82669327ddc792e004cffd995df91f5971b30f962e5e05da9a009",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "4be87a344e78d293ee7ffd8747c150d18b4402fdc0f495cdff21a1ad2362bb4b",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "renderer-only-j1-1-lead-plus-20px",
+                                                             "originalProducerSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                                             "originalCompiledMutationSha256":  "37d8e41c7f9128770c3281929f8ea2f3092d2702ac552911b40c1e7c8832ea79",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "d346b0dae815b31bb9acb14c6c99d2830344a055cc50da7bca12c2e0ca227d5f",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "37d8e41c7f9128770c3281929f8ea2f3092d2702ac552911b40c1e7c8832ea79",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "raw-copper-j1-1-endpoint-gap",
+                                                             "originalProducerSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                             "originalCompiledMutationSha256":  "1fb4491893a1de9a1074eadc6c44afba4b81d8bc0d028a8102b4c3dbfe25d1df",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "f777f4df2f6873b0f445cea2f73b965560eeade76125a46f4b29b8e6c547a754",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "d3b5eb89fbf9a1bb9dc350ad61f76863a05d95500bccb5e46f529fd6abbf42b9",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "raw-net-mismatch",
+                                                             "originalProducerSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                             "originalCompiledMutationSha256":  "1b9a2693fda6f0a3f98bad6f4b2aa40da4b640f87f7ae70cf7af9d758e6b9920",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "0ed3398fa307630b51f888b38842bd58885eab0788499d077c1008d6aa714820",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "f6d17b534bae06ebe3be500a61651b055edee96ed06e5f01d7fae344297f63aa",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "solver-binding-j1-1-post-mismatch",
+                                                             "originalProducerSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                             "originalCompiledMutationSha256":  "1f57f638b2f85ee368585452be232d7c870a66594ce2468d1dc73fbe7b0991da",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "4765a99f32aac91a6c391ec5d4a7b4d900223581a9aa30f942fdff30c5a23fd3",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "055f7693a53c5b34d73a017c0457fec4df973f8f97cdeef42a72bf3c61d2dfc5",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "solver-detachable-c1-plus-identity-mismatch",
+                                                             "originalProducerSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                             "originalCompiledMutationSha256":  "6eb1457cde77a6ace645d46af94f9a2fc0e2226096ebcf522b4cfd7302cec9cd",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "ba640b1f7e83e9c43b9365a6348973f311d6ce42e18a15b7056ccce7d95efc28",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "a9e690bd597e73e333b2c29cfd891e2d00051c0f640a397220b4f802348c019c",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "package-mirror-mismatch",
+                                                             "originalProducerSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                                             "originalCompiledMutationSha256":  "ac36cc666cf35437fa6a0bf62aba875dfcc4ca72a0af101d851d7f7d519e6dc4",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "cb1aabe5128e09a799adb35f49ff84e7cbbf49f69b9d50375455376131633be5",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "ac36cc666cf35437fa6a0bf62aba875dfcc4ca72a0af101d851d7f7d519e6dc4",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "internally-self-consistent-wrong-mapping",
+                                                             "originalProducerSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                                             "originalCompiledMutationSha256":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF",
+                                                                                                   "CRLF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "9b9894ff52bb5ffa752efaa1261c5edacfce5436b47286db68ddf524f3255229",
+                                                             "originalProofAndExitRetained":  true
+                                                         }
+                                                     ],
+                                           "interpretation":  "Original compiled mutations reconstructed to their recorded raw hashes. Current mutations differ only in CRLF/LF separators; Java source tokens and intended defects are identical. Original compiled evidence keeps its own raw byte identity; no new build is claimed."
+                                       },
+    "reuseLimit":  "First eight physical compiled proofs retain original identity. C2 retains its original compiled identity only after exact current preflight. Omitted-manifest and public Remove anchors require fresh compiled cases."
+}

@@ -1,5 +1,138 @@
 # Task 43P runtime reconciliation — 2026-09-05
 
+C1/C2 repairs and Task 43P acceptance are complete and independently reviewed.
+The result is ready for Owner Review under the authorized publication workflow;
+owner approval has not occurred and Task 44 is unstarted.
+
+The tested candidate is `codex/task43p-final-recovery`, based on
+`8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7` plus the integrated diff, with source/verifier
+digest `9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663`.
+The [acceptance index](../task-evidence/task-43p/c1c2/acceptance-index.json)
+retains original commands, exits, run/request identities, raw-artifact hashes,
+source/build provenance, explicit reuse and cleanup. The enclosing commit
+identifies the final source, documentation and curated evidence.
+
+## Completed repairs
+
+**43P-C1 — CLOSED / CODE.** The actual adapter is `CircuitMeasurementAdapter`;
+it reaches `CirSim.runTemporaryActiveMeasurement()`. Removal, solver rebuild,
+queued power and final synchronization have separate exception handling. The
+original throwable propagates with later cleanup failures retained as suppressed
+exceptions. The READER and AFTER_STIMULUS_REMOVE injection points remain meaningful.
+
+Queued power is applied only after temporary elements leave `elmList`, the
+voltage-source index and node links, with a restored solver. If restoration
+remains impossible, real external inputs are isolated, solving stops, the
+latest request remains pending and power is visibly blocked until reload.
+Seven supplemental canaries exercise primary/suppressed errors, failed or
+omitted removal, propagated analysis errors, latest power-off, queued-power
+reconstruction failure and CircuitJS's native stamp-exception/stop-message path.
+
+All four real resistance-injection cases are CLOSED: both stages, each with
+and without queued power. Each records four temporary elements, exactly one
+typed injection, all three indexes clean, a present matrix, restored solver
+flags, no overlay/pending power, the requested real power state and preserved
+owner identity. The measured R2 baseline is approximately 680 ohms. A deferred
+resistance refresh after power-on remains legitimate cache state.
+
+**43P-C2 — CLOSED / TEST/TOOL.** `Task41SimulationSnapshot.assertRestored()`
+checks `lastResistanceTestCurrent` with the existing NaN-aware comparison. The
+one-time supported-inventory audit also closed omitted input, render, solver
+and measurement/verification assertions. Captured values affected by UI refresh
+or restart are restored last, including geometry, repaint/analysis flags,
+instrument state, mouse owner and static element state.
+
+Fresh H calibration proves non-default round trips, preserved original owner
+and targets, four supported inventory groups, and rejection for the exact reason
+`Task 41 restore changed lastResistanceTestCurrent`. The existing eight restore
+failure stages run under the stronger assertions. The compiled omitted-assignment
+case is caught for that field reason. Option A remains a fresh-candidate/detached-
+original proof; it does not establish deep same-owner transactions, scope/renderer
+internals, timer identity or actual same-owner attachment-failure rollback.
+
+## Acceptance composition
+
+| Criterion | Accepted result and authoritative evidence |
+| --- | --- |
+| Final production build | JDK8 `1.8.0_502`, all five GWT OBF permutations, actual `0`; final Java/build inputs unchanged after build `9d10b65795344f7695018bae2846581b`. |
+| Harness regressions | Full `verify-gate-b.ps1 -SkipJdkCheck`, actual `0`, final run `e7b0424879544efd81eb1a119cfb8245`; JDK/GWT covered by the separate build. |
+| Forced-negative first | `89d83513cd0a4e9e84e9f8a92a98617f`, exact bound DOM marker and anchored Java diagnostic, expected `1`, complete cleanup/audit. |
+| Dedicated A–I | `953b5055dcfa4aee8f0487c08dae6a1c`, legitimate `0`, zero open observations, four D cases, seven canaries, H calibration and the real I callback. |
+| Physical correspondence | [18 qualified packets](../task-evidence/task-43p/c1c2/physical-correspondence.json), six families × seeds 0/2/3, nine semantic negatives each. All six invocations retain their original digests under the final test-only BOM dependency audit; every legacy aggregate remains `2`. |
+| Compiled falsifiers | [11 qualified cases](../task-evidence/task-43p/c1c2/source-falsification.json): manifest omission `b54ee4face5c4be98608659728b79e37`, public Remove `4f5cca393b8c4f3e9f3326ec77ece720`, eight prior physical cases and current-Java C2 `87bcba0283734e5db8a97271aa8bdebb`. All are reused after the final test-only BOM delta with original compiled identities. Individual caught exits remain `1`; original parent exits remain unchanged. |
+| Player behavior/privacy | [Five real screenshots](../task-evidence/task-43p/c1c2/README.md): original retest rejection, power-off resistance/red-left/black-right probes, mode exit, removal, wrong 2200-ohm retest rejection, correct 1000-ohm completion and disabled controls. Ordinary LED3 DOM/accessibility inspection is bounded to those states. |
+| Ownership | Each accepted live invocation has complete process/listener/profile/lease cleanup and a separate absence audit. The visible tab closes before the preview stops. |
+| Review | Fresh Luna MAX integrated/delta, dependency, source/runtime/physical and final packet reviews passed, including the documentation and final BOM source/reuse/proof deltas. The reviewer authored neither implementation nor oracle. |
+
+The mapping was written before expensive runs and independently reviewed.
+The [efficiency evidence](../task-evidence/task-43p/c1c2/efficiency-validation.json)
+records all eleven source anchors and four exact-reason/overlap/BOM canaries
+before selected compilation. Preflight is separate from required compiled proof.
+The first eight original compiled byte images were reconstructed to their
+recorded hashes; current mutation text differs only by CRLF/LF, with identical
+Java content. C2's original and current preflight before/after hashes match
+exactly. Relevant producer, detector, manifest, build/toolchain and isolation
+dependencies are unchanged; all reused artifacts retain their original identity.
+
+Final staging inspection found that the positive BOM preflight fixture used an
+encoding with no preamble. Its earlier reported BOM coverage is unaccepted.
+The corrected fixture emits and checks `EF BB BF`, mutates the disposable bytes
+and restores the original bytes exactly. Fresh preflight
+`0e30a024c5b1436fa65a8791e9d5ab60` and the final full Gate B both returned `0`.
+Only `Invoke-MutationPreflightCanaries` changed in the source helper; all eleven
+mutation definitions, other helper code, Java, browser/isolation code and compiled
+web bytes are unchanged. The final dependency audit records the new helper and
+execution hashes. Earlier build, forced/A–I, physical, compiled-source and visible
+proofs are explicitly reused under their original source/script/execution digests,
+including the preceding helper digest
+`a0abcf3d61cb95c2e07ae3ed3516bc391dc312359c6cde31262d080c2d26faea`.
+
+Task43P's final page diagnostic now runs before evidence capture. Phase, CDP
+operation, elapsed/remaining time and cleanup metadata diagnose failures without
+granting acceptance. Full Gate B covers transport, persistence, unexpected Java
+errors and cleanup rejection. The 500 ms proof budget, ownership rules, route
+deadlines and exit semantics are unchanged.
+
+## Failed attempts and remaining limits
+
+The index preserves all failed invocation exits and resource dispositions.
+The baseline-pin failure, initial long physical run, source startup failure,
+public-Remove anchor mismatch, earlier A–I transport/cleanup failures, visible
+startup failure and first RC cleanup failure remain unaccepted. No packet from
+the failed long physical or RC invocation is reused. Exact root-only manual
+cleanup was used only for separately proven owned roots; other failed browser
+trees exited naturally. Failed profiles/claims and raw diagnostics are retained
+where cleanup did not qualify. Separate absence never converts exit `2` to PASS.
+
+The explicit proof baseline was updated from the preceding `a5b2538` to this
+task's reviewed `8bf4424` reference. Wrong/stale/missing baseline canaries still
+reject. A later-HEAD invocation requires a reviewed baseline update; this proof
+remains bound to its tested base and diff.
+
+The historical disposition ledger below remains applicable within its stated
+boundaries, except C1/S:R4 and C2/M5/V:R03 are now closed by the new proof.
+READY alone does not establish settlement. Generic request/board/session epochs
+and deep same-owner rollback are absent; secondary-damage projections are not a
+complete public-surface proof. The synthetic healthy-before/pending schema
+combination and nullable installed-target envelope remain TEST/TOOL follow-ups.
+Actual G rejects healthy completion before natural updates and accepts it
+afterward. The real I callback proves its observed owner/callback sequence,
+not general settlement. None invalidates this reviewed acceptance composition.
+
+Player privacy covers the exercised LED3 ordinary DOM/accessibility states.
+Live CDP evidence uses the recorded 30000 ms startup condition; shorter startup
+conditions and unrelated hosts are not certified. Owner approval is not implied
+by acceptance or publication. Task 44 remains unstarted.
+
+## Historical blocked checkpoint — preceding publication 8bf4424
+
+Everything below records the earlier tested `a5b2538` candidate and its
+publication at `8bf4424`. Its failures, open findings, and next-step statements
+describe that checkpoint. They are preserved without relabeling its A–I `1`,
+physical aggregate `2`, or failed source/player attempts as successful. Current
+acceptance and the closed C1/C2 dispositions are stated above.
+
+
 Task 43P's developer evidence and verifier-trust recovery are implemented.
 Runtime acceptance remains blocked by the two concrete findings below. Owner
 Review is incomplete and Task 44 is blocked and unstarted. This report records
@@ -28,7 +161,7 @@ The final evidence index records individual source hashes, raw-artifact hashes,
 commands, actual child exit codes, and run identities. Documentation and
 curated evidence are added after the live runs; they do not change tested code.
 
-## Evidence and exit-code boundary
+### Evidence and exit-code boundary
 
 Use [the evidence index](../task-evidence/task-43p/runtime-evidence-index.json)
 and [runtime observations](../task-evidence/task-43p/runtime-observations.json)
@@ -109,7 +242,7 @@ unrelated browser processes. Exit `2`, absent evidence, contradictory schemas,
 timeouts, and unproven cleanup remain non-passes. Generic shell `1` is never
 Java/application proof.
 
-## Runtime A–I observations
+### Runtime A–I observations
 
 The runtime route uses a fixed LED seed-3 entry document, then fresh detached
 candidates for its bounded cases. Observations are copied before restoration;
@@ -139,9 +272,9 @@ assertions are the acceptance source for those sequences. Making the envelope
 independently require the expected final target is a TEST/TOOL FOLLOW-UP, not
 proof that a target disappeared in this run.
 
-## Proven blockers and bounded correction milestones
+### Proven blockers and bounded correction milestones
 
-### Task 43P-C1 — exception-safe temporary measurement cleanup
+#### Task 43P-C1 — exception-safe temporary measurement cleanup
 
 **Classification:** OPEN BLOCKER / CODE. **Owner:** CircuitJS adaptation and
 instrument lifecycle owner. **Affected path:**
@@ -167,7 +300,7 @@ mutation/reset checks; final JDK8/GWT build, fresh independent review, and
 qualified forced-first/runtime cleanup. No production repair is implemented
 in this reconciliation.
 
-### Task 43P-C2 — snapshot assertion completeness for the supported boundary
+#### Task 43P-C2 — snapshot assertion completeness for the supported boundary
 
 **Classification:** OPEN BLOCKER / TEST/TOOL. **Owner:** Task 41 verifier and
 snapshot-proof owner. **Affected path:**
@@ -190,7 +323,7 @@ support or broaden snapshot ownership silently.
 Both correction milestones precede relevant runtime-composition acceptance.
 Owner Review remains incomplete and Task 44 must not start automatically.
 
-## Historical finding reconciliation
+### Historical finding reconciliation
 
 Keys reference the preserved reports listed in the earlier reconciliation:
 S = lifecycle audit; V = false-pass audit; A = Task43 recovery assessment;
@@ -240,7 +373,7 @@ or a grant to start another milestone.
 | TR — distinguishability/input/leakage | Actual wrong/correct repair and normal-player privacy evidence is bounded to LED3; all-fault separating sequences and public NPN input remain future work. | FOLLOW-UP |
 | Gate B isolation | Current verifier-owned exact cleanup and fresh independent absence audits cover forced, runtime, physical, each accepted source case, and the successful visible preview. Earlier failed/manual cleanup and retained source copies are kept separate. | CLOSED for individually qualified runs; failed legacy NormalPlayer CLI remains UNPROVEN/2 |
 
-## Task 41 ownership decision and review
+### Task 41 ownership decision and review
 
 Option A remains authoritative: evaluate a fresh candidate with the original
 workbench detached, then restore that original owner. The observed exact

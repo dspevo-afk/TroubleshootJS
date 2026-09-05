@@ -4989,7 +4989,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean enabled = isChallengeInteractionEnabled();
 	instrumentController.setInteractionEnabled(enabled);
 	if (boardPowerButton != null)
-	    boardPowerButton.setEnabled(enabled);
+	    boardPowerButton.setEnabled(enabled && !isActiveMeasurementCleanupBlocked());
 	refreshBoardModificationControls();
 	}
 
@@ -5129,13 +5129,20 @@ MouseOutHandler, MouseWheelHandler {
 	if (boardPowerButton == null)
 	    return;
 	boolean generatedBoardActive = generatedBoardInstance != null;
+	boolean cleanupBlocked = isActiveMeasurementCleanupBlocked();
 	boardPowerButton.setVisible(generatedBoardActive);
-	boardPowerButton.setEnabled(isChallengeInteractionEnabled());
+	boardPowerButton.setEnabled(isChallengeInteractionEnabled() && !cleanupBlocked);
 	if (generatedBoardActive)
-	    boardPowerButton.setText(boardPowerController.getState() == BoardPowerState.POWERED ?
+	    boardPowerButton.setText(cleanupBlocked ?
+		"Measurement cleanup failed: power blocked; reload board" :
+		boardPowerController.getState() == BoardPowerState.POWERED ?
 		"Board Power: ON" : "Board Power: OFF");
 	if (pcbWorkbenchController != null)
 	    pcbWorkbenchController.refresh();
+    }
+
+    private boolean isActiveMeasurementCleanupBlocked() {
+	return activeMeasurementOverlay && !activeMeasurementSolverRestored && stopMessage != null;
     }
 
     private boolean isPcbWorkbenchVisible() {
@@ -5305,9 +5312,13 @@ MouseOutHandler, MouseWheelHandler {
 
     private double runTemporaryActiveMeasurement(ActiveMeasurementStimulus stimulus,
 	    ActiveMeasurementResultReader reader) {
+	if (activeMeasurementOverlay)
+	    throw new IllegalStateException("A temporary measurement is already active or awaiting cleanup");
 	lastActiveMeasurementStimulus = stimulus;
-		activeMeasurementSolverRestored = false;
+	activeMeasurementSolverRestored = false;
 	activeMeasurementOverlay = true;
+	double result = Double.NaN;
+	Throwable failure = null;
 	try {
 	    stimulus.install(this);
 	    if (requestPowerOnDuringActiveMeasurementForDeveloperVerification) {
@@ -5319,35 +5330,107 @@ MouseOutHandler, MouseWheelHandler {
 	    runCircuit(true);
 	    injectTask43PMeasurementFailureForDeveloperVerification(
 		Task43PMeasurementFailureStage.READER);
-	    return reader.readResult();
-	} finally {
+	    result = reader.readResult();
+	} catch (Throwable measurementFailure) {
+	    failure = measurementFailure;
+	}
+	try {
 	    stimulus.remove(this);
 	    injectTask43PMeasurementFailureForDeveloperVerification(
 		Task43PMeasurementFailureStage.AFTER_STIMULUS_REMOVE);
+	} catch (Throwable removalFailure) {
+	    failure = retainActiveMeasurementFailure(failure, removalFailure);
+	}
+	/* Removal and solver reconstruction are separate cleanup stages. An
+	 * exception after removal must not strand the old solver indexes. Never
+	 * analyze or energize a graph that still contains a meter element. */
+	boolean restored = false;
+	try {
+	    if (!isStimulusAbsentFromElementList(stimulus))
+		throw new IllegalStateException("Temporary measurement elements remain in the board graph");
 	    analyzeCircuit();
 	    runCircuit(true);
+	    restored = stopMessage == null && isStimulusAbsentFromSolver(stimulus);
+	    if (!restored)
+		throw new IllegalStateException("Temporary measurement solver restoration failed: " + stopMessage);
+	} catch (Throwable restorationFailure) {
+	    failure = retainActiveMeasurementFailure(failure, restorationFailure);
+	}
+	activeMeasurementSolverRestored = restored;
+	if (restored) {
+	    activeMeasurementOverlay = false;
 	    if (pendingBoardPowerState != null) {
 		BoardPowerState requestedState = pendingBoardPowerState;
 		pendingBoardPowerState = null;
-		activeMeasurementOverlay = false;
-		setBoardPowerState(requestedState);
-		analyzeCircuit();
-		runCircuit(true);
-		analyzeFlag = false;
-		generatedBoardVerificationAnalyzed = true;
-		runGeneratedBoardVerificationIfReady(true);
-	    } else {
-		/* The temporary meter graph is gone and no persistent board state
-		 * changed. Do not manufacture a challenge verification here: doing so
-		 * makes an ordinary measurement re-enter repair validation, which may
-		 * exercise a family control and feed back into the meter. A verification
-		 * already requested by a real board/power mutation remains pending. */
-		activeMeasurementOverlay = false;
+		try {
+		    setBoardPowerState(requestedState);
+		    analyzeCircuit();
+		    runCircuit(true);
+		    if (stopMessage != null || !isStimulusAbsentFromSolver(stimulus))
+			throw new IllegalStateException("Queued board power solver restoration failed: " + stopMessage);
+		    analyzeFlag = false;
+		    generatedBoardVerificationAnalyzed = true;
+		    runGeneratedBoardVerificationIfReady(true);
+		} catch (Throwable powerFailure) {
+		    restored = false;
+		    if (pendingBoardPowerState == null)
+			pendingBoardPowerState = requestedState;
+		    failure = retainActiveMeasurementFailure(failure, powerFailure);
+		}
 	    }
-	    activeMeasurementSolverRestored = isStimulusAbsentFromSolver(stimulus);
+	    /* With no persistent power/board change, leave any existing validation
+	     * pending. An ordinary measurement must not manufacture a retest. */
+	}
+	if (!restored) {
+	    activeMeasurementSolverRestored = false;
+	    activeMeasurementOverlay = true;
+	    /* Bypass the queuing UI seam only to disconnect the actual external
+	     * inputs. Keep the latest request pending, lock out further measurement,
+	     * and stop the solver until the board is reloaded. */
+	    try {
+		if (generatedBoardInstance != null) {
+		    boardPowerController.setState(BoardPowerState.UNPOWERED);
+		    generatedBoardInstance.getPhysicalBoardRuntime()
+			.onBoardPowerStateChanged(BoardPowerState.UNPOWERED);
+		}
+	    } catch (Throwable isolationFailure) {
+		failure = retainActiveMeasurementFailure(failure, isolationFailure);
+	    }
+	    try {
+		stop("Measurement cleanup failed. Reload the board before continuing.", null);
+		updateBoardPowerButton();
+	    } catch (Throwable stopFailure) {
+		failure = retainActiveMeasurementFailure(failure, stopFailure);
+	    }
+	}
+	try {
 	    if (generatedBoardInstance != null)
 		generatedBoardInstance.getPhysicalBoardRuntime().synchronizeSimulationTime(t);
+	} catch (Throwable synchronizationFailure) {
+	    failure = retainActiveMeasurementFailure(failure, synchronizationFailure);
 	}
+	if (failure instanceof RuntimeException)
+	    throw (RuntimeException) failure;
+	if (failure instanceof Error)
+	    throw (Error) failure;
+	if (failure != null)
+	    throw new IllegalStateException("Temporary measurement failed", failure);
+	return result;
+    }
+
+    private static Throwable retainActiveMeasurementFailure(Throwable original, Throwable next) {
+	if (original == null)
+	    return next;
+	if (original != next)
+	    original.addSuppressed(next);
+	return original;
+    }
+
+    double runTemporaryActiveMeasurementForDeveloperVerification(ActiveMeasurementStimulus stimulus,
+	    ActiveMeasurementResultReader reader) {
+	if (!troubleshootTask43PVerification || !developerVerifierRunning)
+	    throw new IllegalStateException("Task43P measurement cleanup verification is not active");
+	return runTemporaryActiveMeasurement(stimulus, reader);
     }
 
     boolean isActiveMeasurementSolverRestoredForDeveloperVerification() {
@@ -5396,11 +5479,20 @@ MouseOutHandler, MouseWheelHandler {
 	return observationalValidationDepth != 0;
     }
 
-    private boolean isStimulusAbsentFromSolver(ActiveMeasurementStimulus stimulus) {
+    private boolean isStimulusAbsentFromElementList(ActiveMeasurementStimulus stimulus) {
 	CircuitElm elements[] = stimulus.getTemporaryElements();
+	if (elements == null || elmList == null)
+	    return false;
 	for (CircuitElm element : elements)
-	    if (elmList.contains(element))
+	    if (element == null || elmList.contains(element))
 		return false;
+	return true;
+    }
+
+    private boolean isStimulusAbsentFromSolver(ActiveMeasurementStimulus stimulus) {
+	if (!isStimulusAbsentFromElementList(stimulus) || voltageSources == null || nodeList == null)
+	    return false;
+	CircuitElm elements[] = stimulus.getTemporaryElements();
 	for (CircuitElm voltageSource : voltageSources) {
 	    for (CircuitElm element : elements)
 		if (voltageSource == element)

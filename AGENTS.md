@@ -1,7 +1,7 @@
 # AGENTS.md — TroubleshootJS
 
 Standing repository instructions | Astra Max / Luna flat orchestration
-Policy revision: 2026-09-04
+Policy revision: 2026-09-05
 
 This is a complete root-file replacement, not an appendix to an older
 agent hierarchy. It governs work in this repository without authorizing
@@ -142,8 +142,9 @@ identity, synchronization, security, or resource-lifecycle change, obtain one
 fresh Luna read-only review of the integrated candidate. The reviewer must not
 have authored the implementation or its test oracle. Review includes the real
 diff, relevant call paths, acceptance checks, and focused independent validation
-where feasible. A documentation-only or genuinely trivial change does not
-require a ceremonial worker panel.
+where feasible. Findings cite the affected invariant and the smallest necessary
+regression or delta review; Astra owns adjudication. A documentation-only or
+genuinely trivial change does not require a ceremonial worker panel.
 
 Astra inspects the integrated result and adjudicates findings using evidence.
 An extra independent Luna specialist is optional for a concrete unresolved risk,
@@ -178,11 +179,22 @@ Gradle builds, browser farms, or recursive repository copies.
 ## Validation, failure handling, and closure
 
 Define required gates before implementation from the user task, current
-roadmap, project policy below, and directly affected invariants. Run focused
-checks during development, then the applicable complete gates against the
-final integrated candidate. Reuse evidence only when the relevant candidate,
-inputs, environment, and toolchain are unchanged, and identify that reuse.
-A documentation-only correction does not require rebuilding unchanged code.
+roadmap, project policy below, and directly affected invariants. Record each
+gate in a compact acceptance table naming its production path, verifier, oracle,
+fixtures or seeds, toolchain, and environment dependencies. Keep the full
+candidate fingerprint for traceability, but an unrelated file or digest change
+alone does not require rerunning an unaffected qualified proof after an exact
+dependency audit confirms that those inputs are unchanged; Astra adjudicates
+such reuse, and independent review inspects the integrated candidate and that
+dependency audit. Task-specific required fresh gates override this reuse rule. Run
+focused checks during development, then the applicable complete gates against
+the final integrated candidate. A documentation-only correction does not
+require rebuilding unchanged code.
+
+Before an expensive source-falsifier build or candidate freeze, run a cheap
+preflight for every planned mutation: verify exactly one expected anchor is
+present, apply the mutation, and restore the original bytes exactly. Missing,
+ambiguous, or non-restoring anchors fail closed before the expensive gate.
 
 When changing an operating-system, subprocess, listener, or transport boundary,
 run a small check through the actual selected implementation early, before the
@@ -196,7 +208,13 @@ For each result record the command or interaction, exit/result, relevant
 output/evidence, and candidate identity (SHA plus uncommitted diff when needed).
 Use `PASS`, `FAIL`, `BLOCKED`, `NOT RUN`, or `NOT APPLICABLE` accurately.
 Missing dependencies, no collected tests, disabled smoke paths, skipped required
-cases, timeouts, unauthorized devices, and missing logs are not PASS.
+cases, timeouts, unauthorized devices, missing logs, missing proof, failed
+invocations, failed cleanup, and exit code 2 are not PASS.
+
+Failure diagnostics record phase and operation, elapsed time, remaining
+deadline, and cleanup outcome separately. This is diagnostic metadata only and
+does not change the existing 500 ms limits, fail-closed decisions, ownership
+checks, or exit-code semantics.
 
 Do not weaken assertions, suppress errors, bless goldens blindly, fake UI
 interaction, bypass the actual execution path, or substitute a nearby easier

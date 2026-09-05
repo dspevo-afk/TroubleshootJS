@@ -1,13 +1,17 @@
 # Post-Task 43 Integrity Reconciliation
 
-Current outcomes are recorded in the
+Current outcomes are in the
 [2026-09-05 runtime reconciliation](TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md).
-The dated report below is preserved. Its missing-runtime conclusions and M5
-stale classification are superseded where the new report provides current
-evidence; C1/C2 remain open blockers and Task44 is unstarted.
+C1/C2 repairs, acceptance and final packet review are complete for the authorized
+publication and Owner Review handoff. The dated matrix below is
+preserved. Its missing-runtime conclusions and M5 stale classification are
+superseded where the current report supplies proof. Failed exits remain failed;
+Owner approval has not occurred and Task 44 is unstarted.
 
-
-Date: 2026-08-26. Tested baseline `C` is full `9853f1e5fd311830d14d671d0ba380c51018a658` on `codex/post43-mainline-consolidation`. Only the intentional `AGENTS.md` governance diff pre-existed. Historical reports remain untouched.
+Historical report date: 2026-08-26. Tested baseline `C` is
+`9853f1e5fd311830d14d671d0ba380c51018a658` on
+`codex/post43-mainline-consolidation`. Only the intentional `AGENTS.md` governance
+diff pre-existed. The imported historical reports remain untouched.
 
 ## Provenance and evidence boundary
 
@@ -27,7 +31,7 @@ Every row uses `C`; allowed dispositions are `CLOSED`, `OPEN BLOCKER`, `FOLLOW-U
 
 Deterministic ledger: `D1` = `powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`, exit 0; JDK8 `1.8.0_502`. `D2` = `scripts/verify-renderer-boundary.ps1`, exit 0 (`PASS:renderer-provider-boundary`). `D3` = `scripts/verify-gate-b.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07`, exit 0; minimal relevance check. `D4` = disposable `src`/`scripts` byte comparison and cleanup, exit 0. `D5` = `scripts/stop-preview.ps1 -Port 8897`, exit 2 (orphan parent); identity-checked PID 3224 fallback/port check, exit 0; 8899/PID 14912 preserved.
 
-External CDP: `scripts/verify-browser.ps1 -BaseUrl http://127.0.0.1:8897 -BrowserPath "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" -Task39 -TimeoutSeconds 90`, exit 2: attach deadline expired before WebSocket handshake. Retained manifest: `C:\Users\david\AppData\Local\Temp\TroubleshootJS\verify\20cd7fcd353094d844fb\9073437bbfe345368a19cd170d9c7710\manifest.json`. Task40 retry with `-TimeoutSeconds 20` stalled with manifest `C:\Users\david\AppData\Local\Temp\TroubleshootJS\verify\20cd7fcd353094d844fb\e7454b9e9f2b4b2593917e4e61b4455a\manifest.json` showing started/cleanup pending; wrapper was interrupted (exit 1), classified exit 2 infrastructure uncertainty.
+External CDP: `scripts/verify-browser.ps1 -BaseUrl http://127.0.0.1:8897 -BrowserPath "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" -Task39 -TimeoutSeconds 90`, exit 2: attach deadline expired before WebSocket handshake. Retained manifest: `<OS-temp>/TroubleshootJS\verify\20cd7fcd353094d844fb\9073437bbfe345368a19cd170d9c7710\manifest.json`. Task40 retry with `-TimeoutSeconds 20` stalled with manifest `<OS-temp>/TroubleshootJS\verify\20cd7fcd353094d844fb\e7454b9e9f2b4b2593917e4e61b4455a\manifest.json` showing started/cleanup pending; wrapper was interrupted (exit 1), classified exit 2 infrastructure uncertainty.
 
 Visible in-app `@Browser` tabs at `B=http://127.0.0.1:8897/` observed: `B/circuitjs.html?tsjFixture=npn&seed=0&tsjVerifyTask39=true&running=true` → `PASS:task39`; `B/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43=true&running=true` → `PASS:task43`; `B/circuitjs.html?tsjChallenge=led&seed=0&tsjVerifyMeter=true` → `PASS:meter`; `B/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyStress=true` → `PASS:stress`; Quick Play `B/circuitjs.html?tsjQuickPlay=true` loaded, HIGH/LOW were exercised, and Finish was disabled before repair. No persistent screenshot/tab/run artifact was retained. Visible, not CDP/CLI. Fresh Task40/41/QuickPlay-query/RC/stored-energy attempts timed out at `Page.getFrameTree` (each exit 2; not a pass).
 
@@ -167,7 +171,7 @@ runtime A-I closure therefore remains pending.
   passes or current product defects. No runtime Task43P JSON artifact is
   claimed because the DOM evidence attribute was never reached.
 - The retained infrastructure manifests for those attempts are
-  `C:\Users\david\AppData\Local\Temp\TroubleshootJS\verify\20cd7fcd353094d844fb\f32917bf63874747af44672a344c84e5\manifest.json`
+  `<OS-temp>/TroubleshootJS\verify\20cd7fcd353094d844fb\f32917bf63874747af44672a344c84e5\manifest.json`
   (Task43P),
   `...\53bc9b915a2e49248fa5d608fd92e999\manifest.json` (forced negative),
   `...\1ccf41fb5fc0407e875e2f23c9513577\manifest.json` (Task43), and
@@ -313,7 +317,7 @@ five OBF permutations, and records the exact mutation bytes/SHA-256 before,
 after, and after restoration.
 
 The combined record is
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-027ac10835a24e31a91625b9bbcfee85.json`.
+`<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-027ac10835a24e31a91625b9bbcfee85.json`.
 All nine compile exits are `0`; all nine runtime exits are `2`/`UNPROVEN`
 because the host cannot construct `System.Net.HttpListener` before preview
 identity and wrapper extraction. All nine records show
@@ -354,7 +358,7 @@ compiled, restored exact bytes, and proved repository state unchanged, but did
 not claim runtime rejection or visible `@Browser` acceptance.
 
 The refreshed record is
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a1e8de2ba420464086e03d52a6b70147.json`.
+`<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a1e8de2ba420464086e03d52a6b70147.json`.
 The solver mutation preserves the first J1.1 read used by fixed-part
 construction before redirecting a later live binding read, so the retained
 endpoint remains independent of the mutation. The runtime result is still
@@ -377,7 +381,7 @@ from being mistaken for intermediate board WireElm/GroundElm endpoints.
 
 The real detachable solver case is `C1.+` in RC, which has the actual
 detachable binding; fixed J1.1 remains separate. The nine-case source record is
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`.
+`<OS-temp>/TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`.
 All nine OBF compiles exit `0`; all nine runtime attempts exit `2`/UNPROVEN
 because the host cannot construct `System.Net.HttpListener` before preview
 identity. Exact source restoration, unchanged baseline HEAD/status/source

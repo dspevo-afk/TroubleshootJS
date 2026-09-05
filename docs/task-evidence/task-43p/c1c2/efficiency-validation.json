@@ -1,0 +1,770 @@
+{
+    "sourceVerifierDigest":  "9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663",
+    "preflight":  {
+                      "command":  "scripts/verify-task43p-source-experiments.ps1 -MutationPreflight",
+                      "actualExit":  0,
+                      "runId":  "0e30a024c5b1436fa65a8791e9d5ab60",
+                      "status":  "PREFLIGHT_PASS",
+                      "originalArtifact":  {
+                                               "name":  "task43p-source-experiments-0e30a024c5b1436fa65a8791e9d5ab60.json",
+                                               "sha256":  "B0659F634BA77BC9AAA8649DFD6B1BCA2EE68ED6813A94C79C35A4A02A0EA4AF"
+                                           },
+                      "log":  {
+                                  "name":  "mutation-preflight-bom-65de7aaa81dd4db2a5a99cb9c4faf4ab.log",
+                                  "sha256":  "E99BA9CC2AE9D82B97D0793DB6B1374B6D4C2969A431969038F9672906EA851B"
+                              },
+                      "definitionCount":  11,
+                      "canaryCount":  4,
+                      "definitions":  [
+                                          {
+                                              "id":  "renderer-only-j1-1-plus-20px",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\PcbWorkbenchRenderer.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                              "afterSha256":  "60d0c0f152d82669327ddc792e004cffd995df91f5971b30f962e5e05da9a009",
+                                              "restoredSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "renderer-only-j1-1-lead-plus-20px",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\PhysicalPartRenderTerminal.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                              "afterSha256":  "d346b0dae815b31bb9acb14c6c99d2830344a055cc50da7bca12c2e0ca227d5f",
+                                              "restoredSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "raw-copper-j1-1-endpoint-gap",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\GeneratedBoardInstance.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                              "afterSha256":  "f777f4df2f6873b0f445cea2f73b965560eeade76125a46f4b29b8e6c547a754",
+                                              "restoredSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "raw-net-mismatch",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\GeneratedBoardInstance.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                              "afterSha256":  "0ed3398fa307630b51f888b38842bd58885eab0788499d077c1008d6aa714820",
+                                              "restoredSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "solver-binding-j1-1-post-mismatch",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\BoardSimulationBindings.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                              "afterSha256":  "4765a99f32aac91a6c391ec5d4a7b4d900223581a9aa30f942fdff30c5a23fd3",
+                                              "restoredSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "solver-detachable-c1-plus-identity-mismatch",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\BoardSimulationBindings.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                              "afterSha256":  "ba640b1f7e83e9c43b9365a6348973f311d6ce42e18a15b7056ccce7d95efc28",
+                                              "restoredSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "package-mirror-mismatch",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\PcbComponentPlacement.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                              "afterSha256":  "cb1aabe5128e09a799adb35f49ff84e7cbbf49f69b9d50375455376131633be5",
+                                              "restoredSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "internally-self-consistent-wrong-mapping",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\LedIndicatorGenerator.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                              "afterSha256":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                                              "restoredSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "omitted-manifest-terminal",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\Task43PPhysicalTruthDeveloperVerifier.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                              "afterSha256":  "755a8e2c4cfcff44896a1b6d746d958ffbf4b162017e7a73dcb7c0ced64cd8e3",
+                                              "restoredSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "snapshot-restore-resistance-current-omitted",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\Task41SimulationSnapshot.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                                              "afterSha256":  "4fc6c97ff3f885c83af19307aee3b3bdc3c540f47c3beb743f61b8b4a89bc6f1",
+                                              "restoredSha256":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          },
+                                          {
+                                              "id":  "public-remove-action-disabled",
+                                              "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\PcbWorkbenchController.java",
+                                              "anchorCount":  1,
+                                              "beforeSha256":  "5e1053ad490fc159b55e0302fa580e0c92ecaddf265e71d7291c80c8b2ea3849",
+                                              "afterSha256":  "f7da4c113323e961f04e940c0f8036e1f7e5f5c4054a913eeed60f6af42e4489",
+                                              "restoredSha256":  "5e1053ad490fc159b55e0302fa580e0c92ecaddf265e71d7291c80c8b2ea3849",
+                                              "restoredExactly":  true,
+                                              "exit":  0
+                                          }
+                                      ],
+                      "canaries":  [
+                                       {
+                                           "name":  "zero-anchor",
+                                           "anchorCount":  0,
+                                           "expectedAnchorCount":  0,
+                                           "beforeSha256":  "4d4c7eee2e28d03cb2dbf3df639c3290ade66e18755e83caade2d8f37bd8c044",
+                                           "afterSha256":  "",
+                                           "restoredSha256":  "4d4c7eee2e28d03cb2dbf3df639c3290ade66e18755e83caade2d8f37bd8c044",
+                                           "withBom":  false,
+                                           "mutationChanged":  false,
+                                           "rejectionReasonMatched":  true,
+                                           "restoredExactly":  true,
+                                           "exit":  0
+                                       },
+                                       {
+                                           "name":  "duplicate-anchor",
+                                           "anchorCount":  2,
+                                           "expectedAnchorCount":  2,
+                                           "beforeSha256":  "537ddd22d8edabf557668bdb64df37ccf7cf75410611d4a5bd380cb7ee579f8c",
+                                           "afterSha256":  "",
+                                           "restoredSha256":  "537ddd22d8edabf557668bdb64df37ccf7cf75410611d4a5bd380cb7ee579f8c",
+                                           "withBom":  false,
+                                           "mutationChanged":  false,
+                                           "rejectionReasonMatched":  true,
+                                           "restoredExactly":  true,
+                                           "exit":  0
+                                       },
+                                       {
+                                           "name":  "overlapping-anchor",
+                                           "anchorCount":  2,
+                                           "expectedAnchorCount":  2,
+                                           "beforeSha256":  "61be55a8e2f6b4e172338bddf184d6dbee29c98853e0a0485ecee7f27b9af0b4",
+                                           "afterSha256":  "",
+                                           "restoredSha256":  "61be55a8e2f6b4e172338bddf184d6dbee29c98853e0a0485ecee7f27b9af0b4",
+                                           "withBom":  false,
+                                           "mutationChanged":  false,
+                                           "rejectionReasonMatched":  true,
+                                           "restoredExactly":  true,
+                                           "exit":  0
+                                       },
+                                       {
+                                           "name":  "positive-bom-mixed-restore",
+                                           "anchorCount":  1,
+                                           "expectedAnchorCount":  1,
+                                           "beforeSha256":  "6b183f72ab6f059624da1f1d008d8e83132b52d44f61c38d2591b1f78b599d67",
+                                           "afterSha256":  "29bf781bf70787261ad78574fd332bf8c34ccd29e488a4197dbf10cbd8dffb24",
+                                           "restoredSha256":  "6b183f72ab6f059624da1f1d008d8e83132b52d44f61c38d2591b1f78b599d67",
+                                           "withBom":  true,
+                                           "mutationChanged":  true,
+                                           "rejectionReasonMatched":  false,
+                                           "restoredExactly":  true,
+                                           "exit":  0
+                                       }
+                                   ],
+                      "ownedScratchRemoved":  true,
+                      "compiledEvidence":  false
+                  },
+    "dependencyDelta":  {
+                            "utc":  "2026-09-05T18:00:06.3284455Z",
+                            "base":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                            "scriptOnlyDelta":  true,
+                            "files":  [
+                                          {
+                                              "path":  "scripts/VerifierIsolation.psm1",
+                                              "originalSha256":  "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701",
+                                              "currentSha256":  "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "scripts/verify-browser.ps1",
+                                              "originalSha256":  "F415121A25203D81936A132A4694DC242F865079CCCDEEB0984686EC66C373D3",
+                                              "currentSha256":  "477CF2F6BB8A38E43483A000EC596F56E0027D356AC82ECB0F7B99482C617495",
+                                              "unchanged":  false
+                                          },
+                                          {
+                                              "path":  "scripts/verify-gate-b.ps1",
+                                              "originalSha256":  "EDDB343D99142C11297F0D576424FC32A7982649796613AD7DBEC25B14C5D870",
+                                              "currentSha256":  "04C9966C67AD454F2E0EBF4BCE9CA923F4B4B545A53760682BCDDADCD1DCF618",
+                                              "unchanged":  false
+                                          },
+                                          {
+                                              "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                              "originalSha256":  "35FFD704B78BC8BE522564045310210719BE86CADE7B8E2FAF0169F0CD5E9219",
+                                              "currentSha256":  "062F4332F07D912548205EA1F049659B36B24A25E352EA05653226AB96250018",
+                                              "unchanged":  false
+                                          },
+                                          {
+                                              "path":  "scripts/Task43PRuntimeEvidence.ps1",
+                                              "originalSha256":  "06E08BD5F100A99614CBBCBF497FC778F3C1B3B38A23AF382F55D2DE0530FA0C",
+                                              "currentSha256":  "06E08BD5F100A99614CBBCBF497FC778F3C1B3B38A23AF382F55D2DE0530FA0C",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "scripts/Task43PPublicActionEvidence.ps1",
+                                              "originalSha256":  "1E019764D2415B0C9700D77D39E83C77B0DDB3EC0090BF7CB8B590161BEED3E3",
+                                              "currentSha256":  "1E019764D2415B0C9700D77D39E83C77B0DDB3EC0090BF7CB8B590161BEED3E3",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+                                              "originalSha256":  "048DB79C3F4AE73AD4D1C1A02ACD1B49D9FDF33A9F814E9B2C966038D97291C7",
+                                              "currentSha256":  "048DB79C3F4AE73AD4D1C1A02ACD1B49D9FDF33A9F814E9B2C966038D97291C7",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+                                              "originalSha256":  "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D",
+                                              "currentSha256":  "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                                              "originalSha256":  "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353",
+                                              "currentSha256":  "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+                                              "originalSha256":  "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C",
+                                              "currentSha256":  "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+                                              "originalSha256":  "22476D1C4C4B0FAEDEEC58E1471DC7F3A51047158E1F16CD470BA16B75A9DF53",
+                                              "currentSha256":  "22476D1C4C4B0FAEDEEC58E1471DC7F3A51047158E1F16CD470BA16B75A9DF53",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+                                              "originalSha256":  "35BC5810EFA0DBEEE11FBE7189E8D69F69CDF4C1656787EC66C325012D49D2DB",
+                                              "currentSha256":  "35BC5810EFA0DBEEE11FBE7189E8D69F69CDF4C1656787EC66C325012D49D2DB",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+                                              "originalSha256":  "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6",
+                                              "currentSha256":  "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+                                              "originalSha256":  "0183E1C0DA284354C6E7DAB50892E30A975BF24A29A5284FE0D6D9FED5EB67FC",
+                                              "currentSha256":  "0183E1C0DA284354C6E7DAB50892E30A975BF24A29A5284FE0D6D9FED5EB67FC",
+                                              "unchanged":  true
+                                          },
+                                          {
+                                              "path":  "src/com/lushprojects/circuitjs1/client/Task43PMeasurementCleanupDeveloperVerifier.java",
+                                              "originalSha256":  "4036F1C59A4285EA517BF438ACFCA5F9DBF23C5F31A97EF5D4716EC896AD1F9C",
+                                              "currentSha256":  "4036F1C59A4285EA517BF438ACFCA5F9DBF23C5F31A97EF5D4716EC896AD1F9C",
+                                              "unchanged":  true
+                                          }
+                                      ],
+                            "changedFiles":  [
+                                                 "scripts/verify-browser.ps1",
+                                                 "scripts/verify-gate-b.ps1",
+                                                 "scripts/verify-task43p-source-experiments.ps1"
+                                             ]
+                        },
+    "finalBomFixtureDelta":  {
+                                 "protocol":  "task43p-final-bom-canary-delta-v1",
+                                 "actualExit":  0,
+                                 "utc":  "2026-09-05T19:46:47.2182875Z",
+                                 "head":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                                 "affectedPath":  "scripts/verify-task43p-source-experiments.ps1",
+                                 "cause":  "TEST/TOOL",
+                                 "previousSourceVerifierDigest":  "a0abcf3d61cb95c2e07ae3ed3516bc391dc312359c6cde31262d080c2d26faea",
+                                 "finalSourceVerifierDigest":  "9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663",
+                                 "onlyChangedFunction":  "Invoke-MutationPreflightCanaries",
+                                 "otherScriptContentUnchanged":  true,
+                                 "productionJavaUnchanged":  true,
+                                 "compiledWebUnchanged":  true,
+                                 "changedTrackedInputCount":  1,
+                                 "currentSourceHashes":  [
+                                                             {
+                                                                 "path":  "scripts/VerifierIsolation.psm1",
+                                                                 "previousSha256":  "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701",
+                                                                 "sha256":  "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "scripts/verify-browser.ps1",
+                                                                 "previousSha256":  "477CF2F6BB8A38E43483A000EC596F56E0027D356AC82ECB0F7B99482C617495",
+                                                                 "sha256":  "477CF2F6BB8A38E43483A000EC596F56E0027D356AC82ECB0F7B99482C617495",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "scripts/verify-gate-b.ps1",
+                                                                 "previousSha256":  "04C9966C67AD454F2E0EBF4BCE9CA923F4B4B545A53760682BCDDADCD1DCF618",
+                                                                 "sha256":  "04C9966C67AD454F2E0EBF4BCE9CA923F4B4B545A53760682BCDDADCD1DCF618",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                                                 "previousSha256":  "062F4332F07D912548205EA1F049659B36B24A25E352EA05653226AB96250018",
+                                                                 "sha256":  "BD12253B8440A5937FB7B08AC19B46CE406350A673A05BEA51ECBF66A3DDB39C",
+                                                                 "unchanged":  false
+                                                             },
+                                                             {
+                                                                 "path":  "scripts/Task43PRuntimeEvidence.ps1",
+                                                                 "previousSha256":  "06E08BD5F100A99614CBBCBF497FC778F3C1B3B38A23AF382F55D2DE0530FA0C",
+                                                                 "sha256":  "06E08BD5F100A99614CBBCBF497FC778F3C1B3B38A23AF382F55D2DE0530FA0C",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "scripts/Task43PPublicActionEvidence.ps1",
+                                                                 "previousSha256":  "1E019764D2415B0C9700D77D39E83C77B0DDB3EC0090BF7CB8B590161BEED3E3",
+                                                                 "sha256":  "1E019764D2415B0C9700D77D39E83C77B0DDB3EC0090BF7CB8B590161BEED3E3",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+                                                                 "previousSha256":  "048DB79C3F4AE73AD4D1C1A02ACD1B49D9FDF33A9F814E9B2C966038D97291C7",
+                                                                 "sha256":  "048DB79C3F4AE73AD4D1C1A02ACD1B49D9FDF33A9F814E9B2C966038D97291C7",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+                                                                 "previousSha256":  "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D",
+                                                                 "sha256":  "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                                                                 "previousSha256":  "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353",
+                                                                 "sha256":  "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+                                                                 "previousSha256":  "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C",
+                                                                 "sha256":  "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+                                                                 "previousSha256":  "22476D1C4C4B0FAEDEEC58E1471DC7F3A51047158E1F16CD470BA16B75A9DF53",
+                                                                 "sha256":  "22476D1C4C4B0FAEDEEC58E1471DC7F3A51047158E1F16CD470BA16B75A9DF53",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+                                                                 "previousSha256":  "35BC5810EFA0DBEEE11FBE7189E8D69F69CDF4C1656787EC66C325012D49D2DB",
+                                                                 "sha256":  "35BC5810EFA0DBEEE11FBE7189E8D69F69CDF4C1656787EC66C325012D49D2DB",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+                                                                 "previousSha256":  "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6",
+                                                                 "sha256":  "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+                                                                 "previousSha256":  "0183E1C0DA284354C6E7DAB50892E30A975BF24A29A5284FE0D6D9FED5EB67FC",
+                                                                 "sha256":  "0183E1C0DA284354C6E7DAB50892E30A975BF24A29A5284FE0D6D9FED5EB67FC",
+                                                                 "unchanged":  true
+                                                             },
+                                                             {
+                                                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PMeasurementCleanupDeveloperVerifier.java",
+                                                                 "previousSha256":  "4036F1C59A4285EA517BF438ACFCA5F9DBF23C5F31A97EF5D4716EC896AD1F9C",
+                                                                 "sha256":  "4036F1C59A4285EA517BF438ACFCA5F9DBF23C5F31A97EF5D4716EC896AD1F9C",
+                                                                 "unchanged":  true
+                                                             }
+                                                         ],
+                                 "mutationDefinitionChecks":  [
+                                                                  {
+                                                                      "id":  "renderer-only-j1-1-plus-20px",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "renderer-only-j1-1-lead-plus-20px",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "raw-copper-j1-1-endpoint-gap",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "raw-net-mismatch",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "solver-binding-j1-1-post-mismatch",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "solver-detachable-c1-plus-identity-mismatch",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "package-mirror-mismatch",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "internally-self-consistent-wrong-mapping",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "omitted-manifest-terminal",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "snapshot-restore-resistance-current-omitted",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  },
+                                                                  {
+                                                                      "id":  "public-remove-action-disabled",
+                                                                      "beforeAfterRestoredHashesUnchanged":  true
+                                                                  }
+                                                              ],
+                                 "previousExecutionProvenance":  {
+                                                                     "Protocol":  "troubleshootjs-execution-provenance-v1",
+                                                                     "SourceDigest":  "3d3e78ed8bec13b3cfd2607cdca277925b63afd9116065838e15b63f0ec86f58",
+                                                                     "ScriptDigest":  "75dff2d8a90946ba7435fca42c0066926090ad82568a20945d1228d7bfbdb74d",
+                                                                     "WebDigest":  "7f3c98108c904ace7ffbb472620ff4b29386991bb3958acce6cfd372f5dbfdf2",
+                                                                     "Digest":  "e95ce9073e1883e11f2783dabbc1472a167705cd8e4ef424130370f81026247d",
+                                                                     "FileCount":  1250
+                                                                 },
+                                 "finalExecutionProvenance":  {
+                                                                  "Protocol":  "troubleshootjs-execution-provenance-v1",
+                                                                  "SourceDigest":  "3d3e78ed8bec13b3cfd2607cdca277925b63afd9116065838e15b63f0ec86f58",
+                                                                  "ScriptDigest":  "d0413739150af0b5333ae924e46411183ea34752ec299c3a40b4b0fca44a55ac",
+                                                                  "WebDigest":  "7f3c98108c904ace7ffbb472620ff4b29386991bb3958acce6cfd372f5dbfdf2",
+                                                                  "Digest":  "bf1664dc2dc28b5ba6ee99efc37763c75a90b871b80f8ec10222ed2d26fb8a3a",
+                                                                  "FileCount":  1250
+                                                              },
+                                 "previousPreflightBomClaimAccepted":  false,
+                                 "previousPreflight":  {
+                                                           "runId":  "60a03e8d38d44068b95adcc526ec60f7",
+                                                           "actualExit":  0,
+                                                           "artifact":  "task43p-source-experiments-60a03e8d38d44068b95adcc526ec60f7.json",
+                                                           "sha256":  "1445C020FD6F9DD7ED58CF333D9E2AE22C5014898E3195E16F2CDBD1034BB7EF",
+                                                           "reportedBom":  true,
+                                                           "actualBomBytes":  0,
+                                                           "acceptedAsBomEvidence":  false
+                                                       },
+                                 "correctedPreflight":  {
+                                                            "runId":  "0e30a024c5b1436fa65a8791e9d5ab60",
+                                                            "actualExit":  0,
+                                                            "artifact":  "task43p-source-experiments-0e30a024c5b1436fa65a8791e9d5ab60.json",
+                                                            "sha256":  "B0659F634BA77BC9AAA8649DFD6B1BCA2EE68ED6813A94C79C35A4A02A0EA4AF",
+                                                            "observedBom":  true,
+                                                            "actualBomBytes":  3,
+                                                            "prefixHex":  "EF BB BF"
+                                                        },
+                                 "limitation":  "Previous preflight advertised a BOM but supplied no BOM; its BOM claim is superseded, not reused.",
+                                 "reuseScope":  "Java build, forced-first, A-I, physical triads, compiled mutations and visible flow retain original proof identities. Their producer, detector, mutation definition, transport and cleanup code is unchanged. Fresh actual preflight and full Gate B qualify the final canary repair."
+                             },
+    "finalBomFixtureAudit":  {
+                                 "name":  "bom-canary-dependency-audit.json",
+                                 "sha256":  "20827F11247F6CA6F3CA4DA220172570B9CD4B51AA0CAB6F639A416B4D57A3C0"
+                             },
+    "mutationReuseChecks":  {
+                                "utc":  "2026-09-05T17:57:19.3626487Z",
+                                "preflightSha256":  "1445C020FD6F9DD7ED58CF333D9E2AE22C5014898E3195E16F2CDBD1034BB7EF",
+                                "preflightRunId":  "60a03e8d38d44068b95adcc526ec60f7",
+                                "currentSourceVerifierDigest":  "a0abcf3d61cb95c2e07ae3ed3516bc391dc312359c6cde31262d080c2d26faea",
+                                "checks":  [
+                                               {
+                                                   "id":  "renderer-only-j1-1-plus-20px",
+                                                   "originalBefore":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                                   "currentBefore":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "65ebf96a3cd5215f4d593c7f4ef4b52309adb75342739b413e4b029fbb682ee8",
+                                                   "currentAfter":  "60d0c0f152d82669327ddc792e004cffd995df91f5971b30f962e5e05da9a009",
+                                                   "afterEqual":  false,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "renderer-only-j1-1-lead-plus-20px",
+                                                   "originalBefore":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                                   "currentBefore":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "37d8e41c7f9128770c3281929f8ea2f3092d2702ac552911b40c1e7c8832ea79",
+                                                   "currentAfter":  "d346b0dae815b31bb9acb14c6c99d2830344a055cc50da7bca12c2e0ca227d5f",
+                                                   "afterEqual":  false,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "raw-copper-j1-1-endpoint-gap",
+                                                   "originalBefore":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                   "currentBefore":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "1fb4491893a1de9a1074eadc6c44afba4b81d8bc0d028a8102b4c3dbfe25d1df",
+                                                   "currentAfter":  "f777f4df2f6873b0f445cea2f73b965560eeade76125a46f4b29b8e6c547a754",
+                                                   "afterEqual":  false,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "raw-net-mismatch",
+                                                   "originalBefore":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                   "currentBefore":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "1b9a2693fda6f0a3f98bad6f4b2aa40da4b640f87f7ae70cf7af9d758e6b9920",
+                                                   "currentAfter":  "0ed3398fa307630b51f888b38842bd58885eab0788499d077c1008d6aa714820",
+                                                   "afterEqual":  false,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "solver-binding-j1-1-post-mismatch",
+                                                   "originalBefore":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                   "currentBefore":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "1f57f638b2f85ee368585452be232d7c870a66594ce2468d1dc73fbe7b0991da",
+                                                   "currentAfter":  "4765a99f32aac91a6c391ec5d4a7b4d900223581a9aa30f942fdff30c5a23fd3",
+                                                   "afterEqual":  false,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "solver-detachable-c1-plus-identity-mismatch",
+                                                   "originalBefore":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                   "currentBefore":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "6eb1457cde77a6ace645d46af94f9a2fc0e2226096ebcf522b4cfd7302cec9cd",
+                                                   "currentAfter":  "ba640b1f7e83e9c43b9365a6348973f311d6ce42e18a15b7056ccce7d95efc28",
+                                                   "afterEqual":  false,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "package-mirror-mismatch",
+                                                   "originalBefore":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                                   "currentBefore":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "ac36cc666cf35437fa6a0bf62aba875dfcc4ca72a0af101d851d7f7d519e6dc4",
+                                                   "currentAfter":  "cb1aabe5128e09a799adb35f49ff84e7cbbf49f69b9d50375455376131633be5",
+                                                   "afterEqual":  false,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "internally-self-consistent-wrong-mapping",
+                                                   "originalBefore":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                                   "currentBefore":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                                                   "currentAfter":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                                                   "afterEqual":  true,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "omitted-manifest-terminal",
+                                                   "originalBefore":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                                   "currentBefore":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "aade3bd1e3b873bc7d294ac1193382f2061ce816289ba849da5f53009536a030",
+                                                   "currentAfter":  "755a8e2c4cfcff44896a1b6d746d958ffbf4b162017e7a73dcb7c0ced64cd8e3",
+                                                   "afterEqual":  false,
+                                                   "restoredExactly":  true
+                                               },
+                                               {
+                                                   "id":  "snapshot-restore-resistance-current-omitted",
+                                                   "originalBefore":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                                                   "currentBefore":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                                                   "beforeEqual":  true,
+                                                   "originalAfter":  "4fc6c97ff3f885c83af19307aee3b3bdc3c540f47c3beb743f61b8b4a89bc6f1",
+                                                   "currentAfter":  "4fc6c97ff3f885c83af19307aee3b3bdc3c540f47c3beb743f61b8b4a89bc6f1",
+                                                   "afterEqual":  true,
+                                                   "restoredExactly":  true
+                                               }
+                                           ]
+                            },
+    "originalCompiledMutationChecks":  {
+                                           "utc":  "2026-09-05T17:59:34.4975469Z",
+                                           "baseline":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                                           "originalSourceEvidenceSha256":  "AB754F279FB4F7BDCB6D635E07D8E1D55C78FA82F538469876A7C50ADB9A0A4B",
+                                           "actualCurrentPreflightSha256":  "1445C020FD6F9DD7ED58CF333D9E2AE22C5014898E3195E16F2CDBD1034BB7EF",
+                                           "caseCount":  8,
+                                           "cases":  [
+                                                         {
+                                                             "id":  "renderer-only-j1-1-plus-20px",
+                                                             "originalProducerSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                                             "originalCompiledMutationSha256":  "65ebf96a3cd5215f4d593c7f4ef4b52309adb75342739b413e4b029fbb682ee8",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "60d0c0f152d82669327ddc792e004cffd995df91f5971b30f962e5e05da9a009",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "4be87a344e78d293ee7ffd8747c150d18b4402fdc0f495cdff21a1ad2362bb4b",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "renderer-only-j1-1-lead-plus-20px",
+                                                             "originalProducerSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                                             "originalCompiledMutationSha256":  "37d8e41c7f9128770c3281929f8ea2f3092d2702ac552911b40c1e7c8832ea79",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "d346b0dae815b31bb9acb14c6c99d2830344a055cc50da7bca12c2e0ca227d5f",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "37d8e41c7f9128770c3281929f8ea2f3092d2702ac552911b40c1e7c8832ea79",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "raw-copper-j1-1-endpoint-gap",
+                                                             "originalProducerSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                             "originalCompiledMutationSha256":  "1fb4491893a1de9a1074eadc6c44afba4b81d8bc0d028a8102b4c3dbfe25d1df",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "f777f4df2f6873b0f445cea2f73b965560eeade76125a46f4b29b8e6c547a754",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "d3b5eb89fbf9a1bb9dc350ad61f76863a05d95500bccb5e46f529fd6abbf42b9",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "raw-net-mismatch",
+                                                             "originalProducerSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                             "originalCompiledMutationSha256":  "1b9a2693fda6f0a3f98bad6f4b2aa40da4b640f87f7ae70cf7af9d758e6b9920",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "0ed3398fa307630b51f888b38842bd58885eab0788499d077c1008d6aa714820",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "f6d17b534bae06ebe3be500a61651b055edee96ed06e5f01d7fae344297f63aa",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "solver-binding-j1-1-post-mismatch",
+                                                             "originalProducerSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                             "originalCompiledMutationSha256":  "1f57f638b2f85ee368585452be232d7c870a66594ce2468d1dc73fbe7b0991da",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "4765a99f32aac91a6c391ec5d4a7b4d900223581a9aa30f942fdff30c5a23fd3",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "055f7693a53c5b34d73a017c0457fec4df973f8f97cdeef42a72bf3c61d2dfc5",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "solver-detachable-c1-plus-identity-mismatch",
+                                                             "originalProducerSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                             "originalCompiledMutationSha256":  "6eb1457cde77a6ace645d46af94f9a2fc0e2226096ebcf522b4cfd7302cec9cd",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "ba640b1f7e83e9c43b9365a6348973f311d6ce42e18a15b7056ccce7d95efc28",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "a9e690bd597e73e333b2c29cfd891e2d00051c0f640a397220b4f802348c019c",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "package-mirror-mismatch",
+                                                             "originalProducerSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                                             "originalCompiledMutationSha256":  "ac36cc666cf35437fa6a0bf62aba875dfcc4ca72a0af101d851d7f7d519e6dc4",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "cb1aabe5128e09a799adb35f49ff84e7cbbf49f69b9d50375455376131633be5",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "ac36cc666cf35437fa6a0bf62aba875dfcc4ca72a0af101d851d7f7d519e6dc4",
+                                                             "originalProofAndExitRetained":  true
+                                                         },
+                                                         {
+                                                             "id":  "internally-self-consistent-wrong-mapping",
+                                                             "originalProducerSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                                             "originalCompiledMutationSha256":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                                                             "reconstructedOriginalMatches":  true,
+                                                             "matchingOriginalScriptEndings":  [
+                                                                                                   "LF",
+                                                                                                   "CRLF"
+                                                                                               ],
+                                                             "currentMutationSha256":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                                                             "differsOnlyByCrLfVsLf":  true,
+                                                             "normalizedMutationSha256":  "9b9894ff52bb5ffa752efaa1261c5edacfce5436b47286db68ddf524f3255229",
+                                                             "originalProofAndExitRetained":  true
+                                                         }
+                                                     ],
+                                           "interpretation":  "Original compiled mutations reconstructed to their recorded raw hashes. Current mutations differ only in CRLF/LF separators; Java source tokens and intended defects are identical. Original compiled evidence keeps its own raw byte identity; no new build is claimed."
+                                       },
+    "routeTimingMetadata":  [
+                                {
+                                    "protocol":  "troubleshootjs-route-timing-v1",
+                                    "route":  "task43p forced-negative canary",
+                                    "phase":  "evidence-capture",
+                                    "outcome":  "recorded",
+                                    "elapsedMilliseconds":  50863,
+                                    "remainingRouteMilliseconds":  48114,
+                                    "cdpOperation":  "Runtime.evaluate",
+                                    "cdpStage":  "complete",
+                                    "cleanup":  "not-started",
+                                    "evidenceStage":  "artifact-persistence"
+                                },
+                                {
+                                    "protocol":  "troubleshootjs-route-timing-v1",
+                                    "route":  "task43p forced-negative canary",
+                                    "phase":  "cleanup",
+                                    "outcome":  "complete",
+                                    "elapsedMilliseconds":  89443,
+                                    "remainingRouteMilliseconds":  9529,
+                                    "cdpOperation":  "Runtime.evaluate",
+                                    "cdpStage":  "complete",
+                                    "cleanup":  "complete",
+                                    "evidenceStage":  "artifact-persistence"
+                                },
+                                {
+                                    "protocol":  "troubleshootjs-route-timing-v1",
+                                    "route":  "task43p runtime lanes",
+                                    "phase":  "evidence-capture",
+                                    "outcome":  "recorded",
+                                    "elapsedMilliseconds":  93469,
+                                    "remainingRouteMilliseconds":  2999,
+                                    "cdpOperation":  "Runtime.evaluate",
+                                    "cdpStage":  "complete",
+                                    "cleanup":  "not-started",
+                                    "evidenceStage":  "artifact-persistence"
+                                },
+                                {
+                                    "protocol":  "troubleshootjs-route-timing-v1",
+                                    "route":  "task43p runtime lanes",
+                                    "phase":  "cleanup",
+                                    "outcome":  "complete",
+                                    "elapsedMilliseconds":  141223,
+                                    "remainingRouteMilliseconds":  0,
+                                    "cdpOperation":  "Runtime.evaluate",
+                                    "cdpStage":  "complete",
+                                    "cleanup":  "complete",
+                                    "evidenceStage":  "artifact-persistence"
+                                }
+                            ],
+    "timingMetadataGrantsAcceptance":  false,
+    "regressions":  {
+                        "gateBActualExit":  0,
+                        "gateBLog":  {
+                                         "name":  "gate-b-efficiency-e7b0424879544efd81eb1a119cfb8245.log",
+                                         "sha256":  "D1F8C58F29073E9447895FF9E9FCE0FE803A6D6874D63794DC0537DF158DC381"
+                                     },
+                        "checks":  [
+                                       "Task43P diagnostics precede capture; other routes keep existing diagnostics.",
+                                       "Transport, persistence, unexpected Java errors and cleanup failures still reject.",
+                                       "All eleven mutation anchors and exact-reason/overlap/BOM restoration canaries are integrated."
+                                   ],
+                        "limits":  "The 500 ms proof budget, route deadlines, ownership checks and exit contracts are unchanged."
+                    }
+}

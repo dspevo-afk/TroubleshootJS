@@ -708,9 +708,9 @@ function Invoke-GateBSourceChecks() {
         $moduleText -notmatch '(?i)manifested') `
         'lease lifecycle does not use one finite transition validator without the stray manifested state'
     Assert-GateB ($browserText.IndexOf(
-        'a5b253873c2b25a54d7c393b118e3f2e1831a4d8',
+        '8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7',
         [StringComparison]::Ordinal) -ge 0) `
-        'Task43P evidence wrapper does not use the supplied a5b2538 baseline'
+        'Task43P evidence wrapper does not use the supplied 8bf4424 baseline'
     foreach ($token in @(
         'Invoke-VerifierBoundedProcess',
         'Stop-VerifierBoundedProcessExactly',
@@ -8910,7 +8910,90 @@ function Invoke-GateBListenerInspectionFailureCheck() {
     Write-Host 'PASS:listener inspection malformed/error fail-closed contract'
 }
 
+function Invoke-GateBRouteCompletionCanary() {
+    # Execute the real route body with bounded transport/file-I/O doubles.
+    # This proves completion ordering and rejection, not Java or live CDP.
+    $scope = New-Module -ScriptBlock { }
+    & $scope {
+        param($SourcePath)
+        Set-StrictMode -Version Latest
+        $tokens = $null; $errors = $null
+        $ast = [Management.Automation.Language.Parser]::ParseFile($SourcePath, [ref]$tokens, [ref]$errors)
+        if ($errors.Count -ne 0) { throw 'Route completion source did not parse.' }
+        foreach ($name in @('verifyRoute', 'Write-VerifierRouteTiming')) {
+            $definition = @($ast.EndBlock.Statements | Where-Object {
+                $_ -is [Management.Automation.Language.FunctionDefinitionAst] -and $_.Name -ceq $name
+            })
+            if ($definition.Count -ne 1) { throw 'Route completion helper was not unique.' }
+            . ([scriptblock]::Create($definition[0].Extent.Text))
+        }
+        function Write-Host($Object) { [void]$script:messages.Add([string]$Object) }
+        function Test-Task43PForcedNegativeMarker($value) { return $false }
+        function Get-Task43PRepositoryState($roots) { return [pscustomobject]@{headSha='fixture'} }
+        function startVerifierBrowser($name, $url) {
+            return [pscustomobject]@{Profile='fixture';Browser='fixture';Socket='fixture';Deadline=[DateTime]::UtcNow.AddSeconds(30)}
+        }
+        function invokeCdp($socket, [ref]$counter, $method, $parameters, [ref]$failures, $deadline) {
+            return [pscustomobject]@{result=[pscustomobject]@{result=[pscustomobject]@{value='PASS:fixture'}}}
+        }
+        function Wait-Task43PBrowserStartup { }
+        function Get-Task43ForcedNegativeNavigationUrl($url) { return $url }
+        function navigateAndWaitForDocument { }
+        function Start-Sleep { }
+        function evaluateCdp($socket, [ref]$counter, $expression, [ref]$failures, $deadline) {
+            if ($expression -cne 'document.readyState') { throw 'Unexpected completion CDP expression.' }
+            [void]$script:events.Add('diagnostics')
+            if ($script:captured) { throw 'fixture: post-persistence transport deadline expired' }
+            if ($script:case -ceq 'diagnostic-error') { throw 'fixture: diagnostic transport failed' }
+            return 'complete'
+        }
+        function Capture-Task43PEvidence($socket, [ref]$counter, $deadline, [ref]$failures) {
+            [void]$script:events.Add('capture')
+            $script:captured = $true
+            if ($script:case -ceq 'capture-error') { throw 'fixture: persistence failed' }
+            if ($script:case -ceq 'console-error') { $failures.Value += 'fixture: unexpected Java error' }
+        }
+        function Capture-Task43PSourceObservation {
+            [void]$script:events.Add('capture'); $script:captured = $true
+        }
+        function cleanupBrowser($browser, $socket, $profile) {
+            if ($null -eq $browser) { return }
+            [void]$script:events.Add('cleanup')
+            if ($script:case -ceq 'cleanup-error') { throw 'fixture: cleanup failed' }
+        }
+        function Set-VerifierFailure($errorRecord, $name) { [void]$script:rejections.Add([string]$errorRecord) }
+        $script:Task43PExecutionRoots = $null
+        $script:VerifierEvidenceDirectory = ''
+        $Task43PStartupSettleMilliseconds = 0
+        foreach ($script:case in @('capture-last', 'source-last', 'normal-route', 'diagnostic-error', 'capture-error', 'console-error', 'cleanup-error')) {
+            $script:events = [Collections.Generic.List[string]]::new()
+            $script:messages = [Collections.Generic.List[string]]::new()
+            $script:rejections = [Collections.Generic.List[string]]::new()
+            $script:captured = $false
+            $script:Task43PSourceDefinition = if ($script:case -ceq 'source-last') { [pscustomobject]@{id='fixture'} } else { $null }
+            $route = if ($script:case -ceq 'normal-route') { 'normal fixture' } else { 'task43p fixture' }
+            $actual = verifyRoute $route 'http://127.0.0.1:1/fixture' 'PASS:fixture'
+            $expected = $script:case -in @('capture-last', 'source-last', 'normal-route')
+            if ($actual -isnot [bool] -or $actual -ne $expected) { throw ('Route completion outcome changed: ' + $script:case) }
+            if ($expected -and $script:rejections.Count -ne 0) { throw 'Successful route retained a rejection.' }
+            if (-not $expected -and $script:rejections.Count -eq 0) { throw 'Failed route lost its rejection.' }
+            if ($script:case -in @('capture-last', 'source-last') -and
+                    ($script:events -join ',') -cne 'diagnostics,capture,cleanup') { throw 'CDP remained after evidence persistence.' }
+            if ($script:case -ceq 'normal-route' -and
+                    ($script:events -join ',') -cne 'diagnostics,cleanup') { throw 'Normal route diagnostics changed.' }
+            $timings = @($script:messages | Where-Object { $_.StartsWith('VERIFIER_ROUTE_TIMING ') } | ForEach-Object {
+                $_.Substring('VERIFIER_ROUTE_TIMING '.Length) | ConvertFrom-Json
+            })
+            if ($timings.Count -lt 1 -or $timings[-1].phase -cne 'cleanup' -or
+                    $timings[-1].elapsedMilliseconds -lt 0 -or $timings[-1].remainingRouteMilliseconds -lt 0) { throw 'Route timing/cleanup diagnostics missing.' }
+            if (-not $expected -and @($timings | Where-Object outcome -CEQ 'failed').Count -eq 0) { throw 'Failed route timing lost its phase.' }
+        }
+    } (Join-Path $PSScriptRoot 'verify-browser.ps1')
+    Write-Host 'PASS:actual route completion preserves normal diagnostics; Task43P captures last; transport, persistence, Java-error, and cleanup failures still reject with timing'
+}
+
 function Invoke-GateBCdpReferenceCanary() {
+    Invoke-GateBRouteCompletionCanary
     # Load the actual helper bodies without running the browser driver's setup.
     # Inject only the CDP transport and a capture-boundary observer; these cases
     # prove reference/JSON handling, not Java acceptance or visible interaction.
@@ -12458,7 +12541,7 @@ Start-Sleep -Seconds 30
 
 function Invoke-GateBSourceNegativeContractCheck() {
     $shell = (Get-Command powershell.exe -ErrorAction Stop).Source
-    foreach ($probe in @('-ContractProbe', '-IdentityCanary')) {
+    foreach ($probe in @('-ContractProbe', '-IdentityCanary', '-MutationPreflight')) {
         $result = Invoke-GateBBoundedProcess $shell @('-NoLogo', '-NoProfile',
             '-NonInteractive', '-File',
             (Join-Path $PSScriptRoot 'verify-task43p-source-experiments.ps1'), $probe) `

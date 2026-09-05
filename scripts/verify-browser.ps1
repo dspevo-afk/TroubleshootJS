@@ -228,7 +228,7 @@ $script:VerifierFailureKind = ''
 $script:VerifierCurrentRouteId = ''
 $script:VerifierResolvedBrowserPath = ''
 $script:Task43PPublishedBaselineSha =
-    'a5b253873c2b25a54d7c393b118e3f2e1831a4d8'
+    '8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7'
 $script:Task43ForcedNegativeProof = [pscustomobject]@{
     Invocation = $false
     ExpectedMarker = ''
@@ -1734,6 +1734,7 @@ function Assert-Task43PJavaEvidencePayload($Value, [string]$RouteName,
 function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
         [ref]$failures, [string]$routeName, [string]$expected, [string]$observed,
         $repositoryBefore) {
+    $script:VerifierEvidenceStage = 'java-payload'
     $payload = [string](evaluateCdp $socket $nextId `
         "document.documentElement.getAttribute('data-tsj-task43p-evidence') || ''" `
         $failures $deadline)
@@ -1751,6 +1752,7 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
     $runtimeParsed = $null
     $runtimeOutcome = $null
     if ($Task43PRuntime) {
+        $script:VerifierEvidenceStage = 'runtime-payload'
         if ($expected -cne 'OBSERVED:task43p-runtime' -or $observed -cne $expected) {
             Throw-VerifierInfrastructure 'Task43P runtime capture did not observe its exact route marker.'
         }
@@ -1798,6 +1800,7 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
                 'publish its run-request marker.')
         }
     }
+    $script:VerifierEvidenceStage = 'repository-provenance'
     $repositoryAfter = Get-Task43PRepositoryState $script:Task43PExecutionRoots
     if ($null -eq $repositoryBefore -or
             $repositoryBefore.headSha -ne $script:Task43PPublishedBaselineSha) {
@@ -1852,6 +1855,7 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
             'the selected execution tree provenance.')
     }
     try {
+        $script:VerifierEvidenceStage = 'artifact-persistence'
         $safeRouteName = $routeName -replace '[^A-Za-z0-9._-]', '-'
         $path = getVerifierEvidencePath ('task43p-' + $safeRouteName + '.json')
         $record = [ordered]@{
@@ -1954,8 +1958,12 @@ function invokeCdp($socket, [ref]$nextId, [string]$method, $parameters, [ref]$fa
         [DateTime]$deadline = [DateTime]::MinValue) {
     $id = $nextId.Value
     $nextId.Value++
+    $script:VerifierLastCdpOperation = $method
+    $script:VerifierLastCdpStage = 'send'
     [void](sendCdp $socket $id $method $parameters)
+    $script:VerifierLastCdpStage = 'receive'
     $response = receiveCdp $socket $id $failures (resolveCdpRouteDeadline $deadline)
+    $script:VerifierLastCdpStage = 'validate-response'
     if ($null -eq $response -or -not $response.PSObject.Properties['id'] -or
             [int]$response.id -ne $id) {
         Throw-VerifierInfrastructure "CDP returned no matching response for $method."
@@ -1968,6 +1976,7 @@ function invokeCdp($socket, [ref]$nextId, [string]$method, $parameters, [ref]$fa
             $response.result -and $response.result.PSObject.Properties['errorText']) {
         Throw-VerifierInfrastructure "CDP navigation/protocol error for $method`: $($response.result.errorText)"
     }
+    $script:VerifierLastCdpStage = 'complete'
     return $response
 }
 
@@ -2084,7 +2093,7 @@ function Get-Task43PSourceExperimentDefinition([string]$Id) {
         }
         'snapshot-restore-resistance-current-omitted' {
             $path = 'Task41SimulationSnapshot.java'
-            'task43p-H-snapshot-resistance-current-did-not-round-trip'
+            'Task 41 restore changed lastResistanceTestCurrent'
         }
         'public-remove-action-disabled' {
             $path = 'PcbWorkbenchController.java'
@@ -2707,6 +2716,28 @@ function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
     return $true
 }
 
+function Write-VerifierRouteTiming([string]$Name, [string]$Phase, [string]$Outcome,
+        [Diagnostics.Stopwatch]$Clock, [DateTime]$Deadline,
+        [string]$Operation, [string]$OperationStage, [string]$Cleanup,
+        [string]$EvidenceStage = '') {
+    # Diagnostic output is not proof and must never replace the primary error.
+    # Record method names only: no expressions, URLs, or browser payloads.
+    try {
+        $remaining = if ($Deadline -eq [DateTime]::MinValue) { $null } else {
+            [Math]::Round([Math]::Max(0, ($Deadline - [DateTime]::UtcNow).TotalMilliseconds))
+        }
+        $record = [ordered]@{
+            protocol = 'troubleshootjs-route-timing-v1'; route = $Name
+            phase = $Phase; outcome = $Outcome
+            elapsedMilliseconds = [Math]::Round($Clock.Elapsed.TotalMilliseconds)
+            remainingRouteMilliseconds = $remaining
+            cdpOperation = $Operation; cdpStage = $OperationStage; cleanup = $Cleanup
+            evidenceStage = $EvidenceStage
+        }
+        Write-Host ('VERIFIER_ROUTE_TIMING ' + ($record | ConvertTo-Json -Compress))
+    } catch { }
+}
+
 function verifyRoute([string]$name, [string]$url, [string]$expected,
         [string]$expectedComplaint = '', [string]$expectedFailure = '') {
     $profile = $null
@@ -2716,6 +2747,13 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
     $success = $false
     $expectedFailureObserved = $false
     $task43pRepositoryBefore = $null
+    $routeClock = [Diagnostics.Stopwatch]::StartNew()
+    $phase = 'browser-startup'
+    $deadline = [DateTime]::MinValue
+    $cleanupState = 'not-started'
+    $script:VerifierLastCdpOperation = ''
+    $script:VerifierLastCdpStage = ''
+    $script:VerifierEvidenceStage = ''
     $isTask43ForcedRoute = ($expectedFailure -eq 'FAIL:task43-forced-negative-canary' -or
         (Test-Task43PForcedNegativeMarker $expectedFailure))
     if ($isTask43ForcedRoute) {
@@ -2738,19 +2776,23 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
         $nextId = 1
         $failures = @()
         $script:CdpRouteDeadline = $deadline
+        $phase = 'protocol-enable'
         [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures) $deadline)
         [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures) $deadline)
         if ($name -like 'task43p *') {
+            $phase = 'startup-settle'
             Wait-Task43PBrowserStartup $socket ([ref]$nextId) ([ref]$failures) `
                 $deadline $Task43PStartupSettleMilliseconds
         }
         $routeUrl = Get-Task43ForcedNegativeNavigationUrl $url
+        $phase = 'navigation'
         [void](navigateAndWaitForDocument $socket ([ref]$nextId) $routeUrl $deadline ([ref]$failures))
         if ($expectedComplaint) {
             $escapedComplaint = $expectedComplaint.Replace("'", "\\'")
             $ticketExpression = "(()=>{const title=[...document.querySelectorAll('.tsj-component-title')].find(e=>e.textContent.trim()==='Service Ticket');if(!title||!title.parentElement)return false;const lines=title.parentElement.innerText.split(/\r?\n+/).map(x=>x.trim()).filter(Boolean);return lines.length===2&&lines[0]==='Service Ticket'&&lines[1]==='$escapedComplaint';})()"
             waitForCdp $socket ([ref]$nextId) $ticketExpression $deadline ([ref]$failures) 'solver-validated Service Ticket complaint'
         }
+        $phase = 'application-result'
         do {
             $response = invokeCdp $socket ([ref]$nextId) 'Runtime.evaluate' @{
                 expression = "document.documentElement.getAttribute('data-tsj-verification') || ''"; returnByValue = $true
@@ -2815,6 +2857,12 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
             Write-Host "NPN ELECTRICAL REPORT: $npnElectricalReport"
         }
         if ($name -like 'task43p *') {
+            # Drain final page diagnostics before serializing/hashing evidence;
+            # report I/O must not precede another route-deadline CDP call.
+            $phase = 'page-diagnostics'
+            Start-Sleep -Milliseconds 100
+            [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures) $deadline)
+            $phase = 'evidence-capture'
             if ($null -ne $script:Task43PSourceDefinition) {
                 if ($script:Task43PSourceDefinition.id -ceq 'public-remove-action-disabled') {
                     Invoke-Task43PPublicRemoveProbe $socket ([ref]$nextId) $deadline ([ref]$failures)
@@ -2824,10 +2872,15 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
                 Capture-Task43PEvidence $socket ([ref]$nextId) $deadline ([ref]$failures) `
                     $name $expected $verificationResult $task43pRepositoryBefore
             }
+            Write-VerifierRouteTiming $name $phase 'recorded' $routeClock $deadline `
+                $script:VerifierLastCdpOperation $script:VerifierLastCdpStage $cleanupState $script:VerifierEvidenceStage
+        } else {
+            $phase = 'page-diagnostics'
+            Start-Sleep -Milliseconds 100
+            [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures) $deadline)
         }
-        Start-Sleep -Milliseconds 100
-        [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures) $deadline)
         if ($script:VerifierEvidenceDirectory -and $name -match '^seed=(0|2) parallel$') {
+            $phase = 'screenshot'
             captureBrowserScreenshot $socket ([ref]$nextId) (getVerifierEvidencePath ("parallel-seed-" + $Matches[1] + ".png")) ([ref]$failures)
         }
         if ($failures.Count -gt 0) {
@@ -2839,7 +2892,10 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
             })
             if ($unexpectedFailures.Count -gt 0) { throw ($unexpectedFailures -join '; ') }
         }
+        $phase = 'browser-cleanup'
+        $cleanupState = 'in-progress'
         cleanupBrowser $browser $socket $profile
+        $cleanupState = 'complete'
         $socket = $null
         $browser = $null
         if ($isTask43ForcedRoute) {
@@ -2857,17 +2913,24 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
         }
         $success = $true
     } catch {
+        Write-VerifierRouteTiming $name $phase 'failed' $routeClock $deadline `
+            $script:VerifierLastCdpOperation $script:VerifierLastCdpStage $cleanupState $script:VerifierEvidenceStage
         Set-VerifierFailure $_ $name
     } finally {
         try {
             cleanupBrowser $browser $socket $profile
+            $cleanupState = 'complete'
         } catch {
+            $cleanupState = 'failed'
             Set-VerifierFailure $_ ($name + ' cleanup')
             $success = $false
         }
         if ($isTask43ForcedRoute -and -not $success) {
             Invalidate-Task43ForcedNegativeProof
         }
+        Write-VerifierRouteTiming $name 'cleanup' $cleanupState $routeClock $deadline `
+            $script:VerifierLastCdpOperation $script:VerifierLastCdpStage $cleanupState $script:VerifierEvidenceStage
+        $routeClock.Stop()
         $script:CdpRouteDeadline = [DateTime]::MinValue
     }
     return $success
@@ -8305,6 +8368,15 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
         Assert-IntegratedChildOutputContract 'Gate B forced-negative proof' 1 1 `
             @('EXPECTED FAILURE task43p forced-negative canary') $validLedgerProof $task43pMarker
         Write-Host 'PASS:forced-negative exact anchored Java proof and expected-route ledger -> exit 1'
+
+        foreach ($wrongBaseline in @('a5b253873c2b25a54d7c393b118e3f2e1831a4d8',
+                '0000000000000000000000000000000000000000', '')) {
+            if (isExpectedTask43ForcedFailureDiagnostic $task43pDiagnostic $task43pMarker `
+                    $runId $routeId $wrongBaseline) {
+                throw 'wrong published baseline accepted an otherwise valid forced-negative diagnostic.'
+            }
+        }
+        Write-Host 'PASS:forced-negative stale, foreign, and missing published baseline rejected'
 
         & $reset $task43pMarker
         try { Throw-VerifierInfrastructure 'synthetic preview died before application' } catch {
