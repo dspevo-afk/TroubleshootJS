@@ -1,6 +1,24 @@
 # Historical Audit Status
 
-## Purpose and truth boundary
+## Current disposition — 2026-09-05
+
+The [runtime reconciliation](TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
+supersedes missing-evidence claims only for the covered current cases. A-I,
+eighteen physical triads, eleven individually qualified compiled falsifiers,
+and the real LED3 player sequence are recorded with exact provenance. Aggregate
+exit-2 attempts remain unproven. Runtime acceptance and Owner Review are blocked
+by 43P-C1 (exception-unsafe measurement cleanup) and 43P-C2 (snapshot assertion
+omission); Task 44 is unstarted. Each historical row has a bounded disposition.
+
+The earlier M5 snapshot finding is **OPEN BLOCKER / TEST/TOOL** for C2, not
+stale: a working restore assignment does not prove the restoration assertion
+detects an omitted or changed field. Option A remains the supported Task41
+boundary; complete same-owner transactions and generic epochs are unsupported.
+
+The following sections preserve the Gate A and earlier Task43P checkpoints.
+Their dated baseline conclusions are not current runtime acceptance claims.
+
+## Historical purpose and truth boundary
 
 This file records the disposition of preserved historical audit and recovery
 material during Post-Task-43 Gate A. Preservation is not reconciliation. The
@@ -32,14 +50,14 @@ objects. Their working-tree line endings may follow the repository's normal
 checkout policy, but their normalized Git content is exact and their report
 text has not been rewritten.
 
-## Historical hypotheses versus current truth
+## Historical hypotheses versus the Gate A checkpoint
 
 The historical reports contain observations, experiments, inferences,
 recommendations, and recovery classifications. Those are useful inputs to
 Task 43P, but they are not evidence that the same behavior exists at the
 accepted Task 43 baseline or at the Gate A documentation candidate.
 
-Current truth for this status index is:
+The recorded truth at the Gate A checkpoint was:
 
 - Task 43 remains the accepted production baseline at
   `8245c79990647f6c40f53bc1dd9330ec2ccd22b4`.
@@ -96,7 +114,7 @@ No separate tracked Gate A prompt file was found by the repository filename and
 content search. This candidate therefore follows the reconciled Gate A brief
 provided in the current user task as its authoritative prompt.
 
-## Remaining 43P follow-up
+## Remaining 43P follow-up at the earlier checkpoint
 
 The current packet records the final-SHA evidence classification for the exact
 preserved paths above, including S:R1–R10, V:R-01..R-09/M1–M5, and recovery
@@ -105,7 +123,7 @@ unlock. Missing runtime A-I lanes and independent physical-triad evidence
 remain required before Owner Review. Only a proven final-SHA `OPEN BLOCKER` may
 authorize a bounded correction; none is invented here.
 
-## Current Task 43P Coder candidate — 2026-08-28
+## Historical Task 43P Coder candidate — 2026-08-28
 
 The uncommitted candidate at HEAD `3bfaab093f85247fc20aec068824c83dc3d214c8`
 adds only developer-only Task 43P evidence plumbing:

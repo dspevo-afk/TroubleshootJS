@@ -6,16 +6,33 @@ param(
     [switch]$GateBHangingChildProbe,
     [switch]$GateBLeaseReleaseProbe,
     [switch]$GateBPreviewIdentityFailureProbe,
+    [switch]$GateBBrowserIdentityRetryProbe,
+    [switch]$GateBBrowserDescendantIdentityRetryProbe,
+    [switch]$GateBBrowserDrainNaturalExitProbe,
+    [switch]$GateBBrowserNaturalShutdownProbe,
+    [switch]$GateBListenerAuthorizationRetryProbe,
+    [switch]$GateBDescendantSnapshotRefreshProbe,
+    [switch]$GateBBrowserRootListenerFastPathProbe,
     [switch]$GateBStopPreviewProbe,
     [switch]$GateBCdpHandshakeProbe,
+    [switch]$GateBCdpReferenceProbe,
+    [switch]$GateBTask43PRuntimeEvidenceProbe,
     [switch]$GateBArgumentPathProbe,
+    [switch]$GateBEdgeDescendantCompatibilityProbe,
     [switch]$GateBLateMarkerlessProbe,
     [switch]$GateBRootGoneProbe,
     [switch]$GateBRealEdgeOwnershipProbe,
     [switch]$GateBProcessOwnershipProbe,
+    [switch]$GateBProcessIdentityPidZeroProbe,
     [switch]$GateBProcessStartIdentityProbe,
     [switch]$GateBKernelTransportProbe,
-    [switch]$GateBListenerRecordConsumerProbe
+    [switch]$GateBListenerRecordConsumerProbe,
+    [switch]$GateBCleanupRetentionProbe,
+    [switch]$GateBBrowserLeaseProbe,
+    [switch]$GateBNativeProcessInspectionProbe,
+    [switch]$GateBTcpListenerPreviewProbe,
+    [switch]$GateBStartPreviewAdoptionProbe,
+    [switch]$GateBIsolationProbe
 )
 
 Set-StrictMode -Version Latest
@@ -53,6 +70,207 @@ function Throw-GateBInfrastructure([string]$Message) {
 
 function Assert-GateBInfrastructure([bool]$Condition, [string]$Message) {
     if (-not $Condition) { Throw-GateBInfrastructure $Message }
+}
+
+function New-GateBCanaryLease($Context, $RequestedPort = 0) {
+    $browserPath = (Get-Command powershell.exe -ErrorAction Stop).Source
+    return New-VerifierPortLease $Context 'cdp' $RequestedPort $browserPath
+}
+
+function Invoke-GateBTimeoutBoundaryCanary() {
+    $secondsCases = @(
+        [pscustomobject]@{ Name = 'string'; Value = '30' }
+        [pscustomobject]@{ Name = 'Boolean'; Value = $true }
+        [pscustomobject]@{ Name = 'fraction'; Value = [double]30.5 }
+        [pscustomobject]@{ Name = 'array'; Value = [object[]]@(30) }
+        [pscustomobject]@{ Name = 'object'; Value = [pscustomobject]@{ Seconds = 30 } }
+        [pscustomobject]@{ Name = 'null'; Value = $null }
+        [pscustomobject]@{ Name = 'below-range'; Value = 9 }
+        [pscustomobject]@{ Name = 'above-range'; Value = 301 }
+    )
+    foreach ($case in $secondsCases) {
+        $rejected = $false
+        try { [void](Assert-VerifierTimeoutSeconds $case.Value 'timeout boundary canary') } catch {
+            $rejected = Test-VerifierInfrastructureError $_
+        }
+        Assert-GateB $rejected "timeout seconds accepted malformed $($case.Name) input"
+    }
+
+    $millisecondsCases = @(
+        [pscustomobject]@{ Name = 'string'; Value = '1000' }
+        [pscustomobject]@{ Name = 'Boolean'; Value = $true }
+        [pscustomobject]@{ Name = 'fraction'; Value = [double]1000.5 }
+        [pscustomobject]@{ Name = 'array'; Value = [object[]]@(1000) }
+        [pscustomobject]@{ Name = 'object'; Value = [pscustomobject]@{ Milliseconds = 1000 } }
+        [pscustomobject]@{ Name = 'null'; Value = $null }
+        [pscustomobject]@{ Name = 'zero'; Value = 0 }
+        [pscustomobject]@{ Name = 'negative'; Value = -1 }
+        [pscustomobject]@{ Name = 'int-overflow'; Value = [long]([int]::MaxValue) + 1L }
+    )
+    foreach ($case in $millisecondsCases) {
+        $rejected = $false
+        try {
+            [void](Invoke-GateBBoundedProcess 'not-a-real-process.exe' @() `
+                $case.Value 'timeout boundary canary')
+        } catch {
+            $rejected = Test-VerifierInfrastructureError $_
+        }
+        Assert-GateB $rejected "bounded process accepted malformed $($case.Name) timeout before process start"
+    }
+    Write-Host 'PASS:raw timeout boundaries reject malformed values before lease or process mutation'
+}
+
+function Invoke-GateBStrictListenerDeadlineCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for strict listener deadline canary.'
+    }
+    $emptyInspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $false
+        Listeners = @(); ListenerOwnerKind = 'none'
+        ListenerOwnerProof = ''; ListenerOwnerEvidence = ''
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }
+    $kernelListener = [pscustomobject]@{
+        LocalAddress = '127.0.0.1'; Port = 45125; ProcessId = 4
+        ProcessStartTicks = $null; ListenerOwnerKind = 'kernel-transport'
+        ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+        ListenerOwnerEvidence = 'pid-4-system-http-sys'
+        Source = 'Get-NetTCPConnection'
+    }
+    $kernelInspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Listeners = @($kernelListener); ListenerOwnerKind = 'kernel-transport'
+        ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+        ListenerOwnerEvidence = 'pid-4-system-http-sys'
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }
+    $userListener = [pscustomobject]@{
+        LocalAddress = '127.0.0.1'; Port = 45125; ProcessId = 9001
+        ProcessStartTicks = 701L; ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'
+    }
+    $userInspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Listeners = @($userListener); ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }
+    $context = [pscustomobject]@{}
+    $lease = [pscustomobject]@{ Port = 45125 }
+    $owner = [pscustomobject]@{}
+    $kernelOwner = [pscustomobject]@{}
+    $proof = [pscustomobject]@{ Authorized = $true }
+    $probe = & $module[0] {
+        param($empty, $kernel, $user, $contextValue, $leaseValue,
+            $ownerValue, $kernelOwnerValue, $proofValue)
+        $saved = @{}
+        foreach ($name in @(
+                'Test-VerifierListenerInspectionSchema',
+                'Test-VerifierListenerRecordSchema',
+                'Test-VerifierRunOwnedPreviewHttpSysAuthorizationProof',
+                'Get-VerifierLoopbackListenerRecords',
+                'Test-VerifierListenerBelongsToOwner')) {
+            $saved[$name] = (Get-Command $name -CommandType Function `
+                -ErrorAction Stop).ScriptBlock
+        }
+        try {
+            $script:GateBStrictDeadlineMode = 'fast'
+            $script:GateBStrictDeadlineInspection = $user
+            Set-Item Function:\Test-VerifierListenerInspectionSchema -Force -Value {
+                if ($script:GateBStrictDeadlineMode -eq 'schema-delay') {
+                    Start-Sleep -Milliseconds 650
+                }
+                return $true
+            }
+            Set-Item Function:\Test-VerifierListenerRecordSchema -Force -Value {
+                return $true
+            }
+            Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysAuthorizationProof `
+                -Force -Value {
+                    if ($script:GateBStrictDeadlineMode -eq 'kernel-delay') {
+                        Start-Sleep -Milliseconds 650
+                    }
+                    return $true
+                }
+            Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force -Value {
+                if ($script:GateBStrictDeadlineMode -eq 'initial-delay') {
+                    Start-Sleep -Milliseconds 650
+                }
+                return $script:GateBStrictDeadlineInspection
+            }
+            Set-Item Function:\Test-VerifierListenerBelongsToOwner -Force -Value {
+                if ($script:GateBStrictDeadlineMode -eq 'direct-delay') {
+                    Start-Sleep -Milliseconds 650
+                }
+                return $true
+            }
+            $cases = @(
+                [pscustomobject]@{ Name = 'schema-fast'; Kind = 'live-empty'; Mode = 'fast' }
+                [pscustomobject]@{ Name = 'schema-delay'; Kind = 'live-empty'; Mode = 'schema-delay' }
+                [pscustomobject]@{ Name = 'kernel-fast'; Kind = 'live-kernel'; Mode = 'fast' }
+                [pscustomobject]@{ Name = 'kernel-delay'; Kind = 'live-kernel'; Mode = 'kernel-delay' }
+                [pscustomobject]@{ Name = 'retained-direct-fast'; Kind = 'bound-user'; Mode = 'fast' }
+                [pscustomobject]@{ Name = 'retained-direct-delay'; Kind = 'bound-user'; Mode = 'direct-delay' }
+                [pscustomobject]@{ Name = 'initial-listener-delay'; Kind = 'bound-user'; Mode = 'initial-delay' }
+            )
+            $results = New-Object Collections.ArrayList
+            foreach ($case in $cases) {
+                $script:GateBStrictDeadlineMode = $case.Mode
+                $script:GateBStrictDeadlineInspection = $user
+                $accepted = $false
+                $typedFailure = $false
+                try {
+                    if ($case.Kind -eq 'live-empty') {
+                        $accepted = [bool](Test-VerifierLiveListenerInspectionAuthorization `
+                            $empty [pscustomobject]@{} [pscustomobject]@{} 9000 700L)
+                    } elseif ($case.Kind -eq 'live-kernel') {
+                        $accepted = [bool](Test-VerifierLiveListenerInspectionAuthorization `
+                            $kernel $contextValue $kernelOwnerValue 9000 700L $proofValue)
+                    } else {
+                        $accepted = $null -ne (Get-VerifierPortLeaseBoundOwnershipProof `
+                            $contextValue $leaseValue 9000 700L $ownerValue $null)
+                    }
+                } catch {
+                    $typedFailure = Test-VerifierInfrastructureError $_
+                }
+                [void]$results.Add([pscustomobject]@{
+                    Name = $case.Name; Accepted = $accepted
+                    TypedFailure = $typedFailure
+                })
+            }
+            return @($results)
+        } finally {
+            foreach ($name in $saved.Keys) {
+                Set-Item Function:\$name -Force -Value $saved[$name]
+            }
+            Remove-Variable -Name GateBStrictDeadlineMode,`
+                GateBStrictDeadlineInspection -Scope Script -Force `
+                -ErrorAction SilentlyContinue
+        }
+    } $emptyInspection $kernelInspection $userInspection $context $lease `
+        $owner $kernelOwner $proof
+    foreach ($fastName in @('schema-fast', 'kernel-fast', 'retained-direct-fast')) {
+        $fast = @($probe | Where-Object Name -eq $fastName)
+        Assert-GateB ($fast.Count -eq 1 -and $fast[0].Accepted -and
+            -not $fast[0].TypedFailure) `
+            "$fastName valid fast proof was rejected"
+    }
+    foreach ($delayedName in @(
+            'schema-delay', 'kernel-delay', 'retained-direct-delay',
+            'initial-listener-delay')) {
+        $delayed = @($probe | Where-Object Name -eq $delayedName)
+        Assert-GateB ($delayed.Count -eq 1 -and -not $delayed[0].Accepted) `
+            "$delayedName proof was accepted after the strict monotonic deadline"
+        if ($delayedName -in @('retained-direct-delay', 'initial-listener-delay')) {
+            Assert-GateB $delayed[0].TypedFailure `
+                "$delayedName did not fail as typed infrastructure uncertainty"
+        }
+    }
+    Write-Host 'PASS:strict listener deadline covers initial, schema, direct retained, and kernel proof dependencies'
 }
 
 function Resolve-GateBInfrastructureChildExitCode($RawExitCode,
@@ -131,6 +349,31 @@ function Invoke-GateBSourceChecks() {
         'Windows Gate B workflow is missing'
     $workflowText = Get-Content -LiteralPath $workflowPath -Raw
 
+    $provenanceStart = $moduleText.IndexOf(
+        'function Get-VerifierExecutionTreeProvenance', [StringComparison]::Ordinal)
+    $provenanceEnd = $moduleText.IndexOf(
+        'function Complete-VerifierProcessOutputCapture', $provenanceStart,
+        [StringComparison]::Ordinal)
+    Assert-GateB ($provenanceStart -ge 0 -and $provenanceEnd -gt $provenanceStart) `
+        'execution provenance function boundary could not be located'
+    $provenanceText = $moduleText.Substring($provenanceStart,
+        $provenanceEnd - $provenanceStart)
+    Assert-GateB ($provenanceText.IndexOf(
+        '$filePaths.Sort([StringComparer]::OrdinalIgnoreCase)',
+        [StringComparison]::Ordinal) -ge 0) `
+        'execution provenance does not use explicit ordinal path ordering'
+    Assert-GateB ($provenanceText.IndexOf(
+        'duplicate or case-colliding file path', [StringComparison]::Ordinal) -ge 0) `
+        'execution provenance does not fail closed on duplicate/case-colliding paths'
+    Assert-GateB ($provenanceText.IndexOf('Sort-Object', [StringComparison]::Ordinal) -lt 0) `
+        'execution provenance retained a culture-sensitive Sort-Object boundary'
+
+    $currentProcessStartCommand = Get-Command `
+        Get-VerifierCurrentProcessStartTicks -CommandType Function `
+        -ErrorAction SilentlyContinue
+    Assert-GateB ($null -ne $currentProcessStartCommand) `
+        'Gate B required current-process start identity helper is not exported by VerifierIsolation'
+
     # The live Edge ownership lane is supplemental and opt-in. Keep this
     # structural guard close to the source checks so a future default-driver
     # call cannot silently turn the protected deterministic job into a
@@ -147,6 +390,13 @@ function Invoke-GateBSourceChecks() {
     $defaultDriverBody = $driverBody.Replace($optInRealEdgeMatch.Value, '')
     Assert-GateB ($defaultDriverBody -notmatch '\bInvoke-GateBRealEdgeOwnershipCanary\b') `
         'default Gate B driver invokes the supplemental live-Edge ownership canary'
+    $optInEdgeCompatibilityMatch = [regex]::Match($driverBody,
+        '(?ms)if\s*\(\$GateBEdgeDescendantCompatibilityProbe\)\s*\{\s*Invoke-GateBEdgeDescendantCompatibilityCanary\s*\r?\n\s*return\s+0\s*\}')
+    Assert-GateB $optInEdgeCompatibilityMatch.Success `
+        'Edge descendant compatibility canary lost its explicit opt-in branch'
+    $defaultDriverBody = $defaultDriverBody.Replace($optInEdgeCompatibilityMatch.Value, '')
+    Assert-GateB ($defaultDriverBody -notmatch '\bInvoke-GateBEdgeDescendantCompatibilityCanary\b') `
+        'default Gate B driver invokes the machine-dependent Edge compatibility canary'
 
     foreach ($token in @(
         'New-VerifierRunContext',
@@ -179,9 +429,11 @@ function Invoke-GateBSourceChecks() {
         'Write-VerifierManifest',
         'Test-VerifierListenerOwnerTuple',
         'Assert-VerifierDurableListenerOwnerTuple',
+        'Assert-VerifierLeaseTransition',
         'Get-VerifierLoopbackListenerRecords',
         'Parse-VerifierNetstatListenerOutput',
         'Test-VerifierListenerRecordSchema',
+        'Test-VerifierSameRootBrowserListenerEligibility',
         'Test-VerifierRunOwnedPreviewHttpSysAuthorization',
         'Test-VerifierKernelTransportListenerRecord',
         'Test-VerifierRunOwnedPreviewHttpSysListener',
@@ -217,7 +469,17 @@ function Invoke-GateBSourceChecks() {
         'configured browser executable identity',
         'Get-VerifierCurrentOwnedProcess',
         'Get-VerifierCurrentProcessIdentity',
+        'Get-VerifierFileSha256',
+        'Get-VerifierPreviewAdoptionCandidateRecords',
          'Get-VerifierCurrentProcessRecordById',
+         'New-VerifierBrowserDrainScope',
+         'New-VerifierBrowserDrainAttestation',
+         'Get-VerifierBrowserDrainNaturalExitResult',
+         'browser-drain-scope-v1',
+         'browser-drain-attestation-v1',
+         'VerifierDrainAttestation',
+         'Stop-VerifierBrowserProcessTreeToFixedPointCore',
+         'Dispose-VerifierBrowserDrainScope',
          'Confirm-VerifierRecordedProcessAbsent',
          'Confirm-VerifierReleasedListener',
         'Get-VerifierPortMutexName',
@@ -333,6 +595,12 @@ function Invoke-GateBSourceChecks() {
         'preview serving does not recheck the owned web root with an explicit root allowance'
     Assert-GateB ($startPreviewText.IndexOf('Start-VerifierProcess', [StringComparison]::Ordinal) -ge 0) `
         'developer preview launch does not use the shared Windows argument helper'
+    Assert-GateB ($startPreviewText.IndexOf('Get-VerifierProcessSnapshotWithFallback',
+        [StringComparison]::Ordinal) -ge 0 -and
+        $startPreviewText.IndexOf('Get-VerifierPreviewAdoptionCandidateRecords',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $startPreviewText -notmatch 'Get-CimInstance') `
+        'developer preview adoption does not use the shared WMI-first/native-fallback identity path'
     Assert-GateB ($startPreviewText.IndexOf('Invoke-VerifierBoundedProcess', [StringComparison]::Ordinal) -ge 0 -and
         $startPreviewText.IndexOf('$versionResult', [StringComparison]::Ordinal) -ge 0 -and
         $startPreviewText.IndexOf('$buildResult', [StringComparison]::Ordinal) -ge 0) `
@@ -436,6 +704,13 @@ function Invoke-GateBSourceChecks() {
     Assert-GateB ($moduleText.IndexOf('ClaimState', [StringComparison]::Ordinal) -ge 0 -and
         $moduleText.IndexOf('Confirm-VerifierPortLeaseBound', [StringComparison]::Ordinal) -ge 0) `
         'port claims do not record retained-bind validation'
+    Assert-GateB ($moduleText -match 'Assert-VerifierLeaseTransition' -and
+        $moduleText -notmatch '(?i)manifested') `
+        'lease lifecycle does not use one finite transition validator without the stray manifested state'
+    Assert-GateB ($browserText.IndexOf(
+        'a5b253873c2b25a54d7c393b118e3f2e1831a4d8',
+        [StringComparison]::Ordinal) -ge 0) `
+        'Task43P evidence wrapper does not use the supplied a5b2538 baseline'
     foreach ($token in @(
         'Invoke-VerifierBoundedProcess',
         'Stop-VerifierBoundedProcessExactly',
@@ -674,12 +949,16 @@ function Invoke-GateBSourceChecks() {
         'equivalentStatePath',
         'Invoke-GateBBoundedProcess',
         'Invoke-GateBHangingChildCanary',
-        'Invoke-GateBProcessStartIdentityCanary',
-        'Invoke-GateBPreviewIdentityFailureCanary',
-        'Invoke-GateBDescendantCleanupCanary',
-        'Invoke-GateBLateMarkerlessCleanupCanary',
+        'Invoke-GateBStartPreviewAdoptionCanary',
+         'Invoke-GateBProcessStartIdentityCanary',
+         'Invoke-GateBPreviewIdentityFailureCanary',
+         'Invoke-GateBDescendantCleanupCanary',
+         'Invoke-GateBBrowserDrainNaturalExitCanary',
+         'Invoke-GateBEdgeDescendantCompatibilityCanary',
+         'Invoke-GateBLateMarkerlessCleanupCanary',
          'Invoke-GateBRootGoneCleanupCanary',
          'Invoke-GateBRealEdgeOwnershipCanary',
+         'Invoke-GateBBrowserRootListenerFastPathCanary',
          'root-gone',
          'different-name-markerless-helper',
          'late-markerless',
@@ -691,6 +970,10 @@ function Invoke-GateBSourceChecks() {
          'markerless Edge helper',
          'real Edge ownership canary',
          'missing configured BrowserPath',
+         'GateBEdgeDescendantCompatibilityProbe',
+         'identity_helper.exe',
+         'Get-AuthenticodeSignature',
+         'SignerThumbprint',
          'Invoke-GateBStopPreviewContractCanary',
         'GateBHangAfterContext',
         'New-VerifierIntegratedChildLedger',
@@ -724,6 +1007,24 @@ function Invoke-GateBSourceChecks() {
         $descendantFunctionText.IndexOf('$ownerRoot.PSObject.Properties',
             [StringComparison]::Ordinal) -lt 0) `
         'descendant cleanup can authorize a child through an unset/colliding owner-root variable'
+    $contextResourcesStart = $moduleText.IndexOf(
+        'function Assert-VerifierContextPhysicalResources', [StringComparison]::Ordinal)
+    $contextResourcesEnd = $moduleText.IndexOf(
+        'function Write-VerifierManifest', $contextResourcesStart,
+        [StringComparison]::Ordinal)
+    Assert-GateB ($contextResourcesStart -ge 0 -and
+        $contextResourcesEnd -gt $contextResourcesStart) `
+        'manifest physical-resource validation boundary could not be located'
+    $contextResourcesText = $moduleText.Substring($contextResourcesStart,
+        $contextResourcesEnd - $contextResourcesStart)
+    Assert-GateB ($contextResourcesText.IndexOf('$mutableBrowserProfile',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $contextResourcesText.IndexOf('$validateProfileTrees = -not $mutableBrowserProfile',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $contextResourcesText.IndexOf(
+            'Assert-VerifierPhysicalOwnedPath $Context.RunNamespaceRoot $Context.RunRoot)',
+            [StringComparison]::Ordinal) -ge 0) `
+        'manifest validation does not defer recursive run/profile checks for a mutable browser profile'
     $browserCleanupStart = $moduleText.IndexOf(
         'function Complete-VerifierBrowserSession', [StringComparison]::Ordinal)
     $browserCleanupText = if ($browserCleanupStart -ge 0) {
@@ -740,6 +1041,258 @@ function Invoke-GateBSourceChecks() {
             'Get-VerifierDescendantProcessRecords $OwnerRoot $snapshot',
             [StringComparison]::Ordinal) -ge 0) `
         'browser cleanup does not initialize one exact owner-root/session-root record and use the fixed-point graph drain'
+    $initialProfileOwnershipIndex = $browserCleanupText.IndexOf(
+        'Assert-VerifierPhysicalOwnedPath $sessionRoot $sessionProfile',
+        [StringComparison]::Ordinal)
+    $drainIndex = $browserCleanupText.IndexOf(
+        'Stop-VerifierBrowserProcessTreeToFixedPoint', [StringComparison]::Ordinal)
+    $recursiveProfileOwnershipIndex = $browserCleanupText.IndexOf(
+        'Assert-VerifierPhysicalOwnedPath $sessionRoot $sessionProfile -ValidateTree',
+        $initialProfileOwnershipIndex + 1, [StringComparison]::Ordinal)
+    Assert-GateB ($initialProfileOwnershipIndex -ge 0 -and
+        $drainIndex -gt $initialProfileOwnershipIndex -and
+        $recursiveProfileOwnershipIndex -gt $drainIndex) `
+        'browser cleanup recursively walks the live profile before fixed-point process drain'
+    $browserSessionFunctionMatch = [regex]::Match($moduleText,
+        '(?ms)function\s+New-VerifierBrowserSession\b.*?(?=\r?\nfunction\s+)')
+    Assert-GateB $browserSessionFunctionMatch.Success `
+        'browser session startup transaction boundary could not be located'
+    $browserSessionFunctionText = $browserSessionFunctionMatch.Groups[0].Value
+    $browserIdentityCaptureIndex = $browserSessionFunctionText.IndexOf(
+        'Get-VerifierCurrentProcessIdentityWithRetry $browserProcessId',
+        [StringComparison]::Ordinal)
+    $browserSessionCommitIndex = $browserSessionFunctionText.IndexOf(
+        '$browserSessionRecord.ProcessId = $browserProcessId',
+        [StringComparison]::Ordinal)
+    Assert-GateB ($browserIdentityCaptureIndex -ge 0 -and
+        $browserSessionCommitIndex -gt $browserIdentityCaptureIndex) `
+        'browser session startup publishes a partial PID/start tuple before complete identity capture'
+    $retryFunctionStart = $moduleText.IndexOf(
+        'function Get-VerifierCurrentProcessIdentityWithRetry',
+        [StringComparison]::Ordinal)
+    Assert-GateB ($retryFunctionStart -ge 0 -and
+        $moduleText.IndexOf('$attempt -le 3', $retryFunctionStart,
+            [StringComparison]::Ordinal) -gt $retryFunctionStart -and
+        $moduleText.IndexOf('StartNew()', $retryFunctionStart,
+            [StringComparison]::Ordinal) -gt $retryFunctionStart -and
+         ($moduleText.IndexOf('Elapsed.TotalMilliseconds', $retryFunctionStart,
+             [StringComparison]::Ordinal) -gt $retryFunctionStart -or
+          $moduleText.IndexOf('ElapsedTicks', $retryFunctionStart,
+             [StringComparison]::Ordinal) -gt $retryFunctionStart) -and
+        $moduleText.IndexOf('Assert-VerifierRawProcessIdentityRecord', $retryFunctionStart,
+            [StringComparison]::Ordinal) -gt $retryFunctionStart) `
+        'browser identity startup retry does not retain bounded complete-proof checks'
+    $descendantRetryStart = $moduleText.IndexOf(
+        'function Get-VerifierCurrentOwnedDescendantWithRetry',
+        [StringComparison]::Ordinal)
+    $descendantRetryText = if ($descendantRetryStart -ge 0) {
+        $nextFunction = $moduleText.IndexOf("`nfunction ",
+            $descendantRetryStart + 1, [StringComparison]::Ordinal)
+        if ($nextFunction -gt $descendantRetryStart) {
+            $moduleText.Substring($descendantRetryStart,
+                $nextFunction - $descendantRetryStart)
+        } else { $moduleText.Substring($descendantRetryStart) }
+    } else { '' }
+    Assert-GateB ($descendantRetryText.IndexOf('$attempt -le 3',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $descendantRetryText.IndexOf('StartNew()',
+            [StringComparison]::Ordinal) -ge 0 -and
+        ($descendantRetryText.IndexOf('Elapsed.TotalMilliseconds',
+            [StringComparison]::Ordinal) -ge 0 -or
+         $descendantRetryText.IndexOf('ElapsedTicks',
+            [StringComparison]::Ordinal) -ge 0) -and
+        $descendantRetryText.IndexOf('Get-VerifierCurrentProcessRecordById',
+            [StringComparison]::Ordinal) -ge 0 -and
+         $descendantRetryText.IndexOf('Test-VerifierDescendantExecutableIdentity',
+             [StringComparison]::Ordinal) -ge 0 -and
+        $descendantRetryText.IndexOf('Get-VerifierCurrentOwnedProcessOnce',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $moduleText.IndexOf(
+            'Get-VerifierCurrentOwnedDescendantWithRetry $rootOwner',
+            [StringComparison]::Ordinal) -ge 0) `
+        'browser descendant cleanup does not retain a bounded complete executable-identity retry'
+    $listenerAuthorizationStart = $moduleText.IndexOf(
+        'function Test-VerifierLiveListenerInspectionAuthorization',
+        [StringComparison]::Ordinal)
+    $listenerAuthorizationText = if ($listenerAuthorizationStart -ge 0) {
+        $nextFunction = $moduleText.IndexOf("`nfunction ",
+            $listenerAuthorizationStart + 1, [StringComparison]::Ordinal)
+        if ($nextFunction -gt $listenerAuthorizationStart) {
+            $moduleText.Substring($listenerAuthorizationStart,
+                $nextFunction - $listenerAuthorizationStart)
+        } else { $moduleText.Substring($listenerAuthorizationStart) }
+    } else { '' }
+    Assert-GateB ($listenerAuthorizationText.IndexOf('$attempt -le 3',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf('StartNew()',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf('$retryBudget.Start()',
+            [StringComparison]::Ordinal) -lt 0 -and
+        $listenerAuthorizationText.IndexOf('ElapsedTicks',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf('Get-VerifierLoopbackListenerRecords',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf('Get-VerifierBrowserOwnershipSnapshot',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf('Get-VerifierCurrentProcessRecordById',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf('Get-VerifierMissingProcessId',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf('-PreferNetstat',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf(
+            'Test-VerifierSameRootBrowserListenerEligibility',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf(
+            'Test-VerifierListenerBelongsToOwner $PreviewOwner',
+            [StringComparison]::Ordinal) -ge 0) `
+        'listener authorization boundary does not retain a bounded fresh full-proof retry'
+    $listenerBudgetIndex = $listenerAuthorizationText.IndexOf(
+        '$retryBudget = [Diagnostics.Stopwatch]::StartNew()',
+        [StringComparison]::Ordinal)
+    $listenerSecondViewIndex = $listenerAuthorizationText.IndexOf(
+        'Get-VerifierCurrentProcessRecordById $missingProcessId',
+        [StringComparison]::Ordinal)
+    $listenerRefreshStartIndex = $listenerAuthorizationText.IndexOf(
+        'StartNew()', [StringComparison]::Ordinal)
+    $listenerSchemaIndex = $listenerAuthorizationText.IndexOf(
+        '$inspectionSchemaValid = Test-VerifierListenerInspectionSchema',
+        [StringComparison]::Ordinal)
+    $kernelAuthorizationIndex = $listenerAuthorizationText.IndexOf(
+        'if ($null -eq $AuthorizationProof) { return $false }',
+        [StringComparison]::Ordinal)
+    $kernelAuthorizationReturnIndex = $listenerAuthorizationText.IndexOf(
+        'Test-VerifierRunOwnedPreviewHttpSysAuthorizationProof',
+        $kernelAuthorizationIndex, [StringComparison]::Ordinal)
+    Assert-GateB ($listenerBudgetIndex -ge 0 -and
+        $listenerSecondViewIndex -ge 0 -and
+        $listenerRefreshStartIndex -lt $listenerSecondViewIndex -and
+        $listenerSchemaIndex -gt $listenerBudgetIndex -and
+        $kernelAuthorizationIndex -gt $listenerSchemaIndex -and
+        $kernelAuthorizationReturnIndex -gt $kernelAuthorizationIndex -and
+        $listenerAuthorizationText.IndexOf(
+            '-StructuralOnly', $listenerSchemaIndex,
+            [StringComparison]::Ordinal) -ge 0 -and
+        $listenerAuthorizationText.IndexOf(
+            'Test-VerifierRunOwnedPreviewHttpSysAuthorizationProof',
+            $kernelAuthorizationIndex, [StringComparison]::Ordinal) -ge 0) `
+        'listener authorization does not separate structural schema from its single semantic kernel proof'
+    $portOwnershipStart = $moduleText.IndexOf(
+        'function Get-VerifierPortLeaseBoundOwnershipProof',
+        [StringComparison]::Ordinal)
+    $portOwnershipText = if ($portOwnershipStart -ge 0) {
+        $nextFunction = $moduleText.IndexOf("`nfunction ",
+            $portOwnershipStart + 1, [StringComparison]::Ordinal)
+        if ($nextFunction -gt $portOwnershipStart) {
+            $moduleText.Substring($portOwnershipStart,
+                $nextFunction - $portOwnershipStart)
+        } else { $moduleText.Substring($portOwnershipStart) }
+    } else { '' }
+    Assert-GateB ($portOwnershipText.IndexOf('$attempt -le 3',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('StartNew()',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('ElapsedTicks',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('Get-VerifierLoopbackListenerRecords',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('Get-VerifierCurrentProcessRecordById',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('Get-VerifierMissingProcessId',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf(
+            'Test-VerifierSameRootBrowserListenerEligibility',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf(
+            'Test-VerifierRunOwnedPreviewHttpSysListener',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('-PreferNetstat',
+            [StringComparison]::Ordinal) -ge 0) `
+        'port lease ownership proof does not retain a bounded fresh full-proof retry'
+    Assert-GateB ($portOwnershipText.IndexOf(
+            '$retryBudget = [Diagnostics.Stopwatch]::StartNew()',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('$retryBudget.Start()',
+            [StringComparison]::Ordinal) -lt 0 -and
+        $portOwnershipText.IndexOf(
+            '$retryBudget = [Diagnostics.Stopwatch]::StartNew()',
+            [StringComparison]::Ordinal) -lt
+        $portOwnershipText.IndexOf(
+            'Get-VerifierCurrentProcessRecordById $missingProcessId',
+            [StringComparison]::Ordinal) -and
+        $portOwnershipText.IndexOf(
+            'New-VerifierRunOwnedPreviewHttpSysAuthorizationProof',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('ProofStage',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $portOwnershipText.IndexOf('ProofElapsedMilliseconds',
+            [StringComparison]::Ordinal) -ge 0) `
+        'port ownership proof does not separate ordinary kernel authorization from refresh budget or failure-stage evidence'
+    $previewSemanticStart = $moduleText.IndexOf(
+        'function Test-VerifierRunOwnedPreviewHttpSysAuthorizationProof',
+        [StringComparison]::Ordinal)
+    $previewSemanticText = if ($previewSemanticStart -ge 0) {
+        $nextFunction = $moduleText.IndexOf("`nfunction ",
+            $previewSemanticStart + 1, [StringComparison]::Ordinal)
+        if ($nextFunction -gt $previewSemanticStart) {
+            $moduleText.Substring($previewSemanticStart,
+                $nextFunction - $previewSemanticStart)
+        } else { $moduleText.Substring($previewSemanticStart) }
+    } else { '' }
+    Assert-GateB ($previewSemanticText.IndexOf(
+            '[object]::ReferenceEquals($Context.Server, $OwnerRecord)',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $previewSemanticText.IndexOf('CleanupState',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $previewSemanticText.IndexOf('ReleaseState',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $previewSemanticText.IndexOf('ReleaseJournalState',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $previewSemanticText.IndexOf(
+            'Test-VerifierRunOwnedPreviewHttpSysProofFieldSnapshot',
+            [StringComparison]::Ordinal) -ge 0) `
+        'kernel semantic proof does not bind current Context.Server and lifecycle/release snapshots'
+    $releaseStart = $moduleText.IndexOf(
+        'function Release-VerifierPortLease', [StringComparison]::Ordinal)
+    $releaseText = if ($releaseStart -ge 0) {
+        $nextFunction = $moduleText.IndexOf("`nfunction ",
+            $releaseStart + 1, [StringComparison]::Ordinal)
+        if ($nextFunction -gt $releaseStart) {
+            $moduleText.Substring($releaseStart, $nextFunction - $releaseStart)
+        } else { $moduleText.Substring($releaseStart) }
+    } else { '' }
+    Assert-GateB ($releaseText.IndexOf('$releaseAuthorizationProof',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $releaseText.IndexOf("'AuthorizationProof'", [StringComparison]::Ordinal) -ge 0 -and
+        $releaseText.IndexOf('Set-VerifierLeaseListenerInspection $Lease $inspection',
+            [StringComparison]::Ordinal) -ge 0) `
+        'port-lease release does not carry the retained opaque kernel proof into its setter'
+    $bindStart = $moduleText.IndexOf(
+        'function Confirm-VerifierPortLeaseBound', [StringComparison]::Ordinal)
+    $bindText = if ($bindStart -ge 0) {
+        $nextFunction = $moduleText.IndexOf("`nfunction ",
+            $bindStart + 1, [StringComparison]::Ordinal)
+        if ($nextFunction -gt $bindStart) {
+            $moduleText.Substring($bindStart, $nextFunction - $bindStart)
+        } else { $moduleText.Substring($bindStart) }
+    } else { '' }
+    Assert-GateB ($bindText.IndexOf('$authorizationProof',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $bindText.IndexOf('Name AuthorizationProof',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $bindText.IndexOf('$authorizationProof)',
+            [StringComparison]::Ordinal) -ge 0) `
+        'port-lease bind does not retain and pass the opaque kernel proof'
+    Assert-GateB ($browserSessionFunctionText.IndexOf(
+        'startup failure evidence could not be written:',
+        [StringComparison]::Ordinal) -ge 0 -and
+        $browserSessionFunctionText.IndexOf(
+            'exact cleanup was not proven; resource evidence was retained:',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $browserSessionFunctionText.IndexOf(
+            'startupMessage = Get-VerifierErrorMessage $startupError',
+            [StringComparison]::Ordinal) -ge 0) `
+        'browser session startup catch does not retain the originating typed reason and evidence outcome'
     Assert-GateB ($gateText.IndexOf('$edgePath = Resolve-VerifierBrowserPath',
         [StringComparison]::Ordinal) -ge 0 -and
         $gateText.IndexOf('$edgeProcess = Start-VerifierProcess $edgePath $arguments',
@@ -1278,6 +1831,197 @@ function Invoke-GateBProcessOwnershipCanary() {
     Write-Host 'PASS:relevant browser snapshot, canonical-path/late-helper quiescence, complete descendant/helper graph, missing-descendant-executable, stale-PPID/foreign descendant, prefix-marker, and delayed-preview ownership canary'
 }
 
+function Invoke-GateBEdgeDescendantCompatibilityCanary() {
+    # Exercise the descendant-only Edge companion capability against the real
+    # installed, signed files. No Edge process is started and no process/PID
+    # ownership proof is claimed by this canary.
+    $fixtureRoot = ''
+    $failure = $null
+    $cleanupError = $null
+    $coldElapsed = 0.0
+    $warmTripleElapsed = 0.0
+    try {
+        $edgePath = Resolve-VerifierBrowserPath
+        Assert-GateBInfrastructure (Test-Path -LiteralPath $edgePath -PathType Leaf) `
+            'installed Edge executable was not available for the descendant companion canary'
+        $edgeVersionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($edgePath)
+        Assert-GateBInfrastructure ($null -ne $edgeVersionInfo -and
+            [string]$edgeVersionInfo.FileVersion -match '^\d+\.\d+\.\d+\.\d+$') `
+            'installed Edge executable did not expose a strict four-part file version'
+        $edgeVersion = [string]$edgeVersionInfo.FileVersion
+        $edgeDirectory = Split-Path -Parent $edgePath
+        $helperPath = Join-Path (Join-Path $edgeDirectory $edgeVersion) `
+            'identity_helper.exe'
+        Assert-GateBInfrastructure (Test-Path -LiteralPath $helperPath -PathType Leaf) `
+            'installed Edge identity_helper.exe was not available for the descendant companion canary'
+
+        $probeId = [Guid]::NewGuid().ToString('N')
+        $profile = Join-Path ([IO.Path]::GetTempPath()) `
+            ('TroubleshootJS\gate-b-edge-companion-' + $probeId + '\profile')
+        $owner = [pscustomobject]@{
+            ProcessId = 400; Profile = $profile; RunId = 'gate-b-edge-run'
+            RepositoryIdentity = 'gate-b-edge-worktree'; CdpPort = 45129
+            BrowserPath = $edgePath; Name = 'msedge.exe'
+        }
+        $commandLine = ('"' + $helperPath + '" --type=utility ' +
+            '--utility-sub-type=winrt_app_id.mojom.WinrtAppIdService ' +
+            '--service-sandbox-type=windows_package_identity ' +
+            '--user-data-dir="' + $profile + '"')
+        $positive = [pscustomobject]@{
+            ProcessId = 401; ParentProcessId = 400; ProcessStartTicks = 1L
+            Name = 'identity_helper.exe'; ExecutablePath = $helperPath
+            CommandLine = $commandLine
+        }
+        $coldWatch = [Diagnostics.Stopwatch]::StartNew()
+        Assert-GateB (Test-VerifierDescendantExecutableIdentity $owner $positive) `
+            'actual signed Edge identity_helper.exe was rejected by descendant policy'
+        $coldWatch.Stop()
+        $coldElapsed = $coldWatch.Elapsed.TotalMilliseconds
+        $warmWatch = [Diagnostics.Stopwatch]::StartNew()
+        foreach ($attempt in 1..3) {
+            Assert-GateB (Test-VerifierDescendantExecutableIdentity $owner $positive) `
+                "actual signed Edge identity_helper.exe failed warm matcher attempt $attempt"
+        }
+        $warmWatch.Stop()
+        $warmTripleElapsed = $warmWatch.Elapsed.TotalMilliseconds
+        Assert-GateB (Test-VerifierDescendantOwnership $owner $positive) `
+            'synthetic descendant companion identity and marker policy proof failed'
+        Assert-GateB (-not (Test-VerifierConfiguredExecutableIdentity $edgePath $positive `
+            -RequireExecutablePath)) `
+            'identity_helper.exe was admitted by the strict root executable identity seam'
+
+        $negativeCases = @(
+            [pscustomobject]@{ Name = 'wrong-root'; Owner = ($owner | Select-Object *)
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'wrong-path'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'wrong-version'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'wrong-name'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'wrong-profile'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'wrong-type'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'wrong-subtype'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'wrong-sandbox'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'missing-name'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'missing-path'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+            [pscustomobject]@{ Name = 'missing-commandline'; Owner = $owner
+                Candidate = ($positive | Select-Object *) }
+        )
+        $negativeCases[0].Owner.BrowserPath = Join-Path $edgeDirectory 'missing-msedge.exe'
+        $negativeCases[1].Candidate.ExecutablePath = Join-Path $edgeDirectory 'wrong-helper.exe'
+        $negativeCases[2].Candidate.ExecutablePath = Join-Path $edgeDirectory `
+            '0.0.0.0\identity_helper.exe'
+        $negativeCases[3].Candidate.Name = 'msedge.exe'
+        $negativeCases[4].Candidate.CommandLine = $commandLine.Replace(
+            ('--user-data-dir="' + $profile + '"'),
+            '--user-data-dir="C:\wrong-profile"')
+        $negativeCases[5].Candidate.CommandLine = $commandLine.Replace(
+            '--type=utility', '--type=renderer')
+        $negativeCases[6].Candidate.CommandLine = $commandLine.Replace(
+            '--utility-sub-type=winrt_app_id.mojom.WinrtAppIdService',
+            '--utility-sub-type=wrong.Service')
+        $negativeCases[7].Candidate.CommandLine = $commandLine.Replace(
+            '--service-sandbox-type=windows_package_identity',
+            '--service-sandbox-type=wrong')
+        $negativeCases[8].Candidate.PSObject.Properties.Remove('Name')
+        $negativeCases[9].Candidate.PSObject.Properties.Remove('ExecutablePath')
+        $negativeCases[10].Candidate.PSObject.Properties.Remove('CommandLine')
+        foreach ($case in $negativeCases) {
+            Assert-GateB (-not (Test-VerifierDescendantExecutableIdentity `
+                $case.Owner $case.Candidate)) `
+                "Edge companion negative case '$($case.Name)' was accepted"
+        }
+
+        # Use disposable copies only for the signature negative. This keeps
+        # the installed Edge files untouched while proving an otherwise exact
+        # companion with a damaged Authenticode hash fails closed.
+        $tempNamespace = Get-VerifierFullPath ([IO.Path]::GetTempPath())
+        $fixtureRoot = Join-Path $tempNamespace `
+            ('TroubleshootJS\gate-b-edge-companion-fixture-' + $probeId)
+        $fixtureVersionDirectory = Join-Path $fixtureRoot $edgeVersion
+        New-Item -ItemType Directory -Path $fixtureVersionDirectory -Force `
+            -ErrorAction Stop | Out-Null
+        $fixtureEdgePath = Join-Path $fixtureRoot 'msedge.exe'
+        $fixtureHelperPath = Join-Path $fixtureVersionDirectory 'identity_helper.exe'
+        Copy-Item -LiteralPath $edgePath -Destination $fixtureEdgePath `
+            -Force -ErrorAction Stop
+        Copy-Item -LiteralPath $helperPath -Destination $fixtureHelperPath `
+            -Force -ErrorAction Stop
+        $sourceEdgeVersionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($edgePath)
+        $sourceHelperVersionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($helperPath)
+        $fixtureEdgeVersionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($fixtureEdgePath)
+        $fixtureHelperVersionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($fixtureHelperPath)
+        Assert-GateB ($fixtureEdgeVersionInfo.FileVersion -ceq $sourceEdgeVersionInfo.FileVersion -and
+            $fixtureEdgeVersionInfo.OriginalFilename -ceq $sourceEdgeVersionInfo.OriginalFilename -and
+            $fixtureHelperVersionInfo.FileVersion -ceq $sourceHelperVersionInfo.FileVersion -and
+            $fixtureHelperVersionInfo.OriginalFilename -ceq $sourceHelperVersionInfo.OriginalFilename) `
+            'untouched copied Edge signature fixture changed file metadata'
+        $fixtureEdgeSignature = @(Get-AuthenticodeSignature -LiteralPath $fixtureEdgePath `
+            -ErrorAction Stop)
+        $fixtureHelperSignature = @(Get-AuthenticodeSignature -LiteralPath $fixtureHelperPath `
+            -ErrorAction Stop)
+        Assert-GateB ($fixtureEdgeSignature.Count -eq 1 -and
+            $fixtureHelperSignature.Count -eq 1 -and
+            [string]$fixtureEdgeSignature[0].Status -ceq 'Valid' -and
+            [string]$fixtureHelperSignature[0].Status -ceq 'Valid') `
+            'untouched copied Edge signature fixture was not Authenticode-valid'
+        $signatureOwner = $owner | Select-Object *
+        $signatureOwner.BrowserPath = $fixtureEdgePath
+        $signatureCandidate = $positive | Select-Object *
+        $signatureCandidate.ExecutablePath = $fixtureHelperPath
+        $signatureCandidate.CommandLine = $commandLine.Replace($helperPath,
+            $fixtureHelperPath)
+        Assert-GateB (Test-VerifierDescendantExecutableIdentity `
+            $signatureOwner $signatureCandidate) `
+            'untouched copied signed Edge companion was rejected by descendant policy'
+        $fixtureBytes = [IO.File]::ReadAllBytes($fixtureHelperPath)
+        Assert-GateBInfrastructure ($fixtureBytes.Length -gt 2048) `
+            'signature fixture helper was unexpectedly short'
+        $fixtureBytes[2048] = [byte]($fixtureBytes[2048] -bxor 0xFF)
+        [IO.File]::WriteAllBytes($fixtureHelperPath, $fixtureBytes)
+        $mutatedHelperVersionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($fixtureHelperPath)
+        Assert-GateB ($mutatedHelperVersionInfo.FileVersion -ceq $fixtureHelperVersionInfo.FileVersion -and
+            $mutatedHelperVersionInfo.OriginalFilename -ceq $fixtureHelperVersionInfo.OriginalFilename) `
+            'damaged Authenticode companion fixture changed file metadata'
+        $mutatedHelperSignature = @(Get-AuthenticodeSignature -LiteralPath $fixtureHelperPath `
+            -ErrorAction Stop)
+        Assert-GateB ($mutatedHelperSignature.Count -eq 1 -and
+            [string]$mutatedHelperSignature[0].Status -ceq 'HashMismatch') `
+            ('damaged Authenticode companion fixture did not report HashMismatch ' +
+                "($([string]$mutatedHelperSignature[0].Status))")
+        Assert-GateB (-not (Test-VerifierDescendantExecutableIdentity `
+            $signatureOwner $signatureCandidate)) `
+            'damaged Authenticode companion fixture was accepted'
+    } catch {
+        $failure = $_
+    } finally {
+        if (-not [String]::IsNullOrWhiteSpace($fixtureRoot) -and
+                (Test-Path -LiteralPath $fixtureRoot)) {
+            try {
+                Remove-VerifierOwnedTree (Get-VerifierFullPath ([IO.Path]::GetTempPath())) `
+                    $fixtureRoot
+            } catch {
+                $cleanupError = $_
+            }
+        }
+    }
+    if ($null -ne $cleanupError) {
+        Throw-GateBInfrastructure ('Edge companion canary fixture cleanup was not proven: ' +
+            (Get-VerifierErrorMessage $cleanupError))
+    }
+    if ($null -ne $failure) { throw $failure }
+    Write-Host ('PASS:Edge descendant companion metadata/path/signature/command-line ' +
+        ('canary (coldMs={0:N1}; warmTripleMs={1:N1}; no Edge process ownership claimed)' -f `
+            $coldElapsed, $warmTripleElapsed))
+}
+
 function Invoke-GateBProcessStartIdentityCanary() {
     $currentProcess = $null
     $childProcess = $null
@@ -1471,6 +2215,7 @@ function Invoke-GateBProcessStartIdentityCanary() {
         }
         Assert-GateB $naturalExitObserved `
             'process that exited before identity acquisition was not typed infrastructure failure'
+
     } catch {
         $failure = $_
     } finally {
@@ -1509,6 +2254,259 @@ function Invoke-GateBProcessStartIdentityCanary() {
             $transientAttempts, $unavailableAttempts, $unavailableElapsed,
             $malformedAttempts, $nonPositiveAttempts, $multipleAttempts,
             $arbitraryExceptionAttempts)
+}
+
+function Invoke-GateBBoundedProcessLaunchRaceCanary() {
+    # Exercise the real short-lived netstat child while an actual loopback
+    # listener is held open. The bounded runner must capture launch identity
+    # before reader startup, retain complete output, and prove cleanup without
+    # adopting a current process by PID.
+    $listener = $null
+    $listenerPort = 0
+    $listenerCleanupProven = $false
+    $timeoutEvidencePath = ''
+    $canaryFailure = $null
+    $cleanupErrors = New-Object Collections.ArrayList
+    $checksValidated = $false
+    try {
+        $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
+        $netstat = (Get-Command netstat.exe -ErrorAction Stop).Source
+        $listener = [Net.Sockets.TcpListener]::new(
+            [Net.IPAddress]::Parse('127.0.0.1'), 0)
+        $listener.Start()
+        $listenerPort = [int]([Net.IPEndPoint]$listener.LocalEndpoint).Port
+        Assert-GateB ($listenerPort -ge 1 -and $listenerPort -le 65535) `
+            'real loopback listener did not receive a valid ephemeral port'
+        $ownerStartTicks = [long](Get-VerifierCurrentProcessStartTicks)
+
+        # This is the real consumer route: netstat.exe is short-lived, its
+        # stdout is parsed, and the listener record is tied back to this live
+        # owner using the exact Process.StartTime identity.
+        $inspection = Get-VerifierLoopbackListenerRecords $listenerPort `
+            -PreferNetstat
+        $listeners = @($inspection.Listeners | Where-Object {
+            [int]$_.Port -eq $listenerPort -and
+            [int]$_.ProcessId -eq [int]$PID
+        })
+        Assert-GateB ([string]$inspection.Source -ceq 'netstat' -and
+            [bool]$inspection.Success -and [bool]$inspection.Known -and
+            $listeners.Count -eq 1 -and
+            [long]$listeners[0].ProcessStartTicks -eq $ownerStartTicks) `
+            'real netstat listener route did not preserve the current owner start identity'
+
+        # A same-process, immediate-exit child covers the launch/readers race.
+        # Its exact numeric exit and complete marker output are accepted only
+        # after the retained launch handle supplied a positive StartTicks.
+        $quickResult = Invoke-VerifierBoundedProcess $powershell @(
+            '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy',
+            'Bypass', '-Command', "Write-Output 'gate-b-launch-race'; exit 0"
+        ) 5000
+        $quickStdout = [string]$quickResult.Stdout
+        $quickMarkerExact = $quickStdout -ceq 'gate-b-launch-race' -or
+            $quickStdout -ceq "gate-b-launch-race`n" -or
+            $quickStdout -ceq "gate-b-launch-race`r`n"
+        Assert-GateB ([long]$quickResult.ProcessStartTicks -gt 0 -and
+            [int]$quickResult.ExitCode -eq 0 -and
+            [bool]$quickResult.TerminationProven -and
+            $quickMarkerExact -and
+            -not (Test-Path -LiteralPath $quickResult.ProcessRoot)) `
+            'short-lived bounded child did not prove launch identity, exit, output, and log cleanup'
+
+        # A long-lived child must still take the exact retained-identity stop
+        # path when the bounded deadline expires. Wrap only the module's exact
+        # stop helper inside its own scope so the canary records the Process
+        # handle PID/start tuple actually supplied to the stop proof. The
+        # original helper still performs the real stop and absence checks.
+        $timeoutArguments = @(
+            '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy',
+            'Bypass', '-Command',
+            'Start-Sleep -Milliseconds 3000'
+        )
+        $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+        Assert-GateB ($module.Count -eq 1) `
+            'VerifierIsolation module was unavailable for bounded timeout proof'
+        $timeoutProbe = & $module[0] {
+            param($filePath, $childArguments)
+            $oldStop = (Get-Command Stop-VerifierBoundedProcessExactly `
+                -CommandType Function -ErrorAction Stop).ScriptBlock
+            try {
+                $script:GateBLaunchRaceStopCalls = 0
+                $script:GateBLaunchRaceStopPid = 0
+                $script:GateBLaunchRaceStopStartTicks = 0L
+                $script:GateBLaunchRaceStopProcessType = ''
+                $script:GateBLaunchRaceStopWaitMilliseconds = 0
+                $script:GateBLaunchRaceStopOriginal = $oldStop
+                Set-Item Function:\Stop-VerifierBoundedProcessExactly -Force -Value {
+                    param($retainedProcess, $expectedStartTicks,
+                        $waitMilliseconds = 5000)
+                    $script:GateBLaunchRaceStopCalls =
+                        [int]$script:GateBLaunchRaceStopCalls + 1
+                    $script:GateBLaunchRaceStopPid = [int]$retainedProcess.Id
+                    $script:GateBLaunchRaceStopStartTicks = [long]$expectedStartTicks
+                    $script:GateBLaunchRaceStopProcessType =
+                        [string]$retainedProcess.GetType().FullName
+                    $script:GateBLaunchRaceStopWaitMilliseconds =
+                        [int]$waitMilliseconds
+                    & $script:GateBLaunchRaceStopOriginal $retainedProcess `
+                        $expectedStartTicks $waitMilliseconds
+                }
+                $typedFailure = $false
+                $errorMessage = ''
+                try {
+                    [void](Invoke-VerifierBoundedProcess $filePath `
+                        $childArguments 100)
+                } catch {
+                    $typedFailure = Test-VerifierInfrastructureError $_
+                    $errorMessage = Get-VerifierErrorMessage $_
+                }
+                return [pscustomobject]@{
+                    TypedFailure = $typedFailure
+                    Error = $errorMessage
+                    StopCalls = [int]$script:GateBLaunchRaceStopCalls
+                    StopPid = [int]$script:GateBLaunchRaceStopPid
+                    StopStartTicks = [long]$script:GateBLaunchRaceStopStartTicks
+                    StopProcessType = [string]$script:GateBLaunchRaceStopProcessType
+                    StopWaitMilliseconds = [int]$script:GateBLaunchRaceStopWaitMilliseconds
+                }
+            } finally {
+                Set-Item Function:\Stop-VerifierBoundedProcessExactly `
+                    -Force -Value $oldStop
+                Remove-Variable -Name GateBLaunchRaceStopCalls,`
+                    GateBLaunchRaceStopPid,GateBLaunchRaceStopStartTicks,`
+                    GateBLaunchRaceStopProcessType,GateBLaunchRaceStopWaitMilliseconds,`
+                    GateBLaunchRaceStopOriginal `
+                    -Scope Script -Force -ErrorAction SilentlyContinue
+            }
+        } $powershell $timeoutArguments
+        $timeoutObserved = [bool]$timeoutProbe.TypedFailure
+        $timeoutError = [string]$timeoutProbe.Error
+        Assert-GateB $timeoutObserved `
+            'bounded-process timeout did not return typed infrastructure failure'
+        Assert-GateB ([int]$timeoutProbe.StopCalls -eq 1 -and
+            [int]$timeoutProbe.StopPid -gt 0 -and
+            [long]$timeoutProbe.StopStartTicks -gt 0 -and
+            [string]$timeoutProbe.StopProcessType -ceq
+                'System.Diagnostics.Process' -and
+            [int]$timeoutProbe.StopWaitMilliseconds -eq 5000) `
+            'bounded-process timeout did not invoke exact stop with one retained Process identity'
+        # Extract only the evidence path needed to construct the canonical
+        # expected message. Acceptance is a whole-message equality check: the
+        # typed infrastructure prefix, exact executable, exact deadline text,
+        # and the same evidence root must appear in the one permitted order.
+        # A cleanup/disposal/output uncertainty inserted before the evidence
+        # marker therefore cannot qualify as a timeout pass.
+        $timeoutEvidenceMatch = [regex]::Match($timeoutError,
+            "logs retained at '([^']+)'")
+        Assert-GateB $timeoutEvidenceMatch.Success `
+            'bounded-process timeout did not name a retained evidence root'
+        $timeoutEvidencePath = $timeoutEvidenceMatch.Groups[1].Value
+        $expectedTimeoutError =
+            "VERIFIER_INFRASTRUCTURE: VERIFIER_INFRASTRUCTURE: Bounded process '$powershell' exceeded 100ms; logs retained at '$timeoutEvidencePath'. Bounded-process evidence: '$timeoutEvidencePath'."
+        $timeoutDiagnosticOracle = {
+            param($candidate, $expected)
+            return ([string]$candidate -ceq [string]$expected)
+        }
+        Assert-GateB (& $timeoutDiagnosticOracle $timeoutError `
+            $expectedTimeoutError) `
+            'bounded-process timeout did not match the complete canonical diagnostic'
+        # Focused negative oracle: the same clean timeout with appended
+        # cleanup uncertainty must be rejected by the whole-message matcher.
+        $uncertainTimeoutError = $expectedTimeoutError.Replace(
+            ' Bounded-process evidence:',
+            '; bounded-process cleanup was not proven: injected uncertainty. Bounded-process evidence:')
+        Assert-GateB (-not (& $timeoutDiagnosticOracle $uncertainTimeoutError `
+            $expectedTimeoutError)) `
+            'timeout diagnostic oracle accepted appended cleanup uncertainty'
+
+        $tempNamespace = Get-VerifierFullPath ([IO.Path]::GetTempPath())
+        Assert-VerifierNoReparseAncestors $timeoutEvidencePath
+        Assert-GateB (Test-VerifierPhysicalChildPath $tempNamespace $timeoutEvidencePath) `
+            'bounded-process timeout evidence escaped the owned temp namespace'
+        $timeoutStdoutPath = Join-Path $timeoutEvidencePath 'stdout.log'
+        $timeoutStderrPath = Join-Path $timeoutEvidencePath 'stderr.log'
+        Assert-GateB ((Test-Path -LiteralPath $timeoutStdoutPath -PathType Leaf) -and
+            (Test-Path -LiteralPath $timeoutStderrPath -PathType Leaf) -and
+            (Test-VerifierPhysicalChildPath $timeoutEvidencePath $timeoutStdoutPath) -and
+            (Test-VerifierPhysicalChildPath $timeoutEvidencePath $timeoutStderrPath)) `
+            'bounded-process timeout did not retain both owned output streams'
+        # A timed-out child is allowed to produce no output. Read both retained
+        # files directly so an empty stream remains a valid closed capture;
+        # Get-Content -Raw returns $null for a zero-byte file and `.Trim()`
+        # would turn that valid timeout into a null-valued-expression failure.
+        try {
+            $timeoutStdout = [IO.File]::ReadAllText($timeoutStdoutPath)
+            $timeoutStderr = [IO.File]::ReadAllText($timeoutStderrPath)
+        } catch {
+            Throw-GateBInfrastructure ('bounded-process timeout retained output files that could not be read: ' +
+                (Get-VerifierErrorMessage $_))
+        }
+        Assert-GateB ($timeoutStdout -is [string] -and $timeoutStderr -is [string]) `
+            'bounded-process timeout retained output streams without readable string contents'
+        # The real stop wrapper records the retained Process handle identity;
+        # timeout proof must use that tuple and never depend on child stdout.
+        $timeoutPid = [int]$timeoutProbe.StopPid
+        Assert-GateB ((Test-VerifierStrictIntegralValue $timeoutPid 1 ([int]::MaxValue)) -and
+            (Test-VerifierStrictIntegralValue $timeoutProbe.StopStartTicks `
+                1 ([long]::MaxValue))) `
+            'bounded-process timeout stop tuple carried malformed PID or retained start identity'
+        $timeoutRecord = [pscustomobject]@{
+            ProcessId = $timeoutPid
+            ProcessStartTicks = [long]$timeoutProbe.StopStartTicks
+            CommandLine = ''
+        }
+        $timeoutAbsence = Confirm-VerifierRecordedProcessAbsent $timeoutRecord `
+            'bounded timeout child'
+        Assert-GateB ([bool]$timeoutAbsence.QueryProven -and
+            [bool]$timeoutAbsence.Absent -and
+            $null -eq $timeoutAbsence.Current -and
+            -not [bool]$timeoutAbsence.Replaced) `
+            'bounded-process timeout did not prove exact child termination and current-process absence'
+        $checksValidated = $true
+    } catch {
+        $canaryFailure = $_
+    } finally {
+        if ($null -ne $listener) {
+            try {
+                $listener.Stop()
+                $listener = $null
+            } catch {
+                [void]$cleanupErrors.Add(('real loopback listener stop failed: ' +
+                    (Get-VerifierErrorMessage $_)))
+            }
+        }
+        if ($listenerPort -gt 0) {
+            try {
+                $postStopInspection = Get-VerifierLoopbackListenerRecords `
+                    $listenerPort -PreferNetstat
+                if (-not $postStopInspection.Success -or
+                        -not $postStopInspection.Known -or
+                        $postStopInspection.HasListeners) {
+                    throw "post-stop listener inspection was not proven quiescent for port $listenerPort"
+                }
+                $listenerCleanupProven = $true
+            } catch {
+                [void]$cleanupErrors.Add(('real loopback listener absence was not proven: ' +
+                    (Get-VerifierErrorMessage $_)))
+            }
+        }
+    }
+    if ($cleanupErrors.Count -gt 0) {
+        $evidenceText = if ([String]::IsNullOrWhiteSpace($timeoutEvidencePath)) {
+            ''
+        } else { "; timeout evidence retained at '$timeoutEvidencePath'" }
+        Throw-GateBInfrastructure ('real launch/netstat canary cleanup was not proven' +
+            $evidenceText + ': ' + ($cleanupErrors -join '; '))
+    }
+    if ($null -ne $canaryFailure) { throw $canaryFailure }
+    Assert-GateB ($checksValidated -and $listenerCleanupProven) `
+        'real launch/netstat canary did not complete its checks and fixture cleanup proof'
+    Write-Host ('PASS:real netstat listener and bounded launch race prove retained ' +
+        'start identity, complete output/log cleanup, exact timeout stop/absence, ' +
+        'and listener cleanup ' +
+        "(port=$listenerPort; ownerStartTicks=$ownerStartTicks; timeoutPid=$timeoutPid; " +
+        "timeoutStartTicks=$($timeoutProbe.StopStartTicks); timeoutStopWaitMs=$($timeoutProbe.StopWaitMilliseconds); " +
+        "timeoutEvidence='$timeoutEvidencePath'; " +
+        "timeoutAbsent=$($timeoutAbsence.Absent); listenerAbsent=$listenerCleanupProven)")
 }
 
 function Invoke-GateBKernelTransportCanary() {
@@ -1573,7 +2571,8 @@ function Invoke-GateBKernelTransportCanary() {
         Server = $null; WorktreeRoot = $repositoryRootForCanary
         PortLeaseRoot = (Join-Path $repositoryRootForCanary 'gate-b-kernel-port-leases')
         RepositoryIdentity = 'gate-b-kernel-transport-repository'
-        RunId = $runId; PreviewNonce = $nonce
+        RunId = $runId; PreviewNonce = $nonce; ManifestWritePhase = ''
+        CleanupState = 'pending'; CleanupCompletedUtc = ''
     }
     $owner = [pscustomobject]@{
         Owner = 'run'; BaseUrl = 'http://127.0.0.1:' + [string]$port
@@ -1613,12 +2612,508 @@ function Invoke-GateBKernelTransportCanary() {
         $constructedKernel.ListenerOwnerEvidence -ceq 'pid-4-system-http-sys') `
         'valid kernel transport listener constructor record was rejected or altered'
     Assert-GateB (Test-VerifierKernelTransportListenerRecord $kernelListener `
-            $context $owner) `
-        'valid PID 4 kernel transport record was rejected'
+            $context $owner -StructuralOnly) `
+        'valid PID 4 kernel transport structural record was rejected'
+    Assert-GateB (-not (Test-VerifierKernelTransportListenerRecord $kernelListener `
+            $context $owner)) `
+        'kernel transport record was semantically reauthorized without a carried proof'
     Assert-GateB (Test-VerifierRunOwnedPreviewHttpSysAuthorization $context $owner $port) `
         'exact run-owned preview identity handshake proof was rejected'
-    Assert-GateB (Test-VerifierRunOwnedPreviewHttpSysListener $context $owner $kernelListener) `
-        'PID 4 kernel transport listener was not accepted after exact preview proof'
+    $initialKernelProof = & $module[0] {
+        param($proofContext, $proofOwner, $proofPort)
+        New-VerifierRunOwnedPreviewHttpSysAuthorizationProof `
+            $proofContext $proofOwner $proofPort
+    } $context $owner $port
+    Assert-GateB ($null -ne $initialKernelProof -and
+        (Test-VerifierRunOwnedPreviewHttpSysListener $context $owner `
+            $kernelListener $initialKernelProof)) `
+        'PID 4 kernel transport listener was not accepted with the carried preview proof'
+
+    # A valid kernel preview must not spend the bounded browser-snapshot
+    # budget on an irrelevant census.  Inject a deliberately slow snapshot
+    # dependency; listener-first proof must bind without invoking it.
+    $kernelBindProbe = & $module[0] {
+        param($probeContext, $probeLease, $probeOwner, $probeInspection,
+            $probeProcessId, $probeProcessStart)
+        $oldLoopback = (Get-Command Get-VerifierLoopbackListenerRecords `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldSnapshot = (Get-Command Get-VerifierBrowserOwnershipSnapshot `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldAuthorization = (Get-Command Test-VerifierRunOwnedPreviewHttpSysAuthorization `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        try {
+            $script:GateBSlowKernelSnapshotCalled = $false
+            $script:GateBKernelSemanticAuthorizationCalls = 0
+            $script:GateBKernelListenerQueries = 0
+            Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force -Value {
+                $script:GateBKernelListenerQueries++
+                return $probeInspection
+            }
+            Set-Item Function:\Get-VerifierBrowserOwnershipSnapshot -Force -Value {
+                $script:GateBSlowKernelSnapshotCalled = $true
+                Start-Sleep -Milliseconds 600
+                return @()
+            }
+            Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysAuthorization -Force -Value {
+                $script:GateBKernelSemanticAuthorizationCalls++
+                return [bool](& $script:GateBKernelSemanticAuthorizationOriginal `
+                    $args[0] $args[1] $args[2])
+            }
+            $script:GateBKernelSemanticAuthorizationOriginal = $oldAuthorization
+            $accepted = $false
+            $proof = $null
+            try {
+                $proof = Get-VerifierPortLeaseBoundOwnershipProof `
+                    $probeContext $probeLease $probeProcessId $probeProcessStart `
+                    $probeOwner $probeOwner
+                $accepted = $null -ne $proof
+            } catch { $accepted = $false }
+            return [pscustomobject]@{
+                Accepted = $accepted
+                SnapshotCalled = [bool]$script:GateBSlowKernelSnapshotCalled
+                SemanticAuthorizationCalls = [int]$script:GateBKernelSemanticAuthorizationCalls
+                ListenerQueries = [int]$script:GateBKernelListenerQueries
+                ProofStage = if ($null -eq $proof) { '' } else { [string]$proof.ProofStage }
+                ProofElapsedMilliseconds = if ($null -eq $proof) { -1L } else {
+                    [long]$proof.ProofElapsedMilliseconds
+                }
+            }
+        } finally {
+            Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force `
+                -Value $oldLoopback
+            Set-Item Function:\Get-VerifierBrowserOwnershipSnapshot -Force `
+                -Value $oldSnapshot
+            Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysAuthorization -Force `
+                -Value $oldAuthorization
+            Remove-Variable -Name GateBSlowKernelSnapshotCalled,`
+                GateBKernelSemanticAuthorizationCalls,GateBKernelSemanticAuthorizationOriginal,`
+                GateBKernelListenerQueries `
+                -Force -ErrorAction SilentlyContinue
+        }
+    } $context $lease $owner ([pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Listeners = @($kernelListener); ListenerOwnerKind = 'kernel-transport'
+        ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+        ListenerOwnerEvidence = 'pid-4-system-http-sys'
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }) $PID $currentStart
+    Assert-GateB ([bool]$kernelBindProbe.Accepted -and
+        -not [bool]$kernelBindProbe.SnapshotCalled -and
+        [int]$kernelBindProbe.SemanticAuthorizationCalls -eq 1 -and
+        [int]$kernelBindProbe.ListenerQueries -eq 1 -and
+        $kernelBindProbe.ProofStage -ceq 'kernel-semantic-authorization' -and
+        [long]$kernelBindProbe.ProofElapsedMilliseconds -ge 0) `
+        'valid kernel preview bind invoked or failed on a slow browser snapshot dependency'
+
+    # A structurally mixed inspection is not a durable lease state (the lease
+    # records one canonical owner tuple), but the bound-proof routine still
+    # has a defensive mixed branch for an OS snapshot containing both the
+    # HTTP.sys transport record and a user-process record.  Exercise that
+    # branch with only the structural inspection aggregate mocked: the kernel
+    # token must be created once, consumed by the kernel listener, and never
+    # reacquired by a downstream consumer.
+    $mixedKernelBindProbe = & $module[0] {
+        param($probeContext, $probeLease, $probeOwner, $kernelValue,
+            $processId, $processStart)
+        $saved = @{}
+        foreach ($name in @(
+                'Get-VerifierLoopbackListenerRecords',
+                'Get-VerifierBrowserOwnershipSnapshot',
+                'Test-VerifierRunOwnedPreviewHttpSysAuthorization',
+                'Test-VerifierListenerInspectionSchema',
+                'Test-VerifierListenerBelongsToOwner',
+                'Test-VerifierRunOwnedPreviewHttpSysListener')) {
+            $saved[$name] = (Get-Command $name -CommandType Function `
+                -ErrorAction Stop).ScriptBlock
+        }
+        try {
+            $userValue = $kernelValue | Select-Object *
+            $userValue.ProcessId = [int]$processId
+            $userValue.ProcessStartTicks = [long]$processStart
+            $userValue.ListenerOwnerKind = 'user-process'
+            $userValue.ListenerOwnerProof = 'diagnostics-process-start-v1'
+            $userValue.ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+            $mixedInspection = [pscustomobject]@{
+                Success = $true; Known = $true; HasListeners = $true
+                Listeners = @($kernelValue, $userValue)
+                ListenerOwnerKind = 'kernel-transport'
+                ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+                ListenerOwnerEvidence = 'pid-4-system-http-sys'
+                Source = 'Get-NetTCPConnection'; Error = ''
+            }
+            $script:GateBMixedListenerQueries = 0
+            $script:GateBMixedSnapshotQueries = 0
+            $script:GateBMixedBelongsQueries = 0
+            $script:GateBMixedSemanticCalls = 0
+            $script:GateBMixedProofConsumerCalls = 0
+            $script:GateBMixedMissingProof = $false
+            $script:GateBMixedAuthorizationOriginal =
+                $saved['Test-VerifierRunOwnedPreviewHttpSysAuthorization']
+            $script:GateBMixedListenerOriginal =
+                $saved['Test-VerifierRunOwnedPreviewHttpSysListener']
+            Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force -Value {
+                $script:GateBMixedListenerQueries++
+                return $script:GateBMixedInspection
+            }
+            Set-Item Function:\Get-VerifierBrowserOwnershipSnapshot -Force -Value {
+                $script:GateBMixedSnapshotQueries++
+                return @([pscustomobject]@{ ProcessId = $processId })
+            }
+            Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysAuthorization `
+                -Force -Value {
+                $script:GateBMixedSemanticCalls++
+                return $true
+            }
+            # The aggregate's owner kind is necessarily one scalar in the
+            # existing inspection schema.  This probe admits only this
+            # synthetic mixed aggregate; each listener still crosses the real
+            # structural record validator and the real proof consumer.
+            Set-Item Function:\Test-VerifierListenerInspectionSchema -Force -Value {
+                param($candidateInspection)
+                return [object]::ReferenceEquals($candidateInspection,
+                    $script:GateBMixedInspection) -or
+                    ($null -ne $candidateInspection -and
+                     $candidateInspection.PSObject.Properties['Listeners'] -and
+                     @($candidateInspection.Listeners).Count -eq 2)
+            }
+            Set-Item Function:\Test-VerifierListenerBelongsToOwner -Force -Value {
+                $script:GateBMixedBelongsQueries++
+                return $true
+            }
+            Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysListener `
+                -Force -Value {
+                param($candidateContext, $candidateOwner, $candidateListener,
+                    $candidateProof)
+                if ($candidateListener.ListenerOwnerKind -ceq 'kernel-transport') {
+                    $script:GateBMixedProofConsumerCalls++
+                    if ($null -eq $candidateProof) {
+                        $script:GateBMixedMissingProof = $true
+                        return $false
+                    }
+                }
+                return [bool](& $script:GateBMixedListenerOriginal `
+                    $candidateContext $candidateOwner $candidateListener $candidateProof)
+            }
+            $script:GateBMixedInspection = $mixedInspection
+            $proofResult = $null
+            $accepted = $false
+            $typedFailure = $false
+            try {
+                $proofResult = Get-VerifierPortLeaseBoundOwnershipProof `
+                    $probeContext $probeLease $processId $processStart `
+                    $probeOwner $probeOwner
+                $accepted = $null -ne $proofResult
+            } catch {
+                $typedFailure = Test-VerifierInfrastructureError $_
+            }
+            return [pscustomobject]@{
+                Accepted = $accepted; TypedFailure = $typedFailure
+                ListenerQueries = [int]$script:GateBMixedListenerQueries
+                SnapshotQueries = [int]$script:GateBMixedSnapshotQueries
+                BelongsQueries = [int]$script:GateBMixedBelongsQueries
+                SemanticCalls = [int]$script:GateBMixedSemanticCalls
+                ProofConsumerCalls = [int]$script:GateBMixedProofConsumerCalls
+                MissingProof = [bool]$script:GateBMixedMissingProof
+                HasProof = ($null -ne $proofResult -and
+                    $null -ne $proofResult.AuthorizationProof)
+            }
+        } finally {
+            foreach ($name in $saved.Keys) {
+                Set-Item Function:\$name -Force -Value $saved[$name]
+            }
+            Remove-Variable -Name GateBMixedInspection,GateBMixedListenerQueries,`
+                GateBMixedSnapshotQueries,GateBMixedBelongsQueries,`
+                GateBMixedSemanticCalls,GateBMixedProofConsumerCalls,`
+                GateBMixedMissingProof,GateBMixedAuthorizationOriginal,`
+                GateBMixedListenerOriginal -Scope Script -Force `
+                -ErrorAction SilentlyContinue
+        }
+    } $context $lease $owner $kernelListener $PID $currentStart
+    Assert-GateB ([bool]$mixedKernelBindProbe.Accepted -and
+        -not [bool]$mixedKernelBindProbe.TypedFailure -and
+        [int]$mixedKernelBindProbe.ListenerQueries -eq 1 -and
+        [int]$mixedKernelBindProbe.SnapshotQueries -eq 1 -and
+        [int]$mixedKernelBindProbe.BelongsQueries -eq 1 -and
+        [int]$mixedKernelBindProbe.SemanticCalls -eq 1 -and
+        [int]$mixedKernelBindProbe.ProofConsumerCalls -eq 1 -and
+        -not [bool]$mixedKernelBindProbe.MissingProof -and
+        [bool]$mixedKernelBindProbe.HasProof) `
+        'mixed kernel/user bound-proof path did not carry one opaque semantic authorization proof'
+
+    # Release performs a new structural listener query, but it is a downstream
+    # consumer of the capability retained on the bound lease.  Use the same
+    # exact live owner/lease and force a positive kernel observation; release
+    # must reject the still-listening port after the setter consumes the
+    # carried proof, without invoking the semantic handshake again.
+    $releaseKernelProbe = & $module[0] {
+        param($probeContext, $probeLease, $probeOwner, $kernelValue,
+            $processStart)
+        $saved = @{}
+        foreach ($name in @(
+                'Get-VerifierLoopbackListenerRecords',
+                'Test-VerifierRunOwnedPreviewHttpSysAuthorization',
+                'Test-Path', 'Get-Content',
+                'Assert-VerifierPhysicalOwnedPath',
+                'Test-VerifierPhysicalChildPath',
+                'Assert-VerifierNoReparseAncestors')) {
+            # Test-Path/Get-Content are cmdlets rather than module functions;
+            # retain their command kind so the temporary function shadow can
+            # be removed cleanly in the finally block.
+            $command = Get-Command $name -ErrorAction Stop
+            # Keep immutable command-kind/script text values.  A live
+            # FunctionInfo is mutated in place when Set-Item replaces its
+            # function, so retaining it would make its ScriptBlock point at
+            # the temporary mock and restore that mock after this canary.
+            $saved[$name] = [pscustomobject]@{
+                CommandType = [string]$command.CommandType
+                ScriptBlock = if ([string]$command.CommandType -ceq 'Function') {
+                    $command.ScriptBlock
+                } else { $null }
+            }
+        }
+        $probeResult = $null
+        try {
+            $releaseInspection = [pscustomobject]@{
+                Success = $true; Known = $true; HasListeners = $true
+                Listeners = @($kernelValue)
+                ListenerOwnerKind = 'kernel-transport'
+                ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+                ListenerOwnerEvidence = 'pid-4-system-http-sys'
+                Source = 'Get-NetTCPConnection'; Error = ''
+            }
+            $claimValue = [pscustomobject]@{
+                protocol = 'troubleshootjs-verifier-port-claim-v1'
+                runId = $probeContext.RunId
+                repositoryIdentity = $probeContext.RepositoryIdentity
+                worktreeRoot = $probeContext.WorktreeRoot
+                kind = $probeLease.Kind; leaseId = $probeLease.LeaseId
+                path = $probeLease.Path; port = $probeLease.Port
+                mutexName = $probeLease.ClaimName; ownerPid = $PID
+                ownerStartTicks = $processStart
+            }
+            $global:GateBReleaseInspection = $releaseInspection
+            $global:GateBReleaseClaim = $claimValue
+            $global:GateBReleaseListenerQueries = 0
+            $global:GateBReleaseSemanticCalls = 0
+            Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force -Value {
+                $global:GateBReleaseListenerQueries++
+                return $global:GateBReleaseInspection
+            }
+            Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysAuthorization `
+                -Force -Value {
+                $counter = Get-Variable GateBReleaseSemanticCalls -Scope Global `
+                    -ErrorAction SilentlyContinue
+                if ($null -eq $counter) {
+                    Set-Variable -Name GateBReleaseSemanticCalls -Scope Global `
+                        -Value 0 -Force
+                }
+                $global:GateBReleaseSemanticCalls =
+                    [int]$global:GateBReleaseSemanticCalls + 1
+                return $true
+            }
+            # The synthetic claim is already represented by the held lease;
+            # these path-boundary shims keep the probe focused on proof
+            # carriage and never permit the release body to delete a file.
+            Set-Item Function:\Test-Path -Force -Value {
+                param($LiteralPath, $PathType, $ErrorAction)
+                return ([string]$LiteralPath -ceq
+                    [string]$global:GateBReleaseClaim.path)
+            }
+            Set-Item Function:\Get-Content -Force -Value {
+                param($LiteralPath, [switch]$Raw, $ErrorAction)
+                return ($global:GateBReleaseClaim | ConvertTo-Json -Compress -Depth 8)
+            }
+            Set-Item Function:\Assert-VerifierPhysicalOwnedPath -Force -Value { }
+            Set-Item Function:\Test-VerifierPhysicalChildPath -Force -Value { return $true }
+            Set-Item Function:\Assert-VerifierNoReparseAncestors -Force -Value { }
+
+            if (-not $probeLease.PSObject.Properties['AuthorizationProof']) {
+                Add-Member -InputObject $probeLease -MemberType NoteProperty `
+                    -Name AuthorizationProof -Value $null
+            }
+            $proof = $null
+            $proofCreationError = ''
+            try {
+                $proof = New-VerifierRunOwnedPreviewHttpSysAuthorizationProof `
+                    $probeContext $probeOwner ([int]$probeLease.Port)
+                $probeLease.AuthorizationProof = $proof
+            } catch {
+                $proofCreationError = Get-VerifierErrorMessage $_
+            }
+            $typedFailure = $false
+            $releaseError = ''
+            if ($null -eq $proof) {
+                $typedFailure = $false
+                $releaseError = 'proof creation: ' + $proofCreationError
+            } else {
+              try {
+                Release-VerifierPortLease $probeContext $probeLease
+              } catch {
+                $typedFailure = Test-VerifierInfrastructureError $_
+                $releaseError = Get-VerifierErrorMessage $_
+              }
+            }
+            $semanticCallCount = if (Get-Variable GateBReleaseSemanticCalls `
+                    -Scope Global -ErrorAction SilentlyContinue) {
+                [int]$global:GateBReleaseSemanticCalls
+            } else { -1 }
+            $probeResult = [pscustomobject]@{
+                TypedFailure = $typedFailure
+                ProofCreated = ($null -ne $proof)
+                ListenerQueries = [int]$global:GateBReleaseListenerQueries
+                SemanticCalls = $semanticCallCount
+                SetterReceivedProof = ($probeLease.ListenerOwnerKind -ceq
+                    'kernel-transport' -and
+                    [object]::ReferenceEquals($probeLease.AuthorizationProof, $proof))
+                LeaseStillHeld = ($probeLease.ReleaseState -ceq 'active' -and
+                    -not $probeLease.MutexReleased)
+                RestorationExact = $false
+                Error = $releaseError
+            }
+        } finally {
+            foreach ($name in $saved.Keys) {
+                if ($saved[$name].CommandType -ceq 'Function') {
+                    Set-Item Function:\$name -Force `
+                        -Value $saved[$name].ScriptBlock
+                } else {
+                    Remove-Item Function:\$name -Force `
+                        -ErrorAction SilentlyContinue
+                }
+            }
+            $restorationExact = $true
+            foreach ($name in $saved.Keys) {
+                $expected = $saved[$name]
+                $actual = Get-Command $name -ErrorAction Stop
+                if ($expected.CommandType -ceq 'Function') {
+                    $expectedText = if ($null -eq $expected.ScriptBlock) {
+                        ''
+                    } else { $expected.ScriptBlock.ToString() }
+                    $actualText = if ($null -eq $actual.ScriptBlock) {
+                        ''
+                    } else { $actual.ScriptBlock.ToString() }
+                    if ($actual.CommandType -ne 'Function' -or
+                            $actualText -cne $expectedText) {
+                        $restorationExact = $false
+                    }
+                } elseif ([string]$actual.CommandType -cne $expected.CommandType -or
+                        [string]$actual.Name -cne $name) {
+                    $restorationExact = $false
+                }
+            }
+            if ($null -ne $probeResult) {
+                $probeResult.RestorationExact = $restorationExact
+            }
+            Remove-Variable -Name GateBReleaseInspection,GateBReleaseClaim,`
+                GateBReleaseListenerQueries,GateBReleaseSemanticCalls `
+                -Scope Global -Force `
+                -ErrorAction SilentlyContinue
+            }
+        return $probeResult
+    } $context $lease $owner $kernelListener $currentStart
+    Assert-GateB ([bool]$releaseKernelProbe.TypedFailure -and
+        [bool]$releaseKernelProbe.ProofCreated -and
+        [int]$releaseKernelProbe.ListenerQueries -eq 1 -and
+        [int]$releaseKernelProbe.SemanticCalls -eq 1 -and
+        [bool]$releaseKernelProbe.SetterReceivedProof -and
+        [bool]$releaseKernelProbe.LeaseStillHeld) `
+        ('release listener consumer reauthorized or failed to carry the one-time kernel proof ' +
+         '(typed={0}; created={1}; queries={2}; semantic={3}; setterProof={4}; leaseHeld={5}; error={6})' -f
+            $releaseKernelProbe.TypedFailure, $releaseKernelProbe.ProofCreated,
+            $releaseKernelProbe.ListenerQueries, $releaseKernelProbe.SemanticCalls,
+            $releaseKernelProbe.SetterReceivedProof, $releaseKernelProbe.LeaseStillHeld,
+            $releaseKernelProbe.Error)
+    Assert-GateB ([bool]$releaseKernelProbe.RestorationExact) `
+        'kernel release probe did not restore the exact pre-canary command definitions'
+
+    # The release probe temporarily shadows both module functions and native
+    # commands.  Prove that the same PowerShell process can immediately create
+    # and complete a real run context after those shadows are removed.
+    $sequentialKernelContext = $null
+    $sequentialKernelScratch = Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\gate-b-kernel-sequential-' +
+         [Guid]::NewGuid().ToString('N'))
+    try {
+        $sequentialKernelContext = New-VerifierRunContext $repositoryRootForCanary
+        $sequentialKernelCleanup = Complete-VerifierRun $sequentialKernelContext
+        Assert-GateB ($null -ne $sequentialKernelCleanup -and
+            [bool]$sequentialKernelCleanup.Success) `
+            'same-process real run context failed after kernel transport canary'
+        Assert-GateBContextResourcesReleased $sequentialKernelContext
+        Remove-GateBCanaryRoots $sequentialKernelScratch @($sequentialKernelContext)
+        Assert-GateB (-not (Test-Path -LiteralPath $sequentialKernelContext.RunRoot)) `
+            'same-process sequential kernel context cleanup retained its run root'
+    } finally {
+        if ($null -ne $sequentialKernelContext -and
+                (Test-Path -LiteralPath $sequentialKernelContext.RunRoot)) {
+            try {
+                $retryCleanup = Complete-VerifierRun $sequentialKernelContext
+                if ($retryCleanup -and [bool]$retryCleanup.Success) {
+                    Remove-GateBCanaryRoots $sequentialKernelScratch @($sequentialKernelContext)
+                }
+            } catch { }
+        }
+    }
+
+    # A kernel proof is an opaque, one-semantic-auth capability.  Its later
+    # consumers must reject both forged markers and mutation of any retained
+    # owner/lease identity, while still re-reading the live exact process.
+    $context.Server = $owner
+    $proofForMutation = & $module[0] {
+        param($proofContext, $proofOwner, $proofPort)
+        New-VerifierRunOwnedPreviewHttpSysAuthorizationProof `
+            $proofContext $proofOwner $proofPort
+    } $context $owner $port
+    Assert-GateB ($null -ne $proofForMutation -and
+        (Test-VerifierRunOwnedPreviewHttpSysListener $context $owner `
+            $kernelListener $proofForMutation)) `
+        'valid kernel authorization proof was not consumable after creation'
+    $replacementServer = $owner | Select-Object *
+    $context.Server = $replacementServer
+    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context `
+            $owner $kernelListener $proofForMutation)) `
+        'kernel proof remained valid after Context.Server replacement'
+    $context.Server = $owner
+    $savedOwnerState = $owner.State
+    $owner.State = 'cleaned'
+    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context `
+            $owner $kernelListener $proofForMutation)) `
+        'kernel proof remained valid after owner lifecycle mutation'
+    $owner.State = $savedOwnerState
+    $savedLeaseReleaseState = $owner.Lease.ReleaseState
+    $owner.Lease.ReleaseState = 'os-released'
+    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context `
+            $owner $kernelListener $proofForMutation)) `
+        'kernel proof remained valid after lease release-state mutation'
+    $owner.Lease.ReleaseState = $savedLeaseReleaseState
+    $savedContextCleanupState = $context.CleanupState
+    $context.CleanupState = 'complete'
+    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context `
+            $owner $kernelListener $proofForMutation)) `
+        'kernel proof remained valid after context lifecycle mutation'
+    $context.CleanupState = $savedContextCleanupState
+    $savedOwnerPid = $owner.ProcessId
+    $owner.ProcessId = $savedOwnerPid + 1
+    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context `
+            $owner $kernelListener $proofForMutation)) `
+        'kernel proof remained valid after owner PID mutation'
+    $owner.ProcessId = $savedOwnerPid
+    $savedOwnerStart = $owner.ProcessStartTicks
+    $owner.ProcessStartTicks = [long]$savedOwnerStart + 1L
+    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context `
+            $owner $kernelListener $proofForMutation)) `
+        'kernel proof remained valid after owner start identity mutation'
+    $owner.ProcessStartTicks = $savedOwnerStart
+    $savedLeaseStart = $owner.Lease.BoundProcessStartTicks
+    $owner.Lease.BoundProcessStartTicks = [long]$savedLeaseStart + 1L
+    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context `
+            $owner $kernelListener $proofForMutation)) `
+        'kernel proof remained valid after lease identity mutation'
+    $owner.Lease.BoundProcessStartTicks = $savedLeaseStart
+    $forgedProof = $proofForMutation | Select-Object *
+    $forgedProof.Marker = [object]::new()
+    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context `
+            $owner $kernelListener $forgedProof)) `
+        'forged kernel authorization proof marker was accepted'
 
     $callerOwner = $owner | Select-Object *
     $callerOwner.Owner = 'caller'; $callerOwner.State = 'caller-verified'
@@ -1633,8 +3128,9 @@ function Invoke-GateBKernelTransportCanary() {
     $browserOwner.IdentityVerified = $true; $browserOwner.CallerOwned = $true
     $browserOwner.ProcessIdentityKnown = $false
     $context.Server = $browserOwner
-    Assert-GateB (-not (Test-VerifierRunOwnedPreviewHttpSysListener $context $browserOwner $kernelListener)) `
-        'browser/caller listener path was authorized as a kernel transport owner'
+    Assert-GateB (-not (Test-VerifierKernelTransportListenerRecord $kernelListener `
+        $context $browserOwner)) `
+        'browser/caller listener schema consumed a kernel record without a carried proof'
 
     $unverifiedOwner = $owner | Select-Object *
     $unverifiedOwner.State = 'starting'; $unverifiedOwner.IdentityVerified = $false
@@ -1652,6 +3148,13 @@ function Invoke-GateBKernelTransportCanary() {
     $malformedClaimMutexOwner.Lease = $owner.Lease | Select-Object *
     $malformedClaimMutexOwner.Lease.ClaimMutex = 'not-a-threading-mutex'
     $context.Server = $malformedClaimMutexOwner
+    $malformedServerRejected = & $module[0] {
+        param($diagnosticContext)
+        try {
+            Assert-VerifierDurableServerLease $diagnosticContext 'malformed claim diagnostic'
+            return $false
+        } catch { return (Test-VerifierInfrastructureError $_) }
+    } $context
     $malformedAuthorizationResult = & $module[0] {
         param($authorizationContext, $authorizationOwner, $authorizationPort)
         $oldProcessStartLookup = (Get-Command Get-VerifierProcessStartTicks `
@@ -1674,9 +3177,13 @@ function Invoke-GateBKernelTransportCanary() {
                 -Force -ErrorAction SilentlyContinue
         }
     } $context $malformedClaimMutexOwner $port
-    Assert-GateB (-not [bool]$malformedAuthorizationResult.Accepted -and
+    Assert-GateB ([bool]$malformedServerRejected -and
         -not [bool]$malformedAuthorizationResult.QueryObserved) `
-        'HTTP.sys authorization accepted malformed ClaimMutex or queried before rejection'
+        ('HTTP.sys authorization boundary accepted malformed ClaimMutex or queried before rejection ' +
+         '(serverRejected={0}; queried={1}; claimType={2})' -f
+            $malformedServerRejected,
+            $malformedAuthorizationResult.QueryObserved,
+            $malformedClaimMutexOwner.Lease.ClaimMutex.GetType().FullName)
 
     $wrongProofListener = $kernelListener | Select-Object *
     $wrongProofListener.ListenerOwnerProof = 'wrong-proof'
@@ -1706,6 +3213,125 @@ function Invoke-GateBKernelTransportCanary() {
     $userListener.ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
     Assert-GateB (-not (Test-VerifierKernelTransportListenerRecord $userListener)) `
         'user-mode listener was misclassified as the kernel transport owner'
+
+    # The live-listener authorization boundary must account for schema work
+    # before it can return or enter the kernel proof.  Exercise the real schema
+    # after a delayed wrapper; downstream proof functions must remain untouched.
+    $userInspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Listeners = @($userListener); ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }
+    $schemaDeadlineProbe = & $module[0] {
+        param($inspectionValue, $ownerValue)
+        $saved = @{}
+        foreach ($name in @(
+                'Test-VerifierListenerInspectionSchema',
+                'Get-VerifierLoopbackListenerRecords',
+                'Get-VerifierBrowserOwnershipSnapshot',
+                'Get-VerifierCurrentProcessRecordById',
+                'Test-VerifierListenerBelongsToOwner')) {
+            $saved[$name] = (Get-Command $name -CommandType Function `
+                -ErrorAction Stop).ScriptBlock
+        }
+        try {
+            $script:GateBDeadlineSchemaCalls = 0
+            $script:GateBDeadlineDownstreamCalls = 0
+            $script:GateBDeadlineSchemaOriginal = $saved['Test-VerifierListenerInspectionSchema']
+            Set-Item Function:\Test-VerifierListenerInspectionSchema -Force -Value {
+                param($candidateInspection, $candidateContext, $candidateOwner)
+                $script:GateBDeadlineSchemaCalls++
+                Start-Sleep -Milliseconds 600
+                return [bool](& $script:GateBDeadlineSchemaOriginal `
+                    $candidateInspection $candidateContext $candidateOwner)
+            }
+            foreach ($name in @(
+                    'Get-VerifierLoopbackListenerRecords',
+                    'Get-VerifierBrowserOwnershipSnapshot',
+                    'Get-VerifierCurrentProcessRecordById',
+                    'Test-VerifierListenerBelongsToOwner')) {
+                Set-Item Function:\$name -Force -Value {
+                    $script:GateBDeadlineDownstreamCalls++
+                    Throw-VerifierInfrastructure 'schema deadline canary reached a downstream proof dependency'
+                }
+            }
+            $accepted = $false
+            $typedFailure = $false
+            try {
+                $accepted = [bool](Test-VerifierLiveListenerInspectionAuthorization `
+                    $inspectionValue $null $ownerValue 0 0L)
+            } catch {
+                $typedFailure = Test-VerifierInfrastructureError $_
+            }
+            return [pscustomobject]@{
+                Accepted = $accepted; TypedFailure = $typedFailure
+                SchemaCalls = [int]$script:GateBDeadlineSchemaCalls
+                DownstreamCalls = [int]$script:GateBDeadlineDownstreamCalls
+            }
+        } finally {
+            foreach ($name in $saved.Keys) {
+                Set-Item Function:\$name -Force -Value $saved[$name]
+            }
+            Remove-Variable -Name GateBDeadlineSchemaCalls,`
+                GateBDeadlineDownstreamCalls,GateBDeadlineSchemaOriginal `
+                -Scope Script -Force -ErrorAction SilentlyContinue
+        }
+    } $userInspection $owner
+    Assert-GateB (-not [bool]$schemaDeadlineProbe.Accepted -and
+        [int]$schemaDeadlineProbe.SchemaCalls -eq 1 -and
+        [int]$schemaDeadlineProbe.DownstreamCalls -eq 0) `
+        'delayed live-listener schema was accepted or reached a downstream proof dependency'
+
+    # Ordinary kernel authorization is a single semantic proof after the OS
+    # listener query. It is not the missing-descendant refresh lane, so a slow
+    # (but otherwise valid) handshake must not be rejected by that 500ms cap.
+    $kernelInspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Listeners = @($kernelListener); ListenerOwnerKind = 'kernel-transport'
+        ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+        ListenerOwnerEvidence = 'pid-4-system-http-sys'
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }
+    $kernelAuthorizationDeadlineProbe = & $module[0] {
+        param($inspectionValue, $contextValue, $ownerValue, $proofValue)
+        $oldAuthorization = (Get-Command Test-VerifierRunOwnedPreviewHttpSysAuthorization `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        try {
+            $script:GateBDeadlineAuthorizationCalls = 0
+            $script:GateBDeadlineAuthorizationOriginal = $oldAuthorization
+            Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysAuthorization -Force -Value {
+                $script:GateBDeadlineAuthorizationCalls++
+                if ($script:GateBDeadlineAuthorizationCalls -eq 1) {
+                    Start-Sleep -Milliseconds 600
+                }
+                return [bool](& $script:GateBDeadlineAuthorizationOriginal `
+                    $args[0] $args[1] $args[2])
+            }
+            $accepted = $false
+            $typedFailure = $false
+            try {
+                $accepted = [bool](Test-VerifierLiveListenerInspectionAuthorization `
+                    $inspectionValue $contextValue $ownerValue 0 0L $proofValue)
+            } catch {
+                $typedFailure = Test-VerifierInfrastructureError $_
+            }
+            return [pscustomobject]@{
+                Accepted = $accepted; TypedFailure = $typedFailure
+                AuthorizationCalls = [int]$script:GateBDeadlineAuthorizationCalls
+            }
+        } finally {
+            Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysAuthorization `
+                -Force -Value $oldAuthorization
+            Remove-Variable -Name GateBDeadlineAuthorizationCalls,`
+                GateBDeadlineAuthorizationOriginal -Scope Script -Force `
+                -ErrorAction SilentlyContinue
+        }
+    } $kernelInspection $context $owner $proofForMutation
+    Assert-GateB ([bool]$kernelAuthorizationDeadlineProbe.Accepted -and
+        [int]$kernelAuthorizationDeadlineProbe.AuthorizationCalls -eq 0) `
+        'carried kernel proof was rejected or downstream listener authorization reauthorized'
 
     foreach ($ownerVariant in @(
         [pscustomobject]@{ Name = 'wrong owner kind'; Field = 'Owner'; Value = 'caller' },
@@ -2819,8 +4445,20 @@ function Invoke-GateBListenerRecordConsumerCanary() {
         param($context)
         (Get-VerifierManifestView $context | ConvertTo-Json -Depth 12)
     } $manifestContext
-    $manifestView = $manifestViewJson | ConvertFrom-Json
+    $manifestView = ConvertFrom-VerifierDurableJson $manifestViewJson
     $manifestServerView = $manifestView.server
+    $manifestCreatedUtc = & $module[0] {
+        param($value)
+        ConvertTo-VerifierStrictTimestampText $value $false 'Gate B manifest createdUtc' -AllowJsonDateTime
+    } $manifestView.createdUtc
+    $manifestCleanupCompletedUtc = & $module[0] {
+        param($value)
+        ConvertTo-VerifierStrictTimestampText $value $true 'Gate B manifest cleanup completedUtc' -AllowJsonDateTime
+    } $manifestView.cleanup.completedUtc
+    Assert-GateB ($manifestCreatedUtc -ceq $manifestContext.CreatedUtc -and
+        $manifestView.cleanup.state -ceq 'pending' -and
+        $manifestCleanupCompletedUtc -ceq '') `
+        'valid manifest JSON round-trip did not preserve strict context timestamp/state fields'
     foreach ($releaseFieldCase in @(
             [pscustomobject]@{ Name = 'missing ReleaseState'; Field = 'ReleaseState'; Value = $null; Remove = $true }
             [pscustomobject]@{ Name = 'numeric ReleaseState'; Field = 'ReleaseState'; Value = 0; Remove = $false }
@@ -2986,9 +4624,21 @@ function Invoke-GateBListenerRecordConsumerCanary() {
                 [pscustomobject]@{ Name = 'fractional server parent PID'; Target = 'server'; Field = 'ProcessParentProcessId'; Value = 1.5; Remove = $false }
                 [pscustomobject]@{ Name = 'missing lease inspection UTC'; Target = 'lease'; Field = 'ListenerInspectionUtc'; Value = $null; Remove = $true }
                 [pscustomobject]@{ Name = 'missing browser session path'; Target = 'session'; Field = 'BrowserPath'; Value = $null; Remove = $true }
+                [pscustomobject]@{ Name = 'empty CreatedUtc'; Target = 'context'; Field = 'CreatedUtc'; Value = ''; Remove = $false }
+                [pscustomobject]@{ Name = 'malformed CreatedUtc'; Target = 'context'; Field = 'CreatedUtc'; Value = 'not-a-timestamp'; Remove = $false }
+                [pscustomobject]@{ Name = 'empty CleanupState'; Target = 'context'; Field = 'CleanupState'; Value = ''; Remove = $false }
+                [pscustomobject]@{ Name = 'unknown CleanupState'; Target = 'context'; Field = 'CleanupState'; Value = 'legacy'; Remove = $false }
+                [pscustomobject]@{ Name = 'malformed CleanupCompletedUtc'; Target = 'context'; Field = 'CleanupCompletedUtc'; Value = 'not-a-timestamp'; Remove = $false }
+                [pscustomobject]@{ Name = 'pending CleanupCompletedUtc'; Target = 'context'; Field = 'CleanupCompletedUtc'; Value = '2026-08-30T00:00:00.0000000Z'; Remove = $false }
             )) {
             $candidateContext = $manifestNoWriteContext | Select-Object *
-            if ($noWriteCase.Target -eq 'server') {
+            if ($noWriteCase.Target -eq 'context') {
+                if ($noWriteCase.Remove) {
+                    [void]$candidateContext.PSObject.Properties.Remove($noWriteCase.Field)
+                } else {
+                    $candidateContext.($noWriteCase.Field) = $noWriteCase.Value
+                }
+            } elseif ($noWriteCase.Target -eq 'server') {
                 $candidateServer = $manifestNoWriteContext.Server | Select-Object *
                 if ($noWriteCase.Remove) {
                     [void]$candidateServer.PSObject.Properties.Remove($noWriteCase.Field)
@@ -3371,6 +5021,32 @@ function Invoke-GateBListenerRecordConsumerCanary() {
     Write-Host 'PASS:live listener consumers require exact user-process/kernel tuples; malformed tuples, duplicates, ambiguous identities, and mutated absence fail typed infrastructure'
 }
 
+function Invoke-GateBIntegratedListenerConsumerCanary() {
+    # The direct listener canary above exercises the live mutation consumers.
+    # Run the browser wrapper's deterministic proof canary as a real child so
+    # serialized server/manifest and integrated ledger readers are tested at
+    # their process boundary too; shell-collapsed nonzero status is not enough.
+    $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
+    $browserVerifier = Join-Path $PSScriptRoot 'verify-browser.ps1'
+    $childResult = Invoke-GateBBoundedProcess $powershell @(
+        '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+        '-File', $browserVerifier, '-GateBListenerProofProbe') 120000 `
+        'integrated listener consumer canary'
+    $childExit = Resolve-GateBChildExitCode $childResult `
+        'integrated listener consumer canary'
+    if ($childExit -ne 0) {
+        $message = 'integrated listener consumer canary returned exit ' +
+            [string]$childExit + ': ' + [string]$childResult.Stdout + ' ' +
+            [string]$childResult.Stderr
+        if ($childExit -eq 2) { Throw-GateBInfrastructure $message }
+        throw $message
+    }
+    Assert-GateB ([string]$childResult.Stdout -match
+        'PASS:listener owner proof') `
+        'integrated listener consumer canary did not publish its proof-bearing PASS output'
+    Write-Host 'PASS:integrated listener consumer canary exercised serialized server/manifest and ledger readers in a bounded child'
+}
+
 function Invoke-GateBDescendantCleanupCanary() {
     $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
         ('TroubleshootJS\gate-b-descendant-cleanup-' + [Guid]::NewGuid().ToString('N'))
@@ -3406,7 +5082,8 @@ function Invoke-GateBDescendantCleanupCanary() {
             'physical child-path validation accepted a junction/reparse path'
 
         try {
-            [void](Get-CimInstance Win32_Process -ErrorAction Stop)
+            [void](Get-VerifierProcessSnapshotWithFallback `
+                'end-to-end descendant cleanup canary')
         } catch {
             Throw-GateBInfrastructure ('end-to-end descendant cleanup requires complete Win32_Process ' +
                 'inspection; this host returned: ' + (Get-VerifierErrorMessage $_))
@@ -3668,7 +5345,8 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
     try {
         New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
         try {
-            [void](Get-CimInstance Win32_Process -ErrorAction Stop)
+            [void](Get-VerifierProcessSnapshotWithFallback `
+                'late-markerless cleanup canary')
         } catch {
             Throw-GateBInfrastructure ('late-markerless cleanup canary requires complete Win32_Process ' +
                 'inspection; this host returned: ' + (Get-VerifierErrorMessage $_))
@@ -3740,15 +5418,14 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
             '--tsj-verifier-worktree', $repositoryIdentity,
             '--remote-debugging-port', [string]$port)
         $rootProcess = Start-VerifierProcess $browserPath $rootArguments
-        # Preserve the exact launch handle/PID before any fallible identity
-        # query. Cleanup must never fall back to a bare PID or profile guess.
+        # Preserve the exact launch handle before any fallible identity query.
+        # Do not publish a positive PID until its complete start/parent/command
+        # tuple has been proved; cleanup must never serialize a mixed identity.
         $session.Runtime.Browser = $rootProcess
-        $session.ProcessId = [int]$rootProcess.Id
-        $session.Status = 'started'
-        Write-VerifierManifest $context
         $rootStartTicks = Get-VerifierProcessStartTicks $rootProcess
-        $rootIdentity = Get-VerifierCurrentProcessIdentity $session.ProcessId `
+        $rootIdentity = Get-VerifierCurrentProcessIdentity ([int]$rootProcess.Id) `
             $rootStartTicks 0 '' '' 0 $runId '' 0 $browserPath
+        $session.ProcessId = [int]$rootProcess.Id
         $session.ProcessStartTicks = $rootStartTicks
         $session.ProcessParentProcessId = [int]$rootIdentity.Record.ParentProcessId
         $session.ProcessParentProcessStartTicks = [long]$rootIdentity.Record.ParentProcessStartTicks
@@ -3762,6 +5439,10 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
         $context.TestHooks.BrowserDrainAfterInitialGraphReadyPath = $helperReadyPath
         $context.TestHooks.BrowserDrainAfterInitialGraphSignalWritten = $false
         Complete-VerifierBrowserSession $context $session
+        Assert-GateB (-not [bool]$session.Lease.ProcessProofRequired -and
+            -not [bool]$session.Lease.ProcessTerminationProven -and
+            -not [bool]$session.Lease.ProcessAbsent) `
+            'late-markerless cleanup copied root process proof into an unbound lease'
         Assert-GateB ([bool]$context.TestHooks.BrowserDrainAfterInitialGraphSignalWritten) `
             'late-markerless cleanup did not capture its initial empty graph before signaling the helper'
         Assert-GateB (Test-Path -LiteralPath $helperReadyPath -PathType Leaf) `
@@ -3771,7 +5452,8 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
             'late-markerless fixed-point cleanup returned before the root terminated'
         Assert-GateB ($null -eq (Get-VerifierCurrentProcessRecordById ([int]$rootProcess.Id))) `
             'late-markerless fixed-point cleanup left the root in the current process view'
-        $lateHelperRecords = @(Get-CimInstance Win32_Process -ErrorAction Stop |
+        $lateHelperRecords = @(Get-VerifierProcessSnapshotWithFallback `
+            'late-markerless helper discovery' |
             Where-Object {
                 $_.Name -and ([string]$_.Name).Equals(
                     [IO.Path]::GetFileName($browserPath), [StringComparison]::OrdinalIgnoreCase) -and
@@ -3799,7 +5481,8 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
         try {
             $lateHelperRecords = @()
             if ($helperScript -and $browserPath) {
-                $lateHelperRecords = @(Get-CimInstance Win32_Process -ErrorAction Stop |
+                $lateHelperRecords = @(Get-VerifierProcessSnapshotWithFallback `
+                    'late-markerless helper polling' |
                     Where-Object {
                         $_.Name -and ([string]$_.Name).Equals(
                             [IO.Path]::GetFileName($browserPath), [StringComparison]::OrdinalIgnoreCase) -and
@@ -3826,7 +5509,8 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
             try {
                 $helperDeadline = [DateTime]::UtcNow.AddSeconds(30)
                 do {
-                    $lateHelperRecords = @(Get-CimInstance Win32_Process -ErrorAction Stop |
+                    $lateHelperRecords = @(Get-VerifierProcessSnapshotWithFallback `
+                        'late-markerless helper polling' |
                         Where-Object {
                             $_.Name -and ([string]$_.Name).Equals(
                                 [IO.Path]::GetFileName($browserPath), [StringComparison]::OrdinalIgnoreCase) -and
@@ -3979,6 +5663,7 @@ function Invoke-GateBRootGoneCleanupCanary() {
     $helperScript = ''
     $rootScript = ''
     $rootStopPath = ''
+    $helperStopPath = ''
     $evidencePath = ''
     $rootGoneObserved = $false
     $rootGoneRejected = $false
@@ -3989,13 +5674,19 @@ function Invoke-GateBRootGoneCleanupCanary() {
     try {
         New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
         try {
-            [void](Get-CimInstance Win32_Process -ErrorAction Stop)
+            [void](Get-VerifierProcessSnapshotWithFallback 'root-gone cleanup canary')
         } catch {
             Throw-GateBInfrastructure ('root-gone cleanup canary requires complete Win32_Process ' +
                 'inspection; this host returned: ' + (Get-VerifierErrorMessage $_))
         }
         $browserPath = (Get-Command wscript.exe -ErrorAction Stop).Source
-        $helperExecutable = (Get-Command cscript.exe -ErrorAction Stop).Source
+        # cscript.exe is unavailable on this host because Windows Script Host
+        # cannot load its settings under the sandbox token. Use the supported
+        # absolute PowerShell executable for the markerless differently named
+        # helper instead; its command line still carries only positional
+        # fixture arguments and remains subject to the same exact identity
+        # proof.
+        $helperExecutable = (Get-Command powershell.exe -ErrorAction Stop).Source
         $context = New-VerifierRunContext $repositoryRoot $canaryRoot
         $session = New-VerifierBrowserLease $context 'root-gone-cleanup' $browserPath
         $profile = [string]$session.Profile
@@ -4008,27 +5699,33 @@ function Invoke-GateBRootGoneCleanupCanary() {
             [Text.UTF8Encoding]::new($false))
         Register-VerifierEvidenceArtifact $context $evidencePath
 
-        $helperScript = [IO.Path]::ChangeExtension(
-            (Join-Path $canaryRoot 'different-name-markerless-helper.ps1'), '.vbs')
+        $helperScript = Join-Path $canaryRoot 'different-name-markerless-helper.ps1'
         $rootScript = [IO.Path]::ChangeExtension(
             (Join-Path $canaryRoot 'root-gone-launcher.ps1'), '.vbs')
         $rootStopPath = Join-Path $canaryRoot 'root-gone-stop.signal'
+        $helperStopPath = Join-Path $canaryRoot 'helper-stop.signal'
         $helperText = [string]::Join([Environment]::NewLine, @(
-            'Option Explicit'
-            # The helper has no verifier switches. The profile is passed as a
-            # positional fixture argument solely to model a markerless
-            # differently named process that may still retain a profile.
-            'WScript.Sleep 15000'
+            'param([string]$ProfilePath, [string]$StopPath)'
+            '# The helper has no verifier switches. The profile is passed as a'
+            '# positional fixture argument solely to model a markerless'
+            '# differently named process that may still retain a profile.'
+            '$deadline = [DateTime]::UtcNow.AddMinutes(10)'
+            'while (-not [IO.File]::Exists($StopPath) -and [DateTime]::UtcNow -lt $deadline) {'
+            '    Start-Sleep -Milliseconds 100'
+            '}'
         ))
         $rootText = [string]::Join([Environment]::NewLine, @(
             'Option Explicit'
-            'Dim shell, commandLine, fileSystem, i'
+            'Dim shell, commandLine, fileSystem, i, helperExecution'
             'Function Q(value)'
             '    Q = Chr(34) & Replace(CStr(value), Chr(34), Chr(34) & Chr(34)) & Chr(34)'
             'End Function'
             'Set shell = CreateObject("WScript.Shell")'
-            'commandLine = Q("cscript.exe") & " //B " & Q(WScript.Arguments(0)) & " " & Q(WScript.Arguments(1))'
-            'shell.Run commandLine, 0, False'
+            # Use the already-resolved absolute helper host. Resolving a
+            # helper inside WScript would re-enter the inherited case-
+            # colliding Path/PATH environment on affected hosts.
+            'commandLine = Q(WScript.Arguments(4)) & " -NoProfile -ExecutionPolicy Bypass -File " & Q(WScript.Arguments(0)) & " " & Q(WScript.Arguments(1)) & " " & Q(WScript.Arguments(3))'
+            'Set helperExecution = shell.Exec(commandLine)'
             'Set fileSystem = CreateObject("Scripting.FileSystemObject")'
             # Hold the root until the canary has captured the helper's exact
             # WMI identity, then let the canary signal a bounded exit. This
@@ -4045,29 +5742,34 @@ function Invoke-GateBRootGoneCleanupCanary() {
             [Text.UTF8Encoding]::new($false))
         Assert-VerifierNoReparseAncestors $canaryRoot
         if (-not (Test-VerifierPhysicalChildPath $canaryRoot $helperScript) -or
-                -not (Test-VerifierPhysicalChildPath $canaryRoot $rootScript)) {
+                -not (Test-VerifierPhysicalChildPath $canaryRoot $rootScript) -or
+                -not (Test-VerifierPhysicalChildPath $canaryRoot $rootStopPath) -or
+                -not (Test-VerifierPhysicalChildPath $canaryRoot $helperStopPath)) {
             Throw-GateBInfrastructure 'root-gone canary fixture scripts escaped the physical namespace'
         }
 
         $rootArguments = @(
-            '//B', $rootScript, $helperScript, $profile, $rootStopPath,
+            '//B', $rootScript, $helperScript, $profile, $rootStopPath, $helperStopPath,
+            $helperExecutable,
             '--user-data-dir', $profile,
             '--tsj-verifier-run', $runId,
             '--tsj-verifier-worktree', $repositoryIdentity,
             '--remote-debugging-port', [string]$port)
         $rootProcess = Start-VerifierProcess $browserPath $rootArguments
-        # Retain the launch handle/PID before any fallible identity query.
+        # Retain the launch handle before any fallible identity query.  Do not
+        # publish a positive PID into the durable session until its complete
+        # start/parent/command tuple has been proved; the durable schema must
+        # never contain an intentionally mixed identity.
         $session.Runtime.Browser = $rootProcess
-        $session.ProcessId = [int]$rootProcess.Id
-        $session.Status = 'started'
-        Write-VerifierManifest $context
         $rootStartTicks = Get-VerifierProcessStartTicks $rootProcess
-        $rootIdentity = Get-VerifierCurrentProcessIdentity $session.ProcessId `
+        $rootIdentity = Get-VerifierCurrentProcessIdentity ([int]$rootProcess.Id) `
             $rootStartTicks 0 '' '' 0 $runId '' 0 $browserPath
+        $session.ProcessId = [int]$rootProcess.Id
         $session.ProcessStartTicks = $rootStartTicks
         $session.ProcessParentProcessId = [int]$rootIdentity.Record.ParentProcessId
         $session.ProcessParentProcessStartTicks = [long]$rootIdentity.Record.ParentProcessStartTicks
         $session.ProcessCommandLine = [string]$rootIdentity.Record.CommandLine
+        $session.Status = 'started'
         Write-VerifierManifest $context
 
         $helperCandidate = $null
@@ -4077,7 +5779,8 @@ function Invoke-GateBRootGoneCleanupCanary() {
             if ([bool]$rootProcess.HasExited) {
                 Throw-GateBInfrastructure 'root-gone canary root exited before its helper identity was captured'
             }
-            $helperCandidates = @(Get-CimInstance Win32_Process -ErrorAction Stop |
+            $helperCandidates = @(Get-VerifierProcessSnapshotWithFallback `
+                'root-gone helper discovery' |
                 Where-Object {
                     [int]$_.ParentProcessId -eq [int]$rootProcess.Id -and
                     $_.Name -and
@@ -4209,6 +5912,28 @@ function Invoke-GateBRootGoneCleanupCanary() {
         # is alive. Once the canary-owned helper exits naturally, perform a
         # separate exact test-fixture recovery. This recovery is never used by
         # production cleanup to authorize a root-gone session.
+        if (-not [String]::IsNullOrWhiteSpace($helperStopPath)) {
+            try {
+                if (Test-VerifierPhysicalChildPath $canaryRoot $helperStopPath) {
+                    [IO.File]::WriteAllText($helperStopPath, 'stop-root-gone-helper',
+                        [Text.UTF8Encoding]::new($false))
+                }
+            } catch {
+                [void]$cleanupErrors.Add(('root-gone helper stop signal: ' +
+                    (Get-VerifierErrorMessage $_)))
+            }
+        }
+        if (-not [String]::IsNullOrWhiteSpace($rootStopPath)) {
+            try {
+                if (Test-VerifierPhysicalChildPath $canaryRoot $rootStopPath) {
+                    [IO.File]::WriteAllText($rootStopPath, 'stop-root-gone-root',
+                        [Text.UTF8Encoding]::new($false))
+                }
+            } catch {
+                [void]$cleanupErrors.Add(('root-gone root stop signal: ' +
+                    (Get-VerifierErrorMessage $_)))
+            }
+        }
         if ($null -ne $helperProcess) {
             try {
                 if (-not $helperProcess.WaitForExit(30000)) {
@@ -4342,7 +6067,7 @@ function Invoke-GateBRealEdgeOwnershipCanary() {
     try {
         New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
         try {
-            [void](Get-CimInstance Win32_Process -ErrorAction Stop)
+            [void](Get-VerifierProcessSnapshotWithFallback 'real Edge ownership canary')
         } catch {
             Throw-GateBInfrastructure ('real Edge ownership canary requires complete Win32_Process ' +
                 'inspection; this host returned: ' + (Get-VerifierErrorMessage $_))
@@ -4470,6 +6195,2108 @@ function Invoke-GateBRealEdgeOwnershipCanary() {
     Write-Host 'PASS:real Edge markerless-descendant ancestry, profile, claim, listener, and evidence cleanup canary'
 }
 
+function Invoke-GateBBrowserIdentityRetryCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for browser identity retry canary.'
+    }
+    $process = Get-Process -Id ([int]$PID) -ErrorAction Stop
+    if ($null -eq $process) {
+        Throw-GateBInfrastructure 'Browser identity retry canary could not retain its current process.'
+    }
+    $startTicks = Get-VerifierProcessStartTicks $process
+    $browserPath = (Get-Command powershell.exe -ErrorAction Stop).Source
+    $current = Get-VerifierCurrentProcessRecordById ([int]$PID)
+    if ($null -eq $current -or [String]::IsNullOrWhiteSpace([string]$current.CommandLine)) {
+        Throw-GateBInfrastructure 'Browser identity retry canary could not obtain a complete current command line.'
+    }
+    $validRecord = [pscustomobject]@{
+        ProcessId = [int]$PID
+        ProcessStartTicks = [long]$startTicks
+        ParentProcessId = [int]$current.ParentProcessId
+        ParentProcessStartTicks = 1L
+        CommandLine = [string]$current.CommandLine
+        Name = 'powershell.exe'
+        ExecutablePath = [string]$browserPath
+    }
+    $probe = & $module[0] {
+        param($pidValue, $startValue, $expectedPath, $processValue, $recordValue)
+        $oldFunction = Get-Command Get-VerifierCurrentProcessIdentity `
+            -CommandType Function -ErrorAction Stop
+        $oldScriptBlock = $oldFunction.ScriptBlock
+        try {
+            $results = New-Object Collections.ArrayList
+            foreach ($case in @(
+                    [pscustomobject]@{ Name = 'transient-empty-path'; Mode = 'transient' }
+                    [pscustomobject]@{ Name = 'stable-empty-path'; Mode = 'empty' }
+                    [pscustomobject]@{ Name = 'stable-wrong-path'; Mode = 'wrong' }
+                    [pscustomobject]@{ Name = 'delayed-proof'; Mode = 'delayed' }
+                )) {
+                $script:GateBRetryAttempts = 0
+                $script:GateBRetryMode = $case.Mode
+                $script:GateBRetryExpectedPath = $expectedPath
+                $script:GateBRetryProcess = $processValue
+                $script:GateBRetryRecord = $recordValue
+                Set-Item Function:\Get-VerifierCurrentProcessIdentity -Force -Value {
+                    $script:GateBRetryAttempts++
+                    if ($script:GateBRetryMode -eq 'delayed') {
+                        Start-Sleep -Milliseconds 600
+                    }
+                    $record = $script:GateBRetryRecord | Select-Object *
+                    if ($script:GateBRetryMode -eq 'transient' -and
+                            $script:GateBRetryAttempts -eq 1) {
+                        $record.ExecutablePath = ''
+                    } elseif ($script:GateBRetryMode -eq 'empty') {
+                        $record.ExecutablePath = ''
+                    } elseif ($script:GateBRetryMode -eq 'wrong') {
+                        $record.ExecutablePath = 'C:\Windows\System32\not-the-browser.exe'
+                    }
+                    return [pscustomobject]@{
+                        Process = $script:GateBRetryProcess
+                        Record = $record
+                    }
+                }
+                $accepted = $false
+                $typedFailure = $false
+                try {
+                    [void](Get-VerifierCurrentProcessIdentityWithRetry $pidValue `
+                        $startValue 0 '' '' 0 '' '' 0 $expectedPath)
+                    $accepted = $true
+                } catch {
+                    $typedFailure = Test-VerifierInfrastructureError $_
+                }
+                [void]$results.Add([pscustomobject]@{
+                    Name = $case.Name
+                    Attempts = [int]$script:GateBRetryAttempts
+                    Accepted = $accepted
+                    TypedFailure = $typedFailure
+                })
+            }
+            return @($results)
+        } finally {
+            Set-Item Function:\Get-VerifierCurrentProcessIdentity -Force `
+                -Value $oldScriptBlock
+            Remove-Variable -Name GateBRetryAttempts,GateBRetryMode,`
+                GateBRetryExpectedPath,GateBRetryProcess,GateBRetryRecord `
+                -Scope Script -Force -ErrorAction SilentlyContinue
+        }
+    } ([int]$PID) ([long]$startTicks) $browserPath $process $validRecord
+    $transient = @($probe | Where-Object Name -eq 'transient-empty-path')
+    $empty = @($probe | Where-Object Name -eq 'stable-empty-path')
+    $wrong = @($probe | Where-Object Name -eq 'stable-wrong-path')
+    $delayed = @($probe | Where-Object Name -eq 'delayed-proof')
+    Assert-GateB ($transient.Count -eq 1 -and $transient[0].Accepted -and
+        [int]$transient[0].Attempts -eq 2) `
+        'transient empty executable path was not retried to a complete identity'
+    foreach ($negative in @($empty, $wrong)) {
+        Assert-GateB ($negative.Count -eq 1 -and -not $negative[0].Accepted -and
+            $negative[0].TypedFailure -and [int]$negative[0].Attempts -eq 3) `
+            'stable empty/wrong executable path did not remain typed infrastructure rejection'
+    }
+    Assert-GateB ($delayed.Count -eq 1 -and -not $delayed[0].Accepted -and
+        $delayed[0].TypedFailure -and [int]$delayed[0].Attempts -eq 1) `
+        'delayed complete identity proof was accepted after the monotonic retry budget'
+    Write-Host 'PASS:browser identity retry accepts transient empty path only after complete proof, rejects stable empty/wrong paths, and enforces its monotonic budget'
+}
+
+function Invoke-GateBBrowserDescendantIdentityRetryCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for browser descendant identity retry canary.'
+    }
+    $process = Get-Process -Id ([int]$PID) -ErrorAction Stop
+    if ($null -eq $process -or $process.GetType() -ne [Diagnostics.Process]) {
+        Throw-GateBInfrastructure 'Browser descendant identity retry canary could not retain its live process.'
+    }
+    $startTicks = Get-VerifierProcessStartTicks $process
+    $current = Get-VerifierCurrentProcessRecordById ([int]$PID)
+    if ($null -eq $current -or
+            [String]::IsNullOrWhiteSpace([string]$current.Name) -or
+            [String]::IsNullOrWhiteSpace([string]$current.ExecutablePath) -or
+            [String]::IsNullOrWhiteSpace([string]$current.CommandLine)) {
+        Throw-GateBInfrastructure 'Browser descendant identity retry canary could not obtain a complete current process record.'
+    }
+    $parentStartTicks = & $module[0] {
+        param($parentId)
+        Get-VerifierCurrentParentStartTicks $parentId
+    } ([int]$current.ParentProcessId)
+    if ([long]$parentStartTicks -le 0) {
+        Throw-GateBInfrastructure 'Browser descendant identity retry canary could not obtain the live parent start identity.'
+    }
+    $profile = Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\gate-b-descendant-profile-' + [Guid]::NewGuid().ToString('N'))
+    $runId = 'gate-b-descendant-run'
+    $worktree = 'gate-b-descendant-worktree'
+    $port = 45123
+    $owner = [pscustomobject]@{
+        ProcessId = [int]$current.ParentProcessId; ProcessStartTicks = [long]$parentStartTicks
+        ProcessParentProcessId = 8999; ProcessParentProcessStartTicks = 699L
+        ProcessCommandLine = 'launcher.exe'
+        Profile = $profile
+        BrowserPath = [string]$current.ExecutablePath
+        RunId = $runId; RepositoryIdentity = $worktree
+        CdpPort = $port
+    }
+    $record = [pscustomobject]@{
+        ProcessId = [int]$PID; ProcessStartTicks = [long]$startTicks
+        ParentProcessId = [int]$current.ParentProcessId
+        ParentProcessStartTicks = [long]$parentStartTicks
+        Name = [string]$current.Name; ExecutablePath = ''
+        CommandLine = ([IO.Path]::GetFileName([string]$current.ExecutablePath) +
+            ' -NoProfile -Command gate-b-descendant-retry-canary')
+    }
+    $probe = & $module[0] {
+        param($ownerValue, $recordValue, $processValue)
+        $oldProbe = (Get-Command Get-VerifierCurrentProcessRecordById `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldOnce = (Get-Command Get-VerifierCurrentOwnedProcessOnce `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldParentStart = (Get-Command Get-VerifierCurrentParentStartTicks `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        try {
+            $completePath = [string]$ownerValue.BrowserPath
+            $completeRecord = $recordValue | Select-Object *
+            $completeRecord.ExecutablePath = $completePath
+            $wrongRecord = $recordValue | Select-Object *
+            $wrongRecord.ExecutablePath = 'C:\Program Files\Other\other.exe'
+            $changedParent = $completeRecord | Select-Object *
+            $changedParent.ParentProcessId = 9002
+            $changedStart = $completeRecord | Select-Object *
+            $changedStart.ProcessStartTicks = 702L
+            $malformedCurrent = $completeRecord | Select-Object *
+            $malformedCurrent.CommandLine = ''
+            $cases = @(
+                [pscustomobject]@{
+                    Name = 'transient-empty-path'
+                    Mode = 'transient'; Records = @($recordValue, $completeRecord)
+                }
+                [pscustomobject]@{
+                    Name = 'stable-empty-path'
+                    Mode = 'stable-empty'; Records = @($recordValue)
+                }
+                [pscustomobject]@{
+                    Name = 'stable-wrong-path'
+                    Mode = 'stable-wrong'; Records = @($wrongRecord)
+                }
+                [pscustomobject]@{
+                    Name = 'changed-parent'
+                    Mode = 'changed-parent'; Records = @($changedParent)
+                }
+                [pscustomobject]@{
+                    Name = 'changed-start'
+                    Mode = 'changed-start'; Records = @($changedStart)
+                }
+                [pscustomobject]@{
+                    Name = 'disappeared'
+                    Mode = 'disappeared'; Records = @()
+                }
+                [pscustomobject]@{
+                    Name = 'malformed-current'
+                    Mode = 'malformed-current'; Records = @($malformedCurrent)
+                }
+                [pscustomobject]@{
+                    Name = 'null-process'
+                    Mode = 'null-process'; Records = @($completeRecord)
+                }
+                [pscustomobject]@{
+                    Name = 'malformed-process'
+                    Mode = 'malformed-process'; Records = @($completeRecord)
+                }
+                [pscustomobject]@{
+                    Name = 'once-typed-failure'
+                    Mode = 'once-typed-failure'; Records = @($completeRecord)
+                }
+                [pscustomobject]@{
+                    Name = 'delayed-proof'
+                    Mode = 'delayed-proof'; Records = @($completeRecord)
+                }
+            )
+            $results = New-Object Collections.ArrayList
+            foreach ($case in $cases) {
+                $state = [pscustomobject]@{
+                    Index = 0; Once = 0; Mode = $case.Mode; Records = $case.Records
+                }
+                $script:GateBDescendantRetryState = $state
+                Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                    $state = $script:GateBDescendantRetryState
+                    if ($state.Mode -eq 'delayed-proof') {
+                        Start-Sleep -Milliseconds 600
+                    }
+                    if ($state.Mode -eq 'disappeared') {
+                        $state.Index++
+                        return $null
+                    }
+                    $index = [Math]::Min($state.Index, $state.Records.Count - 1)
+                    $state.Index++
+                    return ($state.Records[$index] | Select-Object *)
+                }
+                Set-Item Function:\Get-VerifierCurrentOwnedProcessOnce -Force -Value {
+                    $state = $script:GateBDescendantRetryState
+                    $state.Once++
+                    if ($state.Mode -eq 'once-typed-failure') {
+                        Throw-VerifierInfrastructure 'synthetic termination-boundary failure'
+                    }
+                    $current = $state.Records[[Math]::Min($state.Index - 1,
+                        $state.Records.Count - 1)] | Select-Object *
+                    $verifiedProcess = if ($state.Mode -eq 'null-process') {
+                        $null
+                    } elseif ($state.Mode -eq 'malformed-process') {
+                        [pscustomobject]@{ Id = [int]$processValue.Id }
+                    } else { $processValue }
+                    return [pscustomobject]@{
+                        Process = $verifiedProcess; Record = $current
+                    }
+                }
+                Set-Item Function:\Get-VerifierCurrentParentStartTicks -Force -Value {
+                    param($parentId)
+                    if ([int]$parentId -eq [int]$recordValue.ParentProcessId) {
+                        return [long]$recordValue.ParentProcessStartTicks
+                    }
+                    return 999L
+                }
+                $accepted = $false
+                $typedFailure = $false
+                try {
+                    [void](Get-VerifierCurrentOwnedDescendantWithRetry $ownerValue $recordValue)
+                    $accepted = $true
+                } catch {
+                    $typedFailure = Test-VerifierInfrastructureError $_
+                }
+                [void]$results.Add([pscustomobject]@{
+                    Name = $case.Name
+                    Attempts = [int]$state.Index
+                    OnceAttempts = [int]$state.Once
+                    Accepted = $accepted
+                    TypedFailure = $typedFailure
+                })
+            }
+            return @($results)
+        } finally {
+            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value $oldProbe
+            Set-Item Function:\Get-VerifierCurrentOwnedProcessOnce -Force -Value $oldOnce
+            Set-Item Function:\Get-VerifierCurrentParentStartTicks -Force -Value $oldParentStart
+            Remove-Variable -Name GateBDescendantRetryState -Scope Script -Force `
+                -ErrorAction SilentlyContinue
+        }
+    } $owner $record $process
+    $transient = @($probe | Where-Object Name -eq 'transient-empty-path')
+    $empty = @($probe | Where-Object Name -eq 'stable-empty-path')
+    $wrong = @($probe | Where-Object Name -eq 'stable-wrong-path')
+    $parent = @($probe | Where-Object Name -eq 'changed-parent')
+    $start = @($probe | Where-Object Name -eq 'changed-start')
+    $disappeared = @($probe | Where-Object Name -eq 'disappeared')
+    $malformedCurrent = @($probe | Where-Object Name -eq 'malformed-current')
+    $nullProcess = @($probe | Where-Object Name -eq 'null-process')
+    $malformedProcess = @($probe | Where-Object Name -eq 'malformed-process')
+    $onceFailure = @($probe | Where-Object Name -eq 'once-typed-failure')
+    $delayed = @($probe | Where-Object Name -eq 'delayed-proof')
+    Assert-GateB ($transient.Count -eq 1 -and $transient[0].Accepted -and
+        $transient[0].TypedFailure -eq $false -and
+        [int]$transient[0].Attempts -eq 2 -and
+        [int]$transient[0].OnceAttempts -eq 1) `
+        'transient empty descendant executable path did not recover on a complete retry'
+    Assert-GateB ($empty.Count -eq 1 -and -not $empty[0].Accepted -and
+        $empty[0].TypedFailure -and [int]$empty[0].Attempts -eq 3 -and
+        [int]$empty[0].OnceAttempts -eq 0) `
+        'stable empty descendant executable path did not remain bounded typed rejection'
+    foreach ($negative in @($wrong, $parent, $start, $disappeared, $malformedCurrent)) {
+        Assert-GateB ($negative.Count -eq 1 -and -not $negative[0].Accepted -and
+            $negative[0].TypedFailure -and [int]$negative[0].Attempts -eq 1 -and
+            [int]$negative[0].OnceAttempts -eq 0) `
+            'wrong descendant path, changed identity, disappearance, or malformed current record was retried or accepted'
+    }
+    foreach ($negative in @($nullProcess, $malformedProcess, $onceFailure)) {
+        Assert-GateB ($negative.Count -eq 1 -and -not $negative[0].Accepted -and
+            $negative[0].TypedFailure -and [int]$negative[0].Attempts -eq 1 -and
+            [int]$negative[0].OnceAttempts -eq 1) `
+            'null/malformed Process or a termination-boundary failure was retried or accepted'
+    }
+    Assert-GateB ($delayed.Count -eq 1 -and -not $delayed[0].Accepted -and
+        $delayed[0].TypedFailure -and [int]$delayed[0].Attempts -eq 1 -and
+        [int]$delayed[0].OnceAttempts -eq 0) `
+        'delayed complete descendant proof was accepted after the monotonic retry budget'
+    Write-Host 'PASS:browser descendant identity retry recovers only a transient empty path and rejects identity, termination, and Process-object failures immediately'
+}
+
+function Invoke-GateBBrowserDrainNaturalExitCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for browser drain natural-exit canary.'
+    }
+    $probe = & $module[0] {
+        $cases = New-Object Collections.ArrayList
+        $oldCurrent = (Get-Command Get-VerifierCurrentProcessRecordById `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldAttestation = (Get-Command Get-VerifierBrowserDrainAttestation `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldStart = (Get-Command Get-VerifierRetainedProcessStartTimeValue `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $script:GateBDrainOriginalCurrent = $oldCurrent
+        $script:GateBDrainOriginalAttestation = $oldAttestation
+        $script:GateBDrainOriginalStart = $oldStart
+        function New-DrainCanaryFixture([int]$Milliseconds = 1200) {
+            $process = Start-VerifierProcess (Get-Command powershell.exe `
+                -ErrorAction Stop).Source @(
+                '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy',
+                'Bypass', '-Command', "Start-Sleep -Milliseconds $Milliseconds")
+            $record = $null
+            $scope = $null
+            try {
+                $record = Get-VerifierCurrentProcessRecordById ([int]$process.Id)
+                if ($null -eq $record) {
+                    Throw-VerifierInfrastructure ('browser drain canary child PID ' +
+                        [string]$process.Id + ' disappeared before record capture (' +
+                        [string]$Milliseconds + 'ms fixture).')
+                }
+                [void]($record | Add-Member -MemberType NoteProperty `
+                    -Name ParentProcessStartTicks -Value `
+                    (Get-VerifierCurrentParentStartTicks $record.ParentProcessId) -Force)
+                $scope = New-VerifierBrowserDrainScope
+                $attestation = New-VerifierBrowserDrainAttestation $scope `
+                    $record $record.Process
+                [void]($record | Add-Member -MemberType NoteProperty `
+                    -Name VerifierDrainAttestation -Value $attestation -Force
+                )
+                return [pscustomobject]@{
+                    Process = $process
+                    Record = $record
+                    Scope = $scope
+                    StartTicks = [long]$record.ProcessStartTicks
+                }
+            } catch {
+                $fixtureFailure = $_
+                $fixtureErrors = New-Object Collections.ArrayList
+                try {
+                    if (-not $process.WaitForExit($Milliseconds + 5000)) {
+                        [void]$fixtureErrors.Add('bounded canary child did not exit after fixture creation failed')
+                    }
+                } catch { [void]$fixtureErrors.Add((Get-VerifierErrorMessage $_)) }
+                if ($null -ne $scope) {
+                    try {
+                        foreach ($failure in @(Dispose-VerifierBrowserDrainScope $scope)) {
+                            [void]$fixtureErrors.Add($failure)
+                        }
+                    } catch { [void]$fixtureErrors.Add((Get-VerifierErrorMessage $_)) }
+                }
+                try { $process.Dispose() } catch {
+                    [void]$fixtureErrors.Add((Get-VerifierErrorMessage $_))
+                }
+                if ($fixtureErrors.Count -gt 0) {
+                    Throw-VerifierInfrastructure ((Get-VerifierErrorMessage $fixtureFailure) +
+                        '; fixture cleanup: ' + ($fixtureErrors -join '; '))
+                    }
+                throw $fixtureFailure
+            }
+        }
+        function Dispose-DrainCanaryFixture($Fixture, [bool]$StopLive = $false) {
+            $errors = New-Object Collections.ArrayList
+            if ($null -eq $Fixture) { return @() }
+            $fixturePid = 0
+            $fixtureExited = $false
+            if ($null -ne $Fixture.Process) {
+                try {
+                    $fixturePid = [int]$Fixture.Process.Id
+                } catch { [void]$errors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($StopLive -and $null -ne $Fixture.Process) {
+                try {
+                    [void](Stop-VerifierVerifiedProcessExactly $Fixture.Process `
+                        ([long]$Fixture.StartTicks) 5000 $Fixture.Record)
+                } catch { [void]$errors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $Fixture.Process) {
+                try { $Fixture.Process.Refresh(); $fixtureExited = [bool]$Fixture.Process.HasExited } catch {
+                    [void]$errors.Add((Get-VerifierErrorMessage $_))
+                }
+            }
+            if ($null -ne $Fixture.Scope) {
+                try {
+                    $dispose = @(Dispose-VerifierBrowserDrainScope $Fixture.Scope)
+                    foreach ($error in $dispose) { [void]$errors.Add([string]$error) }
+                } catch { [void]$errors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $Fixture.Process) {
+                if (-not $fixtureExited) {
+                    [void]$errors.Add('browser drain canary fixture PID ' +
+                        [string]$fixturePid + ' remained alive during disposal')
+                }
+                try { $Fixture.Process.Dispose() } catch {
+                    [void]$errors.Add((Get-VerifierErrorMessage $_))
+                }
+            }
+            return @($errors)
+        }
+        function Assert-DrainCanaryTypedFailure($Action, [string]$Name) {
+            $typed = $false
+            try { & $Action } catch { $typed = Test-VerifierInfrastructureError $_ }
+            if (-not $typed) {
+                Throw-VerifierInfrastructure "browser drain canary case '$Name' did not reject with typed infrastructure failure."
+            }
+            return $true
+        }
+        $positive = $null
+        $live = $null
+        $positiveResult = $false
+        $liveStopped = $false
+        $negativeFixtures = New-Object Collections.ArrayList
+        $foreignHandle = $null
+        $emptyScope = $null
+        try {
+            # Positive path: this is a real short-lived child and a real
+            # retained Process handle. The natural lane must prove two current
+            # absence observations and must not stop the already-exited child.
+            $positive = New-DrainCanaryFixture 3000
+            if (-not $positive.Process.WaitForExit(5000)) {
+                Throw-VerifierInfrastructure 'browser drain positive child did not naturally exit in its bound.'
+            }
+            $natural = Get-VerifierBrowserDrainNaturalExitResult $positive.Scope `
+                $positive.Record
+            if ($null -eq $natural -or -not [bool]$natural.NaturalExit -or
+                    -not [bool]$natural.TerminationProven) {
+                Throw-VerifierInfrastructure 'browser drain positive natural-exit result was incomplete.'
+            }
+            $positiveResult = $true
+
+            # Each injected delay delegates to the actual proof/accessor.
+            # Acceptance must cover the entire call, including the last view.
+            Set-Item Function:\Get-VerifierBrowserDrainAttestation -Force -Value {
+                param($DrainScope, $Record)
+                Start-Sleep -Milliseconds 650
+                & $script:GateBDrainOriginalAttestation $DrainScope $Record
+            }
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $positive.Scope $positive.Record
+            } 'delayed-attestation-proof')
+            Set-Item Function:\Get-VerifierBrowserDrainAttestation -Force -Value $oldAttestation
+            Set-Item Function:\Get-VerifierRetainedProcessStartTimeValue -Force -Value {
+                param($Process)
+                Start-Sleep -Milliseconds 650
+                & $script:GateBDrainOriginalStart $Process
+            }
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $positive.Scope $positive.Record
+            } 'delayed-retained-handle-proof')
+            Set-Item Function:\Get-VerifierRetainedProcessStartTimeValue -Force -Value {
+                param($Process)
+                (& $script:GateBDrainOriginalStart $Process).AddTicks(1)
+            }
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $positive.Scope $positive.Record
+            } 'exited-retained-handle-start-mismatch')
+            Set-Item Function:\Get-VerifierRetainedProcessStartTimeValue -Force -Value $oldStart
+            foreach ($delayAt in @(1, 2)) {
+                $script:GateBDrainCurrentCalls = 0
+                $script:GateBDrainDelayAt = $delayAt
+                Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                    param($ProcessId)
+                    $script:GateBDrainCurrentCalls++
+                    if ($script:GateBDrainCurrentCalls -eq $script:GateBDrainDelayAt) {
+                        Start-Sleep -Milliseconds 650
+                    }
+                    & $script:GateBDrainOriginalCurrent $ProcessId
+                }
+                [void](Assert-DrainCanaryTypedFailure {
+                    Get-VerifierBrowserDrainNaturalExitResult $positive.Scope $positive.Record
+                } ('delayed-current-view-' + $delayAt))
+                if ($script:GateBDrainCurrentCalls -ne $delayAt) {
+                    Throw-VerifierInfrastructure 'browser drain continued to another current view after its deadline.'
+                }
+            }
+            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value $oldCurrent
+
+            # Missing/unverified handle and copied/foreign scope/attestation
+            # cases must fail before any current-process fallback is accepted.
+            $missing = New-DrainCanaryFixture 5000
+            [void]$negativeFixtures.Add($missing)
+            $emptyScope = New-VerifierBrowserDrainScope
+            $unmintedScopeCopy = $emptyScope | Select-Object *
+            [void](Assert-DrainCanaryTypedFailure {
+                New-VerifierBrowserDrainAttestation $unmintedScopeCopy `
+                    $missing.Record $missing.Record.Process
+            } 'copied-scope-mint-before-any-original-attestation')
+            $emptyDispose = @(Dispose-VerifierBrowserDrainScope $emptyScope)
+            if ($emptyDispose.Count -gt 0) {
+                Throw-VerifierInfrastructure ('empty scope cleanup failed: ' + ($emptyDispose -join '; '))
+            }
+            $disposedScope = $emptyScope
+            $emptyScope = $null
+            [void](Assert-DrainCanaryTypedFailure {
+                New-VerifierBrowserDrainAttestation $disposedScope `
+                    $missing.Record $missing.Record.Process
+            } 'disposed-scope-mint')
+            $missingCopy = $missing.Record | Select-Object *
+            [void]$missingCopy.PSObject.Properties.Remove('VerifierDrainAttestation')
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $missing.Scope $missingCopy
+            } 'missing-unverified-handle')
+            $missingAttestation = $missing.Record.VerifierDrainAttestation
+            $missingProcess = $missingAttestation.Process
+            $missingAttestation.Process = $null
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $missing.Scope $missing.Record
+            } 'unverified-retained-handle')
+            $missingAttestation.Process = $missingProcess
+            $originalIdentity = $missingAttestation.Identity
+            $missingAttestation.Identity = $originalIdentity | Select-Object *
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $missing.Scope $missing.Record
+            } 'replaced-immutable-identity-tuple')
+            $missingAttestation.Identity = $originalIdentity
+
+            # A distinct real Process object for the SAME live PID/start is
+            # not the handle registered when this child was fully proved.
+            $foreignHandle = [Diagnostics.Process]::GetProcessById([int]$missing.Record.ProcessId)
+            [void]$foreignHandle.Handle
+            if ([object]::ReferenceEquals($foreignHandle, $missingProcess) -or
+                    (Get-VerifierProcessStartTicks $foreignHandle) -ne $missing.StartTicks) {
+                Throw-VerifierInfrastructure 'foreign-handle canary did not establish a distinct object for the same PID/start.'
+            }
+            $missingAttestation.Process = $foreignHandle
+            $missing.Record.Process = $foreignHandle
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $missing.Scope $missing.Record
+            } 'substituted-same-pid-start-handle-while-live')
+            if (-not $missing.Process.WaitForExit(7000)) {
+                Throw-VerifierInfrastructure 'foreign-handle child did not naturally exit in its bound.'
+            }
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $missing.Scope $missing.Record
+            } 'substituted-same-pid-start-handle-after-exit')
+            $missingAttestation.Process = $missingProcess
+            $missing.Record.Process = $missingProcess
+            $foreignHandle.Dispose()
+            $foreignHandle = $null
+
+            $startMismatch = New-DrainCanaryFixture 5000
+            [void]$negativeFixtures.Add($startMismatch)
+            $startMismatch.Record.VerifierDrainAttestation.ProcessStartTicks =
+                [long]$startMismatch.Record.ProcessStartTicks + 1L
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $startMismatch.Scope `
+                    $startMismatch.Record
+            } 'start-mismatch')
+
+            $foreign = New-DrainCanaryFixture 3000
+            [void]$negativeFixtures.Add($foreign)
+            if (-not $foreign.Process.WaitForExit(5000)) {
+                Throw-VerifierInfrastructure 'browser drain foreign-scope child did not exit in its bound.'
+            }
+            $foreignScopeCopy = $foreign.Scope | Select-Object *
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $foreignScopeCopy `
+                    $foreign.Record
+            } 'copied-foreign-scope')
+            $foreignRecordCopy = $foreign.Record | Select-Object *
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $foreign.Scope `
+                    $foreignRecordCopy
+            } 'copied-foreign-attestation')
+
+            # PID reuse/current presence and an unreadable/disagreeing current
+            # view are both rejected after the retained handle reports exit.
+            $presence = New-DrainCanaryFixture 3000
+            [void]$negativeFixtures.Add($presence)
+            if (-not $presence.Process.WaitForExit(5000)) {
+                Throw-VerifierInfrastructure 'browser drain PID-reuse child did not exit in its bound.'
+            }
+            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                param($ProcessId)
+                return [pscustomobject]@{ ProcessId = [int]$ProcessId }
+            }
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $presence.Scope `
+                    $presence.Record
+            } 'pid-reuse-current-presence')
+            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                param($ProcessId)
+                Throw-VerifierInfrastructure 'injected current-view failure'
+            }
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $presence.Scope `
+                    $presence.Record
+            } 'current-view-failure')
+            Set-Item Function:\Get-VerifierCurrentProcessRecordById `
+                -Force -Value $oldCurrent
+
+            # A live retained handle takes the ordinary current-identity/stop
+            # lane. The natural helper must return null and leave it alive.
+            $live = New-DrainCanaryFixture 5000
+            $liveResult = Get-VerifierBrowserDrainNaturalExitResult $live.Scope `
+                $live.Record
+            if ($null -ne $liveResult) {
+                Throw-VerifierInfrastructure 'browser drain live child entered the natural-exit lane.'
+            }
+            $live.Process.Refresh()
+            if ([bool]$live.Process.HasExited) {
+                Throw-VerifierInfrastructure 'browser drain live child exited before its ordinary stop path.'
+            }
+            $wrongPreStopRecord = $live.Record | Select-Object *
+            $wrongPreStopRecord.ParentProcessId = [int]$live.Record.ParentProcessId + 1
+            [void](Assert-DrainCanaryTypedFailure {
+                Stop-VerifierVerifiedProcessExactly $live.Process `
+                    ([long]$live.StartTicks) 5000 $wrongPreStopRecord
+            } 'live-prestop-parent-mismatch')
+            $live.Process.Refresh()
+            if ($live.Process.HasExited) {
+                Throw-VerifierInfrastructure 'live ownership-mismatch canary terminated its child.'
+            }
+            $liveStop = Stop-VerifierVerifiedProcessExactly $live.Process `
+                ([long]$live.StartTicks) 5000 $live.Record
+            if (-not [bool]$liveStop.TerminationProven -or
+                    [bool]$liveStop.NaturalExit) {
+                Throw-VerifierInfrastructure 'browser drain live child did not use the ordinary exact stop path.'
+            }
+            $liveStopped = $true
+
+            # Changing an ownership scalar after attestation is not a natural
+            # exit and must remain typed infrastructure failure.
+            $ownership = New-DrainCanaryFixture 3000
+            [void]$negativeFixtures.Add($ownership)
+            if (-not $ownership.Process.WaitForExit(5000)) {
+                Throw-VerifierInfrastructure 'browser drain ownership child did not exit in its bound.'
+            }
+            $ownership.Record.ParentProcessId = [int]$ownership.Record.ParentProcessId + 1
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $ownership.Scope `
+                    $ownership.Record
+            } 'ownership-mismatch')
+            $positive.Record.Process.Dispose()
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $positive.Scope $positive.Record
+            } 'disposed-original-handle')
+
+            return [pscustomobject]@{
+                Positive = [bool]$positiveResult
+                MissingHandle = $true
+                StartMismatch = $true
+                CopiedForeignScope = $true
+                PidReusePresence = $true
+                CurrentViewFailure = $true
+                LiveOrdinaryStop = [bool]$liveStopped
+                OwnershipMismatch = $true
+                ExactScopeAndHandle = $true
+                WholeCallDeadline = $true
+                ExitedStartIdentity = $true
+                DisposedHandle = $true
+            }
+        } finally {
+            Set-Item Function:\Get-VerifierCurrentProcessRecordById `
+                -Force -Value $oldCurrent
+            Set-Item Function:\Get-VerifierBrowserDrainAttestation -Force -Value $oldAttestation
+            Set-Item Function:\Get-VerifierRetainedProcessStartTimeValue -Force -Value $oldStart
+            $cleanupErrors = New-Object Collections.ArrayList
+            if ($null -ne $foreignHandle) {
+                try { $foreignHandle.Dispose() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $emptyScope) {
+                try {
+                    foreach ($failure in @(Dispose-VerifierBrowserDrainScope $emptyScope)) {
+                        [void]$cleanupErrors.Add($failure)
+                    }
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            foreach ($fixture in @($negativeFixtures) + @($live, $positive)) {
+                try {
+                    foreach ($failure in @(Dispose-DrainCanaryFixture $fixture $true)) {
+                        [void]$cleanupErrors.Add($failure)
+                    }
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            foreach ($variable in @('GateBDrainOriginalCurrent', 'GateBDrainOriginalAttestation',
+                    'GateBDrainOriginalStart', 'GateBDrainCurrentCalls', 'GateBDrainDelayAt')) {
+                Remove-Variable -Scope Script -Name $variable -ErrorAction SilentlyContinue
+            }
+            if ($cleanupErrors.Count -gt 0) {
+                Throw-VerifierInfrastructure ('browser drain canary fixture cleanup failed: ' +
+                    ($cleanupErrors -join '; '))
+                }
+        }
+    }
+    Assert-GateB ([bool]$probe.Positive -and [bool]$probe.MissingHandle -and
+        [bool]$probe.StartMismatch -and [bool]$probe.CopiedForeignScope -and
+        [bool]$probe.PidReusePresence -and [bool]$probe.CurrentViewFailure -and
+        [bool]$probe.LiveOrdinaryStop -and [bool]$probe.OwnershipMismatch -and
+        [bool]$probe.ExactScopeAndHandle -and [bool]$probe.WholeCallDeadline -and
+        [bool]$probe.ExitedStartIdentity -and [bool]$probe.DisposedHandle) `
+        'browser drain retained-handle natural-exit canary did not validate every positive/negative lane'
+    Write-Host 'PASS:browser drain retained-handle natural-exit proof, exact absence, live stop, and typed negative lanes'
+}
+
+function Invoke-GateBBrowserNaturalShutdownCanary() {
+    # The TCP fixture exercises the selected ClientWebSocket implementation.
+    # It is bounded, loopback-only, and owns its listener, client, and worker.
+    if (-not ('GateBBrowserCloseServer' -as [type])) {
+        Add-Type -TypeDefinition @'
+using System;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+public sealed class GateBBrowserCloseServer : IDisposable {
+    public readonly TcpListener Listener;
+    public readonly int Port;
+    public string Request;
+    public Exception Failure;
+    private readonly Task worker;
+    private TcpClient client;
+    private static byte[] ReadExact(Stream stream, int count) {
+        byte[] bytes = new byte[count];
+        for (int offset = 0; offset < count;) {
+            int read = stream.Read(bytes, offset, count - offset);
+            if (read == 0) throw new IOException("unexpected fixture EOF");
+            offset += read;
+        }
+        return bytes;
+    }
+    public GateBBrowserCloseServer(string[] replies, int delay, bool drop, bool binary) {
+        Listener = new TcpListener(IPAddress.Loopback, 0);
+        Listener.Start();
+        Port = ((IPEndPoint)Listener.LocalEndpoint).Port;
+        worker = Task.Factory.StartNew(delegate {
+            try {
+                Task<TcpClient> accept = Listener.AcceptTcpClientAsync();
+                if (!accept.Wait(4000)) throw new TimeoutException("fixture accept timeout");
+                client = accept.GetAwaiter().GetResult();
+                client.ReceiveTimeout = 4000;
+                client.SendTimeout = 4000;
+                NetworkStream stream = client.GetStream();
+                StringBuilder header = new StringBuilder();
+                while (!header.ToString().EndsWith("\r\n\r\n", StringComparison.Ordinal)) {
+                    header.Append((char)ReadExact(stream, 1)[0]);
+                    if (header.Length > 8192) throw new IOException("fixture header too long");
+                }
+                string key = null;
+                foreach (string line in header.ToString().Split(new string[]{"\r\n"}, StringSplitOptions.None)) {
+                    if (line.StartsWith("Sec-WebSocket-Key:", StringComparison.OrdinalIgnoreCase))
+                        key = line.Substring(line.IndexOf(':') + 1).Trim();
+                }
+                if (key == null) throw new IOException("fixture omitted WebSocket key");
+                string hash;
+                using (SHA1 sha = SHA1.Create()) {
+                    hash = Convert.ToBase64String(sha.ComputeHash(Encoding.ASCII.GetBytes(
+                        key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
+                }
+                byte[] upgrade = Encoding.ASCII.GetBytes("HTTP/1.1 101 Switching Protocols\r\n" +
+                    "Upgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: " + hash + "\r\n\r\n");
+                stream.Write(upgrade, 0, upgrade.Length);
+                byte[] frame = ReadExact(stream, 2);
+                int length = frame[1] & 127;
+                if (frame[0] != 129 || (frame[1] & 128) == 0 || length >= 126)
+                    throw new IOException("fixture received unexpected close command frame");
+                byte[] mask = ReadExact(stream, 4);
+                byte[] body = ReadExact(stream, length);
+                for (int i = 0; i < length; i++) body[i] ^= mask[i % 4];
+                Request = new UTF8Encoding(false, true).GetString(body);
+                if (drop) return;
+                if (delay > 0) Thread.Sleep(delay);
+                foreach (string reply in replies) {
+                    byte[] payload = Encoding.UTF8.GetBytes(reply);
+                    if (payload.Length >= 126) throw new IOException("fixture reply too long");
+                    stream.WriteByte((byte)(binary ? 130 : 129));
+                    stream.WriteByte((byte)payload.Length);
+                    stream.Write(payload, 0, payload.Length);
+                }
+            } catch (Exception error) { Failure = error; }
+            finally { if (client != null) client.Close(); }
+        });
+    }
+    public void Dispose() {
+        Listener.Stop();
+        if (client != null) client.Close();
+        if (!worker.Wait(5000)) throw new TimeoutException("fixture worker cleanup timeout");
+        worker.Dispose();
+    }
+}
+'@ -ErrorAction Stop
+    }
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    Assert-GateBInfrastructure ($module.Count -eq 1) 'natural shutdown module was unavailable'
+    & $module[0] {
+        function Assert-ShutdownFailure($Action, [string]$Name) {
+            $typed = $false
+            try { [void](& $Action) } catch { $typed = Test-VerifierInfrastructureError $_ }
+            if (-not $typed) { Throw-VerifierInfrastructure "shutdown canary $Name did not reject with typed infrastructure failure." }
+        }
+        $target = 'a7dfa1a9-0f28-4ac8-b5a2-05edb2b8c289'
+        $goodUrl = 'ws://127.0.0.1:51234/devtools/browser/' + $target
+        $version = [pscustomobject]@{ webSocketDebuggerUrl = $goodUrl }
+        if ((Get-VerifierBrowserShutdownEndpoint $version 51234) -cne $goodUrl) {
+            Throw-VerifierInfrastructure 'shutdown canary rejected the exact browser endpoint.'
+        }
+        foreach ($badUrl in @($goodUrl.Replace('127.0.0.1', 'localhost'),
+                $goodUrl.Replace('51234', '51235'), $goodUrl.Replace('/browser/', '/page/'),
+                $goodUrl.Replace('ws:', 'wss:'), ($goodUrl + '?x=1'), ($goodUrl + '#x'),
+                $goodUrl.Replace('/browser/', '/browser/%2f'),
+                $goodUrl.Replace('127.0.0.1', 'u:p@127.0.0.1'),
+                $goodUrl.Replace($target, [Guid]::Empty.ToString()), $null)) {
+            $badVersion = [pscustomobject]@{ webSocketDebuggerUrl = $badUrl }
+            Assert-ShutdownFailure { Get-VerifierBrowserShutdownEndpoint $badVersion 51234 } 'foreign-or-malformed-endpoint'
+        }
+        $badVersion = [pscustomobject]@{ webSocketDebuggerUrl = @($goodUrl) }
+        Assert-ShutdownFailure { Get-VerifierBrowserShutdownEndpoint $badVersion 51234 } 'array-endpoint'
+        foreach ($badPort in @(0, 65536, '51234', $null)) {
+            Assert-ShutdownFailure { Get-VerifierBrowserShutdownEndpoint $version $badPort } 'malformed-port'
+        }
+        Assert-ShutdownFailure { Get-VerifierBrowserShutdownEndpoint $version @([int]51234) } 'array-port'
+        foreach ($wire in @(
+                [pscustomobject]@{ Name='success'; Replies=@('{"id":1,"result":{}}'); Pass=$true; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='notification-then-success'; Replies=@('{"method":"Target.targetDestroyed","params":{}}','{ "result" : {}, "id" : 1 }'); Pass=$true; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='wrong-id'; Replies=@('{"id":2,"result":{}}'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='string-id'; Replies=@('{"id":"1","result":{}}'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='duplicate-id'; Replies=@('{"id":2,"id":1,"result":{}}'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='cdp-error'; Replies=@('{"id":1,"error":{"code":-1}}'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='extra-field'; Replies=@('{"id":1,"result":{},"extra":true}'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='nonempty-result'; Replies=@('{"id":1,"result":{"x":1}}'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='array-result'; Replies=@('{"id":1,"result":[]}'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='array-reply'; Replies=@('[{"id":1,"result":{}}]'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='malformed-json'; Replies=@('{'); Pass=$false; Delay=0; Drop=$false; Binary=$false },
+                [pscustomobject]@{ Name='binary'; Replies=@('{"id":1,"result":{}}'); Pass=$false; Delay=0; Drop=$false; Binary=$true },
+                [pscustomobject]@{ Name='drop'; Replies=@(); Pass=$false; Delay=0; Drop=$true; Binary=$false },
+                [pscustomobject]@{ Name='timeout'; Replies=@(); Pass=$false; Delay=2400; Drop=$false; Binary=$false })) {
+            $server = $null
+            $socket = $null
+            $cleanupErrors = New-Object Collections.ArrayList
+            try {
+                $server = [GateBBrowserCloseServer]::new([string[]]$wire.Replies,
+                    [int]$wire.Delay, [bool]$wire.Drop, [bool]$wire.Binary)
+                $socket = Connect-VerifierCdpSocket (
+                    'ws://127.0.0.1:' + $server.Port + '/devtools/browser/' + $target) ([DateTime]::UtcNow.AddSeconds(3))
+                $budget = [Diagnostics.Stopwatch]::StartNew()
+                $ticks = [long]([Diagnostics.Stopwatch]::Frequency * 5)
+                $action = { Send-VerifierBrowserCloseAndReadAcknowledgement $socket $budget $ticks }
+                if ($wire.Pass) { & $action } else { Assert-ShutdownFailure $action $wire.Name }
+            } finally {
+                if ($null -ne $socket) {
+                    try { $socket.Abort() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+                    try { $socket.Dispose() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+                }
+                if ($null -ne $server) {
+                    try { $server.Dispose() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+                    if ($null -ne $server.Failure) { [void]$cleanupErrors.Add($server.Failure.Message) }
+                    if ($server.Request -cne '{"id":1,"method":"Browser.close"}') {
+                        [void]$cleanupErrors.Add('fixture did not receive the exact close request')
+                    }
+                    try {
+                        $inspection = Get-VerifierLoopbackListenerRecords $server.Port
+                        if (-not $inspection.Success -or -not $inspection.Known -or $inspection.HasListeners) {
+                            [void]$cleanupErrors.Add('fixture listener absence was not proven')
+                        }
+                    } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+                }
+                if ($cleanupErrors.Count -gt 0) {
+                    Throw-VerifierInfrastructure ('shutdown wire fixture cleanup: ' + ($cleanupErrors -join '; '))
+                }
+            }
+        }
+    }
+    Write-Host 'PASS:natural browser shutdown exact endpoint and actual ClientWebSocket acknowledgement/negative transport canaries'
+
+    # These are explicit orchestration fault injections. Native retained-handle
+    # proof is covered by the separate real-process drain canary; actual Edge
+    # ancestry and shutdown remain a required live prerequisite after review.
+    & $module[0] {
+        $functionNames = @('Assert-VerifierDurableBrowserSession',
+            'Get-VerifierPortLeaseBoundOwnershipProof', 'Invoke-RestMethod',
+            'Connect-VerifierCdpSocket', 'Get-VerifierBrowserOwnershipSnapshot',
+            'Get-VerifierBrowserRootRecordFromSnapshot', 'Get-VerifierCurrentOwnedProcess',
+            'New-VerifierBrowserDrainAttestation', 'Get-VerifierDescendantProcessRecords',
+            'Add-VerifierBrowserDrainHandle', 'Send-VerifierBrowserCloseAndReadAcknowledgement',
+            'Get-VerifierBrowserDrainNaturalExitResult', 'Assert-VerifierNoResidualBrowserDescendants',
+            'Dispose-VerifierBrowserDrainScope', 'Stop-VerifierBrowserProcessTreeToFixedPoint')
+        $originals = @{}
+        foreach ($name in $functionNames) {
+            $found = Get-Command $name -CommandType Function -ErrorAction SilentlyContinue
+            $originals[$name] = if ($null -ne $found) { $found.ScriptBlock } else { $null }
+        }
+        $script:GateBShutdownOriginalDispose = $originals['Dispose-VerifierBrowserDrainScope']
+        $script:GateBShutdownCalls = $null
+        $script:GateBShutdownMode = ''
+        $script:GateBShutdownSnapshotCount = 0
+        $script:GateBShutdownChildCount = 0
+        $script:GateBShutdownListenerCount = 0
+        $script:GateBShutdownFakeSocket = $null
+        $script:GateBShutdownRecord = $null
+        $testAttemptKeys = New-Object Collections.ArrayList
+        try {
+            Set-Item Function:\Assert-VerifierDurableBrowserSession -Value { param($SessionRecord,$Context,$Label) }
+            Set-Item Function:\Invoke-RestMethod -Value {
+                param($Uri,$TimeoutSec)
+                return [pscustomobject]@{ webSocketDebuggerUrl='ws://127.0.0.1:51234/devtools/browser/a7dfa1a9-0f28-4ac8-b5a2-05edb2b8c289' }
+            }
+            Set-Item Function:\Get-VerifierPortLeaseBoundOwnershipProof -Value {
+                param($Context,$Lease,$ProcessId,$Start,$Session,$Preview)
+                $script:GateBShutdownListenerCount++
+                [void]$script:GateBShutdownCalls.Add('listener')
+                if ($script:GateBShutdownMode -eq 'listener-change' -and $script:GateBShutdownListenerCount -eq 3) {
+                    Throw-VerifierInfrastructure 'injected current listener owner change'
+                }
+                if ($script:GateBShutdownMode -eq 'preclose-deadline' -and $script:GateBShutdownListenerCount -eq 3) {
+                    Start-Sleep -Milliseconds 15020
+                }
+            }
+            Set-Item Function:\Connect-VerifierCdpSocket -Value {
+                param($Uri,$Deadline)
+                return $script:GateBShutdownFakeSocket
+            }
+            Set-Item Function:\Get-VerifierBrowserOwnershipSnapshot -Value {
+                param($BrowserPath,$Profile,$RunId,$RepositoryIdentity,$CdpPort)
+                $script:GateBShutdownSnapshotCount++
+                [void]$script:GateBShutdownCalls.Add('snapshot')
+                return @($script:GateBShutdownRecord)
+            }
+            Set-Item Function:\Get-VerifierBrowserRootRecordFromSnapshot -Value {
+                param($OwnerRoot,$Snapshot)
+                if ($script:GateBShutdownMode -eq 'missing-root') { Throw-VerifierInfrastructure 'injected missing initial root' }
+                return $script:GateBShutdownRecord
+            }
+            Set-Item Function:\Get-VerifierCurrentOwnedProcess -Value {
+                param($OwnerRoot,$Recorded,[switch]$Root)
+                [void]$script:GateBShutdownCalls.Add('current-root')
+                return [pscustomobject]@{ Record=$script:GateBShutdownRecord; Process=[object]::new() }
+            }
+            Set-Item Function:\New-VerifierBrowserDrainAttestation -Value { param($Scope,$Record,$Process) return [object]::new() }
+            Set-Item Function:\Add-VerifierBrowserDrainHandle -Value { param($Scope,$Process) }
+            Set-Item Function:\Get-VerifierDescendantProcessRecords -Value {
+                param($OwnerRoot,$Snapshot,$Scope)
+                $script:GateBShutdownChildCount++
+                [void]$script:GateBShutdownCalls.Add('children')
+                if ($script:GateBShutdownMode -eq 'missing-child') { Throw-VerifierInfrastructure 'injected unattested missing child' }
+                $child = [pscustomobject]@{
+                    ProcessId=202; ProcessStartTicks=200L; ParentProcessId=101;
+                    ParentProcessStartTicks=100L; Name='fixture.exe'; ExecutablePath='fixture.exe'; CommandLine='fixture child'
+                }
+                if ($script:GateBShutdownMode -eq 'changed-child' -and $script:GateBShutdownChildCount -gt 1) {
+                    $child.ProcessStartTicks++
+                }
+                $child
+                if ($script:GateBShutdownMode -eq 'new-child' -and $script:GateBShutdownChildCount -gt 1) {
+                    $newChild = $child | Select-Object *
+                    $newChild.ProcessId = 203
+                    $newChild
+                }
+            }
+            Set-Item Function:\Send-VerifierBrowserCloseAndReadAcknowledgement -Value {
+                param($Socket,$Budget,$BudgetTicks)
+                [void]$script:GateBShutdownCalls.Add('send')
+                if ($script:GateBShutdownChildCount -lt 2 -or $script:GateBShutdownListenerCount -ne 3) {
+                    Throw-VerifierInfrastructure 'orchestration omitted complete graph/listener refresh before close'
+                }
+                if ($script:GateBShutdownMode -eq 'dropped-ack') { Throw-VerifierInfrastructure 'injected dropped acknowledgement' }
+            }
+            Set-Item Function:\Get-VerifierBrowserDrainNaturalExitResult -Value {
+                param($Scope,$Record)
+                [void]$script:GateBShutdownCalls.Add('natural:' + $Record.ProcessId)
+                if ($script:GateBShutdownMode -eq 'unproven-exit') { Throw-VerifierInfrastructure 'injected retained exit proof failure' }
+                return [pscustomobject]@{ TerminationProven=$true; NaturalExit=$true }
+            }
+            Set-Item Function:\Assert-VerifierNoResidualBrowserDescendants -Value {
+                param($OwnerRoot,$RootRecord,$Children,$Snapshot)
+                [void]$script:GateBShutdownCalls.Add('final-graph')
+                if ($script:GateBShutdownMode -eq 'late-unknown') { Throw-VerifierInfrastructure 'injected unknown late descendant' }
+            }
+            Set-Item Function:\Stop-VerifierBrowserProcessTreeToFixedPoint -Value {
+                param($Context,$OwnerRoot,$Wait)
+                Throw-VerifierInfrastructure 'unexpected exact-stop fallback during natural shutdown'
+            }
+            Set-Item Function:\Dispose-VerifierBrowserDrainScope -Value {
+                param($Scope)
+                & $script:GateBShutdownOriginalDispose $Scope
+                if ($script:GateBShutdownMode -eq 'disposal-failure') { 'injected handle disposal failure' }
+                if ($script:GateBShutdownMode -eq 'final-deadline') { Start-Sleep -Milliseconds 15020 }
+            }
+            foreach ($mode in @('success','new-child','missing-root','missing-child','changed-child',
+                    'listener-change','dropped-ack','unproven-exit','late-unknown','disposal-failure',
+                    'preclose-deadline','final-deadline')) {
+                $script:GateBShutdownMode = $mode
+                $script:GateBShutdownCalls = New-Object Collections.ArrayList
+                $script:GateBShutdownSnapshotCount = 0
+                $script:GateBShutdownChildCount = 0
+                $script:GateBShutdownListenerCount = 0
+                $script:GateBShutdownFakeSocket = [pscustomobject]@{ Aborted=$false; Disposed=$false }
+                $script:GateBShutdownFakeSocket | Add-Member ScriptMethod Abort { $this.Aborted=$true }
+                $script:GateBShutdownFakeSocket | Add-Member ScriptMethod Dispose { $this.Disposed=$true }
+                $script:GateBShutdownRecord = [pscustomobject]@{
+                    ProcessId=101; ProcessStartTicks=100L; ParentProcessId=99; ParentProcessStartTicks=90L;
+                    Name='fixture.exe'; ExecutablePath='fixture.exe'; CommandLine='fixture root'
+                }
+                $session = [pscustomobject]@{
+                    RunId=[Guid]::NewGuid().ToString('N'); RouteId=[Guid]::NewGuid().ToString('N');
+                    ProcessId=101; ProcessStartTicks=100L; ProcessParentProcessId=99; ProcessParentProcessStartTicks=90L;
+                    ProcessCommandLine='fixture root'; BrowserPath='fixture.exe'; Profile='fixture-profile';
+                    CdpPort=51234; RepositoryIdentity='fixture-repository'; Lease=[object]::new(); Runtime=[pscustomobject]@{}
+                }
+                $owner = $session | Select-Object ProcessId,ProcessStartTicks,ProcessParentProcessId,
+                    ProcessParentProcessStartTicks,ProcessCommandLine,BrowserPath,Profile,CdpPort,RunId,RepositoryIdentity
+                $key = Get-VerifierBrowserCloseAttemptKey $session
+                [void]$testAttemptKeys.Add($key)
+                if ($mode -eq 'success') {
+                    foreach ($field in @('ProcessId','ProcessStartTicks','ProcessParentProcessId','ProcessParentProcessStartTicks',
+                            'ProcessCommandLine','BrowserPath','Profile','CdpPort','RunId','RepositoryIdentity')) {
+                        $badOwner = $owner | Select-Object *
+                        $badOwner.$field = if ($badOwner.$field -is [string]) { 'foreign' } else { 1 }
+                        $rejected = $false
+                        try { Assert-VerifierBrowserShutdownOwner $session $badOwner } catch { $rejected=Test-VerifierInfrastructureError $_ }
+                        if (-not $rejected) { Throw-VerifierInfrastructure "shutdown owner accepted changed $field" }
+                    }
+                    foreach ($badFlag in @('false', 0, $null)) {
+                        $session.Runtime | Add-Member NoteProperty GracefulCloseAttempted $badFlag -Force
+                        $rejected = $false
+                        try { Assert-VerifierBrowserCloseNotAttempted $session } catch { $rejected=Test-VerifierInfrastructureError $_ }
+                        if (-not $rejected) { Throw-VerifierInfrastructure 'shutdown accepted malformed attempt flag' }
+                    }
+                    $session.Runtime.PSObject.Properties.Remove('GracefulCloseAttempted')
+                }
+                $proof = $null
+                $typed = $false
+                try { $proof = Close-VerifierBrowserSessionNaturally ([object]::new()) $session $owner }
+                catch { $typed = Test-VerifierInfrastructureError $_ }
+                $positive = $mode -in @('success','new-child')
+                if ($positive) {
+                    $expectedChildren = if ($mode -eq 'new-child') { 2 } else { 1 }
+                    if ($typed -or $null -eq $proof -or -not $proof.ProcessTerminationProven -or
+                            -not $proof.NaturalShutdownProven -or $proof.AttestedDescendantCount -ne $expectedChildren -or
+                            $script:GateBShutdownCalls[-1] -cne 'final-graph' -or
+                            @($script:GateBShutdownCalls | Where-Object { $_ -like 'natural:*' }).Count -ne (1+$expectedChildren)) {
+                        Throw-VerifierInfrastructure "shutdown orchestration positive $mode omitted proof or graph refresh."
+                    }
+                } elseif (-not $typed -or $null -ne $proof) {
+                    Throw-VerifierInfrastructure "shutdown orchestration negative $mode was accepted or not typed infrastructure."
+                }
+                $sent = $script:GateBShutdownCalls.Contains('send')
+                if ($mode -in @('missing-root','missing-child','changed-child','listener-change','preclose-deadline') -and $sent) {
+                    Throw-VerifierInfrastructure "shutdown $mode sent a close command after a failed precondition."
+                }
+                if (-not $script:GateBShutdownFakeSocket.Aborted -or -not $script:GateBShutdownFakeSocket.Disposed) {
+                    Throw-VerifierInfrastructure "shutdown $mode did not dispose its private socket."
+                }
+                if ($sent) {
+                    # A caller cannot erase the object flag or copy the session
+                    # to escape the module's private attempt registry.
+                    $session.Runtime.PSObject.Properties.Remove('GracefulCloseAttempted')
+                    $copy = $session | Select-Object *
+                    $rejected = $false
+                    try { Assert-VerifierBrowserCloseNotAttempted $copy } catch { $rejected=Test-VerifierInfrastructureError $_ }
+                    if (-not $rejected) { Throw-VerifierInfrastructure 'copied close attempt selected retry/force-stop fallback' }
+                    $copy.RouteId = [Guid]::NewGuid().ToString('N')
+                    $copy.RunId = [Guid]::NewGuid().ToString('N')
+                    $rejected = $false
+                    try { Assert-VerifierBrowserCloseNotAttempted $copy } catch { $rejected=Test-VerifierInfrastructureError $_ }
+                    if (-not $rejected) { Throw-VerifierInfrastructure 'relabeled close attempt selected retry/force-stop fallback' }
+                }
+                # All cases deliberately use the same synthetic PID/start;
+                # remove only this fixture's marker between independent cases.
+                $script:VerifierBrowserCloseAttempts.Remove($key)
+            }
+        } finally {
+            foreach ($name in $functionNames) {
+                if ($null -eq $originals[$name]) { Remove-Item -LiteralPath ('Function:\' + $name) -ErrorAction SilentlyContinue }
+                else { Set-Item -LiteralPath ('Function:\' + $name) -Value $originals[$name] -Force }
+            }
+            foreach ($key in $testAttemptKeys) { $script:VerifierBrowserCloseAttempts.Remove($key) }
+            foreach ($name in @('GateBShutdownOriginalDispose','GateBShutdownCalls','GateBShutdownMode',
+                    'GateBShutdownSnapshotCount','GateBShutdownChildCount','GateBShutdownListenerCount',
+                    'GateBShutdownFakeSocket','GateBShutdownRecord')) {
+                Remove-Variable -Scope Script -Name $name -ErrorAction SilentlyContinue
+            }
+        }
+    }
+    Write-Host 'PASS:natural shutdown orchestration identity, graph refresh, deadline, disposal, and no-retry fault injections'
+}
+
+function Invoke-GateBListenerAuthorizationRetryCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for listener authorization retry canary.'
+    }
+    $owner = [pscustomobject]@{
+        ProcessId = 9000; ProcessStartTicks = 700L
+        Profile = 'C:\Temp\gate-b-listener-retry-profile'
+        BrowserPath = 'C:\Program Files\Edge\Application\msedge.exe'
+        RunId = 'gate-b-listener-retry-run'; RepositoryIdentity = 'gate-b-listener-retry-worktree'
+        CdpPort = 45124
+    }
+    $listener = [pscustomobject]@{
+        LocalAddress = '127.0.0.1'; Port = 45124
+        ProcessId = 9001; ProcessStartTicks = 701L
+        ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'
+    }
+    $inspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Listeners = @($listener)
+        ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }
+    $context = [pscustomobject]@{}
+    $probe = & $module[0] {
+        param($ownerValue, $inspectionValue, $contextValue)
+        $oldSchema = (Get-Command Test-VerifierListenerInspectionSchema `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldLoopback = (Get-Command Get-VerifierLoopbackListenerRecords `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldSnapshot = (Get-Command Get-VerifierBrowserOwnershipSnapshot `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldCurrent = (Get-Command Get-VerifierCurrentProcessRecordById `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldBelongs = (Get-Command Test-VerifierListenerBelongsToOwner `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldProcessIdentity = (Get-Command Test-VerifierProcessIdentity `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldPreviewIdentity = (Get-Command Test-VerifierPreviewProcessIdentity `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        try {
+            $freshInspection = $inspectionValue | Select-Object *
+            $freshInspection.Listeners = @($inspectionValue.Listeners)
+            $changedInspection = $inspectionValue | Select-Object *
+            $changedListener = $inspectionValue.Listeners[0] | Select-Object *
+            $changedListener.ProcessStartTicks = 702L
+            $changedInspection.Listeners = @($changedListener)
+            $snapshotValue = @([pscustomobject]@{
+                ProcessId = 9000; ParentProcessId = 1
+                CommandLine = 'msedge.exe --owned'
+            })
+            $cases = @(
+                [pscustomobject]@{ Name = 'transient-missing'; Mode = 'transient'; Fresh = $freshInspection }
+                [pscustomobject]@{ Name = 'persistent-missing'; Mode = 'persistent-missing'; Fresh = $freshInspection }
+                [pscustomobject]@{ Name = 'foreign'; Mode = 'foreign'; Fresh = $freshInspection }
+                [pscustomobject]@{ Name = 'inaccessible'; Mode = 'inaccessible'; Fresh = $freshInspection }
+                [pscustomobject]@{ Name = 'listener-start-changed'; Mode = 'listener-start-changed'; Fresh = $changedInspection }
+                [pscustomobject]@{ Name = 'delayed-proof'; Mode = 'delayed-proof'; Fresh = $freshInspection }
+                [pscustomobject]@{ Name = 'delayed-second-view'; Mode = 'delayed-second-view'; Fresh = $freshInspection }
+                [pscustomobject]@{ Name = 'late-second-view'; Mode = 'late-second-view'; Fresh = $freshInspection }
+            )
+            $results = New-Object Collections.ArrayList
+            foreach ($case in $cases) {
+                $state = [pscustomobject]@{
+                    Mode = $case.Mode; Fresh = $case.Fresh; Snapshot = $snapshotValue
+                    ListenerQueries = 0; SnapshotQueries = 0; CurrentQueries = 0
+                    BelongsQueries = 0; SecondViewQueries = 0
+                }
+                $script:GateBListenerRetryState = $state
+                Set-Item Function:\Test-VerifierListenerInspectionSchema -Force -Value {
+                    param($candidateInspection, $candidateContext, $candidateOwner)
+                    return $true
+                }
+                Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force -Value {
+                    $state = $script:GateBListenerRetryState
+                    $state.ListenerQueries++
+                    return $state.Fresh
+                }
+                Set-Item Function:\Get-VerifierBrowserOwnershipSnapshot -Force -Value {
+                    $state = $script:GateBListenerRetryState
+                    $state.SnapshotQueries++
+                    if ($state.Mode -eq 'delayed-proof') {
+                        Start-Sleep -Milliseconds 600
+                    }
+                    if ($state.Mode -eq 'inaccessible') {
+                        Throw-VerifierInfrastructure 'synthetic inaccessible ownership snapshot'
+                    }
+                    if ($state.Mode -eq 'persistent-missing') {
+                        Throw-VerifierInfrastructureMissingProcess `
+                            'synthetic ownership snapshot missing candidate' 9003
+                    }
+                    return $state.Snapshot
+                }
+                Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                    param($processId)
+                    $state = $script:GateBListenerRetryState
+                    $state.CurrentQueries++
+                    if ([int]$processId -eq 9003) {
+                        $state.SecondViewQueries++
+                        if ($state.Mode -eq 'delayed-second-view') {
+                            Start-Sleep -Milliseconds 600
+                        }
+                        return $null
+                    }
+                    if ([int]$processId -eq 9000) {
+                        return [pscustomobject]@{
+                            ProcessId = 9000; ProcessStartTicks = 700L
+                        }
+                    }
+                    if ([int]$processId -eq 9001) {
+                        return [pscustomobject]@{
+                            ProcessId = 9001; ProcessStartTicks = 701L
+                        }
+                    }
+                    return $null
+                }
+                Set-Item Function:\Test-VerifierProcessIdentity -Force -Value {
+                    return $true
+                }
+                Set-Item Function:\Test-VerifierPreviewProcessIdentity -Force -Value {
+                    return $true
+                }
+                Set-Item Function:\Test-VerifierListenerBelongsToOwner -Force -Value {
+                    $state = $script:GateBListenerRetryState
+                    $state.BelongsQueries++
+                    if ($state.Mode -eq 'foreign') { return $false }
+                    if (($state.Mode -eq 'transient' -or
+                            $state.Mode -eq 'delayed-proof' -or
+                            $state.Mode -eq 'listener-start-changed' -or
+                            $state.Mode -eq 'delayed-second-view') -and
+                            $state.BelongsQueries -eq 1) {
+                        Throw-VerifierInfrastructureMissingProcess `
+                            'synthetic descendant disappeared during ownership proof' 9003
+                    }
+                    if ($state.Mode -eq 'persistent-missing') {
+                        Throw-VerifierInfrastructureMissingProcess `
+                            'synthetic descendant remained absent during ownership proof' 9003
+                    }
+                    if ($state.Mode -eq 'late-second-view') {
+                        Start-Sleep -Milliseconds 600
+                        Throw-VerifierInfrastructureMissingProcess `
+                            'synthetic descendant proof became stale before its second view' 9003
+                    }
+                    return $true
+                }
+                $accepted = $false
+                try {
+                    $accepted = [bool](Test-VerifierLiveListenerInspectionAuthorization `
+                        $inspectionValue $contextValue $ownerValue 9000 700L)
+                } catch { $accepted = $false }
+                [void]$results.Add([pscustomobject]@{
+                    Name = $case.Name; Accepted = $accepted
+                    ListenerQueries = [int]$state.ListenerQueries
+                    SnapshotQueries = [int]$state.SnapshotQueries
+                    CurrentQueries = [int]$state.CurrentQueries
+                    BelongsQueries = [int]$state.BelongsQueries
+                    SecondViewQueries = [int]$state.SecondViewQueries
+                })
+            }
+            return @($results)
+        } finally {
+            Set-Item Function:\Test-VerifierListenerInspectionSchema -Force -Value $oldSchema
+            Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force -Value $oldLoopback
+            Set-Item Function:\Get-VerifierBrowserOwnershipSnapshot -Force -Value $oldSnapshot
+            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value $oldCurrent
+            Set-Item Function:\Test-VerifierListenerBelongsToOwner -Force -Value $oldBelongs
+            Set-Item Function:\Test-VerifierProcessIdentity -Force -Value $oldProcessIdentity
+            Set-Item Function:\Test-VerifierPreviewProcessIdentity -Force -Value $oldPreviewIdentity
+            Remove-Variable -Name GateBListenerRetryState -Scope Script -Force `
+                -ErrorAction SilentlyContinue
+        }
+    } $owner $inspection $context
+    $transient = @($probe | Where-Object Name -eq 'transient-missing')
+    $persistent = @($probe | Where-Object Name -eq 'persistent-missing')
+    $foreign = @($probe | Where-Object Name -eq 'foreign')
+    $inaccessible = @($probe | Where-Object Name -eq 'inaccessible')
+    $changed = @($probe | Where-Object Name -eq 'listener-start-changed')
+    $delayed = @($probe | Where-Object Name -eq 'delayed-proof')
+    $delayedSecondView = @($probe | Where-Object Name -eq 'delayed-second-view')
+    Assert-GateB ($transient.Count -eq 1 -and $transient[0].Accepted -and
+        [int]$transient[0].ListenerQueries -eq 1 -and
+        [int]$transient[0].SnapshotQueries -eq 2 -and
+        [int]$transient[0].BelongsQueries -eq 2) `
+        'transient missing descendant was not recovered by a fresh full listener/ownership proof'
+    Assert-GateB ($persistent.Count -eq 1 -and -not $persistent[0].Accepted -and
+        [int]$persistent[0].ListenerQueries -eq 2 -and
+        [int]$persistent[0].SnapshotQueries -eq 3) `
+        'persistent missing descendant did not remain bounded infrastructure failure'
+    foreach ($negative in @($foreign, $inaccessible)) {
+        Assert-GateB ($negative.Count -eq 1 -and -not $negative[0].Accepted -and
+            [int]$negative[0].ListenerQueries -eq 0 -and
+            [int]$negative[0].SnapshotQueries -eq 1) `
+            'foreign or inaccessible listener ownership was retried or accepted'
+    }
+    Assert-GateB ($changed.Count -eq 1 -and -not $changed[0].Accepted -and
+        [int]$changed[0].ListenerQueries -eq 1 -and
+        [int]$changed[0].SnapshotQueries -eq 1) `
+        'listener PID/start change was accepted after a retry'
+    Assert-GateB ($delayed.Count -eq 1 -and -not $delayed[0].Accepted -and
+        [int]$delayed[0].ListenerQueries -eq 0 -and
+        [int]$delayed[0].SnapshotQueries -eq 1 -and
+        [int]$delayed[0].CurrentQueries -eq 2 -and
+        [int]$delayed[0].BelongsQueries -eq 0) `
+        'delayed initial ownership snapshot was accepted after its strict deadline'
+    Assert-GateB ($delayedSecondView.Count -eq 1 -and
+        -not $delayedSecondView[0].Accepted -and
+        [int]$delayedSecondView[0].ListenerQueries -eq 0 -and
+        [int]$delayedSecondView[0].SnapshotQueries -eq 1 -and
+        [int]$delayedSecondView[0].CurrentQueries -eq 3 -and
+        [int]$delayedSecondView[0].BelongsQueries -eq 1 -and
+        [int]$delayedSecondView[0].SecondViewQueries -eq 1) `
+        'delayed missing-PID absence proof was accepted after the strict deadline'
+    $lateSecondView = @($probe | Where-Object Name -eq 'late-second-view')
+    Assert-GateB ($lateSecondView.Count -eq 1 -and -not $lateSecondView[0].Accepted -and
+        [int]$lateSecondView[0].ListenerQueries -eq 0 -and
+        [int]$lateSecondView[0].SnapshotQueries -eq 1 -and
+        [int]$lateSecondView[0].CurrentQueries -eq 2 -and
+        [int]$lateSecondView[0].BelongsQueries -eq 1 -and
+        [int]$lateSecondView[0].SecondViewQueries -eq 0) `
+        'listener authorization accepted a late ownership proof after its strict deadline'
+    Write-Host 'PASS:listener authorization retries only a proven disappeared candidate and repeats exact listener/root/ownership proof'
+}
+
+function Invoke-GateBBrowserRootListenerFastPathCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for browser-root listener fast-path canary.'
+    }
+    $currentProcess = Get-Process -Id $PID -ErrorAction Stop
+    $currentStart = [long](Get-VerifierProcessStartTicks $currentProcess)
+    $browserPath = [string]$currentProcess.Path
+    if ([String]::IsNullOrWhiteSpace($browserPath)) {
+        $browserPath = [string](Get-Command powershell.exe -ErrorAction Stop).Source
+    }
+    $profile = Join-Path ([IO.Path]::GetTempPath()) 'gate-b-browser-fast-profile'
+    $owner = [pscustomobject]@{
+        ProcessId = [int]$PID; ProcessStartTicks = $currentStart
+        ProcessParentProcessId = 9200; ProcessParentProcessStartTicks = 9201L
+        ProcessCommandLine = 'synthetic browser owner command line'
+        Profile = $profile; BrowserPath = $browserPath
+        RunId = 'gate-b-browser-fast-run'
+        RepositoryIdentity = 'gate-b-browser-fast-worktree'; CdpPort = 45126
+    }
+    $listener = [pscustomobject]@{
+        LocalAddress = '127.0.0.1'; Port = 45126
+        ProcessId = [int]$PID; ProcessStartTicks = $currentStart
+        ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'
+    }
+    $inspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Listeners = @($listener); ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }
+    # The setter is a durable-state consumer and therefore receives the
+    # smallest real run identity that its preflight boundary requires.  The
+    # durable validators are replaced with no-ops inside the synthetic probe;
+    # the listener authorization itself remains the production implementation.
+    $context = [pscustomobject]@{
+        WorktreeRoot = 'C:\Temp\gate-b-browser-fast-worktree'
+        RunId = 'gate-b-browser-fast-run'
+        RepositoryIdentity = 'gate-b-browser-fast-worktree'
+    }
+    $lease = [pscustomobject]@{ Port = 45126 }
+    $probe = & $module[0] {
+        param($ownerValue, $inspectionValue, $contextValue, $leaseValue)
+        $saved = @{}
+        foreach ($name in @(
+                'Test-VerifierListenerInspectionSchema',
+                'Test-VerifierListenerRecordSchema',
+                'Get-VerifierLoopbackListenerRecords',
+                'Get-VerifierBrowserOwnershipSnapshot',
+                'Get-VerifierCurrentProcessRecordById',
+                'Get-VerifierCurrentParentStartTicks',
+                'Get-VerifierProcessRecordsByIdWithFallback',
+                'Test-VerifierListenerBelongsToOwner',
+                'Get-VerifierProcessStartTicks',
+                'Assert-VerifierDurableLeaseRecord',
+                'Assert-VerifierDurableServerLease')) {
+            $saved[$name] = (Get-Command $name -CommandType Function `
+                -ErrorAction Stop).ScriptBlock
+        }
+        try {
+            $script:GateBBrowserFastOriginalBelongs =
+                $saved['Test-VerifierListenerBelongsToOwner']
+            $script:GateBBrowserFastOriginalStartTicks =
+                $saved['Get-VerifierProcessStartTicks']
+            $results = New-Object Collections.ArrayList
+            $setterResults = New-Object Collections.ArrayList
+            Set-Item Function:\Assert-VerifierDurableLeaseRecord -Force -Value {
+                param($lease, $context, $label, [switch]$serialized)
+                return
+            }
+            Set-Item Function:\Assert-VerifierDurableServerLease -Force -Value {
+                param($context, $label, [switch]$allowMissing)
+                return
+            }
+            Set-Item Function:\Get-VerifierProcessStartTicks -Force -Value {
+                param($process, $startTimeAccessor)
+                $s = $script:GateBBrowserFastState
+                if ($null -ne $s -and $s.Mode -eq 'wrong-start') {
+                    return [long]$s.Owner.ProcessStartTicks + 1L
+                }
+                if ($null -eq $startTimeAccessor) {
+                    return [long](& $script:GateBBrowserFastOriginalStartTicks $process)
+                }
+                return [long](& $script:GateBBrowserFastOriginalStartTicks $process $startTimeAccessor)
+            }
+            foreach ($mode in @(
+                    'valid-fast', 'wrong-start', 'wrong-executable',
+                    'wrong-parent', 'wrong-markers', 'late-proof', 'descendant',
+                    'malformed-parent', 'malformed-parent-start',
+                    'malformed-command')) {
+                $candidateOwner = $ownerValue | Select-Object *
+                if ($mode -eq 'malformed-parent') {
+                    $candidateOwner.ProcessParentProcessId = 0
+                } elseif ($mode -eq 'malformed-parent-start') {
+                    $candidateOwner.ProcessParentProcessStartTicks = '9201'
+                } elseif ($mode -eq 'malformed-command') {
+                    $candidateOwner.ProcessCommandLine = ''
+                }
+                $state = [pscustomobject]@{
+                    Mode = $mode; Owner = $candidateOwner; Inspection = $inspectionValue
+                    SnapshotQueries = 0; CurrentQueries = 0; ParentQueries = 0
+                    IdentityQueries = 0; BelongsQueries = 0; SnapshotWasNull = $false
+                }
+                $script:GateBBrowserFastState = $state
+                Set-Item Function:\Test-VerifierListenerInspectionSchema -Force -Value {
+                    return $true
+                }
+                Set-Item Function:\Test-VerifierListenerRecordSchema -Force -Value {
+                    return $true
+                }
+                Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force -Value {
+                    $s = $script:GateBBrowserFastState
+                    $result = $s.Inspection | Select-Object *
+                    $result.Listeners = @($s.Inspection.Listeners | ForEach-Object {
+                        $_ | Select-Object *
+                    })
+                    if ($s.Mode -eq 'descendant') {
+                        $result.Listeners[0].ProcessId = [int]$s.Owner.ProcessId + 1
+                        $result.Listeners[0].ProcessStartTicks =
+                            [long]$s.Owner.ProcessStartTicks + 1L
+                    }
+                    return $result
+                }
+                Set-Item Function:\Get-VerifierBrowserOwnershipSnapshot -Force -Value {
+                    $s = $script:GateBBrowserFastState
+                    $s.SnapshotQueries++
+                    return @([pscustomobject]@{
+                        ProcessId = [int]$s.Owner.ProcessId
+                        ParentProcessId = 9200
+                        Name = [IO.Path]::GetFileName([string]$s.Owner.BrowserPath)
+                        ExecutablePath = [string]$s.Owner.BrowserPath
+                        CommandLine = ('"' + [string]$s.Owner.BrowserPath +
+                            '" --user-data-dir="' + [string]$s.Owner.Profile +
+                            '" --tsj-verifier-run="' + [string]$s.Owner.RunId +
+                            '" --tsj-verifier-worktree="' +
+                            [string]$s.Owner.RepositoryIdentity +
+                            '" --remote-debugging-port="' +
+                            [string]$s.Owner.CdpPort + '"')
+                    })
+                }
+                Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                    param($processId)
+                    $s = $script:GateBBrowserFastState
+                    $s.CurrentQueries++
+                    $pidValue = [int]$processId
+                    if ($pidValue -eq 4) {
+                        $start = 0L
+                    } elseif ($pidValue -eq [int]$s.Owner.ProcessId) {
+                        $start = if ($s.Mode -eq 'wrong-start') {
+                            [long]$s.Owner.ProcessStartTicks + 1L
+                        } else { [long]$s.Owner.ProcessStartTicks }
+                    } else {
+                        $start = [long]$s.Owner.ProcessStartTicks + 1L
+                    }
+                    return [pscustomobject]@{
+                        ProcessId = $pidValue; ProcessStartTicks = $start
+                    }
+                }
+                Set-Item Function:\Get-VerifierCurrentParentStartTicks -Force -Value {
+                    $s = $script:GateBBrowserFastState
+                    $s.ParentQueries++
+                    if ($s.Mode -eq 'wrong-parent') { return 9999L }
+                    return 9201L
+                }
+                Set-Item Function:\Get-VerifierProcessRecordsByIdWithFallback -Force -Value {
+                    param($processId, $purpose)
+                    $s = $script:GateBBrowserFastState
+                    $s.IdentityQueries++
+                    if ([int]$processId -ne [int]$s.Owner.ProcessId) {
+                        return @()
+                    }
+                    $command = '"' + [string]$s.Owner.BrowserPath +
+                        '" --user-data-dir="' + [string]$s.Owner.Profile +
+                        '" --tsj-verifier-run="' + [string]$s.Owner.RunId +
+                        '" --tsj-verifier-worktree="' +
+                        [string]$s.Owner.RepositoryIdentity +
+                        '" --remote-debugging-port="' +
+                        [string]$s.Owner.CdpPort + '"'
+                    if ($s.Mode -eq 'wrong-markers') {
+                        $command = '"' + [string]$s.Owner.BrowserPath + '"'
+                    }
+                    $executablePath = if ($s.Mode -eq 'wrong-executable') {
+                        'C:\Program Files\Other Browser\other.exe'
+                    } else { [string]$s.Owner.BrowserPath }
+                    return @([pscustomobject]@{
+                        ProcessId = [int]$s.Owner.ProcessId
+                        ParentProcessId = 9200
+                        Name = [IO.Path]::GetFileName([string]$s.Owner.BrowserPath)
+                        ExecutablePath = $executablePath
+                        CommandLine = $command
+                    })
+                }
+                Set-Item Function:\Test-VerifierListenerBelongsToOwner -Force -Value {
+                    param($candidateOwner, $candidateListener, $processId,
+                        $processStartTicks, $snapshot)
+                    $s = $script:GateBBrowserFastState
+                    $s.BelongsQueries++
+                    $s.SnapshotWasNull = $null -eq $snapshot
+                    if ($s.Mode -eq 'late-proof') {
+                        Start-Sleep -Milliseconds 600
+                        return $true
+                    }
+                    if ($s.Mode -eq 'descendant') { return $true }
+                    return [bool](& $script:GateBBrowserFastOriginalBelongs `
+                        $candidateOwner $candidateListener $processId `
+                        $processStartTicks $snapshot)
+                }
+                $accepted = $false
+                $typedFailure = $false
+                $errorMessage = ''
+                try {
+                    $proof = Get-VerifierPortLeaseBoundOwnershipProof `
+                        $contextValue $leaseValue $state.Owner.ProcessId `
+                        $state.Owner.ProcessStartTicks $state.Owner $null
+                    $accepted = $null -ne $proof
+                } catch {
+                    $typedFailure = Test-VerifierInfrastructureError $_
+                    $errorMessage = Get-VerifierErrorMessage $_
+                }
+                [void]$results.Add([pscustomobject]@{
+                    Mode = $state.Mode; Accepted = $accepted
+                    TypedFailure = $typedFailure; Error = $errorMessage
+                    SnapshotQueries = [int]$state.SnapshotQueries
+                    CurrentQueries = [int]$state.CurrentQueries
+                    ParentQueries = [int]$state.ParentQueries
+                    IdentityQueries = [int]$state.IdentityQueries
+                    BelongsQueries = [int]$state.BelongsQueries
+                    SnapshotWasNull = [bool]$state.SnapshotWasNull
+                })
+            }
+            # Exercise the actual downstream durable setter with the same
+            # synthetic OS views.  Keep these records nested under the
+            # existing valid-fast result so the proof rows above retain their
+            # historical one-row-per-mode shape.
+            foreach ($setterCase in @(
+                    [pscustomobject]@{ Mode = 'valid-fast'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'wrong-start'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'wrong-executable'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'wrong-parent'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'wrong-markers'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'changed-root-pid'; AuthorizedProcessId = [int]$ownerValue.ProcessId + 1; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'changed-listener-pid-start'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'malformed-parent'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'malformed-parent-start'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'malformed-command'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'descendant'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'mixed'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                    [pscustomobject]@{ Mode = 'late-proof'; AuthorizedProcessId = [int]$ownerValue.ProcessId; AuthorizedProcessStartTicks = [long]$ownerValue.ProcessStartTicks }
+                )) {
+                $candidateOwner = $ownerValue | Select-Object *
+                if ($setterCase.Mode -eq 'malformed-parent') {
+                    $candidateOwner.ProcessParentProcessId = 0
+                } elseif ($setterCase.Mode -eq 'malformed-parent-start') {
+                    $candidateOwner.ProcessParentProcessStartTicks = '9201'
+                } elseif ($setterCase.Mode -eq 'malformed-command') {
+                    $candidateOwner.ProcessCommandLine = ''
+                }
+                $candidateInspection = $inspectionValue | Select-Object *
+                $candidateInspection.Listeners = @($inspectionValue.Listeners | ForEach-Object {
+                    $_ | Select-Object *
+                })
+                if ($setterCase.Mode -eq 'descendant') {
+                    $candidateInspection.Listeners[0].ProcessId =
+                        [int]$candidateOwner.ProcessId + 1
+                    $candidateInspection.Listeners[0].ProcessStartTicks =
+                        [long]$candidateOwner.ProcessStartTicks + 1L
+                } elseif ($setterCase.Mode -eq 'changed-listener-pid-start') {
+                    $candidateInspection.Listeners[0].ProcessId =
+                        [int]$candidateOwner.ProcessId + 1
+                    $candidateInspection.Listeners[0].ProcessStartTicks =
+                        [long]$candidateOwner.ProcessStartTicks + 1L
+                } elseif ($setterCase.Mode -eq 'mixed') {
+                    $kernelListener = $candidateInspection.Listeners[0] | Select-Object *
+                    $kernelListener.ProcessId = 4
+                    $kernelListener.ProcessStartTicks = 0L
+                    $kernelListener.ListenerOwnerKind = 'kernel-transport'
+                    $kernelListener.ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+                    $kernelListener.ListenerOwnerEvidence = 'pid-4-system-http-sys'
+                    $candidateInspection.Listeners = @(
+                        $candidateInspection.Listeners[0], $kernelListener)
+                }
+                $state = [pscustomobject]@{
+                    Mode = $setterCase.Mode; Owner = $candidateOwner
+                    Inspection = $candidateInspection; SnapshotQueries = 0
+                    CurrentQueries = 0; ParentQueries = 0; IdentityQueries = 0
+                    BelongsQueries = 0; SnapshotWasNull = $false
+                }
+                $script:GateBBrowserFastState = $state
+                $setterLease = [pscustomobject]@{
+                    Port = 45126; ListenerProcessId = 0
+                    ListenerProcessStartTicks = 0L; ListenerOwnerKind = 'none'
+                    ListenerOwnerProof = ''; ListenerOwnerEvidence = ''
+                    ListenerInspectionSuccess = $false
+                    ListenerInspectionKnown = $false
+                    ListenerHasListeners = $null; ListenerAbsent = $null
+                }
+                $accepted = $false
+                $typedFailure = $false
+                $errorMessage = ''
+                try {
+                    Set-VerifierLeaseListenerInspection $setterLease `
+                        $candidateInspection $contextValue $candidateOwner `
+                        $setterCase.AuthorizedProcessId `
+                        $setterCase.AuthorizedProcessStartTicks
+                    $accepted = $true
+                } catch {
+                    $typedFailure = Test-VerifierInfrastructureError $_
+                    $errorMessage = Get-VerifierErrorMessage $_
+                }
+                [void]$setterResults.Add([pscustomobject]@{
+                    Mode = $setterCase.Mode; Accepted = $accepted
+                    TypedFailure = $typedFailure; Error = $errorMessage
+                    SnapshotQueries = [int]$state.SnapshotQueries
+                    CurrentQueries = [int]$state.CurrentQueries
+                    ParentQueries = [int]$state.ParentQueries
+                    IdentityQueries = [int]$state.IdentityQueries
+                    BelongsQueries = [int]$state.BelongsQueries
+                    SnapshotWasNull = [bool]$state.SnapshotWasNull
+                    ListenerProcessId = [int]$setterLease.ListenerProcessId
+                    ListenerProcessStartTicks = $setterLease.ListenerProcessStartTicks
+                    ListenerInspectionSuccess = [bool]$setterLease.ListenerInspectionSuccess
+                    ListenerInspectionKnown = [bool]$setterLease.ListenerInspectionKnown
+                    ListenerHasListeners = $setterLease.ListenerHasListeners
+                    ListenerAbsent = $setterLease.ListenerAbsent
+                })
+            }
+            $validResult = @($results | Where-Object Mode -eq 'valid-fast' |
+                Select-Object -First 1)
+            if ($validResult.Count -eq 1) {
+                [void](Add-Member -InputObject $validResult[0] -MemberType NoteProperty `
+                    -Name SetterCases -Value @($setterResults) -Force
+                )
+            }
+            return @($results)
+        } finally {
+            foreach ($name in $saved.Keys) {
+                Set-Item Function:\$name -Force -Value $saved[$name]
+            }
+            Remove-Variable -Name GateBBrowserFastState,`
+                GateBBrowserFastOriginalBelongs,GateBBrowserFastOriginalStartTicks `
+                -Scope Script -Force `
+                -ErrorAction SilentlyContinue
+        }
+    } $owner $inspection $context $lease
+
+    $valid = @($probe | Where-Object Mode -eq 'valid-fast')
+    Assert-GateB ($valid.Count -eq 1 -and $valid[0].Accepted -and
+        -not $valid[0].TypedFailure -and
+        [int]$valid[0].SnapshotQueries -eq 0 -and
+        [bool]$valid[0].SnapshotWasNull -and
+        [int]$valid[0].IdentityQueries -eq 1) `
+        'same-root browser listener did not use the PID-scoped identity fast path'
+
+    foreach ($negativeMode in @(
+            'wrong-start', 'wrong-executable', 'wrong-parent', 'wrong-markers')) {
+        $negative = @($probe | Where-Object Mode -eq $negativeMode)
+        Assert-GateB ($negative.Count -eq 1 -and -not $negative[0].Accepted -and
+            $negative[0].TypedFailure -and
+            [int]$negative[0].SnapshotQueries -eq 0) `
+            "$negativeMode browser identity was accepted or fell back to the broad snapshot"
+    }
+    foreach ($malformedMode in @(
+            'malformed-parent', 'malformed-parent-start', 'malformed-command')) {
+        $malformed = @($probe | Where-Object Mode -eq $malformedMode)
+        Assert-GateB ($malformed.Count -eq 1 -and
+            [int]$malformed[0].SnapshotQueries -eq 1 -and
+            -not [bool]$malformed[0].SnapshotWasNull) `
+            "$malformedMode browser owner did not use the complete snapshot fallback"
+    }
+    $malformedParent = @($probe | Where-Object Mode -eq 'malformed-parent')
+    $malformedParentStart = @($probe | Where-Object Mode -eq 'malformed-parent-start')
+    $malformedCommand = @($probe | Where-Object Mode -eq 'malformed-command')
+    Assert-GateB ($malformedParent[0].Accepted -and
+        -not $malformedParent[0].TypedFailure -and
+        $malformedCommand[0].Accepted -and
+        -not $malformedCommand[0].TypedFailure -and
+        -not $malformedParentStart[0].Accepted -and
+        $malformedParentStart[0].TypedFailure) `
+        'complete browser snapshot fallback did not preserve malformed-owner outcomes'
+    $late = @($probe | Where-Object Mode -eq 'late-proof')
+    Assert-GateB ($late.Count -eq 1 -and -not $late[0].Accepted -and
+        $late[0].TypedFailure -and [int]$late[0].SnapshotQueries -eq 0 -and
+        [bool]$late[0].SnapshotWasNull -and
+        [string]$late[0].Error -match 'stage=browser-root-listener-fast-identity' -and
+        [string]$late[0].Error -match 'elapsedMs=') `
+        'same-root browser listener accepted a late PID-scoped identity proof'
+
+    $descendant = @($probe | Where-Object Mode -eq 'descendant')
+    Assert-GateB ($descendant.Count -eq 1 -and $descendant[0].Accepted -and
+        -not $descendant[0].TypedFailure -and
+        [int]$descendant[0].SnapshotQueries -eq 1 -and
+        -not [bool]$descendant[0].SnapshotWasNull) `
+        'descendant browser listener bypassed the complete ownership snapshot path'
+
+    $setterCases = @($valid[0].SetterCases)
+    Assert-GateB ($valid.Count -eq 1 -and $setterCases.Count -eq 13) `
+        'downstream listener setter fast-path canary did not return every required case'
+    $setterFast = @($setterCases | Where-Object Mode -eq 'valid-fast')
+    Assert-GateB ($setterFast.Count -eq 1 -and $setterFast[0].Accepted -and
+        -not $setterFast[0].TypedFailure -and
+        [int]$setterFast[0].SnapshotQueries -eq 0 -and
+        [bool]$setterFast[0].SnapshotWasNull -and
+        [int]$setterFast[0].IdentityQueries -eq 1 -and
+        [int]$setterFast[0].ListenerProcessId -eq [int]$owner.ProcessId -and
+        [long]$setterFast[0].ListenerProcessStartTicks -eq [long]$owner.ProcessStartTicks -and
+        [bool]$setterFast[0].ListenerInspectionSuccess -and
+        [bool]$setterFast[0].ListenerInspectionKnown -and
+        [bool]$setterFast[0].ListenerHasListeners -and
+        -not [bool]$setterFast[0].ListenerAbsent) `
+        'downstream listener setter did not persist the valid PID-scoped fast-path proof'
+    foreach ($setterNegativeMode in @(
+            'wrong-start', 'wrong-executable', 'wrong-parent', 'wrong-markers')) {
+        $setterNegative = @($setterCases | Where-Object Mode -eq $setterNegativeMode)
+        Assert-GateB ($setterNegative.Count -eq 1 -and
+            -not $setterNegative[0].Accepted -and
+            $setterNegative[0].TypedFailure -and
+            [int]$setterNegative[0].SnapshotQueries -eq 0 -and
+            [bool]$setterNegative[0].SnapshotWasNull -and
+            [int]$setterNegative[0].ListenerProcessId -eq 0 -and
+            -not [bool]$setterNegative[0].ListenerInspectionSuccess) `
+            "$setterNegativeMode downstream listener setter accepted or broadened a fast-path identity negative"
+    }
+    foreach ($setterFallbackMode in @(
+            'changed-root-pid', 'changed-listener-pid-start',
+            'malformed-parent', 'malformed-parent-start', 'malformed-command',
+            'descendant', 'mixed')) {
+        $setterFallback = @($setterCases | Where-Object Mode -eq $setterFallbackMode)
+        Assert-GateB ($setterFallback.Count -eq 1 -and
+            [int]$setterFallback[0].SnapshotQueries -eq 1 -and
+            -not [bool]$setterFallback[0].SnapshotWasNull) `
+            "$setterFallbackMode downstream listener setter did not use the complete snapshot fallback"
+    }
+    $setterChangedRoot = @($setterCases | Where-Object Mode -eq 'changed-root-pid')
+    $setterChangedListener = @($setterCases | Where-Object Mode -eq 'changed-listener-pid-start')
+    Assert-GateB (-not $setterChangedRoot[0].Accepted -and
+        $setterChangedRoot[0].TypedFailure -and
+        -not $setterChangedListener[0].Accepted -and
+        $setterChangedListener[0].TypedFailure) `
+        'downstream listener setter accepted a changed root or listener identity'
+    foreach ($setterAcceptedFallbackMode in @(
+            'malformed-parent', 'malformed-command', 'descendant')) {
+        $setterAcceptedFallback = @($setterCases | Where-Object Mode -eq $setterAcceptedFallbackMode)
+        Assert-GateB ($setterAcceptedFallback[0].Accepted -and
+            -not $setterAcceptedFallback[0].TypedFailure -and
+            [bool]$setterAcceptedFallback[0].ListenerInspectionSuccess -and
+            [bool]$setterAcceptedFallback[0].ListenerInspectionKnown) `
+            "$setterAcceptedFallbackMode downstream complete proof did not authorize the retained listener"
+    }
+    $setterMalformedStart = @($setterCases | Where-Object Mode -eq 'malformed-parent-start')
+    Assert-GateB (-not $setterMalformedStart[0].Accepted -and
+        $setterMalformedStart[0].TypedFailure -and
+        [int]$setterMalformedStart[0].ListenerProcessId -eq 0) `
+        'downstream listener setter accepted a malformed parent start identity'
+    $setterDescendant = @($setterCases | Where-Object Mode -eq 'descendant')
+    Assert-GateB ([int]$setterDescendant[0].ListenerProcessId -eq [int]$owner.ProcessId + 1 -and
+        [long]$setterDescendant[0].ListenerProcessStartTicks -eq [long]$owner.ProcessStartTicks + 1L) `
+        'downstream listener setter did not retain the complete-proof descendant listener identity'
+    $setterMixed = @($setterCases | Where-Object Mode -eq 'mixed')
+    Assert-GateB (-not $setterMixed[0].Accepted -and $setterMixed[0].TypedFailure -and
+        [int]$setterMixed[0].CurrentQueries -eq 3 -and
+        [int]$setterMixed[0].ListenerProcessId -eq 0) `
+        'downstream listener setter accepted a mixed user/kernel listener set'
+    $setterLate = @($setterCases | Where-Object Mode -eq 'late-proof')
+    Assert-GateB (-not $setterLate[0].Accepted -and $setterLate[0].TypedFailure -and
+        [int]$setterLate[0].SnapshotQueries -eq 0 -and
+        [bool]$setterLate[0].SnapshotWasNull -and
+        [int]$setterLate[0].ListenerProcessId -eq 0) `
+        'downstream listener setter accepted a delayed PID-scoped proof'
+    Write-Host ('PASS:same-root browser listener fast path preserves PID-scoped executable/parent/marker ' +
+        'identity negatives, strict deadline, downstream setter authorization, and descendant complete-snapshot fallback')
+}
+
+function Invoke-GateBDescendantSnapshotRefreshCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for descendant snapshot refresh canary.'
+    }
+    $owner = [pscustomobject]@{
+        ProcessId = 9100; ProcessStartTicks = 800L
+        Profile = 'C:\Temp\gate-b-descendant-refresh-profile'
+        BrowserPath = 'C:\Program Files\Edge\Application\msedge.exe'
+        RunId = 'gate-b-descendant-refresh-run'
+        RepositoryIdentity = 'gate-b-descendant-refresh-worktree'; CdpPort = 45125
+    }
+    $listener = [pscustomobject]@{
+        LocalAddress = '127.0.0.1'; Port = 45125
+        ProcessId = 9101; ProcessStartTicks = 801L
+        ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'
+    }
+    $inspection = [pscustomobject]@{
+        Success = $true; Known = $true; HasListeners = $true
+        Listeners = @($listener); ListenerOwnerKind = 'user-process'
+        ListenerOwnerProof = 'diagnostics-process-start-v1'
+        ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
+        Source = 'Get-NetTCPConnection'; Error = ''
+    }
+    $context = [pscustomobject]@{}
+    $lease = [pscustomobject]@{ Port = 45125 }
+    $probe = & $module[0] {
+        param($ownerValue, $inspectionValue, $contextValue, $leaseValue)
+        $saved = @{}
+        foreach ($name in @(
+                'Test-VerifierListenerInspectionSchema',
+                'Test-VerifierListenerRecordSchema',
+                'Get-VerifierLoopbackListenerRecords',
+                'Get-VerifierBrowserOwnershipSnapshot',
+                'Get-VerifierCurrentProcessRecordById',
+                 'Test-VerifierListenerBelongsToOwner',
+                 'Test-VerifierRunOwnedPreviewHttpSysListener',
+                 'New-VerifierRunOwnedPreviewHttpSysAuthorizationProof')) {
+            $saved[$name] = (Get-Command $name -CommandType Function -ErrorAction Stop).ScriptBlock
+        }
+        try {
+                $results = New-Object Collections.ArrayList
+                foreach ($mode in @('transient', 'present', 'inaccessible', 'foreign',
+                    'listener-start-changed', 'delayed-proof', 'delayed-listener',
+                    'delayed-http-proof', 'delayed-second-view',
+                    'late-second-view')) {
+                $state = [pscustomobject]@{
+                    Mode = $mode; ListenerQueries = 0; SnapshotQueries = 0
+                    CurrentQueries = 0; BelongsQueries = 0; SecondViewQueries = 0
+                    HttpProofQueries = 0; TypedFailure = $false
+                }
+                $script:GateBDescendantRefreshState = $state
+                Set-Item Function:\Test-VerifierListenerInspectionSchema -Force -Value {
+                    param($candidateInspection, $candidateContext, $candidateOwner)
+                    return $true
+                }
+                Set-Item Function:\Test-VerifierListenerRecordSchema -Force -Value {
+                    param($candidateListener, $candidateContext, $candidateOwner)
+                    return $true
+                }
+                Set-Item Function:\Get-VerifierLoopbackListenerRecords -Force -Value {
+                    $s = $script:GateBDescendantRefreshState
+                    $s.ListenerQueries++
+                    if ($s.Mode -eq 'delayed-listener' -and
+                            $s.ListenerQueries -gt 1) {
+                        Start-Sleep -Milliseconds 600
+                    }
+                    $resultInspection = $inspectionValue | Select-Object *
+                    $resultInspection.Listeners = @($inspectionValue.Listeners)
+                    if ($s.Mode -eq 'listener-start-changed' -and $s.ListenerQueries -gt 1) {
+                        $changed = $inspectionValue.Listeners[0] | Select-Object *
+                        $changed.ProcessStartTicks = 802L
+                        $resultInspection.Listeners = @($changed)
+                    }
+                    if ($s.Mode -eq 'delayed-http-proof') {
+                        $kernelInspection = $inspectionValue | Select-Object *
+                        $kernelListener = $inspectionValue.Listeners[0] | Select-Object *
+                        $kernelListener.ProcessId = 4
+                        $kernelListener.ProcessStartTicks = $null
+                        $kernelListener.ListenerOwnerKind = 'kernel-transport'
+                        $kernelListener.ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+                        $kernelListener.ListenerOwnerEvidence = 'pid-4-system-http-sys'
+                        $kernelInspection.Listeners = @($kernelListener)
+                        $kernelInspection.ListenerOwnerKind = 'kernel-transport'
+                        $kernelInspection.ListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+                        $kernelInspection.ListenerOwnerEvidence = 'pid-4-system-http-sys'
+                        return $kernelInspection
+                    }
+                    return $resultInspection
+                }
+                Set-Item Function:\Get-VerifierBrowserOwnershipSnapshot -Force -Value {
+                    $s = $script:GateBDescendantRefreshState
+                    $s.SnapshotQueries++
+                    if ($s.Mode -eq 'delayed-proof' -and
+                            $s.SnapshotQueries -gt 1) {
+                        Start-Sleep -Milliseconds 600
+                    }
+                    return [pscustomobject]@{
+                        Version = [int]$s.SnapshotQueries; Root = $ownerValue.RunId
+                        Profile = $ownerValue.Profile; Port = $ownerValue.CdpPort
+                    }
+                }
+                Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                    param($processId)
+                    $s = $script:GateBDescendantRefreshState
+                    $s.CurrentQueries++
+                    if ([int]$processId -eq 9103) {
+                        $s.SecondViewQueries++
+                        if ($s.Mode -eq 'present') {
+                            return [pscustomobject]@{ ProcessId = 9103; ProcessStartTicks = 803L }
+                        }
+                        if ($s.Mode -eq 'inaccessible') {
+                            Throw-VerifierInfrastructure 'synthetic second process view inaccessible'
+                        }
+                        if ($s.Mode -eq 'delayed-second-view') {
+                            Start-Sleep -Milliseconds 600
+                        }
+                        return $null
+                    }
+                    if ([int]$processId -eq 9100) {
+                        return [pscustomobject]@{ ProcessId = 9100; ProcessStartTicks = 800L }
+                    }
+                    if ([int]$processId -eq 9101) {
+                        return [pscustomobject]@{ ProcessId = 9101; ProcessStartTicks = 801L }
+                    }
+                    return $null
+                }
+                Set-Item Function:\Test-VerifierListenerBelongsToOwner -Force -Value {
+                    param($candidateOwner, $candidateListener, $processId,
+                        $processStartTicks, $snapshot)
+                    $s = $script:GateBDescendantRefreshState
+                    $s.BelongsQueries++
+                    if ([string]$candidateOwner.Profile -cne [string]$ownerValue.Profile -or
+                            [string]$candidateOwner.RunId -cne [string]$ownerValue.RunId -or
+                            [int]$candidateOwner.CdpPort -ne [int]$ownerValue.CdpPort -or
+                            [int]$candidateListener.ProcessId -ne 9101 -or
+                            [long]$candidateListener.ProcessStartTicks -ne 801L) {
+                        Throw-VerifierInfrastructure 'synthetic exact owner/listener tuple changed'
+                    }
+                    if ($s.Mode -eq 'foreign') { return $false }
+                    if (($s.Mode -eq 'transient' -or
+                            $s.Mode -eq 'delayed-proof' -or
+                            $s.Mode -eq 'delayed-listener' -or
+                            $s.Mode -eq 'listener-start-changed' -or
+                            $s.Mode -eq 'delayed-second-view') -and
+                            $s.BelongsQueries -eq 1) {
+                        Throw-VerifierInfrastructureMissingProcess `
+                            'synthetic descendant disappeared from stale snapshot' 9103
+                    }
+                    if ($s.Mode -eq 'present' -or $s.Mode -eq 'inaccessible') {
+                        Throw-VerifierInfrastructureMissingProcess `
+                            'synthetic descendant snapshot candidate unavailable' 9103
+                    }
+                    if ($s.Mode -eq 'transient' -and
+                            [int]$snapshot.Version -ne 2) {
+                        Throw-VerifierInfrastructure 'synthetic stale ownership snapshot was reused'
+                    }
+                    if ($s.Mode -eq 'late-second-view') {
+                        Start-Sleep -Milliseconds 600
+                        Throw-VerifierInfrastructureMissingProcess `
+                            'synthetic descendant proof became stale before its second view' 9103
+                    }
+                    return $true
+                }
+                Set-Item Function:\Test-VerifierRunOwnedPreviewHttpSysListener -Force -Value {
+                    $s = $script:GateBDescendantRefreshState
+                    $s.HttpProofQueries++
+                    if ($s.Mode -eq 'delayed-http-proof') {
+                        Start-Sleep -Milliseconds 600
+                    }
+                    return $true
+                }
+                Set-Item Function:\New-VerifierRunOwnedPreviewHttpSysAuthorizationProof -Force -Value {
+                    $s = $script:GateBDescendantRefreshState
+                    $s.HttpProofQueries++
+                    if ($s.Mode -eq 'delayed-http-proof') {
+                        Start-Sleep -Milliseconds 600
+                        return $null
+                    }
+                    return [pscustomobject]@{ Protocol = 'synthetic-proof'; Authorized = $true }
+                }
+                $accepted = $false
+                $typedFailure = $false
+                $previewListenerOwner = if ($mode -eq 'delayed-http-proof') {
+                    [pscustomobject]@{ Name = 'synthetic-kernel-preview-owner' }
+                } else { $null }
+                try {
+                    $accepted = [bool](Get-VerifierPortLeaseBoundOwnershipProof `
+                        $contextValue $leaseValue 9100 800L $ownerValue $previewListenerOwner)
+                } catch {
+                    $accepted = $false
+                    $typedFailure = Test-VerifierInfrastructureError $_
+                }
+                [void]$results.Add([pscustomobject]@{
+                    Mode = $state.Mode; Accepted = $accepted
+                    ListenerQueries = [int]$state.ListenerQueries
+                    SnapshotQueries = [int]$state.SnapshotQueries
+                    CurrentQueries = [int]$state.CurrentQueries
+                    BelongsQueries = [int]$state.BelongsQueries
+                    SecondViewQueries = [int]$state.SecondViewQueries
+                    HttpProofQueries = [int]$state.HttpProofQueries
+                    TypedFailure = $typedFailure
+                })
+            }
+            return @($results)
+        } finally {
+            foreach ($name in $saved.Keys) {
+                Set-Item Function:\$name -Force -Value $saved[$name]
+            }
+            Remove-Variable -Name GateBDescendantRefreshState -Scope Script -Force `
+                -ErrorAction SilentlyContinue
+        }
+    } $owner $inspection $context $lease
+    $transient = @($probe | Where-Object Mode -eq 'transient')
+    $present = @($probe | Where-Object Mode -eq 'present')
+    $inaccessible = @($probe | Where-Object Mode -eq 'inaccessible')
+    $foreign = @($probe | Where-Object Mode -eq 'foreign')
+    $changed = @($probe | Where-Object Mode -eq 'listener-start-changed')
+    $delayed = @($probe | Where-Object Mode -eq 'delayed-proof')
+    $delayedListener = @($probe | Where-Object Mode -eq 'delayed-listener')
+    $delayedHttp = @($probe | Where-Object Mode -eq 'delayed-http-proof')
+    $delayedSecondView = @($probe | Where-Object Mode -eq 'delayed-second-view')
+    $lateSecondView = @($probe | Where-Object Mode -eq 'late-second-view')
+    Assert-GateB ($transient.Count -eq 1 -and $transient[0].Accepted -and
+        [int]$transient[0].ListenerQueries -eq 2 -and
+        [int]$transient[0].SnapshotQueries -eq 2 -and
+        [int]$transient[0].CurrentQueries -eq 5 -and
+        [int]$transient[0].BelongsQueries -eq 2) `
+        'absent descendant did not trigger a fresh complete ownership proof'
+    foreach ($negative in @($present, $inaccessible, $foreign)) {
+        Assert-GateB ($negative.Count -eq 1 -and -not $negative[0].Accepted) `
+            'present, inaccessible, or foreign descendant was accepted during refresh'
+    }
+    Assert-GateB ([int]$present[0].SnapshotQueries -eq 1 -and
+        [int]$inaccessible[0].SnapshotQueries -eq 1 -and
+        [int]$foreign[0].SnapshotQueries -eq 1) `
+        'non-absent descendant failure reused or refreshed a stale snapshot'
+    Assert-GateB ($changed.Count -eq 1 -and -not $changed[0].Accepted -and
+        [int]$changed[0].ListenerQueries -eq 2 -and
+        [int]$changed[0].SnapshotQueries -eq 1) `
+        'listener PID/start change was accepted during descendant snapshot refresh'
+    Assert-GateB ($delayed.Count -eq 1 -and -not $delayed[0].Accepted -and
+        $delayed[0].TypedFailure -and
+        [int]$delayed[0].ListenerQueries -eq 2 -and
+        [int]$delayed[0].SnapshotQueries -eq 2 -and
+        [int]$delayed[0].CurrentQueries -eq 5 -and
+        [int]$delayed[0].BelongsQueries -eq 1) `
+        'delayed refresh-lane ownership proof was accepted after its monotonic budget'
+    Assert-GateB ($delayedListener.Count -eq 1 -and
+        -not $delayedListener[0].Accepted -and $delayedListener[0].TypedFailure -and
+        [int]$delayedListener[0].ListenerQueries -eq 2 -and
+        [int]$delayedListener[0].SnapshotQueries -eq 1 -and
+        [int]$delayedListener[0].CurrentQueries -eq 3 -and
+        [int]$delayedListener[0].BelongsQueries -eq 1 -and
+        [int]$delayedListener[0].HttpProofQueries -eq 0) `
+        'delayed refresh-lane listener inspection was accepted after its monotonic budget'
+    Assert-GateB ($delayedHttp.Count -eq 1 -and
+        -not $delayedHttp[0].Accepted -and $delayedHttp[0].TypedFailure -and
+        [int]$delayedHttp[0].ListenerQueries -eq 1 -and
+        [int]$delayedHttp[0].HttpProofQueries -eq 1 -and
+        [int]$delayedHttp[0].SnapshotQueries -eq 0 -and
+        [int]$delayedHttp[0].CurrentQueries -eq 0 -and
+        [int]$delayedHttp[0].BelongsQueries -eq 0) `
+        'delayed HTTP.sys proof was not rejected before returning kernel ownership'
+    Assert-GateB ($delayedSecondView.Count -eq 1 -and
+        -not $delayedSecondView[0].Accepted -and
+        $delayedSecondView[0].TypedFailure -and
+        [int]$delayedSecondView[0].ListenerQueries -eq 1 -and
+        [int]$delayedSecondView[0].SnapshotQueries -eq 1 -and
+        [int]$delayedSecondView[0].CurrentQueries -eq 3 -and
+        [int]$delayedSecondView[0].BelongsQueries -eq 1 -and
+        [int]$delayedSecondView[0].SecondViewQueries -eq 1) `
+        'delayed missing-PID absence proof was accepted after the strict deadline'
+    Assert-GateB ($lateSecondView.Count -eq 1 -and
+        -not $lateSecondView[0].Accepted -and $lateSecondView[0].TypedFailure -and
+        [int]$lateSecondView[0].ListenerQueries -eq 1 -and
+        [int]$lateSecondView[0].SnapshotQueries -eq 1 -and
+        [int]$lateSecondView[0].CurrentQueries -eq 2 -and
+        [int]$lateSecondView[0].BelongsQueries -eq 1 -and
+        [int]$lateSecondView[0].SecondViewQueries -eq 0) `
+        'late missing-PID proof was accepted after the strict deadline expired'
+    Write-Host 'PASS:descendant snapshot refresh requires exact disappearance and repeats the complete unchanged ownership proof'
+}
+
 function Invoke-GateBPreviewIdentityFailureCanary() {
     $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
         ('TroubleshootJS\gate-b-preview-identity-' + [Guid]::NewGuid().ToString('N'))
@@ -4547,6 +8374,481 @@ function Invoke-GateBPreviewIdentityFailureCanary() {
     Write-Host 'PASS:run-owned preview identity-capture failure retained process/claim until exact cleanup proof'
 }
 
+function Invoke-GateBStartPreviewAdoptionCanary() {
+    $startPreviewPath = Join-Path $PSScriptRoot 'start-preview.ps1'
+    $startPreviewText = Get-Content -LiteralPath $startPreviewPath -Raw -ErrorAction Stop
+    Assert-GateB ($startPreviewText.IndexOf('Get-VerifierProcessSnapshotWithFallback',
+        [StringComparison]::Ordinal) -ge 0 -and
+        $startPreviewText.IndexOf('Get-VerifierPreviewAdoptionCandidateRecords',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $startPreviewText -notmatch 'Get-CimInstance') `
+        'start-preview adoption retained a direct WMI-only process snapshot'
+
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        throw 'VerifierIsolation module was unavailable for start-preview adoption canary.'
+    }
+    $previewScript = Get-VerifierFullPath (Join-Path $PSScriptRoot 'preview.ps1')
+    $port = 45678
+    $command = '"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" ' +
+        '-NoProfile -ExecutionPolicy Bypass -File "' + $previewScript +
+        '" -Port ' + [string]$port
+    $validRecord = [pscustomobject]@{
+        ProcessId = 123456; ParentProcessId = 654321; Name = 'powershell.exe'
+        CommandLine = $command
+    }
+    $forcedProbe = & $module[0] {
+        param($candidateScript, $candidatePort, $candidateRecord)
+        $oldFunction = Get-Command Get-CimInstance -CommandType Function `
+            -ErrorAction SilentlyContinue
+        $oldScriptBlock = if ($null -ne $oldFunction) {
+            $oldFunction.ScriptBlock
+        } else { $null }
+        try {
+            Set-Item Function:\Get-CimInstance -Force -Value {
+                throw [UnauthorizedAccessException]::new('forced WMI denial')
+            }
+            $snapshot = @(Get-VerifierProcessSnapshotWithFallback `
+                'start-preview adoption forced WMI denial')
+            $currentRecord = Get-VerifierCurrentProcessRecordById ([int]$PID)
+            $selected = @(Get-VerifierPreviewAdoptionCandidateRecords `
+                @($candidateRecord) $candidateScript $candidatePort 'powershell.exe')
+            return [pscustomobject]@{
+                SnapshotCount = $snapshot.Count
+                CurrentRecord = $currentRecord
+                SelectedCount = $selected.Count
+            }
+        } finally {
+            if ($null -ne $oldFunction) {
+                Set-Item Function:\Get-CimInstance -Force -Value $oldScriptBlock
+            } else {
+                Remove-Item Function:\Get-CimInstance -Force `
+                    -ErrorAction SilentlyContinue
+            }
+        }
+    } $previewScript $port $validRecord
+    Assert-GateB ([int]$forcedProbe.SnapshotCount -gt 0 -and
+        $null -ne $forcedProbe.CurrentRecord -and
+        [int]$forcedProbe.CurrentRecord.ProcessId -eq [int]$PID -and
+        [int]$forcedProbe.CurrentRecord.ParentProcessId -gt 0 -and
+        [long]$forcedProbe.CurrentRecord.ProcessStartTicks -gt 0 -and
+        -not [String]::IsNullOrWhiteSpace([string]$forcedProbe.CurrentRecord.CommandLine)) `
+        'forced WMI denial did not produce a native current process record'
+    Assert-GateB ([int]$forcedProbe.SelectedCount -eq 1) `
+        'valid preview adoption candidate was not selected from the native path'
+
+    foreach ($negative in @(
+            [pscustomobject]@{ Name = 'malformed relevant PID'; Record = [pscustomobject]@{
+                ProcessId = '123456'; ParentProcessId = 654321; Name = 'powershell.exe'
+                CommandLine = $command } }
+            [pscustomobject]@{ Name = 'malformed relevant command'; Record = [pscustomobject]@{
+                ProcessId = 123456; ParentProcessId = 654321; Name = 'powershell.exe'
+                CommandLine = [pscustomobject]@{ Value = $command } } }
+            [pscustomobject]@{ Name = 'foreign marked candidate'; Record = [pscustomobject]@{
+                ProcessId = 123456; ParentProcessId = 654321; Name = 'pwsh.exe'
+                CommandLine = $command } }
+        )) {
+        $rejected = $false
+        try {
+            [void](Get-VerifierPreviewAdoptionCandidateRecords `
+                @($negative.Record) $previewScript $port 'powershell.exe')
+        } catch {
+            $rejected = Test-VerifierInfrastructureError $_
+        }
+        Assert-GateB $rejected `
+            "start-preview adoption accepted $($negative.Name)"
+    }
+    Write-Host ('PASS:start-preview adoption uses forced-WMI-denial native records, ' +
+        'current parent/start identity, and rejects malformed/foreign candidates')
+}
+
+function Invoke-GateBNativeProcessInspectionCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        throw 'VerifierIsolation module was unavailable for native process-inspection canary.'
+    }
+    $candidatePid = [int]$PID
+    $probe = & $module[0] {
+        param($candidatePid)
+        $oldFunction = Get-Command Get-CimInstance -CommandType Function `
+            -ErrorAction SilentlyContinue
+        $oldScriptBlock = if ($null -ne $oldFunction) {
+            $oldFunction.ScriptBlock
+        } else { $null }
+        try {
+            Set-Item Function:\Get-CimInstance -Force -Value {
+                throw [UnauthorizedAccessException]::new('Access is denied')
+            }
+            $rawRecords = @(Get-VerifierProcessRecordsByIdWithFallback $candidatePid `
+                'native WMI access-denied canary')
+            $snapshot = @(Get-VerifierProcessSnapshotWithFallback `
+                'native WMI access-denied canary')
+            $currentRecord = Get-VerifierCurrentProcessRecordById $candidatePid
+            $current = @($snapshot | Where-Object {
+                [int]$_.ProcessId -eq $candidatePid
+            })
+            $bounded = Invoke-VerifierBoundedProcess `
+                (Get-Command powershell.exe -ErrorAction Stop).Source `
+                @('-NoProfile', '-Command', 'Start-Sleep -Milliseconds 100') `
+                10000
+            return [pscustomobject]@{
+                RecordCount = $rawRecords.Count
+                SnapshotCount = $snapshot.Count
+                CurrentCount = $current.Count
+                RawRecord = if ($rawRecords.Count -eq 1) { $rawRecords[0] } else { $null }
+                Record = $currentRecord
+                Current = if ($current.Count -eq 1) { $current[0] } else { $null }
+                BoundedExit = [int]$bounded.ExitCode
+                BoundedTerminationProven = [bool]$bounded.TerminationProven
+            }
+        } finally {
+            if ($null -ne $oldFunction) {
+                Set-Item Function:\Get-CimInstance -Force -Value $oldScriptBlock
+            } else {
+                Remove-Item Function:\Get-CimInstance -Force `
+                    -ErrorAction SilentlyContinue
+            }
+        }
+    } $candidatePid
+    Assert-GateB ([int]$probe.RecordCount -eq 1 -and
+        [int]$probe.SnapshotCount -gt 0 -and [int]$probe.CurrentCount -eq 1) `
+        'WMI access-denied fallback did not return a native current tuple and complete snapshot'
+    Assert-GateB ($null -ne $probe.RawRecord -and
+        [int]$probe.RawRecord.ProcessId -eq $candidatePid -and
+        [int]$probe.RawRecord.ParentProcessId -gt 0 -and
+        -not [String]::IsNullOrWhiteSpace([string]$probe.RawRecord.CommandLine)) `
+        'native access-denied adapter did not return the raw PID/parent/command tuple'
+    Assert-GateB ($null -ne $probe.Record -and
+        [int]$probe.Record.ProcessId -eq $candidatePid -and
+        [int]$probe.Record.ParentProcessId -gt 0 -and
+        [long]$probe.Record.ProcessStartTicks -gt 0 -and
+        -not [String]::IsNullOrWhiteSpace([string]$probe.Record.CommandLine) -and
+        -not [String]::IsNullOrWhiteSpace([string]$probe.Record.ExecutablePath)) `
+        'native access-denied tuple did not carry positive PID/parent/start/command/path identity'
+    Assert-GateB ($null -ne $probe.Current -and
+        [int]$probe.Current.ProcessId -eq $candidatePid) `
+        'native access-denied snapshot omitted the current process'
+    Assert-GateB ([int]$probe.BoundedExit -eq 0 -and
+        [bool]$probe.BoundedTerminationProven) `
+        'exact bounded cleanup did not complete through the native process view'
+
+    foreach ($malformed in @(
+            [pscustomobject]@{ Name = 'missing command'; Value = [pscustomobject]@{
+                ProcessId = $candidatePid; ParentProcessId = 1 } }
+            [pscustomobject]@{ Name = 'string parent'; Value = [pscustomobject]@{
+                ProcessId = $candidatePid; ParentProcessId = '1'; CommandLine = 'native-canary' } }
+            [pscustomobject]@{ Name = 'Boolean command'; Value = [pscustomobject]@{
+                ProcessId = $candidatePid; ParentProcessId = 1; CommandLine = $true } }
+        )) {
+        $rejected = & $module[0] {
+            param($candidatePid, $malformedValue)
+            $oldCim = Get-Command Get-CimInstance -CommandType Function `
+                -ErrorAction SilentlyContinue
+            $oldCimScript = if ($null -ne $oldCim) { $oldCim.ScriptBlock } else { $null }
+            $oldNative = Get-Command Get-VerifierNativeProcessSnapshot `
+                -CommandType Function -ErrorAction Stop
+            $oldNativeScript = $oldNative.ScriptBlock
+            try {
+                Set-Item Function:\Get-CimInstance -Force -Value {
+                    throw [UnauthorizedAccessException]::new('Access is denied')
+                }
+                $script:GateBNativeMalformedValue = $malformedValue.Value
+                Set-Item Function:\Get-VerifierNativeProcessSnapshot -Force -Value {
+                    return @($script:GateBNativeMalformedValue)
+                }
+                try {
+                    [void](Get-VerifierCurrentProcessRecordById $candidatePid)
+                    return $false
+                } catch {
+                    return (Test-VerifierInfrastructureError $_)
+                }
+            } finally {
+                if ($null -ne $oldCim) {
+                    Set-Item Function:\Get-CimInstance -Force -Value $oldCimScript
+                } else {
+                    Remove-Item Function:\Get-CimInstance -Force `
+                        -ErrorAction SilentlyContinue
+                }
+                Set-Item Function:\Get-VerifierNativeProcessSnapshot -Force `
+                    -Value $oldNativeScript
+                Remove-Variable -Name GateBNativeMalformedValue -Scope Script `
+                    -Force -ErrorAction SilentlyContinue
+            }
+        } $candidatePid $malformed
+        Assert-GateB ([bool]$rejected) `
+            "malformed native process tuple '$($malformed.Name)' was accepted"
+    }
+
+    $pid4Rejected = & $module[0] {
+        $oldCim = Get-Command Get-CimInstance -CommandType Function `
+            -ErrorAction SilentlyContinue
+        $oldCimScript = if ($null -ne $oldCim) { $oldCim.ScriptBlock } else { $null }
+        try {
+            Set-Item Function:\Get-CimInstance -Force -Value {
+                throw [UnauthorizedAccessException]::new('Access is denied')
+            }
+            try {
+                [void](Get-VerifierCurrentProcessRecordById 4)
+                return $false
+            } catch {
+                return (Test-VerifierInfrastructureError $_)
+            }
+        } finally {
+            if ($null -ne $oldCim) {
+                Set-Item Function:\Get-CimInstance -Force -Value $oldCimScript
+            } else {
+                Remove-Item Function:\Get-CimInstance -Force `
+                    -ErrorAction SilentlyContinue
+            }
+        }
+    }
+    Assert-GateB ([bool]$pid4Rejected) `
+        'PID 4 was not rejected as a user-process identity under native inspection'
+    Write-Host 'PASS:native Toolhelp/NtQuery process inspection, malformed tuple rejection, PID4 guard, and exact cleanup canary'
+}
+
+function Invoke-GateBTcpListenerPreviewCanary() {
+    $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\gate-b-tcp-preview-' + [Guid]::NewGuid().ToString('N'))
+    $context = $null
+    $failure = $null
+    $cleanupErrors = New-Object Collections.ArrayList
+    $cleanup = $null
+    $stdoutLog = ''
+    try {
+        New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
+        $context = New-VerifierRunContext $repositoryRoot $canaryRoot
+        $previewScript = Join-Path $repositoryRoot 'scripts\preview.ps1'
+        # Let the shared allocator retain the selected port before the preview
+        # starts. A probe-then-release port would allow unrelated host churn to
+        # replace the intended listener between those two operations.
+        [void](Start-VerifierOwnedPreview $context $previewScript 30 $true 0)
+        $baseUrl = [string]$context.Server.BaseUrl
+        $page = Invoke-WebRequest -UseBasicParsing -Uri ($baseUrl + '/circuitjs.html') `
+            -TimeoutSec 5
+        $identityResponse = Invoke-WebRequest -UseBasicParsing `
+            -Uri ($baseUrl + '/__tsj/verify-identity') -TimeoutSec 5
+        $identity = $identityResponse.Content | ConvertFrom-Json -ErrorAction Stop
+        Assert-GateB ([int]$page.StatusCode -eq 200 -and
+            [int]$identityResponse.StatusCode -eq 200 -and
+            -not [String]::IsNullOrWhiteSpace([string]$page.Content)) `
+            'TcpListener preview did not return the static page and identity route'
+        Assert-GateB ([string]$identity.protocol -ceq 'troubleshootjs-preview-identity-v1' -and
+            [int]$identity.previewPort -eq [int]$context.Server.Port -and
+            [int]$identity.processId -eq [int]$context.Server.ProcessId -and
+            [string]$identity.verifierRunId -ceq [string]$context.RunId -and
+            [string]$identity.verifierNonce -ceq [string]$context.PreviewNonce) `
+            'TcpListener identity route did not preserve the exact run/nonce/process/port handshake'
+        $stdoutLog = [string]$context.Server.StdoutLog
+        $cleanup = Complete-VerifierRun $context
+        Assert-GateB ($cleanup -and [bool]$cleanup.Success) `
+            'TcpListener preview exact process/listener/claim cleanup was not proven'
+        Assert-GateBContextResourcesReleased $context
+        Assert-GateB (Test-Path -LiteralPath $stdoutLog -PathType Leaf) `
+            'TcpListener preview did not retain its owned launcher output'
+        $transportOutput = Get-Content -LiteralPath $stdoutLog -Raw -ErrorAction Stop
+        Assert-GateB ($transportOutput -match 'transport=TcpListener') `
+            'forced TcpListener preview did not report the selected loopback transport'
+    } catch {
+        $failure = $_
+    } finally {
+        if ($null -ne $context) {
+            try {
+                $cleanup = Complete-VerifierRun $context
+                if ($null -eq $cleanup -or -not [bool]$cleanup.Success) {
+                    $detail = if ($cleanup) { @($cleanup.Errors) -join '; ' } else {
+                        'Complete-VerifierRun returned no result.'
+                    }
+                    [void]$cleanupErrors.Add($detail)
+                }
+            } catch {
+                [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+            }
+        }
+        if ($null -eq $failure -and $cleanupErrors.Count -eq 0 -and $null -ne $context) {
+            try {
+                Remove-GateBCanaryRoots $canaryRoot @($context)
+            } catch {
+                [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+            }
+        }
+    }
+    if ($cleanupErrors.Count -gt 0) {
+        Throw-GateBInfrastructure ('TcpListener preview canary cleanup was not proven; evidence was retained at ' +
+            $canaryRoot + ': ' + ($cleanupErrors -join '; '))
+    }
+    if ($null -ne $failure) {
+        if (Test-VerifierInfrastructureError $failure) { throw $failure }
+        Throw-GateBInfrastructure ('TcpListener preview canary failed: ' +
+            (Get-VerifierErrorMessage $failure))
+    }
+    Write-Host 'PASS:forced TcpListener identity/static-page route, duplicate-PATH-safe launcher, and exact owned cleanup canary'
+}
+
+function Invoke-GateBNetstatPreferenceCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for netstat preference canary.'
+    }
+    $port = 50001
+    $process = Get-Process -Id $PID -ErrorAction Stop
+    $processStartTicks = [long](Get-VerifierProcessStartTicks $process)
+    $probe = & $module[0] {
+        param($probePort, $probePid, $probeStartTicks)
+        $oldNetFunction = Get-Command Get-NetTCPConnection `
+            -CommandType Function -ErrorAction SilentlyContinue
+        $oldNetScriptBlock = if ($null -ne $oldNetFunction) {
+            $oldNetFunction.ScriptBlock
+        } else { $null }
+        $oldBoundedFunction = (Get-Command Invoke-VerifierBoundedProcess `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $result = $null
+        try {
+            $script:GateBNetstatPreferenceProviderCalls = 0
+            $script:GateBNetstatPreferenceProcessCalls = 0
+            $script:GateBNetstatPreferenceOutputMode = 'valid'
+            Set-Item Function:\Get-NetTCPConnection -Force -Value {
+                [CmdletBinding()]
+                param($LocalPort, $State)
+                $script:GateBNetstatPreferenceProviderCalls++
+                Start-Sleep -Milliseconds 650
+                return [pscustomobject]@{
+                    LocalAddress = '127.0.0.1'
+                    LocalPort = $LocalPort
+                    OwningProcess = $probePid
+                    State = 'Listen'
+                }
+            }
+            Set-Item Function:\Invoke-VerifierBoundedProcess -Force -Value {
+                param($FilePath, $Arguments, $TimeoutMilliseconds)
+                $script:GateBNetstatPreferenceProcessCalls++
+                $validLine = 'TCP 127.0.0.1:' + [string]$probePort +
+                    ' 0.0.0.0:0 LISTENING ' + [string]$probePid
+                if ($script:GateBNetstatPreferenceOutputMode -ceq 'valid') {
+                    return [pscustomobject]@{
+                        ExitCode = 0
+                        Stdout = "Active Connections`r`n  Proto  Local Address          Foreign Address        State           PID`r`n$validLine"
+                        Stderr = ''
+                    }
+                }
+                if ($script:GateBNetstatPreferenceOutputMode -ceq 'empty') {
+                    return [pscustomobject]@{ ExitCode = 0; Stdout = ''; Stderr = '' }
+                }
+                if ($script:GateBNetstatPreferenceOutputMode -ceq 'malformed') {
+                    return [pscustomobject]@{
+                        ExitCode = 0; Stdout = 'TCP 127.0.0.1:' +
+                            [string]$probePort + ' malformed'; Stderr = ''
+                    }
+                }
+                return [pscustomobject]@{
+                    ExitCode = 1; Stdout = 'netstat failed'; Stderr = ''
+                }
+            }
+
+            $defaultInspection = Get-VerifierLoopbackListenerRecords $probePort
+            $defaultListener = @($defaultInspection.Listeners)
+            $defaultProviderCalls = [int]$script:GateBNetstatPreferenceProviderCalls
+            $defaultProcessCalls = [int]$script:GateBNetstatPreferenceProcessCalls
+
+            $script:GateBNetstatPreferenceProviderCalls = 0
+            $script:GateBNetstatPreferenceProcessCalls = 0
+            $script:GateBNetstatPreferenceOutputMode = 'valid'
+            $preferredInspection = Get-VerifierLoopbackListenerRecords `
+                $probePort -PreferNetstat
+            $preferredListener = @($preferredInspection.Listeners)
+            $preferredProviderCalls = [int]$script:GateBNetstatPreferenceProviderCalls
+            $preferredProcessCalls = [int]$script:GateBNetstatPreferenceProcessCalls
+            $preferredInspectionSchema = Test-VerifierListenerInspectionSchema `
+                $preferredInspection $null $null $null -StructuralOnly
+            $preferredListenerSchema = if ($preferredListener.Count -eq 1) {
+                Test-VerifierListenerRecordSchema $preferredListener[0] `
+                    $null $null $null -StructuralOnly
+            } else { $false }
+
+            $failureResults = New-Object Collections.ArrayList
+            foreach ($mode in @('empty', 'malformed', 'error')) {
+                $script:GateBNetstatPreferenceProviderCalls = 0
+                $script:GateBNetstatPreferenceProcessCalls = 0
+                $script:GateBNetstatPreferenceOutputMode = $mode
+                $rejected = $false
+                $typedFailure = $false
+                try {
+                    [void](Get-VerifierLoopbackListenerRecords $probePort `
+                        -PreferNetstat)
+                } catch {
+                    $rejected = $true
+                    $typedFailure = Test-VerifierInfrastructureError $_
+                }
+                [void]$failureResults.Add([pscustomobject]@{
+                    Mode = $mode
+                    Rejected = $rejected
+                    TypedFailure = $typedFailure
+                    ProviderCalls = [int]$script:GateBNetstatPreferenceProviderCalls
+                    ProcessCalls = [int]$script:GateBNetstatPreferenceProcessCalls
+                })
+            }
+            $result = [pscustomobject]@{
+                DefaultInspectionSource = [string]$defaultInspection.Source
+                DefaultProviderCalls = $defaultProviderCalls
+                DefaultProcessCalls = $defaultProcessCalls
+                DefaultListenerCount = $defaultListener.Count
+                PreferredInspectionSource = [string]$preferredInspection.Source
+                PreferredProviderCalls = $preferredProviderCalls
+                PreferredProcessCalls = $preferredProcessCalls
+                PreferredInspectionSchema = [bool]$preferredInspectionSchema
+                PreferredListenerSchema = [bool]$preferredListenerSchema
+                PreferredListener = if ($preferredListener.Count -eq 1) {
+                    $preferredListener[0]
+                } else { $null }
+                FailureResults = @($failureResults)
+            }
+        } finally {
+            if ($null -ne $oldNetFunction) {
+                Set-Item Function:\Get-NetTCPConnection -Force `
+                    -Value $oldNetScriptBlock
+            } else {
+                Remove-Item Function:\Get-NetTCPConnection -Force `
+                    -ErrorAction SilentlyContinue
+            }
+            Set-Item Function:\Invoke-VerifierBoundedProcess -Force `
+                -Value $oldBoundedFunction
+            Remove-Variable -Name GateBNetstatPreferenceProviderCalls,`
+                GateBNetstatPreferenceProcessCalls,GateBNetstatPreferenceOutputMode `
+                -Scope Script -Force -ErrorAction SilentlyContinue
+        }
+        return $result
+    } $port $PID $processStartTicks
+
+    Assert-GateB ($probe.DefaultInspectionSource -ceq 'Get-NetTCPConnection' -and
+        [int]$probe.DefaultProviderCalls -eq 1 -and
+        [int]$probe.DefaultProcessCalls -eq 0 -and
+        [int]$probe.DefaultListenerCount -eq 1) `
+        'ordinary loopback listener query did not retain the Get-NetTCPConnection-primary route'
+    $preferredListener = $probe.PreferredListener
+    Assert-GateB ($probe.PreferredInspectionSource -ceq 'netstat' -and
+        [int]$probe.PreferredProviderCalls -eq 0 -and
+        [int]$probe.PreferredProcessCalls -eq 1 -and
+        [bool]$probe.PreferredInspectionSchema -and
+        [bool]$probe.PreferredListenerSchema -and
+        $null -ne $preferredListener -and
+        [int]$preferredListener.Port -eq $port -and
+        [int]$preferredListener.ProcessId -eq $PID -and
+        [long]$preferredListener.ProcessStartTicks -eq $processStartTicks -and
+        [string]$preferredListener.LocalAddress -ceq '127.0.0.1' -and
+        [string]$preferredListener.Source -ceq 'netstat' -and
+        [string]$preferredListener.ListenerOwnerKind -ceq 'user-process' -and
+        [string]$preferredListener.ListenerOwnerProof -ceq 'diagnostics-process-start-v1' -and
+        [string]$preferredListener.ListenerOwnerEvidence -ceq 'system-diagnostics-process-starttime') `
+        'opt-in netstat listener query did not preserve exact PID/start/listener/schema identity'
+    foreach ($failure in @($probe.FailureResults)) {
+        Assert-GateB ($failure.Rejected -and $failure.TypedFailure -and
+            [int]$failure.ProviderCalls -eq 0 -and
+            [int]$failure.ProcessCalls -eq 1) `
+            "opt-in netstat $($failure.Mode) output was not fail-closed"
+    }
+    Write-Host 'PASS:opt-in netstat listener route skips the slow provider, preserves exact identity/schema, and fails closed on malformed/empty/error output'
+}
+
 function Invoke-GateBListenerInspectionFailureCheck() {
     $cases = @(
         [pscustomobject]@{ Name = 'empty output'; Output = @(); ExitCode = 0 },
@@ -4606,6 +8908,279 @@ function Invoke-GateBListenerInspectionFailureCheck() {
         @($emptyHeaderInspection.Listeners).Count -eq 0) `
         'exact successful netstat empty output did not prove listener absence'
     Write-Host 'PASS:listener inspection malformed/error fail-closed contract'
+}
+
+function Invoke-GateBCdpReferenceCanary() {
+    # Load the actual helper bodies without running the browser driver's setup.
+    # Inject only the CDP transport and a capture-boundary observer; these cases
+    # prove reference/JSON handling, not Java acceptance or visible interaction.
+    $tokens = $null
+    $parseErrors = $null
+    $ast = [Management.Automation.Language.Parser]::ParseFile(
+        (Join-Path $PSScriptRoot 'verify-browser.ps1'), [ref]$tokens, [ref]$parseErrors)
+    Assert-GateB ($parseErrors.Count -eq 0) 'CDP helper source did not parse'
+    foreach ($name in @('Capture-Task43PEvidence', 'evaluateCdp', 'invokeCdp',
+            'resolveCdpRouteDeadline', 'waitForCdp', 'clickPoint', 'sendKey',
+            'clickButtonAndWaitForPredicate', 'clickTrayPartAndWaitForSelection',
+            'selectOptionWithKeyboard', 'ConvertTo-Task43PStartupSettleMilliseconds',
+            'Wait-Task43PBrowserStartup', 'navigateAndWaitForDocument')) {
+        $definitions = @($ast.EndBlock.Statements | Where-Object {
+            $_ -is [Management.Automation.Language.FunctionDefinitionAst] -and
+                $_.Name -ceq $name
+        })
+        Assert-GateB ($definitions.Count -eq 1) "CDP helper '$name' was not unique"
+        . ([scriptblock]::Create($definitions[0].Extent.Text))
+    }
+    function sendCdp($socket, [int]$id, [string]$method, $parameters) {
+        [void]$socket.Requests.Add([pscustomobject]@{ Id = $id; Method = $method; Parameters = $parameters })
+    }
+    function receiveCdp($socket, [int]$wantedId, [ref]$failures, [DateTime]$deadline) {
+        Assert-GateB ($socket.Requests[-1].Id -eq $wantedId) 'CDP response ID changed'
+        Assert-GateB ($socket.Results.Count -gt 0) 'CDP helper exceeded its response fixture'
+        $failures.Value += ('event:' + $wantedId)
+        if ($socket.PSObject.Properties['DelayMilliseconds'] -and $socket.DelayMilliseconds -gt 0) {
+            Start-Sleep -Milliseconds $socket.DelayMilliseconds
+        }
+        if ($socket.PSObject.Properties['RawResponse']) {
+            [void]$socket.Results.Dequeue()
+            return $socket.RawResponse
+        }
+        return [pscustomobject]@{ id = $wantedId; result = [pscustomobject]@{
+            result = [pscustomobject]@{ value = $socket.Results.Dequeue() }
+        } }
+    }
+    function Assert-Task43PJavaEvidenceProvenance($Value) {
+        Assert-GateB ($Value.deep.entries -is [array] -and
+            $Value.deep.entries.Count -eq 2 -and
+            $Value.deep.entries[0].ok -is [bool] -and $Value.deep.entries[0].ok -and
+            $Value.deep.entries[0].number -eq 7 -and
+            $null -eq $Value.deep.entries[1] -and
+            $Value.deep.text -ceq 'canary') 'capture changed nested JSON values or types'
+        # Stop at the observed decode boundary before repository or file work.
+        Throw-VerifierInfrastructure 'gate-b-capture-decoded-boundary'
+    }
+    $savedDeadline = Get-Variable CdpRouteDeadline -Scope Script -ErrorAction SilentlyContinue
+    $savedDeadlineValue = if ($null -eq $savedDeadline) { $null } else { $savedDeadline.Value }
+    $savedContext = Get-Variable VerifierContext -Scope Script -ErrorAction SilentlyContinue
+    $savedContextValue = if ($null -eq $savedContext) { $null } else { $savedContext.Value }
+    $savedRoute = Get-Variable VerifierCurrentRouteId -Scope Script -ErrorAction SilentlyContinue
+    $savedRouteValue = if ($null -eq $savedRoute) { $null } else { $savedRoute.Value }
+    try {
+        $script:CdpRouteDeadline = [DateTime]::UtcNow.AddSeconds(30)
+        $script:VerifierContext = [pscustomobject]@{ RunId = ('a' * 32) }
+        $script:VerifierCurrentRouteId = 'b' * 32
+        foreach ($caseName in @('omitted', 'reference', 'invalid')) {
+            $socket = [pscustomobject]@{
+                Requests = [Collections.ArrayList]::new()
+                Results = [Collections.Queue]::new()
+            }
+            if ($caseName -cne 'invalid') {
+                foreach ($value in @($true, $true, $true, 123456)) { $socket.Results.Enqueue($value) }
+            }
+            $counter = 41; $failures = @(); $marker = $null; $observedError = $null
+            $timeOrigin = $null
+            try {
+                if ($caseName -ceq 'omitted') {
+                    $timeOrigin = navigateAndWaitForDocument $socket ([ref]$counter) `
+                        'http://127.0.0.1:12345/circuitjs.html?tsjChallenge=led' `
+                        $script:CdpRouteDeadline ([ref]$failures)
+                } else {
+                    $output = if ($caseName -ceq 'reference') { [ref]$marker } else { 'not-a-reference' }
+                    $timeOrigin = navigateAndWaitForDocument $socket ([ref]$counter) `
+                        'http://127.0.0.1:12345/circuitjs.html?tsjChallenge=led' `
+                        $script:CdpRouteDeadline ([ref]$failures) $output
+                }
+            } catch { $observedError = $_ }
+            if ($caseName -ceq 'invalid') {
+                Assert-GateB ($null -ne $observedError -and
+                    (Test-VerifierInfrastructureError $observedError) -and
+                    (Get-VerifierErrorMessage $observedError).Contains('Navigation marker output must be a reference') -and
+                    $socket.Requests.Count -eq 0 -and $counter -eq 41 -and $failures.Count -eq 0) `
+                    'invalid navigation output did not fail typed infrastructure before transport'
+                continue
+            }
+            Assert-GateB ($null -eq $observedError -and $timeOrigin -eq 123456 -and
+                $socket.Results.Count -eq 0 -and $socket.Requests.Count -eq 4 -and
+                $counter -eq 45 -and $failures.Count -eq 4 -and
+                ($socket.Requests.Method -join ',') -ceq
+                    'Page.navigate,Runtime.evaluate,Runtime.evaluate,Runtime.evaluate') `
+                "navigation $caseName lost its result, references, or document waits: $observedError"
+            $navigationUrl = [string]$socket.Requests[0].Parameters.url
+            $navigationMatch = [regex]::Match($navigationUrl, '&tsjVerifierNavigation=([0-9a-f]{32})&')
+            Assert-GateB ($navigationMatch.Success -and
+                $navigationUrl.EndsWith(('&tsjVerifierRun=' + ('a' * 32) + '&tsjVerifierRoute=' + ('b' * 32))) -and
+                $socket.Requests[1].Parameters.expression.Contains($navigationMatch.Groups[1].Value) -and
+                $socket.Requests[2].Parameters.expression.Contains(('tsjVerifierRun=' + ('a' * 32))) -and
+                $socket.Requests[3].Parameters.expression -ceq 'performance.timeOrigin') `
+                "navigation $caseName did not wait for its exact document and owner markers"
+            if ($caseName -ceq 'reference') {
+                Assert-GateB ($marker -is [string] -and $marker -ceq $navigationMatch.Groups[1].Value) `
+                    'navigation output did not return the actual document token'
+            }
+        }
+        Write-Host 'PASS:actual navigation helper accepts omitted/reference output and rejects malformed output before transport'
+        $point = [pscustomobject]@{ x = 5; y = 5; visible = $true; enabled = $true; index = 1 }
+        foreach ($caseName in @('capture-json', 'capture-malformed', 'capture-empty',
+                'button', 'tray', 'select')) {
+            $socket = [pscustomobject]@{
+                Requests = [Collections.ArrayList]::new()
+                Results = [Collections.Queue]::new()
+            }
+            $expectedError = ''
+            $mouseMethods = @('Runtime.evaluate', 'Input.dispatchMouseEvent',
+                'Input.dispatchMouseEvent', 'Runtime.evaluate')
+            switch ($caseName) {
+                'capture-json' {
+                    $values = @('{"deep":{"entries":[{"ok":true,"number":7},null],"text":"canary"}}')
+                    $expectedError = 'gate-b-capture-decoded-boundary'
+                    $expectedMethods = @('Runtime.evaluate')
+                }
+                'capture-malformed' {
+                    $values = @('{"deep":')
+                    $expectedError = 'published invalid JSON evidence'
+                    $expectedMethods = @('Runtime.evaluate')
+                }
+                'capture-empty' {
+                    $values = @('')
+                    $expectedError = 'did not publish structured evidence'
+                    $expectedMethods = @('Runtime.evaluate')
+                }
+                'button' { $values = @($point, $true, $true, $true); $expectedMethods = $mouseMethods }
+                'tray' {
+                    $values = @($point, $true, $true, $true, 'selected canary')
+                    $expectedMethods = $mouseMethods + @('Runtime.evaluate')
+                }
+                'select' {
+                    $values = @($point, $point, [pscustomobject]@{ found = $true }) +
+                        (@($true) * 12) + @('canary option')
+                    $expectedMethods = @('Runtime.evaluate', 'Runtime.evaluate', 'Runtime.evaluate',
+                        'Input.dispatchMouseEvent', 'Input.dispatchMouseEvent', 'Runtime.evaluate',
+                        'Input.dispatchKeyEvent', 'Input.dispatchKeyEvent', 'Runtime.evaluate',
+                        'Input.dispatchKeyEvent', 'Input.dispatchKeyEvent', 'Runtime.evaluate',
+                        'Input.dispatchKeyEvent', 'Input.dispatchKeyEvent', 'Runtime.evaluate', 'Runtime.evaluate')
+                }
+            }
+            foreach ($value in $values) { $socket.Results.Enqueue($value) }
+            $counter = 41
+            $failures = @('existing diagnostic')
+            $observedError = $null
+            try {
+                switch -Wildcard ($caseName) {
+                    'capture-*' { Capture-Task43PEvidence $socket ([ref]$counter) `
+                        $script:CdpRouteDeadline ([ref]$failures) 'helper canary' '' '' $null }
+                    'button' { clickButtonAndWaitForPredicate $socket ([ref]$counter) 'canary' `
+                        'true' $script:CdpRouteDeadline ([ref]$failures) 'canary predicate' }
+                    'tray' { [void](clickTrayPartAndWaitForSelection $socket ([ref]$counter) `
+                        'canary' $script:CdpRouteDeadline ([ref]$failures)) }
+                    'select' { selectOptionWithKeyboard $socket ([ref]$counter) 0 `
+                        'canary option' ([ref]$failures) }
+                }
+            } catch { $observedError = $_ }
+            if ($expectedError) {
+                Assert-GateB ($null -ne $observedError -and
+                    (Test-VerifierInfrastructureError $observedError) -and
+                    (Get-VerifierErrorMessage $observedError).Contains($expectedError)) `
+                    "$caseName did not reach its expected typed capture boundary: $observedError"
+            } else {
+                Assert-GateB ($null -eq $observedError) "$caseName failed: $observedError"
+            }
+            Assert-GateB ($socket.Results.Count -eq 0 -and
+                ($socket.Requests.Method -join ',') -ceq ($expectedMethods -join ',') -and
+                $counter -eq (41 + $expectedMethods.Count)) "$caseName lost counter updates or helper calls"
+            Assert-GateB ($failures.Count -eq (1 + $expectedMethods.Count) -and
+                $failures[0] -ceq 'existing diagnostic') "$caseName lost the caller's diagnostic array"
+            for ($index = 0; $index -lt $expectedMethods.Count; $index++) {
+                Assert-GateB ($socket.Requests[$index].Id -eq (41 + $index) -and
+                    $failures[1 + $index] -ceq ('event:' + (41 + $index))) `
+                    "$caseName failed to preserve exact CDP IDs/diagnostics at $index"
+            }
+        }
+        foreach ($value in @(0, 45000, '30000')) {
+            $converted = ConvertTo-Task43PStartupSettleMilliseconds $value
+            Assert-GateB ($converted -is [int] -and $converted -eq [int]$value) 'canonical settle input changed'
+        }
+        foreach ($value in @($null, $true, [double]3, -1, 45001, '030', '3.0',
+                '9223372036854775808', [object[]]@(1, 2))) {
+            $rejected = $false
+            try { [void](ConvertTo-Task43PStartupSettleMilliseconds $value) } catch {
+                $rejected = Test-VerifierInfrastructureError $_
+            }
+            Assert-GateB $rejected 'malformed/out-of-range settle input was accepted'
+        }
+        foreach ($caseName in @('zero', 'positive', 'early', 'deadline-before',
+                'deadline-after', 'wrong-url', 'wrong-state', 'missing-result',
+                'script-exception', 'protocol-error', 'invalid-internal')) {
+            $document = [pscustomobject]@{ url = 'about:blank'; state = 'complete' }
+            $socket = [pscustomobject]@{ Requests = [Collections.ArrayList]::new()
+                Results = [Collections.Queue]::new(); DelayMilliseconds = 25 }
+            $delay = 10
+            $deadline = [DateTime]::UtcNow.AddSeconds(5)
+            $expectedRequests = 1
+            switch ($caseName) {
+                'zero' { $delay = 0; $expectedRequests = 0 }
+                'early' { $delay = 1000; $socket.DelayMilliseconds = 0 }
+                'deadline-before' { $deadline = [DateTime]::UtcNow.AddMilliseconds(1); $expectedRequests = 0 }
+                'deadline-after' { $deadline = [DateTime]::UtcNow.AddMilliseconds(100); $socket.DelayMilliseconds = 200 }
+                'wrong-url' { $document.url = 'https://example.invalid/' }
+                'wrong-state' { $document.state = 'loading' }
+                'missing-result' { $socket | Add-Member RawResponse ([pscustomobject]@{ id = 41 }) }
+                'script-exception' { $socket | Add-Member RawResponse ([pscustomobject]@{
+                    id = 41; result = [pscustomobject]@{ result = [pscustomobject]@{ value = $document }
+                        exceptionDetails = [pscustomobject]@{ text = 'canary' } } }) }
+                'protocol-error' { $socket | Add-Member RawResponse ([pscustomobject]@{
+                    id = 41; error = [pscustomobject]@{ message = 'canary' } }) }
+                'invalid-internal' { $delay = '10'; $expectedRequests = 0 }
+            }
+            $socket.Results.Enqueue($document)
+            $counter = 41; $failures = @(); $observedError = $null
+            try { Wait-Task43PBrowserStartup $socket ([ref]$counter) ([ref]$failures) $deadline $delay } catch {
+                $observedError = $_
+            }
+            if ($caseName -in @('zero', 'positive')) {
+                Assert-GateB ($null -eq $observedError) "startup settle $caseName failed: $observedError"
+            } else {
+                Assert-GateB ($null -ne $observedError -and (Test-VerifierInfrastructureError $observedError)) `
+                    "startup settle $caseName did not fail typed infrastructure: $observedError"
+            }
+            Assert-GateB ($socket.Requests.Count -eq $expectedRequests -and
+                $counter -eq (41 + $expectedRequests) -and $failures.Count -eq $expectedRequests) `
+                "startup settle $caseName changed counter/diagnostic forwarding or sent before validation"
+            if ($expectedRequests -gt 0) {
+                $request = $socket.Requests[0]
+                Assert-GateB ($request.Method -ceq 'Runtime.evaluate' -and
+                    $request.Parameters.awaitPromise -eq $true -and
+                    $request.Parameters.returnByValue -eq $true -and
+                    $request.Parameters.expression.Contains(('}),' + [string]$delay + '))'))) `
+                    "startup settle $caseName did not issue its bounded real Promise request"
+            }
+        }
+        foreach ($case in @(
+                [pscustomobject]@{ Value = '-1'; Message = 'startup settle must be an exact integer' },
+                [pscustomobject]@{ Value = '30000'; Message = 'startup settle requires a Task43P route selection' })) {
+            $child = Invoke-GateBBoundedProcess (Get-Command powershell.exe -ErrorAction Stop).Source @(
+                '-NoLogo', '-NoProfile', '-NonInteractive', '-File',
+                (Join-Path $PSScriptRoot 'verify-browser.ps1'),
+                '-Task43PStartupSettleMilliseconds', $case.Value) 10000 'startup settle CLI rejection'
+            $childExit = Resolve-GateBChildExitCode $child 'startup settle CLI rejection'
+            Assert-GateB ($childExit -eq 2 -and
+                ([string]$child.Stdout + [string]$child.Stderr).Contains($case.Message)) `
+                'startup settle CLI did not fail with its specific pre-context infrastructure result'
+        }
+        Write-Host 'PASS:Task43P opt-in startup settle CLI scalars, reference handoff, timing/deadline, and document/protocol rejection'
+    } finally {
+        if ($null -ne $savedContext) { $script:VerifierContext = $savedContextValue } else {
+            Remove-Variable VerifierContext -Scope Script -ErrorAction Stop
+        }
+        if ($null -ne $savedRoute) { $script:VerifierCurrentRouteId = $savedRouteValue } else {
+            Remove-Variable VerifierCurrentRouteId -Scope Script -ErrorAction Stop
+        }
+        if ($null -ne $savedDeadline) {
+            $script:CdpRouteDeadline = $savedDeadlineValue
+        } else {
+            Remove-Variable CdpRouteDeadline -Scope Script -ErrorAction Stop
+        }
+    }
+    Write-Host 'PASS:actual capture/input helper references and JSON parsing with injected CDP transport'
 }
 
 function Invoke-GateBCdpHandshakeCanary() {
@@ -4990,6 +9565,7 @@ function New-GateBCanaryBrowserRecord($Context, $Lease, [string]$RouteName,
         $Lease.OwnerType = 'browser'
         $record = [pscustomobject]@{
             RunId = $Context.RunId; RepositoryIdentity = $Context.RepositoryIdentity
+            WorktreeRoot = $Context.WorktreeRoot
             RouteId = $routeId; RouteName = $RouteName
             CdpPort = $Lease.Port; Lease = $Lease; Profile = Get-VerifierFullPath $profile
             BrowserPath = $BrowserPath
@@ -5007,6 +9583,150 @@ function New-GateBCanaryBrowserRecord($Context, $Lease, [string]$RouteName,
         if (Test-VerifierInfrastructureError $_) { throw }
         Throw-GateBInfrastructure ('could not prepare canary browser profile: ' +
             (Get-VerifierErrorMessage $_))
+    }
+}
+
+function Invoke-GateBBrowserLeaseConstructorCanary() {
+    $browserPath = (Get-Command powershell.exe -ErrorAction Stop).Source
+    $context = $null
+    $validRecord = $null
+    $primaryFailure = $null
+    $cleanupErrors = New-Object Collections.ArrayList
+    $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\gate-b-browser-lease-' + [Guid]::NewGuid().ToString('N'))
+    try {
+        New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
+        $context = New-VerifierRunContext $repositoryRoot $canaryRoot
+        foreach ($routeCase in @(
+                [pscustomobject]@{ Name = 'null'; Value = $null }
+                [pscustomobject]@{ Name = 'empty'; Value = '' }
+                [pscustomobject]@{ Name = 'whitespace'; Value = '   ' }
+                [pscustomobject]@{ Name = 'Boolean'; Value = $true }
+                [pscustomobject]@{ Name = 'array'; Value = [object[]]@('route') }
+            )) {
+            $leaseCountBefore = @($context.LeaseRecords).Count
+            $sessionCountBefore = @($context.BrowserSessions).Count
+            $rejected = $false
+            try {
+                [void](New-VerifierBrowserLease $context $routeCase.Value $browserPath)
+            } catch {
+                $rejected = Test-VerifierInfrastructureError $_
+            }
+            Assert-GateB $rejected `
+                "live browser lease accepted malformed $($routeCase.Name) RouteName"
+            Assert-GateB (@($context.LeaseRecords).Count -eq $leaseCountBefore -and
+                @($context.BrowserSessions).Count -eq $sessionCountBefore) `
+                "malformed $($routeCase.Name) RouteName changed live ownership state"
+        }
+
+        $validRecord = New-VerifierBrowserLease $context 'constructor-valid' $browserPath
+        Assert-GateB ((Test-VerifierStrictStringValue $validRecord.WorktreeRoot) -and
+            $validRecord.WorktreeRoot -ceq $context.WorktreeRoot -and
+            $validRecord.RouteName -ceq 'constructor-valid') `
+            'valid browser lease did not retain the complete live session identity'
+        $manifest = Get-Content -LiteralPath $context.ManifestPath -Raw | ConvertFrom-Json
+        Assert-GateB (@($manifest.browserSessions).Count -eq 1 -and
+            $manifest.browserSessions[0].worktreeRoot -ceq $context.WorktreeRoot -and
+            $manifest.browserSessions[0].routeName -ceq 'constructor-valid') `
+            'valid browser lease did not retain WorktreeRoot and RouteName in its first durable write'
+        $serializedSession = $manifest.browserSessions[0]
+        Assert-VerifierSerializedBrowserSessionRecord $serializedSession `
+            'browser constructor serialized session'
+        foreach ($routeMutation in @(
+                [pscustomobject]@{ Name = 'empty'; Value = '' }
+                [pscustomobject]@{ Name = 'Boolean'; Value = $true }
+                [pscustomobject]@{ Name = 'array'; Value = [object[]]@('route') }
+            )) {
+            $mutatedSession = $serializedSession | Select-Object *
+            $mutatedSession.routeName = $routeMutation.Value
+            $serializedRejected = $false
+            try {
+                Assert-VerifierSerializedBrowserSessionRecord $mutatedSession `
+                    ('serialized browser session ' + $routeMutation.Name)
+            } catch {
+                $serializedRejected = Test-VerifierInfrastructureError $_
+            }
+            Assert-GateB $serializedRejected `
+                "serialized browser session accepted malformed $($routeMutation.Name) RouteName"
+        }
+
+        $context.TestHooks.FailNextBrowserLeaseManifestWrite = $true
+        $rollbackRejected = $false
+        try {
+            [void](New-VerifierBrowserLease $context 'constructor-rollback' $browserPath)
+        } catch {
+            $rollbackRejected = Test-VerifierInfrastructureError $_
+        }
+        Assert-GateB $rollbackRejected `
+            'browser lease constructor did not fail the injected prewrite canary'
+        Assert-GateB (@($context.BrowserSessions | Where-Object {
+                [object]::ReferenceEquals($_, $validRecord)
+            }).Count -eq 1 -and @($context.BrowserSessions).Count -eq 1) `
+            'browser lease prewrite failure left a session record in the live ledger'
+        $browserDirectories = @(Get-ChildItem -LiteralPath (Join-Path $context.RunRoot 'browser') `
+            -Directory -ErrorAction Stop)
+        Assert-GateB ($browserDirectories.Count -eq 1 -and
+            $browserDirectories[0].FullName -ceq (Split-Path -Parent $validRecord.Profile)) `
+            'browser lease prewrite failure left an owned browser route directory'
+        $rollbackLeases = @($context.LeaseRecords | Where-Object {
+            -not [object]::ReferenceEquals($_, $validRecord.Lease)
+        })
+        Assert-GateB ($rollbackLeases.Count -eq 1 -and
+            $rollbackLeases[0].Status -ceq 'released' -and
+            $rollbackLeases[0].ClaimState -ceq 'released' -and
+            $rollbackLeases[0].MutexReleased -eq $true -and
+            -not (Test-Path -LiteralPath $rollbackLeases[0].Path) -and
+            -not (Test-Path -LiteralPath $rollbackLeases[0].ProfilePath)) `
+            'browser lease prewrite failure did not retain only a terminal, released lease proof'
+        Write-Host 'PASS:browser lease constructor validates complete session identity, RouteName, and exact prewrite rollback'
+    } catch {
+        $primaryFailure = $_
+    } finally {
+        if ($null -ne $context) {
+            if ($null -ne $validRecord) {
+                try { [void]$context.BrowserSessions.Remove($validRecord) } catch {
+                    [void]$cleanupErrors.Add('browser session cleanup: ' + (Get-VerifierErrorMessage $_))
+                }
+                try {
+                    if (Test-Path -LiteralPath $validRecord.Profile -ErrorAction Stop) {
+                        Assert-VerifierNoReparseAncestors $context.RunRoot
+                        Remove-VerifierOwnedTree $context.RunRoot $validRecord.Profile
+                    }
+                    $validRouteRoot = Split-Path -Parent $validRecord.Profile
+                    if (Test-Path -LiteralPath $validRouteRoot -ErrorAction Stop) {
+                        Remove-VerifierOwnedTree $context.RunRoot $validRouteRoot
+                    }
+                } catch {
+                    [void]$cleanupErrors.Add('browser profile cleanup: ' + (Get-VerifierErrorMessage $_))
+                }
+                try { Release-VerifierPortLease $context $validRecord.Lease } catch {
+                    [void]$cleanupErrors.Add('browser lease cleanup: ' + (Get-VerifierErrorMessage $_))
+                }
+            }
+            try {
+                $cleanup = Complete-VerifierRun $context
+                if ($null -eq $cleanup -or -not [bool]$cleanup.Success) {
+                    $cleanupDetail = if ($cleanup) { @($cleanup.Errors) -join '; ' } else {
+                        'browser constructor context cleanup returned no result'
+                    }
+                    [void]$cleanupErrors.Add($cleanupDetail)
+                }
+            } catch {
+                [void]$cleanupErrors.Add('browser constructor context cleanup: ' + (Get-VerifierErrorMessage $_))
+            }
+        }
+    }
+    if ($cleanupErrors.Count -gt 0) {
+        $cleanupMessage = 'browser lease constructor canary cleanup failed; evidence was retained: ' +
+            ($cleanupErrors -join '; ')
+        if ($null -ne $primaryFailure) {
+            Throw-GateBInfrastructure ((Get-VerifierErrorMessage $primaryFailure) + '; ' + $cleanupMessage)
+        }
+        Throw-GateBInfrastructure $cleanupMessage
+    }
+    if ($null -ne $primaryFailure) {
+        if (Test-VerifierInfrastructureError $primaryFailure) { throw $primaryFailure }
+        throw $primaryFailure
     }
 }
 
@@ -5086,6 +9806,184 @@ function Get-GateBFreeTcpPort() {
     return $port
 }
 
+function Test-GateBPortSelectionRace($ErrorRecord) {
+    $message = Get-VerifierErrorMessage $ErrorRecord
+    # This narrow predicate is used only by bounded canary port-reselection
+    # paths.  A verified foreign listener or a requested-port bind loss means
+    # that the free-port probe lost its race; unknown inspection/cleanup
+    # remains a hard failure.
+    return ($message -match '(?i)Loopback port \d+ is listening under foreign PID \d+/start \d+, not the recorded owner\.' -or
+        $message -match '(?i)Could not claim requested isolated port \d+ for')
+}
+
+function Test-GateBSocketAddressAlreadyInUse($ErrorRecord) {
+    $exception = if ($ErrorRecord -is [Management.Automation.ErrorRecord]) {
+        $ErrorRecord.Exception
+    } elseif ($ErrorRecord -is [Exception]) {
+        $ErrorRecord
+    } else { $null }
+    while ($null -ne $exception) {
+        if ($exception -is [Net.Sockets.SocketException] -and
+                $exception.SocketErrorCode -eq [Net.Sockets.SocketError]::AddressAlreadyInUse) {
+            return $true
+        }
+        $exception = $exception.InnerException
+    }
+    return $false
+}
+
+function Test-GateBInitialBindSelectionRace($ErrorRecord) {
+    $portRace = Test-GateBPortSelectionRace $ErrorRecord
+    $socketRace = Test-GateBSocketAddressAlreadyInUse $ErrorRecord
+    return ($portRace -or $socketRace)
+}
+
+function Complete-GateBInitialBindAttemptCleanup($Context, $Lease,
+        $Listener, [int]$Port) {
+    $cleanupErrors = New-Object Collections.ArrayList
+    $absenceProven = $false
+    if ($Port -lt 1 -or $Port -gt 65535) {
+        [void]$cleanupErrors.Add('initial bind retry cleanup received an invalid port')
+    }
+    if ($null -ne $Listener) {
+        try { $Listener.Stop() } catch {
+            [void]$cleanupErrors.Add(('initial bind listener stop: ' +
+                (Get-VerifierErrorMessage $_)))
+        }
+    }
+    if ($cleanupErrors.Count -eq 0) {
+        $deadline = [DateTime]::UtcNow.AddSeconds(5)
+        $lastInspection = $null
+        while ([DateTime]::UtcNow -lt $deadline) {
+            try {
+                $lastInspection = Get-VerifierLoopbackListenerRecords $Port
+                if (-not $lastInspection.Success -or -not $lastInspection.Known) {
+                    Throw-GateBInfrastructure ('initial bind retry cleanup could not positively inspect port ' +
+                        [string]$Port)
+                }
+                $currentStart = [long](Get-VerifierCurrentProcessStartTicks)
+                $currentListeners = @($lastInspection.Listeners | Where-Object {
+                    [int]$_.ProcessId -eq [int]$PID -and
+                    [long]$_.ProcessStartTicks -eq $currentStart
+                })
+                # The exact listener object was stopped above.  A current
+                # listener record after that point is therefore cleanup
+                # uncertainty, never a reason to release or retry blindly.
+                if ($currentListeners.Count -eq 0 -and
+                        -not $lastInspection.HasListeners) {
+                    $absenceProven = $true
+                    break
+                }
+            } catch {
+                [void]$cleanupErrors.Add(('initial bind retry listener inspection: ' +
+                    (Get-VerifierErrorMessage $_)))
+                break
+            }
+            Start-Sleep -Milliseconds 100
+        }
+        if (-not $absenceProven) {
+            $inspectionDetail = if ($null -eq $lastInspection) { 'no inspection' } else {
+                'success=' + [string]$lastInspection.Success +
+                    ', known=' + [string]$lastInspection.Known +
+                    ', hasListeners=' + [string]$lastInspection.HasListeners
+            }
+            [void]$cleanupErrors.Add(('initial bind retry cleanup did not prove port ' +
+                [string]$Port + ' absence within 5 seconds (' + $inspectionDetail + ')'))
+        }
+    }
+    if ($null -ne $Lease -and $absenceProven -and $cleanupErrors.Count -eq 0) {
+        try {
+            Release-VerifierPortLease $Context $Lease
+            if (Test-Path -LiteralPath $Lease.Path -PathType Leaf) {
+                [void]$cleanupErrors.Add(('initial bind retry cleanup left claim evidence at ' +
+                    [string]$Lease.Path))
+            }
+        } catch {
+            [void]$cleanupErrors.Add(('initial bind retry claim release: ' +
+                (Get-VerifierErrorMessage $_)))
+        }
+    }
+    return [pscustomobject]@{
+        Success = ($cleanupErrors.Count -eq 0 -and
+            ($null -eq $Lease -or $absenceProven))
+        Errors = @($cleanupErrors)
+    }
+}
+
+function Set-GateBLeaseProcessProofAfterExactCleanup($Lease) {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for lease process-proof propagation.'
+    }
+    & $module[0] {
+        param($item)
+        [void](Set-VerifierLeaseProcessProofFromCleanup $item $true)
+    } $Lease
+}
+
+function New-GateBLeaseAfterExactPortReselection($Context, [ref]$Port) {
+    $maxAttempts = 8
+    $lastRace = ''
+    for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+        $candidatePort = 0
+        try {
+            $candidatePort = Get-GateBFreeTcpPort
+            $lease = New-GateBCanaryLease $Context $candidatePort
+            $Port.Value = $candidatePort
+            return $lease
+        } catch {
+            if (-not (Test-GateBPortSelectionRace $_) -or
+                    $attempt -ge $maxAttempts) {
+                throw
+            }
+            $lastRace = Get-VerifierErrorMessage $_
+            Start-Sleep -Milliseconds 25
+        }
+    }
+    Throw-GateBInfrastructure ('bounded exact free-port reselection exhausted after ' +
+        [string]$maxAttempts + ' attempts: ' + $lastRace)
+}
+
+function Complete-GateBPortReuseAttemptCleanup($ReuseContext,
+        $ReuseNewContext, $ReuseNewLease, $ReuseNewProcess, $ReuseListener,
+        [int]$ReusePort) {
+    $cleanupErrors = New-Object Collections.ArrayList
+    if ($null -ne $ReuseNewProcess) {
+        try {
+            Stop-GateBExactProcess $ReuseNewProcess $ReusePort
+            if ($null -ne $ReuseNewLease) {
+                Set-GateBLeaseProcessProofAfterExactCleanup $ReuseNewLease
+            }
+        } catch {
+            [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+        }
+    }
+    if ($null -ne $ReuseListener) {
+        try { Stop-GateBListenerExact $ReuseListener $ReusePort } catch {
+            [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+        }
+    }
+    foreach ($reuse in @($ReuseContext, $ReuseNewContext)) {
+        if ($null -ne $reuse) {
+            try {
+                $reuseCleanup = Complete-VerifierRun $reuse
+                if ($null -eq $reuseCleanup -or -not [bool]$reuseCleanup.Success) {
+                    $reuseDetail = if ($reuseCleanup) {
+                        @($reuseCleanup.Errors) -join '; '
+                    } else { 'port-reuse retry cleanup returned no result.' }
+                    [void]$cleanupErrors.Add($reuseDetail)
+                }
+            } catch {
+                [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+            }
+        }
+    }
+    return [pscustomobject]@{
+        Success = ($cleanupErrors.Count -eq 0)
+        Errors = @($cleanupErrors)
+    }
+}
+
 function Start-GateBSeparateListener([int]$Port) {
     $process = $null
     $returned = $false
@@ -5158,6 +10056,67 @@ function Start-GateBSeparateListener([int]$Port) {
 function Invoke-GateBLifecycleBooleanCanary() {
     $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
     if ($module.Count -ne 1) { throw 'VerifierIsolation module was unavailable for lifecycle Boolean canary.' }
+    foreach ($transition in @(
+            [pscustomobject]@{ Status = 'leased'; ClaimState = 'held'; ReleaseState = 'active'; Journal = 'active' }
+            [pscustomobject]@{ Status = 'bound'; ClaimState = 'bound'; ReleaseState = 'active'; Journal = 'active' }
+            [pscustomobject]@{ Status = 'releasing'; ClaimState = 'releasing'; ReleaseState = 'releasing'; Journal = 'releasing' }
+            [pscustomobject]@{ Status = 'releasing'; ClaimState = 'os-released'; ReleaseState = 'os-released'; Journal = 'os-released' }
+            [pscustomobject]@{ Status = 'releasing'; ClaimState = 'os-released'; ReleaseState = 'claim-delete-failed'; Journal = 'claim-delete-failed' }
+            [pscustomobject]@{ Status = 'released'; ClaimState = 'delete-pending'; ReleaseState = 'complete'; Journal = 'pre-delete' }
+            [pscustomobject]@{ Status = 'released'; ClaimState = 'delete-pending'; ReleaseState = 'complete'; Journal = 'post-delete-pending' }
+            [pscustomobject]@{ Status = 'released'; ClaimState = 'released'; ReleaseState = 'complete'; Journal = 'complete' }
+        )) {
+        $transitionRecord = [pscustomobject]@{
+            Status = $transition.Status; ClaimState = $transition.ClaimState
+            ReleaseState = $transition.ReleaseState
+            ReleaseJournalState = $transition.Journal
+        }
+        [void](Assert-VerifierLeaseTransition $transitionRecord 'finite transition canary')
+    }
+    foreach ($transition in @(
+            [pscustomobject]@{ Name = 'released+held+active'; Status = 'released'; ClaimState = 'held'; ReleaseState = 'active'; Journal = 'active' }
+            [pscustomobject]@{ Name = 'released+released+active'; Status = 'released'; ClaimState = 'released'; ReleaseState = 'active'; Journal = 'complete' }
+            [pscustomobject]@{ Name = 'releasing+bound+active'; Status = 'releasing'; ClaimState = 'bound'; ReleaseState = 'active'; Journal = 'active' }
+            [pscustomobject]@{ Name = 'manifested'; Status = 'released'; ClaimState = 'released'; ReleaseState = 'manifested'; Journal = 'complete' }
+        )) {
+        $rejected = $false
+        try {
+            [void](Assert-VerifierLeaseTransition ([pscustomobject]@{
+                Status = $transition.Status; ClaimState = $transition.ClaimState
+                ReleaseState = $transition.ReleaseState
+                ReleaseJournalState = $transition.Journal
+            }) ('finite transition canary ' + $transition.Name))
+        } catch { $rejected = Test-VerifierInfrastructureError $_ }
+        Assert-GateB $rejected "finite lease transition accepted $($transition.Name)"
+    }
+    Write-Host 'PASS:finite lease transition validator accepts only canonical lifecycle tuples and rejects impossible cross-field states'
+
+    # Session/root cleanup can prove termination even when its browser lease
+    # never bound a positive process/listener identity.  Exercise the shared
+    # propagation boundary directly for both lease classes: an unbound lease
+    # must stay false/false, while a bound lease must retain both positives.
+    $unboundProofLease = [pscustomobject]@{
+        ProcessProofRequired = $false
+        ProcessTerminationProven = $true
+        ProcessAbsent = $true
+    }
+    $boundProofLease = [pscustomobject]@{
+        ProcessProofRequired = $true
+        ProcessTerminationProven = $false
+        ProcessAbsent = $false
+    }
+    & $module[0] {
+        param($unbound, $bound)
+        [void](Set-VerifierLeaseProcessProofFromCleanup $unbound $true)
+        [void](Set-VerifierLeaseProcessProofFromCleanup $bound $true)
+    } $unboundProofLease $boundProofLease
+    Assert-GateB (-not [bool]$unboundProofLease.ProcessTerminationProven -and
+        -not [bool]$unboundProofLease.ProcessAbsent) `
+        'unbound lease cleanup proof was not kept at explicit false/false'
+    Assert-GateB ([bool]$boundProofLease.ProcessTerminationProven -and
+        [bool]$boundProofLease.ProcessAbsent) `
+        'bound lease cleanup proof was not retained as positive termination/absence'
+    Write-Host 'PASS:lease cleanup proof propagation keeps unbound leases false/false and preserves bound termination/absence proof'
     $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
         ('TroubleshootJS\gate-b-lifecycle-boolean-' + [Guid]::NewGuid().ToString('N'))
     $context = $null
@@ -5165,7 +10124,7 @@ function Invoke-GateBLifecycleBooleanCanary() {
     try {
         New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
         $context = New-VerifierRunContext $repositoryRoot $canaryRoot
-        $lease = New-VerifierPortLease $context 'canary-lifecycle-booleans'
+        $lease = New-GateBCanaryLease $context
         # A run-owned server without its exact Server.Lease must be rejected
         # before release mutates lifecycle state or attempts a durable write.
         $serverBeforeMalformedRelease = $context.Server
@@ -5409,17 +10368,18 @@ function Invoke-GateBLeaseRollbackCheck() {
     $reuseNewContext = $null
     $reuseOldLease = $null
     $reuseNewLease = $null
+    $reuseNewProcess = $null
     $reuseListener = $null
     $checksValidated = $false
     $canarySucceeded = $false
     try {
         $context = New-VerifierRunContext $repositoryRoot $rollbackRoot
         foreach ($failureHook in @('FailNextManifestWrite', 'FailNextClaimWrite')) {
-            $port = Get-GateBFreeTcpPort
+            $port = 0
             $context.TestHooks.$failureHook = $true
             $classified = $false
             try {
-                [void](New-VerifierPortLease $context ('canary-' + $failureHook) $port)
+                [void](New-GateBLeaseAfterExactPortReselection $context ([ref]$port))
             } catch {
                 $classified = Test-VerifierInfrastructureError $_
             }
@@ -5434,7 +10394,7 @@ function Invoke-GateBLeaseRollbackCheck() {
             # The same exact requested port must be immediately acquirable by
             # this independent attempt, proving both mutex release and partial
             # claim-file rollback rather than merely checking a directory.
-            $reacquired = New-VerifierPortLease $context ('canary-reacquire-' + $failureHook) $port
+            $reacquired = New-GateBCanaryLease $context $port
             Release-VerifierPortLease $context $reacquired
             Assert-GateB (@(Get-ChildItem -LiteralPath $context.PortLeaseRoot `
                 -Filter '*.lease' -File -ErrorAction Stop).Count -eq 0) `
@@ -5445,7 +10405,7 @@ function Invoke-GateBLeaseRollbackCheck() {
                 'FailNextPostDeleteJournalWrite',
                 'FailNextPostDeleteFinalManifestWrite',
                 'FailNextPostDeleteBeforeFinalState')) {
-            $lease = New-VerifierPortLease $context ('canary-' + $releaseHook)
+            $lease = New-GateBCanaryLease $context
             $context.TestHooks.$releaseHook = $true
             $releaseFailed = $false
             try {
@@ -5512,53 +10472,100 @@ function Invoke-GateBLeaseRollbackCheck() {
         # run acquires and binds the same port. The old recovery may delete
         # only its exact claim and must not require the port to be absent or
         # disturb the new run's claim/listener.
-        $reuseContext = New-VerifierRunContext $repositoryRoot $rollbackRoot
-        $reusePort = Get-GateBFreeTcpPort
-        $reuseOldLease = New-VerifierPortLease $reuseContext 'canary-port-reuse-old' $reusePort
-        $reuseContext.TestHooks.FailNextFinalManifestWrite = $true
-        $oldReleaseFailure = $false
-        try {
-            Release-VerifierPortLease $reuseContext $reuseOldLease
-        } catch {
-            $oldReleaseFailure = Test-VerifierInfrastructureError $_
-        }
-        Assert-GateB $oldReleaseFailure `
-            'injected pre-delete tombstone failure was not infrastructure'
-        Assert-GateB (Test-Path -LiteralPath $reuseOldLease.Path -PathType Leaf) `
-            'old exact claim was not retained for port-reuse recovery'
-        Assert-GateB ((Test-GateBExactBooleanProperty $reuseOldLease `
-                'MutexReleased' $true) -and
-            [string]$reuseOldLease.ReleaseState -eq 'os-released') `
-            'old lease did not retain a durable OS-release marker'
+        $reuseAttemptLimit = 5
+        $reuseAttemptSucceeded = $false
+        for ($reuseAttempt = 1; $reuseAttempt -le $reuseAttemptLimit; $reuseAttempt++) {
+            try {
+                $reuseContext = New-VerifierRunContext $repositoryRoot $rollbackRoot
+                $reusePort = 0
+                $reuseOldLease = New-GateBLeaseAfterExactPortReselection `
+                    $reuseContext ([ref]$reusePort)
+                $reuseContext.TestHooks.FailNextFinalManifestWrite = $true
+                $oldReleaseFailure = $false
+                try {
+                    Release-VerifierPortLease $reuseContext $reuseOldLease
+                } catch {
+                    $oldReleaseFailure = Test-VerifierInfrastructureError $_
+                }
+                Assert-GateB $oldReleaseFailure `
+                    'injected pre-delete tombstone failure was not infrastructure'
+                Assert-GateB (Test-Path -LiteralPath $reuseOldLease.Path -PathType Leaf) `
+                    'old exact claim was not retained for port-reuse recovery'
+                Assert-GateB ((Test-GateBExactBooleanProperty $reuseOldLease `
+                        'MutexReleased' $true) -and
+                    [string]$reuseOldLease.ReleaseState -eq 'os-released') `
+                    'old lease did not retain a durable OS-release marker'
 
-        $reuseNewContext = New-VerifierRunContext $repositoryRoot $rollbackRoot
-        $reuseNewLease = New-VerifierPortLease $reuseNewContext 'canary-port-reuse-new' $reusePort
-        $reuseListener = [Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback, $reusePort)
-        $reuseListener.Start()
-        $reuseNewProcess = Get-Process -Id $PID -ErrorAction Stop
-        $reuseNewStartTicks = [long](Get-VerifierProcessStartTicks $reuseNewProcess)
-        Confirm-VerifierPortLeaseBound $reuseNewContext $reuseNewLease $PID $reuseNewStartTicks
-        $oldRetry = Complete-VerifierRun $reuseContext
-        Assert-GateB ($oldRetry -and [bool]$oldRetry.Success) `
-            'old OS-released tombstone could not recover while a newer run reused its port'
-        Assert-GateB (-not (Test-Path -LiteralPath $reuseOldLease.Path)) `
-            'old tombstone recovery did not remove the exact old claim'
-        Assert-GateB (Test-Path -LiteralPath $reuseNewLease.Path -PathType Leaf) `
-            'old tombstone recovery removed or corrupted the newer run claim'
-        $reuseInspection = Get-VerifierLoopbackListenerRecords $reusePort
-        Assert-GateB ($reuseInspection.Success -and $reuseInspection.Known -and
-            $reuseInspection.HasListeners -and @($reuseInspection.Listeners | Where-Object {
-                [int]$_.ProcessId -eq $PID -and [long]$_.ProcessStartTicks -eq $reuseNewStartTicks
-            }).Count -gt 0) `
-            'newer reused-port listener was not preserved during old tombstone recovery'
-        Stop-GateBListenerExact $reuseListener $reusePort
-        $reuseListener = $null
-        $newRetry = Complete-VerifierRun $reuseNewContext
-        Assert-GateB ($newRetry -and [bool]$newRetry.Success) `
-            'newer reused-port lease could not complete after old tombstone recovery'
-        Assert-GateBContextResourcesReleased $reuseContext
-        Assert-GateBContextResourcesReleased $reuseNewContext
-        $checksValidated = $true
+                $reuseNewContext = New-VerifierRunContext $repositoryRoot $rollbackRoot
+                $reuseNewLease = New-GateBCanaryLease $reuseNewContext $reusePort
+                $reuseNewProcess = Start-GateBSeparateListener $reusePort
+                $reuseNewStartTicks = [long](Get-VerifierProcessStartTicks $reuseNewProcess)
+                $reuseOwner = [pscustomobject]@{
+                    DirectProcessOwner = $true
+                    Process = $reuseNewProcess
+                    ProcessId = [int]$reuseNewProcess.Id
+                    ProcessStartTicks = $reuseNewStartTicks
+                    IdentityProof = 'retained-process-object-v1'
+                }
+                Confirm-VerifierPortLeaseBound $reuseNewContext $reuseNewLease `
+                    $reuseNewProcess.Id `
+                    $reuseNewStartTicks $reuseOwner
+                $oldRetry = Complete-VerifierRun $reuseContext
+                Assert-GateB ($oldRetry -and [bool]$oldRetry.Success) `
+                    'old OS-released tombstone could not recover while a newer run reused its port'
+                Assert-GateB (-not (Test-Path -LiteralPath $reuseOldLease.Path)) `
+                    'old tombstone recovery did not remove the exact old claim'
+                Assert-GateB (Test-Path -LiteralPath $reuseNewLease.Path -PathType Leaf) `
+                    'old tombstone recovery removed or corrupted the newer run claim'
+                $reuseInspection = Get-VerifierLoopbackListenerRecords $reusePort
+                Assert-GateB ($reuseInspection.Success -and $reuseInspection.Known -and
+                    $reuseInspection.HasListeners -and @($reuseInspection.Listeners | Where-Object {
+                        [int]$_.ProcessId -eq [int]$reuseOwner.ProcessId -and
+                        [long]$_.ProcessStartTicks -eq $reuseNewStartTicks
+                    }).Count -gt 0) `
+                    'newer reused-port listener was not preserved during old tombstone recovery'
+                Stop-GateBExactProcess $reuseNewProcess $reusePort
+                Set-GateBLeaseProcessProofAfterExactCleanup $reuseNewLease
+                Assert-GateB ($reuseNewLease.ProcessProofRequired -and
+                    $reuseNewLease.ProcessTerminationProven -and
+                    $reuseNewLease.ProcessAbsent) `
+                    'newer reused-port lease did not retain exact child termination/absence proof'
+                $reuseNewProcess = $null
+                $newRetry = Complete-VerifierRun $reuseNewContext
+                Assert-GateB ($newRetry -and [bool]$newRetry.Success) `
+                    'newer reused-port lease could not complete after old tombstone recovery'
+                Assert-GateBContextResourcesReleased $reuseContext
+                Assert-GateBContextResourcesReleased $reuseNewContext
+                $checksValidated = $true
+                $reuseAttemptSucceeded = $true
+                break
+            } catch {
+                if (-not (Test-GateBPortSelectionRace $_) -or
+                        $reuseAttempt -ge $reuseAttemptLimit) {
+                    throw
+                }
+                $retryCleanup = Complete-GateBPortReuseAttemptCleanup `
+                    $reuseContext $reuseNewContext $reuseNewLease $reuseNewProcess `
+                    $reuseListener $reusePort
+                if (-not [bool]$retryCleanup.Success) {
+                    Throw-GateBInfrastructure ('port-reselection attempt cleanup was not proven: ' +
+                        (@($retryCleanup.Errors) -join '; '))
+                }
+                Write-Host ('INFO: transactional rollback port-selection race on attempt ' +
+                    [string]$reuseAttempt + '; exact cleanup proven, selecting a fresh port.')
+                $reuseContext = $null
+                $reuseNewContext = $null
+                $reuseOldLease = $null
+                $reuseNewLease = $null
+                $reuseNewProcess = $null
+                $reuseListener = $null
+                $reusePort = 0
+            }
+        }
+        if (-not $reuseAttemptSucceeded) {
+            Throw-GateBInfrastructure ('transactional rollback port-reselection exhausted after ' +
+                [string]$reuseAttemptLimit + ' attempts.')
+        }
     } finally {
         $cleanup = $null
         $cleanupErrors = New-Object Collections.ArrayList
@@ -5582,6 +10589,11 @@ function Invoke-GateBLeaseRollbackCheck() {
         }
         if ($null -ne $reuseListener) {
             try { Stop-GateBListenerExact $reuseListener $reusePort } catch {
+                [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+            }
+        }
+        if ($null -ne $reuseNewProcess) {
+            try { Stop-GateBExactProcess $reuseNewProcess $reusePort } catch {
                 [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
             }
         }
@@ -5632,7 +10644,7 @@ function Invoke-GateBCleanupRetentionCheck() {
     $canarySucceeded = $false
     try {
         $context = New-VerifierRunContext $repositoryRoot $retentionRoot
-        $lease = New-VerifierPortLease $context 'canary-cleanup-retention'
+        $lease = New-GateBCanaryLease $context
         $listener = [Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback, $lease.Port)
         $listener.Start()
 
@@ -5645,14 +10657,37 @@ function Invoke-GateBCleanupRetentionCheck() {
             'cleanup-failure retention canary did not retain its manifest'
         Assert-GateB (Test-Path -LiteralPath $lease.Path -PathType Leaf) `
             'cleanup-failure retention canary released its claim while the port was listening'
+        Assert-GateB (@($context.CleanupErrors).Count -gt 0) `
+            'cleanup-failure retention canary did not retain the current failed-pass error evidence'
 
         $listener.Stop()
         $listener = $null
         $successfulCleanup = Complete-VerifierRun $context
         Assert-GateB ($null -ne $successfulCleanup -and [bool]$successfulCleanup.Success) `
             'cleanup-failure retention canary could not complete after the listener was removed'
+        Assert-GateB (@($successfulCleanup.Errors).Count -eq 0) `
+            'cleanup retry returned stale or current errors after successful release'
+        Assert-GateB ([string]$context.CleanupState -ceq 'complete' -and
+            @($context.CleanupErrors).Count -eq 0) `
+            'cleanup retry did not replace stale errors with an exact completed empty error ledger'
         Assert-GateB (-not (Test-Path -LiteralPath $lease.Path)) `
             'cleanup-failure retention canary left its claim after successful retry'
+        $retryManifestJson = Get-Content -LiteralPath $context.ManifestPath -Raw
+        $retryManifest = ConvertFrom-VerifierDurableJson $retryManifestJson
+        Assert-GateB ([string]$retryManifest.cleanup.state -ceq 'complete' -and
+            $retryManifest.cleanup.errors -is [array] -and
+            @($retryManifest.cleanup.errors).Count -eq 0) `
+            'cleanup retry manifest did not prove cleanupState=complete with cleanupErrors=[]'
+        $retryLease = @($retryManifest.leases | Where-Object {
+            [string]$_.leaseId -ceq [string]$lease.LeaseId
+        })
+        Assert-GateB ($retryLease.Count -eq 1 -and
+            [string]$retryLease[0].status -ceq 'released' -and
+            [string]$retryLease[0].claimState -ceq 'released' -and
+            [string]$retryLease[0].releaseState -ceq 'complete' -and
+            [string]$retryLease[0].releaseJournalState -ceq 'complete' -and
+            [bool]$retryLease[0].mutexReleased) `
+            'cleanup retry manifest did not retain the exact terminal lease release proof'
         Assert-GateBContextResourcesReleased $context
         $checksValidated = $true
     } finally {
@@ -5753,8 +10788,8 @@ function Stop-GateBExactProcess($Process, [int]$ExpectedPort = 0,
             if ($expectedStart -ne $actualStart) {
                 throw "canary process PID $($Process.Id) changed start identity"
             }
-            $currentRecords = @(Get-CimInstance Win32_Process `
-                -Filter "ProcessId = $($Process.Id)" -ErrorAction Stop)
+            $currentRecords = @(Get-VerifierProcessRecordsByIdWithFallback `
+                ([int]$Process.Id) 'Gate B canary process identity')
             if ($currentRecords.Count -ne 1 -or
                     -not $currentRecords[0].PSObject.Properties['ProcessId'] -or
                     -not $currentRecords[0].PSObject.Properties['ParentProcessId'] -or
@@ -5844,17 +10879,60 @@ function Stop-GateBExactProcess($Process, [int]$ExpectedPort = 0,
     }
 }
 
+function Wait-GateBPortQuiescence($Port) {
+    if (-not (Test-VerifierStrictIntegralValue $Port 1 65535)) {
+        Throw-GateBInfrastructure 'canary port quiescence received an invalid port.'
+    }
+    $maxAttempts = 10
+    $delayMilliseconds = 100
+    $lastDetail = 'no listener observation was captured'
+    for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+        try {
+            $inspection = Get-VerifierLoopbackListenerRecords ([int]$Port)
+            $inspectionShapeValid = $null -ne $inspection -and
+                $inspection -isnot [array] -and
+                $null -ne $inspection.PSObject.Properties['Success'] -and
+                $null -ne $inspection.PSObject.Properties['Known'] -and
+                $null -ne $inspection.PSObject.Properties['HasListeners'] -and
+                (Test-VerifierStrictBooleanValue $inspection.Success) -and
+                (Test-VerifierStrictBooleanValue $inspection.Known) -and
+                (Test-VerifierStrictBooleanValue $inspection.HasListeners)
+            if ($inspectionShapeValid) {
+                if ($inspection.Success -and $inspection.Known -and
+                        -not $inspection.HasListeners) {
+                    return $inspection
+                }
+                $lastDetail = 'success=' + [string]$inspection.Success +
+                    ', known=' + [string]$inspection.Known +
+                    ', hasListeners=' + [string]$inspection.HasListeners
+            } else {
+                $lastDetail = 'listener inspection was missing or malformed'
+            }
+        } catch {
+            $lastDetail = Get-VerifierErrorMessage $_
+        }
+        if ($attempt -lt $maxAttempts) {
+            Start-Sleep -Milliseconds $delayMilliseconds
+        }
+    }
+    Throw-GateBInfrastructure ('canary port ' + [string]$Port +
+        ' did not reach a proven quiescent state after ' + [string]$maxAttempts +
+        ' bounded observations: ' + $lastDetail)
+}
+
 function ConvertTo-GateBPowerShellLiteral([string]$Value) {
     return [string][char]39 + $Value.Replace([string][char]39, ([string][char]39 +
         [string][char]39)) + [string][char]39
 }
 
-function Start-GateBRedirectedProcess([string]$FilePath, [string[]]$Arguments) {
+function Start-GateBRedirectedProcess($FilePath, $Arguments) {
+    $invocation = Assert-VerifierProcessInvocationBoundary $FilePath $Arguments `
+        'Gate B redirected process'
     $process = New-Object Diagnostics.Process
     try {
         $startInfo = New-Object Diagnostics.ProcessStartInfo
-        $startInfo.FileName = $FilePath
-        $startInfo.Arguments = ConvertTo-VerifierArgumentString $Arguments
+        $startInfo.FileName = $invocation.FilePath
+        $startInfo.Arguments = ConvertTo-VerifierArgumentString $invocation.Arguments
         $startInfo.UseShellExecute = $false
         $startInfo.CreateNoWindow = $true
         $startInfo.RedirectStandardOutput = $true
@@ -5872,8 +10950,18 @@ function Start-GateBRedirectedProcess([string]$FilePath, [string[]]$Arguments) {
     }
 }
 
-function Invoke-GateBBoundedProcess([string]$FilePath, [string[]]$Arguments,
-        [int]$TimeoutMilliseconds = 30000, [string]$Label = 'Gate B child') {
+function Invoke-GateBBoundedProcess($FilePath, $Arguments,
+        $TimeoutMilliseconds = 30000, $Label = 'Gate B child') {
+    if (-not (Test-VerifierStrictStringValue $Label) -or
+            [String]::IsNullOrWhiteSpace($Label)) {
+        Throw-GateBInfrastructure 'Gate B bounded-process label must be an exact non-empty string.'
+    }
+    $invocation = Assert-VerifierProcessInvocationBoundary $FilePath $Arguments `
+        $Label
+    if (-not (Test-VerifierStrictIntegralValue $TimeoutMilliseconds 1L ([int]::MaxValue))) {
+        Throw-GateBInfrastructure "$Label timeout must be an exact positive integral value before process start."
+    }
+    $TimeoutMilliseconds = [int]$TimeoutMilliseconds
     $process = $null
     $terminationProven = $false
     $failure = $null
@@ -5885,7 +10973,7 @@ function Invoke-GateBBoundedProcess([string]$FilePath, [string[]]$Arguments,
     $numericExitCode = $null
     $timedOut = $false
     try {
-        $process = Start-GateBRedirectedProcess $FilePath $Arguments
+        $process = Start-GateBRedirectedProcess $invocation.FilePath $invocation.Arguments
         $stdoutTask = $process.StandardOutput.ReadToEndAsync()
         $stderrTask = $process.StandardError.ReadToEndAsync()
         if (-not $process.WaitForExit($TimeoutMilliseconds)) {
@@ -6057,6 +11145,8 @@ function Remove-GateBCanaryRoots([string]$CanaryRoot, $Contexts) {
 }
 
 function Invoke-GateBArgumentPathCanary([string]$CanaryRoot) {
+    $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
+    Invoke-GateBProcessInvocationBoundaryCanary $powershell
     $argumentRoot = Join-Path $CanaryRoot 'argument worktree with spaces'
     $profileRoot = Join-Path $argumentRoot 'profile with spaces'
     $scriptPath = Join-Path $argumentRoot 'argument child script with spaces.ps1'
@@ -6075,7 +11165,6 @@ function Invoke-GateBArgumentPathCanary([string]$CanaryRoot) {
             'Write-Output (''ARGUMENT_CANARY_PROFILE='' + [IO.Path]::GetFullPath($ProfilePath))'
         ))
         [IO.File]::WriteAllText($scriptPath, $scriptText, [Text.UTF8Encoding]::new($false))
-        $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
         # Use the same shared Windows argument builder through the redirected
         # ProcessStartInfo path so this canary proves a real launch with both
         # the script path and profile path containing spaces.
@@ -6113,6 +11202,52 @@ function Invoke-GateBArgumentPathCanary([string]$CanaryRoot) {
     Write-Host 'PASS:PS5.1 quoted spaces-path process argument canary'
 }
 
+function Invoke-GateBProcessInvocationBoundaryCanary([string]$Powershell) {
+    $malformedCases = @(
+        [pscustomobject]@{ Name = 'null path'; FilePath = $null; Arguments = @() }
+        [pscustomobject]@{ Name = 'Boolean path'; FilePath = $true; Arguments = @() }
+        [pscustomobject]@{ Name = 'array path'; FilePath = [object[]]@($Powershell); Arguments = @() }
+        [pscustomobject]@{ Name = 'null arguments'; FilePath = $Powershell; Arguments = $null }
+        [pscustomobject]@{ Name = 'scalar arguments'; FilePath = $Powershell; Arguments = '-NoProfile' }
+        [pscustomobject]@{ Name = 'Boolean arguments'; FilePath = $Powershell; Arguments = $true }
+        [pscustomobject]@{ Name = 'Boolean argument element'; FilePath = $Powershell; Arguments = [object[]]@('-NoProfile', $true) }
+        [pscustomobject]@{ Name = 'object argument element'; FilePath = $Powershell; Arguments = [object[]]@('-NoProfile', [pscustomobject]@{}) }
+    )
+    $processRoot = Join-Path ([IO.Path]::GetTempPath()) 'TroubleshootJS'
+    $beforeProcessLogs = if (Test-Path -LiteralPath $processRoot -PathType Container) {
+        @((Get-ChildItem -LiteralPath $processRoot -Directory -Filter 'verify-process-*' -ErrorAction Stop).Name)
+    } else { @() }
+    foreach ($case in $malformedCases) {
+        foreach ($wrapper in @(
+                [pscustomobject]@{ Name = 'module Start'; Invoke = {
+                    param($item) [void](Start-VerifierProcess $item.FilePath $item.Arguments)
+                }}
+                [pscustomobject]@{ Name = 'module bounded'; Invoke = {
+                    param($item) [void](Invoke-VerifierBoundedProcess $item.FilePath $item.Arguments 1000)
+                }}
+                [pscustomobject]@{ Name = 'Gate B Start'; Invoke = {
+                    param($item) [void](Start-GateBRedirectedProcess $item.FilePath $item.Arguments)
+                }}
+                [pscustomobject]@{ Name = 'Gate B bounded'; Invoke = {
+                    param($item) [void](Invoke-GateBBoundedProcess $item.FilePath $item.Arguments 1000 'raw process boundary canary')
+                }}
+            )) {
+            $rejected = $false
+            try { & $wrapper.Invoke $case } catch {
+                $rejected = Test-VerifierInfrastructureError $_
+            }
+            Assert-GateB $rejected `
+                "$($wrapper.Name) accepted malformed $($case.Name) input"
+        }
+    }
+    $afterProcessLogs = if (Test-Path -LiteralPath $processRoot -PathType Container) {
+        @((Get-ChildItem -LiteralPath $processRoot -Directory -Filter 'verify-process-*' -ErrorAction Stop).Name)
+    } else { @() }
+    Assert-GateB ((@($beforeProcessLogs) -join '|') -eq (@($afterProcessLogs) -join '|')) `
+        'malformed process invocation inputs created bounded-process filesystem evidence'
+    Write-Host 'PASS:raw process path/argument arrays reject malformed values before process start or log-root mutation'
+}
+
 function Invoke-GateBCommandLineRoundTripCheck() {
     $profile = Join-Path ([IO.Path]::GetTempPath()) 'TroubleshootJS\round-trip profile with spaces'
     $previewScript = Join-Path ([IO.Path]::GetTempPath()) 'TroubleshootJS\preview script with spaces.ps1'
@@ -6136,6 +11271,40 @@ function Invoke-GateBCommandLineRoundTripCheck() {
     })
     Assert-GateB (Test-VerifierPreviewProcessIdentity $previewRecord $previewSnapshot) `
         'quoted preview command-line round-trip was not recognized'
+    # Win32_Process and the native fallback both expose a real retained
+    # process's PID/command-line tuple without a ProcessStartTicks property.
+    # Keep this WMI-shaped snapshot separate from the PID-only negative below:
+    # the retained System.Diagnostics.Process re-read remains the source of
+    # exact start identity.
+    $wmiShapedPreviewSnapshot = @([pscustomobject]@{
+        ProcessId = [int]$PID; ParentProcessId = 1
+        Name = 'powershell.exe'; ExecutablePath = ''
+        CommandLine = $previewCommand
+    })
+    Assert-GateB (-not $wmiShapedPreviewSnapshot[0].PSObject.Properties['ProcessStartTicks']) `
+        'WMI-shaped preview canary unexpectedly fabricated a snapshot start identity'
+    Assert-GateB (Test-VerifierPreviewProcessIdentity $previewRecord `
+        $wmiShapedPreviewSnapshot) `
+        'retained preview identity rejected a WMI/native snapshot without ProcessStartTicks'
+    Assert-GateB (-not (Test-VerifierPreviewProcessIdentity $previewRecord @(
+        [pscustomobject]@{ ProcessId = $PID }
+    ))) `
+        'preview identity accepted a PID-only snapshot without command or start identity'
+    Assert-GateB (-not (Test-VerifierPreviewProcessIdentity $previewRecord @(
+        [pscustomobject]@{ ProcessId = [int]$PID; ParentProcessId = 1
+            Name = 'powershell.exe'; CommandLine = '' }
+    ))) `
+        'preview identity accepted a WMI-shaped snapshot with an empty command line'
+    foreach ($malformedStart in @($null, 0L, 'not-a-start')) {
+        $malformedNoStart = [pscustomobject]@{
+            ProcessId = [int]$PID; ParentProcessId = 1
+            Name = 'powershell.exe'; ExecutablePath = ''
+            CommandLine = $previewCommand; ProcessStartTicks = $malformedStart
+        }
+        Assert-GateB (-not (Test-VerifierPreviewProcessIdentity $previewRecord `
+            @($malformedNoStart))) `
+            'preview identity accepted a malformed snapshot ProcessStartTicks value'
+    }
     Assert-GateB (Test-VerifierPreviewProcessIdentity $previewRecord @(
         [pscustomobject]@{ ProcessId = 0 }
         [pscustomobject]@{ ProcessId = 4 }
@@ -6302,7 +11471,7 @@ function Invoke-GateBStopPreviewContractCanary([string]$CanaryRoot) {
     Write-Host 'PASS:stop-preview canonical paths, prefix rejection, PID replacement, and post-stop proof canary'
 }
 
-function Invoke-GateBIsolationCanary() {
+function Invoke-GateBIsolationCanary([switch]$SkipArgumentPathCanary) {
     $canaryId = [Guid]::NewGuid().ToString('N')
     $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) ('TroubleshootJS\gate-b-canary-' + $canaryId)
     try {
@@ -6347,8 +11516,10 @@ function Invoke-GateBIsolationCanary() {
         # of the supplemental live-Edge lane while still exercising the exact
         # root executable/parent/start/profile/port ownership proof.
         $browserPath = (Get-Command wscript.exe -ErrorAction Stop).Source
-        Invoke-GateBArgumentPathCanary $canaryRoot
-        try { [void](Get-CimInstance Win32_Process -ErrorAction Stop) } catch {
+        if (-not $SkipArgumentPathCanary) {
+            Invoke-GateBArgumentPathCanary $canaryRoot
+        }
+        try { [void](Get-VerifierProcessSnapshotWithFallback 'isolation canary') } catch {
             $profileInspectionAvailable = $false
             $profileInspectionError = $_.Exception.Message
         }
@@ -6360,8 +11531,7 @@ function Invoke-GateBIsolationCanary() {
         }
         $contextA = New-VerifierRunContext $repositoryRoot $canaryRoot
         $contextB = New-VerifierRunContext $worktreeBRoot $canaryRoot
-        $leaseA = New-VerifierPortLease $contextA 'canary-retained-bind'
-        $recordA = New-GateBCanaryBrowserRecord $contextA $leaseA 'canary-timeout-cleanup-A' $browserPath
+        $recordA = $null
         [IO.File]::WriteAllText($rootScript,
             [string]::Join([Environment]::NewLine, @(
                 'Option Explicit'
@@ -6371,16 +11541,98 @@ function Invoke-GateBIsolationCanary() {
         if (-not (Test-VerifierPhysicalChildPath $canaryRoot $rootScript)) {
             Throw-GateBInfrastructure 'isolation browser-root fixture escaped its exact canary namespace'
         }
-        Assert-GateB ($leaseA.ClaimState -eq 'held') 'new port claim was not retained before bind'
-        Assert-GateB (Test-Path -LiteralPath $leaseA.Path -PathType Leaf) `
-            'retained port claim record was not created'
-
         # Bind a real loopback listener while the named claim is held, then
         # validate that the claim records the actual owning process identity.
-        $bindListener = [Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback, $leaseA.Port)
-        $bindListener.Start()
-        Confirm-VerifierPortLeaseBound $contextA $leaseA $PID `
-            ([long](Get-VerifierCurrentProcessStartTicks))
+        # The free-port probe and the later bind are separate OS operations;
+        # retry only the exact foreign-listener/address-in-use race, releasing
+        # the exact claim only after the complete current port observation is
+        # positively absent.
+        $initialBindMaxAttempts = 8
+        $initialBindSucceeded = $false
+        $initialBindLastRace = ''
+        for ($initialBindAttempt = 1;
+                $initialBindAttempt -le $initialBindMaxAttempts;
+                $initialBindAttempt++) {
+            $candidateLease = $null
+            $candidateListener = $null
+            $candidatePort = 0
+            try {
+                # New-VerifierPortLease holds the exact global claim through
+                # its own availability probe.  The remaining gap is the
+                # canary's external bind below, which is the bounded race
+                # handled by this loop.
+                $candidateLease = New-GateBCanaryLease $contextA
+                $candidatePort = [int]$candidateLease.Port
+                Assert-GateB ($candidateLease.ClaimState -eq 'held') `
+                    'new port claim was not retained before bind'
+                Assert-GateB (Test-Path -LiteralPath $candidateLease.Path -PathType Leaf) `
+                    'retained port claim record was not created'
+                $candidateListener = [Net.Sockets.TcpListener]::new(
+                    [Net.IPAddress]::Loopback, $candidateLease.Port)
+                $candidateListener.Start()
+                $initialOwnerProcess = Get-Process -Id ([int]$PID) -ErrorAction Stop
+                if ($null -eq $initialOwnerProcess -or
+                        $initialOwnerProcess -is [array] -or
+                        -not ($initialOwnerProcess -is [Diagnostics.Process]) -or
+                        -not (Test-VerifierStrictIntegralValue $initialOwnerProcess.Id `
+                            1 ([int]::MaxValue)) -or
+                        [int]$initialOwnerProcess.Id -ne [int]$PID) {
+                    Throw-GateBInfrastructure 'initial bind owner was not the exact current Diagnostics.Process object.'
+                }
+                $initialOwnerStartTicks = [long](Get-VerifierProcessStartTicks `
+                    $initialOwnerProcess)
+                $currentOwnerStartTicks = [long](Get-VerifierCurrentProcessStartTicks)
+                if ([bool]$initialOwnerProcess.HasExited -or
+                        -not (Test-VerifierStrictIntegralValue $initialOwnerStartTicks 1) -or
+                        $initialOwnerStartTicks -ne $currentOwnerStartTicks) {
+                    Throw-GateBInfrastructure 'initial bind owner process identity changed before confirmation.'
+                }
+                $initialOwner = [pscustomobject]@{
+                    DirectProcessOwner = $true
+                    Process = $initialOwnerProcess
+                    ProcessId = [int]$initialOwnerProcess.Id
+                    ProcessStartTicks = $initialOwnerStartTicks
+                    IdentityProof = 'retained-process-object-v1'
+                }
+                Confirm-VerifierPortLeaseBound $contextA $candidateLease $PID `
+                    $currentOwnerStartTicks $initialOwner
+                $leaseA = $candidateLease
+                $bindListener = $candidateListener
+                $candidateLease = $null
+                $candidateListener = $null
+                $initialBindSucceeded = $true
+                break
+            } catch {
+                $race = Test-GateBInitialBindSelectionRace $_
+                $raceMessage = Get-VerifierErrorMessage $_
+                if ($null -ne $candidateLease -or $null -ne $candidateListener) {
+                    $attemptCleanup = Complete-GateBInitialBindAttemptCleanup `
+                        $contextA $candidateLease $candidateListener $candidatePort
+                    if (-not $attemptCleanup.Success) {
+                        Throw-GateBInfrastructure ('initial isolation bind race cleanup was not proven; ' +
+                            'evidence was retained at ' + $canaryRoot + ': ' +
+                            (@($attemptCleanup.Errors) -join '; '))
+                    }
+                }
+                if (-not $race -or $initialBindAttempt -ge $initialBindMaxAttempts) {
+                    if ($race) {
+                        Throw-GateBInfrastructure ('initial isolation bind port-reselection exhausted after ' +
+                            [string]$initialBindMaxAttempts + ' attempts: ' + $raceMessage)
+                    }
+                    throw
+                }
+                $initialBindLastRace = $raceMessage
+                Write-Host ('INFO: initial isolation bind port-selection race on attempt ' +
+                    [string]$initialBindAttempt + '; exact cleanup proven, selecting a fresh port.')
+                Start-Sleep -Milliseconds 25
+            }
+        }
+        if (-not $initialBindSucceeded) {
+            Throw-GateBInfrastructure ('initial isolation bind did not complete after ' +
+                [string]$initialBindMaxAttempts + ' attempts: ' + $initialBindLastRace)
+        }
+        $recordA = New-GateBCanaryBrowserRecord $contextA $leaseA `
+            'canary-timeout-cleanup-A' $browserPath
         Assert-GateB ($leaseA.ClaimState -eq 'bound' -and $leaseA.BoundProcessId -eq $PID) `
             'retained claim did not record successful bind identity'
         $manifestA = Get-Content -LiteralPath $contextA.ManifestPath -Raw | ConvertFrom-Json
@@ -6407,6 +11659,7 @@ function Invoke-GateBIsolationCanary() {
             'separate foreign listener was accepted as the owned port bind'
         Stop-GateBExactProcess $foreignListenerProcess $leaseA.Port
         $foreignListenerProcess = $null
+        [void](Wait-GateBPortQuiescence $leaseA.Port)
 
         # Compete from a separate PowerShell process representing a different
         # worktree. Its real process exit must be `2`, not merely a diagnostic
@@ -6419,6 +11672,7 @@ function Invoke-GateBIsolationCanary() {
         }
         $moduleLiteral = ConvertTo-GateBPowerShellLiteral $modulePath
         $worktreeLiteral = ConvertTo-GateBPowerShellLiteral $worktreeBRoot
+        $browserLiteral = ConvertTo-GateBPowerShellLiteral $browserPath
         $competitionCommand = [string]::Join(' ', @(
             '$ErrorActionPreference = ''Stop'';'
             ('Import-Module ' + $moduleLiteral + ' -Force;')
@@ -6426,8 +11680,8 @@ function Invoke-GateBIsolationCanary() {
             '$childCleanupErrors = New-Object Collections.ArrayList; $childCleanup = $null;'
             '$childCleanupJsonPath = ''''; $childRunRoot = '''';'
             'try { $childContext = New-VerifierRunContext ' + $worktreeLiteral + ' '''';'
-            ' $competingLease = New-VerifierPortLease $childContext ''canary-competing'' ' +
-                [string]$leaseA.Port + ';'
+            ' $competingLease = New-VerifierPortLease $childContext ''cdp'' ' +
+                [string]$leaseA.Port + ' ' + $browserLiteral + ';'
             ' Write-Output ''ACQUIRED:exit=0''; $childExit = 0; }'
             ' catch { if (Test-VerifierInfrastructureError $_) {'
             ' Write-Output (''BLOCKED:exit=2:'' + $_.Exception.Message); $childExit = 2; }'
@@ -6443,17 +11697,48 @@ function Invoke-GateBIsolationCanary() {
             ' } catch { $childExit = 2; [void]$childCleanupErrors.Add((''complete-exception: '' + $_.Exception.Message)) };'
             ' try { $childManifest = Get-Content -LiteralPath $childContext.ManifestPath -Raw | ConvertFrom-Json;'
             ' $childClaims = @($childManifest.leases); $childProfiles = @($childManifest.browserSessions | ForEach-Object { $_.profile });'
-            ' $portInspection = Get-VerifierLoopbackListenerRecords ' + [string]$leaseA.Port + ';'
+            ' $portInspection = $null; $portInspectionSuccess = $false;'
+            ' $portInspectionKnown = $false; $portInspectionHasListeners = $true;'
+            ' $portQuiescenceProven = $false; $portInspectionDetail = ''not observed'';'
+            ' for ($portAttempt = 1; $portAttempt -le 10; $portAttempt++) {'
+            '  try { $candidateInspection = Get-VerifierLoopbackListenerRecords ' +
+                [string]$leaseA.Port + ';'
+            '   $inspectionShapeValid = $null -ne $candidateInspection -and'
+            '    $candidateInspection -isnot [array] -and'
+            '    $null -ne $candidateInspection.PSObject.Properties[''Success''] -and'
+            '    $null -ne $candidateInspection.PSObject.Properties[''Known''] -and'
+            '    $null -ne $candidateInspection.PSObject.Properties[''HasListeners''] -and'
+            '    (Test-VerifierStrictBooleanValue $candidateInspection.Success) -and'
+            '    (Test-VerifierStrictBooleanValue $candidateInspection.Known) -and'
+            '    (Test-VerifierStrictBooleanValue $candidateInspection.HasListeners);'
+            '   if ($inspectionShapeValid) {'
+            '    $portInspection = $candidateInspection;'
+            '    $portInspectionSuccess = [bool]$candidateInspection.Success;'
+            '    $portInspectionKnown = [bool]$candidateInspection.Known;'
+            '    $portInspectionHasListeners = [bool]$candidateInspection.HasListeners;'
+            '    $portInspectionDetail = ''success='' + [string]$portInspectionSuccess +'
+            '     '', known='' + [string]$portInspectionKnown + '', hasListeners='' +'
+            '     [string]$portInspectionHasListeners;'
+            '    if ($candidateInspection.Success -and $candidateInspection.Known -and'
+            '        -not $candidateInspection.HasListeners) { $portQuiescenceProven = $true; break }'
+            '   } else { $portInspectionDetail = ''listener inspection was missing or malformed'' }'
+            '  } catch { $portInspection = $null; $portInspectionSuccess = $false;'
+            '   $portInspectionKnown = $false; $portInspectionHasListeners = $true;'
+            '   $portInspectionDetail = $_.Exception.Message }'
+            '  if ($portAttempt -lt 10) { Start-Sleep -Milliseconds 100 }'
+            ' }'
+            ' if (-not $portQuiescenceProven) { [void]$childCleanupErrors.Add(''port-quiescence: complete current absence was not proven after 10 bounded observations: '' + $portInspectionDetail) };'
             ' $childCleanupSuccess = ($childCleanupErrors.Count -eq 0 -and $childCleanup -and [bool]$childCleanup.Success -and'
             ' $childManifest.cleanup.state -eq ''complete'' -and @($childManifest.cleanup.errors).Count -eq 0 -and'
             ' @($childClaims | Where-Object { $_.status -ne ''released'' }).Count -eq 0 -and'
-            ' $portInspection.Success -and $portInspection.Known -and -not $portInspection.HasListeners);'
+            ' $portQuiescenceProven -and $portInspectionSuccess -and $portInspectionKnown -and'
+            ' -not $portInspectionHasListeners);'
             ' if (-not $childCleanupSuccess) { $childExit = 2; [void]$childCleanupErrors.Add(''manifest/port cleanup proof failed'') }'
             ' $childCleanupRecord = [pscustomobject]@{ protocol = ''troubleshootjs-child-cleanup-v1''; success = [bool]$childCleanupSuccess;'
             ' runRoot = $childRunRoot; manifestPath = $childContext.ManifestPath; leaseLedger = $childClaims;'
             ' claimPaths = @($childClaims | Where-Object { $_.status -ne ''released'' } | ForEach-Object { $_.path }); profiles = $childProfiles;'
-            ' requestedPort = ' + [string]$leaseA.Port + '; requestedPortInspectionSuccess = [bool]$portInspection.Success;'
-            ' requestedPortKnown = [bool]$portInspection.Known; requestedPortHasListeners = [bool]$portInspection.HasListeners;'
+            ' requestedPort = ' + [string]$leaseA.Port + '; requestedPortInspectionSuccess = [bool]$portInspectionSuccess;'
+            ' requestedPortKnown = [bool]$portInspectionKnown; requestedPortHasListeners = [bool]$portInspectionHasListeners;'
             ' errors = @($childCleanupErrors) };'
             ' $childCleanupJsonPath = Join-Path $childContext.EvidenceDirectory ''child-cleanup.json'';'
             ' [IO.File]::WriteAllText($childCleanupJsonPath, ($childCleanupRecord | ConvertTo-Json -Depth 8), [Text.UTF8Encoding]::new($false));'
@@ -6575,7 +11860,7 @@ function Invoke-GateBIsolationCanary() {
         }
         $childCleanupProven = $true
 
-        $leaseB = New-VerifierPortLease $contextB 'canary-foreign-resource-B'
+        $leaseB = New-GateBCanaryLease $contextB
         $recordB = New-GateBCanaryBrowserRecord $contextB $leaseB 'canary-foreign-resource-B' $browserPath
         Assert-GateB ($contextA.RunId -ne $contextB.RunId) 'run IDs collided'
         Assert-GateB ($contextA.RunRoot -ne $contextB.RunRoot) 'run roots collided'
@@ -6614,16 +11899,15 @@ function Invoke-GateBIsolationCanary() {
             '--tsj-verifier-worktree', $contextA.RepositoryIdentity,
             '--remote-debugging-port', [string]$recordA.CdpPort)
         $recordA.Runtime.Browser = $rootProcessA
-        $recordA.ProcessId = [int]$rootProcessA.Id
-        $recordA.Status = 'started'
-        Write-VerifierManifest $contextA
         $rootStartA = Get-VerifierProcessStartTicks $rootProcessA
         $rootIdentityA = Get-VerifierCurrentProcessIdentity $rootProcessA.Id $rootStartA `
             0 '' '' 0 $contextA.RunId '' 0 $browserPath
-        $recordA.ProcessStartTicks = $rootStartA
+        $recordA.ProcessId = [int]$rootIdentityA.Record.ProcessId
+        $recordA.ProcessStartTicks = [long]$rootIdentityA.Record.ProcessStartTicks
         $recordA.ProcessParentProcessId = [int]$rootIdentityA.Record.ParentProcessId
         $recordA.ProcessParentProcessStartTicks = [long]$rootIdentityA.Record.ParentProcessStartTicks
         $recordA.ProcessCommandLine = [string]$rootIdentityA.Record.CommandLine
+        $recordA.Status = 'started'
         Write-VerifierManifest $contextA
 
         # Cleanup can remove only A's profile and retained claim; it must not
@@ -6678,20 +11962,19 @@ function Invoke-GateBIsolationCanary() {
             '--tsj-verifier-worktree', $contextB.RepositoryIdentity,
             '--remote-debugging-port', [string]$recordB.CdpPort)
         $recordB.Runtime.Browser = $rootProcessB
-        $recordB.ProcessId = [int]$rootProcessB.Id
+        $rootStartB = Get-VerifierProcessStartTicks $rootProcessB
+        $rootIdentityB = Get-VerifierCurrentProcessIdentity $rootProcessB.Id $rootStartB `
+            0 '' '' 0 $contextB.RunId '' 0 $browserPath
+        $recordB.ProcessId = [int]$rootIdentityB.Record.ProcessId
+        $recordB.ProcessStartTicks = [long]$rootIdentityB.Record.ProcessStartTicks
+        $recordB.ProcessParentProcessId = [int]$rootIdentityB.Record.ParentProcessId
+        $recordB.ProcessParentProcessStartTicks = [long]$rootIdentityB.Record.ParentProcessStartTicks
+        $recordB.ProcessCommandLine = [string]$rootIdentityB.Record.CommandLine
         $recordB.Status = 'started'
         $recordB.CleanupResult = 'pending'
         $recordB.Error = ''
         $recordB.Lease.ReleaseBlocked = $false
         $recordB.Lease.ReleaseBlockReason = ''
-        Write-VerifierManifest $contextB
-        $rootStartB = Get-VerifierProcessStartTicks $rootProcessB
-        $rootIdentityB = Get-VerifierCurrentProcessIdentity $rootProcessB.Id $rootStartB `
-            0 '' '' 0 $contextB.RunId '' 0 $browserPath
-        $recordB.ProcessStartTicks = $rootStartB
-        $recordB.ProcessParentProcessId = [int]$rootIdentityB.Record.ParentProcessId
-        $recordB.ProcessParentProcessStartTicks = [long]$rootIdentityB.Record.ParentProcessStartTicks
-        $recordB.ProcessCommandLine = [string]$rootIdentityB.Record.CommandLine
         Write-VerifierManifest $contextB
         Complete-VerifierBrowserSession $contextB $recordB
         Assert-GateB (-not (Test-Path -LiteralPath $recordB.Profile)) `
@@ -6728,8 +12011,20 @@ function Invoke-GateBIsolationCanary() {
             '--tsj-verifier-run', $contextB.RunId,
             '--tsj-verifier-worktree', $contextB.RepositoryIdentity,
             '--remote-debugging-port', [string]$recordB.CdpPort))
+        $quotedCurrentRecord = Get-VerifierCurrentProcessRecordById ([int]$PID)
+        if ($null -eq $quotedCurrentRecord -or
+                $quotedCurrentRecord -is [array] -or
+                $null -eq $quotedCurrentRecord.PSObject.Properties['ParentProcessId'] -or
+                -not (Test-VerifierStrictIntegralValue `
+                    $quotedCurrentRecord.PSObject.Properties['ParentProcessId'].Value `
+                    1 ([int]::MaxValue))) {
+            Throw-GateBInfrastructure `
+                'quoted Windows command-line canary could not prove a positive current parent identity'
+        }
+        $quotedParentProcessId = [int]$quotedCurrentRecord.ParentProcessId
         $quotedSnapshot = @([pscustomobject]@{
             ProcessId = $PID; Name = [IO.Path]::GetFileName($recordB.BrowserPath)
+            ParentProcessId = $quotedParentProcessId
             ExecutablePath = $recordB.BrowserPath; CommandLine = $quotedCommand
         })
         Assert-GateB (Test-VerifierProcessIdentity $quotedIdentityRecord $quotedSnapshot) `
@@ -6872,6 +12167,134 @@ function Invoke-GateBIsolationCanary() {
     if ($canarySucceeded) { Write-Host 'PASS:atomic global claim, listener ownership, and A/B resource canary' }
 }
 
+function Invoke-GateBProcessIdentityPidZeroCanary() {
+    $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\gate-b-pid-zero-identity-' + [Guid]::NewGuid().ToString('N'))
+    $fixtureScript = Join-Path $canaryRoot 'identity-fixture.vbs'
+    $fixtureProfile = Join-Path $canaryRoot 'profile'
+    $fixtureProcess = $null
+    $fixtureIdentity = $null
+    $fixtureRecord = $null
+    $primaryFailure = $null
+    $cleanupFailure = $null
+    $cleanupProven = $false
+    try {
+        New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
+        New-Item -ItemType Directory -Path $fixtureProfile -Force -ErrorAction Stop | Out-Null
+        [IO.File]::WriteAllText($fixtureScript, [string]::Join([Environment]::NewLine, @(
+            'Option Explicit'
+            'WScript.Sleep 60000'
+        )), [Text.UTF8Encoding]::new($false))
+        Assert-VerifierNoReparseAncestors $fixtureScript
+        $browserPath = (Get-Command wscript.exe -ErrorAction Stop).Source
+        $runId = 'gate-b-pid-zero-run-' + [Guid]::NewGuid().ToString('N')
+        $repositoryIdentity = 'gate-b-pid-zero-worktree'
+        $port = 49329
+        $fixtureCommandArguments = @(
+            '//B', $fixtureScript,
+            '--user-data-dir', $fixtureProfile,
+            '--tsj-verifier-run', $runId,
+            '--tsj-verifier-worktree', $repositoryIdentity,
+            '--remote-debugging-port', [string]$port)
+        $fixtureProcess = Start-Process -FilePath $browserPath `
+            -ArgumentList $fixtureCommandArguments -PassThru -WindowStyle Hidden -ErrorAction Stop
+        $fixtureStartTicks = [long](Get-VerifierProcessStartTicks $fixtureProcess)
+        $fixtureIdentity = Get-VerifierCurrentProcessIdentity $fixtureProcess.Id $fixtureStartTicks `
+            0 '' '' 0 $runId '' 0 $browserPath
+        $fixtureRecord = [pscustomobject]@{
+            ProcessId = [int]$fixtureIdentity.Record.ProcessId
+            ProcessStartTicks = [long]$fixtureIdentity.Record.ProcessStartTicks
+            ProcessParentProcessId = [int]$fixtureIdentity.Record.ParentProcessId
+            ProcessParentProcessStartTicks = [long]$fixtureIdentity.Record.ParentProcessStartTicks
+            Profile = $fixtureProfile
+            RunId = $runId
+            RepositoryIdentity = $repositoryIdentity
+            CdpPort = $port
+            BrowserPath = $browserPath
+        }
+
+        # Read the actual complete Win32_Process snapshot. This focused
+        # regression deliberately requires WMI because native Toolhelp does
+        # not expose the PID-0/System Idle record that caused the production
+        # failure. The real PID-0 tuple must be ignored only as this exact
+        # out-of-band record, while the positively identified WSH target
+        # remains fully validated.
+        $completeSnapshot = @(Get-CimInstance Win32_Process -ErrorAction Stop)
+        $idleRecords = @($completeSnapshot | Where-Object {
+            $null -ne $_ -and
+            $null -ne $_.PSObject.Properties['ProcessId'] -and
+            $null -ne $_.PSObject.Properties['ParentProcessId'] -and
+            $null -ne $_.PSObject.Properties['Name'] -and
+            $null -ne $_.PSObject.Properties['CommandLine'] -and
+            (Test-VerifierStrictIntegralValue $_.ProcessId 0 0) -and
+            (Test-VerifierStrictIntegralValue $_.ParentProcessId 0 0) -and
+            (Test-VerifierStrictStringValue $_.Name) -and
+            $_.Name -ceq 'System Idle Process' -and
+            ($null -eq $_.CommandLine -or
+                ((Test-VerifierStrictStringValue $_.CommandLine) -and $_.CommandLine -ceq ''))
+        })
+        Assert-GateB ($idleRecords.Count -eq 1) `
+            'real complete Win32_Process snapshot did not contain exactly one PID-0 System Idle record'
+        $targetRecords = @($completeSnapshot | Where-Object {
+            $null -ne $_ -and $null -ne $_.PSObject.Properties['ProcessId'] -and
+            (Test-VerifierStrictIntegralValue $_.ProcessId 1 ([int]::MaxValue)) -and
+            [int]$_.ProcessId -eq [int]$fixtureRecord.ProcessId
+        })
+        Assert-GateB ($targetRecords.Count -eq 1) `
+            'real complete Win32_Process snapshot did not contain the exact WSH target'
+        Assert-GateB (Test-VerifierProcessIdentity $fixtureRecord $completeSnapshot) `
+            'exact WSH target identity was rejected when the real complete snapshot contained PID-0 System Idle'
+        foreach ($invalidRecord in @(
+                [pscustomobject]@{ ProcessId = '0'; ParentProcessId = 0; Name = 'System Idle Process'; CommandLine = ''; ExecutablePath = '' }
+                [pscustomobject]@{ ProcessId = 0; ParentProcessId = 1; Name = 'System Idle Process'; CommandLine = ''; ExecutablePath = '' }
+                [pscustomobject]@{ ProcessId = 0; ParentProcessId = 0; Name = 'system idle process'; CommandLine = ''; ExecutablePath = '' }
+                [pscustomobject]@{ ProcessId = 0; ParentProcessId = 0; Name = 'foreign.exe'; CommandLine = ''; ExecutablePath = '' }
+                [pscustomobject]@{ ProcessId = 0; ParentProcessId = 0; Name = 'System Idle Process'; CommandLine = 'foreign'; ExecutablePath = '' }
+                [pscustomobject]@{ ProcessId = -1; ParentProcessId = 0; Name = 'System Idle Process'; CommandLine = ''; ExecutablePath = '' }
+            )) {
+            Assert-GateB (-not (Test-VerifierProcessIdentity $fixtureRecord @(
+                $invalidRecord, $targetRecords[0]))) `
+                'malformed/non-idle PID-0 snapshot record passed exact identity validation'
+        }
+        [void](Stop-VerifierVerifiedProcessExactly $fixtureIdentity.Process `
+            ([long]$fixtureIdentity.Record.ProcessStartTicks) 5000 $fixtureIdentity.Record)
+        $fixtureProcess = $null
+        $cleanupProven = $true
+        Write-Host 'PASS:real complete Win32_Process PID-0 System Idle exception and malformed tuple rejection'
+    } catch {
+        $primaryFailure = $_
+    } finally {
+        if ($null -ne $fixtureProcess) {
+            try {
+                if ($null -ne $fixtureIdentity) {
+                    [void](Stop-VerifierVerifiedProcessExactly $fixtureIdentity.Process `
+                        ([long]$fixtureIdentity.Record.ProcessStartTicks) 5000 $fixtureIdentity.Record)
+                    $fixtureProcess = $null
+                }
+            } catch {
+                $cleanupFailure = Get-VerifierErrorMessage $_
+            }
+        }
+        if ($null -eq $primaryFailure -and $null -eq $cleanupFailure -and $cleanupProven -and
+                (Test-Path -LiteralPath $canaryRoot)) {
+            try {
+                Remove-VerifierOwnedTree (Get-VerifierFullPath ([IO.Path]::GetTempPath())) $canaryRoot
+            } catch {
+                $cleanupFailure = Get-VerifierErrorMessage $_
+            }
+        }
+    }
+    if ($null -ne $cleanupFailure) {
+        Throw-GateBInfrastructure ('PID-0 identity canary cleanup was not proven; evidence was retained at ' +
+            $canaryRoot + ': ' + $cleanupFailure)
+    }
+    if ($null -ne $primaryFailure) {
+        if (Test-VerifierInfrastructureError $primaryFailure) { throw $primaryFailure }
+        Throw-GateBInfrastructure ('PID-0 identity canary failed; evidence was retained at ' +
+            $canaryRoot + ': ' + (Get-VerifierErrorMessage $primaryFailure))
+    }
+}
+
 function Invoke-GateBHangingChildCanary() {
     $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
         ('TroubleshootJS\gate-b-hanging-child-' + [Guid]::NewGuid().ToString('N'))
@@ -6903,7 +12326,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 Import-Module $ModulePath -Force -ErrorAction Stop
 $childContext = New-VerifierRunContext $WorktreeRoot $EvidenceRoot
-$childLease = New-VerifierPortLease $childContext 'hanging-child-owned-resource'
+$childLease = New-VerifierPortLease $childContext 'cdp' 0 ((Get-Command powershell.exe -ErrorAction Stop).Source)
 $ledger = [ordered]@{
     protocol = 'troubleshootjs-hanging-child-ledger-v1'
     runRoot = $childContext.RunRoot
@@ -6921,7 +12344,7 @@ Start-Sleep -Seconds 30
         [IO.File]::WriteAllText($childScriptPath, $childScript,
             [Text.UTF8Encoding]::new($false))
         $contextB = New-VerifierRunContext $repositoryRoot $canaryRoot
-        $leaseB = New-VerifierPortLease $contextB 'foreign-run-survival'
+        $leaseB = New-GateBCanaryLease $contextB
         $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
         try {
             $childResult = Invoke-GateBBoundedProcess $powershell @(
@@ -7033,18 +12456,243 @@ Start-Sleep -Seconds 30
         'and child evidence was retained without affecting run B: ' + $childLedger.runRoot)
 }
 
+function Invoke-GateBSourceNegativeContractCheck() {
+    $shell = (Get-Command powershell.exe -ErrorAction Stop).Source
+    foreach ($probe in @('-ContractProbe', '-IdentityCanary')) {
+        $result = Invoke-GateBBoundedProcess $shell @('-NoLogo', '-NoProfile',
+            '-NonInteractive', '-File',
+            (Join-Path $PSScriptRoot 'verify-task43p-source-experiments.ps1'), $probe) `
+            30000 ('source-negative ' + $probe)
+        $exitCode = Resolve-GateBChildExitCode $result ('source-negative ' + $probe)
+        if ($exitCode -ne 0) {
+            Throw-GateBInfrastructure ("Source-negative $probe returned exit ${exitCode}: " +
+                $result.Stdout + ' ' + $result.Stderr)
+        }
+    }
+    Write-Host 'PASS:source-negative complete proof, late-failure, cleanup, and preview-identity contracts'
+}
+
+function Invoke-GateBTask43PRuntimeCaptureCanary() {
+    $tokens = $null; $parseErrors = $null
+    $ast = [Management.Automation.Language.Parser]::ParseFile(
+        (Join-Path $PSScriptRoot 'verify-browser.ps1'), [ref]$tokens, [ref]$parseErrors)
+    Assert-GateB ($parseErrors.Count -eq 0) 'runtime capture source did not parse'
+    foreach ($name in @('Capture-Task43PEvidence', 'getVerifierEvidencePath',
+            'Write-VerifierEvidenceText', 'captureBrowserScreenshot', 'Write-VerifierEvidenceBytes')) {
+        $definitions = @($ast.EndBlock.Statements | Where-Object {
+            $_ -is [Management.Automation.Language.FunctionDefinitionAst] -and $_.Name -ceq $name
+        })
+        Assert-GateB ($definitions.Count -eq 1) "runtime capture helper '$name' was not unique"
+        . ([scriptblock]::Create($definitions[0].Extent.Text))
+    }
+    . (Join-Path $PSScriptRoot 'Task43PRuntimeEvidence.ps1')
+    # Only transport/base admission and manifest registration are doubles. The
+    # actual capture, runtime schema, filename guard, and file writer execute.
+    function evaluateCdp($Socket, [ref]$Id, $Expression, [ref]$Failures, $Deadline) {
+        return $Socket.Dequeue()
+    }
+    function invokeCdp($Socket, [ref]$Id, $Method, $Parameters, [ref]$Failures) {
+        Assert-GateB ($Method -ceq 'Page.captureScreenshot' -and $Parameters.format -ceq 'png') `
+            'screenshot capture used an unexpected transport command'
+        return $Socket.Dequeue()
+    }
+    function Assert-Task43PJavaEvidenceProvenance($Value) { }
+    function Assert-Task43PJavaEvidencePayload($Value, $RouteName, $Expected, $Observed) { }
+    function Register-VerifierEvidenceArtifact($Context, $Path) { [void]$Context.Artifacts.Add($Path) }
+    $saved = @{}
+    foreach ($name in @('VerifierContext', 'VerifierCurrentRouteId',
+            'VerifierEvidenceDirectory', 'Task43PRuntimeOutcome')) {
+        $variable = Get-Variable $name -Scope Script -ErrorAction SilentlyContinue
+        $saved[$name] = [pscustomobject]@{ Exists = $null -ne $variable
+            Value = $(if ($null -ne $variable) { $variable.Value } else { $null }) }
+    }
+    $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS-gate-b-runtime-capture-' + [Guid]::NewGuid().ToString('N'))
+    try {
+        New-Item -ItemType Directory -Path $canaryRoot -ErrorAction Stop | Out-Null
+        $Task43PRuntime = $true
+        foreach ($case in @('schema', 'malformed', 'write-failure')) {
+            $script:VerifierContext = [pscustomobject]@{
+                RunId = ('a' * 32); Artifacts = [Collections.ArrayList]::new() }
+            $script:VerifierCurrentRouteId = [Guid]::NewGuid().ToString('N')
+            $script:VerifierEvidenceDirectory = $canaryRoot
+            $script:Task43PRuntimeOutcome = $null
+            $value = New-Task43PRuntimeContractProbeValue `
+                $script:VerifierContext.RunId $script:VerifierCurrentRouteId
+            $value.measurement.cases[0].activeMeasurementOverlay = $true
+            $raw = $value | ConvertTo-Json -Depth 100
+            $signature = 'cleanup/disposition contradicted'
+            if ($case -ceq 'malformed') { $raw = '{"protocol":'; $signature = 'published invalid JSON' }
+            if ($case -ceq 'write-failure') {
+                $script:VerifierEvidenceDirectory = Join-Path $canaryRoot 'absent-directory'
+            }
+            $socket = [Collections.Queue]::new(); $socket.Enqueue('{}'); $socket.Enqueue($raw)
+            $counter = 1; $failures = @(); $rejection = $null
+            try {
+                Capture-Task43PEvidence $socket ([ref]$counter) ([DateTime]::UtcNow.AddSeconds(10)) `
+                    ([ref]$failures) 'runtime capture canary' 'OBSERVED:task43p-runtime' `
+                    'OBSERVED:task43p-runtime' $null
+            } catch { $rejection = $_ }
+            Assert-GateB ($null -ne $rejection -and (Test-VerifierInfrastructureError $rejection) -and
+                (Get-VerifierErrorMessage $rejection).Contains($signature) -and
+                $null -eq $script:Task43PRuntimeOutcome -and $socket.Count -eq 0) `
+                "runtime capture $case lost the original typed rejection or assigned an outcome"
+            if ($case -ceq 'write-failure') {
+                Assert-GateB ($script:VerifierContext.Artifacts.Count -eq 0) `
+                    'failed diagnostic write registered a nonexistent artifact'
+            } else {
+                $path = Join-Path $canaryRoot ('task43p-runtime-unvalidated-' +
+                    $script:VerifierCurrentRouteId + '.json')
+                Assert-GateB ($script:VerifierContext.Artifacts.Count -eq 1 -and
+                    $script:VerifierContext.Artifacts[0] -ceq $path -and
+                    [IO.File]::ReadAllText($path) -ceq $raw) `
+                    "runtime capture $case did not preserve the exact rejected observation"
+            }
+        }
+        # Exercise the actual command-mode call and byte writer under Windows
+        # PowerShell, including typed failures that must register no artifact.
+        $expectedBytes = [byte[]]@(137, 80, 78, 71, 13, 10, 26, 10)
+        foreach ($case in @('bytes', 'invalid-base64', 'write-failure', 'existing-path')) {
+            $script:VerifierContext = [pscustomobject]@{
+                EvidenceDirectory = $canaryRoot; Artifacts = [Collections.ArrayList]::new() }
+            $path = Join-Path $canaryRoot ('screenshot-' + $case + '.png')
+            $encoded = [Convert]::ToBase64String($expectedBytes)
+            if ($case -ceq 'invalid-base64') { $encoded = 'invalid!' }
+            if ($case -ceq 'write-failure') { $path = Join-Path $canaryRoot 'absent-directory/screenshot.png' }
+            if ($case -ceq 'existing-path') { [IO.File]::WriteAllBytes($path, [byte[]]@(42)) }
+            $socket = [Collections.Queue]::new()
+            $socket.Enqueue([pscustomobject]@{ result = [pscustomobject]@{ data = $encoded } })
+            $counter = 1; $failures = @(); $rejection = $null
+            try { captureBrowserScreenshot $socket ([ref]$counter) $path ([ref]$failures) }
+            catch { $rejection = $_ }
+            if ($case -ceq 'bytes') {
+                Assert-GateB ($null -eq $rejection -and $socket.Count -eq 0 -and
+                    $script:VerifierContext.Artifacts.Count -eq 1 -and
+                    $script:VerifierContext.Artifacts[0] -ceq $path -and
+                    [Convert]::ToBase64String([IO.File]::ReadAllBytes($path)) -ceq $encoded) `
+                    'actual screenshot capture did not decode/write/register exact bytes'
+            } else {
+                Assert-GateB ($null -ne $rejection -and (Test-VerifierInfrastructureError $rejection) -and
+                    $script:VerifierContext.Artifacts.Count -eq 0) `
+                    "screenshot $case was not a typed infrastructure failure without an artifact"
+                if ($case -ceq 'existing-path') {
+                    Assert-GateB ($socket.Count -eq 1 -and
+                        [Convert]::ToBase64String([IO.File]::ReadAllBytes($path)) -ceq 'Kg==') `
+                        'existing screenshot was overwritten or transport ran before refusal'
+                } else {
+                    Assert-GateB (-not (Test-Path -LiteralPath $path)) 'failed screenshot write created a file'
+                }
+            }
+        }
+        Write-Host 'PASS:actual screenshot byte capture and invalid/failed/overwrite rejection paths'
+        Write-Host 'PASS:runtime rejected observations retained without accepted outcomes; persistence failure preserves typed rejection'
+    } finally {
+        foreach ($name in $saved.Keys) {
+            if ($saved[$name].Exists) { Set-Variable $name -Scope Script -Value $saved[$name].Value } else {
+                Remove-Variable $name -Scope Script -ErrorAction SilentlyContinue
+            }
+        }
+        if (Test-Path -LiteralPath $canaryRoot) {
+            Remove-VerifierOwnedTree (Get-VerifierFullPath ([IO.Path]::GetTempPath())) $canaryRoot
+        }
+    }
+}
+
+function Invoke-GateBTask43PRuntimeEvidenceCheck() {
+    Invoke-GateBTask43PRuntimeCaptureCanary
+    $shell = (Get-Command powershell.exe -ErrorAction Stop).Source
+    $result = Invoke-GateBBoundedProcess $shell @('-NoLogo', '-NoProfile',
+        '-NonInteractive', '-File',
+        (Join-Path $PSScriptRoot 'Task43PRuntimeEvidence.ps1'),
+        '-Task43PRuntimeEvidenceContractProbe') 30000 'Task43P runtime evidence schema'
+    $exitCode = Resolve-GateBChildExitCode $result 'Task43P runtime evidence schema'
+    if ($exitCode -ne 0) {
+        Throw-GateBInfrastructure ("Task43P runtime evidence schema returned exit ${exitCode}: " +
+            $result.Stdout + ' ' + $result.Stderr)
+    }
+    foreach ($case in @(
+            @('-Task43PRuntime'),
+            @('-Task43P', '-Task43PRuntime', '-Seeds', '3'),
+            @('-Task43P', '-Task43PRuntime', '-Task43PForcedNegative'),
+            @('-Task43P', '-Task43PRuntime', '-NormalPlayer'),
+            @('-Task43P', '-Task43PRuntime', '-Task43PFamily', 'led'))) {
+        $result = Invoke-GateBBoundedProcess $shell (@('-NoLogo', '-NoProfile',
+            '-NonInteractive', '-File', (Join-Path $PSScriptRoot 'verify-browser.ps1')) +
+            $case) 10000 'Task43P runtime route rejection'
+        $exitCode = Resolve-GateBChildExitCode $result 'Task43P runtime route rejection'
+        Assert-GateB ($exitCode -eq 2 -and ($result.Stdout + $result.Stderr).Contains(
+            'Task43P runtime requires its sole normal Task43P route')) `
+            ('Task43P runtime route did not reject conflicting selection: ' + ($case -join ' '))
+    }
+    Write-Host 'PASS:Task43P runtime evidence schema, blocker classification, and fixed-corpus route contracts'
+}
+
 function Invoke-GateBDriver() {
     try {
         if ($GateBDriverInfrastructureProbe) {
             Throw-GateBInfrastructure 'deterministic driver infrastructure probe'
+        }
+        Invoke-GateBTimeoutBoundaryCanary
+        Invoke-GateBStrictListenerDeadlineCanary
+        if ($GateBNativeProcessInspectionProbe) {
+            Invoke-GateBNativeProcessInspectionCanary
+            return 0
+        }
+        if ($GateBStartPreviewAdoptionProbe) {
+            Invoke-GateBStartPreviewAdoptionCanary
+            return 0
+        }
+        if ($GateBIsolationProbe) {
+            Invoke-GateBIsolationCanary -SkipArgumentPathCanary
+            return 0
+        }
+        if ($GateBTcpListenerPreviewProbe) {
+            Invoke-GateBTcpListenerPreviewCanary
+            return 0
+        }
+        if ($GateBBrowserLeaseProbe) {
+            Invoke-GateBBrowserLeaseConstructorCanary
+            return 0
         }
         if ($GateBLeaseReleaseProbe) {
             Invoke-GateBLifecycleBooleanCanary
             Invoke-GateBLeaseRollbackCheck
             return 0
         }
+        if ($GateBCleanupRetentionProbe) {
+            Invoke-GateBCleanupRetentionCheck
+            return 0
+        }
         if ($GateBPreviewIdentityFailureProbe) {
             Invoke-GateBPreviewIdentityFailureCanary
+            return 0
+        }
+        if ($GateBBrowserIdentityRetryProbe) {
+            Invoke-GateBBrowserIdentityRetryCanary
+            return 0
+        }
+        if ($GateBBrowserDescendantIdentityRetryProbe) {
+            Invoke-GateBBrowserDescendantIdentityRetryCanary
+            return 0
+        }
+        if ($GateBBrowserDrainNaturalExitProbe) {
+            Invoke-GateBBrowserDrainNaturalExitCanary
+            return 0
+        }
+        if ($GateBBrowserNaturalShutdownProbe) {
+            Invoke-GateBBrowserNaturalShutdownCanary
+            return 0
+        }
+        if ($GateBListenerAuthorizationRetryProbe) {
+            Invoke-GateBListenerAuthorizationRetryCanary
+            return 0
+        }
+        if ($GateBDescendantSnapshotRefreshProbe) {
+            Invoke-GateBDescendantSnapshotRefreshCanary
+            return 0
+        }
+        if ($GateBBrowserRootListenerFastPathProbe) {
+            Invoke-GateBBrowserRootListenerFastPathCanary
             return 0
         }
         if ($GateBStopPreviewProbe) {
@@ -7053,6 +12701,14 @@ function Invoke-GateBDriver() {
         }
         if ($GateBCdpHandshakeProbe) {
             Invoke-GateBCdpHandshakeCanary
+            return 0
+        }
+        if ($GateBCdpReferenceProbe) {
+            Invoke-GateBCdpReferenceCanary
+            return 0
+        }
+        if ($GateBTask43PRuntimeEvidenceProbe) {
+            Invoke-GateBTask43PRuntimeEvidenceCheck
             return 0
         }
         if ($GateBArgumentPathProbe) {
@@ -7064,6 +12720,10 @@ function Invoke-GateBDriver() {
             if (Test-Path -LiteralPath $argumentCanaryRoot) {
                 Remove-VerifierOwnedTree (Get-VerifierFullPath ([IO.Path]::GetTempPath())) $argumentCanaryRoot
             }
+            return 0
+        }
+        if ($GateBEdgeDescendantCompatibilityProbe) {
+            Invoke-GateBEdgeDescendantCompatibilityCanary
             return 0
         }
         if ($GateBHangingChildProbe) {
@@ -7086,7 +12746,12 @@ function Invoke-GateBDriver() {
             Invoke-GateBProcessOwnershipCanary
             return 0
         }
+        if ($GateBProcessIdentityPidZeroProbe) {
+            Invoke-GateBProcessIdentityPidZeroCanary
+            return 0
+        }
         if ($GateBProcessStartIdentityProbe) {
+            Invoke-GateBBoundedProcessLaunchRaceCanary
             Invoke-GateBProcessStartIdentityCanary
             return 0
         }
@@ -7097,8 +12762,10 @@ function Invoke-GateBDriver() {
         if ($GateBListenerRecordConsumerProbe) {
             Invoke-GateBListenerTrustBoundaryCanary
             Invoke-GateBListenerRecordConsumerCanary
+            Invoke-GateBIntegratedListenerConsumerCanary
             Invoke-GateBListenerRecordScalarCanary
             Invoke-GateBCallerIdentityScalarCanary
+            Invoke-GateBNetstatPreferenceCanary
             return 0
         }
         Invoke-GateBParserChecks
@@ -7106,6 +12773,10 @@ function Invoke-GateBDriver() {
         Invoke-GateBWorkflowChecks
         Invoke-GateBGwtModuleCheck
         Invoke-GateBModuleImportSetupCheck
+        # Run the real short-lived netstat/launch-handle regression immediately
+        # after module setup, before the larger mocked ownership matrix. The
+        # focused ProcessStartIdentity probe uses the same callable canary.
+        Invoke-GateBBoundedProcessLaunchRaceCanary
         Invoke-GateBKernelTransportCanary
         Invoke-GateBListenerTrustBoundaryCanary
         Invoke-GateBListenerRecordConsumerCanary
@@ -7118,10 +12789,17 @@ function Invoke-GateBDriver() {
         # lane. The protected default remains deterministic and nonvisual.
         Invoke-GateBProcessOwnershipCanary
         Invoke-GateBProcessStartIdentityCanary
+        Invoke-GateBBrowserIdentityRetryCanary
+        Invoke-GateBBrowserDescendantIdentityRetryCanary
+        Invoke-GateBListenerAuthorizationRetryCanary
+        Invoke-GateBDescendantSnapshotRefreshCanary
         Invoke-GateBPreviewIdentityFailureCanary
         Invoke-GateBSetupFailureCheck
+        Invoke-GateBNetstatPreferenceCanary
         Invoke-GateBListenerInspectionFailureCheck
         Invoke-GateBCdpHandshakeCanary
+        Invoke-GateBCdpReferenceCanary
+        Invoke-GateBBrowserNaturalShutdownCanary
         Invoke-GateBDriverInfrastructureCheck
         if ($SkipJdkCheck) {
             Write-Host 'SKIP:JDK8 check explicitly requested for local static/isolation-only validation'
@@ -7129,6 +12807,8 @@ function Invoke-GateBDriver() {
             Invoke-GateBJdkCheck
         }
         Invoke-GateBExitContractChecks
+        Invoke-GateBSourceNegativeContractCheck
+        Invoke-GateBTask43PRuntimeEvidenceCheck
         Invoke-GateBLifecycleBooleanCanary
         Invoke-GateBLeaseRollbackCheck
         Invoke-GateBCleanupRetentionCheck

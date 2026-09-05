@@ -1,5 +1,12 @@
 # Post-Task 43 Integrity Reconciliation
 
+Current outcomes are recorded in the
+[2026-09-05 runtime reconciliation](TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md).
+The dated report below is preserved. Its missing-runtime conclusions and M5
+stale classification are superseded where the new report provides current
+evidence; C1/C2 remain open blockers and Task44 is unstarted.
+
+
 Date: 2026-08-26. Tested baseline `C` is full `9853f1e5fd311830d14d671d0ba380c51018a658` on `codex/post43-mainline-consolidation`. Only the intentional `AGENTS.md` governance diff pre-existed. Historical reports remain untouched.
 
 ## Provenance and evidence boundary

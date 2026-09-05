@@ -231,6 +231,7 @@ function stopOwnedProcess($validState) {
         '' '' ([long]$state.processParentProcessStartTicks)
     $process = $identity.Process
     [void](Stop-VerifierVerifiedProcessExactly $process ([long]$state.processStartTicks) 5000 $identity.Record)
+    Complete-VerifierProcessOutputCapture $process 5000
     $inspection = Get-VerifierLoopbackListenerRecords ([int]$state.port)
     if (-not $inspection.Success -or -not $inspection.Known -or $inspection.HasListeners) {
         Throw-VerifierInfrastructure 'Caller-owned preview listener absence was not positively proven after cleanup.'
@@ -256,23 +257,20 @@ if ($null -ne $validState) {
 
 if (testHealthyPreview) {
     try {
-        $candidateProcesses = @(Get-CimInstance Win32_Process `
-            -Filter "Name = 'powershell.exe'" -ErrorAction Stop)
+        $candidateProcesses = @(Get-VerifierProcessSnapshotWithFallback `
+            'preview adoption')
+        $matches = @(Get-VerifierPreviewAdoptionCandidateRecords `
+            $candidateProcesses $previewScript $Port 'powershell.exe')
     } catch {
         Throw-VerifierInfrastructure ('Could not inspect candidate preview processes for safe adoption: ' +
             (Get-VerifierErrorMessage $_))
     }
-    $matches = @($candidateProcesses | Where-Object {
-        $_.PSObject.Properties['CommandLine'] -and
-        -not [String]::IsNullOrWhiteSpace([string]$_.CommandLine) -and
-        (Test-VerifierCommandLinePath $_.CommandLine $previewScript) -and
-        (Test-VerifierCommandLineSwitch $_.CommandLine '-Port' ([string]$Port))
-    })
     if ($matches.Count -ne 1) {
         throw "Port $Port is healthy but is not owned by one identifiable TroubleshootJS preview process."
     }
-    $adoptedIdentity = Get-VerifierCurrentProcessIdentity ([int]$matches[0].ProcessId) `
-        0 0 '' $previewScript $Port
+    $adoptedIdentity = Get-VerifierCurrentProcessIdentity `
+        ([int]$matches[0].ProcessId) 0 ([int]$matches[0].ParentProcessId) `
+        ([string]$matches[0].CommandLine) $previewScript $Port
     $adopted = $adoptedIdentity.Process
     writeState $adopted $Port $adoptedIdentity
     Write-Host "Adopted existing TroubleshootJS preview (PID $($adopted.Id))."
@@ -355,6 +353,7 @@ if (-not $process.HasExited) {
     if (-not [bool]$process.HasExited) {
         Throw-VerifierInfrastructure 'Preview startup process exit state was not proven.'
     }
+    Complete-VerifierProcessOutputCapture $process 5000
     removeState
 }
 $details = if (Test-Path -LiteralPath $stderrLog) {

@@ -2,8 +2,7 @@
 param(
     [AllowEmptyString()]
     [string]$BaseUrl = '',
-    [ValidateRange(10, 300)]
-    [int]$TimeoutSeconds = 90,
+    $TimeoutSeconds = 90,
     [AllowEmptyString()]
     [string]$BrowserPath = '',
     [int[]]$Seeds = @(0, 2, 3),
@@ -36,13 +35,18 @@ param(
     [switch]$Task43,
     [switch]$Task43ForcedNegative,
     [switch]$Task43P,
+    [switch]$Task43PRuntime,
+    [string]$Task43PFamily = '',
     [switch]$Task43PForcedNegative,
+    [string]$Task43PSourceExperiment = '',
+    $Task43PStartupSettleMilliseconds = 0,
     [switch]$Task43Integrated,
     [int]$PlayerSeed = 3,
     [string]$EvidenceDirectory,
     [switch]$PersistentPreviewEvidence,
     [switch]$GateBListenerProofProbe,
     [switch]$GateBContractProbe,
+    [switch]$GateBForcedNegativeProofProbe,
     [switch]$GateBContractProbeFailure,
     [switch]$GateBExplicitExit2Probe,
     [switch]$GateBExplicitExit2TypedProbe,
@@ -54,7 +58,9 @@ param(
     [AllowEmptyString()]
     [string]$ExecutionWebRoot = '',
     [AllowEmptyString()]
-    [string]$ExecutionScriptRoot = ''
+    [string]$ExecutionScriptRoot = '',
+    [AllowEmptyString()]
+    [string]$ExpectedExecutionProvenanceDigest = ''
 )
 
 Set-StrictMode -Version Latest
@@ -108,6 +114,71 @@ try {
         (Get-VerifierEarlySetupMessage $_))
     exit 2
 }
+try {
+    . (Join-Path $PSScriptRoot 'Task43PRuntimeEvidence.ps1')
+    . (Join-Path $PSScriptRoot 'Task43PPublicActionEvidence.ps1')
+} catch {
+    Write-VerifierEarlySetupFailure ('Task43P evidence helpers could not be loaded: ' +
+        (Get-VerifierEarlySetupMessage $_))
+    exit 2
+}
+function ConvertTo-Task43PStartupSettleMilliseconds($Value) {
+    # This is a CLI boundary; only canonical decimal strings may become an
+    # exact integer. Internal delay calls below still require an integer.
+    if ((Test-VerifierStrictStringValue $Value) -and $Value -match '^(0|[1-9][0-9]*)$') {
+        $parsed = 0L
+        if ([long]::TryParse($Value, [Globalization.NumberStyles]::None,
+                [Globalization.CultureInfo]::InvariantCulture, [ref]$parsed)) {
+            $Value = $parsed
+        }
+    }
+    if (-not (Test-VerifierStrictIntegralValue $Value 0L 45000L)) {
+        Throw-VerifierInfrastructure 'Task43P startup settle must be an exact integer from 0 through 45000 milliseconds.'
+    }
+    return [int]$Value
+}
+
+try {
+    # PowerShell presents an untyped command-line scalar as a string.  Accept
+    # only its canonical decimal form at this script boundary, then hand the
+    # resulting exact integral value to the shared validator.  Internal calls
+    # to Assert-VerifierTimeoutSeconds remain strict about numeric strings.
+    if ((Test-VerifierStrictStringValue $TimeoutSeconds) -and
+            $TimeoutSeconds -match '^[0-9]+$') {
+        $parsedTimeoutSeconds = 0L
+        if ([long]::TryParse($TimeoutSeconds,
+                [Globalization.NumberStyles]::None,
+                [Globalization.CultureInfo]::InvariantCulture,
+                [ref]$parsedTimeoutSeconds)) {
+            $TimeoutSeconds = $parsedTimeoutSeconds
+        }
+    }
+    $TimeoutSeconds = Assert-VerifierTimeoutSeconds $TimeoutSeconds 'verify-browser TimeoutSeconds'
+    $Task43PStartupSettleMilliseconds = ConvertTo-Task43PStartupSettleMilliseconds `
+        $Task43PStartupSettleMilliseconds
+    if ($Task43PStartupSettleMilliseconds -gt 0 -and -not ($Task43P -or $Task43PForcedNegative)) {
+        Throw-VerifierInfrastructure 'Task43P startup settle requires a Task43P route selection.'
+    }
+    if ($Task43PFamily -cne '' -and
+            (-not $Task43P -or $Task43PForcedNegative -or
+                $Task43PFamily -cnotin @('led', 'diode', 'rc', 'npn', 'nmos', 'parallel'))) {
+        Throw-VerifierInfrastructure 'Task43P family selection requires a normal Task43P route and one exact supported family.'
+    }
+    if ($Task43PRuntime) {
+        $runtimeAllowedParameters = @('Task43P', 'Task43PRuntime', 'BaseUrl',
+            'TimeoutSeconds', 'BrowserPath', 'EvidenceDirectory',
+            'Task43PStartupSettleMilliseconds', 'ExecutionRepositoryRoot',
+            'ExecutionWebRoot', 'ExecutionScriptRoot', 'ExpectedExecutionProvenanceDigest')
+        if (-not $Task43P -or @($PSBoundParameters.Keys | Where-Object {
+                $_ -notin $runtimeAllowedParameters }).Count -ne 0) {
+            Throw-VerifierInfrastructure 'Task43P runtime requires its sole normal Task43P route with the fixed runtime corpus.'
+        }
+    }
+} catch {
+    [Console]::Error.WriteLine('FAIL verifier setup - verifier infrastructure exit 2: ' +
+        (Get-VerifierEarlySetupMessage $_))
+    exit 2
+}
 
 # All evidence I/O after module initialization is verifier infrastructure. Keep
 # these wrappers at the script boundary so directory/file failures cannot be
@@ -157,13 +228,16 @@ $script:VerifierFailureKind = ''
 $script:VerifierCurrentRouteId = ''
 $script:VerifierResolvedBrowserPath = ''
 $script:Task43PPublishedBaselineSha =
-    '20f83535163070a0688fcc0958715e6bc827d445'
+    'a5b253873c2b25a54d7c393b118e3f2e1831a4d8'
 $script:Task43ForcedNegativeProof = [pscustomobject]@{
     Invocation = $false
     ExpectedMarker = ''
     ExpectedRoute = ''
     RunId = ''
     RouteId = ''
+    Nonce = ''
+    RequestId = ''
+    ExecutionDigest = ''
     MarkerObserved = $false
     ObservedMarker = ''
     MarkerRunId = ''
@@ -185,6 +259,13 @@ $script:Task43PExecutionRepositoryRoot = ''
 $script:Task43PExecutionWebRoot = ''
 $script:Task43PExecutionScriptRoot = ''
 $script:Task43PExecutionPreviewScript = ''
+$script:Task43PExecutionRoots = $null
+$script:Task43PExecutionProvenance = $null
+$script:Task43PExpectedExecutionProvenanceDigest = ''
+$script:Task43PSourceDefinition = $null
+$script:Task43PSourceObservation = $null
+$script:Task43PRuntimeOutcome = $null
+$script:Task43PRuntimeRoutePassedAfterCleanup = $false
 $script:VerifierParentLedgerWritten = $false
 # Allow synchronous developer-proof gaps to exceed one CDP receive while the route deadline remains authoritative.
 $CdpReceiveTimeoutMilliseconds = 60000
@@ -195,8 +276,11 @@ function Resolve-Task43PExecutionRoots() {
     $provided = @(
         foreach ($rootValue in @($ExecutionRepositoryRoot, $ExecutionWebRoot,
                 $ExecutionScriptRoot)) {
-            if (-not [String]::IsNullOrWhiteSpace([string]$rootValue)) {
-                [string]$rootValue
+            if ($null -ne $rootValue -and $rootValue.GetType() -ne [string]) {
+                Throw-VerifierInfrastructure 'Task43P execution roots must remain exact strings before path normalization.'
+            }
+            if (-not [String]::IsNullOrWhiteSpace($rootValue)) {
+                $rootValue
             }
         }
     )
@@ -242,22 +326,127 @@ function Resolve-Task43PExecutionRoots() {
     [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $webRoot -ValidateTree)
     [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $scriptRoot -ValidateTree)
     [void](Assert-VerifierPhysicalOwnedPath $scriptRoot $previewScript)
+    $provenance = Get-VerifierExecutionTreeProvenance $repositoryRoot
+    if (-not [String]::IsNullOrWhiteSpace($ExpectedExecutionProvenanceDigest)) {
+        if (-not (Test-VerifierStrictStringValue $ExpectedExecutionProvenanceDigest) -or
+                $ExpectedExecutionProvenanceDigest -notmatch '^[0-9a-f]{64}$' -or
+                $provenance.Digest -cne $ExpectedExecutionProvenanceDigest) {
+            Throw-VerifierInfrastructure 'Task43P selected execution tree did not match the expected candidate provenance digest.'
+        }
+    }
     return [pscustomobject]@{
         RepositoryRoot = $repositoryRoot
         WebRoot = $webRoot
         ScriptRoot = $scriptRoot
         PreviewScript = $previewScript
         Explicit = ($provided.Count -eq 3)
+        Provenance = $provenance
+    }
+}
+
+function Assert-Task43PPreviewExecutionIdentity([string]$BaseUrl) {
+    if ($null -eq $script:Task43PExecutionRoots -or
+            $null -eq $script:Task43PExecutionProvenance) {
+        Throw-VerifierInfrastructure 'Task43P preview identity was checked before selected execution provenance was established.'
+    }
+    try {
+        $uri = [Uri]$BaseUrl
+        if ($uri.Scheme -ne 'http' -or $uri.Host -notin @('127.0.0.1', 'localhost') -or
+                $uri.AbsolutePath -notin @('', '/') -or $uri.Query -or $uri.Fragment -or
+                $uri.Port -lt 1 -or $uri.Port -gt 65535) {
+            Throw-VerifierInfrastructure 'Task43P preview identity request required a loopback preview root URL.'
+        }
+        $response = Invoke-WebRequest -UseBasicParsing `
+            -Uri ($BaseUrl.TrimEnd('/') + '/__tsj/verify-identity') -TimeoutSec 5
+        $identity = $response.Content | ConvertFrom-Json -ErrorAction Stop
+        if ($null -eq $identity -or $identity -is [System.Array] -or
+                $identity -isnot [pscustomobject]) {
+            Throw-VerifierInfrastructure 'Task43P preview identity was not an exact JSON object.'
+        }
+        $allowed = @('protocol', 'repositoryRoot', 'previewScript', 'webRoot',
+            'sourceRoot', 'scriptRoot', 'sourceDigest', 'scriptDigest', 'webDigest',
+            'executionDigest', 'executionFileCount', 'previewPort', 'processId',
+            'processStartTicks', 'verifierRunId', 'verifierNonce')
+        foreach ($property in @($identity.PSObject.Properties)) {
+            if ($allowed -cnotcontains [string]$property.Name) {
+                Throw-VerifierInfrastructure "Task43P preview identity contained unknown field '$($property.Name)'."
+            }
+        }
+        foreach ($name in @('protocol', 'repositoryRoot', 'previewScript', 'webRoot',
+                'sourceRoot', 'scriptRoot', 'sourceDigest', 'scriptDigest', 'webDigest',
+                'executionDigest', 'verifierRunId', 'verifierNonce')) {
+            if ($null -eq $identity.PSObject.Properties[$name] -or
+                    -not (Test-VerifierStrictStringValue $identity.PSObject.Properties[$name].Value)) {
+                Throw-VerifierInfrastructure "Task43P preview identity omitted or malformed '$name'."
+            }
+        }
+        foreach ($name in @('previewPort', 'processId', 'processStartTicks',
+                'executionFileCount')) {
+            if ($null -eq $identity.PSObject.Properties[$name] -or
+                    -not (Test-VerifierStrictIntegralValue $identity.PSObject.Properties[$name].Value 0 ([long]::MaxValue))) {
+                Throw-VerifierInfrastructure "Task43P preview identity omitted or malformed '$name'."
+            }
+        }
+        foreach ($name in @('sourceDigest', 'scriptDigest', 'webDigest', 'executionDigest')) {
+            if ([string]$identity.$name -notmatch '^[0-9a-f]{64}$') {
+                Throw-VerifierInfrastructure "Task43P preview identity carried a malformed '$name'."
+            }
+        }
+        $provenance = $script:Task43PExecutionProvenance
+        if ($identity.protocol -cne 'troubleshootjs-preview-identity-v1' -or
+                -not (Test-VerifierCanonicalWindowsPathValue $identity.repositoryRoot `
+                    $provenance.RepositoryRoot) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $identity.previewScript `
+                    $script:Task43PExecutionPreviewScript) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $identity.webRoot `
+                    $provenance.WebRoot) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $identity.sourceRoot `
+                    $provenance.SourceRoot) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $identity.scriptRoot `
+                    $provenance.ScriptRoot) -or
+                [int]$identity.previewPort -ne [int]$uri.Port -or
+                $identity.sourceDigest -cne $provenance.SourceDigest -or
+                $identity.scriptDigest -cne $provenance.ScriptDigest -or
+                $identity.webDigest -cne $provenance.WebDigest -or
+                $identity.executionDigest -cne $provenance.Digest -or
+                [long]$identity.executionFileCount -ne [long]$provenance.FileCount) {
+            Throw-VerifierInfrastructure 'Task43P preview identity did not match the selected execution tree provenance.'
+        }
+        if ([int]$identity.processId -le 0 -or [long]$identity.processStartTicks -le 0) {
+            Throw-VerifierInfrastructure 'Task43P preview identity did not provide a positive process start identity.'
+        }
+        return $identity
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Task43P preview identity verification failed: ' +
+            (Get-VerifierErrorMessage $_))
     }
 }
 
 function Get-VerifierDurableBooleanValue($Object, [string]$Name,
         [string]$Label, [switch]$AllowNull) {
+    $dictionaryKey = $null
+    $hasProperty = if ($Object -is [System.Collections.IDictionary]) {
+        foreach ($key in $Object.Keys) {
+            if ([string]::Equals([string]$key, $Name,
+                    [StringComparison]::OrdinalIgnoreCase)) {
+                $dictionaryKey = $key
+                break
+            }
+        }
+        $null -ne $dictionaryKey
+    } else {
+        $null -ne $Object -and $null -ne $Object.PSObject.Properties[$Name]
+    }
     if ($null -eq $Object -or [String]::IsNullOrWhiteSpace($Name) -or
-            $null -eq $Object.PSObject.Properties[$Name]) {
+            -not $hasProperty) {
         Throw-VerifierInfrastructure "Durable record omitted required Boolean field '$Label'."
     }
-    $value = $Object.PSObject.Properties[$Name].Value
+    $value = if ($Object -is [System.Collections.IDictionary]) {
+        $Object[$dictionaryKey]
+    } else {
+        $Object.PSObject.Properties[$Name].Value
+    }
     if ($null -eq $value) {
         if ($AllowNull) { return $null }
         Throw-VerifierInfrastructure "Durable record field '$Label' was null instead of an exact Boolean."
@@ -547,6 +736,7 @@ function Write-VerifierParentLedger($State, $ErrorMessage = '') {
                      } else { '' }
                     state = $script:VerifierContext.Server.State
                     cleanupResult = $script:VerifierContext.Server.CleanupResult
+                    error = $script:VerifierContext.Server.Error
                     processIdentityKnown = Get-VerifierDurableBooleanValue `
                         $script:VerifierContext.Server 'ProcessIdentityKnown' 'server processIdentityKnown'
                     ownershipUncertain = Get-VerifierDurableBooleanValue `
@@ -808,7 +998,7 @@ function Invoke-VerifierDurableReaderSchemaCanary() {
         previewNonce = 'reader-schema-canary-nonce'
         leases = @(); browserSessions = @(); artifacts = @()
         server = $null
-        cleanup = [pscustomobject]@{ state = 'complete'; completedUtc = ''; errors = @() }
+        cleanup = [pscustomobject]@{ state = 'complete'; completedUtc = '2026-08-31T00:00:01.0000000Z'; errors = @() }
     }
     $ledgerJson = $validLedger | ConvertTo-Json -Depth 16 -Compress
     $manifestJson = $validManifest | ConvertTo-Json -Depth 16 -Compress
@@ -825,7 +1015,7 @@ function Invoke-VerifierDurableReaderSchemaCanary() {
             [pscustomobject]@{ Name = 'null cleanup completedUtc'; Field = 'completedUtc'; Value = $null; Remove = $false }
             [pscustomobject]@{ Name = 'wrong-type cleanup completedUtc'; Field = 'completedUtc'; Value = 123; Remove = $false }
         )) {
-        $manifestVariant = $manifestJson | ConvertFrom-Json
+        $manifestVariant = ConvertFrom-VerifierDurableJson $manifestJson
         if ($variantDefinition.Field -eq 'completedUtc') {
             if ($variantDefinition.Remove) {
                 [void]$manifestVariant.cleanup.PSObject.Properties.Remove('completedUtc')
@@ -905,7 +1095,11 @@ function Get-VerifierRouteFailureExitCode() {
     return 1
 }
 
-function Throw-VerifierExit([int]$ExitCode, [string]$Message) {
+function Throw-VerifierExit($ExitCode, [string]$Message) {
+    if (-not (Test-VerifierStrictIntegralValue $ExitCode 0 2)) {
+        Throw-VerifierInfrastructure 'Verifier exit code must be one exact whitelisted value: 0, 1, or 2.'
+    }
+    $ExitCode = [int]$ExitCode
     $exception = [System.InvalidOperationException]::new($Message)
     $exception.Data['VerifierExitCode'] = $ExitCode
     if ($ExitCode -eq 2) {
@@ -924,20 +1118,20 @@ function Get-VerifierRequestedExitCode($ErrorRecord) {
     $explicitExitCode = $null
     if ($exception -and $exception.Data -and
             $exception.Data.Contains('VerifierExitCode')) {
-        $parsedExitCode = 0
-        if ([int]::TryParse([string]$exception.Data['VerifierExitCode'],
-                [Globalization.NumberStyles]::Integer,
-                [Globalization.CultureInfo]::InvariantCulture,
-                [ref]$parsedExitCode)) {
-            $explicitExitCode = $parsedExitCode
+        $rawExitCode = $exception.Data['VerifierExitCode']
+        if (-not (Test-VerifierStrictIntegralValue $rawExitCode 0 2)) {
+            # An explicit but malformed request is itself infrastructure. Do
+            # not parse or pass through values such as -1, 3, '1', or $true.
+            return 2
         }
+        $explicitExitCode = [int]$rawExitCode
     }
     if ($explicitExitCode -eq 2) { return 2 }
     # A run-level infrastructure result is monotonic.  It dominates a later
     # route/child application exception carrying an explicit exit 1.
     if ($script:VerifierFailureExitCode -eq 2) { return 2 }
     if ($null -ne $explicitExitCode) {
-        return [int]$explicitExitCode
+        return $explicitExitCode
     }
     if (Test-VerifierInfrastructureError $ErrorRecord) { return 2 }
     return 1
@@ -981,9 +1175,58 @@ function getVerifierEvidencePath([string]$fileName) {
     return $path
 }
 
-function Get-Task43PRepositoryState() {
+function Test-Task43PExecutionProvenanceEqual($Before, $After) {
+    if ($null -eq $Before -or $null -eq $After) { return $false }
+    foreach ($propertyName in @('Protocol', 'RepositoryRoot', 'SourceRoot',
+            'ScriptRoot', 'WebRoot', 'SourceDigest', 'ScriptDigest', 'WebDigest',
+            'Digest', 'FileCount')) {
+        if ($null -eq $Before.PSObject.Properties[$propertyName] -or
+                $null -eq $After.PSObject.Properties[$propertyName]) {
+            return $false
+        }
+        if ($propertyName -eq 'FileCount') {
+            if (-not (Test-VerifierStrictIntegralValue $Before.$propertyName 1 ([long]::MaxValue)) -or
+                    -not (Test-VerifierStrictIntegralValue $After.$propertyName 1 ([long]::MaxValue)) -or
+                    [long]$Before.$propertyName -ne [long]$After.$propertyName) {
+                return $false
+            }
+        } elseif ($Before.$propertyName -cne $After.$propertyName) {
+            return $false
+        }
+    }
+    return $true
+}
+
+function Get-Task43PRepositoryState($ExecutionRoots = $null) {
     try {
         $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+        $executionProvenance = $null
+        if ($null -ne $ExecutionRoots) {
+            foreach ($propertyName in @('RepositoryRoot', 'WebRoot', 'ScriptRoot',
+                    'PreviewScript', 'Provenance')) {
+                if ($null -eq $ExecutionRoots.PSObject.Properties[$propertyName]) {
+                    Throw-VerifierInfrastructure "Task43P execution roots omitted '$propertyName' while capturing repository state."
+                }
+            }
+            $executionProvenance = Get-VerifierExecutionTreeProvenance $ExecutionRoots.RepositoryRoot
+            if (-not (Test-VerifierCanonicalWindowsPathValue $executionProvenance.RepositoryRoot `
+                    $ExecutionRoots.RepositoryRoot) -or
+                    -not (Test-VerifierCanonicalWindowsPathValue $executionProvenance.WebRoot `
+                        $ExecutionRoots.WebRoot) -or
+                    -not (Test-VerifierCanonicalWindowsPathValue $executionProvenance.ScriptRoot `
+                        $ExecutionRoots.ScriptRoot) -or
+                    -not (Test-VerifierCanonicalWindowsPathValue `
+                        (Join-Path $executionProvenance.ScriptRoot 'preview.ps1') `
+                        $ExecutionRoots.PreviewScript) -or
+                    -not (Test-Task43PExecutionProvenanceEqual $executionProvenance `
+                        $ExecutionRoots.Provenance)) {
+                Throw-VerifierInfrastructure 'Task43P selected execution roots changed or carried inconsistent provenance during repository capture.'
+            }
+            if (-not [String]::IsNullOrWhiteSpace($ExpectedExecutionProvenanceDigest) -and
+                    $executionProvenance.Digest -cne $ExpectedExecutionProvenanceDigest) {
+                Throw-VerifierInfrastructure 'Task43P repository capture did not match the expected candidate provenance digest.'
+            }
+        }
         $safeRepositoryRoot = $repositoryRoot.Replace('\', '/')
         $headArgs = @('-c', "safe.directory=$safeRepositoryRoot", '-C', $repositoryRoot,
             'rev-parse', 'HEAD')
@@ -1009,7 +1252,7 @@ function Get-Task43PRepositoryState() {
             foreach ($file in @(Get-ChildItem -LiteralPath $root -Recurse -File -ErrorAction Stop |
                     Sort-Object FullName)) {
                 $relativePath = $file.FullName.Substring($repositoryRoot.Length).TrimStart('\', '/')
-                $fileHash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256 -ErrorAction Stop).Hash.ToLowerInvariant()
+                $fileHash = Get-VerifierFileSha256 $file.FullName
                 [void]$fileRecords.Add($relativePath.Replace('\', '/') + '=' + $fileHash)
             }
         }
@@ -1028,6 +1271,7 @@ function Get-Task43PRepositoryState() {
             dirty = -not [String]::IsNullOrWhiteSpace($status)
             sourceVerifierFileCount = $fileRecords.Count
             statusText = $status
+            executionProvenance = $executionProvenance
         }
     } catch {
         if (Test-VerifierInfrastructureError $_) { throw }
@@ -1114,7 +1358,7 @@ function Assert-Task43PJavaEvidenceProvenance($Value, [string]$Path = 'root') {
         'retestPresent', 'generatedVerificationPending',
         'generatedVerificationAnalyzed', 'developerVerifierRunning', 'lifecycle',
         'verifierDesignStateBefore', 'verifierDesignStateAfter', 'mutationCleanup',
-        'lanes', 'epochContract', 'triad'
+        'lanes', 'epochContract', 'forcedNegativeProof', 'triad'
     )
     Assert-Task43PJavaEvidenceObject $Value $Path $rootProperties
     Assert-Task43PJavaEvidenceRequired $Value $Path $rootProperties
@@ -1130,6 +1374,40 @@ function Assert-Task43PJavaEvidenceProvenance($Value, [string]$Path = 'root') {
             'generatedVerificationPending', 'generatedVerificationAnalyzed',
             'developerVerifierRunning')) {
         Assert-Task43PJavaEvidenceBoolean $Value.$name ($Path + '.' + $name)
+    }
+
+    $forcedProofPath = $Path + '.forcedNegativeProof'
+    $forcedProofProperties = @('requested', 'nonce', 'routeId', 'requestId',
+        'executionDigest')
+    Assert-Task43PJavaEvidenceObject $Value.forcedNegativeProof $forcedProofPath `
+        $forcedProofProperties
+    Assert-Task43PJavaEvidenceRequired $Value.forcedNegativeProof $forcedProofPath `
+        $forcedProofProperties
+    Assert-Task43PJavaEvidenceBoolean $Value.forcedNegativeProof.requested `
+        ($forcedProofPath + '.requested')
+    foreach ($name in @('nonce', 'routeId', 'requestId', 'executionDigest')) {
+        if ($Value.forcedNegativeProof.$name -isnot [string]) {
+            Throw-VerifierInfrastructure ("Task43P Java evidence expected an exact string at " +
+                $forcedProofPath + '.' + $name + '.')
+        }
+    }
+    if ([bool]$Value.forcedNegativeProof.requested) {
+        foreach ($name in @('nonce', 'routeId', 'requestId', 'executionDigest')) {
+            if ([String]::IsNullOrWhiteSpace([string]$Value.forcedNegativeProof.$name)) {
+                Throw-VerifierInfrastructure ("Task43P Java forced-negative proof omitted " +
+                    "required '$name'.")
+            }
+        }
+        if ([string]$Value.forcedNegativeProof.executionDigest -notmatch '^[0-9a-f]{64}$') {
+            Throw-VerifierInfrastructure 'Task43P Java forced-negative proof carried a malformed execution digest.'
+        }
+    } else {
+        foreach ($name in @('nonce', 'routeId', 'requestId', 'executionDigest')) {
+            if (-not [String]::IsNullOrWhiteSpace([string]$Value.forcedNegativeProof.$name)) {
+                Throw-VerifierInfrastructure ("Task43P non-forced evidence carried an unexpected " +
+                    "forced-negative '$name' identity.")
+            }
+        }
     }
 
     $lifecyclePath = $Path + '.lifecycle'
@@ -1255,7 +1533,7 @@ function Assert-Task43PJavaEvidencePayload($Value, [string]$RouteName,
             'completed', 'repairStatus', 'retestPresent', 'generatedVerificationPending',
             'generatedVerificationAnalyzed', 'developerVerifierRunning', 'lifecycle',
             'verifierDesignStateBefore', 'verifierDesignStateAfter', 'mutationCleanup',
-            'lanes', 'epochContract', 'triad')) {
+            'lanes', 'epochContract', 'forcedNegativeProof', 'triad')) {
         if (-not $Value.PSObject.Properties[$required]) {
             Throw-VerifierInfrastructure ("Task43P route '$RouteName' omitted required evidence " +
                 "property '$required'.")
@@ -1305,7 +1583,8 @@ function Assert-Task43PJavaEvidencePayload($Value, [string]$RouteName,
                 "'$booleanProperty' field.")
         }
     }
-    foreach ($objectProperty in @('lifecycle', 'mutationCleanup', 'lanes', 'epochContract')) {
+    foreach ($objectProperty in @('lifecycle', 'mutationCleanup', 'lanes',
+            'epochContract', 'forcedNegativeProof')) {
         if ($Value.$objectProperty -is [System.Array] -or
                 $Value.$objectProperty -isnot [pscustomobject]) {
             Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a malformed " +
@@ -1455,20 +1734,57 @@ function Assert-Task43PJavaEvidencePayload($Value, [string]$RouteName,
 function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
         [ref]$failures, [string]$routeName, [string]$expected, [string]$observed,
         $repositoryBefore) {
-    $payload = [string](evaluateCdp $socket ([ref]$nextId) `
+    $payload = [string](evaluateCdp $socket $nextId `
         "document.documentElement.getAttribute('data-tsj-task43p-evidence') || ''" `
-        ([ref]$failures) $deadline)
+        $failures $deadline)
     if ([String]::IsNullOrWhiteSpace($payload)) {
         Throw-VerifierInfrastructure "Task43P route '$routeName' did not publish structured evidence."
     }
     try {
-        $parsed = $payload | ConvertFrom-Json -Depth 30 -ErrorAction Stop
+        $parsed = $payload | ConvertFrom-Json -ErrorAction Stop
     } catch {
         Throw-VerifierInfrastructure ("Task43P route '$routeName' published invalid JSON evidence: " +
             (Get-VerifierErrorMessage $_))
     }
     Assert-Task43PJavaEvidenceProvenance $parsed
     Assert-Task43PJavaEvidencePayload $parsed $routeName $expected $observed
+    $runtimeParsed = $null
+    $runtimeOutcome = $null
+    if ($Task43PRuntime) {
+        if ($expected -cne 'OBSERVED:task43p-runtime' -or $observed -cne $expected) {
+            Throw-VerifierInfrastructure 'Task43P runtime capture did not observe its exact route marker.'
+        }
+        $runtimePayload = evaluateCdp $socket $nextId `
+            "document.documentElement.getAttribute('data-tsj-task43p-runtime-evidence') || ''" `
+            $failures $deadline
+        if ($runtimePayload -isnot [string] -or [String]::IsNullOrWhiteSpace($runtimePayload)) {
+            Throw-VerifierInfrastructure 'Task43P runtime route did not publish structured evidence.'
+        }
+        try {
+            try { $runtimeParsed = $runtimePayload | ConvertFrom-Json -ErrorAction Stop } catch {
+                Throw-VerifierInfrastructure ('Task43P runtime route published invalid JSON: ' +
+                    (Get-VerifierErrorMessage $_))
+            }
+            $runtimeOutcome = Assert-Task43PRuntimeEvidence $runtimeParsed `
+                $script:VerifierContext.RunId $script:VerifierCurrentRouteId
+        } catch {
+            $runtimeRejection = $_
+            # Preserve the raw observation for diagnosis without assigning an
+            # outcome or qualifying it as accepted runtime evidence.
+            try {
+                $rejectedPath = getVerifierEvidencePath ('task43p-runtime-unvalidated-' +
+                    $script:VerifierCurrentRouteId + '.json')
+                Write-VerifierEvidenceText $rejectedPath $runtimePayload `
+                    'unvalidated Task43P runtime observation'
+                Register-VerifierEvidenceArtifact $script:VerifierContext $rejectedPath
+                Write-Host ('TASK43P UNVALIDATED runtime observation path=' + $rejectedPath)
+            } catch {
+                Write-Warning ('Could not retain unvalidated runtime observation: ' +
+                    (Get-VerifierErrorMessage $_))
+            }
+            throw $runtimeRejection
+        }
+    }
     if ($routeName -notlike '*forced-negative*' -and $expected -eq 'UNPROVEN:task43p' -and
             $expected -like 'UNPROVEN:*' -and $expected -ne $observed) {
         Throw-VerifierInfrastructure ("Task43P route '$routeName' published evidence for " +
@@ -1482,7 +1798,7 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
                 'publish its run-request marker.')
         }
     }
-    $repositoryAfter = Get-Task43PRepositoryState
+    $repositoryAfter = Get-Task43PRepositoryState $script:Task43PExecutionRoots
     if ($null -eq $repositoryBefore -or
             $repositoryBefore.headSha -ne $script:Task43PPublishedBaselineSha) {
         Throw-VerifierInfrastructure ("Task43P route '$routeName' did not start from the " +
@@ -1497,6 +1813,44 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
             'running developer evidence: before=' + $repositoryBefore.sourceVerifierDigest +
             ' after=' + $repositoryAfter.sourceVerifierDigest)
     }
+    $forcedRoute = $routeName -like '*forced-negative*'
+    $forcedProof = $parsed.forcedNegativeProof
+    if ($forcedProof.requested -ne [bool]$forcedRoute) {
+        Throw-VerifierInfrastructure ("Task43P route '$RouteName' published a forced-negative " +
+            'proof for a different route type.')
+    }
+    foreach ($name in @('nonce', 'routeId', 'requestId', 'executionDigest')) {
+        if ($forcedProof.$name -isnot [string]) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' forced-negative proof " +
+                "field '$name' was not an exact string.")
+        }
+    }
+    if ($forcedRoute) {
+        $proof = $script:Task43ForcedNegativeProof
+        if ($null -eq $proof -or $proof.Invocation -ne $true -or
+                $forcedProof.nonce -cne [string]$proof.Nonce -or
+                $forcedProof.routeId -cne [string]$proof.RouteId -or
+                $forcedProof.requestId -cne [string]$proof.RequestId -or
+                $forcedProof.executionDigest -cne [string]$proof.ExecutionDigest -or
+                $forcedProof.routeId -cne [string]$script:VerifierCurrentRouteId -or
+                $null -eq $script:Task43PExecutionProvenance -or
+                $forcedProof.executionDigest -cne [string]$script:Task43PExecutionProvenance.Digest) {
+            Throw-VerifierInfrastructure ("Task43P route '$RouteName' Java forced-negative " +
+                'proof was not bound to the current verifier request, route, and execution tree.')
+        }
+    } else {
+        foreach ($name in @('nonce', 'routeId', 'requestId', 'executionDigest')) {
+            if (-not [String]::IsNullOrWhiteSpace([string]$forcedProof.$name)) {
+                Throw-VerifierInfrastructure ("Task43P route '$RouteName' non-forced proof carried " +
+                    "unexpected '$name' identity.")
+            }
+        }
+    }
+    if (-not (Test-Task43PExecutionProvenanceEqual `
+            $repositoryBefore.executionProvenance $repositoryAfter.executionProvenance)) {
+        Throw-VerifierInfrastructure ("Task43P route '$routeName' changed or failed to prove " +
+            'the selected execution tree provenance.')
+    }
     try {
         $safeRouteName = $routeName -replace '[^A-Za-z0-9._-]', '-'
         $path = getVerifierEvidencePath ('task43p-' + $safeRouteName + '.json')
@@ -1506,13 +1860,19 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
             expected = $expected
             observed = $observed
             capturedUtc = [DateTime]::UtcNow.ToString('o', [Globalization.CultureInfo]::InvariantCulture)
+            browserStartupSettleMilliseconds = $Task43PStartupSettleMilliseconds
             runId = $script:VerifierContext.RunId
             routeId = $script:VerifierCurrentRouteId
             baselineSha = $script:Task43PPublishedBaselineSha
             repositoryBefore = $repositoryBefore
             repositoryAfter = $repositoryAfter
+            executionProvenance = $repositoryAfter.executionProvenance
             evidencePath = $path
             evidence = $parsed
+        }
+        if ($Task43PRuntime) {
+            $record.runtimeEvidence = $runtimeParsed
+            $record.runtimeOutcome = $runtimeOutcome
         }
         Write-VerifierEvidenceText $path ($record | ConvertTo-Json -Depth 30) `
             'Task43P route evidence'
@@ -1523,6 +1883,7 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
     }
     Write-Host ("TASK43P EVIDENCE $routeName path=$path head=$($repositoryAfter.headSha) " +
         "sourceVerifierDigest=$($repositoryAfter.sourceVerifierDigest)")
+    if ($Task43PRuntime) { $script:Task43PRuntimeOutcome = $runtimeOutcome }
 }
 
 function receiveCdp($socket, [int]$wantedId, [ref]$failures,
@@ -1610,9 +1971,58 @@ function invokeCdp($socket, [ref]$nextId, [string]$method, $parameters, [ref]$fa
     return $response
 }
 
+function Wait-Task43PBrowserStartup($socket, [ref]$nextId, [ref]$failures,
+        [DateTime]$deadline, $Milliseconds) {
+    if (-not (Test-VerifierStrictIntegralValue $Milliseconds 0L 45000L)) {
+        Throw-VerifierInfrastructure 'Task43P internal startup settle was not a bounded exact integer.'
+    }
+    if ($Milliseconds -eq 0) { return }
+    $deadline = resolveCdpRouteDeadline $deadline
+    if ($deadline -eq [DateTime]::MinValue -or
+            ($deadline - [DateTime]::UtcNow).TotalMilliseconds -le $Milliseconds) {
+        Throw-VerifierInfrastructure 'Task43P startup settle does not fit the existing route deadline.'
+    }
+    $elapsed = [Diagnostics.Stopwatch]::StartNew()
+    $minimumTicks = [long][Math]::Ceiling(([decimal]$Milliseconds *
+        [Diagnostics.Stopwatch]::Frequency) / [decimal]1000)
+    $response = invokeCdp $socket $nextId 'Runtime.evaluate' @{
+        expression = ('new Promise(resolve=>setTimeout(()=>resolve({url:location.href,' +
+            'state:document.readyState}),' + [string]$Milliseconds + '))')
+        awaitPromise = $true; returnByValue = $true
+    } $failures $deadline
+    if ([DateTime]::UtcNow -ge $deadline -or
+            $elapsed.ElapsedTicks -lt $minimumTicks) {
+        Throw-VerifierInfrastructure 'Task43P startup settle returned outside its required timing window.'
+    }
+    if ($null -eq $response -or $null -eq $response.PSObject.Properties['result'] -or
+            $response.result -is [array] -or $response.result -isnot [pscustomobject]) {
+        Throw-VerifierInfrastructure 'Task43P startup settle returned a malformed CDP result.'
+    }
+    $document = $null
+    if ($response.result.PSObject.Properties['result'] -and
+            $null -ne $response.result.result -and
+            $response.result.result.PSObject.Properties['value']) {
+        $document = $response.result.result.value
+    }
+    if ($response.result.PSObject.Properties['exceptionDetails'] -or
+            $null -eq $document -or $document -is [array] -or
+            $document -isnot [pscustomobject] -or
+            $null -eq $document.PSObject.Properties['url'] -or
+            $null -eq $document.PSObject.Properties['state'] -or
+            $document.url -isnot [string] -or $document.url -cne 'about:blank' -or
+            $document.state -isnot [string] -or $document.state -cne 'complete') {
+        Throw-VerifierInfrastructure 'Task43P startup settle did not retain the complete owned blank document.'
+    }
+    Write-Host ("TASK43P STARTUP SETTLED milliseconds=$Milliseconds (existing route deadline retained)")
+}
+
 function navigateAndWaitForDocument($socket, [ref]$nextId, [string]$url,
-        [DateTime]$deadline, [ref]$failures) {
+        [DateTime]$deadline, [ref]$failures, $NavigationMarker = $null) {
+    if ($null -ne $NavigationMarker -and $NavigationMarker -isnot [ref]) {
+        Throw-VerifierInfrastructure 'Navigation marker output must be a reference when supplied.'
+    }
     $marker = [Guid]::NewGuid().ToString('N')
+    if ($null -ne $NavigationMarker) { $NavigationMarker.Value = $marker }
     $query = @('tsjVerifierNavigation=' + $marker)
     if ($script:VerifierContext -and $script:VerifierCurrentRouteId) {
         $query += 'tsjVerifierRun=' + $script:VerifierContext.RunId
@@ -1631,13 +2041,268 @@ function navigateAndWaitForDocument($socket, [ref]$nextId, [string]$url,
     return evaluateCdp $socket $nextId 'performance.timeOrigin' $failures $deadline
 }
 
+function Get-Task43PSourceExperimentDefinition([string]$Id) {
+    $path = 'GeneratedBoardInstance.java'
+    $family = 'LED_INDICATOR'
+    $topology = 'DIRECT_SERIES'
+    $urlFamily = 'led'
+    $failure = switch -CaseSensitive ($Id) {
+        'renderer-only-j1-1-plus-20px' {
+            $path = 'PcbWorkbenchRenderer.java'
+            'task43p-renderer-pad-projection-mismatch:J1.1'
+        }
+        'renderer-only-j1-1-lead-plus-20px' {
+            $path = 'PhysicalPartRenderTerminal.java'
+            'task43p-renderer-surface-mismatch:J1.1'
+        }
+        'raw-copper-j1-1-endpoint-gap' { 'task43p-raw-copper-start-gap:J1.1' }
+        'raw-net-mismatch' {
+            'task43p-set-mismatch:manifest/raw board nets:expected=[GND, LED_NODE, VIN]:actual=[GND, LED_NODE, TASK43P_UNMANIFESTED_EMPTY, VIN]'
+        }
+        'solver-binding-j1-1-post-mismatch' {
+            $path = 'BoardSimulationBindings.java'
+            'task43p-solver-binding-endpoint-identity-mismatch:J1.1'
+        }
+        'solver-detachable-c1-plus-identity-mismatch' {
+            $path = 'BoardSimulationBindings.java'
+            $family = 'RC_DELAY'
+            $topology = 'RC_CHARGE_DELAY'
+            $urlFamily = 'rc'
+            'task43p-solver-binding-endpoint-identity-mismatch:C1.+'
+        }
+        'package-mirror-mismatch' {
+            $path = 'PcbComponentPlacement.java'
+            'task43p-physical-package-variant-mismatch:J1'
+        }
+        'internally-self-consistent-wrong-mapping' {
+            $path = 'LedIndicatorGenerator.java'
+            'task43p-solver-oracle-net-mismatch:R1.1'
+        }
+        'omitted-manifest-terminal' {
+            $path = 'Task43PPhysicalTruthDeveloperVerifier.java'
+            'task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2]'
+        }
+        'snapshot-restore-resistance-current-omitted' {
+            $path = 'Task41SimulationSnapshot.java'
+            'task43p-H-snapshot-resistance-current-did-not-round-trip'
+        }
+        'public-remove-action-disabled' {
+            $path = 'PcbWorkbenchController.java'
+            'task43p-public-remove-direct-control-passed'
+        }
+        default { Throw-VerifierInfrastructure 'Unsupported exact Task43P source experiment ID.' }
+    }
+    return [pscustomobject]@{
+        id = $Id; relativePath = 'src/com/lushprojects/circuitjs1/client/' + $path
+        family = $family; topology = $topology
+        seed = if ($Id -ceq 'public-remove-action-disabled') { 3 } else { 0 }
+        urlFamily = $urlFamily
+        expectedMarker = 'FAIL:' + $failure
+    }
+}
+
+function Initialize-Task43PSourceExperiment() {
+    if ($Task43PSourceExperiment -ceq '') { return }
+    if (-not $Task43PForcedNegative -or $Task43P -or $Task43ForcedNegative -or
+            $Task43Integrated -or [String]::IsNullOrWhiteSpace($EvidenceDirectory) -or
+            $ExpectedExecutionProvenanceDigest -cnotmatch '^[0-9a-f]{64}$') {
+        Throw-VerifierInfrastructure 'Task43P source experiment requires its sole forced-negative route, explicit evidence directory, and compiled execution provenance.'
+    }
+    $definition = Get-Task43PSourceExperimentDefinition $Task43PSourceExperiment
+    $originalRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+    if ([StringComparer]::OrdinalIgnoreCase.Equals($originalRoot,
+            $script:Task43PExecutionRepositoryRoot)) {
+        Throw-VerifierInfrastructure 'Task43P source experiment requires a distinct disposable execution tree.'
+    }
+    $originalHash = Get-VerifierFileSha256 (Join-Path $originalRoot $definition.relativePath)
+    $mutatedHash = Get-VerifierFileSha256 (Join-Path $script:Task43PExecutionRepositoryRoot `
+        $definition.relativePath)
+    if ($originalHash -cnotmatch '^[0-9a-f]{64}$' -or
+            $mutatedHash -cnotmatch '^[0-9a-f]{64}$' -or $originalHash -ceq $mutatedHash) {
+        Throw-VerifierInfrastructure 'Task43P source experiment did not prove distinct original and mutated source bytes.'
+    }
+    $script:Task43PSourceDefinition = $definition
+    $script:Task43PSourceObservation = [ordered]@{
+        sourceMutationBeforeSha256 = $originalHash
+        sourceMutationAfterSha256 = $mutatedHash
+        repositoryBefore = $null; repositoryAfter = $null
+    }
+}
+
+function Test-Task43PForcedNegativeMarker([string]$Marker) {
+    return $Marker -ceq 'FAIL:task43p-forced-negative-canary' -or
+        ($null -ne $script:Task43PSourceDefinition -and
+            $Marker -ceq $script:Task43PSourceDefinition.expectedMarker)
+}
+
+function Test-Task43PSourceRepositoryStateEqual($Before, $After) {
+    if ($null -eq $Before -or $null -eq $After -or
+            $Before.headSha -cne $script:Task43PPublishedBaselineSha) { return $false }
+    foreach ($field in @('headSha', 'sourceVerifierDigest', 'sourceVerifierFileCount',
+            'dirty', 'statusText')) {
+        if ($Before.$field -cne $After.$field) { return $false }
+    }
+    return Test-Task43PExecutionProvenanceEqual $Before.executionProvenance `
+        $After.executionProvenance
+}
+
+function Capture-Task43PSourceObservation($RepositoryBefore) {
+    $after = Get-Task43PRepositoryState $script:Task43PExecutionRoots
+    if ($null -eq $script:Task43PSourceObservation -or
+            -not (Test-Task43PSourceRepositoryStateEqual $RepositoryBefore $after)) {
+        Throw-VerifierInfrastructure 'Task43P source-negative route changed its source, verifier, or compiled execution tree.'
+    }
+    $script:Task43PSourceObservation.repositoryBefore = $RepositoryBefore
+    $script:Task43PSourceObservation.repositoryAfter = $after
+}
+
+function Get-Task43PPublicRemovePlayerState($Socket, [ref]$NextId,
+        [ref]$Failures, [DateTime]$Deadline) {
+    $expression = @'
+(()=>{
+ const buttons=[...document.querySelectorAll('button')];
+ const remove=buttons.filter(b=>b.innerText.trim()==='Remove component');
+ const button=remove.length===1?remove[0]:null;
+ const rect=button?button.getBoundingClientRect():null;
+ const x=rect?rect.left+rect.width/2:0,y=rect?rect.top+rect.height/2:0;
+ const hit=button?document.elementFromPoint(x,y):null;
+ const panel=button?button.closest('.tsj-component-panel'):null;
+ const body=document.body?document.body.innerText:'';
+ const power=buttons.filter(b=>b.innerText.trim()==='Board Power: OFF');
+ return {point:{x,y},state:{
+  powerOff:power.length===1&&!power[0].disabled,
+  selectedInstalledR1:!!panel&&/\bR1\b/.test(panel.innerText)&&panel.innerText.includes('State: Installed')&&panel.innerText.includes('Type: resistor'),
+  emptyTray:body.includes('No removed parts'),
+  removedOriginalVisible:buttons.some(b=>b.innerText.trim()==='R1_ORIGINAL - Removed resistor'),
+  removeButtonCount:remove.length,removeButtonDisabled:!!button&&button.disabled,
+  removeButtonVisible:!!rect&&rect.width>0&&rect.height>0&&rect.top>=0&&rect.bottom<=innerHeight&&rect.left>=0&&rect.right<=innerWidth,
+  removeButtonHitTest:!!button&&(hit===button||button.contains(hit)),
+  liftLeadEnabled:!!panel&&[...panel.querySelectorAll('button')].some(b=>b.innerText.trim().startsWith('Lift lead ')&&!b.disabled)
+ }};
+})()
+'@
+    return evaluateCdp $Socket $NextId $expression $Failures $Deadline
+}
+
+function Invoke-Task43PPublicRemoveProbe($Socket, [ref]$NextId,
+        [DateTime]$Deadline, [ref]$Failures) {
+    $proof = $script:Task43ForcedNegativeProof
+    $raw = evaluateCdp $Socket $NextId `
+        "document.documentElement.getAttribute('data-tsj-task43p-public-remove-control') || ''" `
+        $Failures $Deadline
+    if ($raw -isnot [string] -or [String]::IsNullOrWhiteSpace($raw)) {
+        Throw-VerifierInfrastructure 'Public Remove direct controller did not publish its proof.'
+    }
+    try { $direct = $raw | ConvertFrom-Json -ErrorAction Stop } catch {
+        Throw-VerifierInfrastructure 'Public Remove direct controller proof was not valid JSON.'
+    }
+    # Start a fresh normal-player document on this same owned browser. Geometry
+    # is only the existing coordinate aid; no Task43P/forced/debug query remains.
+    $playerUrl = "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyGeometry=true"
+    $navigationMarker = ''
+    [void](navigateAndWaitForDocument $Socket $NextId $playerUrl $Deadline $Failures `
+        ([ref]$navigationMarker))
+    waitForCdp $Socket $NextId `
+        "document.body&&document.body.innerText.includes('Indicator does not light.')&&!!window.__tsjPcbGeometry" `
+        $Deadline $Failures 'public Remove normal-player challenge'
+    $r1 = getCanvasPoint $Socket $NextId 'component:R1' $Failures
+    if ($null -eq $r1) { Throw-VerifierInfrastructure 'Public Remove normal-player R1 coordinate was missing.' }
+    clickPoint $Socket $NextId $r1 'left' $Failures
+    waitForCdp $Socket $NextId `
+        "[...document.querySelectorAll('button')].some(b=>b.innerText.trim()==='Remove component')" `
+        $Deadline $Failures 'public Remove component controls'
+    clickButtonAndWaitForPredicate $Socket $NextId 'Board Power: ON' `
+        "[...document.querySelectorAll('button')].some(b=>b.innerText.trim()==='Board Power: OFF')" `
+        $Deadline $Failures 'public Remove unpowered board'
+    waitForAnimationFrames $Socket $NextId $Deadline $Failures
+    $before = $null
+    for ($attempt = 0; $attempt -lt 12; $attempt++) {
+        $before = Get-Task43PPublicRemovePlayerState $Socket $NextId $Failures $Deadline
+        if ($before.state.removeButtonVisible) { break }
+        $wheelY = if ([double]$before.point.y -gt 0) { 480 } else { -480 }
+        [void](invokeCdp $Socket $NextId 'Input.dispatchMouseEvent' @{
+            type = 'mouseWheel'; x = [Math]::Max(1, [Math]::Min(1439, [double]$before.point.x))
+            y = 500; deltaX = 0; deltaY = $wheelY
+        } $Failures $Deadline)
+        waitForAnimationFrames $Socket $NextId $Deadline $Failures
+    }
+    Assert-Task43PPublicRemoveState $before.state 'before'
+    # clickPoint always sends a real pressed/released pair, including for a
+    # disabled button. The DOM is inspected, never used to dispatch a click.
+    clickPoint $Socket $NextId $before.point 'left' $Failures
+    waitForAnimationFrames $Socket $NextId $Deadline $Failures
+    $after = Get-Task43PPublicRemovePlayerState $Socket $NextId $Failures $Deadline
+    $normalUrl = evaluateCdp $Socket $NextId 'location.href' $Failures $Deadline
+    $evidence = [pscustomobject]@{
+        protocol = 'TSJ-TASK43P-PUBLIC-REMOVE-1'; runId = $proof.RunId; routeId = $proof.RouteId
+        navigationMarker = $navigationMarker
+        normalPlayerUrl = $normalUrl; inputMethod = 'Input.dispatchMouseEvent'; inputEventCount = 2
+        directControllerPositive = $direct; before = $before.state; after = $after.state
+    }
+    Assert-Task43PPublicRemoveEvidence $evidence $proof.RunId $proof.RouteId `
+        $proof.Nonce $proof.RequestId $proof.ExecutionDigest
+    captureBrowserScreenshot $Socket $NextId `
+        (getVerifierEvidencePath 'task43p-public-remove-disabled.png') $Failures
+    $script:Task43PSourceObservation.publicRemove = $evidence
+    Write-Host 'OBSERVED public Remove unreachable through real mouse input; independent workbench dispatch succeeded.'
+}
+
+function Write-Task43PSourceNegativeFinalProof([int]$ExitCode) {
+    $definition = $script:Task43PSourceDefinition
+    $observation = $script:Task43PSourceObservation
+    if ($ExitCode -ne 1 -or $null -eq $definition -or $null -eq $observation -or
+            -not (Test-Task43ForcedNegativeProof $definition.expectedMarker -RequireFinalCleanup)) {
+        Throw-VerifierInfrastructure 'Task43P source-negative proof was incomplete after final verifier cleanup.'
+    }
+    $after = Get-Task43PRepositoryState $script:Task43PExecutionRoots
+    if (-not (Test-Task43PSourceRepositoryStateEqual $observation.repositoryBefore $after) -or
+            -not (Test-Task43PSourceRepositoryStateEqual $observation.repositoryAfter $after)) {
+        Throw-VerifierInfrastructure 'Task43P source-negative provenance changed before durable final proof.'
+    }
+    $record = [ordered]@{
+        protocol = 'troubleshootjs-task43p-source-negative-proof-v1'; exit = 1
+        experiment = [ordered]@{
+            id = $definition.id; relativePath = $definition.relativePath
+            family = $definition.family; topology = $definition.topology; seed = $definition.seed
+            expectedMarker = $definition.expectedMarker
+        }
+        sourceMutationBeforeSha256 = $observation.sourceMutationBeforeSha256
+        sourceMutationAfterSha256 = $observation.sourceMutationAfterSha256
+        compiledExecutionDigest = $script:Task43PExecutionProvenance.Digest
+        repositoryBefore = $observation.repositoryBefore; repositoryAfter = $after
+        browserStartupSettleMilliseconds = $Task43PStartupSettleMilliseconds
+        forcedNegativeProof = Get-Task43ForcedNegativeProofRecord
+    }
+    if ($definition.id -ceq 'public-remove-action-disabled') {
+        if (-not $observation.Contains('publicRemove')) {
+            Throw-VerifierInfrastructure 'Public Remove source proof omitted real player input evidence.'
+        }
+        $proof = $script:Task43ForcedNegativeProof
+        Assert-Task43PPublicRemoveEvidence $observation.publicRemove $proof.RunId `
+            $proof.RouteId $proof.Nonce $proof.RequestId $proof.ExecutionDigest
+        $record.publicRemove = $observation.publicRemove
+    }
+    $path = getVerifierEvidencePath 'task43p-source-negative-proof.json'
+    Write-VerifierEvidenceText $path ($record | ConvertTo-Json -Depth 30) `
+        'Task43P source-negative final proof'
+    Register-VerifierEvidenceArtifact $script:VerifierContext $path
+    Write-Host ("TASK43P SOURCE NEGATIVE CAUGHT id=$($definition.id) proof=$path")
+}
+
 function Get-Task43ForcedNegativeExpectedMarker() {
+    if ($null -ne $script:Task43PSourceDefinition) {
+        return $script:Task43PSourceDefinition.expectedMarker
+    }
     if ($Task43PForcedNegative) { return 'FAIL:task43p-forced-negative-canary' }
     if ($Task43ForcedNegative) { return 'FAIL:task43-forced-negative-canary' }
     return ''
 }
 
 function Get-Task43ForcedNegativeExpectedRoute([string]$ExpectedMarker) {
+    if ($null -ne $script:Task43PSourceDefinition -and
+            $ExpectedMarker -ceq $script:Task43PSourceDefinition.expectedMarker) {
+        return 'task43p source-negative ' + $script:Task43PSourceDefinition.id
+    }
     if ($ExpectedMarker -eq 'FAIL:task43p-forced-negative-canary') {
         return 'task43p forced-negative canary'
     }
@@ -1647,25 +2312,124 @@ function Get-Task43ForcedNegativeExpectedRoute([string]$ExpectedMarker) {
     return ''
 }
 
+function Get-Task43ForcedNegativeExpectedDiagnostic([string]$ExpectedMarker,
+        [string]$Family = 'led/controlled-indicator', [int]$Seed = 3) {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true -or
+            [string]$proof.ExpectedMarker -cne $ExpectedMarker) {
+        Throw-VerifierInfrastructure 'Forced-negative diagnostic construction had no matching active proof.'
+    }
+    $sourceRoute = $null -ne $script:Task43PSourceDefinition -and
+        $ExpectedMarker -ceq $script:Task43PSourceDefinition.expectedMarker
+    if ($sourceRoute) {
+        $Family = $script:Task43PSourceDefinition.family + '/' + $script:Task43PSourceDefinition.topology
+        $Seed = $script:Task43PSourceDefinition.seed
+    }
+    $diagnostic = 'Console failure: exception in runCircuit java.lang.IllegalStateException: ' +
+        'Generated board verification failed for ' + $Family + ', seed ' + [string]$Seed + ': ' +
+        $ExpectedMarker.Substring(5)
+    if (Test-Task43PForcedNegativeMarker $ExpectedMarker) {
+        foreach ($field in @('Nonce', 'RouteId', 'RequestId', 'ExecutionDigest')) {
+            if ([String]::IsNullOrWhiteSpace([string]$proof.$field)) {
+                Throw-VerifierInfrastructure "Task43P forced-negative diagnostic omitted proof field '$field'."
+            }
+        }
+        $diagnostic += ' nonce=' + [string]$proof.Nonce +
+            ' route=' + [string]$proof.RouteId +
+            ' request=' + [string]$proof.RequestId +
+            ' execution=' + [string]$proof.ExecutionDigest
+        if ($sourceRoute) {
+            $diagnostic += ' experiment=' + $script:Task43PSourceDefinition.id +
+                ' run=' + [string]$proof.RunId
+        }
+    }
+    return $diagnostic
+}
+
 function Test-Task43ForcedFailureDiagnosticText([string]$Failure,
-        [string]$ExpectedFailure) {
+        [string]$ExpectedFailure, [string]$ExpectedNonce = '',
+        [string]$ExpectedRouteId = '', [string]$ExpectedRequestId = '',
+        [string]$ExpectedExecutionDigest = '') {
     if ($ExpectedFailure -ne 'FAIL:task43-forced-negative-canary' -and
-            $ExpectedFailure -ne 'FAIL:task43p-forced-negative-canary') { return $false }
+            -not (Test-Task43PForcedNegativeMarker $ExpectedFailure)) { return $false }
     if ([String]::IsNullOrWhiteSpace($Failure)) { return $false }
     $marker = [regex]::Escape($ExpectedFailure.Substring(5))
     # Keep this a complete-string match.  A substring or a diagnostic with a
     # trailing error line is not positive proof of the Java forced-negative
     # boundary.
+    $familyPattern = '[^,\r\n]+, seed \d+'
+    $sourceRoute = $null -ne $script:Task43PSourceDefinition -and
+        $ExpectedFailure -ceq $script:Task43PSourceDefinition.expectedMarker
+    if ($sourceRoute) {
+        $familyPattern = [regex]::Escape($script:Task43PSourceDefinition.family + '/' +
+            $script:Task43PSourceDefinition.topology + ', seed ' +
+            [string]$script:Task43PSourceDefinition.seed)
+    }
     $pattern = '\AConsole failure: exception in runCircuit ' +
         'java\.lang\.IllegalStateException: Generated board verification failed for ' +
-        '[^,\r\n]+, seed \d+: ' + $marker + '\z'
+        $familyPattern + ': ' + $marker
+    if (Test-Task43PForcedNegativeMarker $ExpectedFailure) {
+        if ([String]::IsNullOrWhiteSpace($ExpectedNonce) -or
+                [String]::IsNullOrWhiteSpace($ExpectedRouteId) -or
+                [String]::IsNullOrWhiteSpace($ExpectedRequestId) -or
+                $ExpectedExecutionDigest -notmatch '^[0-9a-f]{64}$') {
+            return $false
+        }
+        $separator = if ($sourceRoute) { ' ' } else { '\s+' }
+        $pattern += $separator + 'nonce=' + [regex]::Escape($ExpectedNonce) +
+            $separator + 'route=' + [regex]::Escape($ExpectedRouteId) +
+            $separator + 'request=' + [regex]::Escape($ExpectedRequestId) +
+            $separator + 'execution=' + [regex]::Escape($ExpectedExecutionDigest)
+        if ($sourceRoute) {
+            $proof = $script:Task43ForcedNegativeProof
+            if ($null -eq $proof -or [String]::IsNullOrWhiteSpace([string]$proof.RunId)) {
+                return $false
+            }
+            $pattern += ' experiment=' + [regex]::Escape($script:Task43PSourceDefinition.id) +
+                ' run=' + [regex]::Escape([string]$proof.RunId)
+        }
+    }
+    $pattern += '\z'
     return [regex]::IsMatch($Failure, $pattern)
+}
+
+function Get-Task43ForcedNegativeNavigationUrl([string]$Url) {
+    $proof = $script:Task43ForcedNegativeProof
+    if ($null -eq $proof -or $proof.Invocation -ne $true -or
+            -not (Test-Task43PForcedNegativeMarker $proof.ExpectedMarker)) {
+        return $Url
+    }
+    Set-Task43ForcedNegativeRouteIdentity
+    foreach ($field in @('Nonce', 'RouteId', 'RequestId', 'ExecutionDigest')) {
+        if ([String]::IsNullOrWhiteSpace([string]$proof.$field)) {
+            Throw-VerifierInfrastructure "Task43P forced-negative navigation omitted proof field '$field'."
+        }
+    }
+    $query = @(
+        'tsjVerifierForcedNonce=' + [Uri]::EscapeDataString([string]$proof.Nonce)
+        'tsjVerifierForcedRoute=' + [Uri]::EscapeDataString([string]$proof.RouteId)
+        'tsjVerifierForcedRequest=' + [Uri]::EscapeDataString([string]$proof.RequestId)
+        'tsjVerifierExecutionDigest=' + [Uri]::EscapeDataString([string]$proof.ExecutionDigest)
+    )
+    if ($null -ne $script:Task43PSourceDefinition) {
+        $query += 'tsjTask43PSourceExperiment=' + [Uri]::EscapeDataString(
+            $script:Task43PSourceDefinition.id)
+    }
+    $fragment = ''
+    $fragmentIndex = $Url.IndexOf('#')
+    $baseUrl = $Url
+    if ($fragmentIndex -ge 0) {
+        $baseUrl = $Url.Substring(0, $fragmentIndex)
+        $fragment = $Url.Substring($fragmentIndex)
+    }
+    $separator = if ($baseUrl.IndexOf('?') -ge 0) { '&' } else { '?' }
+    return $baseUrl + $separator + ($query -join '&') + $fragment
 }
 
 function Reset-Task43ForcedNegativeProof([string]$ExpectedMarker,
         [string]$RouteName) {
     if ($ExpectedMarker -ne 'FAIL:task43-forced-negative-canary' -and
-            $ExpectedMarker -ne 'FAIL:task43p-forced-negative-canary') {
+            -not (Test-Task43PForcedNegativeMarker $ExpectedMarker)) {
         Throw-VerifierInfrastructure 'Forced-negative proof reset received an unsupported expected marker.'
     }
     $runId = if ($null -ne $script:VerifierContext) {
@@ -1677,6 +2441,20 @@ function Reset-Task43ForcedNegativeProof([string]$ExpectedMarker,
         ExpectedRoute = $RouteName
         RunId = $runId
         RouteId = ''
+        Nonce = if (Test-Task43PForcedNegativeMarker $ExpectedMarker) {
+            [Guid]::NewGuid().ToString('N')
+        } else { '' }
+        RequestId = if (Test-Task43PForcedNegativeMarker $ExpectedMarker) {
+            [Guid]::NewGuid().ToString('N')
+        } else { '' }
+        ExecutionDigest = if (Test-Task43PForcedNegativeMarker $ExpectedMarker) {
+            if ($null -ne $script:Task43PExecutionProvenance -and
+                    $script:Task43PExecutionProvenance.Digest -match '^[0-9a-f]{64}$') {
+                [string]$script:Task43PExecutionProvenance.Digest
+            } else {
+                ('0' * 64)
+            }
+        } else { '' }
         MarkerObserved = $false
         ObservedMarker = ''
         MarkerRunId = ''
@@ -1709,6 +2487,12 @@ function Set-Task43ForcedNegativeRouteIdentity() {
     if ([string]$proof.RunId -ne [string]$script:VerifierContext.RunId) {
         Throw-VerifierInfrastructure 'Forced-negative route run identity changed after proof reset.'
     }
+    if ((Test-Task43PForcedNegativeMarker $proof.ExpectedMarker) -and
+            ([String]::IsNullOrWhiteSpace([string]$proof.Nonce) -or
+             [String]::IsNullOrWhiteSpace([string]$proof.RequestId) -or
+             [string]$proof.ExecutionDigest -notmatch '^[0-9a-f]{64}$')) {
+        Throw-VerifierInfrastructure 'Task43P forced-negative route did not establish nonce/request/execution identity.'
+    }
     $proof.RouteId = [string]$script:VerifierCurrentRouteId
 }
 
@@ -1733,10 +2517,12 @@ function Set-Task43ForcedNegativeAnchoredDiagnostic([string]$Diagnostic,
     if ($null -eq $proof -or $proof.Invocation -ne $true) { return }
     if (-not $proof.MarkerObserved -or
             -not (Test-Task43ForcedFailureDiagnosticText $Diagnostic `
-                ([string]$proof.ExpectedMarker))) {
+                ([string]$proof.ExpectedMarker) ([string]$proof.Nonce) `
+                ([string]$proof.RouteId) ([string]$proof.RequestId) `
+                ([string]$proof.ExecutionDigest))) {
         Throw-VerifierInfrastructure 'Forced-negative route did not prove its exact anchored Java diagnostic.'
     }
-    if ($proof.ExpectedMarker -eq 'FAIL:task43p-forced-negative-canary' -and
+    if ((Test-Task43PForcedNegativeMarker $proof.ExpectedMarker) -and
             $BaselineHead -ne $script:Task43PPublishedBaselineSha) {
         Throw-VerifierInfrastructure 'Task43P forced-negative route did not retain the published baseline identity.'
     }
@@ -1804,6 +2590,9 @@ function Get-Task43ForcedNegativeProofRecord() {
         expectedRoute = $expectedRoute
         runId = if ($null -ne $proof) { [string]$proof.RunId } else { '' }
         routeId = if ($null -ne $proof) { [string]$proof.RouteId } else { '' }
+        nonce = if ($null -ne $proof) { [string]$proof.Nonce } else { '' }
+        requestId = if ($null -ne $proof) { [string]$proof.RequestId } else { '' }
+        executionDigest = if ($null -ne $proof) { [string]$proof.ExecutionDigest } else { '' }
         markerObserved = if ($null -ne $proof) { [bool]$proof.MarkerObserved } else { $false }
         observedMarker = if ($null -ne $proof) { [string]$proof.ObservedMarker } else { '' }
         markerRunId = if ($null -ne $proof) { [string]$proof.MarkerRunId } else { '' }
@@ -1840,7 +2629,9 @@ function Test-Task43ForcedNegativeProof([string]$ExpectedMarker,
             $proof.AnchoredDiagnosticProven -ne $true -or
             [String]::IsNullOrWhiteSpace([string]$proof.AnchoredJavaDiagnostic) -or
             -not (Test-Task43ForcedFailureDiagnosticText `
-                ([string]$proof.AnchoredJavaDiagnostic) $ExpectedMarker) -or
+                ([string]$proof.AnchoredJavaDiagnostic) $ExpectedMarker `
+                ([string]$proof.Nonce) ([string]$proof.RouteId) `
+                ([string]$proof.RequestId) ([string]$proof.ExecutionDigest)) -or
             [string]$proof.DiagnosticExpectedMarker -ne $ExpectedMarker -or
             [String]::IsNullOrWhiteSpace([string]$proof.RunId) -or
             [String]::IsNullOrWhiteSpace([string]$proof.RouteId) -or
@@ -1851,13 +2642,17 @@ function Test-Task43ForcedNegativeProof([string]$ExpectedMarker,
             $proof.RoutePassedAfterCleanup -ne $true) {
         return $false
     }
-    if ($ExpectedMarker -eq 'FAIL:task43p-forced-negative-canary' -and
+    if ((Test-Task43PForcedNegativeMarker $ExpectedMarker) -and
             [string]$proof.DiagnosticBaselineHead -ne
                 $script:Task43PPublishedBaselineSha) {
         return $false
     }
     if ($null -ne $script:VerifierContext -and
             [string]$script:VerifierContext.RunId -ne [string]$proof.RunId) {
+        return $false
+    }
+    if (-not [String]::IsNullOrWhiteSpace([string]$script:VerifierCurrentRouteId) -and
+            [string]$script:VerifierCurrentRouteId -ne [string]$proof.RouteId) {
         return $false
     }
     if ($script:VerifierFailureExitCode -ne 0 -or
@@ -1877,9 +2672,10 @@ function Get-Task43ForcedNegativeRouteExitCode([string]$ExpectedMarker) {
     return 2
 }
 
-function Resolve-Task43ForcedNegativeTopLevelExitCode([int]$CandidateExitCode,
+function Resolve-Task43ForcedNegativeTopLevelExitCode($CandidateExitCode,
         [string]$ExpectedMarker) {
-    if ($CandidateExitCode -eq 1 -and
+    if ((Test-VerifierStrictIntegralValue $CandidateExitCode 0 2) -and
+            [int]$CandidateExitCode -eq 1 -and
             (Test-Task43ForcedNegativeProof $ExpectedMarker -RequireFinalCleanup)) {
         return 1
     }
@@ -1890,7 +2686,15 @@ function Resolve-Task43ForcedNegativeTopLevelExitCode([int]$CandidateExitCode,
 function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
         [string]$expectedFailure, [string]$runId = '', [string]$routeId = '',
         [string]$baselineHead = '') {
-    if (-not (Test-Task43ForcedFailureDiagnosticText $failure $expectedFailure)) {
+    $proof = $script:Task43ForcedNegativeProof
+    $expectedNonce = if ((Test-Task43PForcedNegativeMarker $expectedFailure) -and
+            $null -ne $proof) { [string]$proof.Nonce } else { '' }
+    $expectedRequestId = if ((Test-Task43PForcedNegativeMarker $expectedFailure) -and
+            $null -ne $proof) { [string]$proof.RequestId } else { '' }
+    $expectedExecutionDigest = if ((Test-Task43PForcedNegativeMarker $expectedFailure) -and
+            $null -ne $proof) { [string]$proof.ExecutionDigest } else { '' }
+    if (-not (Test-Task43ForcedFailureDiagnosticText $failure $expectedFailure `
+            $expectedNonce $routeId $expectedRequestId $expectedExecutionDigest)) {
         return $false
     }
     if ([String]::IsNullOrWhiteSpace($runId) -or
@@ -1898,7 +2702,7 @@ function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
             $null -eq $script:VerifierContext -or
             $script:VerifierContext.RunId -ne $runId -or
             $script:VerifierCurrentRouteId -ne $routeId) { return $false }
-    if ($expectedFailure -eq 'FAIL:task43p-forced-negative-canary' -and
+    if ((Test-Task43PForcedNegativeMarker $expectedFailure) -and
             $baselineHead -ne $script:Task43PPublishedBaselineSha) { return $false }
     return $true
 }
@@ -1913,14 +2717,14 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
     $expectedFailureObserved = $false
     $task43pRepositoryBefore = $null
     $isTask43ForcedRoute = ($expectedFailure -eq 'FAIL:task43-forced-negative-canary' -or
-        $expectedFailure -eq 'FAIL:task43p-forced-negative-canary')
+        (Test-Task43PForcedNegativeMarker $expectedFailure))
     if ($isTask43ForcedRoute) {
         # This is the only reset point for the route proof.  Later failures
         # invalidate it; they never create a fresh success state.
         Reset-Task43ForcedNegativeProof $expectedFailure $name
     }
     if ($name -like 'task43p *') {
-        $task43pRepositoryBefore = Get-Task43PRepositoryState
+        $task43pRepositoryBefore = Get-Task43PRepositoryState $script:Task43PExecutionRoots
     }
     $task43pBaselineHead = if ($null -eq $task43pRepositoryBefore) { '' } else {
         [string]$task43pRepositoryBefore.headSha
@@ -1936,7 +2740,12 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
         $script:CdpRouteDeadline = $deadline
         [void](invokeCdp $socket ([ref]$nextId) 'Runtime.enable' @{} ([ref]$failures) $deadline)
         [void](invokeCdp $socket ([ref]$nextId) 'Page.enable' @{} ([ref]$failures) $deadline)
-        [void](navigateAndWaitForDocument $socket ([ref]$nextId) $url $deadline ([ref]$failures))
+        if ($name -like 'task43p *') {
+            Wait-Task43PBrowserStartup $socket ([ref]$nextId) ([ref]$failures) `
+                $deadline $Task43PStartupSettleMilliseconds
+        }
+        $routeUrl = Get-Task43ForcedNegativeNavigationUrl $url
+        [void](navigateAndWaitForDocument $socket ([ref]$nextId) $routeUrl $deadline ([ref]$failures))
         if ($expectedComplaint) {
             $escapedComplaint = $expectedComplaint.Replace("'", "\\'")
             $ticketExpression = "(()=>{const title=[...document.querySelectorAll('.tsj-component-title')].find(e=>e.textContent.trim()==='Service Ticket');if(!title||!title.parentElement)return false;const lines=title.parentElement.innerText.split(/\r?\n+/).map(x=>x.trim()).filter(Boolean);return lines.length===2&&lines[0]==='Service Ticket'&&lines[1]==='$escapedComplaint';})()"
@@ -2006,8 +2815,15 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
             Write-Host "NPN ELECTRICAL REPORT: $npnElectricalReport"
         }
         if ($name -like 'task43p *') {
-            Capture-Task43PEvidence $socket ([ref]$nextId) $deadline ([ref]$failures) `
-                $name $expected $verificationResult $task43pRepositoryBefore
+            if ($null -ne $script:Task43PSourceDefinition) {
+                if ($script:Task43PSourceDefinition.id -ceq 'public-remove-action-disabled') {
+                    Invoke-Task43PPublicRemoveProbe $socket ([ref]$nextId) $deadline ([ref]$failures)
+                }
+                Capture-Task43PSourceObservation $task43pRepositoryBefore
+            } else {
+                Capture-Task43PEvidence $socket ([ref]$nextId) $deadline ([ref]$failures) `
+                    $name $expected $verificationResult $task43pRepositoryBefore
+            }
         }
         Start-Sleep -Milliseconds 100
         [void](evaluateCdp $socket ([ref]$nextId) "document.readyState" ([ref]$failures) $deadline)
@@ -2033,6 +2849,9 @@ function verifyRoute([string]$name, [string]$url, [string]$expected,
             Write-Host "EXPECTED FAILURE $name - $expectedFailure (anchored Java console diagnostic observed)"
         } elseif ($verificationResult.StartsWith('UNPROVEN:')) {
             Write-Host "UNPROVEN $name - $verificationResult (typed evidence recorded)"
+        } elseif ($verificationResult -ceq 'OBSERVED:task43p-runtime') {
+            Write-Host ("OBSERVED $name - typed runtime evidence recorded; open blockers=" +
+                $script:Task43PRuntimeOutcome.OpenBlockerCount)
         } else {
             Write-Host "PASS $name"
         }
@@ -2140,7 +2959,7 @@ function clickButtonAndWaitForPredicate($socket, [ref]$nextId, [string]$text,
             clickPoint $socket $nextId $point 'left' $failures
             $settleDeadline = [DateTime]::UtcNow.AddSeconds(3)
             if ($settleDeadline -gt $deadline) { $settleDeadline = $deadline }
-            waitForCdp $socket $nextId $successExpression $settleDeadline ([ref]$failures) $description
+            waitForCdp $socket $nextId $successExpression $settleDeadline $failures $description
             return
         } catch {
             if (Test-VerifierInfrastructureError $_) { throw }
@@ -2185,7 +3004,7 @@ function clickTrayPartAndWaitForSelection($socket, [ref]$nextId, [string]$button
             clickPoint $socket $nextId $button 'left' $failures
             $selectionDeadline = [DateTime]::UtcNow.AddSeconds(3)
             if ($selectionDeadline -gt $deadline) { $selectionDeadline = $deadline }
-            waitForCdp $socket $nextId "[...document.querySelectorAll('.tsj-component-panel')].some(p=>p.innerText.includes('$escapedSelectedText')&&p.innerText.includes('State: Loose'))" $selectionDeadline ([ref]$failures) 'selected loose tray part panel'
+            waitForCdp $socket $nextId "[...document.querySelectorAll('.tsj-component-panel')].some(p=>p.innerText.includes('$escapedSelectedText')&&p.innerText.includes('State: Loose'))" $selectionDeadline $failures 'selected loose tray part panel'
             return evaluateCdp $socket $nextId "(()=>{const panel=[...document.querySelectorAll('.tsj-component-panel')].find(p=>p.innerText.includes('$escapedSelectedText')&&p.innerText.includes('State: Loose'));return panel?panel.innerText:'';})()" $failures
         } catch {
             if (Test-VerifierInfrastructureError $_) { throw }
@@ -2321,17 +3140,17 @@ function selectOptionWithKeyboard($socket, [ref]$nextId, [int]$selectIndex,
             if (-not $attemptInfo.visible) { throw "catalog did not scroll into view: $optionText" }
             $focusPlan = evaluateCdp $socket $nextId "(()=>{const target=document.querySelectorAll('select')[$selectIndex];return {found:!!target&&!target.disabled&&target.getClientRects().length>0};})()" $failures
             if (-not $focusPlan.found) { throw "catalog is not keyboard reachable: $optionText" }
-            clickPoint $socket $nextId $attemptInfo 'left' ([ref]$failures)
+            clickPoint $socket $nextId $attemptInfo 'left' $failures
             $selectionDeadline = [DateTime]::UtcNow.AddSeconds(5)
-            waitForCdp $socket $nextId "document.activeElement===document.querySelectorAll('select')[$selectIndex]" $selectionDeadline ([ref]$failures) 'catalog select focus'
+            waitForCdp $socket $nextId "document.activeElement===document.querySelectorAll('select')[$selectIndex]" $selectionDeadline $failures 'catalog select focus'
             sendKey $socket $nextId 'Escape' 27 $failures
-            waitForCdp $socket $nextId "document.activeElement===document.querySelectorAll('select')[$selectIndex]" $selectionDeadline ([ref]$failures) 'catalog select focus after closing popup'
+            waitForCdp $socket $nextId "document.activeElement===document.querySelectorAll('select')[$selectIndex]" $selectionDeadline $failures 'catalog select focus after closing popup'
             sendKey $socket $nextId 'Home' 36 $failures
-            waitForCdp $socket $nextId "(()=>{const e=document.querySelectorAll('select')[$selectIndex];return document.activeElement===e&&e.selectedIndex===0&&e.selectedOptions[0].text===e.options[0].text;})()" $selectionDeadline ([ref]$failures) 'catalog first option after Home'
+            waitForCdp $socket $nextId "(()=>{const e=document.querySelectorAll('select')[$selectIndex];return document.activeElement===e&&e.selectedIndex===0&&e.selectedOptions[0].text===e.options[0].text;})()" $selectionDeadline $failures 'catalog first option after Home'
             for ($index = 1; $index -le [int]$attemptInfo.index; $index++) {
                 sendKey $socket $nextId 'ArrowDown' 40 $failures
                 $stepIndex = $index
-                waitForCdp $socket $nextId "(()=>{const e=document.querySelectorAll('select')[$selectIndex],i=$stepIndex;return document.activeElement===e&&e.selectedIndex===i&&e.selectedOptions[0].text===e.options[i].text;})()" $selectionDeadline ([ref]$failures) "catalog option $stepIndex after ArrowDown"
+                waitForCdp $socket $nextId "(()=>{const e=document.querySelectorAll('select')[$selectIndex],i=$stepIndex;return document.activeElement===e&&e.selectedIndex===i&&e.selectedOptions[0].text===e.options[i].text;})()" $selectionDeadline $failures "catalog option $stepIndex after ArrowDown"
             }
             $actual = evaluateCdp $socket $nextId "document.querySelectorAll('select')[$selectIndex].selectedOptions[0].text" $failures
             if ($actual -ne $optionText) {
@@ -2366,7 +3185,7 @@ function captureBrowserScreenshot($socket, [ref]$nextId, [string]$path, [ref]$fa
         format = 'png'; fromSurface = $true; captureBeyondViewport = $false
     } $failures
     try {
-        Write-VerifierEvidenceBytes $path [Convert]::FromBase64String($result.result.data) `
+        Write-VerifierEvidenceBytes $path ([Convert]::FromBase64String($result.result.data)) `
             'screenshot evidence'
     } catch {
         Throw-VerifierInfrastructure "Could not write screenshot evidence '$path': $(Get-VerifierErrorMessage $_)"
@@ -3290,13 +4109,18 @@ function Resolve-VerifierIntegratedChildExitCode([bool]$TerminationProven,
     return (Resolve-VerifierChildExitCode $false $numericExitCode)
 }
 
-function Start-VerifierIntegratedChildProcess([string]$FilePath,
-        [string[]]$Arguments) {
-    $process = New-Object Diagnostics.Process
+function Start-VerifierIntegratedChildProcess($FilePath, $Arguments) {
+    # Keep both values raw until the same shared boundary used by every other
+    # verifier process launch. In particular, do not construct even a
+    # Diagnostics.Process object before malformed input has been rejected.
+    $invocation = Assert-VerifierProcessInvocationBoundary $FilePath $Arguments `
+        'integrated child'
+    $process = $null
     try {
+        $process = New-Object Diagnostics.Process
         $startInfo = New-Object Diagnostics.ProcessStartInfo
-        $startInfo.FileName = $FilePath
-        $startInfo.Arguments = ConvertTo-VerifierArgumentString $Arguments
+        $startInfo.FileName = $invocation.FilePath
+        $startInfo.Arguments = ConvertTo-VerifierArgumentString $invocation.Arguments
         $startInfo.UseShellExecute = $false
         $startInfo.CreateNoWindow = $true
         $startInfo.RedirectStandardOutput = $true
@@ -3312,6 +4136,61 @@ function Start-VerifierIntegratedChildProcess([string]$FilePath,
         Throw-VerifierInfrastructure ('Could not start integrated child process: ' +
             (Get-VerifierErrorMessage $_))
     }
+}
+
+function Invoke-VerifierIntegratedProcessInvocationBoundaryCanary() {
+    $cases = @(
+        [pscustomobject]@{ Name = 'null-path'; FilePath = $null; Arguments = @() }
+        [pscustomobject]@{ Name = 'boolean-path'; FilePath = $true; Arguments = @() }
+        [pscustomobject]@{ Name = 'array-path'; FilePath = @('powershell.exe'); Arguments = @() }
+        [pscustomobject]@{ Name = 'null-arguments'; FilePath = 'powershell.exe'; Arguments = $null }
+        [pscustomobject]@{ Name = 'scalar-arguments'; FilePath = 'powershell.exe'; Arguments = '-NoProfile' }
+        [pscustomobject]@{ Name = 'boolean-arguments'; FilePath = 'powershell.exe'; Arguments = $true }
+        [pscustomobject]@{ Name = 'boolean-element'; FilePath = 'powershell.exe'; Arguments = @('-NoProfile', $true) }
+        [pscustomobject]@{ Name = 'object-element'; FilePath = 'powershell.exe'; Arguments = @([pscustomobject]@{ Value = '-NoProfile' }) }
+    )
+    foreach ($case in $cases) {
+        $rejected = $false
+        $returnedProcess = $null
+        try {
+            $returnedProcess = Start-VerifierIntegratedChildProcess $case.FilePath $case.Arguments
+        } catch {
+            $rejected = Test-VerifierInfrastructureError $_
+        }
+        if ($null -ne $returnedProcess) {
+            try { Stop-VerifierIntegratedChildExact $returnedProcess } catch { }
+            throw "Integrated process boundary canary '$($case.Name)' returned a process for malformed input."
+        }
+        if (-not $rejected) {
+            throw "Integrated process boundary canary '$($case.Name)' was not rejected before process creation."
+        }
+    }
+    Write-Host 'PASS:integrated child raw invocation boundary rejects malformed input before process construction'
+}
+
+function Invoke-VerifierRequestedExitCodeCanary() {
+    $cases = @(
+        [pscustomobject]@{ Name = 'zero'; Value = 0; Expected = 0 }
+        [pscustomobject]@{ Name = 'one'; Value = 1; Expected = 1 }
+        [pscustomobject]@{ Name = 'two'; Value = 2; Expected = 2 }
+        [pscustomobject]@{ Name = 'negative'; Value = -1; Expected = 2 }
+        [pscustomobject]@{ Name = 'arbitrary'; Value = 3; Expected = 2 }
+        [pscustomobject]@{ Name = 'numeric-string'; Value = '1'; Expected = 2 }
+        [pscustomobject]@{ Name = 'fraction'; Value = 1.5; Expected = 2 }
+        [pscustomobject]@{ Name = 'boolean'; Value = $true; Expected = 2 }
+        [pscustomobject]@{ Name = 'array'; Value = @(1); Expected = 2 }
+    )
+    foreach ($case in $cases) {
+        $exception = [System.InvalidOperationException]::new(
+            ('requested-exit-code canary ' + $case.Name))
+        $exception.Data['VerifierExitCode'] = $case.Value
+        $script:VerifierFailureExitCode = 0
+        $actual = Get-VerifierRequestedExitCode $exception
+        if ([int]$actual -ne [int]$case.Expected) {
+            throw "Requested exit-code canary '$($case.Name)' returned $actual instead of $($case.Expected)."
+        }
+    }
+    Write-Host 'PASS:requested verifier exits are strictly whitelisted to 0/1/2; malformed codes resolve to exit 2'
 }
 
 function Stop-VerifierIntegratedChildExact($Process) {
@@ -3551,6 +4430,8 @@ function Assert-VerifierDurableBooleanPair($LedgerValue, $ManifestValue,
 
 function Assert-VerifierDurableStringPair($LedgerValue, $ManifestValue,
         [string]$Name) {
+    $timestampField = $Name -in @('bindValidatedUtc', 'releasedUtc', 'listenerInspectionUtc')
+    $normalizedValues = @()
     foreach ($copy in @(
             [pscustomobject]@{ Label = 'ledger'; Value = $LedgerValue }
             [pscustomobject]@{ Label = 'manifest'; Value = $ManifestValue }
@@ -3558,19 +4439,23 @@ function Assert-VerifierDurableStringPair($LedgerValue, $ManifestValue,
         $property = if ($null -eq $copy.Value) { $null } else {
             $copy.Value.PSObject.Properties[$Name]
         }
-        if ($null -eq $property -or
-                -not (Test-VerifierStrictStringProperty $copy.Value $Name)) {
+        if ($null -eq $property) {
             Throw-VerifierInfrastructure "Durable $($copy.Label) '$Name' was missing or was not an exact string."
         }
+        if ($timestampField) {
+            $normalizedValues += ConvertTo-VerifierStrictTimestampText $property.Value $true `
+                ("Durable $($copy.Label) '$Name'") -AllowJsonDateTime
+        } elseif (-not (Test-VerifierStrictStringProperty $copy.Value $Name)) {
+            Throw-VerifierInfrastructure "Durable $($copy.Label) '$Name' was missing or was not an exact string."
+        } else {
+            $normalizedValues += $property.Value
+        }
     }
-    $ledgerValue = $LedgerValue.PSObject.Properties[$Name].Value
-    $manifestValue = $ManifestValue.PSObject.Properties[$Name].Value
-    if ($ledgerValue.GetType() -ne $manifestValue.GetType() -or
-            -not [String]::Equals($ledgerValue, $manifestValue,
+    if (-not [String]::Equals($normalizedValues[0], $normalizedValues[1],
                 [StringComparison]::Ordinal)) {
         Throw-VerifierInfrastructure "Durable ledger and manifest disagreed on exact string field '$Name'."
     }
-    return $ledgerValue
+    return $normalizedValues[0]
 }
 
 function Get-VerifierDurableArrayProperty($Object, [string]$Name,
@@ -3802,6 +4687,265 @@ function Test-VerifierIntegratedLeaseTerminal($Lease, $ClaimPath,
         $ExpectedRunId $ExpectedRepositoryIdentity $ExpectedWorktreeRoot
 }
 
+function Invoke-GateBIntegratedKernelLedgerCanary([string]$RepositoryRoot,
+        [string]$PreviewScript, [string]$WebRoot) {
+    # This is an actual integrated completion-consumer canary.  The process
+    # identities are deterministic test records, while the released-listener
+    # query remains the production Confirm-VerifierReleasedListener call so
+    # the kernel branch proves real absence without ever treating PID 4 as a
+    # terminable process.
+    $readerContext = $null
+    $readerRoot = Get-VerifierFullPath (Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\verify\integrated-kernel-reader-' +
+            [Guid]::NewGuid().ToString('N')))
+    $oldRecordedProcessAbsent = $null
+    $oldBrowserSnapshot = $null
+    try {
+        $readerContext = New-VerifierRunContext $RepositoryRoot '' $readerRoot
+        $readerPort = 40194
+        $readerLeaseId = 'gate-b-integrated-kernel-lease'
+        $readerClaimName = Get-VerifierPortMutexName $null $readerPort
+        $readerClaimPath = Get-VerifierFullPath (Join-Path $readerContext.PortLeaseRoot `
+            ([string]$readerPort + '-' + $readerLeaseId + '.lease'))
+        $claimOwnerProcess = Get-Process -Id $PID -ErrorAction Stop
+        $claimOwnerStart = [long](Get-VerifierProcessStartTicks $claimOwnerProcess)
+        $boundProcessId = 65402
+        $boundProcessStart = 234502L
+        $readerLease = [pscustomobject]([ordered]@{
+            leaseId = $readerLeaseId; kind = 'preview'; port = $readerPort
+            path = $readerClaimPath; runId = $readerContext.RunId
+            repositoryIdentity = $readerContext.RepositoryIdentity
+            worktreeRoot = $readerContext.WorktreeRoot
+            status = 'released'; claimName = $readerClaimName
+            claimState = 'released'; claimOwnerPid = [int]$PID
+            claimOwnerStartTicks = $claimOwnerStart
+            profile = ''; browserPath = ''; registered = $true
+            boundProcessId = $boundProcessId
+            boundProcessStartTicks = $boundProcessStart
+            listenerProcessId = 4; listenerProcessStartTicks = $null
+            listenerOwnerKind = 'kernel-transport'
+            listenerOwnerProof = 'run-owned-preview-http-sys-v1'
+            listenerOwnerEvidence = 'pid-4-system-http-sys'
+            bindValidatedUtc = ''; releasedUtc = ''
+            releaseState = 'complete'; releaseJournalState = 'complete'
+            releaseBlocked = $false; releaseBlockReason = ''
+            mutexReleased = $true; listenerInspectionSuccess = $true
+            listenerInspectionKnown = $true; listenerHasListeners = $false
+            listenerAbsent = $true; listenerInspectionUtc = ''
+            processTerminationProven = $true; processAbsent = $true
+            processProofRequired = $true; ClaimMutex = $null
+            claim = [ordered]@{
+                protocol = 'troubleshootjs-verifier-port-claim-v1'
+                runId = $readerContext.RunId
+                repositoryIdentity = $readerContext.RepositoryIdentity
+                worktreeRoot = $readerContext.WorktreeRoot
+                leaseId = $readerLeaseId; path = $readerClaimPath
+                kind = 'preview'; port = $readerPort
+                mutexName = $readerClaimName; ownerPid = [int]$PID
+                ownerStartTicks = $claimOwnerStart
+            }
+        })
+        $serverLogRoot = Get-VerifierFullPath (Join-Path $readerContext.RunRoot 'server')
+        New-Item -ItemType Directory -Path $serverLogRoot -Force -ErrorAction Stop | Out-Null
+        $stdoutLog = Get-VerifierFullPath (Join-Path $serverLogRoot 'stdout.log')
+        $stderrLog = Get-VerifierFullPath (Join-Path $serverLogRoot 'stderr.log')
+        Write-VerifierEvidenceText $stdoutLog 'gate-b kernel reader stdout' `
+            'Gate B integrated kernel reader stdout'
+        Write-VerifierEvidenceText $stderrLog '' `
+            'Gate B integrated kernel reader stderr'
+        $readerCommandLine = 'powershell.exe -File "' + $PreviewScript +
+            '" -Port ' + [string]$readerPort + ' -VerifierRunId ' +
+            $readerContext.RunId + ' -VerifierNonce ' + $readerContext.PreviewNonce
+        $readerServer = [pscustomobject]([ordered]@{
+            owner = 'run'; baseUrl = 'http://127.0.0.1:' + [string]$readerPort
+            repositoryIdentity = $readerContext.RepositoryIdentity
+            worktreeRoot = $readerContext.WorktreeRoot
+            repositoryRoot = $RepositoryRoot; webRoot = $WebRoot
+            identityProtocol = 'troubleshootjs-preview-identity-v1'
+            identityVerified = $true; callerOwned = $false
+            port = $readerPort; processId = $boundProcessId
+            processStartTicks = $boundProcessStart
+            processParentProcessId = 65403
+            processParentProcessStartTicks = 234503L
+            processCommandLine = $readerCommandLine; script = $PreviewScript
+            runId = $readerContext.RunId; nonce = $readerContext.PreviewNonce
+            leaseId = $readerLeaseId; leaseKind = 'preview'
+            leaseClaimName = $readerClaimName; leaseClaimState = 'released'
+            leaseReleaseState = 'complete'
+            leaseReleaseJournalState = 'complete'
+            leasePath = $readerClaimPath; leaseOwnerPid = [int]$PID
+            leaseOwnerStartTicks = $claimOwnerStart
+            leaseListenerAbsent = $true; leaseProcessProofRequired = $true
+            leaseListenerOwnerKind = 'kernel-transport'
+            leaseListenerOwnerProof = 'run-owned-preview-http-sys-v1'
+            leaseListenerOwnerEvidence = 'pid-4-system-http-sys'
+            state = 'cleaned'; stdoutLog = $stdoutLog; stderrLog = $stderrLog
+            cleanupResult = 'complete'; error = ''
+            processIdentityKnown = $true; ownershipUncertain = $false
+            processTerminationProven = $true; processAbsent = $true
+            listenerInspectionProven = $true; listenerAbsent = $true
+        })
+        $manifest = ConvertFrom-VerifierDurableJson (
+            Get-Content -LiteralPath $readerContext.ManifestPath -Raw)
+        $manifest.leases = @($readerLease)
+        $manifest.browserSessions = @()
+        $manifest.artifacts = @()
+        $manifest.server = $readerServer
+        $manifest.cleanup.state = 'complete'
+        $manifest.cleanup.completedUtc = '2026-08-31T00:00:01.0000000Z'
+        $manifest.cleanup.errors = @()
+        $manifestText = $manifest | ConvertTo-Json -Depth 16
+        Write-VerifierEvidenceText $readerContext.ManifestPath $manifestText `
+            'Gate B integrated kernel reader manifest'
+        $readerLedgerPath = Get-VerifierFullPath (Join-Path $readerContext.RunNamespaceRoot `
+            'completed-kernel-transport.json')
+        $ledger = [ordered]@{
+            protocol = 'troubleshootjs-integrated-child-ledger-v1'
+            state = 'completed'; forcedNegativeProof = $null
+            runId = $readerContext.RunId
+            repositoryIdentity = $readerContext.RepositoryIdentity
+            worktreeRoot = $readerContext.WorktreeRoot
+            parentNamespaceRoot = $readerContext.RunNamespaceRoot
+            runRoot = $readerContext.RunRoot
+            manifestPath = $readerContext.ManifestPath
+            evidenceDirectory = $readerContext.EvidenceDirectory
+            evidence = @(); leases = @($readerLease); profiles = @()
+            server = $readerServer; cleanupState = 'complete'
+            cleanupErrors = @(); error = ''; updatedUtc = Get-VerifierUtcText
+        }
+        $ledgerText = $ledger | ConvertTo-Json -Depth 16
+        Write-VerifierEvidenceText $readerLedgerPath $ledgerText `
+            'Gate B integrated kernel reader ledger'
+        $baselineLedgerText = [IO.File]::ReadAllText($readerLedgerPath)
+        $baselineManifestText = [IO.File]::ReadAllText($readerContext.ManifestPath)
+
+        $oldRecordedProcessAbsent = (Get-Command Confirm-VerifierRecordedProcessAbsent `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldBrowserSnapshot = (Get-Command Get-VerifierBrowserProcessSnapshot `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $script:GateBKernelReaderProcessCalls = 0
+        $script:GateBKernelReaderExpectedRunId = $readerContext.RunId
+        $script:GateBKernelReaderExpectedPort = $readerPort
+        Set-Item Function:\Confirm-VerifierRecordedProcessAbsent -Force -Value {
+            param($Recorded, [string]$Role, [string]$ExpectedCommandLine,
+                $Port, [string]$Script, [string]$RunId, [string]$Nonce,
+                [string]$Profile)
+            $recordedPid = $Recorded.PSObject.Properties['ProcessId']
+            $recordedStart = $Recorded.PSObject.Properties['ProcessStartTicks']
+            if ($null -eq $recordedPid -or $null -eq $recordedStart -or
+                    [long]$recordedPid.Value -ne 65402L -or
+                    [long]$recordedStart.Value -ne 234502L) {
+                throw 'Gate B kernel reader process-proof hook received an unexpected identity.'
+            }
+            $script:GateBKernelReaderProcessCalls++
+            return [pscustomobject]@{
+                QueryProven = $true; Absent = $true; Replaced = $false
+                Current = $null
+            }
+        }
+        Set-Item Function:\Get-VerifierBrowserProcessSnapshot -Force -Value {
+            param([string]$BrowserPath = '', [string]$Profile = '',
+                [string]$RunId = '', [string]$RepositoryIdentity = '', $Port = 0,
+                [string]$Script = '', [string]$Nonce = '')
+            if ($RunId -cne $script:GateBKernelReaderExpectedRunId -or
+                    [int]$Port -ne [int]$script:GateBKernelReaderExpectedPort) {
+                throw 'Gate B kernel reader process-snapshot hook received an unexpected identity.'
+            }
+            return @()
+        }
+        try {
+            $accepted = Read-VerifierIntegratedChildLedger $readerLedgerPath 2
+            if ([string]$accepted.state -cne 'completed' -or
+                    [int]$script:GateBKernelReaderProcessCalls -ne 2) {
+                throw 'completed paired kernel ledger/manifest reader did not consume both exact process proofs.'
+            }
+            foreach ($variantDefinition in @(
+                    [pscustomobject]@{ Name = 'missing listener owner kind'; Action = 'remove-kind' }
+                    [pscustomobject]@{ Name = 'PID 4 with non-null start'; Action = 'kernel-start' }
+                    [pscustomobject]@{ Name = 'arbitrary listener owner proof'; Action = 'arbitrary-proof' }
+                    [pscustomobject]@{ Name = 'wrong listener owner record'; Action = 'wrong-owner' }
+                )) {
+                $variantLedger = ConvertFrom-VerifierDurableJson $baselineLedgerText
+                $variantManifest = ConvertFrom-VerifierDurableJson $baselineManifestText
+                $variantLease = $variantLedger.leases[0]
+                $variantManifestLease = $variantManifest.leases[0]
+                switch ($variantDefinition.Action) {
+                    'remove-kind' {
+                        [void]$variantLease.PSObject.Properties.Remove('listenerOwnerKind')
+                        [void]$variantManifestLease.PSObject.Properties.Remove('listenerOwnerKind')
+                    }
+                    'kernel-start' {
+                        $variantLease.listenerProcessStartTicks = 234502L
+                        $variantManifestLease.listenerProcessStartTicks = 234502L
+                    }
+                    'arbitrary-proof' {
+                        $variantLease.listenerOwnerProof = 'arbitrary-record'
+                        $variantManifestLease.listenerOwnerProof = 'arbitrary-record'
+                    }
+                    'wrong-owner' {
+                        $variantLease.listenerProcessId = 5
+                        $variantManifestLease.listenerProcessId = 5
+                    }
+                }
+                $variantLedgerText = $variantLedger | ConvertTo-Json -Depth 16
+                $variantManifestText = $variantManifest | ConvertTo-Json -Depth 16
+                Write-VerifierEvidenceText $readerLedgerPath $variantLedgerText `
+                    ('Gate B integrated ' + $variantDefinition.Name + ' ledger')
+                Write-VerifierEvidenceText $readerContext.ManifestPath $variantManifestText `
+                    ('Gate B integrated ' + $variantDefinition.Name + ' manifest')
+                $callsBefore = [int]$script:GateBKernelReaderProcessCalls
+                $rejected = $false
+                try {
+                    [void](Read-VerifierIntegratedChildLedger $readerLedgerPath 2)
+                } catch { $rejected = Test-VerifierInfrastructureError $_ }
+                $ledgerAfter = [IO.File]::ReadAllText($readerLedgerPath)
+                $manifestAfter = [IO.File]::ReadAllText($readerContext.ManifestPath)
+                if (-not $rejected -or
+                        $ledgerAfter -cne $variantLedgerText -or
+                        $manifestAfter -cne $variantManifestText -or
+                        [int]$script:GateBKernelReaderProcessCalls -ne $callsBefore) {
+                    throw "integrated $($variantDefinition.Name) was accepted, mutated, or queried before schema rejection."
+                }
+                Write-VerifierEvidenceText $readerLedgerPath $baselineLedgerText `
+                    'Gate B integrated kernel reader ledger restore'
+                Write-VerifierEvidenceText $readerContext.ManifestPath $baselineManifestText `
+                    'Gate B integrated kernel reader manifest restore'
+            }
+        } finally {
+            Set-Item Function:\Confirm-VerifierRecordedProcessAbsent -Force `
+                -Value $oldRecordedProcessAbsent
+            Set-Item Function:\Get-VerifierBrowserProcessSnapshot -Force `
+                -Value $oldBrowserSnapshot
+            Remove-Variable -Name GateBKernelReaderProcessCalls -Scope Script `
+                -Force -ErrorAction SilentlyContinue
+            Remove-Variable -Name GateBKernelReaderExpectedRunId -Scope Script `
+                -Force -ErrorAction SilentlyContinue
+            Remove-Variable -Name GateBKernelReaderExpectedPort -Scope Script `
+                -Force -ErrorAction SilentlyContinue
+        }
+        Write-Host 'PASS:completed paired kernel ledger/manifest listener absence used ExpectedProcessId=0/ExpectedStartTicks=0, rejected missing/malformed/arbitrary owner records before process queries, and performed no PID 4 termination'
+    } finally {
+        if ($null -ne $oldRecordedProcessAbsent) {
+            Set-Item Function:\Confirm-VerifierRecordedProcessAbsent -Force `
+                -Value $oldRecordedProcessAbsent
+        }
+        if ($null -ne $oldBrowserSnapshot) {
+            Set-Item Function:\Get-VerifierBrowserProcessSnapshot -Force `
+                -Value $oldBrowserSnapshot
+        }
+        Remove-Variable -Name GateBKernelReaderProcessCalls -Scope Script `
+            -Force -ErrorAction SilentlyContinue
+        Remove-Variable -Name GateBKernelReaderExpectedRunId -Scope Script `
+            -Force -ErrorAction SilentlyContinue
+        Remove-Variable -Name GateBKernelReaderExpectedPort -Scope Script `
+            -Force -ErrorAction SilentlyContinue
+        if (Test-Path -LiteralPath $readerRoot) {
+            Remove-VerifierOwnedTree (Get-VerifierFullPath (Join-Path ([IO.Path]::GetTempPath()) `
+                'TroubleshootJS\verify')) $readerRoot
+        }
+    }
+}
+
 function Assert-VerifierIntegratedForcedNegativeProof($Proof,
         [int]$ExpectedExit, [string]$ExpectedMarker = '') {
     if ($ExpectedExit -ne 1) { return }
@@ -3812,7 +4956,7 @@ function Assert-VerifierIntegratedForcedNegativeProof($Proof,
             'runId', 'routeId', 'observedMarker', 'markerExpectedMarker',
             'markerRunId', 'markerRouteId', 'diagnosticExpectedMarker',
             'diagnosticRunId', 'diagnosticRouteId', 'anchoredJavaDiagnostic',
-            'diagnosticBaselineHead')) {
+            'diagnosticBaselineHead', 'nonce', 'requestId', 'executionDigest')) {
         $property = $Proof.PSObject.Properties[$stringProperty]
         if ($null -eq $property -or
                 -not (Test-VerifierStrictStringValue $property.Value)) {
@@ -3859,12 +5003,27 @@ function Assert-VerifierIntegratedForcedNegativeProof($Proof,
             (Get-VerifierLedgerProperty $Proof 'diagnosticRouteId') -ne $routeId) {
         Throw-VerifierInfrastructure 'Integrated expected-exit-1 child forced-negative marker/diagnostic run or route identity was incomplete.'
     }
+    $proofNonce = Get-VerifierLedgerProperty $Proof 'nonce'
+    $proofRequestId = Get-VerifierLedgerProperty $Proof 'requestId'
+    $proofExecutionDigest = Get-VerifierLedgerProperty $Proof 'executionDigest'
+    if (Test-Task43PForcedNegativeMarker $ExpectedMarker) {
+        if ([String]::IsNullOrWhiteSpace($proofNonce) -or
+                [String]::IsNullOrWhiteSpace($proofRequestId) -or
+                $proofExecutionDigest -notmatch '^[0-9a-f]{64}$') {
+            Throw-VerifierInfrastructure 'Integrated expected-exit-1 Task43P child omitted its nonce/request/execution identity.'
+        }
+    } elseif (-not [String]::IsNullOrWhiteSpace($proofNonce) -or
+            -not [String]::IsNullOrWhiteSpace($proofRequestId) -or
+            -not [String]::IsNullOrWhiteSpace($proofExecutionDigest)) {
+        Throw-VerifierInfrastructure 'Integrated legacy forced-negative child carried unexpected Task43P identity fields.'
+    }
     $diagnostic = Get-VerifierLedgerProperty $Proof 'anchoredJavaDiagnostic'
-    if (-not (Test-Task43ForcedFailureDiagnosticText $diagnostic $ExpectedMarker)) {
+    if (-not (Test-Task43ForcedFailureDiagnosticText $diagnostic $ExpectedMarker `
+            $proofNonce $routeId $proofRequestId $proofExecutionDigest)) {
         Throw-VerifierInfrastructure 'Integrated expected-exit-1 child omitted the exact anchored Java forced-negative diagnostic.'
     }
     $baselineHead = Get-VerifierLedgerProperty $Proof 'diagnosticBaselineHead'
-    if ($ExpectedMarker -eq 'FAIL:task43p-forced-negative-canary' -and
+    if ((Test-Task43PForcedNegativeMarker $ExpectedMarker) -and
             $baselineHead -ne $script:Task43PPublishedBaselineSha) {
         Throw-VerifierInfrastructure 'Integrated expected-exit-1 Task43P child did not prove the published baseline identity.'
     }
@@ -3875,12 +5034,18 @@ function Assert-VerifierIntegratedForcedNegativeProof($Proof,
 }
 
 function Assert-VerifierIntegratedLedgerString($Object, [string]$Name,
-        [string]$Label) {
+        [string]$Label, [switch]$Timestamp, [switch]$AllowEmpty) {
     $property = if ($null -eq $Object) { $null } else {
         $Object.PSObject.Properties[$Name]
     }
-    if ($null -eq $property -or
-            -not (Test-VerifierStrictStringValue $property.Value)) {
+    if ($null -eq $property) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed exact string '$Name'."
+    }
+    if ($Timestamp) {
+        return ConvertTo-VerifierStrictTimestampText $property.Value ([bool]$AllowEmpty) `
+            ("$Label $Name") -AllowJsonDateTime
+    }
+    if (-not (Test-VerifierStrictStringValue $property.Value)) {
         Throw-VerifierInfrastructure "$Label omitted or malformed exact string '$Name'."
     }
     return $property.Value
@@ -3977,7 +5142,7 @@ function Read-VerifierIntegratedClaimRecord($Claim, $Lease, [string]$ClaimPath,
     $claimOwnerStart = $Claim.PSObject.Properties['ownerStartTicks'].Value
 
     if ($claimProtocol -cne 'troubleshootjs-verifier-port-claim-v1' -or
-            $claimKind -notin @('cdp', 'preview') -or
+            -not (Test-VerifierSupportedPortLeaseKind $claimKind) -or
             $claimKind -cne $leaseKind -or
             $claimRunId -cne $leaseRunId -or $claimRunId -cne $ExpectedRunId -or
             $claimRepositoryIdentity -cne $leaseRepositoryIdentity -or
@@ -4047,9 +5212,11 @@ function Assert-VerifierIntegratedLedgerCopySchema($Ledger, [string]$LedgerJson)
     }
     foreach ($name in @('protocol', 'state', 'runId', 'repositoryIdentity',
             'worktreeRoot', 'parentNamespaceRoot', 'runRoot', 'manifestPath',
-            'evidenceDirectory', 'cleanupState', 'error', 'updatedUtc')) {
+            'evidenceDirectory', 'cleanupState', 'error')) {
         [void](Assert-VerifierIntegratedLedgerString $Ledger $name 'integrated child ledger')
     }
+    [void](Assert-VerifierIntegratedLedgerString $Ledger 'updatedUtc' `
+        'integrated child ledger' -Timestamp)
     $proofProperty = $Ledger.PSObject.Properties['forcedNegativeProof']
     if ($null -eq $proofProperty) {
         Throw-VerifierInfrastructure 'Integrated child ledger omitted its explicit forced-negative proof state.'
@@ -4062,7 +5229,8 @@ function Assert-VerifierIntegratedLedgerCopySchema($Ledger, [string]$LedgerJson)
         foreach ($name in @('protocol', 'expectedMarker', 'expectedRoute', 'runId',
                 'routeId', 'observedMarker', 'markerExpectedMarker', 'markerRunId',
                 'markerRouteId', 'anchoredJavaDiagnostic', 'diagnosticExpectedMarker',
-                'diagnosticRunId', 'diagnosticRouteId', 'diagnosticBaselineHead')) {
+                'diagnosticRunId', 'diagnosticRouteId', 'diagnosticBaselineHead',
+                'nonce', 'requestId', 'executionDigest')) {
             [void](Assert-VerifierIntegratedLedgerString $proof $name `
                 'integrated child forced-negative proof')
         }
@@ -4115,10 +5283,12 @@ function Assert-VerifierIntegratedManifestCopySchema($Manifest, [string]$Manifes
     }
     foreach ($name in @('protocol', 'runId', 'repositoryIdentity',
             'worktreeRoot', 'runRoot', 'evidenceDirectory', 'manifestPath',
-            'evidenceNamespaceRoot', 'runNamespaceRoot', 'createdUtc',
+            'evidenceNamespaceRoot', 'runNamespaceRoot',
             'baseUrl', 'previewNonce')) {
         [void](Assert-VerifierIntegratedLedgerString $Manifest $name 'integrated child manifest')
     }
+    [void](Assert-VerifierIntegratedLedgerString $Manifest 'createdUtc' `
+        'integrated child manifest' -Timestamp)
     $manifestPreviewNonce = Assert-VerifierIntegratedLedgerString $Manifest `
         'previewNonce' 'integrated child manifest'
     if ([String]::IsNullOrWhiteSpace($manifestPreviewNonce)) {
@@ -4157,10 +5327,17 @@ function Assert-VerifierIntegratedManifestCopySchema($Manifest, [string]$Manifes
         Throw-VerifierInfrastructure 'Integrated child manifest omitted an exact cleanup object.'
     }
     $cleanup = $cleanupProperty.Value
-    [void](Assert-VerifierIntegratedLedgerString $cleanup 'state' `
-        'integrated child manifest cleanup')
-    [void](Assert-VerifierIntegratedLedgerString $cleanup 'completedUtc' `
-        'integrated child manifest cleanup')
+    $cleanupState = Assert-VerifierIntegratedLedgerString $cleanup 'state' `
+        'integrated child manifest cleanup'
+    if ($cleanupState -cnotin @('pending', 'complete', 'infrastructure-failure')) {
+        Throw-VerifierInfrastructure 'Integrated child manifest cleanup carried an unknown finite cleanup state.'
+    }
+    $cleanupCompletedUtc = Assert-VerifierIntegratedLedgerString $cleanup 'completedUtc' `
+        'integrated child manifest cleanup' -Timestamp `
+        -AllowEmpty:($cleanupState -ne 'complete')
+    if ($cleanupState -ceq 'pending' -and $cleanupCompletedUtc -cne '') {
+        Throw-VerifierInfrastructure 'Integrated child manifest pending cleanup carried a completion timestamp.'
+    }
     $cleanupErrors = Get-VerifierDurableArrayProperty $cleanup 'errors' `
         'integrated child manifest cleanup' $ManifestJson
     foreach ($errorItem in @($cleanupErrors)) {
@@ -4208,7 +5385,7 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
     }
     try {
         $ledgerJson = Get-Content -LiteralPath $canonicalLedger -Raw
-        $ledger = $ledgerJson | ConvertFrom-Json
+        $ledger = ConvertFrom-VerifierDurableJson $ledgerJson
     } catch {
         Throw-VerifierInfrastructure ('Integrated child ledger was not valid JSON: ' +
             (Get-VerifierErrorMessage $_))
@@ -4268,7 +5445,7 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
     }
     try {
         $manifestJson = Get-Content -LiteralPath $manifestPath -Raw
-        $manifest = $manifestJson | ConvertFrom-Json
+        $manifest = ConvertFrom-VerifierDurableJson $manifestJson
     } catch {
         Throw-VerifierInfrastructure ('Integrated child manifest was not valid JSON: ' +
             (Get-VerifierErrorMessage $_))
@@ -4305,8 +5482,10 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
     $ledgerCleanupState = Get-VerifierRequiredLedgerProperty $ledger 'cleanupState' `
         'integrated child ledger cleanup'
     if ($null -eq $ledgerCleanupState -or
-            $ledgerCleanupState.GetType() -ne [string]) {
-        Throw-VerifierInfrastructure 'Integrated child ledger cleanupState was missing or was not an exact string.'
+            $ledgerCleanupState.GetType() -ne [string] -or
+            $ledgerCleanupState -cnotin @('pending', 'complete',
+                'infrastructure-failure')) {
+        Throw-VerifierInfrastructure 'Integrated child ledger cleanupState was missing or was not a recognized finite exact string.'
     }
     $manifestCleanupState = Get-VerifierRequiredLedgerProperty $manifestCleanup 'state' `
         'integrated child manifest cleanup'
@@ -4641,7 +5820,7 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             Throw-VerifierInfrastructure "Integrated child lease $leaseId had foreign, incomplete, or mismatched identity fields."
         }
         $leaseKind = [string](Get-VerifierLedgerProperty $lease 'kind' '')
-        if ($leaseKind -notin @('preview', 'cdp')) {
+        if (-not (Test-VerifierSupportedPortLeaseKind $leaseKind)) {
             Throw-VerifierInfrastructure "Integrated child lease $leaseId used an unsupported lease kind '$leaseKind'."
         }
         $leasePortForPath = $leasePortForIdentity
@@ -5105,8 +6284,25 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
         Assert-VerifierDurableBooleanPair $server $manifestServer $durableBoolean.Name `
             -AllowNull:$durableBoolean.AllowNull
     }
-    if (-not (Test-VerifierIntegratedServerListenerOwnerSchema $server) -or
-            -not (Test-VerifierIntegratedServerListenerOwnerSchema $manifestServer)) {
+    $serverOwnerLeaseForSchema = $null
+    $manifestServerOwnerLeaseForSchema = $null
+    if ($serverOwner -eq 'run') {
+        $serverLeaseIdForSchema = [string](Get-VerifierLedgerProperty $server 'leaseId' '')
+        $serverOwnerLeaseCandidates = @($ledgerLeases | Where-Object {
+            [string](Get-VerifierLedgerProperty $_ 'leaseId' '') -ceq $serverLeaseIdForSchema
+        })
+        $manifestServerOwnerLeaseCandidates = @($manifestLeases | Where-Object {
+            [string](Get-VerifierLedgerProperty $_ 'leaseId' '') -ceq $serverLeaseIdForSchema
+        })
+        if (@($serverOwnerLeaseCandidates).Count -ne 1 -or
+                @($manifestServerOwnerLeaseCandidates).Count -ne 1) {
+            Throw-VerifierInfrastructure 'Integrated child run-owned server listener owner proof did not identify exactly one paired lease in each durable copy.'
+        }
+        $serverOwnerLeaseForSchema = $serverOwnerLeaseCandidates[0]
+        $manifestServerOwnerLeaseForSchema = $manifestServerOwnerLeaseCandidates[0]
+    }
+    if (-not (Test-VerifierIntegratedServerListenerOwnerSchema $server $serverOwnerLeaseForSchema) -or
+            -not (Test-VerifierIntegratedServerListenerOwnerSchema $manifestServer $manifestServerOwnerLeaseForSchema)) {
         Throw-VerifierInfrastructure 'Integrated child server omitted or malformed its explicit listener owner tuple.'
     }
     foreach ($serverListenerOwnerProperty in @('leaseListenerOwnerKind',
@@ -5432,7 +6628,7 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
             $expectedPid = if ($kernelTransport) { 0 } elseif ($listenerPid -gt 0) {
                 $listenerPid
             } else { $boundPid }
-            $expectedStart = $boundStart
+            $expectedStart = if ($kernelTransport) { 0L } else { $boundStart }
             if (-not $kernelTransport -and $listenerPid -gt 0) {
                 $listenerStartProperty = $lease.PSObject.Properties['listenerProcessStartTicks']
                 if ($null -eq $listenerStartProperty -or $null -eq $listenerStartProperty.Value) {
@@ -5846,7 +7042,7 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
     }
     $commandParts = @('&', (& $quotePowerShellArgument $PSCommandPath),
         '-BaseUrl', (& $quotePowerShellArgument $BaseUrl),
-        '-TimeoutSeconds', (& $quotePowerShellArgument ([string]$TimeoutSeconds)),
+        '-TimeoutSeconds', ('([int]' + [string]$TimeoutSeconds + ')'),
         '-BrowserPath', (& $quotePowerShellArgument $childBrowserPath),
         '-ParentLedgerPath', (& $quotePowerShellArgument $childLedgerPath),
         '-ParentNamespaceRoot', (& $quotePowerShellArgument (Split-Path -Parent $childLedgerPath)))
@@ -6231,23 +7427,42 @@ if ($Task41) {
     return 0
 }
 if ($Task43PForcedNegative) {
+    $marker = Get-Task43ForcedNegativeExpectedMarker
+    $routeName = Get-Task43ForcedNegativeExpectedRoute $marker
     try {
-        [void](verifyRoute 'task43p forced-negative canary' `
-            "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask43P=true&tsjTask43PForcedFailure=true&running=true" `
-            'UNPROVEN:task43p' '' 'FAIL:task43p-forced-negative-canary')
+        $family = 'led'
+        $seed = 3
+        if ($null -ne $script:Task43PSourceDefinition) {
+            $family = $script:Task43PSourceDefinition.urlFamily
+            $seed = $script:Task43PSourceDefinition.seed
+        }
+        [void](verifyRoute $routeName `
+            "$BaseUrl/circuitjs.html?tsjChallenge=$family&seed=$seed&tsjVerifyTask43P=true&tsjTask43PForcedFailure=true&running=true" `
+            'UNPROVEN:task43p' '' $marker)
     } catch {
         Invalidate-Task43ForcedNegativeProof
         Write-Host "FAIL task43p forced-negative canary - verifier infrastructure: $($_.Exception.Message)"
         return 2
     }
-    return (Get-Task43ForcedNegativeRouteExitCode `
-        'FAIL:task43p-forced-negative-canary')
+    return (Get-Task43ForcedNegativeRouteExitCode $marker)
 }
 if ($Task43P) {
+    if ($Task43PRuntime) {
+        $runtimeRoute = "$BaseUrl/circuitjs.html?tsjChallenge=led&seed=3&" +
+            'tsjVerifyTask43P=true&tsjTask43PRuntime=true&running=true'
+        if (-not (verifyRoute 'task43p runtime lanes' $runtimeRoute `
+                'OBSERVED:task43p-runtime')) { return 2 }
+        if ($null -eq $script:Task43PRuntimeOutcome) {
+            Throw-VerifierInfrastructure 'Task43P runtime route completed without its validated outcome.'
+        }
+        $script:Task43PRuntimeRoutePassedAfterCleanup = $true
+        return $script:Task43PRuntimeOutcome.ExitCode
+    }
     $task43pSeeds = if ($script:VerifierBoundParameters.ContainsKey('Seeds')) { $Seeds } else {
         @(0, 2, 3)
     }
     $task43pFamilies = @('led', 'diode', 'rc', 'npn', 'nmos', 'parallel')
+    if ($Task43PFamily -cne '') { $task43pFamilies = @($Task43PFamily) }
     foreach ($task43pFamily in $task43pFamilies) {
         foreach ($seed in $task43pSeeds) {
             $task43pRoute = "$BaseUrl/circuitjs.html?tsjChallenge=$task43pFamily&seed=$seed&" +
@@ -6503,6 +7718,27 @@ function Invoke-GateBListenerProofCanary() {
             [string]$userLease.listenerOwnerEvidence -ne 'system-diagnostics-process-starttime') {
         throw 'user-process positive listener bind did not retain its exact owner proof.'
     }
+    $missingKindLiveLease = $userLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
+    $missingKindLiveInspection = $userPositiveInspection | ConvertTo-Json -Depth 16 |
+        ConvertFrom-Json
+    [void]$missingKindLiveInspection.PSObject.Properties.Remove('ListenerOwnerKind')
+    [void]$missingKindLiveInspection.Listeners[0].PSObject.Properties.Remove('ListenerOwnerKind')
+    $missingKindLiveBefore = $missingKindLiveLease | ConvertTo-Json -Depth 16 -Compress
+    $missingKindLiveRejected = $false
+    try {
+        & $module[0] {
+            param($targetLease, $inspection, $previewContext, $previewOwner,
+                $processId, $processStartTicks)
+            Set-VerifierLeaseListenerInspection $targetLease $inspection `
+                $previewContext $previewOwner $processId $processStartTicks
+        } $missingKindLiveLease $missingKindLiveInspection $userPreviewContext `
+            $userDirectOwner $PID $userProcessStartTicks
+    } catch { $missingKindLiveRejected = Test-VerifierInfrastructureError $_ }
+    if (-not $missingKindLiveRejected -or
+            ($missingKindLiveLease | ConvertTo-Json -Depth 16 -Compress) -ne
+            $missingKindLiveBefore) {
+        throw 'live listener consumer accepted or mutated an inspection missing ListenerOwnerKind.'
+    }
     Invoke-VerifierParentLedgerWriterTupleCanary $userLease
     Invoke-VerifierCleanupArrayReaderCanary
     Invoke-VerifierDurableReaderSchemaCanary
@@ -6692,6 +7928,19 @@ function Invoke-GateBListenerProofCanary() {
         RunId = $runId; RepositoryIdentity = $repositoryIdentity
         WorktreeRoot = $repositoryRoot; PortLeaseRoot = $repositoryRoot
     }
+    $missingKindCleanupLease = $userTerminalSerializedLease | ConvertTo-Json -Depth 16 |
+        ConvertFrom-Json
+    [void]$missingKindCleanupLease.PSObject.Properties.Remove('listenerOwnerKind')
+    $missingKindCleanupBefore = $missingKindCleanupLease | ConvertTo-Json -Depth 16 -Compress
+    $missingKindCleanupRejected = $false
+    try {
+        Release-VerifierPortLease $releaseBoundaryContext $missingKindCleanupLease
+    } catch { $missingKindCleanupRejected = Test-VerifierInfrastructureError $_ }
+    if (-not $missingKindCleanupRejected -or
+            ($missingKindCleanupLease | ConvertTo-Json -Depth 16 -Compress) -ne
+            $missingKindCleanupBefore) {
+        throw 'cleanup listener consumer accepted or mutated a lease missing ListenerOwnerKind.'
+    }
     foreach ($releaseVariantDefinition in @(
             [pscustomobject]@{ Name = 'pathless'; Field = 'path'; Value = '' }
             [pscustomobject]@{ Name = 'release-blocked'; Field = 'releaseBlocked'; Value = $true }
@@ -6791,11 +8040,24 @@ function Invoke-GateBListenerProofCanary() {
          ListenerOwnerEvidence = 'pid-4-system-http-sys'
          Error = ''
     }
+    # Kernel listener consumers no longer perform a second semantic
+    # authorization. Create the opaque capability at the initial preview
+    # boundary and carry it into the setter below.
+    $kernelAuthorizationProof = & $module[0] {
+        param($previewContext, $previewOwner, $port)
+        New-VerifierRunOwnedPreviewHttpSysAuthorizationProof `
+            $previewContext $previewOwner $port
+    } $kernelPreviewContext $kernelPreviewOwner $kernelPort
+    if ($null -eq $kernelAuthorizationProof) {
+        throw 'kernel transport proof canary could not create its initial opaque authorization proof.'
+    }
     & $module[0] {
-        param($targetLease, $inspection, $previewContext, $previewOwner)
+        param($targetLease, $inspection, $previewContext, $previewOwner,
+            $authorizationProof)
         Set-VerifierLeaseListenerInspection $targetLease $inspection `
-            $previewContext $previewOwner
-    } $kernelLease $kernelPositiveInspection $kernelPreviewContext $kernelPreviewOwner
+            $previewContext $previewOwner $null $null $authorizationProof
+    } $kernelLease $kernelPositiveInspection $kernelPreviewContext `
+        $kernelPreviewOwner $kernelAuthorizationProof
     if ([string]$kernelLease.listenerOwnerKind -ne 'kernel-transport' -or
             [string]$kernelLease.listenerOwnerProof -ne 'run-owned-preview-http-sys-v1' -or
             [string]$kernelLease.listenerOwnerEvidence -ne 'pid-4-system-http-sys' -or
@@ -6847,6 +8109,7 @@ function Invoke-GateBListenerProofCanary() {
             $kernelServer $runId $repositoryIdentity $repositoryRoot)) {
         throw 'completed kernel-transport listener lease did not validate after proof-preserving absence.'
     }
+    Invoke-GateBIntegratedKernelLedgerCanary $repositoryRoot $previewScript $webRoot
 
     foreach ($remainingLease in @($userLease, $kernelLease)) {
         $remainingVariant = $remainingLease | ConvertTo-Json -Depth 16 | ConvertFrom-Json
@@ -6952,7 +8215,7 @@ function Invoke-GateBListenerProofCanary() {
             throw "durable string pair accepted a $($typeDefinition.Name) type mismatch."
         }
     }
-    Write-Host 'PASS:listener owner proof bind/absence preservation, user/kernel terminal validation, paired forged user/PID4 rejection, malformed terminal release fail-closed/no-mutation, canonical delegation, remaining-listener fail-closed behavior, paired tuple equality, and malformed scalar/legacy/mismatch rejection'
+    Write-Host 'PASS:listener owner proof bind/absence preservation, user/kernel terminal validation, actual paired kernel ledger/manifest completion-reader absence proof, paired forged user/PID4 rejection, malformed terminal release fail-closed/no-mutation, canonical delegation, remaining-listener fail-closed behavior, paired tuple equality, and malformed scalar/legacy/mismatch rejection'
     } finally {
         if ($kernelPreviewClaimName -and $null -ne $kernelPreviewMutex) {
             & $module[0] {
@@ -6980,6 +8243,8 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
     $priorContext = $script:VerifierContext
     $priorRouteId = $script:VerifierCurrentRouteId
     $priorProof = $script:Task43ForcedNegativeProof
+    $priorSourceDefinition = $script:Task43PSourceDefinition
+    $script:Task43PSourceDefinition = $null
     $priorObserved = $script:task43ExpectedFailureObserved
     $priorRoutePassed = $script:task43ExpectedFailureRoutePassed
     $priorFailureExit = $script:VerifierFailureExitCode
@@ -7004,6 +8269,10 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
     $setValid = {
         param([string]$Marker, [string]$Diagnostic, [string]$BaselineHead)
         & $reset $Marker
+        if ([String]::IsNullOrWhiteSpace($Diagnostic) -and
+                (Test-Task43PForcedNegativeMarker $Marker)) {
+            $Diagnostic = Get-Task43ForcedNegativeExpectedDiagnostic $Marker
+        }
         Set-Task43ForcedNegativeMarkerObserved $Marker
         if (-not (isExpectedTask43ForcedFailureDiagnostic $Diagnostic $Marker `
                 $runId $routeId $BaselineHead)) {
@@ -7021,10 +8290,10 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
             throw 'integrated child $?/$LASTEXITCODE ambiguity did not remain infrastructure.'
         }
         Write-Host 'PASS:integrated child $?/$LASTEXITCODE stale-status ambiguity -> exit 2'
-        $task43pDiagnostic = 'Console failure: exception in runCircuit java.lang.IllegalStateException: ' +
-            'Generated board verification failed for led/controlled-indicator, seed 3: ' +
-            $task43pMarker.Substring(5)
-        & $setValid $task43pMarker $task43pDiagnostic $script:Task43PPublishedBaselineSha
+        # Construct the valid proof only after the reset so its nonce/request
+        # identity cannot be carried across routes.
+        & $setValid $task43pMarker '' $script:Task43PPublishedBaselineSha
+        $task43pDiagnostic = Get-Task43ForcedNegativeExpectedDiagnostic $task43pMarker
         if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 1) {
             throw 'exact anchored Task43P proof did not resolve to application exit 1.'
         }
@@ -7046,6 +8315,20 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
             throw 'preview-before-application forced-negative uncertainty was not exit 2.'
         }
         Write-Host 'PASS:forced-negative preview-before-application uncertainty -> exit 2'
+
+        & $reset $task43pMarker
+        Set-Task43ForcedNegativeMarkerObserved $task43pMarker
+        $forgedPageDiagnostic = 'Console failure: exception in runCircuit java.lang.IllegalStateException: ' +
+            'Generated board verification failed for led/controlled-indicator, seed 3: ' +
+            $task43pMarker.Substring(5)
+        if (isExpectedTask43ForcedFailureDiagnostic $forgedPageDiagnostic $task43pMarker `
+                $runId $routeId $script:Task43PPublishedBaselineSha) {
+            throw 'forged-page marker/console canary was accepted without the Java request proof.'
+        }
+        if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 2) {
+            throw 'forged-page marker/console canary did not resolve to exit 2.'
+        }
+        Write-Host 'PASS:forged-page Task43P marker/console without Java request proof -> exit 2'
 
         foreach ($uncertainty in @(
             [pscustomobject]@{ Name = 'browser identity unavailable'; Message = 'synthetic browser identity unavailable' }
@@ -7076,6 +8359,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
 
         & $reset $task43pMarker
         Set-Task43ForcedNegativeMarkerObserved $task43pMarker
+        $task43pDiagnostic = Get-Task43ForcedNegativeExpectedDiagnostic $task43pMarker
         $wrongDiagnostic = $task43pDiagnostic.Replace($task43pMarker.Substring(5), 'wrong-java-text')
         if (isExpectedTask43ForcedFailureDiagnostic $wrongDiagnostic $task43pMarker `
                 $runId $routeId $script:Task43PPublishedBaselineSha) {
@@ -7085,6 +8369,59 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
             throw 'wrong Java forced-negative text did not resolve to exit 2.'
         }
         Write-Host 'PASS:forced-negative wrong Java text -> not expected success/exit 2'
+
+        foreach ($sourceId in @('renderer-only-j1-1-plus-20px',
+                'renderer-only-j1-1-lead-plus-20px', 'raw-copper-j1-1-endpoint-gap',
+                'raw-net-mismatch', 'solver-binding-j1-1-post-mismatch',
+                'solver-detachable-c1-plus-identity-mismatch', 'package-mirror-mismatch',
+                'internally-self-consistent-wrong-mapping', 'omitted-manifest-terminal',
+                'snapshot-restore-resistance-current-omitted', 'public-remove-action-disabled')) {
+            $script:Task43PSourceDefinition = Get-Task43PSourceExperimentDefinition $sourceId
+            $sourceMarker = $script:Task43PSourceDefinition.expectedMarker
+            & $setValid $sourceMarker '' $script:Task43PPublishedBaselineSha
+            $sourceDiagnostic = Get-Task43ForcedNegativeExpectedDiagnostic $sourceMarker
+            foreach ($badDiagnostic in @(
+                $sourceDiagnostic.Replace('experiment=' + $sourceId, 'experiment=wrong-source-id'),
+                $sourceDiagnostic.Replace('run=' + $runId, 'run=wrong-run-id'),
+                $sourceDiagnostic.Replace(', seed ' + [string]$script:Task43PSourceDefinition.seed + ':', ', seed 99:'),
+                $sourceDiagnostic.Replace(' nonce=', "`nnonce="),
+                ($sourceDiagnostic + "`nunrelated error"),
+                $sourceDiagnostic.Replace($sourceMarker.Substring(5), 'different-validator-failure'))) {
+                if (isExpectedTask43ForcedFailureDiagnostic $badDiagnostic $sourceMarker `
+                        $runId $routeId $script:Task43PPublishedBaselineSha) {
+                    throw "source-negative wrong diagnostic was accepted: $sourceId"
+                }
+            }
+            foreach ($field in @('RunId', 'RouteId', 'Nonce', 'RequestId',
+                    'ExecutionDigest', 'DiagnosticBaselineHead')) {
+                $originalValue = $script:Task43ForcedNegativeProof.$field
+                $script:Task43ForcedNegativeProof.$field = 'different-proof-identity'
+                if (Test-Task43ForcedNegativeProof $sourceMarker) {
+                    throw "source-negative mismatched $field was accepted: $sourceId"
+                }
+                $script:Task43ForcedNegativeProof.$field = $originalValue
+            }
+            Set-Task43ForcedNegativeFinalCleanupProven $true
+            if ((Resolve-Task43ForcedNegativeTopLevelExitCode 1 $sourceMarker) -ne 1) {
+                throw "complete exact source-negative proof was rejected: $sourceId"
+            }
+            & $setValid $sourceMarker '' $script:Task43PPublishedBaselineSha
+            if ((Resolve-Task43ForcedNegativeTopLevelExitCode 1 $sourceMarker) -ne 2) {
+                throw "source-negative unproven final cleanup was accepted: $sourceId"
+            }
+            & $reset $sourceMarker
+            Set-Task43ForcedNegativeMarkerObserved $sourceMarker
+            if ((Get-Task43ForcedNegativeRouteExitCode $sourceMarker) -ne 2) {
+                throw "source-negative DOM-only marker was accepted: $sourceId"
+            }
+        }
+        $unknownSourceRejected = $false
+        try { [void](Get-Task43PSourceExperimentDefinition 'arbitrary-failure') } catch {
+            $unknownSourceRejected = Test-VerifierInfrastructureError $_
+        }
+        if (-not $unknownSourceRejected) { throw 'unknown source-negative ID was accepted' }
+        Write-Host 'PASS:source-negative exact Java/DOM identities, malformed diagnostics, missing proof, and final-cleanup gates'
+        $script:Task43PSourceDefinition = $null
 
         $legacyDiagnostic = 'Console failure: exception in runCircuit java.lang.IllegalStateException: ' +
             'Generated board verification failed for led/controlled-indicator, seed 3: ' +
@@ -7135,6 +8472,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
         $script:VerifierContext = $priorContext
         $script:VerifierCurrentRouteId = $priorRouteId
         $script:Task43ForcedNegativeProof = $priorProof
+        $script:Task43PSourceDefinition = $priorSourceDefinition
         $script:task43ExpectedFailureObserved = $priorObserved
         $script:task43ExpectedFailureRoutePassed = $priorRoutePassed
         $script:VerifierFailureExitCode = $priorFailureExit
@@ -7155,12 +8493,23 @@ if ($GateBListenerProofProbe) {
         exit 2
     }
 }
+if ($GateBForcedNegativeProofProbe) {
+    try {
+        Invoke-Task43ForcedNegativeContractCanaries
+        exit 0
+    } catch {
+        [Console]::Error.WriteLine('FAIL:forced-negative proof canary - ' + $_.Exception.Message)
+        exit 2
+    }
+}
 if ($GateBContractProbe) {
     try {
         if ($GateBContractProbeFailure) {
             Throw-VerifierInfrastructure 'deterministic Gate B CDP contract-probe failure'
         }
         Invoke-Task43ForcedNegativeContractCanaries
+        Invoke-VerifierIntegratedProcessInvocationBoundaryCanary
+        Invoke-VerifierRequestedExitCodeCanary
         function evaluateCdp {
             param($socket, [ref]$nextId, [string]$expression, [ref]$failures,
                 [DateTime]$deadline = [DateTime]::MinValue)
@@ -7371,28 +8720,23 @@ if ($GateBContractProbe) {
                      if ([String]::IsNullOrWhiteSpace($claimName)) {
                          $claimName = 'Global\TroubleshootJS.Verifier.Port.' + [string]$port
                      }
-                     $profileValue = [string](Get-VerifierLedgerProperty $candidate 'profile' '')
+                     $profileValue = [string](Get-VerifierCanaryLedgerProperty $candidate 'profile' '')
                      if ([String]::IsNullOrWhiteSpace($profileValue)) {
-                         $profileValue = [string](Get-VerifierLedgerProperty $candidate 'ProfilePath' '')
+                         $profileValue = [string](Get-VerifierCanaryLedgerProperty $candidate 'ProfilePath' '')
                      }
                      $ownerPid = [int](Get-VerifierLedgerProperty $candidate 'claimOwnerPid' $PID)
                      $ownerStart = [long](Get-VerifierLedgerProperty $candidate 'claimOwnerStartTicks' 1)
                      $mutexReleased = Get-VerifierDurableBooleanValue $candidate `
                          'MutexReleased' ('canary lease ' + $leaseId + ' mutexReleased')
                      $candidateListenerPid = [int](Get-VerifierLedgerProperty $candidate 'listenerProcessId' 0)
-                     $listenerStartProperty = $candidate.PSObject.Properties['listenerProcessStartTicks']
-                     $listenerStartValue = if ($null -ne $listenerStartProperty) {
-                         $listenerStartProperty.Value
-                     } else { $null }
-                     $listenerOwnerKindValue = if ($candidate.PSObject.Properties['listenerOwnerKind']) {
-                         [string]$candidate.listenerOwnerKind
-                     } else { $null }
-                     $listenerOwnerProofValue = if ($candidate.PSObject.Properties['listenerOwnerProof']) {
-                         [string]$candidate.listenerOwnerProof
-                     } else { $null }
-                     $listenerOwnerEvidenceValue = if ($candidate.PSObject.Properties['listenerOwnerEvidence']) {
-                         [string]$candidate.listenerOwnerEvidence
-                     } else { $null }
+                     $listenerStartValue = Get-VerifierCanaryLedgerProperty $candidate `
+                         'listenerProcessStartTicks' $null
+                     $listenerOwnerKindValue = [string](Get-VerifierCanaryLedgerProperty `
+                         $candidate 'listenerOwnerKind' '')
+                     $listenerOwnerProofValue = [string](Get-VerifierCanaryLedgerProperty `
+                         $candidate 'listenerOwnerProof' '')
+                     $listenerOwnerEvidenceValue = [string](Get-VerifierCanaryLedgerProperty `
+                         $candidate 'listenerOwnerEvidence' '')
                      $normalizedLeases += [pscustomobject]([ordered]@{
                         runId = $Context.RunId; repositoryIdentity = $Context.RepositoryIdentity
                         worktreeRoot = $Context.WorktreeRoot; leaseId = $leaseId
@@ -7512,7 +8856,7 @@ if ($GateBContractProbe) {
                 # provide canonical descriptors explicitly.
                 $providedLeases = @($Leases)
                 $providedAreCanonical = (@($providedLeases | Where-Object {
-                    $null -eq $_ -or $null -eq (Get-VerifierLedgerProperty $_ 'claim' $null)
+                    $null -eq $_ -or $null -eq (Get-VerifierCanaryLedgerProperty $_ 'claim' $null)
                 }).Count -eq 0)
                 if ($providedAreCanonical) {
                     $manifest.leases = $providedLeases
@@ -7523,6 +8867,9 @@ if ($GateBContractProbe) {
                 }
                 $manifest.browserSessions = @($Profiles)
                 if ($null -ne $Server) { $manifest.server = $Server }
+                if ($null -ne $Context.PSObject.Properties['CleanupState']) {
+                    $manifest.cleanup.state = [string]$Context.CleanupState
+                }
                 Write-VerifierEvidenceText $Context.ManifestPath `
                     ($manifest | ConvertTo-Json -Depth 12) 'Gate B manifest canary'
             }
@@ -7533,6 +8880,7 @@ if ($GateBContractProbe) {
             $zeroParent = Get-VerifierFullPath (Join-Path $ledgerCanaryRoot 'completed-zero')
             $zeroContext = New-VerifierRunContext $repoForLedger '' $zeroParent
             $zeroContext.CleanupState = 'complete'
+            $zeroContext.CleanupCompletedUtc = '2026-08-31T00:00:01.0000000Z'
             Write-VerifierManifest $zeroContext
             $zeroLedgerPath = Get-VerifierFullPath (Join-Path $zeroParent 'expected2-completed.json')
             Write-GateBLedger $zeroContext $zeroLedgerPath 'completed' `
@@ -7600,10 +8948,17 @@ if ($GateBContractProbe) {
                 browserPath = $ledgerBrowserPath; processId = 0; processStartTicks = 0
                 processParentProcessId = 0; processParentProcessStartTicks = 0
                 processCommandLine = ''
+                routeId = 'gate-b-real-resource'; routeName = 'Gate B real resource'
+                targetId = ''; expectedUrl = ''
+                expectedRunMarker = 'tsjVerifierRun=' + $realResourceContext.RunId
+                expectedRouteMarker = 'tsjVerifierRoute=gate-b-real-resource'
                 status = 'cleaned'; cleanupResult = 'complete'
+                profileProcessScanCompleted = $true; profileInspectionFailed = $false
+                error = ''
             }
             Remove-VerifierOwnedTree $realResourceContext.RunRoot $realResourceProfile
             $realResourceContext.CleanupState = 'complete'
+            $realResourceContext.CleanupCompletedUtc = Get-VerifierUtcText
             Write-VerifierManifest $realResourceContext
             Set-GateBManifestResources $realResourceContext -Leases @($realResourceLease) `
                 -Profiles @($realResourceProfileRecord) -Server $null
@@ -7853,9 +9208,12 @@ if ($GateBContractProbe) {
                     worktreeRoot=$callerCanaryContext.WorktreeRoot
                     repositoryRoot=$callerCanaryContext.WorktreeRoot; webRoot=$callerWebRoot
                     identityProtocol='troubleshootjs-preview-identity-v1'; identityVerified=$true; callerOwned=$true
-                    port=40126; processId=0; processStartTicks=0; processParentProcessId=0; processCommandLine=''
+                    port=40126; processId=0; processStartTicks=0; processParentProcessId=0; processParentProcessStartTicks=0; processCommandLine=''
                     script=$callerScript; runId=''; nonce=''; leaseId=''; leaseKind=''; leaseClaimName=''
-                    leaseClaimState=''; leaseReleaseState=''; leaseOwnerPid=0; leaseOwnerStartTicks=0; leasePath=''
+                    leaseClaimState=''; leaseReleaseState=''; leaseReleaseJournalState=''
+                    leaseOwnerPid=0; leaseOwnerStartTicks=0; leasePath=''
+                    leaseListenerOwnerKind='none'; leaseListenerOwnerProof=''; leaseListenerOwnerEvidence=''
+                    leaseListenerAbsent=$null; leaseProcessProofRequired=$null
                     stdoutLog=''; stderrLog=''; state='caller-verified'; cleanupResult='not-owned'
                     error=''
                     Lease=$null; Process=$null
@@ -7864,6 +9222,7 @@ if ($GateBContractProbe) {
                 }
                 $callerCanaryContext.Server = [pscustomobject]$callerServerLedger
                 $callerCanaryContext.CleanupState = 'complete'
+                $callerCanaryContext.CleanupCompletedUtc = Get-VerifierUtcText
                 Write-VerifierManifest $callerCanaryContext
                 Set-GateBManifestResources $callerCanaryContext -Leases @() -Profiles @() `
                     -Server $callerServerLedger
@@ -8037,7 +9396,7 @@ if ($GateBContractProbe) {
             $staleClaimPath = Get-VerifierFullPath (Join-Path $staleContext.PortLeaseRoot ('40123-' + $staleLeaseId + '.lease'))
             $staleClaimName = Get-VerifierPortMutexName $null 40123
             $staleClaim = [ordered]@{ protocol='troubleshootjs-verifier-port-claim-v1'; runId=$staleContext.RunId; repositoryIdentity=$staleContext.RepositoryIdentity; worktreeRoot=$staleContext.WorktreeRoot; leaseId=$staleLeaseId; path=$staleClaimPath; kind='cdp'; port=40123; mutexName=$staleClaimName; ownerPid=$PID; ownerStartTicks=1 }
-            $staleLease = [ordered]@{ runId=$staleContext.RunId; repositoryIdentity=$staleContext.RepositoryIdentity; worktreeRoot=$staleContext.WorktreeRoot; leaseId=$staleLeaseId; path=$staleClaimPath; kind='cdp'; port=40123; claimName=$staleClaimName; browserPath=$ledgerBrowserPath; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='released'; claimState='released'; releaseState='complete'; mutexReleased=$false; profile=''; listenerInspectionSuccess=$true; listenerInspectionKnown=$true; listenerHasListeners=$false; boundProcessId=0; boundProcessStartTicks=0; listenerProcessId=0; listenerProcessStartTicks=0; listenerOwnerKind='none'; listenerOwnerProof=''; listenerOwnerEvidence=''; claim=$staleClaim }
+            $staleLease = [ordered]@{ runId=$staleContext.RunId; repositoryIdentity=$staleContext.RepositoryIdentity; worktreeRoot=$staleContext.WorktreeRoot; leaseId=$staleLeaseId; path=$staleClaimPath; kind='cdp'; port=40123; claimName=$staleClaimName; browserPath=$ledgerBrowserPath; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='released'; claimState='released'; releaseState='complete'; releaseJournalState='complete'; registered=$true; releaseBlocked=$false; releaseBlockReason=''; bindValidatedUtc=''; releasedUtc=''; mutexReleased=$false; profile=''; listenerInspectionSuccess=$true; listenerInspectionKnown=$true; listenerInspectionUtc=''; listenerHasListeners=$false; listenerAbsent=$true; processTerminationProven=$false; processAbsent=$false; processProofRequired=$false; boundProcessId=0; boundProcessStartTicks=0; listenerProcessId=0; listenerProcessStartTicks=0; listenerOwnerKind='none'; listenerOwnerProof=''; listenerOwnerEvidence=''; claim=$staleClaim }
             Write-VerifierEvidenceText $staleClaimPath `
                 ($staleClaim | ConvertTo-Json -Depth 8) 'Gate B stale-claim canary'
             Set-GateBManifestResources $staleContext -Leases @($staleLease) -Profiles @()
@@ -8060,13 +9419,13 @@ if ($GateBContractProbe) {
             $retainedServerClaimPath = Get-VerifierFullPath (Join-Path $retainedContext.PortLeaseRoot ('40124-' + $retainedServerLeaseId + '.lease'))
             $retainedServerClaimName = Get-VerifierPortMutexName $null 40124
             $retainedServerClaim = [ordered]@{ protocol='troubleshootjs-verifier-port-claim-v1'; runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedServerLeaseId; path=$retainedServerClaimPath; kind='preview'; port=40124; mutexName=$retainedServerClaimName; ownerPid=$PID; ownerStartTicks=1 }
-            $retainedServerLease = [ordered]@{ runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedServerLeaseId; path=$retainedServerClaimPath; kind='preview'; port=40124; claimName=$retainedServerClaimName; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='held'; claimState='held'; releaseState='active'; releaseJournalState='active'; registered=$true; releaseBlocked=$false; releaseBlockReason=''; listenerInspectionUtc=''; bindValidatedUtc=''; releasedUtc=''; browserPath=$ledgerBrowserPath; mutexReleased=$false; profile=''; listenerInspectionSuccess=$false; listenerInspectionKnown=$false; listenerHasListeners=$null; listenerAbsent=$false; processTerminationProven=$false; processAbsent=$false; processProofRequired=$true; boundProcessId=54321; boundProcessStartTicks=12345L; listenerProcessId=54321; listenerProcessStartTicks=12345L; listenerOwnerKind='user-process'; listenerOwnerProof='diagnostics-process-start-v1'; listenerOwnerEvidence='system-diagnostics-process-starttime'; processParentProcessStartTicks=12344L; claim=$retainedServerClaim }
+            $retainedServerLease = [ordered]@{ runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedServerLeaseId; path=$retainedServerClaimPath; kind='preview'; port=40124; claimName=$retainedServerClaimName; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='bound'; claimState='bound'; releaseState='active'; releaseJournalState='active'; registered=$true; releaseBlocked=$false; releaseBlockReason=''; listenerInspectionUtc=''; bindValidatedUtc=''; releasedUtc=''; browserPath=$ledgerBrowserPath; mutexReleased=$false; profile=''; listenerInspectionSuccess=$true; listenerInspectionKnown=$true; listenerHasListeners=$true; listenerAbsent=$false; processTerminationProven=$false; processAbsent=$false; processProofRequired=$true; boundProcessId=54321; boundProcessStartTicks=12345L; listenerProcessId=54321; listenerProcessStartTicks=12345L; listenerOwnerKind='user-process'; listenerOwnerProof='diagnostics-process-start-v1'; listenerOwnerEvidence='system-diagnostics-process-starttime'; processParentProcessStartTicks=12344L; claim=$retainedServerClaim }
             Write-VerifierEvidenceText $retainedServerClaimPath `
                 ($retainedServerClaim | ConvertTo-Json -Depth 8) `
                 'Gate B retained preview claim canary'
             $retainedClaimName = Get-VerifierPortMutexName $null 40125
             $retainedClaim = [ordered]@{ protocol='troubleshootjs-verifier-port-claim-v1'; runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedLeaseId; path=$retainedClaimPath; kind='cdp'; port=40125; mutexName=$retainedClaimName; ownerPid=$PID; ownerStartTicks=1 }
-            $retainedLease = [ordered]@{ runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedLeaseId; path=$retainedClaimPath; kind='cdp'; port=40125; claimName=$retainedClaimName; browserPath=$ledgerBrowserPath; bindValidatedUtc=''; releasedUtc=''; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='held'; claimState='held'; releaseState='active'; releaseJournalState='active'; registered=$true; releaseBlocked=$false; releaseBlockReason=''; listenerInspectionUtc=''; mutexReleased=$false; profile=$retainedProfile; listenerInspectionSuccess=$false; listenerInspectionKnown=$false; listenerHasListeners=$null; listenerAbsent=$null; processTerminationProven=$false; processAbsent=$false; processProofRequired=$false; boundProcessId=0; boundProcessStartTicks=0; listenerProcessId=0; listenerProcessStartTicks=0; listenerOwnerKind='none'; listenerOwnerProof=''; listenerOwnerEvidence=''; claim=$retainedClaim }
+            $retainedLease = [ordered]@{ runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; leaseId=$retainedLeaseId; path=$retainedClaimPath; kind='cdp'; port=40125; claimName=$retainedClaimName; browserPath=$ledgerBrowserPath; bindValidatedUtc=''; releasedUtc=''; claimOwnerPid=$PID; claimOwnerStartTicks=1; status='leased'; claimState='held'; releaseState='active'; releaseJournalState='active'; registered=$true; releaseBlocked=$false; releaseBlockReason=''; listenerInspectionUtc=''; mutexReleased=$false; profile=$retainedProfile; listenerInspectionSuccess=$false; listenerInspectionKnown=$false; listenerHasListeners=$null; listenerAbsent=$null; processTerminationProven=$false; processAbsent=$false; processProofRequired=$false; boundProcessId=0; boundProcessStartTicks=0; listenerProcessId=0; listenerProcessStartTicks=0; listenerOwnerKind='none'; listenerOwnerProof=''; listenerOwnerEvidence=''; claim=$retainedClaim }
             Write-VerifierEvidenceText $retainedClaimPath `
                 ($retainedClaim | ConvertTo-Json -Depth 8) 'Gate B retained CDP claim canary'
             $retainedProfileRecord = [ordered]@{ owner='run'; runId=$retainedContext.RunId; repositoryIdentity=$retainedContext.RepositoryIdentity; worktreeRoot=$retainedContext.WorktreeRoot; routeId='retained-timeout'; routeName='retained-timeout'; profile=$retainedProfile; cdpLeasePath=$retainedClaimPath; cdpPort=40125; browserPath=$ledgerBrowserPath; processId=0; processStartTicks=0; processParentProcessId=0; processParentProcessStartTicks=0; processCommandLine=''; targetId=''; expectedUrl=''; expectedRunMarker='tsjVerifierRun=' + $retainedContext.RunId; expectedRouteMarker='tsjVerifierRoute=retained-timeout'; status='startup-failed'; cleanupResult='infrastructure-failure'; profileProcessScanCompleted=$false; profileInspectionFailed=$false; error='retained timeout' }
@@ -8083,31 +9442,35 @@ if ($GateBContractProbe) {
                 ProcessStartTicks=12345L; ProcessParentProcessId=54320
                 ProcessParentProcessStartTicks=12344L
                 ProcessCommandLine=$retainedServerCommand; Script=$retainedServerScript
-                State='started'; RunId=$retainedContext.RunId; Nonce=$retainedContext.PreviewNonce
+                State='cleanup-failed'; RunId=$retainedContext.RunId; Nonce=$retainedContext.PreviewNonce
                 StdoutLog=(Join-Path $retainedServerRoot 'stdout.log')
                 StderrLog=(Join-Path $retainedServerRoot 'stderr.log')
                 CleanupResult='infrastructure-failure'; Error='synthetic retained timeout'
                 Lease=$retainedServerLease; Process=$null; ProcessIdentityKnown=$true
                 OwnershipUncertain=$false; ProcessTerminationProven=$false; ProcessAbsent=$false
-                ListenerInspectionProven=$false; ListenerAbsent=$false
+                ListenerInspectionProven=$true; ListenerAbsent=$false
             }
             Write-VerifierEvidenceText $retainedServer.StdoutLog 'retained server evidence' `
                 'Gate B retained preview stdout canary'
             Write-VerifierEvidenceText $retainedServer.StderrLog '' `
                 'Gate B retained preview stderr canary'
             $retainedContext.Server = $retainedServer
+            $retainedContext.CleanupState = 'infrastructure-failure'
             $retainedServerLedger = [ordered]@{
                 owner='run'; baseUrl='http://127.0.0.1:40124'; repositoryIdentity=$retainedContext.RepositoryIdentity
-                worktreeRoot=$retainedContext.WorktreeRoot; port=40124; processId=54321; processStartTicks=12345L
+                worktreeRoot=$retainedContext.WorktreeRoot; repositoryRoot=$retainedContext.WorktreeRoot
+                webRoot=(Get-VerifierFullPath (Join-Path $retainedContext.WorktreeRoot 'war'))
+                port=40124; processId=54321; processStartTicks=12345L
                 processParentProcessId=54320; processParentProcessStartTicks=12344; processCommandLine=$retainedServerCommand; script=$retainedServerScript
                 runId=$retainedContext.RunId; nonce=$retainedContext.PreviewNonce
                 identityProtocol='troubleshootjs-preview-identity-v1'
+                identityVerified=$true; callerOwned=$false
                 leaseId=$retainedServerLeaseId; leaseKind='preview'; leaseClaimName=$retainedServerClaimName
-                leaseClaimState='held'; leaseReleaseState='active'; leaseOwnerPid=$PID; leaseOwnerStartTicks=1
-                leasePath=$retainedServerClaimPath; state='started'
+                leaseClaimState='bound'; leaseReleaseState='active'; leaseOwnerPid=$PID; leaseOwnerStartTicks=1
+                leaseReleaseJournalState='active'; leasePath=$retainedServerClaimPath; state='cleanup-failed'
                 stdoutLog=$retainedServer.StdoutLog; stderrLog=$retainedServer.StderrLog
                 cleanupResult='infrastructure-failure'; error='synthetic retained timeout'; processIdentityKnown=$true; ownershipUncertain=$false
-                processTerminationProven=$false; processAbsent=$false; listenerInspectionProven=$false; listenerAbsent=$false
+                processTerminationProven=$false; processAbsent=$false; listenerInspectionProven=$true; listenerAbsent=$false
                 leaseListenerAbsent=$false; leaseProcessProofRequired=$true
                 leaseListenerOwnerKind='user-process'; leaseListenerOwnerProof='diagnostics-process-start-v1'
                 leaseListenerOwnerEvidence='system-diagnostics-process-starttime'
@@ -8442,6 +9805,11 @@ try {
     $script:Task43PExecutionWebRoot = $executionRoots.WebRoot
     $script:Task43PExecutionScriptRoot = $executionRoots.ScriptRoot
     $script:Task43PExecutionPreviewScript = $executionRoots.PreviewScript
+    $script:Task43PExecutionRoots = $executionRoots
+    $script:Task43PExecutionProvenance = $executionRoots.Provenance
+    $script:Task43PExpectedExecutionProvenanceDigest = $ExpectedExecutionProvenanceDigest
+    Initialize-Task43PSourceExperiment
+    $forcedNegativeExpectedMarker = Get-Task43ForcedNegativeExpectedMarker
     $worktreeRoot = $executionRoots.RepositoryRoot
     $script:VerifierContext = New-VerifierRunContext $worktreeRoot $EvidenceDirectory $ParentNamespaceRoot
     $script:VerifierEvidenceDirectory = $script:VerifierContext.EvidenceDirectory
@@ -8485,6 +9853,9 @@ try {
                 $script:Task43PExecutionPreviewScript $TimeoutSeconds)
         } else {
             $BaseUrl = [string](Set-VerifierCallerOwnedPreview $script:VerifierContext $BaseUrl)
+        }
+        if (-not $Task43Integrated -and ($Task43P -or $Task43PForcedNegative)) {
+            [void](Assert-Task43PPreviewExecutionIdentity $BaseUrl)
         }
         $requestedExitCode = [int](InvokeVerifierMain)
     }
@@ -8573,5 +9944,24 @@ if ($forcedNegativeInvocation) {
 }
 if ($infrastructureFailureRecorded -and $requestedExitCode -ne 2) {
     $requestedExitCode = 2
+}
+if ($Task43PRuntime -and $requestedExitCode -ne 2) {
+    if ($null -eq $script:Task43PRuntimeOutcome -or
+            -not $script:Task43PRuntimeRoutePassedAfterCleanup -or
+            $null -eq $cleanupResult -or -not [bool]$cleanupResult.Success -or
+            $requestedExitCode -ne $script:Task43PRuntimeOutcome.ExitCode) {
+        $requestedExitCode = 2
+        [Console]::Error.WriteLine('FAIL Task43P runtime final proof - outcome or exact cleanup was not proven.')
+    }
+}
+if ($null -ne $script:Task43PSourceDefinition -and $requestedExitCode -eq 1) {
+    try {
+        Write-Task43PSourceNegativeFinalProof $requestedExitCode
+    } catch {
+        Invalidate-Task43ForcedNegativeProof
+        $requestedExitCode = 2
+        [Console]::Error.WriteLine('FAIL source-negative final proof - verifier infrastructure: ' +
+            (Get-VerifierErrorMessage $_))
+    }
 }
 exit ([int]$requestedExitCode)

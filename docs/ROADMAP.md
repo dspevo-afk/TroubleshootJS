@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-08-28 — Post-Task-43 Gate B complete; Task 43P developer evidence candidate added; Owner Review pending_
+_Last updated: 2026-09-05 — Task 43P runtime evidence recorded; C1/C2 corrections required; Owner Review and Task 44 blocked_
 
 ## Purpose
 
@@ -978,11 +978,12 @@ their numbers and broad product direction; the bounded post-Task-43 gates
 below make the runtime-composition wall explicit without turning every later
 feature into a prerequisite for every other feature.
 
-Task 43P is the next planned milestone after Gate B validation and publication.
-Its evidence reconciliation pass has been performed and recorded for current
-evidence, but Task 43P acceptance remains incomplete and pending. Missing
-runtime A-I lanes and the independent physical triad block Owner Review; no
-later milestone is authority to continue automatically.
+Task 43P's runtime and physical evidence is recorded in the
+[current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md).
+Runtime acceptance remains blocked by demonstrated measurement-cleanup and
+snapshot-assertion defects. Bounded corrections 43P-C1 and 43P-C2 are required;
+Owner Review and Task 44 remain blocked. No later milestone authorizes an
+automatic continuation.
 
 ## Governing architecture gates
 
@@ -1405,17 +1406,18 @@ mainline-protection action remains external and is documented below.
 
 ## Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation
 
-**Status:** `[~] EVIDENCE RECONCILIATION PERFORMED — ACCEPTANCE PENDING`
+**Status:** `[~] IMPLEMENTED — RUNTIME ACCEPTANCE BLOCKED BY 43P-C1/C2`
 
 **Purpose:** Re-run material historical lifecycle and verification-integrity
 findings against the final Task 43 SHA before runtime composition begins.
 
 **Hard dependencies:** Task 43 complete; Gates A and B accepted and published;
-historical audit reports preserved. The evidence reconciliation pass has been
-performed and recorded for current evidence in
-[`docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`](research/POST_TASK_43_INTEGRITY_RECONCILIATION.md),
-but acceptance is incomplete and pending. Missing runtime A-I lanes and the
-independent physical triad block the Owner Review Gate.
+historical audit reports preserved. The final runtime reconciliation, individual
+physical/source results, visible evidence, and historical finding dispositions
+are recorded in the
+[current report](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md).
+Runtime acceptance remains blocked by 43P-C1/C2. No exit-2 invocation is counted
+as a complete pass, and no production correction is made by this evidence task.
 
 **Bounded goals:**
 
@@ -1458,9 +1460,12 @@ has a reproduction, owner, affected path, bounded correction milestone, and
 acceptance criteria; independent review passes; and results are presented to
 the owner before Task 44 becomes eligible.
 
-**Unlocks:** None yet. Owner Review remains blocked pending completion of the
-missing runtime A-I lanes and independent physical triad. Task 44 remains
-blocked and unstarted and requires explicit owner approval.
+**Unlocks:** The bounded 43P-C1/C2 correction tasks below. They are unstarted;
+Owner Review remains blocked pending their relevant acceptance evidence.
+Task 44 remains blocked and unstarted and requires explicit owner approval.
+
+The dated candidate entries below retain earlier evidence boundaries. The
+2026-09-05 report is authoritative for current outcomes and reuse limits.
 
 **2026-08-28 Coder candidate:** A query-gated developer-only Task 43P route,
 independently authored physical-triad verifier, structured evidence capture,
@@ -1471,7 +1476,128 @@ ownership was blocked by WMI `Access denied` before page execution, so no A-I
 or triad runtime lane is accepted, Owner Review is not complete, and Task 44
 remains blocked/unstarted.
 
+**2026-09-04 post-crash recovery:** Reconfirmed the intentionally dirty
+`codex/task43p-final-recovery` candidate at HEAD
+`a5b253873c2b25a54d7c393b118e3f2e1831a4d8`. Fresh review identified and the
+candidate repaired two unstarted listener-proof timers and a Gate B mock
+restoration defect. The repaired deadline/restoration candidate has independent
+review PASS, complete Gate B PASS, and JDK 8/GWT production build PASS. The
+fresh isolated Edge/CDP prerequisite returned infrastructure exit `2` at the
+strict ownership deadline with unproven verifier cleanup. Separately verified
+manual cleanup removed the owned live process; retained evidence remains.
+The subsequent short-lived subprocess and timeout-fixture corrections passed
+fresh independent review and complete Gate B. A second isolated prerequisite
+still exceeded the complete ownership deadline; its exact manual cleanup also
+proved no live Edge/listener residue without passing verifier cleanup. A
+same-root listener optimization passed fresh independent review and the next
+run opened CDP within the ownership deadline. Immediate and startup-settled
+cleanup still failed, so those prerequisites remain exit `2`; separate exact
+manual cleanup proved no live residue. A bounded diagnostic identified the
+rejected child as Edge's signed, matching-version `identity_helper.exe`; the
+descendant-only compatibility repair passed focused checks and fresh independent
+review. The next prerequisite failed downstream canonical listener authorization
+before CDP readiness, with descendant cleanup unproven. Separate exactly
+revalidated manual cleanup proved no live residue and preserved failure evidence.
+The downstream exact-root listener correction passed focused checks and fresh
+independent review. Its next real run passed listener authorization and CDP
+readiness, but returned `2` on a disappearing descendant during cleanup.
+Separate exact manual cleanup proved no live residue; cleanup lifecycle
+diagnosis reproduced a child disappearing after full discovery proof and
+earlier exact child stops. A bounded retained-handle natural-exit proof was
+implemented, then rejected by independent review for scope/handle substitution
+and deadline defects. Astra's correction passed focused real-process positive
+and negative canaries and fresh targeted review. The next real prerequisite
+reached CDP/readiness but failed the 15-second descendant drain; a diagnostic
+proved repeated Edge child recreation after exact stops. Both roots had
+already exited at separate fresh audits; profiles/claims/evidence remain
+retained. A cooperative browser-level CDP shutdown correction now passes
+focused actual-WebSocket transport checks and separate orchestration fault
+injections. Fresh independent delta review passed after an attempt-key copy
+bypass was fixed. The untraced 30-second startup-settled Edge/CDP prerequisite
+passed with actual exit `0` and complete verifier-owned cleanup. The shorter
+3- and 10-second startup conditions returned `2` on transient/unproved child
+records and remain failed evidence. Final complete Gate B passed with captured
+exit `0` against the reviewed shutdown candidate; current
+identity, cleanup, and deadline requirements remain in force.
+The first forced-negative attempt returned actual exit `2` on a PowerShell
+reference-forwarding error, with unproven verifier cleanup. Separate exact
+manual cleanup proved process/listener absence and retained failure evidence.
+The capture/input helper and PowerShell 5.1 parsing correction passes its
+focused canary, fresh independent delta review, and final complete Gate B with
+captured exit `0`. Forced-negative first must be retried against this candidate.
+That retry reached Java evidence parsing but returned `2` for a missing
+required `triad.faultType`; all verifier-owned cleanup completed. The producer
+field correction passed fresh independent review and a new JDK 8/GWT build
+with all five permutations and captured exit `0`, before the next retry.
+That retry captured the complete Java/DOM packet but returned `2` on transient
+descendant proof at browser age 8.2 seconds. Separate current absence checks
+preserved its failed status and evidence. An explicit bounded startup-settle
+option now passes focused tests, fresh independent delta review, and current
+complete Gate B with captured exit `0`, before a 30-second-condition
+forced-negative retry.
+That forced-negative run (`a452a5450ff344fb95f02bc1cad2a65d`) passed with the
+expected actual exit `1`, exact Java/DOM/request proof, and complete
+verifier-owned cleanup. The saved records and current absence audit agree.
+Normal runtime and physical-triad qualification may now proceed; this does
+not itself complete Task 43P or unlock Owner Review/Task 44.
+The focused normal seed-3 run recorded physical-triad PASS for LED, diode,
+RC, and NPN, then stopped on NMOS `RPD.2` solver-post correspondence with
+actual exit `1`; parallel was not reached. Exact verifier cleanup completed.
+Independent investigation traced this mismatch to a verifier-manifest
+regression: NMOS `RPD.2` has always been bound to `GroundElm` post 0, and the
+manifest incorrectly expected `WireElm` post 0. The expectation is corrected;
+the electrical implementation is unchanged. A compiled source-negative proof
+path now requires a specific anchored Java/DOM failure and exact final cleanup;
+its current runtime qualification, normal acceptance, and visible evidence
+remain pending. Current
+evidence is recorded in `docs/CODEX_TASK_REPORT.md`; acceptance remains pending.
+
 ---
+
+## Task 43P-C1 — Temporary Measurement Exception Cleanup
+
+**Status:** `[>] NEXT — NOT STARTED`
+
+**Evidence/owner:** OPEN BLOCKER / CODE, reproduced by runtime lane D.
+CircuitJS adaptation and instrument lifecycle owner; affected path is
+`CircuitJsSimulationAdapter` → `CirSim.runTemporaryActiveMeasurement()`.
+
+**Bounded scope:** Make temporary-measurement cleanup exception-safe across
+all real graph indexes, solver state, overlay, and queued power while
+preserving the latest user power request, original exception, and current
+owner. No new transaction framework or unrelated lifecycle rewrite.
+
+**Acceptance:** Close both post-removal failures and preserve both passing
+reader failures in the four-case real injection matrix. Check normal
+measurement/mode-switch/mutation/reset behavior, exact owner identity, final
+JDK8/GWT build, fresh independent review, and qualified forced-first/runtime
+cleanup. Full reproduction and evidence are in the
+[current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md).
+
+**Unlocks:** The C1 slice of runtime acceptance only; no automatic Owner Review
+closure or Task 44 start.
+
+## Task 43P-C2 — Supported Snapshot Restoration Assertion
+
+**Status:** `[ ] REQUIRED — NOT STARTED`
+
+**Evidence/owner:** OPEN BLOCKER / TEST/TOOL, reproduced by snapshot
+calibration. Task41 snapshot-proof owner; affected path is
+`Task41SimulationSnapshot.assertRestored()`.
+
+**Bounded scope:** Assert the captured/restored `lastResistanceTestCurrent`
+field and audit the supported field inventory for the same omission pattern.
+Preserve Option A's fresh-candidate/detached-owner boundary; complete
+same-owner transactions remain unsupported.
+
+**Acceptance:** Reject the post-restore sentinel and compiled omitted-restore
+canary; preserve non-default exact round trips and original-owner
+identity/targets. Require fresh independent review, final build, and affected
+runtime gates. C1 and C2 both precede relevant runtime acceptance and Owner
+Review. Neither correction is implemented by the evidence collectors.
+
+---
+
 
 ## Owner Review Gate — Post-Task-43 Roadmap Confirmation
 
@@ -3463,13 +3589,10 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Task 43P — Post-Task-43 Cross-Boundary Integrity Reconciliation
-(evidence reconciliation performed; acceptance pending)**
+**Task 43P-C1 — Temporary Measurement Exception Cleanup (not started)**
 
-The historical Gate B result is published.
-The current-evidence reconciliation pass is
-recorded in [`docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`](research/POST_TASK_43_INTEGRITY_RECONCILIATION.md),
-but Task 43P acceptance remains pending: missing runtime A-I lanes and the
-independent physical triad block the Owner Review Gate. Task 44 is **not**
-next; it remains blocked and unstarted and requires the explicit owner review
-described above. Do not begin Task 44 automatically.
+Then complete 43P-C2 and affected runtime acceptance checks. The
+[current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
+records the two demonstrated blockers, their owners, reproductions, and bounded
+acceptance criteria. Owner Review and Task 44 remain blocked and unstarted.
+These milestones require a new task; do not begin them automatically.

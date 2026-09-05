@@ -392,7 +392,16 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask43Verification;
 	boolean troubleshootTask43ForcedFailure;
 	boolean troubleshootTask43PVerification;
+	boolean troubleshootTask43PRuntimeVerification;
 	boolean troubleshootTask43PForcedFailure;
+	String troubleshootTask43PForcedNonce = "";
+	String troubleshootTask43PForcedRouteId = "";
+	String troubleshootTask43PForcedRequestId = "";
+	String troubleshootTask43PExecutionDigest = "";
+	String troubleshootTask43PSourceExperiment = "";
+	boolean troubleshootTask43PSourceRequestValidated;
+	String troubleshootVerifierRunId = "";
+	String troubleshootVerifierRouteId = "";
 	boolean troubleshootStoredEnergyVerification;
 	boolean troubleshootGeometryVerificationComplete;
 	boolean troubleshootChallengeVerificationComplete;
@@ -487,8 +496,22 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootTask43ForcedFailure = troubleshootTask43Verification &&
 		qp.getBooleanValue("tsjTask43ForcedFailure", false);
 	    troubleshootTask43PVerification = qp.getBooleanValue("tsjVerifyTask43P", false);
+	    troubleshootTask43PRuntimeVerification = troubleshootTask43PVerification &&
+		qp.getBooleanValue("tsjTask43PRuntime", false);
 	    troubleshootTask43PForcedFailure = troubleshootTask43PVerification &&
 		qp.getBooleanValue("tsjTask43PForcedFailure", false);
+	    troubleshootTask43PForcedNonce = queryValueOrEmpty(
+		qp.getValue("tsjVerifierForcedNonce"));
+	    troubleshootTask43PForcedRouteId = queryValueOrEmpty(
+		qp.getValue("tsjVerifierForcedRoute"));
+	    troubleshootTask43PForcedRequestId = queryValueOrEmpty(
+		qp.getValue("tsjVerifierForcedRequest"));
+	    troubleshootTask43PExecutionDigest = queryValueOrEmpty(
+		qp.getValue("tsjVerifierExecutionDigest"));
+	    troubleshootTask43PSourceExperiment = queryValueOrEmpty(
+		qp.getValue("tsjTask43PSourceExperiment"));
+	    troubleshootVerifierRunId = queryValueOrEmpty(qp.getValue("tsjVerifierRun"));
+	    troubleshootVerifierRouteId = queryValueOrEmpty(qp.getValue("tsjVerifierRoute"));
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
@@ -1484,10 +1507,19 @@ MouseOutHandler, MouseWheelHandler {
     void repaint() {
 	if (!needsRepaint) {
 	    needsRepaint = true;
+	    final Task43PRuntimeCallbackDeveloperVerifier.RepaintObservation task43PObservation =
+		Task43PRuntimeCallbackDeveloperVerifier.scheduled(this);
 	    Scheduler.get().scheduleFixedDelay(new Scheduler.RepeatingCommand() {
 		public boolean execute() {
-		      updateCircuit();
+		      Task43PRuntimeCallbackDeveloperVerifier.started(CirSim.this, task43PObservation);
+		      try {
+			  updateCircuit();
+		      } catch (RuntimeException failure) {
+			  Task43PRuntimeCallbackDeveloperVerifier.failed(CirSim.this, failure);
+			  throw failure;
+		      }
 		      needsRepaint = false;
+		      Task43PRuntimeCallbackDeveloperVerifier.completed(CirSim.this, task43PObservation);
 		      return false;
 		  }
 	    }, FASTTIMER);
@@ -4389,6 +4421,21 @@ MouseOutHandler, MouseWheelHandler {
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
 	ActiveMeasurementStimulus lastActiveMeasurementStimulus;
 	boolean activeMeasurementSolverRestored;
+
+	enum Task43PMeasurementFailureStage { NONE, READER, AFTER_STIMULUS_REMOVE }
+	static final class Task43PInjectedMeasurementFailure extends RuntimeException {
+	    private final Task43PMeasurementFailureStage stage;
+	    Task43PInjectedMeasurementFailure(Task43PMeasurementFailureStage stage) {
+		super("Task43P injected active measurement failure: " + stage);
+		this.stage = stage;
+	    }
+	    Task43PMeasurementFailureStage getStage() { return stage; }
+	}
+	Task43PMeasurementFailureStage task43PMeasurementFailureStage =
+	    Task43PMeasurementFailureStage.NONE;
+	Task43PMeasurementFailureStage task43PMeasurementFailureLastInjectedStage =
+	    Task43PMeasurementFailureStage.NONE;
+	int task43PMeasurementFailureInjectionCount;
 	String lastResistanceMeasurementDiagnostics;
 	double lastResistanceTestCurrent;
 	double lastResistanceReferenceCurrent;
@@ -4529,6 +4576,7 @@ MouseOutHandler, MouseWheelHandler {
 	if (t <= generatedBoardVerificationStartTime)
 	    return;
 	try {
+	    Task43PDeveloperVerifier.verifySourceExperimentBeforeAdmission(this);
 	    verifyGeneratedBoard();
 	    generatedBoardVerificationPending = false;
 	    if (generatedChallengeController != null)
@@ -4710,6 +4758,20 @@ MouseOutHandler, MouseWheelHandler {
 		}
 	    }
 	} catch (RuntimeException e) {
+	    String diagnosticMessage = e.getMessage();
+	    if (troubleshootTask43PVerification && troubleshootTask43PForcedFailure &&
+		troubleshootTask43PSourceRequestValidated && diagnosticMessage != null) {
+		// Preserve the first real source-falsifier result. A later paint must
+		// not skip the one-shot source check and replace its failure with an
+		// unrelated admission diagnostic while the wrapper is observing it.
+		setSimRunning(false);
+		diagnosticMessage += " nonce=" + troubleshootTask43PForcedNonce +
+		    " route=" + troubleshootTask43PForcedRouteId +
+		    " request=" + troubleshootTask43PForcedRequestId +
+		    " execution=" + troubleshootTask43PExecutionDigest +
+		    " experiment=" + troubleshootTask43PSourceExperiment +
+		    " run=" + troubleshootVerifierRunId;
+	    }
 	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootWrongRepairVerification ||
 		    troubleshootMeterVerification ||
@@ -4721,12 +4783,18 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
 		    troubleshootNmosVerification || troubleshootTask39Verification ||
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
-		    troubleshootTask43Verification || troubleshootTask43PVerification)
-		publishBrowserVerificationResult("FAIL:" + e.getMessage());
+		    troubleshootTask43Verification || troubleshootTask43PVerification) {
+		String failureMessage = e.getMessage();
+		if (troubleshootTask43PForcedFailure && failureMessage != null &&
+		    failureMessage.startsWith("task43p-forced-negative-canary nonce="))
+		    publishBrowserVerificationResult("FAIL:task43p-forced-negative-canary");
+		else
+		    publishBrowserVerificationResult("FAIL:" + failureMessage);
+		}
 	    throw new IllegalStateException("Generated board verification failed for " +
 		generatedBoardInstance.getCircuitFamilyId() + "/" +
 		generatedBoardInstance.getTopologyVariantId() + ", seed " +
-		generatedBoardInstance.getSeed() + ": " + e.getMessage(), e);
+		generatedBoardInstance.getSeed() + ": " + diagnosticMessage, e);
 	}
     }
 
@@ -4736,6 +4804,34 @@ MouseOutHandler, MouseWheelHandler {
 
 	boolean isTask43PForcedFailureActive() {
 	return troubleshootTask43PForcedFailure;
+	}
+
+	String getTask43PForcedNonceForDeveloperVerification() {
+	return troubleshootTask43PForcedNonce;
+	}
+
+	String getTask43PForcedRouteIdForDeveloperVerification() {
+	return troubleshootTask43PForcedRouteId;
+	}
+
+	String getTask43PForcedRequestIdForDeveloperVerification() {
+	return troubleshootTask43PForcedRequestId;
+	}
+
+	String getTask43PExecutionDigestForDeveloperVerification() {
+	return troubleshootTask43PExecutionDigest;
+	}
+
+	String getVerifierRunIdForDeveloperVerification() {
+	return troubleshootVerifierRunId;
+	}
+
+	String getVerifierRouteIdForDeveloperVerification() {
+	return troubleshootVerifierRouteId;
+	}
+
+	private static String queryValueOrEmpty(String value) {
+	return value == null ? "" : value;
 	}
 
     private static native void publishBrowserVerificationResult(String result) /*-{
@@ -4841,6 +4937,24 @@ MouseOutHandler, MouseWheelHandler {
 	    if (troubleshootTask43PVerification)
 		publishBrowserVerificationResult(result);
 	}
+
+	void publishTask43PRuntimeEvidenceForDeveloperVerification(String result) {
+	    if (troubleshootTask43PRuntimeVerification)
+		publishBrowserTask43PRuntimeEvidence(result);
+	}
+
+	private static native void publishBrowserTask43PRuntimeEvidence(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-task43p-runtime-evidence", result);
+	}-*/;
+
+	void publishTask43PPublicRemoveControlForDeveloperVerification(String result) {
+	    if (troubleshootTask43PVerification && troubleshootTask43PSourceRequestValidated)
+		publishBrowserTask43PPublicRemoveControl(result);
+	}
+
+	private static native void publishBrowserTask43PPublicRemoveControl(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-task43p-public-remove-control", result);
+	}-*/;
 
 	private static native void publishBrowserTask43PEvidence(String result) /*-{
 	$doc.documentElement.setAttribute("data-tsj-task43p-evidence", result);
@@ -5203,9 +5317,13 @@ MouseOutHandler, MouseWheelHandler {
 	    analyzeCircuit();
 	    runCircuit(true);
 	    runCircuit(true);
+	    injectTask43PMeasurementFailureForDeveloperVerification(
+		Task43PMeasurementFailureStage.READER);
 	    return reader.readResult();
 	} finally {
 	    stimulus.remove(this);
+	    injectTask43PMeasurementFailureForDeveloperVerification(
+		Task43PMeasurementFailureStage.AFTER_STIMULUS_REMOVE);
 	    analyzeCircuit();
 	    runCircuit(true);
 	    if (pendingBoardPowerState != null) {
@@ -5235,6 +5353,35 @@ MouseOutHandler, MouseWheelHandler {
     boolean isActiveMeasurementSolverRestoredForDeveloperVerification() {
 	return activeMeasurementSolverRestored && lastActiveMeasurementStimulus != null &&
 	    isStimulusAbsentFromSolver(lastActiveMeasurementStimulus);
+    }
+
+    void armTask43PMeasurementFailureForDeveloperVerification(
+	    Task43PMeasurementFailureStage stage) {
+	if (!troubleshootTask43PVerification || !developerVerifierRunning ||
+		activeMeasurementOverlay || stage == null ||
+		stage == Task43PMeasurementFailureStage.NONE ||
+		task43PMeasurementFailureStage != Task43PMeasurementFailureStage.NONE)
+	    throw new IllegalStateException("Task43P measurement injection cannot be armed");
+	task43PMeasurementFailureLastInjectedStage = Task43PMeasurementFailureStage.NONE;
+	task43PMeasurementFailureInjectionCount = 0;
+	task43PMeasurementFailureStage = stage;
+    }
+
+    void clearTask43PMeasurementFailureForDeveloperVerification() {
+	task43PMeasurementFailureStage = Task43PMeasurementFailureStage.NONE;
+	task43PMeasurementFailureLastInjectedStage = Task43PMeasurementFailureStage.NONE;
+	task43PMeasurementFailureInjectionCount = 0;
+    }
+
+    private void injectTask43PMeasurementFailureForDeveloperVerification(
+	    Task43PMeasurementFailureStage stage) {
+	if (!troubleshootTask43PVerification || !developerVerifierRunning ||
+		task43PMeasurementFailureStage != stage)
+	    return;
+	task43PMeasurementFailureStage = Task43PMeasurementFailureStage.NONE;
+	task43PMeasurementFailureLastInjectedStage = stage;
+	task43PMeasurementFailureInjectionCount++;
+	throw new Task43PInjectedMeasurementFailure(stage);
     }
 
     int getAnalysisCountForDeveloperVerification() {

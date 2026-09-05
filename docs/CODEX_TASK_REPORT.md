@@ -1,4 +1,600 @@
-# POST-TASK-43 GATE B — Verification Isolation and Mainline Protection Baseline
+# TroubleshootJS — Current Task Report
+
+## Current checkpoint — Task 43P — 2026-09-05
+
+- **Status/scope:** IMPLEMENTED — VALIDATION BLOCKED. Verifier trust and
+  forensic evidence are implemented; runtime acceptance is not granted.
+  No production cleanup repair, Owner Review closure, or Task 44 work occurred.
+- **Candidate:** `codex/task43p-final-recovery`, tested base
+  `a5b253873c2b25a54d7c393b118e3f2e1831a4d8` plus the intended integrated
+  diff. The [evidence index](task-evidence/task-43p/runtime-evidence-index.json)
+  records final and reused source digests, exact commands, hashes, and run IDs.
+  The enclosing commit identifies the documentation/evidence publication.
+- **Findings:** A-I returned proven application `1`, with three open
+  observations representing two causes: post-removal measurement cleanup
+  leaves solver/overlay/queued-power residue (43P-C1), and Task41's restoration
+  assertion accepts a changed resistance-current sentinel (43P-C2). Both have
+  bounded correction milestones, owners, reproductions, and acceptance checks
+  in the [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md).
+- **Validation:** Final JDK8/GWT production build and complete Gate B returned
+  `0`; unchanged Gate B seams reuse their recorded evidence. Forced-first
+  reached its exact expected DOM/Java proof with `1` and exact cleanup. All
+  18 physical triads passed; that route's aggregate remains `2` because its
+  separate legacy A-I fields are unproven. All eleven compiled source
+  falsifiers are individually qualified; their original invocation exits and
+  explicit unchanged-evidence reuse are recorded in the evidence index.
+  No aggregate `2` or generic shell `1` is relabeled PASS.
+- **Visible evidence:** Real built-in Browser LED3 input proved original and
+  wrong-2200-ohm retest rejection, red-left/black-right meter controls and mode
+  exit, removal, correct-1000-ohm completion, and disabled terminal controls.
+  [Five real screenshots](task-evidence/task-43p/README.md) and bounded ordinary
+  DOM/accessibility inspection are retained. The supplementary legacy
+  NormalPlayer CLI returned `2`; its manual cleanup is separate and never
+  counts as verifier-owned acceptance cleanup.
+- **Review:** Fresh independent Luna integrated/delta reviews cover the code
+  and runtime observations. Final documentation/evidence reconciliation passed;
+  review provenance is recorded in the index. C1/C2 remain blockers; broad settlement/epoch,
+  transaction, seed, geometry, and privacy claims remain bounded follow-ups.
+- **Resources:** No known task-owned live browser, preview, listener, or tab
+  remains after the final absence audits. Private OS-temp failure evidence,
+  retained failed source copies/profiles, and audit artifacts remain preserved.
+  Workers own no mutable resources. No broad process kill or evidence deletion
+  was used. Successful route cleanup and exact manual cleanup of failed runs
+  are explicitly distinguished.
+- **Next:** 43P-C1, then 43P-C2 and affected acceptance checks. These are
+  unstarted correction tasks; Owner Review and Task 44 remain blocked. Root
+  owns the ordinary commit/push and post-push Gmail notification; their actual
+  outcome is supplied in the final handoff, not inferred from this document.
+
+
+## Before final source cases — Task 43P — 2026-09-05
+
+- **Status/scope:** IN PROGRESS — RUNTIME ACCEPTANCE BLOCKED. Verifier trust
+  and evidence reconciliation only; no production cleanup repair, Owner Review
+  closure, or Task 44 implementation.
+- **Candidate:** `codex/task43p-final-recovery`, HEAD
+  `a5b253873c2b25a54d7c393b118e3f2e1831a4d8`, 24 intended worktree entries.
+  Current source/verifier digest is
+  `6b4e1541894eff75c6ff8a4b6c222e2fee5d9ff1ccf046f0299c8b2dd55f85fb`.
+  The only code change after the A-I/triad runs selects a genuinely different
+  solver endpoint in source falsifier 6; no Java, wrapper, isolation, or Gate B
+  code changed. Root owns integration and publication.
+- **Qualified runtime:** Forced `2efbdc81cf7c4981a4ed35a685ac1c16` returned
+  exact expected `1`; A-I `1e71c0ae2b4a40d0a2672775d3a83e57` returned proven
+  application `1` with a complete validated packet. Its three open observations
+  represent two causes: post-removal measurement cleanup leaves solver/overlay/
+  queued-power residue, and Task41's restoration assertion accepts a changed
+  resistance-current sentinel. All 18 physical triads passed in
+  `813c693b2cda48a9b980a59c147ff84b`; the separate legacy route's aggregate
+  remains `2` because its A-I fields remain unproven. All three runs completed
+  exact verifier cleanup and fresh current absence audits without manual cleanup.
+- **Source falsification:** Five cases qualified before the sixth selected an
+  alias of the original C1.+ endpoint, reached the generic forced marker, and
+  remained `2` with final child cleanup unproven. Source restoration and a
+  separate current absence audit passed; failure evidence is retained. The
+  test-only target correction (`F175C33E...`) passed Windows PowerShell 5.1
+  contract checks and fresh independent delta review. Current forced-first
+  `8e481ed75b29428098bb5ab760e1dd96` then returned exact `1` plus complete
+  cleanup/current absence; corrected source case 6
+  `302a40709aba43a69322370046f1bffe` returned qualified `CAUGHT`/`1`, exact
+  restoration, unchanged repository, and complete cleanup/current absence.
+  The remaining five cases are pending; the first five retain their original
+  unaffected source/provenance evidence.
+- **Visible evidence:** Real built-in Browser LED3 input proved unrepaired and
+  wrong-2200-ohm retest rejection, meter red-left/black-right controls and mode
+  exit, removal, correct-1000-ohm completion, and disabled terminal controls.
+  Five real screenshots and bounded ordinary DOM/accessibility inspection are
+  retained for curation. This is separate from the supplementary legacy
+  NormalPlayer CLI run `207aabfafa5b4d7599c9097ff3dbf9de`, which timed out and
+  failed cleanup with actual `2`. Exact root-only manual cleanup and fresh
+  process/listener absence were proven for that failure; profile/claim/evidence
+  remain retained. It is not counted as a CLI pass.
+- **Gates/review:** Final unchanged Java build passed all five JDK8/GWT OBF
+  permutations with actual `0`. Complete Gate B passed with actual `0` before
+  the source-case-only correction; unchanged seams reuse that evidence and
+  current source contract checks cover the correction. Fresh integrated and
+  targeted independent Luna reviews found no additional current blocker.
+- **Resources/next:** No live browser/preview remains after current audits.
+  Root owns retained private evidence; workers own no mutable resources.
+  Complete remaining source cases, finalize historical dispositions and bounded
+  correction milestones, curate evidence, and obtain final evidence review.
+  No commit, push, or email has occurred.
+
+## Before final runtime runs — 2026-09-05
+
+- **Status/scope:** IN PROGRESS — NOT ACCEPTED. Complete verifier trust,
+  physical falsification, and A-I evidence reconciliation only. Owner Review
+  and Task 44 remain blocked; no production lifecycle repair is in scope.
+- **Candidate:** `codex/task43p-final-recovery`, HEAD
+  `a5b253873c2b25a54d7c393b118e3f2e1831a4d8`, 24 intended worktree entries.
+  Root owns integration. Final Java build `gwt-source-latch-h-target-a041fd81470c4f23b3c8dc5d6afc64e4.log`
+  passed all five JDK 8/GWT permutations with actual `0`; Java has not changed.
+- **Qualified evidence:** On the preceding script candidate, forced run
+  `ea5706234f5a4da98c6e95ed09dc94b9` reached its exact DOM/anchored Java failure,
+  actual expected `1`, and complete verifier cleanup. The renderer-only
+  `J1.1 +20px` compiled source falsifier then returned validated `CAUGHT`/actual
+  `1` (`6d12268d2b6b4a2b9ad6bc005558068c`): exact physical rejection, bound child
+  proof, cleanup, restored source bytes, and unchanged repository. No generic
+  shell failure was accepted. These are earlier-script evidence, not proof of
+  the current changed wrapper.
+- **Latest incomplete A-I run:** `f95064683d814fe99d302a108ed16bf2` reached the
+  aggregate observation but returned `2` because the wrapper incorrectly
+  classified the deferred resistance-reading refresh as temporary measurement
+  residue. No qualified aggregate packet was saved. Exact verifier cleanup
+  and a separate fresh process/listener/profile/lease absence audit passed;
+  no manual cleanup was used.
+- **Current correction/gates:** The validator now matches Java's actual graph,
+  solver, overlay, power, and identity cleanup predicate while retaining the
+  raw refresh flag. Rejected runtime packets are retained as unvalidated
+  diagnostics without assigning an outcome. Windows PowerShell 5.1 focused
+  schema/capture/persistence-failure canaries passed with actual `0`. Review
+  additionally tightened D's positive baseline and exact power-state enums.
+  Fresh independent delta review passed on helper `1268EA3F...`; final complete
+  Gate B passed with actual `0` and unchanged before/after script hashes in
+  `gate-b-runtime-schema-final-c99f4eef3b8b43aabd3deb4633180cac.log`.
+  Wrapper/Gate B hashes begin `789956A8...` / `28E01914...`.
+- **Resources/next:** No live browser is owned; failed evidence remains
+  retained. Freeze the reviewed candidate and repeat forced-negative first, then A-I, final
+  physical corpus, remaining compiled falsifiers, and real built-in Browser
+  evidence. Reconcile historical findings, obtain final review, and publish
+  only after the requested gates are complete. No commit/push/email occurred.
+
+## Before runtime predicate correction — 2026-09-05
+
+- **Status/scope:** IN PROGRESS — NOT ACCEPTED. Verifier trust and A-I runtime
+  reconciliation; no Owner Review closure or Task 44 work.
+- **Candidate:** `codex/task43p-final-recovery`, HEAD
+  `a5b253873c2b25a54d7c393b118e3f2e1831a4d8`, moving worktree candidate.
+  Four new Java runtime collectors cover existing A/B/C/E/F assertions,
+  active-meter exception cases, paused completion/reset/session/snapshot cases,
+  and observation of a real queued repaint across a board switch. Their
+  integration and strict evidence schema now have a current JDK 8/GWT
+  production build (all five permutations, actual exit `0`) and fresh
+  independent scoped review. Two subsequent test-path corrections below are
+  the moving candidate; their current production build is running.
+- **Latest qualified runtime:** Forced run
+  `1db920291ba74b82a482f7b4ae8557d1` returned actual expected `1`, exact DOM and
+  anchored Java diagnostic, and verifier-owned complete cleanup. Separate
+  current residue audit found no remaining processes/listeners/profile/lease;
+  no manual cleanup was used. NMOS seed 3 and LED seed 0 then recorded triad
+  PASS and complete cleanup; each overall invocation remained actual `2`
+  because its A-I evidence was still explicitly unproven. These results use
+  the earlier `5F38FAD5...` wrapper/source-protocol candidate and the explicit
+  30000 ms startup condition, not the current moving runtime candidate.
+- **First compiled source case:** Renderer-only `J1.1 +20px` compiled all five
+  permutations with actual `0`, then returned actual `2`. The real application
+  rejected it at diagnostic admission before the physical verifier ran. The
+  harness also exposed an incorrectly named exception type while reporting
+  the unproven result. Preview process/listener absence, exact byte restoration,
+  and unchanged repository state were proven; the failed disposable copy and
+  evidence remain retained (`task43p-source-experiments-c29da7ed342d4c68981d92cf8f5041cc.json`).
+- **Corrections/review:** The source rejection now uses the exact
+  `System.IO.InvalidDataException` contract; focused Windows PowerShell 5.1
+  contract/identity probes passed with actual `0`. A validated source-only
+  request runs the unchanged physical checker after real analysis/time advance
+  and before other admission checks; no admission check is skipped. That seam
+  passed independent source review. New lifecycle collectors also passed a
+  scoped static review after correcting observation reads across restoration.
+  No current runtime defect is claimed proven from those new source checks.
+- **Latest integration:** The runtime wrapper distinguishes validated observed
+  blockers (`1`) from unproved evidence/cleanup (`2`). H now tests direct
+  session succession and a dirty reset; terminal Finish/Retest must reject
+  repeats. New compiled falsifiers cover the omitted snapshot restore field
+  and disabled public Remove. The latter separately proves direct workbench
+  dispatch and real mouse input on a fresh player document. The exact
+  navigation token is retained and validated; geometry is a coordinate aid.
+- **Current runtime attempts:** Forced run `e1efba6d49d0413a97f7c60c5d6af21f`
+  on the reviewed navigation candidate returned exact expected `1` with
+  anchored Java/DOM proof and complete verifier cleanup. A separate current
+  residue audit passed. Source attempt `f43ddb30d6654c7599ac37ce139e22c2`
+  compiled successfully but remained `2` after its first physical failure could
+  be replaced by a later diagnostic-admission result. Source bytes restored
+  exactly; preview cleanup and unchanged repository were proven. The A-I
+  attempt `e6d593d401b84c809af233eea6471e18` returned `2`, without an aggregate
+  packet, at an invalid collector lookup of NPN `R1`; verifier cleanup and the
+  separate residue audit passed. H now selects real NPN `RLOAD` posts (LED/RC
+  retain `R1`), with independent delta review PASS. The source-only catch now
+  pauses after a validated real failure so later timer updates cannot replace
+  it. That delta is under review. No product lifecycle blocker is inferred from
+  these incomplete runs; no production repair or admission bypass was added.
+- **Gates/resources:** Build log `gwt-runtime-public-3b73608a24f44b57be3cb7c83cd6b17d.log`
+  records current Java exit `0`. Windows PowerShell 5.1 runtime schema,
+  source proof/public input schema, and forced-proof probes returned `0`.
+  Fresh Luna runtime and public/snapshot source reviews passed after repairs.
+  The first complete Gate B returned actual `2` because Windows PowerShell 5.1
+  rejected an omitted optional reference parameter in navigation. The corrected
+  actual helper passes omitted/reference/invalid-output canaries and independent
+  delta review. Complete Gate B then passed with actual `0`, unchanged before/
+  after hashes for all 13 integration files, in
+  `gate-b-navigation-final-60eae52af6774838946ce02d582898e7.log`.
+  Current wrapper/Gate B hashes begin `45F17BB2...` / `D1B87E3D...`.
+  The unchanged Java candidate reuses the build above. A prior root-only
+  preflight used an unexported assertion and is not a clean-state proof;
+  fresh native process and verifier-owned listener checks precede live runs.
+  No live browser is owned. Root owns all
+  integration; workers returned file ownership and own no processes. Failed
+  evidence is retained. No publication occurred.
+- **Next:** Finish the current JDK 8/GWT build and source-latch delta review;
+  repeat forced-negative first on that frozen Java candidate, then source smoke
+  and A-I. Complete Gate B evidence above applies to its unchanged script,
+  schema, XML, and toolchain inputs; the Java deltas require fresh live proof.
+  Final physical corpus, required compiled falsifiers, visible built-in Browser
+  evidence, finding reconciliation, and final review remain pending.
+
+## Source-negative protocol and first focused positives — 2026-09-05
+
+- **Status/scope:** IN PROGRESS — NOT ACCEPTED. Verifier-trust recovery and
+  runtime reconciliation; Owner Review and Task 44 remain blocked/unstarted.
+- **Candidate:** `codex/task43p-final-recovery`, HEAD
+  `a5b253873c2b25a54d7c393b118e3f2e1831a4d8`, 18 worktree status entries.
+  Module `8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701`;
+  wrapper `5F38FAD5F56B2AEF44268B72A949C1D944EC3738C38BE5015C63FBACD3BAD420`;
+  source harness `58BA97710CBAA8BD9847783945EB5A755123C82CC0408A17661AF38C8EE09BD5`;
+  Gate B `6C67E6CB682FCAD6FAF7E3298BE106AD2772B9BF56951842440093A0454F500B`;
+  physical verifier `08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353`.
+- **Delta:** NMOS `RPD.2` was a verifier-manifest regression: the unchanged
+  generator has always bound this GND pad to `GroundElm` post 0. The manifest
+  now matches that independently checked endpoint contract. No electrical
+  implementation changed. Set-mismatch diagnostics use sorted IDs without
+  changing set equality. A normal Task 43P invocation can select one exact
+  family for focused checks; the default six-family corpus is unchanged.
+- **Source-negative proof:** Nine fixed source cases select the corresponding
+  compiled disposable route. A validated Java request binds the real specific
+  failure to nonce/run/route/request/execution/experiment identity; the DOM
+  retains the original exact failure. The wrapper writes its separate proof
+  only after final verifier cleanup. The harness requires actual child `1`,
+  exact proof/hashes/provenance, preview process and listener absence, exact
+  byte restoration, repository equality, and final evidence persistence.
+  Late errors remain `2`; the sequence stops at the first unproven case and
+  retains its disposable copy. No live source case has passed yet.
+- **Checks:** Current Java JDK `1.8.0_502` production build
+  `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile
+  -Style OBF` passed with captured exit `0`, all five permutations and link
+  (`gwt-source-proof-7eaab24879ad40d8a13517d5d3d170b1.log`). The wrapper's
+  Windows PowerShell 5.1 `-GateBForcedNegativeProofProbe` passed with actual
+  `0`; source `-ContractProbe` and `-IdentityCanary` passed with actual `0`.
+  Invalid family/source CLI selections returned actual `2` before context
+  creation. These synthetic checks do not prove live Java/UI cleanup.
+  Full Gate B passed wrapper `5F38FAD5...`, Gate B `6C67E6CB...`, and source
+  harness `0A6D42F5...` with actual `0`
+  (`gate-b-source-proof-551214c9f0944abfbe3ae929baf011f3.log`). Review then
+  found an unpinned preview response PID/start. The current harness binds that
+  response to the exact launched handle tuple, revalidates the current owner
+  before the browser child, and retains the original tuple for cleanup.
+  Added launch-tuple negative checks pass with actual `0`. Final complete
+  Windows PowerShell 5.1 Gate B passed the current `58BA9771...` harness with
+  captured exit `0` (`gate-b-source-launch-final-df661c431f0e48ae8d8ca13ce0fe0ff4.log`).
+  Current live forced-negative remains pending.
+- **Review:** The source-request Java/wrapper delta passed independent Luna
+  review. A fresh Luna integration review found the preview launch-binding
+  blocker above; the correction passed targeted independent delta review,
+  including separate focused checks with exit `0`. Root also ran the current
+  probes in Windows PowerShell 5.1 with actual `0`. The source harness author
+  is separate from this reviewer.
+- **Prior runtime limits:** Forced run `a452a5450ff344fb95f02bc1cad2a65d`
+  passed expected exit `1`, exact Java/DOM proof, and verifier cleanup using
+  explicit 30000 ms startup settling. Normal run
+  `ef122e530c0c45af91a4cf125e2ab346` recorded triad PASS for LED/diode/RC/NPN
+  seed 3, then failed the now-corrected NMOS manifest expectation; parallel
+  was not reached. All five browser sessions and preview were verifier-cleaned,
+  with a separate current residue audit of zero. These remain earlier-candidate
+  observations, not proof for the new candidate or complete A-I acceptance.
+- **Resources/publication:** No owned live browser/preview remains. Root owns
+  integration; workers have completed source edits and the reviewer is read-only.
+  Failed evidence and previously retained temporary resources remain preserved.
+  No staging, commit, push, notification, or broad cleanup occurred.
+- **Next:** Final integration review and full Gate B; forced-negative first on
+  this candidate; focused positive LED/NMOS checks and one real source-negative
+  smoke case. Complete A-I runtime falsification, the final seed corpus, all
+  required source cases, and visible built-in Browser evidence remain pending.
+
+## Startup qualification and first normal corpus — 2026-09-05
+
+- **Status/scope:** IN PROGRESS — NOT ACCEPTED. Verifier-trust recovery and
+  runtime acceptance; Owner Review and Task 44 remain blocked. Inherited dirty
+  work and the owner's project agent-configuration changes are preserved.
+- **Candidate:** `codex/task43p-final-recovery`, HEAD
+  `a5b253873c2b25a54d7c393b118e3f2e1831a4d8`, with 18 worktree status entries.
+  Module SHA-256 `8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701`;
+  wrapper `69A685B301F4658317DBC4926F388B18AE9492CB7D7B49881D67422805573461`;
+  Gate B `D43D9EA2E9D5E6C13951F93BC58F78751DC40C6AA12D5DDC741415EA5F5ABF1F`;
+  physical evidence producer `F90BD2EF7008C348244A8C2C7231512DB6DD15BDE55B7AB3A897DFD4F2AEBBA1`.
+- **Latest boundary:** Optional `-Task43PStartupSettleMilliseconds` defaults to
+  zero and accepts only bounded canonical input (0–45000 ms). A selected Task
+  43P route waits through an actual CDP Promise before navigation, retains the
+  existing route deadline, verifies minimum elapsed time and the complete
+  owned blank document, and records the setting in wrapper evidence. This
+  does not change the module's 500 ms proofs or 15 s cleanup budget.
+- **Validation:** Focused Windows PowerShell 5.1
+  `scripts/verify-gate-b.ps1 -SkipJdkCheck -GateBCdpReferenceProbe`: captured
+  exit `0`, including actual helper references/JSON, injected startup timing,
+  document/protocol/deadline negatives, and actual pre-context CLI rejection.
+  Those injected cases are not live Edge proof. Parser and diff checks pass.
+  Final full Windows PowerShell 5.1 Gate B passed with captured exit `0`
+  against the current `8BEF40EA...` / `69A685B3...` / `D43D9EA2...` hashes.
+  JDK `1.8.0_502` `scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07
+  -Target Compile -Style OBF`: captured exit `0`, all five GWT permutations
+  and link passed for the current `F90BD2EF...` Java candidate; no Java changed
+  afterward, so this build is reused.
+- **Review:** Independent Luna reviews passed the shutdown capability/attempt
+  guard, CDP reference/PowerShell 5.1 repair, and triad `faultType` emission.
+  The startup-wait delta also passed fresh read-only Luna review, including a
+  separate focused probe run with exit `0`; the reviewer launched no browser.
+- **Runtime evidence:** The 30-second settled prerequisite passed with exact
+  verifier cleanup. Forced run `a452a5450ff344fb95f02bc1cad2a65d` passed the
+  required expected-negative gate with actual exit `1`, exact DOM marker,
+  anchored Java diagnostic, nonce/route/request/execution proof, and complete
+  verifier cleanup. Final manifest/packet audit confirmed both released leases,
+  browser/server absence, profile/claim removal, unchanged source digest
+  `983a6cc7abf8249618305d3558d9c68c357f0aa57275582cf67453963ca839e2`
+  (856 files), unchanged status, and zero current process/listener residue.
+  This result uses the explicit 30000 ms startup condition.
+  Earlier forced run `31672c206ddd4472804ca80e85811ef0` rejected the
+  missing triad field with exit `2`, while verifier cleanup fully passed.
+  After the field repair, run `757519e50da4420fbdce5ea35cb33f29` captured the
+  complete Java/DOM packet at browser age 8.2 s, then returned `2` on unproved
+  transient descendants. Its root was already absent at the separate audit;
+  two current views, a full process scan, both ports, and unchanged manifest
+  were proved. No manual stop occurred. Failure evidence remains retained.
+- **Normal seed-3 runtime:** Run `ef122e530c0c45af91a4cf125e2ab346` recorded
+  physical-triad PASS for LED (6 terminals), diode (8), RC (12), and NPN (15),
+  each with all nine canonical negative fixtures. Their A-I status remains
+  partial/unproven. NMOS stopped at the actual DOM failure
+  `FAIL:task43p-solver-post-oracle-mismatch:RPD.2`; the run returned exit `1`
+  and parallel was not reached. This is an unresolved correspondence finding,
+  not a normal-corpus pass. All five browser sessions and the preview completed
+  verifier-owned cleanup; fresh process/listener, profile, and claim audits
+  confirmed no remaining resource. Source digest remained unchanged.
+- **Resources/publication:** Gate B and its fixtures are finished; no live
+  browser/preview remains from the failed route. Root is the sole writer;
+  workers are read-only. No staging, commit, push, or notification occurred.
+- **Next:** Independently determine whether the NMOS RPD.2 mismatch is in the
+  independent oracle or the live binding, then repair only the authorized
+  verifier boundary or document a reproduced product blocker. Complete runtime
+  falsification, final seed corpus, source experiments, and visible Browser
+  evidence remain required before acceptance.
+
+## Recovery evidence before opt-in startup qualification — 2026-09-05
+
+- **Status/scope:** IN PROGRESS — NOT ACCEPTED. Verifier-trust recovery and
+  runtime acceptance; Owner Review and Task 44 remain blocked. The owner's
+  project agent-configuration/guidance changes are included.
+- **Candidate:** Branch `codex/task43p-final-recovery`, HEAD
+  `a5b253873c2b25a54d7c393b118e3f2e1831a4d8`, inherited dirty work preserved.
+  Frozen module SHA-256
+  `8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701`;
+  Browser wrapper SHA-256
+  `4DFFD686B8A8B846EAD57B6708E0ED540FF8219D3BF310563B090515B2A09894`;
+  Gate B test SHA-256
+  `EC784AAE19381B645B55A7522F0200E633DC0F8CAB070693AD16E3330B2CC101`;
+  physical evidence producer SHA-256
+  `F90BD2EF7008C348244A8C2C7231512DB6DD15BDE55B7AB3A897DFD4F2AEBBA1`.
+- **Latest change:** The next forced-negative run reached the decoded Java
+  payload and exposed a missing required `triad.faultType`. The physical
+  evidence producer now emits the selected fault object's type alongside its
+  existing fault ID. The exact consumer schema remains unchanged. Fresh
+  independent producer/consumer review passed with no findings: the selected
+  fault/binding identity and complete nested allowlists agree. The new Windows PowerShell
+  JDK `1.8.0_502` build (`scripts/build.ps1 -JavaHome
+  .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`) passed with
+  captured exit `0`; all five GWT permutations compiled and linked from the
+  unchanged before/after `F90BD2EF...` producer candidate.
+- **Wrapper repair:** The first forced-negative run exposed nested PowerShell
+  reference forwarding in evidence capture and an unsupported PowerShell 5.1
+  JSON option. Astra corrected those sites and the same reference defect in
+  three input helpers. The focused actual-helper canary passed with captured
+  exit `0`, including caller counter/diagnostic mutation, nested JSON parsing,
+  and malformed/empty rejection. Its injected transport and decode observer
+  do not establish Java proof or visible interaction. Fresh independent delta
+  review passed, including its own focused PowerShell 5.1 run with exit `0`.
+  Final Windows PowerShell 5.1 `scripts/verify-gate-b.ps1 -SkipJdkCheck`
+  passed with captured exit `0` against the `8BEF40EA...` / `4DFFD686...` /
+  `EC784AAE...` source candidate. Its sidecar records unchanged before/after
+  hashes; the existing JDK 8/GWT build is reused for unchanged Java source.
+- **Shutdown change:** Attached browsers use a private browser-level CDP close
+  request after current session/root/listener ownership and repeated complete
+  child-graph proofs. Exact acknowledgement, retained root/child exit, final
+  residual scan, and all profile/listener/claim gates are required. Unproven
+  shutdown is exit `2`; an attempted command cannot fall back to force-stop.
+- **Validation:** Windows PowerShell 5.1
+  `scripts/verify-gate-b.ps1 -SkipJdkCheck -GateBBrowserNaturalShutdownProbe`
+  passed with captured exit `0`. Real loopback ClientWebSocket cases cover
+  successful acknowledgement and malformed/duplicate/error/drop/timeout
+  rejection. Separate orchestration injections cover changed ownership/graph,
+  missing proof, late descendants, disposal, attempt reuse, and whole-call
+  deadline failures. These mocked orchestration cases do not prove live Edge
+  cleanup. Parser and whitespace checks passed. Earlier real retained-handle
+  tests/review remain evidence only for unchanged functions; the earlier
+  complete Gate B is not the final current gate. The prior JDK 8/GWT build is
+  reusable because Java source remains unchanged in this recovery session.
+- **Review:** Independent Luna review rejected the preceding shutdown candidate
+  because changing a copied session's route label bypassed the attempt key.
+  Astra bound the key to immutable process PID/start, added route/run relabel
+  negatives, and reran the focused PowerShell 5.1 suite with actual exit `0`.
+  Fresh targeted delta review passed, including an independently reproduced
+  real durable-context copy rejection and a focused suite rerun with exit `0`.
+  The first live Edge prerequisite for this candidate returned `2` after
+  CDP/readiness passed: descendant PID `27544` exited before its current start
+  identity was established. No cleanup acceptance was claimed. A separately
+  revalidated exact manual stop of root PID `32212` proved current process and
+  port `52068` absence; its manifest remained unchanged.
+  A subsequent diagnostic completed all verifier-owned cleanup with 30 child
+  checks, zero exact-stop calls, and profile/claim removal; its fixed diagnostic
+  exit remains `2`. The untraced 10-second startup-settled prerequisite returned
+  `2` on an empty descendant command line in the broad snapshot. Separate exact
+  manual cleanup of root PID `100976` proved two current absence observations,
+  complete process and port `52786` absence, and unchanged manifest evidence.
+  The current unknown observation remains a failure; no discovery rule changed.
+  The reviewed untraced 30-second startup-settled prerequisite then passed with
+  actual exit `0`: CDP readiness, `Complete-VerifierRun`, profile removal, and
+  claim removal all passed for run `20e8e3aa33fc4ac093e989e850097fd4`.
+  A separate post-run current process/listener audit also passed. This
+  qualifies the settled startup condition only; the 3- and 10-second failures
+  remain failures. The final complete PowerShell 5.1
+  `scripts/verify-gate-b.ps1 -SkipJdkCheck` then passed with captured exit `0`
+  against the preceding `8BEF40EA...` / `E18545F8...` candidate, including parser,
+  source/workflow, listener/schema, real process, root-gone/late-helper,
+  natural-shutdown, 0/1/2 exit, resource isolation, and renderer checks.
+- **Forced-negative first:** Run `2985286a1f2647afbc25181a7f1f5bc9` returned
+  actual exit `2`. Capture attempted to increment a nested `PSReference`;
+  cleanup also failed on unproved disappearing descendants. No anchored Java
+  evidence packet or acceptance was recorded. Separate immediate exact
+  PID/start/parent/executable/full-command proof authorized manual stop of root
+  `53172`. Two current root-absence observations, the complete process scan,
+  and CDP `61180`/preview `61173` absence passed; the manifest was unchanged.
+  This manual reconciliation does not count as verifier-owned cleanup.
+  The repaired wrapper's run `31672c206ddd4472804ca80e85811ef0` also returned
+  `2`, this time rejecting the missing required `root.triad.faultType`.
+  Verifier-owned cleanup completed with no errors: browser `80752`, CDP
+  `57381`, preview `59495`, profile, and claim were released. A separate fresh
+  process/listener audit confirmed absence; no manual cleanup was performed.
+  The application gate remains failed until its complete packet is accepted.
+- **Host evidence:** The previous reviewed candidate reached CDP/readiness but
+  failed the 15-second force-stop drain. A diagnostic recorded repeated Edge
+  child recreation after 30 exact stops. Both roots had already exited at
+  separate fresh audits; listener absence was proved, no manual stop occurred,
+  and all failed profiles/claims/manifests remain retained.
+- **Resources/publication:** The prerequisite owns no remaining browser or
+  listener. Full Gate B and its bounded fixtures have completed.
+  Fresh post-prerequisite audits found zero Edge/helper/WScript/verifier-marked processes; failed
+  profiles, claims, manifests, and logs remain preserved. The focused wire
+  fixtures proved disposal and listener absence. Root is the sole writer;
+  shutdown and wrapper delta reviews are complete. No staging,
+  commit, push, or email.
+- **Next:** Rerun forced-negative first with the worktree frozen after a fresh
+  process/listener audit. Normal A-I/physical-triad, source
+  experiments, and visible Browser evidence remain unrun in this recovery.
+
+## Recovery evidence before cooperative shutdown qualification — 2026-09-05
+
+- **Status:** IN PROGRESS — NOT ACCEPTED. Owner Review is blocked; Task 44 is
+  blocked and unstarted.
+- **Scope:** Verifier-trust recovery and runtime acceptance, plus the owner's
+  in-session request to align project agent configuration and improve recovery
+  and validation guidance.
+- **Candidate:** Branch `codex/task43p-final-recovery`, HEAD
+  `a5b253873c2b25a54d7c393b118e3f2e1831a4d8`, with inherited uncommitted work
+  preserved and additional verifier/configuration/documentation changes. The
+  companion and downstream listener implementation has module SHA-256
+  `65807ABCDB49CB0045E3A00AB9F1DFC3243BFCFB22E409CE8F4095A9CC19B1AD`.
+  Its integrated test candidate is
+  `A4600A7731768ACE55F6D1BF648D498EF6B3CB5020F302B39E0168DC0A868760`.
+  These hashes identify the last reviewed downstream authorization correction.
+  Independent review rejected the subsequent natural-exit candidate
+  `ED6AB0E1...` for copied-scope minting, substituted retained Process objects,
+  and an incomplete absence-proof deadline. Astra corrected those boundaries.
+  The new frozen module SHA-256 is
+  `7659B40ED63DC6664219B075AD8304A3E9FF75228E5815A9FF359AD6A9415754` and
+  test SHA-256 is
+  `71B239B6545B168F07779DA0E8AD88630C04CD19ED58FF37D692D9CD406ED813`.
+  That candidate passed fresh targeted independent review and real-process
+  negative checks. Its live prerequisite still failed the 15-second drain
+  deadline. A new cooperative shutdown correction is being implemented by
+  Astra; its current module hash is
+  `137FEBAED37BD2529A422AA3F90D71B566D2011849B953427FF58377B2D686F6`.
+  This moving candidate has only parser validation; focused canaries and fresh
+  independent review are still required before live qualification.
+- **Validation:** Complete Windows PowerShell 5.1 Gate B passed with actual exit
+  `0` against the earlier `34A3EE21...` / `CB88B8C1...` candidate, including
+  renderer validation. The
+  JDK 8/GWT production build passed all five permutations; Java source has not
+  changed during this recovery session. The companion matcher and focused
+  ownership checks passed. The final explicit compatibility probe passed with
+  actual exit `0`, including copied-file policy acceptance before signature
+  mutation and rejection afterward. The downstream authorization correction
+  passed the focused root-listener probe with actual exit `0`, including the
+  real setter, identity negatives, full-snapshot fallbacks, and delayed proof.
+  Real Edge cleanup and final complete Gate B still require qualification
+  against the corrected candidate. Astra's final focused PowerShell 5.1
+  `-SkipJdkCheck -GateBBrowserDrainNaturalExitProbe` passed with captured exit
+  `0` against `7659B40E...` / `71B239B6...`. It exercised a real retained
+  handle's natural exit, copied-scope minting, substituted handles for the same
+  PID/start before and after exit, immutable-identity replacement, disposed
+  handles/scopes, wrong retained creation time, delayed attestation/handle/
+  first and final current views, live pre-stop parent mismatch, and ordinary
+  exact termination. Parser and whitespace checks passed. The worker's
+  earlier full deterministic run preceded the required real Edge prerequisite
+  and is not counted as the ordered final gate.
+- **Review:** The initial deadline/restoration repair passed independent review.
+  The launch-handle implementation and final timeout/fixture-cleanup corrections
+  have fresh independent review PASS. The reviewer ran the final focused
+  process-start identity probe once with exit `0`, including a silent timeout
+  child, exact retained process identity, canonical diagnostic, current child
+  absence, and listener cleanup. A fresh independent Luna review of the
+  same-root candidate passed after the host crash. Fresh independent review
+  also passed the companion production policy, including actual signed-file
+  acceptance and rejection cases. The test dependency and signature-oracle
+  findings were corrected; fresh targeted independent Luna delta review passed
+  the integrated `DDD668CB...` / `6E3CF349...` candidate.
+  The subsequent `65807ABC...` / `A4600A77...` correction also passed fresh delta
+  review; unchanged structural schema evidence is reused alongside inspection
+  of the real production schema call paths.
+  The natural-exit implementation subsequently failed independent review;
+  the corrected `7659B40E...` / `71B239B6...` candidate passed a fresh targeted
+  Luna review, including independent real-process checks and the focused
+  canary with captured exit `0`. The new cooperative-shutdown delta is not
+  covered by that PASS.
+- **Runtime:** The first two fresh Edge/CDP prerequisites returned infrastructure
+  exit `2` at the strict ownership deadline with unproven descendant cleanup.
+  Separate exact manual cleanup proved each run's Edge processes/listener
+  absent and retained evidence. The third prerequisite passed the strict
+  listener proof and opened CDP, then returned `2` because a cleanup-snapshot
+  process disappeared before inspection. Its separately revalidated manual
+  cleanup also proved no live Edge/listener residue; all failed evidence is
+  retained. A separate settled-startup run passed a real CDP document-readiness
+  request but failed descendant executable proof. A reviewed diagnostic-only
+  observer then captured the rejected child as Microsoft's signed, matching-
+  version `identity_helper.exe` under this run's exact Edge profile. The
+  failing verifier only recognized `msedge.exe` descendants. All three
+  subsequent roots were manually revalidated/stopped and their listeners
+  proved absent; no verifier cleanup prerequisite has yet passed. Forced
+  negative, normal A-I/physical-triad runtime, and visible Browser evidence have
+  not started in this recovery session.
+- **Latest prerequisite:** The downstream correction passed actual startup
+  listener authorization and CDP document readiness on a fresh run. Cleanup
+  returned `2` because descendant PID `16456` disappeared during identity
+  inspection. The independently reviewed diagnostic observer then reproduced
+  the failure after full child ownership validation: renderer PID `64768`
+  passed discovery proof, eleven other children were exactly stopped, and the
+  same renderer was missing at its own immediate pre-stop check. This locates
+  the failure after discovery, without proving its natural exit. The worker's
+  retained-handle proof for that transition is under review. Diagnostic
+  runs always return `2` and cannot qualify acceptance.
+  The subsequent `7659B40E...` real prerequisite reached CDP/readiness but
+  returned `2` at the 15-second descendant-drain limit. A diagnostic run then
+  recorded 30 exact child stops: after the initial 15 children, Edge repeatedly
+  created five new GPU/network/storage groups under the same root PID/start.
+  Increasing query speed alone does not remove that restart behavior. Both
+  runs' processes had already exited at the fresh post-failure audit; no manual
+  stop was performed, their listeners were absent, and profiles/claims/manifests
+  remain retained. Neither failed run qualifies acceptance.
+- **Resources:** Preflight found an abandoned late-markerless Gate B fixture
+  process from an earlier probe. Root revalidated its exact manifest/current
+  PID, start time, parent PID, executable, full command, and task markers before
+  stopping that one process; current process/listener absence was proved and
+  retained evidence was unchanged. This manual fixture cleanup is not verifier
+  acceptance. A subsequent fresh inventory found zero Edge/helper and zero
+  verifier-marked processes. Prerequisite run
+  `cb6458bfd8cd4192804a9a804f9ff3b3` and subsequent corrected run
+  `5abb1a03082946c3af2b5a0bf9f5fa82` failed; separate exact manual root cleanup
+  proved all Edge/helper processes and each listener absent. Diagnostic run
+  `2b076bb659c54a9e9a04ea973331fda3` also has separate exact manual cleanup
+  proving all Edge/helper processes and port `62517` absent, with its manifest
+  unchanged. Root owns no live browser. Retained failure profiles, claims,
+  manifests, and logs remain preserved. A fresh post-worker audit found zero
+  Edge, identity-helper, WScript, or verifier-marked processes.
+- **Publication:** No staging, commit, push, or completion email in this session.
+- **Next:** Complete the bounded cooperative browser-shutdown proof and its
+  canaries, independently review the final delta, qualify the real Edge/CDP/cleanup path,
+  then final
+  Gate B and forced-negative/subsequent runtime gates.
+
+Detailed current-session evidence is recorded in
+[the post-crash recovery entry](#task-43p-post-crash-verifier-recovery--2026-09-04).
+Earlier records below describe their own candidates and do not supersede this
+checkpoint.
+
+## Historical Gate B — Verification Isolation and Mainline Protection Baseline
 
 ## Historical Task 43P handoff — post-inspection (pre-Coder candidate)
 
@@ -1130,3 +1726,277 @@ PID4/HTTP.sys implementation, or unrelated dirty change was modified.
 No visible `@Browser` evidence or Task43P acceptance is claimed. The candidate
 remains dirty and uncommitted at baseline HEAD
 `20f83535163070a0688fcc0958715e6bc827d445`.
+
+## Task 43P post-crash verifier recovery — 2026-09-04
+
+**Status:** IN PROGRESS — NOT ACCEPTED. Owner Review remains blocked; Task 44
+remains blocked and unstarted. Current branch is `codex/task43p-final-recovery`
+at HEAD `a5b253873c2b25a54d7c393b118e3f2e1831a4d8`, with the inherited
+uncommitted implementation preserved. The owner subsequently authorized the
+project agent-configuration and workflow-guidance changes recorded below.
+
+Fresh independent Luna review found that two 500 ms listener-proof stopwatches
+were constructed without starting. The repair starts one monotonic budget at
+entry and checks it before and after every relevant dependency, including the
+initial listener query, schema validation, and direct HTTP.sys authorization.
+Delayed valid observations cannot become a positive proof after the deadline.
+
+The complete Gate B run then exposed a test-isolation defect: the kernel
+release canary retained mutable `FunctionInfo` objects while replacing their
+definitions. It restored a mock into later tests. The canary now snapshots
+immutable command type and script-block values, asserts exact restoration, and
+creates and completes a real context afterward in the same PowerShell process.
+
+Validation against this intermediate reviewed candidate:
+
+- `scripts/verify-gate-b.ps1 -SkipJdkCheck`: PASS, actual exit `0`, including
+  focused kernel/listener tests and the complete contract, ownership, child,
+  cleanup, and integration canaries. Log is retained in the task-owned temp
+  directory `deadline-gate-final4-59ed0baaea104e16810bb5f9d7f77d0c`.
+- Fresh independent Luna deadline/restoration review: PASS. Module SHA-256
+  `11F1C0935A1A583F7A2A1949BC786A2279A4E99A6726C978EA3505BA5E52B256`;
+  Gate B SHA-256
+  `524C4109C33711A6E3110AF62B30A9F280860EAE5524902650416BAF402062D3`.
+- Windows PowerShell 5.1 execution of `scripts/build.ps1 -JavaHome
+  .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF`: PASS, exit `0`,
+  JDK `1.8.0_502`, all five GWT permutations compiled and linked.
+- `git diff --check`: PASS, exit `0`.
+
+The first fresh Edge/CDP prerequisite used a new profile and dedicated port
+after a current process/listener inventory. Run
+`5a128ada6ef8490eafe64c0cf6008cc8` returned infrastructure exit `2` before CDP
+attachment: the listener proof exceeded its strict 500 ms budget, and browser
+descendant cleanup could not prove complete current identities. A separate
+read-only listener query took 641 ms using `Get-NetTCPConnection`.
+
+The retained run manifest, profile, claim, and diagnostic records were
+preserved. Separate manual cleanup revalidated the exact root PID/start,
+parent, executable, command line, run marker, profile, and port immediately
+before stopping it. A subsequent inventory found zero Edge processes and no
+listener on that run's port. This is manual resource cleanup, **not** a passed
+verifier cleanup gate. The original prerequisite remains exit `2`.
+
+Independent read-only diagnosis measured the provider no-match query at
+429.433 ms and `netstat -ano -p tcp` at 83.737 ms (exit `0`). The proposed
+repair selects the existing validated netstat path only inside the strict
+ownership deadline. A separate cleanup-path review found no proven defect:
+one descendant vanished between the complete snapshot and its direct query,
+and the other lacked recorded executable proof. Neither condition authorizes
+discarding an incomplete cleanup graph or relaxing identity checks.
+
+The scoped `-PreferNetstat` implementation now passes its focused provider and
+identity/schema canary and the complete Windows PowerShell 5.1 Gate B run
+(`-SkipJdkCheck`, actual exit `0`). Default provider behavior, malformed/empty/
+error-output rejection, strict deadlines, and all cleanup contracts are
+preserved. This candidate's module SHA-256 is
+`97032BAC7B68113A1EC627AC863F9C93F8F1B5DB74329C967C5F6E276909F603` and Gate B
+SHA-256 is `41657E966070C38A28D9A22A91390B400F38AB3D9FBC751C4225DE25120C4DE0`.
+The final log is retained under
+`deadline-gate-netstat-final2-5974e197518e43f4ab43887ff94203c8`.
+Independent delta review returned BLOCKED after a real preferred-route query
+exposed a short-lived subprocess race that the mocked provider canary did not
+exercise. `Invoke-VerifierBoundedProcess` starts asynchronous output readers
+before capturing start identity; `netstat.exe` can exit before the existing
+live-process identity reader accepts it. The failure is typed infrastructure,
+and its logs remain in
+`verify-process-7117c6989bf440b4af5b632f368c06b5`. The reviewer proved its
+temporary listener and subprocesses absent afterward. Focused consumer/kernel
+tests and static call-path review passed, but that candidate's real preferred
+query was unproven.
+
+The launch repair captures exact positive creation time from the retained
+`System.Diagnostics.Process` launch handle before starting asynchronous output
+readers. This launch-only accessor also permits a naturally exited child with
+that retained handle; the shared live-process identity helper still rejects
+already-exited processes. Numeric exit, complete output, exact termination,
+and owned log cleanup remain required. The real netstat listener route and
+quick-child checks now pass in Windows PowerShell 5.1, and independent review
+found no blocker in this implementation delta. Module SHA-256 is
+`34A3EE21711968F6D94AB4EB06B4CAAAB10D6D0B31FBC4884DCA7B1433019E26`.
+
+Root integration review and independent adjudication identified a TEST/TOOL
+blocker in the new canary: its timeout branch accepts any infrastructure
+error, and listener teardown suppresses exceptions. Its reported timeout-stop
+and fixture-cleanup PASS is therefore invalid. The real listener and quick
+child evidence remains valid; a focused oracle correction and independent
+delta review must precede the final complete Gate B and live browser retry.
+
+Those oracle defects are now corrected. The canary requires the complete
+canonical timeout diagnostic, records the retained `Process` PID/start tuple
+passed to the real stop helper, proves current child absence, and emits PASS
+only after listener cleanup. An appended cleanup-uncertainty diagnostic is
+rejected. A subsequent intermittent null-expression failure led to a bounded
+real-path reproduction: a deliberately timed-out child may produce zero bytes,
+and `Get-Content -Raw` followed by `.Trim()` dereferenced null. The fixture now
+uses a silent child, reads both retained streams with `File.ReadAllText`, and
+gets identity from the retained process tuple. The quick natural-exit child
+separately requires exact complete marker output. The original failed child's
+identity was not captured, so its exact attribution remains unproven; the
+reachable null-dereference defect was reproduced and corrected.
+
+Fresh independent final delta review: PASS. Windows PowerShell 5.1
+`scripts/verify-gate-b.ps1 -SkipJdkCheck -GateBProcessStartIdentityProbe` ran
+once with actual exit `0`. Gate B SHA-256 is
+`CB88B8C1B25924CEBC5ED4AABDD19151FF2D8905EC3E48833E2FFB21D9618A6B`;
+the module remains at the SHA above. The final complete Windows PowerShell 5.1
+`scripts/verify-gate-b.ps1 -SkipJdkCheck` returned actual exit `0`, including
+the hanging-child, A/B isolation, and renderer checks. Root evidence log:
+`gate-b-final-1061c05bb43c4c92b32b2608880f02ba.log` in the task-owned recovery
+temp directory. Source hashes were reconfirmed after the run.
+
+The next current process inventory found zero Edge processes and zero verifier
+run-marked processes. A new Edge profile/run
+`ab72e5c649a64be188b87b6965dd3e6f` then returned prerequisite exit `2`, again
+before CDP attachment. Its complete port-bind proof exceeded 500 ms, and
+descendant PID `180428` lacked the required executable identity during cleanup.
+That descendant was already absent when inspected afterward; the retained
+records do not establish whether its earlier executable was missing or wrong.
+
+Read-only Windows PowerShell 5.1 measurements on the owned live browser found
+warm preferred listener queries at 71-89 ms, current root records at 32-40 ms,
+and a warm complete browser ownership snapshot at 210 ms. Cold component calls
+were substantially slower. These are component timings, not a successful
+integrated ownership proof. Static inspection shows that the port-bind path
+takes a complete graph snapshot even when the listener is the exact root
+PID/start and the existing identity helper supports a fresh PID-scoped query.
+A bounded optimization of that case is implemented. Descendant ownership,
+preview/HTTP.sys authorization, cleanup graph traversal, and the 500 ms proof
+contract remain required.
+
+After diagnosis, exact manual cleanup revalidated the second run's root
+PID `45404`, start identity, parent, executable, complete command line, and
+run/route/worktree/profile/port switches immediately before stopping it.
+Subsequent current queries proved zero Edge processes and no listener on port
+`50037`. All retained profiles, claims, manifests, and logs were preserved.
+This manual action does not convert the prerequisite or verifier cleanup to
+PASS.
+
+The same-root candidate recorded in the current checkpoint passed a fresh
+independent Luna review after another host crash. Windows PowerShell 5.1
+focused probes passed for the new browser-root path, descendant snapshot
+refresh, listener authorization retry, browser root and descendant identity
+retry, kernel transport, and listener-record consumers. Parser checks and
+`git diff --check` passed. The new canary is currently an explicit focused
+probe; adding it to the default full driver is a nonblocking coverage follow-up.
+
+On this candidate, fresh run `04e83ae623a74c91bd4a22eaa39a26c6` passed the
+strict listener ownership proof and opened its CDP WebSocket. Immediate
+cleanup failed because relevant snapshot PID `7164` disappeared before its
+direct inspection; the complete prerequisite remained exit `2`. A later
+independent current query proved that PID absent, and a later complete snapshot
+succeeded. These observations do not retroactively prove the failed cleanup.
+Separate manual cleanup immediately revalidated root PID `10580`, creation
+time, parent, executable, full command line, and all ownership switches before
+stopping it; subsequent queries proved zero Edge processes and no listener on
+port `64049`. Retained profile, claim, manifest, and logs remain untouched.
+The next small prerequisite adds a declared startup-settling interval and an
+actual CDP document-readiness response before the unchanged cleanup gate. It
+uses a fresh run and does not retry or relabel the failed immediate-close run.
+
+The separate settled-startup run `0faf32eeaefd4ad9a2b98f1b3dcab935` also
+passed CDP and returned the expected ready `about:blank` document, but failed
+cleanup at a descendant executable mismatch (exit `2`). Waiting alone did not
+resolve cleanup. A subsequent diagnostic-only run
+`9b7ddf9cfe9d41799b7b251d624b78f7` used a reviewed observer that delegated the
+real executable check unchanged and recorded only rejected candidate data.
+It captured `identity_helper.exe` from Edge's matching version directory,
+with the exact run profile and Windows package-identity utility arguments.
+The installed browser and helper both have version `152.0.4191.62` and valid
+Microsoft signatures with the same signer. The actual rejection occurred
+before the helper's start time was captured, so this trace identifies the
+compatibility cause and is not a process-ownership proof or acceptance run.
+
+The bounded repair recognizes only this exact versioned, signed Edge companion
+in the descendant policy, with required profile and utility identity. Root
+executable, PID/start, current parent/start, complete graph, pre-stop identity,
+missing-process, and deadline contracts remain required. The two new failed
+roots were manually cleaned only after full current target revalidation;
+subsequent listener/process queries proved no live residue. All run evidence
+remains retained. No additional live attempt or full matrix is appropriate
+until the repair passes focused validation and fresh independent review.
+
+The companion implementation (`DDD668CB...`) and corrected tests (`6E3CF349...`)
+passed fresh independent integrated Luna review. Its final explicit Windows
+PowerShell 5.1 `-GateBEdgeDescendantCompatibilityProbe` returned actual exit `0`.
+The test now proves the untouched copied pair is admitted by the actual policy
+before changing one helper byte, preserving version/original-filename metadata,
+observing `HashMismatch`, and requiring policy rejection. This host-dependent
+file capability probe remains explicit-only; the default Gate B suite has a
+source guard against accidentally requiring installed Edge.
+
+Fresh preflight found one retained late-markerless test root from a worker's
+earlier parallel dispatch. That dispatch did not capture an actual exit code;
+the retained manifest records cleanup failure, and a separate serial PASS log
+does not prove this run. Root exactly revalidated and stopped PID `17708`,
+proved process and port `51488` absence, and preserved all retained evidence.
+The manual cleanup artifact is `manual-retained-late-markerless-cleanup.json`
+in the task-owned recovery directory; it is not verifier acceptance.
+
+With a fresh zero-Edge/helper/verifier-marker inventory, the reviewed candidate
+ran prerequisite `cb6458bfd8cd4192804a9a804f9ff3b3`. It returned actual exit `2`
+before CDP readiness: `Positive listener inspection lacked canonical live owner
+authorization.` Cleanup then failed on disappearing descendant identities.
+Result artifact: `edge-cdp-prerequisite-8ac7ff719eff46faaa38450f8f7ea066.json`.
+Root's subsequent exact current target/manifest comparison and immediate stop
+revalidation proved root PID `187236`, all Edge/helper processes, and port
+`57745` absent. The retained manifest hash and artifacts were unchanged;
+`manual-reviewed-companion-prerequisite-cleanup.json` records that manual action.
+Code inspection found the downstream live listener-authorization setter still
+collects a complete browser census even when its entire listener set is the
+exact browser root. The same strict scoped eligibility is being applied there,
+with fresh independent identity proof and unchanged whole-call deadline.
+The frozen implementation now shares one narrow eligibility helper between
+both authorization boundaries. Windows PowerShell 5.1
+`scripts/verify-gate-b.ps1 -SkipJdkCheck -GateBBrowserRootListenerFastPathProbe`
+returned actual exit `0`; the worker retained
+`tsj-gateb-fast-22f5b6fbde084be795f7e44bf2167daf.log` in OS temp. The extended
+canary invokes the downstream setter and checks successful exact identity,
+identity rejection, retained full-snapshot fallbacks, and late-proof rejection.
+Parser/source checks and whitespace checks passed. Fresh independent Luna delta
+review passed this integrated candidate, with unchanged schema evidence reused.
+
+Run `5abb1a03082946c3af2b5a0bf9f5fa82` then passed the actual startup listener
+authorization, CDP attachment, and settled document-readiness response. It still
+returned actual exit `2`: descendant PID `16456` disappeared during cleanup
+identity inspection. Result: `edge-cdp-prerequisite-d9b51b23e85b437193ff5a9242e85419.json`.
+Separate exact manual cleanup of root PID `216560` proved all Edge/helper
+processes and port `52579` absent while preserving the retained manifest and
+all failure artifacts. `manual-canonical-prerequisite-cleanup.json` records
+that manual action; it does not qualify verifier-owned cleanup. The scratch-only
+observer for descendant proof and exact stop calls passed independent review
+at SHA-256 `C2E875F645C98DC9F38C7845771CE256A6866C1FD2AE48F99D5DB20284B3910C`,
+including isolated delegation/restoration canaries. It delegates original
+functions and always returns diagnostic exit `2`.
+
+Diagnostic run `2b076bb659c54a9e9a04ea973331fda3` opened CDP and passed actual
+document readiness, then returned actual exit `2` on cleanup. Its
+`edge-cdp-cleanup-diagnostic-e21b2680057941b1802f68592a1e2c31.json` records
+successful full discovery proof for renderer PID `64768` with start identity
+`639241825758562248` (trace `22`). After eleven other exact child terminations,
+the same recorded child disappeared at the immediate pre-stop identity query
+(trace `74`, fixed-point drain call path). This proves where the failure occurs;
+it does not itself prove the child's natural exit. A bounded retained-handle
+proof is being designed for fully verified children only. Unknown disappearance,
+PID reuse, incomplete identity, and inconsistent inspection remain infrastructure
+failures. Separate current exact manual cleanup proved root PID `78576`, all
+Edge/helper processes, and port `62517` absent, with the retained manifest
+unchanged. `manual-cleanup-lifecycle-diagnostic.json` records this action;
+no files were deleted and it is not verifier-owned acceptance cleanup.
+
+The owner also authorized removing the obsolete coder/reviewer presets and
+aligning the project configuration during this session. The old architect
+preset is replaced by a bounded read-only `specialist` preset, and project
+defaults plus that preset request `gpt-5.6-luna` with `max` reasoning. Existing
+concurrency settings remain unchanged. Both TOML files parse and match these
+settings; this does not claim that an already-running session hot-reloaded
+them. Repository guidance now requires consistent presets, an authoritative
+checkpoint at the top of this report, and a small real OS-path check early in
+validation when relevant. Architecture guidance records the strict proof
+budget's purpose and host-qualification limits; the 500 ms contract is unchanged.
+
+Forced-negative, normal A-I/physical-triad runtime, and visible built-in Browser
+evidence have not started in this recovery session. The next step is the
+cleanup lifecycle diagnosis and any bounded reviewed correction, then the real
+prerequisite and final Gate B if it passes. Deadline, ownership, and
+exact-cleanup contracts remain unchanged.
+No commit, push, or completion email has occurred.

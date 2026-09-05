@@ -1,0 +1,516 @@
+{
+  "protocol": "TSJ-TASK43P-CURATED-2026-09-05",
+  "status": "RUNTIME_ACCEPTANCE_BLOCKED",
+  "head": "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+  "branch": "codex/task43p-final-recovery",
+  "sourceVerifierDigest": "0d4d6c5e4376ff7a865e4d3f0e6079aedb2d1dcfb26ccd21dcd518a3230ad07d",
+  "finalSourceHashes": [
+    {
+      "path": "scripts/VerifierIsolation.psm1",
+      "sha256": "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701"
+    },
+    {
+      "path": "scripts/verify-browser.ps1",
+      "sha256": "F5B73ABCB4FBB2BEFC70C6F4888809289E882D8EB03BF50124192DDEC59D1DF1"
+    },
+    {
+      "path": "scripts/verify-gate-b.ps1",
+      "sha256": "C4AF7325C10829B02654531090D71347E119C44A0BE84EFE05765171FE42CD8C"
+    },
+    {
+      "path": "scripts/verify-task43p-source-experiments.ps1",
+      "sha256": "F175C33E52D98B707224ADC1FADB4D2D34947ECA961244C5788610934E04BAC3"
+    },
+    {
+      "path": "scripts/Task43PRuntimeEvidence.ps1",
+      "sha256": "1268EA3FAB1C82A1AAD078324FE9F87093751112BDFF8ACEF0FED6C05EC185A8"
+    },
+    {
+      "path": "scripts/Task43PPublicActionEvidence.ps1",
+      "sha256": "1E019764D2415B0C9700D77D39E83C77B0DDB3EC0090BF7CB8B590161BEED3E3"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "sha256": "90D6B6A3AE28E712591BB0B79A4E62015C23841B2B141528D9AB5C3F956D2400"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+      "sha256": "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+      "sha256": "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+      "sha256": "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+      "sha256": "8AE87DCE84B48F71FBEC59D5833A35A512254D4FFD948EB586210F207A75D68B"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+      "sha256": "594867A425E548DF120844D048EE498ED529B16B9268A954DFE476AD8B0D452C"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+      "sha256": "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6"
+    }
+  ],
+  "digestExecutionEnvironment": "Windows PowerShell 5.1; native sorted-record ordering",
+  "runtimeSourceVerifierDigest": "aabfeb3e4bd00fead02c33a3dd1ec0ab1a30f633650befaa90617f63903c1f38",
+  "testedRuntimeSourceHashes": [
+    {
+      "path": "scripts/VerifierIsolation.psm1",
+      "sha256": "8BEF40EAD838B7AB450A0BF60FDA6F6E0F7540B4580AF06CE03416BC737B5701"
+    },
+    {
+      "path": "scripts/verify-browser.ps1",
+      "sha256": "789956A8A563A22CC7E05F5B581DD046D9900223D26F1D09A36C258B1655D2DB"
+    },
+    {
+      "path": "scripts/verify-gate-b.ps1",
+      "sha256": "28E0191465CDE179D18EF93D0C047A487C054DCBFE31F27297C9758B245C3C6F"
+    },
+    {
+      "path": "scripts/verify-task43p-source-experiments.ps1",
+      "sha256": "C2CBC4E9FB0A2532B533F8540431BE242EC85B57BA154B8E849BEEDFE273254C"
+    },
+    {
+      "path": "scripts/Task43PRuntimeEvidence.ps1",
+      "sha256": "1268EA3FAB1C82A1AAD078324FE9F87093751112BDFF8ACEF0FED6C05EC185A8"
+    },
+    {
+      "path": "scripts/Task43PPublicActionEvidence.ps1",
+      "sha256": "1E019764D2415B0C9700D77D39E83C77B0DDB3EC0090BF7CB8B590161BEED3E3"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "sha256": "90D6B6A3AE28E712591BB0B79A4E62015C23841B2B141528D9AB5C3F956D2400"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+      "sha256": "9DB49E4EBB13D28730D7E3044D936500010D4EA3339F49137AE223A5E43AA1B4"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+      "sha256": "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+      "sha256": "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+      "sha256": "8AE87DCE84B48F71FBEC59D5833A35A512254D4FFD948EB586210F207A75D68B"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+      "sha256": "594867A425E548DF120844D048EE498ED529B16B9268A954DFE476AD8B0D452C"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+      "sha256": "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6"
+    }
+  ],
+  "sourceTargetDelta": {
+    "path": "scripts/verify-task43p-source-experiments.ps1",
+    "sha256": "F175C33E52D98B707224ADC1FADB4D2D34947ECA961244C5788610934E04BAC3",
+    "scope": "Only case6 mutation target/comment: use distinct R1.2 before C1.+ endpoint aliases",
+    "currentContractProbeExit": 0,
+    "independentDeltaReview": "PASS",
+    "intermediateSourceVerifierDigest": "6b4e1541894eff75c6ff8a4b6c222e2fee5d9ff1ccf046f0299c8b2dd55f85fb",
+    "reusedEvidence": "Wrapper, isolation, GateB, runtime collectors, physical corpus, and first five mutation definitions unchanged"
+  },
+  "publicControlDelta": {
+    "path": "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+    "sha256": "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D",
+    "scope": "Only public Remove direct-control reinstall operation uses explicit authoritative slot via forPartAtSlot",
+    "independentDeltaReview": "PASS",
+    "finalBuildExit": 0,
+    "reusedEvidence": "A-I collectors, physical verifier, and first ten source branches unchanged; final forced proof and public source case rerun"
+  },
+  "build": {
+    "actualExit": 0,
+    "permutations": 5,
+    "jdk": "1.8.0_502",
+    "command": "scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF",
+    "log": {
+      "name": "gwt-public-slot-final-ac97934ce2df43f492a2006c113d823f.log",
+      "sha256": "51B5994AC34B77C4C8FCE9FD1352295FBC0217A89DEF3942F96EEA934E1EDB0A"
+    },
+    "exitRecord": {
+      "name": "gwt-public-slot-final-ac97934ce2df43f492a2006c113d823f-exit.json",
+      "sha256": "B6429BDAB0F2773A0CFEC542014DC26CFF029FA832DC7369480BE4781B4DD567"
+    },
+    "sourceHashes": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "sha256": "90D6B6A3AE28E712591BB0B79A4E62015C23841B2B141528D9AB5C3F956D2400"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+        "sha256": "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+        "sha256": "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+        "sha256": "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+        "sha256": "8AE87DCE84B48F71FBEC59D5833A35A512254D4FFD948EB586210F207A75D68B"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+        "sha256": "594867A425E548DF120844D048EE498ED529B16B9268A954DFE476AD8B0D452C"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+        "sha256": "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6"
+      }
+    ]
+  },
+  "gateB": {
+    "actualExit": 0,
+    "command": "scripts/verify-gate-b.ps1 -SkipJdkCheck",
+    "log": {
+      "name": "gate-b-runtime-schema-final-c99f4eef3b8b43aabd3deb4633180cac.log",
+      "sha256": "569B3FB6823646095F3DB282C50B364ED25EF5D1780AD47E834BA2F24B220899"
+    },
+    "exitRecord": {
+      "name": "gate-b-runtime-schema-final-c99f4eef3b8b43aabd3deb4633180cac-exit.json",
+      "sha256": "00CAA240F29246D05B40A8C692B9ED155F27425CD48E68899E98A44C8D920397"
+    },
+    "reuseLimit": "Complete run precedes source-case6 mutation-target, public-control slot, and screenshot decoding corrections; unchanged seams reused with targeted independent reviews, current source contract probe, final Java build, affected screenshot/runtime capture canary, and live public-source qualification"
+  },
+  "screenshotCapture": {
+    "actualExit": 0,
+    "command": "powershell.exe -NoProfile -File scripts/verify-gate-b.ps1 -GateBTask43PRuntimeEvidenceProbe",
+    "log": {
+      "name": "gate-b-screenshot-final.log",
+      "sha256": "937AC8FCC99FD81828096B9687BC0ADC48B72BF11BBE9CBEF5C4D19F8075B5DB"
+    },
+    "exitRecord": {
+      "name": "gate-b-screenshot-final-exit.json",
+      "sha256": "54694C4B59C76BCFC2267FC405F568A738C4EF73AD35CA060EA8C381204731C5"
+    },
+    "scope": "Actual screenshot decode/write/registration, invalid Base64, I/O failure and overwrite refusal; retained rejected runtime packets",
+    "independentDeltaReview": "PASS"
+  },
+  "forced": {
+    "actualExit": 1,
+    "expectedNegative": true,
+    "observed": "FAIL:task43p-forced-negative-canary",
+    "anchoredJavaDiagnosticObserved": true,
+    "command": "scripts/verify-browser.ps1 -Task43PForcedNegative -Task43PStartupSettleMilliseconds 30000 -TimeoutSeconds 90",
+    "log": {
+      "name": "task43p-forced-current-e6f5bb2f5de1466c8ecc0ebd8c8a2bf1.log",
+      "sha256": "EEA8C3A9ABC4778847465777CDA0786E8DC0CF5D09132F9B74085D8103ADF1F6"
+    },
+    "exitRecord": {
+      "name": "task43p-forced-current-e6f5bb2f5de1466c8ecc0ebd8c8a2bf1-exit.json",
+      "sha256": "392B48D96F08A7BE90429F6C8C53F9B8D50E61853F16A4C23CDF0A3B71281E46"
+    },
+    "originalPacket": {
+      "name": "task43p-task43p-forced-negative-canary.json",
+      "sha256": "29ACAD6B8FE6F8A66CC5E0C77A9E73BBF0ABDAF77F35CBBA347DBCC83C1E8642"
+    },
+    "proof": {
+      "requested": true,
+      "nonce": "aa8868e5b31341abb6f8c57fef251b73",
+      "routeId": "18c134497f204d20a53eee76c9e143b3",
+      "requestId": "e3fc9046281a45f8a9f4ad891e99f61a",
+      "executionDigest": "97bb4d43d8111d9d667ad38c36d51e0301455a8331327c1ad3efa9f2552c64b7"
+    },
+    "cleanup": {
+      "runId": "703cb831ebe54e71b2b806ea2f043afb",
+      "manifest": {
+        "name": "manifest.json",
+        "sha256": "43AA5FB3012303E6B08273061462B6E1FA8AE0889DB0EAF439E945E6C015905A"
+      },
+      "cleanup": {
+        "state": "complete",
+        "completedUtc": "2026-09-05T14:18:38.0058276Z",
+        "errors": []
+      },
+      "server": {
+        "processId": 226040,
+        "processStartTicks": 639242146291325519,
+        "port": 56144,
+        "state": "cleaned",
+        "cleanupResult": "complete"
+      },
+      "browsers": [
+        {
+          "routeId": "18c134497f204d20a53eee76c9e143b3",
+          "processId": 10204,
+          "processStartTicks": 639242146424077369,
+          "cdpPort": 56150,
+          "status": "cleaned",
+          "cleanupResult": "complete"
+        }
+      ],
+      "leaseCount": 2,
+      "residueAudit": {
+        "name": "703cb831ebe54e71b2b806ea2f043afb-residue-audit.json",
+        "sha256": "150F3CD964CC7C030A0BF01C5F408852CBFB549C4721BFBFD566EC353876143B"
+      },
+      "auditedUtc": "2026-09-05T14:30:56.6515936Z",
+      "currentRelevantCount": 0,
+      "previewAbsent": true,
+      "manualCleanupPerformed": false
+    }
+  },
+  "runtime": {
+    "actualExit": 1,
+    "openObservationCount": 3,
+    "rootCauseCount": 2,
+    "command": "scripts/verify-browser.ps1 -Task43P -Task43PRuntime -Task43PStartupSettleMilliseconds 30000 -TimeoutSeconds 90",
+    "log": {
+      "name": "task43p-runtime-current-aba7954566ca489aa3dad31cc9a1c644.log",
+      "sha256": "70F97E482A2380DE9023347CBDF514F3A534D3E83045A1AB6ADF9BC21A343028"
+    },
+    "exitRecord": {
+      "name": "task43p-runtime-current-aba7954566ca489aa3dad31cc9a1c644-exit.json",
+      "sha256": "9AA6D0D571FA35DD3D2C6F7CFBDC95541A2B7055FCCB465CDA0B55DEE1B0F01B"
+    },
+    "artifact": "runtime-observations.json"
+  },
+  "physical": {
+    "actualInvocationExit": 2,
+    "triadCount": 18,
+    "triadPassCount": 18,
+    "command": "scripts/verify-browser.ps1 -Task43P -Task43PStartupSettleMilliseconds 30000 -TimeoutSeconds 90",
+    "log": {
+      "name": "task43p-triad-current-191c597ec5d1425d86bd6aced2ff42e7.log",
+      "sha256": "807298A47C6398B2A1E1057D13BB359503425B781D373168E5A635180BC90CED"
+    },
+    "exitRecord": {
+      "name": "task43p-triad-current-191c597ec5d1425d86bd6aced2ff42e7-exit.json",
+      "sha256": "D723468BC76EAEDB876B5718EDD1BED23C719624B5424D32B4A635384DA25417"
+    },
+    "artifact": "physical-correspondence.json"
+  },
+  "sourceExperiments": {
+    "status": "ALL_ELEVEN_INDIVIDUAL_FALSIFIERS_CAUGHT",
+    "qualifiedCaseCount": 11,
+    "artifact": "source-falsification.json",
+    "invocationCount": 7,
+    "limit": "No single complete invocation is claimed to have exited 1; the original partial invocation remains UNPROVEN/2."
+  },
+  "failedPublicSourceAttempt": {
+    "status": "UNPROVEN",
+    "actualExit": 2,
+    "runId": "1a30bb8295c141a6b5225025f42a5346",
+    "marker": "FAIL:task43p-public-remove-direct-control-reinstall-failed",
+    "rawEvidence": {
+      "name": "task43p-source-experiments-1a30bb8295c141a6b5225025f42a5346.json",
+      "sha256": "A7A4315566DB52C4139F11FE0C0D9EFF303E40A7E6F5E3D3DEEE0DCBBFFCFDA9"
+    },
+    "currentAbsenceAudit": {
+      "name": "1a30bb8295c141a6b5225025f42a5346-failed-public-current-absence.json",
+      "sha256": "2D512601CCD559D4622152E5CCBC9A65BA09219A6C13D354D029BB9C0A4BF324"
+    },
+    "sourceBytesRestoredExactly": true,
+    "browserCleanup": "complete",
+    "manualCleanupPerformed": false,
+    "failedSourceCopyRetained": true,
+    "interpretation": "Developer helper omitted reinstall destination after removal; separate corrected case proof is required"
+  },
+  "failedScreenshotSourceAttempt": {
+    "status": "UNPROVEN",
+    "actualExit": 2,
+    "runId": "76f73a1293db4c639b6bc3054cc39f62",
+    "cause": "PowerShell argument mode passed Base64 static expression as text to byte-array parameter",
+    "rawEvidence": {
+      "name": "task43p-source-experiments-76f73a1293db4c639b6bc3054cc39f62.json",
+      "sha256": "B2276D416686E659823101FC135B07C5A42CF8466AF05F5BA9207447F84CE76F"
+    },
+    "currentAbsenceAudit": {
+      "name": "76f73a1293db4c639b6bc3054cc39f62-failed-public-current-absence.json",
+      "sha256": "0A94019242D3C040265806BEFCFD54DAAF0B45764C84FF592D06637C542FC87D"
+    },
+    "sourceBytesRestoredExactly": true,
+    "browserCleanup": "complete",
+    "manualCleanupPerformed": false,
+    "failedSourceCopyRetained": true,
+    "interpretation": "No final proof was published; later corrected invocation is separate evidence"
+  },
+  "normalPlayerCli": {
+    "status": "UNPROVEN",
+    "actualExit": 2,
+    "runId": "207aabfafa5b4d7599c9097ff3dbf9de",
+    "command": "scripts/verify-browser.ps1 -NormalPlayer -PlayerSeed 3 -TimeoutSeconds 90",
+    "reached": "Ready and original removed; timed out waiting for solver-backed retest completion",
+    "verifierCleanup": "infrastructure-failure",
+    "manualCleanupPerformed": true,
+    "currentProcessAndListenerAbsenceProven": true,
+    "failedProfileAndClaimRetained": true,
+    "log": {
+      "name": "task43p-normal-player-current-593559005cb5447ca3eabf5392fc94fc.log",
+      "sha256": "5CCB5B48D8BCE4F7652C960AEA24FBC1A22673D072BF2ACB5AD2AC2BD7F9F355"
+    },
+    "exitRecord": {
+      "name": "task43p-normal-player-current-593559005cb5447ca3eabf5392fc94fc-exit.json",
+      "sha256": "9E308AEAF89AE5531339BC9A0367F3097295B61598327BDB3683B93CF613CD1B"
+    },
+    "exactManualStop": {
+      "name": "207aabfafa5b4d7599c9097ff3dbf9de-manual-root-stop.json",
+      "sha256": "0B3896388E66E4334C77C327ACEC4A020CBD3FF3E00A59454DA3A82C65D27471"
+    },
+    "currentAbsenceAudit": {
+      "name": "207aabfafa5b4d7599c9097ff3dbf9de-post-manual-absence.json",
+      "sha256": "A23EF25314DBC5493F664A4645C67D73EBA4791B60764B5CEB0355755B08F040"
+    },
+    "interpretation": "Supplementary legacy CLI is not a pass; visible positive and compiled public-action falsifier are separate checks"
+  },
+  "visible": {
+    "status": "PASS",
+    "family": "LED_INDICATOR",
+    "seed": 3,
+    "inputRoute": "Built-in Browser real mouse and keyboard",
+    "query": "tsjChallenge=led&seed=3",
+    "developerQuery": false,
+    "states": [
+      "unrepaired retest rejected",
+      "power-off OHM red-left black-right about 100k ohm",
+      "original removed",
+      "2200 ohm replacement retest rejected",
+      "1000 ohm replacement completed; controls disabled"
+    ],
+    "privacyScope": "LED seed-3 visible DOM and accessible attributes at material states",
+    "domAudit": {
+      "name": "task43p-visible-dom-audit.json",
+      "sha256": "6CC549D9B29B4E9127A73B5AEABCB322BDD9A2B4085BD3DE895C4F5A6B459868"
+    },
+    "screenshots": [
+      {
+        "artifact": "visible-unrepaired-retest.png",
+        "raw": {
+          "name": "task43p-visible-unrepaired-retest.png",
+          "sha256": "0C92803867F5A62966ED11823B389D90D0A14B2E7EA830EA7922C3384F5A765E"
+        },
+        "inspected": true,
+        "width": 1172,
+        "height": 1272
+      },
+      {
+        "artifact": "visible-resistance.png",
+        "raw": {
+          "name": "task43p-visible-resistance.png",
+          "sha256": "FE679A38DD7505DC76CA7A96AEAADB012901D3602EA2342113AD5FDD8517F9DF"
+        },
+        "inspected": true,
+        "width": 1172,
+        "height": 1272
+      },
+      {
+        "artifact": "visible-removed.png",
+        "raw": {
+          "name": "task43p-visible-removed.png",
+          "sha256": "A10C3F849EF9CF0F1C48C252ADA40F2D497CBE9A35E5F847BB4069ED33398C9A"
+        },
+        "inspected": true,
+        "width": 1172,
+        "height": 1272
+      },
+      {
+        "artifact": "visible-wrong-repair.png",
+        "raw": {
+          "name": "task43p-visible-wrong-repair.png",
+          "sha256": "0066E0C2DD9C4E4485076912A7126AFB0A103EA123E95691495C2AB3291D218F"
+        },
+        "inspected": true,
+        "width": 1172,
+        "height": 1272
+      },
+      {
+        "artifact": "visible-completed.png",
+        "raw": {
+          "name": "task43p-visible-completed.png",
+          "sha256": "62879BC4BED391C5B7305D860D0454FB2167A17B27D2642B8B7A95EC90FA2639"
+        },
+        "inspected": true,
+        "width": 1172,
+        "height": 1272
+      }
+    ],
+    "cleanup": {
+      "runId": "3569d61f88314fadb72d456f8cf22ece",
+      "manifest": {
+        "name": "manifest.json",
+        "sha256": "1E5542EAE7F33C2331200D96CF6748A1133DA7421859A90D2D1E17DA63324953"
+      },
+      "cleanup": {
+        "state": "complete",
+        "completedUtc": "2026-09-05T12:49:44.081361Z",
+        "errors": []
+      },
+      "server": {
+        "processId": 136800,
+        "processStartTicks": 639242087820737428,
+        "port": 52476,
+        "state": "cleaned",
+        "cleanupResult": "complete"
+      },
+      "browsers": [],
+      "leaseCount": 1,
+      "residueAudit": {
+        "name": "3569d61f88314fadb72d456f8cf22ece-residue-audit.json",
+        "sha256": "88EC4860135A6C1C3C47E91EFA329E8E054916EFE2E2787621A6CFD3C7B88315"
+      },
+      "auditedUtc": "2026-09-05T12:59:22.1155948Z",
+      "currentRelevantCount": 0,
+      "previewAbsent": true,
+      "manualCleanupPerformed": false
+    }
+  },
+  "review": {
+    "sourceIntegration": "PASS, fresh independent Luna read-only integrated review plus targeted reviews of subsequent corrections",
+    "runtimePacket": "REVIEWED, D and snapshot blockers confirmed",
+    "finalDeltas": [
+      {
+        "scope": "source case6 endpoint target",
+        "result": "PASS",
+        "sha256": "F175C33E52D98B707224ADC1FADB4D2D34947ECA961244C5788610934E04BAC3"
+      },
+      {
+        "scope": "public direct-control slot-aware reinstall",
+        "result": "PASS",
+        "sha256": "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D"
+      },
+      {
+        "scope": "actual screenshot decoding and GateB positive/negative canary",
+        "result": "PASS",
+        "wrapperSha256": "F5B73ABCB4FBB2BEFC70C6F4888809289E882D8EB03BF50124192DDEC59D1DF1",
+        "gateBSha256": "C4AF7325C10829B02654531090D71347E119C44A0BE84EFE05765171FE42CD8C"
+      }
+    ],
+    "finalEvidence": "PASS — independent Luna read-only reconciliation on 2026-09-05; historical headings clarified"
+  },
+  "blockers": [
+    {
+      "id": "43P-C1",
+      "cause": "CODE",
+      "observations": 2,
+      "summary": "Post-removal measurement exception leaves solver/overlay/power residue"
+    },
+    {
+      "id": "43P-C2",
+      "cause": "TEST/TOOL",
+      "observations": 1,
+      "summary": "Snapshot assertion accepts changed resistance-current scalar"
+    }
+  ],
+  "followups": [
+    "Healthy-before synthetic pending-state acceptance is bounded; actual G shows false-before/true-after",
+    "Existing-lane installedTargetAfter is nullable in the schema; all four actual packets include installed targets",
+    "Same-owner transactions and generic board/session/request epochs remain unsupported"
+  ],
+  "preservation": "Raw execution artifacts and earlier failed evidence retained privately; no manual cleanup accepted as verifier cleanup."
+}

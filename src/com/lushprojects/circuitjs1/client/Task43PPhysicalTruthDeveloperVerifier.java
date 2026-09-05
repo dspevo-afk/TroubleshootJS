@@ -1463,6 +1463,8 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         result.append("\"seed\":").append(instance.getSeed()).append(',');
         result.append("\"fault\":").append(q(instance.getFaultBinding().getFault().getId()))
             .append(',');
+        result.append("\"faultType\":")
+            .append(q(instance.getFaultBinding().getFault().getType().toString())).append(',');
         result.append("\"faultOwner\":").append(q(instance.getFaultLocus() == null ? null :
             instance.getFaultLocus().getOwnerId())).append(',');
         result.append("\"terminalCount\":").append(manifest.terminals.size()).append(',');
@@ -1622,7 +1624,7 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             addTerminal(result, "J2.1", "J2", "1", "CONTROL_INPUT", "WireElm", 1);
             addTerminal(result, "J2.2", "J2", "2", "GND", "GroundElm", 0);
             addTerminal(result, "RPD.1", "RPD", "1", "CONTROL_INPUT", "WireElm", 0);
-            addTerminal(result, "RPD.2", "RPD", "2", "GND", "WireElm", 0);
+            addTerminal(result, "RPD.2", "RPD", "2", "GND", "GroundElm", 0);
             addTerminal(result, "Q1.G", "Q1", "G", "CONTROL_INPUT", "WireElm", 1);
             addTerminal(result, "Q1.D", "Q1", "D", "DRAIN", "WireElm", 1);
             addTerminal(result, "Q1.S", "Q1", "S", "GND", "WireElm", 1);
@@ -1855,8 +1857,12 @@ final class Task43PPhysicalTruthDeveloperVerifier {
 
     private static void requireSetEquals(String description, HashSet<String> expected,
             HashSet<String> actual) {
+        Vector<String> expectedIds = new Vector<String>(expected);
+        Vector<String> actualIds = new Vector<String>(actual);
+        Collections.sort(expectedIds);
+        Collections.sort(actualIds);
         require(expected.equals(actual), "task43p-set-mismatch:" + description +
-            ":expected=" + expected.toString() + ":actual=" + actual.toString());
+            ":expected=" + expectedIds.toString() + ":actual=" + actualIds.toString());
     }
 
     private static void requireId(String value, String description) {

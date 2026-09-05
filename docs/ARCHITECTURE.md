@@ -1974,12 +1974,12 @@ session/run root and one immutable owner-root record; the browser root must
 match the resolved `BrowserPath` by exact
 current executable name and nonblank canonical `ExecutablePath`; an inferred
 descendant must also expose a nonblank current `ExecutablePath` that canonically
-matches the configured browser executable identity, the verified current
+matches an explicitly supported browser descendant executable identity, the verified current
 PID/start/parent ancestry, and any
 root-owned markers that it actually carries. Real Chromium/Edge renderer,
 utility, GPU, and helper descendants are not required to repeat every root-only
 verifier switch; markerless helpers are admissible only through that complete
-ancestry plus executable proof. A different executable, reparented/PID-reused
+ancestry plus executable proof. An unsupported executable, reparented/PID-reused
 node, unknown identity, or conflicting marker is left running and the run is
 retained as infrastructure failure. Once an owned root is being traversed, the
 candidate graph is built from the complete process snapshot, so differently
@@ -1990,6 +1990,16 @@ run/profile/remote-port markers, executable identity, and current start identity
 with the discovery record. It stops only the revalidated process object; a PID
 disappearance, replacement, access failure, or mismatch retains the run and
 returns infrastructure failure.
+
+The descendant policy also recognizes Edge's `identity_helper.exe` only at the
+exact versioned sibling path derived from the configured `msedge.exe`. Both
+files must have matching four-part versions, expected original filenames,
+valid Microsoft signatures, and the same signer. Physical paths must have no
+reparse ancestors. This companion must explicitly carry this run's profile,
+the utility process type, the Windows app-ID service subtype, and the Windows
+package-identity sandbox type. It still requires the complete current ancestry
+and process identity proofs above. The browser root and listener identity
+checks continue to require the configured browser executable itself.
 
 The browser cleanup drain keeps the verified root alive while it repeatedly
 captures a complete current process snapshot, expands exact root ancestry,
@@ -2142,6 +2152,74 @@ and logs. Successful exit/timeout canary assertions remove only their exact
 temporary process namespaces; unexpected failures retain those logs/evidence.
 A workflow-level timeout remains only a backstop.
 
+The bounded subprocess runner captures positive creation-time ticks from its
+retained `System.Diagnostics.Process` launch handle before starting output
+readers. This launch-only boundary permits a naturally exited short-lived
+child whose retained handle still provides its exact creation time. It never
+adopts a process through a PID lookup. The shared ownership identity helper
+continues to require a live process; numeric exit, complete output, exact
+termination, and owned log cleanup still govern bounded-runner success.
+
+Listener authorization and port-bind ownership proofs use one 500 ms monotonic
+`Stopwatch.ElapsedTicks` budget per call, including the initial query or schema
+inspection and every semantic authorization and current-process refresh.
+Dependencies cannot return a positive proof after that deadline. The strict
+port-bind query and bounded authorization refresh opt into the existing
+validated netstat route through `-PreferNetstat`; ordinary listener callers
+retain `Get-NetTCPConnection` as their primary provider. Both paths retain
+exact current PID/start identity, listener schemas, and separate HTTP.sys
+semantic authorization. Empty, malformed, failed, or otherwise unknown netstat
+results remain infrastructure failures.
+
+When every listener belongs to the exact browser root PID/start, a strictly
+formed browser owner can omit the broad process snapshot during port binding
+and downstream live listener authorization. Both boundaries use the same
+eligibility predicate; each independently performs the existing PID-scoped
+identity proof, which checks current process/start identity, executable, parent
+PID/start, and run/profile/worktree/port markers. No positive live proof is
+cached or transferred between calls. Descendant and mixed listener sets retain
+their complete ancestry proof. This changes neither cleanup graph requirements
+nor the total proof deadline.
+
+Fixed-point browser cleanup pins a descendant's native process handle only
+after complete live ownership proof. A module-private registry binds the
+original drain scope, descendant record, Process object, native handle, and
+immutable identity tuple. Copies or substituted objects cannot authorize
+cleanup. If that exact handle later reports natural exit, its retained creation
+time must still match and two independent current PID/WMI observations must
+prove absence within one whole-call 500 ms monotonic budget. A live child still
+requires the ordinary fresh ownership and exact-stop checks; an initially
+unproved or missing child remains infrastructure failure. The scope releases
+its retained handles on success and failure. Complete graph, root, listener,
+profile, and claim cleanup requirements remain in force. This implementation's
+current review and host-qualification status is recorded in the task report.
+
+For an attached browser, cleanup can request Edge's normal shutdown through a
+new private browser-level CDP socket. The `/json/version` endpoint must resolve
+to the exact leased loopback address/port and browser target. The owner record
+must match the durable session. Current listener/root proofs and repeated full
+descendant observations establish a stable set of retained identities before
+`Browser.close`; any identity change fails closed. The wire reply must exactly
+acknowledge that command. Each retained root/child handle then proves natural
+exit, followed by the existing complete residual, profile, listener, and claim
+checks. One 15-second monotonic budget includes preparation, transport, proof,
+and resource disposal. Command attempts are recorded against immutable process
+PID/start before sending; changing copied session labels cannot bypass them.
+An unproven attempt blocks retry or force-stop fallback in that verifier process.
+Unattached startup cleanup retains the descendant-first exact-stop path.
+Unavailable preparation, malformed replies, late/unknown children, or failed
+disposal preserve failure evidence and cannot qualify cleanup.
+
+The 500 ms total proof budget is the current Task 43P trust-recovery acceptance
+requirement. It bounds the complete observation/authorization attempt while
+exact identity checks address PID reuse and changing ownership. It is not a
+claim that Windows providers finish within that time on every host. Qualify the
+actual query and ownership path on the selected host; a late or unknown proof
+returns infrastructure exit `2`. Document measured provider limitations and
+optimize the implementation within this budget. Changing the budget or its
+coverage requires an explicit reviewed contract change, not a local timeout
+increase to pass a gate.
+
 The normal single-run developer workflow remains compatible: omit `-BaseUrl`
 for an isolated run-owned preview, or pass the exact Preview root URL printed
 by a running preview for an explicitly verified caller-owned server. The
@@ -2217,6 +2295,71 @@ was fabricated or mutated by Gate B.
 
 ## Current Task 43P evidence status
 
+The opt-in `-Task43P -Task43PRuntime` route starts from a fixed LED seed-3
+document. Four developer-only collectors exercise existing mutation/meter/
+stress/stored-energy paths, one-shot exceptions inside the real temporary
+measurement implementation, paused completion, fresh-session/reset ordering,
+and a real scheduled repaint across an owner switch. Observations are copied
+before restoring the detached original owner. The collectors introduce no
+production rollback owner or request/board/session epoch.
+
+Java publishes the run/route-bound `TSJ-TASK43P-RUNTIME-1` observations.
+`Task43PRuntimeEvidence.ps1` validates the exact nested schema and derives
+the supported outcomes from raw fields. The wrapper owns repository and
+compiled execution provenance, persists evidence before assigning an outcome,
+and returns an application `1` for observed blockers. Missing/contradictory
+evidence or unproven cleanup returns `2`. Rejected runtime packets are retained
+as explicitly unvalidated diagnostics; they cannot assign a successful result.
+
+Current runtime evidence records three open observations with two root causes:
+post-removal measurement exceptions leave solver/overlay/power residue, and
+Task41's restoration assertion accepts a changed resistance-current scalar.
+These are documented correction milestones, not production repairs made by
+the collectors. A deferred resistance-reading refresh after queued power is
+ordinary cache state; cleanup still requires all graph, solver, overlay,
+power, and owner invariants.
+
+The independent physical verifier passed its six-family, three-seed corpus.
+Its separate legacy route keeps unproven A-I fields and therefore retains
+aggregate exit `2`; individual triad PASS is not a whole-route natural success.
+Compiled source falsifiers separately exercise renderer, copper/net, solver
+endpoint, package transform, manifest omission, snapshot omission, and public
+Remove failures. Public Remove evidence separates direct developer dispatch
+from actual mouse input on a fresh normal-player document. No generic shell
+failure is accepted as application proof. Exact compiled/run/request binding,
+source restoration, and verifier/harness cleanup remain required.
+
+The current report is
+[Task 43P runtime reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md),
+with [curated evidence](task-evidence/task-43p/README.md). Earlier reports below
+retain their historical candidate limits. Real built-in Browser evidence
+proves the bounded LED repair flow; it does not turn the separately failed
+legacy NormalPlayer CLI run into a pass.
+
+Task41's supported proof boundary remains Option A: evaluate fresh candidate
+boards with the original workbench detached, then restore that original owner.
+Option B, complete same-owner nested transactional mutation, is unsupported.
+Generic settlement/epoch, multi-owner rollback, broader geometry/seed coverage,
+and complete snapshot state remain follow-ups. Runtime acceptance and Owner
+Review remain blocked by the recorded correction gates; Task44 is unstarted.
+
+
+## Earlier Task 43P evidence status — before final runtime qualification
+
+The current recovery candidate adds an opt-in `-Task43P -Task43PRuntime`
+route with a fixed LED seed-3 entry board. Developer-only collectors exercise
+existing mutation/meter/stress/stored-energy paths, one-shot exceptions inside
+the real temporary-measurement implementation, paused customer completion,
+fresh-session/reset ordering, and an actual scheduled repaint across an owner
+switch. They restore the detached original owner and copy observations before
+restoration. They do not implement production rollback or a new epoch owner.
+The wrapper validates a separate run/route-bound `TSJ-TASK43P-RUNTIME-1`
+packet. A complete observed application blocker returns `1`; missing or
+contradictory evidence returns `2`, and any unproven cleanup overrides the
+application result to `2`. This new route is under build/review qualification;
+the historical partial route and evidence below do not establish its runtime
+acceptance.
+
 The evidence-only reconciliation pass is recorded in
 [`docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md`](research/POST_TASK_43_INTEGRITY_RECONCILIATION.md).
 No production behavior changed in that pass. The supported Task 41 proof
@@ -2256,6 +2399,13 @@ The wrapper captures the DOM evidence attribute into a run-owned manifest and
 owns the actual baseline/HEAD, dirty state, source SHA-256, file count, and
 evidence path; Java/GWT repository-provenance fields are rejected.
 
+Task 43P can explicitly select `-Task43PStartupSettleMilliseconds` (default
+zero, maximum 45000) to let a fresh Edge profile mature before application
+navigation. The wrapper uses a bounded CDP Promise, requires the complete
+owned `about:blank` document, preserves the existing route deadline, and
+records the selected duration in its evidence. This timing condition does
+not relax current process identity, listener, or exact cleanup requirements.
+
 `scripts/verify-task43p-source-experiments.ps1` mutates only isolated
 disposable copies for renderer-only `J1.1 +20px`, raw-copper endpoint-gap
 through the `GeneratedBoardInstance`/`PcbTraceGeometry` layout data, and
@@ -2280,6 +2430,24 @@ and cleanup inspection; no runtime evidence is claimed. This developer route
 is supplemental regression evidence, not visible built-in `@Browser` proof.
 
 ### Task 43P delta remediation — disposable ownership and fail-closed schema
+
+**2026-09-05 source-negative protocol:** The current nine-case source harness
+selects one compiled disposable family/seed for each mutation. The preview's
+HTTP identity must equal the exact PID/start tuple from its launch handle,
+and the current process/script/port is revalidated before the browser child.
+Cleanup retains that original tuple and separately proves listener absence.
+The wrapper's source-negative route accepts only the case's exact DOM marker
+and validated Java diagnostic bound to nonce/run/route/request/execution and
+experiment identity. It writes separate durable proof after final verifier
+cleanup. The harness additionally requires matching original/mutated hashes,
+compiled provenance, actual child exit `1`, exact source restoration, unchanged
+repository state, and successful cleanup/evidence persistence. Any uncertainty
+or late error remains `2`; the sequence stops and retains failed evidence.
+These source outcomes do not replace normal A-I or visible Browser acceptance.
+An optional exact `-Task43PFamily` selector limits focused normal runs; the
+default six-family corpus remains unchanged. NMOS `RPD.2` is independently
+expected to bind to `GroundElm` post 0; this corrects a manifest regression
+without altering the generator or electrical graph.
 
 The source-experiment harness now starts and identifies each disposable
 preview from the same isolated compiled tree whose source mutation produced

@@ -1,2354 +1,459 @@
 # AGENTS.md — TroubleshootJS
 
-# AGENT BUREAUCRACY MODE
+Standing repository instructions | Astra Max / Luna flat orchestration
+Policy revision: 2026-09-04
 
-This is an optional orchestration policy. It does not replace the project,
-validation, roadmap, review, or completion rules in this file.
+This is a complete root-file replacement, not an appendix to an older
+agent hierarchy. It governs work in this repository without authorizing
+unrequested product changes. Current task-specific acceptance and safety
+contracts remain in force. Keep current status in the project roadmap/log,
+not in this operating manual.
 
-## Strict opt-in activation
-
-AGENT BUREAUCRACY MODE activates only when the user's CURRENT USER TASK
-contains the exact phrase:
-
-    AGENT BUREAUCRACY MODE
-
-When that exact phrase is absent:
-
-- the mode is inactive;
-- normal AGENTS.md rules apply;
-- do not create this hierarchy merely because the task is large, difficult,
-  multi-phase, or likely to benefit from subagents;
-- do not infer activation from a previous task, this document, the roadmap,
-  the conversation, or personal preference.
-
-When the exact phrase is present, activate the hierarchy below unless the
-current user task explicitly overrides a specific part of it.
-
-Activation applies to ONE USER TASK ONLY. Completing that task deactivates the
-mode. The next task returns to normal mode unless the exact phrase is supplied
-again. There is no implied or inherited activation.
-
-## Hierarchy when activated
-
-The activated hierarchy is:
+## Default operating model — Astra Max with Luna workers
 
 ```text
-SUPERINTENDENT
-Model: GPT-5.6 Luna
-Reasoning: ACTUAL MAX
-Role: Root coordinator
-Depth: 0
-└── FOREMAN
-    Model: GPT-5.6 Luna
-    Reasoning: ACTUAL MAX
-    Role: Architect and owner of one discrete task
-    Depth: 1
-    ├── INVESTIGATOR 1
-    │   Model: GPT-5.6 Luna
-    │   Reasoning: ACTUAL MAX
-    │   Role: Read-only architecture / ownership investigation
-    │   Depth: 2
-    ├── INVESTIGATOR 2
-    │   Model: GPT-5.6 Luna
-    │   Reasoning: ACTUAL MAX
-    │   Role: Read-only regression / validation / coupling investigation
-    │   Depth: 2
-    ├── INVESTIGATOR 3 (optional for approved high-risk exceptions)
-    │   Model: GPT-5.6 Luna
-    │   Reasoning: ACTUAL MAX
-    │   Role: Read-only adversarial / falsification investigation
-    │   Depth: 2
-    ├── CODER
-    │   Model: GPT-5.6 Luna
-    │   Reasoning: ACTUAL MAX
-    │   Role: Sole implementation owner
-    │   Depth: 2
-    ├── REVIEWER
-    │   Model: GPT-5.6 Luna
-    │   Reasoning: ACTUAL MAX
-    │   Role: Independent read-only implementation review
-    │   Depth: 2
-    └── INSPECTOR
-        Model: GPT-5.6 Terra
-        Reasoning: MAX
-        Role: Final independent read-only audit
-        Depth: 2
+ASTRA — MAX reasoning — single root owner and hands-on orchestrator
+    +-- LUNA — bounded investigation / implementation / test / review
+    +-- LUNA — independent work only when it adds useful parallelism
+    `-- ... no more than 10 concurrently open Luna subagent threads
 ```
 
-## Model requirements
-
-Every default Luna role in an activated task requires GPT-5.6 Luna with
-ACTUAL MAX reasoning:
-
-- Superintendent;
-- Foreman;
-- Investigators 1–2;
-- Coder; and
-- Reviewer.
-
-ACTUAL MAX means MAX. It does not mean EXTRA HIGH, HIGH, or a lower setting
-that is merely labeled or described as MAX. If the platform exposes separate
-reasoning levels, explicitly request MAX. The default Inspector requires
-GPT-5.6 Terra with MAX reasoning. A third Investigator is conditional under
-the Lean Context Bureaucracy Protocol below. Sol is reserved for a justified
-escalation or an explicit user request; never silently substitute a weaker or
-different configuration.
-
-If a requested configuration is unavailable, report that limitation honestly.
-Do not silently substitute a weaker configuration, and do not repeatedly kill
-and respawn agents to try to force an unavailable configuration.
-
-## Write ownership
-
-During an activated bureaucracy task, ONLY THE CODER MAY EDIT PRODUCTION CODE.
-
-The following roles are read-only with respect to production implementation:
-
-- Superintendent;
-- Foreman;
-- Investigators;
-- Reviewer; and
-- Inspector.
-
-These roles may inspect production source, diffs, tests, logs, Git history,
-documentation, architecture, browser evidence, task reports, and verifier
-output. They may not directly implement a production fix. If a review finds a
-correction, the correction returns to a Coder. Supervisors do not make a quick
-direct fix merely to close a finding.
-
-## Superintendent
-
-The Superintendent is the root coordinator. It should keep its context clean
-and primarily retain the user objective, requested task sequence, task
-boundaries, Foreman completion packets, deferred findings, Inspector outcomes,
-repository completion state, and the identity of the next task.
-
-The Superintendent must:
-
-1. receive the user's requested work;
-2. select the next discrete task;
-3. spawn exactly one Foreman for that task;
-4. provide the objective, acceptance criteria, constraints, relevant previous
-   findings, and relevant deferred issues;
-5. wait while the Foreman completes its entire workflow;
-6. receive the Foreman's final completion packet;
-7. verify that the required workflow occurred;
-8. perform repository-level completion actions only when authorized;
-9. report the result; and
-10. create a fresh Foreman for the next discrete task when the user requested
-    multiple tasks.
-
-The Superintendent must not become the architect, investigate production code,
-implement fixes, review the Coder's implementation, duplicate Foreman work,
-continuously poll workers, generate meaningless status narration, or invent
-work while workers are busy.
-
-## Foreman
-
-The Foreman is the architect and owner of ONE discrete task. It reads relevant
-project documentation, determines the task architecture, delegates
-investigation, reconciles the investigation, writes one implementation brief,
-delegates implementation, evaluates reviewer findings, performs its own
-bounded read-only final architectural review, and invokes the Terra Inspector
-only after the candidate is genuinely ready.
-
-The Foreman must not directly edit production code.
-
-## Phase 1 — required Investigators
-
-The default activated workflow spawns exactly TWO independent, read-only
-GPT-5.6 Luna ACTUAL MAX Investigators with distinct angles. Use a third only
-for electrical truth / solver correctness, board or topology-generation
-invariants, verifier ownership or concurrency architecture,
-persistence/state-corruption risk, major gameplay-state architecture, three
-or more genuinely independent subsystems, or a material disagreement between
-the first two. A narrow blocker repair does not automatically receive new
-Investigators. A task-specific current-user instruction may require a third.
-
-1. Investigator 1 — architecture and ownership: authoritative owners, call
-   paths, state boundaries, existing abstractions, permanent invariants,
-   integration seams, and duplicate-system risks.
-2. Investigator 2 — regression, coupling, and validation: existing verifiers,
-   affected families, related tests, historical regressions, collateral-damage
-   risks, and the minimum closed validation set.
-3. Optional Investigator 3 — adversarial or otherwise specifically named
-   independent question, only when one of the approved exceptions applies.
-
-### Mandatory investigation barrier
-
-The Foreman MUST NOT spawn the Coder until ALL required Investigators have
-completely finished and every required report has arrived. This means both
-default Investigators, or all three when a documented exception or explicit
-task requirement activates the third.
-
-The required sequence is:
-
-1. spawn all required Investigators;
-2. let all required Investigators finish;
-3. receive all complete reports;
-4. reconcile the full evidence set and resolve contradictions;
-5. produce and review one coherent implementation design; and
-6. only then spawn the Coder.
-
-If even one required Investigator is still working, NO CODER EXISTS YET. Do
-not start a Coder using partial information and drip-feed later Investigator
-findings into it. The Coder receives the reconciled answer and does not
-discover the architecture by being repeatedly redirected as reports arrive.
-
-### Foreman reconciliation
-
-After all required reports arrive, the Foreman must synthesize them by
-comparing agreements and disagreements, resolving contradictions from
-repository evidence, determining the likely root cause or architecture,
-identifying authoritative owners, defining required and unchanged behavior,
-setting exact scope, prohibiting shortcuts, defining validation, identifying
-likely regressions, and producing ONE implementation brief.
-
-Do not hand raw Investigator reports to the Coder and ask the Coder to decide
-the architecture. Investigators advise; the Foreman decides.
-
-## Phase 2 — Coder
-
-Only after reconciliation, spawn one GPT-5.6 Luna ACTUAL MAX Coder. Exactly one
-Coder owns implementation for the task. The Coder receives the task objective,
-reconciled architecture, root cause, authoritative ownership decisions, likely
-files and systems, exact required behavior, preservation constraints,
-forbidden scope, acceptance criteria, validation requirements, and known
-hazards. Use a compact handoff rather than full prior reports or transcripts.
-
-The Coder must inspect the necessary code, implement the smallest coherent
-change, add or update tests where appropriate, run required validation, inspect
-the complete diff, and return:
-
-- implementation summary;
-- files changed;
-- tests run and results;
-- uncertainty; and
-- anything requiring Foreman attention.
-
-## Supervisory inactivity and professional treatment
-
-When a subagent owns the current actionable work, the Superintendent and
-Foreman should do nothing except wait for meaningful completion or a real
-request for attention. Use `wait_agent` or an equivalent long blocking wait;
-remain idle until the worker returns.
-
-They must not constantly announce that an agent is still working, repeatedly
-poll agent lists or timestamps, inspect process lists or partial diffs for
-entertainment, repeatedly request status, interrupt without cause, duplicate
-investigation, invent unrelated work, or narrate every passing minute.
-
-Silence while workers work is correct behavior. Long-running research, builds,
-browser validation, and debugging are normal.
-
-Treat subagents professionally. Do not bark at, hurry, badger, or repeatedly
-interrupt them; do not terminate them merely because work takes time; do not
-treat silence as failure; and do not treat supervisory status as making worker
-contributions less important. Give each worker a clear assignment and leave it
-alone to complete that assignment.
-
-## Phase 3 — independent Reviewer
-
-After the Coder completes, spawn one fresh, read-only GPT-5.6 Luna ACTUAL MAX
-Reviewer. The Reviewer inspects the original task, Foreman implementation
-brief, Coder changes, complete diff, relevant architecture and production
-paths, tests, acceptance criteria, and regression risks.
-
-The first review is a full task-level audit. A repair review is delta-focused:
-it covers the prior blocker, the repair diff since the last reviewed
-candidate, affected ownership/exit/electrical/gameplay invariants, nearby
-interaction surfaces, and relevant regression evidence. Request a new full
-task audit only when the repair changes architecture, enters a new subsystem,
-reveals systemic misunderstanding, reaches three repair loops since the last
-full audit, or invalidates prior evidence. Reviewer reports should be concise
-and normally no longer than 1,200 words.
-
-The Reviewer uses these classifications:
-
-- BLOCKER — a real correctness or acceptance failure, including wrong
-  behavior, an architectural violation, a regression, missing functionality,
-  unsafe state handling, broken CircuitJS truth or identity, or missing
-  required validation;
-- MINOR / DEFERABLE — a legitimate nonblocking issue such as small hardening,
-  cleanup, documentation polish, or nonblocking robustness; and
-- PASS — no blocking issue found.
-
-The Reviewer is read-only. If it finds blockers, the Foreman evaluates each
-finding, rejects invalid findings with evidence, records deferable findings,
-converts real blockers into a focused remediation brief, and sends them to a
-Coder. The Coder fixes the blocker, runs relevant validation, and a fresh
-Reviewer reviews when appropriate. Repeat until all blocking findings are
-resolved. The Foreman does not directly implement a review fix.
-
-## Phase 4 — Foreman review
-
-After independent Reviewer PASS, the Foreman performs a bounded read-only
-review. It confirms the open acceptance criteria, current diff and status,
-required exit contracts, latest tests/canaries, CI and visible Browser
-evidence, scope, and resolution of Reviewer blockers. It does not repeat a
-complete forensic archaeology unless evidence conflicts.
-
-The Foreman must not rubber-stamp the Reviewer. If the Foreman finds a blocker,
-it returns that blocker to a Coder.
-
-## Phase 5 — Terra Max Inspector
-
-Only after implementation is complete, the Reviewer has passed, and the
-Foreman has passed, spawn the final independent read-only Inspector:
-
-- Model: GPT-5.6 Terra;
-- Reasoning: MAX; and
-- role: final independent audit gate.
-
-Before the Inspector is spawned, the Coder must be complete; the latest
-Reviewer and Foreman must have passed; deterministic source, contract, and
-local checks must be complete; supported JDK8/GWT CI terminal evidence and
-visible @Browser validation must be complete wherever required; known
-infrastructure blockers must be resolved or explicitly permitted; and the
-candidate must otherwise be publication-ready. The Inspector receives only a
-compact handoff: acceptance criteria, baseline/current SHA, changed-file map,
-latest Reviewer PASS, Foreman PASS, final canary/CI/visible-Browser evidence,
-and open or deferred minors. Do not forward the full Gate B transcript or
-large logs.
-
-The Inspector aggressively searches for hidden correctness failures,
-incomplete implementation, architectural violations, regression risk, missing
-edge cases, bad assumptions, test gaps, and false acceptance evidence.
-
-The Inspector uses BLOCKER, MINOR / DEFERABLE, and PASS classifications and is
-read-only. If Terra finds a BLOCKER, the Foreman evaluates it, prepares a
-remediation brief, the Coder fixes it, a fresh delta Reviewer reviews it, the
-Foreman reviews it, and Terra performs a targeted reinspection. The targeted
-reinspection covers the blocker, repair delta, regression, affected
-invariants, and refreshed evidence. Do not run a new full Inspector audit
-unless the repair changes architecture or invalidates broad prior proof.
-Sol may be used only when Terra explicitly cannot resolve an important
-ambiguity, materially disagrees with Reviewer/Foreman, electrical truth or
-solver correctness remains disputed, contradictory Browser/CI evidence
-remains, a high-risk ownership/destructive-process issue cannot be resolved,
-or the user explicitly requests Sol. A clean Terra PASS ends the Inspector
-gate.
-
-## Deferred findings and completion packet
-
-Record every legitimate nonblocking Reviewer or Inspector finding. Do not
-silently discard it, and do not reopen a completed task merely because a
-nonblocking improvement could theoretically be cleaner. The Foreman includes
-deferred findings in the completion packet, and the Superintendent carries
-them to the next relevant task.
-
-After Coder completion, Reviewer PASS, Foreman PASS, Inspector PASS, and all
-required validation PASS, the Foreman returns this concise packet:
-
-```text
-TASK: <name>
-STATUS: COMPLETE
-IMPLEMENTATION: <concise summary>
-FILES CHANGED: <list>
-VALIDATION: <checks and results>
-REVIEW:
-  Reviewer: PASS
-  Foreman: PASS
-  Inspector: PASS
-DEFERRED MINOR ITEMS: <list or NONE>
-RISKS / NOTES: <list or NONE>
-```
-
-Do not dump the entire Foreman context into the Superintendent.
-
-## Multiple tasks and concurrency
-
-When the user explicitly requests multiple roadmap tasks in one activated
-prompt, complete them sequentially unless the user explicitly authorizes
-parallel execution. Each discrete roadmap task gets a fresh Foreman and a
-clean lifecycle. Do not roll from one task into another with the same Foreman,
-begin the next task while review is incomplete, or spawn workers for the next
-task while the current task has unresolved blockers.
-
-Within one Foreman task, the required read-only Investigators may run in
-parallel.
-The following are not allowed:
-
-- a Coder while required Investigators are still working;
-- a Reviewer before Coder completion;
-- Foreman final review before Reviewer completion; or
-- an Inspector before Foreman PASS.
-
-Across roadmap tasks, execution is sequential by default. Parallel task
-execution requires explicit authorization in the current user task.
-
-## Blocked state
-
-If a real prerequisite, external failure, architecture contradiction, or
-unrelated blocker prevents safe continuation, stop and do not fake completion
-or broaden the task indefinitely. Return:
-
-```text
-STATUS: BLOCKED
-BLOCKER: <exact problem>
-EVIDENCE: <exact evidence>
-ATTEMPTS: <what was tried>
-RECOMMENDED NEXT ACTION: <bounded recommendation>
-```
-
-## Activation and deactivation summary
-
-AGENT BUREAUCRACY MODE IS OFF BY DEFAULT.
-
-It activates ONLY when the exact phrase `AGENT BUREAUCRACY MODE` appears in the
-CURRENT USER TASK. It expires when that user task completes and does not
-persist into later tasks. The next task uses normal mode unless the user
-explicitly writes the phrase again.
-
-NO IMPLIED ACTIVATION.
-
-The mode is not activated because the user used it last time, the task is
-complicated, the roadmap mentions it, the conversation discussed it, or the
-hierarchy appears in this file. EXPLICIT PHRASE OR THE MODE IS OFF.
-
-## Lean Context Bureaucracy Protocol
-
-When Agent Bureaucracy Mode is activated, this section is an orchestration
-optimization. It preserves the existing engineering, safety, electrical-truth,
-false-pass, cleanup, exit-code, and visible-`@Browser` quality floor; it does
-not waive a required check or a real blocker. It applies to future tasks and
-does not reopen Gate B or duplicate completed work.
-
-1. **Context isolation.** The repository, current diff, tests, CI, roadmap,
-   governing instructions, and compact handoff are authoritative. Do not
-   forward the full Gate B chronology, full child transcripts, giant logs, or
-   role-by-role archaeology. Search history only for a specific unresolved
-   contradiction. Resolved blockers remain in Git history and task reports.
-
-2. **Compact handoff.** At every role or context rotation, use no more than
-   approximately 1,500 words and include only:
+This is the default workflow, not an opt-in bureaucracy mode. There is no
+Superintendent, Foreman, mandatory three-investigator panel, or mandatory second
+Inspector. Old role names in historical reports do not reactivate an old
+hierarchy. A current explicit user instruction can change the workflow.
+
+- Astra owns scope, architecture, assignments, integration, acceptance, and the
+  final answer. It may inspect code, implement, debug, test, and repair directly.
+  Delegation is not a prohibition on the root doing useful engineering.
+- Use Luna for every spawned worker, including reviewers and specialists.
+  Default to MAX reasoning and NORMAL speed. Do not select Ultra or Fast for
+  workers unless the current user task explicitly changes that requirement.
+- The limit is 10 simultaneously open child threads per root session, excluding
+  Astra. Count working, waiting, and completed-but-not-closed workers until the
+  runtime releases their slots. A lower runtime limit always wins. Ten is a
+  ceiling, not a quota; small tasks may need no workers or only one reviewer.
+- Workers are leaves: no child agents, nested managers, recursive delegation,
+  or side-channel spawning. A worker needing help sends its question to Astra.
+- Astra may parallelize independent work inside the authorized task. Do not
+  distribute unresolved shared architecture across competing implementations.
+  Do not spin up ten redundant investigations because ten slots exist.
+
+### Runtime settings are real settings, not claims in a document
+
+Start the root using Astra with MAX reasoning. Request Luna and its reasoning
+explicitly through the available supported spawn/configuration interface rather
+than letting workers accidentally inherit Astra. Use the runtime's real model
+identifiers and schemas; do not invent parameter names or capability checks.
+
+This file does not itself switch the running model, enable delegation, increase
+thread capacity, or alter global configuration. Missing effective-model or
+speed metadata is not a blocker by itself. State what was requested and what
+was observable; never claim enforcement that the interface cannot verify.
+
+Keep project worker defaults in `.codex/config.toml` and any custom agent
+presets consistent with this operating model. Retire obsolete role instructions
+when changing the workflow; do not leave a second command hierarchy in presets.
+
+Where a speed control exists, select NORMAL/default non-Fast for every worker,
+regardless of root speed. Where it does not, do not deliberately select Fast,
+do not invent a setting, and disclose the limitation once. Known model,
+reasoning, or speed mismatches must not be silently relabeled as compliant.
+Do not repeatedly respawn workers to chase unavailable settings.
+
+If delegation is unavailable, Astra may continue safe, authorized work directly
+and report that limitation. Do not invent an independent review or declare a
+required independent-review gate satisfied. Do not silently substitute another
+worker model or edit the user's global agent configuration to bypass a limit.
+
+## Authority, orientation, and scope
+
+Follow platform/system/developer instructions and actual runtime precedence.
+Within repository guidance, the current explicit user task takes precedence,
+then applicable more-specific instruction files, then this root manual, then
+standing project documentation. Read applicable `AGENTS.override.md`, nested
+`AGENTS.md`, and relevant project guidance; never assume this file overrides a
+higher-priority instruction. Flag an actual conflict rather than following two
+incompatible hierarchies or silently rewriting an unrelated instruction file.
+
+Before substantive edits:
+
+1. Confirm the repository, working directory, branch, HEAD, tracked changes,
+   and pre-existing untracked paths. Preserve unrelated work.
+2. Read the project sources named below, relevant implementation, callers,
+   tests, and recent history. Read affected sections, not every historical log.
+3. Identify the authoritative state/ownership boundary and the root cause.
+   Existing code is evidence of behavior; existing behavior is not automatically
+   the intended contract, and a passing test does not override the user request.
+4. Define the smallest coherent scope, acceptance criteria, explicit non-scope,
+   and closed validation set. A short plan or existing task record is enough;
+   do not create a paperwork framework for a small repair.
+
+Use the actual local task branch, not an assumed default branch. Read current
+roadmap status rather than freezing a phase number or old blocker into this
+manual. If documentation disagrees with code, resolve the relevant discrepancy
+using implementation, tests, history, and the requested contract. A renamed
+navigation document is not automatically a product blocker; a missing required
+acceptance contract may be.
+
+Work only within the requested boundary. A request for an entire phase or
+explicit sequence authorizes its eligible substeps without another permission
+request after each small fix; respect dependencies and required gates. It does
+not authorize the next unrequested phase, unrelated backlog, or a rewrite.
+
+Prefer surgical root-cause fixes, existing adapters/services/registries, and
+small testable changes. Preserve working behavior and compatibility. No
+opportunistic dependency upgrades, framework migrations, formatting churn,
+duplicate state owners, or broad god-class decomposition. Do not impose a
+fake two-file limit when a correct repair genuinely requires more files.
+
+## Delegation, ownership, and independent review
+
+Give each worker one compact, self-contained assignment: objective, expected
+behavior, relevant files/contracts, read/write permission, exclusive write
+scope, dependencies, required checks, and requested evidence. Provide only
+necessary context; use the smallest supported history fork. Reviewers receive
+the original requirement and candidate, not a transcript telling them why the
+author believes the patch is correct.
+
+A small in-session ownership map is sufficient. Record worker ID, purpose,
+owned files or read-only scope, state, and any owned processes/temp locations.
+Do not build a permanent delegation database or transcript archive.
+
+- One active writer per file, including Astra. Different files can still share
+  an invariant; agree on interfaces and integration order before parallel edits.
+- Shared models, schema, core state, build/configuration, generated outputs, and
+  integration files need one explicit owner. Other workers propose changes to
+  that owner instead of editing concurrently.
+- Complete and reconcile prerequisite investigations before dependent coding.
+  Independent work need not wait for an unrelated investigation to finish.
+- Test workers and reviewers are read-only with respect to source, fixtures,
+  goldens, and configuration unless separately reassigned to implementation.
+  Their test runs may create only scoped, disposable execution artifacts.
+- Workers do not stage, commit, merge, cherry-pick, push, or send external
+  notifications. Astra owns authorized integration/publication. Never treat
+  another session's simultaneous edit as something to overwrite or discard.
+- If isolated worktrees are used, record each base and patch/commit identity.
+  Astra reviews and integrates them explicitly; never assume separate worktrees
+  share uncommitted edits.
+
+For a nontrivial production change, or any persistence, money calculation,
+identity, synchronization, security, or resource-lifecycle change, obtain one
+fresh Luna read-only review of the integrated candidate. The reviewer must not
+have authored the implementation or its test oracle. Review includes the real
+diff, relevant call paths, acceptance checks, and focused independent validation
+where feasible. A documentation-only or genuinely trivial change does not
+require a ceremonial worker panel.
+
+Astra inspects the integrated result and adjudicates findings using evidence.
+An extra independent Luna specialist is optional for a concrete unresolved risk,
+not a mandatory Inspector role. If Astra or a worker repairs a reviewed area,
+rerun affected checks and obtain a targeted independent delta review. Do not
+reuse a pre-repair PASS for changed behavior or restart an unrelated full audit.
+
+## Waiting, updates, and resource use
+
+When useful non-overlapping root work remains, Astra may do it. Otherwise use
+the supported long blocking agent wait, not busy polling. Prefer the configured
+wait; when an explicit duration is needed, use the longest supported practical
+wait, up to 3,600,000 ms when supported. Do not invent an unsupported one-hour
+argument. A platform-imposed shorter timeout simply means wait again silently.
+
+No periodic "still working," "no updates," worker-list polling, status requests,
+or minute-by-minute heartbeat narration. Send a brief initial plan, material
+findings or decisions, genuine blockers, and the final result. An empty wake-up
+is not progress. Do not interrupt or kill a worker because it is quiet or slow.
+Agent-wait duration and subprocess/test timeouts are separate controls.
+
+Reuse a worker only for a known immediate follow-up compatible with its role.
+Once its result and resource ownership are reconciled, close it. Do not retain
+idle workers just in case or create duplicates of active assignments.
+
+Use one expensive full build/test matrix per worktree at a time. Give each
+browser session, GUI, emulator, device, port, and mutable test resource one
+owner. Reduce concurrency if memory, CPU, disk, shared tooling, or desktop
+responsiveness suffers. Ten workers are not permission for ten simultaneous
+Gradle builds, browser farms, or recursive repository copies.
+
+## Validation, failure handling, and closure
+
+Define required gates before implementation from the user task, current
+roadmap, project policy below, and directly affected invariants. Run focused
+checks during development, then the applicable complete gates against the
+final integrated candidate. Reuse evidence only when the relevant candidate,
+inputs, environment, and toolchain are unchanged, and identify that reuse.
+A documentation-only correction does not require rebuilding unchanged code.
+
+When changing an operating-system, subprocess, listener, or transport boundary,
+run a small check through the actual selected implementation early, before the
+large validation matrix. Pair it with focused negative canaries; a mocked
+dependency does not establish that the real host path works. Preserve required
+gate ordering, including independent review before live browser work when the
+task requires it. This rule does not add runtime checks to documentation-only
+work or substitute a smoke check for the final complete gates.
+
+For each result record the command or interaction, exit/result, relevant
+output/evidence, and candidate identity (SHA plus uncommitted diff when needed).
+Use `PASS`, `FAIL`, `BLOCKED`, `NOT RUN`, or `NOT APPLICABLE` accurately.
+Missing dependencies, no collected tests, disabled smoke paths, skipped required
+cases, timeouts, unauthorized devices, and missing logs are not PASS.
+
+Do not weaken assertions, suppress errors, bless goldens blindly, fake UI
+interaction, bypass the actual execution path, or substitute a nearby easier
+check for a required gate. An intentional contract/oracle change requires
+explicit task scope and reviewed expectations. Separate implementation tests,
+manual behavior evidence, and verifier/tooling certification.
+
+Classify findings by both impact and cause:
+
+- `BLOCKER`: breaks current acceptance, correctness, data/electrical integrity,
+  an established invariant, a relevant regression, or a required gate.
+- `FOLLOW-UP`: a real issue that does not invalidate the requested result.
+- `BACKLOG`: an optional improvement outside scope.
+
+Cause is `CODE`, `TEST/TOOL`, `ENVIRONMENT`, or `USER DECISION`. A broken required
+harness can block qualification without proving the product broken. Optional
+harness flakiness is not automatically a reason to reopen product code.
+Record nonblocking findings; only genuine blockers reopen implementation.
+
+After two identical environment/tool failures, stop rerunning the unchanged
+full command. Preserve the signature, diagnose a specific cause, change or
+verify a relevant condition, try a bounded equivalent method where permitted,
+or report the remaining prerequisite. Continue while a safe evidence-based
+repair path exists; neither elapsed time nor an arbitrary retry quota decides
+correctness. Do not stack speculative patches or call repeated output progress.
+
+Do not expand the blocking finish line indefinitely. New evidence of a real
+correctness/integrity defect may add a necessary regression; aesthetic cleanup
+or hypothetical perfection may not. Once acceptance, applicable gates, review,
+and final reconciliation pass, complete the authorized handoff/publication and
+stop at the requested boundary.
+
+## Git, user data, processes, and scratch safety
+
+Never discard unrelated edits, untracked files, private project data, or another
+agent's work. No broad `git clean`, `git reset --hard`, destructive restore,
+force-push, history rewriting, branch deletion, or mass filesystem cleanup
+without explicit authorization for the exact operation and targets. Stage
+explicit intended paths only, and inspect staged and unstaged changes separately.
+
+Do not expose or commit credentials, tokens, private documents/inventory,
+absolute personal paths, raw user payloads, or uncontrolled logs. Use sanitized
+fixtures. Do not escalate privileges, change authentication, weaken sandboxing,
+or modify global runtime settings just to turn a failure green.
+
+Prefer bounded commands that exit naturally. Do not leave task-only shells,
+servers, watchers, browsers, test runners, or worker threads alive. For a needed
+persistent process, record ownership at launch using the available process
+handle/job/group or PID plus creation time, executable, and task-specific
+profile/port. Revalidate identity before terminating it; a process name or PID
+alone is not sufficient. Respect stricter task-specific cleanup contracts.
+
+Never kill all Edge, Chrome, Node, Python, Java, PowerShell, or IDE processes.
+If ownership cannot be established, leave that resource alone, record it, and
+use safe isolation where possible. An uncertain old process can block its
+cleanup or a particular isolation gate; it does not automatically prohibit all
+unrelated useful work. Do not claim a clean-state test when it was not proven.
+
+Substantial scratch trees, temporary repository copies, and pytest `--basetemp`
+must use unique, task-owned OS-temp subdirectories outside the repository.
+Never pass the shared OS-temp root itself as a destructive test base. Verify
+resolved containment and ownership before cleanup, including symlink/reparse
+boundaries. Exclude `.git`, caches, nested scratch, build output, and private
+data from temporary source copies unless a small specific fixture needs them.
+Do not recursively copy a repository into itself or run per-file Git commands
+over generated scratch. Unexpected tree/process growth is a reason to stop the
+run and diagnose it, not launch more workers or hide it with `.gitignore`.
+
+Normal build outputs may remain in their documented build directories; the
+external-scratch rule is not permission to relocate or delete required build
+assets. Clean only verified task-owned disposable resources. Before a pause or
+context handoff, save one compact checkpoint with HEAD/candidate, diff scope,
+pre-existing changes, worker/resource ownership, exact gate results, blockers,
+and the next action. Revalidate that state when resuming.
+
+## TroubleshootJS — project direction and sources
+
+TroubleshootJS is a PCB troubleshooting simulator built around CircuitJS, not a
+schematic-reading quiz or a general-purpose PCB CAD package. The player gets an
+incomplete complaint, examines an unfamiliar board, measures, isolates faults,
+repairs it, and verifies restored operation. Favor electrical reasoning over
+memorized layouts or clicking the secretly marked bad part.
+
+Read `docs/ROADMAP.md` for sequencing, `docs/ARCHITECTURE.md` for implemented
+ownership, and `docs/CODEX_TASK_REPORT.md` for the current handoff and evidence.
+Consult current build scripts, verifier contracts, tests, and any more-specific
+instructions for the affected code. These documents, not a snapshot in this
+manual, determine the current task number and implementation status.
+
+Keep one compact current checkpoint at the top of `docs/CODEX_TASK_REPORT.md`:
+active scope, branch/HEAD and candidate identity, gate results and their limits,
+review status, owned resources, and the next safe action. Preserve historical
+handoffs below it. When the candidate changes, distinguish earlier passing
+evidence from checks still required for the new candidate.
+
+Keep simulation adaptation, circuit generation/validation, fault injection,
+PCB generation/routing/rendering, instruments, board mutation, damage, and
+scenario/scoring responsibilities separated. Prefer existing extension seams;
+isolate necessary upstream CircuitJS changes and preserve mergeability.
+
+## TroubleshootJS — electrical and gameplay invariants
+
+- **CircuitJS is electrical truth.** Player actions modify the active electrical
+  graph; the solver produces the resulting behavior. Never make a failing
+  circuit appear correct with hard-coded meter readings, scenario-specific UI
+  patches, or an independent replacement physics engine. Any deliberate model
+  approximation must be explicit, bounded, and consistent with the contract.
+- **One authoritative graph and stable identity.** Keep generated logical
+  circuits separate from visual geometry and from current user modifications.
+  Preserve stable component, terminal, node/net, pad, trace, and probe identity
+  through mutation, reset, and rerendering. Reuse the actual graph/mutation
+  owner; do not infer connectivity from pixels, labels, or array positions.
+- **Every conductive visual feature maps correctly.** Pads, leads, exposed
+  copper, connectors, and test points must identify the right electrical target.
+  Routing and placement must not silently short nets or disconnect a logical
+  connection. Realistic routing links are preferable to fake connectivity.
+- **Generate valid challenges.** Use constrained functional families and valid
+  topology modules, not arbitrary random circuits. Validate healthy behavior,
+  inject a compatible fault, verify a meaningful faulty symptom, then generate
+  and map the PCB. Reject invalid/uninteresting generations instead of hiding
+  them. Supporting healthy circuitry is not automatically faulty.
+- **Reproducibility matters.** Preserve seeded topology, parameter, layout, and
+  fault generation for a given version/settings contract. Tests select explicit
+  representative families/topologies and known boundary/regression seeds rather
+  than hoping a random draw reaches the changed path.
+- **Mutations are electrical, not decorative.** Removal, lead lifting,
+  replacement, jumpers, trace cuts/restoration, and secondary failures modify the
+  live circuit. Preserve original-versus-current board state and documented
+  undo/reset behavior. Wrong repairs have their electrical consequences; do not
+  silently undo mistakes or protect a player with fictitious readings.
+- **Measurement lifecycle is safe.** Respect powered versus unpowered modes,
+  in-circuit parallel paths, isolated/removed components, and board-power
+  isolation. Temporary test sources, temporary graph elements, listeners, and
+  instrument state must be removed/restored on exit, error, cancellation,
+  switching, mutation, and reset. Stale instrument work must not alter a new
+  graph or reenergize a board after the user turns it off.
+- **Preserve probe controls.** In a probe-based meter mode, left click places
+  red and right click places black. Suppress normal context behavior only while
+  needed, and selecting the active mode again exits and restores normal input.
+  Do not change this interaction contract in an unrelated repair.
+- **Damage and waveforms follow simulation.** Stress, heating, current limiting,
+  secondary failures, and scope waveforms must have defensible electrical causes.
+  Do not introduce arbitrary damage rolls, fake power limiting, or theatrical
+  waveform animation as substitutes for implemented behavior.
+- **Keep the answer private.** Normal-player complaints, UI, labels, overlays,
+  and interaction must not reveal hidden faults, topology answers, netlists,
+  debug flags, the neat schematic, or the intended repair path. Developer views
+  are explicitly separate. Difficulty and scoring may not cheat the physics.
+- **Verify function, not the answer key.** Completion requires restored customer
+  behavior under relevant power/input conditions. Preserve valid alternative
+  repairs instead of requiring a click on the originally faulted component.
+
+These rules preserve existing behavior; descriptions of possible instruments,
+board features, or damage systems are not permission to implement future
+roadmap features during a focused task.
+
+## TroubleshootJS — validation and browser evidence
+
+Select direct electrical, identity, mutation, generation, lifecycle, and privacy
+regressions for the changed boundary. Use representative explicit seeds and
+known failures; broad historical matrices are justified by risk, not required
+for every minor edit. Java/GWT production changes require a final JDK 8/GWT
+production build from the final source candidate using the repository's actual
+build command. Earlier diagnostic builds do not prove later edits.
+
+Preflight only capabilities required by the selected gates: JDK/GWT, listeners,
+local service reachability, browser access, and process-ownership inspection
+when the verifier needs it. Do not require elevated WMI, a CDP handshake, or a
+browser for an unrelated documentation/unit-test task. Never grant yourself
+elevation or weaken a listener/ownership contract to get a verifier running.
+
+For a visible player-flow change, exercise the actual production preview with
+real visible input and inspect meaningful initial, changed, invalid/unrepaired,
+and successfully repaired states as relevant. Prefer the built-in Browser.
+An available user-authorized Computer Use route may interact with a task-owned
+browser when needed; protect the user's desktop and record the route used.
+Do not silently substitute manual evidence for a task that explicitly requires
+a particular automated verifier, browser capability, or certification method.
+
+DOM/console/CDP inspection can diagnose failures. Injected clicks, direct
+controller calls, private state mutation, and mock screenshots do not prove
+normal-player interaction. A CDP transport failure is not evidence that the
+application is broken, and successful manual interaction is not evidence that
+the CDP verifier itself passed. Record these as separate gates.
+
+Use a dedicated profile/port where the test requires isolation. Do not close
+all of the user's browsers to manufacture a clean state. Preserve exact
+process/listener ownership, immediate identity revalidation, fail-closed trust,
+negative/positive canaries, and documented exit-code semantics. In particular,
+an unproven/blocked verifier result or exit code 2 is not PASS. A new method may
+satisfy an equivalent behavior check only when its evidence meets that contract;
+it cannot waive stricter task-specific cleanup or isolation requirements.
+
+Capture a small curated set of real screenshots for material visible changes,
+normally two to five. Inspect that they are nonblank and show the intended
+normal-player states. Surface them to Astra/user as supported. Preserve final
+curated evidence under `docs/task-evidence/task-XX/` using the actual task number
+and descriptive filenames, and explain what each proves in the task report.
+Do not commit screenshot spam, private data, or fabricated visual evidence.
+
+## TroubleshootJS — documentation and publication
+
+Preserve the existing project-specific completion workflow for implementation
+tasks unless the current user task overrides it. It does not apply to a
+read-only review, planning-only request, or an explicit no-commit/no-push task.
+Astra alone owns the following publication sequence:
+
+1. Complete the requested work, required validation, independent review, and
+   final reconciliation. Do not publish an unresolved blocker as success.
+2. Update `docs/ARCHITECTURE.md` when implemented architecture changed. For a
+   completed milestone, update `docs/ROADMAP.md`, retain history, and identify
+   but do not start the next unrequested milestone. Update
+   `docs/CODEX_TASK_REPORT.md` with evidence, limitations, and curated screenshots.
+3. Stage only intended changes; inspect the staged diff and whitespace. Commit
+   with a concise descriptive message unless the task forbids it.
+4. Verify branch, configured remote, upstream, and final SHA; make a normal push
+   and verify the remote contains that accepted SHA. Do not force-push or guess
+   another remote when the configured publication path fails.
+5. Only after verified publication, attempt the established completion email
+   through connected Gmail when available, unless the user disables it:
 
    ```text
-   TASK / GATE:
-   BASELINE SHA:
-   CANDIDATE SHA:
-   OBJECTIVE:
-   NON-NEGOTIABLE INVARIANTS:
-   FILES/SCRIPTS IN SCOPE:
-   OPEN BLOCKERS:
-   RESOLVED BLOCKERS STILL RELEVANT:
-   CURRENT EXIT-CODE CONTRACT:
-   CURRENT VALIDATION:
-   EXTERNAL / VISIBLE-BROWSER EVIDENCE:
-   ENVIRONMENT LIMITATIONS:
-   DEFERRED MINORS:
-   NEXT ACTION:
+   To: dspevock@stateofthearcelectric.com
+   Subject: TroubleshootJS: <task/commit summary> pushed
+   Body: Task; exact commit SHA/message; branch; change summary; validation;
+         limitations/follow-ups; next unstarted milestone when applicable.
    ```
 
-   Use paths, symbols, commands, run IDs, and short error excerpts instead of
-   narrative history or pasted logs.
-
-3. **Safe Foreman rotation.** Never interrupt an active Coder or Reviewer.
-   At the next clean checkpoint after a review/repair result, the outgoing
-   Foreman writes the compact handoff and the Superintendent may intentionally
-   spawn a fresh Foreman. Thereafter rotate only after a major gate/task
-   closure or two substantial repair loops. This is planned context
-   compaction, not replacement for inactivity. Never rotate mid-edit or while
-   an unresolved child result still needs reconciliation.
-
-4. **Investigator budget.** The default is exactly two independent,
-   read-only GPT-5.6 Luna MAX Investigators. Add a third only for electrical
-   truth/solver correctness, board or topology-generation invariants, verifier
-   ownership/concurrency architecture, persistence/state corruption, major
-   gameplay-state architecture, three or more independent subsystems, or a
-   material disagreement between the first two. A narrow blocker repair does
-   not automatically receive new Investigators. All required Investigators
-   must finish before the single Coder exists.
-
-5. **One Coder.** Exactly one GPT-5.6 Luna MAX Coder owns implementation for
-   an activated task. It receives the open blocker or bounded objective,
-   affected invariant, exact files, required regressions, and validation
-   requirements—not the full prior history. The Coder report should normally
-   be no longer than 1,200 words.
-
-6. **Delta-focused review.** Every candidate still receives an independent
-   Luna MAX Reviewer. The first review is task-level. A repair review covers
-   the prior blocker, repair delta, affected ownership/exit/electrical/
-   gameplay invariants, nearby interaction surfaces, and relevant regression
-   evidence. Start a new full audit only when repair changes architecture,
-   enters a new subsystem, reveals systemic misunderstanding, reaches three
-   repair loops since the last full audit, or invalidates prior evidence.
-   Reviewer reports should normally be no longer than 1,200 words.
-
-7. **Bounded Foreman review.** After Reviewer PASS, check open acceptance
-   criteria, current diff/status, required exit contracts, latest tests and
-   canaries, CI/visible Browser evidence, scope, and blocker resolution. Do
-   not repeat complete forensic archaeology unless evidence conflicts.
-
-8. **Inspector readiness.** Do not spawn an Inspector for CI or environment
-   triage. Before the Inspector, the Coder is complete, the latest Reviewer
-   and Foreman passed, deterministic source/contract/local checks are done,
-   supported JDK8/GWT terminal evidence is green where required, visible
-   `@Browser` validation is complete where required, known infrastructure
-   blockers are resolved or explicitly permitted, and the candidate is
-   publication-ready.
-
-9. **Terra default.** The final Inspector is GPT-5.6 Terra with MAX reasoning
-   and receives only the compact handoff, acceptance contract, baseline/current
-   SHA, changed-file map, latest review results, final canary/CI/visible-
-   Browser evidence, and open/deferred minors. Its report should normally be
-   no longer than 1,500 words. A Terra blocker returns through the same Coder,
-   delta Reviewer, bounded Foreman review, and targeted Terra reinspection.
-
-10. **Sol escalation.** Use GPT-5.6 Sol only when Terra cannot resolve an
-    important ambiguity, materially disagrees with the Reviewer or Foreman,
-    electrical truth/solver correctness remains disputed, contradictory
-    Browser/CI evidence remains, a high-risk ownership/destructive-process
-    issue cannot be resolved confidently, or the user explicitly requests
-    Sol. A clean Terra PASS ends the Inspector gate; allow at most one Sol
-    escalation per gate/task unless the user authorizes more.
-
-11. **Sacred contracts.** Preserve verified positive exit `0`, verified
-    application failure or expected forced-negative exit `1` where specified,
-    and verifier/tool/browser/CDP/timeout/ownership/cleanup/infrastructure
-    uncertainty exit `2`. Preserve false-pass detection, forced-negative
-    markers, recovery, exact owned-resource cleanup, no broad process killing,
-    CircuitJS electrical truth, and the requirement that deterministic checks
-    never replace required visible `@Browser` evidence.
-
-12. **Output discipline.** Reports reference file/line or symbol, exit code,
-    short canary result, commit SHA, CI job/run, and Browser evidence path.
-    Keep Investigator reports preferably under 800 words, Coder and Reviewer
-    reports under 1,200 words, and Inspector reports under 1,500 words. Do not
-    copy other agents' reports verbatim.
-
-13. **Quality floor.** Never waive a real blocker, let a Coder self-review,
-    fake visible Browser proof, weaken electrical truth or cleanup checks,
-    restart completed Gate B work, start Task 43P while Gate B is incomplete,
-    start Task 44 before prerequisites, or replace an active agent merely for
-    timeout, silence, or inactivity.
-
-## Project Mission
-
-TroubleshootJS is an interactive electronics troubleshooting simulator built around CircuitJS.
-
-The goal is NOT merely to teach schematic reading.
-
-The goal is to recreate the reasoning process of troubleshooting a real PCB on a workbench:
-
-1. Receive an incomplete customer complaint.
-2. Inspect an unfamiliar PCB.
-3. Determine what the board and its subsystems do.
-4. Decide what measurements are useful.
-5. Probe the actual board rather than a neat schematic.
-6. Isolate the failed subsystem/component.
-7. Remove or isolate components when appropriate.
-8. Replace components or repair traces.
-9. Power the board back up and verify the repair.
-
-The simulator should reward electrical reasoning and discourage brute-force probing.
-
----
-
-# Core Design Principle
-
-CircuitJS is the electrical simulation backbone.
-
-TroubleshootJS adds additional layers around CircuitJS:
-
-- procedural circuit generation
-- procedural PCB rendering
-- PCB-to-simulation node mapping
-- customer complaints
-- hidden faults
-- multimeter/scope interaction
-- component removal/replacement
-- jumper wires and trace cutting
-- component stress and secondary failures
-- scoring and troubleshooting workflow
-
-Do NOT replace CircuitJS electrical behavior with hard-coded fake meter readings unless absolutely necessary.
-
-Whenever practical:
-
-USER ACTION
-    ↓
-MODIFY ELECTRICAL GRAPH
-    ↓
-CIRCUITJS SIMULATES RESULT
-    ↓
-MEASUREMENT/BEHAVIOR CHANGES NATURALLY
-
-The simulation state should be the source of electrical truth.
-
----
-
-# Important Non-Goal
-
-Do NOT turn TroubleshootJS into KiCad, Altium, or a general-purpose PCB design package.
-
-Generated PCBs only need to be:
-
-- electrically representative
-- visually believable
-- easy enough for the software to generate
-- difficult enough for a human to visually trace
-- interactive
-
-They do NOT initially need to:
-
-- satisfy manufacturing design rules
-- support arbitrary layer stacks
-- model electromagnetic fields
-- produce Gerber files
-- perform professional autorouting
-- reproduce GHz signal integrity
-
-Prefer a useful training simulator over technically perfect PCB CAD.
-
----
-
-# Architecture
-
-Keep major systems separated.
-
-Prefer modules/services roughly corresponding to:
-
-1. Simulation Adapter
-2. Circuit Generator
-3. Circuit Validator
-4. Fault Engine
-5. PCB Generator
-6. PCB Router
-7. PCB Renderer
-8. Probe/Instrument System
-9. Board Modification System
-10. Component Stress/Damage System
-11. Challenge/Scenario Generator
-12. Scoring/History System
-
-Do not create unnecessary coupling between these systems.
-
-The PCB renderer must not itself determine electrical behavior.
-
-The generator must produce a logical circuit/netlist first.
-
-The PCB is generated FROM the circuit.
-
----
-
-# Procedural Circuit Generator
-
-Do NOT attempt unrestricted random electronic circuit generation.
-
-Use constrained functional families and reusable topology modules.
-
-Examples of functional families:
-
-- LED indicator/control
-- transistor switch
-- MOSFET switch
-- relay driver
-- regulator
-- sensor input
-- comparator
-- amplifier
-- oscillator
-- timer
-- motor/fan driver
-- logic circuit
-- power supply
-- buck converter
-- memory/data interface
-
-A functional family describes WHAT the circuit accomplishes.
-
-Each family may contain multiple valid implementations.
-
-Example: "controlled LED"
-
-Possible topologies include:
-
-- direct switch
-- NPN low-side driver
-- PNP high-side driver
-- NMOS low-side driver
-- PMOS high-side driver
-- relay-controlled LED
-- logic/comparator-controlled LED
-
-The player should not know which topology was selected.
-
----
-
-# Circuit Randomization
-
-Randomization should occur at multiple levels.
-
-## Functional topology
-
-Different valid implementations of the same customer-visible function.
-
-## Parameters
-
-Examples:
-
-- supply voltage
-- resistor values
-- capacitor values
-- transistor types
-- MOSFET types
-- pull-up/pull-down values
-- component packages
-- timing constants
-
-Values must remain electrically sensible unless an intentionally incorrect value is the injected fault.
-
-## Auxiliary circuitry
-
-Generated boards should frequently include healthy circuitry unrelated or only indirectly related to the reported problem.
-
-Examples:
-
-- status LEDs
-- buzzers
-- reverse-polarity protection
-- decoupling
-- unused headers
-- secondary outputs
-- sensor inputs
-- power indicators
-- additional regulated rails
-- filtering
-- protection networks
-
-These circuits are NOT automatically faults.
-
-Their purpose is to make boards realistic and force users to determine which subsystem matters.
-
-## Layout
-
-Randomize:
-
-- component placement
-- component rotation
-- reference designators where practical
-- trace routing
-- board dimensions/shape within reasonable limits
-- connector placement
-- test point placement
-
-A user should not be able to memorize a board layout and immediately know where to probe.
-
----
-
-# Generation Pipeline
-
-Prefer this pipeline:
-
-1. Select functional family.
-2. Select valid topology.
-3. Generate required components.
-4. Calculate valid component values.
-5. Add optional supporting/auxiliary circuits.
-6. Build electrical netlist.
-7. Validate healthy circuit through simulation.
-8. Select a compatible fault.
-9. Inject fault.
-10. Simulate faulty circuit.
-11. Verify that the fault produces a meaningful symptom.
-12. Reject invalid/uninteresting generations.
-13. Generate PCB footprints.
-14. Place PCB components.
-15. Route PCB traces.
-16. Map every pad/trace/test point to simulation nodes.
-17. Generate customer complaint.
-18. Present challenge.
-
-Do not render a board until the underlying electrical circuit has been validated.
-
----
-
-# Roadmap Authority
-
-The ordered development roadmap is maintained in:
-
-docs/ROADMAP.md
-
-Before defining or beginning any implementation milestone, the primary architect must read:
-
-- AGENTS.md
-- docs/ROADMAP.md
-- docs/ARCHITECTURE.md
-- docs/CODEX_TASK_REPORT.md
-
-Use these documents as follows:
-
-- AGENTS.md defines permanent project laws, architectural invariants, development protocol, and safety rules.
-- docs/ROADMAP.md defines ordered development direction, milestone dependencies, and intended sequencing.
-- docs/ARCHITECTURE.md documents the current implemented architecture and important technical boundaries.
-- docs/CODEX_TASK_REPORT.md records the latest completed task, validation evidence, limitations, and current handoff state.
-
-The roadmap defines development sequencing and dependencies, but it does not authorize autonomous continuation across milestones.
-
-Rules:
-
-1. Work on exactly ONE roadmap milestone at a time.
-2. Unless the user explicitly reprioritizes work, select the first eligible incomplete milestone identified as the immediate next milestone in docs/ROADMAP.md.
-3. Before delegating implementation, confirm that the milestone's dependencies are satisfied.
-4. Convert the roadmap milestone into bounded implementation scope and explicit acceptance criteria.
-5. The existence of later roadmap entries is NOT permission to implement them.
-6. Never automatically begin the next roadmap milestone after finishing the current one.
-7. After successful validation, review, final status/diff inspection,
-   authorized staging/checks, commit, verified final push, and the post-push
-   completion-notification attempt required by the Task Completion Protocol,
-   STOP.
-8. The user may explicitly override roadmap order at any time.
-9. Discovering an attractive adjacent feature is not permission to implement it.
-10. Do not perform future roadmap work opportunistically during another task.
-11. If implementation reveals that roadmap sequencing should materially change, report the proposed change rather than silently reordering the roadmap.
-12. When a milestone is successfully completed:
-    - mark the completed milestone complete;
-    - identify the next eligible milestone;
-    - preserve completed roadmap history;
-    - do NOT begin the newly identified milestone.
-13. If AGENTS.md, ROADMAP.md, ARCHITECTURE.md, CODEX_TASK_REPORT.md, and the actual repository appear inconsistent, inspect the real code/history and resolve the discrepancy before delegating implementation.
-14. Permanent architectural rules belong in AGENTS.md. Development sequencing belongs in docs/ROADMAP.md. Current implementation explanations belong in docs/ARCHITECTURE.md. Per-task handoff evidence belongs in docs/CODEX_TASK_REPORT.md.
-
-# Validation
-
-Generated circuits must be tested automatically.
-
-A healthy generated circuit should satisfy its intended behavior.
-
-A faulty generated circuit should differ meaningfully from healthy behavior.
-
-If validation fails:
-
-DO NOT patch the displayed result with fake behavior.
-
-Reject the generation and try another valid generation.
-
-Where feasible, use CircuitJS itself as the validation engine.
-
-## Player-Facing Validation
-
-When a task requires normal-player validation of player-facing TroubleshootJS behavior, the built-in `@Browser` is the default and required interaction method. Verify that the development server is running (starting it when necessary), open the actual local application in `@Browser`, and keep the built-in browser visible during validation.
-
-For normal-player validation:
-
-- Interact with the running local application through real visible browser input: visible clicks, left/right clicks where the UI requires them, typing, rendered navigation, and observation of rendered state changes.
-- Exercise the workflow as a normal player would, including final inspection of the rendered state after the important interactions. Capture screenshots when useful, including important UI states and interaction results, and preserve them as evidence where appropriate.
-- Do not use DOM manipulation, JavaScript-triggered clicks, synthetic events, direct method calls, internal state mutation, or other shortcuts as substitutes for required player interaction. These techniques are allowed only for explicitly requested developer-level checks, not as evidence of normal-player behavior.
-- Browser/CDP/DOM/console/network inspection may be used as supplemental diagnostics, but it must not replace the required visible `@Browser` interaction.
-- Do not hide or replace the visible built-in browser with Windows desktop automation. Do not use `@Computer`/Windows desktop Computer Use by default; keeping the desktop usable is the default.
-- If a required test cannot be performed through `@Browser` and would require `@Computer`, do not switch silently. Explain and record the specific limitation, continue all feasible `@Browser` validation, and use `@Computer` only when explicitly authorized or when no reasonable browser alternative exists.
-- Clearly distinguish behavior directly observed through visible `@Browser` interaction from supplemental browser diagnostics, automated-test results, verifier results, or source-level reasoning.
-
-The validation hierarchy is: `@Browser` real visible interaction -> browser/CDP diagnostics -> CLI/verifier tests -> `@Computer` only for genuinely non-browser GUI requirements.
-
-Automated tests, verifiers, CDP, DOM inspection, and source-level diagnostics remain valid for non-player-facing checks. Do not require visible browser interaction for builds, unit tests, deterministic verifier routes, simulation invariants, or other purely automated checks unless the task explicitly requires player-facing validation.
-
----
-
-# PCB Generation
-
-Initial PCB generation should target simple believable ONE-SIDED boards.
-
-Start with through-hole components where useful because they are educational and visually recognizable.
-
-Later SMD footprints may be added.
-
-PCB generation should include:
-
-- board outline
-- component footprints
-- component bodies
-- pads
-- visible copper traces
-- silkscreen/reference labels
-- connectors
-- optional test pads
-
-Possible component representations include:
-
-- axial resistors
-- axial diodes
-- radial ceramic capacitors
-- radial electrolytics
-- LEDs
-- TO-92
-- TO-220
-- DIP ICs
-- relays
-- terminal blocks
-- simple SMD packages later
-
-Each conductive feature must know which electrical net/node it represents.
-
-Do not use a flat decorative PCB image as the source of connectivity.
-
-The board geometry must be interactive.
-
----
-
-# PCB Routing
-
-The router does not need industrial-quality PCB routing.
-
-For initial implementations use simple deterministic/heuristic routing such as:
-
-- grid routing
-- Manhattan routing
-- A* pathfinding
-- obstacle avoidance
-
-If a one-sided route cannot reasonably be completed, allow realistic jumper wires / zero-ohm links.
-
-Routing must preserve correct electrical connectivity.
-
-Visual complexity is desirable, but electrical correctness has priority.
-
----
-
-# Customer Complaint System
-
-The user should normally receive an incomplete real-world-style complaint rather than the answer.
-
-Examples:
-
-"The pump won't start. The power light still comes on."
-
-"This controller turns on but the fan never runs."
-
-"The machine shuts down after a few seconds."
-
-"The indicator stays on all the time."
-
-Do NOT reveal:
-
-- failed subsystem
-- failed component
-- fault type
-- intended troubleshooting path
-
-Internally the scenario may know these facts.
-
-The player must infer them.
-
----
-
-# Fault Engine
-
-Faults must be electrically meaningful.
-
-Initial fault types may include:
-
-- resistor open
-- resistor incorrect value
-- capacitor short
-- capacitor open
-- excessive capacitor leakage
-- diode open
-- diode short
-- transistor open
-- transistor short
-- MOSFET D-S short
-- failed gate/base path
-- relay coil open
-- relay contacts failed
-- connector open
-- trace open
-- rail short
-- missing ground
-- failed regulator
-- stuck logic state
-
-Only choose faults compatible with the generated topology.
-
-Never silently create physically nonsensical faults merely for difficulty.
-
----
-
-# Measurement / Multimeter UI
-
-Implement meter modes as selectable buttons.
-
-Initial modes:
-
-- DC voltage
-- AC voltage when supported
-- resistance
-- continuity
-- diode test
-
-Future modes:
-
-- capacitance
-- frequency
-
-While a meter mode is active:
-
-LEFT CLICK = place/move red probe
-RIGHT CLICK = place/move black probe
-
-The normal right-click/context behavior should be suppressed only while an instrument mode requiring probes is active.
-
-Clicking the currently selected meter mode again should exit that mode and restore normal mouse behavior.
-
-Probe locations should be allowed on electrically exposed:
-
-- component leads
-- pads
-- test points
-- connectors
-- exposed copper where appropriate
-
-Measurements must come from the simulation whenever possible.
-
----
-
-# Powered vs Unpowered Measurements
-
-Respect realistic troubleshooting behavior.
-
-Examples:
-
-- resistance/continuity measurements should normally be performed with power off
-- diode mode should interact with the simulated component/network appropriately
-- voltage requires the relevant circuit to be powered
-- parallel circuit paths may affect in-circuit resistance/diode measurements
-
-Do not automatically reveal that a misleading in-circuit measurement is misleading.
-
-The player may need to isolate the component.
-
----
-
-# Component Manipulation
-
-The PCB is an interactive electrical workbench.
-
-Users should eventually be able to:
-
-## Remove Component
-
-Disconnect all component terminals from the board.
-
-The removed component should remain available for out-of-circuit measurement when practical.
-
-## Lift Lead
-
-For components where appropriate, allow one terminal to be disconnected while the remainder stays installed.
-
-Examples:
-
-- resistor
-- capacitor
-- diode
-
-This is important for isolating parallel measurement paths.
-
-## Replace Component
-
-Allow installation of a replacement component/value.
-
-The replacement must actually modify the simulated circuit.
-
-Incorrect replacements must produce their real electrical consequences.
-
-Do not automatically prevent bad choices.
-
-## Jumper Wire
-
-Allow the user to select two accessible electrical points and connect them.
-
-The jumper becomes part of the electrical graph.
-
-The user may:
-
-- repair an open trace
-- bypass a connector
-- temporarily force a signal
-- intentionally bypass a component
-- accidentally create a short
-
-Do not protect the user from electrically bad jumper choices.
-
-## Cut Trace
-
-Allow selected copper paths to be electrically opened.
-
-This can be used to isolate sections of a circuit.
-
-Later allow trace repair/restoration.
-
----
-
-# Board State Must Be Mutable
-
-All physical troubleshooting actions must modify the active board state.
-
-Maintain a clear distinction between:
-
-ORIGINAL GENERATED BOARD
-
-and
-
-CURRENT USER-MODIFIED BOARD
-
-Possible modifications include:
-
-- removed components
-- lifted leads
-- replacements
-- jumpers
-- cut traces
-- repaired traces
-- secondary component damage
-
-The simulator should support undo/reset where practical, but should not silently undo user mistakes.
-
----
-
-# Component Damage / Secondary Failure System
-
-TroubleshootJS should eventually allow the user to damage previously healthy components.
-
-Example:
-
-The user installs a jumper that shorts a rail.
-
-CircuitJS calculates excessive current/power.
-
-The damage system observes that stress.
-
-A component may then fail.
-
-Do NOT immediately tell the player that they damaged it.
-
-The changed circuit behavior should be their indication.
-
-Secondary failures must result from defensible electrical stress, never arbitrary RNG.
-
-Useful hidden component limits include:
-
-- maximum voltage
-- maximum reverse voltage
-- maximum current
-- maximum power
-- approximate thermal limit
-- overload duration
-
-Model accumulated damage approximately rather than attempting perfect semiconductor physics.
-
-Example conceptual model:
-
-stressRatio = actualStress / ratedStress
-
-if stressRatio > safeThreshold:
-    damage += f(stressRatio, elapsedTime)
-
-if damage >= failureThreshold:
-    transition component to a plausible failed state
-
-Possible failure states:
-
-- open
-- short
-- leakage
-- changed resistance
-- degraded behavior
-
-Failure mode may contain limited randomness when multiple outcomes are physically plausible.
-
-The CAUSE of failure must not be random.
-
----
-
-# Power Supply / Current Limiting
-
-Future bench-power functionality should support:
-
-- adjustable supply voltage
-- current limit
-- voltage readout
-- current readout
-
-Current limiting should matter electrically.
-
-A sensible current limit may prevent component destruction.
-
-An excessively high current limit may permit cascading failures.
-
----
-
-# Thermal Behavior
-
-Do not build full thermal simulation initially.
-
-Approximate heating from electrical power/stress.
-
-Possible future UI:
-
-- component temperature indication
-- virtual thermal camera
-- hot-component detection during short hunting
-
-Thermal behavior should remain derived from simulated electrical conditions.
-
----
-
-# Oscilloscope
-
-Plan architecture so scope support is possible without redesign.
-
-Eventually support:
-
-- one or more channels
-- probes mapped to PCB nodes
-- voltage/time scale
-- triggering
-- digital signals
-- PWM
-- switching waveforms
-- clocks
-- intermittent events
-
-CircuitJS should remain responsible for waveform behavior whenever feasible.
-
----
-
-# Scoring / Anti-Brute-Force Design
-
-Do not make random probing impossible.
-
-Make thoughtful troubleshooting more rewarding.
-
-Possible scoring factors:
-
-- number of measurements
-- unnecessary component removals
-- unnecessary replacements
-- incorrect repairs
-- caused secondary damage
-- time
-- successful verification
-- diagnostic efficiency
-
-Do NOT make scoring rules interfere with electrical realism.
-
-A player should be free to probe every component if they want; it should simply be inefficient.
-
----
-
-# Repair Completion
-
-Finding the bad part is not enough.
-
-Prefer challenges where the player must:
-
-1. diagnose the fault
-2. repair/replace/isolate it
-3. power the board
-4. operate relevant inputs
-5. verify that the customer's reported symptom is resolved
-
-A repaired board is considered complete based on FUNCTIONAL BEHAVIOR, not merely whether the player clicked the originally faulted component.
-
-This allows alternate valid repairs such as a properly installed jumper around a broken trace.
-
----
-
-# Difficulty Scaling
-
-Difficulty should increase primarily through circuit complexity and information ambiguity, not cheating.
-
-Beginner:
-
-- few components
-- simple rails
-- one obvious functional path
-- one fault
-
-Intermediate:
-
-- topology variation
-- auxiliary circuits
-- more components
-- misleading parallel meter paths
-- several possible suspects
-
-Advanced:
-
-- multiple rails
-- dependent subsystems
-- enable/PGOOD chains
-- analog/digital interaction
-- scope requirements
-- intermittent behavior
-- faults that cause secondary symptoms
-
-Expert:
-
-- large boards
-- multiple interacting subsystems
-- subtle timing/signal faults
-- user-caused secondary failures
-- minimal hints
-
----
-
-# UI Philosophy
-
-The PCB should be the primary troubleshooting view.
-
-Do NOT reveal the neat CircuitJS schematic by default during a normal challenge.
-
-The schematic may exist internally and may later be available in special teaching/debug modes.
-
-The normal player experience should require understanding the circuit from:
-
-- PCB traces
-- component identification
-- meter readings
-- scope readings
-- board behavior
-
-This is deliberate.
-
----
-
-# Development Rules
-
-Before implementing a feature:
-
-1. Inspect the existing architecture.
-2. Identify the smallest clean integration point.
-3. Avoid rewriting working CircuitJS code unnecessarily.
-4. Prefer adapters/wrappers around upstream CircuitJS functionality.
-5. Preserve the ability to update/merge upstream CircuitJS when practical.
-6. Keep generated-circuit data separate from rendered-board geometry.
-7. Keep electrical node IDs stable and explicit.
-8. Add tests for any generation or mutation logic.
-9. Do not hide failures with hard-coded UI behavior.
-10. Prefer deterministic seeded randomness during development/testing.
-
----
-
-# Seeded Randomness
-
-Procedural generation should support a reproducible seed.
-
-Given the same:
-
-- generator version
-- challenge settings
-- random seed
-
-the same challenge should be reproducible whenever practical.
-
-This is required for:
-
-- debugging
-- automated tests
-- sharing challenges
-- bug reports
-
-Expose the seed in developer/debug mode.
-
----
-
-# Testing Requirements
-
-Every meaningful generator feature should have automated validation.
-
-Test categories should eventually include:
-
-- valid netlist generation
-- healthy circuit functional validation
-- fault compatibility
-- faulty symptom validation
-- no impossible component overlaps
-- PCB route connectivity
-- pad-to-node mapping
-- probe measurement correctness
-- component removal behavior
-- lifted-lead behavior
-- jumper behavior
-- trace-cut behavior
-- replacement behavior
-- secondary damage behavior
-- deterministic generation from seeds
-
-For generator tests, prefer running hundreds/thousands of seeded generations where practical to identify edge cases.
-
----
-
-# Debug Mode
-
-Maintain a developer/debug mode capable of exposing information hidden from normal users.
-
-Useful debug information:
-
-- random seed
-- selected functional family
-- selected topology
-- generated netlist
-- node names
-- PCB net highlights
-- injected original fault
-- expected symptom
-- component stress
-- secondary failures
-- CircuitJS values
-- generator rejection reason
-
-Never expose these automatically in normal challenge mode.
-
----
-
-# Implementation Strategy
-
-Build incrementally.
-
-DO NOT attempt every planned feature at once.
-
-Preferred early milestone order:
-
-1. Preserve/fork working CircuitJS.
-2. Implement improved probe controls.
-3. Define stable board/net/component data model.
-4. Render one manually defined interactive PCB.
-5. Map PCB pads/traces to CircuitJS nodes.
-6. Implement removal/lift/replace/jumper primitives.
-7. Implement one simple procedural functional family.
-8. Add PCB placement/routing for that family.
-9. Add fault injection and validation.
-10. Add auxiliary/red-herring circuits.
-11. Expand functional-family library.
-12. Add damage/thermal/bench-power systems.
-13. Add advanced scope/digital systems.
-
-Do not build an enormous general generator before one complete end-to-end challenge works.
-
----
-
-# First-Proof Challenge
-
-A good first end-to-end procedural family is an LED/control board.
-
-It should eventually be capable of generating multiple healthy implementations such as:
-
-- direct switch
-- NPN driver
-- NMOS driver
-
-Then:
-
-- randomize values within valid ranges
-- optionally add one harmless auxiliary circuit
-- inject one compatible fault
-- validate the symptom
-- generate a simple one-sided PCB
-- allow probing
-- allow repair
-- verify restored LED operation
-
-This is the minimum proof that the architecture works.
-
----
-
-# Code Quality
-
-Prefer:
-
-- clear names
-- small focused modules
-- explicit types/interfaces where supported
-- comments explaining WHY rather than narrating obvious code
-- testable pure logic for generation algorithms
-- separation between model/state/rendering
-- minimal hidden global state
-
-Avoid:
-
-- giant god classes
-- duplicated electrical state
-- hard-coded scenario-specific hacks
-- UI code deciding circuit physics
-- undocumented magic numbers
-- unnecessary framework churn
-- premature optimization
-
-When encountering existing project conventions, follow them unless there is a strong technical reason not to.
-
----
-
-# Working With Existing Code
-
-Before editing unfamiliar code:
-
-- search the repository
-- understand relevant call paths
-- inspect related tests
-- determine whether functionality already exists
-- reuse existing abstractions where appropriate
-
-Do not create parallel systems when the repository already contains an adequate one.
-
-When a requested change requires significant architecture work, explain the intended architecture before performing a large rewrite.
-
----
-
-# Preserve Upstream CircuitJS Behavior
-
-CircuitJS is a mature simulation engine.
-
-Avoid modifying simulation internals unless required.
-
-Prefer:
-
-TroubleshootJS feature
-    ↓
-adapter/interface
-    ↓
-CircuitJS
-
-rather than scattering TroubleshootJS-specific behavior throughout CircuitJS core classes.
-
-Any unavoidable upstream modifications should be:
-
-- small
-- documented
-- isolated
-- easy to identify during future upstream merges
-
----
-
-# Definition of Success
-
-TroubleshootJS succeeds when a player can be handed an unfamiliar generated PCB and a vague complaint and must reason through:
-
-"What does this section do?"
-
-"Where should voltage be present?"
-
-"Why is this node wrong?"
-
-"Is this component actually bad, or is another path affecting my reading?"
-
-"Should I isolate it?"
-
-"What happens if I jumper this?"
-
-"Did my repair actually fix the customer's problem?"
-
-The simulator should teach troubleshooting judgment, not memorization.
-
----
-
-# Multi-Agent Development Protocol
-
-This protocol augments all existing project architecture, development,
-validation, and completion requirements. It does not remove, weaken, or
-replace them.
-
-## Parallel Subagent Policy
-
-The primary architect should use parallel subagents when doing so can safely
-reduce task completion time or improve independent analysis.
-
-Parallel work is encouraged for independent activities such as:
-
-- repository/code-path investigation
-- architecture analysis
-- searching for related implementations
-- test and verifier analysis
-- documentation inspection
-- independent bug investigation
-- independent review of distinct concerns
-- browser/test evidence analysis
-
-The activated bureaucracy workflow retains exactly one Coder for the task.
-Multiple write-capable coder subagents are not used within that workflow; one
-Coder owns the implementation and any required correction loop. In normal
-mode, multiple write-capable coders remain permissible only when ownership is
-explicitly separated and edits cannot reasonably conflict, such as independent
-fixes in files or subsystems with no overlapping ownership, and only when the
-task instructions explicitly authorize that parallelism.
-
-Do NOT run multiple write-capable agents in parallel when:
-
-- they may edit the same files
-- one agent's implementation depends on another agent's unfinished design
-- they are changing the same subsystem or shared abstraction
-- integration order is unclear
-- concurrent edits could produce conflicting architectural decisions
-
-The primary architect must assign explicit ownership before spawning parallel
-write-capable agents and remains responsible for integrating and reviewing all
-results.
-
-The normal workflow uses a primary architect and bounded coder/reviewer
-implementation and review roles. A separate escalation architect is available
-when the normal bounded process cannot safely resolve a substantive issue.
-
-## Commit and Push Authority
-
-Delegated coder, reviewer, and escalation-architect subagents must never
-independently push or publish work. The coder returns its candidate to the
-primary architect for review and completion; returning a candidate does not
-authorize publication. The primary architect is the only role that may push,
-and may push ONLY the final accepted task result after the implementation and
-review gates, final validation, final `git status`/`git diff` inspection,
-intended-only staging, `git diff --cached --check`, and the final commit have
-all succeeded. Failed, intermediate, unreviewed, unresolved, unvalidated,
-unrelated, or unfinished work must never be pushed. Routine force-push is
-prohibited unless explicitly authorized for a specific situation.
-
-## Primary Architect
-
-The primary architect is the main task thread and is the task owner,
-delegation controller, reviewer-finding evaluator, final code reviewer,
-acceptance authority, completion owner, and escalation coordinator.
-
-The primary architect must:
-
-- read AGENTS.md, docs/ROADMAP.md, docs/ARCHITECTURE.md, and
-  docs/CODEX_TASK_REPORT.md before defining or beginning a milestone;
-- inspect the current repository state and relevant execution paths;
-- select exactly one eligible milestone;
-- confirm milestone dependencies;
-- define bounded scope and explicit acceptance criteria;
-- identify architectural invariants that must remain true;
-- determine required build, test, and browser validation;
-- delegate the bounded implementation to the coder;
-- evaluate every reviewer finding rather than blindly forwarding it;
-- perform an independent final review of the actual implementation and diff;
-- decide `FINAL PASS` or `FINAL FAIL`;
-- run the completion protocol after success; and
-- stop after the task.
-
-The primary architect must not implement delegated work while the coder owns
-the implementation phase. Outside that phase, a narrow diagnostic or unblock
-change is permitted only through the defined correction or escalation workflow.
-
-## Delegation Ownership and Patience Protocol
-
-Once implementation is delegated, the coder owns that phase until
-it returns a result, explicitly reports `BLOCKED` or `FAILURE`, or the user
-explicitly cancels the delegation.
-
-While the coder is active, the primary architect must not tell it to hurry,
-repeatedly request progress, send unnecessary follow-ups, interrupt or
-terminate it merely because work is taking longer than expected, implement the
-delegated task, edit its delegated product source files, or spawn a replacement
-coder for the same work.
-
-The architect should wait for natural completion and use passive wait/status
-mechanisms when available. Silence, elapsed time, and long-running builds,
-browser checks, dependency setup, or debugging are not evidence of failure.
-The architect may contact an active coder only for clarification, materially
-new user information, a confirmed blocking condition, an explicit `BLOCKED` or
-`FAILURE` report, or intervention required to prevent confirmed destructive or
-out-of-scope work.
-
-If the coder genuinely fails or becomes unusable, preserve valid work, inspect
-and diagnose the state, then resume or redelegate through the defined correction
-workflow or report the blocker. Do not silently become the implementation
-agent. Architect ownership remains task definition, acceptance criteria,
-clarification, evidence and reviewer evaluation, failed-round diagnosis,
-final review, and escalation; implementation remains the coder's
-responsibility.
-
-The same ownership and patience rules apply during correction rounds and
-escalation-architect work: after a repair is delegated, let the coder complete
-it before reviewer or architect action begins. Let reviewer work complete
-naturally as well; do not pressure, interrupt, or replace a reviewer merely
-because independent review takes time. No phase advances until its assigned
-role has returned the required disposition or report. Existing bounded retry
-limits and escalation rules remain unchanged.
-
-## Coder Subagent
-
-The coder has workspace-write access.
-
-The coder must:
-
-- read and obey AGENTS.md and relevant project documentation;
-- implement only the bounded task supplied by the primary architect;
-- preserve CircuitJS as the electrical simulation source of truth;
-- preserve all established stable identity and graph-ownership rules;
-- prefer small incremental changes over broad refactors;
-- avoid unrelated cleanup and opportunistic future-roadmap work;
-- run required builds and tests;
-- inspect its own diff;
-- report files changed, behavior implemented, validation performed, failures,
-  uncertainty, and architectural concerns;
-- return the candidate to the primary architect and never independently push
-  or publish it;
-- never begin another milestone;
-- never weaken tests or acceptance criteria to make a task pass; and
-- stop and escalate architectural uncertainty instead of inventing a new
-  architecture.
-
-The coder must not spawn additional write-capable agents for routine work.
-
-## Reviewer Subagent
-
-The reviewer has read-only access.
-
-The reviewer must independently inspect:
-
-- the actual changed implementation;
-- the actual diff;
-- the architect's acceptance criteria;
-- relevant architecture and permanent invariants;
-- real execution paths where necessary; and
-- test and browser evidence.
-
-The reviewer must prioritize:
-
-- functional correctness;
-- architectural violations;
-- CircuitJS simulation correctness;
-- graph ownership;
-- stable board, component, pad, and net identity;
-- state and lifecycle bugs;
-- temporary measurement cleanup;
-- board-power safety;
-- procedural-generation validity;
-- deterministic behavior;
-- browser/player-visible regressions;
-- missing validation; and
-- unsafe assumptions or scope creep.
-
-The reviewer must not:
-
-- edit source code;
-- weaken requirements;
-- approve merely because tests pass; or
-- focus on cosmetic/style issues unless they expose substantive risk.
-
-Every reviewer result must end in exactly one of:
-
-`PASS`
-
-or
-
-`FAIL`
-
-Every `FAIL` finding should identify the exact issue, affected file or symbol
-where possible, why it matters, expected behavior, actual behavior or risk,
-evidence/reproduction path where applicable, and required behavior for
-resolution.
-
-Reviewer `PASS` means only that the candidate is ready for the primary
-architect's independent final review.
-
-## Normal Review Loop
-
-The normal hierarchy is:
+Do not create another mail-delivery mechanism. A failed push leaves a local
+commit, not a successfully published task; report the SHA and stop at that
+boundary. A successful push with unavailable/failed Gmail remains published,
+but the notification must be reported as not sent. Do not send a success email
+before the push or retry into duplicate notifications without checking results.
+
+## Final handoff
+
+Inspect the actual final diff, `git diff --check`, and `git status`. When staging
+is authorized, also inspect `git diff --cached` and run
+`git diff --cached --check`. Confirm there are no accidental data, scratch,
+generated, or unrelated changes. Do not label a previously dirty tree clean.
+
+Keep the final report short and evidence-based. Include:
 
 ```text
-Primary architect
-    -> coder
-    -> reviewer
-    -> primary architect final review
+STATUS: COMPLETE | IMPLEMENTED — VALIDATION BLOCKED | BLOCKED | REVIEW ONLY
+SCOPE: What the user requested and what was actually done.
+CHANGES: Important behavior and files; no transcript dump.
+VALIDATION: Exact checks/results and candidate; identify reused evidence.
+REVIEW: Independent reviewer result, or NOT RUN with the reason.
+LIMITATIONS: Failed/unavailable required gates, uncertainties, and impact.
+FOLLOW-UPS: Genuine nonblocking findings, or NONE.
+GIT: Branch, commit/push outcome when applicable, and remaining worktree changes.
+RESOURCES: Unresolved owned processes/temp resources, or NONE.
+NEXT: Only a necessary unblock action or the next unstarted roadmap item.
 ```
 
-The primary architect must independently review the actual implementation
-after reviewer `PASS` and must not blindly trust either the coder or reviewer.
-
-If the reviewer returns `FAIL`:
-
-1. The primary architect evaluates every finding.
-2. The primary architect classifies every finding as `BLOCKER`, `FOLLOW-UP`,
-   or `BACKLOG`.
-3. Invalid findings are discarded with a brief reason; non-blocking findings
-   are recorded without reopening implementation.
-4. Only `BLOCKER` findings become precise corrective requirements and go back
-   to the coder.
-5. The coder makes the narrowest defensible fixes and reruns relevant
-   validation.
-6. The reviewer independently reviews the corrected candidate again when a
-   `BLOCKER` correction requires independent review.
-
-Coder and reviewer work remains sequential. Allow at most TWO coder/reviewer
-correction passes within one primary-architect review round. Do not allow an
-unlimited nested loop. If the candidate still cannot reach reviewer `PASS`
-because of a `BLOCKER`, the unresolved issue returns to the primary architect
-for diagnosis and a decision about the next bounded review round or
-escalation-architect review. If only `FOLLOW-UP` or `BACKLOG` findings remain,
-the architect records them and continues toward completion.
-
-## Maximum Three Architect Final-Review Rounds
-
-A task may receive at most THREE primary architect final-review rounds.
-
-### Round 1
-
-The coder implements, the reviewer independently reviews, and the primary
-architect performs the first final review after the review phase.
-
-If the architect returns `FINAL PASS`, proceed to final validation and
-completion.
-
-If the architect returns `FINAL FAIL`, the architect must identify every
-substantive blocker, explain why it violates the requirements or architecture,
-provide precise corrective requirements, send them to the coder, and begin
-Round 2.
-
-### Round 2
-
-The coder implements the architect's corrections, the reviewer independently
-reviews the corrected candidate, and the primary architect performs the second
-final review.
-
-If the architect returns `FINAL PASS`, proceed to final validation and
-completion.
-
-If the architect returns `FINAL FAIL`, the architect must recognize that only
-one autonomous correction round remains and must perform deeper diagnosis
-before beginning Round 3.
-
-### Round 3 — Final Architect Diagnostic Attempt
-
-Before returning the task to the coder, the primary architect must actively diagnose the
-failure by inspecting enough of the real implementation and surrounding
-architecture to produce a useful repair strategy. Where applicable, identify:
-
-- the probable root cause;
-- the affected execution path;
-- affected files, classes, methods, and symbols;
-- the incorrect state transition;
-- the incorrect architectural assumption;
-- relevant graph or simulation behavior;
-- why previous corrections failed;
-- required invariants and what must remain unchanged;
-- the exact desired behavior;
-- a proposed repair strategy; and
-- tests or instrumentation needed to verify the diagnosis.
-
-The primary architect must give the coder a detailed diagnostic repair brief resembling
-senior-engineer implementation guidance rather than a generic review comment.
-The coder must verify the diagnosis against the actual code, report
-contradictory evidence instead of forcing the proposed fix, implement the
-narrowest defensible repair, run especially thorough relevant validation, and
-return the candidate. The reviewer then independently reviews it, and the
-primary architect performs the THIRD AND FINAL independent final review.
-
-If the primary architect returns `FINAL PASS`, proceed to completion. If the
-primary architect returns `FINAL FAIL`, do not begin a fourth architect review
-round; follow the escalation-architect protocol below.
-
-## Escalation Architect Protocol
-
-The escalation architect provides senior architectural escalation only.
-
-An authorized escalation uses the configured escalation-architect role. The
-primary architect remains the owner of orchestration.
-
-The escalation architect is used only when the normal workflow cannot safely
-resolve the task or when an architectural escalation condition is met. It is
-NOT required for routine successful milestones.
-
-Escalate to the escalation architect when any of these conditions occurs:
-
-1. The third primary architect final-review round fails.
-2. The coder and reviewer materially disagree about an architectural issue
-   that the primary architect cannot confidently resolve.
-3. Fixing the issue appears to require changing a permanent architectural
-   invariant.
-4. The project documents and actual implementation reveal a fundamental
-   architectural contradiction.
-5. The task exposes a potentially dangerous issue involving core boundaries
-   such as CircuitJS graph ownership, active measurement stimulus cleanup,
-   board-power isolation, stable board identity, solver-backed measurement
-   correctness, generated-board ownership, procedural-generation validity,
-   physical-part identity, or mutation lifecycle integrity, and the primary
-   architect cannot confidently resolve it.
-6. The primary architect determines that continuing without stronger
-   architectural review risks hidden technical debt or corruption of an
-   established invariant.
-
-When escalated, the escalation architect must inspect the actual
-implementation and relevant architecture and identify the root cause,
-architectural conflict, execution path, affected symbols, why prior attempts
-failed, what must remain unchanged, the narrowest defensible repair strategy,
-and the validation required. The escalation architect provides a detailed
-repair brief to the coder. The coder makes the repair, the reviewer
-independently reviews it, and the escalation architect performs the final
-escalation review.
-
-The escalation architect's final result must be exactly one of:
-
-`FINAL PASS`
-
-or
-
-`FINAL FAIL`
-
-If the escalation architect returns `FINAL PASS`, proceed to normal task
-completion. If it returns `FINAL FAIL`, STOP. Do not start another repair
-cycle, weaken requirements, redesign the subsystem autonomously, begin another
-roadmap milestone, or commit failed work. Report the blocker, attempted work,
-validation state, and recommended human or architect decision to the user. The
-escalation architect is the final safety valve, not an unlimited fourth
-development loop.
-
-## Hard Autonomy Limits
-
-At all times:
-
-- Exactly one milestone may be worked on per autonomous run.
-- Never automatically start the next milestone.
-- Delegated coder, reviewer, and escalation-architect subagents must never
-  independently push or publish work; only the primary architect may push the
-  final accepted result after all completion gates succeed.
-- Failed, intermediate, unreviewed, unresolved, unvalidated, unrelated, or
-  unfinished work must never be pushed.
-- Routine force-push is prohibited unless explicitly authorized for a specific
-  situation.
-- Never weaken tests or acceptance criteria to achieve `PASS`.
-- Never change product requirements merely to make implementation easier.
-- Never allow multiple write-capable agents to edit the same implementation
-  concurrently.
-- Keep coder/reviewer work sequential unless a clearly safe read-only parallel
-  investigation is explicitly useful.
-- Keep the reviewer read-only.
-- Do not perform unrelated refactors.
-- Do not implement future-roadmap features opportunistically.
-- Do not silently change established architecture.
-- A failed task is a valid stopping condition.
-- If the repository enters an uncertain state, stop rather than stacking more
-  changes on top.
-- Preserve unrelated user changes.
-- User instructions override roadmap ordering.
-- The primary architect may stop earlier than the maximum retry count when
-  additional autonomous attempts would likely make the code worse.
-
-## Successful Multi-Agent Acceptance and Completion
-
-When the multi-agent workflow is used, successful acceptance requires:
-
-- the coder considers the implementation complete;
-- the reviewer returns `PASS`, or the primary architect independently
-  classifies every remaining reviewer finding as `FOLLOW-UP` or `BACKLOG`
-  under the severity protocol below; and
-- the primary architect returns `FINAL PASS`, or the escalation architect
-  returns `FINAL PASS` after an authorized escalation.
-
-Only after those gates are satisfied may the normal Task Completion Protocol
-proceed. It must then:
-
-1. Run the required final JDK 8 / GWT build and applicable automated/browser
-   validation.
-2. Inspect `git diff` and `git status`.
-3. Verify that only intended changes remain.
-4. Update docs/ARCHITECTURE.md if architectural behavior changed.
-5. Update docs/ROADMAP.md by marking the completed milestone complete,
-   identifying the next eligible milestone, preserving completed history, and
-   not beginning the next milestone.
-6. Overwrite docs/CODEX_TASK_REPORT.md with the final task report.
-7. Stage only intended changes.
-8. Run `git diff --cached --check`.
-9. Commit exactly once with a concise descriptive message unless an explicit
-   task instruction overrides or forbids the commit.
-10. Verify the current branch, upstream, configured remote, and final commit
-    SHA; push the final accepted commit; and verify that the remote contains
-    that SHA.
-11. Only after the verified push, send the project owner a concise completion
-    email through the connected Gmail capability when it is available.
-12. STOP without beginning another milestone.
-
-The final docs/CODEX_TASK_REPORT.md must include:
-
-- roadmap milestone/task;
-- summary;
-- architectural decisions;
-- files changed;
-- validation performed;
-- important test data and results;
-- coder result;
-- reviewer result;
-- number of primary architect review rounds;
-- primary architect final result;
-- whether escalation-architect review was required;
-- escalation-architect diagnosis and result if used;
-- known limitations or concerns;
-- next roadmap milestone;
-- intended commit message;
-- configured remote and branch/upstream;
-- notification destination and intended subject; and
-- a statement that the authoritative final commit SHA, push result, and
-  notification result are established after the report is written and are
-  available from repository history and the final Codex task response.
-
-Because the report is committed before its own final commit SHA and publication
-result exist, it must not contain pending placeholders or invented final SHA,
-push, or email results.
-
----
-
-# Review Severity, Closed Validation Set, and Task Stop Conditions
-
-This protocol supplements the existing architecture, safety, testing,
-review, persistence, and Task Completion Protocol requirements. It defines
-when a finding may reopen implementation and when a task must stop.
-
-## Finding Severity
-
-Every issue discovered during coder review, reviewer review, architect review,
-or final validation must be classified as exactly one of the following:
-
-### BLOCKER
-
-A `BLOCKER` materially prevents the current task from being considered
-correct. Examples include:
-
-- product behavior is functionally incorrect;
-- an explicit acceptance criterion for the current task fails;
-- a core architectural invariant is violated;
-- simulation or electrical truth is violated;
-- state can be corrupted or persisted incorrectly;
-- determinism required by the task is broken;
-- safety, power, or measurement invariants are broken;
-- an existing required user-facing behavior has regressed;
-- the implementation could expose false or invalid player-facing information;
-  or
-- the task cannot perform its intended gameplay or functionality reliably.
-
-Only `BLOCKER` findings may return the task to the coder.
-
-### FOLLOW-UP
-
-A `FOLLOW-UP` is a real issue that should be fixed but does not invalidate the
-current milestone. Examples include:
-
-- test or browser automation flakiness that does not demonstrate incorrect
-  product behavior;
-- intermittent CDP or UI interaction timing failures in verifier
-  infrastructure;
-- additional defensive validation;
-- non-critical UI races;
-- minor developer-tooling problems;
-- documentation cleanup that does not materially misrepresent current
-  behavior; or
-- non-critical edge cases and robustness improvements outside the explicit
-  acceptance criteria.
-
-`FOLLOW-UP` findings must be documented for a later task and must not prevent
-completion of the current task.
-
-### BACKLOG
-
-`BACKLOG` is a worthwhile improvement that is not currently required.
-Examples include naming cleanup, refactoring, maintainability improvements,
-better diagnostics, additional optional tests, architecture polish, and
-developer-experience improvements. `BACKLOG` findings must not prevent task
-completion.
-
-## Only BLOCKER Findings Reopen Implementation
-
-The architect must independently evaluate reviewer findings instead of
-blindly treating every reviewer `FAIL` as a reason to return work to the
-coder. If a reviewer returns `FAIL` but the underlying finding qualifies only
-as `FOLLOW-UP` or `BACKLOG`, the architect must record the finding, explain
-the classification, and continue toward completion without opening another
-coder correction pass for that finding. A reviewer disposition is evidence
-for the architect, not an automatic command to reopen implementation.
-
-## Closed Validation Set
-
-Every task has a closed validation set consisting of:
-
-- the acceptance criteria explicitly defined when the task began;
-- required repository-wide build and test checks established by AGENTS.md;
-- regression checks directly necessary to prove that functionality touched by
-  the task was not broken; and
-- specific checks added to reproduce and verify a previously discovered
-  `BLOCKER`.
-
-Once the closed validation set passes and all substantive `BLOCKER` findings
-are resolved, the task is eligible for completion. During final review, the
-architect must not continually expand the blocking validation set by
-inventing additional spot checks, extra legacy routes, supplemental stress
-tests, optional browser matrices, “just to be safe” checks, unrelated edge
-cases, or new acceptance requirements.
-
-The architect may perform exploratory checks when useful. A failure found
-exclusively by an exploratory check is `FOLLOW-UP` by default unless it
-provides concrete evidence of a genuine `BLOCKER` in the product or an
-original acceptance criterion. The finish line must not move indefinitely.
-
-## Permanent Risk-Based Targeted Validation Policy
-
-For every bounded task, the primary architect must define the closed
-validation set before implementation and review begin. The set must name the
-task acceptance checks, the required build or test checks, the direct
-regressions for the changed execution path, and the adjacent regressions that
-protect established boundaries. A later exploratory check may inform a
-follow-up, but it must not silently expand the blocking set after the defined
-set has passed.
-
-For Java or GWT production-source changes, run one final JDK 8/GWT production
-build after the final source candidate is ready. Intermediate builds are
-diagnostic and do not replace that final build. The completion check also
-requires inspection of the final `git status` and `git diff`,
-`git diff --check`, and, when staging is authorized, `git diff --cached --check`
-after only the intended files are staged.
-
-Validation should cover the direct changed path and the smallest adjacent
-regressions that could be affected by it. Broad historical matrices are
-required only when the change surface or risk genuinely justifies them; they
-are not the default substitute for reasoning about coverage. Seeded procedural
-work should use deterministic representative seeds: at least one seed for
-each touched family or topology, plus boundary or previously-regressed seeds
-when relevant. Do not make a validation pass depend on probabilistic family or
-seed selection.
-
-Visible player behavior requires materially distinct built-in `@Browser`
-workflows appropriate to the risk, such as initial state, the new interaction,
-an invalid or unrepaired state, and a correctly completed state. Repeating the
-same route or relying only on DOM/CDP diagnostics is not materially distinct
-player validation. Screenshots should cover the important visible states and
-must be surfaced and preserved when the task evidence rules apply. The
-reviewer independently runs targeted checks for the changed boundary and any
-direct regression; reviewer validation may be narrower than the full closed
-set only when it still directly proves the review concerns.
-
-Correction rounds rerun the narrowest relevant failed checks, the direct
-regressions, and any required final build or browser evidence; they do not
-restart an unrelated full matrix. Documentation-only or evidence-only
-corrections do not require a product rebuild unless the correction changes
-production source or invalidates the evidence, but they do require a diff and
-consistency inspection. Testing effort scales with regression risk and change
-surface. This policy never weakens electrical truth, CircuitJS ownership,
-determinism, stable identity, power and measurement safety, player privacy, or
-the established architecture.
-
-## Test-Harness Failures Versus Product Failures
-
-A test or verifier failure does not automatically mean that the product is
-incorrect. The architect and reviewer must distinguish evidence that actual
-product behavior is broken from evidence that automation failed to interact
-with or observe otherwise-correct product behavior.
-
-Lost synthetic CDP clicks, transient focus loss, GWT re-render timing, delayed
-panel appearance, and automation-selector races are normally `FOLLOW-UP`
-unless investigation demonstrates a corresponding player-facing defect. Do
-not repeatedly reopen a completed feature solely to make optional automation
-theoretically perfect. Required automated checks must still be reliable
-enough to establish their acceptance criteria; this rule is not permission to
-ignore a verifier that cannot prove required behavior.
-
-## Bounded Correction Loops
-
-Correction loops resolve substantive `BLOCKER`s, not unlimited polish. When a
-correction is requested, give the coder the exact finding, identify expected
-versus actual behavior, constrain the correction to the affected scope, and
-rerun only the necessary affected validation plus required regression checks.
-Send the corrected candidate back to the reviewer when independent review is
-required. Do not restart a broad review cycle for every minor issue.
-
-If repeated failures within the same subsystem indicate that the test
-infrastructure itself is flaky, classify that infrastructure problem
-separately rather than repeatedly treating each manifestation as a new
-product `BLOCKER`.
-
-## Architect Stop Condition
-
-Once all of the following are true, the architect must stop searching for
-additional reasons to delay completion:
-
-- the coder has completed the requested implementation;
-- the original acceptance criteria pass;
-- required repository build and test checks pass;
-- substantive `BLOCKER` findings are resolved;
-- the reviewer has passed the implementation, or all remaining reviewer
-  findings have been independently classified as `FOLLOW-UP` or `BACKLOG`;
-  and
-- the architect has completed the predefined final validation.
-
-At that point, document `FOLLOW-UP` and `BACKLOG` findings, update the task
-handoff/report, inspect git diff and status, stage only intended files, run the
-repository's required staged-diff checks, commit according to the existing
-Task Completion Protocol, verify the current branch, upstream, configured
-remote, and final commit SHA, push the final accepted commit, verify that the
-remote contains that SHA, attempt the required post-push Gmail completion
-notification, and stop. Do not begin the next task unless instructed by the
-established workflow. “Could be improved” is not equivalent to “the current
-task is incorrect.”
-
-## Incremental Development Principle
-
-TroubleshootJS is developed incrementally. Non-game-breaking defects and
-infrastructure improvements may be carried into the next task or backlog
-rather than forcing the current milestone into an unlimited correction loop.
-Quality remains important, but the objective is high confidence in the defined
-milestone, not theoretical perfection across every adjacent subsystem. Core
-correctness, simulation truth, architectural invariants, player-facing
-validity, state integrity, and regressions remain blocking.
-
-## Preservation of Existing Project Rules
-
-This protocol does not remove or relax the Task Completion Protocol,
-persistence and retry rules, build requirements, reviewer independence,
-architectural invariants, CircuitJS-as-source-of-truth requirement,
-normal-player privacy requirements, deterministic-generation requirements, or
-power and measurement safety requirements. Where a generic retry instruction
-overlaps with this section, classify the issue first: the retry loop applies
-to a suspected `BLOCKER` or failed check in the closed validation set; it does
-not turn a `FOLLOW-UP` or `BACKLOG` into a blocker.
-
----
-
-# Task Completion Protocol
-
-## Persistence and Retry Protocol
-
-A task is not incomplete merely because work remains after one implementation or
-validation pass. Continue through implementation, validation, screenshots,
-documentation, staging, commit, verified final push, and post-push notification
-attempt in the same task whenever safely possible.
-Do not return an unfinished task after a first failed command, browser
-interaction, screenshot attempt, verifier failure, timeout, stale layout, or
-automation mistake while a suspected `BLOCKER` or closed-validation failure
-remains unresolved.
-
-For a recoverable failure that may be a `BLOCKER` or affects the closed
-validation set, diagnose it and make at least three materially distinct
-attempts before declaring it externally blocking. A materially distinct
-attempt changes a relevant execution method, browser context, viewport
-initialization, event coordinates, route isolation, diagnostic instrumentation,
-source fix, server process, or validation strategy; repeating the same command
-does not count. Preserve the working tree between attempts and continue the
-remaining checklist after a fix. This retry requirement does not apply to an
-issue already classified as `FOLLOW-UP` or `BACKLOG` unless new evidence shows
-that it is a `BLOCKER`.
-
-Do not weaken assertions, remove validation, fabricate screenshots, bypass
-normal UI interaction, or directly mutate verifier/controller state merely to
-obtain a pass. An unfinished return is permitted only for unavailable required
-permissions or credentials, a required user decision that materially changes
-the implementation, an environment that repeatedly cannot perform the work,
-behavior that contradicts the electrical model or repository architecture, or
-a reproducible build/browser/source failure remaining after three diagnostic or
-fix attempts. Such a return must list the exact blocking requirement, every
-materially distinct attempt and diagnostic, why further autonomous work is
-unsafe or nonproductive, and the current worktree state. Time, task length, or
-an incomplete checklist is not itself a blocker.
-
-Three alternate ways of invoking the same failing interaction do not
-automatically count as three materially distinct attempts to resolve the
-underlying defect. Once a reproducible product or integration defect is
-identified, trace, fix, and validate it. A minimum retry count does not permit
-stopping while useful diagnostic and repair paths remain. Materially distinct
-attempts test different root-cause hypotheses or apply different repairs. A
-defect in code currently being implemented is not a hard blocker merely
-because it prevents later validation; a hard blocker requires an external
-constraint or technically demonstrated contradiction that cannot be safely
-corrected within task scope.
-
-For normal TroubleshootJS tasks, unless the task explicitly says
-otherwise:
-
-When the multi-agent workflow is used, do not proceed to staging or commit
-until the successful multi-agent acceptance gates above have been satisfied.
-
-1. Perform the requested work.
-2. Run the required JDK 8 / GWT build and applicable automated, test, and
-   browser validation.
-3. Inspect `git diff` and `git status`.
-4. Update `docs/ARCHITECTURE.md` if architectural behavior changed.
-5. Update `docs/ROADMAP.md` when a roadmap milestone was completed: mark it
-   complete, identify the next eligible milestone, preserve completed history,
-   and do not begin the next milestone.
-6. Update `docs/CODEX_TASK_REPORT.md` with the latest completed task report.
-7. Stage only intended source and documentation changes.
-8. Run `git diff --cached --check`.
-9. Commit with a concise descriptive message unless an explicit task
-   instruction overrides or forbids the commit.
-10. Verify the current branch, upstream, configured remote, and final commit
-    SHA; push the final accepted commit; verify that the remote contains that
-    SHA.
-11. Only after the verified push, send a concise completion email through the
-    connected Gmail capability when available. Unless the task says otherwise,
-    send it to `dspevock@stateofthearcelectric.com` with subject
-    `TroubleshootJS: <task/commit summary> pushed`. Include the task name/number,
-    exact commit SHA and message, pushed branch, change summary, validation,
-    known limitations/follow-up concerns, and next roadmap milestone when
-    applicable. Do not use or create another mail-delivery mechanism.
-12. STOP without beginning another milestone.
-
-If a required check in the closed validation set fails because of an
-unresolved `BLOCKER`, do not commit, push, or send a success email. Leave the
-intended changes in the working tree for correction and clearly report the
-failure.
-
-If the commit succeeds but the push fails, do not claim completion and do not
-send a success email. Preserve the local commit, clearly report the push
-failure and exact local commit SHA, and STOP without beginning another roadmap
-task.
-
-If the push succeeds but Gmail is unavailable or the notification fails, the
-Git task remains successfully published. Clearly report the email
-failure/unavailability and do not claim or imply that a notification was sent.
-
-An explicit user instruction for an individual task may override automatic
-commit, push, or notification behavior. Do not auto-commit, push, or notify
-when explicitly told not to. `docs/CODEX_TASK_REPORT.md` is intentionally
-overwritten after each successful task; Git history preserves prior reports.
-
-## Visual Evidence Protocol
-
-For every successful task that changes or exercises visible player behavior:
-
-For all browser-based player-flow validation:
-
-- Use the Codex built-in `@Browser` for all browser-based normal-player interaction, as required by the Player-Facing Validation protocol; browser/CDP diagnostics are supplemental only.
-- Capture and surface screenshots at every important UI state, including after
-  reaching newly implemented UI and before and after important interactions.
-- Do not merely report that a browser test passed; make the visual evidence
-  user-visible to the primary architect during the task.
-- Preserve the screenshots as task evidence where appropriate.
-- If a coder subagent's browser session cannot be displayed directly in the
-  visible Codex browser pane, return screenshots to the primary architect
-  immediately during the task so the architect can inspect what the coder is
-  seeing.
-
-1. Capture a small curated set of final production-browser screenshots after
-   the final production build, using the actual production preview rather than
-   mockups.
-2. Use normal-player mode unless a developer view is specifically relevant.
-3. Prefer two to five screenshots that meaningfully show the initial state, new
-   feature or UI, important interaction state, repaired or final state, and any
-   visually important regression evidence.
-4. Do not commit large numbers of debugging or intermediate screenshots.
-5. Store screenshots under `docs/task-evidence/task-XX/`, where `XX` is the task
-   number, and use descriptive filenames such as `initial-board.png`,
-   `led-selected.png`, `led-removed-parts-tray.png`, and `repaired-board.png`.
-6. Pixel-inspect or otherwise verify every screenshot is nonblank, is not an
-   error page, shows the intended application state, and uses a useful viewport
-   size.
-7. List every committed screenshot in `docs/CODEX_TASK_REPORT.md` and briefly
-   state what it proves.
-8. Stage the curated screenshots with the intended source and documentation
-   changes.
-
-Screenshots supplement and never weaken or replace existing electrical,
-automated, or browser validation. Screenshots are optional when a task has no
-visible player or UI effect.
-
-Before defining any milestone, the primary architect must read:
-
-- AGENTS.md
-- docs/ROADMAP.md
-- docs/ARCHITECTURE.md
-- docs/CODEX_TASK_REPORT.md
-
-Use:
-- AGENTS.md for permanent architectural and development rules.
-- docs/ROADMAP.md for ordered development direction and dependencies.
-- docs/ARCHITECTURE.md for current implemented architecture and technical
-  boundaries.
-- docs/CODEX_TASK_REPORT.md for the actual latest completed state.
-
-If these disagree about current project state, inspect the repository and resolve the discrepancy before delegating implementation.
+For review-only tasks, report findings rather than making unrequested edits.
+For incomplete work, identify the exact missing proof and preserve the useful
+changes. Never claim a test, review, commit, push, cleanup, or notification that
+was not actually performed. Stop when the requested work is finished.

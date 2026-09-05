@@ -1,8 +1,52 @@
 # Task 43P Evidence
 
-This directory is the durable evidence namespace for the developer-only
-Task 43P cross-boundary reconciliation route. It is not visible-player
-`@Browser` evidence and it does not authorize Owner Review or Task 44.
+## Current evidence — 2026-09-05
+
+Task 43P evidence is implemented; runtime acceptance remains blocked by
+43P-C1 (temporary-measurement exception cleanup) and 43P-C2 (snapshot assertion
+coverage). Owner Review and Task 44 remain blocked. Read the
+[current reconciliation](../../research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
+for historical finding dispositions and bounded correction milestones.
+
+- [Evidence index](runtime-evidence-index.json): candidate/source hashes,
+  exact commands and actual exits, raw-artifact hashes, cleanup and review
+  provenance, and explicit evidence reuse limits.
+- [A-I observations](runtime-observations.json): complete raw runtime fields
+  extracted without rewriting observations; application exit `1`, three open
+  observations and two root causes.
+- [Physical correspondence](physical-correspondence.json): eighteen individual
+  triad PASS packets and nine negative fixtures each; whole invocation stays
+  `UNPROVEN`/`2` because separate legacy A-I fields are unproven.
+- [Source falsification](source-falsification.json): individual compiled
+  mutation results, exact expected DOM/Java proof, source restoration, and
+  cleanup. The retained partial invocation is never relabeled a complete pass.
+
+These are sanitized projections of retained private execution artifacts.
+Projection files omit personal paths and raw host logs, retain original
+artifact hashes and run identities, and do not rewrite runtime observations.
+No manually cleaned failed run counts as verifier-owned cleanup.
+
+## Visible ordinary player input
+
+All five images are real, inspected built-in Browser screenshots from the
+production preview at `tsjChallenge=led&seed=3`, with real mouse/keyboard input
+and no developer query. The separate supplementary legacy NormalPlayer CLI
+failed with exit `2`; these screenshots do not certify that CLI.
+
+| Screenshot | What it proves |
+| --- | --- |
+| [Unrepaired retest](visible-unrepaired-retest.png) | Original complaint still fails the public customer retest. |
+| [Resistance and probes](visible-resistance.png) | Powered-off meter reads about 100 kΩ; left click placed red and right click black on the visible R1 pads. Selecting OHM again exited the mode. |
+| [Original removed](visible-removed.png) | Public Remove changed the board and placed the original resistor in the loose-parts tray. |
+| [Wrong repair](visible-wrong-repair.png) | Installed 2200 Ω replacement remains visible and fails the public retest. |
+| [Verified repair](visible-completed.png) | Installed 1000 Ω replacement passes the solver-backed customer retest; terminal controls are disabled. |
+
+Ordinary visible DOM and accessible attributes were inspected at material
+states without exposing a hidden-fault or topology answer. This privacy result
+is limited to the LED3 sequence. It is not every family, hit envelope, or channel.
+
+## Earlier route contract and candidate history
+
 
 ## Route contract
 
@@ -37,7 +81,7 @@ Task 43P cross-boundary reconciliation route. It is not visible-player
   extraction route. Browser/preview-blocked experiments remain exit
   `2`/`UNPROVEN`; compile success is not runtime mutation proof.
 
-## Current candidate status
+## Historical candidate status — before final runtime qualification
 
 Repair baseline/HEAD before the Coder edits: `20f83535163070a0688fcc0958715e6bc827d445`.
 The repair candidate is uncommitted. The positive/forced-negative Browser routes did
@@ -67,7 +111,7 @@ cannot construct `System.Net.HttpListener`, stopped its disposable preview,
 restored exact source bytes, and proved unchanged repository
 HEAD/status/source digest/file count.
 
-## Required interpretation
+## Interpretation at the earlier candidate checkpoint
 
 Absence of a JSON run artifact is an infrastructure limitation, not a pass.
 The Java/GWT compile proves only that the developer-only route is buildable;
@@ -172,7 +216,7 @@ facts, owned-element membership, and finite voltage. A missing or mismatched
 oracle, binding, fixed part, package, or terminal is a verifier failure.
 
 The refreshed disposable source record
-`C:\\Users\\david\\AppData\\Local\\Temp\\TroubleshootJS\\verify\\task43p-source-experiments\\task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`
+`<OS-temp>/TroubleshootJS/verify/task43p-source-experiments/task43p-source-experiments-a702ea7b3abe44c4853d146daccb360e.json`
 compiled all nine producer mutations with exit `0`, attempted runtime
 extraction against the matching disposable root while each mutation was
 present, and returned exit `2`/UNPROVEN before preview identity because this
