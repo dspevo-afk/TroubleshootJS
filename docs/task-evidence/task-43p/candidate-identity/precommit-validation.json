@@ -1,0 +1,414 @@
+{
+    "protocol":  "troubleshootjs-task43p-candidate-precommit-validation-v1",
+    "status":  "PRECOMMIT_CHECKS_AND_INDEPENDENT_REVIEW_PASS",
+    "candidate":  {
+                      "headSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                      "sourceVerifierDigest":  "1a9c9109e38aadfa7593684eeb36d26b94f148a1926afd594487b57ffa6c6753",
+                      "sourceVerifierFileCount":  865,
+                      "dirty":  true,
+                      "statusText":  "M docs/CODEX_TASK_REPORT.md\r\n M scripts/verify-browser.ps1\r\n M scripts/verify-gate-b.ps1\r\n M scripts/verify-task43p-source-experiments.ps1\r\n?? scripts/Task43PCandidateIdentity.ps1\r\n?? scripts/verify-task43p-candidate-identity.ps1",
+                      "digestEnvironment":  "Windows PowerShell 5.1 native sorted records"
+                  },
+    "scriptScope":  [
+                        "scripts/Task43PCandidateIdentity.ps1",
+                        "scripts/verify-task43p-source-experiments.ps1",
+                        "scripts/verify-browser.ps1",
+                        "scripts/verify-gate-b.ps1",
+                        "scripts/verify-task43p-candidate-identity.ps1"
+                    ],
+    "reproduction":  {
+                         "command":  "powershell.exe -NoProfile -File scripts/verify-task43p-source-experiments.ps1 -MutationPreflight -EvidenceDirectory \u003cowned-temp\u003e",
+                         "artifact":  {
+                                          "file":  "task43p-source-experiments-e9d20a0189054f11b6c7f0a82a4077dc.json",
+                                          "sha256":  "a727bd2fefb4493586636151d0eae383ea9119cc037bcb2f679c3d56cc8eacbf"
+                                      },
+                         "runId":  "e9d20a0189054f11b6c7f0a82a4077dc",
+                         "actualExit":  2,
+                         "repositoryBefore":  {
+                                                  "headSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                                                  "sourceVerifierDigest":  "9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663",
+                                                  "sourceVerifierFileCount":  863,
+                                                  "dirty":  false,
+                                                  "statusText":  ""
+                                              },
+                         "repositoryAfter":  {
+                                                 "headSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                                                 "sourceVerifierDigest":  "9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663",
+                                                 "sourceVerifierFileCount":  863,
+                                                 "dirty":  false,
+                                                 "statusText":  ""
+                                             },
+                         "errors":  [
+                                        "SOURCE_EXPERIMENT_INFRASTRUCTURE: experiment orchestration failed: Source experiment harness requires published repair baseline 8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7; found 164704ccbbcbea14532b21a1d8c8bc6b4f380252."
+                                    ]
+                     },
+    "mutationPreflight":  {
+                              "command":  "powershell.exe -NoProfile -File scripts/verify-task43p-source-experiments.ps1 -MutationPreflight -ExpectedCandidateSha \u003cinvocation-HEAD\u003e",
+                              "artifact":  {
+                                               "file":  "task43p-source-experiments-03567b1fd3894da7954ef93342b91ef3.json",
+                                               "sha256":  "fb5888d69aac90471e65562e2d6722c1dc7c1c24ccdbd84c89cfed9439fbd666"
+                                           },
+                              "runId":  "03567b1fd3894da7954ef93342b91ef3",
+                              "actualExit":  0,
+                              "candidateSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                              "historicalBaselineSha":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                              "repositoryBefore":  {
+                                                       "headSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                                                       "sourceVerifierDigest":  "1a9c9109e38aadfa7593684eeb36d26b94f148a1926afd594487b57ffa6c6753",
+                                                       "sourceVerifierFileCount":  865,
+                                                       "dirty":  true,
+                                                       "statusText":  "M docs/CODEX_TASK_REPORT.md\r\n M scripts/verify-browser.ps1\r\n M scripts/verify-gate-b.ps1\r\n M scripts/verify-task43p-source-experiments.ps1\r\n?? scripts/Task43PCandidateIdentity.ps1\r\n?? scripts/verify-task43p-candidate-identity.ps1"
+                                                   },
+                              "repositoryAfter":  {
+                                                      "headSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                                                      "sourceVerifierDigest":  "1a9c9109e38aadfa7593684eeb36d26b94f148a1926afd594487b57ffa6c6753",
+                                                      "sourceVerifierFileCount":  865,
+                                                      "dirty":  true,
+                                                      "statusText":  "M docs/CODEX_TASK_REPORT.md\r\n M scripts/verify-browser.ps1\r\n M scripts/verify-gate-b.ps1\r\n M scripts/verify-task43p-source-experiments.ps1\r\n?? scripts/Task43PCandidateIdentity.ps1\r\n?? scripts/verify-task43p-candidate-identity.ps1"
+                                                  },
+                              "fixtureRemoved":  true,
+                              "proof":  {
+                                            "requested":  true,
+                                            "passed":  true,
+                                            "exit":  0,
+                                            "definitions":  [
+                                                                {
+                                                                    "id":  "renderer-only-j1-1-plus-20px",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\PcbWorkbenchRenderer.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                                                    "afterSha256":  "60d0c0f152d82669327ddc792e004cffd995df91f5971b30f962e5e05da9a009",
+                                                                    "restoredSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                                                    "beforeByteLength":  39012,
+                                                                    "afterByteLength":  39140,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "renderer-only-j1-1-lead-plus-20px",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\PhysicalPartRenderTerminal.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                                                    "afterSha256":  "d346b0dae815b31bb9acb14c6c99d2830344a055cc50da7bca12c2e0ca227d5f",
+                                                                    "restoredSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                                                    "beforeByteLength":  9586,
+                                                                    "afterByteLength":  9708,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "raw-copper-j1-1-endpoint-gap",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\GeneratedBoardInstance.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                                    "afterSha256":  "f777f4df2f6873b0f445cea2f73b965560eeade76125a46f4b29b8e6c547a754",
+                                                                    "restoredSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                                    "beforeByteLength":  12119,
+                                                                    "afterByteLength":  12526,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "raw-net-mismatch",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\GeneratedBoardInstance.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                                    "afterSha256":  "0ed3398fa307630b51f888b38842bd58885eab0788499d077c1008d6aa714820",
+                                                                    "restoredSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                                                    "beforeByteLength":  12119,
+                                                                    "afterByteLength":  12265,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "solver-binding-j1-1-post-mismatch",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\BoardSimulationBindings.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                                    "afterSha256":  "4765a99f32aac91a6c391ec5d4a7b4d900223581a9aa30f942fdff30c5a23fd3",
+                                                                    "restoredSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                                    "beforeByteLength":  4065,
+                                                                    "afterByteLength":  4916,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "solver-detachable-c1-plus-identity-mismatch",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\BoardSimulationBindings.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                                    "afterSha256":  "ba640b1f7e83e9c43b9365a6348973f311d6ce42e18a15b7056ccce7d95efc28",
+                                                                    "restoredSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                                                    "beforeByteLength":  4065,
+                                                                    "afterByteLength":  5167,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "package-mirror-mismatch",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\PcbComponentPlacement.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                                                    "afterSha256":  "cb1aabe5128e09a799adb35f49ff84e7cbbf49f69b9d50375455376131633be5",
+                                                                    "restoredSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                                                    "beforeByteLength":  19920,
+                                                                    "afterByteLength":  20019,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "internally-self-consistent-wrong-mapping",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\LedIndicatorGenerator.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                                                    "afterSha256":  "7380196ca50be68060efdf340c052d4a426e548e2201a86d625e26fdb3707330",
+                                                                    "restoredSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                                                    "beforeByteLength":  15191,
+                                                                    "afterByteLength":  15191,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "omitted-manifest-terminal",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\Task43PPhysicalTruthDeveloperVerifier.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                                                    "afterSha256":  "755a8e2c4cfcff44896a1b6d746d958ffbf4b162017e7a73dcb7c0ced64cd8e3",
+                                                                    "restoredSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                                                    "beforeByteLength":  112219,
+                                                                    "afterByteLength":  112141,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "snapshot-restore-resistance-current-omitted",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\Task41SimulationSnapshot.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                                                                    "afterSha256":  "4fc6c97ff3f885c83af19307aee3b3bdc3c540f47c3beb743f61b8b4a89bc6f1",
+                                                                    "restoredSha256":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                                                                    "beforeByteLength":  53376,
+                                                                    "afterByteLength":  53387,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                },
+                                                                {
+                                                                    "id":  "public-remove-action-disabled",
+                                                                    "relativePath":  "src\\com\\lushprojects\\circuitjs1\\client\\PcbWorkbenchController.java",
+                                                                    "anchorCount":  1,
+                                                                    "beforeSha256":  "5e1053ad490fc159b55e0302fa580e0c92ecaddf265e71d7291c80c8b2ea3849",
+                                                                    "afterSha256":  "f7da4c113323e961f04e940c0f8036e1f7e5f5c4054a913eeed60f6af42e4489",
+                                                                    "restoredSha256":  "5e1053ad490fc159b55e0302fa580e0c92ecaddf265e71d7291c80c8b2ea3849",
+                                                                    "beforeByteLength":  30102,
+                                                                    "afterByteLength":  30110,
+                                                                    "restoredExactly":  true,
+                                                                    "restoreError":  "",
+                                                                    "error":  "",
+                                                                    "exit":  0
+                                                                }
+                                                            ],
+                                            "canaries":  [
+                                                             {
+                                                                 "name":  "zero-anchor",
+                                                                 "anchorCount":  0,
+                                                                 "expectedAnchorCount":  0,
+                                                                 "beforeSha256":  "4d4c7eee2e28d03cb2dbf3df639c3290ade66e18755e83caade2d8f37bd8c044",
+                                                                 "afterSha256":  "",
+                                                                 "restoredSha256":  "4d4c7eee2e28d03cb2dbf3df639c3290ade66e18755e83caade2d8f37bd8c044",
+                                                                 "withBom":  false,
+                                                                 "mutationChanged":  false,
+                                                                 "rejectionReasonMatched":  true,
+                                                                 "restoredExactly":  true,
+                                                                 "rejectionError":  "Expected exactly one source mutation anchor in \u003ctemp\u003e\\TroubleshootJS\\task43p-source-experiments\\03567b1fd3894da7954ef93342b91ef3\\mutation-preflight\\__canary-zero-anchor.source; found 0.",
+                                                                 "restoreError":  "",
+                                                                 "exit":  0
+                                                             },
+                                                             {
+                                                                 "name":  "duplicate-anchor",
+                                                                 "anchorCount":  2,
+                                                                 "expectedAnchorCount":  2,
+                                                                 "beforeSha256":  "537ddd22d8edabf557668bdb64df37ccf7cf75410611d4a5bd380cb7ee579f8c",
+                                                                 "afterSha256":  "",
+                                                                 "restoredSha256":  "537ddd22d8edabf557668bdb64df37ccf7cf75410611d4a5bd380cb7ee579f8c",
+                                                                 "withBom":  false,
+                                                                 "mutationChanged":  false,
+                                                                 "rejectionReasonMatched":  true,
+                                                                 "restoredExactly":  true,
+                                                                 "rejectionError":  "Expected exactly one source mutation anchor in \u003ctemp\u003e\\TroubleshootJS\\task43p-source-experiments\\03567b1fd3894da7954ef93342b91ef3\\mutation-preflight\\__canary-duplicate-anchor.source; found 2.",
+                                                                 "restoreError":  "",
+                                                                 "exit":  0
+                                                             },
+                                                             {
+                                                                 "name":  "overlapping-anchor",
+                                                                 "anchorCount":  2,
+                                                                 "expectedAnchorCount":  2,
+                                                                 "beforeSha256":  "61be55a8e2f6b4e172338bddf184d6dbee29c98853e0a0485ecee7f27b9af0b4",
+                                                                 "afterSha256":  "",
+                                                                 "restoredSha256":  "61be55a8e2f6b4e172338bddf184d6dbee29c98853e0a0485ecee7f27b9af0b4",
+                                                                 "withBom":  false,
+                                                                 "mutationChanged":  false,
+                                                                 "rejectionReasonMatched":  true,
+                                                                 "restoredExactly":  true,
+                                                                 "rejectionError":  "Expected exactly one source mutation anchor in \u003ctemp\u003e\\TroubleshootJS\\task43p-source-experiments\\03567b1fd3894da7954ef93342b91ef3\\mutation-preflight\\__canary-overlapping-anchor.source; found 2.",
+                                                                 "restoreError":  "",
+                                                                 "exit":  0
+                                                             },
+                                                             {
+                                                                 "name":  "positive-bom-mixed-restore",
+                                                                 "anchorCount":  1,
+                                                                 "expectedAnchorCount":  1,
+                                                                 "beforeSha256":  "6b183f72ab6f059624da1f1d008d8e83132b52d44f61c38d2591b1f78b599d67",
+                                                                 "afterSha256":  "29bf781bf70787261ad78574fd332bf8c34ccd29e488a4197dbf10cbd8dffb24",
+                                                                 "restoredSha256":  "6b183f72ab6f059624da1f1d008d8e83132b52d44f61c38d2591b1f78b599d67",
+                                                                 "withBom":  true,
+                                                                 "mutationChanged":  true,
+                                                                 "rejectionReasonMatched":  false,
+                                                                 "restoredExactly":  true,
+                                                                 "rejectionError":  "",
+                                                                 "restoreError":  "",
+                                                                 "exit":  0
+                                                             }
+                                                         ]
+                                        }
+                          },
+    "candidateRegressions":  {
+                                 "command":  "powershell.exe -NoProfile -File scripts/verify-task43p-candidate-identity.ps1",
+                                 "artifact":  {
+                                                  "file":  "candidate-identity-ecd7253e647d47f7b9b3ece1631ab282.json",
+                                                  "sha256":  "0f9386c7e60de59c5ba1e55036e1f062f8ddb4ea03f551f9bc5f0d0cff244e93"
+                                              },
+                                 "proof":  {
+                                               "protocol":  "troubleshootjs-candidate-identity-regressions-v1",
+                                               "candidateSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                                               "runId":  "ecd7253e647d47f7b9b3ece1631ab282",
+                                               "passed":  true,
+                                               "fixtureRemoved":  true,
+                                               "cases":  [
+                                                             {
+                                                                 "name":  "clean-committed",
+                                                                 "exit":  0,
+                                                                 "expectedExit":  0,
+                                                                 "passed":  true
+                                                             },
+                                                             {
+                                                                 "name":  "commit-does-not-invalidate",
+                                                                 "exit":  0,
+                                                                 "expectedExit":  0,
+                                                                 "passed":  true
+                                                             },
+                                                             {
+                                                                 "name":  "detached-shallow-ci",
+                                                                 "exit":  0,
+                                                                 "expectedExit":  0,
+                                                                 "passed":  true
+                                                             },
+                                                             {
+                                                                 "name":  "reject-expected-919344ae3bfe49553e6a3f1c45ea92381d4408bd",
+                                                                 "exit":  2,
+                                                                 "expectedExit":  2,
+                                                                 "passed":  true
+                                                             },
+                                                             {
+                                                                 "name":  "reject-expected-0000000000000000000000000000000000000000",
+                                                                 "exit":  2,
+                                                                 "expectedExit":  2,
+                                                                 "passed":  true
+                                                             },
+                                                             {
+                                                                 "name":  "reject-expected-not-a-sha",
+                                                                 "exit":  2,
+                                                                 "expectedExit":  2,
+                                                                 "passed":  true
+                                                             },
+                                                             {
+                                                                 "name":  "browser-rejects-parent-mismatch",
+                                                                 "exit":  2,
+                                                                 "expectedExit":  2,
+                                                                 "passed":  true
+                                                             },
+                                                             {
+                                                                 "name":  "browser-rejects-provenance-mismatch",
+                                                                 "exit":  2,
+                                                                 "expectedExit":  2,
+                                                                 "passed":  true
+                                                             },
+                                                             {
+                                                                 "name":  "source-and-repository-mutation",
+                                                                 "exit":  0,
+                                                                 "expectedExit":  0,
+                                                                 "passed":  true
+                                                             }
+                                                         ]
+                                           }
+                             },
+    "gateB":  {
+                  "gate":  "complete Gate B",
+                  "startingHead":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                  "actualExit":  0,
+                  "logSha256":  "645a110307f66f9a9253c601c073babca71dd72d7547dcad2877c597f455079d",
+                  "candidate":  "starting HEAD plus candidate-identity working diff",
+                  "completedUtc":  "2026-09-05T20:45:22.4021055Z"
+              },
+    "focusedContracts":  [
+                             {
+                                 "command":  "powershell.exe -NoProfile -File scripts/verify-browser.ps1 -GateBForcedNegativeProofProbe",
+                                 "actualExit":  0
+                             },
+                             {
+                                 "command":  "powershell.exe -NoProfile -File scripts/verify-task43p-source-experiments.ps1 -ContractProbe",
+                                 "actualExit":  0
+                             }
+                         ],
+    "independentReview":  {
+                              "reviewer":  "candidate_identity_review",
+                              "modelRequested":  "Luna",
+                              "reasoningRequested":  "MAX",
+                              "disposition":  "PASS",
+                              "sourceFindings":  [
+
+                                                 ],
+                              "ownership":  "Read-only; did not author implementation or test oracle",
+                              "scope":  "Integrated scripts and regressions, actual call paths, focused independent checks, and dependency audit",
+                              "liveBrowserRunByReviewer":  false,
+                              "fullGateBRunByReviewer":  false
+                          },
+    "dependencyAudit":  {
+                            "file":  "dependency-audit.json",
+                            "sha256":  "efb1c9cb70b6c15a942631c97f832459d64448688490d592e8650046c7fd3f16"
+                        },
+    "postcommit":  {
+                       "status":  "RECORDED_SEPARATELY_AFTER_COMMIT",
+                       "required":  [
+                                        "clean committed-HEAD preflight",
+                                        "complete Gate B",
+                                        "forced-negative first with exact cleanup",
+                                        "dedicated A-I with exact cleanup",
+                                        "normal push and remote SHA equality",
+                                        "existing GitHub workflow outcome or limitation"
+                                    ],
+                       "receipt":  "Postcommit receipt is outside the checkout and linked in the final handoff; it does not modify the qualified commit."
+                   },
+    "historicalEvidence":  "C1/C2 packets remain unchanged. No dirty-parent pass is relabeled as committed-HEAD evidence.",
+    "ownerApproval":  "NOT GRANTED",
+    "task44":  "UNSTARTED"
+}

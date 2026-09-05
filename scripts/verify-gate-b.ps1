@@ -1,6 +1,8 @@
 [CmdletBinding()]
 param(
     [string]$JavaHome = '',
+    [AllowEmptyString()]
+    [string]$ExpectedCandidateSha = '',
     [switch]$SkipJdkCheck,
     [switch]$GateBDriverInfrastructureProbe,
     [switch]$GateBHangingChildProbe,
@@ -38,11 +40,16 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $script:GateBDriverExitCode = 0
+$script:GateBCandidateSha = ''
 
 $modulePath = Join-Path $PSScriptRoot 'VerifierIsolation.psm1'
 try {
     Import-Module $modulePath -Force
+    . (Join-Path $PSScriptRoot 'Task43PCandidateIdentity.ps1')
     $repositoryRoot = Get-VerifierFullPath (Join-Path $PSScriptRoot '..')
+    if ($PSBoundParameters.ContainsKey('ExpectedCandidateSha')) {
+        $script:GateBCandidateSha = Get-Task43PCandidateSha $repositoryRoot $ExpectedCandidateSha
+    }
 } catch {
     Write-Host ('FAIL:Gate B deterministic checks - infrastructure exit 2: could not load ' +
         "VerifierIsolation.psm1: $($_.Exception.Message)")
@@ -707,10 +714,10 @@ function Invoke-GateBSourceChecks() {
     Assert-GateB ($moduleText -match 'Assert-VerifierLeaseTransition' -and
         $moduleText -notmatch '(?i)manifested') `
         'lease lifecycle does not use one finite transition validator without the stray manifested state'
-    Assert-GateB ($browserText.IndexOf(
-        '8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7',
-        [StringComparison]::Ordinal) -ge 0) `
-        'Task43P evidence wrapper does not use the supplied 8bf4424 baseline'
+    Assert-GateB ($browserText.Contains('Get-Task43PCandidateSha') -and
+        $browserText.Contains('candidateSha = $script:Task43PCandidateSha') -and
+        $browserText.Contains('baselineSha = $script:Task43PHistoricalBaselineSha')) `
+        'Task43P evidence wrapper does not separate frozen candidate and historical baseline'
     foreach ($token in @(
         'Invoke-VerifierBoundedProcess',
         'Stop-VerifierBoundedProcessExactly',
@@ -12544,13 +12551,21 @@ function Invoke-GateBSourceNegativeContractCheck() {
     foreach ($probe in @('-ContractProbe', '-IdentityCanary', '-MutationPreflight')) {
         $result = Invoke-GateBBoundedProcess $shell @('-NoLogo', '-NoProfile',
             '-NonInteractive', '-File',
-            (Join-Path $PSScriptRoot 'verify-task43p-source-experiments.ps1'), $probe) `
+            (Join-Path $PSScriptRoot 'verify-task43p-source-experiments.ps1'), $probe,
+            '-ExpectedCandidateSha', $script:GateBCandidateSha) `
             30000 ('source-negative ' + $probe)
         $exitCode = Resolve-GateBChildExitCode $result ('source-negative ' + $probe)
         if ($exitCode -ne 0) {
             Throw-GateBInfrastructure ("Source-negative $probe returned exit ${exitCode}: " +
                 $result.Stdout + ' ' + $result.Stderr)
         }
+    }
+    $candidateCheck = Invoke-GateBBoundedProcess $shell @('-NoLogo', '-NoProfile',
+        '-NonInteractive', '-File', (Join-Path $PSScriptRoot 'verify-task43p-candidate-identity.ps1')) `
+        30000 'candidate identity regressions'
+    if ((Resolve-GateBChildExitCode $candidateCheck 'candidate identity regressions') -ne 0) {
+        Throw-GateBInfrastructure ('Candidate identity regressions failed: ' +
+            $candidateCheck.Stdout + ' ' + $candidateCheck.Stderr)
     }
     Write-Host 'PASS:source-negative complete proof, late-failure, cleanup, and preview-identity contracts'
 }
@@ -12851,6 +12866,9 @@ function Invoke-GateBDriver() {
             Invoke-GateBNetstatPreferenceCanary
             return 0
         }
+        if ($script:GateBCandidateSha -ceq '') {
+            $script:GateBCandidateSha = Get-Task43PCandidateSha $repositoryRoot
+        }
         Invoke-GateBParserChecks
         Invoke-GateBSourceChecks
         Invoke-GateBWorkflowChecks
@@ -12910,7 +12928,8 @@ function Invoke-GateBDriver() {
             if ($rendererExit -eq 2) { Throw-GateBInfrastructure $rendererMessage }
             throw $rendererMessage
         }
-        Write-Host 'PASS:Gate B deterministic checks'
+        [void](Get-Task43PCandidateSha $repositoryRoot $script:GateBCandidateSha)
+        Write-Host ('PASS:Gate B deterministic checks candidate=' + $script:GateBCandidateSha)
         return 0
     } catch {
         if (Test-VerifierInfrastructureError $_) {

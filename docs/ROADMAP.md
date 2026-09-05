@@ -1412,6 +1412,12 @@ mainline-protection action remains external and is documented below.
 
 **Status:** `[x] COMPLETE — READY FOR OWNER REVIEW`
 
+The subsequent bounded [committed-candidate verifier correction](task-evidence/task-43p/candidate-identity/README.md)
+repairs admission of the published checkout and its descendants. It preserves
+the accepted C1/C2 production and physical evidence under its original identities;
+new candidate binding and committed-HEAD results are recorded separately. It
+does not grant Owner Review approval or start Task 44.
+
 **Purpose:** Re-run material historical lifecycle and verification-integrity
 findings against the final Task 43 SHA before runtime composition begins.
 

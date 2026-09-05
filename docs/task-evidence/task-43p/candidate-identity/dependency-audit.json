@@ -1,0 +1,520 @@
+{
+    "protocol":  "troubleshootjs-task43p-candidate-dependency-audit-v1",
+    "status":  "REUSE_DEPENDENCIES_CONFIRMED",
+    "originalPublishedCommit":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+    "candidate":  {
+                      "headSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                      "sourceVerifierDigest":  "1a9c9109e38aadfa7593684eeb36d26b94f148a1926afd594487b57ffa6c6753",
+                      "sourceVerifierFileCount":  865,
+                      "dirty":  true,
+                      "statusText":  "M docs/CODEX_TASK_REPORT.md\r\n M scripts/verify-browser.ps1\r\n M scripts/verify-gate-b.ps1\r\n M scripts/verify-task43p-source-experiments.ps1\r\n?? scripts/Task43PCandidateIdentity.ps1\r\n?? scripts/verify-task43p-candidate-identity.ps1",
+                      "digestEnvironment":  "Windows PowerShell 5.1 native sorted records"
+                  },
+    "baselineAncestry":  {
+                             "historicalBaselineSha":  "8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7",
+                             "candidateSha":  "164704ccbbcbea14532b21a1d8c8bc6b4f380252",
+                             "command":  "git merge-base --is-ancestor \u003chistorical-baseline\u003e HEAD",
+                             "exit":  0,
+                             "scope":  "Separate local full-history ancestry audit; no ancestry claim for shallow CI"
+                         },
+    "provenance":  {
+                       "originalSourceDigest":  "3d3e78ed8bec13b3cfd2607cdca277925b63afd9116065838e15b63f0ec86f58",
+                       "currentSourceDigest":  "3d3e78ed8bec13b3cfd2607cdca277925b63afd9116065838e15b63f0ec86f58",
+                       "originalWebDigest":  "7f3c98108c904ace7ffbb472620ff4b29386991bb3958acce6cfd372f5dbfdf2",
+                       "currentWebDigest":  "7f3c98108c904ace7ffbb472620ff4b29386991bb3958acce6cfd372f5dbfdf2",
+                       "originalExecutionDigest":  "bf1664dc2dc28b5ba6ee99efc37763c75a90b871b80f8ec10222ed2d26fb8a3a",
+                       "currentExecutionDigest":  "cd3cac3cbf71de52da0fa1551c81a3d012ed71d0f0f2dcfb6d3a09d1e23645cb",
+                       "currentScriptDigest":  "359a3eb99a1b123a3076afa088c83bdd3ca4a120b4c7bbcf9f428b7701edbff1",
+                       "currentFileCount":  1252
+                   },
+    "productionSourceUnchanged":  true,
+    "compiledWebUnchanged":  true,
+    "mutationDefinitionsUnchanged":  true,
+    "definitionSha256":  "d4deb46e582c632da75490d8e6297a74d9fca806e2a5ac16419a7dc0a807249f",
+    "sourceProofOnlyCandidateBindingChanged":  true,
+    "forcedProofOnlyCandidateBindingChanged":  true,
+    "diagnosticOnlyCandidateBindingChanged":  true,
+    "fileDependencies":  [
+                             {
+                                 "path":  "scripts/VerifierIsolation.psm1",
+                                 "originalSha256":  "8bef40ead838b7ab450a0bf60fda6f6e0f7540b4580af06ce03416bc737b5701",
+                                 "currentSha256":  "8bef40ead838b7ab450a0bf60fda6f6e0f7540b4580af06ce03416bc737b5701",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "scripts/build.ps1",
+                                 "originalSha256":  "523935bcaed57796b8e78e36df25d94a91c54464f21b1e32dcf877e83d81f5dd",
+                                 "currentSha256":  "523935bcaed57796b8e78e36df25d94a91c54464f21b1e32dcf877e83d81f5dd",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "scripts/preview.ps1",
+                                 "originalSha256":  "12c42ff229ff786ab7c7e7910347d19e4c23ae5f35f7a79d0613cfbcffc5c9f1",
+                                 "currentSha256":  "12c42ff229ff786ab7c7e7910347d19e4c23ae5f35f7a79d0613cfbcffc5c9f1",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "scripts/Task43PPublicActionEvidence.ps1",
+                                 "originalSha256":  "1e019764d2415b0c9700d77d39e83c77b0ddb3ec0090bf7cb8b590161beed3e3",
+                                 "currentSha256":  "1e019764d2415b0c9700d77d39e83c77b0ddb3ec0090bf7cb8b590161beed3e3",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                                 "originalSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                 "currentSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+                                 "originalSha256":  "387a472a311076eaf0ed6580ae3524ee87aaa44957f1f6e2ed6c4628792dd22d",
+                                 "currentSha256":  "387a472a311076eaf0ed6580ae3524ee87aaa44957f1f6e2ed6c4628792dd22d",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+                                 "originalSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                 "currentSha256":  "5d51d4d5f2a7b10cac6028f25eacd5d79a0d0fbfc0670af1dc6e3c4630dc492f",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderTerminal.java",
+                                 "originalSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                 "currentSha256":  "ab1eff8bebb3c58980a7f411fc4e6e1ed906442ee2b8e0927b50f8ee94a1c351",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java",
+                                 "originalSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                 "currentSha256":  "12e09401e695410b28cbfdc03934bc47b7e6d0f2e5248b6650b6f88f456ffb22",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/BoardSimulationBindings.java",
+                                 "originalSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                 "currentSha256":  "7a7c717f8389ba8385424c332ebb72745e732fa46d69f92ffc85706f329da794",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/PcbComponentPlacement.java",
+                                 "originalSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                 "currentSha256":  "f5c371ec351b46d340b1286cacd5045629556c2d3c6f258d58927c7ca1381510",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/LedIndicatorGenerator.java",
+                                 "originalSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                 "currentSha256":  "073b518817eecbd5f7f7525b88c96ee3f6d883781163ecf5e6ab1566afcd51a8",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+                                 "originalSha256":  "048db79c3f4ae73ad4d1c1a02acd1b49d9fdf33a9f814e9b2c966038d97291c7",
+                                 "currentSha256":  "048db79c3f4ae73ad4d1c1a02acd1b49d9fdf33a9f814e9b2c966038d97291c7",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+                                 "originalSha256":  "387a472a311076eaf0ed6580ae3524ee87aaa44957f1f6e2ed6c4628792dd22d",
+                                 "currentSha256":  "387a472a311076eaf0ed6580ae3524ee87aaa44957f1f6e2ed6c4628792dd22d",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                                 "originalSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                 "currentSha256":  "08412efb947ac4dd65099a667baa402241fb38c4a6b36f0a23a2bebe6aa21353",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+                                 "originalSha256":  "1af9d5606a6d245eeb9d075a83d9a4db01850940c919cd909e6424694a985a0c",
+                                 "currentSha256":  "1af9d5606a6d245eeb9d075a83d9a4db01850940c919cd909e6424694a985a0c",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+                                 "originalSha256":  "22476d1c4c4b0faedeec58e1471dc7f3a51047158e1f16cd470ba16b75a9df53",
+                                 "currentSha256":  "22476d1c4c4b0faedeec58e1471dc7f3a51047158e1f16cd470ba16b75a9df53",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+                                 "originalSha256":  "35bc5810efa0dbeee11fbe7189e8d69f69cdf4c1656787ec66c325012d49d2db",
+                                 "currentSha256":  "35bc5810efa0dbeee11fbe7189e8d69f69cdf4c1656787ec66c325012d49d2db",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+                                 "originalSha256":  "fbe2240b497eb4758fb4c868835a67e787d6ebfa2926ead219e2233908e55fb6",
+                                 "currentSha256":  "fbe2240b497eb4758fb4c868835a67e787d6ebfa2926ead219e2233908e55fb6",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+                                 "originalSha256":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                                 "currentSha256":  "0183e1c0da284354c6e7dab50892e30a975bf24a29a5284fe0d6d9fed5eb67fc",
+                                 "unchanged":  true
+                             },
+                             {
+                                 "path":  "src/com/lushprojects/circuitjs1/client/Task43PMeasurementCleanupDeveloperVerifier.java",
+                                 "originalSha256":  "4036f1c59a4285ea517bf438acfca5f9dbf23c5f31a97ef5d4716ec896ad1f9c",
+                                 "currentSha256":  "4036f1c59a4285ea517bf438acfca5f9dbf23c5f31a97ef5d4716ec896ad1f9c",
+                                 "unchanged":  true
+                             }
+                         ],
+    "toolchainArtifacts":  [
+                               {
+                                   "file":  "gwt-dev-2.7.0.jar",
+                                   "originalSha256":  "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+                                   "currentSha256":  "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+                                   "unchanged":  true
+                               },
+                               {
+                                   "file":  "gwt-user-2.7.0.jar",
+                                   "originalSha256":  "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+                                   "currentSha256":  "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+                                   "unchanged":  true
+                               },
+                               {
+                                   "file":  "validation-api-1.0.0.GA.jar",
+                                   "originalSha256":  "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc",
+                                   "currentSha256":  "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc",
+                                   "unchanged":  true
+                               },
+                               {
+                                   "file":  "validation-api-1.0.0.GA-sources.jar",
+                                   "originalSha256":  "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+                                   "currentSha256":  "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+                                   "unchanged":  true
+                               },
+                               {
+                                   "file":  "asm-5.0.3.jar",
+                                   "originalSha256":  "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+                                   "currentSha256":  "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+                                   "unchanged":  true
+                               },
+                               {
+                                   "file":  "asm-analysis-5.0.3.jar",
+                                   "originalSha256":  "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+                                   "currentSha256":  "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+                                   "unchanged":  true
+                               },
+                               {
+                                   "file":  "asm-commons-5.0.3.jar",
+                                   "originalSha256":  "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+                                   "currentSha256":  "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+                                   "unchanged":  true
+                               },
+                               {
+                                   "file":  "asm-tree-5.0.3.jar",
+                                   "originalSha256":  "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+                                   "currentSha256":  "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+                                   "unchanged":  true
+                               },
+                               {
+                                   "file":  "asm-util-5.0.3.jar",
+                                   "originalSha256":  "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+                                   "currentSha256":  "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+                                   "unchanged":  true
+                               }
+                           ],
+    "functionDeltas":  [
+                           {
+                               "path":  "scripts/verify-browser.ps1",
+                               "beforeCount":  138,
+                               "afterCount":  138,
+                               "changed":  [
+                                               {
+                                                   "name":  "Assert-VerifierIntegratedForcedNegativeProof",
+                                                   "beforeSha256":  "994886b60d68016728028044af26dbb7eebe9dc70edc0067f0ce6b8566ee5f2e",
+                                                   "afterSha256":  "5cb52c906635a36679ac7d029ebdc10d33514dc5d70106d1c445308dd2f08597"
+                                               },
+                                               {
+                                                   "name":  "Capture-Task43PEvidence",
+                                                   "beforeSha256":  "24e18ca318d9930038174a5fb8e49bfb634cffd18e4f8231a6f4be66c2a97644",
+                                                   "afterSha256":  "3ccd441d97d1ef2ec335d0657902cc12c7a7bba11b883a813e7950a64e997151"
+                                               },
+                                               {
+                                                   "name":  "Get-Task43PRepositoryState",
+                                                   "beforeSha256":  "30d1a717ec5d2c7cdf548f3a148599ccae5bd84e3b4142de705a53f16eb2f502",
+                                                   "afterSha256":  "a6bcec77e2c2d9d379bdf7b579bce74d0c2580a287d075e91d593bf6c6b6b6ef"
+                                               },
+                                               {
+                                                   "name":  "invokeIntegratedChild",
+                                                   "beforeSha256":  "2b33e63e6bbd223dd5d840ea467e31efd32323163f6a036ec7190456d2d27c93",
+                                                   "afterSha256":  "bf51ffd64544a2b7335b1cc168332b64de00144843977719a3979f6580c99645"
+                                               },
+                                               {
+                                                   "name":  "Invoke-Task43ForcedNegativeContractCanaries",
+                                                   "beforeSha256":  "8449eff51afb32f3ca42b7c8bf0ed3002df6f724a2ba3d0390bec63ed3ef31ad",
+                                                   "afterSha256":  "e06376f9ed0eb5140645bf3454a92b497800c67a8c0eed6b92154239e9f71bd9"
+                                               },
+                                               {
+                                                   "name":  "isExpectedTask43ForcedFailureDiagnostic",
+                                                   "beforeSha256":  "444c9162ea5bf94ab9db63d67ec8dd05edb797b200244372656cbb1880639279",
+                                                   "afterSha256":  "5a59c51927ac72e6e32b04f6c42d81693f172a2f85915d7c93aec41d60082ac1"
+                                               },
+                                               {
+                                                   "name":  "Set-Task43ForcedNegativeAnchoredDiagnostic",
+                                                   "beforeSha256":  "9f4ae80e1aa391ffe1386fd79d590d8ce8e67f52317e2ffda0e794a9525cc93c",
+                                                   "afterSha256":  "2394bc47c21bc76be4759564993d5de51cea1df43aa42dbdd63479a4834393bf"
+                                               },
+                                               {
+                                                   "name":  "Test-Task43ForcedNegativeProof",
+                                                   "beforeSha256":  "e881d3fd20f64a10966fe1145c8d456a0ec472a277a9252739dfc22bbfa317bf",
+                                                   "afterSha256":  "57d7789d76220498ebac97ebf7e0039f74304b877e3df5addef5cc008de70188"
+                                               },
+                                               {
+                                                   "name":  "Test-Task43PSourceRepositoryStateEqual",
+                                                   "beforeSha256":  "c1ad05676fca0c66641178610787c75f6f8016f9e9b0ff2eb7caa6414700ad89",
+                                                   "afterSha256":  "981befee78eec283a27ef84ef7fdd602603076a6af63a6ebbd51ae2f111a6e7d"
+                                               }
+                                           ],
+                               "comparison":  "AST function text with CRLF normalized to LF; no semantic normalization"
+                           },
+                           {
+                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                               "beforeCount":  45,
+                               "afterCount":  45,
+                               "changed":  [
+                                               {
+                                                   "name":  "Assert-SourceNegativeProof",
+                                                   "beforeSha256":  "e42876228ec057b67dc74417ff25c095c3a9aec1c994d5b03e2aa52f0a79a43e",
+                                                   "afterSha256":  "a67936383fa77f8f566841f769dc78fcb985f64b87c6dba805e5fec5eeb1ca1d"
+                                               },
+                                               {
+                                                   "name":  "Invoke-DisposableRuntimeExtraction",
+                                                   "beforeSha256":  "63929270560338e803779e0c85a7525946f4357a707af1578b0aa3ee2c3d45b4",
+                                                   "afterSha256":  "4b37d5eea76e520b206a7500574d3c7da28e20e93a89535ad6e84e464c6d503f"
+                                               },
+                                               {
+                                                   "name":  "Invoke-SourceNegativeProofContractProbe",
+                                                   "beforeSha256":  "c573e3adca2a09f5d05662ad0ca97abdeb39eaa88a639941cbb5a54c4e2d8b3b",
+                                                   "afterSha256":  "ce0c4ee3164a4742c934bf35dd36d15e8c60a8d8cb56808af02a8c46a1de2d6f"
+                                               },
+                                               {
+                                                   "name":  "Test-RepositoryStateEqual",
+                                                   "beforeSha256":  "3d60f9a54e48be08ef1e2d765933a706ba20ecba8f282342612ebe2e5b039bb6",
+                                                   "afterSha256":  "283be8836bea247023d393255dab1101327778058cc289d50a81e46ca997337e"
+                                               }
+                                           ],
+                               "comparison":  "AST function text with CRLF normalized to LF; no semantic normalization"
+                           },
+                           {
+                               "path":  "scripts/verify-gate-b.ps1",
+                               "beforeCount":  82,
+                               "afterCount":  82,
+                               "changed":  [
+                                               {
+                                                   "name":  "Invoke-GateBDriver",
+                                                   "beforeSha256":  "e464b2255443493461128bb8342a1176a3a74c2aac8ce6a56ed3d99879f8f147",
+                                                   "afterSha256":  "9056342124c6151c2df45d473899ee5e4ca1f74232c0f0b31a415238f895f43a"
+                                               },
+                                               {
+                                                   "name":  "Invoke-GateBSourceChecks",
+                                                   "beforeSha256":  "afc7d728c0cf13140585489c721268be4558ef3406f277b1d5cca7e12fbe52f4",
+                                                   "afterSha256":  "f3adccb0b8f00033ada2ec7bf79dc018cf4e40d633cd68ed03d0d83666a5ac36"
+                                               },
+                                               {
+                                                   "name":  "Invoke-GateBSourceNegativeContractCheck",
+                                                   "beforeSha256":  "b1915710de36a83d5d80e376950646cd73a6ca6f3437cea7116b9656487aa208",
+                                                   "afterSha256":  "13061b5116de8a598f0c947d5e69e363d6e2343a6102177c6af46b1753e87a75"
+                                               }
+                                           ],
+                               "comparison":  "AST function text with CRLF normalized to LF; no semantic normalization"
+                           }
+                       ],
+    "unaffectedFunctionDependencies":  [
+                                           {
+                                               "path":  "scripts/verify-browser.ps1",
+                                               "function":  "Assert-Task43PJavaEvidenceProvenance",
+                                               "sha256":  "5d0fdd21cf017518b7efd0d86be862cc4427d86e000a857bb1e0984540c17be4",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-browser.ps1",
+                                               "function":  "Assert-Task43PJavaEvidencePayload",
+                                               "sha256":  "4f1e2046e8f58c66adfb67fb262e5ada7de20b353e4694b62fa03181dac63d0c",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-browser.ps1",
+                                               "function":  "Test-Task43PExecutionProvenanceEqual",
+                                               "sha256":  "1da9e946ad8abe0562ecdf24ff8ff1ba0b986c11ae8e6fcb93aab96e210af8c7",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-browser.ps1",
+                                               "function":  "Assert-Task43PPreviewExecutionIdentity",
+                                               "sha256":  "e238379696371aa1871ff54fd4ca284f54fc2bb7bd1d936ca9d05d73ecea8a68",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-browser.ps1",
+                                               "function":  "Get-Task43PPublicRemovePlayerState",
+                                               "sha256":  "0fc32f38729cfebad614b6e77dd016cb466aae0f8bbca776846456daf8c80809",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-browser.ps1",
+                                               "function":  "Invoke-Task43PPublicRemoveProbe",
+                                               "sha256":  "0bbd4deea65d4931a13c4d74a51beacf41b6cea71f883db5dce51e05f1bd067e",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-browser.ps1",
+                                               "function":  "Write-Task43PSourceNegativeFinalProof",
+                                               "sha256":  "eeb9e27070283f0c06ea331049df9734d3ac3e919944fcff9ae18fd34283ab2a",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Invoke-MutationPreflight",
+                                               "sha256":  "0409b2479f87a5ca9b329145e14fcddc55a8bad5d7c3a95e598fce23155c1899",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Invoke-MutationPreflightCase",
+                                               "sha256":  "fa7deaecdc72cf64fd5b798dd08e2383ea616ea0db6d2e0edc8d4ccff05fb4a7",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Invoke-MutationPreflightCanaries",
+                                               "sha256":  "51f631e8b6e1168fa077a72fab0226e40874066f3dd02f4092e552433e3fb5f3",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Copy-DisposableBuildTree",
+                                               "sha256":  "c025e61c06b04cb081b1f3d541111b969b21b235d6f51b1b15b0f64576509d6a",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Get-ExactTextAnchorCount",
+                                               "sha256":  "f32616d8f492c24f22899f1b442c5a3b2fb2cb199981b7ba6b156b98effbbdbe",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Invoke-ExactTextReplacement",
+                                               "sha256":  "8e8a2544fd17b7dbffde0f4f1def7c72735a821f451c7d285001a39aa64a3157",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Assert-DisposablePreviewIdentity",
+                                               "sha256":  "3b2aaac6e46d594af7f4acbc42423a45c1acd4f684c81ae19f42510d59bae115",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Test-SourceNegativeExecutionProvenanceEqual",
+                                               "sha256":  "d04aa289cfc8df0efbdca158ac65f2e5bf7dbfdc8ba4d58a238336e35b2073f0",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Invoke-DisposableCompile",
+                                               "sha256":  "458c7e8db0d24197409dab0e7b8642ad2ed80a239afd7d2e463e3b6faf849b3f",
+                                               "unchanged":  true
+                                           },
+                                           {
+                                               "path":  "scripts/verify-task43p-source-experiments.ps1",
+                                               "function":  "Test-SourceExperimentCaught",
+                                               "sha256":  "62f0e303896afd1690c11df062427f39a369f5024a3d68753a0b8867c5492a34",
+                                               "unchanged":  true
+                                           }
+                                       ],
+    "retainedHistoricalPackets":  [
+                                      {
+                                          "path":  "docs/task-evidence/task-43p/c1c2/acceptance-index.json",
+                                          "sha256":  "4aa3810fd729844e160781bd7b9afbf1b94a91c9a478417a251afaf8358fc464"
+                                      },
+                                      {
+                                          "path":  "docs/task-evidence/task-43p/c1c2/physical-correspondence.json",
+                                          "sha256":  "0ff2ca68aea9532434c2a010278e90964bd7ed5d62d52d9703076d04b0277633"
+                                      },
+                                      {
+                                          "path":  "docs/task-evidence/task-43p/c1c2/source-falsification.json",
+                                          "sha256":  "91ef464261c55554d234e8aa34becb77aaea3dbc05b5b7a59b333f58b87dad0f"
+                                      },
+                                      {
+                                          "path":  "docs/task-evidence/task-43p/c1c2/runtime-observations.json",
+                                          "sha256":  "ea24d053a2dfbe100db0f2f403a32ed5d6192068af84991c8bc67836d582041d"
+                                      },
+                                      {
+                                          "path":  "docs/task-evidence/task-43p/c1c2/efficiency-validation.json",
+                                          "sha256":  "7fe8f08d708e10f7c016d1c491d1406656b2eb978dbad331fc6e603f04a9460a"
+                                      }
+                                  ],
+    "reused":  {
+                   "productionBuild":  {
+                                           "actualExit":  0,
+                                           "permutations":  5,
+                                           "jdk":  "1.8.0_502",
+                                           "command":  "scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF",
+                                           "log":  {
+                                                       "name":  "gwt-public-slot-final-9d10b65795344f7695018bae2846581b.log",
+                                                       "sha256":  "198E7BA1D65B181A5C39164F091C9B6C887243F010184AC065B6DF8619CF285D"
+                                                   },
+                                           "exitRecord":  {
+                                                              "name":  "gwt-public-slot-final-9d10b65795344f7695018bae2846581b-exit.json",
+                                                              "sha256":  "D4CF8E87F623DC796D5701F800954FA607A69E71B6E423AAB5E76BAF0068C8C0"
+                                                          },
+                                           "sourceHashes":  [
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+                                                                    "sha256":  "048DB79C3F4AE73AD4D1C1A02ACD1B49D9FDF33A9F814E9B2C966038D97291C7"
+                                                                },
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/Task43PDeveloperVerifier.java",
+                                                                    "sha256":  "387A472A311076EAF0ED6580AE3524EE87AAA44957F1F6E2ED6C4628792DD22D"
+                                                                },
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/Task43PPhysicalTruthDeveloperVerifier.java",
+                                                                    "sha256":  "08412EFB947AC4DD65099A667BAA402241FB38C4A6B36F0A23A2BEBE6AA21353"
+                                                                },
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeExistingLanesVerifier.java",
+                                                                    "sha256":  "1AF9D5606A6D245EEB9D075A83D9A4DB01850940C919CD909E6424694A985A0C"
+                                                                },
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeLifecycleDeveloperVerifier.java",
+                                                                    "sha256":  "22476D1C4C4B0FAEDEEC58E1471DC7F3A51047158E1F16CD470BA16B75A9DF53"
+                                                                },
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+                                                                    "sha256":  "35BC5810EFA0DBEEE11FBE7189E8D69F69CDF4C1656787EC66C325012D49D2DB"
+                                                                },
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/Task43PRuntimeCallbackDeveloperVerifier.java",
+                                                                    "sha256":  "FBE2240B497EB4758FB4C868835A67E787D6EBFA2926EAD219E2233908E55FB6"
+                                                                },
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+                                                                    "sha256":  "0183E1C0DA284354C6E7DAB50892E30A975BF24A29A5284FE0D6D9FED5EB67FC"
+                                                                },
+                                                                {
+                                                                    "path":  "src/com/lushprojects/circuitjs1/client/Task43PMeasurementCleanupDeveloperVerifier.java",
+                                                                    "sha256":  "4036F1C59A4285EA517BF438ACFCA5F9DBF23C5F31A97EF5D4716EC896AD1F9C"
+                                                                }
+                                                            ]
+                                       },
+                   "physicalTriadCount":  18,
+                   "physicalOriginalInvocationExits":  [
+                                                           2,
+                                                           2,
+                                                           2,
+                                                           2,
+                                                           2,
+                                                           2
+                                                       ],
+                   "compiledFalsifierCount":  11,
+                   "originalCandidateSourceVerifierDigest":  "9e4d9457411db8c24fbb74b3d6655d38a14b3a9a2c0ff930068b7033ef79b663",
+                   "originalCandidateExecutionDigest":  "bf1664dc2dc28b5ba6ee99efc37763c75a90b871b80f8ec10222ed2d26fb8a3a",
+                   "limitation":  "Historical build, physical and compiled catches retain all original HEAD/diff identities, execution hashes and exits. This audit does not certify them as fresh candidate-identity runs. The changed binding and runtime paths require fresh forced-negative and dedicated A-I qualification."
+               }
+}

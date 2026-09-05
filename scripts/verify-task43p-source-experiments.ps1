@@ -7,6 +7,8 @@ param(
     [string]$ExperimentId = '',
     [AllowEmptyString()]
     [string]$EvidenceDirectory = '',
+    [AllowEmptyString()]
+    [string]$ExpectedCandidateSha = '',
     [switch]$IdentityCanary,
     [switch]$ContractProbe,
     [switch]$MutationPreflight
@@ -22,13 +24,15 @@ $ErrorActionPreference = 'Stop'
 # created.
 Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force
 try {
+    . (Join-Path $PSScriptRoot 'Task43PCandidateIdentity.ps1')
     . (Join-Path $PSScriptRoot 'Task43PPublicActionEvidence.ps1')
 } catch {
     [Console]::Error.WriteLine('SOURCE_EXPERIMENT_INFRASTRUCTURE: public-action evidence helper could not be loaded: ' + $_.Exception.Message)
     exit 2
 }
 
-$publishedBaselineSha = '8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7'
+$historicalBaselineSha = '8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7'
+$candidateSha = ''
 $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $tempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())
 $runId = [Guid]::NewGuid().ToString('N')
@@ -358,10 +362,7 @@ function Get-RepositoryState {
 }
 
 function Test-RepositoryStateEqual($Before, $After) {
-    return $Before.headSha -eq $After.headSha -and
-        $Before.sourceVerifierDigest -eq $After.sourceVerifierDigest -and
-        $Before.sourceVerifierFileCount -eq $After.sourceVerifierFileCount -and
-        $Before.dirty -eq $After.dirty -and $Before.statusText -eq $After.statusText
+    return Test-Task43PCandidateRepositoryState $Before.headSha $Before $After
 }
 
 function Get-BytesHash([byte[]]$Bytes) {
@@ -684,7 +685,7 @@ function Assert-SourceNegativeProof($Artifact, [string]$ArtifactRunId,
             [string]$proof.diagnosticExpectedMarker -cne [string]$Definition.expectedMarker -or
             [string]$proof.diagnosticRunId -cne [string]$proof.runId -or
             [string]$proof.diagnosticRouteId -cne [string]$proof.routeId -or
-            [string]$proof.diagnosticBaselineHead -cne $publishedBaselineSha -or
+            [string]$proof.diagnosticBaselineHead -cne [string]$RepositoryBefore.headSha -or
             -not $proof.routePassedAfterCleanup -or -not $proof.finalCleanupProven -or
             -not $proof.routePassed -or -not $proof.cleanupProven -or $proof.invalidated) {
         Throw-SourceNegativeUnproven 'Child forced-negative proof flags or identities were incomplete or mismatched.'
@@ -849,7 +850,8 @@ function Invoke-SourceNegativeProofContractProbe() {
             diagnosticExpectedMarker = $definition.expectedMarker
             diagnosticRunId = $runId
             diagnosticRouteId = $routeId
-            diagnosticBaselineHead = $publishedBaselineSha
+            # Legacy field name; its value is the candidate that owns this proof.
+            diagnosticBaselineHead = [string]$repository.headSha
             routePassedAfterCleanup = $true
             finalCleanupProven = $true
             routePassed = $true
@@ -885,6 +887,8 @@ function Invoke-SourceNegativeProofContractProbe() {
             [pscustomobject]@{ Name = 'wrong-id'; Mutate = { param($value) $value.experiment.id = 'other-id' } }
             [pscustomobject]@{ Name = 'wrong-hash'; Mutate = { param($value) $value.sourceMutationBeforeSha256 = ('0' * 64) } }
             [pscustomobject]@{ Name = 'wrong-digest'; Mutate = { param($value) $value.compiledExecutionDigest = ('1' * 64) } }
+            [pscustomobject]@{ Name = 'wrong-candidate'; Mutate = { param($value) $value.repositoryBefore.headSha = ('0' * 40) } }
+            [pscustomobject]@{ Name = 'wrong-diagnostic-candidate'; Mutate = { param($value) $value.forcedNegativeProof.diagnosticBaselineHead = ('0' * 40) } }
             [pscustomobject]@{ Name = 'wrong-anchor'; Mutate = { param($value) $value.forcedNegativeProof.anchoredJavaDiagnostic = 'wrong diagnostic' } }
             [pscustomobject]@{ Name = 'final-cleanup-false'; Mutate = { param($value) $value.forcedNegativeProof.finalCleanupProven = $false } }
             [pscustomobject]@{ Name = 'missing-field'; Mutate = { param($value) $value.forcedNegativeProof.PSObject.Properties.Remove('cleanupProven') } }
@@ -1420,6 +1424,7 @@ function Invoke-DisposableRuntimeExtraction([string]$Destination, $Definition,
             '-ExecutionRepositoryRoot', $runtime.executionRepositoryRoot,
             '-ExecutionWebRoot', $runtime.executionWebRoot,
             '-ExecutionScriptRoot', $runtime.executionScriptRoot,
+            '-ExpectedCandidateSha', $candidateSha,
             '-ExpectedExecutionProvenanceDigest', $runtime.executionProvenance.digest)
         $runtime.route = ($wrapperArguments -join ' ')
         $childResult = Invoke-VerifierBoundedProcess $powershell $wrapperArguments 125000
@@ -1861,6 +1866,17 @@ function ConvertTo-SourceExperimentEvidence($Experiment) {
     }
 }
 
+try {
+    $expectedCandidate = if ($PSBoundParameters.ContainsKey('ExpectedCandidateSha')) {
+        $ExpectedCandidateSha
+    } else { $null }
+    $candidateSha = Get-Task43PCandidateSha $repositoryRoot $expectedCandidate
+} catch {
+    [Console]::Error.WriteLine('FAIL:source-negative candidate identity - ' +
+        (Get-ExperimentErrorMessage $_))
+    exit 2
+}
+
 if ($ContractProbe) {
     try {
         Invoke-SourceNegativeProofContractProbe
@@ -2105,8 +2121,8 @@ try {
     if (-not [String]::IsNullOrWhiteSpace($selectionError)) {
         throw $selectionError
     }
-    if ($repositoryBefore.headSha -ne $publishedBaselineSha) {
-        throw "Source experiment harness requires published repair baseline $publishedBaselineSha; found $($repositoryBefore.headSha)."
+    if ($repositoryBefore.headSha -cne $candidateSha) {
+        throw 'Source experiment candidate HEAD changed before initial repository capture.'
     }
     $selectedJavaHome = $JavaHome
     if ([String]::IsNullOrWhiteSpace($selectedJavaHome)) {
@@ -2230,7 +2246,8 @@ try {
         $record = [ordered]@{
             protocol = 'troubleshootjs-task43p-source-experiments-v2'
             runId = $runId
-            baselineSha = $publishedBaselineSha
+            baselineSha = $historicalBaselineSha
+            candidateSha = $candidateSha
             repositoryBefore = ConvertTo-SourceRepositoryEvidence $repositoryBefore
             repositoryAfter = ConvertTo-SourceRepositoryEvidence $finalRepositoryState
             runRoot = [string]$runRoot

@@ -1,6 +1,51 @@
 # TroubleshootJS — Current Task Report
 
-## Current checkpoint — Task 43P C1/C2 and efficiency work — 2026-09-05
+## Current checkpoint — Task 43P committed-candidate verification — 2026-09-05
+
+- **Status/scope:** REVIEWED CANDIDATE — bounded candidate-identity correction in the
+  source-experiment, browser and Gate B scripts, their shared identity helper,
+  focused regressions and current handoff documentation. No Java, electrical,
+  geometry, C1/C2, snapshot or Task 44 changes. Owner approval remains ungranted.
+- **Candidate:** `codex/task43p-final-recovery`, starting clean HEAD
+  `164704ccbbcbea14532b21a1d8c8bc6b4f380252`. The enclosing commit identifies the
+  correction; source/verifier digest
+  `1a9c9109e38aadfa7593684eeb36d26b94f148a1926afd594487b57ffa6c6753` and execution
+  digest `cd3cac3cbf71de52da0fa1551c81a3d012ed71d0f0f2dcfb6d3a09d1e23645cb` identify
+  the reviewed bytes. Historical evidence keeps its original HEAD/diff and digests.
+- **Root cause:** Runtime admission and forced-proof checks equated the actual
+  checkout with the historical `8bf4424` baseline. The real current-HEAD
+  `-MutationPreflight` reproduced exit `2` before any anchors. The correction
+  freezes actual HEAD, validates explicit expectations and forwards that identity
+  to child verification. Historical baseline metadata is independent of candidate
+  admission; ancestry requires a separate audit and is not inferred in shallow CI.
+- **Current evidence:** Corrected real preflight passes all eleven anchors and
+  four restoration/rejection canaries. Committed, subsequent-commit and detached
+  shallow-checkout fixture preflights pass. Wrong expected identity, execution
+  provenance and actual source/status/HEAD mutation readers reject. Source-proof
+  and forced-proof focused contracts pass. Complete Gate B returned `0` and the
+  fresh independent Luna review passed without blockers. A test fixture's initial in-memory
+  reader extraction lost `PSScriptRoot`; file-backed extraction corrected that
+  harness failure. It was not a product pass or a browser result.
+- **Evidence/reuse:** The [candidate handoff](task-evidence/task-43p/candidate-identity/README.md)
+  and its precommit validation/dependency audit retain exact commands, outcomes
+  and fingerprints. Production Java/web, all eleven mutation definitions,
+  detectors, build/preview/isolation and pinned toolchain are unchanged. The
+  original five-permutation build, eighteen physical triads and eleven compiled
+  catches are reused with original identities; legacy aggregate exits remain `2`.
+- **Postcommit receipt:** Clean committed-HEAD preflight and complete Gate B,
+  forced-negative first and dedicated A–I with exact cleanup, normal push/remote
+  SHA equality, CI outcome and notification are recorded outside the checkout and
+  linked in the final handoff. They are deliberately separate from the dirty-parent
+  checks above; recording their exact commit must not create a SHA-update loop.
+- **Ownership/resources:** Astra owns all edits and test processes. The Luna CI
+  investigation and independent review are complete and read-only. At this
+  precommit checkpoint no browser or preview is active; task-owned logs and a
+  failed regression fixture remain in OS temp. The postcommit receipt records
+  subsequent runtime resource cleanup.
+- **Next:** Consult the postcommit receipt for the published candidate's outcome;
+  the handoff stops at Owner Review. Task 44 remains unstarted.
+
+## Prior checkpoint — Task 43P C1/C2 and efficiency work — 2026-09-05
 
 - **Status/scope:** COMPLETE — ready for Owner Review. C1/C2 and the authorized
   efficiency work passed acceptance and independent review, including the final

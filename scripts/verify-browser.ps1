@@ -60,7 +60,9 @@ param(
     [AllowEmptyString()]
     [string]$ExecutionScriptRoot = '',
     [AllowEmptyString()]
-    [string]$ExpectedExecutionProvenanceDigest = ''
+    [string]$ExpectedExecutionProvenanceDigest = '',
+    [AllowEmptyString()]
+    [string]$ExpectedCandidateSha = ''
 )
 
 Set-StrictMode -Version Latest
@@ -115,6 +117,7 @@ try {
     exit 2
 }
 try {
+    . (Join-Path $PSScriptRoot 'Task43PCandidateIdentity.ps1')
     . (Join-Path $PSScriptRoot 'Task43PRuntimeEvidence.ps1')
     . (Join-Path $PSScriptRoot 'Task43PPublicActionEvidence.ps1')
 } catch {
@@ -168,7 +171,8 @@ try {
         $runtimeAllowedParameters = @('Task43P', 'Task43PRuntime', 'BaseUrl',
             'TimeoutSeconds', 'BrowserPath', 'EvidenceDirectory',
             'Task43PStartupSettleMilliseconds', 'ExecutionRepositoryRoot',
-            'ExecutionWebRoot', 'ExecutionScriptRoot', 'ExpectedExecutionProvenanceDigest')
+            'ExecutionWebRoot', 'ExecutionScriptRoot', 'ExpectedExecutionProvenanceDigest',
+            'ExpectedCandidateSha')
         if (-not $Task43P -or @($PSBoundParameters.Keys | Where-Object {
                 $_ -notin $runtimeAllowedParameters }).Count -ne 0) {
             Throw-VerifierInfrastructure 'Task43P runtime requires its sole normal Task43P route with the fixed runtime corpus.'
@@ -227,8 +231,19 @@ $script:VerifierFailureMessage = ''
 $script:VerifierFailureKind = ''
 $script:VerifierCurrentRouteId = ''
 $script:VerifierResolvedBrowserPath = ''
-$script:Task43PPublishedBaselineSha =
+$script:Task43PHistoricalBaselineSha =
     '8bf442416a2fa2c0c9d654d1efa14e754c2b7ee7'
+$script:Task43PCandidateSha = ''
+$script:Task43PInvocationRepositoryState = $null
+if ($PSBoundParameters.ContainsKey('ExpectedCandidateSha')) {
+    try {
+        $script:Task43PCandidateSha = Get-Task43PCandidateSha `
+            ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))) $ExpectedCandidateSha
+    } catch {
+        Write-VerifierEarlySetupFailure (Get-VerifierEarlySetupMessage $_)
+        exit 2
+    }
+}
 $script:Task43ForcedNegativeProof = [pscustomobject]@{
     Invocation = $false
     ExpectedMarker = ''
@@ -1263,7 +1278,7 @@ function Get-Task43PRepositoryState($ExecutionRoots = $null) {
         } finally {
             $hasher.Dispose()
         }
-        return [ordered]@{
+        $state = [ordered]@{
             # This object is wrapper-owned repository evidence.  Java/GWT never
             # receives or emits these claims.
             headSha = $head.ToLowerInvariant()
@@ -1273,6 +1288,14 @@ function Get-Task43PRepositoryState($ExecutionRoots = $null) {
             statusText = $status
             executionProvenance = $executionProvenance
         }
+        if ($script:Task43PCandidateSha -cne '' -and
+                ($state.headSha -cne $script:Task43PCandidateSha -or
+                    ($null -ne $script:Task43PInvocationRepositoryState -and
+                        -not (Test-Task43PCandidateRepositoryState $script:Task43PCandidateSha `
+                            $script:Task43PInvocationRepositoryState $state)))) {
+            Throw-VerifierInfrastructure 'Task43P repository changed from the frozen invocation candidate.'
+        }
+        return $state
     } catch {
         if (Test-VerifierInfrastructureError $_) { throw }
         Throw-VerifierInfrastructure ('Task43P repository state read failed closed: ' +
@@ -1803,9 +1826,9 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
     $script:VerifierEvidenceStage = 'repository-provenance'
     $repositoryAfter = Get-Task43PRepositoryState $script:Task43PExecutionRoots
     if ($null -eq $repositoryBefore -or
-            $repositoryBefore.headSha -ne $script:Task43PPublishedBaselineSha) {
+            $repositoryBefore.headSha -cne $script:Task43PCandidateSha) {
         Throw-VerifierInfrastructure ("Task43P route '$routeName' did not start from the " +
-            "published repair baseline $script:Task43PPublishedBaselineSha.")
+            "frozen invocation candidate $script:Task43PCandidateSha.")
     }
     if ($repositoryBefore.headSha -ne $repositoryAfter.headSha -or
             $repositoryBefore.sourceVerifierDigest -ne $repositoryAfter.sourceVerifierDigest -or
@@ -1867,7 +1890,8 @@ function Capture-Task43PEvidence($socket, [ref]$nextId, [DateTime]$deadline,
             browserStartupSettleMilliseconds = $Task43PStartupSettleMilliseconds
             runId = $script:VerifierContext.RunId
             routeId = $script:VerifierCurrentRouteId
-            baselineSha = $script:Task43PPublishedBaselineSha
+            baselineSha = $script:Task43PHistoricalBaselineSha
+            candidateSha = $script:Task43PCandidateSha
             repositoryBefore = $repositoryBefore
             repositoryAfter = $repositoryAfter
             executionProvenance = $repositoryAfter.executionProvenance
@@ -2145,12 +2169,8 @@ function Test-Task43PForcedNegativeMarker([string]$Marker) {
 }
 
 function Test-Task43PSourceRepositoryStateEqual($Before, $After) {
-    if ($null -eq $Before -or $null -eq $After -or
-            $Before.headSha -cne $script:Task43PPublishedBaselineSha) { return $false }
-    foreach ($field in @('headSha', 'sourceVerifierDigest', 'sourceVerifierFileCount',
-            'dirty', 'statusText')) {
-        if ($Before.$field -cne $After.$field) { return $false }
-    }
+    if (-not (Test-Task43PCandidateRepositoryState $script:Task43PCandidateSha `
+            $Before $After)) { return $false }
     return Test-Task43PExecutionProvenanceEqual $Before.executionProvenance `
         $After.executionProvenance
 }
@@ -2532,8 +2552,8 @@ function Set-Task43ForcedNegativeAnchoredDiagnostic([string]$Diagnostic,
         Throw-VerifierInfrastructure 'Forced-negative route did not prove its exact anchored Java diagnostic.'
     }
     if ((Test-Task43PForcedNegativeMarker $proof.ExpectedMarker) -and
-            $BaselineHead -ne $script:Task43PPublishedBaselineSha) {
-        Throw-VerifierInfrastructure 'Task43P forced-negative route did not retain the published baseline identity.'
+            $BaselineHead -ne $script:Task43PCandidateSha) {
+        Throw-VerifierInfrastructure 'Task43P forced-negative route did not retain the frozen candidate identity.'
     }
     Set-Task43ForcedNegativeRouteIdentity
     $proof.AnchoredDiagnosticProven = $true
@@ -2541,6 +2561,7 @@ function Set-Task43ForcedNegativeAnchoredDiagnostic([string]$Diagnostic,
     $proof.DiagnosticExpectedMarker = [string]$proof.ExpectedMarker
     $proof.DiagnosticRunId = [string]$proof.RunId
     $proof.DiagnosticRouteId = [string]$proof.RouteId
+    # Retain the protocol field name; this records the frozen candidate HEAD.
     $proof.DiagnosticBaselineHead = [string]$BaselineHead
 }
 
@@ -2653,7 +2674,7 @@ function Test-Task43ForcedNegativeProof([string]$ExpectedMarker,
     }
     if ((Test-Task43PForcedNegativeMarker $ExpectedMarker) -and
             [string]$proof.DiagnosticBaselineHead -ne
-                $script:Task43PPublishedBaselineSha) {
+                $script:Task43PCandidateSha) {
         return $false
     }
     if ($null -ne $script:VerifierContext -and
@@ -2712,7 +2733,7 @@ function isExpectedTask43ForcedFailureDiagnostic([string]$failure,
             $script:VerifierContext.RunId -ne $runId -or
             $script:VerifierCurrentRouteId -ne $routeId) { return $false }
     if ((Test-Task43PForcedNegativeMarker $expectedFailure) -and
-            $baselineHead -ne $script:Task43PPublishedBaselineSha) { return $false }
+            $baselineHead -ne $script:Task43PCandidateSha) { return $false }
     return $true
 }
 
@@ -5087,8 +5108,8 @@ function Assert-VerifierIntegratedForcedNegativeProof($Proof,
     }
     $baselineHead = Get-VerifierLedgerProperty $Proof 'diagnosticBaselineHead'
     if ((Test-Task43PForcedNegativeMarker $ExpectedMarker) -and
-            $baselineHead -ne $script:Task43PPublishedBaselineSha) {
-        Throw-VerifierInfrastructure 'Integrated expected-exit-1 Task43P child did not prove the published baseline identity.'
+            $baselineHead -ne $script:Task43PCandidateSha) {
+        Throw-VerifierInfrastructure 'Integrated expected-exit-1 Task43P child did not prove the frozen candidate identity.'
     }
     if ($ExpectedMarker -eq 'FAIL:task43-forced-negative-canary' -and
             -not [String]::IsNullOrWhiteSpace($baselineHead)) {
@@ -7109,6 +7130,13 @@ function invokeIntegratedChild([string]$label, [string[]]$routeArguments,
         '-BrowserPath', (& $quotePowerShellArgument $childBrowserPath),
         '-ParentLedgerPath', (& $quotePowerShellArgument $childLedgerPath),
         '-ParentNamespaceRoot', (& $quotePowerShellArgument (Split-Path -Parent $childLedgerPath)))
+    if ($routeArguments -contains '-Task43P' -or $routeArguments -contains '-Task43PForcedNegative') {
+        if ($script:Task43PCandidateSha -cnotmatch '^[0-9a-f]{40}$') {
+            Throw-VerifierInfrastructure 'Integrated Task43P child requires a frozen parent candidate.'
+        }
+        $commandParts += @('-ExpectedCandidateSha',
+            (& $quotePowerShellArgument $script:Task43PCandidateSha))
+    }
     for ($argumentIndex = 0; $argumentIndex -lt $routeArguments.Count; $argumentIndex++) {
         $routeArgument = [string]$routeArguments[$argumentIndex]
         if ($routeArgument -eq '-Seeds') {
@@ -8303,6 +8331,8 @@ function Invoke-GateBListenerProofCanary() {
 }
 
 function Invoke-Task43ForcedNegativeContractCanaries() {
+    $priorCandidateSha = $script:Task43PCandidateSha
+    $script:Task43PCandidateSha = ('c' * 40)
     $priorContext = $script:VerifierContext
     $priorRouteId = $script:VerifierCurrentRouteId
     $priorProof = $script:Task43ForcedNegativeProof
@@ -8355,7 +8385,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
         Write-Host 'PASS:integrated child $?/$LASTEXITCODE stale-status ambiguity -> exit 2'
         # Construct the valid proof only after the reset so its nonce/request
         # identity cannot be carried across routes.
-        & $setValid $task43pMarker '' $script:Task43PPublishedBaselineSha
+        & $setValid $task43pMarker '' $script:Task43PCandidateSha
         $task43pDiagnostic = Get-Task43ForcedNegativeExpectedDiagnostic $task43pMarker
         if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 1) {
             throw 'exact anchored Task43P proof did not resolve to application exit 1.'
@@ -8369,14 +8399,14 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
             @('EXPECTED FAILURE task43p forced-negative canary') $validLedgerProof $task43pMarker
         Write-Host 'PASS:forced-negative exact anchored Java proof and expected-route ledger -> exit 1'
 
-        foreach ($wrongBaseline in @('a5b253873c2b25a54d7c393b118e3f2e1831a4d8',
+        foreach ($wrongBaseline in @($script:Task43PHistoricalBaselineSha,
                 '0000000000000000000000000000000000000000', '')) {
             if (isExpectedTask43ForcedFailureDiagnostic $task43pDiagnostic $task43pMarker `
                     $runId $routeId $wrongBaseline) {
-                throw 'wrong published baseline accepted an otherwise valid forced-negative diagnostic.'
+                throw 'wrong candidate accepted an otherwise valid forced-negative diagnostic.'
             }
         }
-        Write-Host 'PASS:forced-negative stale, foreign, and missing published baseline rejected'
+        Write-Host 'PASS:forced-negative historical baseline, foreign, and missing candidate rejected'
 
         & $reset $task43pMarker
         try { Throw-VerifierInfrastructure 'synthetic preview died before application' } catch {
@@ -8394,7 +8424,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
             'Generated board verification failed for led/controlled-indicator, seed 3: ' +
             $task43pMarker.Substring(5)
         if (isExpectedTask43ForcedFailureDiagnostic $forgedPageDiagnostic $task43pMarker `
-                $runId $routeId $script:Task43PPublishedBaselineSha) {
+                $runId $routeId $script:Task43PCandidateSha) {
             throw 'forged-page marker/console canary was accepted without the Java request proof.'
         }
         if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 2) {
@@ -8421,7 +8451,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
 
         & $reset $task43pMarker
         if (isExpectedTask43ForcedFailureDiagnostic '' $task43pMarker $runId $routeId `
-                $script:Task43PPublishedBaselineSha) {
+                $script:Task43PCandidateSha) {
             throw 'missing forced-negative marker was accepted as expected proof.'
         }
         if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 2) {
@@ -8434,7 +8464,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
         $task43pDiagnostic = Get-Task43ForcedNegativeExpectedDiagnostic $task43pMarker
         $wrongDiagnostic = $task43pDiagnostic.Replace($task43pMarker.Substring(5), 'wrong-java-text')
         if (isExpectedTask43ForcedFailureDiagnostic $wrongDiagnostic $task43pMarker `
-                $runId $routeId $script:Task43PPublishedBaselineSha) {
+                $runId $routeId $script:Task43PCandidateSha) {
             throw 'wrong Java forced-negative text was accepted as anchored proof.'
         }
         if ((Get-Task43ForcedNegativeRouteExitCode $task43pMarker) -ne 2) {
@@ -8450,7 +8480,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
                 'snapshot-restore-resistance-current-omitted', 'public-remove-action-disabled')) {
             $script:Task43PSourceDefinition = Get-Task43PSourceExperimentDefinition $sourceId
             $sourceMarker = $script:Task43PSourceDefinition.expectedMarker
-            & $setValid $sourceMarker '' $script:Task43PPublishedBaselineSha
+            & $setValid $sourceMarker '' $script:Task43PCandidateSha
             $sourceDiagnostic = Get-Task43ForcedNegativeExpectedDiagnostic $sourceMarker
             foreach ($badDiagnostic in @(
                 $sourceDiagnostic.Replace('experiment=' + $sourceId, 'experiment=wrong-source-id'),
@@ -8460,7 +8490,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
                 ($sourceDiagnostic + "`nunrelated error"),
                 $sourceDiagnostic.Replace($sourceMarker.Substring(5), 'different-validator-failure'))) {
                 if (isExpectedTask43ForcedFailureDiagnostic $badDiagnostic $sourceMarker `
-                        $runId $routeId $script:Task43PPublishedBaselineSha) {
+                        $runId $routeId $script:Task43PCandidateSha) {
                     throw "source-negative wrong diagnostic was accepted: $sourceId"
                 }
             }
@@ -8477,7 +8507,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
             if ((Resolve-Task43ForcedNegativeTopLevelExitCode 1 $sourceMarker) -ne 1) {
                 throw "complete exact source-negative proof was rejected: $sourceId"
             }
-            & $setValid $sourceMarker '' $script:Task43PPublishedBaselineSha
+            & $setValid $sourceMarker '' $script:Task43PCandidateSha
             if ((Resolve-Task43ForcedNegativeTopLevelExitCode 1 $sourceMarker) -ne 2) {
                 throw "source-negative unproven final cleanup was accepted: $sourceId"
             }
@@ -8541,6 +8571,7 @@ function Invoke-Task43ForcedNegativeContractCanaries() {
                 ' without forced proof -> infrastructure exit 2')
         }
     } finally {
+        $script:Task43PCandidateSha = $priorCandidateSha
         $script:VerifierContext = $priorContext
         $script:VerifierCurrentRouteId = $priorRouteId
         $script:Task43ForcedNegativeProof = $priorProof
@@ -9872,6 +9903,14 @@ $forcedNegativeExpectedMarker = Get-Task43ForcedNegativeExpectedMarker
 $requestedExitCode = 2
 $cleanupResult = $null
 try {
+    if ($Task43P -or $Task43PForcedNegative -or
+            $PSBoundParameters.ContainsKey('ExpectedCandidateSha')) {
+        if ($script:Task43PCandidateSha -ceq '') {
+            $script:Task43PCandidateSha = Get-Task43PCandidateSha `
+                ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..')))
+        }
+        $script:Task43PInvocationRepositoryState = Get-Task43PRepositoryState
+    }
     $executionRoots = Resolve-Task43PExecutionRoots
     $script:Task43PExecutionRepositoryRoot = $executionRoots.RepositoryRoot
     $script:Task43PExecutionWebRoot = $executionRoots.WebRoot
@@ -9977,6 +10016,15 @@ try {
                 Set-VerifierFailure $_ 'verifier cleanup'
             }
             $requestedExitCode = 2
+        }
+        if ($null -ne $script:Task43PInvocationRepositoryState) {
+            try {
+                [void](Get-Task43PRepositoryState $script:Task43PExecutionRoots)
+            } catch {
+                Invalidate-Task43ForcedNegativeProof
+                Set-VerifierFailure $_ 'final candidate provenance' -Quiet
+                $requestedExitCode = 2
+            }
         }
         if ($forcedNegativeInvocation) {
             if (-not $cleanupExceptionCaught -and $null -ne $cleanupResult -and

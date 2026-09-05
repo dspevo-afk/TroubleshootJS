@@ -2313,6 +2313,23 @@ was fabricated or mutated by Gate B.
 
 ## Current Task 43P evidence status
 
+Task43P verification separates the historical baseline from the invocation's
+candidate. `Task43PCandidateIdentity.ps1` freezes actual Git HEAD and validates
+an explicitly supplied `-ExpectedCandidateSha`; an empty, malformed or mismatched
+expectation fails closed. Source experiments pass the same SHA to the browser
+child, and Gate B passes its frozen SHA to the source checks. Detached and
+shallow CI checkouts use their actual checked-out HEAD. Historical `baselineSha`
+is metadata; it makes no ancestry claim for a checkout without that history.
+
+The wrapper records `candidateSha` separately and retains source/verifier hashes,
+file counts, Git status and exact selected execution-tree fingerprints. Browser
+repository capture checks the frozen invocation state across routes and after
+cleanup. Disposable source/build roots remain separate from the wrapper's Git
+checkout. The legacy forced-proof field `diagnosticBaselineHead` records the
+candidate HEAD; its consumer compares it to the owning invocation, not a moving
+literal. The [candidate handoff](task-evidence/task-43p/candidate-identity/README.md)
+records focused checks, dependency reuse and the clean-HEAD receipt boundary.
+
 C1 independently handles measurement removal, solver reconstruction, queued
 power and synchronization; it retains primary/suppressed failures and visibly
 isolates/stops an unproven graph. C2 asserts the supported Task41 snapshot
