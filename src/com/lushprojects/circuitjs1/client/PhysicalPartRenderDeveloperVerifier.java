@@ -736,7 +736,8 @@ final class PhysicalPartRenderDeveloperVerifier {
             new PhysicalPartGeometryRealization();
 
         private LooseRenderCanaryPart(String id, PhysicalPackage physicalPackage,
-                PhysicalSpecification specification, PhysicalPartRenderMetadata metadata) {
+                PhysicalSpecification specification, PhysicalPartRenderMetadata metadata,
+                int wireBaseX) {
             this.id = id;
             this.physicalPackage = physicalPackage;
             this.specification = specification;
@@ -746,8 +747,8 @@ final class PhysicalPartRenderDeveloperVerifier {
             Vector<CircuitElm> elements = new Vector<CircuitElm>();
             terminals = new PhysicalPartTerminal[physicalPackage.getTerminalCount()];
             for (int index = 0; index < terminals.length; index++) {
-                WireElm wire = new WireElm(1000 + index * 32, 1000);
-                wire.drag(1016 + index * 32, 1000);
+                WireElm wire = new WireElm(wireBaseX + index * 32, 1000);
+                wire.drag(wireBaseX + 16 + index * 32, 1000);
                 elements.add(wire);
                 CircuitMeasurementEndpoint endpoint = new CircuitPostMeasurementEndpoint(wire, 0);
                 endpoints.add(endpoint);
@@ -759,6 +760,11 @@ final class PhysicalPartRenderDeveloperVerifier {
 
         static LooseRenderCanaryPart create(String id, PhysicalPackage physicalPackage,
                 boolean reversed) {
+            return create(id, physicalPackage, reversed, 1000);
+        }
+
+        static LooseRenderCanaryPart create(String id, PhysicalPackage physicalPackage,
+                boolean reversed, int wireBaseX) {
             PhysicalSpecification specification;
             PhysicalPartRenderMetadata metadata;
             if (PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(physicalPackage)) {
@@ -802,7 +808,8 @@ final class PhysicalPartRenderDeveloperVerifier {
                 metadata = new PhysicalPartRenderMetadata(specification,
                     PhysicalPartOrientation.NON_POLARIZED, null);
             }
-            return new LooseRenderCanaryPart(id, physicalPackage, specification, metadata);
+            return new LooseRenderCanaryPart(id, physicalPackage, specification, metadata,
+                wireBaseX);
         }
 
         public String getId() { return id; }
@@ -956,9 +963,12 @@ final class PhysicalPartRenderDeveloperVerifier {
                     PhysicalPackages.TO92_NMOS
                 };
                 for (int index = 0; index < packages.length; index++) {
+                    // These backing wires coexist in the live solver. Separate
+                    // each part's electrical posts so unrelated loose parts do
+                    // not create parallel wire loops. Tray geometry is separate.
                     LooseRenderCanaryPart part = LooseRenderCanaryPart.create(
                         "TASK43_LOOSE_" + index, packages[index],
-                        isPolarizedCanaryPackage(packages[index]));
+                        isPolarizedCanaryPackage(packages[index]), 1000 + index * 256);
                     runtime.registerPart(part);
                     parts.add(part);
                     elements.addAll(part.getElectricalBacking().getCircuitElements());

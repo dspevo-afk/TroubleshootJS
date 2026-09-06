@@ -6929,6 +6929,761 @@ function Invoke-GateBBrowserDrainNaturalExitCanary() {
     Write-Host 'PASS:browser drain retained-handle natural-exit proof, exact absence, live stop, and typed negative lanes'
 }
 
+function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for the paired browser descendant disappearance canary.'
+    }
+    $probe = & $module[0] {
+        $functionNames = @(
+            'Get-VerifierCurrentOwnedProcess',
+            'Get-VerifierCurrentProcessRecordById',
+            'Get-VerifierCurrentParentStartTicks',
+            'Get-VerifierProcessById',
+            'Get-VerifierProcessRecordsByIdWithFallback',
+            'Get-VerifierProcessRecordsByParentWithFallback',
+            'Get-VerifierPreviouslyAttestedBrowserDescendantExit',
+            'Stop-VerifierVerifiedProcessExactly')
+        $originals = @{}
+        foreach ($name in $functionNames) {
+            $command = Get-Command $name -CommandType Function -ErrorAction Stop
+            $originals[$name] = $command.ScriptBlock
+        }
+        $fixtures = New-Object Collections.ArrayList
+        $cleanupErrors = New-Object Collections.ArrayList
+        $shell = (Get-Command powershell.exe -ErrorAction Stop).Source
+        $browserPath = [string]$shell
+        $rootProcess = Get-Process -Id ([int]$PID) -ErrorAction Stop
+        if ($null -eq $rootProcess -or $rootProcess.GetType() -ne [Diagnostics.Process]) {
+            Throw-VerifierInfrastructure 'paired browser descendant canary could not retain its real root Process object.'
+        }
+        $rootCurrent = & $originals['Get-VerifierCurrentProcessRecordById'] ([int]$PID)
+        if ($null -eq $rootCurrent -or
+                [String]::IsNullOrWhiteSpace([string]$rootCurrent.CommandLine)) {
+            Throw-VerifierInfrastructure 'paired browser descendant canary could not capture the real root command line.'
+        }
+        $rootStart = Get-VerifierProcessStartTicks $rootProcess
+        # The live child/root relation is real; the launcher above this
+        # verifier process may be a short-lived harness wrapper. Keep that
+        # outer parent as a positive synthetic identity so this canary does
+        # not depend on the harness retaining its own launcher process.
+        $rootParentStart = 1L
+        if ([long]$rootStart -le 0 -or [long]$rootParentStart -le 0) {
+            Throw-VerifierInfrastructure 'paired browser descendant canary could not capture the real root start identities.'
+        }
+        $owner = [pscustomobject]@{
+            ProcessId = [int]$PID
+            ProcessStartTicks = [long]$rootStart
+            ProcessParentProcessId = [int]$rootCurrent.ParentProcessId
+            ProcessParentProcessStartTicks = [long]$rootParentStart
+            ProcessCommandLine = [string]$rootCurrent.CommandLine
+            BrowserPath = $browserPath
+            Profile = (Join-Path ([IO.Path]::GetTempPath()) `
+                ('TroubleshootJS\gate-b-paired-profile-' + [Guid]::NewGuid().ToString('N')))
+            RunId = 'gate-b-paired-run'
+            RepositoryIdentity = 'gate-b-paired-worktree'
+            CdpPort = 45871
+        }
+        $rootVerified = [pscustomobject]@{
+            Process = $rootProcess
+            Record = [pscustomobject]@{
+                ProcessId = [int]$owner.ProcessId
+                ProcessStartTicks = [long]$owner.ProcessStartTicks
+                ParentProcessId = [int]$owner.ProcessParentProcessId
+                ParentProcessStartTicks = [long]$owner.ProcessParentProcessStartTicks
+                Name = if ($rootCurrent.PSObject.Properties['Name']) { [string]$rootCurrent.Name } else { '' }
+                ExecutablePath = $browserPath
+                CommandLine = [string]$owner.ProcessCommandLine
+            }
+        }
+        $snapshot = @([pscustomobject]@{
+            ProcessId = 2147483000
+            ProcessStartTicks = 1L
+            ParentProcessId = 1
+            ParentProcessStartTicks = 1L
+            Name = 'unrelated-process.exe'
+            ExecutablePath = $browserPath
+            CommandLine = 'unrelated-process'
+        })
+        $state = [pscustomobject]@{
+            Owner = $owner
+            OwnerPid = [int]$owner.ProcessId
+            OwnerStart = [long]$owner.ProcessStartTicks
+            RootParentStart = [long]$owner.ProcessParentProcessStartTicks
+            OwnerProcess = $rootProcess
+            RootCurrent = $rootCurrent
+            RootWmi = [pscustomobject]@{
+                ProcessId = [int]$owner.ProcessId
+                ParentProcessId = [int]$owner.ProcessParentProcessId
+                Name = if ($rootCurrent.PSObject.Properties['Name']) { [string]$rootCurrent.Name } else { '' }
+                ExecutablePath = $browserPath
+                CommandLine = [string]$owner.ProcessCommandLine
+            }
+            RootVerified = $rootVerified
+            ChildPid = 0
+            ChildProcess = $null
+            ChildCurrent = $null
+            ChildWmi = $null
+            Candidate = $null
+            Mode = 'normal'
+            ChildExited = $false
+            ChildCurrentCalls = 0
+            NaturalCurrentCalls = 0
+            PreviouslyAttestedCalls = 0
+            InNatural = $false
+            LateProofSlept = $false
+            NonNullExitedLookups = 0
+            UnattestedNonNullExitedLookups = 0
+            FinalNonNullExitProcessByIdCalls = 0
+            FinalNonNullExitLiveLookups = 0
+            FinalNonNullExitLookups = 0
+            FinalNonNullExitReleaseCalls = 0
+            NullInitialLookups = 0
+            CurrentProofFixture = $null
+            FinalProofFixture = $null
+            IdentityProofFixture = $null
+            StopCalls = 0
+        }
+        $script:GateBPairedState = $state
+        $script:GateBPairedOriginalCurrent = $originals['Get-VerifierCurrentProcessRecordById']
+        $script:GateBPairedOriginalParentStart = $originals['Get-VerifierCurrentParentStartTicks']
+        $script:GateBPairedOriginalGetProcess = $originals['Get-VerifierProcessById']
+        $script:GateBPairedOriginalOwned = $originals['Get-VerifierCurrentOwnedProcess']
+        $script:GateBPairedOriginalById = $originals['Get-VerifierProcessRecordsByIdWithFallback']
+        $script:GateBPairedOriginalByParent = $originals['Get-VerifierProcessRecordsByParentWithFallback']
+        $script:GateBPairedOriginalPrevious = $originals['Get-VerifierPreviouslyAttestedBrowserDescendantExit']
+        $script:GateBPairedOriginalStop = $originals['Stop-VerifierVerifiedProcessExactly']
+
+        function New-PairedDescendantFixture() {
+            $process = $null
+            $scope = $null
+            $releasePath = Join-Path ([IO.Path]::GetTempPath()) `
+                ('TroubleshootJS-gate-b-paired-release-' + [Guid]::NewGuid().ToString('N') + '.signal')
+            try {
+                $command = "while (-not [IO.File]::Exists('$releasePath')) { Start-Sleep -Milliseconds 25 }"
+                $process = Start-VerifierProcess $shell @(
+                    '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy',
+                    'Bypass', '-Command', $command)
+                if ($null -eq $process -or $process.GetType() -ne [Diagnostics.Process]) {
+                    Throw-VerifierInfrastructure 'paired browser descendant fixture did not return a real Process object.'
+                }
+                $wmiRecords = @(& $script:GateBPairedOriginalById ([int]$process.Id) `
+                    'paired browser descendant fixture record')
+                if ($wmiRecords.Count -ne 1 -or $null -eq $wmiRecords[0]) {
+                    Throw-VerifierInfrastructure ('paired browser descendant fixture PID ' +
+                        [string]$process.Id + ' had no unique current WMI record.')
+                }
+                $wmiRecord = $wmiRecords[0]
+                $retainedProcess = [Diagnostics.Process]::GetProcessById([int]$process.Id)
+                $record = [pscustomobject]@{
+                    Process = $retainedProcess
+                    ProcessId = [int]$wmiRecord.ProcessId
+                    ProcessStartTicks = [long](Get-VerifierProcessStartTicks $retainedProcess)
+                    ParentProcessId = [int]$wmiRecord.ParentProcessId
+                    ParentProcessStartTicks = [long]$state.OwnerStart
+                    Name = [string]$wmiRecord.Name
+                    ExecutablePath = [string]$wmiRecord.ExecutablePath
+                    CommandLine = [string]$wmiRecord.CommandLine
+                }
+                $record | Add-Member -MemberType NoteProperty `
+                    -Name ParentProcessStartTicks -Value ([long]$state.OwnerStart) -Force
+                $scope = New-VerifierBrowserDrainScope
+                $candidate = $record | Select-Object *
+                return [pscustomobject]@{
+                    Process = $process
+                    Record = $record
+                    Candidate = $candidate
+                    Scope = $scope
+                    ReleasePath = $releasePath
+                }
+            } catch {
+                if ($null -ne $scope) {
+                    try { [void](Dispose-VerifierBrowserDrainScope $scope) } catch { }
+                }
+                if ($null -ne $process) {
+                    try { [void]$process.WaitForExit(10000) } catch { }
+                    try { $process.Dispose() } catch { }
+                }
+                if (Test-Path -LiteralPath $releasePath) {
+                    Remove-Item -LiteralPath $releasePath -Force -ErrorAction SilentlyContinue
+                }
+                throw
+            }
+        }
+        function Release-PairedDescendantFixture($Fixture) {
+            if ($null -eq $Fixture -or $null -eq $Fixture.Process) {
+                Throw-VerifierInfrastructure 'paired browser descendant release omitted its fixture Process.'
+            }
+            try {
+                [IO.File]::WriteAllText([string]$Fixture.ReleasePath, 'release')
+            } catch {
+                Throw-VerifierInfrastructure ('Could not signal paired browser descendant natural exit: ' +
+                    (Get-VerifierErrorMessage $_))
+            }
+            try {
+                if (-not $Fixture.Process.WaitForExit(15000)) {
+                    Throw-VerifierInfrastructure 'paired browser descendant did not naturally exit after its release signal.'
+                }
+                $Fixture.Process.Refresh()
+                if (-not [bool]$Fixture.Process.HasExited) {
+                    Throw-VerifierInfrastructure 'paired browser descendant remained live after its release signal.'
+                }
+            } catch {
+                if (Test-VerifierInfrastructureError $_) { throw }
+                Throw-VerifierInfrastructure ('Could not prove paired browser descendant natural exit: ' +
+                    (Get-VerifierErrorMessage $_))
+            }
+        }
+        function Dispose-PairedDescendantFixture($Fixture) {
+            if ($null -eq $Fixture) { return }
+            if ($null -ne $Fixture.Process) {
+                try {
+                    $Fixture.Process.Refresh()
+                    if (-not [bool]$Fixture.Process.HasExited) {
+                        [IO.File]::WriteAllText([string]$Fixture.ReleasePath, 'cleanup-release')
+                        if (-not $Fixture.Process.WaitForExit(15000)) {
+                            [void]$cleanupErrors.Add('paired browser descendant fixture remained live during bounded cleanup')
+                        }
+                    }
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $Fixture.Scope) {
+                try {
+                    foreach ($failure in @(Dispose-VerifierBrowserDrainScope $Fixture.Scope)) {
+                        [void]$cleanupErrors.Add([string]$failure)
+                    }
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $Fixture.Process) {
+                try { $Fixture.Process.Dispose() } catch {
+                    [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+                }
+            }
+            if (-not [String]::IsNullOrWhiteSpace([string]$Fixture.ReleasePath) -and
+                    (Test-Path -LiteralPath $Fixture.ReleasePath)) {
+                try { Remove-Item -LiteralPath $Fixture.ReleasePath -Force -ErrorAction Stop } catch {
+                    [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+                }
+            }
+        }
+        function Assert-PairedTypedFailure($Action, [string]$Name) {
+            $typed = $false
+            try { [void](& $Action) } catch {
+                $typed = Test-VerifierInfrastructureError $_
+            }
+            if (-not $typed) {
+                Throw-VerifierInfrastructure "paired browser descendant case '$Name' did not reject with typed infrastructure failure."
+            }
+            return $true
+        }
+        function Invoke-PairedDescendant($Fixture) {
+            return @(Get-VerifierDescendantProcessRecords $state.Owner $snapshot $Fixture.Scope)
+        }
+        function Set-PairedChildState($Fixture, [string]$Mode,
+                [bool]$Exited) {
+            if ($null -eq $Fixture -or $null -eq $Fixture.Record) {
+                Throw-VerifierInfrastructure 'paired browser child state omitted its fixture record.'
+            }
+            $state.ChildPid = [int]$Fixture.Record.ProcessId
+            $state.ChildProcess = $Fixture.Process
+            $state.ChildCurrent = $Fixture.Record
+            $state.ChildWmi = [pscustomobject]@{
+                ProcessId = [int]$Fixture.Record.ProcessId
+                ParentProcessId = [int]$Fixture.Record.ParentProcessId
+                Name = [string]$Fixture.Record.Name
+                ExecutablePath = [string]$Fixture.Record.ExecutablePath
+                CommandLine = [string]$Fixture.Record.CommandLine
+            }
+            $state.Candidate = $Fixture.Candidate
+            $state.Mode = $Mode
+            $state.ChildExited = $Exited
+            $state.ChildCurrentCalls = 0
+            $state.NaturalCurrentCalls = 0
+        }
+        # Capture real child records before installing lower-provider seams.
+        # Release signals are held until each fixture has reached its intended
+        # attestation/disappearance phase.
+        $positive = New-PairedDescendantFixture
+        [void]$fixtures.Add($positive)
+        $missing = New-PairedDescendantFixture
+        [void]$fixtures.Add($missing)
+        $missingExited = New-PairedDescendantFixture
+        [void]$fixtures.Add($missingExited)
+        $nullInitial = New-PairedDescendantFixture
+        [void]$fixtures.Add($nullInitial)
+        $currentProof = New-PairedDescendantFixture
+        [void]$fixtures.Add($currentProof)
+        $finalProof = New-PairedDescendantFixture
+        [void]$fixtures.Add($finalProof)
+        $identityProof = New-PairedDescendantFixture
+        [void]$fixtures.Add($identityProof)
+        try {
+            Set-Item Function:\Get-VerifierCurrentOwnedProcess -Force -Value {
+                param($OwnerRecord, $Recorded, [switch]$Root)
+                if ($Root) { return $script:GateBPairedState.RootVerified }
+                return & $script:GateBPairedOriginalOwned $OwnerRecord $Recorded
+            }
+            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                param($ProcessId)
+                $stateValue = $script:GateBPairedState
+                if ([int]$ProcessId -eq [int]$stateValue.OwnerPid) {
+                    return $stateValue.RootCurrent
+                }
+                if ([int]$ProcessId -eq [int]$stateValue.ChildPid) {
+                    $stateValue.ChildCurrentCalls++
+                    if ($stateValue.InNatural) { $stateValue.NaturalCurrentCalls++ }
+                    if ($stateValue.Mode -eq 'late-proof' -and
+                            $stateValue.InNatural -and -not $stateValue.LateProofSlept) {
+                        $stateValue.LateProofSlept = $true
+                        Start-Sleep -Milliseconds 650
+                    }
+                    if ($stateValue.Mode -eq 'typed-current-exit' -and
+                            -not $stateValue.InNatural -and
+                            $stateValue.ChildCurrentCalls -eq 1) {
+                        if (-not $stateValue.ChildExited) {
+                            if ($null -eq $stateValue.CurrentProofFixture) {
+                                Throw-VerifierInfrastructure 'paired current-proof exit omitted its live fixture.'
+                            }
+                            Release-PairedDescendantFixture $stateValue.CurrentProofFixture
+                            $stateValue.ChildExited = $true
+                        }
+                        return $stateValue.ChildCurrent
+                    }
+                    if ($stateValue.Mode -eq 'identity-mismatch' -and
+                            -not $stateValue.InNatural -and
+                            $stateValue.ChildCurrentCalls -eq 1) {
+                        $mismatched = $stateValue.ChildCurrent | Select-Object *
+                        $mismatched.CommandLine = [string]$stateValue.ChildCurrent.CommandLine +
+                            ' mismatched-current-proof'
+                        return $mismatched
+                    }
+                    if ($stateValue.ChildExited) { return $null }
+                    return $stateValue.ChildCurrent
+                }
+                return & $script:GateBPairedOriginalCurrent ([int]$ProcessId)
+            }
+            Set-Item Function:\Get-VerifierCurrentParentStartTicks -Force -Value {
+                param($ParentProcessId)
+                $stateValue = $script:GateBPairedState
+                if ([int]$ParentProcessId -eq [int]$stateValue.OwnerPid) {
+                    return [long]$stateValue.OwnerStart
+                }
+                if ([int]$ParentProcessId -eq [int]$stateValue.RootCurrent.ParentProcessId) {
+                    return [long]$stateValue.RootParentStart
+                }
+                return & $script:GateBPairedOriginalParentStart ([int]$ParentProcessId)
+            }
+            Set-Item Function:\Get-VerifierProcessById -Force -Value {
+                param($ProcessId)
+                $stateValue = $script:GateBPairedState
+                if ([int]$ProcessId -eq [int]$stateValue.ChildPid) {
+                    if ($stateValue.Mode -eq 'initial-miss') { return $null }
+                    if ($stateValue.Mode -eq 'initial-null-exit') {
+                        $stateValue.NullInitialLookups++
+                        return $null
+                    }
+                    if ($stateValue.Mode -eq 'final-nonnull-exit') {
+                        $stateValue.FinalNonNullExitProcessByIdCalls++
+                        $liveProcess = $stateValue.ChildCurrent.Process
+                        if ($null -eq $liveProcess -or
+                                $liveProcess.GetType() -ne [Diagnostics.Process]) {
+                            Throw-VerifierInfrastructure 'paired final non-null exit proof did not retain a real Process object.'
+                        }
+                        if ([int]$stateValue.FinalNonNullExitProcessByIdCalls -le 2) {
+                            try {
+                                $liveProcess.Refresh()
+                                if ([bool]$liveProcess.HasExited) {
+                                    Throw-VerifierInfrastructure 'paired final non-null exit proof lost its live Process before the final lookup.'
+                                }
+                            } catch {
+                                if (Test-VerifierInfrastructureError $_) { throw }
+                                Throw-VerifierInfrastructure ('Could not inspect paired final non-null exit live lookup: ' +
+                                    (Get-VerifierErrorMessage $_))
+                            }
+                            $stateValue.FinalNonNullExitLiveLookups++
+                            return $liveProcess
+                        }
+                        if ([int]$stateValue.FinalNonNullExitProcessByIdCalls -eq 3) {
+                            if ($null -eq $stateValue.FinalProofFixture) {
+                                Throw-VerifierInfrastructure 'paired final non-null exit proof omitted its live fixture.'
+                            }
+                            Release-PairedDescendantFixture $stateValue.FinalProofFixture
+                            $stateValue.ChildExited = $true
+                            $stateValue.FinalNonNullExitReleaseCalls++
+                            $stateValue.FinalNonNullExitLookups++
+                            # Return the exact retained Process instance after its
+                            # natural exit so Get-VerifierCurrentOwnedProcessOnce
+                            # must traverse the final non-null Refresh/HasExited
+                            # guard rather than the initial-null branch.
+                            return $liveProcess
+                        }
+                        Throw-VerifierInfrastructure 'paired final non-null exit proof performed an unexpected extra Process lookup.'
+                    }
+                    if ($stateValue.ChildExited -and
+                            $stateValue.Mode -in @('normal', 'initial-exited-miss')) {
+                        $stale = $stateValue.ChildCurrent.Process
+                        if ($null -ne $stale -and
+                                $stale.GetType() -eq [Diagnostics.Process]) {
+                            try {
+                                $stale.Refresh()
+                                if ([bool]$stale.HasExited) {
+                                    if ($stateValue.Mode -eq 'normal') {
+                                        $stateValue.NonNullExitedLookups++
+                                    } else {
+                                        $stateValue.UnattestedNonNullExitedLookups++
+                                    }
+                                    return $stale
+                                }
+                            } catch { }
+                        }
+                    }
+                    if ($stateValue.Mode -eq 'typed-current-exit') {
+                        if ($stateValue.ChildExited) { return $null }
+                        return $stateValue.ChildCurrent.Process
+                    }
+                    if ($stateValue.Mode -eq 'identity-mismatch') {
+                        return $stateValue.ChildCurrent.Process
+                    }
+                }
+                $processResult = & $script:GateBPairedOriginalGetProcess ([int]$ProcessId)
+                return $processResult
+            }
+            Set-Item Function:\Get-VerifierProcessRecordsByIdWithFallback -Force -Value {
+                param($ProcessId, $Label)
+                $stateValue = $script:GateBPairedState
+                if ([int]$ProcessId -eq [int]$stateValue.OwnerPid) {
+                    return @($stateValue.RootWmi)
+                }
+                if ([int]$ProcessId -eq [int]$stateValue.ChildPid) {
+                    return @($stateValue.ChildWmi)
+                }
+                return & $script:GateBPairedOriginalById $ProcessId $Label
+            }
+            Set-Item Function:\Get-VerifierProcessRecordsByParentWithFallback -Force -Value {
+                param($ParentProcessId, $Label)
+                $stateValue = $script:GateBPairedState
+                if ([int]$ParentProcessId -eq [int]$stateValue.OwnerPid) {
+                    return @($stateValue.Candidate)
+                }
+                return @()
+            }
+            Set-Item Function:\Get-VerifierPreviouslyAttestedBrowserDescendantExit -Force -Value {
+                param($DrainScope, $CandidateRecord)
+                $stateValue = $script:GateBPairedState
+                $stateValue.PreviouslyAttestedCalls++
+                $stateValue.InNatural = $true
+                try {
+                    return & $script:GateBPairedOriginalPrevious $DrainScope $CandidateRecord
+                } finally {
+                    $stateValue.InNatural = $false
+                }
+            }
+            Set-Item Function:\Stop-VerifierVerifiedProcessExactly -Force -Value {
+                param($Process, $ExpectedStartTicks, $WaitMilliseconds, $ExpectedRecord)
+                $script:GateBPairedState.StopCalls++
+                return & $script:GateBPairedOriginalStop $Process $ExpectedStartTicks `
+                    $WaitMilliseconds $ExpectedRecord
+            }
+            # First prove the normal live path and retain the exact record,
+            # Process object, native handle, and immutable identity tuple.
+            Set-PairedChildState $positive 'normal' $false
+            $first = @(Invoke-PairedDescendant $positive)
+            if ($first.Count -ne 1 -or $null -eq $first[0] -or
+                    -not $first[0].PSObject.Properties['VerifierDrainAttestation'] -or
+                    $first[0].Process.GetType() -ne [Diagnostics.Process]) {
+                Throw-VerifierInfrastructure 'paired browser descendant live proof did not produce one fully attested real child record.'
+            }
+            $firstRecord = $first[0]
+            $firstProcess = $firstRecord.Process
+            $firstPid = [int]$firstRecord.ProcessId
+            $firstStart = [long]$firstRecord.ProcessStartTicks
+            Release-PairedDescendantFixture $positive
+            $state.ChildExited = $true
+            $state.Mode = 'normal'
+            $state.ChildCurrentCalls = 0
+            $state.NaturalCurrentCalls = 0
+            $second = @(Invoke-PairedDescendant $positive)
+            if ($second.Count -ne 1 -or
+                    -not [object]::ReferenceEquals($second[0], $firstRecord) -or
+                    -not [object]::ReferenceEquals($second[0].Process, $firstProcess) -or
+                    [int]$second[0].ProcessId -ne $firstPid -or
+                    [long]$second[0].ProcessStartTicks -ne $firstStart -or
+                    [int]$state.NonNullExitedLookups -lt 1 -or
+                    [int]$state.PreviouslyAttestedCalls -ne 1 -or
+                    [int]$state.NaturalCurrentCalls -ne 2) {
+                Throw-VerifierInfrastructure 'paired browser descendant natural exit did not return the original attested record after two current absence proofs.'
+            }
+
+            # The same attested natural exit must also be accepted when the
+            # initial post-exit provider lookup is a true null rather than a
+            # stale exited Process object.
+            Set-PairedChildState $nullInitial 'normal' $false
+            $nullInitialFirst = @(Invoke-PairedDescendant $nullInitial)
+            if ($nullInitialFirst.Count -ne 1 -or
+                    $nullInitialFirst[0].Process.GetType() -ne [Diagnostics.Process]) {
+                Throw-VerifierInfrastructure 'paired null-initial fixture did not produce a live attested record.'
+            }
+            $nullInitialRecord = $nullInitialFirst[0]
+            $nullInitialProcess = $nullInitialRecord.Process
+            $nullInitialBeforeHelpers = [int]$state.PreviouslyAttestedCalls
+            Release-PairedDescendantFixture $nullInitial
+            Set-PairedChildState $nullInitial 'initial-null-exit' $true
+            $InvokeNullInitial = @(Invoke-PairedDescendant $nullInitial)
+            if ($InvokeNullInitial.Count -ne 1 -or
+                    -not [object]::ReferenceEquals($InvokeNullInitial[0], $nullInitialRecord) -or
+                    -not [object]::ReferenceEquals($InvokeNullInitial[0].Process, $nullInitialProcess) -or
+                    [int]$state.NullInitialLookups -lt 1 -or
+                    [int]$state.PreviouslyAttestedCalls -ne ($nullInitialBeforeHelpers + 1) -or
+                    [int]$state.NaturalCurrentCalls -ne 2) {
+                Throw-VerifierInfrastructure 'paired null-initial natural exit did not return the original attested record after two current absence proofs.'
+            }
+
+            # A child that exits during the lower current-child proof starts
+            # live, is first attested, then disappears only after the first
+            # current record callback. The typed missing callback may reuse
+            # that prior attestation; it must not mint a new handle.
+            Set-PairedChildState $currentProof 'normal' $false
+            $currentFirst = @(Invoke-PairedDescendant $currentProof)
+            if ($currentFirst.Count -ne 1 -or
+                    $currentFirst[0].Process.GetType() -ne [Diagnostics.Process]) {
+                Throw-VerifierInfrastructure 'paired current-proof fixture did not produce a live attested record.'
+            }
+            $currentFirstRecord = $currentFirst[0]
+            $currentFirstProcess = $currentFirstRecord.Process
+            $state.CurrentProofFixture = $currentProof
+            Set-PairedChildState $currentProof 'typed-current-exit' $false
+            $beforeCurrentExitHelpers = [int]$state.PreviouslyAttestedCalls
+            $duringProof = @(Invoke-PairedDescendant $currentProof)
+            if ($duringProof.Count -ne 1 -or
+                    -not [object]::ReferenceEquals($duringProof[0], $currentFirstRecord) -or
+                    -not [object]::ReferenceEquals($duringProof[0].Process, $currentFirstProcess) -or
+                    [int]$state.PreviouslyAttestedCalls -ne ($beforeCurrentExitHelpers + 1) -or
+                    [int]$state.NaturalCurrentCalls -ne 2) {
+                Throw-VerifierInfrastructure 'paired browser descendant current-proof exit did not reuse the original attestation and its two absence proofs.'
+            }
+
+            # A child that exits only at the final Process lookup must traverse
+            # the non-null Refresh/HasExited guard in Get-VerifierCurrentOwnedProcessOnce.
+            # The candidate lookup and that helper's initial lookup both remain
+            # live; only the third lookup returns the same real Process object
+            # after natural exit. The retained helper then reuses the original
+            # attestation and performs its two independent current absences.
+            Set-PairedChildState $finalProof 'normal' $false
+            $finalFirst = @(Invoke-PairedDescendant $finalProof)
+            if ($finalFirst.Count -ne 1 -or
+                    $finalFirst[0].Process.GetType() -ne [Diagnostics.Process]) {
+                Throw-VerifierInfrastructure 'paired final non-null exit fixture did not produce a live attested record.'
+            }
+            $finalFirstRecord = $finalFirst[0]
+            $finalFirstProcess = $finalFirstRecord.Process
+            $state.FinalProofFixture = $finalProof
+            $state.FinalNonNullExitProcessByIdCalls = 0
+            $state.FinalNonNullExitLiveLookups = 0
+            $state.FinalNonNullExitLookups = 0
+            $state.FinalNonNullExitReleaseCalls = 0
+            $beforeFinalExitHelpers = [int]$state.PreviouslyAttestedCalls
+            Set-PairedChildState $finalProof 'final-nonnull-exit' $false
+            $finalDuringProof = @(Invoke-PairedDescendant $finalProof)
+            if ($finalDuringProof.Count -ne 1 -or
+                    -not [object]::ReferenceEquals($finalDuringProof[0], $finalFirstRecord) -or
+                    -not [object]::ReferenceEquals($finalDuringProof[0].Process, $finalFirstProcess) -or
+                    [int]$state.FinalNonNullExitProcessByIdCalls -ne 3 -or
+                    [int]$state.FinalNonNullExitLiveLookups -ne 2 -or
+                    [int]$state.FinalNonNullExitLookups -ne 1 -or
+                    [int]$state.FinalNonNullExitReleaseCalls -ne 1 -or
+                    -not [bool]$state.ChildExited -or
+                    [int]$state.PreviouslyAttestedCalls -ne ($beforeFinalExitHelpers + 1) -or
+                    [int]$state.NaturalCurrentCalls -ne 2) {
+                Throw-VerifierInfrastructure 'paired final non-null exit did not traverse the final exited-Process guard, retain the original attestation, and prove two current absences.'
+            }
+
+            # An untyped current-record identity mismatch also starts live and
+            # must fail at the current-child callback before the retained-exit
+            # helper is consulted.
+            Set-PairedChildState $identityProof 'normal' $false
+            $identityFirst = @(Invoke-PairedDescendant $identityProof)
+            if ($identityFirst.Count -ne 1 -or
+                    $identityFirst[0].Process.GetType() -ne [Diagnostics.Process]) {
+                Throw-VerifierInfrastructure 'paired identity-proof fixture did not produce a live attested record.'
+            }
+            Set-PairedChildState $identityProof 'identity-mismatch' $false
+            $beforeMismatchHelpers = [int]$state.PreviouslyAttestedCalls
+            [void](Assert-PairedTypedFailure {
+                [void](Invoke-PairedDescendant $identityProof)
+            } 'live-current-record-identity-mismatch')
+            if ([int]$state.PreviouslyAttestedCalls -ne $beforeMismatchHelpers) {
+                Throw-VerifierInfrastructure 'live current-record identity mismatch incorrectly entered the retained natural-exit helper.'
+            }
+
+            # Candidate identity changes are rejected even when a matching PID
+            # has already left the OS. They cannot borrow a prior attestation.
+            Set-PairedChildState $positive 'normal' $true
+            foreach ($case in @(
+                    [pscustomobject]@{ Name='altered-name'; Field='Name'; Value='other.exe' }
+                    [pscustomobject]@{ Name='altered-path'; Field='ExecutablePath'; Value='C:\other\browser.exe' }
+                    [pscustomobject]@{ Name='altered-command'; Field='CommandLine'; Value='different-command' }
+                    [pscustomobject]@{ Name='altered-parent'; Field='ParentProcessId'; Value=[int]$owner.ProcessParentProcessId })) {
+                $candidate = $positive.Candidate | Select-Object *
+                $candidate.($case.Field) = $case.Value
+                $state.Mode = 'normal'
+                $state.Candidate = $candidate
+                $state.ChildCurrentCalls = 0
+                $state.NaturalCurrentCalls = 0
+                $before = [int]$state.PreviouslyAttestedCalls
+                [void](Assert-PairedTypedFailure {
+                    [void](Invoke-PairedDescendant $positive)
+                } $case.Name)
+                $expectedHelperDelta = if ($case.Name -eq 'altered-command') { 1 } else { 0 }
+                if ([int]$state.PreviouslyAttestedCalls -ne ($before + $expectedHelperDelta)) {
+                    Throw-VerifierInfrastructure "candidate identity change '$($case.Name)' incorrectly entered the retained natural-exit helper."
+                }
+            }
+
+            # Scope and attestation capabilities are reference-bound. Copies,
+            # foreign scopes, copied attestations, and scalar mutations fail.
+            $state.Candidate = $positive.Candidate
+            $state.Mode = 'normal'
+            $scopeCopy = $positive.Scope | Select-Object *
+            [void](Assert-PairedTypedFailure {
+                [void](Get-VerifierDescendantProcessRecords $state.Owner $snapshot $scopeCopy)
+            } 'copied-scope')
+            $foreignScope = New-VerifierBrowserDrainScope
+            try {
+                [void](Assert-PairedTypedFailure {
+                    [void](Get-VerifierDescendantProcessRecords $state.Owner $snapshot $foreignScope)
+                } 'foreign-scope')
+            } finally {
+                foreach ($failure in @(Dispose-VerifierBrowserDrainScope $foreignScope)) {
+                    [void]$cleanupErrors.Add([string]$failure)
+                }
+            }
+            $attestation = $firstRecord.VerifierDrainAttestation
+            $attestationCopy = $attestation | Select-Object *
+            $firstRecord.VerifierDrainAttestation = $attestationCopy
+            try {
+                [void](Assert-PairedTypedFailure {
+                    [void](Invoke-PairedDescendant $positive)
+                } 'copied-attestation')
+            } finally { $firstRecord.VerifierDrainAttestation = $attestation }
+            $originalScope = $attestation.Scope
+            $attestation.Scope = $foreignScope
+            try {
+                [void](Assert-PairedTypedFailure {
+                    [void](Invoke-PairedDescendant $positive)
+                } 'foreign-attestation')
+            } finally { $attestation.Scope = $originalScope }
+            $originalCommand = [string]$attestation.CommandLine
+            $attestation.CommandLine = $originalCommand + ' mutated'
+            try {
+                [void](Assert-PairedTypedFailure {
+                    [void](Invoke-PairedDescendant $positive)
+                } 'mutated-attestation')
+            } finally { $attestation.CommandLine = $originalCommand }
+
+            # A late current absence proof is bounded and remains typed; the
+            # helper never widens the 500 ms proof interval.
+            $state.Mode = 'late-proof'
+            $state.Candidate = $positive.Candidate
+            $state.ChildCurrentCalls = 0
+            $state.NaturalCurrentCalls = 0
+            $state.LateProofSlept = $false
+            [void](Assert-PairedTypedFailure {
+                [void](Invoke-PairedDescendant $positive)
+            } 'late-absence-proof')
+            if (-not $state.LateProofSlept -or [int]$state.NaturalCurrentCalls -ne 1) {
+                Throw-VerifierInfrastructure 'late natural-exit absence proof did not stop inside the bounded helper.'
+            }
+
+            # First-ever/unattested disappearance is never eligible for the
+            # retained-exit lane, even when the candidate record is otherwise
+            # complete and the Process exited naturally.
+            Set-PairedChildState $missing 'initial-miss' $false
+            Release-PairedDescendantFixture $missing
+            Set-PairedChildState $missing 'initial-miss' $true
+            $beforeMissingHelpers = [int]$state.PreviouslyAttestedCalls
+            [void](Assert-PairedTypedFailure {
+                [void](Invoke-PairedDescendant $missing)
+            } 'first-ever-unattested-missing-child')
+            if ([int]$state.PreviouslyAttestedCalls -ne ($beforeMissingHelpers + 1) -or
+                    [int]$state.NaturalCurrentCalls -ne 0) {
+                Throw-VerifierInfrastructure 'first-ever missing child was treated as a retained natural exit.'
+            }
+
+            # A first-ever child that is returned as a stale exited Process is
+            # equally ineligible for the retained-exit lane.
+            Set-PairedChildState $missingExited 'initial-exited-miss' $false
+            Release-PairedDescendantFixture $missingExited
+            Set-PairedChildState $missingExited 'initial-exited-miss' $true
+            $beforeMissingExitedHelpers = [int]$state.PreviouslyAttestedCalls
+            [void](Assert-PairedTypedFailure {
+                [void](Invoke-PairedDescendant $missingExited)
+            } 'first-ever-unattested-exited-child')
+            if ([int]$state.UnattestedNonNullExitedLookups -lt 1 -or
+                    [int]$state.PreviouslyAttestedCalls -ne ($beforeMissingExitedHelpers + 1) -or
+                    [int]$state.NaturalCurrentCalls -ne 0) {
+                Throw-VerifierInfrastructure 'first-ever exited child was treated as a retained natural exit.'
+            }
+
+            if ([int]$state.StopCalls -ne 0) {
+                Throw-VerifierInfrastructure 'paired natural-exit canary invoked exact process stop for a naturally exited child.'
+            }
+            return [pscustomobject]@{
+                PositiveInitialAttestation = $true
+                PositiveNonNullExitedLookup = ([int]$state.NonNullExitedLookups -gt 0)
+                PositiveNullInitialLookupExit = ([int]$state.NullInitialLookups -gt 0)
+                PositiveCurrentProofExit = $true
+                PositiveFinalNonNullExitGuard = ([int]$state.FinalNonNullExitLookups -eq 1 -and
+                    [int]$state.FinalNonNullExitLiveLookups -eq 2 -and
+                    [int]$state.FinalNonNullExitReleaseCalls -eq 1)
+                TwoCurrentAbsenceProofs = $true
+                FirstEverUnattestedMissing = $true
+                FirstEverUnattestedExited = $true
+                PresentOrReusedRejected = $true
+                LiveCurrentIdentityMismatchRejected = $true
+                AlteredIdentityRejected = $true
+                CopiedForeignMutatedAttestationRejected = $true
+                LateProofRejected = $true
+                NoNaturalExitStop = ([int]$state.StopCalls -eq 0)
+            }
+        } finally {
+            foreach ($fixture in @($fixtures)) {
+                Dispose-PairedDescendantFixture $fixture
+            }
+            foreach ($name in $functionNames) {
+                Set-Item -LiteralPath ('Function:\' + $name) `
+                    -Value $originals[$name] -Force
+            }
+            foreach ($name in @('GateBPairedState', 'GateBPairedOriginalCurrent',
+                    'GateBPairedOriginalParentStart', 'GateBPairedOriginalGetProcess',
+                    'GateBPairedOriginalOwned', 'GateBPairedOriginalById',
+                    'GateBPairedOriginalByParent', 'GateBPairedOriginalPrevious',
+                    'GateBPairedOriginalStop')) {
+                Remove-Variable -Scope Script -Name $name -Force -ErrorAction SilentlyContinue
+            }
+            if ($cleanupErrors.Count -gt 0) {
+                Throw-VerifierInfrastructure ('paired browser descendant fixture cleanup failed: ' +
+                    ($cleanupErrors -join '; '))
+            }
+        }
+    }
+    Assert-GateB ([bool]$probe.PositiveInitialAttestation -and
+        [bool]$probe.PositiveNonNullExitedLookup -and
+        [bool]$probe.PositiveNullInitialLookupExit -and
+        [bool]$probe.PositiveCurrentProofExit -and
+        [bool]$probe.PositiveFinalNonNullExitGuard -and
+        [bool]$probe.TwoCurrentAbsenceProofs -and
+        [bool]$probe.FirstEverUnattestedMissing -and
+        [bool]$probe.FirstEverUnattestedExited -and
+        [bool]$probe.PresentOrReusedRejected -and
+        [bool]$probe.LiveCurrentIdentityMismatchRejected -and
+        [bool]$probe.AlteredIdentityRejected -and
+        [bool]$probe.CopiedForeignMutatedAttestationRejected -and
+        [bool]$probe.LateProofRejected -and
+        [bool]$probe.NoNaturalExitStop) `
+        'paired browser descendant disappearance canary did not validate every positive/negative lane'
+    Write-Host 'PASS:paired browser descendant natural-exit retention, final exited-Process guard, current-proof race, identity/attestation negatives, bounded absence, and no-stop contract'
+}
+
 function Invoke-GateBBrowserNaturalShutdownCanary() {
     # The TCP fixture exercises the selected ClientWebSocket implementation.
     # It is bounded, loopback-only, and owns its listener, client, and worker.
@@ -12778,6 +13533,7 @@ function Invoke-GateBDriver() {
             return 0
         }
         if ($GateBBrowserNaturalShutdownProbe) {
+            Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary
             Invoke-GateBBrowserNaturalShutdownCanary
             return 0
         }
@@ -12842,6 +13598,7 @@ function Invoke-GateBDriver() {
         }
         if ($GateBProcessOwnershipProbe) {
             Invoke-GateBProcessOwnershipCanary
+            Invoke-GateBDescendantCleanupCanary
             return 0
         }
         if ($GateBProcessIdentityPidZeroProbe) {
@@ -12900,6 +13657,7 @@ function Invoke-GateBDriver() {
         Invoke-GateBListenerInspectionFailureCheck
         Invoke-GateBCdpHandshakeCanary
         Invoke-GateBCdpReferenceCanary
+        Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary
         Invoke-GateBBrowserNaturalShutdownCanary
         Invoke-GateBDriverInfrastructureCheck
         if ($SkipJdkCheck) {

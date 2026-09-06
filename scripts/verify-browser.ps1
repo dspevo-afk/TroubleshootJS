@@ -4119,6 +4119,7 @@ function verifyTask39NormalPlayer([string]$url,
     $session = $null
     try {
         $session = startVerifierBrowser 'task39-normal-player' $url
+        $evidencePrefix = 'task39-player-' + [string]$session.RouteId + '-'
         $profile = $session.Profile
         $browser = $session.Browser
         $socket = $session.Socket
@@ -4135,19 +4136,19 @@ function verifyTask39NormalPlayer([string]$url,
             throw "Task 39 normal-player privacy/control boundary failed: $($initial | ConvertTo-Json -Compress)"
         }
         if ($script:VerifierEvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (getVerifierEvidencePath 'task39-player-initial.png') ([ref]$failures)
+            captureBrowserScreenshot $socket ([ref]$nextId) (getVerifierEvidencePath ($evidencePrefix + 'initial.png')) ([ref]$failures)
         }
         foreach ($command in $commandButtons) {
             clickButton $socket ([ref]$nextId) $command ([ref]$failures)
             waitForAnimationFrames $socket ([ref]$nextId) $deadline ([ref]$failures)
         }
         if ($script:VerifierEvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (getVerifierEvidencePath 'task39-player-after-inputs.png') ([ref]$failures)
+            captureBrowserScreenshot $socket ([ref]$nextId) (getVerifierEvidencePath ($evidencePrefix + 'after-inputs.png')) ([ref]$failures)
         }
         clickButton $socket ([ref]$nextId) $retestButton ([ref]$failures)
         waitForCdp $socket ([ref]$nextId) "document.body.innerText.includes('Customer retest did not pass.')" $deadline ([ref]$failures) 'Task 39 visible customer retest result'
         if ($script:VerifierEvidenceDirectory) {
-            captureBrowserScreenshot $socket ([ref]$nextId) (getVerifierEvidencePath 'task39-player-retest-result.png') ([ref]$failures)
+            captureBrowserScreenshot $socket ([ref]$nextId) (getVerifierEvidencePath ($evidencePrefix + 'retest-result.png')) ([ref]$failures)
         }
         if ($failures.Count -gt 0) { throw ($failures -join '; ') }
         cleanupBrowser $browser $socket $profile

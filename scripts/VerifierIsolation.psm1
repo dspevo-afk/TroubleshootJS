@@ -1735,7 +1735,35 @@ function Assert-VerifierRawProcessRecord($Record,
     }
     if ($RequireCommandLine -and
             [String]::IsNullOrWhiteSpace($commandProperty.Value)) {
-        Throw-VerifierInfrastructure "$Label carried an empty raw command-line identity."
+        $emptyIdentityMessage = "$Label carried an empty raw command-line identity."
+        try {
+            # Diagnostics describe captured observations only. A prior PID
+            # binding is not exit proof or permission to accept empty identity.
+            $rawProcessId = [int]$pidProperty.Value
+            $rawParentId = [int]$parentProperty.Value
+            $rawPriorBindings = 0
+            $rawPriorParentBindings = 0
+            foreach ($rawScope in $script:VerifierBrowserDrainScopes) {
+                foreach ($rawBinding in $rawScope.Item3) {
+                    if ([long]$rawBinding.Item4.Item1 -eq [long]$rawProcessId) {
+                        $rawPriorBindings++
+                        if ([long]$rawBinding.Item4.Item3 -eq [long]$rawParentId) {
+                            $rawPriorParentBindings++
+                        }
+                    }
+                }
+            }
+            $rawCallers = (@(Get-PSCallStack | Select-Object -First 12 `
+                -ExpandProperty FunctionName) -join '>')
+            $emptyIdentityMessage += (' [raw-identity pid={0}; parent={1}; ' +
+                'activeDrains={2}; priorBindings={3}; priorParentBindings={4}; callers={5}]') -f `
+                $rawProcessId, $rawParentId, $script:VerifierBrowserDrainScopes.Count,
+                $rawPriorBindings, $rawPriorParentBindings, $rawCallers
+        } catch {
+            # Missing diagnostic state must preserve the original failure.
+            $emptyIdentityMessage = "$Label carried an empty raw command-line identity."
+        }
+        Throw-VerifierInfrastructure $emptyIdentityMessage
     }
     foreach ($propertyName in @('ProcessStartTicks', 'ParentProcessStartTicks')) {
         $property = $Record.PSObject.Properties[$propertyName]
@@ -6890,9 +6918,24 @@ function Assert-VerifierProcessSnapshotComplete($Snapshot, [string]$Purpose) {
         $seen[$processId] = $true
         $process = Get-VerifierProcessById $processId
         if ($null -eq $process) {
-        Throw-VerifierInfrastructureMissingProcess `
-            "The $Purpose process snapshot contained PID $processId that could not be inspected." `
-            $processId
+            # Inspect only captured data after selecting the same failure.
+            # These counts describe existing scopes; they grant no ownership.
+            $priorBindingCount = 0
+            foreach ($scopeRegistration in @($script:VerifierBrowserDrainScopes)) {
+                foreach ($scopeBinding in @($scopeRegistration.Item3)) {
+                    if ([int]$scopeBinding.Item4.Item1 -eq $processId) { $priorBindingCount++ }
+                }
+            }
+            $processType = [regex]::Match($item.CommandLine,
+                '(?:^|[\s"])--type=([A-Za-z0-9_.:-]+)').Groups[1].Value
+            $utilitySubtype = [regex]::Match($item.CommandLine,
+                '(?:^|[\s"])--utility-sub-type=([A-Za-z0-9_.:-]+)').Groups[1].Value
+            $callerNames = @((Get-PSCallStack) | Select-Object -ExpandProperty FunctionName) -join '>'
+            Throw-VerifierInfrastructureMissingProcess `
+                ("The $Purpose process snapshot contained PID $processId that could not be inspected. " +
+                    "[activeDrains=$($script:VerifierBrowserDrainScopes.Count); priorBindings=$priorBindingCount; " +
+                    "parent=$($item.ParentProcessId); processType=$processType; utilitySubtype=$utilitySubtype; " +
+                    "callers=$callerNames]") $processId
         }
         try {
             if ((Get-VerifierProcessStartTicks $process) -le 0) {
@@ -8312,9 +8355,12 @@ function Get-VerifierCurrentOwnedProcessOnce($OwnerRecord, $Recorded, [switch]$R
     try { $verifiedProcess.Refresh() } catch {
         Throw-VerifierInfrastructure "Could not refresh owned process PID $pidValue immediately before termination: $(Get-VerifierErrorMessage $_)"
     }
-    if ([bool]$verifiedProcess.HasExited -or
-            (Get-VerifierProcessStartTicks $verifiedProcess) -ne [long]$current.ProcessStartTicks) {
-        Throw-VerifierInfrastructure "Owned process PID $pidValue changed or exited after current identity validation."
+    if ([bool]$verifiedProcess.HasExited) {
+        Throw-VerifierInfrastructureMissingProcess `
+            "Owned process PID $pidValue exited after current identity validation." $pidValue
+    }
+    if ((Get-VerifierProcessStartTicks $verifiedProcess) -ne [long]$current.ProcessStartTicks) {
+        Throw-VerifierInfrastructure "Owned process PID $pidValue changed start identity after current identity validation."
     }
     return [pscustomobject]@{ Process = $verifiedProcess; Record = $current }
 }
@@ -9412,6 +9458,73 @@ function Get-VerifierBrowserDrainNaturalExitResult($DrainScope, $Record) {
     }
 }
 
+function Get-VerifierPreviouslyAttestedBrowserDescendantExit($DrainScope, $CandidateRecord) {
+    # Candidate enumeration is not ownership proof. A stale later observation
+    # may refer only to the original fully verified record in this live drain
+    # scope; it must never mint a handle or adopt an initially missing child.
+    $proofBudget = [Diagnostics.Stopwatch]::StartNew()
+    $proofBudgetTicks = [long][Math]::Ceiling(
+        ([double][Diagnostics.Stopwatch]::Frequency * 500) / 1000.0)
+    if ($null -eq $DrainScope) { return $null }
+    Assert-VerifierBrowserDrainScope $DrainScope 'repeated browser descendant observation'
+    [void](Assert-VerifierRawProcessRecord $CandidateRecord `
+        'repeated browser descendant candidate' -RequirePositiveIdentity -RequireCommandLine)
+    $registration = Get-VerifierBrowserDrainScopeRegistration $DrainScope
+    $retainedRecord = $null
+    foreach ($binding in @($registration.Item3)) {
+        if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
+            Throw-VerifierInfrastructure 'Repeated browser descendant exit proof exceeded its bounded interval during retained-identity lookup.'
+        }
+        if ([int]$binding.Item4.Item1 -ne [int]$CandidateRecord.ProcessId) { continue }
+        $priorRecord = $binding.Item2
+        # Validate the private binding before reading public record fields.
+        # Copied, mutated, substituted, or cross-scope capabilities stay fatal.
+        [void](Get-VerifierBrowserDrainAttestation $DrainScope $priorRecord)
+        # WMI uses UInt32 PIDs and the native fallback uses Int32. Compare
+        # only after raw integral validation, without boxed-type inequality.
+        foreach ($field in @('ProcessId', 'ParentProcessId')) {
+            if ([long]$CandidateRecord.$field -ne [long]$priorRecord.$field) {
+                Throw-VerifierInfrastructure "Repeated browser descendant PID $($CandidateRecord.ProcessId) changed its observed $field before natural-exit proof."
+            }
+        }
+        foreach ($field in @('Name', 'ExecutablePath', 'CommandLine')) {
+            if (-not $CandidateRecord.PSObject.Properties[$field] -or
+                    -not [object]::Equals($CandidateRecord.$field, $priorRecord.$field)) {
+                Throw-VerifierInfrastructure "Repeated browser descendant PID $($CandidateRecord.ProcessId) changed its observed $field before natural-exit proof."
+            }
+        }
+        foreach ($field in @('ProcessStartTicks', 'ParentProcessStartTicks')) {
+            if ($CandidateRecord.PSObject.Properties[$field] -and
+                    (-not (Test-VerifierStrictIntegralValue $CandidateRecord.$field 1 ([long]::MaxValue)) -or
+                        [long]$CandidateRecord.$field -ne [long]$priorRecord.$field)) {
+                Throw-VerifierInfrastructure "Repeated browser descendant PID $($CandidateRecord.ProcessId) changed its observed $field before natural-exit proof."
+            }
+        }
+        if ($null -ne $retainedRecord) {
+            foreach ($field in @('ProcessId', 'ProcessStartTicks', 'ParentProcessId',
+                    'ParentProcessStartTicks', 'Name', 'ExecutablePath', 'CommandLine')) {
+                if (-not [object]::Equals($retainedRecord.$field, $priorRecord.$field)) {
+                    Throw-VerifierInfrastructure "Repeated browser descendant PID $($CandidateRecord.ProcessId) had conflicting retained $field identities."
+                }
+            }
+        } else {
+            $retainedRecord = $priorRecord
+        }
+    }
+    if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
+        Throw-VerifierInfrastructure 'Repeated browser descendant exit proof exceeded its bounded interval before current absence proof.'
+    }
+    if ($null -eq $retainedRecord) { return $null }
+    $naturalExit = Get-VerifierBrowserDrainNaturalExitResult $DrainScope $retainedRecord
+    # Include lookup, candidate comparison, attestation validation and both
+    # independent current absence observations in one whole-call 500 ms budget.
+    if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
+        Throw-VerifierInfrastructure 'Repeated browser descendant exit proof exceeded its bounded interval.'
+    }
+    if ($null -eq $naturalExit) { return $null }
+    return $retainedRecord
+}
+
 function Get-VerifierDescendantProcessRecords($RootOwnerRecord, $Snapshot,
         $DrainScope = $null) {
     # The full snapshot is supplemented with an exact WMI child query for each
@@ -9537,9 +9650,52 @@ function Get-VerifierDescendantProcessRecords($RootOwnerRecord, $Snapshot,
             Throw-VerifierInfrastructure "Browser descendant PID $id omitted or mismatched the configured executable identity."
         }
         $childProcess = Get-VerifierProcessById $id
-        if ($null -eq $childProcess) {
+        $childExited = $false
+        if ($null -ne $childProcess) {
+            if ($childProcess.GetType() -ne [Diagnostics.Process] -or
+                    [int]$childProcess.Id -ne $id) {
+                Throw-VerifierInfrastructure "Browser descendant PID $id returned a mismatched current Process object."
+            }
+            try {
+                [void]$childProcess.Refresh()
+                $childExited = [bool]$childProcess.HasExited
+            } catch {
+                Throw-VerifierInfrastructure "Could not inspect browser descendant PID $id liveness during ownership cleanup: $(Get-VerifierErrorMessage $_)"
+            }
+        }
+        if ($null -eq $childProcess -or $childExited) {
+            # Windows may return a Process object whose child has already
+            # exited. It carries no new live start-identity proof; use only
+            # an original attestation, with the same independent absences.
+            $retainedExit = Get-VerifierPreviouslyAttestedBrowserDescendantExit `
+                $DrainScope $child
+            if ($null -ne $retainedExit) {
+                $verifiedStartByPid[$id] = [long]$retainedExit.ProcessStartTicks
+                $verifiedRecordByPid[$id] = $retainedExit
+                [void]$result.Add($retainedExit)
+                continue
+            }
+            # Failure diagnostics read only the already captured candidate and
+            # private scope bindings. Do not query a new process/handle here or
+            # turn an initially unproven disappearance into an accepted exit.
+            $priorBindingCount = 0
+            foreach ($scopeRegistration in @($script:VerifierBrowserDrainScopes)) {
+                if (-not [object]::ReferenceEquals($scopeRegistration.Item1, $DrainScope)) {
+                    continue
+                }
+                foreach ($scopeBinding in @($scopeRegistration.Item3)) {
+                    if ([int]$scopeBinding.Item4.Item1 -eq $id) { $priorBindingCount++ }
+                }
+            }
+            $processType = [regex]::Match($childIdentityRecord.CommandLine,
+                '(?:^|[\s"])--type=([A-Za-z0-9_.:-]+)').Groups[1].Value
+            $utilitySubtype = [regex]::Match($childIdentityRecord.CommandLine,
+                '(?:^|[\s"])--utility-sub-type=([A-Za-z0-9_.:-]+)').Groups[1].Value
             Throw-VerifierInfrastructureMissingProcess `
-                "Could not inspect browser descendant PID $id during ownership cleanup." $id
+                ("Could not inspect browser descendant PID $id during ownership cleanup. " +
+                    "[scopePresent=$($null -ne $DrainScope); priorBindings=$priorBindingCount; " +
+                    "currentProcessPresent=$($null -ne $childProcess); currentProcessExited=$childExited; " +
+                    "processType=$processType; utilitySubtype=$utilitySubtype]") $id
         }
         $childIdentityRecord.ProcessStartTicks = Get-VerifierProcessStartTicks $childProcess
         if ([long]$childIdentityRecord.ProcessStartTicks -le 0) {
@@ -9548,10 +9704,29 @@ function Get-VerifierDescendantProcessRecords($RootOwnerRecord, $Snapshot,
         # `$rootOwner` is the root owner and must remain untouched. PowerShell
         # variable names are case-insensitive, so a child local can never
         # replace it and make the child validate against itself.
-        $verified = if ($rootOwner.PSObject.Properties['Profile']) {
-            Get-VerifierCurrentOwnedDescendantWithRetry $rootOwner $childIdentityRecord
-        } else {
-            Get-VerifierCurrentOwnedProcessOnce $rootOwner $childIdentityRecord
+        $verified = $null
+        try {
+            $verified = if ($rootOwner.PSObject.Properties['Profile']) {
+                Get-VerifierCurrentOwnedDescendantWithRetry $rootOwner $childIdentityRecord
+            } else {
+                Get-VerifierCurrentOwnedProcessOnce $rootOwner $childIdentityRecord
+            }
+        } catch {
+            # An already attested child can also exit during the subsequent
+            # fresh live proof. Only a typed disappearance for this exact PID
+            # may consult the retained handle; changed identity, inaccessible
+            # data, and expired proof budgets remain unconditional failures.
+            if ((Get-VerifierMissingProcessId $_) -eq $id) {
+                $retainedExit = Get-VerifierPreviouslyAttestedBrowserDescendantExit `
+                    $DrainScope $childIdentityRecord
+                if ($null -ne $retainedExit) {
+                    $verifiedStartByPid[$id] = [long]$retainedExit.ProcessStartTicks
+                    $verifiedRecordByPid[$id] = $retainedExit
+                    [void]$result.Add($retainedExit)
+                    continue
+                }
+            }
+            throw
         }
         $verified.Record | Add-Member -NotePropertyName ParentProcessStartTicks `
             -NotePropertyValue ([long]$currentParent.ProcessStartTicks) -Force

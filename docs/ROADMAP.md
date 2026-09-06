@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-09-05 — Task 44 contract accepted; Task 45 authorized after verified Task 44 publication; Task 46 unstarted_
+_Last updated: 2026-09-06 — Task 44 published at 10dcafa; Task 45 accepted with complete qualification; Task 46 unstarted_
 
 ## Purpose
 
@@ -1724,7 +1724,30 @@ findings.
 
 ## Task 45 — Typed Electrical Domains and Port Compatibility Preflight
 
-**Status:** `[>] AUTHORIZED — IMPLEMENT AFTER VERIFIED TASK 44 PUBLICATION`
+**Status:** `[x] COMPLETE — ACCEPTED`
+
+Task 44 was published and its remote SHA verified at
+`10dcafa36fa9c40d97ee6460aa41df5836e8ea9b`. The existing two-task authorization
+permits this task to proceed without another approval; it stops before Task 46.
+
+The immutable contract, pure checker and read-only adapters pass 449 focused
+assertions, the final five-permutation JDK8/GWT build and fresh independent Luna
+review. All 55 selected legacy routes qualify in 20 complete exit-0 invocations,
+including separate NPN/NMOS control/load inputs and all six Task39 routes.
+Every accepted invocation completed browser, preview, profile and lease cleanup.
+
+Owner-authorized tooling repairs preserve a previously attested child's natural
+exit proof, improve failure-only diagnostics, separate coincident synthetic
+fixture wires and give Task39 screenshots distinct session-scoped names. Nine
+affected process probes and fresh independent delta reviews pass. Final
+independent evidence reconciliation verifies the full route set, exact source
+pins and all nine Task39 artifacts. Earlier exit-2 runs remain failed; reviewed
+dependency audits support only the explicitly documented successful-gate reuse.
+Original failure receipts are preserved, owned processes are stopped and the
+disposable Chrome package/profiles are removed. Intermittent strict identity
+failures remain a tooling follow-up, and three policy-rejected Edge profiles
+remain as recorded in the [Task 45 evidence](task-evidence/task-45/README.md).
+This completes the authorized sequence; Task 46 remains unstarted.
 
 **Purpose:** Prevent semantically nonsensical block connections before building
 an expensive solver candidate.
@@ -3624,5 +3647,7 @@ The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.
 records the accepted composition, historical failures, reuse and remaining
 limits. The owner approved the final `a5e8efa` handoff and explicitly authorized
 Tasks 44 then 45. Task 44's contract, focused tests, final build and independent
-review pass. After its verified publication, implement Task 45 under the same
-authorization; after Task 45, stop before the unstarted Task 46.
+review pass, and its publication at `10dcafa` is verified. Task 45 is accepted:
+focused tests, final production build, all 55 selected legacy routes and fresh
+independent reviews pass. The two-task authorization is complete; stop before
+Task 46, which remains unstarted and outside this authorization.

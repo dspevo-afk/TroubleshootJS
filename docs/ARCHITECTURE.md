@@ -48,6 +48,64 @@ The focused Java contract harness explicitly compiles and exercises these
 otherwise-unreferenced production classes without the solver/GWT runtime. The
 normal five-permutation JDK8/GWT build remains a separate production gate.
 
+## Electrical port metadata and preflight — Task 45
+
+Task 45 is accepted: focused tests, the final production build, all 55 selected
+legacy routes and independent review pass, with evidence reuse and limits in
+the [Task 45 evidence](task-evidence/task-45/README.md).
+
+`ElectricalPortContract` separates role, block-relative direction, source/sink
+behavior, drive/loading, voltage evidence, reference/isolation, digital levels,
+merge policy and required/provided accessibility. Immutable scalar and range
+values distinguish known, unknown and not applicable; nominal voltage does not
+imply tolerance, capacity, loading or switching thresholds. Constructor checks
+reject nonfinite/inverted values, negative current bounds, contradictory level
+declarations and missing references. `ElectricalContractException` reports a
+stable code and field/entity ID.
+
+`ElectricalBlockContract` binds one electrical declaration to each exact Task 44
+port and validates its local reference net. References are scoped by block
+instance and local net; matching `GND` labels across blocks do not establish a
+common reference. Isolation IDs are explicit device-domain declarations. A
+regulator, divider, level shifter, relay or isolation barrier can declare its
+input/output port pair with separate voltage evidence. Isolated sides retain
+distinct references and isolation IDs. The contract performs no conversion or
+internal wiring and makes no claim about an adapter's simulated implementation.
+
+Device intent owns immutable `ElectricalConnection` proposals.
+`PortCompatibilityPreflight.check` implements `TSJ-PORT-PREFLIGHT-1` over these
+descriptions. Per-call semantic equivalence combines overlapping proposals and
+local conductive aliases so that group conflicts and aggregate current demand
+cannot hide in separate pair checks. Only explicitly permitted return wiring
+with adequate isolation evidence establishes a common reference. Different
+isolation domains cannot merge; incomplete reference evidence stays unproven.
+
+Supported source/load groups require one voltage driver, full source-range
+containment in each receiver's limits, and capacity covering the sum of declared
+bounded loading. Digital/control receivers additionally require adequate LOW
+and HIGH guarantees, thresholds and matching active levels. Equal nominal
+voltages do not permit multiple driven outputs. Logic-to-analog transfer remains
+unsupported even when numerical ranges fit. Open-drain low-side sinking
+does not provide a positive supply; pull-up/transfer analysis remains unsupported
+in v1. Declared access requirements are checked without claiming later physical
+reachability. Wiring an adapter's input and output together is rejected.
+
+Results are `COMPATIBLE`, `INCOMPATIBLE`, `INSUFFICIENT_INFORMATION` or `MALFORMED`,
+with stable, canonical connection/port/field diagnostics. Compatibility certifies
+only this declared policy, not solver operation, electrical safety or challenge
+validity. No BoardNet, CircuitJS candidate, allocator or runtime owner is created
+or changed by checking a proposal.
+
+`LegacyInputPortMetadata` reads the existing external-input, pad and optional
+nameplate objects into an immutable external-input contribution view. It copies
+the actual IDs and nominal values; missing specifications remain unknown.
+`LowSideSwitchInputMetadata` is the leaf-owned provider for the existing NPN/NMOS
+load/control input mappings. It verifies the separate J1/J2 boundary and assigns
+roles without a family switch or numeric value table in the generic checker.
+These adapters are callable metadata utilities, not new production admission
+gates; existing generators, seeds, electrical graphs and player behavior retain
+their accepted paths. Task 46 and runtime composition remain unstarted.
+
 `ProbeTarget` describes where a user placed a probe: validity, semantic target
 identity, marker position, and resolution to a `CircuitMeasurementEndpoint`.
 It does not perform a measurement. `CircuitPostProbeTarget` identifies a
@@ -1777,6 +1835,12 @@ generated LED family's real `R1` path when available), with `C1` as the RC
 fallback. The same helper exercises both terminal positions, including the
 explicit RC `C1.+` regression while C1 remains mounted and lifted.
 
+The detached loose-projection fixture assigns distinct electrical backing-wire
+coordinates to each concurrently inserted canary part. Those coordinates do
+not affect tray geometry or terminal identity; they prevent unrelated loose
+parts from creating accidental shared nodes and parallel wire loops during
+the real measurement and solver-restoration checks.
+
 The canary preserves positive connected/lifted/reconnected/graph-only-removed
 behavior and checks board-pad precedence, provider point/bounds and marker
 agreement, non-overlapping board/component probe surfaces, target-class and
@@ -2255,6 +2319,31 @@ unproved or missing child remains infrastructure failure. The scope releases
 its retained handles on success and failure. Complete graph, root, listener,
 profile, and claim cleanup requirements remain in force. This implementation's
 current review and host-qualification status is recorded in the task report.
+
+Repeated descendant discovery can encounter a child that was fully attested
+in an earlier observation but has since exited. In that case the private
+`Get-VerifierPreviouslyAttestedBrowserDescendantExit` helper reconciles the
+candidate's exact parent/name/executable/command and any supplied start
+identities against all bindings for that PID in the same live drain scope.
+It returns only an original registered record after the existing retained-handle
+and two-current-absence proof succeeds. Its whole-call 500 ms budget includes
+the binding lookup and reconciliation. An initially missing or already-exited
+child without that original capability still fails, as do altered capabilities,
+identity changes, unavailable observations and late proof. The current parent
+ancestry proof remains mandatory before admitting each candidate. The shared
+live-process guard distinguishes an observed exit using its typed missing-PID
+error; only that exact descendant's disappearance can consult a prior binding.
+The Task 45 report records qualification of this bounded cleanup repair.
+
+At already-selected missing-child failures, diagnostics include captured drain
+and prior-attestation counts, sanitized Chromium process type/subtype, and
+function names at the complete-snapshot boundary. These diagnostics add no
+process-provider query or ownership authority and preserve the typed failure,
+its PID and existing deadline/exit semantics.
+The shared empty-command-line guard likewise reports validated child/parent PIDs,
+active-scope and prior-binding counts, and up to twelve function names. Diagnostic
+errors restore the original message before its unconditional infrastructure
+failure. Counts describe captured state; they cannot establish ownership or exit.
 
 For an attached browser, cleanup can request Edge's normal shutdown through a
 new private browser-level CDP socket. The `/json/version` endpoint must resolve

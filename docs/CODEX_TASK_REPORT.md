@@ -1,6 +1,264 @@
 # TroubleshootJS — Current Task Report
 
-## Current checkpoint — Task 44 accepted contract — 2026-09-05
+## Current checkpoint — Task 45 electrical port preflight — 2026-09-06
+
+- **Scope/status: COMPLETE — ACCEPTED.** The owner-approved Task 43P baseline is
+  `a5e8efa775b52914a87269103a316c10669a5305`. Task 44 was separately accepted,
+  pushed and notified at `10dcafa36fa9c40d97ee6460aa41df5836e8ea9b` before Task 45
+  began. This completes the authorized Tasks 44–45 sequence. Task 46 and runtime
+  composition remain unstarted.
+- **Candidate/ownership:** Branch `codex/task43p-final-recovery`, Task 44 base
+  HEAD `10dcafa36fa9c40d97ee6460aa41df5836e8ea9b`. The accepted 13-file
+  implementation/test/runner fingerprint is
+  `301058d9eb0a111bf6343aee881665da28dbce0a4c0d29fdb6f0ae75c0f1ab13`.
+  The containing Git commit also records four documentation paths, for 17
+  intended paths total. Astra integrated all work; Luna assignments are complete.
+  No pre-existing work or global Windows/runtime settings were changed.
+- **Changes:** Immutable typed ports and block/adapter contracts, deterministic
+  pure compatibility preflight and nominal-only legacy input adaptation.
+  Owner-authorized tooling fixes retain previously attested natural child exits,
+  add failure-only identity diagnostics, separate coincident loose-part fixture
+  wires and give Task39 screenshots distinct existing-session names. Electrical
+  runtime, generators, seeds, stable IDs and player controls retain their owners.
+- **Validation: PASS.** Actual-source JDK8 suites: 247 + 202 assertions. Final
+  JDK8/GWT build: all five OBF permutations, 40.082 s compile / 1.102 s link.
+  Nine affected process-boundary probes freshly pass on module `a5420969...`
+  and oracle `b3d1e1a...`. All 55 selected legacy routes qualify in 20 complete
+  exit-0 invocations, including independent NPN/NMOS control/load inputs and
+  all six Task39 routes on browser verifier `23e2b1d7...`. Every accepted run
+  has complete browser/preview/profile/lease cleanup. Nine Task39 screenshots
+  were independently decoded and all were visually inspected by Astra.
+- **Review/reuse: PASS.** Fresh read-only Luna reviews cover the pure contracts,
+  integrated process repair/oracle, fixture and each subsequent delta. Final
+  independent evidence reconciliation verifies 20/55, exact receipts and all
+  13 implementation hashes, with no findings. Nine pure inputs and six compiled
+  outputs are unchanged; exact reconstruction proves later failure diagnostics
+  and Task39-only naming do not affect reused successful gates. Failed exit-2
+  invocations remain failed and contribute no acceptance observations.
+- **Limits/follow-up:** This is semantic metadata and declared-policy checking,
+  not runtime composition certification. Existing Task39 CDP captures do not
+  claim manual visible-input evidence. Intermittent strict process-identity
+  failures remain a tooling reliability follow-up; no acceptance rule was relaxed.
+  Full historical Gate B/43P matrices and CI dispatch were not rerun or claimed.
+- **Resources/publication:** No owned browser, preview, build or test process
+  remains. Remaining Chrome profiles and the temporary test-browser package and
+  archive were removed after exact ownership/process/listener checks; original
+  failure receipts remain unchanged. Three policy-rejected Edge profiles and
+  private evidence receipts remain. The containing acceptance commit targets
+  normal `origin/codex/task43p-final-recovery` publication, followed by the
+  authorized Gmail notification; exact remote SHA and send outcome belong to
+  the final publication handoff. Next roadmap item: **Task 46, UNSTARTED**.
+
+Details, exact commands, hashes, historical failures and evidence limits:
+[Task 45 evidence packet](task-evidence/task-45/README.md).
+
+### Authorized cleanup repair — acceptance set
+
+The diagnostic diode seed `0` reproduced exit `2` at the initial child-handle
+lookup with **two prior attestations for the missing PID in the same drain**.
+The repeated graph scan discarded that already-qualified natural-exit route.
+The repair consults the original module-private record/handle binding only at
+that missing-child boundary, validates the candidate and all retained identities,
+and runs the existing retained-handle/two-current-absence proof. One outer 500 ms
+budget includes lookup and reconciliation; existing proof deadlines remain.
+Unknown children still fail; current parent, complete graph, late-child,
+root/listener, profile and lease checks retain their existing paths.
+The first repaired smoke exposed a later exit in fresh child validation. The
+shared live-process guard now distinguishes a positively observed exit (the
+existing typed missing-process error) from a changed start identity. Only the
+exact child's typed disappearance may consult its prior attestation; identity
+mismatch, inaccessible data and expired proof budgets remain fatal.
+An initially returned `Process` whose exit is already observable follows the
+same prior-attestation proof before any live start-time read. An unreadable or
+mismatched process object remains fatal; no shared start-time helper is relaxed.
+
+| Gate / production path | Verifier and independent oracle | Environment / candidate limits |
+| --- | --- | --- |
+| Repeated descendant discovery | Actual `Get-VerifierDescendantProcessRecords` exercised by new focused Gate B canary: previously attested exit succeeds; first-ever missing child, changed identities, present/reused PID, invalid capabilities, unavailable/late proof fail | Windows PowerShell 5.1, real retained Process handle, lower process-provider seams; root owns module, Luna owns oracle |
+| Existing identity and exit boundaries | `-GateBBrowserDescendantIdentityRetryProbe`, `-GateBDescendantSnapshotRefreshProbe`, `-GateBBrowserDrainNaturalExitProbe`, `-GateBBrowserNaturalShutdownProbe`, `-GateBProcessStartIdentityProbe`, `-GateBBrowserRootListenerFastPathProbe`, `-GateBProcessOwnershipProbe` | Existing `scripts/verify-gate-b.ps1`; focused ownership probe also runs the existing descendant-cleanup canary; preserve malformed/foreign identity and 500 ms assertions |
+| Complete ancestry and retained resources | `-GateBLateMarkerlessProbe`, `-GateBRootGoneProbe` | Existing real Windows process fixtures; exact cleanup or typed infrastructure result, never a fabricated pass |
+| Early actual implementation smoke | Existing browser verifier `-Diode -Seeds @(0) -TimeoutSeconds 90` with the pinned explicit Chrome-for-Testing path | Unique task-owned profile/port/preview and exact cleanup; diagnostic before final acceptance |
+| Independent delta review | Fresh read-only Luna review of integrated module/canary diff, actual call paths and evidence reuse | Reviewer authors neither module nor test oracle; repair findings require affected checks/delta review |
+| Final Task 45 validation/publication | Both pure contract suites; seven legacy groups below, partitioned into 20 sequential invocations / the same 55 routes; final diff/index checks, normal push/SHA proof and notification | Reuse unchanged Java/GWT and completed successful routes only after the documented exact source/dependency audit and independent review; failed or unrun invocations do not qualify |
+
+Root owns one browser/preview run at a time. New disposable resources use a
+separate unique OS-temp cleanup-repair directory. Original failed manifests and
+the three policy-rejected Edge profile targets remain untouched.
+
+### Preserved checkpoint before the authorized verifier repair
+
+- **Entry:** Task 44 is accepted and published at
+  `10dcafa36fa9c40d97ee6460aa41df5836e8ea9b` (`Define immutable functional blocks
+  and stable namespaces`) on `codex/task43p-final-recovery`. Normal `origin` push
+  and exact remote SHA equality passed; the worktree was clean. Authorized Gmail
+  notification was sent after publication. Its [acceptance packet](task-evidence/task-44/README.md)
+  and checkpoint below preserve the namespace/immutability evidence.
+- **Scope/state: IMPLEMENTED — VALIDATION BLOCKED.** Task 45's seven pure
+  contract/checker/adapter types are implemented on the accepted Task 44 HEAD
+  above, with nine tested source/test/runner hashes in the
+  [candidate manifest](task-evidence/task-45/README.md#tested-candidate-file-manifest).
+  Both focused suites, final production build and fresh independent review pass.
+  Required legacy parity remains incomplete after repeated browser-descendant
+  cleanup failures. Task 45 is uncommitted and unpublished; Task 46 and runtime
+  composition remain unstarted. No pre-existing work was overwritten.
+- **Ownership/resources:** Astra owns Task 45 types, pure checker, adapters,
+  integration, scripts and docs. Luna `task45_contract_tests` completed and handed
+  back its independent oracle. Fresh read-only Luna `task45_review` passed the
+  integrated candidate without findings. All Luna assignments are complete.
+  Build, test and browser commands have ended. Existing complete ownership and
+  listener helpers found no known/run-marked processes and no listeners on the
+  eight ports from the failed Edge/Chrome runs. The two failed Chrome profiles
+  and task-only downloaded browser package were removed through the existing
+  owned-tree helper after fresh absence/ownership checks. Three Edge profiles
+  remain quarantined: the user authorized deletion, but automatic approval review
+  rejected the validated native commands after the existing helper failed.
+  Failed manifests, retained lease journals and private execution receipts remain;
+  later resource reconciliation does not upgrade their original cleanup results.
+- **Gates:** Both actual-source JDK8 suites PASS, exit `0`: Task 44 nine groups /
+  247 assertions and Task 45 202 assertions, exact scratch cleanup (root and oracle
+  author's separate runs). Final JDK8/GWT production build PASS, exit `0`, all five
+  permutations (compile 36.468 s / link 2.163 s). Fresh independent Luna review
+  PASS, no findings; independent focused run exit `0` (247 + 202 assertions),
+  exact cleanup, whitespace and all nine candidate hashes matched. The final
+  LED set passed all 15 routes, exit `0`, exact cleanup. Diode seeds `0,2,3`
+  returned exit `2`: seed 2 passed, seeds 0/3 had unproven descendant cleanup.
+  Parallel, RC, NPN, NMOS and Task39 commands were NOT RUN after the repeated
+  failure. Full six-family and independent control/load parity is BLOCKED.
+- **Blocker/next safe action:** `BLOCKER — TEST/TOOL`: the existing
+  verifier cannot retain inspectable descendant identity through cleanup on
+  these failed cases; the exact host/provider cause is unresolved.
+  Diagnose/correct that protected verifier/host boundary
+  under appropriate scope, preserving the 500 ms ownership proofs, isolation,
+  cleanup and exit semantics; then complete the closed legacy set. Task 45 does
+  not authorize browser/process-isolation redesign. No further identical run,
+  Task 45 staging/commit/push or success email was attempted. Task 44's exact
+  origin SHA was rechecked; final Task 45 whitespace/status checks pass with
+  only the 13 intended changed/new files and an empty index.
+
+The root selected the existing explicit `-BrowserPath` seam with standalone
+Chrome for Testing `152.0.7977.82` as a bounded equivalent after the installed
+Edge failed. Read-only Luna review confirmed the unchanged verifier's supported
+configured-executable path and the real exit-0 probe's ownership/cleanup receipt.
+The full LED run qualified this selected path; the later diode exit `2` still
+blocks complete parity. No verifier, deadline, ownership, assertion or global
+setting changed. Exact commands, timing, candidate identity and resource limits
+are in the [Task 45 evidence packet](task-evidence/task-45/README.md).
+
+### Task 45 frozen v1 semantics and acceptance matrix
+
+`ElectricalPortContract` contains separate functional role (rail, return,
+control, analog, digital, passive, load), block-relative direction, electrical
+behavior, drive mode, voltage declarations, scoped reference/isolation domain,
+loading/current declarations, digital active level/guarantees/thresholds,
+merge policy and declared accessibility. Final specialized scalar/range values
+distinguish KNOWN, UNKNOWN and NOT_APPLICABLE. Numeric constructors reject NaN,
+infinity and inverted ranges. Port validation rejects contradictory declared
+thresholds/ranges and absent required local references. Nominal values are
+optional evidence and never manufacture guaranteed ranges or current ratings.
+
+`ElectricalBlockContract` binds metadata to Task 44's exact local ports and
+references. It also declares explicit adapter interfaces (regulator, divider,
+level shifter, relay or isolation barrier). An adapter names its input/output
+ports and whether their references remain isolated. Both sides retain their
+own declared ranges and references; the checker neither computes a conversion
+nor connects them internally. Nonisolated v1 adapters use their declared common
+reference; isolated adapters require distinct declared isolation domains.
+
+`ElectricalConnection` is device-owned proposed wiring, with a stable connection
+ID and qualified block/port references. `PortCompatibilityPreflight` evaluates
+these immutable inputs without a live graph. It combines overlapping proposals
+and declared local conductive aliases before checking the whole group, including
+otherwise unlisted port declarations on the same local attachment. Thus split
+two-port proposals cannot hide a shared conflicting driver. V1 regards each
+declared driven port as a separate driver; aliasing shared-driver capacity needs
+an explicit future policy and is not silently inferred.
+
+References are block-instance/local-net tuples, not labels. A group of RETURN
+ports explicitly wires common references only when its ports permit merging
+and declared isolation domains agree. Unknown merge/isolation evidence remains
+unproven. Distinct isolation domains cannot merge, including transitively.
+Signal groups require identical references or a qualified proposed return
+connection; merely naming two nets GND never joins them. A return/signal mixed
+group is rejected. Adapter declarations never authorize a magic direct merge.
+
+Supported signal/rail groups have one declared voltage driver and compatible
+receivers/passive loads. The entire guaranteed source range must be inside each
+receiver's allowed range, and declared capacity must cover the sum of bounded
+loading. Digital/control groups additionally require adequate low/high guarantees,
+receiver thresholds and matching active levels. Analog/passive declarations do
+not invent digital guarantees. Logic sources feeding an ANALOG receiver remain
+unsupported (`INSUFFICIENT_INFORMATION` / `UNSUPPORTED_ROLE_PAIR`); numerical
+range containment alone does not establish that interface's transfer behavior.
+Stiff/push-pull driver conflicts reject even at
+equal nominal voltages. Open-drain low-side sinks cannot masquerade as positive
+rail outputs; cases requiring pull-up/transfer analysis remain unsupported v1
+information rather than passing. Accessibility checks compare declared required
+access with declared provision; real layout reachability remains a later proof.
+
+Malformed data has a typed validation exception (stable code and field/entity
+identity); malformed proposals produce structured MALFORMED results. Other
+results are COMPATIBLE, INCOMPATIBLE or INSUFFICIENT_INFORMATION with canonically
+ordered connection/port/field-specific diagnostics. A positive result means
+only that the proposal passes this declared v1 policy. It is not solver-validated
+operation, electrical safety certification or challenge validity.
+
+Oracle clarification during focused validation: a return-only join with unknown
+isolation reports `UNKNOWN_ISOLATION`; a dependent signal additionally reports
+`REFERENCE_UNPROVEN`. Unsupported logic-to-analog is insufficient information,
+not proven incompatibility. Unknown-port diagnostics use the full v1 namespace
+address even though the referenced entity is undeclared. The integrated checker
+and final test oracle were covered by the fresh independent review above.
+
+`LegacyInputPortMetadata` reads copies of existing `ExternalBoardPowerInput`,
+`BoardPad` and optional `PowerInputNameplate` values. Its descriptor is only the
+leaf's external-input contribution view. Actual pad/component/terminal/net IDs
+come from these objects, never string splitting. A small leaf-owned
+`LowSideSwitchInputMetadata` provider validates the authoritative NPN/NMOS
+`LOAD_VIN_INPUT` and `CONTROL_VIN_INPUT` mappings and supplies their roles; the
+generic checker has no family-ID dispatch. Missing ranges, thresholds, loading,
+merge/isolation or access evidence stay UNKNOWN. No generator, family selection,
+runtime gate, solver element, stable legacy ID, seed or package is changed.
+
+| Explicit case | Required v1 result / independent oracle |
+| --- | --- |
+| Declared 4.75–5.25 V source, receiver 4.5–5.5 V, adequate bounded current | COMPATIBLE after qualified common-reference wiring |
+| Permitted common-reference return group; known passive load; analog range | COMPATIBLE within declared scope |
+| Digital 0.4 V maximum LOW / 4.4 V minimum HIGH to 1.5 V LOW / 3.5 V HIGH thresholds, matching active level | COMPATIBLE with adequate voltage/current/reference declarations |
+| Explicit 12 V-to-5 V regulator; isolated level shifter/barrier with separate return groups | Side connections COMPATIBLE; domains remain distinct; direct bypass rejected |
+| Nominal-only current leaf inputs, including load/control supplies with different values and identical GND labels in different instances | Nominals and exact mappings preserved; required missing evidence stays INSUFFICIENT_INFORMATION |
+| Voltage mismatch or overlap without containment | INCOMPATIBLE with source/receiver range reason |
+| Invalid direction/drive; low-side sink presented as rail; two equal-voltage stiff sources | INCOMPATIBLE with direction/drive/driver reason |
+| Three-port driver conflict; split overlapping proposals; hidden local aliases; aggregate loading beyond capacity | INCOMPATIBLE at whole-group boundary |
+| Distinct scoped references without permitted wiring; forbidden merge across isolation | INCOMPATIBLE; unproved permitted-reference evidence remains INSUFFICIENT_INFORMATION |
+| Insufficient digital guarantees or opposite active levels | INCOMPATIBLE; UNKNOWN guarantees/thresholds do not pass |
+| Absent reference, duplicate/missing port metadata, malformed/nonfinite/inverted numeric data, contradictory thresholds | MALFORMED typed failure with relevant field/entity identity |
+| Required access absent versus unknown | INCOMPATIBLE versus INSUFFICIENT_INFORMATION, respectively |
+| Known, unknown and not-applicable data; unknown/unsupported drive/loading cases | Distinct outcomes; required NOT_APPLICABLE declaration is malformed |
+| Reordered declarations/proposals, repeated calls, constructor/output mutation attempts, new in-memory example | Identical sorted decisions/reasons; immutable inputs; no family dispatch edit |
+| Task 44 regression | All literal namespace/identity/immutability checks still pass |
+
+The focused runner compiles every new pure production type and both suites
+with the pinned JDK8 and no runtime class/source path. The final GWT command is
+unchanged. Applicable existing browser routes are the default LED verifier and
+`-Diode`, `-Parallel`, `-Rc`, `-Npn`, `-Nmos`, plus the existing `-Task39` independent
+control proof, with explicit representative seeds. Non-43P routes reject the
+Task43P-only startup-settle flag; use their actual supported route options and
+the existing owned browser/preview implementation, preserving exit/cleanup proof.
+Historical exit-2 aggregates are not reused as fresh parity results.
+
+Closed final legacy command set, each through `scripts/verify-browser.ps1` with
+the existing owned browser/preview path and `-TimeoutSeconds 90`: default LED
+`-Seeds 0,2,3`; `-Diode -Seeds 0,2,3`; `-Parallel -Seeds 0,2,3`;
+`-Rc -Seeds 0,2,3`; `-Npn -Seeds 0,1,2,3`; `-Nmos -Seeds 0,1,2`; and `-Task39`.
+The default LED path covers five lifecycle routes per seed, NPN covers all four
+forced faults per seed, NMOS covers all three forced faults per seed, and Task39
+covers generated NPN/NMOS/RC input boundaries plus the existing independent
+control/load proof. Execute sequentially after candidate review/build. Preserve
+each exit and cleanup result; diagnose repeated infrastructure failures before
+continuing the unchanged set. No Task43P source falsifier or historical aggregate
+is added to this contract-only scope.
+
+## Accepted checkpoint — Task 44 contract — 2026-09-05
 
 - **Entry/authorization:** The owner explicitly authorized the attached Tasks
   44–45 prompt after the final Task 43P handoff. Approved baseline and clean

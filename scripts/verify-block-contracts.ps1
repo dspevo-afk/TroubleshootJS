@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
-    [string]$JavaHome = $env:JAVA_HOME
+    [string]$JavaHome = $env:JAVA_HOME,
+    [switch]$Task44Only
 )
 
 # Focused, nonvisual Java contract checks. Reuse the established bounded process
@@ -54,6 +55,23 @@ try {
         'src/com/lushprojects/circuitjs1/client/FunctionalBlockExamples.java',
         'tests/contracts/FunctionalBlockContractTest.java'
     )
+    $testClasses = @('FunctionalBlockContractTest')
+    if (-not $Task44Only) {
+        $sourceFiles += @(
+            'src/com/lushprojects/circuitjs1/client/ElectricalContractException.java',
+            'src/com/lushprojects/circuitjs1/client/ElectricalPortContract.java',
+            'src/com/lushprojects/circuitjs1/client/ElectricalBlockContract.java',
+            'src/com/lushprojects/circuitjs1/client/ElectricalConnection.java',
+            'src/com/lushprojects/circuitjs1/client/PortCompatibilityPreflight.java',
+            'src/com/lushprojects/circuitjs1/client/LegacyInputPortMetadata.java',
+            'src/com/lushprojects/circuitjs1/client/LowSideSwitchInputMetadata.java',
+            'src/com/lushprojects/circuitjs1/client/ExternalBoardPowerInput.java',
+            'src/com/lushprojects/circuitjs1/client/PowerInputNameplate.java',
+            'src/com/lushprojects/circuitjs1/client/BoardPad.java',
+            'tests/contracts/ElectricalPortContractTest.java'
+        )
+        $testClasses += 'ElectricalPortContractTest'
+    }
     $compileArguments = @('-source', '7', '-target', '7', '-encoding', 'UTF-8',
         '-classpath', $classes, '-sourcepath', $emptySourcePath, '-d', $classes)
     foreach ($relativePath in $sourceFiles) {
@@ -69,17 +87,19 @@ try {
     if (-not $compiled.TerminationProven -or $compiled.ExitCode -ne 0) {
         throw "Contract compilation failed, exit $($compiled.ExitCode)."
     }
-    $tested = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classes,
-        'com.lushprojects.circuitjs1.client.FunctionalBlockContractTest') 60000
-    Write-Host $tested.Stdout
-    if ($tested.Stderr) { Write-Host $tested.Stderr }
-    if (-not $tested.TerminationProven) { throw 'Contract test termination was not proven.' }
-    if ($tested.ExitCode -eq 0 -and $tested.Stdout -match '(?m)^PASS: Task44 ') {
-        $resultCode = 0
-    } elseif ($tested.ExitCode -eq 1) {
-        $resultCode = 1
-    } else {
-        throw "Contract tests did not provide a qualified result, exit $($tested.ExitCode)."
+    $resultCode = 0
+    foreach ($testClass in $testClasses) {
+        $marker = if ($testClass -eq 'FunctionalBlockContractTest') { '(?m)^PASS: Task44 ' } else { '(?m)^PASS: Task45 ' }
+        $tested = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classes,
+            ('com.lushprojects.circuitjs1.client.' + $testClass)) 60000
+        Write-Host $tested.Stdout
+        if ($tested.Stderr) { Write-Host $tested.Stderr }
+        if (-not $tested.TerminationProven) { throw 'Contract test termination was not proven.' }
+        if ($tested.ExitCode -eq 1) {
+            $resultCode = 1
+        } elseif ($tested.ExitCode -ne 0 -or $tested.Stdout -notmatch $marker) {
+            throw "Contract tests did not provide a qualified result, exit $($tested.ExitCode)."
+        }
     }
 } catch {
     Write-Host ('BLOCK_CONTRACT_INFRASTRUCTURE: ' + $_.Exception.Message)
