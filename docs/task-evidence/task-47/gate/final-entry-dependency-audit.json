@@ -1,0 +1,20 @@
+{
+  "validationSource": "469e8ce0aacae88ee319b97de62ebcf8c80e2ede3ea47989676216bb83ac0827",
+  "acceptedSource": "a2f24ce5049aa72aa7a2594ccfa0910b61ef163d5f8200c4b5fe447748d390f9",
+  "changedFiles": [
+    "src/com/lushprojects/circuitjs1/client/CompositionEntryGateDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java"
+  ],
+  "priorInstallationBytesIdenticalAfterRemovingNewEntry": true,
+  "newEntryCallers": "Only CompositionEntryGateDeveloperVerifier calls installComposition at gate acceptance. Task47 will use this entry.",
+  "reusedEvidence": [
+    "Task41 14-route corpus",
+    "Task43P runtime A-I and C1",
+    "LED challenge/replacement/meter/stress/wrong-repair",
+    "all-family layout",
+    "four legacy replays",
+    "normal-player privacy and all five visible screenshots"
+  ],
+  "reason": "Every relevant production method, verifier/oracle, UI handler, renderer and fixture is byte-identical. The added wrapper is unreferenced by these routes. Only its new negative gate call is fresh and build08/new composition gate execute that delta.",
+  "review": "Independent Luna reviewed the wrapper and negative; no blocker."
+}

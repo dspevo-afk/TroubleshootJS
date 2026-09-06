@@ -1,0 +1,28 @@
+{
+  "sourceFingerprint": "469e8ce0aacae88ee319b97de62ebcf8c80e2ede3ea47989676216bb83ac0827",
+  "jdk": "1.8.0_502",
+  "style": "OBF",
+  "exitCode": 0,
+  "permutations": [
+    {
+      "file": "02A368B98B442E0294F03130A1887699.cache.js",
+      "sha256": "ba273cc8cbda9e3f2288eecf2ebb1fbb570e0f01cb7718c340e42be84260862d"
+    },
+    {
+      "file": "54CBB543D8F04B45E5AEF5D28B00F01B.cache.js",
+      "sha256": "2cac86ff86e2914ff523dc5c0715155dde00a7f8e07d6c0dfcbc9d3a64c61996"
+    },
+    {
+      "file": "8A1AF581DC213B824A2A54FDCD279CA1.cache.js",
+      "sha256": "acebcdf992dd81c8e0737c580a942d3976f2ceb8fdb8d0ed5e6e061621b12af2"
+    },
+    {
+      "file": "DED0D11D488D2481C114F2879D833771.cache.js",
+      "sha256": "62a35c3258155db928f6de40e4fc10728de44185670a534e2325e5be7b4f550a"
+    },
+    {
+      "file": "FCFC18882F2AE401D557E3F387589201.cache.js",
+      "sha256": "b3d5d58811243e61622d561f923366f6399d631fb036648e3e8b28ba8c483d05"
+    }
+  ]
+}

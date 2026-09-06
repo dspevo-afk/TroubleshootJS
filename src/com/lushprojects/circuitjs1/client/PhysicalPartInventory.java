@@ -22,6 +22,9 @@ final class PhysicalPartInventory<P extends PhysicalPart<?>> {
         this(runtime, inventoryId, typeAdapter(partType));
     }
 
+    PhysicalBoardRuntime getRuntime() { return runtime; }
+    String getInventoryId() { return inventoryId; }
+
     void add(P part) {
         adapter.require(part);
         runtime.addInventoryPart(inventoryId, part);

@@ -24,6 +24,7 @@ final class ResistanceInstrumentMode extends AbstractInstrumentModeStrategy {
     }
 
     public void deactivate(InstrumentController controller) {
+        controller.finishActiveMeasurementForStrategy();
         if (continuity) {
             getState().setContinuityDetected(false);
             controller.setContinuityFeedbackForStrategy(false);

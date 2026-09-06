@@ -67,6 +67,16 @@ final class Task43PRuntimeCallbackDeveloperVerifier {
         return observation;
     }
 
+    static void discarded(CirSim sim, RepaintObservation observation) {
+        Probe proof = active;
+        if (proof == null || proof.sim != sim || observation == null ||
+                observation != proof.expected)
+            return;
+        proof.callbackDiscarded = true;
+        started(sim, observation);
+        completed(sim, observation);
+    }
+
     static void started(CirSim sim, RepaintObservation observation) {
         Probe proof = active;
         if (proof == null || proof.sim != sim)
@@ -124,7 +134,7 @@ final class Task43PRuntimeCallbackDeveloperVerifier {
             boolean noOldTargets = !proof.oldRed.isValid() && !proof.oldBlack.isValid() &&
                 sim.instrumentController.getRedProbeForStrategy() == null &&
                 sim.instrumentController.getBlackProbeForStrategy() == null;
-            boolean closed = proof.currentOwnerAtEntry && currentOwnerAtExit &&
+            boolean closed = proof.callbackDiscarded && proof.currentOwnerAtEntry && currentOwnerAtExit &&
                 oldOwnerUnchanged && noOldTargets && proof.oldTargetsInvalidAfterSwitch &&
                 proof.targetsClearedAfterSwitch && !sim.activeMeasurementOverlay;
             String evidence = "{\"protocol\":\"TSJ-TASK43P-I-1\",\"status\":\"OBSERVED\"," +
@@ -197,7 +207,7 @@ final class Task43PRuntimeCallbackDeveloperVerifier {
         RepaintObservation expected;
         int sequence;
         boolean waitingForPreparedRepaint, captureNextSchedule, previousDeveloperRunning;
-        boolean callbackEntered, currentOwnerAtEntry, oldTargetsInvalidAfterSwitch;
+        boolean callbackEntered, callbackDiscarded, currentOwnerAtEntry, oldTargetsInvalidAfterSwitch;
         boolean targetsClearedAfterSwitch, pendingAfterSwitch, analyzedAfterSwitch;
         String oldFingerprintAfterSwitch, oldFingerprintAtEntry;
 
@@ -219,13 +229,8 @@ final class Task43PRuntimeCallbackDeveloperVerifier {
     }
 
     private static void settleReady(CirSim sim) {
-        sim.setSimRunning(true);
-        for (int attempt = 0; attempt < 14; attempt++) {
-            sim.updateCircuit();
-            if (sim.getGeneratedChallengeController().isReady())
-                return;
-        }
-        throw new IllegalStateException("task43p-callback-owner-did-not-reach-ready");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, sim.getGeneratedBoardInstance(),
+            "task43p-callback-owner");
     }
 
     private static String ownerFingerprint(GeneratedBoardInstance owner) {

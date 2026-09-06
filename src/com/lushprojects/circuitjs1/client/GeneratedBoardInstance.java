@@ -143,6 +143,18 @@ class GeneratedBoardInstance {
         simulationElements.add(element);
     }
 
+    /** Removes only the most recently appended runtime element during abort. */
+    void unregisterRuntimeSimulationElement(CircuitElm element) {
+        if (element == null || simulationElements.isEmpty() ||
+                simulationElements.lastElement() != element)
+            throw new IllegalStateException("Runtime generated element registration is not append-only");
+        simulationElements.remove(simulationElements.size() - 1);
+    }
+
+    boolean ownsRuntimeSimulationElement(CircuitElm element) {
+        return element != null && simulationElements.contains(element);
+    }
+
     BoardSimulationBindings getSimulationBindings() {
         return board.getSimulationBindings();
     }

@@ -137,12 +137,14 @@ final class Task43PRuntimeExistingLanesVerifier {
         PhysicalResistorPart original = (PhysicalResistorPart) originalPart;
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        settleReady(sim, candidate);
         require(slots.removeInstalledPart() && !original.isInstalled() && original.isFaulted(),
             "task43p-runtime-existing-A-original-remove-lost-fault-owner");
+        settleReady(sim, candidate);
         require(slots.install(original.getId()) && original.isInstalled() &&
                 original.ownsGeneratedFault(faultBinding),
             "task43p-runtime-existing-A-original-reinstall-lost-fault-owner");
+        settleReady(sim, candidate);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settleReady(sim, candidate);
         require(challenge.getLiveRepairStatus() == GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL &&
@@ -152,11 +154,13 @@ final class Task43PRuntimeExistingLanesVerifier {
             "task43p-runtime-existing-A-original-reinstall-appeared-repaired");
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        settleReady(sim, candidate);
         require(slots.removeInstalledPart(),
             "task43p-runtime-existing-A-original-remove-before-healthy-substitution-failed");
+        settleReady(sim, candidate);
         require(slots.installNewFromCatalog("R_CATALOG_1000"),
             "task43p-runtime-existing-A-healthy-substitution-failed");
+        settleReady(sim, candidate);
         PhysicalResistorPart healthy = family.getSlot().getInstalledPart();
         require(healthy != null && healthy != original && !healthy.isFaulted(),
             "task43p-runtime-existing-A-healthy-substitution-identity-failed");
@@ -168,8 +172,13 @@ final class Task43PRuntimeExistingLanesVerifier {
             "task43p-runtime-existing-A-healthy-substitution-not-solver-restored");
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        require(slots.removeInstalledPart() && slots.install(original.getId()),
+        settleReady(sim, candidate);
+        require(slots.removeInstalledPart(),
+            "task43p-runtime-existing-A-original-remove-before-restore-failed");
+        settleReady(sim, candidate);
+        require(slots.install(original.getId()),
             "task43p-runtime-existing-A-original-restore-after-healthy-substitution-failed");
+        settleReady(sim, candidate);
         require(original.isInstalled() && original.isFaulted() &&
                 original.ownsGeneratedFault(faultBinding),
             "task43p-runtime-existing-A-original-fault-binding-changed");
@@ -221,17 +230,8 @@ final class Task43PRuntimeExistingLanesVerifier {
     }
 
     private static void settleReady(CirSim sim, GeneratedBoardInstance instance) {
-        sim.setSimRunning(true);
-        for (int attempt = 0; attempt < 14; attempt++) {
-            sim.updateCircuit();
-            GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
-            if (challenge != null && challenge.isReady())
-                break;
-        }
-        require(sim.getGeneratedBoardInstance() == instance &&
-                sim.getGeneratedChallengeController() != null &&
-                sim.getGeneratedChallengeController().isReady(),
-            "task43p-runtime-existing-candidate-did-not-settle-" +
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task43p-runtime-existing-" +
                 (instance == null ? "null" : instance.getCircuitFamilyId()));
     }
 

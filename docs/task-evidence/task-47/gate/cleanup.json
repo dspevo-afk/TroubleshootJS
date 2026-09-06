@@ -1,0 +1,13 @@
+{
+  "runId": "0adabdc4450d434f9bf7c4a10ec85cd7",
+  "cleanup": {
+    "Success": true,
+    "Errors": []
+  },
+  "wrapperExitCode": 0,
+  "taskTabsRemaining": 0,
+  "ownedLiveProcessesRemaining": 0,
+  "baselineCleanup": "PASS",
+  "existingResources": "Preserved; historical quarantines and prior preview are outside task ownership",
+  "scratch": "Unique task-owned external OS-temp scratch retained for raw diagnostic receipts; no repository scratch"
+}

@@ -276,7 +276,8 @@ final class Task41DeveloperVerifier {
             require(!sim.activeMeasurementOverlay, "Task 41 measurement overlay survived signature capture");
 
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-            sim.updateCircuit();
+            GeneratedRuntimeDeveloperSettlement.settle(sim, evaluated,
+                "task41-candidate-unpowered");
             RepairRetestObservation repairObservation = performRealRepairAndRetest(sim,
                 evaluated, trace);
             require(sim.getBoardModificationController().isFullyRestored() &&
@@ -463,9 +464,13 @@ final class Task41DeveloperVerifier {
         if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) ||
                 QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId())) {
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
+            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                "task41-control-high");
             trace.recordInputPowerTransition(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH);
             appendDcSamples(sim, instance, plan, samples, "CONTROL_HIGH", trace);
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
+            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                "task41-control-low");
             trace.recordInputPowerTransition(GeneratedBoardOperationIds.CONTROL_INPUT_LOW);
             appendDcSamples(sim, instance, plan, samples, "CONTROL_LOW", trace);
         } else {
@@ -475,7 +480,8 @@ final class Task41DeveloperVerifier {
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         trace.recordInputPowerTransition("BOARD_POWER_OFF");
-        sim.updateCircuit();
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-signature-unpowered");
         String[] pair = isolationPair(instance.getCircuitFamilyId());
         ProbeTarget first = boardProbe(sim, instance, pair[0]);
         ProbeTarget second = boardProbe(sim, instance, pair[1]);
@@ -532,6 +538,8 @@ final class Task41DeveloperVerifier {
         // energy policy has observed the powered-down state.
         sim.advanceGeneratedTemporalProfile(.800);
         trace.recordTemporalWaitSample("RC_POWER_OFF_SETTLE", .800);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-rc-final-power-off");
         ProbeTarget positive = boardProbe(sim, instance, "C1.+");
         ProbeTarget negative = boardProbe(sim, instance, "C1.-");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(positive, negative);
@@ -629,25 +637,32 @@ final class Task41DeveloperVerifier {
             "Task 41 physical fault owner is not installed: " + componentId);
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
         trace.recordRepairAction(WorkbenchOperation.REMOVE);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-repair-remove");
         String catalogId = correctCatalogId(instance, componentId);
         dispatch(sim, WorkbenchOperation.forCatalog(componentId, catalogId));
         trace.recordRepairAction(WorkbenchOperation.CATALOG_INSTALL);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-repair-install");
         require(instance.getPhysicalBoardRuntime().getInstalledPart(componentId) != original,
             "Task 41 replacement reused the faulted physical owner");
         sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-repair-powered");
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         boolean repairReachable = challenge.getRepairStatus() ==
             GeneratedRepairStatus.CORRECTLY_RESTORED;
         require(repairReachable,
             "Task 41 correct physical repair did not restore solver behavior");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-repair-status-profile");
         GeneratedCustomerRetestResult retest = challenge.performCustomerRetest();
         trace.recordAction(GeneratedBoardOperationIds.CUSTOMER_RETEST);
         boolean customerRetestPassed = retest != null && retest.isPassed();
         require(customerRetestPassed,
-            "Task 41 legal repair did not pass CUSTOMER_RETEST");
+            "Task 41 legal repair did not pass CUSTOMER_RETEST: " +
+            instance.getCircuitFamilyId() + "/" + instance.getSeed() +
+            ", state=" + challenge.getState() + ", settled=" + sim.isGeneratedRuntimeSettled());
         boolean stateIsolated = !sim.activeMeasurementOverlay &&
             sim.getBoardModificationController().isFullyRestored() &&
             sim.getBoardPowerController().getState() == BoardPowerState.POWERED;
@@ -862,20 +877,23 @@ final class Task41DeveloperVerifier {
         settleReady(sim, instance);
         GeneratedDiagnosticSolvabilityAdmission.validate(sim, instance);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-negative-unpowered");
         PhysicalPart<?> baseResistor = instance.getPhysicalBoardRuntime().getInstalledPart("RB");
         require(baseResistor != null && baseResistor.isInstalled(),
             "Task 41 negative repair fixture has no installed NPN base resistor");
         // Remove the base path and lift the collector through the same real
         // player operations for both candidates; do not rewrite meter samples.
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, baseResistor));
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-negative-remove");
         PhysicalPart<?> transistor = instance.getPhysicalBoardRuntime().getInstalledPart("Q1");
         require(transistor != null && transistor.isInstalled(),
             "Task 41 negative repair fixture has no installed NPN transistor");
         dispatch(sim, WorkbenchOperation.forPartLead(WorkbenchOperation.LIFT_LEAD, transistor,
             "Q1", "Q1.C"));
-        sim.analyzeCircuit();
-        sim.updateCircuit();
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-negative-lift");
         DiagnosticSignature signature = collectSolverSignature(sim, instance,
             planFor(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH),
             GeneratedDiagnosticExecutionTrace.builder());
@@ -1070,15 +1088,8 @@ final class Task41DeveloperVerifier {
     }
 
     private static void settleReady(CirSim sim, GeneratedBoardInstance instance) {
-        sim.setSimRunning(true);
-        for (int attempt = 0; attempt < 14; attempt++) {
-            sim.updateCircuit();
-            GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
-            if (challenge != null && challenge.isReady()) break;
-        }
-        require(sim.getGeneratedChallengeController() != null &&
-                sim.getGeneratedChallengeController().isReady(),
-            "Task 41 generated route did not reach READY: " + instance.getCircuitFamilyId());
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task41-route-" + instance.getCircuitFamilyId());
     }
 
     private static void restoreCandidateRoute(CirSim sim, Route route) {

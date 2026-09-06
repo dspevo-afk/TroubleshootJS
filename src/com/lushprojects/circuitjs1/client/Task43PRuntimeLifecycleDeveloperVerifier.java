@@ -84,7 +84,8 @@ final class Task43PRuntimeLifecycleDeveloperVerifier {
             "task43p-runtime-candidate-retained-player-workbench");
         settleReady(sim, candidate);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        GeneratedRuntimeDeveloperSettlement.settle(sim, candidate,
+            "task43p-runtime-unpowered");
         require(sim.getBoardPowerController().getState() == BoardPowerState.UNPOWERED &&
                 sim.getBoardPowerController().isElectricallyUnpowered(),
             "task43p-runtime-candidate-did-not-reach-electrically-unpowered");
@@ -197,16 +198,8 @@ final class Task43PRuntimeLifecycleDeveloperVerifier {
     }
 
     private static void settleReady(CirSim sim, GeneratedBoardInstance instance) {
-        sim.setSimRunning(true);
-        for (int attempt = 0; attempt < 14; attempt++) {
-            sim.updateCircuit();
-            GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
-            if (challenge != null && challenge.isReady())
-                break;
-        }
-        require(sim.getGeneratedChallengeController() != null &&
-                sim.getGeneratedChallengeController().isReady(),
-            "task43p-runtime-candidate-did-not-reach-ready-" + instance.getCircuitFamilyId());
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task43p-runtime-candidate-" + instance.getCircuitFamilyId());
     }
 
     private static boolean temporaryElementsAbsentFromElmList(CirSim sim,

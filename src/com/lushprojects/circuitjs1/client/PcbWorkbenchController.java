@@ -1,5 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -26,6 +27,55 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private boolean attachedToSidebar;
     private String finishFeedbackText = "";
     private String customerRetestFeedbackText = "";
+    /*
+     * Keep references to the handlers that the player-facing widgets really
+     * receive.  The developer lifecycle verifier uses these references to
+     * replay a retained callback after its owner has been replaced; no test
+     * only callback is synthesized.
+     */
+    private final HashMap<String, ClickHandler> semanticOperationHandlers =
+        new HashMap<String, ClickHandler>();
+    private ClickHandler lastSemanticOperationHandler;
+    private ClickHandler lastCustomerRetestHandler;
+    private ClickHandler lastFinishHandler;
+    private ClickHandler lastPhysicalActionHandler;
+
+    private boolean isCurrentOwner() {
+        return sim.getGeneratedBoardInstance() == instance &&
+            sim.pcbWorkbenchController == this;
+    }
+
+    private boolean isCurrentOwner(GeneratedChallengeController challenge) {
+        return isCurrentOwner() && sim.getGeneratedChallengeController() == challenge;
+    }
+
+    private boolean isCurrentPhysicalActionable() {
+        return isCurrentOwner() && sim.isChallengeInteractionEnabled();
+    }
+
+    private boolean isCurrentSemanticActionable(GeneratedChallengeController challenge) {
+        return isCurrentOwner(challenge) && sim.isGeneratedSemanticInteractionEnabled();
+    }
+
+    ClickHandler getSemanticOperationHandlerForDeveloperVerification(String stableId) {
+        return stableId == null ? null : semanticOperationHandlers.get(stableId);
+    }
+
+    ClickHandler getLastSemanticOperationHandlerForDeveloperVerification() {
+        return lastSemanticOperationHandler;
+    }
+
+    ClickHandler getCustomerRetestHandlerForDeveloperVerification() {
+        return lastCustomerRetestHandler;
+    }
+
+    ClickHandler getFinishHandlerForDeveloperVerification() {
+        return lastFinishHandler;
+    }
+
+    ClickHandler getPhysicalActionHandlerForDeveloperVerification() {
+        return lastPhysicalActionHandler;
+    }
 
     PcbWorkbenchController(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, PcbBoardLayout layout,
@@ -45,6 +95,8 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         renderer.setLooseProjectionTransitionListener(
             new PcbWorkbenchRenderer.LooseProjectionTransitionListener() {
                 public void onLooseProjectionTransition() {
+                    if (!isCurrentOwner())
+                        return;
                     if (simulation.instrumentController != null)
                         simulation.instrumentController.onLooseProjectionChanged();
                 }
@@ -94,12 +146,17 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
 
     boolean isAttachedToSidebarForDeveloperVerification() { return attachedToSidebar; }
 
-    void draw(Graphics graphics, Rectangle area) { renderer.draw(graphics, area); }
+    void draw(Graphics graphics, Rectangle area) {
+        if (isCurrentOwner())
+            renderer.draw(graphics, area);
+    }
 
-    ProbeTarget findProbeTarget(int x, int y) { return renderer.findProbeTarget(sim, x, y); }
+    ProbeTarget findProbeTarget(int x, int y) {
+        return isCurrentOwner() ? renderer.findProbeTarget(sim, x, y) : null;
+    }
 
     boolean selectComponentAt(int x, int y) {
-        if (!sim.isChallengeInteractionEnabled())
+        if (!isCurrentPhysicalActionable())
             return false;
         String partId = renderer.findPartId(x, y);
         if (partId != null) {
@@ -119,6 +176,8 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     void refresh() {
+        if (!isCurrentOwner())
+            return;
         rebuildTicket();
         rebuildPanel();
         rebuildPartsPanel();
@@ -143,11 +202,15 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     private boolean isOperationAvailable(PhysicalPart part, WorkbenchOperation operation) {
+        if (!isCurrentPhysicalActionable())
+            return false;
         WorkbenchCapabilityStrategy capability = getCapability(part, operation);
         return capability != null && capability.isAvailable(operation, this);
     }
 
     private boolean dispatchOperation(PhysicalPart part, WorkbenchOperation operation) {
+        if (!isCurrentPhysicalActionable())
+            return false;
         WorkbenchCapabilityStrategy capability = getCapability(part, operation);
         return capability != null && capability.invoke(operation, this);
     }
@@ -253,11 +316,15 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         updateCatalogControls(provider, componentId, catalog, installNew);
         catalog.addChangeHandler(new ChangeHandler() {
             public void onChange(ChangeEvent event) {
+                if (!isCurrentOwner())
+                    return;
                 updateCatalogControls(provider, componentId, catalog, installNew);
             }
         });
-        installNew.addClickHandler(new ClickHandler() {
+        ClickHandler installNewHandler = new ClickHandler() {
             public void onClick(ClickEvent event) {
+                if (!isCurrentPhysicalActionable())
+                    return;
                 try {
                     if (dispatchOperation(null, WorkbenchOperation.forCatalog(componentId,
                             catalog.getValue(catalog.getSelectedIndex()))))
@@ -265,10 +332,14 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                 } catch (BoardModificationRejectedException exception) {
                     feedback.setText("Turn board power off.");
                 }
+                if (!isCurrentOwner())
+                    return;
                 refresh();
                 sim.repaint();
             }
-        });
+        };
+        lastPhysicalActionHandler = installNewHandler;
+        installNew.addClickHandler(installNewHandler);
         partsPanel.add(installNew);
         if (powered && !powerWarningAdded) {
             partsPanel.add(new Label("Turn board power off."));
@@ -303,17 +374,20 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             throw new IllegalStateException("Loose part has no workbench provider: " + part.getId());
         Button select = new Button(provider.getPartLabel(part));
         select.setStyleName("tsj-action-button");
-        select.setEnabled(sim.isChallengeInteractionEnabled());
+        select.setEnabled(isCurrentPhysicalActionable());
         final String partId = part.getId();
-        select.addClickHandler(new ClickHandler() {
+        ClickHandler selectHandler = new ClickHandler() {
             public void onClick(ClickEvent event) {
+                if (!isCurrentPhysicalActionable())
+                    return;
                 renderer.setSelectedPartId(partId);
                 renderer.setSelectedComponentId(null);
                 rebuildPanel();
                 rebuildPartsPanel();
                 sim.repaint();
             }
-        });
+        };
+        select.addClickHandler(selectHandler);
         partsPanel.add(select);
     }
 
@@ -330,18 +404,24 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         install.setStyleName("tsj-action-button");
         install.setEnabled(getCapability(part, installOperation) != null &&
             isOperationAvailable(part, installOperation));
-        install.addClickHandler(new ClickHandler() {
+        ClickHandler installHandler = new ClickHandler() {
             public void onClick(ClickEvent event) {
+                if (!isCurrentPhysicalActionable())
+                    return;
                 try {
                     if (dispatchOperation(part, installOperation))
                         renderer.setSelectedPartId(null);
                 } catch (BoardModificationRejectedException exception) {
                     feedback.setText("Turn board power off before modifying components.");
                 }
+                if (!isCurrentOwner())
+                    return;
                 refresh();
                 sim.repaint();
             }
-        });
+        };
+        lastPhysicalActionHandler = installHandler;
+        install.addClickHandler(installHandler);
         partsPanel.add(install);
 
         final WorkbenchOperation inspectOperation =
@@ -352,14 +432,19 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             Button inspect = new Button(inspectCapability.getOperationLabel(inspectOperation));
             inspect.setStyleName("tsj-action-button");
             inspect.setEnabled(isOperationAvailable(part, inspectOperation));
-            inspect.addClickHandler(new ClickHandler() {
+            ClickHandler inspectHandler = new ClickHandler() {
                 public void onClick(ClickEvent event) {
+                    if (!isCurrentPhysicalActionable())
+                        return;
                     if (dispatchOperation(part, inspectOperation))
                         feedback.setText("Inspection: " + provider.getPartLabel(part));
+                    if (!isCurrentOwner())
+                        return;
                     refresh();
                     sim.repaint();
                 }
-            });
+            };
+            inspect.addClickHandler(inspectHandler);
             partsPanel.add(inspect);
         }
     }
@@ -377,16 +462,21 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         partsPanel.add(new Label("Page " + (renderer.getTrayPage() + 1) + " of " +
             renderer.getTrayPageCount()));
         Button previous = new Button("Previous");
-        previous.setEnabled(renderer.getTrayPage() > 0);
+        previous.setEnabled(isCurrentPhysicalActionable() && renderer.getTrayPage() > 0);
         previous.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+                if (!isCurrentPhysicalActionable())
+                    return;
                 renderer.setTrayPage(renderer.getTrayPage() - 1); refresh(); sim.repaint();
             }
         });
         Button next = new Button("Next");
-        next.setEnabled(renderer.getTrayPage() + 1 < renderer.getTrayPageCount());
+        next.setEnabled(isCurrentPhysicalActionable() &&
+            renderer.getTrayPage() + 1 < renderer.getTrayPageCount());
         next.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+                if (!isCurrentPhysicalActionable())
+                    return;
                 renderer.setTrayPage(renderer.getTrayPage() + 1); refresh(); sim.repaint();
             }
         });
@@ -396,7 +486,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
 
     private void rebuildTicket() {
         ticketPanel.clear();
-        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        final GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         ticketPanel.setVisible(challenge != null);
         if (challenge == null)
             return;
@@ -410,11 +500,13 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (quickPlay) {
             final Button finish = new Button("Finish Job");
             finish.setStyleName("tsj-action-button");
-            finish.setEnabled(challenge.isReady() && !challenge.isCompleted() &&
+            finish.setEnabled(isCurrentSemanticActionable(challenge) && !challenge.isCompleted() &&
                 challenge.getCustomerRetestResult() != null &&
                 challenge.getCustomerRetestResult().isPassed());
-            finish.addClickHandler(new ClickHandler() {
+            ClickHandler finishHandler = new ClickHandler() {
                 public void onClick(ClickEvent event) {
+                    if (!isCurrentSemanticActionable(challenge) || challenge.isCompleted())
+                        return;
                     if (sim.finishQuickPlayJob()) {
                         finishFeedbackText = "";
                         Window.Location.reload();
@@ -424,7 +516,9 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                         rebuildTicket();
                     }
                 }
-            });
+            };
+            lastFinishHandler = finishHandler;
+            finish.addClickHandler(finishHandler);
             ticketPanel.add(finish);
             if (finishFeedbackText.length() != 0) {
                 Label result = new Label(finishFeedbackText);
@@ -442,17 +536,23 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                 continue;
             Button command = new Button(operation.getPlayerLabel());
             command.setStyleName("tsj-action-button");
-            command.setEnabled(challenge.isReady());
+            command.setEnabled(isCurrentSemanticActionable(challenge));
             final String operationId = operation.getStableId();
-            command.addClickHandler(new ClickHandler() {
+            ClickHandler commandHandler = new ClickHandler() {
                 public void onClick(ClickEvent event) {
+                    if (!isCurrentSemanticActionable(challenge))
+                        return;
                     if (sim.invokeGeneratedPlayerOperation(operationId)) {
                         customerRetestFeedbackText = "";
                         refresh();
                     }
-                    sim.repaint();
+                    if (isCurrentOwner())
+                        sim.repaint();
                 }
-            });
+            };
+            semanticOperationHandlers.put(operationId, commandHandler);
+            lastSemanticOperationHandler = commandHandler;
+            command.addClickHandler(commandHandler);
             ticketPanel.add(command);
         }
         final GeneratedBoardOperation retestOperation = instance.getOperationCatalog().find(
@@ -460,15 +560,21 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (retestOperation != null) {
             Button retest = new Button(retestOperation.getPlayerLabel());
             retest.setStyleName("tsj-action-button");
-            retest.setEnabled(challenge.isReady() && !challenge.isCompleted());
-            retest.addClickHandler(new ClickHandler() {
+            retest.setEnabled(isCurrentSemanticActionable(challenge) && !challenge.isCompleted());
+            ClickHandler retestHandler = new ClickHandler() {
                 public void onClick(ClickEvent event) {
+                    if (!isCurrentSemanticActionable(challenge) || challenge.isCompleted())
+                        return;
                     GeneratedCustomerRetestResult result = sim.performCustomerRetest();
                     customerRetestFeedbackText = result.getPlayerMessage();
+                    if (!isCurrentOwner())
+                        return;
                     refresh();
                     sim.repaint();
                 }
-            });
+            };
+            lastCustomerRetestHandler = retestHandler;
+            retest.addClickHandler(retestHandler);
             ticketPanel.add(retest);
         }
         if (customerRetestFeedbackText.length() != 0) {
@@ -572,18 +678,24 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         Button button = new Button(text);
         button.setStyleName("tsj-action-button");
         button.setEnabled(!disabled);
-        button.addClickHandler(new ClickHandler() {
+        ClickHandler actionHandler = new ClickHandler() {
             public void onClick(ClickEvent event) {
+                if (!isCurrentPhysicalActionable())
+                    return;
                 try {
                     action.execute();
                     feedback.setText("");
                 } catch (BoardModificationRejectedException exception) {
                     feedback.setText("Turn board power off before modifying components.");
                 }
+                if (!isCurrentOwner())
+                    return;
                 refresh();
                 sim.repaint();
             }
-        });
+        };
+        lastPhysicalActionHandler = actionHandler;
+        button.addClickHandler(actionHandler);
         panel.add(button);
     }
 
@@ -606,12 +718,16 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     public boolean isAvailable(WorkbenchOperation operation) {
+        if (!isCurrentPhysicalActionable())
+            return false;
         WorkbenchCapabilityStrategy capability = getCapability(operation == null ? null :
             operation.getPart(), operation);
         return capability != null && capability.isAvailable(operation, this);
     }
 
     public boolean dispatch(WorkbenchOperation operation) {
+        if (!isCurrentPhysicalActionable())
+            return false;
         WorkbenchCapabilityStrategy capability = getCapability(operation == null ? null :
             operation.getPart(), operation);
         return capability != null && capability.isAvailable(operation, this) &&

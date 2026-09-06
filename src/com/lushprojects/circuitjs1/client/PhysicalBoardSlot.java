@@ -71,6 +71,8 @@ final class PhysicalBoardSlot {
         this.runtime = runtime;
     }
 
+    PhysicalBoardRuntime getRuntime() { return runtime; }
+
     void bindGeometryRealization(PcbComponentPlacement placement) {
         if (placement == null || !componentId.equals(placement.getComponentId()))
             throw new IllegalArgumentException("Placement does not belong to physical slot: " +
@@ -124,6 +126,29 @@ final class PhysicalBoardSlot {
         removed.getMountState().unmount(this);
         installedPart = null;
         return removed;
+    }
+
+    /**
+     * Restores the slot association captured by a bounded resistor mutation.
+     * This method intentionally uses the ordinary mount operations so a
+     * foreign or inconsistent part fails closed instead of being silently
+     * detached.
+     */
+    void restoreInstalledPartForMutation(PhysicalPart<?> expected) {
+        if (installedPart != null && installedPart != expected) {
+            if (installedPart.getBoardSlot() != this || !installedPart.isInstalled())
+                throw new IllegalStateException("Cannot restore an inconsistent physical slot: " +
+                    componentId);
+            remove();
+        }
+        if (installedPart == expected)
+            return;
+        if (expected == null)
+            return;
+        if (expected.isInstalled() || expected.getBoardSlot() != null)
+            throw new IllegalStateException("Captured physical part is mounted elsewhere: " +
+                expected.getId());
+        install(expected);
     }
 
     private PhysicalPartTerminal findTerminal(PhysicalPart<?> part, String terminalId) {

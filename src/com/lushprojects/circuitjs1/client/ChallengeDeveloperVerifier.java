@@ -17,7 +17,8 @@ class ChallengeDeveloperVerifier {
             "Faulted R1 is not physically installed");
         verifyFaultedPowered(sim, instance);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-faulted-unpowered");
         verifyFaultedUnpowered(sim, instance);
         verifyPhysicalPersistence(sim, instance, modifications, faults);
         verifyDeveloperClearAndReapply(sim, instance, faults);
@@ -238,12 +239,18 @@ class ChallengeDeveloperVerifier {
             verifyFailedOriginalLiftedLeadVoltage(sim, instance, modifications, faults);
         else
             verifyIncorrectOriginalLiftedLead(sim, instance, modifications, faults);
-        modifications.liftLead("R1", "R1.1");
+        require(modifications.liftLead("R1", "R1.1"),
+            "Failed R1 lead 1 did not lift");
         require(modifications.getComponentState("R1") == ComponentPhysicalState.LEAD_LIFTED &&
             faults.isApplied(), "Lead lift cleared the internal fault");
-        modifications.removeComponent("R1");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-r1-lead-lift");
+        require(modifications.removeComponent("R1"),
+            "Failed R1 did not remove after lead lift");
         require(modifications.getComponentState("R1") == ComponentPhysicalState.REMOVED &&
             faults.isApplied(), "Removal cleared the internal fault");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-r1-remove");
         CircuitPostProbeTarget componentLead1 = getProbe(sim,
             instance.getConnectionBindings().get("R1", "R1.1").getComponentEndpoint());
         CircuitPostProbeTarget componentLead2 = getProbe(sim,
@@ -259,9 +266,12 @@ class ChallengeDeveloperVerifier {
             require(!"OL".equals(reading) && Math.abs(actual - expected) <= expected * .05,
                 "Removed incorrect-value R1 did not measure its effective faulty value: " + actual);
         }
-        modifications.restoreComponent("R1");
+        require(modifications.restoreComponent("R1"),
+            "Failed R1 did not restore after tray measurement");
         require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED &&
             faults.isApplied(), "Restoration cleared the internal fault");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-r1-restore");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
     }
 
@@ -273,24 +283,31 @@ class ChallengeDeveloperVerifier {
             "Unexpected non-open fault in incorrect-value persistence path");
         require(modifications.liftLead("R1", "R1.2") && faults.isApplied(),
             "Incorrect-value R1 lead lift changed fault state");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-incorrect-r1-lift");
         sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-incorrect-r1-powered");
         require(Math.abs(((LEDElm) instance.getComponentBindings().getSingleElement("LED1"))
             .getCurrent()) < .000001 &&
             !instance.getOperationalStates().isIlluminated("LED1"),
             "Lifted incorrect-value R1 still drove the LED");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-incorrect-r1-unpowered");
         require(modifications.reconnectLead("R1", "R1.2"),
             "Incorrect-value R1 lead did not reconnect");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-incorrect-r1-reconnect");
         sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-incorrect-r1-repowered");
         instance.getChallengeDefinition().getBehaviorContract().verifyFaulted(instance,
             modifications, BoardPowerState.POWERED);
         require(faults.isApplied(), "Reconnecting incorrect-value R1 cleared the fault");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-incorrect-r1-final-unpowered");
     }
 
     private static void verifyFailedOriginalLedPersistence(CirSim sim,
@@ -300,19 +317,28 @@ class ChallengeDeveloperVerifier {
             .get("LED1", "LED1.A");
         require(modifications.liftLead("LED1", "LED1.A") && faults.isApplied(),
             "LED_OPEN lead lift changed the internal fault");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-led-lift");
         sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-led-powered");
         require(Math.abs(((LEDElm) instance.getComponentBindings().getSingleElement("LED1"))
                 .getCurrent()) < .000001 &&
                 !instance.getOperationalStates().isIlluminated("LED1"),
             "LED_OPEN lifted lead unexpectedly restored the LED");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-led-unpowered");
         require(modifications.reconnectLead("LED1", "LED1.A") && faults.isApplied(),
             "LED_OPEN lead did not reconnect with the fault applied");
-        modifications.removeComponent("LED1");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-led-reconnect");
+        require(modifications.removeComponent("LED1"),
+            "LED_OPEN original did not remove after reconnect");
         require(modifications.getComponentState("LED1") == ComponentPhysicalState.REMOVED &&
                 faults.isApplied(), "LED_OPEN removal changed the internal fault");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-led-remove");
         CircuitPostProbeTarget anode = getProbe(sim, lead.getComponentEndpoint());
         CircuitPostProbeTarget cathode = getProbe(sim,
             instance.getConnectionBindings().get("LED1", "LED1.K").getComponentEndpoint());
@@ -320,9 +346,12 @@ class ChallengeDeveloperVerifier {
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Removed LED_OPEN original did not measure open in the tray");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
-        modifications.restoreComponent("LED1");
+        require(modifications.restoreComponent("LED1"),
+            "LED_OPEN original did not restore");
         require(modifications.getComponentState("LED1") == ComponentPhysicalState.INSTALLED &&
                 faults.isApplied(), "LED_OPEN restoration cleared the internal fault");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-led-restore");
     }
 
     private static void verifyFailedOriginalLiftedLeadVoltage(CirSim sim,
@@ -337,9 +366,11 @@ class ChallengeDeveloperVerifier {
         require(modifications.liftLead("R1", "R1.2"), "Failed original lead 2 did not lift");
         require(!sim.elmList.contains(lead2.getConnectionElement()),
             "Lifted failed-original lead 2 remained attached to its PCB pad");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-failed-r1-lift");
         sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-failed-r1-powered");
         requireApproximately(0, sim.instrumentController.getDcVoltageDifferenceForDeveloperVerification(
             liftedLead2, ground), .01,
             "Failed original lifted public lead 2 incorrectly measured VIN");
@@ -349,6 +380,8 @@ class ChallengeDeveloperVerifier {
             !instance.getOperationalStates().isIlluminated("LED1"),
             "Lifted failed original allowed LED current");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-failed-r1-unpowered");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(
             getProbe(sim, instance.getConnectionBindings().get("R1", "R1.1").getComponentEndpoint()),
             liftedLead2);
@@ -356,13 +389,17 @@ class ChallengeDeveloperVerifier {
             "Lifted failed original did not remain OL across public leads");
         require(modifications.reconnectLead("R1", "R1.2"),
             "Failed original lead 2 did not reconnect");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-failed-r1-reconnect");
         sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-failed-r1-repowered");
         instance.getChallengeDefinition().getBehaviorContract().verifyFaulted(instance, modifications,
             BoardPowerState.POWERED);
         require(faults.isApplied(), "Reconnecting failed original lead 2 bypassed its internal fault");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "challenge-failed-r1-final-unpowered");
     }
 
     private static void verifyDeveloperClearAndReapply(CirSim sim, GeneratedBoardInstance instance,
@@ -371,10 +408,11 @@ class ChallengeDeveloperVerifier {
         challenge.beginDeveloperVerificationScope();
         try {
             require(faults.clearForDeveloperVerification(), "Developer fault clear was ignored");
+            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                "challenge-developer-fault-cleared");
             sim.setBoardPowerState(BoardPowerState.POWERED);
-            sim.analyzeCircuit();
-            sim.runCircuit(true);
-            sim.runCircuit(true);
+            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                "challenge-developer-healthy");
             instance.getBehaviorContract().verifyHealthy(instance, BoardPowerState.POWERED);
             require(instance.getOperationalStates().isIlluminated("LED1"),
                 "Developer-cleared LED did not illuminate");
@@ -390,9 +428,8 @@ class ChallengeDeveloperVerifier {
                 require(((ResistorElm) instance.getComponentBindings().getSingleElement("R1"))
                     .getResistance() == faults.getFault().getEffectiveValue(),
                     "Reapplying incorrect resistor fault did not restore effective resistance");
-            sim.analyzeCircuit();
-            sim.runCircuit(true);
-            sim.runCircuit(true);
+            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                "challenge-developer-fault-reapplied");
             challenge.getDefinition().getBehaviorContract().verifyFaulted(instance,
                 sim.getBoardModificationController(), BoardPowerState.POWERED);
         } finally {

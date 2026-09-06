@@ -1847,11 +1847,15 @@ finding and the product shell’s seed-replay prerequisite.
 
 ## Composition Entry Gate — Runtime Integrity Required Before Task 47
 
-**Status:** `[!] NOT CLAIMED — SEPARATE RUNTIME-INTEGRITY ACCEPTANCE REQUIRED`
+**Status:** `[x] COMPLETE — BOUNDED COMPOSITION ENTRY ACCEPTED`
 
-Tasks 44–46 are accepted. That removes their descriptor/contract prerequisite;
-it does not satisfy the runtime criteria below or authorize Task 47. The
-accepted Task 43P handoff retains its documented scope and remaining limits.
+Tasks 44–46 and the separately qualified runtime gate are accepted. The
+[gate packet](task-evidence/task-47/gate/README.md) records settled operation
+guards, real stale-work rejection, fresh-owner installation, bounded resistor
+abort and owner invariants, applicable cleanup/correspondence evidence, visible
+controls, all-five build and independent Luna review. The accepted Task 43P
+handoff retains its documented scope and remaining limits. Owner authorization
+covers Task 47 only after the gate's separate accepted commit.
 
 **Purpose:** Prevent descriptor/schema work from being mistaken for proof that
 runtime composition itself is safe.
@@ -1887,7 +1891,7 @@ milestones independently accepted.
 
 ## Task 47 — Bounded Assembler and Composed Contribution Contracts
 
-**Status:** `[ ] UNSTARTED — COMPOSITION ENTRY GATE AND OWNER AUTHORIZATION REQUIRED`
+**Status:** `[ ] UNSTARTED — AUTHORIZED AFTER THE ACCEPTED GATE COMMIT`
 
 **Purpose:** Assemble reusable blocks into the existing runtime without
 creating a parallel architecture.
@@ -3656,7 +3660,7 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Composition Entry Gate — unclaimed; Task 47 remains unstarted**
+**Task 47 — authorized after the separately accepted Composition Entry Gate commit**
 
 C1/C2, the authorized efficiency work and Task 43P acceptance are complete.
 The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
@@ -3670,5 +3674,9 @@ separately authorized Task 46 only, starting exactly at reviewed Task 45 commit
 `134a0791b052d9a1928565e7b2318ac7284a357c`. Task 46's immutable descriptor,
 named streams, constraint input and legacy replay contract are now accepted with
 the [recorded qualification](task-evidence/task-46/README.md). This authorization
-ends with its publication. The Composition Entry Gate must be separately
-qualified and owner-authorized before Task 47; this task does not start it.
+ended with its publication. The owner then explicitly authorized Composition
+Entry Gate qualification followed by Task 47 in separate reviewed commits.
+The [gate qualification](task-evidence/task-47/gate/README.md) now passes the
+bounded runtime, visible-input, cleanup and independent-review criteria. Publish
+its accepted checkpoint, then complete Task 47 only. Task 48 remains unstarted
+and requires separate authorization after Task 47.

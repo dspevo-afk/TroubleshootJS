@@ -103,13 +103,8 @@ final class Task46ReplayDeveloperVerifier {
 
     private static void installAndSettle(CirSim sim, GeneratedBoardInstance instance) {
         sim.installGeneratedChallengeForDeveloperVerification(instance);
-        sim.setSimRunning(true);
-        // Same bounded synchronous settlement used by the accepted Task 41
-        // verifier. No private solver-state assignment or scripted readings.
-        for (int attempt = 0; attempt < 14; attempt++) {
-            sim.updateCircuit();
-            if (sim.getGeneratedChallengeController().isReady()) break;
-        }
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "task46-replay-install");
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         require(sim.getGeneratedBoardInstance() == instance && challenge.isReady(),
             "replay did not reach READY through the existing solver lifecycle");

@@ -1,0 +1,200 @@
+{
+  "status": "PASS",
+  "sourceFingerprint": "469e8ce0aacae88ee319b97de62ebcf8c80e2ede3ea47989676216bb83ac0827",
+  "route": "in-app Browser real visible input; DOM inspection is read-only and diagnostic",
+  "ordinaryPage": "LED3, no tsjDebug, both composition developer flags present but ignored",
+  "privacy": {
+    "dataAttributes": [],
+    "hasHoldControl": false,
+    "ticket": true
+  },
+  "controlStates": {
+    "pendingControls": [
+      {
+        "disabled": true,
+        "label": "Reset"
+      },
+      {
+        "disabled": false,
+        "label": "RUN / Stop"
+      },
+      {
+        "disabled": false,
+        "label": "TOOLS"
+      },
+      {
+        "disabled": false,
+        "label": "SHOP"
+      },
+      {
+        "disabled": false,
+        "label": "RESOURCES"
+      },
+      {
+        "disabled": false,
+        "label": "SETTINGS"
+      },
+      {
+        "disabled": true,
+        "label": "DC V"
+      },
+      {
+        "disabled": true,
+        "label": "OHM"
+      },
+      {
+        "disabled": true,
+        "label": "CONT"
+      },
+      {
+        "disabled": true,
+        "label": "DIODE"
+      },
+      {
+        "disabled": true,
+        "label": "Board Power: OFF"
+      },
+      {
+        "disabled": false,
+        "label": "Release verification (developer)"
+      },
+      {
+        "disabled": true,
+        "label": "Retest Customer"
+      },
+      {
+        "disabled": true,
+        "label": "Lift lead 1"
+      },
+      {
+        "disabled": true,
+        "label": "Lift lead 2"
+      },
+      {
+        "disabled": true,
+        "label": "Remove component"
+      },
+      {
+        "disabled": true,
+        "label": "Install new resistor"
+      },
+      {
+        "disabled": true,
+        "label": "Install new LED"
+      }
+    ],
+    "releasedControls": [
+      {
+        "disabled": false,
+        "label": "Reset"
+      },
+      {
+        "disabled": false,
+        "label": "RUN / Stop"
+      },
+      {
+        "disabled": false,
+        "label": "TOOLS"
+      },
+      {
+        "disabled": false,
+        "label": "SHOP"
+      },
+      {
+        "disabled": false,
+        "label": "RESOURCES"
+      },
+      {
+        "disabled": false,
+        "label": "SETTINGS"
+      },
+      {
+        "disabled": false,
+        "label": "DC V"
+      },
+      {
+        "disabled": false,
+        "label": "OHM"
+      },
+      {
+        "disabled": false,
+        "label": "CONT"
+      },
+      {
+        "disabled": false,
+        "label": "DIODE"
+      },
+      {
+        "disabled": false,
+        "label": "Board Power: OFF"
+      },
+      {
+        "disabled": false,
+        "label": "Hold verification (developer)"
+      },
+      {
+        "disabled": false,
+        "label": "Retest Customer"
+      },
+      {
+        "disabled": false,
+        "label": "Lift lead 1"
+      },
+      {
+        "disabled": false,
+        "label": "Lift lead 2"
+      },
+      {
+        "disabled": false,
+        "label": "Remove component"
+      },
+      {
+        "disabled": true,
+        "label": "Install new resistor"
+      },
+      {
+        "disabled": true,
+        "label": "Install new LED"
+      }
+    ]
+  },
+  "controlProof": [
+    "DC V",
+    "OHM",
+    "CONT",
+    "DIODE",
+    "Board Power: OFF",
+    "Retest Customer",
+    "Lift lead 1",
+    "Lift lead 2",
+    "Remove component"
+  ],
+  "modeExit": "Second click on active DC V produced --- V and enabled ordinary body selection; no fabricated click/controller call",
+  "screenshots": [
+    {
+      "file": "01-probes-unrepaired.png",
+      "proves": "Ordinary LED3: visible DC mode; left red/right black on R1 pads; 10.653 V; unrepaired Retest Customer fails.",
+      "sha256": "5b2ef1fa24166bf41e4c31b40f44e800b632a3bea6271a3696edf28d82341b47"
+    },
+    {
+      "file": "02-wrong-repair-rejected.png",
+      "proves": "After active-mode second click exits, board power off, real R1 selection/removal and 2200-ohm catalog installation: powered customer retest still fails.",
+      "sha256": "001b32f3e56b1cd3cb61c1cfcb550523c267c27a77a63ccbff59458c6c95245d"
+    },
+    {
+      "file": "03-customer-retest-passed.png",
+      "proves": "Same normal page: power off, remove wrong part, install 1000-ohm part, power on, actual Retest Customer passes and ticket says Repair verified.",
+      "sha256": "d26a5be21ebd0e5fa5bc81d40dd879deb2c5cdf7a1f05f1747357e12a78c2254"
+    },
+    {
+      "file": "04-pending-controls-disabled.png",
+      "proves": "Explicit developer hold on real generated verification; power/meter/retest/mutation controls disabled. Actual clicks on disabled power and DC controls leave the board off.",
+      "sha256": "f1620f758678d46cd1dc90adc940d61afe64f14cb0d69595427ab9879ee833ec"
+    },
+    {
+      "file": "05-reenabled-physical-removal.png",
+      "proves": "Release real verification, observe controls enabled, click Remove component: empty R1 slot and retained original in tray; catalog installation enabled.",
+      "sha256": "f37590762a83e5a61245193c5c084cc976344b3bf2ab1293470cc2b6dcbe24e7"
+    }
+  ]
+}

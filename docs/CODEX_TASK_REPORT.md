@@ -1,6 +1,53 @@
 # TroubleshootJS — Current Task Report
 
-## Current checkpoint — Task 46 versioned replay — 2026-09-06
+## Current checkpoint — Composition Entry Gate accepted — 2026-09-06
+
+- **Scope/status:** COMPLETE, bounded gate validation and independent review
+  accepted; publication is the next action. The owner authorizes this gate and
+  Task 47 as separate reviewed commits. Task 47 coding and Task 48 are unstarted.
+- **Candidate:** Branch `codex/task43p-final-recovery`, reviewed base
+  `7249709e5061af6b14d4aa968fc3282a1355dac1`, no pre-existing worktree changes.
+  Final 950-input source fingerprint:
+  `a2f24ce5049aa72aa7a2594ccfa0910b61ef163d5f8200c4b5fe447748d390f9`.
+  Exact inputs, five final compiled hashes and command receipts are in the
+  [gate evidence](task-evidence/task-47/gate/README.md).
+- **Changes:** Settled/current-owner action guards; real repaint/workbench/retest
+  succession checks; fresh-owner Option A publication/restoration; explicit
+  resistor-only composition installation; bounded resistor prepare/commit/abort;
+  reference, inventory, cross-role and exact-terminal invariant checks. Failed
+  recovery isolates power and disables actions. No broad transaction framework.
+- **Validation:** Final JDK8/GWT OBF build, all five permutations PASS, exit 0.
+  Actual compiled gate PASS: 113 lifecycle / 180 mutation assertions, five
+  installation failure stages and 18 partial-write aborts. Full Task43P A–I/C1
+  strict oracle PASS (exit 0, zero open blockers); Task41 14 routes / 128 solver
+  samples PASS; selected challenge/replacement/meter/stress/wrong-repair,
+  all-family layout and LED3/RC2/NPN0/NMOS0 legacy replay PASS. Actual visible
+  probes, mode exit, power/mutation, wrong/correct retest and held/re-enabled
+  controls PASS; five inspected screenshots and ordinary-page privacy recorded.
+- **Reuse/limits:** Both actual pure suites PASS (247 + 202 block assertions;
+  410 challenge assertions / 36 negatives, independent seed oracle). Their 27
+  explicit inputs are unchanged. Runtime/visible evidence at fingerprint
+  `469e8ce0aacae88ee319b97de62ebcf8c80e2ede3ea47989676216bb83ac0827` remains
+  applicable after exact dependency audit: the only final production addition
+  is the restricted composition entry; all prior installation bytes are
+  unchanged. That entry and its negative execute in the final build/gate.
+  The physical packet's independent triad passes six terminals/six solver
+  checks and nine negatives; its historical aggregate remains UNPROVEN. No
+  expansion of the separate historical CDP/isolation/source-falsifier campaign.
+- **Review:** Fresh read-only Luna MAX `gate_review` PASS across A–H and targeted
+  corrections. No concrete blocker or new nonblocking product finding remains.
+  Task46's recorded AssertionError-to-RUNNING test/tool follow-up is unchanged.
+  All worker files are reconciled; Astra owns publication. The interface has
+  no worker-speed control; no global settings changed.
+- **Resources:** All task Browser tabs closed. Preview run
+  `0adabdc4450d434f9bf7c4a10ec85cd7` cleanup Success=true, no errors, wrapper
+  exit 0. Baseline run cleanup also passed. No owned live processes remain.
+  Raw diagnostic receipts remain in the uniquely owned external scratch;
+  existing user resources and historical quarantines were preserved.
+- **Next:** Stage the intended gate files, inspect/commit, push to the configured
+  upstream and verify the exact remote SHA; attempt the authorized completion
+  email. Then freeze Task 47's contracts and complete only Task 47.
+## Accepted checkpoint — Task 46 versioned replay — 2026-09-06
 
 - **Scope/status: COMPLETE — ACCEPTED.** Task 46's immutable request, named
   streams, constraints, real legacy replay and closed validation set are accepted.

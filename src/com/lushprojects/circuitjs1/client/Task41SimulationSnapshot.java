@@ -125,6 +125,7 @@ final class Task41SimulationSnapshot {
     private final long lastIterTime;
     private final long secTime;
     private final boolean needsRepaint;
+    private final com.google.gwt.core.client.Scheduler.RepeatingCommand pendingGeneratedRepaint;
     private final Rectangle circuitArea;
     private final double[] transform;
     private final String titleText;
@@ -169,6 +170,9 @@ final class Task41SimulationSnapshot {
     private final int lastResistanceBlackProbeNode;
     private final int lastResistanceReferenceGroundNode;
     private final boolean generatedVerificationPending;
+    private final boolean generatedVerificationRunning;
+    private final boolean generatedRuntimeInstallationInProgress;
+    private final GeneratedBoardInstance failedGeneratedRuntimeOwner;
     private final boolean generatedVerificationAnalyzed;
     private final double generatedVerificationStartTime;
     private final boolean developerVerifierRunning;
@@ -329,6 +333,10 @@ final class Task41SimulationSnapshot {
         lastResistanceBlackProbeNode = sim.lastResistanceBlackProbeNode;
         lastResistanceReferenceGroundNode = sim.lastResistanceReferenceGroundNode;
         generatedVerificationPending = sim.generatedBoardVerificationPending;
+        generatedVerificationRunning = sim.generatedVerificationRunning;
+        generatedRuntimeInstallationInProgress = sim.generatedRuntimeInstallationInProgress;
+        failedGeneratedRuntimeOwner = sim.failedGeneratedRuntimeOwner;
+        pendingGeneratedRepaint = sim.pendingGeneratedRepaint;
         generatedVerificationAnalyzed = sim.generatedBoardVerificationAnalyzed;
         generatedVerificationStartTime = sim.generatedBoardVerificationStartTime;
         developerVerifierRunning = sim.developerVerifierRunning;
@@ -521,6 +529,7 @@ final class Task41SimulationSnapshot {
         sim.circuitArea = copy(circuitArea);
         sim.analyzeFlag = analyzeFlag;
         sim.needsRepaint = needsRepaint;
+        sim.pendingGeneratedRepaint = pendingGeneratedRepaint;
         try {
             sim.instrumentController.restoreForDeveloperVerification(instrumentState);
         } finally {
@@ -658,6 +667,9 @@ final class Task41SimulationSnapshot {
         sim.lastResistanceBlackProbeNode = lastResistanceBlackProbeNode;
         sim.lastResistanceReferenceGroundNode = lastResistanceReferenceGroundNode;
         sim.generatedBoardVerificationPending = generatedVerificationPending;
+        sim.generatedVerificationRunning = generatedVerificationRunning;
+        sim.generatedRuntimeInstallationInProgress = generatedRuntimeInstallationInProgress;
+        sim.failedGeneratedRuntimeOwner = failedGeneratedRuntimeOwner;
         sim.generatedBoardVerificationAnalyzed = generatedVerificationAnalyzed;
         sim.generatedBoardVerificationStartTime = generatedVerificationStartTime;
         sim.developerVerifierRunning = developerVerifierRunning;
@@ -703,6 +715,11 @@ final class Task41SimulationSnapshot {
     }
 
     void assertRestored(CirSim sim) {
+        if (sim.generatedVerificationRunning != generatedVerificationRunning ||
+                sim.generatedRuntimeInstallationInProgress != generatedRuntimeInstallationInProgress ||
+                sim.failedGeneratedRuntimeOwner != failedGeneratedRuntimeOwner ||
+                sim.pendingGeneratedRepaint != pendingGeneratedRepaint)
+            throw new IllegalStateException("Task 41 restore changed generated owner/request state");
         assertOwner(sim);
         assertGraphRestored(sim);
         if (!sameDouble(sim.lastResistanceTestCurrent, lastResistanceTestCurrent))

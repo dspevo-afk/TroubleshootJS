@@ -1,0 +1,28 @@
+{
+  "sourceFingerprint": "a2f24ce5049aa72aa7a2594ccfa0910b61ef163d5f8200c4b5fe447748d390f9",
+  "jdk": "1.8.0_502",
+  "style": "OBF",
+  "exitCode": 0,
+  "permutations": [
+    {
+      "file": "268853BDAF18E85412344FB2AA7A849C.cache.js",
+      "sha256": "f318cfc4750e781ff0b88975c9658d2c9e9fba707ddd51b8e91149fbe7c6cb74"
+    },
+    {
+      "file": "517159ABC77428EE478DAB55EBF8F414.cache.js",
+      "sha256": "56f9e40d593246b903c71144fab231022a1342f16fc94824d2ca40114933ade7"
+    },
+    {
+      "file": "92FF85AE32A61A1581680F98DF7F9D21.cache.js",
+      "sha256": "b49379f9e12575c82fe9de825a8163174c39ad0905176e7629b560d0f6334c25"
+    },
+    {
+      "file": "B48568C1B02E6F711C29069AB0298248.cache.js",
+      "sha256": "3b225d7426bff964760a7d83f940b4747fbb63303d12b5bd8ca26880d382ac3c"
+    },
+    {
+      "file": "D5B25C7C096E944D588673BF7B80C02E.cache.js",
+      "sha256": "c5c19701e942808c5e3570c653722cf7c1f0c15fed778368355a2746a7df2473"
+    }
+  ]
+}

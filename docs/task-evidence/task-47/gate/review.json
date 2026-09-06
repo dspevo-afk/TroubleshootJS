@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "reviewer": "gate_review",
+  "modelRequested": "gpt-5.6-luna",
+  "reasoningRequested": "max",
+  "speedControl": "unavailable; no Fast option selected",
+  "readOnly": true,
+  "authoredImplementationOrOracle": false,
+  "candidateSource": "a2f24ce5049aa72aa7a2594ccfa0910b61ef163d5f8200c4b5fe447748d390f9",
+  "scope": [
+    "Actual A-H production diff, entry and callback call paths",
+    "Task41 fresh/detached original-owner scope and supported restoration",
+    "Bounded resistor abort and failed recovery",
+    "Measurement lifecycle, queued power and cleanup ordering",
+    "Owner registry, explicit endpoint aliases, reference and terminal correspondence",
+    "Legacy settlement-helper and test-oracle deltas",
+    "Final composition provider entry and actual rejection test"
+  ],
+  "findings": [
+    {
+      "impact": "BLOCKER",
+      "cause": "CODE",
+      "issue": "Cross-role component/power/detachable element ownership could alias",
+      "resolution": "Shared owning-claim vector and exact installed-part binding checks; three specific canonical/active alias negatives",
+      "disposition": "CLOSED"
+    },
+    {
+      "impact": "BLOCKER",
+      "cause": "CODE",
+      "issue": "Owned resistor endpoint could be the wrong terminal despite coherent geometry",
+      "resolution": "Exact installed resistor terminal check; negative moves the real lead to a wrong owned post and verifies legacy geometry accepts before invariant rejects",
+      "disposition": "CLOSED"
+    },
+    {
+      "impact": "BLOCKER",
+      "cause": "CODE",
+      "issue": "Composition provider exclusion needed a concrete installation entry",
+      "resolution": "installComposition validates supported providers before generic installation; real fresh LED candidate rejected with exact reason and unchanged active OwnerRefs",
+      "disposition": "CLOSED"
+    }
+  ],
+  "checks": "Read-only source/call-path/negative-oracle and evidence inspection. Root exclusively executed the compiled/browser workload; no independent runtime launch claimed.",
+  "newNonblockingFindings": [],
+  "final": "A-H and all targeted deltas PASS; no concrete blocker",
+  "resources": "No source edits, owned processes or external notifications by reviewer"
+}

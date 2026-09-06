@@ -1,0 +1,13 @@
+{
+  "status": "Historical diagnostic failures; not passing qualification",
+  "source": "Retained task-owned raw receipts",
+  "cases": [
+    "Build01 meter exactly-once failure: fixed deferred meter consumption after generated verification; final runtime B/F PASS",
+    "Early Task41 NPN/NMOS admission: observational profile left analysis pending; old test helper now settles through actual update pipeline; final 14 routes and replays PASS",
+    "Stored-energy and runtime G/H sequences attempted dependent actions before required settlement; real update-cycle sequencing added without weakening electrical/identity oracles; final strict A-I PASS",
+    "Build05 alias fixture replaced authentic auxiliary, triggering an older endpoint guard before the desired ownership oracle; append-based fixture preserves the original endpoint and final specific negatives PASS",
+    "Task41 debug invocation lacked a rendered workbench; preserved unqualified receipt and reran the supported normal-workbench route to PASS",
+    "Early reads on heavy RC/Task41 pages timed out in selector/focus CDP transport. Visible-DOM inspection established responsiveness; bounded read-only attribute reads then captured actual PASS receipts. No transport/timeout redesign or failed invocation called PASS"
+  ],
+  "toolScope": "No claim that the in-app Browser route certifies historical CDP process isolation or 500ms campaigns"
+}

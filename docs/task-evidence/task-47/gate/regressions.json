@@ -1,0 +1,27 @@
+{
+  "sourceFingerprint": "469e8ce0aacae88ee319b97de62ebcf8c80e2ede3ea47989676216bb83ac0827",
+  "standalone": [
+    {
+      "route": "challenge",
+      "fixture": "LED_INDICATOR seed 3",
+      "result": "PASS:challenge"
+    },
+    {
+      "route": "replacement",
+      "fixture": "LED_INDICATOR seed 3",
+      "result": "PASS:replacement"
+    },
+    {
+      "route": "layout",
+      "fixture": "LED_INDICATOR seed 3",
+      "result": "PASS:layout"
+    }
+  ],
+  "otherFreshRegressions": [
+    "runtime A calls existing ReplacementDeveloperVerifier.verifyWrongRepair on LED3",
+    "runtime B/F calls existing MeterLifecycleDeveloperVerifier on LED0",
+    "runtime C calls existing ResistorStressDamageDeveloperVerifier on LED3",
+    "runtime E calls existing StoredEnergyDeveloperVerifier on RC2"
+  ],
+  "layoutCorpus": "Six families; seeds 0, 2, 3 and repeats; exact installed/regenerated layout agreement"
+}

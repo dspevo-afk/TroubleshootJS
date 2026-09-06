@@ -37,9 +37,16 @@ final class StoredEnergyDeveloperVerifier {
 
         String originalId = original.getId();
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
-                CapacitorReplacementCatalog.CORRECT),
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-replacement-unpowered");
+        require(slots.removeInstalledPart(),
+            "Stored-energy verifier could not remove original C1");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-original-removed");
+        require(slots.installNewFromCatalog(CapacitorReplacementCatalog.CORRECT),
             "Stored-energy verifier could not install a real healthy C1");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-healthy-installed");
         PhysicalCapacitorPart healthy = capability.getSlot().getInstalledPart();
         require(healthy != null && !healthy.isFaulted() && healthy != original,
             "Stored-energy verifier did not create an independent healthy C1");
@@ -48,6 +55,8 @@ final class StoredEnergyDeveloperVerifier {
         // power seam to isolate it. This is solver time, not a scripted UI
         // curve, and leaves R2 as the only C1 discharge path.
         sim.setBoardPowerState(BoardPowerState.POWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-charge-powered");
         temporal.advanceForDeveloperVerification(sim, .800);
         double chargedVoltage = voltage(output, ground);
         requireFinite(chargedVoltage, "Healthy RC output did not charge");
@@ -58,6 +67,8 @@ final class StoredEnergyDeveloperVerifier {
             "Charged RC board did not visibly report DC voltage");
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-residual-unpowered");
         temporal.advanceForDeveloperVerification(sim,
             RcDelayTemporalBehavior.PLAYER_RESELECT_SECONDS);
         double interactionResidual = voltage(output, ground);
@@ -84,6 +95,8 @@ final class StoredEnergyDeveloperVerifier {
         // A power-on and DC re-selection must show a real rising output, not
         // a precomputed final value or an identity-derived completion state.
         sim.setBoardPowerState(BoardPowerState.POWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-rising-powered");
         temporal.advanceForDeveloperVerification(sim, .060);
         double risingEarly = voltage(output, ground);
         sim.instrumentController.setDcVoltageProbesForDeveloperVerification(outputProbe, groundProbe);
@@ -96,10 +109,20 @@ final class StoredEnergyDeveloperVerifier {
             " late=" + risingLate);
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        require(slots.removeInstalledPart() && slots.install(originalId) &&
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-restore-unpowered");
+        require(slots.removeInstalledPart(),
+            "Stored-energy verifier could not remove healthy C1");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-healthy-removed");
+        require(slots.install(originalId) &&
             capability.getSlot().getInstalledPart() == original && original.isFaulted(),
             "Stored-energy verifier did not restore the original fault-owning C1");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-original-installed");
         sim.setBoardPowerState(BoardPowerState.POWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "stored-energy-final-powered");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         require(!sim.activeMeasurementOverlay && sim.getBoardModificationController().isFullyRestored(),
             "Stored-energy verification contaminated the restored board state");

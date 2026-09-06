@@ -390,6 +390,10 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask40Verification;
 	boolean troubleshootTask41Verification;
 	boolean troubleshootTask46Verification;
+	boolean troubleshootCompositionGateVerification;
+	boolean troubleshootCompositionGateVerificationComplete;
+	boolean troubleshootCompositionGateControls;
+	boolean holdCompositionGateVerification;
 	boolean troubleshootTask43Verification;
 	boolean troubleshootTask43ForcedFailure;
 	boolean troubleshootTask43PVerification;
@@ -518,6 +522,10 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    troubleshootTask46Verification = troubleshootDebug &&
 		qp.getBooleanValue("tsjVerifyTask46", false);
+	    troubleshootCompositionGateVerification = troubleshootDebug &&
+		qp.getBooleanValue("tsjVerifyCompositionGate", false);
+	    troubleshootCompositionGateControls = troubleshootDebug &&
+		qp.getBooleanValue("tsjCompositionGateControls", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
 	    running = qp.getBooleanValue("running", true);
@@ -764,6 +772,18 @@ MouseOutHandler, MouseWheelHandler {
 		    BoardPowerState.UNPOWERED : BoardPowerState.POWERED);
 	    }
 	});
+	if (troubleshootCompositionGateControls) {
+	    final Button holdButton = new Button("Hold verification (developer)");
+	    holdButton.addClickHandler(new ClickHandler() {
+		public void onClick(ClickEvent event) {
+		    holdCompositionGateVerification = !holdCompositionGateVerification;
+		    holdButton.setText(holdCompositionGateVerification ?
+			"Release verification (developer)" : "Hold verification (developer)");
+		    if (!holdCompositionGateVerification) repaint();
+		}
+	    });
+	    verticalPanel.add(holdButton);
+	}
 	/*
 	dumpMatrixButton = new Button("Dump Matrix");
 	dumpMatrixButton.addClickHandler(new ClickHandler() {
@@ -1507,33 +1527,58 @@ MouseOutHandler, MouseWheelHandler {
     }
     
     boolean needsRepaint;
+    Scheduler.RepeatingCommand pendingGeneratedRepaint;
     
     void repaint() {
-	if (!needsRepaint) {
+	if (pendingGeneratedRepaint == null) {
 	    needsRepaint = true;
+	    final GeneratedBoardInstance repaintOwner = generatedBoardInstance;
 	    final Task43PRuntimeCallbackDeveloperVerifier.RepaintObservation task43PObservation =
 		Task43PRuntimeCallbackDeveloperVerifier.scheduled(this);
-	    Scheduler.get().scheduleFixedDelay(new Scheduler.RepeatingCommand() {
+	    pendingGeneratedRepaint = new Scheduler.RepeatingCommand() {
 		public boolean execute() {
+		      // A one-shot request belongs to its scheduling owner. An older
+		      // callback must neither update a replacement nor clear its request.
+		      if (pendingGeneratedRepaint != this || repaintOwner != generatedBoardInstance) {
+			  Task43PRuntimeCallbackDeveloperVerifier.discarded(CirSim.this, task43PObservation);
+			  return false;
+		      }
 		      Task43PRuntimeCallbackDeveloperVerifier.started(CirSim.this, task43PObservation);
 		      try {
 			  updateCircuit();
 		      } catch (RuntimeException failure) {
 			  Task43PRuntimeCallbackDeveloperVerifier.failed(CirSim.this, failure);
 			  throw failure;
+		      } finally {
+			  // Coalesce refreshes during this update, but never clear a
+			  // replacement owner's newer request.
+			  if (pendingGeneratedRepaint == this) {
+			      pendingGeneratedRepaint = null;
+			      needsRepaint = false;
+			  }
 		      }
-		      needsRepaint = false;
 		      Task43PRuntimeCallbackDeveloperVerifier.completed(CirSim.this, task43PObservation);
 		      return false;
 		  }
-	    }, FASTTIMER);
+	    };
+	    Scheduler.get().scheduleFixedDelay(pendingGeneratedRepaint, FASTTIMER);
 	}
+    }
+
+    void invalidateGeneratedOwnerWork() {
+	pendingGeneratedRepaint = null;
+	needsRepaint = false;
+	pendingBoardPowerState = null;
+	requestPowerOnDuringActiveMeasurementForDeveloperVerification = false;
     }
     
 // *****************************************************************
 //                     UPDATE CIRCUIT
     
     public void updateCircuit() {
+    if (failedGeneratedRuntimeOwner != null &&
+            failedGeneratedRuntimeOwner == generatedBoardInstance)
+        return;
     long mystarttime;
     long myrunstarttime;
     long mydrawstarttime;
@@ -1577,10 +1622,12 @@ MouseOutHandler, MouseWheelHandler {
 		advanceLiveGeneratedTemporalSimulation();
 		if (stopMessage != null && generatedBoardVerificationPending)
 		    throw new IllegalStateException("Generated board solver stopped: " + stopMessage);
-			instrumentController.onSimulationStepComplete(didAnalyze);
 			if (generatedBoardInstance != null)
 			    generatedBoardInstance.getPhysicalBoardRuntime().observeSimulationTime(t);
 			runGeneratedBoardVerificationIfReady(didAnalyze);
+			// Deferred meter work may consume this analysis only after the
+			// generated verification has made its current owner actionable.
+			instrumentController.onSimulationStepComplete(didAnalyze);
 	    } catch (Exception e) {
 		debugger();
 		console("exception in runCircuit " + e);
@@ -3150,6 +3197,14 @@ MouseOutHandler, MouseWheelHandler {
     int max(int a, int b) { return (a > b) ? a : b; }
     
     public void resetAction(){
+        if (generatedBoardInstance != null && !isGeneratedRuntimeSettled())
+            return;
+        if (generatedBoardInstance != null) {
+            invalidateGeneratedOwnerWork();
+            if (generatedChallengeController != null)
+                generatedChallengeController.invalidateCustomerRetest();
+            instrumentController.clearTargets();
+        }
     	int i;
     	analyzeFlag = true;
     	if (t == 0)
@@ -4450,6 +4505,9 @@ MouseOutHandler, MouseWheelHandler {
 	boolean generatedBoardVerificationPending;
 	boolean generatedBoardVerificationAnalyzed;
 	double generatedBoardVerificationStartTime;
+	boolean generatedVerificationRunning;
+	boolean generatedRuntimeInstallationInProgress;
+	GeneratedBoardInstance failedGeneratedRuntimeOwner;
 
     void installGeneratedBoard(GeneratedBoardInstance instance) {
 	installGeneratedBoard(instance, true);
@@ -4461,6 +4519,7 @@ MouseOutHandler, MouseWheelHandler {
 
     private void installGeneratedBoard(GeneratedBoardInstance instance,
 	    boolean attachWorkbenchToSidebar) {
+	invalidateGeneratedOwnerWork();
 	if (pcbWorkbenchController != null) {
 	    pcbWorkbenchController.disposeForDeveloperVerification();
 	    pcbWorkbenchController = null;
@@ -4479,18 +4538,23 @@ MouseOutHandler, MouseWheelHandler {
 	for (CircuitElm element : instance.getSimulationElements())
 	    elmList.add(element);
 	generatedBoardInstance = instance;
+	failedGeneratedRuntimeOwner = null;
+	generatedVerificationRunning = false;
 	generatedChallengeController = null;
 	boardModificationController = new BoardModificationController(this, instance);
 	PhysicalBoardRuntime physicalRuntime = instance.getPhysicalBoardRuntime();
 	physicalRuntime.installRegisteredCapabilities(this, instance, boardModificationController, t);
+	FreshGeneratedRuntimeInstallation.reached(this, FreshGeneratedRuntimeInstallation.Stage.CAPABILITIES);
 	// Task 46's explicit debug route retains the real workbench so its
 	// initial legacy challenge goes through unchanged diagnostic admission.
-	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification) &&
+	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
+	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
 	    instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
 		instance.getPcbLayout(), verticalPanel, quickPlayActive,
 		attachWorkbenchToSidebar) : null;
 	boardPowerController.attach(instance.getExternalPowerBindings());
+	FreshGeneratedRuntimeInstallation.reached(this, FreshGeneratedRuntimeInstallation.Stage.POWER);
 	physicalRuntime.onBoardPowerStateChanged(boardPowerController.getState());
 	updateBoardPowerButton();
 	updateGeneratedView();
@@ -4524,6 +4588,7 @@ MouseOutHandler, MouseWheelHandler {
 	    throw failure;
 	}
 	generatedChallengeController.begin();
+	FreshGeneratedRuntimeInstallation.reached(this, FreshGeneratedRuntimeInstallation.Stage.CHALLENGE);
 	refreshChallengeInteractionState();
     }
 
@@ -4544,6 +4609,8 @@ MouseOutHandler, MouseWheelHandler {
 	generatedBoardVerificationAnalyzed = false;
 	generatedBoardVerificationStartTime = t;
 	needAnalyze();
+	if (instrumentController != null)
+	    refreshChallengeInteractionState();
     }
 
     /**
@@ -4558,12 +4625,15 @@ MouseOutHandler, MouseWheelHandler {
 	if (!needsRepaint)
 	    return;
 	needsRepaint = false;
+	pendingGeneratedRepaint = null;
 	updateCircuit();
 	if (activeMeasurementOverlay)
 	    throw new IllegalStateException("Instrument measurement overlay was not cleaned up");
     }
 
     private void runGeneratedBoardVerificationIfReady(boolean didAnalyze) {
+	if (holdCompositionGateVerification)
+	    return;
 	if (!generatedBoardVerificationPending)
 	    return;
 	if (!generatedBoardVerificationAnalyzed)
@@ -4584,10 +4654,16 @@ MouseOutHandler, MouseWheelHandler {
 	    return;
 	try {
 	    Task43PDeveloperVerifier.verifySourceExperimentBeforeAdmission(this);
-	    verifyGeneratedBoard();
-	    generatedBoardVerificationPending = false;
-	    if (generatedChallengeController != null)
-		generatedChallengeController.afterGeneratedVerification();
+	    boolean previousVerificationRunning = generatedVerificationRunning;
+	    generatedVerificationRunning = true;
+	    try {
+		verifyGeneratedBoard();
+		generatedBoardVerificationPending = false;
+		if (generatedChallengeController != null)
+		    generatedChallengeController.afterGeneratedVerification();
+	    } finally {
+		generatedVerificationRunning = previousVerificationRunning;
+	    }
 	    refreshChallengeInteractionState();
 	    if (!developerVerifierRunning &&
 		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -4738,6 +4814,28 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootCompositionGateVerification &&
+		!troubleshootCompositionGateVerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		generatedChallengeController != null && generatedChallengeController.isReady() &&
+		isGeneratedRuntimeSettled()) {
+		developerVerifierRunning = true;
+		troubleshootCompositionGateVerificationComplete = true;
+		publishBrowserVerificationResult("RUNNING:composition-gate");
+		try {
+		    String lifecycle = CompositionEntryGateDeveloperVerifier.verify(this);
+		    String mutation = CompositionMutationGateDeveloperVerifier.verify(this);
+		    publishCompositionGateEvidence(lifecycle + "\n" + mutation);
+		    publishBrowserVerificationResult("PASS:composition-gate");
+		} catch (Throwable failure) {
+		    publishBrowserVerificationResult("FAIL:composition-gate:" + failure.getMessage());
+		    if (failure instanceof Error) throw (Error) failure;
+		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+		    throw new IllegalStateException("Composition gate verification failed", failure);
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	    if (!developerVerifierRunning && troubleshootTask46Verification &&
 		!troubleshootTask46VerificationComplete &&
 		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -4865,6 +4963,10 @@ MouseOutHandler, MouseWheelHandler {
 	if (troubleshootDebug && troubleshootTask46Verification)
 	    publishTask46EvidenceStrings(parity, replay.diagnostics, replay.snapshot, replay.summary);
     }
+
+    private static native void publishCompositionGateEvidence(String evidence) /*-{
+	$doc.documentElement.setAttribute("data-tsj-composition-gate-report", evidence);
+    }-*/;
 
     /** All seeds cross the Java/browser boundary as canonical strings. */
     private static native void publishTask46EvidenceStrings(String parity, String descriptor,
@@ -5018,13 +5120,53 @@ MouseOutHandler, MouseWheelHandler {
 	}
 
 	boolean isChallengeInteractionEnabled() {
-	return generatedChallengeController == null ||
-	    generatedChallengeController.isPhysicalMutationAllowed();
+	return (generatedChallengeController == null ||
+	    generatedChallengeController.isPhysicalMutationAllowed()) &&
+	    isGeneratedRuntimeSettled();
+	}
+
+	boolean isGeneratedSemanticInteractionEnabled() {
+	return generatedChallengeController != null && generatedChallengeController.isReady() &&
+	    isGeneratedRuntimeSettled();
+	}
+
+	boolean isGeneratedRuntimeSettled() {
+	if (generatedBoardInstance == null)
+	    return true;
+	return failedGeneratedRuntimeOwner != generatedBoardInstance &&
+	    !generatedRuntimeInstallationInProgress && !generatedVerificationRunning &&
+	    !generatedBoardVerificationPending && !analyzeFlag && !dcAnalysisFlag &&
+	    !activeMeasurementOverlay && pendingBoardPowerState == null && stopMessage == null &&
+	    observationalValidationDepth == 0 &&
+	    !generatedBoardInstance.getPhysicalBoardRuntime().isMutationInProgress() &&
+	    (generatedChallengeController == null || !generatedChallengeController.isOperationInProgress());
+	}
+
+	void markGeneratedRuntimeFailure(GeneratedBoardInstance owner, Throwable failure) {
+	if (owner != generatedBoardInstance)
+	    return;
+	failedGeneratedRuntimeOwner = owner;
+	try {
+	    boardPowerController.setState(BoardPowerState.UNPOWERED);
+	} catch (Throwable cleanup) {
+	    if (cleanup != failure)
+		failure.addSuppressed(cleanup);
+	}
+	stopMessage = "Runtime recovery failed: reload board";
+	setSimRunning(false);
+	invalidateGeneratedOwnerWork();
+	try { instrumentController.clearTargets(); } catch (Throwable cleanup) {
+	    if (cleanup != failure) failure.addSuppressed(cleanup);
+	}
+	refreshChallengeInteractionState();
+	updateBoardPowerButton();
 	}
 
 	void refreshChallengeInteractionState() {
 	boolean enabled = isChallengeInteractionEnabled();
 	instrumentController.setInteractionEnabled(enabled);
+	if (resetButton != null)
+	    resetButton.setEnabled(generatedBoardInstance == null || isGeneratedRuntimeSettled());
 	if (boardPowerButton != null)
 	    boardPowerButton.setEnabled(enabled && !isActiveMeasurementCleanupBlocked());
 	refreshBoardModificationControls();
@@ -5090,21 +5232,24 @@ MouseOutHandler, MouseWheelHandler {
     void setBoardPowerState(BoardPowerState state) {
 	if (generatedBoardInstance == null)
 	    return;
-	if (!isChallengeInteractionEnabled())
-	    return;
 	if (activeMeasurementOverlay) {
 	    pendingBoardPowerState = state;
 	    return;
 	}
+	if (!isChallengeInteractionEnabled())
+	    return;
+	applyGeneratedBoardPowerState(state);
+    }
+
+    private void applyGeneratedBoardPowerState(BoardPowerState state) {
 	if (!boardPowerController.setState(state))
 	    return;
 	generatedBoardInstance.getPhysicalBoardRuntime().onBoardPowerStateChanged(state);
 	if (generatedChallengeController != null)
 	    generatedChallengeController.invalidateCustomerRetest();
 	updateBoardPowerButton();
-	refreshBoardModificationControls();
-	instrumentController.refreshActiveMeasurement();
 	requestGeneratedBoardVerification();
+	instrumentController.refreshActiveMeasurement();
     }
 
     /**
@@ -5170,7 +5315,8 @@ MouseOutHandler, MouseWheelHandler {
 	boardPowerButton.setVisible(generatedBoardActive);
 	boardPowerButton.setEnabled(isChallengeInteractionEnabled() && !cleanupBlocked);
 	if (generatedBoardActive)
-	    boardPowerButton.setText(cleanupBlocked ?
+	    boardPowerButton.setText(failedGeneratedRuntimeOwner == generatedBoardInstance ?
+		"Runtime recovery failed: reload board" : cleanupBlocked ?
 		"Measurement cleanup failed: power blocked; reload board" :
 		boardPowerController.getState() == BoardPowerState.POWERED ?
 		"Board Power: ON" : "Board Power: OFF");
@@ -5246,6 +5392,8 @@ MouseOutHandler, MouseWheelHandler {
 
     double measureDcVoltage(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black) {
+	if (!isGeneratedRuntimeSettled())
+	    return Double.NaN;
 	if (!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return Double.NaN;
 	if (usesLiveDcVoltage(red, black))
@@ -5334,6 +5482,8 @@ MouseOutHandler, MouseWheelHandler {
 
     ActiveMeasurementReadiness getActiveMeasurementReadiness(
 	    CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+	if (!isGeneratedRuntimeSettled())
+	    return ActiveMeasurementReadiness.WAITING;
 	if (generatedBoardInstance == null)
 	    return boardPowerController.isElectricallyUnpowered() ?
 		ActiveMeasurementReadiness.READY : ActiveMeasurementReadiness.POWER_OFF;
@@ -5351,6 +5501,8 @@ MouseOutHandler, MouseWheelHandler {
 	    ActiveMeasurementResultReader reader) {
 	if (activeMeasurementOverlay)
 	    throw new IllegalStateException("A temporary measurement is already active or awaiting cleanup");
+	if (!isGeneratedRuntimeSettled())
+	    throw new IllegalStateException("A temporary measurement requires a settled runtime");
 	lastActiveMeasurementStimulus = stimulus;
 	activeMeasurementSolverRestored = false;
 	activeMeasurementOverlay = true;
@@ -5400,7 +5552,10 @@ MouseOutHandler, MouseWheelHandler {
 		BoardPowerState requestedState = pendingBoardPowerState;
 		pendingBoardPowerState = null;
 		try {
-		    setBoardPowerState(requestedState);
+		    // This request was accepted while this synchronous measurement
+		    // owned the overlay. Cleanup has proven all temporary elements
+		    // absent; pending analysis must not silently drop the request.
+		    applyGeneratedBoardPowerState(requestedState);
 		    analyzeCircuit();
 		    runCircuit(true);
 		    if (stopMessage != null || !isStimulusAbsentFromSolver(stimulus))

@@ -165,7 +165,7 @@ are reserved and **not consumed by legacy-leaf@1**.
 
 The explicit `tsjDebug=true&tsjVerifyTask46=true` route executes the same pure
 contract corpus used by JDK8, publishes canonical string outputs and compares
-direct generation with parsed-descriptor replay. Only this debug verifier keeps
+direct generation with parsed-descriptor replay. This debug verifier keeps
 a workbench in debug mode, permitting the initial challenge's existing normal
 diagnostic admission. Subsequent paired installs use the existing developer
 installation scope, real healthy/faulted solver validation and fresh controllers;
@@ -176,6 +176,63 @@ publish descriptor, reserved seeds, snapshot and parity output only behind both
 flags. Normal player pages receive none of these attributes. The
 [Task 46 evidence](task-evidence/task-46/README.md) defines
 the algorithm, fixed oracle corpus, replay coverage and qualification limits.
+
+## Composition entry runtime boundary
+
+The accepted gate supplies `CirSim.isGeneratedRuntimeSettled()` as the
+shared actionability check. It combines analysis, verification, physical
+mutation, active measurement, queued power, observational work and failed
+recovery state. Workbench, instrument, challenge, power and mutation entries
+check their current owner and this state. READY alone is insufficient.
+Completed challenges retain their existing semantic operations. Pending work
+suspends instrument controls without silently discarding the selected mode or
+probes; normal exit still drains the accepted measurement cleanup path.
+
+One-shot repaint requests retain both their originating board reference and
+the actual scheduled command reference. Superseded commands discard without
+updating a new owner or clearing its newer request. Retained workbench handlers
+check the workbench and challenge references. Customer retest publication checks
+the originating challenge and request identity, including after reset. The
+periodic simulator timer remains simulator-owned.
+
+`ResistorMutationScope` covers one replaceable resistor's lead, removal,
+reinstallation and catalog operations. It prepares the touched graph,
+connection flags, slot attachment, binding and append-only registration state,
+validates committed ownership, and compensates those writes on failure.
+Original physical fault and secondary damage objects are retained. A failed
+compensator retains the primary and suppressed cleanup errors, isolates power,
+stops the runtime and disables actions. This is a bounded resistor transaction;
+other mutable part providers are rejected by the composition provider boundary.
+Typed inventory views share the single `PhysicalBoardRuntime` registry.
+
+`FreshGeneratedRuntimeInstallation` requires a distinct candidate with disjoint
+mutable owners. It detaches the original workbench, supplies private graph and
+UI containers to the existing installation path, runs the actual solver and
+challenge validation, then exposes the settled candidate. On failure Task 41
+restores the untouched original owner. Task 41 remains Option A and does not
+restore arbitrary mutations to that original owner's physical objects. Nested
+fresh installation and current-instance installation reject.
+The composition-facing `installComposition` entry rejects unsupported mutable
+providers before invoking that publication path. The generic `install` entry
+remains available for existing leaf proof fixtures; composed callers use the
+restricted entry.
+
+`GeneratedRuntimeInvariant` checks actual board, graph, power, component,
+connection, physical slot/part, inventory, provider, stress and selected-fault
+references. The settled simulator form additionally checks current controllers
+and rejects pending overlays. The structural form is used while the bounded
+mutation or fresh installation owns its guard. Immutable package definitions
+and established board-side endpoint aliases retain their existing authority.
+Component, power and detachable-element owning claims share one identity check.
+Installed primary/auxiliary bindings must belong to the exact physical part,
+and resistor pad terminal names must match that installed part's exact endpoint.
+
+The double-gated developer route `tsjDebug=true&tsjVerifyCompositionGate=true`
+executes the compiled lifecycle, partial-mutation and attachment failure corpus.
+`tsjCompositionGateControls=true`, also requiring debug, exposes a hold of real
+verification for visible pending-control checks. Neither enables Task 47 or
+adds a player menu entry. Qualification status and exact evidence remain in the
+[gate packet](task-evidence/task-47/gate/README.md).
 
 ## Probe and measurement ownership
 

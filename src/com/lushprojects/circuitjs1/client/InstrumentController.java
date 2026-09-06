@@ -20,6 +20,8 @@ class InstrumentController {
     private final CirSim sim;
     private final CircuitMeasurementBoundary measurementAdapter;
     private final HashMap<String, Button> modeButtons = new HashMap<String, Button>();
+    private final HashMap<String, ClickHandler> modeHandlers =
+        new HashMap<String, ClickHandler>();
     private final Grid modeGrid;
     private final Label readingLabel;
     private final Label continuityLabel;
@@ -120,15 +122,43 @@ class InstrumentController {
     }
 
     boolean isHandlingPointerInput() {
-        return interactionEnabled && activeStrategy.getProbeRequirements().requiresTwoProbes();
+        return isCurrentPlayerInteractionAllowed() &&
+            activeStrategy.getProbeRequirements().requiresTwoProbes();
     }
 
     void setInteractionEnabled(boolean enabled) {
         interactionEnabled = enabled;
         for (Button button : modeButtons.values())
             button.setEnabled(enabled);
-        if (!enabled)
+        /*
+         * A pending verification or temporary analysis only suspends player
+         * input.  Keep the selected mode and probes so that settlement can
+         * resume the same meter without triggering another measurement from
+         * this UI refresh.  Completion is terminal and may clear the mode as
+         * the previous lifecycle did.
+         */
+        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        if (!enabled && challenge != null && challenge.isCompleted())
             exitInstrumentModeForDeveloperVerification();
+    }
+
+    private boolean isCurrentPlayerInteractionAllowed() {
+        /* Button enabled state is a rendering cache; always consult the live
+         * simulator predicate at the entry boundary. */
+        return sim.isChallengeInteractionEnabled();
+    }
+
+    boolean isInteractionEnabledForDeveloperVerification() {
+        return interactionEnabled;
+    }
+
+    boolean isModeButtonEnabledForDeveloperVerification(String id) {
+        Button button = id == null ? null : modeButtons.get(id);
+        return button != null && button.isEnabled();
+    }
+
+    ClickHandler getPlayerModeHandlerForDeveloperVerification(String id) {
+        return id == null ? null : modeHandlers.get(id);
     }
 
     DeveloperState captureForDeveloperVerification() {
@@ -175,11 +205,13 @@ class InstrumentController {
     }
 
     void handlePointerInput(int button, int screenX, int screenY) {
+        if (!isCurrentPlayerInteractionAllowed())
+            return;
         handlePointerInput(button, sim.findPostTarget(screenX, screenY));
     }
 
     void handlePointerInput(int button, ProbeTarget target) {
-        if (!interactionEnabled)
+        if (!isCurrentPlayerInteractionAllowed())
             return;
         boolean changed = false;
         if (target != null) {
@@ -233,7 +265,7 @@ class InstrumentController {
     }
 
     void onSimulationStepComplete(boolean didAnalyze) {
-        if (sim.activeMeasurementOverlay)
+        if (sim.activeMeasurementOverlay || !sim.isChallengeInteractionEnabled())
             return;
         activeStrategy.onSimulationStepComplete(this, didAnalyze);
     }
@@ -448,12 +480,16 @@ class InstrumentController {
         modeGrid.resize(rows, 2);
         modeGrid.setWidget(index / 2, index % 2, button);
         button.setEnabled(interactionEnabled);
-        button.addClickHandler(new ClickHandler() {
+        ClickHandler modeHandler = new ClickHandler() {
             public void onClick(ClickEvent event) {
+                if (!isCurrentPlayerInteractionAllowed())
+                    return;
                 toggleMode(strategy.getId());
                 updateReading();
             }
-        });
+        };
+        modeHandlers.put(strategy.getId(), modeHandler);
+        button.addClickHandler(modeHandler);
     }
 
     private void updateReading() {
@@ -511,6 +547,8 @@ class InstrumentController {
     boolean isMeasurementAllowedForStrategy(InstrumentModeStrategy strategy,
             ProbeTarget red, ProbeTarget black) {
         if (strategy == null || red == null || black == null || !red.isValid() || !black.isValid())
+            return false;
+        if (!sim.isChallengeInteractionEnabled())
             return false;
         if (strategy.getPowerPolicy() == InstrumentPowerPolicy.UNPOWERED_ONLY)
             return measurementAdapter.isActiveMeasurementAllowed(red, black);

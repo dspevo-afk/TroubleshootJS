@@ -18,11 +18,14 @@ class MeterLifecycleDeveloperVerifier {
 
     private static void installCorrectReplacement(CirSim sim, GeneratedBoardInstance instance) {
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        settle(sim);
         ResistorSlotController slots = sim.getResistorSlotController();
-        if (!resistorSlot(instance).isEmpty())
+        if (!resistorSlot(instance).isEmpty()) {
             require(slots.removeInstalledPart(), "Could not remove original R1");
+            settle(sim);
+        }
         require(slots.installNewFromCatalog(catalogId(instance)), "Could not install correct R1 replacement");
+        settle(sim);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(instance.getOperationalStates().isIlluminated("LED1"),
@@ -38,7 +41,7 @@ class MeterLifecycleDeveloperVerifier {
         double tolerance = expected * resistorSlot(instance).getInstalledPart().getNameplate()
             .getTolerancePercent() / 100.0;
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        settle(sim);
         ProbeTarget installedFirst = hitPad(sim, renderer, "R1.1");
         ProbeTarget installedSecond = hitPad(sim, renderer, "R1.2");
         sim.instrumentController.activateResistanceModeForDeveloperVerification();
@@ -47,7 +50,7 @@ class MeterLifecycleDeveloperVerifier {
             "Installed healthy R1 unexpectedly measured OL");
         require(sim.getBoardModificationController().liftLead("R1", liftedPadId),
             "Could not lift " + liftedPadId);
-        sim.updateCircuit();
+        settle(sim);
         ProbeTarget liftedComponentLead = hitLead(sim, renderer, liftedPadId);
         ProbeTarget boardLiftedPad = hitPad(sim, renderer, liftedPadId);
         ProbeTarget boardAttachedPad = hitPad(sim, renderer, attachedPadId);
@@ -69,6 +72,7 @@ class MeterLifecycleDeveloperVerifier {
             "Lifted lead gap did not measure OL");
         require(sim.getBoardModificationController().reconnectLead("R1", liftedPadId),
             "Could not reconnect " + liftedPadId);
+        settle(sim);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(instance.getOperationalStates().isIlluminated("LED1"),
@@ -86,9 +90,10 @@ class MeterLifecycleDeveloperVerifier {
         double expected = vin * DcVoltageMeasurementStimulus.INPUT_RESISTANCE /
             (DcVoltageMeasurementStimulus.INPUT_RESISTANCE + resistance);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        settle(sim);
         require(sim.getBoardModificationController().liftLead("R1", "R1.2"),
             "Could not lift downstream R1 lead for DC test");
-        sim.updateCircuit();
+        settle(sim);
         ProbeTarget liftedLead = hitLead(sim, renderer, "R1.2");
         ProbeTarget ground = hitPad(sim, renderer, "J1.2");
         ProbeTarget boardPad = hitPad(sim, renderer, "R1.2");
@@ -99,7 +104,7 @@ class MeterLifecycleDeveloperVerifier {
             "DC probe placement did not consume exactly one refresh per changed probe");
         int beforePowerOn = sim.instrumentController.getDcVoltageMeasurementCountForDeveloperVerification();
         sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.updateCircuit();
+        settle(sim);
         require(beforePowerOn + 1 == sim.instrumentController.getDcVoltageMeasurementCountForDeveloperVerification(),
             "DC power-on refresh was not consumed exactly once");
         requireDisplayVoltage(sim, expected, .02, "Retained lifted-lead DC reading");
@@ -118,16 +123,18 @@ class MeterLifecycleDeveloperVerifier {
             "Canvas repaint caused recurring DC transactions");
         int beforePowerOff = sim.instrumentController.getDcVoltageMeasurementCountForDeveloperVerification();
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        settle(sim);
         require(beforePowerOff + 1 == sim.instrumentController.getDcVoltageMeasurementCountForDeveloperVerification(),
             "DC power-off refresh was not consumed exactly once");
         requireDisplayVoltage(sim, 0, .001, "Retained lifted-lead DC power-off reading");
         sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.updateCircuit();
+        settle(sim);
         requireDisplayVoltage(sim, expected, .02, "Retained lifted-lead DC repower reading");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        settle(sim);
         require(sim.getBoardModificationController().reconnectLead("R1", "R1.2"),
             "Could not reconnect downstream R1 lead after DC test");
+        settle(sim);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         require(instance.getOperationalStates().isIlluminated("LED1"),
@@ -137,23 +144,26 @@ class MeterLifecycleDeveloperVerifier {
     private static void verifyPhysicalTargetInvalidation(CirSim sim, GeneratedBoardInstance instance) {
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        settle(sim);
         require(sim.getBoardModificationController().liftLead("R1", "R1.2"),
             "Could not lift R1 before target identity test");
-        sim.updateCircuit();
+        settle(sim);
         ProbeTarget previousPartLead = hitLead(sim, renderer, "R1.2");
         require(previousPartLead.isValid(), "Lifted lead target was not valid for selected part");
         require(sim.getBoardModificationController().reconnectLead("R1", "R1.2"),
             "Could not reconnect R1 during target identity test");
-        sim.updateCircuit();
+        settle(sim);
         require(!previousPartLead.isValid(), "Reconnected internal lead remained exposed as a probe target");
         require(sim.getResistorSlotController().removeInstalledPart(),
             "Could not remove selected physical resistor");
+        settle(sim);
         require(!previousPartLead.isValid(), "Removed physical part retained an installed-lead probe target");
         require(sim.getResistorSlotController().installNewFromCatalog(catalogId(instance)),
             "Could not install alternate physical resistor");
+        settle(sim);
         require(sim.getBoardModificationController().liftLead("R1", "R1.2"),
             "Could not lift alternate physical resistor");
-        sim.updateCircuit();
+        settle(sim);
         ProbeTarget replacementLead = hitLead(sim, renderer, "R1.2");
         require(!previousPartLead.isSameTarget(replacementLead) && previousPartLead != replacementLead,
             "Probe identity followed the R1 slot to another physical resistor");
@@ -162,10 +172,13 @@ class MeterLifecycleDeveloperVerifier {
         require("--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Invalid physical probe was not cleared before another DC measurement");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        settle(sim);
         require(sim.getResistorSlotController().removeInstalledPart(),
             "Could not remove alternate physical resistor");
+        settle(sim);
         require(sim.getResistorSlotController().installNewFromCatalog(catalogId(instance)),
             "Could not reinstall correct physical resistor");
+        settle(sim);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
     }
@@ -302,10 +315,8 @@ class MeterLifecycleDeveloperVerifier {
     }
 
     private static void settle(CirSim sim) {
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
-        sim.verifyGeneratedBoard();
+        GeneratedRuntimeDeveloperSettlement.settle(sim, sim.getGeneratedBoardInstance(),
+            "meter-lifecycle-verifier");
     }
 
     private static double getLedCurrent(GeneratedBoardInstance instance) {

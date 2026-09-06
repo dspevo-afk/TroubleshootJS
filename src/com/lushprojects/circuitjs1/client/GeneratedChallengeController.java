@@ -14,6 +14,10 @@ class GeneratedChallengeController {
     private GeneratedChallengeState state = GeneratedChallengeState.PREPARING_HEALTHY;
     private GeneratedScenario<GeneratedObservedBehavior> scenario;
     private GeneratedCustomerRetestResult customerRetestResult;
+    private Object currentRetestRequest = new Object();
+    private boolean operationInProgress;
+    interface RetestCompletionDispatch { void dispatch(Runnable completion); }
+    private RetestCompletionDispatch retestCompletionDispatch;
 
     GeneratedChallengeController(CirSim sim, GeneratedBoardInstance instance) {
         this(sim, instance, false);
@@ -102,7 +106,20 @@ class GeneratedChallengeController {
     GeneratedCustomerRetestResult getCustomerRetestResult() { return customerRetestResult; }
     GeneratedRepairStatus getLiveRepairStatus() { return getRepairStatus(); }
 
+    GeneratedBoardInstance getInstanceForRuntimeValidation() { return instance; }
+    boolean isOperationInProgress() { return operationInProgress; }
+
+    void setRetestCompletionDispatchForDeveloperVerification(RetestCompletionDispatch dispatch) {
+        retestCompletionDispatch = dispatch;
+    }
+
+    private boolean isCurrentOwner() {
+        return sim.getGeneratedBoardInstance() == instance &&
+            sim.getGeneratedChallengeController() == this;
+    }
+
     void invalidateCustomerRetest() {
+        currentRetestRequest = new Object();
         if (state == GeneratedChallengeState.READY)
             customerRetestResult = null;
     }
@@ -141,7 +158,8 @@ class GeneratedChallengeController {
         // READY includes the only state allowed to run a functional profile.
         // COMPLETED remains interaction-ready, but it is terminal: temporal
         // profiles must never replay merely because Finish Job is invoked again.
-        if (state != GeneratedChallengeState.READY)
+        if (!isCurrentOwner() || state != GeneratedChallengeState.READY ||
+                !sim.isGeneratedRuntimeSettled())
             return false;
         if (getLiveRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED ||
                 customerRetestResult == null || !customerRetestResult.isPassed())
@@ -151,26 +169,53 @@ class GeneratedChallengeController {
     }
 
     GeneratedCustomerRetestResult performCustomerRetest() {
-        if (state != GeneratedChallengeState.READY)
+        if (!isCurrentOwner() || state != GeneratedChallengeState.READY ||
+                !sim.isGeneratedRuntimeSettled())
             return GeneratedCustomerRetestSupport.failure();
-        GeneratedCustomerRetestResult result = instance.invokeOperation(
-            GeneratedBoardOperationIds.CUSTOMER_RETEST, sim);
-        customerRetestResult = result;
-        if (canLatchCompletionAfterCustomerRetest())
-            latchCompleted();
-        else {
-            sim.refreshBoardModificationControls();
-            sim.repaint();
+        final Object request = new Object();
+        currentRetestRequest = request;
+        customerRetestResult = null;
+        final GeneratedCustomerRetestResult result;
+        operationInProgress = true;
+        try {
+            result = instance.invokeOperation(GeneratedBoardOperationIds.CUSTOMER_RETEST, sim);
+        } finally {
+            operationInProgress = false;
         }
+        // This is the actual result publication callback, also captured by
+        // the bounded developer succession proof. Normal dispatch is immediate.
+        Runnable completion = new Runnable() {
+            public void run() {
+                if (request != currentRetestRequest || !isCurrentOwner() ||
+                        state != GeneratedChallengeState.READY)
+                    return;
+                customerRetestResult = result;
+                if (canLatchCompletionAfterCustomerRetest())
+                    latchCompleted();
+                else {
+                    sim.refreshBoardModificationControls();
+                    sim.repaint();
+                }
+            }
+        };
+        if (retestCompletionDispatch == null)
+            completion.run();
+        else
+            retestCompletionDispatch.dispatch(completion);
         return result;
     }
 
     boolean invokePlayerOperation(String stableId) {
-        if (!isReady() || GeneratedBoardOperationIds.CUSTOMER_RETEST.equals(stableId))
+        if (!isCurrentOwner() || !isReady() || !sim.isGeneratedRuntimeSettled() ||
+                GeneratedBoardOperationIds.CUSTOMER_RETEST.equals(stableId))
             return false;
-        instance.invokeOperation(stableId, sim);
-        if (state == GeneratedChallengeState.READY)
-            customerRetestResult = null;
+        invalidateCustomerRetest();
+        operationInProgress = true;
+        try {
+            instance.invokeOperation(stableId, sim);
+        } finally {
+            operationInProgress = false;
+        }
         sim.refreshBoardModificationControls();
         sim.repaint();
         return true;
@@ -191,7 +236,7 @@ class GeneratedChallengeController {
     }
 
     private boolean canLatchCompletionAfterCustomerRetest() {
-        return !finishJobRequired && state == GeneratedChallengeState.READY &&
+        return isCurrentOwner() && !finishJobRequired && state == GeneratedChallengeState.READY &&
             customerRetestResult != null && customerRetestResult.isPassed() &&
             getLiveRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED;
     }

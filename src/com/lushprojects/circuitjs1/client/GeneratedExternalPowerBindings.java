@@ -12,6 +12,8 @@ class GeneratedExternalPowerBindings {
         this.board = board;
     }
 
+    TroubleshootBoard getBoardForRuntimeValidation() { return board; }
+
     void bindPowerInput(String powerInputId, ExternalPowerSimulationBinding binding) {
         if (board.getPowerInput(powerInputId) == null)
             throw new IllegalArgumentException("Unknown board power input: " + powerInputId);

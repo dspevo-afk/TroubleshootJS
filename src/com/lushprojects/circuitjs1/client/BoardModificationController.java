@@ -23,6 +23,12 @@ class BoardModificationController {
         return setLeadConnection(componentId, padId, true);
     }
 
+    GeneratedBoardInstance getInstanceForRuntimeValidation() { return instance; }
+
+    boolean isOperationInProgress() {
+        return instance.getPhysicalBoardRuntime().isMutationInProgress();
+    }
+
     boolean removeComponent(String componentId) {
         return removeComponent(componentId, true);
     }
@@ -33,6 +39,10 @@ class BoardModificationController {
 
     private boolean removeComponent(String componentId, boolean refreshControls) {
         requireSafeMutation();
+        ReplaceableResistorBoardCapability resistor =
+            ReplaceableResistorBoardCapability.find(instance.getPhysicalBoardRuntime(), componentId);
+        if (resistor != null)
+            return removeResistorComponent(componentId, refreshControls, resistor);
         boolean changed = false;
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId)) {
             changed |= setConnection(binding, false);
@@ -43,6 +53,10 @@ class BoardModificationController {
 
     boolean restoreComponent(String componentId) {
         requireSafeMutation();
+        ReplaceableResistorBoardCapability resistor =
+            ReplaceableResistorBoardCapability.find(instance.getPhysicalBoardRuntime(), componentId);
+        if (resistor != null)
+            return restoreResistorComponent(componentId, resistor);
         boolean changed = false;
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId))
             changed |= setConnection(binding, true);
@@ -81,6 +95,22 @@ class BoardModificationController {
         return true;
     }
 
+    HashMap<String, Boolean> captureConnectionStates(String componentId) {
+        HashMap<String, Boolean> result = new HashMap<String, Boolean>();
+        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
+                .getForComponent(componentId)) {
+            Boolean state = connected.get(binding.getPadId());
+            if (state == null)
+                throw new IllegalStateException("Missing connection state: " + binding.getPadId());
+            result.put(binding.getPadId(), state);
+        }
+        return result;
+    }
+
+    HashMap<String, Boolean> getConnectionStatesForValidation() {
+        return new HashMap<String, Boolean>(connected);
+    }
+
     void verifyStructuralState() {
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getAll()) {
             int occurrences = countOccurrences(binding.getConnectionElement());
@@ -93,7 +123,74 @@ class BoardModificationController {
 
     private boolean setLeadConnection(String componentId, String padId, boolean shouldConnect) {
         requireSafeMutation();
-        boolean changed = setConnection(instance.getConnectionBindings().get(componentId, padId), shouldConnect);
+        GeneratedComponentConnectionBinding binding = instance.getConnectionBindings().get(componentId, padId);
+        if (isConnectionState(binding) == shouldConnect)
+            return false;
+        ReplaceableResistorBoardCapability resistor =
+            ReplaceableResistorBoardCapability.find(instance.getPhysicalBoardRuntime(), componentId);
+        if (resistor == null)
+            return setLeadConnectionWithoutResistorScope(binding, shouldConnect);
+
+        ResistorMutationScope scope = new ResistorMutationScope(sim, instance, this,
+            resistor.getSlot(), "lead");
+        boolean changed = false;
+        try {
+            changed = setConnectionForMutation(scope, binding, shouldConnect);
+            scope.commit();
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            ResistorMutationScope.rethrow(failure);
+            return false;
+        }
+        scope.closeAfterCommit();
+        finishMutationAfterCommittedScope(changed);
+        return changed;
+    }
+
+    /** Runs the public resistor graph removal inside the same bounded scope as
+     * the slot controller, without clearing the physical slot. */
+    private boolean removeResistorComponent(String componentId, boolean refreshControls,
+            ReplaceableResistorBoardCapability resistor) {
+        ResistorMutationScope scope = new ResistorMutationScope(sim, instance, this,
+            resistor.getSlot(), "graph-remove");
+        boolean changed = false;
+        try {
+            changed = disconnectComponentForMutation(scope, componentId);
+            scope.commit();
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            ResistorMutationScope.rethrow(failure);
+            return false;
+        }
+        scope.closeAfterCommit();
+        finishMutationAfterCommittedScope(changed, refreshControls);
+        return changed;
+    }
+
+    /** Runs the public resistor graph restoration inside one bounded scope. */
+    private boolean restoreResistorComponent(String componentId,
+            ReplaceableResistorBoardCapability resistor) {
+        ResistorMutationScope scope = new ResistorMutationScope(sim, instance, this,
+            resistor.getSlot(), "graph-restore");
+        boolean changed = false;
+        try {
+            changed = restoreComponentForMutation(scope, componentId);
+            if (changed)
+                scope.afterGraphRestoreWrite();
+            scope.commit();
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            ResistorMutationScope.rethrow(failure);
+            return false;
+        }
+        scope.closeAfterCommit();
+        finishMutationAfterCommittedScope(changed, true);
+        return changed;
+    }
+
+    private boolean setLeadConnectionWithoutResistorScope(
+            GeneratedComponentConnectionBinding binding, boolean shouldConnect) {
+        boolean changed = setConnection(binding, shouldConnect);
         finishMutation(changed);
         return changed;
     }
@@ -108,6 +205,53 @@ class BoardModificationController {
             removeAllOccurrences(binding.getConnectionElement());
         connected.put(binding.getPadId(), Boolean.valueOf(shouldConnect));
         return true;
+    }
+
+    boolean setConnectionForMutation(ResistorMutationScope scope,
+            GeneratedComponentConnectionBinding binding, boolean shouldConnect) {
+        if (scope == null || !scope.owns(this) || binding == null)
+            throw new IllegalStateException("Invalid resistor mutation connection scope");
+        boolean changed = setConnection(binding, shouldConnect);
+        if (changed)
+            scope.afterGraphWrite(shouldConnect);
+        return changed;
+    }
+
+    boolean disconnectComponentForMutation(ResistorMutationScope scope, String componentId) {
+        if (scope == null || !scope.owns(this))
+            throw new IllegalStateException("Invalid resistor mutation connection scope");
+        boolean changed = false;
+        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
+                .getForComponent(componentId))
+            changed |= setConnectionForMutation(scope, binding, false);
+        return changed;
+    }
+
+    boolean restoreComponentForMutation(ResistorMutationScope scope, String componentId) {
+        if (scope == null || !scope.owns(this))
+            throw new IllegalStateException("Invalid resistor mutation connection scope");
+        boolean changed = false;
+        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
+                .getForComponent(componentId))
+            changed |= setConnectionForMutation(scope, binding, true);
+        return changed;
+    }
+
+    private boolean isConnectionState(GeneratedComponentConnectionBinding binding) {
+        Boolean state = connected.get(binding.getPadId());
+        if (state == null)
+            throw new IllegalStateException("Missing connection state: " + binding.getPadId());
+        return state.booleanValue();
+    }
+
+    void restoreConnectionStatesForMutation(HashMap<String, Boolean> states) {
+        if (states == null)
+            throw new IllegalArgumentException("Missing resistor connection state");
+        for (String padId : states.keySet()) {
+            if (!connected.containsKey(padId) || states.get(padId) == null)
+                throw new IllegalStateException("Unknown resistor connection state: " + padId);
+            connected.put(padId, states.get(padId));
+        }
     }
 
     private void insertInCanonicalOrder(CircuitElm element) {
@@ -153,9 +297,23 @@ class BoardModificationController {
     private void requireSafeMutation() {
         if (sim.getGeneratedBoardInstance() != instance || sim.activeMeasurementOverlay ||
 		!sim.isChallengeInteractionEnabled() ||
-                !sim.getBoardPowerController().isElectricallyUnpowered())
+                !sim.getBoardPowerController().isElectricallyUnpowered() ||
+                instance.getPhysicalBoardRuntime().isMutationInProgress())
             throw new BoardModificationRejectedException(
                 "Board modification requires electrically unpowered generated board");
+    }
+
+    private void finishMutationAfterCommittedScope(boolean changed) {
+        finishMutationAfterCommittedScope(changed, true);
+    }
+
+    private void finishMutationAfterCommittedScope(boolean changed, boolean refreshControls) {
+        try {
+            finishMutation(changed, refreshControls);
+        } catch (Throwable failure) {
+            sim.markGeneratedRuntimeFailure(instance, failure);
+            ResistorMutationScope.rethrow(failure);
+        }
     }
 
     private void finishMutation(boolean changed) {

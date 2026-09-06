@@ -12,6 +12,8 @@ class GeneratedComponentConnectionBindings {
         this.board = board;
     }
 
+    TroubleshootBoard getBoardForRuntimeValidation() { return board; }
+
     void bind(String componentId, String padId, CircuitMeasurementEndpoint boardEndpoint,
             CircuitMeasurementEndpoint componentEndpoint, CircuitElm connectionElement) {
         BoardComponent component = board.getComponent(componentId);
@@ -30,6 +32,10 @@ class GeneratedComponentConnectionBindings {
         if (binding == null || !componentId.equals(binding.getComponentId()))
             throw new IllegalArgumentException("Unknown component connection: " + componentId + "/" + padId);
         return binding;
+    }
+
+    GeneratedComponentConnectionBinding getOrNull(String padId) {
+        return bindings.get(padId);
     }
 
     Vector<GeneratedComponentConnectionBinding> getForComponent(String componentId) {
@@ -82,8 +88,8 @@ class GeneratedComponentConnectionBindings {
             GeneratedExternalPowerBindings externalPowerBindings, GeneratedFaultBinding faultBinding) {
         HashMap<CircuitElm, Boolean> connectionElements = new HashMap<CircuitElm, Boolean>();
         for (GeneratedComponentConnectionBinding binding : bindings.values()) {
-            if (board.getSimulationBindings().getEndpoint(binding.getPadId()) !=
-                    binding.getBoardEndpoint())
+            if (!sameEndpoint(board.getSimulationBindings().getEndpoint(binding.getPadId()),
+                    binding.getBoardEndpoint()))
                 throw new IllegalStateException("Connection board endpoint does not match pad: " +
                     binding.getPadId());
             CircuitPostMeasurementEndpoint boardPost = validateEndpoint(binding.getBoardEndpoint(),
@@ -158,5 +164,19 @@ class GeneratedComponentConnectionBindings {
                 return true;
         }
         return false;
+    }
+
+    /** Endpoint wrappers may be recreated, but their CircuitJS post must agree. */
+    static boolean sameEndpoint(CircuitMeasurementEndpoint first,
+            CircuitMeasurementEndpoint second) {
+        if (first == second)
+            return true;
+        if (!(first instanceof CircuitPostMeasurementEndpoint) ||
+                !(second instanceof CircuitPostMeasurementEndpoint))
+            return false;
+        CircuitPostMeasurementEndpoint firstPost = (CircuitPostMeasurementEndpoint) first;
+        CircuitPostMeasurementEndpoint secondPost = (CircuitPostMeasurementEndpoint) second;
+        return firstPost.getElement() == secondPost.getElement() &&
+            firstPost.getPostIndex() == secondPost.getPostIndex();
     }
 }

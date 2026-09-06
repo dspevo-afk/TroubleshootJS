@@ -41,6 +41,23 @@ class GeneratedComponentBindings {
         return new Vector<CircuitElm>(elements);
     }
 
+    /** Returns whether the generator supplied a primary binding for the component. */
+    boolean hasComponentBinding(String componentId) {
+        return componentElements.containsKey(componentId);
+    }
+
+    /** Returns the board identity that owns this binding registry. */
+    TroubleshootBoard getBoardForRuntimeValidation() {
+        return board;
+    }
+
+    Vector<CircuitElm> getAuxiliaryElements(String componentId) {
+        if (!componentElements.containsKey(componentId))
+            throw new IllegalArgumentException("Unknown component simulation binding: " + componentId);
+        Vector<CircuitElm> elements = auxiliaryComponentElements.get(componentId);
+        return elements == null ? new Vector<CircuitElm>() : new Vector<CircuitElm>(elements);
+    }
+
     CircuitElm getSingleElement(String componentId) {
         Vector<CircuitElm> elements = getElements(componentId);
         if (elements.size() != 1)
@@ -76,6 +93,27 @@ class GeneratedComponentBindings {
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         elements.add(element);
         componentElements.put(componentId, elements);
+    }
+
+    /** Restores the exact two binding vectors captured by a resistor scope. */
+    void restoreForMutation(String componentId, Vector<CircuitElm> elements,
+            Vector<CircuitElm> auxiliaryElements) {
+        if (componentId == null || !componentElements.containsKey(componentId) ||
+                elements == null || elements.isEmpty())
+            throw new IllegalArgumentException("Invalid component binding restoration: " + componentId);
+        for (CircuitElm element : elements)
+            if (element == null)
+                throw new IllegalArgumentException("Missing component binding element: " + componentId);
+        componentElements.put(componentId, new Vector<CircuitElm>(elements));
+        if (auxiliaryElements == null || auxiliaryElements.isEmpty())
+            auxiliaryComponentElements.remove(componentId);
+        else {
+            for (CircuitElm element : auxiliaryElements)
+                if (element == null)
+                    throw new IllegalArgumentException("Missing auxiliary binding element: " + componentId);
+            auxiliaryComponentElements.put(componentId,
+                new Vector<CircuitElm>(auxiliaryElements));
+        }
     }
 
     void validateElementsAreOwnedBy(Vector<CircuitElm> simulationElements) {

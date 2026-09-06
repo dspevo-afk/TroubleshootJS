@@ -30,10 +30,12 @@ class ResistorStressDamageDeveloperVerifier {
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
             settle(sim);
             require(slots.removeInstalledPart(), "Could not remove original for stress proof");
+            settle(sim);
 
             ResistorCatalogEntry severeCatalog = family.getCatalog().get("R_CATALOG_220");
             require(slots.installNewFromCatalog(severeCatalog.getId()),
                 "Could not install severe lower-value replacement");
+            settle(sim);
             PhysicalResistorPart severe = family.getSlot().getInstalledPart();
             require(severe != null && severe != original && severe.getId().equals("R1_CATALOG_PART_0"),
                 "Severe replacement did not acquire a distinct physical identity");
@@ -77,11 +79,14 @@ class ResistorStressDamageDeveloperVerifier {
                     !GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, "R1"),
                 "Secondary-open replacement was mistaken for the installed original-fault owner");
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            settle(sim);
             require(slots.removeInstalledPart() && severe.getLocation() == ResistorPartLocation.LOOSE &&
                 severe.getSecondaryOpenPath().isOpen(),
                 "Failed resistor could not be removed without healing its secondary open");
+            settle(sim);
             require(slots.install(severe.getId()),
                 "Failed resistor could not be reinstalled as the same physical part");
+            settle(sim);
             sim.setBoardPowerState(BoardPowerState.POWERED);
             settle(sim);
             damage.refreshSolvedMeasurements();
@@ -103,6 +108,7 @@ class ResistorStressDamageDeveloperVerifier {
                 "/").append(originalFault.getFault().getType()).append("}");
 
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            settle(sim);
             sim.resetAction();
             settle(sim);
             require(severeState.getAccumulatedDamage() == 0 && !severeState.isFailed() &&
@@ -111,18 +117,23 @@ class ResistorStressDamageDeveloperVerifier {
             require(slots.removeInstalledPart() && severe.getLocation() == ResistorPartLocation.LOOSE &&
                 !severe.getSecondaryOpenPath().isOpen(),
                 "Failed severe part could not be removed");
+            settle(sim);
             require(slots.install(original.getId()) && original.getLocation() == ResistorPartLocation.INSTALLED,
                 "Catalog-to-original installation did not restore the original physical part");
+            settle(sim);
             require(GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, "R1"),
                 "Reinstalled original physical part did not restore generated-fault ownership");
             requireAuxiliaryBinding(instance, original, "catalog-to-original install");
             require(!instance.getComponentBindings().isElementBoundToComponent("R1",
                 severe.getSecondaryOpenPath().getSimulationElement()),
                 "Catalog-to-original installation retained stale catalog auxiliary binding");
+            settle(sim);
             require(slots.removeInstalledPart() && original.getLocation() == ResistorPartLocation.LOOSE,
                 "Original part could not be removed after catalog-to-original binding check");
+            settle(sim);
             require(slots.installNewFromCatalog("R_CATALOG_330"),
                 "Could not install modest-overload catalog replacement");
+            settle(sim);
             PhysicalResistorPart mild = family.getSlot().getInstalledPart();
             sim.setBoardPowerState(BoardPowerState.POWERED);
             settle(sim);
@@ -154,9 +165,12 @@ class ResistorStressDamageDeveloperVerifier {
                 meterVoltage).append(",meterDamageUnchanged=true}");
 
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            settle(sim);
             require(slots.removeInstalledPart(), "Could not remove mild part before correct replacement");
+            settle(sim);
             require(slots.installNewFromCatalog("R_CATALOG_1000"),
                 "Could not install correct catalog replacement");
+            settle(sim);
             PhysicalResistorPart correct = family.getSlot().getInstalledPart();
             String correctId = correct.getId();
             ResistorElm correctElement = correct.getElement();
@@ -186,6 +200,7 @@ class ResistorStressDamageDeveloperVerifier {
             // READY.  COMPLETED is intentionally terminal and must not be
             // followed by simulation or board-state mutations.
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            settle(sim);
             sim.resetAction();
             settle(sim);
             require(correctState.getAccumulatedDamage() == 0 && !correctState.isFailed() &&
@@ -231,9 +246,8 @@ class ResistorStressDamageDeveloperVerifier {
     }
 
     private static void settle(CirSim sim) {
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, sim.getGeneratedBoardInstance(),
+            "resistor-stress-verifier");
         sim.getResistorStressDamageSystem().refreshSolvedMeasurements();
     }
 

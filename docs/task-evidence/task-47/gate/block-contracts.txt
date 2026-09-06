@@ -1,0 +1,11 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+1 warning
+
+PASS: Task44 9 groups, 247 assertions; no simulator dependency
+
+PASS: Task45 202 assertions
+
+CLEANUP: contract classes and task-owned scratch removed.

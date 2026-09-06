@@ -118,9 +118,10 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
 
             ResistorSlotController slots = requireResistorSlots(sim, candidate, "G-primary");
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-            sim.updateCircuit();
+            settleReady(sim, candidate);
             sim.setSimRunning(false);
             require(slots.removeInstalledPart(), "task43p-G-original-remove-failed");
+            settleReady(sim, candidate);
             sim.setBoardPowerState(BoardPowerState.POWERED);
             boolean removedPendingBefore = sim.generatedBoardVerificationPending;
             boolean removedAnalyzedBefore = sim.generatedBoardVerificationAnalyzed;
@@ -131,9 +132,12 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
             removed = point("removedPausedPowered", sim, challenge, removedRetest, removedFinish,
                 removedPendingBefore, removedAnalyzedBefore);
 
+            settleReady(sim, candidate);
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            settleReady(sim, candidate);
             require(slots.installNewFromCatalog("R_CATALOG_2200"),
                 "task43p-G-wrong-2200-install-failed");
+            settleReady(sim, candidate);
             sim.setBoardPowerState(BoardPowerState.POWERED);
             boolean wrongPendingBefore = sim.generatedBoardVerificationPending;
             boolean wrongAnalyzedBefore = sim.generatedBoardVerificationAnalyzed;
@@ -144,10 +148,15 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
             wrong = point("wrong2200PausedPowered", sim, challenge, wrongRetest, wrongFinish,
                 wrongPendingBefore, wrongAnalyzedBefore);
 
+            settleReady(sim, candidate);
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-            require(slots.removeInstalledPart() &&
-                    slots.installNewFromCatalog("R_CATALOG_1000"),
+            settleReady(sim, candidate);
+            require(slots.removeInstalledPart(),
+                "task43p-G-wrong-2200-remove-before-correct-failed");
+            settleReady(sim, candidate);
+            require(slots.installNewFromCatalog("R_CATALOG_1000"),
                 "task43p-G-correct-1000-install-failed");
+            settleReady(sim, candidate);
             sim.setBoardPowerState(BoardPowerState.POWERED);
             boolean healthyPendingBefore = sim.generatedBoardVerificationPending;
             boolean healthyAnalyzedBefore = sim.generatedBoardVerificationAnalyzed;
@@ -158,12 +167,13 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
                 preRetestResult, healthyPreFinish, healthyPendingBefore,
                 healthyAnalyzedBefore);
 
+            settleReady(sim, candidate);
+            sim.setBoardPowerState(BoardPowerState.POWERED);
             /* Run the ordinary update path even when the pre-update call
              * happened to pass.  A queued verification bit alone is not
              * interpreted as a settlement defect. */
             sim.setSimRunning(true);
-            for (int attempt = 0; attempt < 14; attempt++)
-                sim.updateCircuit();
+            settleReady(sim, candidate);
             if (!challenge.isCompleted()) {
                 GeneratedCustomerRetestResult naturalRetestResult = sim.performCustomerRetest();
                 naturalRetest = naturalRetestResult != null && naturalRetestResult.isPassed();
@@ -236,7 +246,7 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
             installQuickPlaySession(sim, session);
             GeneratedChallengeController challenge = requireReady(sim, candidate, "G-rapid");
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-            sim.updateCircuit();
+            settleReady(sim, candidate);
             sim.setSimRunning(false);
             CircuitElm r1 = candidate.getComponentBindings().getSingleElement("R1");
             require(r1 != null && r1.getPostCount() >= 2, "task43p-G-rapid-R1-missing");
@@ -247,17 +257,19 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
                 .getLatestResistanceReadingForDeveloperVerification();
             require(!Double.isNaN(meterValue) && !Double.isInfinite(meterValue),
                 "task43p-G-rapid-resistance-measurement-not-finite");
-            require(sim.getBoardModificationController().liftLead("R1", "R1.1") &&
-                    sim.getBoardModificationController().reconnectLead("R1", "R1.1"),
-                "task43p-G-rapid-lift-reconnect-failed");
+            require(sim.getBoardModificationController().liftLead("R1", "R1.1"),
+                "task43p-G-rapid-lift-failed");
+            settleReady(sim, candidate);
+            require(sim.getBoardModificationController().reconnectLead("R1", "R1.1"),
+                "task43p-G-rapid-reconnect-failed");
+            settleReady(sim, candidate);
             sim.setBoardPowerState(BoardPowerState.POWERED);
             int modeBeforeExit = sim.instrumentController.getActiveModeForDeveloperVerification();
             sim.instrumentController.exitInstrumentModeForDeveloperVerification();
             GeneratedCustomerRetestResult retest = sim.performCustomerRetest();
             boolean finish = sim.finishQuickPlayJob();
             sim.setSimRunning(true);
-            for (int attempt = 0; attempt < 14; attempt++)
-                sim.updateCircuit();
+            settleReady(sim, candidate);
             sim.instrumentController.clearTargets();
             sim.instrumentController.exitInstrumentModeForDeveloperVerification();
             require(!sim.activeMeasurementOverlay && sim.pendingBoardPowerState == null &&
@@ -379,6 +391,7 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
         require(freshRetestEmpty && freshCompletionEmpty && freshInstrumentEmpty,
             "task43p-H-fresh-state-not-empty-" + family);
         String freshFingerprint = semanticFingerprint(sim, session, candidate, challenge);
+        settleReady(sim, candidate);
 
         /* Make a real failed retest and a real DC probe pair on this
          * family's resistor posts.  The references are retained so reset behavior
@@ -390,6 +403,7 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
                 sim.getGeneratedChallengeController() == challenge &&
                 !challenge.isCompleted(),
             "task43p-H-real-failed-retest-precondition-" + family);
+        settleReady(sim, candidate);
         String probeComponentId = NPN.equals(family) ? "RLOAD" : "R1";
         CircuitElm probeElement = candidate.getComponentBindings().getSingleElement(probeComponentId);
         require(probeElement instanceof ResistorElm && probeElement.getPostCount() == 2,
@@ -427,8 +441,13 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
             sim.instrumentController.getBlackProbeForStrategy() == blackBeforeReset;
         require(resetOwnerPreserved && challenge.getState() == GeneratedChallengeState.READY,
             "task43p-H-reset-replaced-owner-" + family);
-        /* Reset is allowed to retain the dirty retest/probe state.  Fresh
-         * installation is the separate boundary that must be empty. */
+        require(!resetPreservedRetestReference && !resetPreservedProbeReferences &&
+                challenge.getCustomerRetestResult() == null &&
+                sim.instrumentController.getRedProbeForStrategy() == null &&
+                sim.instrumentController.getBlackProbeForStrategy() == null,
+            "task43p-H-reset-retained-stale-retest-or-probes-" + family);
+        /* Simulation reset retains the board owner but invalidates its old
+         * retest requests and probes. Fresh installation owns a distinct graph. */
         return new HObservation(order, family, seed, session, candidate, challenge,
             freshFingerprint, modeAtFreshReady, resetOwnerPreserved, freshRetestEmpty,
             freshCompletionEmpty, freshInstrumentEmpty, resetHadRetest, resetHadTargets,
@@ -437,12 +456,10 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
 
     private static void settleAfterReset(CirSim sim, GeneratedBoardInstance candidate,
             GeneratedChallengeController challenge, String family) {
-        sim.setSimRunning(true);
-        for (int attempt = 0; attempt < 14; attempt++)
-            sim.updateCircuit();
-        require(sim.getGeneratedBoardInstance() == candidate &&
-                sim.getGeneratedChallengeController() == challenge && challenge.isReady(),
-            "task43p-H-reset-did-not-settle-" + family);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, candidate,
+            "task43p-H-reset-" + family);
+        require(sim.getGeneratedChallengeController() == challenge,
+            "task43p-H-reset-owner-challenge-changed-" + family);
     }
 
     private static void requireFreshOwnerSuccession(HObservation previous,
@@ -528,7 +545,8 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
         Task41SimulationSnapshot baseline = Task41SimulationSnapshot.capture(sim);
         try {
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-            sim.updateCircuit();
+            GeneratedRuntimeDeveloperSettlement.settle(sim, sim.getGeneratedBoardInstance(),
+                "task43p-H-snapshot-inventory-unpowered");
             CircuitElm resistor = sim.getGeneratedBoardInstance().getComponentBindings().getSingleElement("R1");
             CircuitPostProbeTarget red = new CircuitPostProbeTarget(sim, resistor, 0);
             CircuitPostProbeTarget black = new CircuitPostProbeTarget(sim, resistor, 1);
@@ -610,17 +628,8 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
     }
 
     private static void settleReady(CirSim sim, GeneratedBoardInstance candidate) {
-        sim.setSimRunning(true);
-        for (int attempt = 0; attempt < 14; attempt++) {
-            sim.updateCircuit();
-            if (sim.getGeneratedChallengeController() != null &&
-                    sim.getGeneratedChallengeController().isReady())
-                break;
-        }
-        require(sim.getGeneratedBoardInstance() == candidate &&
-                sim.getGeneratedChallengeController() != null &&
-                sim.getGeneratedChallengeController().isReady(),
-            "task43p-runtime-settlement-candidate-did-not-settle");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, candidate,
+            "task43p-runtime-settlement-candidate");
     }
 
     private static ResistorSlotController requireResistorSlots(CirSim sim,

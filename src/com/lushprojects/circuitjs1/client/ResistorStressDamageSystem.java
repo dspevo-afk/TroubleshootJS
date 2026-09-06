@@ -34,6 +34,18 @@ class ResistorStressDamageSystem {
         states.put(part.getId(), new ResistorStressState(part));
     }
 
+    void unregister(PhysicalResistorPart part) {
+        if (part == null || states.get(part.getId()) == null ||
+                states.get(part.getId()).getPart() != part || part.isInstalled())
+            throw new IllegalStateException("Cannot unregister an active resistor stress part");
+        states.remove(part.getId());
+    }
+
+    boolean ownsState(PhysicalResistorPart part) {
+        return part != null && states.get(part.getId()) != null &&
+            states.get(part.getId()).getPart() == part;
+    }
+
     ResistorStressState getState(String partId) {
         ResistorStressState state = states.get(partId);
         if (state == null)
