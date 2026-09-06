@@ -1,0 +1,54 @@
+{
+  "base": "134a0791b052d9a1928565e7b2318ac7284a357c",
+  "fingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+  "files": [
+    {
+      "path": "scripts/verify-challenge-contracts.ps1",
+      "sha256": "f9045b20edfd7ceb1a75a220d1825e821951b341c3384d7e40a68b893b842c21"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ChallengeContractException.java",
+      "sha256": "e530cff480cd2ca08c06bd273c4ca0bab8fc224e7d950ee614055a14b0ae8511"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ChallengeDescriptor.java",
+      "sha256": "8d4add191775feec174b3344924e8892dd91a93952d5c014a60b244934a50bab"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "sha256": "c2a8c7b9d2f74484b7406b82850a208aad874a1b6e355db0c2cad9c7ea131e3a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationConstraints.java",
+      "sha256": "f9c26c4f0a358a0eb27324799460b5e585ea257fc80b8387e14803fa86261b5f"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/LegacyChallengeReplay.java",
+      "sha256": "dfcaad10d57b92be0350fe431b79742abcea2243ccfcf0b8e8add916bd1b998a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/NamedRandomStreams.java",
+      "sha256": "65203d15977787bb0af8cfffe6fb0f75a21a0a8f90d9c66f9741d29cacec7d9a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task46ContractVectors.java",
+      "sha256": "756eaefd4d78df06388a59c1b38bf7291fc7235bbd0e780f24d9a5f4bf7779cf"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task46ReplayDeveloperVerifier.java",
+      "sha256": "672a5e622bbc535d55bb947b58840499943ba83e5b7a311f16a795578914488e"
+    },
+    {
+      "path": "tests/contracts/ChallengeDescriptorContractTest.java",
+      "sha256": "09d14422e90d0efa9385aa9ee91ceb9efb1466c4ed09837a2914f94f5f5cd98c"
+    },
+    {
+      "path": "tests/contracts/task46_seed_reference.py",
+      "sha256": "d5f3f07ced79d6e15d75828eea8f36c7764d8bdbd58b9e63fa7e685b3ee0391e"
+    },
+    {
+      "path": "tests/contracts/task46-seed-vectors.tsv",
+      "sha256": "35aa92a75ba13b18d7e1b3f3be9e7a1a0fe02ea10dd966694b8e93e837a26a03"
+    }
+  ]
+}

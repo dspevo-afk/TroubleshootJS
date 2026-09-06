@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-09-06 — Task 44 published at 10dcafa; Task 45 accepted with complete qualification; Task 46 unstarted_
+_Last updated: 2026-09-06 — Tasks 44–46 accepted; Task 47 unstarted; Composition Entry Gate unclaimed_
 
 ## Purpose
 
@@ -1787,7 +1787,19 @@ composition risk.
 
 ## Task 46 — Versioned Challenge Descriptor, Named Sub-Seeds, and Constraint Input
 
-**Status:** `[!] BLOCKED BY TASK 45`
+**Status:** `[x] COMPLETE — DESCRIPTOR / REPLAY CONTRACT ACCEPTED`
+
+Accepted prerequisites are confirmed at Task 44 `10dcafa` and Task 45
+`134a0791b052d9a1928565e7b2318ac7284a357c`, with the approved Task 43P `a5e8efa`
+handoff in ancestry. The owner separately authorized Task 46 alone; its
+[bounded design and acceptance set](task-evidence/task-46/README.md) are frozen
+before implementation. The earlier blocked status was stale. Historical
+Tasks 44/45 authorization and handoffs retain their chronology. Task 46 now has
+410 focused assertions, 22 independent literal seed/selection vectors, exact
+JVM/compiled-browser parity, all 19 bounded real leaf replays, affected legacy
+and privacy regressions, all five production permutations and fresh independent
+review. Its [evidence packet](task-evidence/task-46/README.md) records exact
+dependency reuse, cleanup and the nonblocking verifier diagnostic follow-up.
 
 **Purpose:** Make challenge identity replayable and prevent one subsystem’s
 evolution from scrambling every unrelated result.
@@ -1835,7 +1847,11 @@ finding and the product shell’s seed-replay prerequisite.
 
 ## Composition Entry Gate — Runtime Integrity Required Before Task 47
 
-**Status:** `[!] BLOCKED BY TASKS 44–46 AND ALL OPEN TASK 43P RUNTIME BLOCKERS`
+**Status:** `[!] NOT CLAIMED — SEPARATE RUNTIME-INTEGRITY ACCEPTANCE REQUIRED`
+
+Tasks 44–46 are accepted. That removes their descriptor/contract prerequisite;
+it does not satisfy the runtime criteria below or authorize Task 47. The
+accepted Task 43P handoff retains its documented scope and remaining limits.
 
 **Purpose:** Prevent descriptor/schema work from being mistaken for proof that
 runtime composition itself is safe.
@@ -1871,7 +1887,7 @@ milestones independently accepted.
 
 ## Task 47 — Bounded Assembler and Composed Contribution Contracts
 
-**Status:** `[!] BLOCKED BY TASKS 44–46 AND THE COMPOSITION ENTRY GATE`
+**Status:** `[ ] UNSTARTED — COMPOSITION ENTRY GATE AND OWNER AUTHORIZATION REQUIRED`
 
 **Purpose:** Assemble reusable blocks into the existing runtime without
 creating a parallel architecture.
@@ -3640,7 +3656,7 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Task 45 — Typed Electrical Domains and Port Compatibility Preflight**
+**Composition Entry Gate — unclaimed; Task 47 remains unstarted**
 
 C1/C2, the authorized efficiency work and Task 43P acceptance are complete.
 The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
@@ -3649,5 +3665,10 @@ limits. The owner approved the final `a5e8efa` handoff and explicitly authorized
 Tasks 44 then 45. Task 44's contract, focused tests, final build and independent
 review pass, and its publication at `10dcafa` is verified. Task 45 is accepted:
 focused tests, final production build, all 55 selected legacy routes and fresh
-independent reviews pass. The two-task authorization is complete; stop before
-Task 46, which remains unstarted and outside this authorization.
+independent reviews pass. That two-task authorization is complete. The owner
+separately authorized Task 46 only, starting exactly at reviewed Task 45 commit
+`134a0791b052d9a1928565e7b2318ac7284a357c`. Task 46's immutable descriptor,
+named streams, constraint input and legacy replay contract are now accepted with
+the [recorded qualification](task-evidence/task-46/README.md). This authorization
+ends with its publication. The Composition Entry Gate must be separately
+qualified and owner-authorized before Task 47; this task does not start it.

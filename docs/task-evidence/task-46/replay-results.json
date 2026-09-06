@@ -1,0 +1,202 @@
+[
+  {
+    "route": "led-0",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "264c4420b6393e7a00685724ffdb5b2a00846924a6ba79a6b27026daff79b41f",
+    "diagnosticsSha256": "de970ac0c6d1388124972992d85c9c930c7f60259ec01a27884e5fd1bc354fdb",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=LED_INDICATOR\nseed=0\nfault=LED_R1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=LED_INDICATOR_DARK|INDICATOR_DOES_NOT_LIGHT|Indicator does not light.|DARK_INDICATOR|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[LED_INDICATOR_DARK]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [
+      "Initial DOM wait exceeded the browser transport 3000ms command limit; subsequent read of the same completed route returned PASS. No route rerun."
+    ],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "led-2",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "ad0dd35c36f36fbd4ff0c460c34d142fcad170e1c8d95a74a1fc85bf59c51bd1",
+    "diagnosticsSha256": "75b4fecaa73cd22fd402dd0cd714a865ad1cc4ea10aa7c3bd462d6a21e1faa2d",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=LED_INDICATOR\nseed=2\nfault=LED_R1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=LED_INDICATOR_DARK|INDICATOR_DOES_NOT_LIGHT|Indicator does not light.|DARK_INDICATOR|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[LED_INDICATOR_DARK]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "led-3",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "d2c666caaf077d1e7762fe612d6bc10183cf7b96654054104f854e918b0c4885",
+    "diagnosticsSha256": "61fcc05a932e0f21dab4428d04f8cb7718d8b6dd339eb244e7b10d16e9fe4458",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=LED_INDICATOR\nseed=3\nfault=LED_R1_INCORRECT_VALUE\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=LED_INDICATOR_DARK|INDICATOR_DOES_NOT_LIGHT|Indicator does not light.|DARK_INDICATOR|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[LED_INDICATOR_DARK]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [
+      "Error: Error: Timed out after 3000ms waiting for selector html[data-tsj-verification^=\"PASS:\"],html[data-tsj-verification^=\"FAIL:\"]: Timed out running CDP command \"Runtime.evaluate\" for tab 1\nlocator.waitFor(attached) timed out for selector html[data"
+    ],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "led-4",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "d16ba67c4a550b2e221ad34ed92fe1cde0085853048b0a4014470a69860a4fda",
+    "diagnosticsSha256": "3e19f670f2d3d0bf485d8492de8a0fde6c6b74d5a04280e8951d6227ada9ec70",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=LED_INDICATOR\nseed=4\nfault=LED_LED1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=LED_INDICATOR_DARK|INDICATOR_DOES_NOT_LIGHT|Indicator does not light.|DARK_INDICATOR|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[LED_INDICATOR_DARK]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [
+      "Error: Error: Timed out after 3000ms waiting for selector html[data-tsj-verification^=\"PASS:\"],html[data-tsj-verification^=\"FAIL:\"]: Timed out running CDP command \"Runtime.evaluate\" for tab 1\nlocator.waitFor(attached) timed out for selector html[data"
+    ],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "diode-0",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "1c8b3323d049d72dbd3218dc322bd9e4bfe5b2189741f550aa82b7ecb4b7d104",
+    "diagnosticsSha256": "1c0ab29afbad6303cf660d8e0eb545b491ccd6f09e8e005e0a3c9cf8d0e49e8a",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=DIODE_PROTECTED_INDICATOR\nseed=0\nfault=DIODE_D1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=DIODE_INDICATOR_DARK|INDICATOR_DOES_NOT_LIGHT|Indicator does not light.|DARK_INDICATOR|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[DIODE_INDICATOR_DARK]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [
+      "Navigation command exceeded browser transport deadline; exact URL and same completed DOM subsequently verified without rerunning route."
+    ],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "diode-2",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "ecd559a7dccb0101b84e9ab1d5da026b02308aaf4fefc17be16e7403a972fca3",
+    "diagnosticsSha256": "2f4fbbd69ab176731f7600adcbebf7d6e3ac5641e373ab3cec38d40bef3710ca",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=DIODE_PROTECTED_INDICATOR\nseed=2\nfault=DIODE_D1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=DIODE_INDICATOR_DARK|INDICATOR_DOES_NOT_LIGHT|Indicator does not light.|DARK_INDICATOR|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[DIODE_INDICATOR_DARK]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "diode-3",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "f3a56fac4331220fc662638a7696c59fae22d4894e17cfc3b79e8f47fa5014a6",
+    "diagnosticsSha256": "014f5555a2ab0fa39f79c5d7a77a0161071cdfe346cd81ad67dd2114d6e03eb2",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=DIODE_PROTECTED_INDICATOR\nseed=3\nfault=DIODE_D1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=DIODE_INDICATOR_DARK|INDICATOR_DOES_NOT_LIGHT|Indicator does not light.|DARK_INDICATOR|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[DIODE_INDICATOR_DARK]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "parallel-0",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "0934d4816f75a70ca45e578832fac1e0a543214e2c427b5a68d2c7647a0e979a",
+    "diagnosticsSha256": "cdcbe16a56b7f2de252276c68edb0b8279efbed1ccefa910c94eaff623edee25",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=PARALLEL_DUAL_INDICATOR\nseed=0\nfault=PARALLEL_R1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=PARALLEL_ASYMMETRIC_INDICATORS|INDICATORS_DO_NOT_MATCH|The two indicators do not behave the same.|ASYMMETRIC_INDICATORS|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[PARALLEL_ASYMMETRIC_INDICATORS]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "parallel-2",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "4d358d0bfa4f710cb3f3962784433ef57f83e4af91b2682139744eb7e3b3d710",
+    "diagnosticsSha256": "5ac919ebdd8fb3816350d4d0e73e1b5c9c2ac24c015a4268277ecfe8d9ff83be",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=PARALLEL_DUAL_INDICATOR\nseed=2\nfault=PARALLEL_R1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=PARALLEL_ASYMMETRIC_INDICATORS|INDICATORS_DO_NOT_MATCH|The two indicators do not behave the same.|ASYMMETRIC_INDICATORS|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[PARALLEL_ASYMMETRIC_INDICATORS]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "parallel-3",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "d0491148d59b03e4e3d69e9c8fc9cb5975cb22deeedf11ed53003f14f1f8ac60",
+    "diagnosticsSha256": "b45c788cda9b69f66c2dfff94470812a5552fbbb11a88043942e1cd4ecf226ac",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=PARALLEL_DUAL_INDICATOR\nseed=3\nfault=PARALLEL_R1_INCORRECT_VALUE\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=PARALLEL_ASYMMETRIC_INDICATORS|INDICATORS_DO_NOT_MATCH|The two indicators do not behave the same.|ASYMMETRIC_INDICATORS|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[PARALLEL_ASYMMETRIC_INDICATORS]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "rc-0",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "9acbb4bcf2d52f244e8fa8b2ac83b781faaa1290b8d6276c149fbc734c5615a7",
+    "diagnosticsSha256": "9c53631ceb7189f80fef04000bc39104e6e37d1f1f3253b1f40ef6dd7a07b4af",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=RC_DELAY\nseed=0\nfault=RC_C1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=RC_DELAY_IMMEDIATE|STARTS_TOO_SOON|The controller responds immediately after power-up.|RC_DELAY_TOO_FAST|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[RC_DELAY_IMMEDIATE]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [
+      "First result collection exceeded browser command dispatch deadline while solver ran; subsequent collection of same completed route."
+    ],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "rc-2",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "a6e332f1d847ef1c7b8dfaf8cba5a6db8248998eb1c8778bd544e45653113ba5",
+    "diagnosticsSha256": "1c4bd09aface4d1b7542a4b3b69516375abda234e3cda4c238edfbbe80b3ad74",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=RC_DELAY\nseed=2\nfault=RC_C1_SHORT\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=RC_DELAY_NO_START|DOES_NOT_REACH_OPERATING_STATE|The controller never responds after power-up.|RC_DELAY_STUCK_LOW|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[RC_DELAY_NO_START]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "rc-3",
+    "result": "PASS:task46",
+    "paritySha256": "32eb1f0b4b77a0c8aaccff22e4c49d86aecd734cc5b8a14697765e5d56b167bf",
+    "snapshotSha256": "99193206e2ff5b8e3dd599b55cebf298a8b454339822de3de08b53d655585d9c",
+    "diagnosticsSha256": "751fed03f6bc2e717f872368ea3b5221dff548404e8b85621436e1dbe778e527",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=RC_DELAY\nseed=3\nfault=RC_C1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=RC_DELAY_IMMEDIATE|STARTS_TOO_SOON|The controller responds immediately after power-up.|RC_DELAY_TOO_FAST|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[RC_DELAY_IMMEDIATE]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": [],
+    "sourceFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942"
+  },
+  {
+    "route": "npn-0",
+    "result": "PASS:task46",
+    "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+    "paritySha256": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+    "snapshotSha256": "7c1c300e4af066fb4f81044aa7b1f23b1ab7baaaaca23b97421487f6e0784564",
+    "diagnosticsSha256": "d8a3c1e9e3b0eb2ceb3afe6fd73e0fc16ff4d63715dca7789c7ebc5e36d1f164",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=NPN_LOW_SIDE_SWITCH\nseed=0\nfault=NPN_Q1_CE_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=NPN_LOAD_NOT_SWITCHING|CONTROLLED_LOAD_DOES_NOT_SWITCH_ON|The controlled load does not switch on.|NPN_LOAD_NOT_SWITCHING|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[NPN_LOAD_NOT_SWITCHING]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": []
+  },
+  {
+    "route": "npn-1",
+    "result": "PASS:task46",
+    "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+    "paritySha256": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+    "snapshotSha256": "b63d2cafad55a266fc57ce9f2a0edf398c9af7a6eaeb5b14f3d33c5e7a7bfd24",
+    "diagnosticsSha256": "916ce11000b7858d05204bfb23e40a89072cee81608b5418ea6260cb1615a70c",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=NPN_LOW_SIDE_SWITCH\nseed=1\nfault=NPN_Q1_CE_SHORT\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=NPN_LOAD_STUCK_ACTIVE|CONTROLLED_LOAD_STAYS_ACTIVE|The controlled load stays active when control is low.|NPN_LOAD_STUCK_ACTIVE|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[NPN_LOAD_STUCK_ACTIVE]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": []
+  },
+  {
+    "route": "npn-2",
+    "result": "PASS:task46",
+    "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+    "paritySha256": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+    "snapshotSha256": "f87eea1927577ef5a311dd25259accce1d433485cf4d3eab1ec1bad9a3a4c83a",
+    "diagnosticsSha256": "7c827da9d041dc5b58cd8c28ffb8dc0f51a691e5a7bf5789bbb60c2e6c24fd01",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=NPN_LOW_SIDE_SWITCH\nseed=2\nfault=NPN_RB_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=NPN_LOAD_NOT_SWITCHING|CONTROLLED_LOAD_DOES_NOT_SWITCH_ON|The controlled load does not switch on.|NPN_LOAD_NOT_SWITCHING|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[NPN_LOAD_NOT_SWITCHING]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": []
+  },
+  {
+    "route": "nmos-0",
+    "result": "PASS:task46",
+    "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+    "paritySha256": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+    "snapshotSha256": "5ee0d7b59f9e08bd6cff583e5aae7003a57bedcc15a504d743a70a72d51ed680",
+    "diagnosticsSha256": "a5bd15b97bb06b5676a79fa4233b2c46948b0bbf389e60931f94e7bd8d3b0613",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=NMOS_LOW_SIDE_SWITCH\nseed=0\nfault=NMOS_Q1_DS_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=NMOS_LOAD_NOT_SWITCHING|CONTROLLED_LOAD_DOES_NOT_SWITCH_ON|The controlled load does not turn on.|NMOS_LOAD_NOT_SWITCHING|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[NMOS_LOAD_NOT_SWITCHING]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": []
+  },
+  {
+    "route": "nmos-1",
+    "result": "PASS:task46",
+    "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+    "paritySha256": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+    "snapshotSha256": "3f54cee6246cd323229773049466e666b5b6747a19c995922739414d3d262845",
+    "diagnosticsSha256": "490f8515e288911e05787b707f9d715d5503437e791bcb7752b2a9758a9d1042",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=NMOS_LOW_SIDE_SWITCH\nseed=1\nfault=NMOS_Q1_DS_SHORT\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=NMOS_LOAD_STUCK_ACTIVE|CONTROLLED_LOAD_STAYS_ACTIVE|The controlled load remains on when control is low.|NMOS_LOAD_STUCK_ACTIVE|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[NMOS_LOAD_STUCK_ACTIVE]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": []
+  },
+  {
+    "route": "nmos-2",
+    "result": "PASS:task46",
+    "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+    "paritySha256": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+    "snapshotSha256": "f6db8eb58f6cc03e342cfeb16f36e2fd4d412cc64cbec31c75109fcdf331e7a7",
+    "diagnosticsSha256": "3c53b98ee30ee7638af78f48a8e0fd38b26d97975c94e67ef61c18026769b12f",
+    "summary": "TSJ-TASK46-REPLAY-1\nfamily=NMOS_LOW_SIDE_SWITCH\nseed=2\nfault=NMOS_Q1_GATE_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=NMOS_LOAD_NOT_SWITCHING|CONTROLLED_LOAD_DOES_NOT_SWITCH_ON|The controlled load does not turn on.|NMOS_LOAD_NOT_SWITCHING|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[NMOS_LOAD_NOT_SWITCHING]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+    "transport": []
+  }
+]

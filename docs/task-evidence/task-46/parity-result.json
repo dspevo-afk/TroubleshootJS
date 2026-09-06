@@ -1,0 +1,14 @@
+{
+  "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+  "result": "PASS",
+  "bytes": 4748,
+  "sha256": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+  "exactUtf8Equal": true,
+  "assertions": 410,
+  "negativeCases": 36,
+  "literalVectors": 22,
+  "route": "led-0",
+  "replaySnapshotMatchesEarlier": true,
+  "summary": "TSJ-TASK46-REPLAY-1\nfamily=LED_INDICATOR\nseed=0\nfault=LED_R1_OPEN\ngeometry-version=3\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true\nscenario=LED_INDICATOR_DARK|INDICATOR_DOES_NOT_LIGHT|Indicator does not light.|DARK_INDICATOR|STILL_FAULTED_OR_NONFUNCTIONAL|POWERED|eligible=[LED_INDICATOR_DARK]\nrejected-unsupported-inputs=18\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;paired-installs=developer-verification",
+  "transport": []
+}

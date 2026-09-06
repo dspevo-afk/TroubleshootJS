@@ -1,0 +1,29 @@
+{
+  "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+  "jdk": "1.8.0_502",
+  "gwt": "2.7.0",
+  "style": "OBF",
+  "exitCode": 0,
+  "permutations": [
+    {
+      "file": "2412D4CAF1CE7AD9F324FDA1CB4CBC63.cache.js",
+      "sha256": "7b94da62243ac2206c73de9ca66ab72c4cc51490b00c5891f67557eb95f4d09f"
+    },
+    {
+      "file": "403C09356B039C6E48D3DC46A215DB3B.cache.js",
+      "sha256": "4fa59ecdb0578cef472daa28028f47bd1fa94fcef5a0a974ab73630a45288afe"
+    },
+    {
+      "file": "9360C1B58DD3B0F53A709B7EF79C6DE3.cache.js",
+      "sha256": "cfcb4eb81d75ecf3f28c399e35c3a607030f3b7919d78117ceaf87f3fd71f27e"
+    },
+    {
+      "file": "B526D924282A188AA90DD83975DF8689.cache.js",
+      "sha256": "dac5c217fbfb378020033ad93f243de284bd7cbd4a07315adf1d7480a7c5ff7c"
+    },
+    {
+      "file": "DA09C6660CD5067DB4A7C4EE3007AD8C.cache.js",
+      "sha256": "25653c89ee20bd7dea9c62e610bc16bfa595f5f0e62c49366729a3362f226d8a"
+    }
+  ]
+}

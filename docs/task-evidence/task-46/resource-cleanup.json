@@ -1,0 +1,38 @@
+{
+  "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+  "previewRunId": "dbd4b78b90a049a5a9137bc12dcc9ac8",
+  "cleanupCompletedUtc": "2026-09-06T06:12:40.0186802Z",
+  "previewWrapperExitCode": 0,
+  "cleanupSuccess": true,
+  "cleanupErrors": [],
+  "server": {
+    "processId": 363636,
+    "processStartTicks": "639242697237344383",
+    "port": 52700,
+    "identityVerified": true,
+    "processTerminationProven": true,
+    "processAbsent": true,
+    "listenerInspectionProven": true,
+    "listenerAbsent": true,
+    "cleanupResult": "complete"
+  },
+  "leaseCount": 1,
+  "currentListenerAbsent": true,
+  "taskCreatedTabsClosed": true,
+  "browserTabsRemaining": 0,
+  "preExistingPreviewUntouched": true,
+  "rawReceiptsRetainedOutsideRepository": true,
+  "leases": [
+    {
+      "kind": "preview",
+      "port": 52700,
+      "claimState": "released",
+      "releaseState": "complete",
+      "releaseJournalState": "complete",
+      "mutexReleased": true,
+      "releaseBlocked": false,
+      "listenerAbsent": true,
+      "releasedUtc": "2026-09-06T06:12:36.1647803Z"
+    }
+  ]
+}

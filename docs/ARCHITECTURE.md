@@ -104,7 +104,80 @@ load/control input mappings. It verifies the separate J1/J2 boundary and assigns
 roles without a family switch or numeric value table in the generic checker.
 These adapters are callable metadata utilities, not new production admission
 gates; existing generators, seeds, electrical graphs and player behavior retain
-their accepted paths. Task 46 and runtime composition remain unstarted.
+their accepted paths. Runtime composition remains unstarted.
+
+## Challenge description, named streams and leaf replay — Task 46
+
+`ChallengeDescriptor` is an immutable request, independent of a generated board,
+solver state or random cursor. Schema 1 binds a signed 64-bit root seed,
+generator ID/version, device-intent ID/version, difficulty-profile ID/version,
+the existing `PcbGeometryContractVersion`, and complete `GenerationConstraints`.
+Its bounded ASCII canonical representation uses sorted fields, versioned IDs
+and exact decimal seed strings; parsing accepts field permutations but rejects
+duplicates, missing/unknown fields, invalid ranges and noncanonical numbers.
+All effective overrides must be represented, even when replay cannot enforce
+them. Unsupported schema/constraint encodings reject; referenced versions are
+retained as descriptions and resolved explicitly before runtime construction.
+
+`GenerationConstraints` version 1 separates requested count ranges,
+parallel/temporal requirements and allowed instruments from Task 41 measured
+evidence and admission. Counts cover blocks, components, domains, plausible
+physical owners, diagnostic depth, input/power transitions, isolation actions,
+temporal samples and purposeful auxiliaries. Instrument IDs use the existing
+DC voltage, resistance, continuity and diode vocabulary. Unspecified, exact
+zero and an explicitly empty allowed set are distinct. Counts use nonnegative
+signed-int encoding bounds, not calibrated difficulty thresholds. Contradiction
+checks reject impossible temporal/depth combinations. No difficulty presets,
+search, scoring or admission policy is implemented by this value.
+
+`NamedRandomStreams` derivation version 1 uses FNV-1a-64 over length-framed ASCII
+fields, followed by fresh local SplitMix64 cursors. Arithmetic is modulo 2^64
+with unsigned right shifts on both Java and compiled GWT. Each tuple includes
+root seed, versioned intent, device/block scope, stable block key, explicit
+concern token/revision and semantic key. `block` and `values` require block
+scope; topology, support, fault, scenario, placement, routing and presentation
+support either scope. Reopening restarts a stream. Seed inspection never draws.
+Selection sorts copied unique candidate IDs before bounded rejection sampling;
+empty/duplicate sets reject. A changed eligible population may change selection.
+
+| Version/input owner | Intended effect |
+| --- | --- |
+| Descriptor schema | Encoding/interpretation only; absent from named seed tuples |
+| Generator ID/version | Resolves the replay algorithm; absent from named tuples |
+| Device-intent ID/version | Resolves intent meaning and affects its named seeds |
+| Named derivation version | Changes the tuple/hash contract for all named seeds |
+| Concern revision and semantic key | Affect only that exact scoped tuple |
+| Block key | Affects that block scope; optional inventory is never hashed globally |
+| Constraints/profile/geometry | Bound replay inputs; do not reseed unrelated named concerns |
+| Task 44 namespace and runtime owner | Separate identities; no runtime objects enter the descriptor |
+
+`LegacyChallengeReplay` resolves `legacy-leaf@1`, intent version 1 for the six
+existing family IDs, `legacy-default@1`, geometry version 3 and entirely
+unspecified constraints. It then directly calls the accepted
+`QuickPlayFamilyRegistry.generate(familyId, long)` path. It does not remap seeds,
+replace legacy randomness or override fault/scenario selection. Every call
+constructs a fresh runtime owner. Any specified constraint rejects before
+generation; the adapter makes no claim that a requested diagnostic depth was
+achieved. Geometry-version drift rejects instead of silently reinterpreting an
+old descriptor. Future leaf algorithm changes need an explicit replay version
+and preservation or explicit rejection of the old one. All new named streams
+are reserved and **not consumed by legacy-leaf@1**.
+
+The explicit `tsjDebug=true&tsjVerifyTask46=true` route executes the same pure
+contract corpus used by JDK8, publishes canonical string outputs and compares
+direct generation with parsed-descriptor replay. Only this debug verifier keeps
+a workbench in debug mode, permitting the initial challenge's existing normal
+diagnostic admission. Subsequent paired installs use the existing developer
+installation scope, real healthy/faulted solver validation and fresh controllers;
+they do not claim independent normal admission. Cleanup constructs another
+fresh challenge instead of extending same-owner restoration. The developer
+diagnostic API exposes deterministic rejection codes and fields. DOM attributes
+publish descriptor, reserved seeds, snapshot and parity output only behind both
+flags. Normal player pages receive none of these attributes. The
+[Task 46 evidence](task-evidence/task-46/README.md) defines
+the algorithm, fixed oracle corpus, replay coverage and qualification limits.
+
+## Probe and measurement ownership
 
 `ProbeTarget` describes where a user placed a probe: validity, semantic target
 identity, marker position, and resolution to a `CircuitMeasurementEndpoint`.

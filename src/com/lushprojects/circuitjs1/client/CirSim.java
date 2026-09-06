@@ -389,6 +389,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask39Verification;
 	boolean troubleshootTask40Verification;
 	boolean troubleshootTask41Verification;
+	boolean troubleshootTask46Verification;
 	boolean troubleshootTask43Verification;
 	boolean troubleshootTask43ForcedFailure;
 	boolean troubleshootTask43PVerification;
@@ -419,6 +420,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask39VerificationComplete;
 	boolean troubleshootTask40VerificationComplete;
 	boolean troubleshootTask41VerificationComplete;
+	boolean troubleshootTask46VerificationComplete;
 	boolean troubleshootTask43VerificationComplete;
 	boolean troubleshootTask43PVerificationComplete;
 	boolean troubleshootStoredEnergyVerificationComplete;
@@ -514,6 +516,8 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootVerifierRouteId = queryValueOrEmpty(qp.getValue("tsjVerifierRoute"));
 	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
+	    troubleshootTask46Verification = troubleshootDebug &&
+		qp.getBooleanValue("tsjVerifyTask46", false);
 	    euroRes = qp.getBooleanValue("euroResistors", false);
 	    usRes = qp.getBooleanValue("usResistors",  false);
 	    running = qp.getBooleanValue("running", true);
@@ -4479,7 +4483,10 @@ MouseOutHandler, MouseWheelHandler {
 	boardModificationController = new BoardModificationController(this, instance);
 	PhysicalBoardRuntime physicalRuntime = instance.getPhysicalBoardRuntime();
 	physicalRuntime.installRegisteredCapabilities(this, instance, boardModificationController, t);
-	pcbWorkbenchController = !troubleshootDebug && instance.getPcbLayout() != null ?
+	// Task 46's explicit debug route retains the real workbench so its
+	// initial legacy challenge goes through unchanged diagnostic admission.
+	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification) &&
+	    instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
 		instance.getPcbLayout(), verticalPanel, quickPlayActive,
 		attachWorkbenchToSidebar) : null;
@@ -4731,6 +4738,22 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootTask46Verification &&
+		!troubleshootTask46VerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		generatedChallengeController != null && generatedChallengeController.isReady()) {
+		developerVerifierRunning = true;
+		try {
+		    troubleshootTask46VerificationComplete = true;
+		    publishBrowserVerificationResult("RUNNING:task46");
+		    String parity = Task46ContractVectors.run();
+		    Task46ReplayDeveloperVerifier.Result replay = Task46ReplayDeveloperVerifier.verify(this);
+		    publishTask46Evidence(parity, replay);
+		    publishBrowserVerificationResult("PASS:task46");
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	    if (!developerVerifierRunning && troubleshootTask43Verification &&
 		!troubleshootTask43VerificationComplete &&
 		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -4782,7 +4805,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootArchitectureVerification || troubleshootRcVerification ||
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
 		    troubleshootNmosVerification || troubleshootTask39Verification ||
-		    troubleshootTask40Verification || troubleshootTask41Verification ||
+		    troubleshootTask40Verification || troubleshootTask41Verification || troubleshootTask46Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -4836,6 +4859,20 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishBrowserVerificationResult(String result) /*-{
 	$doc.documentElement.setAttribute("data-tsj-verification", result);
+    }-*/;
+
+    private void publishTask46Evidence(String parity, Task46ReplayDeveloperVerifier.Result replay) {
+	if (troubleshootDebug && troubleshootTask46Verification)
+	    publishTask46EvidenceStrings(parity, replay.diagnostics, replay.snapshot, replay.summary);
+    }
+
+    /** All seeds cross the Java/browser boundary as canonical strings. */
+    private static native void publishTask46EvidenceStrings(String parity, String descriptor,
+	    String snapshot, String replay) /*-{
+	$doc.documentElement.setAttribute("data-tsj-task46-parity", parity);
+	$doc.documentElement.setAttribute("data-tsj-task46-descriptor", descriptor);
+	$doc.documentElement.setAttribute("data-tsj-task46-snapshot", snapshot);
+	$doc.documentElement.setAttribute("data-tsj-task46-replay", replay);
     }-*/;
 
     private static native void publishQuickPlaySelection(String familyId, String seed) /*-{

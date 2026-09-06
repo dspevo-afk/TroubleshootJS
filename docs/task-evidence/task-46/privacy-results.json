@@ -1,0 +1,39 @@
+[
+  {
+    "route": "normal-led-3",
+    "url": "http://127.0.0.1:52700/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyTask46=true&running=true",
+    "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+    "result": "PASS",
+    "readyControlsEnabled": true,
+    "ungatedTask46Parameter": true,
+    "debugAbsent": true,
+    "task46AttributesAbsent": true,
+    "bodyAndMountedAttributesPrivateDataAbsent": true,
+    "accessibilityPrivateDataAbsent": true,
+    "bodySha256": "00d1bfed7a128a5f2e78369794c8e4605f97ff2a918f1afbfeb0df92ae864995",
+    "accessibilitySha256": "60e85d619cad33f587de9fa91913ffe493d3ac84a058914304306c8c9750fa16",
+    "screenshotSha256": "1e3685ffdc775b6a07f7f3ab6c313a6ec86f4d7b1ab416169468b0ace0d71b68"
+  },
+  {
+    "route": "normal-rc-0",
+    "url": "http://127.0.0.1:52700/circuitjs.html?tsjChallenge=rc&seed=0&tsjVerifyTask46=true&running=true",
+    "sourceFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+    "result": "PASS",
+    "readyControlsEnabled": true,
+    "retestControl": "Power-cycle and Retest Customer",
+    "ungatedTask46Parameter": true,
+    "debugAbsent": true,
+    "task46AttributesAbsent": true,
+    "bodyAndMountedAttributesPrivateDataAbsent": true,
+    "accessibilityPrivateDataAbsent": true,
+    "bodySha256": "dc1666e2572d27c0734aa53f330def72bd38a2303c119810e70b1aceff4af658",
+    "accessibilitySha256": "142ce2e2558b107e1052cf2f491a231debaf4df8d7dd87991a940f00ff27eacd",
+    "screenshotSha256": "f28aba84291fd0a91567d7ecf66ba9a898cdfacfb6fe7787690e15977747000d",
+    "initialCheck": {
+      "result": "FAIL",
+      "cause": "TEST/TOOL",
+      "reason": "Checker expected LED retest label; observed RC control is Power-cycle and Retest Customer. No product change."
+    },
+    "previewTiming": "Fully loaded from final production preview before its successful shutdown; same loaded page inspected afterward."
+  }
+]

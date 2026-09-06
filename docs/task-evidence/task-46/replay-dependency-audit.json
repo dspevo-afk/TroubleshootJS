@@ -1,0 +1,26 @@
+{
+  "earlierFingerprint": "0d1d1e1d57fa0e38ac274a6fcd08d7a61abc7d758fb196b354651ee7e3925942",
+  "finalFingerprint": "1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23",
+  "comparedInputs": 12,
+  "changedInputs": [
+    "src/com/lushprojects/circuitjs1/client/Task46ContractVectors.java"
+  ],
+  "reusedReplayCases": [
+    "led-0",
+    "led-2",
+    "led-3",
+    "led-4",
+    "diode-0",
+    "diode-2",
+    "diode-3",
+    "parallel-0",
+    "parallel-2",
+    "parallel-3",
+    "rc-0",
+    "rc-2",
+    "rc-3"
+  ],
+  "reason": "Only pure immutable fixture assertions changed. Replay, descriptor, constraints, seed derivation, CirSim route, runtime and all legacy dependencies are byte-identical. Final corpus parity ran freshly and repeated LED0 semantic snapshot matched.",
+  "rootAdjudication": "PASS",
+  "independentDeltaReview": "PASS"
+}

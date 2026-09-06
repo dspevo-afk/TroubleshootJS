@@ -1,6 +1,45 @@
 # TroubleshootJS — Current Task Report
 
-## Current checkpoint — Task 45 electrical port preflight — 2026-09-06
+## Current checkpoint — Task 46 versioned replay — 2026-09-06
+
+- **Scope/status: COMPLETE — ACCEPTED.** Task 46's immutable request, named
+  streams, constraints, real legacy replay and closed validation set are accepted.
+  Task 47 remains unstarted; the Composition Entry Gate is unclaimed.
+- **Branch/candidate:** Clean entry at reviewed HEAD
+  `134a0791b052d9a1928565e7b2318ac7284a357c`, branch
+  `codex/task43p-final-recovery`. Task 44 `10dcafa` and approved Task 43P `a5e8efa`
+  are ancestors. No intervening or pre-existing worktree changes.
+  Current source/test/harness fingerprint:
+  `1b21500d2c07f5b2f9c082f83203a4be96e4948c6bf396b4fb5c9d1ba494cc23`;
+  the evidence packet records all 12 input hashes and the exact replay reuse.
+- **Design/acceptance:** Prerequisite investigations are complete and reconciled.
+  The [Task 46 packet](task-evidence/task-46/README.md) freezes the descriptor,
+  version resolution, lossless seed encoding, named-stream tuple/arithmetic,
+  constraints, real legacy adapter and closed validation set before coding.
+- **Gates/review:** Final pure JDK8 Task46 PASS (410 assertions, 36 negative
+  cases, 22 independently calculated seed/selection vectors); Task44/45 PASS
+  (247 + 202 assertions), exact scratch cleanup. Five-permutation production
+  build passes. Exact final JVM/compiled-browser parity PASS (4,748 bytes).
+  All 19 real replay cases PASS, with 13 unchanged proofs reused under an exact
+  dependency audit. Final challenge, all-family layout and Task 41 (14 cases,
+  128 solver samples) PASS; normal LED/RC privacy and readiness PASS with two
+  inspected screenshots. Independent Luna source, targeted test delta and final
+  evidence/cleanup reviews PASS. The retained corpus-AssertionError diagnostic
+  limitation is a nonblocking TEST/TOOL follow-up.
+- **Ownership/resources:** Astra owns integration, runtime/browser and docs;
+  Luna MAX leaf implementation/oracle/review assignments are reconciled. The
+  task-created Browser tab is closed. Exact preview process/listener/lease
+  cleanup PASS, wrapper exit 0; no task-owned live process or tab remains.
+  Raw qualification/failure receipts are retained outside the repository.
+  Pre-existing preview state at port 8897 and historical quarantined resources
+  remain outside Task 46 ownership.
+- **Publication:** The enclosing commit identifies the accepted source, docs
+  and curated evidence. Exact remote SHA and the post-push Gmail outcome are
+  recorded in the final task handoff.
+- **Next unstarted boundary:** The Composition Entry Gate requires its separate
+  runtime-integrity qualification and owner authorization before Task 47.
+
+## Accepted checkpoint — Task 45 electrical port preflight — 2026-09-06
 
 - **Scope/status: COMPLETE — ACCEPTED.** The owner-approved Task 43P baseline is
   `a5e8efa775b52914a87269103a316c10669a5305`. Task 44 was separately accepted,
