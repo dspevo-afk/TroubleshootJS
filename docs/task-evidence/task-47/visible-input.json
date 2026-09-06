@@ -1,0 +1,53 @@
+{
+  "sourceFingerprint": "57c91b7e47598259a50504ab2d862225fdf661a75f812ca36d6e24bedf3abf7f",
+  "route": "?tsjChallenge=led&seed=3&running=true&tsjVerifyTask47=true&tsjTask47Fail=true&tsjTask47Seed=-9007199254740993",
+  "browser": "Supported in-app Browser; actual visible button and mouse input, no injected clicks or controller calls",
+  "status": "PASS",
+  "privacy": {
+    "verificationMarker": null,
+    "assemblyReport": null,
+    "rootDataTsjAttributes": [],
+    "composedIdentityOrFaultDetailsInRenderedUi": false,
+    "task47FlagsWithoutDebugIgnored": true
+  },
+  "actions": [
+    {
+      "action": "Click DC V, left-click R1.1, right-click R1.2",
+      "actualReading": "10.653 V",
+      "redTarget": "R1.1",
+      "blackTarget": "R1.2",
+      "normalContextPopupWhileProbing": false
+    },
+    {
+      "action": "Click Retest Customer on unrepaired board",
+      "result": "Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "action": "Click active DC V again, then left-click R1 body",
+      "result": "--- V; normal R1 selection and installed-part actions shown"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "01-normal-probes-unrepaired.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "5b2ef1fa24166bf41e4c31b40f44e800b632a3bea6271a3696edf28d82341b47",
+      "rootInspectedNonblank": true,
+      "proves": "Real visible left-click red/right-click black on R1: 10.653 V; customer retest rejects the unrepaired LED board."
+    },
+    {
+      "file": "02-normal-mode-exit.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "a11f2d48ab8bf5e1c94f94e4977900c709c78e437355acb8b7478ef03cd0422d",
+      "rootInspectedNonblank": true,
+      "proves": "Clicking the active DC V mode again exits to --- V; a subsequent real part-body click selects R1 and shows normal physical actions."
+    }
+  ],
+  "limits": "Normal legacy LED3 interaction/privacy regression. This is not player acceptance of a composed challenge; Task48 remains unstarted. Probe targets can remain displayed after mode exit; normal input and inactive measurement are the checked contract."
+}

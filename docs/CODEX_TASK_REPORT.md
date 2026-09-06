@@ -1,6 +1,73 @@
-# TroubleshootJS — Current Task Report
+# TroubleshootJS - Current Task Report
 
-## Current checkpoint — Composition Entry Gate accepted — 2026-09-06
+## Current checkpoint - Task 47 complete and accepted - 2026-09-06
+
+- **Scope/status:** The bounded assembler and contribution contracts are
+  implemented and the closed validation set passes. The real developer-only
+  canary couples a 5 V resistive-source block to a resistive load through
+  explicit signal and return joins. Task48 and player-facing composition remain
+  unstarted. Independent code, delta and final evidence review PASS.
+- **Git/candidate:** Branch `codex/task43p-final-recovery`; the gate/base commit
+  `623f3a74b37eec771576fe11a4d13c03a09335e7` is the separately reviewed, pushed
+  Composition Entry Gate; its completion email was sent. Phase B began clean.
+  The accepted Task47 implementation is the commit containing this checkpoint;
+  the exact SHA and remote/notification outcome are recorded in the final handoff.
+  Final build08 source fingerprint is
+  `57c91b7e47598259a50504ab2d862225fdf661a75f812ca36d6e24bedf3abf7f`
+  (960 inputs). All current source/test/docs/evidence changes belong to Task47.
+- **Ownership/replay:** One device-owned board, CircuitJS graph, physical runtime,
+  global inventory authority, generated instance and existing fault/lifecycle
+  services. Immutable block contributions own local recipes and executable
+  requirements; exact namespaced mappings preserve aliases and explicit net
+  provenance. `bounded-assembler@1` / `resistive-coupling@1` /
+  `developer-canary@1`, geometry 3; isolated named streams and exact signed-long
+  seed strings. Unsupported constraints and open-drain transfer reject.
+- **Validation:** Final JDK8/GWT OBF build08 PASS, all five permutations, exit 0.
+  Fresh phase pure suites PASS: 247 Task44, 202 Task45, 410 Task46 assertions /
+  36 negatives, 269 Task47 assertions; independent Python 22 + 8 vectors.
+  Build02 actual compiled Task47 PASS: 1,540 assertions / eight seeds, both
+  repair owners, four measurement cases, five private and five install failures,
+  stale-work rejection, 72 physical negatives and exact JVM/Python/GWT replay.
+  Selected composition gate PASS 113 lifecycle / 180 mutation assertions;
+  explicit Task47 AssertionError produces FAIL. Final build08 Task43P runtime
+  A-I/C1 strict oracle PASS, exit 0 / zero blockers; Task40 corpus and Task41
+  14 routes / 128 solver samples PASS; challenge/replacement and six-family
+  layout at 0/2/3 PASS. All four final legacy replays PASS with descriptors,
+  summaries and 22-vector parity byte-identical to the accepted gate.
+- **Reuse/limits:** The exact build02-to-build08 audit changes only three
+  developer-verifier files; all 957 other inputs are identical and the reused
+  assembly/gate/error routes do not call the changed helper or its consumers.
+  Affected consumers receive fresh final regressions. All 36 explicit pure gate
+  inputs are unchanged from their fresh phase runs. No old failed proof is
+  reused. Task41 Option A and declared-versus-executed complexity limitations
+  remain; no deep same-owner/nested transaction or full historical CDP/source-
+  falsifier certification is claimed. The legacy physical aggregate remains
+  UNPROVEN while its separately bounded triad passes. Canonical seed transport
+  is exact; the redundant legacy physical-report numeric seed can round in a
+  JavaScript Number consumer and is explicitly excluded from replay transport.
+  Task46's pre-existing AssertionError-to-RUNNING follow-up is unchanged.
+- **Diagnostics:** Reviewed test-seam guard, Task40 dependent-action settlement
+  and null-safe diagnostic repairs retain assertions. The tight developer helper
+  now requests an actual guarded CircuitJS step when wall-clock throttling
+  leaves analyzed verification pending; ordinary settlement remains required.
+  Earlier browser focus timeouts retain separate failed receipts and were closed
+  by delayed collection or a fresh owned tab. Exact evidence and failure
+  dispositions are in the [Task47 packet](task-evidence/task-47/README.md).
+- **Visible input/privacy:** Ordinary LED3 page with Task47 flags but no debug
+  exposes no assembly marker/report/details. Actual left red/right black probes
+  read 10.653 V and the unrepaired customer retest fails. Active-mode reselection
+  exits to --- V and normal R1 selection works. Two inspected screenshots are
+  linked in the packet; they do not claim a playable composed challenge.
+- **Review/resources/next:** Fresh read-only Luna code review and all targeted
+  deltas PASS; final evidence reconciliation and wording delta PASS. All owned Browser tabs
+  closed. Preview run `dcb1d77150c54478aee380848dc418c9` cleanup Success=true,
+  no errors, wrapper exit 0; no owned live process remains. Scoped diagnostic
+  receipts remain outside the repository and existing user resources were
+  preserved. Publish the accepted Task47 candidate as a separate reviewed commit,
+  push the configured upstream, verify its exact SHA and send the authorized
+  completion email. Stop before Task48.
+
+## Accepted checkpoint — Composition Entry Gate — 2026-09-06
 
 - **Scope/status:** COMPLETE, bounded gate validation and independent review
   accepted; publication is the next action. The owner authorizes this gate and

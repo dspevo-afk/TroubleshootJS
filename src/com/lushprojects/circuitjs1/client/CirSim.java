@@ -390,6 +390,10 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask40Verification;
 	boolean troubleshootTask41Verification;
 	boolean troubleshootTask46Verification;
+	boolean troubleshootTask47Verification;
+	boolean troubleshootTask47VerificationComplete;
+	boolean troubleshootTask47ForcedFailure;
+	String troubleshootTask47Seed;
 	boolean troubleshootCompositionGateVerification;
 	boolean troubleshootCompositionGateVerificationComplete;
 	boolean troubleshootCompositionGateControls;
@@ -522,6 +526,12 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    troubleshootTask46Verification = troubleshootDebug &&
 		qp.getBooleanValue("tsjVerifyTask46", false);
+	    troubleshootTask47Verification = troubleshootDebug &&
+		qp.getBooleanValue("tsjVerifyTask47", false);
+	    troubleshootTask47ForcedFailure = troubleshootTask47Verification &&
+		qp.getBooleanValue("tsjTask47Fail", false);
+	    troubleshootTask47Seed = troubleshootTask47Verification ?
+		qp.getValue("tsjTask47Seed") : null;
 	    troubleshootCompositionGateVerification = troubleshootDebug &&
 		qp.getBooleanValue("tsjVerifyCompositionGate", false);
 	    troubleshootCompositionGateControls = troubleshootDebug &&
@@ -4548,6 +4558,7 @@ MouseOutHandler, MouseWheelHandler {
 	// Task 46's explicit debug route retains the real workbench so its
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
+	    troubleshootTask47Verification ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
 	    instance.getPcbLayout() != null ?
 	    new PcbWorkbenchController(this, instance, boardModificationController,
@@ -4814,6 +4825,27 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootTask47Verification &&
+		!troubleshootTask47VerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		generatedChallengeController != null && generatedChallengeController.isReady() &&
+		isGeneratedRuntimeSettled()) {
+		developerVerifierRunning = true;
+		troubleshootTask47VerificationComplete = true;
+		publishBrowserVerificationResult("RUNNING:task47");
+		try {
+		    publishTask47Evidence(Task47AssemblyDeveloperVerifier.verify(this,
+			troubleshootTask47Seed, troubleshootTask47ForcedFailure));
+		    publishBrowserVerificationResult("PASS:task47");
+		} catch (Throwable failure) {
+		    publishBrowserVerificationResult("FAIL:task47:" + failure.getMessage());
+		    if (failure instanceof Error) throw (Error) failure;
+		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+		    throw new IllegalStateException("Task 47 assembly verification failed", failure);
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	    if (!developerVerifierRunning && troubleshootCompositionGateVerification &&
 		!troubleshootCompositionGateVerificationComplete &&
 		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -4963,6 +4995,10 @@ MouseOutHandler, MouseWheelHandler {
 	if (troubleshootDebug && troubleshootTask46Verification)
 	    publishTask46EvidenceStrings(parity, replay.diagnostics, replay.snapshot, replay.summary);
     }
+
+    private static native void publishTask47Evidence(String evidence) /*-{
+	$doc.documentElement.setAttribute("data-tsj-task47-report", evidence);
+    }-*/;
 
     private static native void publishCompositionGateEvidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-composition-gate-report", evidence);
@@ -5620,8 +5656,9 @@ MouseOutHandler, MouseWheelHandler {
 
     double runTemporaryActiveMeasurementForDeveloperVerification(ActiveMeasurementStimulus stimulus,
 	    ActiveMeasurementResultReader reader) {
-	if (!troubleshootTask43PVerification || !developerVerifierRunning)
-	    throw new IllegalStateException("Task43P measurement cleanup verification is not active");
+	if ((!troubleshootTask43PVerification && !troubleshootTask47Verification) ||
+		!developerVerifierRunning)
+	    throw new IllegalStateException("Active measurement cleanup verification is not active");
 	return runTemporaryActiveMeasurement(stimulus, reader);
     }
 

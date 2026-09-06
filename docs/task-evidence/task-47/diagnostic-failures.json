@@ -1,0 +1,101 @@
+{
+  "rawReceiptLocation": "Unique external task-owned scratch; sanitized summaries only are intended for publication",
+  "cases": [
+    {
+      "id": "task47-build01-reader-seam",
+      "impact": "BLOCKER",
+      "cause": "TEST/TOOL",
+      "phase": "compiled assembly matrix",
+      "operation": "forced active-measurement reader failure",
+      "result": "FAIL",
+      "signature": "composed forced reader failure lost primary error or solver/power cleanup",
+      "diagnosis": "Developer measurement overload admitted only Task43P, so the Task47 reader never ran.",
+      "disposition": "CLOSED by reviewed explicit Task47 route guard and build02 1540-assertion PASS",
+      "elapsed": "Not instrumented",
+      "remainingDeadline": "No task deadline imposed",
+      "cleanup": "Owned Browser tab closed; verifier finally restored original owner without replacing the failure",
+      "rawReceipt": "task47-browser01-fail.json"
+    },
+    {
+      "id": "task40-build02-dependent-dispatch",
+      "impact": "BLOCKER",
+      "cause": "TEST/TOOL",
+      "phase": "physical-locus regression",
+      "operation": "dependent physical action after power transition",
+      "result": "FAIL",
+      "signature": "Unknown component connection: LED1/null",
+      "diagnosis": "Legacy test did not wait for runtime settlement; its unavailable-action diagnostic queried a null lead pad.",
+      "disposition": "CLOSED by existing settlement helper and null-safe diagnostics; fresh build04 Task40 PASS",
+      "elapsed": "Not instrumented",
+      "remainingDeadline": "No task deadline imposed",
+      "cleanup": "Owned Browser tab eventually closed after separate Task41 transport failure",
+      "rawReceipt": "task47-task40.json"
+    },
+    {
+      "id": "task40-build03-retest-after-observation",
+      "impact": "BLOCKER",
+      "cause": "TEST/TOOL",
+      "phase": "physical-locus regression",
+      "operation": "NPN retest immediately after repair-status observation",
+      "result": "FAIL",
+      "signature": "Task 40 CUSTOMER_RETEST did not pass: TRANSISTOR_CE_OPEN",
+      "diagnosis": "Repair-status observation executes HIGH/LOW solver commands and leaves pending analysis; guarded retest correctly refused.",
+      "disposition": "CLOSED by settlement between dependent observation and retest; fresh build04 Task40 PASS",
+      "elapsed": "Not instrumented",
+      "remainingDeadline": "No task deadline imposed",
+      "cleanup": "Owned Browser tab closed",
+      "rawReceipt": "task47-task40-build03.json"
+    },
+    {
+      "id": "task41-transport01",
+      "impact": "BLOCKER",
+      "cause": "ENVIRONMENT",
+      "phase": "Task41 browser collection",
+      "operation": "visible DOM / focus preparation",
+      "result": "BLOCKED",
+      "signature": "Emulation.setFocusEmulationEnabled timeout, twice",
+      "diagnosis": "Browser focus transport could not complete during the busy solver route. No application result was collected.",
+      "disposition": "CLOSED by a fresh isolated tab with delayed collection; build04 PASS14 routes/128 samples",
+      "elapsed": "About 12 seconds per failed tool call; no application duration measured",
+      "remainingDeadline": "No task deadline imposed",
+      "cleanup": "Exact owned tab closed; Browser tab listing empty",
+      "rawReceipt": "task47-task41-transport01.json"
+    },
+    {
+      "id": "task43p-runtime-settlement",
+      "impact": "BLOCKER",
+      "cause": "TEST/TOOL",
+      "phase": "Task43P runtime G/H regression",
+      "operation": "settle current LED3 Quick Play candidate",
+      "result": "FAIL",
+      "signature": "ready=true, settled=false, verificationPending=true; all other settled flags clear",
+      "diagnosis": "The synchronous 20-update helper completed in 4-5 ms while CircuitJS ordinary UI wall-clock throttling prevented a solver step: verificationAnalyzed=true and solver time equalled verification start. Developer-only helper now requests the existing actual runCircuit(true) step only when the exact expected owner and all lifecycle guards hold, then requires the unchanged settled predicate on a subsequent update.",
+      "disposition": "CLOSED by reviewed guarded solver-step request; final build08 runtime OBSERVED and strict validator PASS, exit 0, zero open blockers.",
+      "elapsed": "4 ms build06 and 5 ms build07 within the failing helper; final collection elapsed time is separate from execution time.",
+      "remainingDeadline": "No task deadline imposed; existing 20-attempt bound unchanged",
+      "cleanup": "Owned Browser tabs closed after preserved failures; finally restoration retained the original failure",
+      "rawReceipts": [
+        "task47-runtime-build04.json",
+        "task47-runtime-build06.json",
+        "task47-runtime-build07.json",
+        "task47-runtime-build08.json",
+        "task47-runtime-build08-strict.json"
+      ]
+    },
+    {
+      "id": "task46-rc-collection01",
+      "impact": "BLOCKER",
+      "cause": "ENVIRONMENT",
+      "phase": "Final legacy RC replay collection",
+      "operation": "visible DOM / focus preparation",
+      "result": "BLOCKED",
+      "signature": "Emulation.setFocusEmulationEnabled timeout for owned RC tab",
+      "diagnosis": "Browser focus preparation was attempted during the heavy compiled route. Delayed read-only collection on the same owned tab after independent evidence work returned the full PASS result.",
+      "disposition": "CLOSED - actual final build08 RC legacy replay PASS; descriptor, replay, parity and snapshot receipts collected.",
+      "elapsed": "15.7 seconds for failed tool call; no application execution duration measured",
+      "remainingDeadline": "No task deadline imposed",
+      "cleanup": "Exact owned RC tab closed after collection; no unrelated resource touched.",
+      "rawReceipt": "task47-replay-rc-build08.json"
+    }
+  ]
+}

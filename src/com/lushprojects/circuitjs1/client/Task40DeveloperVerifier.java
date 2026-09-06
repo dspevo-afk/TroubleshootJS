@@ -108,7 +108,7 @@ final class Task40DeveloperVerifier {
         GeneratedChallengeController challenge = installReadyChallenge(sim, instance);
         GeneratedFaultServiceabilityAdmission.validateExecutableRuntime(sim, instance,
             instance.getFaultBinding());
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        power(sim, BoardPowerState.UNPOWERED);
         require(sim.getBoardPowerController().isElectricallyUnpowered(),
             "Task 40 isolation did not establish electrical unpowered state: " + type);
 
@@ -158,11 +158,12 @@ final class Task40DeveloperVerifier {
                 instance.getFaultBinding()),
             "Task 40 replacement inherited original fault ownership: " + componentId);
 
-        sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
+        power(sim, BoardPowerState.POWERED);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
             "Task 40 powered solver did not validate repair: " + type);
+        // Switching-family repair observations execute their real input profile.
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "Task40 after physical repair observation");
         require(challenge.performCustomerRetest().isPassed(),
             "Task 40 CUSTOMER_RETEST did not pass: " + type);
         sim.verifyGeneratedBoard();
@@ -170,13 +171,10 @@ final class Task40DeveloperVerifier {
 
     private static void verifyNotRestoredAfterPhysicalWorkflow(CirSim sim,
             GeneratedChallengeController challenge, String caseId) {
-        sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
+        power(sim, BoardPowerState.POWERED);
         require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
             "Task 40 physical workflow incorrectly cleared generated fault: " + caseId);
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        power(sim, BoardPowerState.UNPOWERED);
     }
 
     private static void verifyOriginalReinstallDoesNotRestore(CirSim sim,
@@ -200,13 +198,9 @@ final class Task40DeveloperVerifier {
             GeneratedBoardInstance instance) {
         sim.installGeneratedChallenge(instance);
         sim.setSimRunning(true);
-        for (int attempt = 0; attempt < 10; attempt++) {
-            sim.updateCircuit();
-            GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
-            if (challenge != null && challenge.isReady()) return challenge;
-        }
-        throw new IllegalStateException("Task 40 generated challenge did not become ready: " +
-            instance.getCircuitFamilyId() + "/" + instance.getSeed());
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "Task40 installed candidate");
+        return sim.getGeneratedChallengeController();
     }
 
     private static void exerciseLead(CirSim sim, GeneratedBoardInstance instance,
@@ -227,6 +221,7 @@ final class Task40DeveloperVerifier {
     }
 
     private static void dispatch(CirSim sim, WorkbenchOperation operation) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, "Task40 before " + operation.getId());
         if (sim.pcbWorkbenchController == null ||
                 !sim.pcbWorkbenchController.isAvailable(operation))
             throw new IllegalStateException("Task 40 runtime action is unavailable: " +
@@ -234,12 +229,22 @@ final class Task40DeveloperVerifier {
                 " pad=" + operation.getPadId() + " state=" +
                 sim.getBoardModificationController().getComponentState(
                     operation.getComponentId()) + " connected=" +
-                sim.getBoardModificationController().isLeadConnected(
-                    operation.getComponentId(), operation.getPadId()) +
+                (operation.getPadId() == null ? "not-a-lead-action" :
+                    Boolean.toString(sim.getBoardModificationController().isLeadConnected(
+                        operation.getComponentId(), operation.getPadId()))) +
                 " unpowered=" + sim.getBoardPowerController().isElectricallyUnpowered() +
                 " challenge=" + sim.getGeneratedChallengeController().getState());
         require(sim.pcbWorkbenchController.dispatch(operation),
             "Task 40 runtime action did not execute: " + operation.getId());
+        GeneratedRuntimeDeveloperSettlement.settle(sim, "Task40 after " + operation.getId());
+    }
+
+    private static void power(CirSim sim, BoardPowerState state) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, "Task40 before power " + state);
+        sim.setBoardPowerState(state);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, "Task40 power " + state);
+        require(sim.getBoardPowerController().getState() == state,
+            "Task 40 power operation did not settle: " + state);
     }
 
     private static String correctCatalogId(GeneratedBoardInstance instance, String componentId) {
@@ -263,12 +268,10 @@ final class Task40DeveloperVerifier {
         require(original != null, "Task 40 LED_OPEN route has no R1 wrong-owner fixture");
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
         dispatch(sim, WorkbenchOperation.forCatalog("R1", resistorCatalogId(instance)));
-        sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
+        power(sim, BoardPowerState.POWERED);
         require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
             "LED_OPEN was incorrectly cured by a different-owner R1 replacement");
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        power(sim, BoardPowerState.UNPOWERED);
         PhysicalPart<?> replacement = instance.getPhysicalBoardRuntime().getInstalledPart("R1");
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, replacement));
         dispatch(sim, WorkbenchOperation.forPartAtSlot(WorkbenchOperation.INSTALL, original, "R1"));
@@ -281,12 +284,10 @@ final class Task40DeveloperVerifier {
         require(original != null, "R1-owned LED route has no LED wrong-owner fixture");
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
         dispatch(sim, WorkbenchOperation.forCatalog("LED1", LedReplacementCatalog.CORRECT));
-        sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
+        power(sim, BoardPowerState.POWERED);
         require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
             "R1-owned LED route was incorrectly cured by an LED replacement");
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        power(sim, BoardPowerState.UNPOWERED);
         PhysicalPart<?> replacement = instance.getPhysicalBoardRuntime().getInstalledPart("LED1");
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, replacement));
         dispatch(sim, WorkbenchOperation.forPartAtSlot(WorkbenchOperation.INSTALL, original, "LED1"));

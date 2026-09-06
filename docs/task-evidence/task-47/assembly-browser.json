@@ -1,0 +1,1833 @@
+{
+  "sourceFingerprint": "5407512b9702225902ecc0ddb5e6c5005c66572ee3139f53b10774acea940fc1",
+  "marker": "PASS:task47",
+  "report": {
+    "protocol": "TSJ-TASK47-ASSEMBLY-1",
+    "status": "PASS",
+    "requestedSeed": "-9007199254740993",
+    "cases": [
+      {
+        "seed": "0",
+        "sourceOhms": 100,
+        "loadOhms": 1000,
+        "fault": "load-high-resistance",
+        "faultOutputVolts": 4.9950049950049955,
+        "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=0",
+        "physicalCorrespondence": {
+          "status": "PASS",
+          "validator": "canonical-source-observations-v2",
+          "manifestAuthoring": "independent",
+          "observationSources": [
+            "raw-logical-board",
+            "raw-pcb-layout-copper",
+            "renderer",
+            "physical-package",
+            "solver-post"
+          ],
+          "family": "RESISTIVE_COUPLING",
+          "topology": "SERIES_SOURCE_LOAD",
+          "seed": 0,
+          "fault": "tsj-block-v1/resistive-coupling@1/load/component/R1/fault/high-resistance",
+          "faultType": "RESISTOR_INCORRECT_VALUE",
+          "faultOwner": "tsj-block-v1/resistive-coupling@1/load/component/R1",
+          "terminalCount": 6,
+          "rawTraceChecks": 3,
+          "renderedSurfaceChecks": 6,
+          "solverChecks": 6,
+          "negativeFixtureScope": "same-canonical-path-source-snapshot",
+          "liveReadings": [
+            "J1.1=5",
+            "J1.2=0",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.1=4.545454545454546",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.2=0",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.1=5",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.2=4.545454545454546"
+          ],
+          "negativeFixtures": [
+            {
+              "id": "renderer-only-pad-offset",
+              "sourceMutation": "renderer source pad point +20px",
+              "caught": true
+            },
+            {
+              "id": "renderer-only-lead-offset",
+              "sourceMutation": "renderer source lead endpoint +20px",
+              "caught": true
+            },
+            {
+              "id": "raw-copper-endpoint-gap",
+              "sourceMutation": "raw copper endpoint displacement",
+              "caught": true
+            },
+            {
+              "id": "raw-net-mismatch",
+              "sourceMutation": "raw copper net changed before validation",
+              "caught": true
+            },
+            {
+              "id": "solver-binding-post-mismatch",
+              "sourceMutation": "solver source endpoint identity/class/post/node changed before canonical validation",
+              "caught": true
+            },
+            {
+              "id": "raw-empty-unmanifested-net",
+              "sourceMutation": "raw logical-board source added an empty unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "mirror-transform-mismatch",
+              "sourceMutation": "package source transform changed before validation",
+              "caught": true
+            },
+            {
+              "id": "internally-self-consistent-wrong-mapping",
+              "sourceMutation": "raw board/net/copper sources coherently remapped to an unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "omitted-terminal",
+              "sourceMutation": "renderer source terminal omitted before canonical validation",
+              "caught": true
+            }
+          ],
+          "terminals": [
+            {
+              "padId": "J1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                672,
+                262
+              ],
+              "renderedPadId": "J1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                715,
+                347
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "SwitchElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "J1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                672,
+                322
+              ],
+              "renderedPadId": "J1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                715,
+                410
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "GroundElm",
+              "solverPost": 0,
+              "solverNode": 1
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                222,
+                242
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                246,
+                326
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                422,
+                242
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                455,
+                326
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                422,
+                322
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                455,
+                410
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                622,
+                322
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                663,
+                410
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 1
+            }
+          ]
+        },
+        "freshOwners": true,
+        "inputOrderIndependent": true,
+        "mapsAndSolver": "PASS",
+        "physicalRepairExecuted": true
+      },
+      {
+        "seed": "1",
+        "sourceOhms": 220,
+        "loadOhms": 2200,
+        "fault": "load-high-resistance",
+        "faultOutputVolts": 4.989024146876871,
+        "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=1",
+        "physicalCorrespondence": {
+          "status": "PASS",
+          "validator": "canonical-source-observations-v2",
+          "manifestAuthoring": "independent",
+          "observationSources": [
+            "raw-logical-board",
+            "raw-pcb-layout-copper",
+            "renderer",
+            "physical-package",
+            "solver-post"
+          ],
+          "family": "RESISTIVE_COUPLING",
+          "topology": "SERIES_SOURCE_LOAD",
+          "seed": 1,
+          "fault": "tsj-block-v1/resistive-coupling@1/load/component/R1/fault/high-resistance",
+          "faultType": "RESISTOR_INCORRECT_VALUE",
+          "faultOwner": "tsj-block-v1/resistive-coupling@1/load/component/R1",
+          "terminalCount": 6,
+          "rawTraceChecks": 3,
+          "renderedSurfaceChecks": 6,
+          "solverChecks": 6,
+          "negativeFixtureScope": "same-canonical-path-source-snapshot",
+          "liveReadings": [
+            "J1.1=5",
+            "J1.2=0",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.1=4.545454545454546",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.2=0",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.1=5",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.2=4.545454545454546"
+          ],
+          "negativeFixtures": [
+            {
+              "id": "renderer-only-pad-offset",
+              "sourceMutation": "renderer source pad point +20px",
+              "caught": true
+            },
+            {
+              "id": "renderer-only-lead-offset",
+              "sourceMutation": "renderer source lead endpoint +20px",
+              "caught": true
+            },
+            {
+              "id": "raw-copper-endpoint-gap",
+              "sourceMutation": "raw copper endpoint displacement",
+              "caught": true
+            },
+            {
+              "id": "raw-net-mismatch",
+              "sourceMutation": "raw copper net changed before validation",
+              "caught": true
+            },
+            {
+              "id": "solver-binding-post-mismatch",
+              "sourceMutation": "solver source endpoint identity/class/post/node changed before canonical validation",
+              "caught": true
+            },
+            {
+              "id": "raw-empty-unmanifested-net",
+              "sourceMutation": "raw logical-board source added an empty unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "mirror-transform-mismatch",
+              "sourceMutation": "package source transform changed before validation",
+              "caught": true
+            },
+            {
+              "id": "internally-self-consistent-wrong-mapping",
+              "sourceMutation": "raw board/net/copper sources coherently remapped to an unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "omitted-terminal",
+              "sourceMutation": "renderer source terminal omitted before canonical validation",
+              "caught": true
+            }
+          ],
+          "terminals": [
+            {
+              "padId": "J1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                682,
+                262
+              ],
+              "renderedPadId": "J1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                726,
+                347
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "SwitchElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "J1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                682,
+                322
+              ],
+              "renderedPadId": "J1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                726,
+                410
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "GroundElm",
+              "solverPost": 0,
+              "solverNode": 1
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                272,
+                242
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                299,
+                326
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                472,
+                242
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                507,
+                326
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                472,
+                322
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                507,
+                410
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                632,
+                322
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                674,
+                410
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 1
+            }
+          ]
+        },
+        "freshOwners": true,
+        "inputOrderIndependent": true,
+        "mapsAndSolver": "PASS",
+        "physicalRepairExecuted": false
+      },
+      {
+        "seed": "2",
+        "sourceOhms": 100,
+        "loadOhms": 2200,
+        "fault": "source-high-resistance",
+        "faultOutputVolts": 0.1076320939334638,
+        "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=2",
+        "physicalCorrespondence": {
+          "status": "PASS",
+          "validator": "canonical-source-observations-v2",
+          "manifestAuthoring": "independent",
+          "observationSources": [
+            "raw-logical-board",
+            "raw-pcb-layout-copper",
+            "renderer",
+            "physical-package",
+            "solver-post"
+          ],
+          "family": "RESISTIVE_COUPLING",
+          "topology": "SERIES_SOURCE_LOAD",
+          "seed": 2,
+          "fault": "tsj-block-v1/resistive-coupling@1/source/component/R1/fault/high-resistance",
+          "faultType": "RESISTOR_INCORRECT_VALUE",
+          "faultOwner": "tsj-block-v1/resistive-coupling@1/source/component/R1",
+          "terminalCount": 6,
+          "rawTraceChecks": 3,
+          "renderedSurfaceChecks": 6,
+          "solverChecks": 6,
+          "negativeFixtureScope": "same-canonical-path-source-snapshot",
+          "liveReadings": [
+            "J1.1=5",
+            "J1.2=0",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.1=4.782608695652174",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.2=0",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.1=5",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.2=4.782608695652174"
+          ],
+          "negativeFixtures": [
+            {
+              "id": "renderer-only-pad-offset",
+              "sourceMutation": "renderer source pad point +20px",
+              "caught": true
+            },
+            {
+              "id": "renderer-only-lead-offset",
+              "sourceMutation": "renderer source lead endpoint +20px",
+              "caught": true
+            },
+            {
+              "id": "raw-copper-endpoint-gap",
+              "sourceMutation": "raw copper endpoint displacement",
+              "caught": true
+            },
+            {
+              "id": "raw-net-mismatch",
+              "sourceMutation": "raw copper net changed before validation",
+              "caught": true
+            },
+            {
+              "id": "solver-binding-post-mismatch",
+              "sourceMutation": "solver source endpoint identity/class/post/node changed before canonical validation",
+              "caught": true
+            },
+            {
+              "id": "raw-empty-unmanifested-net",
+              "sourceMutation": "raw logical-board source added an empty unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "mirror-transform-mismatch",
+              "sourceMutation": "package source transform changed before validation",
+              "caught": true
+            },
+            {
+              "id": "internally-self-consistent-wrong-mapping",
+              "sourceMutation": "raw board/net/copper sources coherently remapped to an unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "omitted-terminal",
+              "sourceMutation": "renderer source terminal omitted before canonical validation",
+              "caught": true
+            }
+          ],
+          "terminals": [
+            {
+              "padId": "J1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                692,
+                272
+              ],
+              "renderedPadId": "J1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                736,
+                358
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "SwitchElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "J1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                692,
+                332
+              ],
+              "renderedPadId": "J1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                736,
+                420
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "GroundElm",
+              "solverPost": 0,
+              "solverNode": 1
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                262,
+                252
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                288,
+                337
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_240",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                442,
+                252
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                476,
+                337
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_240",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                442,
+                332
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                476,
+                420
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                642,
+                332
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                684,
+                420
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 1
+            }
+          ]
+        },
+        "freshOwners": true,
+        "inputOrderIndependent": true,
+        "mapsAndSolver": "PASS",
+        "physicalRepairExecuted": true
+      },
+      {
+        "seed": "3",
+        "sourceOhms": 100,
+        "loadOhms": 1000,
+        "fault": "source-high-resistance",
+        "faultOutputVolts": 0.04950495049504951,
+        "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=3",
+        "physicalCorrespondence": {
+          "status": "PASS",
+          "validator": "canonical-source-observations-v2",
+          "manifestAuthoring": "independent",
+          "observationSources": [
+            "raw-logical-board",
+            "raw-pcb-layout-copper",
+            "renderer",
+            "physical-package",
+            "solver-post"
+          ],
+          "family": "RESISTIVE_COUPLING",
+          "topology": "SERIES_SOURCE_LOAD",
+          "seed": 3,
+          "fault": "tsj-block-v1/resistive-coupling@1/source/component/R1/fault/high-resistance",
+          "faultType": "RESISTOR_INCORRECT_VALUE",
+          "faultOwner": "tsj-block-v1/resistive-coupling@1/source/component/R1",
+          "terminalCount": 6,
+          "rawTraceChecks": 3,
+          "renderedSurfaceChecks": 6,
+          "solverChecks": 6,
+          "negativeFixtureScope": "same-canonical-path-source-snapshot",
+          "liveReadings": [
+            "J1.1=5",
+            "J1.2=0",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.1=4.545454545454546",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.2=0",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.1=5",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.2=4.545454545454546"
+          ],
+          "negativeFixtures": [
+            {
+              "id": "renderer-only-pad-offset",
+              "sourceMutation": "renderer source pad point +20px",
+              "caught": true
+            },
+            {
+              "id": "renderer-only-lead-offset",
+              "sourceMutation": "renderer source lead endpoint +20px",
+              "caught": true
+            },
+            {
+              "id": "raw-copper-endpoint-gap",
+              "sourceMutation": "raw copper endpoint displacement",
+              "caught": true
+            },
+            {
+              "id": "raw-net-mismatch",
+              "sourceMutation": "raw copper net changed before validation",
+              "caught": true
+            },
+            {
+              "id": "solver-binding-post-mismatch",
+              "sourceMutation": "solver source endpoint identity/class/post/node changed before canonical validation",
+              "caught": true
+            },
+            {
+              "id": "raw-empty-unmanifested-net",
+              "sourceMutation": "raw logical-board source added an empty unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "mirror-transform-mismatch",
+              "sourceMutation": "package source transform changed before validation",
+              "caught": true
+            },
+            {
+              "id": "internally-self-consistent-wrong-mapping",
+              "sourceMutation": "raw board/net/copper sources coherently remapped to an unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "omitted-terminal",
+              "sourceMutation": "renderer source terminal omitted before canonical validation",
+              "caught": true
+            }
+          ],
+          "terminals": [
+            {
+              "padId": "J1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                702,
+                232
+              ],
+              "renderedPadId": "J1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                747,
+                316
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "SwitchElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "J1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                702,
+                292
+              ],
+              "renderedPadId": "J1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                747,
+                378
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "GroundElm",
+              "solverPost": 0,
+              "solverNode": 1
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                292,
+                212
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                319,
+                295
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                452,
+                212
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                486,
+                295
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                452,
+                292
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                486,
+                378
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                652,
+                292
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                695,
+                378
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 1
+            }
+          ]
+        },
+        "freshOwners": true,
+        "inputOrderIndependent": true,
+        "mapsAndSolver": "PASS",
+        "physicalRepairExecuted": false
+      },
+      {
+        "seed": "-9223372036854775808",
+        "sourceOhms": 220,
+        "loadOhms": 1000,
+        "fault": "source-high-resistance",
+        "faultOutputVolts": 0.04950495049504951,
+        "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=-9223372036854775808",
+        "physicalCorrespondence": {
+          "status": "PASS",
+          "validator": "canonical-source-observations-v2",
+          "manifestAuthoring": "independent",
+          "observationSources": [
+            "raw-logical-board",
+            "raw-pcb-layout-copper",
+            "renderer",
+            "physical-package",
+            "solver-post"
+          ],
+          "family": "RESISTIVE_COUPLING",
+          "topology": "SERIES_SOURCE_LOAD",
+          "seed": -9223372036854775808,
+          "fault": "tsj-block-v1/resistive-coupling@1/source/component/R1/fault/high-resistance",
+          "faultType": "RESISTOR_INCORRECT_VALUE",
+          "faultOwner": "tsj-block-v1/resistive-coupling@1/source/component/R1",
+          "terminalCount": 6,
+          "rawTraceChecks": 3,
+          "renderedSurfaceChecks": 6,
+          "solverChecks": 6,
+          "negativeFixtureScope": "same-canonical-path-source-snapshot",
+          "liveReadings": [
+            "J1.1=5",
+            "J1.2=0",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.1=4.098360655737705",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.2=0",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.1=5",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.2=4.098360655737705"
+          ],
+          "negativeFixtures": [
+            {
+              "id": "renderer-only-pad-offset",
+              "sourceMutation": "renderer source pad point +20px",
+              "caught": true
+            },
+            {
+              "id": "renderer-only-lead-offset",
+              "sourceMutation": "renderer source lead endpoint +20px",
+              "caught": true
+            },
+            {
+              "id": "raw-copper-endpoint-gap",
+              "sourceMutation": "raw copper endpoint displacement",
+              "caught": true
+            },
+            {
+              "id": "raw-net-mismatch",
+              "sourceMutation": "raw copper net changed before validation",
+              "caught": true
+            },
+            {
+              "id": "solver-binding-post-mismatch",
+              "sourceMutation": "solver source endpoint identity/class/post/node changed before canonical validation",
+              "caught": true
+            },
+            {
+              "id": "raw-empty-unmanifested-net",
+              "sourceMutation": "raw logical-board source added an empty unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "mirror-transform-mismatch",
+              "sourceMutation": "package source transform changed before validation",
+              "caught": true
+            },
+            {
+              "id": "internally-self-consistent-wrong-mapping",
+              "sourceMutation": "raw board/net/copper sources coherently remapped to an unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "omitted-terminal",
+              "sourceMutation": "renderer source terminal omitted before canonical validation",
+              "caught": true
+            }
+          ],
+          "terminals": [
+            {
+              "padId": "J1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                672,
+                262
+              ],
+              "renderedPadId": "J1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                715,
+                347
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "SwitchElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "J1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                672,
+                322
+              ],
+              "renderedPadId": "J1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                715,
+                410
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "GroundElm",
+              "solverPost": 0,
+              "solverNode": 1
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                222,
+                242
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                246,
+                326
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                422,
+                242
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                455,
+                326
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                422,
+                322
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                455,
+                410
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                622,
+                322
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                663,
+                410
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 1
+            }
+          ]
+        },
+        "freshOwners": true,
+        "inputOrderIndependent": true,
+        "mapsAndSolver": "PASS",
+        "physicalRepairExecuted": false
+      },
+      {
+        "seed": "9223372036854775807",
+        "sourceOhms": 100,
+        "loadOhms": 2200,
+        "fault": "source-high-resistance",
+        "faultOutputVolts": 0.1076320939334638,
+        "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=9223372036854775807",
+        "physicalCorrespondence": {
+          "status": "PASS",
+          "validator": "canonical-source-observations-v2",
+          "manifestAuthoring": "independent",
+          "observationSources": [
+            "raw-logical-board",
+            "raw-pcb-layout-copper",
+            "renderer",
+            "physical-package",
+            "solver-post"
+          ],
+          "family": "RESISTIVE_COUPLING",
+          "topology": "SERIES_SOURCE_LOAD",
+          "seed": 9223372036854775807,
+          "fault": "tsj-block-v1/resistive-coupling@1/source/component/R1/fault/high-resistance",
+          "faultType": "RESISTOR_INCORRECT_VALUE",
+          "faultOwner": "tsj-block-v1/resistive-coupling@1/source/component/R1",
+          "terminalCount": 6,
+          "rawTraceChecks": 3,
+          "renderedSurfaceChecks": 6,
+          "solverChecks": 6,
+          "negativeFixtureScope": "same-canonical-path-source-snapshot",
+          "liveReadings": [
+            "J1.1=5",
+            "J1.2=0",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.1=4.782608695652174",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.2=0",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.1=5",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.2=4.782608695652174"
+          ],
+          "negativeFixtures": [
+            {
+              "id": "renderer-only-pad-offset",
+              "sourceMutation": "renderer source pad point +20px",
+              "caught": true
+            },
+            {
+              "id": "renderer-only-lead-offset",
+              "sourceMutation": "renderer source lead endpoint +20px",
+              "caught": true
+            },
+            {
+              "id": "raw-copper-endpoint-gap",
+              "sourceMutation": "raw copper endpoint displacement",
+              "caught": true
+            },
+            {
+              "id": "raw-net-mismatch",
+              "sourceMutation": "raw copper net changed before validation",
+              "caught": true
+            },
+            {
+              "id": "solver-binding-post-mismatch",
+              "sourceMutation": "solver source endpoint identity/class/post/node changed before canonical validation",
+              "caught": true
+            },
+            {
+              "id": "raw-empty-unmanifested-net",
+              "sourceMutation": "raw logical-board source added an empty unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "mirror-transform-mismatch",
+              "sourceMutation": "package source transform changed before validation",
+              "caught": true
+            },
+            {
+              "id": "internally-self-consistent-wrong-mapping",
+              "sourceMutation": "raw board/net/copper sources coherently remapped to an unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "omitted-terminal",
+              "sourceMutation": "renderer source terminal omitted before canonical validation",
+              "caught": true
+            }
+          ],
+          "terminals": [
+            {
+              "padId": "J1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                702,
+                212
+              ],
+              "renderedPadId": "J1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                747,
+                295
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "SwitchElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "J1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                702,
+                272
+              ],
+              "renderedPadId": "J1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                747,
+                358
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "GroundElm",
+              "solverPost": 0,
+              "solverNode": 1
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                312,
+                192
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                340,
+                274
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_240",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                492,
+                192
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                528,
+                274
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_240",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                492,
+                272
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                528,
+                358
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                652,
+                272
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                695,
+                358
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 1
+            }
+          ]
+        },
+        "freshOwners": true,
+        "inputOrderIndependent": true,
+        "mapsAndSolver": "PASS",
+        "physicalRepairExecuted": false
+      },
+      {
+        "seed": "9007199254740993",
+        "sourceOhms": 220,
+        "loadOhms": 2200,
+        "fault": "load-high-resistance",
+        "faultOutputVolts": 4.989024146876871,
+        "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=9007199254740993",
+        "physicalCorrespondence": {
+          "status": "PASS",
+          "validator": "canonical-source-observations-v2",
+          "manifestAuthoring": "independent",
+          "observationSources": [
+            "raw-logical-board",
+            "raw-pcb-layout-copper",
+            "renderer",
+            "physical-package",
+            "solver-post"
+          ],
+          "family": "RESISTIVE_COUPLING",
+          "topology": "SERIES_SOURCE_LOAD",
+          "seed": 9007199254740993,
+          "fault": "tsj-block-v1/resistive-coupling@1/load/component/R1/fault/high-resistance",
+          "faultType": "RESISTOR_INCORRECT_VALUE",
+          "faultOwner": "tsj-block-v1/resistive-coupling@1/load/component/R1",
+          "terminalCount": 6,
+          "rawTraceChecks": 3,
+          "renderedSurfaceChecks": 6,
+          "solverChecks": 6,
+          "negativeFixtureScope": "same-canonical-path-source-snapshot",
+          "liveReadings": [
+            "J1.1=5",
+            "J1.2=0",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.1=4.545454545454546",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.2=0",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.1=5",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.2=4.545454545454546"
+          ],
+          "negativeFixtures": [
+            {
+              "id": "renderer-only-pad-offset",
+              "sourceMutation": "renderer source pad point +20px",
+              "caught": true
+            },
+            {
+              "id": "renderer-only-lead-offset",
+              "sourceMutation": "renderer source lead endpoint +20px",
+              "caught": true
+            },
+            {
+              "id": "raw-copper-endpoint-gap",
+              "sourceMutation": "raw copper endpoint displacement",
+              "caught": true
+            },
+            {
+              "id": "raw-net-mismatch",
+              "sourceMutation": "raw copper net changed before validation",
+              "caught": true
+            },
+            {
+              "id": "solver-binding-post-mismatch",
+              "sourceMutation": "solver source endpoint identity/class/post/node changed before canonical validation",
+              "caught": true
+            },
+            {
+              "id": "raw-empty-unmanifested-net",
+              "sourceMutation": "raw logical-board source added an empty unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "mirror-transform-mismatch",
+              "sourceMutation": "package source transform changed before validation",
+              "caught": true
+            },
+            {
+              "id": "internally-self-consistent-wrong-mapping",
+              "sourceMutation": "raw board/net/copper sources coherently remapped to an unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "omitted-terminal",
+              "sourceMutation": "renderer source terminal omitted before canonical validation",
+              "caught": true
+            }
+          ],
+          "terminals": [
+            {
+              "padId": "J1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                682,
+                262
+              ],
+              "renderedPadId": "J1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                726,
+                347
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "SwitchElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "J1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                682,
+                322
+              ],
+              "renderedPadId": "J1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                726,
+                410
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "GroundElm",
+              "solverPost": 0,
+              "solverNode": 1
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                272,
+                242
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                299,
+                326
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                472,
+                242
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                507,
+                326
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_260",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                472,
+                322
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                507,
+                410
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                632,
+                322
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                674,
+                410
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 1
+            }
+          ]
+        },
+        "freshOwners": true,
+        "inputOrderIndependent": true,
+        "mapsAndSolver": "PASS",
+        "physicalRepairExecuted": false
+      },
+      {
+        "seed": "-9007199254740993",
+        "sourceOhms": 100,
+        "loadOhms": 2200,
+        "fault": "source-high-resistance",
+        "faultOutputVolts": 0.1076320939334638,
+        "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=-9007199254740993",
+        "physicalCorrespondence": {
+          "status": "PASS",
+          "validator": "canonical-source-observations-v2",
+          "manifestAuthoring": "independent",
+          "observationSources": [
+            "raw-logical-board",
+            "raw-pcb-layout-copper",
+            "renderer",
+            "physical-package",
+            "solver-post"
+          ],
+          "family": "RESISTIVE_COUPLING",
+          "topology": "SERIES_SOURCE_LOAD",
+          "seed": -9007199254740993,
+          "fault": "tsj-block-v1/resistive-coupling@1/source/component/R1/fault/high-resistance",
+          "faultType": "RESISTOR_INCORRECT_VALUE",
+          "faultOwner": "tsj-block-v1/resistive-coupling@1/source/component/R1",
+          "terminalCount": 6,
+          "rawTraceChecks": 3,
+          "renderedSurfaceChecks": 6,
+          "solverChecks": 6,
+          "negativeFixtureScope": "same-canonical-path-source-snapshot",
+          "liveReadings": [
+            "J1.1=5",
+            "J1.2=0",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.1=4.782608695652174",
+            "tsj-block-v1/resistive-coupling@1/load/pad/R1.2=0",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.1=5",
+            "tsj-block-v1/resistive-coupling@1/source/pad/R1.2=4.782608695652174"
+          ],
+          "negativeFixtures": [
+            {
+              "id": "renderer-only-pad-offset",
+              "sourceMutation": "renderer source pad point +20px",
+              "caught": true
+            },
+            {
+              "id": "renderer-only-lead-offset",
+              "sourceMutation": "renderer source lead endpoint +20px",
+              "caught": true
+            },
+            {
+              "id": "raw-copper-endpoint-gap",
+              "sourceMutation": "raw copper endpoint displacement",
+              "caught": true
+            },
+            {
+              "id": "raw-net-mismatch",
+              "sourceMutation": "raw copper net changed before validation",
+              "caught": true
+            },
+            {
+              "id": "solver-binding-post-mismatch",
+              "sourceMutation": "solver source endpoint identity/class/post/node changed before canonical validation",
+              "caught": true
+            },
+            {
+              "id": "raw-empty-unmanifested-net",
+              "sourceMutation": "raw logical-board source added an empty unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "mirror-transform-mismatch",
+              "sourceMutation": "package source transform changed before validation",
+              "caught": true
+            },
+            {
+              "id": "internally-self-consistent-wrong-mapping",
+              "sourceMutation": "raw board/net/copper sources coherently remapped to an unmanifested net",
+              "caught": true
+            },
+            {
+              "id": "omitted-terminal",
+              "sourceMutation": "renderer source terminal omitted before canonical validation",
+              "caught": true
+            }
+          ],
+          "terminals": [
+            {
+              "padId": "J1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                702,
+                212
+              ],
+              "renderedPadId": "J1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                747,
+                295
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "SwitchElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "J1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                702,
+                272
+              ],
+              "renderedPadId": "J1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                747,
+                358
+              ],
+              "packageId": "THROUGH_HOLE_CONNECTOR_2",
+              "variant": "DEFAULT_MIRRORED_X",
+              "transform": "MIRROR_X",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "GroundElm",
+              "solverPost": 0,
+              "solverNode": 1
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "rawEndpoint": [
+                312,
+                192
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                340,
+                274
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_240",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 4
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                492,
+                192
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/source/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                528,
+                274
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_240",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "rawEndpoint": [
+                492,
+                272
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.1",
+              "renderedTerminalId": "1",
+              "renderedPadPoint": [
+                528,
+                358
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/SUPPLY",
+              "solverClass": "WireElm",
+              "solverPost": 1,
+              "solverNode": 6
+            },
+            {
+              "padId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "rawNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "rawEndpoint": [
+                652,
+                272
+              ],
+              "renderedPadId": "tsj-block-v1/resistive-coupling@1/load/pad/R1.2",
+              "renderedTerminalId": "2",
+              "renderedPadPoint": [
+                695,
+                358
+              ],
+              "packageId": "AXIAL_RESISTOR",
+              "variant": "SPAN_220",
+              "transform": "IDENTITY",
+              "solverOracleNetId": "tsj-block-v1/resistive-coupling@1/load/net/RETURN",
+              "solverClass": "WireElm",
+              "solverPost": 0,
+              "solverNode": 1
+            }
+          ]
+        },
+        "freshOwners": true,
+        "inputOrderIndependent": true,
+        "mapsAndSolver": "PASS",
+        "physicalRepairExecuted": false
+      }
+    ],
+    "construction": {
+      "injectedStages": 5,
+      "stages": [
+        {
+          "stage": "MAPPING",
+          "allocatedElements": 0,
+          "registeredParts": 0,
+          "mappedIdentities": 12,
+          "approvedNetMerges": 2,
+          "originalFailureRetained": true,
+          "cleanup": "PASS"
+        },
+        {
+          "stage": "MERGE",
+          "allocatedElements": 9,
+          "registeredParts": 0,
+          "mappedIdentities": 12,
+          "approvedNetMerges": 2,
+          "originalFailureRetained": true,
+          "cleanup": "PASS"
+        },
+        {
+          "stage": "SECOND_BLOCK",
+          "allocatedElements": 16,
+          "registeredParts": 0,
+          "mappedIdentities": 16,
+          "approvedNetMerges": 2,
+          "originalFailureRetained": true,
+          "cleanup": "PASS"
+        },
+        {
+          "stage": "REGISTRATION",
+          "allocatedElements": 16,
+          "registeredParts": 3,
+          "mappedIdentities": 16,
+          "approvedNetMerges": 2,
+          "originalFailureRetained": true,
+          "cleanup": "PASS"
+        },
+        {
+          "stage": "VALIDATION",
+          "allocatedElements": 16,
+          "registeredParts": 3,
+          "mappedIdentities": 16,
+          "approvedNetMerges": 2,
+          "originalFailureRetained": true,
+          "cleanup": "PASS"
+        }
+      ],
+      "oldOwnerPreserved": true,
+      "cleanup": "PASS"
+    },
+    "installation": {
+      "injectedStages": 5,
+      "oldOwnerRestored": true
+    },
+    "succession": {
+      "sameSeedFreshSuccessor": true,
+      "capturedRepaint": true,
+      "capturedWorkbenchHandler": true,
+      "capturedRetestCompletion": true,
+      "supersededRequestRejected": true,
+      "staleOwnerRejected": true
+    },
+    "repairedOwners": 2,
+    "assertions": 1540,
+    "measurementCases": 4,
+    "candidateCleanup": "PASS",
+    "originalOwnerRestored": true,
+    "playerAdmission": "REJECTED"
+  },
+  "externalValidation": {
+    "status": "PASS",
+    "jvmPythonGwtExactSeedValueFaultCanonicalParity": 8,
+    "independentDividerFaultVoltageChecks": 8,
+    "physicalNegativeChecks": 72,
+    "rawPhysicalSeedIntegerLexemesPreserved": true,
+    "physicalSeedRepresentationLimit": "The reused physical oracle emits a redundant unquoted JSON number. The raw decimal integers are preserved in this packet and were parsed with Python exact-integer semantics. JavaScript Number parsing/serialization can round unsafe integers; use the quoted case.seed/canonical root-seed for seed transport and replay, not this physical-report metadata field."
+  }
+}

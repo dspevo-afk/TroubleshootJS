@@ -1,0 +1,45 @@
+{
+  "validatedSourceFingerprint": "5407512b9702225902ecc0ddb5e6c5005c66572ee3139f53b10774acea940fc1",
+  "finalSourceFingerprint": "57c91b7e47598259a50504ab2d862225fdf661a75f812ca36d6e24bedf3abf7f",
+  "inputCount": 960,
+  "unchangedInputCount": 957,
+  "changedInputs": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java",
+      "validatedSha256": "22ad217f6870ce920c52331519256b4e28d8345fc1915ac0b9be19611fbf9492",
+      "finalSha256": "49787809eb311405a8ae6d07acb1109bf3f316a52a14f2100d20c69d38d3ca60"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task40DeveloperVerifier.java",
+      "validatedSha256": "ecf8aa7c7b6bf53dd0647d7dfe674c15b551e2729ef2ff96ac90a3d018ab0d4d",
+      "finalSha256": "1fcbc5c52a796654a55f6cb3418db947feac60ca18cfcd5e9e3313c863210a07"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task43PRuntimeSettlementDeveloperVerifier.java",
+      "validatedSha256": "f5594ae1262bcf512b97cffd4b258f14f0a01904c68718780b5a883498e4a78d",
+      "finalSha256": "de0e0e653d45b146fdb3153977e7df65e2dc143bab96117d084c2a4f1d3a7099"
+    }
+  ],
+  "changedHelperConsumers": [
+    "ChallengeDeveloperVerifier.java",
+    "GeneratedRuntimeDeveloperSettlement.java",
+    "MeterLifecycleDeveloperVerifier.java",
+    "ReplacementDeveloperVerifier.java",
+    "ResistorStressDamageDeveloperVerifier.java",
+    "StoredEnergyDeveloperVerifier.java",
+    "Task40DeveloperVerifier.java",
+    "Task41DeveloperVerifier.java",
+    "Task43PRuntimeCallbackDeveloperVerifier.java",
+    "Task43PRuntimeExistingLanesVerifier.java",
+    "Task43PRuntimeLifecycleDeveloperVerifier.java",
+    "Task43PRuntimeSettlementDeveloperVerifier.java",
+    "Task46ReplayDeveloperVerifier.java"
+  ],
+  "audit": "All 957 other build inputs are byte-identical. The three changed classes are developer verifier code. The Task47 assembler, entry/mutation gate, installation owner and physical oracle do not reference the changed helper or its consumers. CirSim routing is unchanged from build02; the reused URLs do not invoke Task40 or Task43P runtime branches. The final build compiles all five permutations. Changed helper consumers receive the directly affected final runtime, Task40, Task41, challenge, replacement and four legacy replay checks. Runtime A/B/F/C/E executes replacement, meter lifecycle, resistor stress/damage and stored-energy helpers.",
+  "reusedEvidence": [
+    "assembly-browser.json: build02 1540 assertions, eight exact seeds, repairs, failure and succession proofs",
+    "composition-gate.json: build02 113 lifecycle and 180 mutation assertions",
+    "assertion-canary.json: build02 explicit Task47 AssertionError FAIL"
+  ],
+  "limits": "Only these bounded in-session results are reused. No historical all-package, deep same-owner rollback, or full 500 ms CDP certification claim. Fresh final checks and visible player/privacy proof are recorded separately."
+}

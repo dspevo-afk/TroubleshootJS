@@ -14,7 +14,8 @@ final class GeneratedFaultLocus {
             String terminalId, String pathId) {
         if (type == null)
             throw new IllegalArgumentException("Missing generated fault locus type");
-        requireSemanticId(componentId, "component ID", type != GeneratedFaultLocusType.TRACE_SEGMENT);
+        requireSemanticId(componentId, "component ID",
+            type != GeneratedFaultLocusType.TRACE_SEGMENT, true);
         requireSemanticId(terminalId, "terminal ID", type == GeneratedFaultLocusType.TERMINAL_ATTACHMENT ||
             type == GeneratedFaultLocusType.CONNECTOR_CONTACT);
         requireSemanticId(pathId, "path ID", type == GeneratedFaultLocusType.TRACE_SEGMENT);
@@ -74,17 +75,47 @@ final class GeneratedFaultLocus {
     }
 
     private static void requireSemanticId(String value, String name, boolean required) {
+        requireSemanticId(value, name, required, false);
+    }
+
+    private static void requireSemanticId(String value, String name, boolean required,
+            boolean allowQualifiedComponent) {
         if (value == null) {
             if (required)
                 throw new IllegalArgumentException("Missing stable semantic " + name);
             return;
         }
-        if (value.length() == 0 || !value.matches("[A-Za-z0-9_.+\\-]+"))
+        // Only component owners gain the exact Task 44 qualified form.
+        // Terminal and path IDs retain their existing semantic grammar.
+        boolean simple = value.matches("[A-Za-z0-9_.+\\-]+");
+        if (!simple && !(allowQualifiedComponent && isQualifiedComponentId(value)))
             throw new IllegalArgumentException("Invalid stable semantic " + name);
         String upper = value.toUpperCase();
         String[] forbiddenTokens = { "NODE", "COORD", "INDEX", "UUID", "SWITCH" };
         for (String token : forbiddenTokens)
             if (upper.indexOf(token) >= 0)
                 throw new IllegalArgumentException("Physical locus must not encode " + token);
+    }
+
+    private static boolean isQualifiedComponentId(String value) {
+        String[] fields = value.split("/", -1);
+        if (fields.length != 5 || !"tsj-block-v1".equals(fields[0]) ||
+                !"component".equals(fields[3]))
+            return false;
+        int separator = fields[1].lastIndexOf('@');
+        if (separator < 1)
+            return false;
+        String versionText = fields[1].substring(separator + 1);
+        try {
+            int version = Integer.parseInt(versionText);
+            if (version <= 0 || !Integer.toString(version).equals(versionText))
+                return false;
+            FunctionalBlockDescriptor.requireId(fields[1].substring(0, separator), "deviceSchemaId");
+            FunctionalBlockDescriptor.requireId(fields[2], "instanceKey");
+            FunctionalBlockDescriptor.requireId(fields[4], "componentId");
+            return true;
+        } catch (IllegalArgumentException invalid) {
+            return false;
+        }
     }
 }

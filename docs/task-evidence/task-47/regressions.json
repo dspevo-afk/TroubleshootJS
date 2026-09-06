@@ -1,0 +1,33 @@
+{
+  "sourceFingerprint": "57c91b7e47598259a50504ab2d862225fdf661a75f812ca36d6e24bedf3abf7f",
+  "browser": "in-app Browser; actual compiled GWT",
+  "cases": [
+    {
+      "marker": "PASS:task40",
+      "collectionElapsedMs": 43466,
+      "name": "task40",
+      "route": "?tsjChallenge=led&seed=3&running=true&tsjVerifyTask40=true",
+      "scope": "Existing 14-route physical-locus/serviceability/repair/retest corpus, including legacy-ID admission after the qualified component-ID adapter change."
+    },
+    {
+      "marker": "PASS:challenge",
+      "collectionElapsedMs": 15434,
+      "name": "challenge",
+      "route": "?tsjChallenge=led&seed=3&running=true&tsjVerifyChallenge=true"
+    },
+    {
+      "marker": "PASS:replacement",
+      "collectionElapsedMs": 22738,
+      "name": "replacement",
+      "route": "?tsjChallenge=led&seed=3&running=true&tsjVerifyReplacement=true"
+    },
+    {
+      "marker": "PASS:layout",
+      "collectionElapsedMs": 20147,
+      "name": "layout",
+      "route": "?tsjChallenge=led&seed=3&running=true&tsjVerifyLayout=true",
+      "scope": "All six existing families at explicit seeds 0, 2 and 3 plus deterministic regeneration."
+    }
+  ],
+  "elapsedMeaning": "Collection elapsed times include navigation and independent work; not runtime execution duration."
+}

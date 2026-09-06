@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-09-06 — Tasks 44–46 accepted; Task 47 unstarted; Composition Entry Gate unclaimed_
+_Last updated: 2026-09-06 — Composition Entry Gate and Task 47 accepted; Task 48 unstarted_
 
 ## Purpose
 
@@ -1891,7 +1891,7 @@ milestones independently accepted.
 
 ## Task 47 — Bounded Assembler and Composed Contribution Contracts
 
-**Status:** `[ ] UNSTARTED — AUTHORIZED AFTER THE ACCEPTED GATE COMMIT`
+**Status:** `[x] COMPLETE — BOUNDED ASSEMBLER ACCEPTED`
 
 **Purpose:** Assemble reusable blocks into the existing runtime without
 creating a parallel architecture.
@@ -1926,6 +1926,16 @@ half-composed runtime. Task 41 proof-boundary rules are obeyed.
 **Architectural invariants:** No nested GeneratedBoardInstance, second fault
 engine, second inventory, or renderer-owned connectivity.
 
+**Qualification:** The [Task47 evidence](task-evidence/task-47/README.md) accepts
+one device-owned 5 V resistive source/load canary with explicit compatible
+signal/return joins, namespaced maps, one global mutable envelope, executable
+fault/repair contributions and versioned exact-seed replay. Pure contracts,
+1,540 compiled assertions across eight seeds, failure/succession/correspondence
+proofs, final five-permutation build, affected regressions and independent Luna
+review pass. Canonical seeds are strings; redundant numeric physical-report
+metadata keeps its documented JavaScript Number limitation. No playable
+composed challenge, open-drain extension or Task48 work is included.
+
 **Addresses:** Procedural-generation audit’s missing assembler boundary.
 
 **Unlocks:** Task 48 only.
@@ -1934,7 +1944,7 @@ engine, second inventory, or renderer-owned connectivity.
 
 ## Task 48 — First Two-Block Composed Controlled-Indicator Challenge
 
-**Status:** `[!] BLOCKED BY TASK 47 AND THE COMPOSITION ENTRY GATE`
+**Status:** `[ ] UNSTARTED — REQUIRES SEPARATE OWNER AUTHORIZATION`
 
 **Purpose:** Prove the new contracts immediately with a small real playable
 challenge.
@@ -3660,7 +3670,7 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Task 47 — authorized after the separately accepted Composition Entry Gate commit**
+**Task 48 — unstarted; requires separate owner authorization**
 
 C1/C2, the authorized efficiency work and Task 43P acceptance are complete.
 The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
@@ -3677,6 +3687,8 @@ the [recorded qualification](task-evidence/task-46/README.md). This authorizatio
 ended with its publication. The owner then explicitly authorized Composition
 Entry Gate qualification followed by Task 47 in separate reviewed commits.
 The [gate qualification](task-evidence/task-47/gate/README.md) now passes the
-bounded runtime, visible-input, cleanup and independent-review criteria. Publish
-its accepted checkpoint, then complete Task 47 only. Task 48 remains unstarted
-and requires separate authorization after Task 47.
+bounded runtime, visible-input, cleanup and independent-review criteria and is
+published at `623f3a74b37eec771576fe11a4d13c03a09335e7`. Task47 is now accepted
+with the [bounded assembler qualification](task-evidence/task-47/README.md) and
+its separate reviewed implementation commit. That authorized sequence is
+complete. Task48 remains unstarted and requires separate owner authorization.

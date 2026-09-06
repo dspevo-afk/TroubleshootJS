@@ -1,0 +1,27 @@
+WARNING: The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might
+make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the
+Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+Python: Python 3.12.14
+PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact
+
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+1 warning
+
+TASK47_ASSEMBLY_RECEIPT_BEGIN
+seed=0;source-ohms=100.0;load-ohms=1000.0;fault=load-high-resistance;descriptor=tsj-challenge/1|constraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~|device-intent=resistive-coupling@1|difficulty-profile=developer-canary@1|generator=bounded-assembler@1|geometry=3|root-seed=0
+seed=1;source-ohms=220.0;load-ohms=2200.0;fault=load-high-resistance;descriptor=tsj-challenge/1|constraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~|device-intent=resistive-coupling@1|difficulty-profile=developer-canary@1|generator=bounded-assembler@1|geometry=3|root-seed=1
+seed=2;source-ohms=100.0;load-ohms=2200.0;fault=source-high-resistance;descriptor=tsj-challenge/1|constraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~|device-intent=resistive-coupling@1|difficulty-profile=developer-canary@1|generator=bounded-assembler@1|geometry=3|root-seed=2
+seed=3;source-ohms=100.0;load-ohms=1000.0;fault=source-high-resistance;descriptor=tsj-challenge/1|constraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~|device-intent=resistive-coupling@1|difficulty-profile=developer-canary@1|generator=bounded-assembler@1|geometry=3|root-seed=3
+seed=-9223372036854775808;source-ohms=220.0;load-ohms=1000.0;fault=source-high-resistance;descriptor=tsj-challenge/1|constraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~|device-intent=resistive-coupling@1|difficulty-profile=developer-canary@1|generator=bounded-assembler@1|geometry=3|root-seed=-9223372036854775808
+seed=9223372036854775807;source-ohms=100.0;load-ohms=2200.0;fault=source-high-resistance;descriptor=tsj-challenge/1|constraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~|device-intent=resistive-coupling@1|difficulty-profile=developer-canary@1|generator=bounded-assembler@1|geometry=3|root-seed=9223372036854775807
+seed=-9007199254740993;source-ohms=100.0;load-ohms=2200.0;fault=source-high-resistance;descriptor=tsj-challenge/1|constraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~|device-intent=resistive-coupling@1|difficulty-profile=developer-canary@1|generator=bounded-assembler@1|geometry=3|root-seed=-9007199254740993
+seed=9007199254740993;source-ohms=220.0;load-ohms=2200.0;fault=load-high-resistance;descriptor=tsj-challenge/1|constraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~|device-intent=resistive-coupling@1|difficulty-profile=developer-canary@1|generator=bounded-assembler@1|geometry=3|root-seed=9007199254740993
+TASK47_ASSEMBLY_RECEIPT_END
+PASS: Task47 pure assembly contracts 269 assertions
+
+PASS: Task47 independent assembly oracle 8 seeds
+
+RECEIPT: <task-owned-scratch>/task47-assembly-pure03.txt
+CLEANUP: assembly contract classes and task-owned scratch removed.

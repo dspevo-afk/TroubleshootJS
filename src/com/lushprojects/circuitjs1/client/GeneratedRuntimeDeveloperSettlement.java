@@ -27,6 +27,12 @@ final class GeneratedRuntimeDeveloperSettlement {
                         challenge != null && challenge.isReady() &&
                         sim.isGeneratedRuntimeSettled())
                     return;
+                // A tight developer loop can finish within CircuitJS's UI
+                // wall-clock throttle. Advance the actual, already-analyzed
+                // solver once; the next ordinary update must still complete
+                // verification and satisfy the authoritative settled predicate.
+                if (canAdvanceAwaitedSolverStep(sim, expectedOwner, challenge))
+                    sim.runCircuit(true);
             }
             GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
             throw new IllegalStateException("Generated runtime did not settle after " +
@@ -42,5 +48,20 @@ final class GeneratedRuntimeDeveloperSettlement {
 
     static void settle(CirSim sim, String label) {
         settle(sim, sim.getGeneratedBoardInstance(), label);
+    }
+
+    private static boolean canAdvanceAwaitedSolverStep(CirSim sim,
+            GeneratedBoardInstance expectedOwner, GeneratedChallengeController challenge) {
+        return expectedOwner != null && sim.getGeneratedBoardInstance() == expectedOwner &&
+            challenge != null && challenge.getInstanceForRuntimeValidation() == expectedOwner &&
+            challenge.isReady() && !challenge.isOperationInProgress() &&
+            sim.generatedBoardVerificationPending && sim.generatedBoardVerificationAnalyzed &&
+            sim.t <= sim.generatedBoardVerificationStartTime &&
+            !sim.analyzeFlag && !sim.dcAnalysisFlag && !sim.generatedVerificationRunning &&
+            !sim.generatedRuntimeInstallationInProgress &&
+            sim.failedGeneratedRuntimeOwner != expectedOwner && sim.stopMessage == null &&
+            !sim.activeMeasurementOverlay && sim.pendingBoardPowerState == null &&
+            sim.observationalValidationDepth == 0 &&
+            !expectedOwner.getPhysicalBoardRuntime().isMutationInProgress();
     }
 }

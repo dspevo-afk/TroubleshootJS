@@ -1,0 +1,190 @@
+{
+  "scope": "Task44/45/46 explicit pure sources, fixtures, Python oracle and harness dependencies",
+  "comparison": "Accepted Composition Entry Gate to Task47 build01",
+  "sourceFingerprint": "cc0abe43d52feb7e06bfce7c40de728029039955f67f194d8e7d70f120b0409c",
+  "allInputsUnchanged": true,
+  "inputCount": 27,
+  "inputs": [
+    "scripts/VerifierIsolation.psm1",
+    "scripts/verify-block-contracts.ps1",
+    "scripts/verify-challenge-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/BlockContractException.java",
+    "src/com/lushprojects/circuitjs1/client/BlockNamespace.java",
+    "src/com/lushprojects/circuitjs1/client/BoardPad.java",
+    "src/com/lushprojects/circuitjs1/client/ChallengeContractException.java",
+    "src/com/lushprojects/circuitjs1/client/ChallengeDescriptor.java",
+    "src/com/lushprojects/circuitjs1/client/ElectricalBlockContract.java",
+    "src/com/lushprojects/circuitjs1/client/ElectricalConnection.java",
+    "src/com/lushprojects/circuitjs1/client/ElectricalContractException.java",
+    "src/com/lushprojects/circuitjs1/client/ElectricalPortContract.java",
+    "src/com/lushprojects/circuitjs1/client/ExternalBoardPowerInput.java",
+    "src/com/lushprojects/circuitjs1/client/FunctionalBlockDescriptor.java",
+    "src/com/lushprojects/circuitjs1/client/FunctionalBlockExamples.java",
+    "src/com/lushprojects/circuitjs1/client/GenerationConstraints.java",
+    "src/com/lushprojects/circuitjs1/client/LegacyInputPortMetadata.java",
+    "src/com/lushprojects/circuitjs1/client/LowSideSwitchInputMetadata.java",
+    "src/com/lushprojects/circuitjs1/client/NamedRandomStreams.java",
+    "src/com/lushprojects/circuitjs1/client/PcbGeometryContractVersion.java",
+    "src/com/lushprojects/circuitjs1/client/PortCompatibilityPreflight.java",
+    "src/com/lushprojects/circuitjs1/client/PowerInputNameplate.java",
+    "src/com/lushprojects/circuitjs1/client/Task46ContractVectors.java",
+    "tests/contracts/ChallengeDescriptorContractTest.java",
+    "tests/contracts/ElectricalPortContractTest.java",
+    "tests/contracts/FunctionalBlockContractTest.java",
+    "tests/contracts/task46_seed_reference.py"
+  ],
+  "qualification": "All three suites were run fresh in this phase. Unchanged-input comparison permits retaining those pure receipts across unrelated assembled-runtime repairs; affected Task47 inputs must be rerun. Historical runtime evidence retains only its prior scope; new assembled runtime requires fresh browser proof.",
+  "finalSourceFingerprint": "57c91b7e47598259a50504ab2d862225fdf661a75f812ca36d6e24bedf3abf7f",
+  "finalAudit": {
+    "comparison": "Fresh phase pure receipts at build01 source to final build08",
+    "allInputsUnchanged": true,
+    "inputCount": 36,
+    "inputs": [
+      {
+        "path": "scripts/VerifierIsolation.psm1",
+        "sha256": "a5420969284eb373f89aac3df978b1847b83fe445ee0f99fdfabf974feebffec"
+      },
+      {
+        "path": "scripts/verify-assembly-contracts.ps1",
+        "sha256": "77a268fc659bc31101798ced2ef7a0cc7c4ea57eddc4a8eabbeddf9788722779"
+      },
+      {
+        "path": "scripts/verify-block-contracts.ps1",
+        "sha256": "cc10ea74cf9223d525c02f2d8375fe7eb6ae7113a00c63fbd08e55e29b1ac4a4"
+      },
+      {
+        "path": "scripts/verify-challenge-contracts.ps1",
+        "sha256": "f9045b20edfd7ceb1a75a220d1825e821951b341c3384d7e40a68b893b842c21"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/BlockContractException.java",
+        "sha256": "fe01b4a0d5d4686733aaeaeaee55a76dcaefd430f2e5147f4160f17869c4a2cc"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/BlockNamespace.java",
+        "sha256": "4498cdd536ac8d6de693b3615cc3ec1434c4921a6ae26eda29eb984cf1cf0b2f"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/BoardPad.java",
+        "sha256": "9398cd6097768d16bf6065897a8d5588e286622340d92eb9d873f1be314a147b"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/BoundedAssemblyPlan.java",
+        "sha256": "df379bea0fc64b78d0742ca426ff19b06912048e868b3348fd17753f058ebc2b"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/BoundedAssemblyRequest.java",
+        "sha256": "e4c3fa053b1d7e63970ef12d67a52deb05cb47a160474437e1d1f72049be0b72"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ChallengeContractException.java",
+        "sha256": "e530cff480cd2ca08c06bd273c4ca0bab8fc224e7d950ee614055a14b0ae8511"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ChallengeDescriptor.java",
+        "sha256": "8d4add191775feec174b3344924e8892dd91a93952d5c014a60b244934a50bab"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ComposedBlockContribution.java",
+        "sha256": "cf8666542c55c82b830396994234b748334c53f63266d03f4260dba88097b784"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ElectricalBlockContract.java",
+        "sha256": "ba4e363bbc26e35f4cb7ae31ec44cb1ee09fde33760a2471c2b5faea37022f5c"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ElectricalConnection.java",
+        "sha256": "d464ebb174699aeba4c40fc883d137836f17663411ed4a20b4c29b7fb3da194c"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ElectricalContractException.java",
+        "sha256": "44d8c7650fde3316d2d12b49636372901cd62dcf42620fd7e634c9e225b04cff"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ElectricalPortContract.java",
+        "sha256": "78e188b31b484a20e0e0b8ffbaa9fae263569b582e9514a041f4fa21e8fe9369"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ExternalBoardPowerInput.java",
+        "sha256": "67263e9d91b9ce4322817afd6d6bba04f59e088682bbf84374f6d5cf3ce4fa6b"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/FunctionalBlockDescriptor.java",
+        "sha256": "c60f3ca02893c816b52889f8b629ee5168ad17da8b151faa481e522db852518f"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/FunctionalBlockExamples.java",
+        "sha256": "b5452469a7ca75f785544e77e9315c74f479baab379b732cb802702c48347744"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/GeneratedFaultLocus.java",
+        "sha256": "b6116d33f01577f79d1b5d65a72695c8ecad063413b8e3c3b74f67e4692e243d"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/GeneratedFaultLocusType.java",
+        "sha256": "f12011a23fdd696b2ef03c49b38c2397605ccac91caf22f5c391db008a83fce5"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/GenerationConstraints.java",
+        "sha256": "f9c26c4f0a358a0eb27324799460b5e585ea257fc80b8387e14803fa86261b5f"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/LegacyInputPortMetadata.java",
+        "sha256": "ce92e821d386aee56eb39480bf7747019a2e71daa09733e8999bb19f99ca10d1"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/LowSideSwitchInputMetadata.java",
+        "sha256": "1ea4ae3f64a9f16a79e45f30a960eb6fd2bf94313e5223414901a856c467174f"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/NamedRandomStreams.java",
+        "sha256": "65203d15977787bb0af8cfffe6fb0f75a21a0a8f90d9c66f9741d29cacec7d9a"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbGeometryContractVersion.java",
+        "sha256": "8c42fe543cfec80676a0b20a134d698762cbe0fcda9107a516540540e3e73aba"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PortCompatibilityPreflight.java",
+        "sha256": "19f5acce9e7213959b97868703b02333cac4e5060e74dd8aca12f60dd673142a"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PowerInputNameplate.java",
+        "sha256": "dea09574b305c7452d9c6a621ffc744b793b20e74c78190b0c4aecdeb0720538"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ResistiveBlockContributions.java",
+        "sha256": "018f32e66693bc9219d62b830913dac5fd1e48e65eea49b94239771b74225894"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task46ContractVectors.java",
+        "sha256": "756eaefd4d78df06388a59c1b38bf7291fc7235bbd0e780f24d9a5f4bf7779cf"
+      },
+      {
+        "path": "tests/contracts/BoundedAssemblyContractTest.java",
+        "sha256": "a13b021380a152111175db899914c3880212b6fe4c3595da49f504d8a3fee9c6"
+      },
+      {
+        "path": "tests/contracts/ChallengeDescriptorContractTest.java",
+        "sha256": "09d14422e90d0efa9385aa9ee91ceb9efb1466c4ed09837a2914f94f5f5cd98c"
+      },
+      {
+        "path": "tests/contracts/ElectricalPortContractTest.java",
+        "sha256": "ac4c01a0c8ad55734be4e182b212393c38a0922d81039432fbed56a784b39794"
+      },
+      {
+        "path": "tests/contracts/FunctionalBlockContractTest.java",
+        "sha256": "986a5a54af816026253d4a8f65bb98a0ad1b9c25d21f7d1ff23c43f96b9bfd15"
+      },
+      {
+        "path": "tests/contracts/task46_seed_reference.py",
+        "sha256": "d5f3f07ced79d6e15d75828eea8f36c7764d8bdbd58b9e63fa7e685b3ee0391e"
+      },
+      {
+        "path": "tests/contracts/task47_assembly_reference.py",
+        "sha256": "4cf86b22c94faa78603baa10fd8c83aa7457673a69086717a41dc2f4593d14e1"
+      }
+    ],
+    "qualification": "All three actual JDK8 pure suites and the independent Python oracles ran fresh in Phase B. Every explicitly compiled source, test, imported helper and script is byte-identical through build08; these passes are retained for the final candidate."
+  }
+}

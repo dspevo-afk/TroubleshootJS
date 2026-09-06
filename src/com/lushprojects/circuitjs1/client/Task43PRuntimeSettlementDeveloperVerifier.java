@@ -628,8 +628,31 @@ final class Task43PRuntimeSettlementDeveloperVerifier {
     }
 
     private static void settleReady(CirSim sim, GeneratedBoardInstance candidate) {
-        GeneratedRuntimeDeveloperSettlement.settle(sim, candidate,
-            "task43p-runtime-settlement-candidate");
+        long started = System.currentTimeMillis();
+        try {
+            GeneratedRuntimeDeveloperSettlement.settle(sim, candidate,
+                "task43p-runtime-settlement-candidate");
+        } catch (RuntimeException failure) {
+            GeneratedChallengeController failedChallenge = sim.getGeneratedChallengeController();
+            throw new IllegalStateException(failure.getMessage() +
+                ", family=" + candidate.getCircuitFamilyId() + "/" + candidate.getSeed() +
+                ", elapsedMs=" + (System.currentTimeMillis() - started) +
+                ", failedOwner=" + (sim.failedGeneratedRuntimeOwner == candidate) +
+                ", installing=" + sim.generatedRuntimeInstallationInProgress +
+                ", analyze=" + sim.analyzeFlag + ", dcAnalyze=" + sim.dcAnalysisFlag +
+                ", verificationPending=" + sim.generatedBoardVerificationPending +
+                ", verificationAnalyzed=" + sim.generatedBoardVerificationAnalyzed +
+                ", solverTime=" + sim.t +
+                ", verificationStart=" + sim.generatedBoardVerificationStartTime +
+                ", verificationRunning=" + sim.generatedVerificationRunning +
+                ", overlay=" + sim.activeMeasurementOverlay +
+                ", pendingPower=" + sim.pendingBoardPowerState +
+                ", observationDepth=" + sim.observationalValidationDepth +
+                ", mutation=" + candidate.getPhysicalBoardRuntime().isMutationInProgress() +
+                ", operation=" + (failedChallenge == null ? "missing" :
+                    Boolean.toString(failedChallenge.isOperationInProgress())) +
+                ", stop=" + sim.stopMessage, failure);
+        }
     }
 
     private static ResistorSlotController requireResistorSlots(CirSim sim,

@@ -234,6 +234,68 @@ verification for visible pending-control checks. Neither enables Task 47 or
 adds a player menu entry. Qualification status and exact evidence remain in the
 [gate packet](task-evidence/task-47/gate/README.md).
 
+## Bounded assembly and executable contributions — Task 47
+
+`BoundedAssemblyRequest` binds `bounded-assembler@1`, the `resistive-coupling@1`
+intent, `developer-canary@1`, geometry 3 and an exact signed 64-bit seed to
+explicit block declarations and device wiring. `BoundedAssemblyPlan` resolves
+the typed resistor-source/load providers and requires Task 45 COMPATIBLE before
+mutable allocation. It rejects altered electrical facts, unknown versions,
+changed fixed wiring and unsupported specified constraints. Supported count
+ranges must include two blocks, three components (including J1) and one explicitly
+joined reference domain. Legacy descriptor/random behavior is unchanged.
+
+`ComposedBlockContribution` carries immutable local resistor recipes, endpoint/
+pad/net declarations, healthy predicates, observed-current semantics, a local
+high-resistance fault and replacement/input/retest requirements. Providers own
+no generated instance, PCB, solver element, inventory or fault controller.
+VALUES/revision-1 streams use the independent source/load keys and `resistance`;
+the device FAULT/revision-1 stream uses `selected-fault`. Exact stable decision
+keys map to qualified owners. No qualified ID is sanitized into a local key.
+
+The plan preserves every Task 44 identity and local net alias. Only the explicit
+OUT-to-IN and RETURN-to-RETURN connections join the two blocks. Equal local
+SUPPLY labels do not join nets. Canonical merged net IDs are the least qualified
+member and retain explicit connection provenance. The board contains separate
+source-supply, loaded-output and return nets.
+
+`BoundedGeneratedBoardAssembler` constructs one private board, CircuitJS graph,
+binding set, physical runtime and generated instance. Per-slot resistor inventory
+views use that runtime's single part registry. Its immutable target receipt maps
+block owners to actual slots, original parts, provider capabilities, fault and
+repair targets; endpoint records retain the chosen actual CircuitJS posts.
+Device-owned J1 and a controlled 5 V external input complete the envelope.
+The existing package/layout infrastructure supplies its three-component PCB.
+No complete leaf generator or hidden child board is used.
+
+`GeneratedFaultLocus` accepts the exact Task 44 v1 component namespace at its
+component-owner boundary. It reuses the local-ID validator and requires a
+canonical positive int schema version. Legacy simple IDs and forbidden private
+identity tokens retain their rules; qualified terminal/path IDs and wrong
+namespace kinds remain rejected.
+
+`ComposedResistiveDeviceBehavior` executes the local contribution rules and checks
+the actual coupled divider. Existing fault effects, physical resistor replacement,
+measurement adapters, lifecycle and customer retest remain authoritative. Device
+services select the complaint and check restored voltage/current function,
+including supported alternative resistor values. Private failures report their
+construction stage and cleanup outcome; publication uses the accepted disjoint
+`FreshGeneratedRuntimeInstallation.installComposition` boundary.
+
+The explicit developer-fixture diagnostic contract validates identity and owner
+metrics while carrying no Task 41 plan. The generated-instance overload accepts
+it only with developer-only mode; normal diagnostic admission rejects it. Old
+constructors retain the normal contract. This is a fixture envelope, not a new
+admitted player family.
+
+`tsjDebug=true&tsjVerifyTask47=true` runs the compiled assembler's finite proof and
+restores the original owner. It publishes a bounded report and terminates errors
+with an explicit FAIL marker. A separate literal physical manifest joins raw
+board/copper, rendered terminals and actual solver endpoints through the existing
+correspondence verifier, including its wrong-mapping negatives. The route adds no
+player menu or composed challenge admission. Current qualification and limits are
+recorded in the [Task 47 packet](task-evidence/task-47/README.md); Task 48 is separate.
+
 ## Probe and measurement ownership
 
 `ProbeTarget` describes where a user placed a probe: validity, semantic target

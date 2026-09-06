@@ -464,6 +464,40 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             throw new IllegalStateException("task43p-physical-triad-missing-renderer");
 
         Manifest manifest = manifestFor(instance.getCircuitFamilyId());
+        return verifyManifest(sim, instance, manifest);
+    }
+
+    /** Literal device-fixture oracle, kept outside the admitted leaf-family catalog. */
+    static String verifyResistiveComposition(CirSim sim) {
+        if (sim == null || !sim.troubleshootDebug || !sim.developerVerifierRunning)
+            throw new IllegalArgumentException("Composed correspondence requires developer verification");
+        GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
+        if (instance == null || !instance.isDeveloperOnlyFaultRoute() ||
+                instance.getPcbLayout() == null || sim.pcbWorkbenchController == null)
+            throw new IllegalStateException("Composed correspondence requires a rendered fixture");
+        String prefix = "tsj-block-v1/resistive-coupling@1/";
+        String source = prefix + "source/component/R1";
+        String load = prefix + "load/component/R1";
+        String supply = prefix + "source/net/SUPPLY";
+        String output = prefix + "load/net/SUPPLY";
+        String returned = prefix + "load/net/RETURN";
+        Manifest manifest = new Manifest();
+        addPackage(manifest, "J1", "THROUGH_HOLE_CONNECTOR_2", true);
+        addPackage(manifest, source, "AXIAL_RESISTOR", false,
+            "SPAN_220", "SPAN_240", "SPAN_260");
+        addPackage(manifest, load, "AXIAL_RESISTOR", false,
+            "SPAN_220", "SPAN_240", "SPAN_260");
+        addTerminal(manifest, "J1.1", "J1", "1", supply, "SwitchElm", 1);
+        addTerminal(manifest, "J1.2", "J1", "2", returned, "GroundElm", 0);
+        addTerminal(manifest, prefix + "source/pad/R1.1", source, "1", supply, "WireElm", 1);
+        addTerminal(manifest, prefix + "source/pad/R1.2", source, "2", output, "WireElm", 0);
+        addTerminal(manifest, prefix + "load/pad/R1.1", load, "1", output, "WireElm", 1);
+        addTerminal(manifest, prefix + "load/pad/R1.2", load, "2", returned, "WireElm", 0);
+        return verifyManifest(sim, instance, manifest);
+    }
+
+    private static String verifyManifest(CirSim sim, GeneratedBoardInstance instance,
+            Manifest manifest) {
         ObservationSnapshot snapshot = gatherSourceObservations(sim, instance);
         ValidationSummary summary = validateCanonical(instance, manifest, snapshot);
         Vector<NegativeFixtureResult> negativeFixtures = runNegativeFixtures(instance, manifest,

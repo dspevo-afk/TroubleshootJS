@@ -1,0 +1,18 @@
+{
+  "sourceFingerprint": "57c91b7e47598259a50504ab2d862225fdf661a75f812ca36d6e24bedf3abf7f",
+  "previewRunId": "dcb1d77150c54478aee380848dc418c9",
+  "ownedPreviewProcessId": 71464,
+  "ownedPreviewProcessStartTicks": "639243162002606448",
+  "ownedPort": 50663,
+  "method": "Existing Start-VerifierOwnedPreview / Complete-VerifierRun with recorded process/listener identity and immediate cleanup revalidation",
+  "cleanup": {
+    "Success": true,
+    "Errors": []
+  },
+  "wrapperExitCode": 0,
+  "browser": "All task-owned tabs closed; supported Browser listing returned []",
+  "buildAndPureHarnesses": "All completed with exit 0; scoped pure execution scratch cleanup PASS",
+  "workerScratch": "Accidentally generated in-repository assembler scratch was verified task-owned with no reparse entries and removed; receipt-only diagnostic files retained outside the repository. Existing user/historical resources preserved.",
+  "remainingOwnedLiveResources": "NONE",
+  "retainedDiagnostics": "Compact raw receipts in uniquely owned external OS-temp task directories; no task-only live processes or repository scratch artifacts retained."
+}

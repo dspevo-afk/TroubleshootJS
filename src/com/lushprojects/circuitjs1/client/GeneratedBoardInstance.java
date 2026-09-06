@@ -88,6 +88,30 @@ class GeneratedBoardInstance {
             GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
             PhysicalBoardRuntime physicalRuntime, GeneratedTemporalBehavior temporalBehavior,
             boolean developerOnlyFaultRoute, Vector<GeneratedFaultCandidate> faultCandidates) {
+        this(board, simulationElements, seed, circuitFamilyId, topologyVariantId, description,
+            componentBindings, externalPowerBindings, connectionBindings, behaviorContract,
+            pcbLayout, physicalSpecifications, faultBinding, operationalStates,
+            challengeDefinition, familyState, physicalRuntime, temporalBehavior,
+            developerOnlyFaultRoute, faultCandidates, null);
+    }
+
+    GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
+            long seed, String circuitFamilyId, String topologyVariantId, String description,
+            GeneratedComponentBindings componentBindings,
+            GeneratedExternalPowerBindings externalPowerBindings,
+            GeneratedComponentConnectionBindings connectionBindings,
+            GeneratedChallengeBehaviorContract behaviorContract, PcbBoardLayout pcbLayout,
+            BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
+            GeneratedComponentOperationalStates operationalStates,
+            GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
+            PhysicalBoardRuntime physicalRuntime, GeneratedTemporalBehavior temporalBehavior,
+            boolean developerOnlyFaultRoute, Vector<GeneratedFaultCandidate> faultCandidates,
+            GeneratedDiagnosticSolvabilityContract suppliedDiagnosticSolvabilityContract) {
+        if (suppliedDiagnosticSolvabilityContract != null &&
+                (!developerOnlyFaultRoute ||
+                 !suppliedDiagnosticSolvabilityContract.isDeveloperFixture()))
+            throw new IllegalArgumentException(
+                "Supplied diagnostic contract must be an explicit developer fixture");
         this.board = board;
         this.developerBoardEndpointOracle = board.getSimulationBindings()
             .captureGeneratedBoardEndpointOracle();
@@ -122,10 +146,14 @@ class GeneratedBoardInstance {
         this.familyState = familyState;
         this.temporalBehavior = temporalBehavior;
         this.developerOnlyFaultRoute = developerOnlyFaultRoute;
-        this.diagnosticSolvabilityContract = GeneratedDiagnosticSolvabilityContract
-            .forGeneratedBoard(circuitFamilyId, topologyVariantId, seed, this.faultCandidates);
+        this.diagnosticSolvabilityContract = suppliedDiagnosticSolvabilityContract == null ?
+            GeneratedDiagnosticSolvabilityContract.forGeneratedBoard(
+                circuitFamilyId, topologyVariantId, seed, this.faultCandidates) :
+            suppliedDiagnosticSolvabilityContract;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);
+        if (suppliedDiagnosticSolvabilityContract != null)
+            suppliedDiagnosticSolvabilityContract.validateDeveloperFixture(this);
         board.getSimulationBindings().markDeveloperVerificationReady();
     }
 
