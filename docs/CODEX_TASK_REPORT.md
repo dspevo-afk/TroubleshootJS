@@ -1,6 +1,62 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - Task 49 complete - 2026-09-07
+## Current checkpoint - N00 document/lineage adoption COMPLETE - 2026-09-07
+
+- **Scope/status:** N00 is the document-only adoption and lineage reconciliation
+  for the owner-supplied Edition 2.1 roadmap. Document/lineage adoption is
+  COMPLETE and Edition 2.1 is adopted against the accepted Task49 handoff.
+  N00 changed only `docs/ROADMAP.md` and this report; it does not implement A01,
+  A02, former Task50 work or any production, test, script, source or
+  configuration change.
+- **Candidate identity/lineage:** Accepted Task49 is
+  `3de4da1d3bad3ed532e6c327b24195bc3138ed15` on
+  `codex/task43p-final-recovery`, with direct Task48 parent
+  `62c878b8f381e3418214a93a46d3e8d2d9693b3e`. The configured upstream is
+  `origin/codex/task43p-final-recovery`; branch/upstream and the absence of a
+  newer unreviewed descendant were verified before editing. The final
+  normalized UTF-8/LF SHA-256 of `docs/ROADMAP.md` is
+  `026dfde8159ab9d8c4ae50b3f5088ba5ab3155005a252708d9eb11985ef44acc`.
+  The preserved owner input hash remains
+  `37114b3d32a4b04b8c00d2d939f63a9e7108b33f87ddc4dbb745a6bfc90e85be`.
+- **Task49 contract/evidence:** The accepted bounded route is
+  `bounded-assembler@3`, `controlled-indicator@1`,
+  `resistor-led-load@2`, `controlled-led-load-e12@1`, geometry version 3;
+  generator2 retains fixed 330-ohm/0.25-W legacy meaning. The admitted
+  generated values remain 270 ohms / 5% / 0.25 W and 330 ohms / 5% / 0.22 W,
+  both `AXIAL_RESISTOR`. The retained packet under
+  `task-evidence/task-49/` (`README.md`, `review.json`, `pure-and-build.json`,
+  `runtime.json`, `player-acceptance.json` and `power-guard-negative.json`)
+  and the accepted Task49 handoff remain the evidence source; no additional
+  certification is inferred.
+- **Retained limits/migration:** Task49 remains one load-block policy, two
+  generated values and one truthful axial resistor package. It does not include
+  manufacturing certification, a general circuit-design engine, arbitrary part
+  search, support-block or former Task50 work, PCB scaling,
+  diagnostic-eligibility, bend-count or connected-placement corrections. The
+  former pre-Task50 eligibility/physical smoke gate is superseded as an active
+  milestone: reference/scale measurement moves to A01, candidate/geometry
+  corrections to A02, and broader physical scalability to later P-track gates
+  under Edition 2.1.
+- **Validation/review:** PASS — `python <owned-temp>/validate.py` using Python
+  3.13.14, pre-review exit 0: 72 unique milestone IDs; 248 hard and 16
+  conditional edges unchanged; hard and resolved-conditional graphs acyclic;
+  reverse references, internal links, history/future fields and 12 named
+  negative canaries all passed. `git diff --check` PASS. All four investigators
+  returned before the writer began; fresh independent Turing Luna MAX
+  integrated document review PASS. No extra runtime, build, browser/player or
+  GitHub Actions certification is claimed.
+- **Resources/publication:** Root owns the task-owned OS-temp document checks;
+  no runtime or browser processes remain, and no other write-capable checkout
+  agent was observed before these edits. Old Task49 resources remain historical
+  in its handoff. Publication follows the repository contract of final
+  status-delta review, final document/staged checks and a normal commit/push;
+  the exact N00 commit SHA, remote verification and notification outcome belong
+  only in the final handoff.
+- **Next:** A01 — Reference-board manifests and reproducible measurement
+  harness — remains UNSTARTED and requires separate owner authorization. A02
+  follows A01; N00 implements neither.
+
+## Historical checkpoint - Task 49 complete - 2026-09-07
 
 - **Scope:** Task49 only. Five read-only Luna MAX investigations returned and
   Astra froze the [design/closed matrix](task-evidence/task-49/README.md) before
