@@ -403,6 +403,13 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask49VerificationComplete;
 	boolean troubleshootTask49ForcedFailure;
 	String troubleshootTask49Seed;
+	boolean troubleshootA01Measurement;
+	boolean troubleshootA01MeasurementComplete;
+	boolean troubleshootA01ForcedFailure;
+	String troubleshootA01Corpus;
+	String troubleshootA01SourceFingerprint;
+	String troubleshootA01BuildFingerprint;
+	int troubleshootA01Round;
 	String controlledIndicatorSeedText;
 	boolean troubleshootCompositionGateVerification;
 	boolean troubleshootCompositionGateVerificationComplete;
@@ -555,6 +562,19 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjTask49Fail", false);
 	    troubleshootTask49Seed = troubleshootTask49Verification ?
 		qp.getValue("tsjTask49Seed") : null;
+	    troubleshootA01Measurement = troubleshootDebug &&
+		qp.getBooleanValue("tsjMeasureA01", false);
+	    troubleshootA01ForcedFailure = troubleshootA01Measurement &&
+		qp.getBooleanValue("tsjA01Fail", false);
+	    troubleshootA01Corpus = troubleshootA01Measurement ?
+		queryValueOrEmpty(qp.getValue("tsjA01Corpus")) : "";
+	    if (troubleshootA01Corpus.length() == 0)
+		troubleshootA01Corpus = "pilot";
+	    troubleshootA01SourceFingerprint = troubleshootA01Measurement ?
+		queryValueOrEmpty(qp.getValue("tsjA01Source")) : "";
+	    troubleshootA01BuildFingerprint = troubleshootA01Measurement ?
+		queryValueOrEmpty(qp.getValue("tsjA01Build")) : "";
+	    troubleshootA01Round = parseA01Round(qp.getValue("tsjA01Round"));
 	    troubleshootCompositionGateVerification = troubleshootDebug &&
 		qp.getBooleanValue("tsjVerifyCompositionGate", false);
 	    troubleshootCompositionGateControls = troubleshootDebug &&
@@ -2519,6 +2539,8 @@ MouseOutHandler, MouseWheelHandler {
     // analyze the circuit when something changes, so it can be simulated
     void analyzeCircuit() {
 	analysisCountForDeveloperVerification++;
+	if (a01MeasurementRunning)
+	    a01AnalysisCount++;
 	if (elmList.isEmpty()) {
 	    postDrawList = new Vector<Point>();
 	    badConnectionList = new Vector<Point>();
@@ -2586,6 +2608,8 @@ MouseOutHandler, MouseWheelHandler {
     
     // stamp the matrix, meaning populate the matrix as required to simulate the circuit (for all linear elements, at least)
     void stampCircuit() {
+	if (a01MeasurementRunning)
+	    a01StampCount++;
 	int i;
 	int matrixSize = nodeList.size()-1 + voltageSourceCount;
 	circuitMatrix = new double[matrixSize][matrixSize];
@@ -2621,6 +2645,8 @@ MouseOutHandler, MouseWheelHandler {
 	// if a matrix is linear, we can do the lu_factor here instead of
 	// needing to do it every frame
 	if (!circuitNonLinear) {
+	    if (a01MeasurementRunning)
+		a01FactorizationCount++;
 	    if (!lu_factor(circuitMatrix, circuitMatrixSize, circuitPermute)) {
 		stop("Singular matrix!", null);
 		return;
@@ -3071,6 +3097,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean goodIteration = true;
 	
 	for (iter = 1; ; iter++) {
+	    if (a01MeasurementRunning)
+		a01IterationCount++;
 	    if (goodIterations >= 3 && timeStep < maxTimeStep && goodIteration) {
 		// things are going well, double the time step
 		timeStep = Math.min(timeStep*2, maxTimeStep);
@@ -3087,6 +3115,8 @@ MouseOutHandler, MouseWheelHandler {
 	    steps++;
 	    int subiterCount = (adjustTimeStep && timeStep/2 > minTimeStep) ? 100 : 5000;
 	    for (subiter = 0; subiter != subiterCount; subiter++) {
+		if (a01MeasurementRunning)
+		    a01SubIterationCount++;
 		converged = true;
 		subIterations = subiter;
 //		if (t % .030 < .002 && timeStep > 1e-6)  // force nonconvergence for debugging
@@ -3130,12 +3160,16 @@ MouseOutHandler, MouseWheelHandler {
 		    // stop if converged (elements check for convergence in doStep())
 		    if (converged && subiter > 0)
 			break;
+		    if (a01MeasurementRunning)
+			a01FactorizationCount++;
 		    if (!lu_factor(circuitMatrix, circuitMatrixSize,
 				  circuitPermute)) {
 			stop("Singular matrix!", null);
 			return;
 		    }
 		}
+		if (a01MeasurementRunning)
+		    a01SolveCount++;
 		lu_solve(circuitMatrix, circuitMatrixSize, circuitPermute,
 			 circuitRightSide);
 		applySolvedRightSide(circuitRightSide);
@@ -3166,6 +3200,8 @@ MouseOutHandler, MouseWheelHandler {
 	    else
 		goodIterations = 0;
 	    t += timeStep;
+	    if (a01MeasurementRunning)
+		a01AcceptedStepCount++;
 	    timeStepAccum += timeStep;
 	    goodIteration = true;
 	    if (timeStepAccum >= maxTimeStep) {
@@ -4543,6 +4579,14 @@ MouseOutHandler, MouseWheelHandler {
 	lastIterTime = System.currentTimeMillis();
     }
 
+    /** One bounded real CircuitJS step for the opt-in A01 measurement route. */
+    void runA01SolverStepForDeveloperVerification() {
+	if (lastIterTime == 0)
+	    lastIterTime = System.currentTimeMillis();
+	runCircuit(true, 1);
+	lastIterTime = System.currentTimeMillis();
+    }
+
     GeneratedBoardInstance generatedBoardInstance;
 	GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
@@ -4552,6 +4596,17 @@ MouseOutHandler, MouseWheelHandler {
 	int observationalValidationDepth;
 	int analysisCountForDeveloperVerification;
 	int generatedVerificationCountForDeveloperVerification;
+	/* A01 owns these counters only while its opt-in measurement transaction is
+	 * active.  They observe the existing CircuitJS solver; they never steer it
+	 * or participate in candidate selection. */
+	boolean a01MeasurementRunning;
+	long a01AnalysisCount;
+	long a01StampCount;
+	long a01FactorizationCount;
+	long a01SolveCount;
+	long a01IterationCount;
+	long a01SubIterationCount;
+	long a01AcceptedStepCount;
 	BoardPowerState pendingBoardPowerState;
 	boolean requestPowerOnDuringActiveMeasurementForDeveloperVerification;
 	ActiveMeasurementStimulus lastActiveMeasurementStimulus;
@@ -4626,6 +4681,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
 	    troubleshootTask49Verification ||
+	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
 	    instance.getPcbLayout() != null ?
@@ -4716,6 +4772,17 @@ MouseOutHandler, MouseWheelHandler {
 	    throw new IllegalStateException("Controlled indicator installation failed", failure);
 	} finally {
 	    refreshChallengeInteractionState();
+	}
+    }
+
+    private int parseA01Round(String roundText) {
+	if (roundText == null || roundText.length() == 0)
+	    return 0;
+	try {
+	    int round = Integer.parseInt(roundText);
+	    return round < 0 || round > 9 ? 0 : round;
+	} catch (NumberFormatException e) {
+	    return 0;
 	}
     }
 
@@ -4811,6 +4878,24 @@ MouseOutHandler, MouseWheelHandler {
 		generatedChallengeController.isReady()) {
 		developerVerifierRunning = true;
 		try {
+		    if (troubleshootA01Measurement &&
+			!troubleshootA01MeasurementComplete) {
+			troubleshootA01MeasurementComplete = true;
+			publishBrowserVerificationResult("RUNNING:a01");
+			try {
+			    publishA01Evidence(A01MeasurementVerifier.verify(this,
+				troubleshootA01Corpus, troubleshootA01Round,
+				troubleshootA01SourceFingerprint,
+				troubleshootA01BuildFingerprint,
+				troubleshootA01ForcedFailure));
+			    publishBrowserVerificationResult("PASS:a01");
+			} catch (Throwable failure) {
+			    publishBrowserVerificationResult("FAIL:a01:" + failure.getMessage());
+			    if (failure instanceof Error) throw (Error) failure;
+			    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+			    throw new IllegalStateException("A01 measurement failed", failure);
+			}
+		    }
 		    if (troubleshootResistanceVerification &&
 			troubleshootResistanceVerifierState == VERIFIER_NOT_STARTED) {
 			try {
@@ -5096,7 +5181,10 @@ MouseOutHandler, MouseWheelHandler {
 		    " experiment=" + troubleshootTask43PSourceExperiment +
 		    " run=" + troubleshootVerifierRunId;
 	    }
-	    if (troubleshootResistanceVerification || troubleshootChallengeVerification ||
+	    if (troubleshootA01Measurement && diagnosticMessage != null)
+		publishBrowserVerificationResult("FAIL:a01:" + diagnosticMessage);
+	    if (!troubleshootA01Measurement &&
+		(troubleshootResistanceVerification || troubleshootChallengeVerification ||
 		    troubleshootReplacementVerification || troubleshootWrongRepairVerification ||
 		    troubleshootMeterVerification ||
 		    troubleshootDiodeVerification || troubleshootLedPhysicalVerification ||
@@ -5107,9 +5195,10 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
 		    troubleshootNmosVerification || troubleshootTask39Verification ||
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
+		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
 		    troubleshootTask48Verification || troubleshootTask49Verification ||
-		    troubleshootTask43Verification || troubleshootTask43PVerification) {
+		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
 		    failureMessage.startsWith("task43p-forced-negative-canary nonce="))
@@ -5179,6 +5268,24 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishTask49Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-task49-report", evidence);
+    }-*/;
+
+    void publishA01EvidenceForDeveloperVerification(String evidence) {
+	if (troubleshootDebug && troubleshootA01Measurement)
+	    publishA01Evidence(evidence);
+    }
+
+    private static native void publishA01Evidence(String evidence) /*-{
+	$doc.documentElement.setAttribute("data-tsj-a01-report", evidence);
+    }-*/;
+
+    void publishA01CleanupForDeveloperVerification(String result) {
+	if (troubleshootDebug && troubleshootA01Measurement)
+	    publishA01Cleanup(result);
+    }
+
+    private static native void publishA01Cleanup(String result) /*-{
+	$doc.documentElement.setAttribute("data-tsj-a01-cleanup", result);
     }-*/;
 
     private static native void publishCompositionGateEvidence(String evidence) /*-{

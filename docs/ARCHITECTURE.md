@@ -412,6 +412,28 @@ solver and normal player evidence establish operation. The
 [Task49 packet](task-evidence/task-49/README.md) records qualification status,
 exact gates and limits. No support blocks or Task50 implementation are included.
 
+## Reference manifests and measurement harness — A01
+
+`A01MeasurementVerifier` is an opt-in developer route owned by `CirSim`. It
+installs a bounded 20/40/60/100-resistor ladder into the live CircuitJS graph,
+records the existing analysis/stamp/factorization/solve/iteration counters,
+checks the solved current and node voltages against an independent Ohm-law/KVL
+oracle, and restores the prior simulation owner in every exit path. The route
+does not participate in normal challenge admission or player UI, and its
+synthetic ladder explicitly reports PCB/routing/diagnostic/playable stages as
+unsupported.
+
+`tests/benchmarks/a01-reference-boards.json` contains the architecture-only
+RB15/RB30/RB56/RB100 functional inventories. `scripts/collect-a01.mjs` reads the
+versioned developer DOM receipt through the existing Browser API and records
+viewport/DPR, timing summaries, memory availability and cleanup state.
+`scripts/a01.py` independently validates manifest allocations, electrical
+vectors, cold/warm identity and work counters, frozen budgets, receipt identity
+against the current source/build, and explicit negative outcomes. The compact
+[A01 evidence packet](task-evidence/A01/README.md) records the accepted pilot,
+holdout, forced-failure and debug-off boundaries; it does not qualify routed
+PCB or playable large-board content.
+
 ## Probe and measurement ownership
 
 `ProbeTarget` describes where a user placed a probe: validity, semantic target

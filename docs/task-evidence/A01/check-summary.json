@@ -1,0 +1,35 @@
+{
+  "protocol": "TSJ-A01-CHECK-SUMMARY-2",
+  "references": {
+    "status": "PASS",
+    "boards": 4,
+    "purposefulRoleSlots": 201
+  },
+  "measurements": {
+    "status": "PASS",
+    "protocol": "TSJ-A01-CHECK-1",
+    "reports": 2,
+    "corpora": [
+      "holdout",
+      "pilot"
+    ],
+    "attempts": 32,
+    "acceptedSteps": 64,
+    "expectedAcceptedSteps": 64,
+    "sourceFingerprint": "bb369d0c53699b8b9c17d15f9e2a15ff946b0b3901f45ad780f409e7c7c673d0",
+    "buildFingerprint": "160d99c632f26bb54fb1a3702e28190b23cb78cf2d5b1ca1345ea10da040d18a",
+    "budgetVersion": "a01-budget-v1",
+    "timingIndependentIdentity": true,
+    "allOutcomesRetained": true
+  },
+  "negativeRoutes": "PASS",
+  "negativeReceipt": "pilot-0-negative.json",
+  "debugOff": "pilot-0-debug-off.json",
+  "previewCleanup": "PASS",
+  "focusedContracts": {
+    "verify-block-contracts": "PASS",
+    "verify-assembly-contracts": "PASS",
+    "verify-challenge-contracts": "PASS",
+    "productionBuild": "PASS"
+  }
+}

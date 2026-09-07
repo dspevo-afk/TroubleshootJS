@@ -1,0 +1,23 @@
+{
+  "protocol": "TSJ-A01-HOST-1",
+  "id": "owner-desktop-r15-2026-09-07",
+  "referenceBasis": "Explicit owner exception to the modest-machine requirement; this is a desktop reference, not a modest-hardware claim.",
+  "hardwareClass": "EXPLICIT_OWNER_DESKTOP_EXCEPTION",
+  "modestMachinePortability": "NOT_CLAIMED",
+  "manufacturer": "Alienware",
+  "model": "Aurora R15 AMD",
+  "cpu": "AMD Ryzen 7 7700",
+  "physicalCores": 8,
+  "logicalProcessors": 16,
+  "installedMemoryBytes": 34081759232,
+  "gpu": "NVIDIA GeForce RTX 3070",
+  "os": "Windows 11 Home",
+  "osBuild": "10.0.26200",
+  "powerMode": "Balanced",
+  "jdk": "Temurin 1.8.0_502-b07",
+  "gwt": "2.7.0",
+  "python": "3.13.14",
+  "backgroundConditions": "Ordinary desktop session; no unrelated applications stopped; no concurrent A01 build during samples. Browser/OS/HTTP caches are not forcibly cleared.",
+  "displaySource": "Per-run browser environment in compiled receipt records user agent, viewport and DPR.",
+  "scope": "A01 pilot/holdout timing reference only; no release-scale playable or modest-hardware qualification."
+}

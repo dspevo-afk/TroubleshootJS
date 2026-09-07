@@ -1,0 +1,222 @@
+{
+  "protocol": "TSJ-A01-EVIDENCE-SUMMARY-2",
+  "receipt": "holdout-1.json",
+  "status": "PASS",
+  "terminal": "PASS:a01",
+  "cleanup": "PASS",
+  "tabClosed": true,
+  "corpus": "holdout",
+  "round": 1,
+  "fixtureVersion": "a01-series-ladder-v1",
+  "sourceFingerprint": "bb369d0c53699b8b9c17d15f9e2a15ff946b0b3901f45ad780f409e7c7c673d0",
+  "buildFingerprint": "160d99c632f26bb54fb1a3702e28190b23cb78cf2d5b1ca1345ea10da040d18a",
+  "attemptCount": 16,
+  "acceptedSteps": 32,
+  "totalElapsedMs": 33,
+  "browser": {
+    "devicePixelRatio": 1,
+    "memory": {
+      "reason": "browser evaluator did not expose performance.memory",
+      "status": "UNAVAILABLE"
+    },
+    "userAgent": null,
+    "userAgentReason": "browser evaluator did not expose navigator.userAgent",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "collectionDurationMs": 2373,
+  "performance": {
+    "sampleCount": 16,
+    "passedAttempts": 16,
+    "failedAttempts": 0,
+    "p50AttemptElapsedMs": 0,
+    "p95AttemptElapsedMs": 2,
+    "worstAttemptElapsedMs": 2,
+    "memory": {
+      "status": "UNAVAILABLE",
+      "reason": "browser collector records performance.memory when supported"
+    },
+    "cancellation": "bounded-two-steps-per-attempt"
+  },
+  "budget": {
+    "protocol": "TSJ-A01-BUDGET-1",
+    "version": "a01-budget-v1",
+    "frozen": true,
+    "frozenBeforeHoldout": true,
+    "maxAttemptElapsedMs": 5000,
+    "maxTotalElapsedMs": 30000,
+    "maxSolverElements": 102,
+    "maxMatrixFullSize": 103,
+    "requiredAcceptedSteps": 32,
+    "combinedRequiredAcceptedSteps": 64,
+    "cancellation": "bounded-two-steps-per-attempt"
+  },
+  "sizes": [
+    {
+      "size": 20,
+      "seeds": [
+        2,
+        3
+      ],
+      "temperatures": [
+        "cold",
+        "warm"
+      ],
+      "solverElements": [
+        22
+      ],
+      "matrixFullSizes": [
+        23
+      ],
+      "matrixReducedSizes": [
+        21
+      ],
+      "acceptedSteps": 8,
+      "elapsedMsRange": [
+        0,
+        1
+      ],
+      "observedCurrentRange": [
+        0.003816793893129722,
+        0.0038314176245210435
+      ],
+      "counterTuples": [
+        [
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "size": 40,
+      "seeds": [
+        2,
+        3
+      ],
+      "temperatures": [
+        "cold",
+        "warm"
+      ],
+      "solverElements": [
+        42
+      ],
+      "matrixFullSizes": [
+        43
+      ],
+      "matrixReducedSizes": [
+        41
+      ],
+      "acceptedSteps": 8,
+      "elapsedMsRange": [
+        0,
+        1
+      ],
+      "observedCurrentRange": [
+        0.0019047619047618091,
+        0.0019120458891012805
+      ],
+      "counterTuples": [
+        [
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "size": 60,
+      "seeds": [
+        2,
+        3
+      ],
+      "temperatures": [
+        "cold",
+        "warm"
+      ],
+      "solverElements": [
+        62
+      ],
+      "matrixFullSizes": [
+        63
+      ],
+      "matrixReducedSizes": [
+        61
+      ],
+      "acceptedSteps": 8,
+      "elapsedMsRange": [
+        0,
+        1
+      ],
+      "observedCurrentRange": [
+        0.0012722646310431621,
+        0.0012787723785165016
+      ],
+      "counterTuples": [
+        [
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "size": 100,
+      "seeds": [
+        2,
+        3
+      ],
+      "temperatures": [
+        "cold",
+        "warm"
+      ],
+      "solverElements": [
+        102
+      ],
+      "matrixFullSizes": [
+        103
+      ],
+      "matrixReducedSizes": [
+        101
+      ],
+      "acceptedSteps": 8,
+      "elapsedMsRange": [
+        1,
+        2
+      ],
+      "observedCurrentRange": [
+        0.0007686395080705565,
+        0.0007698229407234525
+      ],
+      "counterTuples": [
+        [
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    }
+  ],
+  "originalOwnerRestored": true,
+  "coldWarmProtocol": "cold-first-then-warm-in-one-loaded-application",
+  "timingCannotAffectIdentity": true,
+  "allOutcomesRetained": true
+}

@@ -1,0 +1,25 @@
+{
+  "protocol": "TSJ-A01-NEGATIVE-SUMMARY-2",
+  "receipt": "pilot-0-negative.json",
+  "status": "FAIL",
+  "terminal": "FAIL:a01:a01-explicit-forced-failure",
+  "reportPresent": true,
+  "reportStatus": "FAIL",
+  "retainedOutcomes": 1,
+  "cleanup": "PASS",
+  "ownerRestored": true,
+  "tabClosed": true,
+  "browser": {
+    "devicePixelRatio": 1,
+    "memory": {
+      "reason": "browser evaluator did not expose performance.memory",
+      "status": "UNAVAILABLE"
+    },
+    "userAgent": null,
+    "userAgentReason": "browser evaluator did not expose navigator.userAgent",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  }
+}

@@ -729,7 +729,7 @@ Condition-related symptoms can be difficult without identifying the exact failed
 
 The identifiers below replace only future work after accepted Task49 and N00. They are dependency nodes, not permission to launch every worker at once. A card is a bounded roadmap contract, not an implementation prompt. Its authorized implementation may split into reviewed sub-checkpoints when the concrete design needs them; record the split without weakening its parent acceptance claim.
 
-**Status after N00 adoption:** T49 is accepted at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`; N00 document/lineage adoption is COMPLETE and Edition 2.1 is adopted. A01 and every later card remain UNSTARTED. Repository publication follows the required final status-delta review, final document/staged checks and normal commit/push handoff. No `[x]` here means “expected to pass.” T48 remains the accepted historical prerequisite of T49. A required evaluation may legitimately choose not to adopt a sophisticated algorithm; that is a completed decision, not a claim that the declined algorithm was implemented.
+**Status after N00 adoption:** T49 is accepted at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`; N00 document/lineage adoption is COMPLETE and Edition 2.1 is adopted. A01 is now IMPLEMENTED — ACCEPTED; A02 and every later card remain UNSTARTED. Repository publication follows the required final status-delta review, final document/staged checks and normal commit/push handoff. No `[x]` here means “expected to pass.” T48 remains the accepted historical prerequisite of T49. A required evaluation may legitimately choose not to adopt a sophisticated algorithm; that is a completed decision, not a claim that the declined algorithm was implemented.
 
 **Conditional use rule:** A content/profile/release that consumes an optional capability adds that capability's accepted implementation as a hard dependency. Otherwise, its decision/skip does not block unrelated work. Every qualification gate tests the actual current integration, including new provider state in saves, measurements and retest. An earlier PASS never automatically qualifies later consumers.
 
@@ -853,7 +853,7 @@ This is a readable planning order, not a second dependency definition. The exact
 <a id="m-a01"></a>
 ### A01 · Reference-board manifests and reproducible measurement harness
 
-**Type / status:** Required early evidence gate; UNSTARTED.
+**Type / status:** Required early evidence gate; IMPLEMENTED — ACCEPTED.
 
 **Purpose and reason:** Expose 60/100-part costs early instead of discovering them after the content library depends on untested assumptions.
 
@@ -863,9 +863,9 @@ This is a readable planning order, not a second dependency definition. The exact
 
 **Must not be coupled:** Do not wait for mains, a finished generic router, or playable RB100 to begin cost probes; do not claim these probes qualify those capabilities.
 
-**Exact deliverable:** RB15/RB30/RB56/RB100 functional inventories; architecture-stage manifests; versioned workload counters; an identified modest reference machine; cold/warm run protocol and frozen qualification budget process.
+**Exact deliverable:** RB15/RB30/RB56/RB100 functional inventories; architecture-stage manifests; versioned workload counters; an identified reference machine; cold/warm run protocol and frozen qualification budget process. An owner-authorized desktop exception is valid when the host is fully identified and the evidence explicitly makes no modest-machine portability claim; a separate modest-host run remains future evidence.
 
-**Acceptance:** Count physical packages separately from solver elements; expose pads/nets/raw and canonical segments, hypothesis count and matrix metrics. Run available small baselines plus bounded synthetic 20/40/60/100 structural/solver pilots; record unsupported stages rather than fake playable boards.
+**Acceptance:** Count physical packages separately from solver elements; expose pads/nets/raw and canonical segments, hypothesis count and matrix metrics. Run available small baselines plus bounded synthetic 20/40/60/100 structural/solver pilots; record unsupported stages rather than fake playable boards. Each 16-attempt corpus records 32 accepted solver steps (64 across pilot and holdout), browser viewport/DPR, timing p50/p95/worst, failure outcomes, memory availability and bounded cancellation.
 
 **Important negative tests:** Inert filler counted as function; only successful seeds retained; timing influencing candidate identity; undefined machine; wall-clock claims without traces.
 
@@ -880,6 +880,15 @@ This is a readable planning order, not a second dependency definition. The exact
 **Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
 
 **Direct later dependents:** [A02](#m-a02), [A07](#m-a07), [P08](#m-p08).
+
+**Current implementation evidence (2026-09-07):** RB15/RB30/RB56/RB100
+architecture manifests, the versioned CircuitJS 20/40/60/100 ladder route,
+pilot/holdout receipts, frozen budgets, debug-off suppression and forced-failure
+cleanup are implemented and pass their focused checks. The final source/build
+fingerprints and compact receipts are recorded in
+[`docs/task-evidence/A01/`](task-evidence/A01/README.md). The required fresh
+independent Luna delta review passed; no A02 work is started by this
+implementation.
 
 <a id="m-a02"></a>
 ### A02 · Close known predicate and geometry correctness seams
@@ -3557,7 +3566,7 @@ This file is a replacement roadmap, not an `AGENTS.md`, `ARCHITECTURE.md` or tas
 
 Do not overwrite the task report with this document, mark the proposed classes as already implemented, force a branch merge or delete old worktrees. The current accepted baseline is the actual reviewed Task49 handoff at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`, not an imagined commit containing this roadmap. The pinned Task48 SHA remains the direct parent and historical source-read baseline. Publication of this adoption candidate still follows the final status-delta review, final document/staged checks and normal commit/push contract; its exact SHA, remote verification and notification outcome belong in the final handoff.
 
-**Immediate next boundary after N00 adoption:** A01 — Reference-board manifests and reproducible measurement harness — remains UNSTARTED and requires separate owner authorization. A02 follows A01. No support-block, former Task50 or large-board implementation starts automatically because the roadmap is installed.
+**Immediate next boundary after N00 adoption:** A01 — Reference-board manifests and reproducible measurement harness — was separately authorized and is now IMPLEMENTED — ACCEPTED. A02 is the next unstarted boundary. No support-block, former Task50 or large-board implementation starts automatically because the roadmap is installed.
 
 The standalone Markdown contains the active plan in full. Historical package references to the old audit, dependency/traceability manifest and document-check results are background provenance only; absent companions are not runtime dependencies or additional approval bureaucracy.
 

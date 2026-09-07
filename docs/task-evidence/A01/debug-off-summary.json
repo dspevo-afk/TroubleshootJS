@@ -1,0 +1,21 @@
+{
+  "protocol": "TSJ-A01-DEBUG-OFF-SUMMARY-2",
+  "receipt": "pilot-0-debug-off.json",
+  "status": "DEBUG_OFF_OBSERVED",
+  "terminal": null,
+  "reportPresent": false,
+  "browser": {
+    "devicePixelRatio": 1,
+    "memory": {
+      "reason": "browser evaluator did not expose performance.memory",
+      "status": "UNAVAILABLE"
+    },
+    "userAgent": null,
+    "userAgentReason": "browser evaluator did not expose navigator.userAgent",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "tabClosed": true
+}

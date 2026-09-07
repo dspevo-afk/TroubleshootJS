@@ -1,6 +1,47 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - N00 document/lineage adoption COMPLETE - 2026-09-07
+## Current checkpoint - A01 reference manifests and measurement harness COMPLETE — 2026-09-07
+
+- **Scope/candidate:** Owner-authorized A01 after N00 publication at
+  `55cac1d24528a26505f540ee52f85631e0add4d2`, branch
+  `codex/task43p-final-recovery`; A02 and later work remain outside scope. The
+  accepted candidate fingerprints are source
+  `bb369d0c53699b8b9c17d15f9e2a15ff946b0b3901f45ad780f409e7c7c673d0` and
+  build `160d99c632f26bb54fb1a3702e28190b23cb78cf2d5b1ca1345ea10da040d18a`.
+- **Changes:** Four architecture-only reference manifests, the opt-in
+  CircuitJS ladder verifier and owner-side counters, bounded Browser collector,
+  independent checker, and explicit unsupported-stage receipts are implemented.
+  The debug-gated route keeps the real workbench, restores the original owner on
+  success/failure, and leaves normal-player pages without a developer report.
+- **Validation:** `python -B scripts/a01.py references` PASS (4 boards/201 role
+  slots); final JDK 8u502/GWT 2.7 OBF production build PASS (five permutations);
+  `verify-block-contracts.ps1`, `verify-assembly-contracts.ps1`, and
+  `verify-challenge-contracts.ps1` PASS. The owned production preview produced
+  PASS pilot and holdout receipts (16 attempts/32 accepted steps each); the
+  independent measurement check PASS (32 attempts/64 accepted steps). Forced
+  failure retained `FAIL:a01` with cleanup PASS, and debug-off retained no
+  report. Tampering the independent electrical oracle was rejected (exit 1).
+- **Review:** Fresh read-only Luna delta review PASS. The reviewer confirmed the
+  repaired identity binding, browser metadata, retained failure outcomes,
+  `FAIL:a01` status preservation, 32-step corpus accounting, and current
+  evidence consistency. Follow-ups are recorded below and do not block A01.
+- **Resources/evidence:** Browser cleanup PASS with all tabs closed. The
+  fail-closed preview stop script could not verify the launch shell's exited
+  parent, so the exact recorded preview command/start identity was revalidated,
+  the owned process was terminated, port 8899 absence was verified, and its
+  state file was removed. Compact summaries are under
+  [task-evidence/A01](task-evidence/A01/), and full receipts remain in the
+  task-owned OS-temp run. Earlier pre-fix receipts are retained for diagnosis
+  and are not counted as final evidence.
+- **Follow-ups:** The checker still permits a single corpus when only one receipt
+  is supplied, and the forced-canary attempt record currently labels its cleanup
+  `PASS` without an injected cleanup-failure canary. Current two-corpus evidence
+  and the observed forced-failure cleanup both pass; these are future hardening
+  work rather than A01 blockers.
+- **Next:** Verify the local implementation commit and normal push handoff. Do
+  not implement A02 predicate, bend-count or connected-placement corrections.
+
+## Historical checkpoint - N00 document/lineage adoption COMPLETE - 2026-09-07
 
 - **Scope/status:** N00 is the document-only adoption and lineage reconciliation
   for the owner-supplied Edition 2.1 roadmap. Document/lineage adoption is

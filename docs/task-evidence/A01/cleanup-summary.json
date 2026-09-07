@@ -1,0 +1,9 @@
+{
+  "protocol": "TSJ-A01-CLEANUP-SUMMARY-1",
+  "success": true,
+  "errors": [],
+  "cleanupState": "complete",
+  "cleanupCompletedUtc": "2026-09-07T18:06:37.3114555Z",
+  "runId": "4c6ca5f694564d2b821ecd1d594ca6ac",
+  "runRoot": "task-owned OS-temp verifier run (path intentionally omitted)"
+}

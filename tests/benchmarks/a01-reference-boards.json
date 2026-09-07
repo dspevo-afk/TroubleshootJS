@@ -1,0 +1,2698 @@
+{
+  "protocol": "TSJ-A01-REFERENCE-1",
+  "schemaVersion": 1,
+  "status": "ARCHITECTURE_SPECIFIED",
+  "architectureOnly": true,
+  "sourceContract": "ROADMAP-4.2-4.7",
+  "notes": [
+    "These are functional inventories and future contract requirements, not instantiated boards or proven netlists.",
+    "Every counted role has a stable identity, a purposeful function, a declared domain, and a proposed package vocabulary.",
+    "Values, manufacturing rules, generation, routing, solver, diagnostic, and playable claims are intentionally deferred to their owning milestones."
+  ],
+  "boards": [
+    {
+      "id": "RB15",
+      "targetPackages": 15,
+      "evidenceStage": "ARCHITECTURE_SPECIFIED",
+      "implemented": false,
+      "allocations": [
+        {
+          "id": "input-protection",
+          "count": 4,
+          "purpose": "Input connector, fuse, reverse protection, and input storage for the low-voltage bench-fed board."
+        },
+        {
+          "id": "relay-driver",
+          "count": 5,
+          "purpose": "One switched relay-load driver with drive, bias, flyback, and relay roles."
+        },
+        {
+          "id": "sensor-conditioning",
+          "count": 3,
+          "purpose": "Externally player-operated sensor/interlock connector with two passive conditioning roles."
+        },
+        {
+          "id": "status-indication",
+          "count": 2,
+          "purpose": "Status LED and its current-limiting path."
+        },
+        {
+          "id": "output-interface",
+          "count": 1,
+          "purpose": "External switched-load output connector."
+        }
+      ],
+      "components": [
+        {
+          "id": "rb15-input-connector",
+          "allocationId": "input-protection",
+          "purpose": "Accept the declared external low-voltage bench source and expose positive and return terminals.",
+          "functionalRegion": "input-protection",
+          "domain": "LOW_VOLTAGE_INPUT",
+          "packageRequirement": "low-voltage-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb15-input-fuse",
+          "allocationId": "input-protection",
+          "purpose": "Limit the supported board-entry path during an overload condition.",
+          "functionalRegion": "input-protection",
+          "domain": "LOW_VOLTAGE_INPUT",
+          "packageRequirement": "fuse-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb15-reverse-protection",
+          "allocationId": "input-protection",
+          "purpose": "Block reverse-fed entry from energizing the downstream board rail.",
+          "functionalRegion": "input-protection",
+          "domain": "LOW_VOLTAGE_INPUT",
+          "packageRequirement": "diode-or-qualified-mosfet-protection-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb15-input-capacitor",
+          "allocationId": "input-protection",
+          "purpose": "Provide local entry storage and a load-dependent observation point.",
+          "functionalRegion": "input-protection",
+          "domain": "LOW_VOLTAGE_INPUT",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb15-driver-switch",
+          "allocationId": "relay-driver",
+          "purpose": "Switch the relay coil path from the conditioned control signal.",
+          "functionalRegion": "relay-driver",
+          "domain": "LOW_VOLTAGE_DRIVER",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb15-driver-resistor",
+          "allocationId": "relay-driver",
+          "purpose": "Set the drive-path loading between the control stimulus and the switch input.",
+          "functionalRegion": "relay-driver",
+          "domain": "LOW_VOLTAGE_DRIVER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open or bounded value change only when the role changes live behavior, is physically serviceable, and is diagnostically separable."
+        },
+        {
+          "id": "rb15-driver-bias",
+          "allocationId": "relay-driver",
+          "purpose": "Hold the switch input in its declared safe state when the stimulus is absent.",
+          "functionalRegion": "relay-driver",
+          "domain": "LOW_VOLTAGE_DRIVER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open or bounded value change only when the role changes live behavior, is physically serviceable, and is diagnostically separable."
+        },
+        {
+          "id": "rb15-driver-flyback",
+          "allocationId": "relay-driver",
+          "purpose": "Provide the modeled coil-energy return path when the switch turns off.",
+          "functionalRegion": "relay-driver",
+          "domain": "LOW_VOLTAGE_DRIVER",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb15-relay",
+          "allocationId": "relay-driver",
+          "purpose": "Provide the switched coil/contact boundary for the external load.",
+          "functionalRegion": "relay-driver",
+          "domain": "RELAY_LOAD",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb15-sensor-connector",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Expose the player-operated sensor/interlock stimulus with a stable terminal map.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_INPUT",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb15-sensor-series-conditioning",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Set the sensor input's real source and loading relationship.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_INPUT",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open or bounded value change only when the role changes live behavior, is physically serviceable, and is diagnostically separable."
+        },
+        {
+          "id": "rb15-sensor-filter-conditioning",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Provide bounded sensor filtering and a measurable time/load response.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_INPUT",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open or bounded value change only when the role changes live behavior, is physically serviceable, and is diagnostically separable."
+        },
+        {
+          "id": "rb15-status-led",
+          "allocationId": "status-indication",
+          "purpose": "Show a state-dependent status from the live switched/control behavior.",
+          "functionalRegion": "status-indication",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "modelRequirement": "Future qualification must make this a state-dependent indication of a real rail or control output, never a selected-fault marker.",
+          "faultRequirement": "Future admission: status-path fault only when the visible state follows the live graph and never discloses a hidden fault identity."
+        },
+        {
+          "id": "rb15-status-limiter",
+          "allocationId": "status-indication",
+          "purpose": "Set the indicator branch loading without encoding a selected fault.",
+          "functionalRegion": "status-indication",
+          "domain": "STATUS",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: indicator open/short or limiting-path fault only when it does not become a hidden fault marker and the customer function remains the oracle."
+        },
+        {
+          "id": "rb15-output-connector",
+          "allocationId": "output-interface",
+          "purpose": "Expose the switched external load through a declared output terminal contract.",
+          "functionalRegion": "output-interface",
+          "domain": "EXTERNAL_LOAD",
+          "packageRequirement": "load-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        }
+      ],
+      "interfaces": [
+        {
+          "id": "rb15-input-to-board",
+          "fromDomain": "EXTERNAL_BENCH",
+          "toDomain": "LOW_VOLTAGE_INPUT",
+          "purpose": "Connect the external source through declared polarity, return, and power-state semantics."
+        },
+        {
+          "id": "rb15-input-to-driver",
+          "fromDomain": "LOW_VOLTAGE_INPUT",
+          "toDomain": "LOW_VOLTAGE_DRIVER",
+          "purpose": "Provide the driver supply and return through the real entry path."
+        },
+        {
+          "id": "rb15-input-to-sensor",
+          "fromDomain": "LOW_VOLTAGE_INPUT",
+          "toDomain": "SENSOR_INPUT",
+          "purpose": "Provide the sensor reference and loading boundary."
+        },
+        {
+          "id": "rb15-player-to-sensor",
+          "fromDomain": "PLAYER_STIMULUS",
+          "toDomain": "SENSOR_INPUT",
+          "purpose": "Allow ordinary player-operated sensor/interlock input."
+        },
+        {
+          "id": "rb15-sensor-to-driver",
+          "fromDomain": "SENSOR_INPUT",
+          "toDomain": "LOW_VOLTAGE_DRIVER",
+          "purpose": "Carry the conditioned interlock/control relationship."
+        },
+        {
+          "id": "rb15-driver-to-relay",
+          "fromDomain": "LOW_VOLTAGE_DRIVER",
+          "toDomain": "RELAY_LOAD",
+          "purpose": "Drive the relay coil while preserving flyback and contact ownership."
+        },
+        {
+          "id": "rb15-relay-to-output",
+          "fromDomain": "RELAY_LOAD",
+          "toDomain": "EXTERNAL_LOAD",
+          "purpose": "Expose the switched load path at the output connector."
+        },
+        {
+          "id": "rb15-driver-to-status",
+          "fromDomain": "LOW_VOLTAGE_DRIVER",
+          "toDomain": "STATUS",
+          "purpose": "Derive status from a real operating state."
+        }
+      ],
+      "unsupportedStages": [
+        "generation",
+        "routing",
+        "solver",
+        "diagnostic",
+        "playable"
+      ],
+      "notes": "Architecture roles only; the sensor stimulus is an external player-operated contract and the driver has two future implementation variants."
+    },
+    {
+      "id": "RB30",
+      "targetPackages": 30,
+      "evidenceStage": "ARCHITECTURE_SPECIFIED",
+      "implemented": false,
+      "allocations": [
+        {
+          "id": "entry-protection",
+          "count": 4,
+          "purpose": "Entry connector, fuse, reverse protection, and input filtering."
+        },
+        {
+          "id": "regulator-filter",
+          "count": 4,
+          "purpose": "Modeled control-rail regulator and local input/output storage."
+        },
+        {
+          "id": "sensor-conditioning",
+          "count": 8,
+          "purpose": "Two four-role sensor conditioning networks with distinct loading/reference choices."
+        },
+        {
+          "id": "dual-driver-output",
+          "count": 10,
+          "purpose": "Two five-role switched output channels with alternative BJT/MOSFET driver populations."
+        },
+        {
+          "id": "status",
+          "count": 2,
+          "purpose": "Two state-dependent status indicators."
+        },
+        {
+          "id": "additional-connectors",
+          "count": 2,
+          "purpose": "Two externally operated sensor connectors."
+        }
+      ],
+      "components": [
+        {
+          "id": "rb30-input-connector",
+          "allocationId": "entry-protection",
+          "purpose": "Accept the declared low-voltage source and expose board-entry terminals.",
+          "functionalRegion": "entry-protection",
+          "domain": "LV_ENTRY",
+          "packageRequirement": "low-voltage-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb30-input-fuse",
+          "allocationId": "entry-protection",
+          "purpose": "Limit the supported entry path during overload.",
+          "functionalRegion": "entry-protection",
+          "domain": "LV_ENTRY",
+          "packageRequirement": "fuse-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb30-reverse-protection",
+          "allocationId": "entry-protection",
+          "purpose": "Prevent reverse source connection from energizing the control rails.",
+          "functionalRegion": "entry-protection",
+          "domain": "LV_ENTRY",
+          "packageRequirement": "diode-or-qualified-mosfet-protection-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb30-input-filter-capacitor",
+          "allocationId": "entry-protection",
+          "purpose": "Provide source-side filtering and loading observation.",
+          "functionalRegion": "entry-protection",
+          "domain": "LV_ENTRY",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb30-5v-regulator",
+          "allocationId": "regulator-filter",
+          "purpose": "Produce the modeled control rail from the board entry path.",
+          "functionalRegion": "regulator-filter",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "linear-regulator-or-qualified-rail-provider-package",
+          "modelRequirement": "Future qualification must produce the declared rail with headroom, line/load, enable, startup, and overload behavior.",
+          "faultRequirement": "Future admission: regulator or storage fault only when rail collapse/overload behavior is solver-backed and repairable."
+        },
+        {
+          "id": "rb30-regulator-input-capacitor",
+          "allocationId": "regulator-filter",
+          "purpose": "Provide local regulator input storage and source transient loading.",
+          "functionalRegion": "regulator-filter",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb30-regulator-output-capacitor",
+          "allocationId": "regulator-filter",
+          "purpose": "Provide local control-rail output storage and load response.",
+          "functionalRegion": "regulator-filter",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb30-control-bypass-capacitor",
+          "allocationId": "regulator-filter",
+          "purpose": "Provide local bypass at the shared control/reference rail.",
+          "functionalRegion": "regulator-filter",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb30-sensor-a-series-resistor",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Set sensor A source loading before the reference network.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb30-sensor-a-filter-capacitor",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Filter sensor A with a solver-visible time/load relationship.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_A",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb30-sensor-a-reference-high",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Set the upper leg of sensor A's reference arrangement.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb30-sensor-a-reference-low",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Set the return leg of sensor A's reference arrangement.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb30-sensor-b-series-resistor",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Set sensor B source loading before the reference network.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb30-sensor-b-filter-capacitor",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Filter sensor B with a solver-visible time/load relationship.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_B",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb30-sensor-b-reference-high",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Set the upper leg of sensor B's reference arrangement.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb30-sensor-b-reference-low",
+          "allocationId": "sensor-conditioning",
+          "purpose": "Set the return leg of sensor B's reference arrangement.",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb30-output-a-switch",
+          "allocationId": "dual-driver-output",
+          "purpose": "Switch output A with a declared BJT or NMOS implementation variant.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb30-output-a-drive-resistor",
+          "allocationId": "dual-driver-output",
+          "purpose": "Set output A control loading and drive current.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb30-output-a-bias-resistor",
+          "allocationId": "dual-driver-output",
+          "purpose": "Define output A's off-state bias path.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb30-output-a-flyback-diode",
+          "allocationId": "dual-driver-output",
+          "purpose": "Return output A coil energy through the declared clamp path.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb30-output-a-relay",
+          "allocationId": "dual-driver-output",
+          "purpose": "Separate output A coil and switched contact behavior.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb30-output-b-switch",
+          "allocationId": "dual-driver-output",
+          "purpose": "Switch output B with a structurally selectable BJT or NMOS variant.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb30-output-b-drive-resistor",
+          "allocationId": "dual-driver-output",
+          "purpose": "Set output B control loading and drive current.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb30-output-b-bias-resistor",
+          "allocationId": "dual-driver-output",
+          "purpose": "Define output B's off-state bias path.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb30-output-b-flyback-diode",
+          "allocationId": "dual-driver-output",
+          "purpose": "Return output B coil energy through the declared clamp path.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb30-output-b-relay",
+          "allocationId": "dual-driver-output",
+          "purpose": "Separate output B coil and switched contact behavior.",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb30-status-power",
+          "allocationId": "status",
+          "purpose": "Indicate the presence of the modeled control rail from solved behavior.",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "modelRequirement": "Future qualification must make this a state-dependent indication of a real rail or control output, never a selected-fault marker.",
+          "faultRequirement": "Future admission: status-path fault only when the visible state follows the live graph and never discloses a hidden fault identity."
+        },
+        {
+          "id": "rb30-status-interlock",
+          "allocationId": "status",
+          "purpose": "Indicate the declared interlock/ready state without identifying a hidden fault.",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "modelRequirement": "Future qualification must make this a state-dependent indication of a real rail or control output, never a selected-fault marker.",
+          "faultRequirement": "Future admission: status-path fault only when the visible state follows the live graph and never discloses a hidden fault identity."
+        },
+        {
+          "id": "rb30-sensor-a-connector",
+          "allocationId": "additional-connectors",
+          "purpose": "Expose sensor A to an ordinary player-operated stimulus.",
+          "functionalRegion": "additional-connectors",
+          "domain": "SENSOR_A",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb30-sensor-b-connector",
+          "allocationId": "additional-connectors",
+          "purpose": "Expose sensor B to an ordinary player-operated stimulus.",
+          "functionalRegion": "additional-connectors",
+          "domain": "SENSOR_B",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        }
+      ],
+      "interfaces": [
+        {
+          "id": "rb30-entry-to-regulator",
+          "fromDomain": "EXTERNAL_BENCH",
+          "toDomain": "LV_ENTRY",
+          "purpose": "Connect the external source through the real entry/protection path."
+        },
+        {
+          "id": "rb30-entry-to-rail",
+          "fromDomain": "LV_ENTRY",
+          "toDomain": "CONTROL_RAIL",
+          "purpose": "Feed the modeled control-rail provider; no unrelated ideal rail is assumed."
+        },
+        {
+          "id": "rb30-rail-to-sensors",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "SENSOR_A",
+          "purpose": "Power and reference sensor A through its declared loading."
+        },
+        {
+          "id": "rb30-rail-to-sensor-b",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "SENSOR_B",
+          "purpose": "Power and reference sensor B through its declared loading."
+        },
+        {
+          "id": "rb30-player-to-sensor-a",
+          "fromDomain": "PLAYER_STIMULUS",
+          "toDomain": "SENSOR_A",
+          "purpose": "Expose sensor A as an ordinary external stimulus."
+        },
+        {
+          "id": "rb30-player-to-sensor-b",
+          "fromDomain": "PLAYER_STIMULUS",
+          "toDomain": "SENSOR_B",
+          "purpose": "Expose sensor B as an ordinary external stimulus."
+        },
+        {
+          "id": "rb30-sensor-a-to-output-a",
+          "fromDomain": "SENSOR_A",
+          "toDomain": "OUTPUT_A",
+          "purpose": "Carry sensor A's conditioned control relationship to output A."
+        },
+        {
+          "id": "rb30-sensor-b-to-output-b",
+          "fromDomain": "SENSOR_B",
+          "toDomain": "OUTPUT_B",
+          "purpose": "Carry sensor B's conditioned control relationship to output B."
+        },
+        {
+          "id": "rb30-rail-to-output-a",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "OUTPUT_A",
+          "purpose": "Provide output A's supply and return."
+        },
+        {
+          "id": "rb30-rail-to-output-b",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "OUTPUT_B",
+          "purpose": "Provide output B's supply and return."
+        },
+        {
+          "id": "rb30-output-a-to-load",
+          "fromDomain": "OUTPUT_A",
+          "toDomain": "EXTERNAL_LOAD_A",
+          "purpose": "Expose output A contact behavior to an external load."
+        },
+        {
+          "id": "rb30-output-b-to-load",
+          "fromDomain": "OUTPUT_B",
+          "toDomain": "EXTERNAL_LOAD_B",
+          "purpose": "Expose output B contact behavior to an external load."
+        },
+        {
+          "id": "rb30-rail-to-status",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "STATUS",
+          "purpose": "Make status observations depend on the real rail/control state."
+        }
+      ],
+      "unsupportedStages": [
+        "generation",
+        "routing",
+        "solver",
+        "diagnostic",
+        "playable"
+      ],
+      "notes": "Architecture roles only; two sensor/reference arrangements and BJT/MOSFET driver populations are future variant contracts."
+    },
+    {
+      "id": "RB56",
+      "targetPackages": 56,
+      "evidenceStage": "ARCHITECTURE_SPECIFIED",
+      "implemented": false,
+      "allocations": [
+        {
+          "id": "mains-entry-protection",
+          "count": 5,
+          "purpose": "Mains connector, fuse, clamp, inrush, and input filtering."
+        },
+        {
+          "id": "rectifier-storage",
+          "count": 4,
+          "purpose": "Packaged bridge, bulk storage, discharge path, and high-frequency bypass."
+        },
+        {
+          "id": "offline-primary-control",
+          "count": 12,
+          "purpose": "Offline primary/control/magnetic/clamp/bias implementation as a real future topology budget."
+        },
+        {
+          "id": "isolated-feedback-sense",
+          "count": 4,
+          "purpose": "Isolated feedback and secondary output-sense implementation."
+        },
+        {
+          "id": "secondary-rectification-filter",
+          "count": 3,
+          "purpose": "Secondary rectification and output filtering."
+        },
+        {
+          "id": "control-5v-regulation",
+          "count": 3,
+          "purpose": "Control-rail regulator and local input/output storage."
+        },
+        {
+          "id": "relay-driver-channels",
+          "count": 10,
+          "purpose": "Two relay-driver channels with five purposeful packages each."
+        },
+        {
+          "id": "sensor-interface-channels",
+          "count": 8,
+          "purpose": "Two sensor-interface channels with four purposeful packages each."
+        },
+        {
+          "id": "decision-reference",
+          "count": 3,
+          "purpose": "Decision and reference circuitry."
+        },
+        {
+          "id": "status-indicators",
+          "count": 2,
+          "purpose": "Status indicator pair."
+        },
+        {
+          "id": "load-output-connectors",
+          "count": 2,
+          "purpose": "Two switched-load/output connectors."
+        }
+      ],
+      "components": [
+        {
+          "id": "rb56-mains-connector",
+          "allocationId": "mains-entry-protection",
+          "purpose": "Accept the declared mains-side source and expose primary/reference terminals.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "mains-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb56-mains-fuse",
+          "allocationId": "mains-entry-protection",
+          "purpose": "Limit the supported mains entry path under a modeled overload.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "fuse-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb56-mains-clamp",
+          "allocationId": "mains-entry-protection",
+          "purpose": "Bound the declared entry transient path within the educational model envelope.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "surge-clamp-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb56-mains-inrush",
+          "allocationId": "mains-entry-protection",
+          "purpose": "Model entry charging/inrush limiting as a causal source-path role.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "inrush-limiter-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb56-mains-filter",
+          "allocationId": "mains-entry-protection",
+          "purpose": "Provide the entry filter role with an explicit reference and loading contract.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "filter-component-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open or bounded value change only when the role changes live behavior, is physically serviceable, and is diagnostically separable."
+        },
+        {
+          "id": "rb56-bridge-rectifier",
+          "allocationId": "rectifier-storage",
+          "purpose": "Rectify the entry path while retaining terminal polarity and domain identity.",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "packaged-bridge-rectifier",
+          "modelRequirement": "Future qualification must model polarity, conduction, storage interaction, and supported open/short effects.",
+          "faultRequirement": "Future admission: supported rectifier open/short or polarity fault only within the qualified energy and measurement envelope."
+        },
+        {
+          "id": "rb56-bulk-capacitor",
+          "allocationId": "rectifier-storage",
+          "purpose": "Store rectified energy with observable charge and discharge behavior.",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bulk-capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb56-discharge-resistor",
+          "allocationId": "rectifier-storage",
+          "purpose": "Provide the declared bulk discharge path after source isolation.",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb56-hv-bypass-capacitor",
+          "allocationId": "rectifier-storage",
+          "purpose": "Provide the high-frequency bypass role within the supported model.",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bypass-capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb56-primary-controller",
+          "allocationId": "offline-primary-control",
+          "purpose": "Coordinate the bounded offline conversion control contract.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "offline-controller-package-or-bounded-behavioral-provider",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-switch",
+          "allocationId": "offline-primary-control",
+          "purpose": "Control primary energy transfer from the declared controller drive.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "switching-transistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-magnetic",
+          "allocationId": "offline-primary-control",
+          "purpose": "Transfer energy across the primary/secondary boundary with separate references.",
+          "functionalRegion": "offline-converter",
+          "domain": "ISOLATION_BOUNDARY",
+          "packageRequirement": "coupled-winding-or-transformer-package",
+          "modelRequirement": "Future qualification must preserve primary/secondary references and bounded energy transfer; no unqualified saturation claim.",
+          "faultRequirement": "Future admission: winding/open or bounded coupling fault only with separate references, causal load effect, and reachable physical repair."
+        },
+        {
+          "id": "rb56-primary-clamp-diode",
+          "allocationId": "offline-primary-control",
+          "purpose": "Return supported primary clamp energy through the declared clamp path.",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "clamp-diode-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-clamp-capacitor",
+          "allocationId": "offline-primary-control",
+          "purpose": "Store and shape the supported primary clamp energy.",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "clamp-capacitor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-startup-resistor",
+          "allocationId": "offline-primary-control",
+          "purpose": "Provide the controller startup bias path from the primary domain.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-bias-resistor",
+          "allocationId": "offline-primary-control",
+          "purpose": "Maintain the declared controller bias relationship during operation.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-current-sense",
+          "allocationId": "offline-primary-control",
+          "purpose": "Relate primary current observation to the converter control boundary.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "current-sense-resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-gate-resistor",
+          "allocationId": "offline-primary-control",
+          "purpose": "Set the primary switch drive path and its modeled loading.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-snubber-resistor",
+          "allocationId": "offline-primary-control",
+          "purpose": "Damp the supported primary switching transient through a real network role.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-snubber-capacitor",
+          "allocationId": "offline-primary-control",
+          "purpose": "Complete the supported primary transient damping network.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-primary-return-bypass",
+          "allocationId": "offline-primary-control",
+          "purpose": "Provide the declared primary return bypass without joining isolated references.",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bypass-capacitor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb56-feedback-coupler",
+          "allocationId": "isolated-feedback-sense",
+          "purpose": "Carry feedback information across the isolation boundary without a conductive reference merge.",
+          "functionalRegion": "isolated-feedback",
+          "domain": "ISOLATION_BOUNDARY",
+          "packageRequirement": "isolation-coupler-package",
+          "modelRequirement": "Future qualification must preserve the isolation boundary and close the loop through actual sensed behavior, with no implicit reference merge.",
+          "faultRequirement": "Future admission: feedback/reference/sense fault only when isolation, loop response, and alternate causes are separable."
+        },
+        {
+          "id": "rb56-secondary-reference",
+          "allocationId": "isolated-feedback-sense",
+          "purpose": "Provide the secondary-side feedback reference.",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "reference-package",
+          "modelRequirement": "Future qualification must preserve the isolation boundary and close the loop through actual sensed behavior, with no implicit reference merge.",
+          "faultRequirement": "Future admission: feedback/reference/sense fault only when isolation, loop response, and alternate causes are separable."
+        },
+        {
+          "id": "rb56-secondary-sense-high",
+          "allocationId": "isolated-feedback-sense",
+          "purpose": "Set the upper leg of the secondary output-sense relationship.",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve the isolation boundary and close the loop through actual sensed behavior, with no implicit reference merge.",
+          "faultRequirement": "Future admission: feedback/reference/sense fault only when isolation, loop response, and alternate causes are separable."
+        },
+        {
+          "id": "rb56-secondary-sense-low",
+          "allocationId": "isolated-feedback-sense",
+          "purpose": "Set the return leg of the secondary output-sense relationship.",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve the isolation boundary and close the loop through actual sensed behavior, with no implicit reference merge.",
+          "faultRequirement": "Future admission: feedback/reference/sense fault only when isolation, loop response, and alternate causes are separable."
+        },
+        {
+          "id": "rb56-secondary-rectifier",
+          "allocationId": "secondary-rectification-filter",
+          "purpose": "Rectify the isolated secondary transfer path.",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "secondary-rectifier-package",
+          "modelRequirement": "Future qualification must model polarity, conduction, storage interaction, and supported open/short effects.",
+          "faultRequirement": "Future admission: supported rectifier open/short or polarity fault only within the qualified energy and measurement envelope."
+        },
+        {
+          "id": "rb56-secondary-filter-inductor",
+          "allocationId": "secondary-rectification-filter",
+          "purpose": "Filter the secondary output while preserving load dependence.",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "filter-inductor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb56-secondary-filter-capacitor",
+          "allocationId": "secondary-rectification-filter",
+          "purpose": "Store and filter the secondary output rail.",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "filter-capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb56-control-regulator",
+          "allocationId": "control-5v-regulation",
+          "purpose": "Produce the control rail from the real secondary rail.",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "linear-regulator-or-qualified-rail-provider-package",
+          "modelRequirement": "Future qualification must produce the declared rail with headroom, line/load, enable, startup, and overload behavior.",
+          "faultRequirement": "Future admission: regulator or storage fault only when rail collapse/overload behavior is solver-backed and repairable."
+        },
+        {
+          "id": "rb56-control-input-storage",
+          "allocationId": "control-5v-regulation",
+          "purpose": "Provide local control-regulator input storage.",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb56-control-output-storage",
+          "allocationId": "control-5v-regulation",
+          "purpose": "Provide local control-regulator output storage and load response.",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb56-relay-a-switch",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Switch relay A from the decision/control output.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb56-relay-a-drive",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Set relay A drive-path loading.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb56-relay-a-bias",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Define relay A off-state bias.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb56-relay-a-flyback",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Return relay A coil energy through the supported clamp path.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb56-relay-a-coil",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Provide relay A coil/contact separation.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb56-relay-b-switch",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Switch relay B from the decision/control output.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb56-relay-b-drive",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Set relay B drive-path loading.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb56-relay-b-bias",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Define relay B off-state bias.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb56-relay-b-flyback",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Return relay B coil energy through the supported clamp path.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb56-relay-b-coil",
+          "allocationId": "relay-driver-channels",
+          "purpose": "Provide relay B coil/contact separation.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb56-sensor-a-connector",
+          "allocationId": "sensor-interface-channels",
+          "purpose": "Expose sensor A to a player-operated external stimulus.",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb56-sensor-a-limiter",
+          "allocationId": "sensor-interface-channels",
+          "purpose": "Limit sensor A input loading within the declared interface.",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb56-sensor-a-filter",
+          "allocationId": "sensor-interface-channels",
+          "purpose": "Filter sensor A with a solver-visible loading response.",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb56-sensor-a-bias",
+          "allocationId": "sensor-interface-channels",
+          "purpose": "Set sensor A's declared reference/bias relationship.",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb56-sensor-b-connector",
+          "allocationId": "sensor-interface-channels",
+          "purpose": "Expose sensor B to a player-operated external stimulus.",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb56-sensor-b-limiter",
+          "allocationId": "sensor-interface-channels",
+          "purpose": "Limit sensor B input loading within the declared interface.",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb56-sensor-b-filter",
+          "allocationId": "sensor-interface-channels",
+          "purpose": "Filter sensor B with a solver-visible loading response.",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb56-sensor-b-bias",
+          "allocationId": "sensor-interface-channels",
+          "purpose": "Set sensor B's declared reference/bias relationship.",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb56-interlock-comparator",
+          "allocationId": "decision-reference",
+          "purpose": "Compare the conditioned sensor/interlock path against a real reference.",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "comparator-package",
+          "modelRequirement": "Future qualification must derive the decision/interlock from solved inputs, references, thresholds, and any advertised hysteresis.",
+          "faultRequirement": "Future admission: decision/reference/interlock fault only with an observable threshold/state effect and a repairable physical owner."
+        },
+        {
+          "id": "rb56-threshold-reference",
+          "allocationId": "decision-reference",
+          "purpose": "Provide the declared decision/reference source.",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "reference-package",
+          "modelRequirement": "Future qualification must derive the decision/interlock from solved inputs, references, thresholds, and any advertised hysteresis.",
+          "faultRequirement": "Future admission: decision/reference/interlock fault only with an observable threshold/state effect and a repairable physical owner."
+        },
+        {
+          "id": "rb56-hysteresis-feedback",
+          "allocationId": "decision-reference",
+          "purpose": "Provide the bounded hysteresis/feedback path when the selected decision variant advertises it.",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must derive the decision/interlock from solved inputs, references, thresholds, and any advertised hysteresis.",
+          "faultRequirement": "Future admission: decision/reference/interlock fault only with an observable threshold/state effect and a repairable physical owner."
+        },
+        {
+          "id": "rb56-status-power",
+          "allocationId": "status-indicators",
+          "purpose": "Indicate a real secondary/control rail state.",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "modelRequirement": "Future qualification must make this a state-dependent indication of a real rail or control output, never a selected-fault marker.",
+          "faultRequirement": "Future admission: status-path fault only when the visible state follows the live graph and never discloses a hidden fault identity."
+        },
+        {
+          "id": "rb56-status-interlock",
+          "allocationId": "status-indicators",
+          "purpose": "Indicate a real interlock/control state without exposing a hidden fault ID.",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "modelRequirement": "Future qualification must make this a state-dependent indication of a real rail or control output, never a selected-fault marker.",
+          "faultRequirement": "Future admission: status-path fault only when the visible state follows the live graph and never discloses a hidden fault identity."
+        },
+        {
+          "id": "rb56-load-a-connector",
+          "allocationId": "load-output-connectors",
+          "purpose": "Expose relay A's switched external load interface.",
+          "functionalRegion": "load-interface-a",
+          "domain": "EXTERNAL_LOAD_A",
+          "packageRequirement": "load-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb56-load-b-connector",
+          "allocationId": "load-output-connectors",
+          "purpose": "Expose relay B's switched external load interface.",
+          "functionalRegion": "load-interface-b",
+          "domain": "EXTERNAL_LOAD_B",
+          "packageRequirement": "load-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        }
+      ],
+      "interfaces": [
+        {
+          "id": "rb56-mains-to-entry",
+          "fromDomain": "EXTERNAL_MAINS",
+          "toDomain": "MAINS_ENTRY",
+          "purpose": "Connect the declared source, fuse, clamp, inrush, filter, and primary return semantics."
+        },
+        {
+          "id": "rb56-entry-to-rectifier",
+          "fromDomain": "MAINS_ENTRY",
+          "toDomain": "HV_PRIMARY",
+          "purpose": "Rectify the protected entry path with explicit polarity."
+        },
+        {
+          "id": "rb56-rectifier-to-converter",
+          "fromDomain": "HV_PRIMARY",
+          "toDomain": "PRIMARY_CONVERTER",
+          "purpose": "Feed the offline conversion model from the actual rectified/storage path."
+        },
+        {
+          "id": "rb56-primary-to-isolated-secondary",
+          "fromDomain": "PRIMARY_CONVERTER",
+          "toDomain": "ISOLATION_BOUNDARY",
+          "purpose": "Transfer energy while keeping primary and secondary references distinct."
+        },
+        {
+          "id": "rb56-feedback-across-boundary",
+          "fromDomain": "SECONDARY_RAIL",
+          "toDomain": "PRIMARY_CONVERTER",
+          "purpose": "Carry feedback through a declared isolated coupling contract."
+        },
+        {
+          "id": "rb56-secondary-to-control",
+          "fromDomain": "SECONDARY_RAIL",
+          "toDomain": "CONTROL_RAIL",
+          "purpose": "Produce the control rail through the modeled regulator."
+        },
+        {
+          "id": "rb56-control-to-relay-a",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "RELAY_A",
+          "purpose": "Power and control relay A through its driver."
+        },
+        {
+          "id": "rb56-control-to-relay-b",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "RELAY_B",
+          "purpose": "Power and control relay B through its driver."
+        },
+        {
+          "id": "rb56-sensor-a-to-decision",
+          "fromDomain": "SENSOR_A",
+          "toDomain": "CONTROL_DECISION",
+          "purpose": "Carry sensor A's conditioned observation to the decision/reference path."
+        },
+        {
+          "id": "rb56-sensor-b-to-decision",
+          "fromDomain": "SENSOR_B",
+          "toDomain": "CONTROL_DECISION",
+          "purpose": "Carry sensor B's conditioned observation to the decision/reference path."
+        },
+        {
+          "id": "rb56-decision-to-relay-a",
+          "fromDomain": "CONTROL_DECISION",
+          "toDomain": "RELAY_A",
+          "purpose": "Drive relay A from the solved decision/interlock output."
+        },
+        {
+          "id": "rb56-decision-to-relay-b",
+          "fromDomain": "CONTROL_DECISION",
+          "toDomain": "RELAY_B",
+          "purpose": "Drive relay B from the solved decision/interlock output."
+        },
+        {
+          "id": "rb56-relay-a-to-load",
+          "fromDomain": "RELAY_A",
+          "toDomain": "EXTERNAL_LOAD_A",
+          "purpose": "Expose relay A's contact behavior at its load connector."
+        },
+        {
+          "id": "rb56-relay-b-to-load",
+          "fromDomain": "RELAY_B",
+          "toDomain": "EXTERNAL_LOAD_B",
+          "purpose": "Expose relay B's contact behavior at its load connector."
+        },
+        {
+          "id": "rb56-control-to-status",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "STATUS",
+          "purpose": "Derive status from real rail/control state."
+        },
+        {
+          "id": "rb56-player-to-sensor-a",
+          "fromDomain": "PLAYER_STIMULUS",
+          "toDomain": "SENSOR_A",
+          "purpose": "Allow ordinary player operation of sensor A."
+        },
+        {
+          "id": "rb56-player-to-sensor-b",
+          "fromDomain": "PLAYER_STIMULUS",
+          "toDomain": "SENSOR_B",
+          "purpose": "Allow ordinary player operation of sensor B."
+        },
+        {
+          "id": "rb56-primary-to-chassis",
+          "fromDomain": "PRIMARY_CONVERTER",
+          "toDomain": "PE_CHASSIS",
+          "purpose": "Keep any protective-earth/chassis relation explicit and separate from numerical solver reference."
+        }
+      ],
+      "unsupportedStages": [
+        "generation",
+        "routing",
+        "solver",
+        "diagnostic",
+        "playable"
+      ],
+      "notes": "Architecture roles only; the converter and isolation contracts remain future model decisions and are not instantiated by A01."
+    },
+    {
+      "id": "RB100",
+      "targetPackages": 100,
+      "evidenceStage": "ARCHITECTURE_SPECIFIED",
+      "implemented": false,
+      "allocations": [
+        {
+          "id": "rb56-functional-base",
+          "count": 56,
+          "purpose": "The complete RB56 functional role inventory carried forward as the heterogeneous base."
+        },
+        {
+          "id": "additional-relay-output-channels",
+          "count": 10,
+          "purpose": "Two additional relay/output channels with five purposeful packages each."
+        },
+        {
+          "id": "dc-power-output-channels",
+          "count": 12,
+          "purpose": "Two DC power-output channels with drive, protection, sensing, and storage roles."
+        },
+        {
+          "id": "additional-sensor-conditioning",
+          "count": 8,
+          "purpose": "Two additional four-package sensor/conditioning channels."
+        },
+        {
+          "id": "3v3-conditioning",
+          "count": 4,
+          "purpose": "An additional low-voltage domain and local conditioning."
+        },
+        {
+          "id": "current-sense-monitoring",
+          "count": 4,
+          "purpose": "A current-sense/monitoring function with causal branch observation."
+        },
+        {
+          "id": "healthy-auxiliary-interlock",
+          "count": 4,
+          "purpose": "An independent healthy auxiliary/interlock function."
+        },
+        {
+          "id": "additional-interface-connectors",
+          "count": 2,
+          "purpose": "Two additional external interface connectors."
+        }
+      ],
+      "components": [
+        {
+          "id": "rb100-base-mains-connector",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Accept the declared mains-side source and expose primary/reference terminals.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "mains-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb100-base-mains-fuse",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Limit the supported mains entry path under a modeled overload.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "fuse-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-base-mains-clamp",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Bound the declared entry transient path within the educational model envelope.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "surge-clamp-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-base-mains-inrush",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Model entry charging/inrush limiting as a causal source-path role.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "inrush-limiter-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-base-mains-filter",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide the entry filter role with an explicit reference and loading contract.",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "filter-component-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open or bounded value change only when the role changes live behavior, is physically serviceable, and is diagnostically separable."
+        },
+        {
+          "id": "rb100-base-bridge-rectifier",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Rectify the entry path while retaining terminal polarity and domain identity.",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "packaged-bridge-rectifier",
+          "modelRequirement": "Future qualification must model polarity, conduction, storage interaction, and supported open/short effects.",
+          "faultRequirement": "Future admission: supported rectifier open/short or polarity fault only within the qualified energy and measurement envelope."
+        },
+        {
+          "id": "rb100-base-bulk-capacitor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Store rectified energy with observable charge and discharge behavior.",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bulk-capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-base-discharge-resistor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide the declared bulk discharge path after source isolation.",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-base-hv-bypass-capacitor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide the high-frequency bypass role within the supported model.",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bypass-capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-base-primary-controller",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Coordinate the bounded offline conversion control contract.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "offline-controller-package-or-bounded-behavioral-provider",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-switch",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Control primary energy transfer from the declared controller drive.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "switching-transistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-magnetic",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Transfer energy across the primary/secondary boundary with separate references.",
+          "functionalRegion": "offline-converter",
+          "domain": "ISOLATION_BOUNDARY",
+          "packageRequirement": "coupled-winding-or-transformer-package",
+          "modelRequirement": "Future qualification must preserve primary/secondary references and bounded energy transfer; no unqualified saturation claim.",
+          "faultRequirement": "Future admission: winding/open or bounded coupling fault only with separate references, causal load effect, and reachable physical repair."
+        },
+        {
+          "id": "rb100-base-primary-clamp-diode",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Return supported primary clamp energy through the declared clamp path.",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "clamp-diode-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-clamp-capacitor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Store and shape the supported primary clamp energy.",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "clamp-capacitor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-startup-resistor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide the controller startup bias path from the primary domain.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-bias-resistor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Maintain the declared controller bias relationship during operation.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-current-sense",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Relate primary current observation to the converter control boundary.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "current-sense-resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-gate-resistor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Set the primary switch drive path and its modeled loading.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-snubber-resistor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Damp the supported primary switching transient through a real network role.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-snubber-capacitor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Complete the supported primary transient damping network.",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-primary-return-bypass",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide the declared primary return bypass without joining isolated references.",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bypass-capacitor-package",
+          "modelRequirement": "Future qualification must expose startup, input draw, enable, dropout, regulation, energy storage, and admitted faults; detailed versus averaged fidelity remains a later decision.",
+          "faultRequirement": "Future admission: converter control/switch/magnetic/clamp faults require a qualified causal model and must not be admitted from decorative parts."
+        },
+        {
+          "id": "rb100-base-feedback-coupler",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Carry feedback information across the isolation boundary without a conductive reference merge.",
+          "functionalRegion": "isolated-feedback",
+          "domain": "ISOLATION_BOUNDARY",
+          "packageRequirement": "isolation-coupler-package",
+          "modelRequirement": "Future qualification must preserve the isolation boundary and close the loop through actual sensed behavior, with no implicit reference merge.",
+          "faultRequirement": "Future admission: feedback/reference/sense fault only when isolation, loop response, and alternate causes are separable."
+        },
+        {
+          "id": "rb100-base-secondary-reference",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide the secondary-side feedback reference.",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "reference-package",
+          "modelRequirement": "Future qualification must preserve the isolation boundary and close the loop through actual sensed behavior, with no implicit reference merge.",
+          "faultRequirement": "Future admission: feedback/reference/sense fault only when isolation, loop response, and alternate causes are separable."
+        },
+        {
+          "id": "rb100-base-secondary-sense-high",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Set the upper leg of the secondary output-sense relationship.",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve the isolation boundary and close the loop through actual sensed behavior, with no implicit reference merge.",
+          "faultRequirement": "Future admission: feedback/reference/sense fault only when isolation, loop response, and alternate causes are separable."
+        },
+        {
+          "id": "rb100-base-secondary-sense-low",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Set the return leg of the secondary output-sense relationship.",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve the isolation boundary and close the loop through actual sensed behavior, with no implicit reference merge.",
+          "faultRequirement": "Future admission: feedback/reference/sense fault only when isolation, loop response, and alternate causes are separable."
+        },
+        {
+          "id": "rb100-base-secondary-rectifier",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Rectify the isolated secondary transfer path.",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "secondary-rectifier-package",
+          "modelRequirement": "Future qualification must model polarity, conduction, storage interaction, and supported open/short effects.",
+          "faultRequirement": "Future admission: supported rectifier open/short or polarity fault only within the qualified energy and measurement envelope."
+        },
+        {
+          "id": "rb100-base-secondary-filter-inductor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Filter the secondary output while preserving load dependence.",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "filter-inductor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-base-secondary-filter-capacitor",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Store and filter the secondary output rail.",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "filter-capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-base-control-regulator",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Produce the control rail from the real secondary rail.",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "linear-regulator-or-qualified-rail-provider-package",
+          "modelRequirement": "Future qualification must produce the declared rail with headroom, line/load, enable, startup, and overload behavior.",
+          "faultRequirement": "Future admission: regulator or storage fault only when rail collapse/overload behavior is solver-backed and repairable."
+        },
+        {
+          "id": "rb100-base-control-input-storage",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide local control-regulator input storage.",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-base-control-output-storage",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide local control-regulator output storage and load response.",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-base-relay-a-switch",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Switch relay A from the decision/control output.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-base-relay-a-drive",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Set relay A drive-path loading.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-base-relay-a-bias",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Define relay A off-state bias.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-base-relay-a-flyback",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Return relay A coil energy through the supported clamp path.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-base-relay-a-coil",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide relay A coil/contact separation.",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb100-base-relay-b-switch",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Switch relay B from the decision/control output.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-base-relay-b-drive",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Set relay B drive-path loading.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-base-relay-b-bias",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Define relay B off-state bias.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-base-relay-b-flyback",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Return relay B coil energy through the supported clamp path.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-base-relay-b-coil",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide relay B coil/contact separation.",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb100-base-sensor-a-connector",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Expose sensor A to a player-operated external stimulus.",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb100-base-sensor-a-limiter",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Limit sensor A input loading within the declared interface.",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-base-sensor-a-filter",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Filter sensor A with a solver-visible loading response.",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-base-sensor-a-bias",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Set sensor A's declared reference/bias relationship.",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-base-sensor-b-connector",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Expose sensor B to a player-operated external stimulus.",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb100-base-sensor-b-limiter",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Limit sensor B input loading within the declared interface.",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-base-sensor-b-filter",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Filter sensor B with a solver-visible loading response.",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-base-sensor-b-bias",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Set sensor B's declared reference/bias relationship.",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-base-interlock-comparator",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Compare the conditioned sensor/interlock path against a real reference.",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "comparator-package",
+          "modelRequirement": "Future qualification must derive the decision/interlock from solved inputs, references, thresholds, and any advertised hysteresis.",
+          "faultRequirement": "Future admission: decision/reference/interlock fault only with an observable threshold/state effect and a repairable physical owner."
+        },
+        {
+          "id": "rb100-base-threshold-reference",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide the declared decision/reference source.",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "reference-package",
+          "modelRequirement": "Future qualification must derive the decision/interlock from solved inputs, references, thresholds, and any advertised hysteresis.",
+          "faultRequirement": "Future admission: decision/reference/interlock fault only with an observable threshold/state effect and a repairable physical owner."
+        },
+        {
+          "id": "rb100-base-hysteresis-feedback",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Provide the bounded hysteresis/feedback path when the selected decision variant advertises it.",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must derive the decision/interlock from solved inputs, references, thresholds, and any advertised hysteresis.",
+          "faultRequirement": "Future admission: decision/reference/interlock fault only with an observable threshold/state effect and a repairable physical owner."
+        },
+        {
+          "id": "rb100-base-status-power",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Indicate a real secondary/control rail state.",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "modelRequirement": "Future qualification must make this a state-dependent indication of a real rail or control output, never a selected-fault marker.",
+          "faultRequirement": "Future admission: status-path fault only when the visible state follows the live graph and never discloses a hidden fault identity."
+        },
+        {
+          "id": "rb100-base-status-interlock",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Indicate a real interlock/control state without exposing a hidden fault ID.",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "modelRequirement": "Future qualification must make this a state-dependent indication of a real rail or control output, never a selected-fault marker.",
+          "faultRequirement": "Future admission: status-path fault only when the visible state follows the live graph and never discloses a hidden fault identity."
+        },
+        {
+          "id": "rb100-base-load-a-connector",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Expose relay A's switched external load interface.",
+          "functionalRegion": "load-interface-a",
+          "domain": "EXTERNAL_LOAD_A",
+          "packageRequirement": "load-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb100-base-load-b-connector",
+          "allocationId": "rb56-functional-base",
+          "purpose": "Expose relay B's switched external load interface.",
+          "functionalRegion": "load-interface-b",
+          "domain": "EXTERNAL_LOAD_B",
+          "packageRequirement": "load-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb100-relay-c-switch",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Switch relay C from the expanded control path.",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-relay-c-drive",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Set relay C drive-path loading.",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-relay-c-bias",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Define relay C off-state bias.",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-relay-c-flyback",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Return relay C coil energy through the supported clamp path.",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-relay-c-coil",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Provide relay C coil/contact separation.",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb100-relay-d-switch",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Switch relay D from the expanded control path.",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-relay-d-drive",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Set relay D drive-path loading.",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-relay-d-bias",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Define relay D off-state bias.",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-relay-d-flyback",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Return relay D coil energy through the supported clamp path.",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "flyback-diode-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-relay-d-coil",
+          "allocationId": "additional-relay-output-channels",
+          "purpose": "Provide relay D coil/contact separation.",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "relay-package",
+          "modelRequirement": "Future qualification must separate coil and contact behavior with pickup/dropout, contact loading, and distinct fault ownership.",
+          "faultRequirement": "Future admission: coil/contact/driver ownership must remain distinct; only modeled, observable, physically repairable modes are candidates."
+        },
+        {
+          "id": "rb100-dc-c-switch",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Switch DC power output C with a declared driver variant.",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-dc-c-drive",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Set DC output C driver loading.",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-dc-c-bias",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Define DC output C off-state bias.",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-dc-c-protection",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Clamp or limit the supported DC output C fault/overload path.",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "clamp-or-current-limit-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-dc-c-shunt",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Relate DC output C current to a real sensing/limiting path.",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "current-shunt-package",
+          "modelRequirement": "Future qualification must relate the observation to an actual branch current/voltage and declared burden/reference.",
+          "faultRequirement": "Future admission: sense-path fault only when the measured branch relationship changes and instrument interaction remains causal."
+        },
+        {
+          "id": "rb100-dc-c-storage",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Provide DC output C local output storage and load response.",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-dc-d-switch",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Switch DC power output D with a structurally distinct driver option.",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must expose drive, off-state, on-state, loading, and clamp behavior through the electrical solver.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-dc-d-drive",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Set DC output D driver loading.",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-dc-d-bias",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Define DC output D off-state bias.",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or drive-state fault only when upstream causes remain distinct and a legal repair/retest path exists."
+        },
+        {
+          "id": "rb100-dc-d-protection",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Clamp or limit the supported DC output D fault/overload path.",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "clamp-or-current-limit-package",
+          "modelRequirement": "Future qualification must tie limiting or conduction behavior to solved current/voltage and supported duration; no arbitrary state change.",
+          "faultRequirement": "Future admission: supported open/short or protection-state fault only when it changes the live graph and passes serviceability, observation, repair, and retest checks."
+        },
+        {
+          "id": "rb100-dc-d-shunt",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Relate DC output D current to a real sensing/limiting path.",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "current-shunt-package",
+          "modelRequirement": "Future qualification must relate the observation to an actual branch current/voltage and declared burden/reference.",
+          "faultRequirement": "Future admission: sense-path fault only when the measured branch relationship changes and instrument interaction remains causal."
+        },
+        {
+          "id": "rb100-dc-d-storage",
+          "allocationId": "dc-power-output-channels",
+          "purpose": "Provide DC output D local output storage and load response.",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-sensor-c-connector",
+          "allocationId": "additional-sensor-conditioning",
+          "purpose": "Expose sensor C to a player-operated external stimulus.",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_C",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb100-sensor-c-limiter",
+          "allocationId": "additional-sensor-conditioning",
+          "purpose": "Limit sensor C input loading within the declared interface.",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_C",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-sensor-c-filter",
+          "allocationId": "additional-sensor-conditioning",
+          "purpose": "Filter sensor C with a solver-visible loading response.",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_C",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-sensor-c-bias",
+          "allocationId": "additional-sensor-conditioning",
+          "purpose": "Set sensor C's declared reference/bias relationship.",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_C",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-sensor-d-connector",
+          "allocationId": "additional-sensor-conditioning",
+          "purpose": "Expose sensor D to a player-operated external stimulus.",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_D",
+          "packageRequirement": "sensor-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb100-sensor-d-limiter",
+          "allocationId": "additional-sensor-conditioning",
+          "purpose": "Limit sensor D input loading within the declared interface.",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_D",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-sensor-d-filter",
+          "allocationId": "additional-sensor-conditioning",
+          "purpose": "Filter sensor D with a solver-visible loading response.",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_D",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-sensor-d-bias",
+          "allocationId": "additional-sensor-conditioning",
+          "purpose": "Set sensor D's declared reference/bias relationship.",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_D",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must preserve external stimulus, loading, reference, filtering, and separating observations across operating states.",
+          "faultRequirement": "Future admission: sensor path open/short/bias fault only with player-operable stimulus, separating observations, and functional retest."
+        },
+        {
+          "id": "rb100-3v3-regulator",
+          "allocationId": "3v3-conditioning",
+          "purpose": "Produce the additional low-voltage control domain from the qualified control rail.",
+          "functionalRegion": "3v3-conditioning",
+          "domain": "AUX_CONTROL_RAIL",
+          "packageRequirement": "low-voltage-regulator-package",
+          "modelRequirement": "Future qualification must produce the declared rail with headroom, line/load, enable, startup, and overload behavior.",
+          "faultRequirement": "Future admission: regulator or storage fault only when rail collapse/overload behavior is solver-backed and repairable."
+        },
+        {
+          "id": "rb100-3v3-input-storage",
+          "allocationId": "3v3-conditioning",
+          "purpose": "Provide input storage for the additional control domain.",
+          "functionalRegion": "3v3-conditioning",
+          "domain": "AUX_CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-3v3-output-storage",
+          "allocationId": "3v3-conditioning",
+          "purpose": "Provide output storage and load response for the additional control domain.",
+          "functionalRegion": "3v3-conditioning",
+          "domain": "AUX_CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "modelRequirement": "Future qualification must expose charge, discharge, stored energy, loading, and permitted measurement behavior in the live graph.",
+          "faultRequirement": "Future admission: supported open/short or bounded degradation only when charge/discharge effects are causal and safely observable."
+        },
+        {
+          "id": "rb100-3v3-reference-filter",
+          "allocationId": "3v3-conditioning",
+          "purpose": "Filter the additional domain's reference/measurement path.",
+          "functionalRegion": "3v3-conditioning",
+          "domain": "AUX_CONTROL_RAIL",
+          "packageRequirement": "filter-component-package",
+          "modelRequirement": "Future qualification must preserve this role's real loading, bias, filtering, or reference relationship in the live graph.",
+          "faultRequirement": "Future admission: supported open or bounded value change only when the role changes live behavior, is physically serviceable, and is diagnostically separable."
+        },
+        {
+          "id": "rb100-monitor-shunt",
+          "allocationId": "current-sense-monitoring",
+          "purpose": "Sense current in a declared output/rail branch through a real series element.",
+          "functionalRegion": "current-monitor",
+          "domain": "CURRENT_MONITOR",
+          "packageRequirement": "current-shunt-package",
+          "modelRequirement": "Future qualification must relate the observation to an actual branch current/voltage and declared burden/reference.",
+          "faultRequirement": "Future admission: sense-path fault only when the measured branch relationship changes and instrument interaction remains causal."
+        },
+        {
+          "id": "rb100-monitor-amplifier",
+          "allocationId": "current-sense-monitoring",
+          "purpose": "Expose the shunt relationship through a bounded monitoring stage.",
+          "functionalRegion": "current-monitor",
+          "domain": "CURRENT_MONITOR",
+          "packageRequirement": "differential-monitor-package",
+          "modelRequirement": "Future qualification must relate the observation to an actual branch current/voltage and declared burden/reference.",
+          "faultRequirement": "Future admission: sense-path fault only when the measured branch relationship changes and instrument interaction remains causal."
+        },
+        {
+          "id": "rb100-monitor-filter",
+          "allocationId": "current-sense-monitoring",
+          "purpose": "Filter the monitor signal without replacing branch-current causality.",
+          "functionalRegion": "current-monitor",
+          "domain": "CURRENT_MONITOR",
+          "packageRequirement": "filter-component-package",
+          "modelRequirement": "Future qualification must relate the observation to an actual branch current/voltage and declared burden/reference.",
+          "faultRequirement": "Future admission: sense-path fault only when the measured branch relationship changes and instrument interaction remains causal."
+        },
+        {
+          "id": "rb100-monitor-reference",
+          "allocationId": "current-sense-monitoring",
+          "purpose": "Provide the monitor's declared reference and burden relationship.",
+          "functionalRegion": "current-monitor",
+          "domain": "CURRENT_MONITOR",
+          "packageRequirement": "reference-package",
+          "modelRequirement": "Future qualification must relate the observation to an actual branch current/voltage and declared burden/reference.",
+          "faultRequirement": "Future admission: sense-path fault only when the measured branch relationship changes and instrument interaction remains causal."
+        },
+        {
+          "id": "rb100-auxiliary-comparator",
+          "allocationId": "healthy-auxiliary-interlock",
+          "purpose": "Provide an independent healthy auxiliary/interlock decision path.",
+          "functionalRegion": "auxiliary-interlock",
+          "domain": "AUX_INTERLOCK",
+          "packageRequirement": "comparator-package",
+          "modelRequirement": "Future qualification must provide an independent healthy function and a reachable, observable interlock contract.",
+          "faultRequirement": "Future admission: auxiliary/interlock fault only after an independent healthy path, public observation, and reachable repair are qualified."
+        },
+        {
+          "id": "rb100-auxiliary-reference",
+          "allocationId": "healthy-auxiliary-interlock",
+          "purpose": "Provide the auxiliary path's independent reference.",
+          "functionalRegion": "auxiliary-interlock",
+          "domain": "AUX_INTERLOCK",
+          "packageRequirement": "reference-package",
+          "modelRequirement": "Future qualification must provide an independent healthy function and a reachable, observable interlock contract.",
+          "faultRequirement": "Future admission: auxiliary/interlock fault only after an independent healthy path, public observation, and reachable repair are qualified."
+        },
+        {
+          "id": "rb100-auxiliary-pullup",
+          "allocationId": "healthy-auxiliary-interlock",
+          "purpose": "Define the auxiliary interlock's default state and loading.",
+          "functionalRegion": "auxiliary-interlock",
+          "domain": "AUX_INTERLOCK",
+          "packageRequirement": "resistor-package",
+          "modelRequirement": "Future qualification must provide an independent healthy function and a reachable, observable interlock contract.",
+          "faultRequirement": "Future admission: auxiliary/interlock fault only after an independent healthy path, public observation, and reachable repair are qualified."
+        },
+        {
+          "id": "rb100-auxiliary-driver",
+          "allocationId": "healthy-auxiliary-interlock",
+          "purpose": "Drive the declared auxiliary/interlock output with an observable causal state.",
+          "functionalRegion": "auxiliary-interlock",
+          "domain": "AUX_INTERLOCK",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "modelRequirement": "Future qualification must provide an independent healthy function and a reachable, observable interlock contract.",
+          "faultRequirement": "Future admission: auxiliary/interlock fault only after an independent healthy path, public observation, and reachable repair are qualified."
+        },
+        {
+          "id": "rb100-dc-output-c-connector",
+          "allocationId": "additional-interface-connectors",
+          "purpose": "Expose DC power output C at a stable external interface.",
+          "functionalRegion": "additional-interfaces",
+          "domain": "EXTERNAL_DC_C",
+          "packageRequirement": "dc-output-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        },
+        {
+          "id": "rb100-dc-output-d-connector",
+          "allocationId": "additional-interface-connectors",
+          "purpose": "Expose DC power output D at a stable external interface.",
+          "functionalRegion": "additional-interfaces",
+          "domain": "EXTERNAL_DC_D",
+          "packageRequirement": "dc-output-connector-package",
+          "modelRequirement": "Future qualification must expose stable physical terminals and the declared external source/load or player stimulus.",
+          "faultRequirement": "Future admission: connector terminal/open or modeled connection fault only at a stable physical locus with a legal repair."
+        }
+      ],
+      "interfaces": [
+        {
+          "id": "rb100-mains-to-entry",
+          "fromDomain": "EXTERNAL_MAINS",
+          "toDomain": "MAINS_ENTRY",
+          "purpose": "Connect the declared source, fuse, clamp, inrush, filter, and primary return semantics."
+        },
+        {
+          "id": "rb100-entry-to-rectifier",
+          "fromDomain": "MAINS_ENTRY",
+          "toDomain": "HV_PRIMARY",
+          "purpose": "Rectify the protected entry path with explicit polarity."
+        },
+        {
+          "id": "rb100-rectifier-to-converter",
+          "fromDomain": "HV_PRIMARY",
+          "toDomain": "PRIMARY_CONVERTER",
+          "purpose": "Feed the offline conversion model from the actual rectified/storage path."
+        },
+        {
+          "id": "rb100-primary-to-isolated-secondary",
+          "fromDomain": "PRIMARY_CONVERTER",
+          "toDomain": "ISOLATION_BOUNDARY",
+          "purpose": "Transfer energy while keeping primary and secondary references distinct."
+        },
+        {
+          "id": "rb100-feedback-across-boundary",
+          "fromDomain": "SECONDARY_RAIL",
+          "toDomain": "PRIMARY_CONVERTER",
+          "purpose": "Carry feedback through a declared isolated coupling contract."
+        },
+        {
+          "id": "rb100-secondary-to-control",
+          "fromDomain": "SECONDARY_RAIL",
+          "toDomain": "CONTROL_RAIL",
+          "purpose": "Produce the control rail through the modeled regulator."
+        },
+        {
+          "id": "rb100-control-to-relay-a",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "RELAY_A",
+          "purpose": "Power and control relay A through its driver."
+        },
+        {
+          "id": "rb100-control-to-relay-b",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "RELAY_B",
+          "purpose": "Power and control relay B through its driver."
+        },
+        {
+          "id": "rb100-control-to-relay-c",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "RELAY_C",
+          "purpose": "Power and control relay C through its driver."
+        },
+        {
+          "id": "rb100-control-to-relay-d",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "RELAY_D",
+          "purpose": "Power and control relay D through its driver."
+        },
+        {
+          "id": "rb100-sensor-a-to-decision",
+          "fromDomain": "SENSOR_A",
+          "toDomain": "CONTROL_DECISION",
+          "purpose": "Carry sensor A's conditioned observation to the decision/reference path."
+        },
+        {
+          "id": "rb100-sensor-b-to-decision",
+          "fromDomain": "SENSOR_B",
+          "toDomain": "CONTROL_DECISION",
+          "purpose": "Carry sensor B's conditioned observation to the decision/reference path."
+        },
+        {
+          "id": "rb100-sensor-c-to-decision",
+          "fromDomain": "SENSOR_C",
+          "toDomain": "CONTROL_DECISION",
+          "purpose": "Carry sensor C's conditioned observation to the decision/reference path."
+        },
+        {
+          "id": "rb100-sensor-d-to-decision",
+          "fromDomain": "SENSOR_D",
+          "toDomain": "CONTROL_DECISION",
+          "purpose": "Carry sensor D's conditioned observation to the decision/reference path."
+        },
+        {
+          "id": "rb100-decision-to-relay-a",
+          "fromDomain": "CONTROL_DECISION",
+          "toDomain": "RELAY_A",
+          "purpose": "Drive relay A from the solved decision/interlock output."
+        },
+        {
+          "id": "rb100-decision-to-relay-b",
+          "fromDomain": "CONTROL_DECISION",
+          "toDomain": "RELAY_B",
+          "purpose": "Drive relay B from the solved decision/interlock output."
+        },
+        {
+          "id": "rb100-decision-to-relay-c",
+          "fromDomain": "CONTROL_DECISION",
+          "toDomain": "RELAY_C",
+          "purpose": "Drive relay C from the solved decision/interlock output."
+        },
+        {
+          "id": "rb100-decision-to-relay-d",
+          "fromDomain": "CONTROL_DECISION",
+          "toDomain": "RELAY_D",
+          "purpose": "Drive relay D from the solved decision/interlock output."
+        },
+        {
+          "id": "rb100-relay-a-to-load",
+          "fromDomain": "RELAY_A",
+          "toDomain": "EXTERNAL_LOAD_A",
+          "purpose": "Expose relay A contact behavior at its load connector."
+        },
+        {
+          "id": "rb100-relay-b-to-load",
+          "fromDomain": "RELAY_B",
+          "toDomain": "EXTERNAL_LOAD_B",
+          "purpose": "Expose relay B contact behavior at its load connector."
+        },
+        {
+          "id": "rb100-relay-c-to-load",
+          "fromDomain": "RELAY_C",
+          "toDomain": "EXTERNAL_LOAD_C",
+          "purpose": "Expose relay C contact behavior at its load interface."
+        },
+        {
+          "id": "rb100-relay-d-to-load",
+          "fromDomain": "RELAY_D",
+          "toDomain": "EXTERNAL_LOAD_D",
+          "purpose": "Expose relay D contact behavior at its load interface."
+        },
+        {
+          "id": "rb100-control-to-dc-c",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "DC_OUTPUT_C",
+          "purpose": "Drive and protect DC power output C."
+        },
+        {
+          "id": "rb100-control-to-dc-d",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "DC_OUTPUT_D",
+          "purpose": "Drive and protect DC power output D."
+        },
+        {
+          "id": "rb100-dc-c-to-external",
+          "fromDomain": "DC_OUTPUT_C",
+          "toDomain": "EXTERNAL_DC_C",
+          "purpose": "Expose DC output C through its connector."
+        },
+        {
+          "id": "rb100-dc-d-to-external",
+          "fromDomain": "DC_OUTPUT_D",
+          "toDomain": "EXTERNAL_DC_D",
+          "purpose": "Expose DC output D through its connector."
+        },
+        {
+          "id": "rb100-control-to-3v3",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "AUX_CONTROL_RAIL",
+          "purpose": "Feed the additional low-voltage domain through its regulator."
+        },
+        {
+          "id": "rb100-3v3-to-aux",
+          "fromDomain": "AUX_CONTROL_RAIL",
+          "toDomain": "AUX_INTERLOCK",
+          "purpose": "Provide the auxiliary/interlock domain's independent supply/reference."
+        },
+        {
+          "id": "rb100-dc-c-to-monitor",
+          "fromDomain": "DC_OUTPUT_C",
+          "toDomain": "CURRENT_MONITOR",
+          "purpose": "Relate a real output branch to current monitoring."
+        },
+        {
+          "id": "rb100-monitor-to-decision",
+          "fromDomain": "CURRENT_MONITOR",
+          "toDomain": "CONTROL_DECISION",
+          "purpose": "Feed the monitoring observation into a declared decision path."
+        },
+        {
+          "id": "rb100-control-to-status",
+          "fromDomain": "CONTROL_RAIL",
+          "toDomain": "STATUS",
+          "purpose": "Derive status from real rail/control state."
+        },
+        {
+          "id": "rb100-player-to-sensor-c",
+          "fromDomain": "PLAYER_STIMULUS",
+          "toDomain": "SENSOR_C",
+          "purpose": "Allow ordinary player operation of sensor C."
+        },
+        {
+          "id": "rb100-player-to-sensor-d",
+          "fromDomain": "PLAYER_STIMULUS",
+          "toDomain": "SENSOR_D",
+          "purpose": "Allow ordinary player operation of sensor D."
+        },
+        {
+          "id": "rb100-aux-to-interlock",
+          "fromDomain": "AUX_INTERLOCK",
+          "toDomain": "CONTROL_DECISION",
+          "purpose": "Expose the independent auxiliary/interlock result to the decision path."
+        },
+        {
+          "id": "rb100-primary-to-chassis",
+          "fromDomain": "PRIMARY_CONVERTER",
+          "toDomain": "PE_CHASSIS",
+          "purpose": "Keep any protective-earth/chassis relation explicit and separate from numerical solver reference."
+        }
+      ],
+      "unsupportedStages": [
+        "generation",
+        "routing",
+        "solver",
+        "diagnostic",
+        "playable"
+      ],
+      "notes": "Architecture roles only; the base carries RB56 purposes and the additions provide heterogeneous channels, shared rails, fan-out, and cross-region contracts."
+    }
+  ]
+}
