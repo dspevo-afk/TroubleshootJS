@@ -3,7 +3,8 @@
 ## Current checkpoint - A01 reference manifests and measurement harness COMPLETE — 2026-09-07
 
 - **Scope/candidate:** Owner-authorized A01 after N00 publication at
-  `55cac1d24528a26505f540ee52f85631e0add4d2`, branch
+  `55cac1d24528a26505f540ee52f85631e0add4d2`, accepted in implementation
+  commit `4a9f4a2f479fc077ba1b6944ebb708cb8406fd12` on branch
   `codex/task43p-final-recovery`; A02 and later work remain outside scope. The
   accepted candidate fingerprints are source
   `bb369d0c53699b8b9c17d15f9e2a15ff946b0b3901f45ad780f409e7c7c673d0` and
@@ -38,8 +39,11 @@
   `PASS` without an injected cleanup-failure canary. Current two-corpus evidence
   and the observed forced-failure cleanup both pass; these are future hardening
   work rather than A01 blockers.
-- **Next:** Verify the local implementation commit and normal push handoff. Do
-  not implement A02 predicate, bend-count or connected-placement corrections.
+- **Publication:** Commit `4a9f4a2f479fc077ba1b6944ebb708cb8406fd12` is present
+  on `origin/codex/task43p-final-recovery`; the established completion email
+  was sent to the configured project address.
+- **Next:** A02 is the next unstarted roadmap boundary. Do not implement its
+  predicate, bend-count or connected-placement corrections in this scope.
 
 ## Historical checkpoint - N00 document/lineage adoption COMPLETE - 2026-09-07
 
