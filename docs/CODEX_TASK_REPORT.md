@@ -42,10 +42,13 @@
   historical diagnostics and are not relabeled.
 - **Follow-ups:** Single-corpus acceptance and the non-injected cleanup-failure
   canary remain future hardening items outside this pass.
-- **Publication:** Review reconciliation, implementation commit, and
-  documentation/evidence commit are complete locally. The normal push, exact
-  remote-SHA verification, and established completion notification remain.
-- **Next:** Publish this A01 correction and stop before A02.
+- **Publication:** Implementation commit
+  `fdabfea1ab6ea0324ba39d76b6ad4173e9bea869` and documentation/evidence commit
+  `e4efd1cfb906e308e818ddbbee5214ca3a4d7fa4` are complete. The branch
+  publication and exact remote-SHA verification were completed, and the
+  established completion email was sent. The final published tip is recorded
+  in the handoff below.
+- **Next:** A01 corrective publication is complete; stop before A02.
 
 ## Historical checkpoint - N00 document/lineage adoption COMPLETE - 2026-09-07
 
