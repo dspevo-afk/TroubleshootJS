@@ -1,0 +1,20 @@
+{
+  "protocol": "TSJ-A01-CORRECTED-REVIEW-SUMMARY-1",
+  "reviewer": "create_thread:01a07d96-ab4a-7b22-b6da-ebb31db3dc5e",
+  "model": "gpt-5.3-codex-spark",
+  "disposition": "PASS",
+  "scope": "Fresh read-only final review of the integrated A01 corrective candidate",
+  "checked": [
+    "collector exceptions remain nonpassing and preserve diagnostics",
+    "wrapper/terminal/report/cleanup/error consistency",
+    "bounded total and per-attempt timing with trace intervals",
+    "preview-served execution provenance through Java, collector and checker",
+    "ten required acceptance cases and corrected evidence summaries",
+    "forced failure retention, debug-off suppression and cleanup evidence",
+    "A02 remains outside scope"
+  ],
+  "followUps": [
+    "check_measurements still permits a single corpus when one receipt is supplied; documented future hardening outside this pass"
+  ],
+  "blockers": []
+}

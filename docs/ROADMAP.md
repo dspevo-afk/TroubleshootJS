@@ -853,7 +853,8 @@ This is a readable planning order, not a second dependency definition. The exact
 <a id="m-a01"></a>
 ### A01 · Reference-board manifests and reproducible measurement harness
 
-**Type / status:** Required early evidence gate; IMPLEMENTED — ACCEPTED.
+**Type / status:** Required early evidence gate; IMPLEMENTED — ACCEPTED after the
+bounded qualification-integrity corrective pass and fresh independent review.
 
 **Purpose and reason:** Expose 60/100-part costs early instead of discovering them after the content library depends on untested assumptions.
 
@@ -864,6 +865,17 @@ This is a readable planning order, not a second dependency definition. The exact
 **Must not be coupled:** Do not wait for mains, a finished generic router, or playable RB100 to begin cost probes; do not claim these probes qualify those capabilities.
 
 **Exact deliverable:** RB15/RB30/RB56/RB100 functional inventories; architecture-stage manifests; versioned workload counters; an identified reference machine; cold/warm run protocol and frozen qualification budget process. An owner-authorized desktop exception is valid when the host is fully identified and the evidence explicitly makes no modest-machine portability claim; a separate modest-host run remains future evidence.
+
+**Corrective-pass closure:** The collector now fails closed on wrapper
+exceptions while retaining diagnostic terminal/report/cleanup/error fields; the
+independent checker enforces finite bounded timing and trace intervals; and the
+preview-served execution provenance is bound through Java and the collector to
+the checker. Fresh two-corpus evidence, forced-failure/debug-off canaries and a
+read-only final review are recorded in the [A01 evidence packet](task-evidence/A01/README.md)
+and its `corrected-*` summaries. The single-corpus checker allowance remains a
+documented future hardening item. The implementation is recorded in
+`fdabfea1ab6ea0324ba39d76b6ad4173e9bea869`; the documentation/evidence commit
+is the final publication commit named in the task handoff.
 
 **Acceptance:** Count physical packages separately from solver elements; expose pads/nets/raw and canonical segments, hypothesis count and matrix metrics. Run available small baselines plus bounded synthetic 20/40/60/100 structural/solver pilots; record unsupported stages rather than fake playable boards. Each 16-attempt corpus records 32 accepted solver steps (64 across pilot and holdout), browser viewport/DPR, timing p50/p95/worst, failure outcomes, memory availability and bounded cancellation.
 

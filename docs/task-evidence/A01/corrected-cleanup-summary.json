@@ -1,0 +1,23 @@
+{
+  "protocol": "TSJ-A01-CORRECTED-CLEANUP-SUMMARY-1",
+  "supportedStopWrapper": "BLOCKED",
+  "supportedStopWrapperResult": "exit 2: preview process parent identity could not be positively identified (launch shell had exited)",
+  "exactOwnedCleanup": "PASS",
+  "processId": 18408,
+  "processStartTicks": 639244095164227829,
+  "port": 8899,
+  "commandLine": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/preview.ps1 -Port 8899",
+  "identityRevalidated": [
+    "PID",
+    "startTicks",
+    "commandLine",
+    "owned script path",
+    "owned port"
+  ],
+  "parentPresent": false,
+  "terminationProven": true,
+  "listenerAbsent": true,
+  "stateRemoved": true,
+  "endpointAfterCleanup": "unreachable",
+  "tabsAfterCollection": []
+}

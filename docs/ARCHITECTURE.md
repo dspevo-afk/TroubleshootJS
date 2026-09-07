@@ -426,10 +426,16 @@ unsupported.
 `tests/benchmarks/a01-reference-boards.json` contains the architecture-only
 RB15/RB30/RB56/RB100 functional inventories. `scripts/collect-a01.mjs` reads the
 versioned developer DOM receipt through the existing Browser API and records
-viewport/DPR, timing summaries, memory availability and cleanup state.
+viewport/DPR, timing summaries, memory availability and cleanup state. Preview
+responses stamp the source, script, served-web and execution-tree digests into
+the loaded document; `A01MeasurementVerifier` publishes those values in its
+report, and the collector retains them as executed-artifact evidence. A wrapper
+exception is retained as nonpassing infrastructure evidence with its terminal,
+report, cleanup and error fields intact.
 `scripts/a01.py` independently validates manifest allocations, electrical
-vectors, cold/warm identity and work counters, frozen budgets, receipt identity
-against the current source/build, and explicit negative outcomes. The compact
+vectors, cold/warm identity and work counters, frozen budgets, finite timing
+totals and traces, receipt identity against both the current source/build and
+the served artifact, and explicit negative outcomes. The compact
 [A01 evidence packet](task-evidence/A01/README.md) records the accepted pilot,
 holdout, forced-failure and debug-off boundaries; it does not qualify routed
 PCB or playable large-board content.

@@ -1,6 +1,17 @@
 # A01 — reference manifests and reproducible measurement harness
 
-Status: IMPLEMENTED — ACCEPTED after fresh independent Luna delta review. Base: `55cac1d24528a26505f540ee52f85631e0add4d2`, branch `codex/task43p-final-recovery`.
+Status: IMPLEMENTED — CORRECTIVE PASS ACCEPTED after fresh independent final review. Base: `3b4fd13db927a673a1d106bdb1ac7d19af9dea12`; implementation commit: `fdabfea1ab6ea0324ba39d76b6ad4173e9bea869`; branch `codex/task43p-final-recovery`.
+
+## Lineage and corrective scope
+
+The original A01 implementation was published in `4a9f4a2f479fc077ba1b6944ebb708cb8406fd12`; its documentation-only successor was
+`3b4fd13db927a673a1d106bdb1ac7d19af9dea12`. Independent review then found
+three qualification-integrity defects: collection exceptions could retain a
+passing wrapper, declared timing limits were not independently enforced, and
+URL-supplied source/build labels were not bound to the served artifact. This
+bounded pass repairs those defects and adds focused regression coverage. The
+CircuitJS solver, A01 fixture families, desktop exception, frozen budgets, and
+all A02 scope remain unchanged.
 
 ## Frozen scope and ownership
 
@@ -52,21 +63,50 @@ player flow, or Q15/Q30/Q60/Q100 qualification. Browser benchmark evidence is
 separate from visible normal-player acceptance. Future release budgets and modest
 hardware portability remain qualified only to the actual declared evidence.
 
-## Final candidate evidence
+## Corrective-pass evidence
 
-The final source candidate fingerprints and build identity are regenerated after
-each source/build change by the A01 identity command; the checker requires both
-receipt values to match that current identity before accepting a corpus.
-The pinned JDK 8/GWT 2.7 OBF build linked all five permutations. The independent
-checker accepted the four architecture manifests and both 16-attempt corpora;
-the live negative routes retained `FAIL:a01` and suppressed the report with
-debug disabled. Compact evidence is in `*-summary.json`; the full receipts are
-retained in the task-owned OS-temp run referenced by the task report.
+The corrected source/build identity is recorded in
+[`corrected-identity-summary.json`](corrected-identity-summary.json). It reports
+five compiled OBF permutations and the execution provenance stamped into the
+served page. The fresh pilot and holdout receipts are summarized in
+[`corrected-pilot-summary.json`](corrected-pilot-summary.json) and
+[`corrected-holdout-summary.json`](corrected-holdout-summary.json); each has 16
+attempts and 32 accepted steps. The independent checker accepted the pair with
+32 attempts and 64 accepted steps; see
+[`corrected-check-summary.json`](corrected-check-summary.json).
 
-The first integrated Luna review identified four evidence/contract gaps. The
-implementation repaired them, and the required fresh read-only Luna delta
-review passed against this candidate. Two nonblocking follow-ups remain: the
-checker accepts a single corpus when only one receipt is supplied, and the
-forced-canary attempt record labels cleanup `PASS` without an injected
-cleanup-failure canary. Current pilot/holdout evidence and the observed forced
-failure cleanup pass; those hardening items are outside this milestone.
+The forced-failure route retained a diagnostic `FAIL:a01` report, restored the
+owner, and closed its tab; the checker rejected it as a qualification corpus.
+[`corrected-negative-summary.json`](corrected-negative-summary.json) records
+that result. The debug-off route retained no report or terminal result while
+still closing its tab; see [`corrected-debug-off-summary.json`](corrected-debug-off-summary.json).
+
+The collector now preserves terminal, report, cleanup, and error fields while
+forcing any wrapper exception to `INFRASTRUCTURE_FAILURE`; the independent
+checker rejects wrapper/report contradictions, cleanup failures, recorded
+errors, timing-budget violations, trace intervals outside attempts, and served
+artifact mismatches. Focused cases 1–10 are covered by
+`tests/contracts/a01_qualification_integrity.py` and
+`tests/contracts/a01_collection_integrity.mjs`.
+
+The Browser tabs were empty after collection. The supported preview stop wrapper
+failed closed because the launch shell's parent had exited. The exact recorded
+preview PID/start identity, command line, owned script and port were revalidated
+before termination through the existing verifier isolation module; termination,
+listener absence, endpoint unreachability, and state removal all passed. The
+result is recorded in [`corrected-cleanup-summary.json`](corrected-cleanup-summary.json).
+
+The original `*-summary.json` files and earlier raw receipts remain historical
+diagnostic evidence and are not relabeled as proof of this corrected behavior.
+
+The fresh independent final review returned PASS with no blockers; its scope and
+one nonblocking single-corpus follow-up are recorded in
+[`corrected-review-summary.json`](corrected-review-summary.json).
+
+## Remaining limits
+
+This pass does not add A02 predicates, bend counts, coordinate corrections,
+large-board qualification, or modest-host portability evidence. The checker
+continues to accept a single corpus when invoked with one receipt, and the
+forced-canary attempt does not inject a cleanup-failure route; both are recorded
+future hardening items outside this bounded correction.

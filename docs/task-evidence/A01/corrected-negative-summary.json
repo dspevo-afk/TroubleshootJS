@@ -1,0 +1,24 @@
+{
+  "protocol": "TSJ-A01-CORRECTED-NEGATIVE-SUMMARY-1",
+  "receipt": "pilot-2-negative.json",
+  "status": "FAIL",
+  "terminal": "FAIL:a01:a01-explicit-forced-failure",
+  "reportPresent": true,
+  "reportStatus": "FAIL",
+  "retainedOutcomes": 1,
+  "cleanup": "PASS",
+  "ownerRestored": true,
+  "tabClosed": true,
+  "forcedFailure": true,
+  "sourceFingerprint": "876e268e7e8193efb16b7135272d613ff000e1e644c6ccc7f61b0debb14c9d98",
+  "buildFingerprint": "3e8c48662a6f9d82017310b230e8a618af762702b8c2a6f7a77317ce97cce883",
+  "executedArtifact": {
+    "executionDigest": "210329fabc7391fd1add00332594eb94aec4e0ba64b0937d3c94db68998be5b2",
+    "fileCount": 1298,
+    "protocol": "troubleshootjs-execution-provenance-v1",
+    "scriptDigest": "efbc4a7f05cff4f0912418f335a86fdb99a43619d018127815af0728bfde1dec",
+    "sourceDigest": "0cf569e9b6cd4ac99f16180e7a891eb7186c8355f74018fc78df258e86f7eba0",
+    "webDigest": "7776fed4fd089a1f80c4d559a9e4a28e3c63b2dadba8141881f5cf388b6a87d6"
+  },
+  "diagnosticCheckerResult": "EXPECTED_REJECTION: measurement corpus contains a failed outcome"
+}
