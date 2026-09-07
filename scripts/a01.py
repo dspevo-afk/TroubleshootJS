@@ -22,6 +22,9 @@ STEPS_PER_ATTEMPT = 2
 ATTEMPTS_PER_CORPUS = 16
 EXPECTED_STEPS_PER_CORPUS = STEPS_PER_ATTEMPT * ATTEMPTS_PER_CORPUS
 EXPECTED_COMBINED_STEPS = EXPECTED_STEPS_PER_CORPUS * 2
+MAX_ATTEMPT_ELAPSED_MS = 5000
+MAX_TOTAL_ELAPSED_MS = 30000
+TRACE_INTERVAL_TOLERANCE_MS = 0
 ALLOCATIONS = {
     "RB15": [4, 5, 3, 2, 1],
     "RB30": [4, 4, 8, 10, 2, 2],
@@ -113,9 +116,11 @@ def identity():
     names = subprocess.check_output(
         ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
         cwd=ROOT, text=True, encoding="utf-8").splitlines()
-    paths = sorted({name for name in names if name.startswith(
-        ("src/", "scripts/", "tests/contracts/", "tests/benchmarks/")) or
-        name in ("build.xml", "war/circuitjs.html")})
+    paths = sorted({name for name in names if
+        (name.startswith(("src/", "scripts/", "tests/contracts/", "tests/benchmarks/")) or
+         name in ("build.xml", "war/circuitjs.html")) and
+        not name.lower().endswith(".pyc") and "/__pycache__/" not in
+        ("/" + name.lower().replace("\\", "/"))})
     entries = [{"path": path, "sha256": hashlib.sha256((ROOT / path).read_bytes()).hexdigest()}
                for path in paths if (ROOT / path).is_file()]
     payload = json.dumps(entries, sort_keys=True, separators=(",", ":")).encode()
@@ -133,6 +138,51 @@ def identity():
         "buildFingerprint": hashlib.sha256(json.dumps(
             compiled_entries, sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
         "compiled": compiled_entries,
+        "execution": execution_provenance(),
+    }
+
+
+def execution_provenance():
+    """Hash the source, verifier scripts, and web tree selected by preview.ps1.
+
+    This deliberately mirrors Get-VerifierExecutionTreeProvenance rather than
+    treating the caller's URL labels as proof of the artifact the browser ran.
+    """
+    category_records = []
+    category_results = {}
+    for category in ("src", "scripts", "war"):
+        root = ROOT / category
+        require(root.is_dir(), "execution provenance root " + category)
+        files = [path for path in root.rglob("*")
+                 if path.is_file() and path.suffix.lower() != ".pyc" and
+                 "__pycache__" not in path.parts]
+        files.sort(key=lambda path: path.relative_to(root).as_posix().lower())
+        seen = set()
+        records = []
+        for path in files:
+            relative = path.relative_to(root).as_posix()
+            folded = relative.lower()
+            require(folded not in seen,
+                    "execution provenance duplicate path " + relative)
+            seen.add(folded)
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            records.append(relative + "=" + digest)
+        category_digest = hashlib.sha256("\n".join(records).encode("utf-8")).hexdigest()
+        category_results[category] = {
+            "root": root,
+            "digest": category_digest,
+            "fileCount": len(records),
+        }
+        category_records.extend(category + "/" + record for record in records)
+    execution_digest = hashlib.sha256(
+        "\n".join(category_records).encode("utf-8")).hexdigest()
+    return {
+        "protocol": "troubleshootjs-execution-provenance-v1",
+        "sourceDigest": category_results["src"]["digest"],
+        "scriptDigest": category_results["scripts"]["digest"],
+        "webDigest": category_results["war"]["digest"],
+        "executionDigest": execution_digest,
+        "fileCount": sum(item["fileCount"] for item in category_results.values()),
     }
 
 
@@ -162,15 +212,21 @@ def percentile(values, percentage):
     return ordered[max(0, min(len(ordered) - 1, index))]
 
 
-def validate_trace(trace, name):
+def validate_trace(trace, name, elapsed=None):
     require(isinstance(trace, list) and len(trace) >= 5, name + " timing trace")
+    require(all(isinstance(item, dict) for item in trace),
+            name + " timing trace event objects")
     events = [item.get("event") for item in trace]
     required = ["constructed", "analyzed", "step1", "step2", "finished"]
     require(events[:5] == required, name + " timing trace events")
     previous = 0.0
     for item in trace:
         value = finite(item.get("ms"), name + " timing trace")
-        require(value >= previous, name + " timing trace is not monotonic")
+        require(value >= 0 and value >= previous,
+                name + " timing trace is not monotonic/nonnegative")
+        if elapsed is not None:
+            require(value <= elapsed + TRACE_INTERVAL_TOLERANCE_MS,
+                    name + " timing trace is outside the reported interval")
         previous = value
 
 
@@ -241,8 +297,9 @@ def validate_attempt(attempt, report_name):
                 close(finite(observed, prefix + " node voltage"), expected, 1e-6),
                 prefix + " independent node-voltage oracle at " + str(index))
     elapsed = finite(attempt.get("elapsedMs"), prefix + " elapsedMs")
-    require(elapsed >= 0 and elapsed <= 5000, prefix + " attempt budget")
-    validate_trace(attempt.get("timingTrace"), prefix)
+    require(elapsed >= 0 and elapsed <= MAX_ATTEMPT_ELAPSED_MS,
+            prefix + " attempt budget")
+    validate_trace(attempt.get("timingTrace"), prefix, elapsed)
     require(attempt.get("stageStatus") == "SOLVER_PASS", prefix + " stage status")
     require(attempt.get("identityMatchesWarm") is True, prefix + " cold/warm identity flag")
 
@@ -267,16 +324,23 @@ def validate_failure_attempt(attempt, report_name):
 def validate_performance(report, attempts, name):
     performance = report.get("performance")
     require(isinstance(performance, dict), name + " missing performance summary")
-    passed = [int(finite(item.get("elapsedMs"), name + " elapsed"))
-              for item in attempts if item.get("status") == "PASS"]
+    passed = []
+    for item in attempts:
+        if item.get("status") != "PASS":
+            continue
+        elapsed = finite(item.get("elapsedMs"), name + " elapsed")
+        require(elapsed >= 0 and elapsed <= MAX_ATTEMPT_ELAPSED_MS,
+                name + " performance attempt budget")
+        require(elapsed.is_integer(), name + " performance elapsed must be integral")
+        passed.append(int(elapsed))
     failed = [item for item in attempts if item.get("status") != "PASS"]
-    require(performance.get("sampleCount") == len(attempts) and
-            performance.get("passedAttempts") == len(passed) and
-            performance.get("failedAttempts") == len(failed),
+    require(integer(performance.get("sampleCount"), name + " performance sampleCount") == len(attempts) and
+            integer(performance.get("passedAttempts"), name + " performance passedAttempts") == len(passed) and
+            integer(performance.get("failedAttempts"), name + " performance failedAttempts") == len(failed),
             name + " performance outcome accounting")
-    require(performance.get("p50AttemptElapsedMs") == percentile(passed, 50) and
-            performance.get("p95AttemptElapsedMs") == percentile(passed, 95) and
-            performance.get("worstAttemptElapsedMs") == (max(passed) if passed else 0),
+    require(integer(performance.get("p50AttemptElapsedMs"), name + " performance p50") == percentile(passed, 50) and
+            integer(performance.get("p95AttemptElapsedMs"), name + " performance p95") == percentile(passed, 95) and
+            integer(performance.get("worstAttemptElapsedMs"), name + " performance worst") == (max(passed) if passed else 0),
             name + " performance percentiles")
     memory = performance.get("memory")
     require(isinstance(memory, dict) and memory.get("status") in ("AVAILABLE", "UNAVAILABLE"),
@@ -289,6 +353,20 @@ def validate_performance(report, attempts, name):
             integer(memory.get(field), name + " memory " + field)
     require(performance.get("cancellation") == "bounded-two-steps-per-attempt",
             name + " cancellation accounting")
+
+
+def validate_executed_artifact(report, name):
+    artifact = report.get("executedArtifact")
+    require(isinstance(artifact, dict) and
+            artifact.get("protocol") == "troubleshootjs-execution-provenance-v1",
+            name + " missing executed artifact provenance")
+    for field in ("sourceDigest", "scriptDigest", "webDigest", "executionDigest"):
+        value = artifact.get(field)
+        require(isinstance(value, str) and len(value) == 64 and
+                all(char in "0123456789abcdef" for char in value),
+                name + " invalid executed artifact " + field)
+    integer(artifact.get("fileCount"), name + " executed artifact fileCount", 1)
+    return artifact
 
 
 def validate_browser_receipt(value, name):
@@ -326,12 +404,35 @@ def report_from_value(value, name):
         require(value.get("status") in ("PASS", "FAIL"), name + " collection status")
         report = value.get("report")
         require(isinstance(report, dict), name + " missing report")
-        require(value.get("terminal", "").startswith(("PASS:a01", "FAIL:a01")),
+        terminal = value.get("terminal", "")
+        require(isinstance(terminal, str) and terminal.startswith(("PASS:a01", "FAIL:a01")),
                 name + " terminal result")
+        terminal_status = "PASS" if terminal.startswith("PASS:") else "FAIL"
+        require(value.get("status") == terminal_status and
+                report.get("status") == terminal_status,
+                name + " wrapper/terminal/report status contradiction")
+        require(value.get("cleanup") in ("PASS", "FAIL", "UNKNOWN"),
+                name + " collection cleanup result")
+        recorded_errors = []
+        for field in ("error", "cleanupError"):
+            if field in value and value.get(field) not in (None, ""):
+                require(isinstance(value.get(field), str) and value[field].strip(),
+                        name + " malformed recorded " + field)
+                recorded_errors.append(field)
+        require(not recorded_errors,
+                name + " collection error cannot coexist with qualification status")
+        if value.get("status") == "PASS":
+            require(value.get("cleanup") == "PASS",
+                    name + " passing collection did not clean up")
         require(value.get("sourceFingerprint") == report.get("sourceFingerprint"),
                 name + " source identity mismatch")
         require(value.get("buildFingerprint") == report.get("buildFingerprint"),
                 name + " build identity mismatch")
+        receipt_artifact = value.get("artifactIdentity")
+        require(isinstance(receipt_artifact, dict),
+                name + " missing collected artifact provenance")
+        require(receipt_artifact == report.get("executedArtifact"),
+                name + " collected/executed artifact provenance mismatch")
         validate_browser_receipt(value, name)
     else:
         report = value
@@ -342,6 +443,7 @@ def report_from_value(value, name):
         require(isinstance(report.get(field), str) and
                 len(report[field]) == 64 and all(c in "0123456789abcdef" for c in report[field]),
                 name + " missing " + field)
+    validate_executed_artifact(report, name)
     corpus = report.get("corpus")
     require(corpus in SEEDS, name + " report corpus")
     integer(report.get("round"), name + " report round")
@@ -377,12 +479,15 @@ def report_from_value(value, name):
     require(report.get("attemptCount") == ATTEMPTS_PER_CORPUS and
             report.get("acceptedSteps") == accepted_steps == EXPECTED_STEPS_PER_CORPUS,
             name + " aggregate step accounting")
+    total_elapsed = finite(report.get("totalElapsedMs"), name + " totalElapsedMs")
+    require(total_elapsed >= 0 and total_elapsed <= MAX_TOTAL_ELAPSED_MS,
+            name + " total measurement budget")
     budget = report.get("budget")
     require(isinstance(budget, dict) and budget.get("protocol") == "TSJ-A01-BUDGET-1" and
             budget.get("version") == "a01-budget-v1" and budget.get("frozen") is True and
             budget.get("frozenBeforeHoldout") is True and
-            budget.get("maxAttemptElapsedMs") == 5000 and
-            budget.get("maxTotalElapsedMs") == 30000 and
+            budget.get("maxAttemptElapsedMs") == MAX_ATTEMPT_ELAPSED_MS and
+            budget.get("maxTotalElapsedMs") == MAX_TOTAL_ELAPSED_MS and
             budget.get("maxSolverElements") == 102 and
             budget.get("maxMatrixFullSize") == 103 and
             budget.get("requiredAcceptedSteps") == EXPECTED_STEPS_PER_CORPUS and
@@ -403,6 +508,8 @@ def report_from_value(value, name):
         integer(baseline.get(field), name + " baseline " + field)
     require(report.get("originalOwnerRestored") is True and report.get("cleanup") == "PASS",
             name + " owner cleanup")
+    require(total_elapsed >= max(item["elapsedMs"] for item in attempts),
+            name + " aggregate timing precedes an attempt")
     validate_performance(report, attempts, name)
     return report
 
@@ -429,6 +536,10 @@ def check_measurements(files):
     require(next(iter(source_ids)) == expected_identity["sourceFingerprint"] and
             next(iter(build_ids)) == expected_identity["buildFingerprint"],
             "receipts are not bound to the current source/build artifacts")
+    expected_execution = expected_identity["execution"]
+    for report in reports:
+        require(report["executedArtifact"] == expected_execution,
+                "receipt is not bound to the served/executed artifact")
     accepted_steps = sum(sum(item["acceptedStepCount"] for item in report["attempts"])
                          for report in reports)
     require(accepted_steps == EXPECTED_STEPS_PER_CORPUS * len(reports),
@@ -444,6 +555,7 @@ def check_measurements(files):
         else EXPECTED_STEPS_PER_CORPUS,
         "sourceFingerprint": next(iter(source_ids)),
         "buildFingerprint": next(iter(build_ids)),
+        "executedArtifact": expected_execution,
         "budgetVersion": "a01-budget-v1",
         "timingIndependentIdentity": True,
         "allOutcomesRetained": True,

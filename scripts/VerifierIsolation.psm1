@@ -1436,7 +1436,11 @@ function Get-VerifierExecutionTreeProvenance($RepositoryRoot) {
         [void](Assert-VerifierPhysicalOwnedPath $root $categoryRoot -ValidateTree)
         $records = New-Object Collections.Generic.List[string]
         $filePaths = New-Object Collections.Generic.List[string]
-        foreach ($file in @(Get-ChildItem -LiteralPath $categoryRoot -Recurse -File -ErrorAction Stop)) {
+        foreach ($file in @(Get-ChildItem -LiteralPath $categoryRoot -Recurse -File -ErrorAction Stop |
+                Where-Object {
+                    $_.Extension -ine '.pyc' -and
+                    $_.FullName -notmatch '(\\|/)__pycache__(\\|/)'
+                })) {
             [void]$filePaths.Add([string]$file.FullName)
         }
         # PowerShell's default comparer is culture-sensitive and can produce

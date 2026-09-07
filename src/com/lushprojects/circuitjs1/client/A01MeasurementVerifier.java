@@ -41,6 +41,15 @@ final class A01MeasurementVerifier {
         require(round >= 0 && round <= 9, "A01 round is outside the bounded range");
         require(isFingerprint(sourceFingerprint) && isFingerprint(buildFingerprint),
             "A01 source/build identity must be a bound lowercase SHA-256 digest");
+        String executedSourceDigest = servedArtifactDigest("source");
+        String executedScriptDigest = servedArtifactDigest("script");
+        String executedWebDigest = servedArtifactDigest("web");
+        String executedDigest = servedArtifactDigest("execution");
+        String executedFileCount = servedArtifactFileCount();
+        require(isFingerprint(executedSourceDigest) && isFingerprint(executedScriptDigest) &&
+            isFingerprint(executedWebDigest) && isFingerprint(executedDigest) &&
+            isPositiveInteger(executedFileCount),
+            "A01 executed artifact provenance is missing from the loaded preview");
         String[] seeds = seedStrings(corpus);
         GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
         require(owner != null && sim.getGeneratedChallengeController() != null &&
@@ -134,7 +143,8 @@ final class A01MeasurementVerifier {
             restored = true;
             sim.publishA01CleanupForDeveloperVerification("PASS");
             return reportJson(corpus, round, sourceFingerprint, buildFingerprint, baseline,
-                attempts, totalElapsed, false);
+                attempts, totalElapsed, false, executedSourceDigest, executedScriptDigest,
+                executedWebDigest, executedDigest, executedFileCount);
         } catch (Throwable failure) {
             primary = failure;
             throwFailure(failure);
@@ -164,7 +174,9 @@ final class A01MeasurementVerifier {
                 sim.publishA01EvidenceForDeveloperVerification(failureReportJson(corpus, round,
                     sourceFingerprint, buildFingerprint, baseline, attempts,
                     System.currentTimeMillis() - totalStart, forcedFailure, restored,
-                    cleanupStatus, primary == null ? cleanupFailure : primary));
+                    cleanupStatus, primary == null ? cleanupFailure : primary,
+                    executedSourceDigest, executedScriptDigest, executedWebDigest,
+                    executedDigest, executedFileCount));
             }
             sim.publishA01CleanupForDeveloperVerification(cleanupStatus);
             if (cleanupFailure != null && primary == null)
@@ -396,21 +408,28 @@ final class A01MeasurementVerifier {
 
     private static String reportJson(String corpus, int round, String sourceFingerprint,
             String buildFingerprint, String baseline, List<String> attempts, long elapsed,
-            boolean forced) {
+            boolean forced, String executedSourceDigest, String executedScriptDigest,
+            String executedWebDigest, String executedDigest, String executedFileCount) {
         return reportJsonWithStatus(corpus, round, sourceFingerprint, buildFingerprint, baseline,
-            attempts, elapsed, forced, "PASS", true, "PASS", null);
+            attempts, elapsed, forced, "PASS", true, "PASS", null, executedSourceDigest,
+            executedScriptDigest, executedWebDigest, executedDigest, executedFileCount);
     }
 
     private static String failureReportJson(String corpus, int round, String sourceFingerprint,
             String buildFingerprint, String baseline, List<String> attempts, long elapsed,
-            boolean forced, boolean restored, String cleanup, Throwable failure) {
+            boolean forced, boolean restored, String cleanup, Throwable failure,
+            String executedSourceDigest, String executedScriptDigest, String executedWebDigest,
+            String executedDigest, String executedFileCount) {
         return reportJsonWithStatus(corpus, round, sourceFingerprint, buildFingerprint, baseline,
-            attempts, elapsed, forced, "FAIL", restored, cleanup, failure);
+            attempts, elapsed, forced, "FAIL", restored, cleanup, failure, executedSourceDigest,
+            executedScriptDigest, executedWebDigest, executedDigest, executedFileCount);
     }
 
     private static String reportJsonWithStatus(String corpus, int round, String sourceFingerprint,
             String buildFingerprint, String baseline, List<String> attempts, long elapsed,
-            boolean forced, String status, boolean restored, String cleanup, Throwable failure) {
+            boolean forced, String status, boolean restored, String cleanup, Throwable failure,
+            String executedSourceDigest, String executedScriptDigest, String executedWebDigest,
+            String executedDigest, String executedFileCount) {
         StringBuilder json = new StringBuilder();
         json.append("{\"protocol\":").append(q(PROTOCOL));
         json.append(",\"status\":").append(q(status));
@@ -419,6 +438,12 @@ final class A01MeasurementVerifier {
         json.append(",\"fixtureVersion\":").append(q(FIXTURE_VERSION));
         json.append(",\"sourceFingerprint\":").append(q(sourceFingerprint));
         json.append(",\"buildFingerprint\":").append(q(buildFingerprint));
+        json.append(",\"executedArtifact\":{\"protocol\":\"troubleshootjs-execution-provenance-v1\"");
+        json.append(",\"sourceDigest\":").append(q(executedSourceDigest));
+        json.append(",\"scriptDigest\":").append(q(executedScriptDigest));
+        json.append(",\"webDigest\":").append(q(executedWebDigest));
+        json.append(",\"executionDigest\":").append(q(executedDigest));
+        json.append(",\"fileCount\":").append(executedFileCount).append('}');
         json.append(",\"architectureManifest\":\"tests/benchmarks/a01-reference-boards.json\"");
         json.append(",\"referenceHost\":\"docs/task-evidence/A01/reference-host.json\"");
         json.append(",\"baseline\":").append(baseline);
@@ -635,6 +660,15 @@ final class A01MeasurementVerifier {
             Math.abs(actual - expected) <= tolerance;
     }
 
+    private static native String servedArtifactDigest(String kind) /*-{
+        var name = "data-tsj-preview-" + kind + "-digest";
+        return $doc.documentElement.getAttribute(name) || "";
+    }-*/;
+
+    private static native String servedArtifactFileCount() /*-{
+        return $doc.documentElement.getAttribute("data-tsj-preview-file-count") || "";
+    }-*/;
+
     private static boolean isFingerprint(String value) {
         if (value == null || value.length() != 64)
             return false;
@@ -644,6 +678,21 @@ final class A01MeasurementVerifier {
                 return false;
         }
         return true;
+    }
+
+    private static boolean isPositiveInteger(String value) {
+        if (value == null || value.length() == 0)
+            return false;
+        for (int index = 0; index < value.length(); index++) {
+            char c = value.charAt(index);
+            if (c < '0' || c > '9')
+                return false;
+        }
+        try {
+            return Long.parseLong(value) > 0;
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
     }
 
     private static String safeMessage(Throwable failure) {

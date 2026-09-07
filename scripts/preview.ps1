@@ -105,10 +105,29 @@ function Get-PreviewResponse([string]$AbsolutePath) {
     # serve another worktree's file.
     [void](Assert-VerifierPhysicalOwnedPath $webRoot $webRoot -AllowRoot)
     [void](Assert-VerifierPhysicalOwnedPath $webRoot $file)
+    $bytes = [IO.File]::ReadAllBytes($file)
+    if ($relativePath -eq 'circuitjs.html') {
+        # Stamp the page with the provenance computed from this exact serving
+        # tree.  The A01 Java route reads these attributes from the loaded DOM,
+        # so URL expectations cannot masquerade as the artifact that ran.
+        $html = [Text.UTF8Encoding]::new($false).GetString($bytes)
+        $marker = '<html>'
+        if (-not $html.Contains($marker)) {
+            throw 'Preview circuitjs.html did not contain its identity injection anchor.'
+        }
+        $attributes = ' data-tsj-preview-identity-protocol="troubleshootjs-execution-provenance-v1"' +
+            ' data-tsj-preview-source-digest="' + $executionProvenance.SourceDigest + '"' +
+            ' data-tsj-preview-script-digest="' + $executionProvenance.ScriptDigest + '"' +
+            ' data-tsj-preview-web-digest="' + $executionProvenance.WebDigest + '"' +
+            ' data-tsj-preview-execution-digest="' + $executionProvenance.Digest + '"' +
+            ' data-tsj-preview-file-count="' + $executionProvenance.FileCount + '"'
+        $html = $html.Replace($marker, '<html' + $attributes + '>')
+        $bytes = [Text.UTF8Encoding]::new($false).GetBytes($html)
+    }
     return [pscustomobject]@{
         StatusCode = 200
         ContentType = getContentType $file
-        Bytes = [IO.File]::ReadAllBytes($file)
+        Bytes = $bytes
     }
 }
 

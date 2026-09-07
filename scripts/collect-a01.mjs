@@ -42,6 +42,14 @@ export async function collectA01({browser, baseUrl, outDir, corpus = 'pilot',
         terminal: document.documentElement.getAttribute('data-tsj-verification'),
         report: document.documentElement.getAttribute('data-tsj-a01-report'),
         cleanup: document.documentElement.getAttribute('data-tsj-a01-cleanup'),
+        artifactIdentity: {
+          protocol: document.documentElement.getAttribute('data-tsj-preview-identity-protocol'),
+          sourceDigest: document.documentElement.getAttribute('data-tsj-preview-source-digest'),
+          scriptDigest: document.documentElement.getAttribute('data-tsj-preview-script-digest'),
+          webDigest: document.documentElement.getAttribute('data-tsj-preview-web-digest'),
+          executionDigest: document.documentElement.getAttribute('data-tsj-preview-execution-digest'),
+          fileCount: Number(document.documentElement.getAttribute('data-tsj-preview-file-count'))
+        },
         normalReady: Array.from(document.querySelectorAll('button')).some(b => b.textContent === 'Retest Customer'),
         scripts: Array.from(document.querySelectorAll('script[src]')).map(s => s.getAttribute('src')),
         browser: {
@@ -66,6 +74,7 @@ export async function collectA01({browser, baseUrl, outDir, corpus = 'pilot',
       }));
       receipt.terminal = state.terminal;
       receipt.cleanup = state.cleanup;
+      receipt.artifactIdentity = state.artifactIdentity;
       receipt.scripts = state.scripts;
       receipt.browser = state.browser;
       if (!debug) {
@@ -91,6 +100,10 @@ export async function collectA01({browser, baseUrl, outDir, corpus = 'pilot',
     if (receipt.status === 'INFRASTRUCTURE_FAILURE') throw new Error('A01 terminal result deadline expired');
   } catch (err) {
     primary = err;
+    // A retained collection exception is diagnostic evidence, never a passing
+    // qualification outcome.  Preserve the terminal/report/cleanup fields so
+    // the independent checker can explain the contradiction.
+    receipt.status = 'INFRASTRUCTURE_FAILURE';
     receipt.error = String(err.message || err);
   } finally {
     try { if (tab) { await tab.close(); receipt.tabClosed = true; } }
