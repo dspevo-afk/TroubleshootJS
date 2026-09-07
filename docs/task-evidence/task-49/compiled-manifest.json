@@ -1,0 +1,38 @@
+{
+  "protocol": "TSJ-TASK49-COMPILED-1",
+  "source": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+  "style": "OBF",
+  "permutations": 5,
+  "files": [
+    {
+      "path": "war/circuitjs1/59FD4D321E744FD56D8B0C982DF340FE.cache.js",
+      "sha256": "eabd2e4e5ef15af3f8735d4a1de4fbb7f490a2f4804fb7d5a32a5b1e077a6ad7",
+      "bytes": 1763440
+    },
+    {
+      "path": "war/circuitjs1/5A9FC1F199118DDE7F74180FA39D5B0E.cache.js",
+      "sha256": "05e0b9ca19351a316683e25c66fd3ea939cde8b1d6858645333f6e946a7dab1b",
+      "bytes": 1673601
+    },
+    {
+      "path": "war/circuitjs1/8C611AC4E492AA662972CB6E738FECD3.cache.js",
+      "sha256": "5e3ea40ab0bc25c511dcd00627718b6a03e6607284411721e4bd98c38455f053",
+      "bytes": 1765779
+    },
+    {
+      "path": "war/circuitjs1/B47DCAB618662B553C213B2241D1069A.cache.js",
+      "sha256": "8b1865e310535f2f551b5aa73cdd56d632e6522a314daa2959f3edd69cf5613c",
+      "bytes": 1765107
+    },
+    {
+      "path": "war/circuitjs1/BAEB8F97F1A9EEDAA85F5C4E3F2E55C9.cache.js",
+      "sha256": "257a6258677386431120f0166ae2d9c4f070f2a391760d65d89ccc39663a331c",
+      "bytes": 1763903
+    },
+    {
+      "path": "war/circuitjs1/circuitjs1.nocache.js",
+      "sha256": "d5c7b4eabe111316ba878af9dc0336609c8d7684f956c7217c1ff27210ed3799",
+      "bytes": 7827
+    }
+  ]
+}

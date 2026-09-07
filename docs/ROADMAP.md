@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-09-06 — Task 48 accepted and G5 satisfied; Task 49 unstarted_
+_Last updated: 2026-09-07 — Task 49 complete; separate pre-Task50 gate next; Task 50 unstarted_
 
 ## Purpose
 
@@ -1953,7 +1953,8 @@ recovery, independent correspondence and fresh-owner isolation. Final JDK8/GWT
 OBF five-permutation build, affected legacy regressions and all independent
 source reviews pass. Final independent evidence review PASS; no blocker remains.
 G5 is satisfied. The accepted implementation is the commit containing this update;
-its final handoff records the verified publication SHA. Task49 remains unstarted.
+its final handoff records the verified publication SHA. Task49 was unstarted at
+that Task48 handoff; its subsequent qualification is recorded below.
 
 **Purpose:** Prove the new contracts immediately with a small real playable
 challenge.
@@ -2003,7 +2004,24 @@ proof pattern.
 
 ## Task 49 — Intent-Driven Value Synthesis v1
 
-**Status:** `[>] NEXT — UNSTARTED; REQUIRES SEPARATE OWNER AUTHORIZATION`
+**Status:** `[x] COMPLETE — implementation, final acceptance and independent review passed`
+
+**Accepted proof:** The [Task49 packet](task-evidence/task-49/README.md) records
+one immutable resolved load recipe, the existing E12 catalog, 270-ohm/0.25-W and
+330-ohm/0.22-W choices, actual typed electrical constraints and deterministic
+block VALUES selection. Generator3 introduces the new policy while generator2
+retains Task48's fixed 330-ohm/0.25-W meaning and exact replay receipts. CircuitJS
+proves both values, both fault owners, healthy/failed/repaired operation, physical
+correspondence and customer retest. Final JDK8/GWT five-permutation build, pure
+and runtime regressions, two visible player loops, four screenshots, privacy,
+negative canaries and independent Luna MAX source/delta reviews pass. The
+accepted implementation is the commit containing this update; the final
+handoff records publication verification and Gmail outcome.
+
+**Retained limits:** One bounded LED-load policy, two admitted standard values,
+one axial resistor package, and an explicit CircuitJS LED-model envelope.
+The full repair catalog remains available for wrong and alternative repairs.
+This is not a general design engine or a manufacturing/rating certification.
 
 **Purpose:** Stop family/block growth from duplicating hard-coded value tables.
 
@@ -2026,13 +2044,20 @@ CircuitJS verifies actual behavior.
 
 **Addresses:** Procedural-generation audit value-synthesis finding.
 
-**Unlocks:** Task 50 only.
+**Unlocks:** A separate bounded pre-Task50 gate. Task50 remains unstarted.
+
+Before Task50 implementation, that separately authorized gate must align
+diagnostic proof enumeration with the canonical admitted-candidate eligibility
+predicate; execute a small physical-capacity/layout smoke using the actual
+proposed Task50 support-block shape; and separately adjudicate the known
+bend-count and connected-placement-target findings when relevant to that smoke.
+Task49 records this requirement only and implements none of those follow-ups.
 
 ---
 
 ## Task 50 — Purposeful Auxiliary and Healthy-Support Block Proof
 
-**Status:** [!] Blocked by Tasks 48–49
+**Status:** [!] UNSTARTED — requires the separate pre-Task50 gate and owner authorization
 
 **Purpose:** Add diagnostic realism without decorative junk.
 
@@ -3679,7 +3704,7 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Task 49 — unstarted; requires separate owner authorization**
+**Pre-Task50 bounded eligibility and physical smoke gate — unstarted**
 
 C1/C2, the authorized efficiency work and Task 43P acceptance are complete.
 The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
@@ -3705,7 +3730,11 @@ separately authorized Task48 only. Its [controlled-indicator qualification](task
 now passes the bounded typed relation, two-owner physics/diagnosis/repair, normal
 visible player loop, privacy, replay, mutation/installation recovery, independent
 physical correspondence, final build and selected regressions. Final independent
-evidence review passes and G5 is satisfied. The accepted implementation is the
-commit containing this update; its final handoff records publication and Gmail
-outcomes. The next milestone is Task49; no value synthesis or later work is
-authorized or started.
+evidence review passes and G5 is satisfied. Its accepted implementation is
+`62c878b8f381e3418214a93a46d3e8d2d9693b3e`. The owner then explicitly authorized
+Task49 only. Its [value-synthesis qualification](task-evidence/task-49/README.md)
+now passes the closed final acceptance set with explicit generator3, preserved
+Task48 replay, two catalog values, solver/physical/repair truth and independent
+review. That authorization ends with publication of the commit containing the
+Task49 update. The next boundary is the separate eligibility/physical smoke
+gate described above. Task50 and that gate have not been started.

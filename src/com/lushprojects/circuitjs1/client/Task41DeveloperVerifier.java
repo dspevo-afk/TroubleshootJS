@@ -197,7 +197,16 @@ final class Task41DeveloperVerifier {
         try {
             require(sim.getAttachedPcbWorkbenchCountForDeveloperVerification() == 0,
                 "Task 41 admission proof attached a player workbench before candidate evaluation");
-            Route route = new Route(owner.getCircuitFamilyId(), owner.getSeed(), null);
+            BoundedAssemblyRequest preservedRequest = null;
+            if (controlledAdmission) {
+                require(owner.getBehaviorContract() instanceof
+                        ControlledIndicatorDeviceBehavior,
+                    "controlled admission owner lost its versioned request");
+                preservedRequest = ((ControlledIndicatorDeviceBehavior)
+                        owner.getBehaviorContract()).getPlan().getRequest();
+            }
+            Route route = new Route(owner.getCircuitFamilyId(), owner.getSeed(), null,
+                null, preservedRequest);
             Vector<CandidateEvaluation> evaluations = evaluateCandidateGroup(sim, route, owner);
             Vector<String> equivalentClasses = classifyCandidateEquivalence(evaluations,
                 owner.getCircuitFamilyId(), owner.getSeed());
@@ -310,7 +319,8 @@ final class Task41DeveloperVerifier {
                     String target = candidate.getFault().getTargetComponentId();
                     if (target != null && !containsRouteTarget(result, target))
                         result.add(new Route(route.familyId, route.seed,
-                            GeneratedFaultType.RESISTOR_OPEN, target));
+                            GeneratedFaultType.RESISTOR_OPEN, target,
+                            route.request));
                 }
             }
             if (result.isEmpty()) {
@@ -318,9 +328,11 @@ final class Task41DeveloperVerifier {
                 // live owner must expose the same two stable candidate IDs;
                 // verifyAdmissionRoute checks the count against its contract.
                 result.add(new Route(route.familyId, route.seed,
-                    GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("driver", "RG")));
+                    GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("driver", "RG"),
+                    route.request));
                 result.add(new Route(route.familyId, route.seed,
-                    GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("load", "RLOAD")));
+                    GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("load", "RLOAD"),
+                    route.request));
             }
             return result;
         }
@@ -878,6 +890,15 @@ final class Task41DeveloperVerifier {
         if ("Q1".equals(componentId))
             return QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) ?
                 NmosReplacementCatalog.CORRECT : NpnReplacementCatalog.CORRECT;
+        if (isControlledIndicatorFamily(instance.getCircuitFamilyId()) &&
+                ("RLOAD".equals(componentId) || componentId.endsWith("/component/RLOAD")) &&
+                instance.getBehaviorContract() instanceof ControlledIndicatorDeviceBehavior) {
+            ControlledIndicatorDeviceBehavior behavior =
+                (ControlledIndicatorDeviceBehavior) instance.getBehaviorContract();
+            BoundedAssemblyPlan plan = behavior.getPlan();
+            if (plan.isControlledIndicatorValues())
+                return plan.getResolvedLoadRecipe().getSelectedCatalogEntryId();
+        }
         PhysicalSpecification specification = instance.getPhysicalSpecifications()
             .getSpecification(componentId);
         require(specification instanceof ResistorNameplate,
@@ -1375,17 +1396,25 @@ final class Task41DeveloperVerifier {
         final GeneratedFaultType type;
         /** Optional stable owner key for same-type composed candidates. */
         final String targetComponentId;
+        /** Original versioned composition request retained across proof replay. */
+        final BoundedAssemblyRequest request;
 
         Route(String familyId, long seed, GeneratedFaultType type) {
-            this(familyId, seed, type, null);
+            this(familyId, seed, type, null, null);
         }
 
         Route(String familyId, long seed, GeneratedFaultType type,
                 String targetComponentId) {
+            this(familyId, seed, type, targetComponentId, null);
+        }
+
+        Route(String familyId, long seed, GeneratedFaultType type,
+                String targetComponentId, BoundedAssemblyRequest request) {
             this.familyId = familyId;
             this.seed = seed;
             this.type = type;
             this.targetComponentId = targetComponentId;
+            this.request = request;
         }
 
         GeneratedBoardInstance generate() {
@@ -1393,10 +1422,41 @@ final class Task41DeveloperVerifier {
                 require(type == GeneratedFaultType.RESISTOR_OPEN &&
                         targetComponentId != null,
                     "Task 41 controlled-indicator route lacks a stable fault owner");
-                BoundedAssemblyRequest request =
-                    BoundedAssemblyRequest.forControlledIndicator(seed);
-                return BoundedGeneratedBoardAssembler.assembleForDiagnosticProof(request,
-                    targetComponentId).getInstance();
+                BoundedAssemblyRequest preserved = request == null ?
+                    BoundedAssemblyRequest.forControlledIndicator(seed) : request;
+                BoundedGeneratedBoardAssembler.Result assembly =
+                    BoundedGeneratedBoardAssembler.assembleForDiagnosticProof(preserved,
+                    targetComponentId);
+                GeneratedBoardInstance result = assembly.getInstance();
+                if (request != null) {
+                    require(result.getBehaviorContract() instanceof
+                            ControlledIndicatorDeviceBehavior,
+                        "Task 41 controlled proof changed behavior owner");
+                    ControlledIndicatorDeviceBehavior behavior =
+                        (ControlledIndicatorDeviceBehavior) result.getBehaviorContract();
+                    require(behavior.getPlan().getRequest() == request &&
+                        behavior.getPlan().getRequest().getDescriptor().getGenerator()
+                            .getVersion() == request.getDescriptor().getGenerator().getVersion(),
+                        "Task 41 controlled proof lost the versioned request/recipe");
+                    if (request.getDescriptor().getGenerator().getVersion() ==
+                            BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION) {
+                        String loadComponentId = behavior.getPlan().idFor("load",
+                            FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD");
+                        PhysicalSpecification loadSpecification = result.getPhysicalSpecifications()
+                            .getSpecification(loadComponentId);
+                        ControlledIndicatorValueSynthesis.ResolvedRecipe recipe =
+                            behavior.getPlan().getResolvedLoadRecipe();
+                        require(recipe != null && loadSpecification instanceof ResistorNameplate,
+                            "Task 41 v3 proof lost selected recipe/physical specification");
+                        ResistorNameplate loadNameplate = (ResistorNameplate) loadSpecification;
+                        require(loadComponentId.equals(loadNameplate.getSpecificationId()) &&
+                            loadNameplate.getNominalResistanceOhms() == recipe.getResistanceOhms() &&
+                            loadNameplate.getTolerancePercent() == recipe.getTolerancePercent() &&
+                            loadNameplate.getRatedWattage() == recipe.getRatedWatts(),
+                            "Task 41 v3 proof lost physical recipe correspondence");
+                    }
+                }
+                return result;
             }
             if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId))
                 return new LedIndicatorGenerator().generateForFaultVerification(seed, type);

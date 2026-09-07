@@ -1,6 +1,49 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - Task 48 complete and accepted - 2026-09-06
+## Current checkpoint - Task 49 complete - 2026-09-07
+
+- **Scope:** Task49 only. Five read-only Luna MAX investigations returned and
+  Astra froze the [design/closed matrix](task-evidence/task-49/README.md) before
+  the sole coder existed. One immutable resolved load recipe feeds graph,
+  specifications, markings, diagnosis and actual CircuitJS behavior/retest.
+- **Candidate/git:** Clean accepted Task48 base
+  `62c878b8f381e3418214a93a46d3e8d2d9693b3e`, branch
+  `codex/task43p-final-recovery`, configured upstream
+  `origin/codex/task43p-final-recovery`. Final root build4/source fingerprint:
+  `ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7`
+  (977 inputs). The accepted implementation is the commit containing this
+  checkpoint; exact pushed SHA and notification outcome belong to final handoff.
+- **Values/version:** Existing E12 270-ohm/0.25-W and 330-ohm/0.22-W, both 5%
+  axial; named load VALUES/revision1/`resistance`; explicit generator3 and
+  policy `controlled-led-load-e12@1`. Generator2 keeps fixed 330-ohm/0.25-W,
+  exact descriptor meaning, ordinary entry and unrelated named streams.
+- **Final gates:** PASS: Task49 pure137/runtime1,053 assertions, eight seeds,
+  four value/owner repair pairs, six measurement cases and both value corners.
+  Pure Task44/45/46/47/48:247/202/410/269/224; low-side12; all independent
+  references. Task48 runtime755, Task47, composition113+mutation180, Task41
+  fourteen routes/128 solver samples, four legacy replay snapshots and legacy
+  replacement pass. Final JDK8/GWT2.7.0 OBF build compiled all five permutations.
+  Forced AssertionError correctly FAILs without report. Power-rejection mutant
+  exits2 at the intended assertion, exact restoration passes; its unchanged pure
+  input audit permits reuse. Earlier builds remain diagnostic, not final proof.
+- **Player/review:** Two real visible debug-off player loops pass markings,
+  probe controls, unrepaired versus repaired retest, LOW/HIGH and privacy;
+  four [curated screenshots](task-evidence/task-49/player-acceptance.json).
+  Fresh Luna MAX integrated source review and all three delta reviews PASS.
+  Final independent evidence reconciliation and staged checks also PASS.
+- **Limits/resources:** One load-block policy and one truthful package; no
+  manufacturing certification, general synthesis or Task50 work. All four owned
+  preview/tab process/listener/lease cleanups PASS, wrapper exit0; no owned process
+  or tab remains. All worker assignments returned. Root raw evidence remains
+  in owned OS-temp. Three coder compile folders remain outside Git after automatic
+  approval review rejected scoped cleanup with only "blocked by policy".
+  Initial Browser DOM read timeouts are distinct from subsequently observed
+  terminal PASS receipts; no standalone historical CDP certification is claimed.
+- **Next:** The final handoff records exact commit, remote and email outcomes.
+  The separate pre-Task50 eligibility/physical smoke gate and Task50 remain
+  unstarted. The roadmap records that gate without implementing it.
+
+## Historical checkpoint - Task 48 complete and accepted - 2026-09-06
 
 - **Scope/status:** COMPLETE — Task48 and its closed validation set are accepted.
   One real composed NMOS driver / LED-load challenge has a normal sidebar entry,

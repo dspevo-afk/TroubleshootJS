@@ -1,0 +1,107 @@
+{
+  "source": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+  "pure": [
+    {
+      "name": "block-qualified",
+      "exitCode": 0,
+      "seconds": 3.115766,
+      "source": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+      "commandArguments": [
+        "-NoProfile",
+        "-File",
+        "scripts/verify-block-contracts.ps1",
+        "-JavaHome",
+        ".tools/jdk8-download/jdk8u502-b07"
+      ],
+      "summary": [
+        "PASS: Task44 9 groups, 247 assertions; no simulator dependency",
+        "PASS: Task45 202 assertions",
+        "CLEANUP: contract classes and task-owned scratch removed."
+      ]
+    },
+    {
+      "name": "challenge-qualified",
+      "exitCode": 0,
+      "seconds": 2.2763512,
+      "source": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+      "commandArguments": [
+        "-NoProfile",
+        "-File",
+        "scripts/verify-challenge-contracts.ps1",
+        "-JavaHome",
+        ".tools/jdk8-download/jdk8u502-b07",
+        "-PythonExe",
+        "<selected-python>",
+        "-ParityOutputPath",
+        "<task-owned-temp>/task46-qualified.tsv"
+      ],
+      "summary": [
+        "PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact",
+        "PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus",
+        "CLEANUP: challenge contract classes and task-owned scratch removed."
+      ]
+    },
+    {
+      "name": "assembly-qualified",
+      "exitCode": 0,
+      "seconds": 3.6587059,
+      "source": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+      "commandArguments": [
+        "-NoProfile",
+        "-File",
+        "scripts/verify-assembly-contracts.ps1",
+        "-JavaHome",
+        ".tools/jdk8-download/jdk8u502-b07",
+        "-PythonExe",
+        "<selected-python>",
+        "-ReceiptOutputPath",
+        "<task-owned-temp>/task47-qualified.tsv",
+        "-ControlledReceiptOutputPath",
+        "<task-owned-temp>/task48-qualified.tsv",
+        "-SynthesizedReceiptOutputPath",
+        "<task-owned-temp>/task49-qualified.tsv"
+      ],
+      "summary": [
+        "PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact",
+        "PASS: Task47 pure assembly contracts 269 assertions",
+        "PASS: Task48 pure controlled-indicator contracts 224 assertions",
+        "PASS: Task48 switched-low-side compatibility 12 assertions",
+        "PASS: Task49 pure value synthesis 137 assertions",
+        "PASS: Task49 independent value synthesis oracle 8 seeds; catalog equations exact",
+        "PASS: Task48 independent assembly oracle 8 seeds; two physical fault decisions",
+        "PASS: Task47 independent assembly oracle 8 seeds",
+        "CLEANUP: assembly contract classes and task-owned scratch removed."
+      ]
+    }
+  ],
+  "build": {
+    "command": "powershell.exe -NoProfile -File scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF",
+    "exitCode": 0,
+    "startedUtc": "2026-09-07T03:42:33.9317631Z",
+    "elapsedSeconds": 48.2598909,
+    "sourceFingerprint": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7"
+  },
+  "java": "Temurin OpenJDK 1.8.0_502-b07",
+  "python": "3.12.14",
+  "compiledPermutations": 5,
+  "oldReceiptComparison": [
+    {
+      "file": "task46-parity.txt",
+      "byteEqual": false,
+      "canonicalTextEqual": true,
+      "sha256": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625"
+    },
+    {
+      "file": "task47-jvm-receipt.txt",
+      "byteEqual": true,
+      "canonicalTextEqual": true,
+      "sha256": "e6b85bf75cc4d6f32079fae9446d4893de834654da0bd51f0c24f56b63729a9d"
+    },
+    {
+      "file": "task48-jvm-receipt.txt",
+      "byteEqual": true,
+      "canonicalTextEqual": true,
+      "sha256": "a164410dcd13f11c3c59ee87626bb1cb3b07365da508ed5149d91a6814d01de3"
+    }
+  ]
+}

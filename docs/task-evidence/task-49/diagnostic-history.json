@@ -1,0 +1,42 @@
+{
+  "earlierRootBuilds": [
+    {
+      "build": 1,
+      "source": "ec6d7c2890fbf92c6ee63df8c141661788c340930a0bb7fbb073c99044abe260",
+      "productionBuild": "PASS; five permutations",
+      "runtime": "FAIL",
+      "failure": "Diagnostic plan has no rendered workbench",
+      "cause": "TEST/TOOL",
+      "qualifiedFinalCandidate": false
+    },
+    {
+      "build": 2,
+      "source": "9df2d71353f6f9afec42cc33599ea11ea2e0fd91ce65ef907dcbf78eaae55197",
+      "productionBuild": "PASS; five permutations",
+      "runtime": "FAIL",
+      "failure": "Task49: failed measurement lost primary error, cleanup or both-source isolation",
+      "cause": "TEST/TOOL",
+      "qualifiedFinalCandidate": false
+    },
+    {
+      "build": 3,
+      "source": "b563c2adfef7bb87cfbbb60eb26bca7a69d7478808ec087847bf12054b641021",
+      "productionBuild": "PASS; five permutations",
+      "runtime": "FAIL",
+      "failure": "Task49: power operation failed to settle",
+      "cause": "TEST/TOOL",
+      "qualifiedFinalCandidate": false
+    }
+  ],
+  "resolution": [
+    "Permit Task49 in the existing debug workbench allowlist.",
+    "Permit Task49 in the temporary-measurement developer failure-hook allowlist.",
+    "Settle restored circuit analysis before the dependent public power restoration; preserve primary failure diagnostics."
+  ],
+  "finalSource": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+  "finalBuild": 4,
+  "finalRuntime": "PASS:task49, 1053 assertions",
+  "coderDiagnosticBuild": "Coder ran one GWT diagnostic outside the assigned scope. It supplies no accepted gate; Astra owned all final builds and Browser evidence.",
+  "baselineJavacLimit": "A whole-source ad hoc javac path encountered an existing PhysicalSpecificationDeveloperVerifier generic mismatch. It is not the repository GWT production command and supplies no qualification.",
+  "evidenceCuration": "The temporary curation helper initially expected a single JSON composition report. The actual published report combines JSON entry evidence and a text mutation receipt. The helper was corrected to preserve both; no verifier/oracle input changed."
+}

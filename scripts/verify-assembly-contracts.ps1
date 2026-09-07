@@ -3,10 +3,11 @@ param(
     [string]$JavaHome = $env:JAVA_HOME,
     [string]$PythonExe = 'python',
     [string]$ReceiptOutputPath = '',
-    [string]$ControlledReceiptOutputPath = ''
+    [string]$ControlledReceiptOutputPath = '',
+    [string]$SynthesizedReceiptOutputPath = ''
 )
 
-# Focused, nonvisual Task 47/48 request/provider/plan checks. This harness
+# Focused, nonvisual Task 47/48/49 request/provider/plan checks. This harness
 # compiles an explicit pure source set and never starts CircuitJS or allocates
 # a runtime board.
 Set-StrictMode -Version Latest
@@ -91,7 +92,19 @@ try {
         'src/com/lushprojects/circuitjs1/client/GeneratedFaultLocusType.java',
         'src/com/lushprojects/circuitjs1/client/GeneratedFaultLocus.java',
         'src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticPlan.java',
+        'src/com/lushprojects/circuitjs1/client/PhysicalSpecification.java',
+        'src/com/lushprojects/circuitjs1/client/PhysicalRating.java',
+        'src/com/lushprojects/circuitjs1/client/PowerRating.java',
+        'src/com/lushprojects/circuitjs1/client/PhysicalNameplate.java',
+        'src/com/lushprojects/circuitjs1/client/PhysicalPartOrientation.java',
+        'src/com/lushprojects/circuitjs1/client/PhysicalCatalogEntry.java',
+        'src/com/lushprojects/circuitjs1/client/AbstractPhysicalCatalogEntry.java',
+        'src/com/lushprojects/circuitjs1/client/PhysicalPartCatalog.java',
+        'src/com/lushprojects/circuitjs1/client/ResistorNameplate.java',
+        'src/com/lushprojects/circuitjs1/client/ResistorCatalogEntry.java',
+        'src/com/lushprojects/circuitjs1/client/ResistorReplacementCatalog.java',
         'src/com/lushprojects/circuitjs1/client/ComposedBlockContribution.java',
+        'src/com/lushprojects/circuitjs1/client/ControlledIndicatorValueSynthesis.java',
         'src/com/lushprojects/circuitjs1/client/ResistiveBlockContributions.java',
         'src/com/lushprojects/circuitjs1/client/DeviceAdapterContract.java',
         'src/com/lushprojects/circuitjs1/client/ControlledIndicatorBlockContributions.java',
@@ -99,7 +112,8 @@ try {
         'src/com/lushprojects/circuitjs1/client/BoundedAssemblyPlan.java',
         'tests/contracts/BoundedAssemblyContractTest.java',
         'tests/contracts/ControlledIndicatorAssemblyContractTest.java',
-        'tests/contracts/SwitchedLowSideCompatibilityContractTest.java'
+        'tests/contracts/SwitchedLowSideCompatibilityContractTest.java',
+        'tests/contracts/Task49ValueSynthesisContractTest.java'
     )
     $compileArguments = @('-source', '7', '-target', '7', '-encoding', 'UTF-8',
         '-classpath', $classes, '-sourcepath', $emptySourcePath, '-d', $classes)
@@ -153,6 +167,32 @@ try {
     $controlledReceipt = [regex]::Match($controlledTested.Stdout,
         '(?m)^TASK48_ASSEMBLY_RECEIPT_BEGIN\r?\n([\s\S]*?)^TASK48_ASSEMBLY_RECEIPT_END\r?$')
     if (-not $controlledReceipt.Success) { throw 'Task 48 assembly receipt body is missing.' }
+    $synthesizedTested = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classes,
+        'com.lushprojects.circuitjs1.client.Task49ValueSynthesisContractTest') 60000
+    Write-Host $synthesizedTested.Stdout
+    if ($synthesizedTested.Stderr) { Write-Host $synthesizedTested.Stderr }
+    if (-not $synthesizedTested.TerminationProven -or $synthesizedTested.ExitCode -ne 0 -or
+            $synthesizedTested.Stdout -notmatch '(?m)^PASS: Task49 pure value synthesis ') {
+        throw "Task 49 pure value synthesis test failed, exit $($synthesizedTested.ExitCode)."
+    }
+    $synthesizedReceipt = [regex]::Match($synthesizedTested.Stdout,
+        '(?m)^TASK49_SYNTHESIZED_RECEIPT_BEGIN\r?\n([\s\S]*?)^TASK49_SYNTHESIZED_RECEIPT_END\r?$')
+    if (-not $synthesizedReceipt.Success) { throw 'Task 49 synthesized receipt body is missing.' }
+    $synthesizedReceiptPath = Join-Path $taskRoot 'synthesized-value-receipt.txt'
+    [IO.File]::WriteAllText($synthesizedReceiptPath, $synthesizedReceipt.Groups[1].Value,
+        (New-Object Text.UTF8Encoding($false)))
+    $synthesizedReferencePath = Join-Path $repositoryRoot 'tests/contracts/task49_value_synthesis_reference.py'
+    # The Task 49 reference imports Task 46; -B keeps that independent
+    # oracle from creating a repository __pycache__ during the gate.
+    $synthesizedOracle = Invoke-VerifierBoundedProcess $python @(
+        '-B', $synthesizedReferencePath, $synthesizedReceiptPath) 60000
+    Write-Host $synthesizedOracle.Stdout
+    if ($synthesizedOracle.Stderr) { Write-Host $synthesizedOracle.Stderr }
+    if (-not $synthesizedOracle.TerminationProven -or $synthesizedOracle.ExitCode -ne 0 -or
+            $synthesizedOracle.Stdout -notmatch
+            '(?m)^PASS: Task49 independent value synthesis oracle 8 seeds') {
+        throw "Independent Task 49 value synthesis oracle failed, exit $($synthesizedOracle.ExitCode)."
+    }
     $controlledReceiptPath = Join-Path $taskRoot 'controlled-assembly-receipt.txt'
     [IO.File]::WriteAllText($controlledReceiptPath, $controlledReceipt.Groups[1].Value,
         (New-Object Text.UTF8Encoding($false)))
@@ -189,6 +229,12 @@ try {
         [IO.File]::WriteAllText($controlledDestination, $controlledReceipt.Groups[1].Value,
             (New-Object Text.UTF8Encoding($false)))
         Write-Host ('CONTROLLED_RECEIPT: ' + $controlledDestination)
+    }
+    if ($SynthesizedReceiptOutputPath) {
+        $synthesizedDestination = [IO.Path]::GetFullPath($SynthesizedReceiptOutputPath)
+        [IO.File]::WriteAllText($synthesizedDestination, $synthesizedReceipt.Groups[1].Value,
+            (New-Object Text.UTF8Encoding($false)))
+        Write-Host ('SYNTHESIZED_RECEIPT: ' + $synthesizedDestination)
     }
     $resultCode = 0
 } catch {

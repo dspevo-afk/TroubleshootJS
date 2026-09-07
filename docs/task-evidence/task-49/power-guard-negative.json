@@ -1,0 +1,26 @@
+{
+  "result": {
+    "protocol": "TSJ-TASK49-POWER-GUARD-CANARY-1",
+    "path": "src/com/lushprojects/circuitjs1/client/ControlledIndicatorValueSynthesis.java",
+    "originalSha256": "d39530b26be280e0f05a5428ce50383b2775a2d97e34e71524a4f5e53086f843",
+    "mutatedSha256": "8e180f5c2152a2884990e2e90356acd18813154a1d23791ea4a8d7676b7be67f",
+    "anchor": "intent.getPowerHeadroomFactor() * pguard <= candidate.getRatedWatts();",
+    "replacement": "true;",
+    "preflight": "PASS",
+    "restored": true,
+    "gate": "PASS",
+    "exitCode": 2,
+    "elapsedSeconds": 3.157,
+    "expectedFailure": "power-headroom equation rejects every catalog value"
+  },
+  "qualifiedSource": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+  "reuse": {
+    "originalSource": "ec6d7c2890fbf92c6ee63df8c141661788c340930a0bb7fbb073c99044abe260",
+    "changedFiles": [
+      "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "src/com/lushprojects/circuitjs1/client/Task49DeveloperVerifier.java"
+    ],
+    "unchanged": "Every synthesis, pure contract, independent oracle, and assembly harness input is byte-identical. Only compiled verifier enablement/cleanup changed.",
+    "disposition": "Exact dependency audit permits reuse; final pure positive gates were refreshed."
+  }
+}

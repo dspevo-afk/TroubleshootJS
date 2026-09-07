@@ -399,6 +399,10 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask48VerificationComplete;
 	boolean troubleshootTask48ForcedFailure;
 	String troubleshootTask48Seed;
+	boolean troubleshootTask49Verification;
+	boolean troubleshootTask49VerificationComplete;
+	boolean troubleshootTask49ForcedFailure;
+	String troubleshootTask49Seed;
 	String controlledIndicatorSeedText;
 	boolean troubleshootCompositionGateVerification;
 	boolean troubleshootCompositionGateVerificationComplete;
@@ -545,6 +549,12 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjTask48Fail", false);
 	    troubleshootTask48Seed = troubleshootTask48Verification ?
 		qp.getValue("tsjTask48Seed") : null;
+	    troubleshootTask49Verification = troubleshootDebug &&
+		qp.getBooleanValue("tsjVerifyTask49", false);
+	    troubleshootTask49ForcedFailure = troubleshootTask49Verification &&
+		qp.getBooleanValue("tsjTask49Fail", false);
+	    troubleshootTask49Seed = troubleshootTask49Verification ?
+		qp.getValue("tsjTask49Seed") : null;
 	    troubleshootCompositionGateVerification = troubleshootDebug &&
 		qp.getBooleanValue("tsjVerifyCompositionGate", false);
 	    troubleshootCompositionGateControls = troubleshootDebug &&
@@ -982,6 +992,14 @@ MouseOutHandler, MouseWheelHandler {
 	    } catch (Throwable failure) {
 		Window.alert("The challenge could not be opened. Check the seed and try again.");
 		console("controlled_indicator_entry_failure: " + failure.getMessage());
+	    }
+	}
+	else if ("controlled-indicator-values".equals(troubleshootChallenge)) {
+	    try {
+		openControlledIndicatorValuesChallenge(parseControlledIndicatorSeed(controlledIndicatorSeedText));
+	    } catch (Throwable failure) {
+		Window.alert("The challenge could not be opened. Check the seed and try again.");
+		console("controlled_indicator_values_entry_failure: " + failure.getMessage());
 	    }
 	}
 	else if ("parallel".equals(troubleshootFixture))
@@ -4607,6 +4625,7 @@ MouseOutHandler, MouseWheelHandler {
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
+	    troubleshootTask49Verification ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
 	    instance.getPcbLayout() != null ?
@@ -4695,6 +4714,29 @@ MouseOutHandler, MouseWheelHandler {
 	    if (failure instanceof Error) throw (Error) failure;
 	    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
 	    throw new IllegalStateException("Controlled indicator installation failed", failure);
+	} finally {
+	    refreshChallengeInteractionState();
+	}
+    }
+
+    /** Explicit Task 49 route; the ordinary controlled-indicator entry remains v2. */
+    void openControlledIndicatorValuesChallenge(long seed) {
+	if (!canOpenControlledIndicatorChallenge())
+	    throw new IllegalStateException("Challenge entry is not currently actionable");
+	boolean priorQuickPlay = quickPlayActive;
+	QuickPlaySession priorSession = quickPlaySession;
+	try {
+	    BoundedGeneratedBoardAssembler.Result result = BoundedGeneratedBoardAssembler.assemble(
+		BoundedAssemblyRequest.forControlledIndicatorValues(seed));
+	    quickPlayActive = false;
+	    quickPlaySession = null;
+	    FreshGeneratedRuntimeInstallation.installNormalComposition(this, result.getInstance(), true);
+	} catch (Throwable failure) {
+	    quickPlayActive = priorQuickPlay;
+	    quickPlaySession = priorSession;
+	    if (failure instanceof Error) throw (Error) failure;
+	    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+	    throw new IllegalStateException("Controlled indicator values installation failed", failure);
 	} finally {
 	    refreshChallengeInteractionState();
 	}
@@ -4933,6 +4975,27 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootTask49Verification &&
+		!troubleshootTask49VerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		generatedChallengeController != null && generatedChallengeController.isReady() &&
+		isGeneratedRuntimeSettled()) {
+		developerVerifierRunning = true;
+		troubleshootTask49VerificationComplete = true;
+		publishBrowserVerificationResult("RUNNING:task49");
+		try {
+		    publishTask49Evidence(Task49DeveloperVerifier.verify(this,
+			troubleshootTask49Seed, troubleshootTask49ForcedFailure));
+		    publishBrowserVerificationResult("PASS:task49");
+		} catch (Throwable failure) {
+		    publishBrowserVerificationResult("FAIL:task49:" + failure.getMessage());
+		    if (failure instanceof Error) throw (Error) failure;
+		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+		    throw new IllegalStateException("Task 49 verification failed", failure);
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	    if (!developerVerifierRunning && troubleshootTask47Verification &&
 		!troubleshootTask47VerificationComplete &&
 		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5043,7 +5106,9 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootArchitectureVerification || troubleshootRcVerification ||
 		    troubleshootStoredEnergyVerification || troubleshootNpnVerification ||
 		    troubleshootNmosVerification || troubleshootTask39Verification ||
-		    troubleshootTask40Verification || troubleshootTask41Verification || troubleshootTask46Verification ||
+		    troubleshootTask40Verification || troubleshootTask41Verification ||
+		    troubleshootTask46Verification || troubleshootTask47Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5110,6 +5175,10 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishTask48Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-task48-report", evidence);
+    }-*/;
+
+    private static native void publishTask49Evidence(String evidence) /*-{
+	$doc.documentElement.setAttribute("data-tsj-task49-report", evidence);
     }-*/;
 
     private static native void publishCompositionGateEvidence(String evidence) /*-{
@@ -5772,7 +5841,7 @@ MouseOutHandler, MouseWheelHandler {
     double runTemporaryActiveMeasurementForDeveloperVerification(ActiveMeasurementStimulus stimulus,
 	    ActiveMeasurementResultReader reader) {
 	if ((!troubleshootTask43PVerification && !troubleshootTask47Verification &&
-		!troubleshootTask48Verification) ||
+		!troubleshootTask48Verification && !troubleshootTask49Verification) ||
 		!developerVerifierRunning)
 	    throw new IllegalStateException("Active measurement cleanup verification is not active");
 	return runTemporaryActiveMeasurement(stimulus, reader);

@@ -359,6 +359,59 @@ real visible normal-player acceptance is a separate gate. The
 qualification status and retained limits. This adds neither value synthesis nor
 a general device generator.
 
+## Intent-driven load values — Task 49
+
+`BoundedAssemblyRequest.forControlledIndicatorValues` declares the existing
+controlled-indicator composition under `bounded-assembler@3`. Its load provider
+is `resistor-led-load@2`: the request contains an unresolved functional intent,
+and `BoundedAssemblyPlan` selects one immutable recipe before any CircuitJS
+element is allocated. Generator2 keeps the fixed 330-ohm/0.25-W recipe, old
+descriptor meaning, ordinary URL and sidebar entry. Generator3 uses the explicit
+ordinary `tsjChallenge=controlled-indicator-values&seed=<canonical-long>` route.
+Intent/profile, namespace and physical geometry versions remain unchanged.
+
+`ControlledIndicatorValueSynthesis` owns the bounded design policy. It reads the
+actual request's typed supply/load/sink ports and low-side relationship, rejects
+unknown or contradictory facts, and combines them with the policy's indicator
+current target, LED model envelope, tolerance and engineering margins. The
+existing `ResistorReplacementCatalog` is the sole standard-value/rating source.
+A candidate is one immutable canonical catalog entry plus the supported axial
+package identity; collection order cannot affect selection. Geometry lead spans
+do not imply different ratings or packages.
+
+The current policy admits 270 ohms/0.25 W and 330 ohms/0.22 W, both 5% axial
+parts. Worst-case current must remain within 5–16 mA over the typed supply and
+sink bounds; sink capacity has 1.25x headroom. A 2x power guard conservatively
+assigns the entire maximum supply voltage to the resistor at minimum resistance.
+The 1.6–2.0 V LED envelope is an explicit constraint for CircuitJS's existing
+`default-led` model, not a manufacturer nameplate rating. Invalid or empty
+candidate sets fail before graph allocation.
+
+Selection uses named-stream derivation1, the exact signed root seed,
+`controlled-indicator@1`, block `load`, VALUES concern, revision1 and key
+`resistance`, under policy `controlled-led-load-e12@1`. The resolved recipe
+retains the selected catalog identity, intent, resistance/tolerance/rating/package
+and margin receipt. The contribution delegates to that same object. The
+assembler reads it for CircuitJS construction and physical specifications; it
+contains no candidate search or design equations. Color bands, workbench detail,
+and diagnostic repair metadata consume the selected part. The unrestricted
+replacement catalog still permits incorrect and alternative repairs.
+
+`ControlledIndicatorDeviceBehavior` reads the v3 recipe envelope and checks
+settled CircuitJS currents/voltages, branch consistency, LED operation and the
+installed part's rating. Healthy LOW/HIGH verification precedes fault injection;
+customer OFF/ON retest remains solver-backed and judges function. Task41's
+diagnostic candidate routes carry the original immutable versioned request, so
+both fault owners are evaluated with the same selected value. Generator2's
+behavior bounds and diagnostic semantics are preserved.
+
+The separate `tsjDebug=true&tsjVerifyTask49=true` verifier exercises replay,
+physical correspondence, real diagnostic admission, value corners, repairs,
+mutation and owner succession. Pure equations propose a design; only the actual
+solver and normal player evidence establish operation. The
+[Task49 packet](task-evidence/task-49/README.md) records qualification status,
+exact gates and limits. No support blocks or Task50 implementation are included.
+
 ## Probe and measurement ownership
 
 `ProbeTarget` describes where a user placed a probe: validity, semantic target

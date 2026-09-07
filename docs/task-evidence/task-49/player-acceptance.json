@@ -1,0 +1,136 @@
+{
+  "protocol": "TSJ-TASK49-PLAYER-1",
+  "status": "PASS",
+  "source": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+  "browser": "visible Codex in-app Browser",
+  "developerMode": false,
+  "cases": [
+    {
+      "seed": "1",
+      "selectedNominalOhms": 330,
+      "query": "tsjChallenge=controlled-indicator-values&seed=1&tsjVerifyTask49=true&tsjTask49Fail=true",
+      "developerFlagsIgnoredWithoutDebug": true,
+      "markings": "orange/orange/brown/gold; public detail Value: 330 Ohm +/-5%",
+      "faultyLowHigh": "LED dark in both command states; gate-to-source reads 0 V with HIGH.",
+      "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+      "isolatedOhm": {
+        "RG": "OL",
+        "RLOAD": "330 Ohm"
+      },
+      "repair": "Exit OHM by selecting it again; select RG body; Remove component; choose 1000 Ohm +/-5% in the RG catalog; Install new resistor in RG.",
+      "repairedLow": "LED dark",
+      "repairedHigh": "LED illuminated",
+      "repairedRetest": "Customer retest passed. The reported behavior is resolved."
+    },
+    {
+      "seed": "2",
+      "selectedNominalOhms": 270,
+      "query": "tsjChallenge=controlled-indicator-values&seed=2",
+      "markings": "red/violet/brown/gold; public detail Value: 270 Ohm +/-5%",
+      "faultyLowHigh": "LED dark in both states; gate-to-source HIGH 4.95 V, LOW 0 V.",
+      "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+      "isolatedOhm": {
+        "RLOAD": "OL",
+        "RG": "1 kOhm"
+      },
+      "repair": "Exit OHM by selecting it again; select RLOAD body; Remove component; choose 270 Ohm +/-5% in the RLOAD catalog; Install new resistor in RLOAD.",
+      "repairedLow": "LED dark",
+      "repairedHigh": "LED illuminated",
+      "repairedRetest": "Customer retest passed. The reported behavior is resolved."
+    }
+  ],
+  "interaction": "Actual public controls and canvas left-click red/right-click black; inspected colored markers and absence of a context menu. Mode re-selection returned --- V and ordinary body selection/actions worked.",
+  "legacyEntry": "Actual Open controlled indicator button opened a fresh symptom-only Task48 challenge after v3 completion.",
+  "privacy": [
+    {
+      "label": "seed1 entry with developer flags ignored",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed1 RLOAD physical selection",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed1 isolated probes",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed1 catalog repair",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed1 completed",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed2 normal entry",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed2 RLOAD selection",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed2 isolated probes",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed2 catalog repair",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "seed2 completed",
+      "status": "PASS",
+      "reportsAbsent": true
+    },
+    {
+      "label": "legacy sidebar entry",
+      "status": "PASS",
+      "reportsAbsent": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "330-ohm-unrepaired.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 87815,
+      "sha256": "4afcd1d82563aa77cc087fc7c3a68af2c374c358b771604400ec51270a310d43",
+      "inspection": "Root inspected the actual Browser screenshot; nonblank board and intended normal-player state visible."
+    },
+    {
+      "path": "330-ohm-repaired.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 88061,
+      "sha256": "ef0fb40f523cf34a1e7cf79802eef7f585bac7117e14ba0b3f3122a328a10c17",
+      "inspection": "Root inspected the actual Browser screenshot; nonblank board and intended normal-player state visible."
+    },
+    {
+      "path": "270-ohm-unrepaired.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 87827,
+      "sha256": "baffbef3ca735a61baaee79da22fc5f8987eac3a297b5ccccc2c383d994e5dad",
+      "inspection": "Root inspected the actual Browser screenshot; nonblank board and intended normal-player state visible."
+    },
+    {
+      "path": "270-ohm-repaired.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 88099,
+      "sha256": "b993c6b067fe0a53473c744d747f24ecb919d21b194b677170f03bee40f22b60",
+      "inspection": "Root inspected the actual Browser screenshot; nonblank board and intended normal-player state visible."
+    }
+  ],
+  "limits": "UI evidence proves visible nominal values/markings and ordinary operation. Wattage/package correspondence is proved by the compiled physical/recipe oracle; the UI does not display wattage. Full unrestricted repair catalogs remain public; no hidden synthesis subset or selected-fault identity is exposed."
+}

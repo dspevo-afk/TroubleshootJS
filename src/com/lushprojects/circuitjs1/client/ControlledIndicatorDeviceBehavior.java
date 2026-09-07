@@ -236,11 +236,38 @@ final class ControlledIndicatorDeviceBehavior
         double led = ledCurrent(instance);
         double mosfet = mosfetCurrent(instance);
         double supply = supplyVoltage(instance);
+        boolean task49 = plan.isControlledIndicatorValues();
+        ResistorElm loadResistor = resistor(instance, "load", "RLOAD");
+        double loadResistance = loadResistor.getResistance();
+        double loadRatedWatts = loadRatedWatts(instance);
+        double minimumLoad = task49 ? plan.getResolvedLoadRecipe().getIntent()
+                .getTargetMinimumCurrentAmps() : MIN_LOAD_CURRENT;
+        double maximumLoad = task49 ? plan.getResolvedLoadRecipe().getIntent()
+                .getTypedDemandAmps() : MAX_LOAD_CURRENT;
+        double minimumSupply = task49 ? plan.getResolvedLoadRecipe().getIntent()
+                .getSourceMinimumVolts() : 4.0;
+        boolean electricalEnvelope = !task49 ||
+                (supply >= plan.getResolvedLoadRecipe().getIntent().getSourceMinimumVolts() &&
+                 supply <= plan.getResolvedLoadRecipe().getIntent().getSourceMaximumVolts() &&
+                 drainSourceVoltage(instance) >= plan.getResolvedLoadRecipe().getIntent()
+                    .getSinkMinimumVolts() - 1.0e-9 &&
+                 drainSourceVoltage(instance) <= plan.getResolvedLoadRecipe().getIntent()
+                    .getSinkMaximumVolts() + 1.0e-9 &&
+                 ledForwardVoltage(instance) >= plan.getResolvedLoadRecipe().getIntent()
+                    .getLedMinimumForwardVolts() - 1.0e-9 &&
+                 ledForwardVoltage(instance) <= plan.getResolvedLoadRecipe().getIntent()
+                    .getLedMaximumForwardVolts() + 1.0e-9 &&
+                 finite(loadResistance) && loadResistance > 0.0 &&
+                 finite(loadRatedWatts) && loadRatedWatts > 0.0 &&
+                 load * load * loadResistance <= loadRatedWatts + 1.0e-9);
         return finite(load) && finite(led) && finite(mosfet) && finite(supply) &&
-                load >= MIN_LOAD_CURRENT && load <= MAX_LOAD_CURRENT &&
+                electricalEnvelope &&
+                load >= minimumLoad && load <= maximumLoad &&
                 led >= MIN_LED_CURRENT && Math.abs(load - led) < 0.0005 &&
                 Math.abs(load - mosfet) < 0.002 && gateSourceVoltage(instance) > ON_VGS &&
-                drainSourceVoltage(instance) <= ON_VDS && supply > 4.0 &&
+                drainSourceVoltage(instance) <= ON_VDS && (!task49 ||
+                    drainSourceVoltage(instance) >= 0.0) &&
+                 (task49 ? supply >= minimumSupply : supply > minimumSupply) &&
                 controlVoltage(instance) > 3.0 && gateCurrent(instance) < 1.0e-9;
     }
 
@@ -287,6 +314,11 @@ final class ControlledIndicatorDeviceBehavior
         return q.getPostVoltage(2) - q.getPostVoltage(1);
     }
 
+    private double ledForwardVoltage(GeneratedBoardInstance instance) {
+        LEDElm led = led(instance);
+        return led.getPostVoltage(0) - led.getPostVoltage(1);
+    }
+
     private double supplyVoltage(GeneratedBoardInstance instance) {
         return voltage(instance, "power-adapter", "J1.1") -
                 voltage(instance, "power-adapter", "J1.2");
@@ -321,6 +353,17 @@ final class ControlledIndicatorDeviceBehavior
             throw new IllegalStateException("Controlled component is not a resistor: " +
                     block + "/" + localComponent);
         return (ResistorElm) element;
+    }
+
+    private double loadRatedWatts(GeneratedBoardInstance instance) {
+        String componentId = plan.idFor("load", EntityKind.COMPONENT, "RLOAD");
+        PhysicalPart<?> installed = instance.getPhysicalBoardRuntime()
+                .getInstalledPart(componentId);
+        if (installed instanceof PhysicalResistorPart)
+            return ((PhysicalResistorPart) installed).getNameplate().getRatedWattage();
+        return plan.getResolvedLoadRecipe() == null ?
+            ComposedBlockContribution.RATED_WATTS :
+            plan.getResolvedLoadRecipe().getRatedWatts();
     }
 
     private NMosfetElm mosfet(GeneratedBoardInstance instance) {

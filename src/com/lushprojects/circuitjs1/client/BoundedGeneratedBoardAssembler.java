@@ -397,6 +397,17 @@ final class BoundedGeneratedBoardAssembler {
 
         private void buildControlledBoardAndSpecifications() {
             board = new TroubleshootBoard(ControlledIndicatorDeviceBehavior.FAMILY_ID);
+            ComposedBlockContribution loadContribution = plan.getLoad();
+            ComposedBlockContribution.ResistorRecipe loadRecipe =
+                loadContribution == null ? null : loadContribution.getResistor("RLOAD");
+            if (loadRecipe == null)
+                throw new IllegalStateException("Controlled load has no resolved resistor recipe");
+            if (plan.isControlledIndicatorValues() &&
+                    (!ControlledIndicatorValueSynthesis.PACKAGE_ID.equals(
+                        plan.getResolvedLoadRecipe().getPackageId()) ||
+                     !PhysicalPackages.AXIAL_RESISTOR.getId().equals(
+                        plan.getResolvedLoadRecipe().getPackageId())))
+                throw new IllegalStateException("Resolved controlled load package is not axial");
             String loadSupply = plan.netFor("load", "SUPPLY");
             String control = plan.netFor("driver", "CONTROL");
             String loadNode = plan.netFor("load", "LED_NODE");
@@ -484,10 +495,14 @@ final class BoundedGeneratedBoardAssembler {
                 new PhysicalNameplate("Q1", "N-channel MOSFET", "Part",
                     "N-channel MOSFET"), PhysicalPackages.TO92_NMOS);
             specifications.addPhysicalDefinition(rload,
-                new ResistorNameplate(rload, ControlledIndicatorBlockContributions.RLOAD_OHMS,
-                    SUPPLY_VOLTAGE, ComposedBlockContribution.RATED_WATTS),
-                new PhysicalNameplate("RLOAD", "Load resistor markings",
-                    "Markings", "Color bands"), PhysicalPackages.AXIAL_RESISTOR);
+                new ResistorNameplate(rload, loadRecipe.getResistanceOhms(),
+                    loadRecipe.getTolerancePercent(), loadRecipe.getRatedWatts()),
+                plan.isControlledIndicatorValues() ?
+                    loadContribution.getResolvedValueRecipe().getPlayerVisibleNameplate()
+                        .forPhysicalPartId("RLOAD") :
+                    new PhysicalNameplate("RLOAD", "Load resistor markings",
+                        "Markings", "Color bands"),
+                PhysicalPackages.AXIAL_RESISTOR);
             specifications.addPhysicalDefinition(led1,
                 new LedNameplate(led1, "Generic red LED", "default-led", 1, 0, 0),
                 new PhysicalNameplate("LED1", "Generic red LED"),
@@ -675,7 +690,7 @@ final class BoundedGeneratedBoardAssembler {
             controlledLoadInputTrace = wire(224, 176, 280, 176);
             controlledLoadFirstAttachment = wire(280, 176, 340, 176);
             controlledRload = resistor(340, 176, 420, 176,
-                ControlledIndicatorBlockContributions.RLOAD_OHMS);
+                plan.getLoad().getResistor("RLOAD").getResistanceOhms());
             controlledRloadFaultSwitch = new SwitchElm(
                 controlledRload.getPost(1).x, controlledRload.getPost(1).y);
             add(controlledRloadFaultSwitch);

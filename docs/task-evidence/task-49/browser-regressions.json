@@ -1,0 +1,445 @@
+{
+  "source": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+  "route": "Codex in-app Browser",
+  "gates": [
+    {
+      "name": "task49-forced-error",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyTask49=true&tsjTask49Fail=true",
+      "expected": "FAIL:task49:task49-explicit-assertion-canary",
+      "terminal": "FAIL:task49:task49-explicit-assertion-canary",
+      "elapsedMs": 2324,
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-verification": "e5897dae4f0d6c5d4b9f3b504fe0dce1f4c85bdd2cdd132f96ab1013c62c1f3b"
+      }
+    },
+    {
+      "name": "task48",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyTask48=true",
+      "expected": "PASS:task48",
+      "terminal": "PASS:task48",
+      "status": "PASS",
+      "transportNote": "Initial DOM wait timed out while synchronous verifier ran; terminal read from the same navigation, no rerun.",
+      "attributeHashes": {
+        "data-tsj-task48-report": "0e5d1ed1cce0262e85bac6d1125f43f09138d1cc81045a60a6bea8c02d25711e",
+        "data-tsj-verification": "9ccf854481570b5803eadb77bc27b80a1849573d7833e17357b25e288ad28e27"
+      },
+      "data-tsj-task48-report": {
+        "protocol": "TSJ-TASK48-1",
+        "status": "PASS",
+        "requestedSeed": "0",
+        "construction": {
+          "injectedStages": 5,
+          "oldOwnerPreserved": true,
+          "cleanup": "PASS"
+        },
+        "installation": {
+          "injectedStages": 5,
+          "originalRestored": true
+        },
+        "detachedInitialOwner": {
+          "priorSchematicRestoredAfterFiveFailures": true,
+          "normalPublication": true
+        },
+        "succession": {
+          "settledPublicControls": true,
+          "supersededRetest": true,
+          "staleWorkbench": true,
+          "staleRepaint": true,
+          "staleCompletion": true
+        },
+        "assertions": 755,
+        "measurementCases": 6,
+        "repairedOwners": 2,
+        "originalOwnerRestored": true,
+        "candidateCleanup": "PASS",
+        "caseCount": 8,
+        "cases": [
+          {
+            "seed": "0",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=0",
+            "faultDecision": "load-rload-open",
+            "freshReplay": true,
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "1",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=1",
+            "faultDecision": "driver-rg-open",
+            "freshReplay": true,
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "2",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=2",
+            "faultDecision": "load-rload-open",
+            "freshReplay": true,
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "3",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=3",
+            "faultDecision": "load-rload-open",
+            "freshReplay": true,
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "-9223372036854775808",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=-9223372036854775808",
+            "faultDecision": "driver-rg-open",
+            "freshReplay": true,
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "9223372036854775807",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=9223372036854775807",
+            "faultDecision": "driver-rg-open",
+            "freshReplay": true,
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "9007199254740993",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=9007199254740993",
+            "faultDecision": "load-rload-open",
+            "freshReplay": true,
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "-9007199254740993",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=-9007199254740993",
+            "faultDecision": "load-rload-open",
+            "freshReplay": true,
+            "inputOrderIndependent": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "task47",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyTask47=true",
+      "expected": "PASS:task47",
+      "terminal": "PASS:task47",
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-task47-report": "ac502465d87909b1c77e8c8a649ad8cab2648cacfa0bbcb7f9fd536956935ff2",
+        "data-tsj-verification": "b9ff8e18e91198c0f6dafb96451a100f6323a01eef4380819ec786dac7192780"
+      },
+      "data-tsj-task47-report": {
+        "protocol": "TSJ-TASK47-ASSEMBLY-1",
+        "status": "PASS",
+        "requestedSeed": "0",
+        "construction": {
+          "injectedStages": 5,
+          "stages": [
+            {
+              "stage": "MAPPING",
+              "allocatedElements": 0,
+              "registeredParts": 0,
+              "mappedIdentities": 12,
+              "approvedNetMerges": 2,
+              "originalFailureRetained": true,
+              "cleanup": "PASS"
+            },
+            {
+              "stage": "MERGE",
+              "allocatedElements": 9,
+              "registeredParts": 0,
+              "mappedIdentities": 12,
+              "approvedNetMerges": 2,
+              "originalFailureRetained": true,
+              "cleanup": "PASS"
+            },
+            {
+              "stage": "SECOND_BLOCK",
+              "allocatedElements": 16,
+              "registeredParts": 0,
+              "mappedIdentities": 16,
+              "approvedNetMerges": 2,
+              "originalFailureRetained": true,
+              "cleanup": "PASS"
+            },
+            {
+              "stage": "REGISTRATION",
+              "allocatedElements": 16,
+              "registeredParts": 3,
+              "mappedIdentities": 16,
+              "approvedNetMerges": 2,
+              "originalFailureRetained": true,
+              "cleanup": "PASS"
+            },
+            {
+              "stage": "VALIDATION",
+              "allocatedElements": 16,
+              "registeredParts": 3,
+              "mappedIdentities": 16,
+              "approvedNetMerges": 2,
+              "originalFailureRetained": true,
+              "cleanup": "PASS"
+            }
+          ],
+          "oldOwnerPreserved": true,
+          "cleanup": "PASS"
+        },
+        "installation": {
+          "injectedStages": 5,
+          "oldOwnerRestored": true
+        },
+        "succession": {
+          "sameSeedFreshSuccessor": true,
+          "capturedRepaint": true,
+          "capturedWorkbenchHandler": true,
+          "capturedRetestCompletion": true,
+          "supersededRequestRejected": true,
+          "staleOwnerRejected": true
+        },
+        "repairedOwners": 2,
+        "assertions": 1540,
+        "measurementCases": 4,
+        "candidateCleanup": "PASS",
+        "originalOwnerRestored": true,
+        "playerAdmission": "REJECTED",
+        "caseCount": 8,
+        "cases": [
+          {
+            "seed": "0",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=0",
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "1",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=1",
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "2",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=2",
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "3",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=3",
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "-9223372036854775808",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=-9223372036854775808",
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "9223372036854775807",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=9223372036854775807",
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "9007199254740993",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=9007199254740993",
+            "inputOrderIndependent": true
+          },
+          {
+            "seed": "-9007199254740993",
+            "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=resistive-coupling@1\ndifficulty-profile=developer-canary@1\ngenerator=bounded-assembler@1\ngeometry=3\nroot-seed=-9007199254740993",
+            "inputOrderIndependent": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "composition-entry",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyCompositionGate=true",
+      "expected": "PASS:composition-gate",
+      "terminal": "PASS:composition-gate",
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-composition-gate-report": "8e5c050b40414f6b25e6968f3b1a35a0471a6fbadd3757c7395e2fa82d4a9ecb",
+        "data-tsj-verification": "bdfca6db3e3b88b158d59965e89fbae143e02dbe61688625799f8aeb6e9e5e39"
+      },
+      "data-tsj-composition-gate-report": {
+        "entry": {
+          "protocol": "TSJ-COMPOSITION-ENTRY-GATE-1",
+          "status": "OBSERVED",
+          "A": {
+            "family": "LED_INDICATOR",
+            "seed": 3,
+            "actualHandlers": true,
+            "pendingAnalyzedWhileHeld": true,
+            "retestFailure": true,
+            "controlsReenabled": true,
+            "disposition": "CLOSED"
+          },
+          "B": {
+            "firstFamily": "LED_INDICATOR",
+            "firstSeed": 3,
+            "secondFamily": "NPN_LOW_SIDE_SWITCH",
+            "secondSeed": 0,
+            "actualScheduledRepaint": true,
+            "staleRepaintDiscarded": true,
+            "staleWorkbenchHandlersDiscarded": true,
+            "supersededRetestDiscarded": true,
+            "staleRetestOwnerDiscarded": true,
+            "disposition": "CLOSED"
+          },
+          "C": {
+            "currentInstanceRejected": true,
+            "unsupportedCompositionProviderRejected": true,
+            "freshCandidatePublished": true,
+            "injectedStages": 5,
+            "originalReferencesRestored": true,
+            "disposition": "CLOSED"
+          },
+          "G": {
+            "families": 3,
+            "resetOwnerPreserved": true,
+            "preResetRetestInvalidated": true,
+            "staleCompletionDiscarded": true,
+            "faultCausalityPreserved": true,
+            "freshOwners": true,
+            "disposition": "CLOSED"
+          },
+          "assertions": 113,
+          "originalOwnerRestored": true,
+          "disposition": "CLOSED"
+        },
+        "mutationReceipt": [
+          "TSJ-COMPOSITION-MUTATION-GATE-1",
+          "assertions=180",
+          "partial-failure-aborts=18",
+          "real-overload-damage-preserved=true",
+          "original-fault-preserved=true",
+          "reference-and-committed-state-negatives=PASS",
+          "failed-recovery-isolated=PASS"
+        ]
+      }
+    },
+    {
+      "name": "task41",
+      "query": "tsjChallenge=npn&seed=0&tsjVerifyTask41=true&running=true",
+      "expected": "PASS:task41",
+      "terminal": "PASS:task41",
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-task41-evidence": "01b9abc1fad4b628bdf56ac2db0c08359455f6b821220ca5f2bde1a7042d6c72",
+        "data-tsj-verification": "251c2da8cb0cd130f983bd099d4e4d88006430646c8711ba3b81a77b8373c9cb"
+      }
+    },
+    {
+      "name": "task46-led3",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyTask46=true",
+      "expected": "PASS:task46",
+      "terminal": "PASS:task46",
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-task46-descriptor": "61fcc05a932e0f21dab4428d04f8cb7718d8b6dd339eb244e7b10d16e9fe4458",
+        "data-tsj-task46-parity": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+        "data-tsj-task46-replay": "04e63daece38cc7985dddc891865bb4f60d777fb312cefa31341efac42f033cb",
+        "data-tsj-task46-snapshot": "d2c666caaf077d1e7762fe612d6bc10183cf7b96654054104f854e918b0c4885",
+        "data-tsj-verification": "2a4737acecc225c0816f2d10f23f018d49c961432407207efae5f1fa39ffac5a"
+      }
+    },
+    {
+      "name": "task46-rc2",
+      "query": "tsjChallenge=rc&seed=2&tsjDebug=true&tsjVerifyTask46=true",
+      "expected": "PASS:task46",
+      "terminal": "PASS:task46",
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-task46-descriptor": "1c4bd09aface4d1b7542a4b3b69516375abda234e3cda4c238edfbbe80b3ad74",
+        "data-tsj-task46-parity": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+        "data-tsj-task46-replay": "d4bed24a461ea3e78f23b3199bf769f02a7407ec234b85f9d2effaaf46bc7131",
+        "data-tsj-task46-snapshot": "a6e332f1d847ef1c7b8dfaf8cba5a6db8248998eb1c8778bd544e45653113ba5",
+        "data-tsj-verification": "2a4737acecc225c0816f2d10f23f018d49c961432407207efae5f1fa39ffac5a"
+      }
+    },
+    {
+      "name": "task46-npn0",
+      "query": "tsjChallenge=npn&seed=0&tsjDebug=true&tsjVerifyTask46=true",
+      "expected": "PASS:task46",
+      "terminal": "PASS:task46",
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-task46-descriptor": "d8a3c1e9e3b0eb2ceb3afe6fd73e0fc16ff4d63715dca7789c7ebc5e36d1f164",
+        "data-tsj-task46-parity": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+        "data-tsj-task46-replay": "3ed7fd3ffab2312a830c3af297a991f0fa22ed4d3adc46278224a03dbe6ea50c",
+        "data-tsj-task46-snapshot": "7c1c300e4af066fb4f81044aa7b1f23b1ab7baaaaca23b97421487f6e0784564",
+        "data-tsj-verification": "2a4737acecc225c0816f2d10f23f018d49c961432407207efae5f1fa39ffac5a"
+      }
+    },
+    {
+      "name": "task46-nmos0",
+      "query": "tsjChallenge=nmos&seed=0&tsjDebug=true&tsjVerifyTask46=true",
+      "expected": "PASS:task46",
+      "terminal": "PASS:task46",
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-task46-descriptor": "a5bd15b97bb06b5676a79fa4233b2c46948b0bbf389e60931f94e7bd8d3b0613",
+        "data-tsj-task46-parity": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+        "data-tsj-task46-replay": "d300ea89304376deb4d4f1a82b317593e32f4de8b9d92920ce5b994aff78b5a5",
+        "data-tsj-task46-snapshot": "5ee0d7b59f9e08bd6cff583e5aae7003a57bedcc15a504d743a70a72d51ed680",
+        "data-tsj-verification": "2a4737acecc225c0816f2d10f23f018d49c961432407207efae5f1fa39ffac5a"
+      }
+    },
+    {
+      "name": "legacy-challenge-replacement",
+      "query": "tsjChallenge=led&seed=3&tsjVerifyChallenge=true&tsjVerifyReplacement=true",
+      "expected": "PASS:replacement",
+      "terminal": "PASS:replacement",
+      "status": "PASS",
+      "attributeHashes": {
+        "data-tsj-verification": "31f23be038c7655c6b117204b6580ee033baef88c481d2e815b74a76fc9dc2c6"
+      }
+    }
+  ],
+  "legacyReplayComparison": [
+    {
+      "gate": "task46-led3",
+      "status": "PASS",
+      "comparison": "Accepted Task48 descriptor, parity, snapshot and replay strings exact",
+      "sha256": {
+        "data-tsj-task46-descriptor": "61fcc05a932e0f21dab4428d04f8cb7718d8b6dd339eb244e7b10d16e9fe4458",
+        "data-tsj-task46-parity": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+        "data-tsj-task46-snapshot": "d2c666caaf077d1e7762fe612d6bc10183cf7b96654054104f854e918b0c4885",
+        "data-tsj-task46-replay": "04e63daece38cc7985dddc891865bb4f60d777fb312cefa31341efac42f033cb"
+      }
+    },
+    {
+      "gate": "task46-rc2",
+      "status": "PASS",
+      "comparison": "Accepted Task48 descriptor, parity, snapshot and replay strings exact",
+      "sha256": {
+        "data-tsj-task46-descriptor": "1c4bd09aface4d1b7542a4b3b69516375abda234e3cda4c238edfbbe80b3ad74",
+        "data-tsj-task46-parity": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+        "data-tsj-task46-snapshot": "a6e332f1d847ef1c7b8dfaf8cba5a6db8248998eb1c8778bd544e45653113ba5",
+        "data-tsj-task46-replay": "d4bed24a461ea3e78f23b3199bf769f02a7407ec234b85f9d2effaaf46bc7131"
+      }
+    },
+    {
+      "gate": "task46-npn0",
+      "status": "PASS",
+      "comparison": "Accepted Task48 descriptor, parity, snapshot and replay strings exact",
+      "sha256": {
+        "data-tsj-task46-descriptor": "d8a3c1e9e3b0eb2ceb3afe6fd73e0fc16ff4d63715dca7789c7ebc5e36d1f164",
+        "data-tsj-task46-parity": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+        "data-tsj-task46-snapshot": "7c1c300e4af066fb4f81044aa7b1f23b1ab7baaaaca23b97421487f6e0784564",
+        "data-tsj-task46-replay": "3ed7fd3ffab2312a830c3af297a991f0fa22ed4d3adc46278224a03dbe6ea50c"
+      }
+    },
+    {
+      "gate": "task46-nmos0",
+      "status": "PASS",
+      "comparison": "Accepted Task48 descriptor, parity, snapshot and replay strings exact",
+      "sha256": {
+        "data-tsj-task46-descriptor": "a5bd15b97bb06b5676a79fa4233b2c46948b0bbf389e60931f94e7bd8d3b0613",
+        "data-tsj-task46-parity": "5fb0d7105ae0fb8f8e8e90a5f2ee69dd32101a85eade19923405a97519359625",
+        "data-tsj-task46-snapshot": "5ee0d7b59f9e08bd6cff583e5aae7003a57bedcc15a504d743a70a72d51ed680",
+        "data-tsj-task46-replay": "d300ea89304376deb4d4f1a82b317593e32f4de8b9d92920ce5b994aff78b5a5"
+      }
+    }
+  ],
+  "task48": {
+    "status": "PASS",
+    "assertions": 755,
+    "seeds": 8,
+    "measurementCases": 6,
+    "canonicalAndFaultDecisionsExact": true
+  },
+  "transportLimit": "Some first DOM inspections exceeded the Browser 3-second CDP read deadline during synchronous solver work. Results were read from those same completed navigations; no runtime PASS was inferred from a timeout."
+}

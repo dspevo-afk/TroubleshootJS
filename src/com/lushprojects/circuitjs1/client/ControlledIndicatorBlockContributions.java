@@ -25,6 +25,7 @@ import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.Requirement;
 /** Typed registry for the Task 48 NMOS driver and LED load contributions. */
 final class ControlledIndicatorBlockContributions {
     static final int VERSION = 1;
+    static final int VALUE_LOAD_VERSION = 2;
     static final String FAMILY_ID = "COMPOSED_CONTROLLED_INDICATOR";
     static final String DRIVER_TYPE_ID = "nmos-low-side-driver";
     static final String LOAD_TYPE_ID = "resistor-led-load";
@@ -68,19 +69,29 @@ final class ControlledIndicatorBlockContributions {
 
     private static final Provider DRIVER = new ProviderImpl(true);
     private static final Provider LOAD = new ProviderImpl(false);
+    private static final Provider VALUE_LOAD = new ProviderImpl(false,
+            VALUE_LOAD_VERSION);
 
     private ControlledIndicatorBlockContributions() { }
 
     static Provider driver() { return DRIVER; }
     static Provider load() { return LOAD; }
+    static Provider valuesLoad() { return VALUE_LOAD; }
+
+    static ComposedBlockContribution createResolvedValueLoad(String blockKey,
+            FaultSpec fault, ControlledIndicatorValueSynthesis.ResolvedRecipe recipe) {
+        return ((ProviderImpl) VALUE_LOAD).createResolved(blockKey, fault, recipe);
+    }
 
     static Provider resolve(String typeId, int version) {
-        if (version != VERSION) {
+        if (version != VERSION && !(version == VALUE_LOAD_VERSION &&
+                LOAD_TYPE_ID.equals(typeId))) {
             throw new IllegalArgumentException("Unsupported controlled provider "
                     + typeId + "@" + version);
         }
         if (DRIVER_TYPE_ID.equals(typeId)) return DRIVER;
-        if (LOAD_TYPE_ID.equals(typeId)) return LOAD;
+        if (LOAD_TYPE_ID.equals(typeId))
+            return version == VALUE_LOAD_VERSION ? VALUE_LOAD : LOAD;
         throw new IllegalArgumentException("Unknown controlled provider " + typeId);
     }
 
@@ -131,15 +142,25 @@ final class ControlledIndicatorBlockContributions {
 
     private static final class ProviderImpl implements Provider {
         private final boolean driver;
-        ProviderImpl(boolean driver) { this.driver = driver; }
+        private final int providerVersion;
+        ProviderImpl(boolean driver) { this(driver, VERSION); }
+        ProviderImpl(boolean driver, int providerVersion) {
+            this.driver = driver;
+            this.providerVersion = providerVersion;
+        }
         @Override public String getFamilyId() { return FAMILY_ID; }
         @Override public String getTypeId() { return driver ? DRIVER_TYPE_ID : LOAD_TYPE_ID; }
-        @Override public int getVersion() { return VERSION; }
+        @Override public int getVersion() { return providerVersion; }
         @Override public ComposedBlockContribution create(String blockKey) {
+            if (!driver && providerVersion == VALUE_LOAD_VERSION)
+                return createIntent(blockKey, FaultSpec.open("RLOAD"));
             return create(blockKey, driver ? FaultSpec.open("RG") : FaultSpec.open("RLOAD"));
         }
         @Override public ComposedBlockContribution create(String blockKey,
                 FaultSpec fault) {
+            if (!driver && providerVersion == VALUE_LOAD_VERSION)
+                throw new IllegalArgumentException(
+                        "Task 49 load requires a resolved catalog recipe");
             String expected = driver ? DRIVER_BLOCK_KEY : LOAD_BLOCK_KEY;
             if (!expected.equals(blockKey))
                 throw new IllegalArgumentException("Provider " + getTypeId()
@@ -150,7 +171,7 @@ final class ControlledIndicatorBlockContributions {
                 throw new IllegalArgumentException("Controlled fault target must be "
                         + expectedTarget);
             FunctionalBlockDescriptor descriptor = driver
-                    ? driverDescriptor(blockKey) : loadDescriptor(blockKey);
+                    ? driverDescriptor(blockKey) : loadDescriptor(blockKey, providerVersion);
             ElectricalBlockContract electrical = driver
                     ? driverElectrical(descriptor) : loadElectrical(descriptor);
             TreeMap<String, ComposedBlockContribution.ResistorRecipe> resistors =
@@ -176,10 +197,55 @@ final class ControlledIndicatorBlockContributions {
                 leds = Arrays.asList(new ComposedBlockContribution.LedRecipe(
                         "LED1", "LED1_A", "LED1_K", "LED1.A", "LED1.K", "LED"));
             }
-            return new ComposedBlockContribution(FAMILY_ID, VERSION, descriptor,
+            return new ComposedBlockContribution(FAMILY_ID, providerVersion, descriptor,
                     electrical, resistors, nmos, leds, fault, fault.getTargetComponentLocalId(),
                     Arrays.asList("BOARD_POWER", "CONTROL_INPUT"),
                     Arrays.asList("STEADY_DC_POWERED", "CUSTOMER_RETEST"));
+        }
+
+        ComposedBlockContribution createIntent(String blockKey, FaultSpec fault) {
+            if (driver || providerVersion != VALUE_LOAD_VERSION)
+                throw new IllegalArgumentException("Only the Task 49 load has an unresolved intent");
+            if (!LOAD_BLOCK_KEY.equals(blockKey) || fault == null ||
+                    !"RLOAD".equals(fault.getTargetComponentLocalId()))
+                throw new IllegalArgumentException("Invalid unresolved controlled load");
+            FunctionalBlockDescriptor descriptor = loadDescriptor(blockKey, providerVersion);
+            ElectricalBlockContract electrical = loadElectrical(descriptor);
+            Collection<ComposedBlockContribution.LedRecipe> leds = Arrays.asList(
+                new ComposedBlockContribution.LedRecipe(
+                    "LED1", "LED1_A", "LED1_K", "LED1.A", "LED1.K", "LED"));
+            return new ComposedBlockContribution(FAMILY_ID, providerVersion,
+                    descriptor, electrical,
+                    Collections.<String, ComposedBlockContribution.ResistorRecipe>emptyMap(),
+                    Collections.<ComposedBlockContribution.NmosRecipe>emptyList(), leds,
+                    fault, fault.getTargetComponentLocalId(),
+                    Arrays.asList("BOARD_POWER", "CONTROL_INPUT"),
+                    Arrays.asList("STEADY_DC_POWERED", "CUSTOMER_RETEST"));
+        }
+
+        ComposedBlockContribution createResolved(String blockKey, FaultSpec fault,
+                ControlledIndicatorValueSynthesis.ResolvedRecipe resolved) {
+            if (driver || providerVersion != VALUE_LOAD_VERSION || resolved == null)
+                throw new IllegalArgumentException("Only the Task 49 load has a resolved value");
+            if (!LOAD_BLOCK_KEY.equals(blockKey) || fault == null ||
+                    !"RLOAD".equals(fault.getTargetComponentLocalId()))
+                throw new IllegalArgumentException("Invalid resolved controlled load");
+            FunctionalBlockDescriptor descriptor = loadDescriptor(blockKey, providerVersion);
+            ElectricalBlockContract electrical = loadElectrical(descriptor);
+            TreeMap<String, ComposedBlockContribution.ResistorRecipe> resistors =
+                    new TreeMap<String, ComposedBlockContribution.ResistorRecipe>();
+            resistors.put("RLOAD", new ComposedBlockContribution.ResistorRecipe(
+                    "RLOAD", "RLOAD_1", "RLOAD_2", "RLOAD.1", "RLOAD.2",
+                    resolved, true));
+            Collection<ComposedBlockContribution.LedRecipe> leds = Arrays.asList(
+                new ComposedBlockContribution.LedRecipe(
+                    "LED1", "LED1_A", "LED1_K", "LED1.A", "LED1.K", "LED"));
+            return new ComposedBlockContribution(FAMILY_ID, providerVersion,
+                    descriptor, electrical, resistors,
+                    Collections.<ComposedBlockContribution.NmosRecipe>emptyList(), leds,
+                    fault, fault.getTargetComponentLocalId(),
+                    Arrays.asList("BOARD_POWER", "CONTROL_INPUT"),
+                    Arrays.asList("STEADY_DC_POWERED", "CUSTOMER_RETEST"), resolved);
         }
     }
 
@@ -220,8 +286,41 @@ final class ControlledIndicatorBlockContributions {
     }
 
     private static FunctionalBlockDescriptor loadDescriptor(String key) {
-        return new FunctionalBlockDescriptor(LOAD_TYPE_ID, VERSION, key,
-                Arrays.asList(parameter("load-resistance-ohms", 330), parameter("model", "LED")),
+        return loadDescriptor(key, VERSION);
+    }
+
+    private static FunctionalBlockDescriptor loadDescriptor(String key, int version) {
+        List<FunctionalBlockDescriptor.Parameter> parameters;
+        if (version == VERSION) {
+            parameters = Arrays.asList(parameter("load-resistance-ohms", 330),
+                    parameter("model", "LED"));
+        } else if (version == VALUE_LOAD_VERSION) {
+            ControlledIndicatorValueSynthesis.Intent intent =
+                    ControlledIndicatorValueSynthesis.defaultIntent();
+            parameters = Arrays.asList(
+                    parameter("target-min-current-amps", intent.getTargetMinimumCurrentAmps()),
+                    parameter("typed-demand-amps", intent.getTypedDemandAmps()),
+                    parameter("source-min-volts", intent.getSourceMinimumVolts()),
+                    parameter("source-max-volts", intent.getSourceMaximumVolts()),
+                    parameter("load-acceptance-min-volts",
+                            intent.getLoadAcceptanceMinimumVolts()),
+                    parameter("load-acceptance-max-volts",
+                            intent.getLoadAcceptanceMaximumVolts()),
+                    parameter("sink-capacity-amps", intent.getSinkCapacityAmps()),
+                    parameter("sink-min-volts", intent.getSinkMinimumVolts()),
+                    parameter("sink-max-volts", intent.getSinkMaximumVolts()),
+                    parameter("led-vf-min-volts", intent.getLedMinimumForwardVolts()),
+                    parameter("led-vf-max-volts", intent.getLedMaximumForwardVolts()),
+                    parameter("tolerance-fraction", intent.getModelToleranceFraction()),
+                    parameter("power-headroom-factor", intent.getPowerHeadroomFactor()),
+                    parameter("sink-headroom-factor", intent.getSinkHeadroomFactor()),
+                    parameter("model", intent.getModelId()),
+                    parameter("package", intent.getPackageId()));
+        } else {
+            throw new IllegalArgumentException("Unsupported controlled load provider version");
+        }
+        return new FunctionalBlockDescriptor(LOAD_TYPE_ID, version, key,
+                parameters,
                 Arrays.asList(
                         new FunctionalBlockDescriptor.Component("RLOAD", "RESISTOR", Arrays.asList("1", "2")),
                         new FunctionalBlockDescriptor.Component("LED1", "LED", Arrays.asList("A", "K"))),
@@ -296,6 +395,10 @@ final class ControlledIndicatorBlockContributions {
     private static FunctionalBlockDescriptor.Parameter parameter(String id, int value) {
         return new FunctionalBlockDescriptor.Parameter(id,
                 FunctionalBlockDescriptor.Value.ofInteger(value));
+    }
+    private static FunctionalBlockDescriptor.Parameter parameter(String id, double value) {
+        return new FunctionalBlockDescriptor.Parameter(id,
+                FunctionalBlockDescriptor.Value.ofDecimal(value));
     }
     private static FunctionalBlockDescriptor.Parameter parameter(String id, String value) {
         return new FunctionalBlockDescriptor.Parameter(id,

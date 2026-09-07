@@ -28,6 +28,8 @@ final class BoundedAssemblyRequest {
 
     /** Task 48 uses a separately versioned route; Task 47 constants remain unchanged. */
     static final int CONTROLLED_GENERATOR_VERSION = 2;
+    /** Task 49 is an explicit replay boundary; generator 2 keeps its meaning. */
+    static final int CONTROLLED_VALUES_GENERATOR_VERSION = 3;
     static final String CONTROLLED_INTENT_ID = "controlled-indicator";
     static final int CONTROLLED_INTENT_VERSION = 1;
     static final String CONTROLLED_PROFILE_ID = "controlled-indicator";
@@ -192,8 +194,30 @@ final class BoundedAssemblyRequest {
         return controlledDescriptor(seed, GenerationConstraints.unspecified());
     }
 
+    static ChallengeDescriptor controlledValuesDescriptor(long seed,
+            GenerationConstraints constraints) {
+        if (constraints == null)
+            throw new IllegalArgumentException("Generation constraints are required");
+        return new ChallengeDescriptor(ChallengeDescriptor.SCHEMA_VERSION, seed,
+                new ChallengeDescriptor.VersionedId(GENERATOR_ID,
+                        CONTROLLED_VALUES_GENERATOR_VERSION),
+                new ChallengeDescriptor.VersionedId(CONTROLLED_INTENT_ID,
+                        CONTROLLED_INTENT_VERSION),
+                new ChallengeDescriptor.VersionedId(CONTROLLED_PROFILE_ID,
+                        CONTROLLED_PROFILE_VERSION),
+                new PcbGeometryContractVersion(GEOMETRY_VERSION), constraints);
+    }
+
+    static ChallengeDescriptor controlledValuesDescriptor(long seed) {
+        return controlledValuesDescriptor(seed, GenerationConstraints.unspecified());
+    }
+
     static BoundedAssemblyRequest forControlledIndicator(long seed) {
         return forControlledIndicator(controlledDescriptor(seed));
+    }
+
+    static BoundedAssemblyRequest forControlledIndicatorValues(long seed) {
+        return forControlledIndicatorValues(controlledValuesDescriptor(seed));
     }
 
     static BoundedAssemblyRequest forControlledIndicator(
@@ -254,6 +278,35 @@ final class BoundedAssemblyRequest {
                                 ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
                                 "RETURN"))));
         return new BoundedAssemblyRequest(descriptor, blocks, connections, adapters);
+    }
+
+    /**
+     * Build the Task 49 declaration.  The load contribution intentionally
+     * carries only the typed intent and LED declaration here; value selection
+     * occurs once while the immutable plan is resolved.
+     */
+    static BoundedAssemblyRequest forControlledIndicatorValues(
+            ChallengeDescriptor descriptor) {
+        if (descriptor == null)
+            throw new IllegalArgumentException("Assembly descriptor is required");
+        if (descriptor.getGenerator().getVersion() !=
+                CONTROLLED_VALUES_GENERATOR_VERSION ||
+                !CONTROLLED_INTENT_ID.equals(descriptor.getDeviceIntent().getId()) ||
+                descriptor.getDeviceIntent().getVersion() != CONTROLLED_INTENT_VERSION)
+            throw new IllegalArgumentException("Task 49 controlled descriptor is required");
+        BoundedAssemblyRequest shape = forControlledIndicator(
+                controlledDescriptor(descriptor.getRootSeed(),
+                        descriptor.getConstraints()));
+        ComposedBlockContribution driver = ControlledIndicatorBlockContributions
+                .driver().create(ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY);
+        ComposedBlockContribution load = ControlledIndicatorBlockContributions
+                .valuesLoad().create(ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY);
+        ArrayList<ElectricalBlockContract> blocks =
+                new ArrayList<ElectricalBlockContract>();
+        blocks.add(driver.getElectricalContract());
+        blocks.add(load.getElectricalContract());
+        return new BoundedAssemblyRequest(descriptor, blocks,
+                shape.getConnections(), shape.getDeviceAdapters());
     }
 
     private static List<ElectricalBlockContract> immutableBlocks(

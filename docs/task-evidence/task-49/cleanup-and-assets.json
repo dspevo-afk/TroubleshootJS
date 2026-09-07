@@ -1,0 +1,79 @@
+{
+  "protocol": "TSJ-TASK49-RESOURCES-1",
+  "source": "ee88af871814a7bda9d88e422367a7a90945621acc984a441bb9bc22a257e4f7",
+  "previews": [
+    {
+      "run": "build1",
+      "runId": "938cdd52d386425aa2647c33fc8d80d2",
+      "port": 65084,
+      "wrapperPid": 309120,
+      "wrapperStartTicks": 639243479710726028,
+      "serverPid": 40216,
+      "serverStartTicks": 639243479734382165,
+      "ownershipAtLaunch": "run-owned-verified",
+      "cleanup": {
+        "Success": true,
+        "Errors": []
+      },
+      "wrapperExitCode": 0,
+      "browserTabClosed": true
+    },
+    {
+      "run": "build2",
+      "runId": "99d7b45c0a0b4bf795dab4e1b12a39a1",
+      "port": 54728,
+      "wrapperPid": 419008,
+      "wrapperStartTicks": 639243484491429929,
+      "serverPid": 362516,
+      "serverStartTicks": 639243484516461242,
+      "ownershipAtLaunch": "run-owned-verified",
+      "cleanup": {
+        "Success": true,
+        "Errors": []
+      },
+      "wrapperExitCode": 0,
+      "browserTabClosed": true
+    },
+    {
+      "run": "build3",
+      "runId": "5446f6da44e247fe9657fb720fdfa0b8",
+      "port": 54181,
+      "wrapperPid": 384260,
+      "wrapperStartTicks": 639243489583509774,
+      "serverPid": 65452,
+      "serverStartTicks": 639243489606901756,
+      "ownershipAtLaunch": "run-owned-verified",
+      "cleanup": {
+        "Success": true,
+        "Errors": []
+      },
+      "wrapperExitCode": 0,
+      "browserTabClosed": true
+    },
+    {
+      "run": "build4",
+      "runId": "8aab681992374a9f962f7d9ec7edf6e1",
+      "port": 62779,
+      "wrapperPid": 38556,
+      "wrapperStartTicks": 639243494139260473,
+      "serverPid": 407660,
+      "serverStartTicks": 639243494162430934,
+      "ownershipAtLaunch": "run-owned-verified",
+      "cleanup": {
+        "Success": true,
+        "Errors": []
+      },
+      "wrapperExitCode": 0,
+      "browserTabClosed": true
+    }
+  ],
+  "activeOwnedProcesses": [],
+  "activeOwnedTabs": [],
+  "loadedPermutation": "BAEB8F97F1A9EEDAA85F5C4E3F2E55C9.cache.js",
+  "loadedPermutationMatchesFinalManifest": true,
+  "retainedTempResources": [
+    "One root-owned OS-temp evidence directory retained for raw diagnostic provenance.",
+    "Three coder-owned compile directories remain outside Git. Automatic approval review rejected the verified scoped cleanup attempt with only \"blocked by policy\". No bypass or repeat deletion was attempted."
+  ],
+  "workers": "All seven Luna leaf assignments returned; no worker owns a running process or browser. The runtime exposes no agent-close operation."
+}

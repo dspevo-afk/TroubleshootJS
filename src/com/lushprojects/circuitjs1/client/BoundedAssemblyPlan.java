@@ -41,6 +41,7 @@ final class BoundedAssemblyPlan {
     private final String faultBlockKey;
     private final Map<String, String> decisionOwners;
     private final String semanticSignature;
+    private final ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe;
 
     private BoundedAssemblyPlan(BoundedAssemblyRequest request,
             BlockNamespace namespace,
@@ -51,7 +52,8 @@ final class BoundedAssemblyPlan {
             String faultDecisionKey, String faultBlockKey,
             Map<String, String> decisionOwners, String semanticSignature,
             Collection<DeviceAdapterContract> deviceAdapters,
-            boolean controlledIndicator) {
+            boolean controlledIndicator,
+            ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe) {
         this.request = request;
         this.namespace = namespace;
         this.blocks = Collections.unmodifiableMap(
@@ -70,6 +72,7 @@ final class BoundedAssemblyPlan {
         this.deviceAdapters = Collections.unmodifiableList(
                 new ArrayList<DeviceAdapterContract>(deviceAdapters));
         this.controlledIndicator = controlledIndicator;
+        this.resolvedLoadRecipe = resolvedLoadRecipe;
     }
 
     /** Resolve the supplied request using only the typed local registry. */
@@ -78,7 +81,8 @@ final class BoundedAssemblyPlan {
             throw new IllegalArgumentException("Assembly request is required");
         }
 
-        if (isControlledDescriptor(request.getDescriptor())) {
+        if (isControlledDescriptor(request.getDescriptor()) ||
+                isControlledValuesDescriptor(request.getDescriptor())) {
             return resolveControlled(request, null);
         }
 
@@ -122,7 +126,7 @@ final class BoundedAssemblyPlan {
         return new BoundedAssemblyPlan(request, namespace, contributions,
                 nets.aliases, nets.portNets, nets.provenance, faultDecisionKey,
                 faultBlockKey, owners, signature,
-                Collections.<DeviceAdapterContract>emptyList(), false);
+                Collections.<DeviceAdapterContract>emptyList(), false, null);
     }
 
     /** Resolve one of the two normal diagnostic fault targets explicitly. */
@@ -130,7 +134,8 @@ final class BoundedAssemblyPlan {
             BoundedAssemblyRequest request, String qualifiedTargetComponentId) {
         if (request == null)
             throw new IllegalArgumentException("Assembly request is required");
-        if (!isControlledDescriptor(request.getDescriptor()))
+        if (!isControlledDescriptor(request.getDescriptor()) &&
+                !isControlledValuesDescriptor(request.getDescriptor()))
             throw new IllegalArgumentException(
                     "Diagnostic fault override requires controlled indicator");
         return resolveControlled(request, qualifiedTargetComponentId);
@@ -170,10 +175,27 @@ final class BoundedAssemblyPlan {
                 .driver().create(ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
                         ControlledIndicatorBlockContributions.faultForDecision(
                                 ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY));
-        ComposedBlockContribution load = ControlledIndicatorBlockContributions
-                .load().create(ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
-                        ControlledIndicatorBlockContributions.faultForDecision(
-                                ControlledIndicatorBlockContributions.LOAD_FAULT_DECISION_KEY));
+        ControlledIndicatorBlockContributions.FaultSpec loadFault =
+                ControlledIndicatorBlockContributions.faultForDecision(
+                    ControlledIndicatorBlockContributions.LOAD_FAULT_DECISION_KEY);
+        ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe = null;
+        ComposedBlockContribution load;
+        if (isControlledValuesDescriptor(request.getDescriptor())) {
+            // The immutable recipe is derived from this request's typed
+            // interfaces after the preflight above.  The standalone default
+            // intent is intentionally not a production input.
+            ControlledIndicatorValueSynthesis.Intent intent =
+                    ControlledIndicatorValueSynthesis.fromRequest(request);
+            resolvedLoadRecipe = ControlledIndicatorValueSynthesis.resolve(
+                     request.getDescriptor().getRootSeed(),
+                     intent);
+            load = ControlledIndicatorBlockContributions.createResolvedValueLoad(
+                    ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
+                    loadFault, resolvedLoadRecipe);
+        } else {
+            load = ControlledIndicatorBlockContributions.load().create(
+                    ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY, loadFault);
+        }
         contributions.put(driver.getDescriptor().getInstanceKey(), driver);
         contributions.put(load.getDescriptor().getInstanceKey(), load);
         validateControlledContributions(request, contributions);
@@ -194,7 +216,8 @@ final class BoundedAssemblyPlan {
                 decision, owners, request.getDeviceAdapters());
         return new BoundedAssemblyPlan(request, namespace, contributions,
                 nets.aliases, nets.portNets, nets.provenance, decision,
-                faultBlockKey, owners, signature, request.getDeviceAdapters(), true);
+                faultBlockKey, owners, signature, request.getDeviceAdapters(), true,
+                resolvedLoadRecipe);
     }
 
     /** Return the declared-policy preflight result without allocating anything. */
@@ -203,9 +226,11 @@ final class BoundedAssemblyPlan {
         if (request == null) {
             throw new IllegalArgumentException("Assembly request is required");
         }
-        String schema = isControlledDescriptor(request.getDescriptor())
+        String schema = (isControlledDescriptor(request.getDescriptor()) ||
+                isControlledValuesDescriptor(request.getDescriptor()))
                 ? BoundedAssemblyRequest.CONTROLLED_INTENT_ID : DEVICE_SCHEMA_ID;
-        int version = isControlledDescriptor(request.getDescriptor())
+        int version = (isControlledDescriptor(request.getDescriptor()) ||
+                isControlledValuesDescriptor(request.getDescriptor()))
                 ? BoundedAssemblyRequest.CONTROLLED_INTENT_VERSION : DEVICE_SCHEMA_VERSION;
         return PortCompatibilityPreflight.check(schema, version,
                 request.getAllElectricalContracts(),
@@ -240,6 +265,10 @@ final class BoundedAssemblyPlan {
     Map<String, ComposedBlockContribution> getBlocks() { return blocks; }
     List<DeviceAdapterContract> getDeviceAdapters() { return deviceAdapters; }
     boolean isControlledIndicator() { return controlledIndicator; }
+    boolean isControlledIndicatorValues() { return resolvedLoadRecipe != null; }
+    ControlledIndicatorValueSynthesis.ResolvedRecipe getResolvedLoadRecipe() {
+        return resolvedLoadRecipe;
+    }
     ComposedBlockContribution getDriver() { return blocks.get("driver"); }
     ComposedBlockContribution getLoad() { return blocks.get("load"); }
     Map<String, String> getNetAliases() { return netAliases; }
@@ -321,6 +350,17 @@ final class BoundedAssemblyPlan {
                         BoundedAssemblyRequest.CONTROLLED_INTENT_ID);
     }
 
+    private static boolean isControlledValuesDescriptor(
+            ChallengeDescriptor descriptor) {
+        return descriptor != null
+                && BoundedAssemblyRequest.GENERATOR_ID.equals(
+                        descriptor.getGenerator().getId())
+                && descriptor.getGenerator().getVersion()
+                        == BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION
+                && BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
+                        descriptor.getDeviceIntent().getId());
+    }
+
     private static void validateDescriptor(ChallengeDescriptor descriptor) {
         if (descriptor.getSchemaVersion() != ChallengeDescriptor.SCHEMA_VERSION
                 || descriptor.getGenerator().getId().equals(
@@ -346,8 +386,10 @@ final class BoundedAssemblyPlan {
         if (descriptor.getSchemaVersion() != ChallengeDescriptor.SCHEMA_VERSION
                 || !BoundedAssemblyRequest.GENERATOR_ID.equals(
                         descriptor.getGenerator().getId())
-                || descriptor.getGenerator().getVersion()
-                        != BoundedAssemblyRequest.CONTROLLED_GENERATOR_VERSION
+                || (descriptor.getGenerator().getVersion()
+                        != BoundedAssemblyRequest.CONTROLLED_GENERATOR_VERSION &&
+                    descriptor.getGenerator().getVersion()
+                        != BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION)
                 || !BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
                         descriptor.getDeviceIntent().getId())
                 || descriptor.getDeviceIntent().getVersion()
@@ -558,6 +600,11 @@ final class BoundedAssemblyPlan {
         for (ElectricalBlockContract declaration : request.getBlocks()) {
             String key = declaration.getDescriptor().getInstanceKey();
             ComposedBlockContribution expected = contributions.get(key);
+            if (isControlledValuesDescriptor(request.getDescriptor()) &&
+                    ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(key)) {
+                expected = ControlledIndicatorBlockContributions.valuesLoad().create(
+                        ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY);
+            }
             if (expected == null || !ComposedBlockContribution.sameContract(
                     declaration, expected.getElectricalContract()))
                 throw new IllegalArgumentException("Block declaration does not match controlled provider " + key);
