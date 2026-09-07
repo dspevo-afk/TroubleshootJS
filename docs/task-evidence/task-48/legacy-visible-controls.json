@@ -1,0 +1,48 @@
+{
+  "source": "cdf2bbee7afdc1af2bccfa38bbda09f3ed65a450156a9dd7793d2dec3234ec09",
+  "route": "visible Codex in-app Browser",
+  "cases": [
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "developerMode": false,
+      "actualInputs": [
+        "Set control LOW",
+        "Set control HIGH",
+        "Board Power: ON",
+        "DC V",
+        "left red J2.1",
+        "right black J2.2",
+        "Board Power: OFF",
+        "Retest Customer",
+        "DC V mode exit"
+      ],
+      "controlsReenabled": true,
+      "powerOffControlVoltage": "0 V",
+      "powerOnControlVoltage": "5 V",
+      "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+      "status": "PASS"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "developerMode": false,
+      "actualInputs": [
+        "Set control LOW",
+        "Set control HIGH",
+        "Board Power: ON",
+        "DC V",
+        "left red J2.1",
+        "right black J2.2",
+        "Board Power: OFF",
+        "Retest Customer",
+        "DC V mode exit"
+      ],
+      "controlsReenabled": true,
+      "powerOffControlVoltage": "0 V",
+      "powerOnControlVoltage": "5 V",
+      "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+      "status": "PASS"
+    }
+  ]
+}

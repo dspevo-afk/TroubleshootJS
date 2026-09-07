@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-_Last updated: 2026-09-06 — Composition Entry Gate and Task 47 accepted; Task 48 unstarted_
+_Last updated: 2026-09-06 — Task 48 accepted and G5 satisfied; Task 49 unstarted_
 
 ## Purpose
 
@@ -1944,7 +1944,16 @@ composed challenge, open-drain extension or Task48 work is included.
 
 ## Task 48 — First Two-Block Composed Controlled-Indicator Challenge
 
-**Status:** `[ ] UNSTARTED — REQUIRES SEPARATE OWNER AUTHORIZATION`
+**Status:** `[x] COMPLETE — ACCEPTED`
+
+The [Task48 packet](task-evidence/task-48/README.md) freezes the bounded design
+and closed validation set. Both real fault owners pass compiled and complete
+visible normal-player diagnosis/repair/retest, privacy, exact replay, mutation
+recovery, independent correspondence and fresh-owner isolation. Final JDK8/GWT
+OBF five-permutation build, affected legacy regressions and all independent
+source reviews pass. Final independent evidence review PASS; no blocker remains.
+G5 is satisfied. The accepted implementation is the commit containing this update;
+its final handoff records the verified publication SHA. Task49 remains unstarted.
 
 **Purpose:** Prove the new contracts immediately with a small real playable
 challenge.
@@ -1994,7 +2003,7 @@ proof pattern.
 
 ## Task 49 — Intent-Driven Value Synthesis v1
 
-**Status:** [!] Blocked by Task 48
+**Status:** `[>] NEXT — UNSTARTED; REQUIRES SEPARATE OWNER AUTHORIZATION`
 
 **Purpose:** Stop family/block growth from duplicating hard-coded value tables.
 
@@ -3670,7 +3679,7 @@ statuses, and debugging history are preserved in
 
 # Immediate Next Milestone
 
-**Task 48 — unstarted; requires separate owner authorization**
+**Task 49 — unstarted; requires separate owner authorization**
 
 C1/C2, the authorized efficiency work and Task 43P acceptance are complete.
 The [current reconciliation](research/TASK43P_RUNTIME_RECONCILIATION_2026-09-05.md)
@@ -3691,4 +3700,12 @@ bounded runtime, visible-input, cleanup and independent-review criteria and is
 published at `623f3a74b37eec771576fe11a4d13c03a09335e7`. Task47 is now accepted
 with the [bounded assembler qualification](task-evidence/task-47/README.md) and
 its separate reviewed implementation commit. That authorized sequence is
-complete. Task48 remains unstarted and requires separate owner authorization.
+complete at `3928f4b8cdf633b89aeb6b78512b5cced833a774`. The owner then
+separately authorized Task48 only. Its [controlled-indicator qualification](task-evidence/task-48/README.md)
+now passes the bounded typed relation, two-owner physics/diagnosis/repair, normal
+visible player loop, privacy, replay, mutation/installation recovery, independent
+physical correspondence, final build and selected regressions. Final independent
+evidence review passes and G5 is satisfied. The accepted implementation is the
+commit containing this update; its final handoff records publication and Gmail
+outcomes. The next milestone is Task49; no value synthesis or later work is
+authorized or started.

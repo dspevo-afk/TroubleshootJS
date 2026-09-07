@@ -24,8 +24,7 @@ class LedPhysicalDeveloperVerifier {
             "Initial LED1 physical state is incorrect");
         verifyPartTopology(sim, instance);
 
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        power(sim, BoardPowerState.UNPOWERED);
         if (originalLedOpen)
             verifyOpenDiode(sim, boardProbe(sim, instance, "LED1.A"),
                 boardProbe(sim, instance, "LED1.K"), "installed original LED1");
@@ -33,6 +32,7 @@ class LedPhysicalDeveloperVerifier {
             verifyHealthyDiode(sim, boardProbe(sim, instance, "LED1.A"),
                 boardProbe(sim, instance, "LED1.K"), "installed original LED1");
         require(leds.removeInstalledPart(), "Could not remove original LED1");
+        settle(sim);
         require(state.getSlot().isEmpty() && state.getInventory().getLooseParts().size() == 1 &&
             state.getInventory().getLooseParts().get(0) == original,
             "Removing LED1 did not preserve its physical identity");
@@ -45,27 +45,28 @@ class LedPhysicalDeveloperVerifier {
         verifyPartTopology(sim, instance);
 
         PhysicalResistorPart replacementResistor = replaceR1WithHealthyPart(sim, instance);
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        power(sim, BoardPowerState.POWERED);
         settle(sim);
         require(!challenge.isCompleted() && !instance.getOperationalStates().isIlluminated("LED1"),
             "Correct R1 completed repair while LED1 was missing");
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        power(sim, BoardPowerState.UNPOWERED);
 
         LedCatalogEntry reversedCatalog = state.getCatalog().get(LedReplacementCatalog.REVERSED);
         require(leds.installNewFromCatalog(reversedCatalog.getId()),
             "Could not acquire reversed LED replacement");
+        settle(sim);
         PhysicalLedPart reversed = state.getSlot().getInstalledPart();
         verifyCatalogAcquisition(reversed, reversedCatalog);
         require(reversed != original && reversed.isReversedInstallation(),
             "Reversed LED acquisition lost identity or polarity");
         verifyRuntimeAllocatedIdentities(instance, replacementResistor, reversed);
         verifyReversedInstalledComponentTargets(sim, instance);
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        power(sim, BoardPowerState.POWERED);
         settle(sim);
         require(!challenge.isCompleted() && !instance.getOperationalStates().isIlluminated("LED1") &&
             Math.abs(reversed.getElement().getCurrent()) < .000001,
             "Reversed LED behaved as a repaired forward indicator");
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        power(sim, BoardPowerState.UNPOWERED);
         require(leds.removeInstalledPart(), "Could not remove reversed LED");
         settleAfterMutation(sim);
         verifyHealthyDiode(sim, looseProbe(sim, instance, reversed, 0),
@@ -74,6 +75,7 @@ class LedPhysicalDeveloperVerifier {
         LedCatalogEntry correctCatalog = state.getCatalog().get(LedReplacementCatalog.CORRECT);
         require(leds.installNewFromCatalog(correctCatalog.getId()),
             "Could not acquire correct LED replacement");
+        settle(sim);
         PhysicalLedPart healthy = state.getSlot().getInstalledPart();
         verifyCatalogAcquisition(healthy, correctCatalog);
         require(healthy != original && healthy != reversed &&
@@ -85,11 +87,14 @@ class LedPhysicalDeveloperVerifier {
         verifyHealthyDiode(sim, looseProbe(sim, instance, healthy, 0),
             looseProbe(sim, instance, healthy, 1), "loose correct LED replacement");
         require(leds.install(healthy.getId()), "Could not reinstall measured LED replacement");
+        settle(sim);
         verifyCatalogAcquisition(healthy, correctCatalog);
         require(leds.removeInstalledPart(),
             "Could not remove healthy LED before repeated catalog acquisition");
+        settle(sim);
         require(leds.installNewFromCatalog(correctCatalog.getId()),
             "Could not acquire the healthy LED catalog entry twice");
+        settle(sim);
         PhysicalLedPart secondHealthy = state.getSlot().getInstalledPart();
         verifyCatalogAcquisition(secondHealthy, correctCatalog);
         PhysicalCatalogAcquisitionDeveloperVerifier.verifySameSpecification(healthy, secondHealthy);
@@ -99,6 +104,7 @@ class LedPhysicalDeveloperVerifier {
             looseProbe(sim, instance, secondHealthy, 1), "loose second correct LED replacement");
         require(leds.install(secondHealthy.getId()),
             "Could not reinstall second correct LED acquisition");
+        settle(sim);
         verifyCatalogAcquisition(secondHealthy, correctCatalog);
         require(sim.pcbWorkbenchController.getRenderer().getLooseTerminalPoint(
                 secondHealthy.getId(), 0) == null,
@@ -109,7 +115,7 @@ class LedPhysicalDeveloperVerifier {
             "LED catalog entries changed after acquisition");
         verifyPartTopology(sim, instance);
 
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        power(sim, BoardPowerState.POWERED);
         settle(sim);
         double ledCurrent = Math.abs(secondHealthy.getElement().getCurrent());
         require(ledCurrent >= .005 && ledCurrent <= .015 &&
@@ -132,6 +138,7 @@ class LedPhysicalDeveloperVerifier {
             GeneratedBoardInstance instance) {
         ResistorSlotController resistors = sim.getResistorSlotController();
         require(resistors.removeInstalledPart(), "Could not remove failed R1 before LED checks");
+        settle(sim);
         double expected = StandardPhysicalDefinitionProviders.RESISTOR.require(
             instance.getPhysicalSpecifications(), "R1").getNominalResistanceOhms();
         String catalogId = null;
@@ -141,6 +148,7 @@ class LedPhysicalDeveloperVerifier {
                 catalogId = entry.getId();
         require(catalogId != null && resistors.installNewFromCatalog(catalogId),
             "Could not install correct R1 before LED checks");
+        settle(sim);
         return ReplaceableResistorBoardCapability.require(instance).getSlot().getInstalledPart();
     }
 
@@ -187,10 +195,12 @@ class LedPhysicalDeveloperVerifier {
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             label + " reverse result was not OL");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        settle(sim);
     }
 
     private static void requireDiodeMeasurementReady(CirSim sim, ProbeTarget red,
             ProbeTarget black, String label) {
+        settle(sim);
         require(red != null && black != null && red.isValid() && black.isValid(),
             label + " diode targets were not valid before measurement");
         CircuitMeasurementEndpoint redEndpoint = red.getMeasurementEndpoint();
@@ -207,6 +217,7 @@ class LedPhysicalDeveloperVerifier {
             GeneratedBoardInstance instance) {
         require(sim.getBoardModificationController().liftLead("LED1", "LED1.A"),
             "Could not lift reversed LED anode lead");
+        settle(sim);
         require(sim.getBoardModificationController().liftLead("LED1", "LED1.K"),
             "Could not lift reversed LED cathode lead");
         settleAfterMutation(sim);
@@ -221,19 +232,24 @@ class LedPhysicalDeveloperVerifier {
             "reversed installed component-side LED");
         require(sim.getBoardModificationController().reconnectLead("LED1", "LED1.A"),
             "Could not reconnect reversed LED anode lead");
+        settle(sim);
         require(sim.getBoardModificationController().reconnectLead("LED1", "LED1.K"),
             "Could not reconnect reversed LED cathode lead");
+        settle(sim);
     }
 
     private static void verifyOpenDiode(CirSim sim, ProbeTarget anode, ProbeTarget cathode,
             String label) {
+        requireDiodeMeasurementReady(sim, anode, cathode, label + " forward");
         sim.instrumentController.setDiodeProbesForDeveloperVerification(anode, cathode);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             label + " faulted LED forward result was not OL");
+        requireDiodeMeasurementReady(sim, cathode, anode, label + " reverse");
         sim.instrumentController.setDiodeProbesForDeveloperVerification(cathode, anode);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             label + " faulted LED reverse result was not OL");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        settle(sim);
     }
 
     private static ProbeTarget boardProbe(CirSim sim, GeneratedBoardInstance instance, String padId) {
@@ -301,13 +317,17 @@ class LedPhysicalDeveloperVerifier {
     }
 
     private static void settle(CirSim sim) {
-        sim.analyzeCircuit();
-        for (int index = 0; index < 8; index++) sim.runCircuit(true);
-        sim.verifyGeneratedBoard();
+        GeneratedRuntimeDeveloperSettlement.settle(sim, sim.getGeneratedBoardInstance(),
+            "LED physical verification");
     }
 
     private static void settleAfterMutation(CirSim sim) {
-        sim.updateCircuit();
+        settle(sim);
+    }
+
+    private static void power(CirSim sim, BoardPowerState state) {
+        settle(sim);
+        sim.setBoardPowerState(state);
         settle(sim);
     }
 

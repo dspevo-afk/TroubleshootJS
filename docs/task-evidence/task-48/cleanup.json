@@ -1,0 +1,52 @@
+{
+  "protocol": "TSJ-TASK48-CLEANUP-1",
+  "candidate": "cdf2bbee7afdc1af2bccfa38bbda09f3ed65a450156a9dd7793d2dec3234ec09",
+  "browser": {
+    "status": "PASS",
+    "taskOwnedTabsClosed": 1,
+    "remainingTabsObserved": 0
+  },
+  "preview": {
+    "runId": "d316bf21ba5d4abfb7682929ae320684",
+    "port": 54848,
+    "status": "PASS",
+    "Success": true,
+    "Errors": [],
+    "wrapperExitCode": 0,
+    "completedUtc": "2026-09-06T23:56:10.7265675Z",
+    "processTerminationProven": true,
+    "processAbsent": true,
+    "listenerAbsent": true,
+    "portLeaseReleased": true,
+    "mutexReleased": true,
+    "independentPostCleanupProcessCount": 0,
+    "independentPostCleanupListenerCount": 0
+  },
+  "workers": {
+    "status": "PASS",
+    "assignmentsComplete": true,
+    "ownedLiveResources": [],
+    "agentCloseControl": "unavailable; completed workers were not claimed closed"
+  },
+  "buildsAndTests": {
+    "status": "PASS",
+    "allProcessesFinished": true,
+    "pureGateScratchCleanup": "PASS by actual harness receipts"
+  },
+  "scratch": {
+    "status": "BLOCKED",
+    "cause": "TEST/TOOL automatic approval review",
+    "disposition": "Retained isolated task-owned external diagnostic directory; deletion was not executed",
+    "reason": "Deletion command rejected before process creation with only: blocked by policy",
+    "containmentPreflight": "PASS: exact named direct OS-temp child; zero reparse points",
+    "retainedFiles": 61,
+    "retainedBytes": 4792679,
+    "impact": "Nonblocking diagnostic retention; no live process, listener, browser or build remains. No repository files or application behavior are affected.",
+    "auditJournal": "Completed verifier audit journal also remains in its established external verifier run directory"
+  },
+  "preserved": [
+    "normal documented build outputs",
+    "unrelated user resources",
+    "historical verifier resources"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "protocol": "TSJ-TASK48-LEGACY-REPLAY-AUDIT-1",
+  "status": "PASS",
+  "source": "c4baf5856bef93edc075272161cbc928fd4a70cf8cd562559dec9d6a84731e6c",
+  "baselineSource": "57c91b7e47598259a50504ab2d862225fdf661a75f812ca36d6e24bedf3abf7f",
+  "checks": [
+    {
+      "name": "task46",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyTask46=true",
+      "status": "PASS",
+      "descriptorReplayParity": "byte-identical to accepted Task47",
+      "snapshotSha256": "d2c666caaf077d1e7762fe612d6bc10183cf7b96654054104f854e918b0c4885",
+      "pairedSnapshotEquality": "asserted by actual compiled replay verifier",
+      "freshOwners": true
+    },
+    {
+      "name": "task46-rc2",
+      "query": "tsjChallenge=rc&seed=2&tsjDebug=true&tsjVerifyTask46=true",
+      "status": "PASS",
+      "descriptorReplayParity": "byte-identical to accepted Task47",
+      "snapshotSha256": "a6e332f1d847ef1c7b8dfaf8cba5a6db8248998eb1c8778bd544e45653113ba5",
+      "pairedSnapshotEquality": "asserted by actual compiled replay verifier",
+      "freshOwners": true
+    },
+    {
+      "name": "task46-npn0",
+      "query": "tsjChallenge=npn&seed=0&tsjDebug=true&tsjVerifyTask46=true",
+      "status": "PASS",
+      "descriptorReplayParity": "byte-identical to accepted Task47",
+      "snapshotSha256": "7c1c300e4af066fb4f81044aa7b1f23b1ab7baaaaca23b97421487f6e0784564",
+      "pairedSnapshotEquality": "asserted by actual compiled replay verifier",
+      "freshOwners": true
+    },
+    {
+      "name": "task46-nmos0",
+      "query": "tsjChallenge=nmos&seed=0&tsjDebug=true&tsjVerifyTask46=true",
+      "status": "PASS",
+      "descriptorReplayParity": "byte-identical to accepted Task47",
+      "snapshotSha256": "5ee0d7b59f9e08bd6cff583e5aae7003a57bedcc15a504d743a70a72d51ed680",
+      "pairedSnapshotEquality": "asserted by actual compiled replay verifier",
+      "freshOwners": true
+    }
+  ]
+}

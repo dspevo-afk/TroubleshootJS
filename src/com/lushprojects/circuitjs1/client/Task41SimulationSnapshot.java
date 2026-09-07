@@ -189,9 +189,9 @@ final class Task41SimulationSnapshot {
         challenge = sim.generatedChallengeController;
         modifications = sim.boardModificationController;
         workbench = sim.pcbWorkbenchController;
-        familyState = board.getFamilyState();
-        temporalBehavior = board.getTemporalBehavior();
-        faultBinding = board.getFaultBinding();
+        familyState = board == null ? null : board.getFamilyState();
+        temporalBehavior = board == null ? null : board.getTemporalBehavior();
+        faultBinding = board == null ? null : board.getFaultBinding();
         workbenchAttached = workbench != null &&
             workbench.isAttachedToSidebarForDeveloperVerification();
         attachedWorkbenchCount = sim.getAttachedPcbWorkbenchCountForDeveloperVerification();
@@ -359,6 +359,24 @@ final class Task41SimulationSnapshot {
         return new Task41SimulationSnapshot(sim);
     }
 
+    /** Fresh composition may start from a schematic with no generated owner. */
+    static Task41SimulationSnapshot captureForFreshInstallation(CirSim sim) {
+        if (sim != null && sim.generatedBoardInstance != null)
+            return capture(sim);
+        if (sim == null || sim.generatedChallengeController != null ||
+                sim.boardModificationController != null || sim.pcbWorkbenchController != null ||
+                sim.getBoardPowerController().getBindingsForDeveloperVerification() != null ||
+                sim.getBoardPowerController().getState() != BoardPowerState.POWERED ||
+                sim.getAttachedPcbWorkbenchCountForDeveloperVerification() != 0 ||
+                sim.elmList == null || sim.adjustables == null || sim.undoStack == null ||
+                sim.redoStack == null || sim.instrumentController == null ||
+                sim.activeMeasurementOverlay || sim.generatedRuntimeInstallationInProgress ||
+                sim.generatedVerificationRunning || sim.generatedBoardVerificationPending ||
+                sim.pendingBoardPowerState != null || sim.observationalValidationDepth != 0)
+            throw new IllegalStateException("Fresh installation requires a detached initial owner");
+        return new Task41SimulationSnapshot(sim);
+    }
+
     void beginProof(CirSim sim) {
         assertOwner(sim);
         sim.detachPcbWorkbenchForDeveloperVerification();
@@ -452,7 +470,7 @@ final class Task41SimulationSnapshot {
             workbench.attachToSidebar(sim.verticalPanel);
         maybeInjectRestoreFailure(RESTORE_FAILURE_WORKBENCH_ATTACH);
 
-        sim.getBoardPowerController().restoreForDeveloperVerification(powerBindings, powerState);
+        restorePower(sim);
         maybeInjectRestoreFailure(RESTORE_FAILURE_POWER);
 
         sim.instrumentController.restoreForDeveloperVerification(instrumentState);
@@ -499,7 +517,7 @@ final class Task41SimulationSnapshot {
                 workbench.attachToSidebar(sim.verticalPanel);
         } catch (Throwable ignored) { }
         try {
-            sim.getBoardPowerController().restoreForDeveloperVerification(powerBindings, powerState);
+            restorePower(sim);
         } catch (Throwable ignored) { }
         try {
             sim.instrumentController.restoreForDeveloperVerification(instrumentState);
@@ -743,13 +761,13 @@ final class Task41SimulationSnapshot {
         if (sim.getBoardPowerController().getBindingsForDeveloperVerification() != powerBindings ||
                 sim.getBoardPowerController().getState() != powerState)
             throw new IllegalStateException("Task 41 restore changed board power ownership");
-        if (powerState == BoardPowerState.POWERED && !powerBindings.areAllConnected())
+        if (powerBindings != null && powerState == BoardPowerState.POWERED && !powerBindings.areAllConnected())
             throw new IllegalStateException("Task 41 restored a disconnected powered board");
-        if (powerState == BoardPowerState.UNPOWERED && !powerBindings.areAllDisconnected())
+        if (powerBindings != null && powerState == BoardPowerState.UNPOWERED && !powerBindings.areAllDisconnected())
             throw new IllegalStateException("Task 41 restored a connected unpowered board");
         if (sim.boardModificationController != modifications ||
-                sim.boardModificationController == null ||
-                sim.boardModificationController.isFullyRestored() != modificationsFullyRestored)
+                (modifications != null &&
+                sim.boardModificationController.isFullyRestored() != modificationsFullyRestored))
             throw new IllegalStateException("Task 41 restore changed physical modification ownership");
         if (sim.activeMeasurementOverlay)
             throw new IllegalStateException("Task 41 restore retained a measurement overlay");
@@ -877,10 +895,17 @@ final class Task41SimulationSnapshot {
     private void assertOwner(CirSim sim) {
         if (sim.generatedBoardInstance != board || sim.generatedChallengeController != challenge ||
                 sim.boardModificationController != modifications ||
-                board.getFamilyState() != familyState ||
+                (board != null && (board.getFamilyState() != familyState ||
                 board.getTemporalBehavior() != temporalBehavior ||
-                board.getFaultBinding() != faultBinding)
+                board.getFaultBinding() != faultBinding)))
             throw new IllegalStateException("Task 41 proof lost its exact generated owner");
+    }
+
+    private void restorePower(CirSim sim) {
+        if (powerBindings == null)
+            sim.getBoardPowerController().detach();
+        else
+            sim.getBoardPowerController().restoreForDeveloperVerification(powerBindings, powerState);
     }
 
     private static <T> Vector<T> copy(Vector<T> source) {

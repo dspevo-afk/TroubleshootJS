@@ -1,0 +1,37 @@
+{
+  "source": "c4baf5856bef93edc075272161cbc928fd4a70cf8cd562559dec9d6a84731e6c",
+  "style": "OBF",
+  "permutations": 5,
+  "files": [
+    {
+      "path": "war/circuitjs1/00359CB6A6954707E1686A20D3ED0B47.cache.js",
+      "sha256": "d693cf58ecda12a87d7d92f7be69d49042bb236bf96198919274a0aaac7613bd",
+      "bytes": 1636687
+    },
+    {
+      "path": "war/circuitjs1/2074908EB42E63C1A161FC239A2A2D60.cache.js",
+      "sha256": "2fec72fb667a8d4294460e967a2e1f92cfb329f3491b67e1e49b3217676f2b93",
+      "bytes": 1728095
+    },
+    {
+      "path": "war/circuitjs1/210931E2549C84C1520D61D52C59D809.cache.js",
+      "sha256": "a48f385d1cbe74eae23cd4c241eac38753e47a976c31b071263a1d9363c20dad",
+      "bytes": 1726221
+    },
+    {
+      "path": "war/circuitjs1/7D0C6C1B3F52FDE53C8F927D2C02C06C.cache.js",
+      "sha256": "9f554567c7dccb0c9f45e64ba93d75f360ab04722745afe37607bb288530887e",
+      "bytes": 1725755
+    },
+    {
+      "path": "war/circuitjs1/circuitjs1.nocache.js",
+      "sha256": "61f5ff2d67e51d5a62bed76916c6f2fa7fa86a896639aba7ec1b08b915ed206a",
+      "bytes": 7827
+    },
+    {
+      "path": "war/circuitjs1/DE54E80EA6ABD1A66845608567EC5429.cache.js",
+      "sha256": "f7888d0551c560b7e75487d7697b4b488f0b8cd9eb8e330e88f2fa1481a614b2",
+      "bytes": 1727427
+    }
+  ]
+}

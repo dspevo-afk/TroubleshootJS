@@ -1,0 +1,13 @@
+{
+  "protocol": "TSJ-TASK48-PUBLIC-NEGATIVE-1",
+  "sourceFingerprint": "ad308c1602274823af1216b097c98ff3ed24424e16dcecfbada95b0e0ba0ec1f",
+  "build": "build13; JDK8/GWT OBF all five permutations",
+  "normalRoute": "tsjChallenge=controlled-indicator&seed=0; debug off",
+  "mutation": "Only the actual Open controlled indicator Button.setEnabled predicate is forced false",
+  "preflight": "exactly one anchor; mutation applied and exact original bytes restored before expensive build",
+  "setupCorrection": "Initial plain-schematic attempt did not reach the mutated generated-control refresh before its first click; no negative PASS was claimed. The explicit normal generated page invokes the actual refresh and visibly disables the required control.",
+  "status": "PASS",
+  "expectedFailure": "Error: FAIL:task48-player:required control disabled: Open controlled indicator",
+  "disabledControlObserved": true,
+  "fallbackUsed": false
+}

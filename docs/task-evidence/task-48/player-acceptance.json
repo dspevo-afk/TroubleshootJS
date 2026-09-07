@@ -1,0 +1,103 @@
+{
+  "protocol": "TSJ-TASK48-PLAYER-1",
+  "status": "PASS",
+  "sourceFingerprint": "b068f505766d676d580f421056d53e521a91ee59d9a9dde0cde0c18252fe0834",
+  "build": "build12; JDK8/GWT OBF, all five permutations",
+  "browser": "visible Codex in-app Browser",
+  "developerMode": false,
+  "entry": {
+    "method": "actual click on Open controlled indicator",
+    "result": "fresh symptom-only controlled challenge",
+    "helper": "tests/browser/task48-player-controls.mjs"
+  },
+  "cases": [
+    {
+      "seed": "0",
+      "owner": "load/RLOAD",
+      "entry": "ordinary tsjChallenge=controlled-indicator&seed=0 URL",
+      "complaint": "The controlled indicator does not turn on.",
+      "faultyControl": {
+        "HIGH": "LED dark; gate-to-source 4.95 V",
+        "LOW": "LED dark; gate-to-source 0 V"
+      },
+      "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+      "diagnosis": {
+        "power": "OFF",
+        "RLOAD": "OL",
+        "RG": "1 kOhm"
+      },
+      "repair": {
+        "method": "ordinary body selection after exiting OHM; Remove component; catalog selection; Install new resistor in RLOAD",
+        "catalogLabel": "330 Ohm +/-5%"
+      },
+      "repairedControl": {
+        "LOW": "LED dark",
+        "HIGH": "LED illuminated"
+      },
+      "retest": "Customer retest passed. The reported behavior is resolved.",
+      "screenshots": [
+        "load-fault-gate-voltage.png",
+        "load-repair-customer-pass.png"
+      ]
+    },
+    {
+      "seed": "1",
+      "owner": "driver/RG",
+      "entry": "ordinary tsjChallenge=controlled-indicator&seed=1 URL",
+      "complaint": "The controlled indicator does not turn on.",
+      "faultyControl": {
+        "HIGH": "LED dark; gate-to-source 0 V; J2 input 5 V",
+        "LOW": "LED dark; J2 input 0 V"
+      },
+      "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+      "diagnosis": {
+        "power": "OFF",
+        "RG": "OL",
+        "RLOAD": "330 Ohm"
+      },
+      "repair": {
+        "method": "ordinary body selection after exiting OHM; Remove component; catalog selection; Install new resistor in RG",
+        "catalogLabel": "1000 Ohm +/-5%"
+      },
+      "repairedControl": {
+        "LOW": "LED dark",
+        "HIGH": "LED illuminated"
+      },
+      "retest": "Customer retest passed. The reported behavior is resolved.",
+      "screenshots": [
+        "driver-fault-gate-voltage.png",
+        "driver-repair-customer-pass.png"
+      ]
+    }
+  ],
+  "interaction": {
+    "probeInput": "actual canvas left-click red and right-click black",
+    "probeMarkers": "red/black markers inspected on physical pads",
+    "modeExit": "click active OHM again; meter returns --- V; ordinary resistor-body click opens physical selection/actions",
+    "settlement": "real LOW/HIGH controls re-enable after the ordinary update; no private controller fallback",
+    "completion": "successful retest locks physical/power/instrument controls while semantic LOW/HIGH remain available"
+  },
+  "privacy": {
+    "result": "PASS",
+    "checkedStates": [
+      "entry",
+      "probed fault",
+      "physical selection",
+      "catalog replacement",
+      "completed"
+    ],
+    "surfaces": [
+      "visible text",
+      "DOM attributes including titles",
+      "Task48 report absent"
+    ],
+    "privateTokensAbsent": [
+      "tsj-block-v1",
+      "driver-rg-open",
+      "load-rload-open",
+      "RESISTOR_OPEN",
+      "diagnostic-proof"
+    ]
+  },
+  "limits": "This is visible player evidence. Developer verifier dispatch and compiled proof are recorded separately. Source-disabled public-entry canary has its own receipt."
+}

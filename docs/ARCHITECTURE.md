@@ -296,6 +296,69 @@ correspondence verifier, including its wrong-mapping negatives. The route adds n
 player menu or composed challenge admission. Current qualification and limits are
 recorded in the [Task 47 packet](task-evidence/task-47/README.md); Task 48 is separate.
 
+## Controlled-indicator composition — Task 48
+
+`BoundedAssemblyRequest.forControlledIndicator` selects `bounded-assembler@2`,
+`controlled-indicator@1` intent/profile and geometry version 3. The accepted
+resistive `@1` identity and six-family Quick Play registry retain their behavior.
+The existing assembler resolves two immutable contributions and two explicit
+device adapters into one board, CircuitJS graph, generated instance and physical
+runtime. No child board is constructed. The only randomized choice is one
+initial fault from the named FAULT stream; signed-long seeds remain canonical
+decimal strings throughout descriptor and browser replay.
+
+The driver contributes mutable RG (1 kOhm), fixed RPD (100 kOhm) and the existing
+NMOS model. The load contributes mutable RLOAD (330 Ohm) and the existing LED
+model. Device adapters own J1 supply and J2 control, their external sources and
+isolation switches. Seven components, fifteen pads and six conductive nets are
+resolved through `BlockNamespace`, including all contribution/adaptor aliases.
+`SwitchedLowSideContract` is a bounded typed sinking relation with actual supply,
+control and common-return joins, active-high thresholds, ON/OFF voltage limits
+and current/loading bounds. Preflight rejects missing or extra group members,
+unjoined support ports, incompatible ranges and unsupported generic open-drain
+connections. CircuitJS remains responsible for final electrical behavior.
+
+`ControlledIndicatorDeviceBehavior` executes real LOW/HIGH input operations and
+checks both states before fault application and during customer retest. An RG
+open leaves the gate pulled low; an RLOAD open leaves high gate drive with no LED
+current. These are different physical owners with the same symptom-only ticket.
+The normal diagnostic contract executes both candidates through Task41 voltage,
+resistance, continuity, physical replacement and customer-retest paths. Receipts
+retain qualified owner IDs only inside developer evidence. Diagnostic reference
+and probe IDs accept canonical qualified PAD identities; other plan categories
+retain their existing grammar and forbidden-identity checks.
+
+RG and RLOAD use separate capabilities over the same global inventory and
+existing `ResistorMutationScope` prepare/commit/abort boundary, including actions
+on the healthy owner. RPD, Q1, LED1 and connectors are fixed physical parts;
+unsupported mutable providers remain rejected. Fixed-part endpoint registration
+resolves package terminals through the actual slot and board bindings. LED
+appearance observes the same live `LEDElm` used by the solver. A device-level
+bounded layout uses authoritative packages, copper validation, renderer and
+probe infrastructure. The independent physical manifest supplies literal
+copper/render/solver expectations and negative mappings.
+
+The sidebar's **Open controlled indicator** and ordinary
+`tsjChallenge=controlled-indicator&seed=<canonical-long>` route call
+`installNormalComposition`. This requires supported providers and a nonempty
+diagnostic contract, settles a fresh disjoint candidate, executes normal live
+diagnostic admission, then attaches its workbench. Initial schematic entry uses
+the narrowly validated detached-owner snapshot variant. Failure restores the
+untouched prior owner or preserves the existing isolated failure state; it does
+not create a same-owner transaction. Existing stale callback, pending-work,
+completion and cleanup guards still apply. Power isolation disconnects both
+declared external inputs before active measurement. Player-facing labels use
+physical markings while stable internal identities remain private.
+The ordinary CircuitJS update refreshes cached control state when the same
+generated owner changes from pending to settled, including the PCB rendering
+return path; it does not clear readiness flags to enable a control.
+
+`tsjDebug=true&tsjVerifyTask48=true` runs bounded implementation qualification;
+real visible normal-player acceptance is a separate gate. The
+[Task48 packet](task-evidence/task-48/README.md) records the exact candidate,
+qualification status and retained limits. This adds neither value synthesis nor
+a general device generator.
+
 ## Probe and measurement ownership
 
 `ProbeTarget` describes where a user placed a probe: validity, semantic target

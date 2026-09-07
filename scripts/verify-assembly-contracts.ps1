@@ -2,10 +2,11 @@
 param(
     [string]$JavaHome = $env:JAVA_HOME,
     [string]$PythonExe = 'python',
-    [string]$ReceiptOutputPath = ''
+    [string]$ReceiptOutputPath = '',
+    [string]$ControlledReceiptOutputPath = ''
 )
 
-# Focused, nonvisual Task 47 request/provider/plan checks.  This harness
+# Focused, nonvisual Task 47/48 request/provider/plan checks. This harness
 # compiles an explicit pure source set and never starts CircuitJS or allocates
 # a runtime board.
 Set-StrictMode -Version Latest
@@ -80,6 +81,7 @@ try {
         'src/com/lushprojects/circuitjs1/client/ElectricalPortContract.java',
         'src/com/lushprojects/circuitjs1/client/ElectricalBlockContract.java',
         'src/com/lushprojects/circuitjs1/client/ElectricalConnection.java',
+        'src/com/lushprojects/circuitjs1/client/SwitchedLowSideContract.java',
         'src/com/lushprojects/circuitjs1/client/PortCompatibilityPreflight.java',
         'src/com/lushprojects/circuitjs1/client/PcbGeometryContractVersion.java',
         'src/com/lushprojects/circuitjs1/client/ChallengeContractException.java',
@@ -88,11 +90,16 @@ try {
         'src/com/lushprojects/circuitjs1/client/NamedRandomStreams.java',
         'src/com/lushprojects/circuitjs1/client/GeneratedFaultLocusType.java',
         'src/com/lushprojects/circuitjs1/client/GeneratedFaultLocus.java',
+        'src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticPlan.java',
         'src/com/lushprojects/circuitjs1/client/ComposedBlockContribution.java',
         'src/com/lushprojects/circuitjs1/client/ResistiveBlockContributions.java',
+        'src/com/lushprojects/circuitjs1/client/DeviceAdapterContract.java',
+        'src/com/lushprojects/circuitjs1/client/ControlledIndicatorBlockContributions.java',
         'src/com/lushprojects/circuitjs1/client/BoundedAssemblyRequest.java',
         'src/com/lushprojects/circuitjs1/client/BoundedAssemblyPlan.java',
-        'tests/contracts/BoundedAssemblyContractTest.java'
+        'tests/contracts/BoundedAssemblyContractTest.java',
+        'tests/contracts/ControlledIndicatorAssemblyContractTest.java',
+        'tests/contracts/SwitchedLowSideCompatibilityContractTest.java'
     )
     $compileArguments = @('-source', '7', '-target', '7', '-encoding', 'UTF-8',
         '-classpath', $classes, '-sourcepath', $emptySourcePath, '-d', $classes)
@@ -126,6 +133,38 @@ try {
     $receipt = [regex]::Match($tested.Stdout,
         '(?m)^TASK47_ASSEMBLY_RECEIPT_BEGIN\r?\n([\s\S]*?)^TASK47_ASSEMBLY_RECEIPT_END\r?$')
     if (-not $receipt.Success) { throw 'Task 47 assembly receipt body is missing.' }
+    $controlledTested = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classes,
+        'com.lushprojects.circuitjs1.client.ControlledIndicatorAssemblyContractTest') 60000
+    Write-Host $controlledTested.Stdout
+    if ($controlledTested.Stderr) { Write-Host $controlledTested.Stderr }
+    if (-not $controlledTested.TerminationProven -or $controlledTested.ExitCode -ne 0 -or
+            $controlledTested.Stdout -notmatch
+            '(?m)^PASS: Task48 pure controlled-indicator contracts ') {
+        throw "Task 48 pure controlled-indicator contract test failed, exit $($controlledTested.ExitCode)."
+    }
+    $switchedTested = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classes,
+        'com.lushprojects.circuitjs1.client.SwitchedLowSideCompatibilityContractTest') 60000
+    Write-Host $switchedTested.Stdout
+    if ($switchedTested.Stderr) { Write-Host $switchedTested.Stderr }
+    if (-not $switchedTested.TerminationProven -or $switchedTested.ExitCode -ne 0 -or
+            $switchedTested.Stdout -notmatch '(?m)^PASS: Task48 switched-low-side compatibility ') {
+        throw "Task 48 switched-low-side compatibility test failed, exit $($switchedTested.ExitCode)."
+    }
+    $controlledReceipt = [regex]::Match($controlledTested.Stdout,
+        '(?m)^TASK48_ASSEMBLY_RECEIPT_BEGIN\r?\n([\s\S]*?)^TASK48_ASSEMBLY_RECEIPT_END\r?$')
+    if (-not $controlledReceipt.Success) { throw 'Task 48 assembly receipt body is missing.' }
+    $controlledReceiptPath = Join-Path $taskRoot 'controlled-assembly-receipt.txt'
+    [IO.File]::WriteAllText($controlledReceiptPath, $controlledReceipt.Groups[1].Value,
+        (New-Object Text.UTF8Encoding($false)))
+    $controlledReferencePath = Join-Path $repositoryRoot 'tests/contracts/task48_assembly_reference.py'
+    $controlledOracle = Invoke-VerifierBoundedProcess $python @(
+        $controlledReferencePath, $controlledReceiptPath) 60000
+    Write-Host $controlledOracle.Stdout
+    if ($controlledOracle.Stderr) { Write-Host $controlledOracle.Stderr }
+    if (-not $controlledOracle.TerminationProven -or $controlledOracle.ExitCode -ne 0 -or
+            $controlledOracle.Stdout -notmatch '(?m)^PASS: Task48 independent assembly oracle 8 seeds') {
+        throw "Independent Task 48 assembly oracle failed, exit $($controlledOracle.ExitCode)."
+    }
     $receiptPath = Join-Path $taskRoot 'assembly-receipt.txt'
     [IO.File]::WriteAllText($receiptPath, $receipt.Groups[1].Value,
         (New-Object Text.UTF8Encoding($false)))
@@ -144,6 +183,12 @@ try {
         [IO.File]::WriteAllText($destination, $receipt.Groups[1].Value,
             (New-Object Text.UTF8Encoding($false)))
         Write-Host ('RECEIPT: ' + $destination)
+    }
+    if ($ControlledReceiptOutputPath) {
+        $controlledDestination = [IO.Path]::GetFullPath($ControlledReceiptOutputPath)
+        [IO.File]::WriteAllText($controlledDestination, $controlledReceipt.Groups[1].Value,
+            (New-Object Text.UTF8Encoding($false)))
+        Write-Host ('CONTROLLED_RECEIPT: ' + $controlledDestination)
     }
     $resultCode = 0
 } catch {

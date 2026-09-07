@@ -25,7 +25,7 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
     public String getOperationLabel(WorkbenchOperation operation) {
         if (operation == null) return "Modify resistor";
         if (WorkbenchOperation.INSTALL.equals(operation.getId()))
-            return "Install as " + getComponentId();
+            return "Install as " + capability.getPlayerComponentLabel();
         if (WorkbenchOperation.CATALOG_INSTALL.equals(operation.getId()))
             return capability.getInstallNewLabel();
         if (WorkbenchOperation.LIFT_LEAD.equals(operation.getId()) ||

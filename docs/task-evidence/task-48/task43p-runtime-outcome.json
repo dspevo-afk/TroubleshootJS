@@ -1,0 +1,18 @@
+{
+  "source": "c4baf5856bef93edc075272161cbc928fd4a70cf8cd562559dec9d6a84731e6c",
+  "command": "Assert-Task43PRuntimeEvidence (task43p-runtime.json | ConvertFrom-Json) task48-final14 task48-runtime",
+  "result": {
+    "ExitCode": 0,
+    "OpenBlockerCount": 0,
+    "VerifiedLanes": [
+      "A",
+      "B/F",
+      "C",
+      "E",
+      "D",
+      "G",
+      "H",
+      "I"
+    ]
+  }
+}

@@ -158,7 +158,11 @@ final class PortCompatibilityPreflight {
         for (Group group : groups.values()) {
             if (!group.onlyReturns()) {
                 checkReferences(group, references, attemptedReferences, issues);
-                checkSignalGroup(group, issues);
+                if (hasTypedSwitchedConnection(group, proposals))
+                    checkSwitchedLowSideGroup(group, proposals, nodes, conductors,
+                            references, attemptedReferences, issues);
+                else
+                    checkSignalGroup(group, issues);
             }
         }
         for (ElectricalBlockContract block : blockMap.values()) {
@@ -309,6 +313,401 @@ final class PortCompatibilityPreflight {
         }
         if (capacityKnown && demandKnown && demand > driver.port.getCapacityAmps().getValue())
             add(group, issues, Decision.INCOMPATIBLE, Reason.LOAD_CAPACITY_EXCEEDED, "capacityAmps.demandAmps", group.ids());
+    }
+
+    private static boolean hasTypedSwitchedConnection(Group group,
+            Map<String, ElectricalConnection> proposals) {
+        for (String id : group.connections) {
+            ElectricalConnection connection = proposals.get(id);
+            if (connection != null && connection.getKind()
+                    == ElectricalConnection.Kind.LOW_SIDE_SWITCHED)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Validate the explicit low-side relation.  An untyped open-drain net
+     * continues through checkSignalGroup and remains fail-closed.
+     */
+    private static void checkSwitchedLowSideGroup(Group group,
+            Map<String, ElectricalConnection> proposals,
+            Map<String, Node> nodes, Union conductors, Union references,
+            Union attemptedReferences, List<Diagnostic> issues) {
+        ElectricalConnection switched = null;
+        for (String id : group.connections) {
+            ElectricalConnection candidate = proposals.get(id);
+            if (candidate != null && candidate.getKind()
+                    == ElectricalConnection.Kind.LOW_SIDE_SWITCHED) {
+                if (switched != null) {
+                    add(group, issues, Decision.INCOMPATIBLE,
+                            Reason.CONFLICTING_DRIVERS, "connection.kind", group.ids());
+                    return;
+                }
+                switched = candidate;
+            }
+        }
+        if (switched == null || switched.getSwitchedLowSideContract() == null) {
+            add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                    Reason.UNSUPPORTED_DRIVE, "connection.kind", group.ids());
+            return;
+        }
+        SwitchedLowSideContract relation = switched.getSwitchedLowSideContract();
+        if (!samePortSet(switched.getPorts(), Arrays.asList(
+                relation.getSinkPort(), relation.getLoadPort()))) {
+            add(group, issues, Decision.MALFORMED, Reason.INVALID_CONNECTION,
+                    "connection.switchedLowSide.ports", group.ids());
+            return;
+        }
+        Node sink = nodes.get(relation.getSinkPort().key());
+        Node load = nodes.get(relation.getLoadPort().key());
+        Node supply = nodes.get(relation.getSupplyPort().key());
+        Node control = nodes.get(relation.getControlPort().key());
+        Node loadSupply = nodes.get("load/SUPPLY");
+        Node driverControl = nodes.get("driver/CONTROL");
+        if (sink == null || load == null || supply == null || control == null
+                || loadSupply == null || driverControl == null) {
+            add(group, issues, Decision.MALFORMED, Reason.UNKNOWN_PORT,
+                    "connection.switchedLowSide.references", group.ids());
+            return;
+        }
+        TreeSet<String> expectedSwitched = new TreeSet<String>(Arrays.asList(
+                sink.key, load.key));
+        TreeSet<String> actualSwitched = new TreeSet<String>();
+        for (Node node : group.nodes) actualSwitched.add(node.key);
+        if (!expectedSwitched.equals(actualSwitched)) {
+            add(group, issues, Decision.INCOMPATIBLE, Reason.INVALID_CONNECTION,
+                    "connection.switchedLowSide.transitivePorts", group.ids());
+            return;
+        }
+        if (!"driver".equals(relation.getSinkPort().getBlockKey())
+                || !"SWITCHED_SINK".equals(relation.getSinkPort().getPortId())
+                || !"load".equals(relation.getLoadPort().getBlockKey())
+                || !"SWITCHED_LOAD".equals(relation.getLoadPort().getPortId())) {
+            add(group, issues, Decision.INCOMPATIBLE, Reason.UNSUPPORTED_ROLE_PAIR,
+                    "connection.switchedLowSide.fixedPorts", group.ids());
+            return;
+        }
+        ElectricalPortContract sinkPort = sink.port, loadPort = load.port;
+        if (sinkPort.getRole() != Role.LOAD
+                || sinkPort.getDirection() != Direction.OUTPUT
+                || sinkPort.getBehavior() != Behavior.SINK
+                || sinkPort.getDrive() != Drive.OPEN_DRAIN
+                || loadPort.getRole() != Role.LOAD
+                || loadPort.getDirection() == Direction.OUTPUT
+                || loadPort.getBehavior() != Behavior.SINK
+                || loadPort.getDrive() != Drive.NONE) {
+            add(group, issues, Decision.INCOMPATIBLE,
+                    Reason.INVALID_DIRECTION_DRIVE, "connection.switchedLowSide.shape", group.ids());
+            return;
+        }
+        if (!relation.isActiveHigh()) {
+            add(group, issues, Decision.INCOMPATIBLE,
+                    Reason.ACTIVE_LEVEL_MISMATCH,
+                    "connection.switchedLowSide.activeHigh", group.ids());
+        }
+        if (relation.getSinkCapacityAmps() < SwitchedLowSideContract.MIN_SINK_CAPACITY_AMPS
+                || relation.getLoadDemandAmps() > SwitchedLowSideContract.MAX_LOAD_DEMAND_AMPS) {
+            add(group, issues, Decision.INCOMPATIBLE,
+                    Reason.LOAD_CAPACITY_EXCEEDED,
+                    "connection.switchedLowSide.contractCapacityDemand", group.ids());
+        }
+        if (sinkPort.getCapacityAmps().getState() != State.KNOWN
+                || loadPort.getLoading() != Loading.BOUNDED_CURRENT
+                || loadPort.getDemandAmps().getState() != State.KNOWN) {
+            add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                    Reason.REQUIRED_INFORMATION_MISSING,
+                    "connection.switchedLowSide.capacityDemand", group.ids());
+            return;
+        }
+        if (sinkPort.getCapacityAmps().getValue() < relation.getSinkCapacityAmps()
+                || loadPort.getDemandAmps().getValue() > relation.getLoadDemandAmps()
+                || loadPort.getDemandAmps().getValue() > sinkPort.getCapacityAmps().getValue()) {
+            add(group, issues, Decision.INCOMPATIBLE,
+                    Reason.LOAD_CAPACITY_EXCEEDED,
+                    "connection.switchedLowSide.capacityDemand", group.ids());
+        }
+        if (!knownRange(sinkPort.getGuaranteedVoltage())
+                || !knownRange(sinkPort.getAllowedVoltage())
+                || !knownRange(loadPort.getAllowedVoltage())
+                || !knownRange(supply.port.getGuaranteedVoltage())
+                || !knownRange(supply.port.getAllowedVoltage())) {
+            add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                    Reason.REQUIRED_INFORMATION_MISSING,
+                    "connection.switchedLowSide.voltageBounds", group.ids());
+        } else {
+            if (sinkPort.getGuaranteedVoltage().getMinimum()
+                        < relation.getOnClampMinimumVolts()
+                    || sinkPort.getGuaranteedVoltage().getMaximum()
+                        > relation.getOnClampMaximumVolts()
+                    || !loadPort.getAllowedVoltage().contains(
+                            relation.getOnClampMinimumVolts())
+                    || !loadPort.getAllowedVoltage().contains(
+                            relation.getOnClampMaximumVolts())
+                    || !sinkPort.getAllowedVoltage().contains(
+                            relation.getOffDrainMinimumVolts())
+                    || !sinkPort.getAllowedVoltage().contains(
+                            relation.getOffDrainMaximumVolts())
+                    || !loadPort.getAllowedVoltage().contains(
+                            relation.getOffDrainMinimumVolts())
+                    || !loadPort.getAllowedVoltage().contains(
+                            relation.getOffDrainMaximumVolts())) {
+                add(group, issues, Decision.INCOMPATIBLE,
+                        Reason.VOLTAGE_RANGE_NOT_CONTAINED,
+                        "connection.switchedLowSide.onOffVoltage", group.ids());
+            }
+            if (supply.port.getGuaranteedVoltage().getMinimum()
+                        < relation.getSupplyGuaranteedMinimumVolts()
+                    || supply.port.getGuaranteedVoltage().getMaximum()
+                        > relation.getSupplyGuaranteedMaximumVolts()
+                    || !loadPort.getAllowedVoltage().contains(
+                            relation.getLoadAllowedMinimumVolts())
+                    || !loadPort.getAllowedVoltage().contains(
+                            relation.getLoadAllowedMaximumVolts())) {
+                add(group, issues, Decision.INCOMPATIBLE,
+                        Reason.VOLTAGE_RANGE_NOT_CONTAINED,
+                        "connection.switchedLowSide.supply", group.ids());
+            }
+        }
+        if (!sameConductor(conductors, supply, loadSupply)) {
+            add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                    Reason.REFERENCE_UNPROVEN,
+                    "connection.switchedLowSide.supplyJoin",
+                    Arrays.asList(supply.id, loadSupply.id));
+        }
+        if (!sameConductor(conductors, control, driverControl)) {
+            add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                    Reason.REFERENCE_UNPROVEN,
+                    "connection.switchedLowSide.controlJoin",
+                    Arrays.asList(control.id, driverControl.id));
+        }
+        checkReferenceEvidence(group, relation, sink, load, supply, control,
+                nodes, conductors, references, attemptedReferences, proposals,
+                issues);
+        if (control.port.getRole() != Role.CONTROL
+                || control.port.getDirection() != Direction.OUTPUT
+                || control.port.getBehavior() != Behavior.SOURCE
+                || control.port.getDrive() != Drive.PUSH_PULL
+                || control.port.getDigital().getActiveLevel() != ActiveLevel.HIGH) {
+                add(group, issues, Decision.INCOMPATIBLE,
+                    Reason.INVALID_DIRECTION_DRIVE,
+                    "connection.switchedLowSide.control", control);
+        }
+        checkControlEvidence(group, relation, control, driverControl, issues);
+        checkSupplyLoadEvidence(group, relation, supply, loadSupply, issues);
+    }
+
+    private static void checkReferenceEvidence(Group group,
+            SwitchedLowSideContract relation, Node sink, Node load,
+            Node supply, Node control, Map<String, Node> allNodes,
+            Union conductors, Union references, Union attemptedReferences,
+            Map<String, ElectricalConnection> proposals, List<Diagnostic> issues) {
+        List<Node> nodes = Arrays.asList(sink, load, supply, control);
+        for (Node node : nodes) {
+            String reference = node.port.getDomain().getReferenceNetId();
+            String isolation = node.port.getDomain().getIsolationId();
+            if (isolation == null) {
+                add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                        Reason.UNKNOWN_ISOLATION,
+                        "connection.switchedLowSide.reference", node);
+            } else if (!relation.getReferenceNetId().equals(reference)
+                    || !relation.getIsolationId().equals(isolation)) {
+                add(group, issues, Decision.INCOMPATIBLE,
+                        Reason.REFERENCE_MISMATCH,
+                        "connection.switchedLowSide.reference", node);
+            }
+        }
+        for (ElectricalConnection.PortRef ref : relation.getReturnPorts()) {
+            Node node = ref == null ? null : allNodes.get(ref.key());
+            if (node == null) {
+                add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                        Reason.REFERENCE_UNPROVEN,
+                        "connection.switchedLowSide.return", group.ids());
+            } else if (node.port.getDomain().getIsolationId() == null) {
+                add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                        Reason.UNKNOWN_ISOLATION,
+                        "connection.switchedLowSide.return", node);
+            } else if (node.port.getRole() != Role.RETURN
+                    || !relation.getReferenceNetId().equals(
+                            node.port.getDomain().getReferenceNetId())
+                    || !relation.getIsolationId().equals(
+                            node.port.getDomain().getIsolationId())) {
+                add(group, issues, Decision.INCOMPATIBLE,
+                        Reason.REFERENCE_MISMATCH,
+                        "connection.switchedLowSide.return", node);
+            }
+        }
+        TreeSet<String> expected = new TreeSet<String>();
+        boolean duplicate = false;
+        String returnRoot = null;
+        for (ElectricalConnection.PortRef ref : relation.getReturnPorts()) {
+            Node node = ref == null ? null : allNodes.get(ref.key());
+            if (node == null) continue;
+            if (!expected.add(node.key)) duplicate = true;
+            String root = conductors.find(node.key);
+            if (returnRoot == null) returnRoot = root;
+            else if (!returnRoot.equals(root)) {
+                add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                        Reason.REFERENCE_UNPROVEN,
+                        "connection.switchedLowSide.returnJoin", group.ids());
+            }
+        }
+        if (duplicate) {
+            add(group, issues, Decision.MALFORMED, Reason.INVALID_CONNECTION,
+                    "connection.switchedLowSide.returnList", group.ids());
+            return;
+        }
+        if (returnRoot != null) {
+            TreeSet<String> actual = new TreeSet<String>();
+            for (Node node : allNodes.values())
+                if (returnRoot.equals(conductors.find(node.key))) actual.add(node.key);
+            if (!expected.containsAll(actual)) {
+                add(group, issues, Decision.INCOMPATIBLE,
+                        Reason.INVALID_CONNECTION,
+                        "connection.switchedLowSide.returnList", group.ids());
+            }
+            if (!actual.containsAll(expected)) {
+                add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                        Reason.REFERENCE_UNPROVEN,
+                        "connection.switchedLowSide.returnJoin", group.ids());
+            }
+            boolean explicitJoin = false;
+            for (ElectricalConnection connection : proposals.values()) {
+                if (connection.getKind() != ElectricalConnection.Kind.CONDUCTIVE
+                        || connection.getPorts().size() < 2) continue;
+                boolean touches = false, allExpected = true;
+                for (ElectricalConnection.PortRef ref : connection.getPorts()) {
+                    Node node = allNodes.get(ref.key());
+                    if (node == null) { allExpected = false; break; }
+                    if (returnRoot.equals(conductors.find(node.key))) touches = true;
+                    if (!expected.contains(node.key)) allExpected = false;
+                }
+                if (touches && allExpected) explicitJoin = true;
+            }
+            if (!explicitJoin) {
+                add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                        Reason.REFERENCE_UNPROVEN,
+                        "connection.switchedLowSide.returnJoin", group.ids());
+            }
+            for (Node node : allNodes.values()) {
+                if (!expected.contains(node.key)) continue;
+                if (node.port.getRole() != Role.RETURN) {
+                    add(group, issues, Decision.INCOMPATIBLE,
+                            Reason.REFERENCE_MISMATCH,
+                            "connection.switchedLowSide.returnRole", node);
+                }
+            }
+            Node first = allNodes.get(relation.getReturnPorts().get(0).key());
+            if (first != null) {
+                for (Node node : Arrays.asList(sink, load, supply, control))
+                    checkReferenceUnion(group, first, node, references,
+                            attemptedReferences, issues);
+                for (String key : expected) {
+                    Node node = allNodes.get(key);
+                    if (node != null) checkReferenceUnion(group, first, node,
+                            references, attemptedReferences, issues);
+                }
+            }
+        }
+    }
+
+    private static void checkReferenceUnion(Group group, Node first, Node node,
+            Union references, Union attemptedReferences, List<Diagnostic> issues) {
+        if (references.find(first.reference).equals(references.find(node.reference))) return;
+        if (attemptedReferences.find(first.reference).equals(
+                attemptedReferences.find(node.reference))) {
+            add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                    Reason.REFERENCE_UNPROVEN, "connection.switchedLowSide.referenceJoin",
+                    Arrays.asList(first.id, node.id));
+        } else {
+            add(group, issues, Decision.INCOMPATIBLE,
+                    Reason.REFERENCE_MISMATCH, "connection.switchedLowSide.referenceJoin",
+                    Arrays.asList(first.id, node.id));
+        }
+    }
+
+    private static boolean sameConductor(Union conductors, Node first, Node second) {
+        return conductors.find(first.key).equals(conductors.find(second.key));
+    }
+
+    private static void checkControlEvidence(Group group,
+            SwitchedLowSideContract relation, Node control, Node driverControl,
+            List<Diagnostic> issues) {
+        ElectricalPortContract.Digital output = control.port.getDigital();
+        ElectricalPortContract.Digital input = driverControl.port.getDigital();
+        boolean outputLow = required(group, control,
+                output.getLowMaximum().getState(), "digital.lowMaximum", issues);
+        boolean outputHigh = required(group, control,
+                output.getHighMinimum().getState(), "digital.highMinimum", issues);
+        boolean inputLow = required(group, driverControl,
+                input.getInputLowMaximum().getState(), "digital.inputLowMaximum", issues);
+        boolean inputHigh = required(group, driverControl,
+                input.getInputHighMinimum().getState(), "digital.inputHighMinimum", issues);
+        if (outputLow && output.getLowMaximum().getValue()
+                > relation.getControlLowMaximumVolts())
+            add(group, issues, Decision.INCOMPATIBLE, Reason.DIGITAL_LEVEL_MISMATCH,
+                    "connection.switchedLowSide.controlLow", control);
+        if (outputHigh && output.getHighMinimum().getValue()
+                < relation.getControlHighMinimumVolts())
+            add(group, issues, Decision.INCOMPATIBLE, Reason.DIGITAL_LEVEL_MISMATCH,
+                    "connection.switchedLowSide.controlHigh", control);
+        if (inputLow && input.getInputLowMaximum().getValue()
+                > relation.getInputLowMaximumVolts())
+            add(group, issues, Decision.INCOMPATIBLE, Reason.DIGITAL_LEVEL_MISMATCH,
+                    "connection.switchedLowSide.inputLow", driverControl);
+        if (inputHigh && input.getInputHighMinimum().getValue()
+                < relation.getInputHighMinimumVolts())
+            add(group, issues, Decision.INCOMPATIBLE, Reason.DIGITAL_LEVEL_MISMATCH,
+                    "connection.switchedLowSide.inputHigh", driverControl);
+        if (output.getActiveLevel() != ActiveLevel.HIGH
+                || input.getActiveLevel() != ActiveLevel.HIGH) {
+            add(group, issues, Decision.INCOMPATIBLE, Reason.ACTIVE_LEVEL_MISMATCH,
+                    "connection.switchedLowSide.activeHigh", Arrays.asList(
+                            control.id, driverControl.id));
+        }
+    }
+
+    private static void checkSupplyLoadEvidence(Group group,
+            SwitchedLowSideContract relation, Node supply, Node loadSupply,
+            List<Diagnostic> issues) {
+        ElectricalPortContract source = supply.port;
+        ElectricalPortContract load = loadSupply.port;
+        if (source.getRole() != Role.RAIL
+                || source.getDirection() != Direction.OUTPUT
+                || source.getBehavior() != Behavior.SOURCE
+                || source.getDrive() != Drive.STIFF_VOLTAGE
+                || load.getRole() != Role.LOAD
+                || load.getDirection() != Direction.INPUT
+                || load.getBehavior() != Behavior.SINK
+                || load.getDrive() != Drive.NONE) {
+            add(group, issues, Decision.INCOMPATIBLE,
+                    Reason.INVALID_DIRECTION_DRIVE,
+                    "connection.switchedLowSide.supplyShape",
+                    Arrays.asList(supply.id, loadSupply.id));
+        }
+        if (load.getLoading() != Loading.BOUNDED_CURRENT
+                || load.getDemandAmps().getState() != State.KNOWN) {
+            add(group, issues, Decision.INSUFFICIENT_INFORMATION,
+                    Reason.REQUIRED_INFORMATION_MISSING,
+                    "connection.switchedLowSide.supplyDemand", loadSupply);
+        } else if (load.getDemandAmps().getValue()
+                > relation.getLoadDemandAmps()) {
+            add(group, issues, Decision.INCOMPATIBLE,
+                    Reason.LOAD_CAPACITY_EXCEEDED,
+                    "connection.switchedLowSide.supplyDemand", loadSupply);
+        }
+    }
+
+    private static boolean samePortSet(Collection<ElectricalConnection.PortRef> first,
+            Collection<ElectricalConnection.PortRef> second) {
+        TreeSet<String> a = new TreeSet<String>(), b = new TreeSet<String>();
+        for (ElectricalConnection.PortRef ref : first) a.add(ref.key());
+        for (ElectricalConnection.PortRef ref : second) b.add(ref.key());
+        return a.equals(b);
+    }
+
+    private static boolean knownRange(ElectricalPortContract.Range range) {
+        return range != null && range.getState() == State.KNOWN;
     }
 
     private static void checkDigital(Group group, Node driver, Node receiver, List<Diagnostic> issues) {

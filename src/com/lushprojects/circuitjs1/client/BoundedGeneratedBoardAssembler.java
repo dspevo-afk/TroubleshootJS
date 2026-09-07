@@ -52,6 +52,16 @@ final class BoundedGeneratedBoardAssembler {
         return assemble(request, null);
     }
 
+    /**
+     * Assemble a normal diagnostic candidate with an explicit physical fault
+     * owner.  Task 41 uses this route to evaluate each admitted owner while
+     * retaining the same composition root and graph/runtime boundary.
+     */
+    static Result assembleForDiagnosticProof(BoundedAssemblyRequest request,
+            String qualifiedTargetComponentId) {
+        return assembleResolved(request, qualifiedTargetComponentId, null);
+    }
+
     /** Convenience entry for focused developer tests. */
     static Result assemble(long seed) {
         return assemble(BoundedAssemblyRequest.forCanary(seed));
@@ -63,8 +73,16 @@ final class BoundedGeneratedBoardAssembler {
      * exists; failures after allocation are reported with a cleanup receipt.
      */
     static Result assemble(BoundedAssemblyRequest request, FailureProbe probe) {
+        return assembleResolved(request, null, probe);
+    }
+
+    private static Result assembleResolved(BoundedAssemblyRequest request,
+            String qualifiedTargetComponentId, FailureProbe probe) {
         // No mutable owner is allocated before this pure resolution step.
-        BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
+        BoundedAssemblyPlan plan = qualifiedTargetComponentId == null ?
+            BoundedAssemblyPlan.resolve(request) :
+            BoundedAssemblyPlan.resolveForDiagnosticFault(request,
+                qualifiedTargetComponentId);
         Context context = new Context(plan, probe);
         try {
             context.begin(Stage.MAPPING);
@@ -125,6 +143,13 @@ final class BoundedGeneratedBoardAssembler {
 
     private static String componentId(String ignoredFamily, long ignoredSeed,
             String block) {
+        if (ControlledIndicatorDeviceBehavior.FAMILY_ID.equals(ignoredFamily)) {
+            String local = ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(block) ?
+                "RG" : ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(block) ?
+                "RLOAD" : block;
+            return ControlledIndicatorBlockContributions.componentId(
+                ControlledIndicatorBlockContributions.namespace(), block, local);
+        }
         return "tsj-block-v1/resistive-coupling@1/" + block +
             "/component/R1";
     }
@@ -133,6 +158,13 @@ final class BoundedGeneratedBoardAssembler {
             String block, int terminal) {
         if (terminal < 1 || terminal > 2)
             throw new IllegalArgumentException("Invalid composed resistor terminal");
+        if (ControlledIndicatorDeviceBehavior.FAMILY_ID.equals(ignoredFamily)) {
+            String local = ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(block) ?
+                "RG" : ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(block) ?
+                "RLOAD" : block;
+            return ControlledIndicatorBlockContributions.padId(
+                ControlledIndicatorBlockContributions.namespace(), block, local + "." + terminal);
+        }
         return "tsj-block-v1/resistive-coupling@1/" + block +
             "/pad/R1." + terminal;
     }
@@ -309,6 +341,10 @@ final class BoundedGeneratedBoardAssembler {
         }
 
         void buildBoardAndSpecifications() {
+            if (plan.isControlledIndicator()) {
+                buildControlledBoardAndSpecifications();
+                return;
+            }
             board = new TroubleshootBoard(BOARD_ID);
             String sourceSupply = plan.netFor("source", "SUPPLY");
             String output = plan.netFor("source", "OUT");
@@ -359,8 +395,126 @@ final class BoundedGeneratedBoardAssembler {
                 SUPPLY_VOLTAGE));
         }
 
+        private void buildControlledBoardAndSpecifications() {
+            board = new TroubleshootBoard(ControlledIndicatorDeviceBehavior.FAMILY_ID);
+            String loadSupply = plan.netFor("load", "SUPPLY");
+            String control = plan.netFor("driver", "CONTROL");
+            String loadNode = plan.netFor("load", "LED_NODE");
+            String switched = plan.netFor("driver", "SWITCHED_SINK");
+            String gate = plan.netFor("driver", "GATE");
+            String returned = plan.netFor("driver", "RETURN");
+            addNet(loadSupply);
+            addNet(control);
+            addNet(loadNode);
+            addNet(switched);
+            addNet(gate);
+            addNet(returned);
+
+            String rg = plan.idFor("driver", EntityKind.COMPONENT, "RG");
+            String rpd = plan.idFor("driver", EntityKind.COMPONENT, "RPD");
+            String q1 = plan.idFor("driver", EntityKind.COMPONENT, "Q1");
+            String rload = plan.idFor("load", EntityKind.COMPONENT, "RLOAD");
+            String led1 = plan.idFor("load", EntityKind.COMPONENT, "LED1");
+            String j1 = plan.idFor("power-adapter", EntityKind.COMPONENT, "J1");
+            String j2 = plan.idFor("control-adapter", EntityKind.COMPONENT, "J2");
+            board.addComponent(new BoardComponent(rg, "RESISTOR",
+                PhysicalPackages.AXIAL_RESISTOR, "RG"));
+            board.addComponent(new BoardComponent(rpd, "RESISTOR",
+                PhysicalPackages.AXIAL_RESISTOR, "RPD"));
+            board.addComponent(new BoardComponent(q1, "NMOS_TRANSISTOR",
+                PhysicalPackages.TO92_NMOS, "Q1"));
+            board.addComponent(new BoardComponent(rload, "RESISTOR",
+                PhysicalPackages.AXIAL_RESISTOR, "RLOAD"));
+            board.addComponent(new BoardComponent(led1, "LED",
+                PhysicalPackages.THROUGH_HOLE_LED, "LED1"));
+            board.addComponent(new BoardComponent(j1, "CONNECTOR",
+                PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, "J1"));
+            board.addComponent(new BoardComponent(j2, "CONNECTOR",
+                PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, "J2"));
+
+            addPad("power-adapter", "J1.1", j1, "1", loadSupply);
+            addPad("power-adapter", "J1.2", j1, "2", returned);
+            addPad("control-adapter", "J2.1", j2, "1", control);
+            addPad("control-adapter", "J2.2", j2, "2", returned);
+            addPad("driver", "RG.1", rg, "1", control);
+            addPad("driver", "RG.2", rg, "2", gate);
+            addPad("driver", "RPD.1", rpd, "1", gate);
+            addPad("driver", "RPD.2", rpd, "2", returned);
+            addPad("driver", "Q1.G", q1, "G", gate);
+            addPad("driver", "Q1.D", q1, "D", switched);
+            addPad("driver", "Q1.S", q1, "S", returned);
+            addPad("load", "RLOAD.1", rload, "1", loadSupply);
+            addPad("load", "RLOAD.2", rload, "2", loadNode);
+            addPad("load", "LED1.A", led1, "A", loadNode);
+            addPad("load", "LED1.K", led1, "K", switched);
+
+            String j11 = plan.idFor("power-adapter", EntityKind.PAD, "J1.1");
+            String j12 = plan.idFor("power-adapter", EntityKind.PAD, "J1.2");
+            String j21 = plan.idFor("control-adapter", EntityKind.PAD, "J2.1");
+            String j22 = plan.idFor("control-adapter", EntityKind.PAD, "J2.2");
+            board.addPowerInput(new ExternalBoardPowerInput(
+                ControlledIndicatorDeviceBehavior.LOAD_POWER_INPUT_ID, j11, j12,
+                loadSupply, returned));
+            board.addPowerInput(new ExternalBoardPowerInput(
+                ControlledIndicatorDeviceBehavior.CONTROL_POWER_INPUT_ID, j21, j22,
+                control, returned));
+            board.validate();
+
+            specifications = new BoardPhysicalSpecifications();
+            specifications.addPhysicalDefinition(j1,
+                new BasicPhysicalSpecification("J1_CONNECTOR"),
+                new PhysicalNameplate("J1", "Load supply connector"),
+                PhysicalPackages.THROUGH_HOLE_CONNECTOR_2);
+            specifications.addPhysicalDefinition(j2,
+                new BasicPhysicalSpecification("J2_CONNECTOR"),
+                new PhysicalNameplate("J2", "Control input connector"),
+                PhysicalPackages.THROUGH_HOLE_CONNECTOR_2);
+            specifications.addPhysicalDefinition(rg,
+                new ResistorNameplate(rg, ControlledIndicatorBlockContributions.RG_OHMS,
+                    SUPPLY_VOLTAGE, ComposedBlockContribution.RATED_WATTS),
+                new PhysicalNameplate("RG", "Gate drive resistor markings",
+                    "Markings", "Color bands"), PhysicalPackages.AXIAL_RESISTOR);
+            specifications.addPhysicalDefinition(rpd,
+                new ResistorNameplate(rpd, ControlledIndicatorBlockContributions.RPD_OHMS,
+                    SUPPLY_VOLTAGE, ComposedBlockContribution.RATED_WATTS),
+                new PhysicalNameplate("RPD", "Gate pull-down resistor markings",
+                    "Markings", "Color bands"), PhysicalPackages.AXIAL_RESISTOR);
+            specifications.addPhysicalDefinition(q1,
+                new NmosSpecification(q1, 1.5, 10.0),
+                new PhysicalNameplate("Q1", "N-channel MOSFET", "Part",
+                    "N-channel MOSFET"), PhysicalPackages.TO92_NMOS);
+            specifications.addPhysicalDefinition(rload,
+                new ResistorNameplate(rload, ControlledIndicatorBlockContributions.RLOAD_OHMS,
+                    SUPPLY_VOLTAGE, ComposedBlockContribution.RATED_WATTS),
+                new PhysicalNameplate("RLOAD", "Load resistor markings",
+                    "Markings", "Color bands"), PhysicalPackages.AXIAL_RESISTOR);
+            specifications.addPhysicalDefinition(led1,
+                new LedNameplate(led1, "Generic red LED", "default-led", 1, 0, 0),
+                new PhysicalNameplate("LED1", "Generic red LED"),
+                PhysicalPackages.THROUGH_HOLE_LED);
+            specifications.addPowerInputNameplate(new PowerInputNameplate(
+                ControlledIndicatorDeviceBehavior.LOAD_POWER_INPUT_ID, SUPPLY_VOLTAGE));
+            specifications.addPowerInputNameplate(new PowerInputNameplate(
+                ControlledIndicatorDeviceBehavior.CONTROL_POWER_INPUT_ID, SUPPLY_VOLTAGE));
+        }
+
+        private void addNet(String netId) {
+            if (board.getNet(netId) == null)
+                board.addNet(new BoardNet(netId));
+        }
+
+        private void addPad(String blockKey, String localPadId, String componentId,
+                String terminalId, String netId) {
+            board.addPad(new BoardPad(plan.idFor(blockKey, EntityKind.PAD, localPadId),
+                componentId, terminalId, netId));
+        }
+
         /** Complete the pure logical namespace mapping before graph allocation. */
         void prepareLogicalMapping() {
+            if (plan.isControlledIndicator()) {
+                prepareControlledLogicalMapping();
+                return;
+            }
             mappedIdentityCount = board.getComponentIds().size() + board.getPadIds().size() +
                 board.getNetIds().size();
             for (String block : new String[] { "source", "load" }) {
@@ -377,8 +531,68 @@ final class BoundedGeneratedBoardAssembler {
             plan.netFor("source", "OUT");
         }
 
+        private void prepareControlledLogicalMapping() {
+            mappedIdentityCount = board.getComponentIds().size() + board.getPadIds().size() +
+                board.getNetIds().size();
+            for (String block : new String[] { "driver", "load" }) {
+                ComposedBlockContribution contribution = plan.getBlocks().get(block);
+                if (contribution == null)
+                    throw new IllegalStateException("Missing controlled block mapping: " + block);
+                for (String local : contribution.getResistors().keySet()) {
+                    plan.idFor(block, EntityKind.COMPONENT, local);
+                    ComposedBlockContribution.ResistorRecipe recipe =
+                        contribution.getResistor(local);
+                    plan.idFor(block, EntityKind.PAD, recipe.getFirstPadLocalId());
+                    plan.idFor(block, EntityKind.PAD, recipe.getSecondPadLocalId());
+                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getFirstEndpointLocalId());
+                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getSecondEndpointLocalId());
+                }
+                for (ComposedBlockContribution.NmosRecipe recipe :
+                        contribution.getNmosRecipes().values()) {
+                    plan.idFor(block, EntityKind.COMPONENT, recipe.getComponentLocalId());
+                    plan.idFor(block, EntityKind.PAD, recipe.getGatePadLocalId());
+                    plan.idFor(block, EntityKind.PAD, recipe.getDrainPadLocalId());
+                    plan.idFor(block, EntityKind.PAD, recipe.getSourcePadLocalId());
+                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getGateEndpointLocalId());
+                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getDrainEndpointLocalId());
+                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getSourceEndpointLocalId());
+                }
+                for (ComposedBlockContribution.LedRecipe recipe :
+                        contribution.getLedRecipes().values()) {
+                    plan.idFor(block, EntityKind.COMPONENT, recipe.getComponentLocalId());
+                    plan.idFor(block, EntityKind.PAD, recipe.getAnodePadLocalId());
+                    plan.idFor(block, EntityKind.PAD, recipe.getCathodePadLocalId());
+                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getAnodeEndpointLocalId());
+                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getCathodeEndpointLocalId());
+                }
+                for (String net : contribution.getDescriptor().getNetIds())
+                    plan.netFor(block, net);
+            }
+            for (DeviceAdapterContract adapter : plan.getDeviceAdapters()) {
+                plan.idFor(adapter.getKey(), EntityKind.COMPONENT,
+                    adapter.getComponentLocalId());
+                plan.idFor(adapter.getKey(), EntityKind.PAD,
+                    adapter.getComponentLocalId() + ".1");
+                plan.idFor(adapter.getKey(), EntityKind.PAD,
+                    adapter.getComponentLocalId() + ".2");
+                plan.idFor(adapter.getKey(), EntityKind.ENDPOINT,
+                    adapter.getComponentLocalId() + "_1");
+                plan.idFor(adapter.getKey(), EntityKind.ENDPOINT,
+                    adapter.getComponentLocalId() + "_2");
+                for (String net : adapter.getDescriptor().getNetIds())
+                    plan.netFor(adapter.getKey(), net);
+            }
+            for (String block : new String[] { "driver", "load" })
+                for (String localNet : plan.getBlocks().get(block).getDescriptor().getNetIds())
+                    plan.netFor(block, localNet);
+        }
+
         /** Allocate the source half and the explicit output merge point. */
         void buildPrimaryCircuit() {
+            if (plan.isControlledIndicator()) {
+                buildControlledCircuit();
+                return;
+            }
             double sourceResistance = plan.getBlocks().get("source").getResistanceOhms();
 
             // Add each element immediately after construction.  A later drag,
@@ -445,8 +659,191 @@ final class BoundedGeneratedBoardAssembler {
             this.outputTrace = outputTrace;
         }
 
+        /** Allocate the complete controlled-indicator graph in this context. */
+        private void buildControlledCircuit() {
+            // Load branch: source -> RLOAD -> LED -> NMOS drain.
+            controlledLoadSupply = new DCVoltageElm(snap(112), snap(416));
+            add(controlledLoadSupply);
+            controlledLoadSupply.drag(snap(112), snap(176));
+            controlledLoadSupply.maxVoltage = ControlledIndicatorDeviceBehavior.SUPPLY_VOLTAGE;
+            controlledLoadIsolation = new SwitchElm(snap(112), snap(176));
+            add(controlledLoadIsolation);
+            controlledLoadIsolation.drag(snap(192), snap(176));
+            controlledLoadConnector = new SwitchElm(snap(192), snap(176));
+            add(controlledLoadConnector);
+            controlledLoadConnector.drag(snap(224), snap(176));
+            controlledLoadInputTrace = wire(224, 176, 280, 176);
+            controlledLoadFirstAttachment = wire(280, 176, 340, 176);
+            controlledRload = resistor(340, 176, 420, 176,
+                ControlledIndicatorBlockContributions.RLOAD_OHMS);
+            controlledRloadFaultSwitch = new SwitchElm(
+                controlledRload.getPost(1).x, controlledRload.getPost(1).y);
+            add(controlledRloadFaultSwitch);
+            controlledRloadFaultSwitch.drag(
+                controlledRload.getPost(1).x + 32,
+                controlledRload.getPost(1).y);
+            controlledRloadSecondary = ResistorSecondaryOpenPath.create(
+                new CircuitPostMeasurementEndpoint(controlledRloadFaultSwitch, 1));
+            add(controlledRloadSecondary.getSimulationElement());
+            Point rloadPublic = controlledRloadSecondary.getPublicTerminal()
+                .getElement().getPost(controlledRloadSecondary.getPublicTerminal().getPostIndex());
+            controlledRloadSecondAttachment = wire(rloadPublic.x, rloadPublic.y,
+                540, 176);
+            controlledLoadNodeTrace = wire(540, 176, 620, 176);
+            controlledLed = new LEDElm(snap(620), snap(176));
+            add(controlledLed);
+            controlledLed.drag(snap(620), snap(256));
+            controlledLed.modelName = "default-led";
+            controlledLed.setup();
+            controlledLed.colorR = 1;
+            controlledLed.colorG = 0;
+            controlledLed.colorB = 0;
+
+            // Control branch: source -> command -> RG -> gate, with a real
+            // RPD from that gate node to the shared return.
+            controlledControlSupply = new DCVoltageElm(snap(112), snap(496));
+            add(controlledControlSupply);
+            controlledControlSupply.drag(snap(112), snap(96));
+            controlledControlSupply.maxVoltage = ControlledIndicatorDeviceBehavior.SUPPLY_VOLTAGE;
+            controlledControlIsolation = new SwitchElm(snap(112), snap(96));
+            add(controlledControlIsolation);
+            controlledControlIsolation.drag(snap(192), snap(96));
+            controlledControlInputTrace = wire(192, 96, 240, 96);
+            controlledControlCommand = new SwitchElm(snap(240), snap(96));
+            add(controlledControlCommand);
+            controlledControlCommand.drag(snap(272), snap(96));
+            controlledControlBoardTrace = wire(272, 96, 368, 96);
+            controlledRgFirstAttachment = wire(368, 96, 432, 96);
+            controlledRg = resistor(432, 96, 512, 96,
+                ControlledIndicatorBlockContributions.RG_OHMS);
+            controlledRgFaultSwitch = new SwitchElm(
+                controlledRg.getPost(1).x, controlledRg.getPost(1).y);
+            add(controlledRgFaultSwitch);
+            controlledRgFaultSwitch.drag(controlledRg.getPost(1).x + 32,
+                controlledRg.getPost(1).y);
+            controlledRgSecondary = ResistorSecondaryOpenPath.create(
+                new CircuitPostMeasurementEndpoint(controlledRgFaultSwitch, 1));
+            add(controlledRgSecondary.getSimulationElement());
+
+            controlledQ1 = new NMosfetElm(snap(720), snap(288));
+            add(controlledQ1);
+            controlledQ1.drag(snap(800), snap(288));
+            controlledQ1.vt = 1.5;
+            controlledQ1.beta = 10.0;
+            controlledRpd = resistor(640, 96, 640, 176,
+                ControlledIndicatorBlockContributions.RPD_OHMS);
+            CircuitPostMeasurementEndpoint rgPublicEndpoint =
+                controlledRgSecondary.getPublicTerminal();
+            Point rgPublic = rgPublicEndpoint.getElement().getPost(
+                rgPublicEndpoint.getPostIndex());
+            controlledRgSecondAttachment = wire(rgPublic.x, rgPublic.y, 640, 96);
+            controlledGateNodeTrace = wire(640, 96,
+                controlledQ1.getPost(0).x, controlledQ1.getPost(0).y);
+            controlledDrainTrace = wire(controlledLed.getPost(1).x,
+                controlledLed.getPost(1).y, controlledQ1.getPost(2).x,
+                controlledQ1.getPost(2).y);
+
+            controlledGround = new GroundElm(snap(900), snap(416));
+            add(controlledGround);
+            controlledGround.drag(snap(900), snap(448));
+            controlledLoadReturn = wire(112, 416, 900, 416);
+            controlledControlReturn = wire(112, 496, 112, 416);
+            controlledPullDownReturn = wire(640, 176, 900, 416);
+            controlledSourceReturn = wire(controlledQ1.getPost(1).x,
+                controlledQ1.getPost(1).y, 900, 416);
+
+            componentBindings = new GeneratedComponentBindings(board);
+            componentBindings.bindComponent(plan.idFor("driver", EntityKind.COMPONENT, "RG"),
+                controlledRg);
+            componentBindings.bindAuxiliaryComponentElement(
+                plan.idFor("driver", EntityKind.COMPONENT, "RG"),
+                controlledRgSecondary.getSimulationElement());
+            componentBindings.bindComponent(plan.idFor("driver", EntityKind.COMPONENT, "RPD"),
+                controlledRpd);
+            componentBindings.bindComponent(plan.idFor("driver", EntityKind.COMPONENT, "Q1"),
+                controlledQ1);
+            componentBindings.bindComponent(plan.idFor("load", EntityKind.COMPONENT, "RLOAD"),
+                controlledRload);
+            componentBindings.bindAuxiliaryComponentElement(
+                plan.idFor("load", EntityKind.COMPONENT, "RLOAD"),
+                controlledRloadSecondary.getSimulationElement());
+            componentBindings.bindComponent(plan.idFor("load", EntityKind.COMPONENT, "LED1"),
+                controlledLed);
+
+            powerBindings = new GeneratedExternalPowerBindings(board);
+            Vector<CircuitElm> loadPower = new Vector<CircuitElm>();
+            loadPower.add(controlledLoadSupply);
+            loadPower.add(controlledLoadIsolation);
+            powerBindings.bindPowerInput(ControlledIndicatorDeviceBehavior.LOAD_POWER_INPUT_ID,
+                new ExternalPowerSimulationBinding(loadPower,
+                    new SwitchExternalPowerControl(controlledLoadIsolation)));
+            Vector<CircuitElm> controlPower = new Vector<CircuitElm>();
+            controlPower.add(controlledControlSupply);
+            controlPower.add(controlledControlIsolation);
+            powerBindings.bindPowerInput(ControlledIndicatorDeviceBehavior.CONTROL_POWER_INPUT_ID,
+                new ExternalPowerSimulationBinding(controlPower,
+                    new SwitchExternalPowerControl(controlledControlIsolation)));
+
+            BoardSimulationBindings bindings = board.getSimulationBindings();
+            bindings.bindPad(plan.idFor("power-adapter", EntityKind.PAD, "J1.1"),
+                new CircuitPostMeasurementEndpoint(controlledLoadConnector, 1));
+            bindings.bindPad(plan.idFor("power-adapter", EntityKind.PAD, "J1.2"),
+                new CircuitPostMeasurementEndpoint(controlledGround, 0));
+            bindings.bindPad(plan.idFor("control-adapter", EntityKind.PAD, "J2.1"),
+                new CircuitPostMeasurementEndpoint(controlledControlCommand, 1));
+            bindings.bindPad(plan.idFor("control-adapter", EntityKind.PAD, "J2.2"),
+                new CircuitPostMeasurementEndpoint(controlledGround, 0));
+            bindings.bindPad(plan.idFor("driver", EntityKind.PAD, "RG.1"),
+                new CircuitPostMeasurementEndpoint(controlledControlBoardTrace, 1));
+            bindings.bindPad(plan.idFor("driver", EntityKind.PAD, "RG.2"),
+                new CircuitPostMeasurementEndpoint(controlledGateNodeTrace, 0));
+            bindings.bindPad(plan.idFor("driver", EntityKind.PAD, "RPD.1"),
+                new CircuitPostMeasurementEndpoint(controlledRpd, 0));
+            bindings.bindPad(plan.idFor("driver", EntityKind.PAD, "RPD.2"),
+                new CircuitPostMeasurementEndpoint(controlledRpd, 1));
+            bindings.bindPad(plan.idFor("driver", EntityKind.PAD, "Q1.G"),
+                new CircuitPostMeasurementEndpoint(controlledQ1, 0));
+            bindings.bindPad(plan.idFor("driver", EntityKind.PAD, "Q1.D"),
+                new CircuitPostMeasurementEndpoint(controlledQ1, 2));
+            bindings.bindPad(plan.idFor("driver", EntityKind.PAD, "Q1.S"),
+                new CircuitPostMeasurementEndpoint(controlledQ1, 1));
+            bindings.bindPad(plan.idFor("load", EntityKind.PAD, "RLOAD.1"),
+                new CircuitPostMeasurementEndpoint(controlledLoadInputTrace, 1));
+            bindings.bindPad(plan.idFor("load", EntityKind.PAD, "RLOAD.2"),
+                new CircuitPostMeasurementEndpoint(controlledLoadNodeTrace, 0));
+            bindings.bindPad(plan.idFor("load", EntityKind.PAD, "LED1.A"),
+                new CircuitPostMeasurementEndpoint(controlledLed, 0));
+            bindings.bindPad(plan.idFor("load", EntityKind.PAD, "LED1.K"),
+                new CircuitPostMeasurementEndpoint(controlledLed, 1));
+
+            connectionBindings = new GeneratedComponentConnectionBindings(board);
+            String rgId = plan.idFor("driver", EntityKind.COMPONENT, "RG");
+            String rg1 = plan.idFor("driver", EntityKind.PAD, "RG.1");
+            String rg2 = plan.idFor("driver", EntityKind.PAD, "RG.2");
+            connectionBindings.bind(rgId, rg1, bindings.getEndpoint(rg1),
+                new CircuitPostMeasurementEndpoint(controlledRg, 0),
+                controlledRgFirstAttachment);
+            connectionBindings.bind(rgId, rg2, bindings.getEndpoint(rg2),
+                controlledRgSecondary.getPublicTerminal(), controlledRgSecondAttachment);
+            String rloadId = plan.idFor("load", EntityKind.COMPONENT, "RLOAD");
+            String rload1 = plan.idFor("load", EntityKind.PAD, "RLOAD.1");
+            String rload2 = plan.idFor("load", EntityKind.PAD, "RLOAD.2");
+            connectionBindings.bind(rloadId, rload1, bindings.getEndpoint(rload1),
+                new CircuitPostMeasurementEndpoint(controlledRload, 0),
+                controlledLoadFirstAttachment);
+            connectionBindings.bind(rloadId, rload2, bindings.getEndpoint(rload2),
+                controlledRloadSecondary.getPublicTerminal(), controlledRloadSecondAttachment);
+
+            this.controlledBuilt = true;
+        }
+
         /** Allocate the load half, complete board endpoint mapping, and route layout. */
         void buildSecondaryCircuit() {
+            if (plan.isControlledIndicator()) {
+                if (!controlledBuilt)
+                    throw new IllegalStateException("Controlled graph was not allocated");
+                return;
+            }
             double loadResistance = plan.getBlocks().get("load").getResistanceOhms();
             String loadComponent = plan.idFor("load", EntityKind.COMPONENT, "R1");
             WireElm loadFirstAttachment = wire(500, 160, 580, 160);
@@ -506,7 +903,44 @@ final class BoundedGeneratedBoardAssembler {
         private WireElm outputTrace;
         private WireElm returnTrace;
 
+        // Controlled-indicator graph and physical identity owners.
+        private boolean controlledBuilt;
+        private DCVoltageElm controlledLoadSupply;
+        private SwitchElm controlledLoadIsolation;
+        private SwitchElm controlledLoadConnector;
+        private WireElm controlledLoadInputTrace;
+        private WireElm controlledLoadFirstAttachment;
+        private ResistorElm controlledRload;
+        private SwitchElm controlledRloadFaultSwitch;
+        private ResistorSecondaryOpenPath controlledRloadSecondary;
+        private WireElm controlledRloadSecondAttachment;
+        private WireElm controlledLoadNodeTrace;
+        private LEDElm controlledLed;
+        private WireElm controlledDrainTrace;
+        private DCVoltageElm controlledControlSupply;
+        private SwitchElm controlledControlIsolation;
+        private WireElm controlledControlInputTrace;
+        private SwitchElm controlledControlCommand;
+        private WireElm controlledControlBoardTrace;
+        private WireElm controlledRgFirstAttachment;
+        private ResistorElm controlledRg;
+        private SwitchElm controlledRgFaultSwitch;
+        private ResistorSecondaryOpenPath controlledRgSecondary;
+        private WireElm controlledRgSecondAttachment;
+        private ResistorElm controlledRpd;
+        private NMosfetElm controlledQ1;
+        private WireElm controlledGateNodeTrace;
+        private GroundElm controlledGround;
+        private WireElm controlledLoadReturn;
+        private WireElm controlledControlReturn;
+        private WireElm controlledPullDownReturn;
+        private WireElm controlledSourceReturn;
+
         void bindMappingsAndLayout() {
+            if (plan.isControlledIndicator()) {
+                bindControlledMappingsAndLayout();
+                return;
+            }
             layout = PCB_LAYOUT_GENERATOR.generate(board, plan.getRequest().getDescriptor()
                 .getRootSeed());
             layout.validateGeometry(board);
@@ -535,6 +969,41 @@ final class BoundedGeneratedBoardAssembler {
             addFoundationManifest("J1.2", "J1", "2");
         }
 
+        private void bindControlledMappingsAndLayout() {
+            layout = ControlledIndicatorPcbLayoutFactory.create(board, specifications, plan);
+            layout.validateGeometry(board);
+            addControlledEndpointManifest("power-adapter", "J1.1", "J1_1");
+            addControlledEndpointManifest("power-adapter", "J1.2", "J1_2");
+            addControlledEndpointManifest("control-adapter", "J2.1", "J2_1");
+            addControlledEndpointManifest("control-adapter", "J2.2", "J2_2");
+            addControlledEndpointManifest("driver", "RG.1", "RG_1");
+            addControlledEndpointManifest("driver", "RG.2", "RG_2");
+            addControlledEndpointManifest("driver", "RPD.1", "RPD_1");
+            addControlledEndpointManifest("driver", "RPD.2", "RPD_2");
+            addControlledEndpointManifest("driver", "Q1.G", "Q1_G");
+            addControlledEndpointManifest("driver", "Q1.D", "Q1_D");
+            addControlledEndpointManifest("driver", "Q1.S", "Q1_S");
+            addControlledEndpointManifest("load", "RLOAD.1", "RLOAD_1");
+            addControlledEndpointManifest("load", "RLOAD.2", "RLOAD_2");
+            addControlledEndpointManifest("load", "LED1.A", "LED1_A");
+            addControlledEndpointManifest("load", "LED1.K", "LED1_K");
+            mappedIdentityCount += board.getPadIds().size();
+        }
+
+        private void addControlledEndpointManifest(String block, String localPad,
+                String localEndpoint) {
+            String padId = plan.idFor(block, EntityKind.PAD, localPad);
+            CircuitMeasurementEndpoint endpoint = board.getSimulationBindings()
+                .getEndpoint(padId);
+            if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
+                throw new IllegalStateException("Controlled mapping has no CircuitJS endpoint: " +
+                    padId);
+            CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint) endpoint;
+            String key = block + "/" + localEndpoint;
+            endpointManifest.put(key, new EndpointManifest(key, block, localEndpoint, padId,
+                board.getPad(padId).getNetId(), post.getElement(), post.getPostIndex()));
+        }
+
         private void addFoundationManifest(String key, String component, String terminal) {
             CircuitMeasurementEndpoint endpoint = board.getSimulationBindings().getEndpoint(key);
             if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
@@ -545,6 +1014,10 @@ final class BoundedGeneratedBoardAssembler {
         }
 
         void buildPhysicalRuntime() {
+            if (plan.isControlledIndicator()) {
+                buildControlledPhysicalRuntime();
+                return;
+            }
             runtime = new PhysicalBoardRuntime(board);
             String sourceComponent = plan.idFor("source", EntityKind.COMPONENT, "R1");
             String loadComponent = plan.idFor("load", EntityKind.COMPONENT, "R1");
@@ -656,6 +1129,168 @@ final class BoundedGeneratedBoardAssembler {
             this.selectedCandidate = selected;
         }
 
+        private void buildControlledPhysicalRuntime() {
+            runtime = new PhysicalBoardRuntime(board);
+            String rgComponent = plan.idFor("driver", EntityKind.COMPONENT, "RG");
+            String rpdComponent = plan.idFor("driver", EntityKind.COMPONENT, "RPD");
+            String q1Component = plan.idFor("driver", EntityKind.COMPONENT, "Q1");
+            String rloadComponent = plan.idFor("load", EntityKind.COMPONENT, "RLOAD");
+            String ledComponent = plan.idFor("load", EntityKind.COMPONENT, "LED1");
+            String j1Component = plan.idFor("power-adapter", EntityKind.COMPONENT, "J1");
+            String j2Component = plan.idFor("control-adapter", EntityKind.COMPONENT, "J2");
+            PhysicalBoardSlot rgSlot = runtime.createSlot(rgComponent);
+            PhysicalBoardSlot rpdSlot = runtime.createSlot(rpdComponent);
+            PhysicalBoardSlot q1Slot = runtime.createSlot(q1Component);
+            PhysicalBoardSlot rloadSlot = runtime.createSlot(rloadComponent);
+            PhysicalBoardSlot ledSlot = runtime.createSlot(ledComponent);
+            PhysicalBoardSlot j1Slot = runtime.createSlot(j1Component);
+            PhysicalBoardSlot j2Slot = runtime.createSlot(j2Component);
+
+            ResistorNameplate rgSpecification = (ResistorNameplate)
+                specifications.getSpecification(rgComponent);
+            ResistorNameplate rpdSpecification = (ResistorNameplate)
+                specifications.getSpecification(rpdComponent);
+            ResistorNameplate rloadSpecification = (ResistorNameplate)
+                specifications.getSpecification(rloadComponent);
+            PhysicalNameplate rgPlayerNameplate = specifications.getNameplate(rgComponent);
+            PhysicalNameplate rloadPlayerNameplate = specifications.getNameplate(rloadComponent);
+            PhysicalPartInventory<PhysicalResistorPart> rgInventory =
+                new PhysicalPartInventory<PhysicalResistorPart>(runtime,
+                    rgComponent + "/inventory/replacements", PhysicalResistorPart.class);
+            PhysicalPartInventory<PhysicalResistorPart> rloadInventory =
+                new PhysicalPartInventory<PhysicalResistorPart>(runtime,
+                    rloadComponent + "/inventory/replacements", PhysicalResistorPart.class);
+            ResistorReplacementCatalog rgCatalog = new ResistorReplacementCatalog();
+            ResistorReplacementCatalog rloadCatalog = new ResistorReplacementCatalog();
+
+            ComposedBlockContribution driver = plan.getDriver();
+            ComposedBlockContribution load = plan.getLoad();
+            requireControlledContribution(driver, "driver");
+            requireControlledContribution(load, "load");
+            Vector<GeneratedFaultCandidate> controlledCandidates =
+                new Vector<GeneratedFaultCandidate>();
+            GeneratedFaultCandidate rgCandidate = GeneratedFaultEngine.resistorOpen(
+                rgComponent + "/fault/" + driver.getFaultLocalId(),
+                ControlledIndicatorDeviceBehavior.FAMILY_ID,
+                plan.getRequest().getDescriptor().getRootSeed(), rgComponent,
+                controlledRgFaultSwitch);
+            GeneratedFaultCandidate rloadCandidate = GeneratedFaultEngine.resistorOpen(
+                rloadComponent + "/fault/" + load.getFaultLocalId(),
+                ControlledIndicatorDeviceBehavior.FAMILY_ID,
+                plan.getRequest().getDescriptor().getRootSeed(), rloadComponent,
+                controlledRloadFaultSwitch);
+            controlledCandidates.add(rgCandidate);
+            controlledCandidates.add(rloadCandidate);
+            GeneratedFaultEngine.clearAll(controlledCandidates);
+            validateControlledFault(rgCandidate, rgComponent, driver.getFaultLocalId());
+            validateControlledFault(rloadCandidate, rloadComponent, load.getFaultLocalId());
+            GeneratedFaultCandidate selected =
+                ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(
+                    plan.getFaultBlockKey()) ? rgCandidate : rloadCandidate;
+
+            PhysicalResistorPart rgOriginal = new PhysicalResistorPart(
+                rgComponent + "/part/original", rgSpecification, rgSpecification,
+                rgPlayerNameplate, controlledRg, selected == rgCandidate ?
+                    rgCandidate.getBinding() : null, controlledRgSecondary,
+                ResistorPartLocation.INSTALLED,
+                new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL,
+                    rgComponent));
+            PhysicalResistorPart rloadOriginal = new PhysicalResistorPart(
+                rloadComponent + "/part/original", rloadSpecification, rloadSpecification,
+                rloadPlayerNameplate, controlledRload, selected == rloadCandidate ?
+                    rloadCandidate.getBinding() : null, controlledRloadSecondary,
+                ResistorPartLocation.INSTALLED,
+                new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL,
+                    rloadComponent));
+            rgInventory.add(rgOriginal);
+            rloadInventory.add(rloadOriginal);
+            ReplaceableComponentSlot rgComponentSlot = new ReplaceableComponentSlot(
+                rgComponent, rgSpecification, rgOriginal, controlledRgFirstAttachment,
+                controlledRgSecondAttachment, rgSlot);
+            ReplaceableComponentSlot rloadComponentSlot = new ReplaceableComponentSlot(
+                rloadComponent, rloadSpecification, rloadOriginal,
+                controlledLoadFirstAttachment, controlledRloadSecondAttachment, rloadSlot);
+            String rgCapabilityId = rgComponent + "/capability/replaceable-resistor";
+            String rloadCapabilityId = rloadComponent + "/capability/replaceable-resistor";
+            runtime.registerCapability(new ReplaceableResistorBoardCapability(rgCapabilityId,
+                rgComponentSlot, rgInventory, rgCatalog, "RG"));
+            runtime.registerCapability(new ReplaceableResistorBoardCapability(rloadCapabilityId,
+                rloadComponentSlot, rloadInventory, rloadCatalog, "RLOAD"));
+
+            FixedPhysicalPart<ResistorNameplate> rpdPart =
+                PhysicalFoundationPartFactory.fromSlotBindings(rpdSlot,
+                    rpdSpecification, specifications.getNameplate(rpdComponent),
+                    board.getSimulationBindings(),
+                    controlledRpd, new PhysicalPartProvenance(
+                        PhysicalPartProvenance.FIXED_GENERATED, rpdComponent));
+            rpdSlot.install(rpdPart);
+            FixedPhysicalPart<NmosSpecification> q1Part =
+                PhysicalFoundationPartFactory.fromSlotBindings(q1Slot,
+                    (NmosSpecification) specifications.getSpecification(q1Component),
+                    specifications.getNameplate(q1Component),
+                    board.getSimulationBindings(), controlledQ1,
+                    new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED,
+                        q1Component));
+            q1Slot.install(q1Part);
+            FixedPhysicalPart<LedNameplate> ledPart =
+                PhysicalFoundationPartFactory.fromSlotBindings(ledSlot,
+                    (LedNameplate) specifications.getSpecification(ledComponent),
+                    specifications.getNameplate(ledComponent),
+                    board.getSimulationBindings(), controlledLed,
+                    new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED,
+                        ledComponent));
+            ledSlot.install(ledPart);
+            FixedPhysicalPart<BasicPhysicalSpecification> j1Part =
+                PhysicalFoundationPartFactory.fromSlotBindings(j1Slot,
+                    (BasicPhysicalSpecification) specifications.getSpecification(j1Component),
+                    specifications.getNameplate(j1Component),
+                    board.getSimulationBindings(), controlledLoadConnector,
+                    new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED,
+                        j1Component));
+            j1Slot.install(j1Part);
+            FixedPhysicalPart<BasicPhysicalSpecification> j2Part =
+                PhysicalFoundationPartFactory.fromSlotBindings(j2Slot,
+                    (BasicPhysicalSpecification) specifications.getSpecification(j2Component),
+                    specifications.getNameplate(j2Component),
+                    board.getSimulationBindings(), controlledControlCommand,
+                    new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED,
+                        j2Component));
+            j2Slot.install(j2Part);
+            runtime.validateSupportedCompositionProviders();
+            runtime.validate();
+
+            runtimeTargets.put("driver", new RuntimeTarget("driver", rgComponent,
+                rgSlot.getId(), rgOriginal.getId(), rgInventory.getInventoryId(),
+                rgCapabilityId, driver.getProviderTypeId(), rgCandidate.getFault().getId(),
+                rgComponent, rgSlot.getId()));
+            runtimeTargets.put("load", new RuntimeTarget("load", rloadComponent,
+                rloadSlot.getId(), rloadOriginal.getId(), rloadInventory.getInventoryId(),
+                rloadCapabilityId, load.getProviderTypeId(), rloadCandidate.getFault().getId(),
+                rloadComponent, rloadSlot.getId()));
+            candidates = controlledCandidates;
+            selectedCandidate = selected;
+        }
+
+        private void requireControlledContribution(ComposedBlockContribution contribution,
+                String block) {
+            if (contribution == null || contribution.getFaultSpec() == null ||
+                    contribution.getFaultSpec().getKind() != ComposedBlockContribution.FaultSpec.Kind.OPEN)
+                throw new IllegalStateException("Incomplete controlled " + block + " contribution");
+        }
+
+        private void validateControlledFault(GeneratedFaultCandidate candidate,
+                String componentId, String localFaultId) {
+            GeneratedFault fault = candidate == null ? null : candidate.getFault();
+            String expectedId = componentId + "/fault/" + localFaultId;
+            if (fault == null || fault.getType() != GeneratedFaultType.RESISTOR_OPEN ||
+                    !expectedId.equals(fault.getId()) ||
+                    !componentId.equals(fault.getTargetComponentId()) ||
+                    !ControlledIndicatorDeviceBehavior.FAMILY_ID.equals(
+                        fault.getCircuitFamilyId()))
+                throw new IllegalStateException("Controlled fault metadata does not match " +
+                    componentId);
+        }
+
         private void requireContribution(ComposedBlockContribution contribution,
                 String block) {
             if (contribution == null)
@@ -727,6 +1362,10 @@ final class BoundedGeneratedBoardAssembler {
         private GeneratedFaultCandidate selectedCandidate;
 
         void buildInstance() {
+            if (plan.isControlledIndicator()) {
+                buildControlledInstance();
+                return;
+            }
             ComposedResistiveDeviceBehavior behavior =
                 new ComposedResistiveDeviceBehavior(plan);
             GeneratedBoardFamilyState familyState = behavior.createFamilyState();
@@ -752,6 +1391,40 @@ final class BoundedGeneratedBoardAssembler {
                 runtime, null, true, candidates, diagnostic);
             // Construction has already run the strict board/connection/runtime
             // checks.  Repeat the cheap detached checks before publication.
+            board.validate();
+            layout.validateGeometry(board);
+            runtime.validateSupportedCompositionProviders();
+            runtime.validate();
+        }
+
+        private void buildControlledInstance() {
+            ControlledIndicatorDeviceBehavior behavior =
+                new ControlledIndicatorDeviceBehavior(plan, controlledControlCommand);
+            GeneratedBoardFamilyState familyState = behavior.createFamilyState();
+            GeneratedScenarioCatalog<GeneratedObservedBehavior> scenarios =
+                behavior.createScenarioCatalog();
+            GeneratedComponentOperationalStates operationalStates =
+                new GeneratedComponentOperationalStates();
+            operationalStates.bindLed(plan.idFor("load", EntityKind.COMPONENT, "LED1"),
+                controlledLed);
+            GeneratedFault fault = selectedCandidate.getFault();
+            GeneratedFaultBinding faultBinding = selectedCandidate.getBinding();
+            GeneratedChallengeDefinition challenge = new GeneratedChallengeDefinition(
+                "CONTROLLED_INDICATOR_CHALLENGE",
+                ControlledIndicatorDeviceBehavior.FAMILY_ID,
+                ControlledIndicatorDeviceBehavior.TOPOLOGY_VARIANT_ID,
+                plan.getRequest().getDescriptor().getRootSeed(), scenarios,
+                "Repair verified. The controlled indicator switches normally.",
+                fault, faultBinding, behavior);
+            instance = new GeneratedBoardInstance(board, elements,
+                plan.getRequest().getDescriptor().getRootSeed(),
+                ControlledIndicatorDeviceBehavior.FAMILY_ID,
+                ControlledIndicatorDeviceBehavior.TOPOLOGY_VARIANT_ID,
+                "Generated controlled indicator, seed " +
+                    plan.getRequest().getDescriptor().getRootSeed(),
+                componentBindings, powerBindings, connectionBindings, behavior, layout,
+                specifications, faultBinding, operationalStates, challenge, familyState, runtime, null,
+                false, candidates, null);
             board.validate();
             layout.validateGeometry(board);
             runtime.validateSupportedCompositionProviders();

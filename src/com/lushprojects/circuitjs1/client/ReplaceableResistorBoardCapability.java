@@ -13,6 +13,7 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
     private ResistorSlotController controller;
     private ResistorStressDamageSystem stressDamageSystem;
     private final String capabilityId;
+    private final String playerComponentLabel;
 
     ReplaceableResistorBoardCapability(ReplaceableComponentSlot slot,
             PhysicalPartInventory<PhysicalResistorPart> inventory,
@@ -23,6 +24,12 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
     ReplaceableResistorBoardCapability(String capabilityId, ReplaceableComponentSlot slot,
             PhysicalPartInventory<PhysicalResistorPart> inventory,
             ResistorReplacementCatalog catalog) {
+        this(capabilityId, slot, inventory, catalog, null);
+    }
+
+    ReplaceableResistorBoardCapability(String capabilityId, ReplaceableComponentSlot slot,
+            PhysicalPartInventory<PhysicalResistorPart> inventory,
+            ResistorReplacementCatalog catalog, String playerComponentLabel) {
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable resistor runtime capability");
         if (capabilityId == null || capabilityId.length() == 0)
@@ -31,6 +38,7 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
         this.slot = slot;
         this.inventory = inventory;
         this.catalog = catalog;
+        this.playerComponentLabel = playerComponentLabel;
     }
 
     public String getCapabilityId() { return capabilityId; }
@@ -69,8 +77,13 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
     }
 
     public String getComponentId() { return slot.getComponentId(); }
-    public String getCatalogTitle() { return "Resistor Replacement Catalog"; }
-    public String getInstallNewLabel() { return "Install new resistor"; }
+    String getPlayerComponentLabel() {
+        return playerComponentLabel == null ? getComponentId() : playerComponentLabel;
+    }
+    public String getCatalogTitle() { return playerComponentLabel == null ?
+        "Resistor Replacement Catalog" : playerComponentLabel + " replacement resistors"; }
+    public String getInstallNewLabel() { return playerComponentLabel == null ?
+        "Install new resistor" : "Install new resistor in " + playerComponentLabel; }
     public boolean showOccupiedMessageWhenPowered() { return false; }
 
     public Vector<WorkbenchCatalogEntry> getCatalogEntries() {
@@ -91,6 +104,9 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
         if (!(part instanceof PhysicalResistorPart) || !ownsPart(part.getId()))
             throw new IllegalArgumentException("Physical part is not owned by resistor provider");
         PhysicalResistorPart resistor = (PhysicalResistorPart) part;
+        if (playerComponentLabel != null)
+            return playerComponentLabel + " - " + (resistor.isOriginal() ?
+                "Removed resistor" : resistor.getNameplate().getDisplayValue());
         return resistor.getId() + " - " + (resistor.isOriginal() ? "Removed resistor" :
             resistor.getNameplate().getDisplayValue());
     }

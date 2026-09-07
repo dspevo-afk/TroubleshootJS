@@ -1,0 +1,8 @@
+{"protocol":"TSJ-COMPOSITION-ENTRY-GATE-1","status":"OBSERVED","A":{"family":"LED_INDICATOR","seed":3,"actualHandlers":true,"pendingAnalyzedWhileHeld":true,"retestFailure":true,"controlsReenabled":true,"disposition":"CLOSED"},"B":{"firstFamily":"LED_INDICATOR","firstSeed":3,"secondFamily":"NPN_LOW_SIDE_SWITCH","secondSeed":0,"actualScheduledRepaint":true,"staleRepaintDiscarded":true,"staleWorkbenchHandlersDiscarded":true,"supersededRetestDiscarded":true,"staleRetestOwnerDiscarded":true,"disposition":"CLOSED"},"C":{"currentInstanceRejected":true,"unsupportedCompositionProviderRejected":true,"freshCandidatePublished":true,"injectedStages":5,"originalReferencesRestored":true,"disposition":"CLOSED"},"G":{"families":3,"resetOwnerPreserved":true,"preResetRetestInvalidated":true,"staleCompletionDiscarded":true,"faultCausalityPreserved":true,"freshOwners":true,"disposition":"CLOSED"},"assertions":113,"originalOwnerRestored":true,"disposition":"CLOSED"}
+TSJ-COMPOSITION-MUTATION-GATE-1
+assertions=180
+partial-failure-aborts=18
+real-overload-damage-preserved=true
+original-fault-preserved=true
+reference-and-committed-state-negatives=PASS
+failed-recovery-isolated=PASS

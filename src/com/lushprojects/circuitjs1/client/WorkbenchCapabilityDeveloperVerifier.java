@@ -18,19 +18,26 @@ final class WorkbenchCapabilityDeveloperVerifier {
         if (challenge != null)
             challenge.beginDeveloperVerificationScope();
         try {
+            settle(sim, instance, "registered-provider entry");
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            settle(sim, instance, "registered-provider power off");
             WorkbenchCapabilityContext context = sim.pcbWorkbenchController;
             for (WorkbenchPartsProvider provider : providers)
-                exerciseProvider(instance, runtime, provider, context);
+                exerciseProvider(sim, instance, runtime, provider, context);
         } finally {
-            if (priorPower == BoardPowerState.POWERED)
-                sim.setBoardPowerState(BoardPowerState.POWERED);
-            if (challenge != null)
-                challenge.endDeveloperVerificationScope();
+            try {
+                settle(sim, instance, "registered-provider before power restoration");
+                if (priorPower == BoardPowerState.POWERED)
+                    sim.setBoardPowerState(BoardPowerState.POWERED);
+                settle(sim, instance, "registered-provider power restored");
+            } finally {
+                if (challenge != null)
+                    challenge.endDeveloperVerificationScope();
+            }
         }
     }
 
-    private static void exerciseProvider(GeneratedBoardInstance instance,
+    private static void exerciseProvider(CirSim sim, GeneratedBoardInstance instance,
             PhysicalBoardRuntime runtime, WorkbenchPartsProvider provider,
             WorkbenchCapabilityContext context) {
         String componentId = provider.getComponentId();
@@ -48,6 +55,7 @@ final class WorkbenchCapabilityDeveloperVerifier {
         require(removeCapability.isAvailable(remove, context) &&
                 removeCapability.invoke(remove, context) && slot.getInstalledPart() == null,
             "Registered provider did not execute generic remove: " + componentId);
+        settle(sim, instance, "registered-provider remove " + componentId);
 
         Vector<WorkbenchCatalogEntry> catalogEntries = provider.getCatalogEntries();
         require(!catalogEntries.isEmpty(), "Production provider has no catalog metadata: " +
@@ -72,6 +80,7 @@ final class WorkbenchCapabilityDeveloperVerifier {
                 inspectCapability.isAvailable(inspect, context) &&
                 inspectCapability.invoke(inspect, context),
             "Production loose-part inspection capability was not executable: " + componentId);
+        settle(sim, instance, "registered-provider inspect " + componentId);
 
         WorkbenchOperation install = WorkbenchOperation.forPartAtSlot(WorkbenchOperation.INSTALL,
             loose, componentId);
@@ -82,6 +91,11 @@ final class WorkbenchCapabilityDeveloperVerifier {
                 installCapability.isAvailable(install, context) &&
                 installCapability.invoke(install, context) && slot.getInstalledPart() == original,
             "Registered provider did not execute generic reinstall: " + componentId);
+        settle(sim, instance, "registered-provider reinstall " + componentId);
+    }
+
+    private static void settle(CirSim sim, GeneratedBoardInstance instance, String label) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, label);
     }
 
     private static void require(boolean condition, String message) {

@@ -4,6 +4,10 @@ import java.util.Vector;
 
 /** Deterministic, family-neutral v1 plan catalog. */
 final class GeneratedDiagnosticPlanCatalog {
+    /** Normal composed Task 48 family; kept local until the player registry publishes it. */
+    private static final String COMPOSED_CONTROLLED_INDICATOR =
+        "COMPOSED_CONTROLLED_INDICATOR";
+
     private GeneratedDiagnosticPlanCatalog() { }
 
     static Vector<GeneratedDiagnosticPlan> forFamily(String familyId) {
@@ -77,9 +81,46 @@ final class GeneratedDiagnosticPlanCatalog {
                     GeneratedBoardOperationIds.CUSTOMER_RETEST },
                 new String[] { "CONTROL_HIGH_SAMPLE", "CONTROL_LOW_SAMPLE" },
                 new String[] { "LOAD_SUPPLY", "CONTROL_INPUT", "DRAIN", "GND" }, 6, false));
+        else if (COMPOSED_CONTROLLED_INDICATOR.equals(familyId))
+            result.add(controlledIndicatorPlan());
         else
             throw new IllegalArgumentException("No diagnostic plan catalog for family: " + familyId);
         return result;
+    }
+
+    /**
+     * The plan deliberately names the assembled public pads, rather than a
+     * solver element, node number, fault effect, or selected candidate.  The
+     * controlled board uses the same block namespace authority as assembly.
+     */
+    private static GeneratedDiagnosticPlan controlledIndicatorPlan() {
+        return simple("CONTROLLED_INDICATOR_TWO_STATE_PATH", pad("power-adapter", "J1.2"),
+            new String[] {
+                pad("power-adapter", "J1.1"), pad("power-adapter", "J1.2"),
+                pad("control-adapter", "J2.1"), pad("control-adapter", "J2.2"),
+                pad("driver", "RG.1"), pad("driver", "RG.2"),
+                pad("driver", "RPD.1"), pad("driver", "RPD.2"),
+                pad("driver", "Q1.G"), pad("driver", "Q1.D"),
+                pad("driver", "Q1.S"), pad("load", "RLOAD.1"),
+                pad("load", "RLOAD.2"), pad("load", "LED1.A"),
+                pad("load", "LED1.K")
+            },
+            new String[] { "DC_VOLTAGE", "RESISTANCE", "CONTINUITY" },
+            new String[] { "CONTROL_INPUT_HIGH", "CONTROL_INPUT_LOW",
+                "BOARD_POWER_OFF", "BOARD_POWER_ON" },
+            new String[] { WorkbenchOperation.REMOVE },
+            new String[] { WorkbenchOperation.CATALOG_INSTALL },
+            new String[] { GeneratedBoardOperationIds.CONTROL_INPUT_HIGH,
+                GeneratedBoardOperationIds.CONTROL_INPUT_LOW,
+                GeneratedBoardOperationIds.CUSTOMER_RETEST },
+            new String[] { "CONTROL_HIGH_SAMPLE", "CONTROL_LOW_SAMPLE" },
+            new String[] { "LOAD_SUPPLY", "CONTROL_INPUT", "GATE",
+                "DRAIN_SWITCHED_LOAD", "GND" }, 9, false);
+    }
+
+    private static String pad(String block, String localId) {
+        return ControlledIndicatorBlockContributions.padId(
+            ControlledIndicatorBlockContributions.namespace(), block, localId);
     }
 
     private static GeneratedDiagnosticPlan simple(String template, String reference,

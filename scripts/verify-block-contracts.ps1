@@ -62,6 +62,7 @@ try {
             'src/com/lushprojects/circuitjs1/client/ElectricalPortContract.java',
             'src/com/lushprojects/circuitjs1/client/ElectricalBlockContract.java',
             'src/com/lushprojects/circuitjs1/client/ElectricalConnection.java',
+            'src/com/lushprojects/circuitjs1/client/SwitchedLowSideContract.java',
             'src/com/lushprojects/circuitjs1/client/PortCompatibilityPreflight.java',
             'src/com/lushprojects/circuitjs1/client/LegacyInputPortMetadata.java',
             'src/com/lushprojects/circuitjs1/client/LowSideSwitchInputMetadata.java',

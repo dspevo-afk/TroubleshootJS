@@ -73,34 +73,40 @@ final class NmosLowSideSwitchDeveloperVerifier {
         try {
             if (!challenge.getFaultController().clearForDeveloperVerification())
                 throw new IllegalStateException("NMOS control canary could not clear its fault");
+            settle(sim, instance);
             sim.setBoardPowerState(BoardPowerState.POWERED);
-            settle(sim);
+            settle(sim, instance);
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
+            settle(sim, instance);
             requireControlVoltageAgreement(instance, 4.5, 5.5,
                 "NMOS commanded ON control voltage is not a shared +5 V board node");
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
+            settle(sim, instance);
             requireControlVoltageAgreement(instance, -.1, .1,
                 "NMOS commanded OFF control voltage is not pulled low");
             require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
                 "NMOS commanded OFF still drives the load");
+            settle(sim, instance);
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-            settle(sim);
+            settle(sim, instance);
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
+            settle(sim, instance);
             requireControlVoltageAgreement(instance, -.1, .1,
                 "NMOS board power OFF did not isolate the control input");
             require(NmosLowSideSwitchGeneratedBoardValidator.loadCurrent(instance) < .000001,
                 "NMOS board power OFF did not isolate the load input");
         } finally {
             try {
+                settle(sim, instance);
                 sim.setBoardPowerState(priorPower);
-                settle(sim);
+                settle(sim, instance);
                 instance.invokeOperation(priorCommand ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
                     GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
                 if (priorFault && !challenge.getFaultController().isApplied())
                     challenge.getFaultController().apply();
             } finally {
                 challenge.endDeveloperVerificationScope();
-                settle(sim);
+                settle(sim, instance);
             }
         }
     }
@@ -137,11 +143,9 @@ final class NmosLowSideSwitchDeveloperVerifier {
             message);
     }
 
-    private static void settle(CirSim sim) {
-        sim.needAnalyze();
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
+    private static void settle(CirSim sim, GeneratedBoardInstance instance) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+            "nmos-low-side developer verifier");
     }
 
     private static void verifyProviderFootprint(GeneratedBoardInstance instance) {
@@ -231,34 +235,41 @@ final class NmosLowSideSwitchDeveloperVerifier {
         try {
             require(challenge.getFaultController().clearForDeveloperVerification(),
                 "NMOS developer verifier could not clear its private fault");
+            settle(sim, instance);
             sim.needAnalyze();
             sim.analyzeCircuit();
             sim.runCircuit(true);
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
+            settle(sim, instance);
             require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
                 "Healthy NMOS ON proof failed live CircuitJS conditions");
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
+            settle(sim, instance);
             require(NmosLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
                 "Healthy NMOS OFF proof failed live CircuitJS conditions");
             require(NmosLowSideSwitchGeneratedBoardValidator.gateCurrent(instance) < 1e-9,
                 "Healthy NMOS gate current exceeded high-impedance tolerance");
             challenge.getFaultController().apply();
+            settle(sim, instance);
             faultRestored = true;
         } finally {
             try {
                 if (!faultRestored && !challenge.getFaultController().isApplied())
                     challenge.getFaultController().apply();
+                settle(sim, instance);
                 instance.invokeOperation(priorCommand ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
                     GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
+                settle(sim, instance);
             } finally {
                 challenge.endDeveloperVerificationScope();
             }
         }
 
+        settle(sim, instance);
         NmosSlotController slots = sim.getNmosSlotController();
         require(slots != null, "NMOS challenge has no Q1 slot controller");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
+        settle(sim, instance);
         PhysicalNmosPart original = (PhysicalNmosPart) instance.getPhysicalBoardRuntime()
             .getInstalledPart("Q1");
         require(slots.removeInstalledPart() && !original.isInstalled() && original.isFaulted(),
@@ -269,29 +280,40 @@ final class NmosLowSideSwitchDeveloperVerifier {
             require(new PhysicalNmosPartProbeTarget(sim, instance, original.getId(), terminal,
                 sim.pcbWorkbenchController.getRenderer()).isValid(),
             "NMOS loose physical lead lacks a probe target: " + terminal);
+        settle(sim, instance);
         require(slots.install(original.getId()),
             "NMOS original reinstall was not accepted");
+        settle(sim, instance);
         requirePrivateFaultGraph(sim, instance, true,
             "original reinstall lost its private fault backing");
         requireOriginalFaultBoardPath(instance, true,
             "original reinstall did not restore its private board path");
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
-            NmosReplacementCatalog.WRONG_HIGH_THRESHOLD),
+        require(slots.removeInstalledPart(),
+            "NMOS wrong catalog replacement could not remove the original");
+        settle(sim, instance);
+        require(slots.installNewFromCatalog(NmosReplacementCatalog.WRONG_HIGH_THRESHOLD),
             "NMOS wrong catalog replacement was not accepted");
+        settle(sim, instance);
         requirePrivateFaultGraph(sim, instance, true,
             "wrong catalog replacement lost declared private fault backing");
         requireOriginalFaultBoardPath(instance, false,
             "wrong catalog replacement retained original private board path");
+        settle(sim, instance);
         sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim, instance);
         sim.analyzeCircuit();
         sim.runCircuit(true);
         require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
             "Wrong NMOS replacement incorrectly passed functional repair");
+        settle(sim, instance);
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
-            NmosReplacementCatalog.CORRECT),
+        settle(sim, instance);
+        require(slots.removeInstalledPart(),
+            "NMOS correct catalog replacement could not remove the wrong part");
+        settle(sim, instance);
+        require(slots.installNewFromCatalog(NmosReplacementCatalog.CORRECT),
             "NMOS correct catalog replacement was not accepted");
+        settle(sim, instance);
         requirePrivateFaultGraph(sim, instance, true,
             "correct catalog replacement lost declared private fault backing");
         requireOriginalFaultBoardPath(instance, false,
@@ -299,11 +321,15 @@ final class NmosLowSideSwitchDeveloperVerifier {
         require(!((PhysicalNmosPart) instance.getPhysicalBoardRuntime().getInstalledPart("Q1"))
                 .ownsGeneratedFault(instance.getFaultBinding()),
             "catalog NMOS replacement inherited the original private fault identity");
+        settle(sim, instance);
         sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim, instance);
         sim.analyzeCircuit();
         sim.runCircuit(true);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
             "Correct NMOS replacement did not restore live behavior");
+        // The repair observation executes and restores the real LOW/HIGH profile.
+        settle(sim, instance);
         Vector<CircuitElm> topology = new Vector<CircuitElm>(sim.elmList);
         String export = sim.dumpCircuit();
         int undo = sim.undoStack.size();

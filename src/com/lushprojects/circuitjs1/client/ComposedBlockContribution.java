@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Pure contribution of one bounded resistive block.
+ * Pure contribution of one bounded local block.
  *
  * <p>A contribution contains declarations and executable local observation
  * rules only.  It deliberately has no reference to a simulator, a board, a
@@ -47,11 +47,21 @@ final class ComposedBlockContribution {
         private final String secondPadLocalId;
         private final double resistanceOhms;
         private final double ratedWatts;
+        private final boolean mutable;
 
         ResistorRecipe(String componentLocalId, String firstEndpointLocalId,
                 String secondEndpointLocalId, String firstPadLocalId,
                 String secondPadLocalId, double resistanceOhms,
                 double ratedWatts) {
+            this(componentLocalId, firstEndpointLocalId, secondEndpointLocalId,
+                    firstPadLocalId, secondPadLocalId, resistanceOhms,
+                    ratedWatts, true);
+        }
+
+        ResistorRecipe(String componentLocalId, String firstEndpointLocalId,
+                String secondEndpointLocalId, String firstPadLocalId,
+                String secondPadLocalId, double resistanceOhms,
+                double ratedWatts, boolean mutable) {
             this.componentLocalId = FunctionalBlockDescriptor.requireId(
                     componentLocalId, "recipe.componentLocalId");
             this.firstEndpointLocalId = FunctionalBlockDescriptor.requireId(
@@ -67,6 +77,7 @@ final class ComposedBlockContribution {
             this.resistanceOhms = resistanceOhms == 0.0 ? 0.0
                     : resistanceOhms;
             this.ratedWatts = ratedWatts == 0.0 ? 0.0 : ratedWatts;
+            this.mutable = mutable;
         }
 
         String getComponentLocalId() { return componentLocalId; }
@@ -77,6 +88,119 @@ final class ComposedBlockContribution {
         String getSecondPadLocalId() { return secondPadLocalId; }
         double getResistanceOhms() { return resistanceOhms; }
         double getRatedWatts() { return ratedWatts; }
+        boolean isMutable() { return mutable; }
+        @Override public String toString() {
+            return componentLocalId + "=" + Double.toString(resistanceOhms)
+                    + ":" + Double.toString(ratedWatts) + ":" + mutable
+                    + "(" + firstEndpointLocalId + "," + secondEndpointLocalId + ")";
+        }
+    }
+
+    /** Immutable local NMOS recipe.  It describes terminals and the model only. */
+    static class NmosRecipe {
+        private final String componentLocalId, gateEndpointLocalId,
+                drainEndpointLocalId, sourceEndpointLocalId;
+        private final String gatePadLocalId, drainPadLocalId, sourcePadLocalId;
+        private final String modelId;
+
+        NmosRecipe(String componentLocalId, String gateEndpointLocalId,
+                String drainEndpointLocalId, String sourceEndpointLocalId,
+                String gatePadLocalId, String drainPadLocalId,
+                String sourcePadLocalId, String modelId) {
+            this.componentLocalId = FunctionalBlockDescriptor.requireId(
+                    componentLocalId, "nmos.componentLocalId");
+            this.gateEndpointLocalId = FunctionalBlockDescriptor.requireId(
+                    gateEndpointLocalId, "nmos.gateEndpointLocalId");
+            this.drainEndpointLocalId = FunctionalBlockDescriptor.requireId(
+                    drainEndpointLocalId, "nmos.drainEndpointLocalId");
+            this.sourceEndpointLocalId = FunctionalBlockDescriptor.requireId(
+                    sourceEndpointLocalId, "nmos.sourceEndpointLocalId");
+            this.gatePadLocalId = FunctionalBlockDescriptor.requireId(
+                    gatePadLocalId, "nmos.gatePadLocalId");
+            this.drainPadLocalId = FunctionalBlockDescriptor.requireId(
+                    drainPadLocalId, "nmos.drainPadLocalId");
+            this.sourcePadLocalId = FunctionalBlockDescriptor.requireId(
+                    sourcePadLocalId, "nmos.sourcePadLocalId");
+            this.modelId = FunctionalBlockDescriptor.requireId(modelId,
+                    "nmos.modelId");
+        }
+        String getComponentLocalId() { return componentLocalId; }
+        String getLocalComponentId() { return componentLocalId; }
+        String getGateEndpointLocalId() { return gateEndpointLocalId; }
+        String getDrainEndpointLocalId() { return drainEndpointLocalId; }
+        String getSourceEndpointLocalId() { return sourceEndpointLocalId; }
+        String getGatePadLocalId() { return gatePadLocalId; }
+        String getDrainPadLocalId() { return drainPadLocalId; }
+        String getSourcePadLocalId() { return sourcePadLocalId; }
+        String getModelId() { return modelId; }
+        String getModel() { return modelId; }
+        @Override public String toString() {
+            return componentLocalId + "=" + modelId + "(" + gateEndpointLocalId
+                    + "," + drainEndpointLocalId + "," + sourceEndpointLocalId + ")";
+        }
+    }
+
+    /** Immutable local LED recipe.  It describes terminals and the model only. */
+    static class LedRecipe {
+        private final String componentLocalId, anodeEndpointLocalId,
+                cathodeEndpointLocalId, anodePadLocalId, cathodePadLocalId;
+        private final String modelId;
+
+        LedRecipe(String componentLocalId, String anodeEndpointLocalId,
+                String cathodeEndpointLocalId, String anodePadLocalId,
+                String cathodePadLocalId, String modelId) {
+            this.componentLocalId = FunctionalBlockDescriptor.requireId(
+                    componentLocalId, "led.componentLocalId");
+            this.anodeEndpointLocalId = FunctionalBlockDescriptor.requireId(
+                    anodeEndpointLocalId, "led.anodeEndpointLocalId");
+            this.cathodeEndpointLocalId = FunctionalBlockDescriptor.requireId(
+                    cathodeEndpointLocalId, "led.cathodeEndpointLocalId");
+            this.anodePadLocalId = FunctionalBlockDescriptor.requireId(
+                    anodePadLocalId, "led.anodePadLocalId");
+            this.cathodePadLocalId = FunctionalBlockDescriptor.requireId(
+                    cathodePadLocalId, "led.cathodePadLocalId");
+            this.modelId = FunctionalBlockDescriptor.requireId(modelId,
+                    "led.modelId");
+        }
+        String getComponentLocalId() { return componentLocalId; }
+        String getLocalComponentId() { return componentLocalId; }
+        String getAnodeEndpointLocalId() { return anodeEndpointLocalId; }
+        String getCathodeEndpointLocalId() { return cathodeEndpointLocalId; }
+        String getAnodePadLocalId() { return anodePadLocalId; }
+        String getCathodePadLocalId() { return cathodePadLocalId; }
+        String getModelId() { return modelId; }
+        String getModel() { return modelId; }
+        @Override public String toString() {
+            return componentLocalId + "=" + modelId + "(" + anodeEndpointLocalId
+                    + "," + cathodeEndpointLocalId + ")";
+        }
+    }
+
+    /** Local fault declaration; no generated/global fault enum is involved. */
+    static class FaultSpec {
+        enum Kind { OPEN, INCORRECT_RESISTANCE }
+        private final Kind kind;
+        private final String targetComponentLocalId;
+        private final double effectiveResistanceOhms;
+
+        FaultSpec(Kind kind, String targetComponentLocalId,
+                double effectiveResistanceOhms) {
+            if (kind == null) throw new IllegalArgumentException("fault kind is required");
+            this.kind = kind;
+            this.targetComponentLocalId = FunctionalBlockDescriptor.requireId(
+                    targetComponentLocalId, "fault.targetComponentLocalId");
+            requireFinitePositive(effectiveResistanceOhms,
+                    "fault.effectiveResistanceOhms");
+            this.effectiveResistanceOhms = effectiveResistanceOhms;
+        }
+        Kind getKind() { return kind; }
+        String getTargetComponentLocalId() { return targetComponentLocalId; }
+        String getTargetLocalComponentId() { return targetComponentLocalId; }
+        double getEffectiveResistanceOhms() { return effectiveResistanceOhms; }
+        @Override public String toString() {
+            return kind + ":" + targetComponentLocalId + ":"
+                    + Double.toString(effectiveResistanceOhms);
+        }
     }
 
     private final String providerTypeId;
@@ -84,6 +208,10 @@ final class ComposedBlockContribution {
     private final FunctionalBlockDescriptor descriptor;
     private final ElectricalBlockContract electricalContract;
     private final ResistorRecipe resistorRecipe;
+    private final Map<String, ResistorRecipe> resistorRecipes;
+    private final Map<String, NmosRecipe> nmosRecipes;
+    private final Map<String, LedRecipe> ledRecipes;
+    private final FaultSpec faultSpec;
     private final String faultLocalId;
     private final double faultEffectiveOhms;
     private final String repairLocalComponentId;
@@ -97,6 +225,37 @@ final class ComposedBlockContribution {
             double faultEffectiveOhms, String repairLocalComponentId,
             Collection<String> inputRequirements,
             Collection<String> retestRequirements) {
+        this(providerTypeId, providerVersion, descriptor, electricalContract,
+                singleton(required(resistorRecipe, "resistorRecipe")),
+                Collections.<NmosRecipe>emptyList(),
+                Collections.<LedRecipe>emptyList(),
+                new FaultSpec(FaultSpec.Kind.OPEN, faultLocalId,
+                        faultEffectiveOhms), repairLocalComponentId, inputRequirements,
+                retestRequirements, true);
+    }
+
+    ComposedBlockContribution(String providerTypeId, int providerVersion,
+            FunctionalBlockDescriptor descriptor,
+            ElectricalBlockContract electricalContract,
+            Map<String, ResistorRecipe> resistorRecipes,
+            Collection<NmosRecipe> nmosRecipes, Collection<LedRecipe> ledRecipes,
+            FaultSpec faultSpec, String repairLocalComponentId,
+            Collection<String> inputRequirements,
+            Collection<String> retestRequirements) {
+        this(providerTypeId, providerVersion, descriptor, electricalContract,
+                resistorRecipes, nmosRecipes, ledRecipes, faultSpec,
+                repairLocalComponentId, inputRequirements, retestRequirements,
+                false);
+    }
+
+    private ComposedBlockContribution(String providerTypeId, int providerVersion,
+            FunctionalBlockDescriptor descriptor,
+            ElectricalBlockContract electricalContract,
+            Map<String, ResistorRecipe> resistorRecipes,
+            Collection<NmosRecipe> nmosRecipes, Collection<LedRecipe> ledRecipes,
+            FaultSpec faultSpec, String repairLocalComponentId,
+            Collection<String> inputRequirements,
+            Collection<String> retestRequirements, boolean legacy) {
         this.providerTypeId = FunctionalBlockDescriptor.requireId(
                 providerTypeId, "providerTypeId");
         FunctionalBlockDescriptor.requirePositiveVersion(providerVersion,
@@ -109,19 +268,27 @@ final class ComposedBlockContribution {
             throw new IllegalArgumentException(
                     "Electrical contract must retain its local descriptor");
         }
-        this.resistorRecipe = required(resistorRecipe, "resistorRecipe");
         if (!descriptor.getInstanceKey().equals(
                 electricalContract.getDescriptor().getInstanceKey())) {
             throw new IllegalArgumentException("Contribution instance mismatch");
         }
-        if (!descriptor.getComponents().containsKey(
-                resistorRecipe.getComponentLocalId())) {
-            throw new IllegalArgumentException("Recipe component is undeclared");
-        }
-        this.faultLocalId = FunctionalBlockDescriptor.requireId(faultLocalId,
-                "faultLocalId");
-        requireFinitePositive(faultEffectiveOhms, "faultEffectiveOhms");
-        this.faultEffectiveOhms = faultEffectiveOhms;
+        this.resistorRecipes = immutableResistors(resistorRecipes);
+        this.resistorRecipe = this.resistorRecipes.isEmpty() ? null
+                : this.resistorRecipes.values().iterator().next();
+        this.nmosRecipes = immutableNmos(nmosRecipes);
+        this.ledRecipes = immutableLeds(ledRecipes);
+        this.faultSpec = required(faultSpec, "faultSpec");
+        this.faultLocalId = faultSpec.getTargetComponentLocalId();
+        this.faultEffectiveOhms = faultSpec.getEffectiveResistanceOhms();
+        if (this.resistorRecipes.isEmpty() &&
+                this.nmosRecipes.isEmpty() && this.ledRecipes.isEmpty())
+            throw new IllegalArgumentException("At least one local recipe is required");
+        for (ResistorRecipe recipe : this.resistorRecipes.values())
+            requireDeclared(descriptor, recipe.getComponentLocalId());
+        for (NmosRecipe recipe : this.nmosRecipes.values())
+            requireDeclared(descriptor, recipe.getComponentLocalId());
+        for (LedRecipe recipe : this.ledRecipes.values())
+            requireDeclared(descriptor, recipe.getComponentLocalId());
         this.repairLocalComponentId = FunctionalBlockDescriptor.requireId(
                 repairLocalComponentId, "repairLocalComponentId");
         if (!descriptor.getComponents().containsKey(repairLocalComponentId)) {
@@ -141,15 +308,19 @@ final class ComposedBlockContribution {
 
     /** Convenience map retained for assembler code that handles recipes generically. */
     Map<String, ResistorRecipe> getResistors() {
-        TreeMap<String, ResistorRecipe> result =
-                new TreeMap<String, ResistorRecipe>();
-        result.put(resistorRecipe.getComponentLocalId(), resistorRecipe);
-        return Collections.unmodifiableMap(result);
+        return resistorRecipes;
     }
 
-    String getComponentLocalId() { return resistorRecipe.getComponentLocalId(); }
-    double getResistanceOhms() { return resistorRecipe.getResistanceOhms(); }
-    double getRatedWatts() { return resistorRecipe.getRatedWatts(); }
+    ResistorRecipe getResistor(String localComponentId) {
+        return resistorRecipes.get(localComponentId);
+    }
+    Map<String, NmosRecipe> getNmosRecipes() { return nmosRecipes; }
+    Map<String, LedRecipe> getLedRecipes() { return ledRecipes; }
+    FaultSpec getFaultSpec() { return faultSpec; }
+
+    String getComponentLocalId() { return resistorRecipe == null ? null : resistorRecipe.getComponentLocalId(); }
+    double getResistanceOhms() { return resistorRecipe == null ? 0.0 : resistorRecipe.getResistanceOhms(); }
+    double getRatedWatts() { return resistorRecipe == null ? 0.0 : resistorRecipe.getRatedWatts(); }
     String getFaultLocalId() { return faultLocalId; }
     double getFaultEffectiveOhms() { return faultEffectiveOhms; }
     double getFaultEffectiveResistanceOhms() { return faultEffectiveOhms; }
@@ -167,16 +338,17 @@ final class ComposedBlockContribution {
         if (observation == null) {
             throw new IllegalArgumentException("Local observation is required");
         }
-        double firstVoltage = observation.voltage("R1_1");
-        double secondVoltage = observation.voltage("R1_2");
-        double current = observation.current(resistorRecipe.getComponentLocalId());
-        double resistance = observation.resistance(resistorRecipe.getComponentLocalId());
-        requireFinite(firstVoltage, "R1_1 voltage");
-        requireFinite(secondVoltage, "R1_2 voltage");
+        ResistorRecipe recipe = primaryRecipe();
+        double firstVoltage = observation.voltage(recipe.getFirstEndpointLocalId());
+        double secondVoltage = observation.voltage(recipe.getSecondEndpointLocalId());
+        double current = observation.current(recipe.getComponentLocalId());
+        double resistance = observation.resistance(recipe.getComponentLocalId());
+        requireFinite(firstVoltage, recipe.getFirstEndpointLocalId() + " voltage");
+        requireFinite(secondVoltage, recipe.getSecondEndpointLocalId() + " voltage");
         requireFinite(current, "R1 current");
         requireFinite(resistance, "R1 resistance");
-        if (!approximately(resistance, resistorRecipe.getResistanceOhms(),
-                resistanceTolerance(resistorRecipe.getResistanceOhms()))) {
+        if (!approximately(resistance, recipe.getResistanceOhms(),
+                resistanceTolerance(recipe.getResistanceOhms()))) {
             throw new IllegalArgumentException("Healthy resistor value mismatch");
         }
         double absoluteCurrent = Math.abs(current);
@@ -187,7 +359,7 @@ final class ComposedBlockContribution {
             throw new IllegalArgumentException("Healthy resistor current exceeds bound");
         }
         double measuredDrop = Math.abs(firstVoltage - secondVoltage);
-        double expectedDrop = absoluteCurrent * resistorRecipe.getResistanceOhms();
+        double expectedDrop = absoluteCurrent * recipe.getResistanceOhms();
         if (!approximately(measuredDrop, expectedDrop,
                 Math.max(1.0e-5, expectedDrop * 2.0e-3))) {
             throw new IllegalArgumentException("Healthy resistor violates Ohm's law");
@@ -199,10 +371,11 @@ final class ComposedBlockContribution {
         if (observation == null) {
             return ObservationResult.INVALID;
         }
-        double firstVoltage = observation.voltage("R1_1");
-        double secondVoltage = observation.voltage("R1_2");
-        double current = observation.current(resistorRecipe.getComponentLocalId());
-        double resistance = observation.resistance(resistorRecipe.getComponentLocalId());
+        ResistorRecipe recipe = primaryRecipe();
+        double firstVoltage = observation.voltage(recipe.getFirstEndpointLocalId());
+        double secondVoltage = observation.voltage(recipe.getSecondEndpointLocalId());
+        double current = observation.current(recipe.getComponentLocalId());
+        double resistance = observation.resistance(recipe.getComponentLocalId());
         if (!finite(firstVoltage) || !finite(secondVoltage)
                 || !finite(current) || !finite(resistance)
                 || resistance <= 0.0) {
@@ -218,6 +391,27 @@ final class ComposedBlockContribution {
 
     /** Stable semantic fingerprint used by pure replay checks. */
     String semanticSignature() {
+        if (resistorRecipe != null && resistorRecipes.size() == 1
+                && nmosRecipes.isEmpty() && ledRecipes.isEmpty()) {
+            return legacySemanticSignature();
+        }
+        StringBuilder result = new StringBuilder();
+        result.append(providerTypeId).append('@').append(providerVersion)
+                .append('|').append(descriptorSignature(descriptor))
+                .append('|').append(contractSignature(electricalContract))
+                .append("|resistors=").append(resistorRecipes)
+                .append("|nmos=").append(nmosRecipes)
+                .append("|leds=").append(ledRecipes)
+                .append("|fault=").append(faultSpec.getKind()).append(':')
+                .append(faultLocalId).append(':')
+                .append(Double.toString(faultEffectiveOhms))
+                .append("|repair=").append(repairLocalComponentId)
+                .append("|input=").append(inputRequirements)
+                .append("|retest=").append(retestRequirements);
+        return result.toString();
+    }
+
+    private String legacySemanticSignature() {
         StringBuilder result = new StringBuilder();
         result.append(providerTypeId).append('@').append(providerVersion)
                 .append('|').append(descriptorSignature(descriptor))
@@ -402,6 +596,64 @@ final class ComposedBlockContribution {
             }
         }
         return Collections.unmodifiableList(copy);
+    }
+
+    private ResistorRecipe primaryRecipe() {
+        if (resistorRecipe == null) {
+            throw new IllegalStateException("Contribution has no resistor observation");
+        }
+        return resistorRecipe;
+    }
+
+    private static Map<String, ResistorRecipe> immutableResistors(
+            Map<String, ResistorRecipe> values) {
+        if (values == null) throw new IllegalArgumentException("resistors are required");
+        TreeMap<String, ResistorRecipe> copy = new TreeMap<String, ResistorRecipe>();
+        for (Map.Entry<String, ResistorRecipe> entry : values.entrySet()) {
+            String key = FunctionalBlockDescriptor.requireId(entry.getKey(), "resistors");
+            ResistorRecipe value = required(entry.getValue(), "resistor");
+            if (!key.equals(value.getComponentLocalId()))
+                throw new IllegalArgumentException("Resistor map key mismatch");
+            if (copy.put(key, value) != null)
+                throw new IllegalArgumentException("Duplicate resistor " + key);
+        }
+        return Collections.unmodifiableMap(copy);
+    }
+
+    private static Map<String, NmosRecipe> immutableNmos(
+            Collection<NmosRecipe> values) {
+        if (values == null) throw new IllegalArgumentException("nmos recipes are required");
+        TreeMap<String, NmosRecipe> copy = new TreeMap<String, NmosRecipe>();
+        for (NmosRecipe value : values) {
+            value = required(value, "nmos recipe");
+            if (copy.put(value.getComponentLocalId(), value) != null)
+                throw new IllegalArgumentException("Duplicate NMOS recipe " + value.getComponentLocalId());
+        }
+        return Collections.unmodifiableMap(copy);
+    }
+
+    private static Map<String, LedRecipe> immutableLeds(
+            Collection<LedRecipe> values) {
+        if (values == null) throw new IllegalArgumentException("led recipes are required");
+        TreeMap<String, LedRecipe> copy = new TreeMap<String, LedRecipe>();
+        for (LedRecipe value : values) {
+            value = required(value, "led recipe");
+            if (copy.put(value.getComponentLocalId(), value) != null)
+                throw new IllegalArgumentException("Duplicate LED recipe " + value.getComponentLocalId());
+        }
+        return Collections.unmodifiableMap(copy);
+    }
+
+    private static Map<String, ResistorRecipe> singleton(ResistorRecipe value) {
+        TreeMap<String, ResistorRecipe> result = new TreeMap<String, ResistorRecipe>();
+        if (value != null) result.put(value.getComponentLocalId(), value);
+        return result;
+    }
+
+    private static void requireDeclared(FunctionalBlockDescriptor descriptor,
+            String componentLocalId) {
+        if (!descriptor.getComponents().containsKey(componentLocalId))
+            throw new IllegalArgumentException("Recipe component is undeclared");
     }
 
     private static <T> T required(T value, String field) {

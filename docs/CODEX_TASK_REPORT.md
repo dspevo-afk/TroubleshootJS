@@ -1,5 +1,74 @@
 # TroubleshootJS - Current Task Report
 
+## Current checkpoint - Task 48 complete and accepted - 2026-09-06
+
+- **Scope/status:** COMPLETE — Task48 and its closed validation set are accepted.
+  One real composed NMOS driver / LED-load challenge has a normal sidebar entry,
+  actual LOW/HIGH control, symptom-only complaint, physical diagnosis and repair,
+  and solver-backed OFF/ON customer retest. RG and RLOAD are the two admitted
+  physical fault owners. Fixed support parts and the exact typed low-side,
+  replay, mutation and fresh-owner boundaries are documented in the
+  [Task48 packet](task-evidence/task-48/README.md). Task49 is unstarted.
+- **Git/candidate:** Clean entry on `codex/task43p-final-recovery` at reviewed
+  Task47 `3928f4b8cdf633b89aeb6b78512b5cced833a774`; accepted gate
+  `623f3a74b37eec771576fe11a4d13c03a09335e7` is an ancestor. No pre-existing
+  changes were present. The accepted implementation is the commit containing
+  this checkpoint; exact commit, remote verification and notification outcomes
+  belong to the final handoff. Final build16 fingerprint (972 inputs):
+  `cdf2bbee7afdc1af2bccfa38bbda09f3ed65a450156a9dd7793d2dec3234ec09`.
+- **Validation:** Final JDK8/GWT OBF build16 PASS, all five permutations, exit0;
+  before/after inputs and loaded Browser permutation verified. Pure suites PASS:
+  Task44 247, Task45 202, Task46 410 / 36 negatives, Task47 269, Task48 224,
+  plus 12 direct low-side cases and independent Python 22 + 8 + 8 seed oracles.
+  Compiled Task48 PASS: 755 assertions, eight exact-string seeds, both repaired
+  owners, six measurement cases, five construction failures, five prior-owner
+  and five detached-initial installation failures, actual stale work rejection
+  and original-owner restoration. Mutation PASS: 235 assertions, 30 partial
+  aborts, four lifecycle and three damage checks. Independent correspondence
+  covers 15 terminals / nine traces / nine wrong mappings for each seed.
+- **Regressions:** Task47 1540 assertions / eight seeds, composition entry 113
+  lifecycle / 180 mutation assertions, Task40 corpus, Task41 14 routes / 128
+  solver samples, strict Task43P runtime oracle exit0 / zero blockers, six-family
+  layout and challenge/replacement PASS. LED physical build15 PASS; final16
+  NMOS DS_OPEN, DS_SHORT and GATE_OPEN PASS. All four legacy descriptors/replays/
+  parity strings exactly match accepted Task47. Forced Task48 AssertionError
+  reaches the required terminal FAIL. No failed or missing result is a PASS.
+- **Visible input/privacy:** Real visible Browser, debug off, full seed0 RLOAD
+  and seed1 RG sequences PASS: complaint, faulty LOW/HIGH, ordinary left-red /
+  right-black probes, distinguishing voltages/resistances, all-source isolation,
+  physical catalog repair and visible OFF/ON customer pass. Unrepaired retests
+  fail; mode reselection exits and ordinary body input works. Text, attributes,
+  tooltips and reports retain privacy. Four inspected screenshots are linked in
+  the packet. The source-disabled actual entry fails the same public helper;
+  source bytes were restored. Final16 normal initial entry and NPN/NMOS controls,
+  physical 0 V isolated / 5 V restored control probes and unrepaired retest PASS.
+- **Evidence reuse/limits:** The exact dependency audit reuses full visible12,
+  compiled14 and pure05/14 results only for unchanged consumers. Final14-to16
+  changes affect three legacy developer verifiers; their dependent actions now
+  settle through the existing boundary without weakening guards or assertions.
+  Normal-player implementation is byte-identical to visible12. All affected
+  selected routes received fresh proof. A worker's unrequested PRETTY build is
+  excluded and superseded by root OBF16. Fixed values/small layout only; fixed
+  NMOS/LED/support parts have no mutation workflow. Task41 Option A/metrics and
+  historical CDP/physical aggregate limitations remain; Task48's independent
+  physical proof is separately qualified. Nonblocking follow-ups are in the
+  packet; no Task49/value-synthesis work is included.
+- **Review/resources:** Fresh independent Luna MAX integrated review and all
+  source deltas PASS before their live Browser runs; final evidence review PASS
+  with no blocker. Astra owns all reconciled files and publication; no worker owns live
+  resources, and no agent-close or speed selector is exposed. The task Browser
+  tab is closed. Preview run `d316bf21ba5d4abfb7682929ae320684` exact cleanup
+  Success=true / no errors / wrapper exit0; process, listener and lease released.
+  The [cleanup receipt](task-evidence/task-48/cleanup.json) records scratch
+  disposition: automatic approval review rejected deletion before execution
+  ("blocked by policy"). The isolated 61-file / 4,792,679-byte diagnostic directory
+  is retained as a nonblocking TEST/TOOL limitation, with scratch status BLOCKED.
+  Existing user resources and the completed verifier audit journal are preserved.
+- **Publication/next:** Commit the accepted Task48 files after staged inspection,
+  normally push the configured upstream, verify its exact SHA and attempt the
+  authorized Gmail notification; the final handoff records those outcomes. G5 is
+  satisfied. Then STOP; Task49 is unstarted and requires separate authorization.
+
 ## Current checkpoint - Task 47 complete and accepted - 2026-09-06
 
 - **Scope/status:** The bounded assembler and contribution contracts are

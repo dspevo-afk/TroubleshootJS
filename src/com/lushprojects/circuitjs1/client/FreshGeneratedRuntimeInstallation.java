@@ -30,18 +30,44 @@ final class FreshGeneratedRuntimeInstallation {
         install(sim, candidate, attachWorkbench);
     }
 
+    /** Player publication always runs the nonempty, executable diagnostic proof. */
+    static void installNormalComposition(CirSim sim, GeneratedBoardInstance candidate,
+            boolean attachWorkbench) {
+        if (sim == null || candidate == null || candidate.isDeveloperOnlyFaultRoute() ||
+                GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning())
+            throw new IllegalArgumentException("Normal composition requires an independent player candidate");
+        candidate.getPhysicalBoardRuntime().validateSupportedCompositionProviders();
+        GeneratedDiagnosticSolvabilityAdmission.validate(candidate);
+        install(sim, candidate, attachWorkbench, true);
+    }
+
+    static boolean isInProgress(CirSim sim) { return active == sim; }
+
     static void install(CirSim sim, GeneratedBoardInstance candidate, boolean attachWorkbench) {
+        install(sim, candidate, attachWorkbench, false);
+    }
+
+    private static void install(CirSim sim, GeneratedBoardInstance candidate,
+            boolean attachWorkbench, boolean normalAdmission) {
         if (sim == null || candidate == null || active != null ||
-                !sim.isGeneratedRuntimeSettled() || sim.getGeneratedChallengeController() == null ||
-                !sim.getGeneratedChallengeController().isReady())
+                !sim.isGeneratedRuntimeSettled() ||
+                ((!normalAdmission || sim.getGeneratedBoardInstance() != null) &&
+                (sim.getGeneratedChallengeController() == null ||
+                !sim.getGeneratedChallengeController().isReady())))
             throw new IllegalStateException("Fresh installation requires a settled generated owner");
         GeneratedBoardInstance original = sim.getGeneratedBoardInstance();
-        requireDisjoint(original, candidate);
+        if (original != null)
+            requireDisjoint(original, candidate);
+        for (CircuitElm element : candidate.getSimulationElements())
+            if (sim.elmList.contains(element))
+                throw new IllegalArgumentException("Fresh installation reused a live solver element");
         candidate.getBoard().validate();
         candidate.getPhysicalBoardRuntime().validate();
         if (candidate.getPcbLayout() != null)
             candidate.getPcbLayout().validateGeometry(candidate.getBoard());
-        Task41SimulationSnapshot snapshot = Task41SimulationSnapshot.capture(sim);
+        Task41SimulationSnapshot snapshot = normalAdmission ?
+            Task41SimulationSnapshot.captureForFreshInstallation(sim) :
+            Task41SimulationSnapshot.capture(sim);
         boolean originalDeveloperScope = sim.developerVerifierRunning;
         boolean originalRunning = sim.simIsRunning();
         boolean committed = false;
@@ -72,6 +98,26 @@ final class FreshGeneratedRuntimeInstallation {
                 throw new IllegalStateException("Fresh candidate did not settle through CircuitJS");
             candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
                 sim.getBoardModificationController(), sim.elmList);
+            if (normalAdmission) {
+                // The candidate is still detached. Task 41 owns a synchronous
+                // fresh-proof graph and must execute real guarded workbench
+                // operations there. The outer active installation prevents
+                // nested publication; stale player handlers retain old owners.
+                sim.generatedRuntimeInstallationInProgress = false;
+                sim.developerVerifierRunning = originalDeveloperScope;
+                try {
+                    GeneratedDiagnosticSolvabilityAdmission.validateLive(sim, candidate,
+                        sim.getGeneratedChallengeController());
+                    if (sim.getGeneratedBoardInstance() != candidate ||
+                            !sim.isGeneratedRuntimeSettled())
+                        throw new IllegalStateException("Diagnostic admission did not restore the candidate");
+                } finally {
+                    sim.generatedRuntimeInstallationInProgress = true;
+                    sim.developerVerifierRunning = true;
+                }
+                candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
+                    sim.getBoardModificationController(), sim.elmList);
+            }
             reached(sim, Stage.VALIDATION);
             if (attachWorkbench && sim.pcbWorkbenchController != null)
                 sim.pcbWorkbenchController.attachToSidebar(sim.verticalPanel);
@@ -104,6 +150,8 @@ final class FreshGeneratedRuntimeInstallation {
                 } catch (Throwable restoration) {
                     failure = retain(failure, restoration);
                     sim.markGeneratedRuntimeFailure(sim.getGeneratedBoardInstance(), failure);
+                    if (sim.getGeneratedBoardInstance() == null)
+                        sim.generatedRuntimeInstallationInProgress = true;
                 }
             }
         }

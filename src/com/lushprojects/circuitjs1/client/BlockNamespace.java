@@ -71,6 +71,24 @@ final class BlockNamespace {
         return blocks;
     }
 
+    /** Validate the canonical encoding only; live consumers still prove declaration/ownership. */
+    static boolean isQualifiedId(String value, FunctionalBlockDescriptor.EntityKind kind) {
+        if (value == null || kind == null || !value.startsWith(ENCODING_PREFIX)) return false;
+        String[] fields = value.substring(ENCODING_PREFIX.length()).split("/", -1);
+        if (fields.length != 4 || !kind.getToken().equals(fields[2])) return false;
+        int separator = fields[0].lastIndexOf('@');
+        if (separator < 1) return false;
+        try {
+            String versionText = fields[0].substring(separator + 1);
+            int version = Integer.parseInt(versionText);
+            if (version <= 0 || !Integer.toString(version).equals(versionText)) return false;
+            FunctionalBlockDescriptor.requireId(fields[0].substring(0, separator), "deviceSchemaId");
+            FunctionalBlockDescriptor.requireId(fields[1], "instanceKey");
+            FunctionalBlockDescriptor.requireId(fields[3], "localId");
+            return true;
+        } catch (IllegalArgumentException invalid) { return false; }
+    }
+
     String idFor(String instanceKey, FunctionalBlockDescriptor.EntityKind kind,
             String localId) {
         String validatedInstanceKey = FunctionalBlockDescriptor.requireId(

@@ -68,6 +68,7 @@ final class Task43PPhysicalTruthDeveloperVerifier {
     private static final class Manifest {
         final Vector<TerminalExpectation> terminals = new Vector<TerminalExpectation>();
         final Vector<PackageExpectation> packages = new Vector<PackageExpectation>();
+        boolean canonicalSeedText;
 
         PackageExpectation getPackage(String componentId) {
             for (PackageExpectation expected : packages)
@@ -494,6 +495,198 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         addTerminal(manifest, prefix + "load/pad/R1.1", load, "1", output, "WireElm", 1);
         addTerminal(manifest, prefix + "load/pad/R1.2", load, "2", returned, "WireElm", 0);
         return verifyManifest(sim, instance, manifest);
+    }
+
+    /**
+     * Independent physical correspondence oracle for the normal Task 48
+     * composed route.  The manifest below is deliberately literal: it is
+     * authored from the frozen device contract and does not read a plan,
+     * mapping receipt, component array, or runtime endpoint in order to decide
+     * what the board is supposed to contain.  The existing canonical engine
+     * then joins that contract to raw logical board/copper, rendered
+     * pad/lead, package, and live solver observations.
+     *
+     * <p>The route is a normal generated family even though the call itself is
+     * developer-only.  Keeping the two checks separate prevents a
+     * developer-only fixture from being accepted as Task 41 admission.</p>
+     */
+    static String verifyControlledIndicatorComposition(CirSim sim) {
+        if (sim == null || !sim.troubleshootDebug || !sim.developerVerifierRunning)
+            throw new IllegalArgumentException(
+                "Controlled-indicator correspondence requires developer verification");
+        GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
+        if (instance == null || !"COMPOSED_CONTROLLED_INDICATOR".equals(
+                instance.getCircuitFamilyId()))
+            throw new IllegalStateException(
+                "Controlled-indicator correspondence requires the normal composed family");
+        if (instance.isDeveloperOnlyFaultRoute())
+            throw new IllegalStateException(
+                "Controlled-indicator correspondence rejects developer-only fixtures");
+        if (instance.getPcbLayout() == null || sim.pcbWorkbenchController == null)
+            throw new IllegalStateException(
+                "Controlled-indicator correspondence requires a rendered board");
+
+        /* This is the normal Task 41 contract, not a fixture validation. */
+        GeneratedDiagnosticSolvabilityAdmission.validate(sim, instance);
+
+        Manifest manifest = controlledIndicatorManifest();
+        String correspondence = verifyManifest(sim, instance, manifest);
+        String resistorSemantics = verifyControlledResistorSemantics(sim, instance);
+        return "{\"protocol\":\"TSJ-TASK48-PHYSICAL-CORRESPONDENCE-1\"," +
+            "\"status\":\"PASS\",\"api\":\"" +
+            "Task43PPhysicalTruthDeveloperVerifier.verifyControlledIndicatorComposition\" ," +
+            "\"family\":\"COMPOSED_CONTROLLED_INDICATOR\",\"manifest\":" +
+            correspondence + ",\"connectedLiftedResistors\":" + resistorSemantics +
+            "}";
+    }
+
+    /**
+     * Exercise the real public resistor graph boundary for both block-owned
+     * replaceable parts.  This is intentionally a small source-level oracle,
+     * not a mock of the mutation provider: each lead is lifted and reconnected
+     * through BoardModificationController, then the whole part is removed and
+     * restored.  The active graph and the physical state must agree at every
+     * boundary, and the original state is restored before returning.
+     */
+    private static String verifyControlledResistorSemantics(CirSim sim,
+            GeneratedBoardInstance instance) {
+        BoardModificationController modifications = sim.getBoardModificationController();
+        require(modifications != null, "task48-resistor-semantics-missing-modifier");
+        require(!sim.activeMeasurementOverlay,
+            "task48-resistor-semantics-active-measurement");
+
+        final String prefix = "tsj-block-v1/controlled-indicator@1/";
+        final String[] components = {
+            prefix + "driver/component/RG", prefix + "load/component/RLOAD"
+        };
+        final String[][] pads = {
+            { prefix + "driver/pad/RG.1", prefix + "driver/pad/RG.2" },
+            { prefix + "load/pad/RLOAD.1", prefix + "load/pad/RLOAD.2" }
+        };
+        HashMap<String, Boolean> initialStates = new HashMap<String, Boolean>();
+        for (int component = 0; component < components.length; component++) {
+            require(instance.getBoard().getComponent(components[component]) != null,
+                "task48-resistor-semantics-component-missing:" + components[component]);
+            require(modifications.getComponentState(components[component]) ==
+                ComponentPhysicalState.INSTALLED,
+                "task48-resistor-semantics-initial-state:" + components[component]);
+            for (String pad : pads[component]) {
+                require(instance.getBoard().getPad(pad) != null,
+                    "task48-resistor-semantics-pad-missing:" + pad);
+                boolean connected = modifications.isLeadConnected(components[component], pad);
+                require(connected, "task48-resistor-semantics-initial-lead:" + pad);
+                initialStates.put(pad, Boolean.valueOf(connected));
+            }
+        }
+
+        BoardPowerState savedPower = sim.getBoardPowerController().getState();
+        require(savedPower != null, "task48-resistor-semantics-power-state-missing");
+        int liftChecks = 0;
+        int reconnectChecks = 0;
+        int removeChecks = 0;
+        int restoreChecks = 0;
+        RuntimeException primary = null;
+        try {
+            sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+            GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-isolate");
+            require(sim.getBoardPowerController().isElectricallyUnpowered(),
+                "task48-resistor-semantics-power-isolation-failed");
+            for (int component = 0; component < components.length; component++) {
+                String componentId = components[component];
+                for (String pad : pads[component]) {
+                    GeneratedComponentConnectionBinding binding = instance
+                        .getConnectionBindings().get(componentId, pad);
+                    CircuitElm connection = binding.getConnectionElement();
+                    require(modifications.liftLead(componentId, pad),
+                        "task48-resistor-semantics-lift-noop:" + pad);
+                    GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-lift");
+                    require(!modifications.isLeadConnected(componentId, pad) &&
+                        modifications.getComponentState(componentId) ==
+                            ComponentPhysicalState.LEAD_LIFTED &&
+                        !sim.elmList.contains(connection),
+                        "task48-resistor-semantics-lift-mismatch:" + pad);
+                    modifications.verifyStructuralState();
+                    liftChecks++;
+
+                    require(modifications.reconnectLead(componentId, pad),
+                        "task48-resistor-semantics-reconnect-noop:" + pad);
+                    GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-reconnect");
+                    require(modifications.isLeadConnected(componentId, pad) &&
+                        modifications.getComponentState(componentId) ==
+                            ComponentPhysicalState.INSTALLED &&
+                        sim.elmList.contains(connection),
+                        "task48-resistor-semantics-reconnect-mismatch:" + pad);
+                    modifications.verifyStructuralState();
+                    reconnectChecks++;
+                }
+
+                require(modifications.removeComponent(componentId),
+                    "task48-resistor-semantics-remove-noop:" + componentId);
+                GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-remove");
+                require(modifications.getComponentState(componentId) ==
+                        ComponentPhysicalState.REMOVED &&
+                        !modifications.isLeadConnected(componentId, pads[component][0]) &&
+                        !modifications.isLeadConnected(componentId, pads[component][1]),
+                    "task48-resistor-semantics-remove-mismatch:" + componentId);
+                modifications.verifyStructuralState();
+                removeChecks++;
+
+                require(modifications.restoreComponent(componentId),
+                    "task48-resistor-semantics-restore-noop:" + componentId);
+                GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-restore");
+                require(modifications.getComponentState(componentId) ==
+                        ComponentPhysicalState.INSTALLED &&
+                        modifications.isLeadConnected(componentId, pads[component][0]) &&
+                        modifications.isLeadConnected(componentId, pads[component][1]),
+                    "task48-resistor-semantics-restore-mismatch:" + componentId);
+                modifications.verifyStructuralState();
+                restoreChecks++;
+            }
+        } catch (RuntimeException failure) {
+            primary = failure;
+            throw failure;
+        } finally {
+            try {
+                /* Restore the exact captured connection state before power. */
+                for (int component = 0; component < components.length; component++) {
+                    String componentId = components[component];
+                    if (modifications.getComponentState(componentId) == ComponentPhysicalState.REMOVED) {
+                        require(modifications.restoreComponent(componentId),
+                            "task48-resistor-semantics-cleanup-restore-noop:" + componentId);
+                        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-cleanup-part");
+                    }
+                    for (String pad : pads[component]) {
+                        boolean expected = initialStates.get(pad).booleanValue();
+                        boolean actual = modifications.isLeadConnected(componentId, pad);
+                        if (actual != expected) {
+                            if (expected)
+                                modifications.reconnectLead(componentId, pad);
+                            else
+                                modifications.liftLead(componentId, pad);
+                            GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-cleanup-lead");
+                            require(modifications.isLeadConnected(componentId, pad) == expected,
+                                "task48-resistor-semantics-cleanup-lead-mismatch:" + pad);
+                        }
+                    }
+                }
+                modifications.verifyStructuralState();
+                sim.setBoardPowerState(savedPower);
+                GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-restore-power");
+                require(sim.getBoardPowerController().getState() == savedPower,
+                    "task48-resistor-semantics-power-restore-failed");
+            } catch (RuntimeException cleanup) {
+                if (primary != null)
+                    primary.addSuppressed(cleanup);
+                else
+                    throw cleanup;
+            }
+        }
+        return "{\"status\":\"PASS\",\"components\":[\"RG\",\"RLOAD\"]," +
+            "\"liftedLeadChecks\":" + liftChecks +
+            ",\"reconnectedLeadChecks\":" + reconnectChecks +
+            ",\"removedComponentChecks\":" + removeChecks +
+            ",\"restoredComponentChecks\":" + restoreChecks +
+            ",\"allInitialConnectionsRestored\":true}";
     }
 
     private static String verifyManifest(CirSim sim, GeneratedBoardInstance instance,
@@ -1494,7 +1687,8 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             .append(',').append(q("solver-post")).append("],");
         result.append("\"family\":").append(q(instance.getCircuitFamilyId())).append(',');
         result.append("\"topology\":").append(q(instance.getTopologyVariantId())).append(',');
-        result.append("\"seed\":").append(instance.getSeed()).append(',');
+        String seed = Long.toString(instance.getSeed());
+        result.append("\"seed\":").append(manifest.canonicalSeedText ? q(seed) : seed).append(',');
         result.append("\"fault\":").append(q(instance.getFaultBinding().getFault().getId()))
             .append(',');
         result.append("\"faultType\":")
@@ -1683,6 +1877,76 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         } else {
             throw new IllegalStateException("task43p-physical-unknown-family:" + family);
         }
+        return result;
+    }
+
+    /** Literal Task 48 identity/terminal oracle.  Keep this independent of
+     * any assembler plan or mapping receipt so a wrong mapping cannot teach
+     * the verifier its own expected answer. */
+    private static Manifest controlledIndicatorManifest() {
+        final String prefix = "tsj-block-v1/controlled-indicator@1/";
+        final String driver = prefix + "driver/component/";
+        final String load = prefix + "load/component/";
+        final String powerAdapter = prefix + "power-adapter/component/";
+        final String controlAdapter = prefix + "control-adapter/component/";
+        final String output = prefix + "control-adapter/net/OUTPUT";
+        final String gate = prefix + "driver/net/GATE";
+        final String switchedSink = prefix + "driver/net/SWITCHED_SINK";
+        final String returned = prefix + "control-adapter/net/RETURN";
+        final String supply = prefix + "load/net/SUPPLY";
+        final String ledNode = prefix + "load/net/LED_NODE";
+
+        Manifest result = new Manifest();
+        result.canonicalSeedText = true;
+        addPackage(result, powerAdapter + "J1", "THROUGH_HOLE_CONNECTOR_2", true);
+        addPackage(result, controlAdapter + "J2", "THROUGH_HOLE_CONNECTOR_2", true);
+        addPackage(result, driver + "RG", "AXIAL_RESISTOR", false,
+            "SPAN_220", "SPAN_240", "SPAN_260");
+        addPackage(result, driver + "RPD", "AXIAL_RESISTOR", false,
+            "SPAN_220", "SPAN_240", "SPAN_260");
+        addPackage(result, driver + "Q1", "TO92_NMOS", false);
+        addPackage(result, load + "RLOAD", "AXIAL_RESISTOR", false,
+            "SPAN_220", "SPAN_240", "SPAN_260");
+        addPackage(result, load + "LED1", "THROUGH_HOLE_LED", false);
+
+        /* Adapters: their board-facing positive is the real SwitchElm post 1;
+         * each external return is the real GroundElm post 0. */
+        addTerminal(result, prefix + "power-adapter/pad/J1.1", powerAdapter + "J1", "1",
+            supply, "SwitchElm", 1);
+        addTerminal(result, prefix + "power-adapter/pad/J1.2", powerAdapter + "J1", "2",
+            returned, "GroundElm", 0);
+        addTerminal(result, prefix + "control-adapter/pad/J2.1", controlAdapter + "J2", "1",
+            output, "SwitchElm", 1);
+        addTerminal(result, prefix + "control-adapter/pad/J2.2", controlAdapter + "J2", "2",
+            returned, "GroundElm", 0);
+
+        /* RG and RLOAD are the only detachable parts.  The public board
+         * endpoint is intentionally the surrounding WireElm (1 then 0),
+         * while terminal 2's component-side endpoint is the retained fault
+         * switch post 1.  resolveRetainedSolverEndpoint cross-checks both. */
+        addTerminal(result, prefix + "driver/pad/RG.1", driver + "RG", "1",
+            output, "WireElm", 1);
+        addTerminal(result, prefix + "driver/pad/RG.2", driver + "RG", "2",
+            gate, "WireElm", 0);
+        addTerminal(result, prefix + "driver/pad/RPD.1", driver + "RPD", "1",
+            gate, "ResistorElm", 0);
+        addTerminal(result, prefix + "driver/pad/RPD.2", driver + "RPD", "2",
+            returned, "ResistorElm", 1);
+        addTerminal(result, prefix + "driver/pad/Q1.G", driver + "Q1", "G",
+            gate, "NMosfetElm", 0);
+        addTerminal(result, prefix + "driver/pad/Q1.D", driver + "Q1", "D",
+            switchedSink, "NMosfetElm", 2);
+        addTerminal(result, prefix + "driver/pad/Q1.S", driver + "Q1", "S",
+            returned, "NMosfetElm", 1);
+
+        addTerminal(result, prefix + "load/pad/RLOAD.1", load + "RLOAD", "1",
+            supply, "WireElm", 1);
+        addTerminal(result, prefix + "load/pad/RLOAD.2", load + "RLOAD", "2",
+            ledNode, "WireElm", 0);
+        addTerminal(result, prefix + "load/pad/LED1.A", load + "LED1", "A",
+            ledNode, "LEDElm", 0);
+        addTerminal(result, prefix + "load/pad/LED1.K", load + "LED1", "K",
+            switchedSink, "LEDElm", 1);
         return result;
     }
 

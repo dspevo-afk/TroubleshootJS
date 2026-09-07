@@ -45,12 +45,14 @@ final class GeneratedDiagnosticPlan {
             String[] railDomainIds, int depth, boolean parallelPathAmbiguity,
             boolean unaffectedFunctionRetestObservation, String equivalentRepairClass) {
         requireSemanticId(templateId, "diagnostic template ID");
-        requireSemanticId(referenceTargetId, "diagnostic reference target ID");
+        requireSemanticId(referenceTargetId, "diagnostic reference target ID",
+            FunctionalBlockDescriptor.EntityKind.PAD);
         if (depth <= 0 || equivalentRepairClass == null || equivalentRepairClass.length() == 0)
             throw new IllegalArgumentException("Invalid diagnostic plan complexity metadata");
         this.templateId = templateId;
         this.referenceTargetId = referenceTargetId;
-        this.probeTargetIds = copy(probeTargetIds, "probe target");
+        this.probeTargetIds = copy(probeTargetIds, "probe target",
+            FunctionalBlockDescriptor.EntityKind.PAD);
         this.meterModeIds = copy(meterModeIds, "meter mode");
         this.inputPowerTransitions = copy(inputPowerTransitions, "input/power transition");
         this.isolationActionIds = copy(isolationActionIds, "isolation action");
@@ -88,11 +90,16 @@ final class GeneratedDiagnosticPlan {
     String getEquivalentRepairClass() { return equivalentRepairClass; }
 
     private static Vector<String> copy(String[] values, String category) {
+        return copy(values, category, null);
+    }
+
+    private static Vector<String> copy(String[] values, String category,
+            FunctionalBlockDescriptor.EntityKind qualifiedKind) {
         if (values == null || values.length == 0)
             throw new IllegalArgumentException("Diagnostic plan has no " + category + " IDs");
         Vector<String> result = new Vector<String>();
         for (String value : values) {
-            requireSemanticId(value, category + " ID");
+            requireSemanticId(value, category + " ID", qualifiedKind);
             if (result.contains(value))
                 throw new IllegalArgumentException("Duplicate diagnostic " + category + " ID");
             result.add(value);
@@ -114,7 +121,14 @@ final class GeneratedDiagnosticPlan {
     }
 
     private static void requireSemanticId(String value, String name) {
-        if (value == null || value.length() == 0 || !value.matches("[A-Za-z0-9_.+\\-]+"))
+        requireSemanticId(value, name, null);
+    }
+
+    private static void requireSemanticId(String value, String name,
+            FunctionalBlockDescriptor.EntityKind qualifiedKind) {
+        if (value == null || value.length() == 0 ||
+                (!value.matches("[A-Za-z0-9_.+\\-]+") &&
+                !BlockNamespace.isQualifiedId(value, qualifiedKind)))
             throw new IllegalArgumentException("Invalid semantic " + name);
         String upper = value.toUpperCase();
         String[] forbidden = { "COORD", "INDEX", "UUID", "SOLVER", "PRIVATE",

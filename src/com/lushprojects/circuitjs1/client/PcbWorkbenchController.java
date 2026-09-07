@@ -61,6 +61,22 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         return stableId == null ? null : semanticOperationHandlers.get(stableId);
     }
 
+    boolean isSemanticOperationControlEnabledForDeveloperVerification(String stableId) {
+        GeneratedBoardOperation operation = instance.getOperationCatalog().find(stableId);
+        if (!isCurrentOwner() || operation == null) return false;
+        int matches = 0;
+        boolean enabled = false;
+        for (int i = 0; i < ticketPanel.getWidgetCount(); i++) {
+            if (!(ticketPanel.getWidget(i) instanceof Button)) continue;
+            Button button = (Button) ticketPanel.getWidget(i);
+            if (operation.getPlayerLabel().equals(button.getText())) {
+                matches++;
+                enabled = button.isEnabled();
+            }
+        }
+        return matches == 1 && enabled;
+    }
+
     ClickHandler getLastSemanticOperationHandlerForDeveloperVerification() {
         return lastSemanticOperationHandler;
     }
@@ -228,7 +244,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (componentId == null)
             return;
         BoardComponent component = instance.getBoard().getComponent(componentId);
-        panel.add(styledLabel(component.getId(), "tsj-component-title"));
+        panel.add(styledLabel(component.getDisplayName(), "tsj-component-title"));
         panel.add(new Label("Type: " + component.getType().toLowerCase()));
         PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
         WorkbenchPartsProvider partsProvider = runtime.getWorkbenchPartsProvider(componentId);
@@ -242,14 +258,15 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         Vector<GeneratedComponentConnectionBinding> bindings =
             instance.getConnectionBindings().getForComponentOrEmpty(componentId);
         if (isManagedSlotEmpty(componentId))
-            panel.add(new Label("State: " + componentId + " slot empty"));
+            panel.add(new Label("State: " + component.getDisplayName() + " slot empty"));
         else if (!bindings.isEmpty())
             panel.add(new Label("State: " + formatState(modifications.getComponentState(componentId))));
         else if (nameplate != null && nameplate.hasWorkbenchDetail() && partsProvider == null)
             panel.add(new Label("State: Installed"));
         for (String padId : component.getPadIds()) {
             BoardPad pad = instance.getBoard().getPad(padId);
-            panel.add(new Label("Lead " + pad.getTerminalId() + ": " + pad.getId()));
+            panel.add(new Label("Lead " + pad.getTerminalId() + ": " +
+                component.getDisplayName() + "." + pad.getTerminalId()));
         }
         feedback.setText("");
         feedback.setStyleName("tsj-inline-feedback");
@@ -348,7 +365,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         PhysicalBoardSlot slot = instance.getPhysicalBoardRuntime().getSlot(componentId);
         if (slot != null && slot.isOccupied() && (!powered ||
                 provider.showOccupiedMessageWhenPowered()))
-            partsPanel.add(new Label("Remove " + componentId +
+            partsPanel.add(new Label("Remove " + playerComponentName(componentId) +
                 " before installing a replacement."));
         return powerWarningAdded;
     }
@@ -400,7 +417,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         final WorkbenchOperation installOperation = WorkbenchOperation.forPartAtSlot(
             WorkbenchOperation.INSTALL, part, componentId);
         Button install = new Button(operationLabel(part, installOperation,
-            "Install as " + componentId));
+            "Install as " + playerComponentName(componentId)));
         install.setStyleName("tsj-action-button");
         install.setEnabled(getCapability(part, installOperation) != null &&
             isOperationAvailable(part, installOperation));
@@ -751,6 +768,10 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             .getMutationProvider(componentId);
         PhysicalBoardSlot slot = instance.getPhysicalBoardRuntime().getSlot(componentId);
         return provider != null && slot != null && !slot.isOccupied();
+    }
+
+    private String playerComponentName(String componentId) {
+        return instance.getBoard().getComponent(componentId).getDisplayName();
     }
 
     private interface ComponentAction { void execute(); }

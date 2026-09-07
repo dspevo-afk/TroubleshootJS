@@ -1,0 +1,98 @@
+{
+  "protocol": "TSJ-TASK48-DIAGNOSTIC-HISTORY-1",
+  "limits": "These are diagnostic failures and corrections, not passing acceptance receipts. Durations and remaining deadlines are omitted where they were not measured. Early build01-04 console results were observed but their attempted pipeline log files were not retained; no retained-log claim is made for them.",
+  "records": [
+    {
+      "phase": "initial compiled integration",
+      "builds": "01-04",
+      "cause": "CODE",
+      "failures": [
+        "Uninitialized fault-switch endpoint queried before drag",
+        "Qualified component reference label did not match rendered label identity",
+        "Fixed-part factory reconstructed a namespaced pad using the legacy component-dot-terminal convention",
+        "Diagnostic reference/probe grammar rejected canonical qualified PAD identities"
+      ],
+      "correction": "Initialize switches from existing adjoining resistor endpoints; use qualified label identities; bind fixed terminals through actual slot/pad mappings; narrowly admit canonical PAD encodings while keeping other diagnostic categories and forbidden-token checks strict.",
+      "closingProof": "Reviewed later compiled Task48 replay, admission, physical correspondence and negative cases",
+      "cleanup": "Failed candidates were not published; prior owner restored"
+    },
+    {
+      "phase": "compiled runtime and verifier integration",
+      "builds": "05-10",
+      "cause": "CODE and TEST/TOOL",
+      "failures": [
+        "Controlled LED operational observer was missing",
+        "Two executed diagnostic routes shared the legacy type-only receipt ID",
+        "Interim successful public retest completed the owner before later physical assertions",
+        "Physical oracle performed dependent actions before runtime settlement",
+        "Same-owner rejection fixture reused a legacy owner with unsupported mutable providers"
+      ],
+      "correction": "Observe the actual LEDElm; bind receipt identity to each qualified target; use the real retest profile for interim implementation checks and the public completion path after the final repair; settle actual dependent actions; use a valid controlled candidate for same-owner rejection.",
+      "closingProof": "Build10 Task48 PASS 745, followed by final candidate regressions and visible public retest for both owners",
+      "cleanup": "Original owner restored and failed candidates disposed"
+    },
+    {
+      "phase": "normal visible control acceptance",
+      "builds": "10-12",
+      "cause": "CODE",
+      "failure": "LOW left cached LOW/HIGH/retest buttons disabled after ordinary analysis settled",
+      "correction": "Refresh controls when the same generated owner transitions from pending to settled during its ordinary update, including the PCB rendering return path. An initial placement only at the method bottom was rejected by review before live use.",
+      "closingProof": "Build12 compiled actual-handler/button regression and both full debug-off visible player flows PASS",
+      "cleanup": "No readiness flag or public guard bypassed"
+    },
+    {
+      "phase": "required disabled-public-control negative",
+      "build": "13",
+      "cause": "TEST/TOOL fixture setup",
+      "failure": "Initial plain schematic did not execute the mutated generated-control refresh before the first click",
+      "correction": "Use the ordinary generated controlled-indicator seed0 page, where the actual required entry control becomes disabled",
+      "closingProof": "The same public-input helper failed with required control disabled; no fallback. Original source bytes restored exactly.",
+      "cleanup": "Source mutation removed before the next production build"
+    },
+    {
+      "phase": "evidence transport",
+      "build": "14",
+      "cause": "TEST/TOOL",
+      "failure": "Nested Task48 physical-manifest seed used the legacy numeric evidence format",
+      "correction": "Emit a canonical decimal string only for the controlled physical manifest and require exact agreement in the independent Python oracle",
+      "closingProof": "Old numeric packet rejected; fresh build14 Task48 PASS 755 and independent eight-seed oracle PASS",
+      "cleanup": "Normal-player implementation inputs unchanged from visible build12"
+    },
+    {
+      "phase": "browser evidence collection",
+      "cause": "ENVIRONMENT and TEST/TOOL",
+      "failures": [
+        "Frame-tree, Runtime.evaluate and focus-emulation collection deadlines while synchronous developer verifiers occupied the page",
+        "Task40 first invoked with an unsupported extra debug flag, which omitted its rendered workbench",
+        "Task47 independent oracle was first passed JSON even though its supported input is a semicolon receipt",
+        "Strict runtime packet checker invoked before a timed-out browser collection had written its input file"
+      ],
+      "correction": "Collect the same completed route separately after its work; use exact supported script URLs; convert the unchanged raw compiled Task47 case fields to the supported receipt; run the strict runtime oracle only after capturing the packet",
+      "closingProof": "Terminal results and required raw evidence subsequently collected; Task47 independent oracle PASS and Task43P strict outcome exit0/zero blockers",
+      "cleanup": "No timeout, missing file or failed invocation classified as PASS"
+    },
+    {
+      "phase": "dedicated legacy regressions",
+      "build": "14",
+      "cause": "TEST/TOOL",
+      "failures": [
+        "NMOS board power OFF did not isolate the control input",
+        "Registered provider did not execute generic remove: R1",
+        "Build15: Correct NMOS replacement did not pass the public customer retest and latch completion"
+      ],
+      "diagnosis": "Legacy NMOS/LED/provider verifiers issued dependent guarded public operations while analysis or mutation settlement was still pending. Normal visible NMOS LOW/HIGH, 0V isolated control, 5V restored control and unrepaired retest independently passed.",
+      "correction": "Use the existing real generated-runtime settlement boundary between dependent verifier actions, without changing public guards or electrical assertions; the repair-status observation also executes/restores LOW/HIGH, so settle it before final public retest as in the accepted Task40 verifier.",
+      "closingProof": "Build15 LED physical route PASS; build16 NMOS DS_OPEN, DS_SHORT and GATE_OPEN routes all PASS including public customer retest/latch and final leakage assertions. Actual loaded build16 permutation 972C3C7155FEC8F4C95FDA7EF4E0F324.cache.js verified through DOM script source.",
+      "cleanup": "Failed disposable pages preserved as failures, then navigated to about:blank"
+    },
+    {
+      "phase": "worker resource ownership",
+      "cause": "TEST/TOOL orchestration",
+      "failure": "A resumed worker used a stale saved assignment and ran an unrequested PRETTY build and pure suite, replacing the shared build outputs at 23:33:54 UTC",
+      "diagnosis": "Worker confirmed build session82111 and the pure command both finished. No worker-owned live process remained. Exact source comparison found only the root's intended LED/provider verifier edits; assembler and behavior were unchanged.",
+      "correction": "Reassert one root matrix owner; exclude this diagnostic build from qualification and run a fresh reviewed root OBF build",
+      "closingProof": "Root build16 JDK8/GWT OBF all five permutations PASS, before/after 972-input source fingerprint cdf2bbee7afdc1af2bccfa38bbda09f3ed65a450156a9dd7793d2dec3234ec09 exact; final compiled hashes retained.",
+      "cleanup": "No unrelated process was terminated"
+    }
+  ]
+}
