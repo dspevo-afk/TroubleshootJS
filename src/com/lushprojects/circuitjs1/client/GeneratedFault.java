@@ -38,4 +38,31 @@ class GeneratedFault {
     long getSelectionSeed() { return selectionSeed; }
     double getHealthyValue() { return healthyValue; }
     double getEffectiveValue() { return effectiveValue; }
+
+    /**
+     * Stable semantic identity for this diagnostic hypothesis.  The key is
+     * deliberately independent of generation order, solver nodes, geometry,
+     * and the selection seed.  The fault id is retained because the current
+     * generators assign a stable semantic id to each supported hypothesis;
+     * the value pair distinguishes value-mutation hypotheses on one owner.
+     */
+    String getHypothesisKey() {
+        StringBuilder result = new StringBuilder("fault-hypothesis-v1|");
+        appendField(result, circuitFamilyId);
+        appendField(result, type.name());
+        appendField(result, targetComponentId);
+        appendField(result, id);
+        // Use the canonical IEEE-754 bit pattern rather than a runtime's
+        // decimal formatter.  JDK and GWT can spell an integral double
+        // differently (for example, 330.0), while the bits are the semantic
+        // value used by the generated fault.  doubleToLongBits also gives all
+        // NaN payloads one deterministic spelling and preserves signed zero.
+        appendField(result, Long.toString(Double.doubleToLongBits(healthyValue)));
+        appendField(result, Long.toString(Double.doubleToLongBits(effectiveValue)));
+        return result.toString();
+    }
+
+    private static void appendField(StringBuilder result, String value) {
+        result.append(value.length()).append(':').append(value);
+    }
 }

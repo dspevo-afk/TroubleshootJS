@@ -27,7 +27,7 @@ final class BoundedGeneratedBoardAssembler {
     private static final String POWER_INPUT_ID = "VIN_INPUT";
     private static final double SUPPLY_VOLTAGE = 5.0;
     private static final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR =
-        new SeededPcbLayoutGenerator();
+        new SeededPcbLayoutGenerator(SeededPcbLayoutGenerator.LEGACY_VERSION);
 
     private BoundedGeneratedBoardAssembler() { }
 
@@ -1075,8 +1075,9 @@ final class BoundedGeneratedBoardAssembler {
             GeneratedFaultEngine.clearAll(candidates);
             validateContributionFault(sourceContribution, sourceComponent, sourceCandidate);
             validateContributionFault(loadContribution, loadComponent, loadCandidate);
-            GeneratedFaultCandidate selected = "source".equals(plan.getFaultBlockKey()) ?
-                sourceCandidate : loadCandidate;
+            GeneratedFaultCandidate selected = GeneratedFaultEngine.selectHypothesis(
+                ("source".equals(plan.getFaultBlockKey()) ? sourceCandidate : loadCandidate)
+                    .getHypothesisKey(), candidates);
             GeneratedFault fault = selected.getFault();
             GeneratedFaultBinding faultBinding = selected.getBinding();
 
@@ -1199,9 +1200,10 @@ final class BoundedGeneratedBoardAssembler {
             GeneratedFaultEngine.clearAll(controlledCandidates);
             validateControlledFault(rgCandidate, rgComponent, driver.getFaultLocalId());
             validateControlledFault(rloadCandidate, rloadComponent, load.getFaultLocalId());
-            GeneratedFaultCandidate selected =
-                ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(
-                    plan.getFaultBlockKey()) ? rgCandidate : rloadCandidate;
+            GeneratedFaultCandidate selected = GeneratedFaultEngine.selectHypothesis(
+                (ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(
+                    plan.getFaultBlockKey()) ? rgCandidate : rloadCandidate).getHypothesisKey(),
+                controlledCandidates);
 
             PhysicalResistorPart rgOriginal = new PhysicalResistorPart(
                 rgComponent + "/part/original", rgSpecification, rgSpecification,

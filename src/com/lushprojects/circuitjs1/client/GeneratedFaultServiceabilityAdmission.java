@@ -8,9 +8,65 @@ final class GeneratedFaultServiceabilityAdmission {
     private GeneratedFaultServiceabilityAdmission() { }
 
     static boolean isAdmitted(GeneratedFaultCandidate candidate) {
-        return candidate != null && candidate.isCompatible() &&
-            candidate.getServiceability() != null &&
-            candidate.getServiceability().isAdmissible();
+        return candidate != null && candidate.isAdmitted();
+    }
+
+    /**
+     * Returns the one normal candidate population used by selection, metric
+     * calculation, and diagnostic proof.  A duplicate semantic key is an
+     * invalid catalog: rejecting it keeps collection order from deciding
+     * which physical/electrical record is silently proved.
+     */
+    static Vector<GeneratedFaultCandidate> getAdmittedCandidates(
+            Vector<GeneratedFaultCandidate> candidates) {
+        Vector<GeneratedFaultCandidate> result = new Vector<GeneratedFaultCandidate>();
+        if (candidates == null) return result;
+        Vector<String> keys = new Vector<String>();
+        for (GeneratedFaultCandidate candidate : candidates) {
+            if (!isAdmitted(candidate)) continue;
+            String key = candidate.getHypothesisKey();
+            if (keys.contains(key))
+                throw new IllegalArgumentException("Duplicate admitted hypothesis key: " + key);
+            keys.add(key);
+            result.add(candidate);
+        }
+        return result;
+    }
+
+    static int getAdmittedCandidateCount(Vector<GeneratedFaultCandidate> candidates) {
+        return getAdmittedCandidates(candidates).size();
+    }
+
+    static Vector<String> getHypothesisKeys(Vector<GeneratedFaultCandidate> candidates) {
+        Vector<String> result = new Vector<String>();
+        for (GeneratedFaultCandidate candidate : getAdmittedCandidates(candidates))
+            result.add(candidate.getHypothesisKey());
+        Collections.sort(result);
+        return result;
+    }
+
+    /**
+     * Checks that a proof receipt covers precisely the canonical admitted
+     * hypothesis population.  Proof callers must use this boundary instead
+     * of comparing only a count, since a same-size population can still have
+     * silently substituted a different fault.
+     */
+    static void validateHypothesisPopulation(Vector<GeneratedFaultCandidate> candidates,
+            Vector<String> provedHypothesisKeys) {
+        if (provedHypothesisKeys == null)
+            throw new IllegalArgumentException("Missing proved hypothesis population");
+        Vector<String> actual = new Vector<String>();
+        for (String key : provedHypothesisKeys) {
+            if (key == null || key.length() == 0)
+                throw new IllegalArgumentException("Proof has a missing hypothesis key");
+            if (actual.contains(key))
+                throw new IllegalArgumentException("Proof has a duplicate hypothesis key: " + key);
+            actual.add(key);
+        }
+        Collections.sort(actual);
+        Vector<String> expected = getHypothesisKeys(candidates);
+        if (!expected.equals(actual))
+            throw new IllegalStateException("Candidate/proof hypothesis population diverged");
     }
 
     static void validateCandidate(GeneratedFaultCandidate candidate) {
@@ -29,10 +85,22 @@ final class GeneratedFaultServiceabilityAdmission {
     static void validate(GeneratedBoardInstance instance, GeneratedFaultBinding binding) {
         if (instance == null || binding == null)
             throw new IllegalArgumentException("Missing physical fault admission context");
+        GeneratedFaultCandidate selectedCandidate = null;
+        for (GeneratedFaultCandidate candidate : instance.getFaultCandidates())
+            if (candidate != null && candidate.getBinding() == binding) {
+                selectedCandidate = candidate;
+                break;
+            }
+        if (selectedCandidate == null || !isAdmitted(selectedCandidate))
+            throw new IllegalArgumentException(
+                "Selected fault is not an admitted candidate owned by the board");
+        // Validate the actual catalog record.  Wrapping the binding in a new
+        // compatible candidate would let an incompatible/developer-only
+        // record cross this normal challenge boundary.
+        validateCandidate(selectedCandidate);
         GeneratedFaultServiceability serviceability = binding.getServiceability();
         if (serviceability == null)
             throw new IllegalArgumentException("Selected fault has no physical serviceability contract");
-        validateCandidate(new GeneratedFaultCandidate(binding, true));
         GeneratedFaultLocus locus = serviceability.getLocus();
         validateLocusIdentity(locus);
         if (locus.getType() == GeneratedFaultLocusType.TRACE_SEGMENT)
@@ -241,12 +309,10 @@ final class GeneratedFaultServiceabilityAdmission {
 
     static Vector<String> getPhysicalOwnerIds(Vector<GeneratedFaultCandidate> candidates) {
         Vector<String> result = new Vector<String>();
-        if (candidates != null)
-            for (GeneratedFaultCandidate candidate : candidates)
-                if (isAdmitted(candidate)) {
-                    String ownerId = candidate.getServiceability().getLocus().getOwnerId();
-                    if (!result.contains(ownerId)) result.add(ownerId);
-                }
+        for (GeneratedFaultCandidate candidate : getAdmittedCandidates(candidates)) {
+            String ownerId = candidate.getServiceability().getLocus().getOwnerId();
+            if (!result.contains(ownerId)) result.add(ownerId);
+        }
         Collections.sort(result);
         return result;
     }

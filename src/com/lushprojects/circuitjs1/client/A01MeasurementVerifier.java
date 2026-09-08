@@ -578,7 +578,8 @@ final class A01MeasurementVerifier {
         json.append(",\"nets\":").append(board.getNetIds().size());
         json.append(",\"rawSegments\":").append(rawSegments);
         json.append(",\"canonicalSegments\":").append(canonicalSegments);
-        json.append(",\"hypothesisCount\":").append(owner.getFaultCandidates().size());
+        json.append(",\"hypothesisCount\":").append(
+            GeneratedDiagnosticSolvabilityAdmission.getAdmittedCandidateCount(owner.getFaultCandidates()));
         json.append(",\"matrixFullSize\":").append(sim.circuitMatrixFullSize);
         json.append(",\"matrixReducedSize\":").append(sim.circuitMatrixSize);
         json.append(",\"unsupportedStages\":[]");

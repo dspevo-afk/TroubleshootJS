@@ -74,6 +74,7 @@ class PcbBoardLayout {
     private final int height;
     private Rectangle boardOutline;
     private final Rectangle partsTray;
+    private final int layoutAlgorithmVersion;
     private final HashMap<String, PcbPadPlacement> pads =
         new HashMap<String, PcbPadPlacement>();
     private final HashMap<String, PcbComponentPlacement> components =
@@ -83,11 +84,24 @@ class PcbBoardLayout {
     private final Vector<PcbTraceGeometry> traces = new Vector<PcbTraceGeometry>();
 
     PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray) {
+        this(width, height, boardOutline, partsTray,
+            SeededPcbLayoutGenerator.LEGACY_VERSION);
+    }
+
+    PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray,
+            int layoutAlgorithmVersion) {
+        if (layoutAlgorithmVersion != SeededPcbLayoutGenerator.LEGACY_VERSION &&
+                layoutAlgorithmVersion != SeededPcbLayoutGenerator.CURRENT_VERSION)
+            throw new IllegalArgumentException("Unsupported PCB layout algorithm version: " +
+                layoutAlgorithmVersion);
         this.width = width;
         this.height = height;
         this.boardOutline = boardOutline;
         this.partsTray = partsTray;
+        this.layoutAlgorithmVersion = layoutAlgorithmVersion;
     }
+
+    int getLayoutAlgorithmVersion() { return layoutAlgorithmVersion; }
 
     void addPad(PcbPadPlacement pad) {
         if (pads.put(pad.getPadId(), pad) != null)
@@ -766,7 +780,7 @@ class PcbBoardLayout {
         for (PcbTraceGeometry trace : traces) {
             int length = getTraceLength(trace);
             int direct = getDirectManhattanDistance(trace);
-            int bends = getTraceBendCount(trace);
+            int bends = getRouteQualityBendCount(trace);
             if (length <= 0 || direct <= 0)
                 throw new IllegalStateException("PCB trace has invalid route length: " +
                     trace.getNetId());
@@ -911,6 +925,33 @@ class PcbBoardLayout {
         int bends = 0;
         int[] xPoints = trace.getXPoints();
         int[] yPoints = trace.getYPoints();
+        long previousDx = 0;
+        long previousDy = 0;
+        boolean haveDirection = false;
+        for (int index = 1; index < xPoints.length; index++) {
+            long dx = (long) xPoints[index] - xPoints[index - 1];
+            long dy = (long) yPoints[index] - yPoints[index - 1];
+            // A repeated point contributes no direction.  Retaining the last
+            // nonzero direction ensures it cannot manufacture a bend or hide
+            // a real turn that follows it.
+            if (dx == 0 && dy == 0)
+                continue;
+            long directionX = dx == 0 ? 0 : (dx < 0 ? -1 : 1);
+            long directionY = dy == 0 ? 0 : (dy < 0 ? -1 : 1);
+            if (haveDirection && (directionX != previousDx || directionY != previousDy))
+                bends++;
+            previousDx = directionX;
+            previousDy = directionY;
+            haveDirection = true;
+        }
+        return bends;
+    }
+
+    /** Preserve the pre-A02 raw-displacement metric for legacy layout scores. */
+    private int getLegacyTraceBendCount(PcbTraceGeometry trace) {
+        int bends = 0;
+        int[] xPoints = trace.getXPoints();
+        int[] yPoints = trace.getYPoints();
         for (int index = 2; index < xPoints.length; index++) {
             int firstDx = xPoints[index - 1] - xPoints[index - 2];
             int firstDy = yPoints[index - 1] - yPoints[index - 2];
@@ -922,6 +963,11 @@ class PcbBoardLayout {
         return bends;
     }
 
+    private int getRouteQualityBendCount(PcbTraceGeometry trace) {
+        return layoutAlgorithmVersion == SeededPcbLayoutGenerator.LEGACY_VERSION ?
+            getLegacyTraceBendCount(trace) : getTraceBendCount(trace);
+    }
+
     double getTraceDetourRatio(PcbTraceGeometry trace) {
         return getTraceLength(trace) / (double) Math.max(1, getDirectManhattanDistance(trace));
     }
@@ -929,7 +975,7 @@ class PcbBoardLayout {
     double getRouteQualityScore(TroubleshootBoard board) {
         double score = 0;
         for (PcbTraceGeometry trace : traces)
-            score += getTraceLength(trace) + getTraceBendCount(trace) * 35 +
+            score += getTraceLength(trace) + getRouteQualityBendCount(trace) * 35 +
                 getTraceDetourRatio(trace) * 60;
         for (String netId : board.getNetIds()) {
             Vector<String> padIds = board.getNet(netId).getPadIds();

@@ -1,0 +1,133 @@
+{
+  "sourceDigest": "4af6d7db262522e8e2e264c48f6615a81fe18fa4fc52ef4813b1b4c1fab9d737",
+  "executionDigest": "3a025afffeadd246bb906e996bdc1fc7d40816ef18700d83fabfd8298302d571",
+  "route": "actual in-app Browser; compiled A02 verifier; separate from visible player gate",
+  "results": [
+    {
+      "protocol": "TSJ-A02-1",
+      "status": "PASS",
+      "family": "LED_INDICATOR",
+      "seed": "3",
+      "hypothesisCount": 3,
+      "physicalOwnerCount": 2,
+      "admittedKeys": [
+        "fault-hypothesis-v1|13:LED_INDICATOR13:RESISTOR_OPEN2:R111:LED_R1_OPEN19:922112023704109056019:9221120237041090560",
+        "fault-hypothesis-v1|13:LED_INDICATOR24:RESISTOR_INCORRECT_VALUE2:R122:LED_R1_INCORRECT_VALUE19:465200730884118937619:4681608360884174848",
+        "fault-hypothesis-v1|13:LED_INDICATOR8:LED_OPEN4:LED113:LED_LED1_OPEN19:922112023704109056019:9221120237041090560"
+      ],
+      "provedKeys": [
+        "fault-hypothesis-v1|13:LED_INDICATOR13:RESISTOR_OPEN2:R111:LED_R1_OPEN19:922112023704109056019:9221120237041090560",
+        "fault-hypothesis-v1|13:LED_INDICATOR24:RESISTOR_INCORRECT_VALUE2:R122:LED_R1_INCORRECT_VALUE19:465200730884118937619:4681608360884174848",
+        "fault-hypothesis-v1|13:LED_INDICATOR8:LED_OPEN4:LED113:LED_LED1_OPEN19:922112023704109056019:9221120237041090560"
+      ],
+      "selectedHypothesisKey": "fault-hypothesis-v1|13:LED_INDICATOR24:RESISTOR_INCORRECT_VALUE2:R122:LED_R1_INCORRECT_VALUE19:465200730884118937619:4681608360884174848",
+      "compatibleUnserviceableExcluded": true,
+      "crossRuntimeHypothesisKey": true,
+      "legacy": {
+        "descriptor": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=LED_INDICATOR@1\ndifficulty-profile=legacy-default@1\ngenerator=legacy-leaf@1\ngeometry=3\nroot-seed=3",
+        "packageGeometryVersion": 3,
+        "layoutAlgorithmVersion": 3,
+        "directionBends": 10,
+        "routeQualityScore": 4082.0338946596275,
+        "fingerprintSha256": "af158fac6c7c1aa1b1aee1e469787d23614739de8575b6af6dea73fd5d8f9c65",
+        "fingerprintLength": 6203
+      },
+      "corrected": {
+        "descriptor": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=LED_INDICATOR@1\ndifficulty-profile=legacy-default@1\ngenerator=legacy-leaf@2\ngeometry=3\nroot-seed=3",
+        "packageGeometryVersion": 3,
+        "layoutAlgorithmVersion": 4,
+        "directionBends": 10,
+        "routeQualityScore": 4112.1904786689975,
+        "fingerprintSha256": "bbfc2bac5de043eb0f778e307115015c9f3c5386039c7c300c5f6cca097bdc9e",
+        "fingerprintLength": 6219
+      },
+      "normalGeometryMatchesCorrectedReplay": true,
+      "geometryAndProbeValidation": true,
+      "legacyAdmissionProof": true,
+      "originalOwnerRestored": true,
+      "candidateCleanup": "PASS"
+    },
+    {
+      "protocol": "TSJ-A02-1",
+      "status": "PASS",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "0",
+      "hypothesisCount": 1,
+      "physicalOwnerCount": 1,
+      "admittedKeys": [
+        "fault-hypothesis-v1|25:DIODE_PROTECTED_INDICATOR10:DIODE_OPEN2:D113:DIODE_D1_OPEN19:922112023704109056019:9221120237041090560"
+      ],
+      "provedKeys": [
+        "fault-hypothesis-v1|25:DIODE_PROTECTED_INDICATOR10:DIODE_OPEN2:D113:DIODE_D1_OPEN19:922112023704109056019:9221120237041090560"
+      ],
+      "selectedHypothesisKey": "fault-hypothesis-v1|25:DIODE_PROTECTED_INDICATOR10:DIODE_OPEN2:D113:DIODE_D1_OPEN19:922112023704109056019:9221120237041090560",
+      "compatibleUnserviceableExcluded": true,
+      "crossRuntimeHypothesisKey": true,
+      "legacy": {
+        "descriptor": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=DIODE_PROTECTED_INDICATOR@1\ndifficulty-profile=legacy-default@1\ngenerator=legacy-leaf@1\ngeometry=3\nroot-seed=0",
+        "packageGeometryVersion": 3,
+        "layoutAlgorithmVersion": 3,
+        "directionBends": 12,
+        "routeQualityScore": 5049.174070430738,
+        "fingerprintSha256": "94720e880f39fb716fd923d9f657979c8b22ec3820a9a5091e02281b18bac9b7",
+        "fingerprintLength": 8500
+      },
+      "corrected": {
+        "descriptor": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=DIODE_PROTECTED_INDICATOR@1\ndifficulty-profile=legacy-default@1\ngenerator=legacy-leaf@2\ngeometry=3\nroot-seed=0",
+        "packageGeometryVersion": 3,
+        "layoutAlgorithmVersion": 4,
+        "directionBends": 12,
+        "routeQualityScore": 5049.174070430738,
+        "fingerprintSha256": "94720e880f39fb716fd923d9f657979c8b22ec3820a9a5091e02281b18bac9b7",
+        "fingerprintLength": 8500
+      },
+      "normalGeometryMatchesCorrectedReplay": true,
+      "geometryAndProbeValidation": true,
+      "legacyAdmissionProof": true,
+      "originalOwnerRestored": true,
+      "candidateCleanup": "PASS"
+    },
+    {
+      "protocol": "TSJ-A02-1",
+      "status": "PASS",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "3",
+      "hypothesisCount": 2,
+      "physicalOwnerCount": 1,
+      "admittedKeys": [
+        "fault-hypothesis-v1|23:PARALLEL_DUAL_INDICATOR13:RESISTOR_OPEN2:R116:PARALLEL_R1_OPEN19:922112023704109056019:9221120237041090560",
+        "fault-hypothesis-v1|23:PARALLEL_DUAL_INDICATOR24:RESISTOR_INCORRECT_VALUE2:R127:PARALLEL_R1_INCORRECT_VALUE19:465200730884118937619:4681608360884174848"
+      ],
+      "provedKeys": [
+        "fault-hypothesis-v1|23:PARALLEL_DUAL_INDICATOR13:RESISTOR_OPEN2:R116:PARALLEL_R1_OPEN19:922112023704109056019:9221120237041090560",
+        "fault-hypothesis-v1|23:PARALLEL_DUAL_INDICATOR24:RESISTOR_INCORRECT_VALUE2:R127:PARALLEL_R1_INCORRECT_VALUE19:465200730884118937619:4681608360884174848"
+      ],
+      "selectedHypothesisKey": "fault-hypothesis-v1|23:PARALLEL_DUAL_INDICATOR24:RESISTOR_INCORRECT_VALUE2:R127:PARALLEL_R1_INCORRECT_VALUE19:465200730884118937619:4681608360884174848",
+      "compatibleUnserviceableExcluded": true,
+      "crossRuntimeHypothesisKey": true,
+      "legacy": {
+        "descriptor": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=PARALLEL_DUAL_INDICATOR@1\ndifficulty-profile=legacy-default@1\ngenerator=legacy-leaf@1\ngeometry=3\nroot-seed=3",
+        "packageGeometryVersion": 3,
+        "layoutAlgorithmVersion": 3,
+        "directionBends": 20,
+        "routeQualityScore": 6831.519925716576,
+        "fingerprintSha256": "80dab4a641cca6f8fa659d102c7b2909ced1bb752d4d48bb149b47ed36c98e0c",
+        "fingerprintLength": 10668
+      },
+      "corrected": {
+        "descriptor": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=PARALLEL_DUAL_INDICATOR@1\ndifficulty-profile=legacy-default@1\ngenerator=legacy-leaf@2\ngeometry=3\nroot-seed=3",
+        "packageGeometryVersion": 3,
+        "layoutAlgorithmVersion": 4,
+        "directionBends": 20,
+        "routeQualityScore": 6707.208605420347,
+        "fingerprintSha256": "dc0e099230e162d565c19dd74415558a01c06088bb498483ab46e8e4ffb1d5ed",
+        "fingerprintLength": 10652
+      },
+      "normalGeometryMatchesCorrectedReplay": true,
+      "geometryAndProbeValidation": true,
+      "legacyAdmissionProof": true,
+      "originalOwnerRestored": true,
+      "candidateCleanup": "PASS"
+    }
+  ]
+}

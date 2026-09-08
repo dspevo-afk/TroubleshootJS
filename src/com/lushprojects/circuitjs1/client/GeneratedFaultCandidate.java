@@ -21,6 +21,7 @@ class GeneratedFaultCandidate {
         return getServiceability() != null && getServiceability().isAdmissible();
     }
     boolean isAdmitted() { return compatible && isServiceable(); }
+    String getHypothesisKey() { return getFault().getHypothesisKey(); }
     Vector<CircuitElm> getPrivateSimulationElements() {
         return binding.getPrivateSimulationElements();
     }

@@ -7,6 +7,7 @@ final class GeneratedDiagnosticSolvabilityEvidence {
     private final String routeId;
     private final String familyId;
     private final long seed;
+    private final String hypothesisKey;
     private final int admittedCandidateCount;
     private final int admittedPhysicalOwnerCount;
 
@@ -41,13 +42,14 @@ final class GeneratedDiagnosticSolvabilityEvidence {
     private final boolean stateIsolated;
 
     GeneratedDiagnosticSolvabilityEvidence(String routeId, String familyId, long seed,
-            int admittedCandidateCount, int admittedPhysicalOwnerCount,
+            String hypothesisKey, int admittedCandidateCount, int admittedPhysicalOwnerCount,
             GeneratedDiagnosticPlan declaredPlan, Vector<GeneratedDiagnosticSample> samples,
             GeneratedDiagnosticExecutionTrace executionTrace,
             boolean unaffectedFunctionRetestObservation, String equivalentRepairClass,
             String deterministicResult, String deterministicRejectionReason,
             boolean repairReachable, boolean customerRetestPassed, boolean stateIsolated) {
-        if (routeId == null || familyId == null || declaredPlan == null ||
+        if (routeId == null || familyId == null || hypothesisKey == null ||
+                hypothesisKey.length() == 0 || declaredPlan == null ||
                 samples == null || executionTrace == null || equivalentRepairClass == null ||
                 deterministicResult == null || deterministicRejectionReason == null)
             throw new IllegalArgumentException("Incomplete diagnostic solvability evidence");
@@ -56,6 +58,7 @@ final class GeneratedDiagnosticSolvabilityEvidence {
         this.routeId = routeId;
         this.familyId = familyId;
         this.seed = seed;
+        this.hypothesisKey = hypothesisKey;
         this.admittedCandidateCount = admittedCandidateCount;
         this.admittedPhysicalOwnerCount = admittedPhysicalOwnerCount;
         declaredPlanDepth = declaredPlan.getDepth();
@@ -93,6 +96,7 @@ final class GeneratedDiagnosticSolvabilityEvidence {
         this.routeId = source.routeId;
         this.familyId = source.familyId;
         this.seed = source.seed;
+        this.hypothesisKey = source.hypothesisKey;
         this.admittedCandidateCount = source.admittedCandidateCount;
         this.admittedPhysicalOwnerCount = source.admittedPhysicalOwnerCount;
         this.declaredPlanDepth = source.declaredPlanDepth;
@@ -132,6 +136,7 @@ final class GeneratedDiagnosticSolvabilityEvidence {
     String getRouteId() { return routeId; }
     String getFamilyId() { return familyId; }
     long getSeed() { return seed; }
+    String getHypothesisKey() { return hypothesisKey; }
     int getAdmittedCandidateCount() { return admittedCandidateCount; }
     int getAdmittedPhysicalOwnerCount() { return admittedPhysicalOwnerCount; }
     int getDeclaredPlanDepth() { return declaredPlanDepth; }

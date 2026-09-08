@@ -15,6 +15,8 @@ final class ChallengeDescriptor {
     static final int SCHEMA_VERSION = 1;
     static final String LEGACY_GENERATOR_ID = "legacy-leaf";
     static final int LEGACY_GENERATOR_VERSION = 1;
+    /** A02 corrects seeded placement/ranking; package geometry remains v3. */
+    static final int CORRECTED_SEEDED_GENERATOR_VERSION = 2;
     static final String LEGACY_DIFFICULTY_ID = "legacy-default";
     static final int LEGACY_DIFFICULTY_VERSION = 1;
     static final int LEGACY_INTENT_VERSION = 1;
@@ -152,6 +154,16 @@ final class ChallengeDescriptor {
                 new VersionedId(familyId, LEGACY_INTENT_VERSION),
                 new VersionedId(LEGACY_DIFFICULTY_ID,
                         LEGACY_DIFFICULTY_VERSION),
+                new PcbGeometryContractVersion(LEGACY_GEOMETRY_VERSION),
+                GenerationConstraints.unspecified());
+    }
+
+    /** Current seeded leaf algorithm, with unchanged electrical/package inputs. */
+    static ChallengeDescriptor correctedSeeded(String familyId, long seed) {
+        return new ChallengeDescriptor(SCHEMA_VERSION, seed,
+                new VersionedId(LEGACY_GENERATOR_ID, CORRECTED_SEEDED_GENERATOR_VERSION),
+                new VersionedId(familyId, LEGACY_INTENT_VERSION),
+                new VersionedId(LEGACY_DIFFICULTY_ID, LEGACY_DIFFICULTY_VERSION),
                 new PcbGeometryContractVersion(LEGACY_GEOMETRY_VERSION),
                 GenerationConstraints.unspecified());
     }

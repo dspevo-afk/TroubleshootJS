@@ -7,8 +7,13 @@ import java.util.Vector;
 class ParallelDualIndicatorGenerator {
     static final String DUAL_PARALLEL_BRANCHES_VARIANT = "DUAL_PARALLEL_BRANCHES";
     private static final String FAMILY_ID = "PARALLEL_DUAL_INDICATOR";
-    private static final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR =
-        new SeededPcbLayoutGenerator();
+    private final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR;
+
+    ParallelDualIndicatorGenerator() { this(SeededPcbLayoutGenerator.CURRENT_VERSION); }
+
+    ParallelDualIndicatorGenerator(int layoutAlgorithmVersion) {
+        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator(layoutAlgorithmVersion);
+    }
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
     private static final double[] R1_VALUES = { 330, 680, 1000 };
     private static final double[] R2_VALUES = { 680, 1500, 2200 };

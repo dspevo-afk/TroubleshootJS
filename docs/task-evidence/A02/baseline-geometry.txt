@@ -1,0 +1,66 @@
+F5_BASELINE
+case=0,points=0,0;10,0;30,0,current=1,corrected=0
+case=1,points=0,0;0,10;0,30,current=1,corrected=0
+case=2,points=0,0;10,0;10,10,current=1,corrected=1
+case=3,points=30,0;20,0;0,0,current=1,corrected=0
+case=4,points=0,0;10,0;0,0,current=1,corrected=1
+case=5,points=0,0;0,0;10,0,current=1,corrected=1
+case=6,points=2147483627,0;2147483637,0;2147483646,0,current=1,corrected=0
+RANDOM nextLong
+RANDOM nextInt bound=31
+RANDOM nextInt bound=31
+RANDOM nextInt bound=25
+RANDOM nextLong
+RANDOM nextInt bound=31
+RANDOM nextInt bound=31
+RANDOM nextInt bound=25
+variation=0;candidate=360,320
+RANDOM nextLong
+RANDOM nextInt bound=31
+RANDOM nextInt bound=31
+RANDOM nextInt bound=25
+variation=1;candidate=320,370
+RANDOM nextLong
+RANDOM nextInt bound=31
+RANDOM nextInt bound=31
+RANDOM nextInt bound=25
+variation=2;candidate=360,320
+RANDOM nextLong
+RANDOM nextInt bound=31
+RANDOM nextInt bound=31
+RANDOM nextInt bound=25
+variation=3;candidate=360,320
+F6_BASELINE
+fixture=LED_INDICATOR;placed=J1@100,150;link=R1.1->J1.1;weight=1.35
+prototype=R1@0,0;width=220,height=70;sourcePad=30,30;otherWorldPad=190,190
+centerOrigin=320,215;intendedRawTarget=160.0,160.0;baselineRawTarget=480.0,375.0
+hypotheticalFits=true;courtyard=Rect(492,375,196,60)
+hypotheticalFitsMinus120=true;courtyard=Rect(372,325,196,60)
+returnedCandidateOrigin=360,320;returnedCandidatePad=390,350
+baselineRawAligned=480,370;intendedRawAligned=160,160
+returnedMinusBaselineAligned=-120,-50
+GENERATED_BASELINE
+seed=0,fingerprintHash=-896296955,components=-2085507248,traces=802087706,quality=4062.212935131351,traceCount=3
+  component=LED1@290,136
+  component=J1@440,106
+  component=R1@70,156
+seed=1,fingerprintHash=-10680059,components=658669868,traces=-1162034708,quality=4070.3997483181643,traceCount=3
+  component=LED1@300,146
+  component=J1@450,116
+  component=R1@80,176
+seed=2,fingerprintHash=1759298152,components=2127209031,traces=791625666,quality=4070.3997483181643,traceCount=3
+  component=LED1@310,136
+  component=J1@460,106
+  component=R1@90,166
+seed=3,fingerprintHash=-620073744,components=1195903475,traces=-1470512954,quality=4082.0338946596275,traceCount=3
+  component=LED1@320,146
+  component=J1@470,116
+  component=R1@100,186
+seed=-9223372036854775808,fingerprintHash=-896296955,components=-2085507248,traces=802087706,quality=4062.212935131351,traceCount=3
+  component=LED1@290,136
+  component=J1@440,106
+  component=R1@70,156
+seed=9223372036854775807,fingerprintHash=-620073744,components=1195903475,traces=-1470512954,quality=4082.0338946596275,traceCount=3
+  component=LED1@320,146
+  component=J1@470,116
+  component=R1@100,186

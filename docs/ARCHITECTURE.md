@@ -153,8 +153,12 @@ empty/duplicate sets reject. A changed eligible population may change selection.
 
 `LegacyChallengeReplay` resolves `legacy-leaf@1`, intent version 1 for the six
 existing family IDs, `legacy-default@1`, geometry version 3 and entirely
-unspecified constraints. It then directly calls the accepted
-`QuickPlayFamilyRegistry.generate(familyId, long)` path. It does not remap seeds,
+unspecified constraints. It explicitly selects layout algorithm 3 through
+`QuickPlayFamilyRegistry.generate(familyId, long, layoutAlgorithmVersion)`.
+A02 adds `legacy-leaf@2` for the LED, diode and parallel seeded families,
+selecting corrected layout algorithm 4. Ordinary generation uses algorithm 4
+for those families; fixed families retain algorithm 3. Package geometry stays
+at version 3. Neither dispatch remaps seeds,
 replace legacy randomness or override fault/scenario selection. Every call
 constructs a fresh runtime owner. Any specified constraint rejects before
 generation; the adapter makes no claim that a requested diagnostic depth was
@@ -1632,9 +1636,9 @@ remain incompatible in normal admission; NPN `LOAD_PATH_OPEN` is retained
 only as a forced developer fixture until a real path owner and repair primitive
 exist. Normal UI surfaces none of this hidden fault metadata.
 
-The current normal admitted corpus is 13 routes: LED 2, diode 1, parallel 2,
-RC 2, NPN 3, and NMOS 3. The previous roadmap estimate of 14 was stale because
-normal `DIODE_SHORT` is developer-only and NPN `LOAD_PATH_OPEN` was removed
+The current normal family corpus is 14 hypotheses: LED 3 (including the later
+LED-owned open hypothesis), diode 1, parallel 2, RC 2, NPN 3, and NMOS 3.
+Normal `DIODE_SHORT` is developer-only and NPN `LOAD_PATH_OPEN` was removed
 from normal admission under the option-B resolution. Task 40 is therefore a
 serviceability/admission boundary only; it does not add trace, connector,
 jumper, cut, or generic repair gameplay.
@@ -1646,7 +1650,7 @@ Task 41 adds the family-agnostic `GeneratedDiagnosticSolvabilityContract`,
 admission boundary. A normal generated challenge is not READY until the
 rendered board has passed the same bounded diagnostic proof used by the
 developer verifier. The proof operates on one unchanged topology/layout at a
-time, enumerates compatible candidates, and uses real `PcbWorkbenchController`
+time, enumerates the owner's admitted hypotheses, and uses real `PcbWorkbenchController`
 probe targets, `InstrumentController` modes, `BoardPowerController` state,
 player input operations, temporal waits, isolation, repair, and customer
 retest. Voltage, resistance, continuity, and diode observations are produced
@@ -1655,7 +1659,7 @@ or scripted readings. Plan capability metadata is kept separate from the
 execution trace: a declared isolation or meter capability is not reported as
 executed unless the verifier actually performs it.
 
-The current normal corpus is deliberately explicit: 13 routes across LED 2,
+The current normal family corpus contains 14 hypotheses across LED 3,
 diode 1, parallel 2, RC 2, NPN 3, and NMOS 3. Candidate groups are compared
 pairwise using solver-derived signatures. Distinct candidates must have a
 separating plan; candidates with the same observable/repair behavior must
@@ -1686,6 +1690,41 @@ restored last before the immediate assertion. Scope-array identity is checked;
 scope internals, nested physical/challenge/renderer state, callback cancellation,
 and timer identity are not captured. This remains the detached-original-owner
 proof model, not a complete same-owner transaction.
+
+## A02 admission identity and seeded geometry contracts
+
+`GeneratedFaultCandidate.isAdmitted()` owns normal eligibility: compatibility
+and an admissible, non-null serviceability contract. The null-safe
+`GeneratedFaultServiceabilityAdmission` population adapter is used by selection,
+counting, owner counting, diagnostic enumeration and evidence validation. Empty
+live populations fail. Forced developer selection is separate and cannot fill
+normal proof coverage.
+
+`GeneratedFault.getHypothesisKey()` length-frames family, fault type, physical
+target, stable fault ID and canonical IEEE-754 healthy/effective value bits.
+Seed, collection order,
+runtime identity and geometry do not enter the key. Every duplicate admitted
+key rejects deterministically, including identical records. The diagnostic
+contract retains sorted exact keys independently of unique physical-owner
+count. Task41 regenerates and checks the exact hypothesis and compares proved
+keys to the contract, so two supported faults on one owner remain two hypotheses.
+
+`PcbBoardLayout.getTraceBendCount()` compares direction signs using widened
+coordinate differences. Segment length does not matter, immediate reversals
+count, and repeated points are ignored without resetting the last direction.
+Geometry validation still rejects diagonals and degenerate segments. Algorithm
+3 retains the historical raw-displacement metric only for replay-sensitive
+quality admission and ranking; algorithm 4 uses direction bends. Trace arrays
+and the geometry fingerprint format are unchanged.
+
+Prototype footprint origins are (0,0) and their pads are local. Placed origins
+and pads use board coordinates. Algorithm 4's production connected-placement
+helper solves `round(sum(w * (neighborWorldPad - candidateLocalPad)) / sum(w))`
+for the new component origin. Only an empty usable-neighbor set uses the board
+center. Widened differences, finite sums and checked integer range prevent
+silent target overflow. Existing jitter draws, grid search, offsets, bounds,
+routing and whole-board `compactToContent` translation follow this raw target.
+Raw translation covariance is separate from final compaction normalization.
 
 ## Task 40/41 contract-hardening correction
 

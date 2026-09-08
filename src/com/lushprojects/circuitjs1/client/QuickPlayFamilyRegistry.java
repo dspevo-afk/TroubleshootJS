@@ -41,12 +41,27 @@ final class QuickPlayFamilyRegistry {
     }
 
     static GeneratedBoardInstance generate(String familyId, long seed) {
+        return generate(familyId, seed, usesSeededLayout(familyId) ?
+            SeededPcbLayoutGenerator.CURRENT_VERSION : SeededPcbLayoutGenerator.LEGACY_VERSION);
+    }
+
+    static boolean usesSeededLayout(String familyId) {
+        return LED_INDICATOR.equals(familyId) || DIODE_PROTECTED_INDICATOR.equals(familyId) ||
+            PARALLEL_DUAL_INDICATOR.equals(familyId);
+    }
+
+    /** Descriptor replay must choose the algorithm, never inherit the default. */
+    static GeneratedBoardInstance generate(String familyId, long seed, int layoutAlgorithmVersion) {
+        if (layoutAlgorithmVersion != SeededPcbLayoutGenerator.LEGACY_VERSION &&
+                (layoutAlgorithmVersion != SeededPcbLayoutGenerator.CURRENT_VERSION ||
+                 !usesSeededLayout(familyId)))
+            throw new IllegalArgumentException("Unsupported leaf layout algorithm version");
         if (LED_INDICATOR.equals(familyId))
-            return new LedIndicatorGenerator().generate(seed);
+            return new LedIndicatorGenerator(layoutAlgorithmVersion).generate(seed);
         if (DIODE_PROTECTED_INDICATOR.equals(familyId))
-            return new DiodeProtectedIndicatorGenerator().generate(seed);
+            return new DiodeProtectedIndicatorGenerator(layoutAlgorithmVersion).generate(seed);
         if (PARALLEL_DUAL_INDICATOR.equals(familyId))
-            return new ParallelDualIndicatorGenerator().generate(seed);
+            return new ParallelDualIndicatorGenerator(layoutAlgorithmVersion).generate(seed);
         if (RC_DELAY.equals(familyId))
             return new RcDelayGenerator().generate(seed);
         if (NPN_LOW_SIDE_SWITCH.equals(familyId))

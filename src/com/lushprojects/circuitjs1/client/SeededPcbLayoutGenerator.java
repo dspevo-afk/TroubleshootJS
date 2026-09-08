@@ -11,6 +11,9 @@ import java.util.Vector;
  * nets are supplied by the logical board and are never invented here.
  */
 class SeededPcbLayoutGenerator {
+    /** Layout algorithm versions are independent of the package geometry schema. */
+    static final int LEGACY_VERSION = 3;
+    static final int CURRENT_VERSION = 4;
     private static final int CANVAS_WIDTH = 1040;
     private static final int CANVAS_HEIGHT = 520;
     private static final int GRID = 10;
@@ -21,16 +24,33 @@ class SeededPcbLayoutGenerator {
     private static final int FINAL_BOARD_Y = 40;
     private static final int FINAL_EDGE_MARGIN = 26;
     private final PcbFootprintRegistry footprintRegistry;
+    private final int layoutAlgorithmVersion;
 
     SeededPcbLayoutGenerator() {
-        this(StandardPcbFootprintProviders.createRegistry());
+        this(StandardPcbFootprintProviders.createRegistry(), CURRENT_VERSION);
+    }
+
+    SeededPcbLayoutGenerator(int layoutAlgorithmVersion) {
+        this(StandardPcbFootprintProviders.createRegistry(), layoutAlgorithmVersion);
     }
 
     SeededPcbLayoutGenerator(PcbFootprintRegistry footprintRegistry) {
+        this(footprintRegistry, CURRENT_VERSION);
+    }
+
+    SeededPcbLayoutGenerator(PcbFootprintRegistry footprintRegistry,
+            int layoutAlgorithmVersion) {
         if (footprintRegistry == null)
             throw new IllegalArgumentException("Missing PCB footprint registry");
+        if (layoutAlgorithmVersion != LEGACY_VERSION &&
+                layoutAlgorithmVersion != CURRENT_VERSION)
+            throw new IllegalArgumentException("Unsupported PCB layout algorithm version: " +
+                layoutAlgorithmVersion);
         this.footprintRegistry = footprintRegistry;
+        this.layoutAlgorithmVersion = layoutAlgorithmVersion;
     }
+
+    int getLayoutAlgorithmVersion() { return layoutAlgorithmVersion; }
 
     PcbBoardLayout generate(TroubleshootBoard board, long seed) {
         if (board == null)
@@ -68,7 +88,7 @@ class SeededPcbLayoutGenerator {
             int variationMode) {
         Rectangle outline = new Rectangle(WORKING_OUTLINE);
         PcbBoardLayout layout = new PcbBoardLayout(CANVAS_WIDTH, CANVAS_HEIGHT, outline,
-            new Rectangle(850, 125, 150, 255));
+            new Rectangle(850, 125, 150, 255), layoutAlgorithmVersion);
 
         TopologyPlacementGraph topology = new TopologyPlacementGraph(board);
         Vector<PcbFootprint> placed = placeTopology(board, topology, outline, random, variationMode);
@@ -156,30 +176,41 @@ class SeededPcbLayoutGenerator {
             Vector<PcbFootprint> placed, int variationMode) {
         PcbFootprint prototype = createFootprint(component, 0, 0,
             new Random(random.nextLong()), outline);
-        int targetX = outline.x + outline.width / 2 -
+        int fallbackX = outline.x + outline.width / 2 -
             prototype.getPlacement().getWidth() / 2;
-        int targetY = outline.y + outline.height / 2 -
+        int fallbackY = outline.y + outline.height / 2 -
             prototype.getPlacement().getHeight() / 2;
-        double targetWeight = 0;
-        for (TopologyPlacementGraph.PadLink link : topology.getLinksFor(component.getId())) {
-            PcbFootprint other = findFootprint(placed, link.getOtherComponentId());
-            if (other == null)
-                continue;
-            PcbPadPlacement sourcePad = prototype.getPad(link.getPadId());
-            PcbPadPlacement otherPad = other.getPad(link.getOtherPadId());
-            targetX += (int) Math.round((otherPad.getX() - sourcePad.getX()) * link.getWeight());
-            targetY += (int) Math.round((otherPad.getY() - sourcePad.getY()) * link.getWeight());
-            targetWeight += link.getWeight();
-        }
-        if (targetWeight > 0) {
-            targetX = (int) Math.round((targetX -
-                (outline.x + outline.width / 2 - prototype.getPlacement().getWidth() / 2)) /
-                targetWeight + (outline.x + outline.width / 2 -
-                    prototype.getPlacement().getWidth() / 2));
-            targetY = (int) Math.round((targetY -
-                (outline.y + outline.height / 2 - prototype.getPlacement().getHeight() / 2)) /
-                targetWeight + (outline.y + outline.height / 2 -
-                    prototype.getPlacement().getHeight() / 2));
+        int targetX;
+        int targetY;
+        Vector<TopologyPlacementGraph.PadLink> links = topology.getLinksFor(component.getId());
+        if (layoutAlgorithmVersion == CURRENT_VERSION) {
+            Point target = weightedConnectedTarget(prototype, placed, links,
+                fallbackX, fallbackY);
+            targetX = target.x;
+            targetY = target.y;
+        } else {
+            // Preserve the legacy seeded placement arithmetic for replay.  The
+            // corrected path above deliberately starts its weighted accumulator
+            // at zero, while this path retains the historical center offset.
+            targetX = fallbackX;
+            targetY = fallbackY;
+            double targetWeight = 0;
+            for (TopologyPlacementGraph.PadLink link : links) {
+                PcbFootprint other = findFootprint(placed, link.getOtherComponentId());
+                if (other == null)
+                    continue;
+                PcbPadPlacement sourcePad = prototype.getPad(link.getPadId());
+                PcbPadPlacement otherPad = other.getPad(link.getOtherPadId());
+                targetX += (int) Math.round((otherPad.getX() - sourcePad.getX()) * link.getWeight());
+                targetY += (int) Math.round((otherPad.getY() - sourcePad.getY()) * link.getWeight());
+                targetWeight += link.getWeight();
+            }
+            if (targetWeight > 0) {
+                targetX = (int) Math.round((targetX - fallbackX) /
+                    targetWeight + fallbackX);
+                targetY = (int) Math.round((targetY - fallbackY) /
+                    targetWeight + fallbackY);
+            }
         }
         targetX += random.nextInt(31) - 15;
         targetY += random.nextInt(31) - 15;
@@ -227,6 +258,82 @@ class SeededPcbLayoutGenerator {
         if (best == null)
             throw new IllegalStateException("Unable to place board component: " + component.getId());
         return best;
+    }
+
+    /**
+     * Calculates an unplaced component origin from already placed neighbors.
+     *
+     * <p>The prototype's pad coordinates are package-local (the prototype is
+     * created at 0,0), while each neighbor pad is already in board/world
+     * coordinates.  Therefore each contribution is {@code worldPad -
+     * prototypeLocalPad}; the board-center fallback is used only when no
+     * positive-weight neighbor is available.  This helper is pure so that the
+     * coordinate contract can be tested without consuming placement randomness
+     * or running the candidate-offset search.</p>
+     */
+    static Point weightedConnectedTarget(PcbFootprint prototype,
+            Vector<PcbFootprint> placed, Vector<TopologyPlacementGraph.PadLink> links,
+            int fallbackX, int fallbackY) {
+        if (prototype == null || placed == null || links == null)
+            throw new IllegalArgumentException("Missing PCB placement target inputs");
+        double weightedX = 0;
+        double weightedY = 0;
+        double totalWeight = 0;
+        boolean connected = false;
+        for (TopologyPlacementGraph.PadLink link : links) {
+            if (link == null)
+                throw new IllegalArgumentException("Missing PCB topology placement link");
+            double weight = link.getWeight();
+            if (Double.isNaN(weight) || Double.isInfinite(weight) || weight < 0)
+                throw new IllegalArgumentException("Invalid PCB topology placement weight: " +
+                    weight);
+            if (weight == 0)
+                continue;
+            PcbFootprint other = findPlacedFootprint(placed, link.getOtherComponentId());
+            if (other == null)
+                continue;
+            PcbPadPlacement sourcePad = prototype.getPad(link.getPadId());
+            PcbPadPlacement otherPad = other.getPad(link.getOtherPadId());
+            long deltaX = (long) otherPad.getX() - sourcePad.getX();
+            long deltaY = (long) otherPad.getY() - sourcePad.getY();
+            double contributionX = deltaX * weight;
+            double contributionY = deltaY * weight;
+            if (Double.isNaN(contributionX) || Double.isInfinite(contributionX) ||
+                    Double.isNaN(contributionY) || Double.isInfinite(contributionY))
+                throw new IllegalArgumentException("PCB placement target arithmetic overflow");
+            weightedX += contributionX;
+            weightedY += contributionY;
+            totalWeight += weight;
+            if (Double.isNaN(weightedX) || Double.isInfinite(weightedX) ||
+                    Double.isNaN(weightedY) || Double.isInfinite(weightedY) ||
+                    Double.isNaN(totalWeight) || Double.isInfinite(totalWeight))
+                throw new IllegalArgumentException("PCB placement target arithmetic overflow");
+            connected = true;
+        }
+        if (!connected)
+            return new Point(fallbackX, fallbackY);
+        return new Point(checkedRoundedTarget(weightedX / totalWeight),
+            checkedRoundedTarget(weightedY / totalWeight));
+    }
+
+    private static int checkedRoundedTarget(double value) {
+        if (Double.isNaN(value) || Double.isInfinite(value))
+            throw new IllegalArgumentException("PCB placement target is not finite");
+        long rounded = Math.round(value);
+        if (rounded < Integer.MIN_VALUE || rounded > Integer.MAX_VALUE)
+            throw new IllegalArgumentException("PCB placement target is out of range: " + value);
+        return (int) rounded;
+    }
+
+    private static PcbFootprint findPlacedFootprint(Vector<PcbFootprint> footprints,
+            String componentId) {
+        for (PcbFootprint footprint : footprints) {
+            if (footprint == null)
+                throw new IllegalArgumentException("Missing placed PCB footprint");
+            if (footprint.getPlacement().getComponentId().equals(componentId))
+                return footprint;
+        }
+        return null;
     }
 
     private boolean fits(PcbFootprint candidate, Rectangle outline, Vector<PcbFootprint> placed) {

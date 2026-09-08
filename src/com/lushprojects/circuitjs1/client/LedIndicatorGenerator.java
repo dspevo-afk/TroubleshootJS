@@ -5,12 +5,17 @@ import java.util.Vector;
 
 class LedIndicatorGenerator {
     static final String DIRECT_SERIES_VARIANT = "DIRECT_SERIES";
-    private static final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR =
-        new SeededPcbLayoutGenerator();
+    private final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR;
     private static final double LED_FORWARD_VOLTAGE = 2.1;
     private static final double TARGET_CURRENT = .010;
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
     private static final double[] RESISTOR_VALUES = { 330, 680, 1000 };
+
+    LedIndicatorGenerator() { this(SeededPcbLayoutGenerator.CURRENT_VERSION); }
+
+    LedIndicatorGenerator(int layoutAlgorithmVersion) {
+        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator(layoutAlgorithmVersion);
+    }
 
     GeneratedBoardInstance generate(long seed) {
         return generate(seed, null);

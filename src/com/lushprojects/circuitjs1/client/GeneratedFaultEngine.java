@@ -140,30 +140,42 @@ class GeneratedFaultEngine {
     }
 
     static GeneratedFaultCandidate select(long seed, Vector<GeneratedFaultCandidate> candidates) {
-        Vector<GeneratedFaultCandidate> compatible = new Vector<GeneratedFaultCandidate>();
-        for (GeneratedFaultCandidate candidate : candidates)
-            if (candidate != null && candidate.isCompatible()) {
-                GeneratedFaultServiceabilityAdmission.validateCandidate(candidate);
-                compatible.add(candidate);
-            }
-        if (compatible.isEmpty())
+        Vector<GeneratedFaultCandidate> admitted =
+            GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(candidates);
+        if (admitted.isEmpty())
             throw new IllegalStateException("No serviceable generated fault candidates");
-        int index = (int) (seed % compatible.size());
+        int index = (int) (seed % admitted.size());
         if (index < 0)
-            index += compatible.size();
-        return compatible.elementAt(index);
+            index += admitted.size();
+        GeneratedFaultCandidate selected = admitted.elementAt(index);
+        GeneratedFaultServiceabilityAdmission.validateCandidate(selected);
+        return selected;
     }
 
     static GeneratedFaultCandidate select(GeneratedFaultType requiredType,
             Vector<GeneratedFaultCandidate> candidates) {
-        for (GeneratedFaultCandidate candidate : candidates)
-            if (candidate != null && candidate.isCompatible() &&
-                candidate.getFault().getType() == requiredType) {
+        for (GeneratedFaultCandidate candidate :
+                GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(candidates))
+            if (candidate.getFault().getType() == requiredType) {
                 GeneratedFaultServiceabilityAdmission.validateCandidate(candidate);
                 return candidate;
             }
         throw new IllegalStateException("No compatible generated fault candidate for type: " +
             requiredType);
+    }
+
+    /** Selects a normal candidate by its stable semantic hypothesis identity. */
+    static GeneratedFaultCandidate selectHypothesis(String hypothesisKey,
+            Vector<GeneratedFaultCandidate> candidates) {
+        if (hypothesisKey == null || hypothesisKey.length() == 0)
+            throw new IllegalArgumentException("Missing generated fault hypothesis key");
+        for (GeneratedFaultCandidate candidate :
+                GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(candidates))
+            if (hypothesisKey.equals(candidate.getHypothesisKey())) {
+                GeneratedFaultServiceabilityAdmission.validateCandidate(candidate);
+                return candidate;
+            }
+        throw new IllegalStateException("No admitted generated fault hypothesis: " + hypothesisKey);
     }
 
     /** Explicit developer-only selection, including intentionally unadmitted effects. */

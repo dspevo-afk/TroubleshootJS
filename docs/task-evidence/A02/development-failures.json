@@ -1,0 +1,97 @@
+{
+  "status": "RETAINED; superseded only by the explicitly named successful gates",
+  "failures": [
+    {
+      "phase": "native harness",
+      "operation": "initial all-client compilation",
+      "result": "FAIL",
+      "reason": "Pre-existing Task35 PhysicalSpecificationDeveloperVerifier generic reference comparison rejected by javac8",
+      "resolution": "Exclude only unrelated verifier with throwing stub; full real GWT production build passed"
+    },
+    {
+      "phase": "native harness",
+      "operation": "geometry Java7 compilation",
+      "result": "FAIL",
+      "reason": "Anonymous-class captured locals required final",
+      "resolution": "Locals made final; final JDK8 source7 Geometry66 PASS"
+    },
+    {
+      "phase": "integration",
+      "operation": "native compilation",
+      "result": "FAIL",
+      "reason": "Root A02 verifier temporarily called private Task41 settleReady",
+      "resolution": "Use existing GeneratedRuntimeDeveloperSettlement; final compile/build PASS"
+    },
+    {
+      "phase": "native fixture",
+      "operation": "actual generator regeneration",
+      "result": "FAIL",
+      "reason": "CircuitElm.drag lacked simulator grid owner",
+      "resolution": "Initialize CirSim/grid context; production generators remain actual source"
+    },
+    {
+      "phase": "native fixture",
+      "operation": "test-only regeneration adapter",
+      "result": "FAIL",
+      "reason": "Installed runtime capability validation called before renderer installation",
+      "resolution": "Remove added test-only production adapter; native test invokes actual private Route; installed validation separately passed in browser"
+    },
+    {
+      "phase": "process launcher",
+      "operation": "default shell and file-handle build launch",
+      "result": "FAIL",
+      "exitHex": "0xC0000142",
+      "output": "none; process initialization failure",
+      "resolution": "Hidden pipe-based launcher executes same repository scripts, JDK and ownership helpers; final suite/build PASS"
+    },
+    {
+      "phase": "Task41 entry",
+      "operation": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyTask41=true",
+      "result": "FAIL",
+      "reason": "Diagnostic plan has no rendered workbench",
+      "resolution": "Ordinary workbench entry without tsjDebug passed14 routes/128 samples"
+    },
+    {
+      "phase": "Task41 receipt read",
+      "operation": "read-only DOM result retrieval during synchronous corpus",
+      "result": "FAIL",
+      "reason": "CDP operation exceeded deadline before dispatch",
+      "resolution": "Completed receipt retrieved after corpus; PASS:task41"
+    },
+    {
+      "phase": "baseline cleanup",
+      "operation": "optional expected-record comparison for relative preview command",
+      "result": "FAIL",
+      "reason": "Relative script command comparison did not establish identity",
+      "resolution": "Exact original command/executable/parent/start independently revalidated, then exact process helper stopped only owned preview and verified listener absence"
+    },
+    {
+      "phase": "review delta invocation",
+      "operation": "focused native command with -Suite",
+      "result": "FAIL",
+      "reason": "Harness parameter is -Contract; no tests ran.",
+      "resolution": "Corrected -Contract All; completed exit0."
+    },
+    {
+      "phase": "review delta live entry",
+      "operation": "NPN seed2 and seed0 with explicit A02 flag",
+      "result": "NOT RUN",
+      "reason": "One-shot post-verification trigger checked runtime settlement before pending analysis drained; no terminal receipt.",
+      "resolution": "A02-only trigger now uses the existing bounded settlement helper before verifying; fresh build/runtime results retained separately."
+    },
+    {
+      "phase": "review delta Browser receipt retrieval",
+      "operation": "read-only DOM receipts during diode/Task41 synchronous proof",
+      "result": "FAIL",
+      "reason": "Page.getFrameTree or pre-dispatch CDP deadline exceeded while solver corpus ran.",
+      "resolution": "No route rerun; completed terminal receipts read after execution; final diode and restored Task41 PASS."
+    },
+    {
+      "phase": "review delta cleanup",
+      "operation": "first final preview identity check",
+      "result": "FAIL",
+      "reason": "JSON numeric conversion rounded 64-bit start ticks in the ad hoc cleanup literal; exact identity check correctly refused termination.",
+      "resolution": "Compared original retained raw decimal ticks with fresh string-valued inspection; all command/executable/parent/start fields matched; exact helper termination and listener absence PASS."
+    }
+  ]
+}

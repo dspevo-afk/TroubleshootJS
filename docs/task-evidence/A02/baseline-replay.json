@@ -1,0 +1,2145 @@
+{
+  "protocol": "TSJ-A02-BASELINE-REPLAY-1",
+  "baselineSha": "1eff2278ccd53181951c19d2965f0b32d9f0a126",
+  "sourceDigest": "0cf569e9b6cd4ac99f16180e7a891eb7186c8355f74018fc78df258e86f7eba0",
+  "executionDigest": "2d37950397cf9b47728b152193e3d8eca51a3a92e44aa234ce4ecfc41f6d7605",
+  "entry": "led/seed3",
+  "collection": "actual in-app Browser; compiled Task48 and Task49 verifiers",
+  "results": [
+    {
+      "task": 48,
+      "terminal": "PASS:task48",
+      "protocol": "TSJ-TASK48-1",
+      "status": "PASS",
+      "assertions": 755,
+      "totalCases": 8,
+      "originalOwnerRestored": true,
+      "candidateCleanup": "PASS",
+      "cases": [
+        {
+          "seed": "0",
+          "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=0",
+          "faultDecision": "load-rload-open",
+          "normalAdmission": {
+            "status": "EXECUTED",
+            "routes": [
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/driver/component/RG",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": 4.149307359666878,
+                    "tolerance": 0.08298614719333756
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398876312,
+                    "tolerance": 0.09999528797752624
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 4.999764398878182,
+                    "tolerance": 0.09999528797756364
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": 4.149307358712335,
+                    "tolerance": 0.0829861471742467
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": 4.149307358681859,
+                    "tolerance": 0.08298614717363717
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398874362,
+                    "tolerance": 0.09999528797748725
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 4.999764398875671,
+                    "tolerance": 0.09999528797751342
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": 4.149307358886924,
+                    "tolerance": 0.08298614717773849
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 330,
+                    "tolerance": 6.6000000000000005
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              },
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/load/component/RLOAD",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": -1.7324419310257667e-47,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 9.63633391106983e-22,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 8.83852839985241e-26,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": -1.0388137033658859e-155,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": -6.835910667191239e-163,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 8.102839905109882e-30,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 1.4898399633404164e-33,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": -2.3708517646966863e-29,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 1000.0000000000005,
+                    "tolerance": 20.00000000000001
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              }
+            ]
+          },
+          "repairExecuted": true,
+          "physicalStatus": "PASS"
+        },
+        {
+          "seed": "1",
+          "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=1",
+          "faultDecision": "driver-rg-open",
+          "normalAdmission": {
+            "status": "EXECUTED",
+            "routes": [
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/driver/component/RG",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": 4.149307359666878,
+                    "tolerance": 0.08298614719333756
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398876312,
+                    "tolerance": 0.09999528797752624
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 4.999764398878182,
+                    "tolerance": 0.09999528797756364
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": 4.149307358712335,
+                    "tolerance": 0.0829861471742467
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": 4.149307358681859,
+                    "tolerance": 0.08298614717363717
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398874362,
+                    "tolerance": 0.09999528797748725
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 4.999764398875671,
+                    "tolerance": 0.09999528797751342
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": 4.149307358886924,
+                    "tolerance": 0.08298614717773849
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 330,
+                    "tolerance": 6.6000000000000005
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              },
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/load/component/RLOAD",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": -1.7324419310257667e-47,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 9.63633391106983e-22,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 8.83852839985241e-26,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": -1.0388137033658859e-155,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": -6.835910667191239e-163,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 8.102839905109882e-30,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 1.4898399633404164e-33,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": -2.3708517646966863e-29,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 1000.0000000000005,
+                    "tolerance": 20.00000000000001
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              }
+            ]
+          },
+          "repairExecuted": true,
+          "physicalStatus": "PASS"
+        },
+        {
+          "seed": "2",
+          "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@2\ngeometry=3\nroot-seed=2",
+          "faultDecision": "load-rload-open",
+          "normalAdmission": {
+            "status": "EXECUTED",
+            "routes": [
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/driver/component/RG",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": 4.149307359666878,
+                    "tolerance": 0.08298614719333756
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398876312,
+                    "tolerance": 0.09999528797752624
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 4.999764398878182,
+                    "tolerance": 0.09999528797756364
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": 4.149307358712335,
+                    "tolerance": 0.0829861471742467
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": 4.149307358681859,
+                    "tolerance": 0.08298614717363717
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398874362,
+                    "tolerance": 0.09999528797748725
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 4.999764398875671,
+                    "tolerance": 0.09999528797751342
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": 4.149307358886924,
+                    "tolerance": 0.08298614717773849
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 330,
+                    "tolerance": 6.6000000000000005
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              },
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/load/component/RLOAD",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": -1.7324419310257667e-47,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 9.63633391106983e-22,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 8.83852839985241e-26,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": -1.0388137033658859e-155,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": -6.835910667191239e-163,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 8.102839905109882e-30,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 1.4898399633404164e-33,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": -2.3708517646966863e-29,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 1000.0000000000005,
+                    "tolerance": 20.00000000000001
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              }
+            ]
+          },
+          "repairExecuted": false,
+          "physicalStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "task": 49,
+      "terminal": "PASS:task49",
+      "protocol": "TSJ-TASK49-1",
+      "status": "PASS",
+      "assertions": 1053,
+      "totalCases": 8,
+      "originalOwnerRestored": true,
+      "candidateCleanup": "PASS",
+      "cases": [
+        {
+          "seed": "0",
+          "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@3\ngeometry=3\nroot-seed=0",
+          "faultDecision": "load-rload-open",
+          "catalog": "R_CATALOG_330",
+          "resistanceOhms": 330,
+          "normalAdmission": {
+            "status": "EXECUTED",
+            "routes": [
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/driver/component/RG",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": 4.149307359666878,
+                    "tolerance": 0.08298614719333756
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398876312,
+                    "tolerance": 0.09999528797752624
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 4.999764398878182,
+                    "tolerance": 0.09999528797756364
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": 4.149307358712335,
+                    "tolerance": 0.0829861471742467
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": 4.149307358681859,
+                    "tolerance": 0.08298614717363717
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398874362,
+                    "tolerance": 0.09999528797748725
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 4.999764398875671,
+                    "tolerance": 0.09999528797751342
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": 4.149307358886924,
+                    "tolerance": 0.08298614717773849
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 330,
+                    "tolerance": 6.6000000000000005
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              },
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/load/component/RLOAD",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": -1.7324419310257667e-47,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 9.63633391106983e-22,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 8.83852839985241e-26,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": -1.0388137033658859e-155,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": -6.835910667191239e-163,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 8.102839905109882e-30,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 1.4898399633404164e-33,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": -2.3708517646966863e-29,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 1000.0000000000005,
+                    "tolerance": 20.00000000000001
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              }
+            ]
+          },
+          "repairExecuted": true,
+          "physicalStatus": "PASS"
+        },
+        {
+          "seed": "1",
+          "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@3\ngeometry=3\nroot-seed=1",
+          "faultDecision": "driver-rg-open",
+          "catalog": "R_CATALOG_330",
+          "resistanceOhms": 330,
+          "normalAdmission": {
+            "status": "EXECUTED",
+            "routes": [
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/driver/component/RG",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": 4.149307359666878,
+                    "tolerance": 0.08298614719333756
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398876312,
+                    "tolerance": 0.09999528797752624
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 4.999764398878182,
+                    "tolerance": 0.09999528797756364
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": 4.149307358712335,
+                    "tolerance": 0.0829861471742467
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": 4.149307358681859,
+                    "tolerance": 0.08298614717363717
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 4.999764398874362,
+                    "tolerance": 0.09999528797748725
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 4.999764398875671,
+                    "tolerance": 0.09999528797751342
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": 4.149307358886924,
+                    "tolerance": 0.08298614717773849
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 330,
+                    "tolerance": 6.6000000000000005
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              },
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/load/component/RLOAD",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": -1.7324419310257667e-47,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 9.63633391106983e-22,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 8.83852839985241e-26,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": -1.0388137033658859e-155,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": -6.835910667191239e-163,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 8.102839905109882e-30,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 1.4898399633404164e-33,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": -2.3708517646966863e-29,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 1000.0000000000005,
+                    "tolerance": 20.00000000000001
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              }
+            ]
+          },
+          "repairExecuted": true,
+          "physicalStatus": "PASS"
+        },
+        {
+          "seed": "2",
+          "canonical": "tsj-challenge/1\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=controlled-indicator@1\ndifficulty-profile=controlled-indicator@1\ngenerator=bounded-assembler@3\ngeometry=3\nroot-seed=2",
+          "faultDecision": "load-rload-open",
+          "catalog": "R_CATALOG_270",
+          "resistanceOhms": 270,
+          "normalAdmission": {
+            "status": "EXECUTED",
+            "routes": [
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/driver/component/RG",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": 4.149344403540368,
+                    "tolerance": 0.08298688807080737
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 4.999807234173147,
+                    "tolerance": 0.09999614468346295
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 4.999807234170881,
+                    "tolerance": 0.09999614468341761
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": 4.14934440461458,
+                    "tolerance": 0.0829868880922916
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": 4.149344404783423,
+                    "tolerance": 0.08298688809566845
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 4.999807234171536,
+                    "tolerance": 0.09999614468343072
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 4.99980723417271,
+                    "tolerance": 0.0999961446834542
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": 4.149344404026814,
+                    "tolerance": 0.08298688808053628
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 270,
+                    "tolerance": 5.4
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              },
+              {
+                "route": "COMPOSED_CONTROLLED_INDICATOR/NMOS_LED_LOW_SIDE/tsj-block-v1/controlled-indicator@1/load/component/RLOAD",
+                "measuredDepth": 9,
+                "samples": [
+                  {
+                    "id": "CONTROL_HIGH_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RG_2",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_1",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_G",
+                    "value": 4.950004950004949,
+                    "tolerance": 0.09900009900009898
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_D",
+                    "value": -1.7324419310257667e-47,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_RLOAD_2",
+                    "value": 2.0919567962485495e-22,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_A",
+                    "value": 1.9187607782734377e-26,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_HIGH_DC_LOAD_LED1_K",
+                    "value": -1.0388137033658859e-155,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_POWER_ADAPTER_J1_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_CONTROL_ADAPTER_J2_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RG_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_1",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_RPD_2",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_G",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_D",
+                    "value": -6.835910667191239e-163,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_DRIVER_Q1_S",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_1",
+                    "value": 5,
+                    "tolerance": 0.1
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_RLOAD_2",
+                    "value": 1.7590497760705644e-30,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_A",
+                    "value": 3.2343000489705306e-34,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "CONTROL_LOW_DC_LOAD_LED1_K",
+                    "value": -5.146894563263388e-30,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_DRIVER_RG",
+                    "value": 1000.0000000000005,
+                    "tolerance": 20.00000000000001
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_DRIVER_RG",
+                    "value": 0,
+                    "tolerance": 0.01
+                  },
+                  {
+                    "id": "OHM_CONTROLLED_LOAD_RLOAD",
+                    "value": 9999999000,
+                    "tolerance": 199999980
+                  },
+                  {
+                    "id": "CONTINUITY_CONTROLLED_LOAD_RLOAD",
+                    "value": 0,
+                    "tolerance": 0.01
+                  }
+                ],
+                "physicalRepair": true,
+                "customerRetest": true,
+                "stateRestored": true
+              }
+            ]
+          },
+          "repairExecuted": true,
+          "physicalStatus": "PASS"
+        }
+      ]
+    }
+  ],
+  "cleanup": {
+    "tabs": "PASS: closed",
+    "preview": "PASS: exact command, executable, parent, start-time revalidation then exact-process termination; listener absent",
+    "initialStopFailure": "record matcher rejected relative preview script path; no process terminated; literal identity revalidated before bounded termination"
+  }
+}

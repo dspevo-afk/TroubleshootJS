@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "candidate": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "c54876b0559bac5d06713e7ce7424acfb3d8feec428ec716321086563daedda7",
+    "ScriptDigest": "8c4e4bbf4939cbc3c9bd32fb7be0bb57b98e35fe7291ef27498aef62360a966c",
+    "WebDigest": "e36cb851b0a4d85085e572d721a9f5d64919af88e4a86ef9fca41ce64ea44f1b",
+    "Digest": "9592cd56c77db015231cc58cdbbf0f65c52f034c3a80216523a73cdfd4673029",
+    "FileCount": 1300
+  },
+  "forcedFailure": {
+    "terminal": "FAIL:a02-explicit-failure-canary",
+    "hasPassingReport": false
+  },
+  "debugOff": {
+    "terminalPresent": false,
+    "hypothesisReportPresent": false
+  }
+}

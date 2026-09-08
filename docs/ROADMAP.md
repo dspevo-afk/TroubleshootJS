@@ -115,7 +115,7 @@ Three retained boundaries preserve the accepted Task49 scope:
 
 Future review of a changed descriptor must still reject silently reinterpreting an old descriptor, independently hardcoding the selected value elsewhere, or accepting formula-only behavior. Those are boundaries on future changes; the larger roadmap is not a reason to reopen the accepted Task49 implementation.
 
-**Retained eligibility follow-up:** The canonical admission rule is `candidate != null && candidate.isCompatible() && serviceability != null && serviceability.isAdmissible()`, while controlled candidate enumeration still principally filters `candidate != null && candidate.isCompatible() && RESISTOR_OPEN`. The current two controlled candidates are admitted and serviceable, so the accepted Task49 result is not reopened. A01 establishes the reproducible reference/measurement baseline; A02 owns the canonical predicate correction and the associated known seams.
+**Eligibility follow-up resolved in A02:** Canonical admission now drives selection, counts and live proof enumeration, with explicit hypothesis identity and fail-closed population checks. The two accepted controlled candidates remain admitted and serviceable; fresh Task48/49 full-report comparisons are unchanged, so their accepted meanings are preserved. The prior compatibility/type-only mismatch remains documented in the A02 baseline evidence; A01 is not reopened.
 
 Retained limits are one load-block value policy, two admitted generated values and one truthful axial resistor package; no manufacturing certification, arbitrary part search, support-block or Task50 implementation, PCB scaling improvement, diagnostic eligibility redesign, bend-count correction or connected-placement correction. The [accepted Task49 evidence packet](task-evidence/task-49/README.md), its [independent review](task-evidence/task-49/review.json) and the Task49 report remain the qualification source. N00 imports this exact SHA, contract, evidence and limits without inventing another approval artifact or reopening the accepted implementation.
 
@@ -729,7 +729,7 @@ Condition-related symptoms can be difficult without identifying the exact failed
 
 The identifiers below replace only future work after accepted Task49 and N00. They are dependency nodes, not permission to launch every worker at once. A card is a bounded roadmap contract, not an implementation prompt. Its authorized implementation may split into reviewed sub-checkpoints when the concrete design needs them; record the split without weakening its parent acceptance claim.
 
-**Status after N00 adoption:** T49 is accepted at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`; N00 document/lineage adoption is COMPLETE and Edition 2.1 is adopted. A01 is now IMPLEMENTED — ACCEPTED; A02 and every later card remain UNSTARTED. Repository publication follows the required final status-delta review, final document/staged checks and normal commit/push handoff. No `[x]` here means “expected to pass.” T48 remains the accepted historical prerequisite of T49. A required evaluation may legitimately choose not to adopt a sophisticated algorithm; that is a completed decision, not a claim that the declined algorithm was implemented.
+**Status after N00 adoption:** T49 is accepted at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`; N00 document/lineage adoption is COMPLETE and Edition 2.1 is adopted. A01 and A02 are now IMPLEMENTED — ACCEPTED; A03 and every later card remain UNSTARTED. Repository publication follows the required final status-delta review, final document/staged checks and normal commit/push handoff. No `[x]` here means “expected to pass.” T48 remains the accepted historical prerequisite of T49. A required evaluation may legitimately choose not to adopt a sophisticated algorithm; that is a completed decision, not a claim that the declined algorithm was implemented.
 
 **Conditional use rule:** A content/profile/release that consumes an optional capability adds that capability's accepted implementation as a hard dependency. Otherwise, its decision/skip does not block unrelated work. Every qualification gate tests the actual current integration, including new provider state in saves, measurements and retest. An earlier PASS never automatically qualifies later consumers.
 
@@ -911,7 +911,7 @@ independent review passed; no A02 work is started by this implementation.
 <a id="m-a02"></a>
 ### A02 · Close known predicate and geometry correctness seams
 
-**Type / status:** Required correctness gate; UNSTARTED.
+**Type / status:** Required correctness gate; IMPLEMENTED — ACCEPTED.
 
 **Purpose and reason:** Fix the small known inconsistencies before trusting expanded metrics or fault populations: audit F3, F5 and F6.
 
@@ -936,6 +936,17 @@ independent review passed; no A02 work is started by this implementation.
 **Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
 
 **Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
+
+**A02 acceptance evidence (2026-09-08):** Repository-native before/after
+reproductions and focused Candidate/Geometry66/Replay112 checks PASS. One
+canonical admitted population and explicit same-owner hypothesis keys now feed
+selection/count/proof; bend counting uses direction; connected placement applies
+world translation once. Final JDK8/GWT2.7 five-permutation build, live NPN/LED/
+diode/parallel proofs, restored 14-route Task41 corpus and 755/1053-assertion
+Task48/49 replay checks PASS. The legacy full reports match every baseline field.
+Independent Luna MAX review and targeted repair review PASS. See
+[A02 evidence](task-evidence/A02/README.md) for identities, retained failures,
+limits, dependency-audited evidence reuse and cleanup. A03 remains UNSTARTED.
 
 **Direct later dependents:** [A03](#m-a03), [A09](#m-a09), [P01](#m-p01).
 
@@ -3246,10 +3257,10 @@ These findings retain the confidence limits of the original audit. Rechecking an
 |---|---|---|---|
 | **F1: device construction concentrated in the bounded assembler** | HIGH, high-confidence code finding. Fresh source still allocates the controlled circuit and knows its parts/constants. [R02; I2 S7–S9] | Task49 supplies resolved values; **A04/A05/A11** replace ordinary device-specific construction and prove variant-local extension. Required before more content relies on this pattern. | Migrate two real implementations and add an ordinary variant without a new generic branch. Avoid a universal DSL or provider-owned nested simulation. |
 | **F2: production admission calls family-specific developer orchestration** | HIGH, proven call linkage, not measured large-board cost. `validateLive` still calls `Task41DeveloperVerifier`. [R09] | **A09/D01** own production hypothesis/plan execution and scale proof. Keep developer tests as independent consumers. | Provider-owned plans, parity with the serial reference, failure isolation and explicit population accounting. Merely renaming the verifier is not closure. |
-| **F3: candidate eligibility and proof enumeration disagree** | HIGH before extension, code-supported latent mismatch; current two-owner pool does not demonstrate failure. Controlled proof filters compatibility/type and deduplicates by target, not the full admitted predicate. [R10; I2 S20/E2] | **A02**, before new fault populations; A09 retains complete hypothesis identity. | Compatible-but-unserviceable negative, multiple faults on one owner, count/selection/proof consistency. Do not reduce the count to hide mismatches. |
+| **F3: candidate eligibility and proof enumeration disagree — resolved in A02** | HIGH before extension, code-supported latent mismatch; current two-owner pool does not demonstrate failure. Controlled proof filters compatibility/type and deduplicates by target, not the full admitted predicate. [R10; I2 S20/E2] | **A02**, before new fault populations; A09 retains complete hypothesis identity. | Compatible-but-unserviceable negative, multiple faults on one owner, count/selection/proof consistency. Do not reduce the count to hide mismatches. |
 | **F4: fixed generic physical capacity** | HIGH, proven inequality for one package mixture, not a universal eighteen-part limit. Current outline remains 720 × 400. [R03; I2 E2] | **A01/P03/P09**. Dynamic bounded sizing and hierarchical placement are now required foundations because the product target changed. | Preserve baseline failures, measure mixed packages and route demand, qualify actual larger envelopes. Larger outlines must not merely transfer the problem into unreadable rendering. |
-| **F5: bend-count semantics** | MEDIUM, prior extracted helper execution; whole-player failure not demonstrated. Unequal collinear segment lengths count as bends. [I2 S13/E1] | **A02**, before new physical corpus scores are trusted. | Direction-change and subdivision-invariance tests, appropriate reversal/self-intersection handling, affected version/replay qualification. |
-| **F6: connected-placement extra center offset** | MEDIUM, prior arithmetic/translation reproduction; actual rejection impact unmeasured. [I2 S11/E1] | **A02/P01**, before hierarchical placement reuses the calculation. | Repository-native translated-world test and a coherent local/global coordinate contract. Preserve before/after evidence rather than changing several heuristics at once. |
+| **F5: bend-count semantics — resolved in A02** | MEDIUM, prior extracted helper execution; whole-player failure not demonstrated. Unequal collinear segment lengths count as bends. [I2 S13/E1] | **A02**, before new physical corpus scores are trusted. | Direction-change and subdivision-invariance tests, appropriate reversal/self-intersection handling, affected version/replay qualification. |
+| **F6: connected-placement extra center offset — resolved in A02** | MEDIUM, prior arithmetic/translation reproduction; actual rejection impact unmeasured. [I2 S11/E1] | **A02/P01**, before hierarchical placement reuses the calculation. | Repository-native translated-world test and a coherent local/global coordinate contract. Preserve before/after evidence rather than changing several heuristics at once. |
 | **F7: raw grid vertices and repeated segment-pair work** | MEDIUM, high-confidence mechanism; timings and practical limit unmeasured. [I2 S11/S13] | **P04/P08**, with A01 measurements. | Canonical contact-preserving paths, accurate unique-reuse metrics, independent broad-phase equivalence, measured cost. Simplification must not erase escape witnesses or repair loci. |
 | **F8: fit-only view and minimum visible sizes** | MEDIUM, code-derived interaction risk for larger boards; no measured hundred-part UI failure. [I2 S15] | **U01**, now a required foundation, not deferred polish. | One transform and coherent visible/hit/marker geometry, zoom/side access, ordinary operator trials. Do not solve it with oversized invisible targets. |
 | **F9: lexicographic merged-net representative** | MEDIUM, proven canonicalization mechanism. Unchanged local IDs remain stable, while a representative can change with a new alias. [I2 S9] | **A03/P02**, before general optional/repeated composition, cuts and persistence. | Stable device-bus identity or validated retained aliases; earlier lexical insertion test; no saved identity bound solely to a DSU root. |
@@ -3584,7 +3595,7 @@ This file is a replacement roadmap, not an `AGENTS.md`, `ARCHITECTURE.md` or tas
 
 Do not overwrite the task report with this document, mark the proposed classes as already implemented, force a branch merge or delete old worktrees. The current accepted baseline is the actual reviewed Task49 handoff at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`, not an imagined commit containing this roadmap. The pinned Task48 SHA remains the direct parent and historical source-read baseline. Publication of this adoption candidate still follows the final status-delta review, final document/staged checks and normal commit/push contract; its exact SHA, remote verification and notification outcome belong in the final handoff.
 
-**Immediate next boundary after N00 adoption:** A01 — Reference-board manifests and reproducible measurement harness — was separately authorized and is now IMPLEMENTED — ACCEPTED. A02 is the next unstarted boundary. No support-block, former Task50 or large-board implementation starts automatically because the roadmap is installed.
+**Immediate next boundary after N00 adoption:** A01 — Reference-board manifests and reproducible measurement harness — was separately authorized and is now IMPLEMENTED — ACCEPTED. A02 is now IMPLEMENTED — ACCEPTED; A03 is the next unstarted boundary. No support-block, former Task50 or large-board implementation starts automatically because the roadmap is installed.
 
 The standalone Markdown contains the active plan in full. Historical package references to the old audit, dependency/traceability manifest and document-check results are background provenance only; absent companions are not runtime dependencies or additional approval bureaucracy.
 

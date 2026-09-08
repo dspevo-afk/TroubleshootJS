@@ -1,6 +1,54 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A01 sequential timing correction COMPLETE — 2026-09-07
+## Current checkpoint - A02 IMPLEMENTED — ACCEPTED — 2026-09-08
+
+- **Scope/base:** F3 canonical admission and explicit hypothesis identity, F5
+  direction bends, F6 connected placement, and necessary replay dispatch only.
+  Accepted A01 base `1eff2278ccd53181951c19d2965f0b32d9f0a126`; branch
+  `codex/task43p-final-recovery`, same upstream on origin. Entry tree was clean.
+  A01/N00 remain closed; A03 and later work remain unstarted.
+- **Corrections:** Candidate.isAdmitted owns the predicate; shared admission
+  enumeration rejects duplicate semantic keys and preserves distinct same-owner
+  hypotheses. Proof regenerates and checks complete keys. Bent segments compare
+  signed direction with widened arithmetic and skip zero-length segments for
+  counting while geometry validation still rejects invalid routes. Connected
+  origin is the weighted world-pad minus local-pad target with center fallback
+  only when no neighbor exists. Ordinary seeded generation selects algorithm4;
+  legacy-leaf@1 and accepted Task48/49 retain algorithm3/package geometry3.
+- **Final candidate:** Source digest
+  `c54876b0559bac5d06713e7ce7424acfb3d8feec428ec716321086563daedda7`;
+  execution digest
+  `9592cd56c77db015231cc58cdbbf0f65c52f034c3a80216523a73cdfd4673029`.
+  Earlier candidate digests and failed attempts remain labeled in the
+  [A02 evidence packet](task-evidence/A02/README.md).
+- **Validation:** Final Candidate/Geometry66/Replay112 PASS; JDK8/GWT2.7 all
+  five permutations PASS (47.112s compile/1.069s link); live NPN/LED/diode/parallel
+  exact admission/replay/repair/retest/restoration PASS; restored Task41 corpus
+  14 historical seed/type routes/128 samples PASS; Task48/49 755/1053 assertions
+  PASS with every full-report field equal to accepted baseline. Final failure
+  and debug-off privacy canaries PASS. Affected pure challenge/block/assembly
+  contracts, standalone Task46 and actual visible player evidence remain valid
+  through the explicit review-delta dependency audit; screenshots are not
+  relabeled as newly captured. See the packet for exact commands and limits.
+- **Review:** Fresh read-only Luna MAX reviewer `/root/a02_independent_review`
+  (Banach) found unsorted NPN proof-key comparison and dropped historical seed
+  variants. Both were repaired, focused/native/live delta gates passed, and
+  the A02-only entry now drains pending analysis through the existing bounded
+  settlement helper. Targeted independent delta review PASS; the reviewer also
+  reran Candidate/Geometry66/Replay112 with cleanup PASS. Its sole nonblocking
+  observation is an unnecessary sort after corpus duplicate checking; no code
+  cleanup was added.
+- **Resources:** All owned Browser tabs closed; final preview PID527920/start
+  639244365842446523 was exactly revalidated and stopped; port8899 absence PASS.
+  All recorded native/build/preview processes absent; native scratch cleanup
+  PASS and earlier four owned OS-temp trees removed. No unresolved owned resource.
+  Pre-existing ignored tool/build directories are preserved.
+- **Publication/next:** Publication target is origin/codex/task43p-final-recovery.
+  The final handoff records exact committed/pushed SHA and notification outcome.
+  Implementation and evidence share one accepted candidate; no separate phase
+  is begun. A03 is the next eligible boundary and remains UNSTARTED.
+
+## Historical checkpoint - A01 sequential timing correction COMPLETE — 2026-09-07
 
 - **Scope/candidate:** The remaining A01 sequential aggregate-timing defect is
   corrected on top of published HEAD `4b1e6668ec03440210ee2617c92ea57fa8d7cb0b`

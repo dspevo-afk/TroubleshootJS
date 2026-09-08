@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
+import java.util.Collections;
 
 /** Focused developer proof for Task 41 diagnostic solvability and complexity. */
 final class Task41DeveloperVerifier {
@@ -17,6 +18,7 @@ final class Task41DeveloperVerifier {
         require(!original.isDeveloperOnlyFaultRoute(),
             "Task 41 normal verifier cannot start from a developer-only route");
         GeneratedDiagnosticSolvabilityAdmission.validate(sim, original);
+        lastEvidence = null;
         Task41SimulationSnapshot originalSnapshot = Task41SimulationSnapshot.capture(sim);
         originalSnapshot.beginProof(sim);
         GeneratedDiagnosticSolvabilityAdmission.beginInternalProof();
@@ -26,6 +28,15 @@ final class Task41DeveloperVerifier {
             Vector<Route> routes = normalRoutes();
             require(routes.size() == admittedNormalCorpusCount(),
                 "Task 41 route/candidate corpus mismatch: routes=" + routes.size());
+            Vector<String> normalHypothesisKeys = new Vector<String>();
+            for (Route route : routes) {
+                String proofCaseKey = route.familyId + "/" + route.seed + "/" + route.hypothesisKey;
+                require(route.hypothesisKey != null &&
+                        !normalHypothesisKeys.contains(proofCaseKey),
+                    "Task 41 normal route population has a missing or duplicate hypothesis key");
+                normalHypothesisKeys.add(proofCaseKey);
+            }
+            Collections.sort(normalHypothesisKeys);
             verifyOwnerDiversityClassification();
             Vector<GeneratedDiagnosticSolvabilityEvidence> evidence =
                 new Vector<GeneratedDiagnosticSolvabilityEvidence>();
@@ -66,8 +77,10 @@ final class Task41DeveloperVerifier {
                 for (Route routeInGroup : routes) {
                     if (!groupKey.equals(routeInGroup.familyId + "/" + routeInGroup.seed))
                         continue;
-                    int selectedIndex = findEvaluationIndex(evaluations, routeInGroup.type,
-                        routeInGroup.targetComponentId);
+                    int selectedIndex = routeInGroup.hypothesisKey == null ?
+                        findEvaluationIndex(evaluations, routeInGroup.type,
+                            routeInGroup.targetComponentId) :
+                        findEvaluationIndex(evaluations, routeInGroup.hypothesisKey);
                     CandidateEvaluation selected = evaluations.get(selectedIndex);
                     GeneratedDiagnosticSolvabilityEvidence routeEvidence =
                         withEquivalentRepairClass(selected.evidence,
@@ -119,7 +132,8 @@ final class Task41DeveloperVerifier {
                     appendUnique(executedIsolations, routeExecutedIsolations);
                     appendUnique(declaredTemporal, routeDeclaredTemporal);
                     appendUnique(executedTemporal, routeExecutedTemporal);
-                    String metric = routeEvidence.getRouteId() + "@" + routeEvidence.getSeed() +
+                    String metric = routeEvidence.getHypothesisKey() + "@" +
+                        routeEvidence.getRouteId() + "@" + routeEvidence.getSeed() +
                         "=" + routeEvidence.getAdmittedCandidateCount() + "/" +
                         routeEvidence.getAdmittedPhysicalOwnerCount();
                     if (!candidateMetrics.contains(metric)) candidateMetrics.add(metric);
@@ -185,6 +199,7 @@ final class Task41DeveloperVerifier {
             "Task 41 admission proof lost its current challenge owner");
         boolean controlledAdmission = isControlledIndicatorFamily(
             owner.getCircuitFamilyId());
+        lastEvidence = null;
         if (controlledAdmission)
             lastControlledAdmissionEvidence = new Vector<GeneratedDiagnosticSolvabilityEvidence>();
         GeneratedDiagnosticSolvabilityAdmission.validate(sim, owner);
@@ -206,13 +221,27 @@ final class Task41DeveloperVerifier {
                         owner.getBehaviorContract()).getPlan().getRequest();
             }
             Route route = new Route(owner.getCircuitFamilyId(), owner.getSeed(), null,
-                null, preservedRequest);
+                null, preservedRequest, null,
+                owner.getPcbLayout().getLayoutAlgorithmVersion());
             Vector<CandidateEvaluation> evaluations = evaluateCandidateGroup(sim, route, owner);
             Vector<String> equivalentClasses = classifyCandidateEquivalence(evaluations,
                 owner.getCircuitFamilyId(), owner.getSeed());
             require(evaluations.size() ==
                     owner.getDiagnosticSolvabilityContract().getAdmittedCandidateCount(),
                 "Task 41 admission candidate count changed during live proof");
+            Vector<String> provedHypothesisKeys = new Vector<String>();
+            for (CandidateEvaluation evaluation : evaluations) {
+                require(evaluation.hypothesisKey != null &&
+                        !provedHypothesisKeys.contains(evaluation.hypothesisKey),
+                    "Task 41 admission proof has a missing or duplicate hypothesis key");
+                provedHypothesisKeys.add(evaluation.hypothesisKey);
+            }
+            GeneratedFaultServiceabilityAdmission.validateHypothesisPopulation(
+                owner.getFaultCandidates(), provedHypothesisKeys);
+            Collections.sort(provedHypothesisKeys);
+            require(provedHypothesisKeys.equals(
+                    owner.getDiagnosticSolvabilityContract().getHypothesisKeys()),
+                "Task 41 admission proof hypothesis population diverged from contract");
             Vector<GeneratedDiagnosticSolvabilityEvidence> admissionEvidence =
                 new Vector<GeneratedDiagnosticSolvabilityEvidence>();
             for (CandidateEvaluation evaluation : evaluations) {
@@ -251,6 +280,8 @@ final class Task41DeveloperVerifier {
                 cleanupCompleted = true;
             }
         }
+        if (admissionProofCompleted && cleanupCompleted && completedEvidence != null)
+            lastEvidence = new Vector<GeneratedDiagnosticSolvabilityEvidence>(completedEvidence);
         if (controlledAdmission) {
             lastControlledAdmissionEvidence = admissionProofCompleted && cleanupCompleted &&
                     completedEvidence != null ?
@@ -275,6 +306,12 @@ final class Task41DeveloperVerifier {
     static Vector<GeneratedDiagnosticSolvabilityEvidence> getLastEvidenceForDeveloperVerification() {
         return lastEvidence == null ? new Vector<GeneratedDiagnosticSolvabilityEvidence>() :
             new Vector<GeneratedDiagnosticSolvabilityEvidence>(lastEvidence);
+    }
+
+    /** Returns the most recent complete normal admission proof receipt. */
+    static Vector<GeneratedDiagnosticSolvabilityEvidence>
+            getLastAdmissionEvidenceForDeveloperVerification() {
+        return getLastEvidenceForDeveloperVerification();
     }
 
     static String getLastNegativeRejectionReasonForDeveloperVerification() {
@@ -312,40 +349,58 @@ final class Task41DeveloperVerifier {
                 return result;
             }
             if (owner != null) {
-                for (GeneratedFaultCandidate candidate : owner.getFaultCandidates()) {
-                    if (candidate == null || !candidate.isCompatible() ||
-                            candidate.getFault().getType() != GeneratedFaultType.RESISTOR_OPEN)
-                        continue;
-                    String target = candidate.getFault().getTargetComponentId();
-                    if (target != null && !containsRouteTarget(result, target))
-                        result.add(new Route(route.familyId, route.seed,
-                            GeneratedFaultType.RESISTOR_OPEN, target,
-                            route.request));
-                }
+                Vector<GeneratedFaultCandidate> admitted =
+                    GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(
+                        owner.getFaultCandidates());
+                if (admitted.isEmpty())
+                    throw new IllegalStateException(
+                        "Task 41 live owner has no admitted diagnostic hypotheses: " +
+                        route.familyId + "/" + route.seed);
+                for (GeneratedFaultCandidate candidate : admitted)
+                    result.add(new Route(route.familyId, route.seed,
+                        candidate.getFault().getType(),
+                        candidate.getFault().getTargetComponentId(), route.request,
+                        candidate.getHypothesisKey(), route.layoutAlgorithmVersion));
             }
             if (result.isEmpty()) {
                 // The fallback is only for the detached verifier route.  A
-                // live owner must expose the same two stable candidate IDs;
-                // verifyAdmissionRoute checks the count against its contract.
+                // live owner must expose an admitted population; the branch
+                // above fails explicitly when it does not.
                 result.add(new Route(route.familyId, route.seed,
                     GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("driver", "RG"),
-                    route.request));
+                    route.request, null, route.layoutAlgorithmVersion));
                 result.add(new Route(route.familyId, route.seed,
                     GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("load", "RLOAD"),
-                    route.request));
+                    route.request, null, route.layoutAlgorithmVersion));
             }
             return result;
         }
-        GeneratedFaultType[] types = candidateTypes(route.familyId);
-        for (GeneratedFaultType type : types)
-            result.add(new Route(route.familyId, route.seed, type));
+        Vector<GeneratedFaultCandidate> admitted;
+        if (owner != null) {
+            admitted = GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(
+                owner.getFaultCandidates());
+            if (admitted.isEmpty())
+                throw new IllegalStateException(
+                    "Task 41 live owner has no admitted diagnostic hypotheses: " +
+                    route.familyId + "/" + route.seed);
+        } else {
+            // Detached normal proof groups still enumerate the actual
+            // generated candidate catalog.  This keeps the verifier's route
+            // population coupled to generation rather than a second type list.
+            GeneratedBoardInstance representative = QuickPlayFamilyRegistry.generate(
+                route.familyId, route.seed);
+            admitted = GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(
+                representative.getFaultCandidates());
+            if (admitted.isEmpty())
+                throw new IllegalStateException(
+                    "Task 41 generated family has no admitted diagnostic hypotheses: " +
+                    route.familyId + "/" + route.seed);
+        }
+        for (GeneratedFaultCandidate candidate : admitted)
+            result.add(new Route(route.familyId, route.seed,
+                candidate.getFault().getType(), candidate.getFault().getTargetComponentId(),
+                route.request, candidate.getHypothesisKey(), route.layoutAlgorithmVersion));
         return result;
-    }
-
-    private static boolean containsRouteTarget(Vector<Route> routes, String target) {
-        for (Route route : routes)
-            if (target.equals(route.targetComponentId)) return true;
-        return false;
     }
 
     private static CandidateEvaluation verifyCandidate(CirSim sim, Route route,
@@ -353,11 +408,15 @@ final class Task41DeveloperVerifier {
         GeneratedBoardInstance evaluated = null;
         try {
             evaluated = route.generate();
-            require(route.type == evaluated.getFaultBinding().getFault().getType(),
+            GeneratedFault generatedFault = evaluated.getFaultBinding().getFault();
+            require(route.type == generatedFault.getType(),
                 "Task 41 route selected an unexpected fault family: " + route.familyId);
+            if (route.hypothesisKey != null)
+                require(route.hypothesisKey.equals(generatedFault.getHypothesisKey()),
+                    "Task 41 route regenerated a different diagnostic hypothesis: " +
+                    route.hypothesisKey);
             if (route.targetComponentId != null)
-                require(route.targetComponentId.equals(evaluated.getFaultBinding().getFault()
-                        .getTargetComponentId()),
+                require(route.targetComponentId.equals(generatedFault.getTargetComponentId()),
                     "Task 41 route selected an unexpected physical fault owner: " +
                         route.targetComponentId);
             require(!evaluated.isDeveloperOnlyFaultRoute(),
@@ -386,7 +445,7 @@ final class Task41DeveloperVerifier {
             GeneratedDiagnosticSolvabilityEvidence evidence = new GeneratedDiagnosticSolvabilityEvidence(
                 evaluated.getCircuitFamilyId() + "/" + evaluated.getTopologyVariantId() +
                     (route.targetComponentId == null ? "" : "/" + route.targetComponentId),
-                evaluated.getCircuitFamilyId(), evaluated.getSeed(),
+                evaluated.getCircuitFamilyId(), evaluated.getSeed(), generatedFault.getHypothesisKey(),
                 evaluated.getDiagnosticSolvabilityContract().getAdmittedCandidateCount(),
                 evaluated.getDiagnosticSolvabilityContract().getAdmittedPhysicalOwnerCount(),
                 plan, signature.getSamples(), trace.freeze(signature.getRepairSemantics()),
@@ -394,7 +453,8 @@ final class Task41DeveloperVerifier {
                 signature.getEquivalentRepairClass(), "PASS", "NONE",
                 repairObservation.repairReachable, repairObservation.customerRetestPassed,
                 repairObservation.stateIsolated);
-            return new CandidateEvaluation(route.type, route.targetComponentId, signature, evidence,
+            return new CandidateEvaluation(route.type, route.targetComponentId,
+                generatedFault.getHypothesisKey(), signature, evidence,
                 evaluated.getTopologyVariantId(), evaluated.getPcbLayout().geometryFingerprint());
         } finally {
             try {
@@ -413,28 +473,6 @@ final class Task41DeveloperVerifier {
         }
     }
 
-    private static GeneratedFaultType[] candidateTypes(String familyId) {
-        if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId))
-            return new GeneratedFaultType[] { GeneratedFaultType.RESISTOR_OPEN,
-                GeneratedFaultType.RESISTOR_INCORRECT_VALUE,
-                GeneratedFaultType.LED_OPEN };
-        if (QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR.equals(familyId))
-            return new GeneratedFaultType[] { GeneratedFaultType.RESISTOR_OPEN,
-                GeneratedFaultType.RESISTOR_INCORRECT_VALUE };
-        if (QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR.equals(familyId))
-            return new GeneratedFaultType[] { GeneratedFaultType.DIODE_OPEN };
-        if (QuickPlayFamilyRegistry.RC_DELAY.equals(familyId))
-            return new GeneratedFaultType[] { GeneratedFaultType.CAPACITOR_OPEN,
-                GeneratedFaultType.CAPACITOR_SHORT };
-        if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId))
-            return new GeneratedFaultType[] { GeneratedFaultType.TRANSISTOR_CE_OPEN,
-                GeneratedFaultType.TRANSISTOR_CE_SHORT, GeneratedFaultType.BASE_RESISTOR_OPEN };
-        if (QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId))
-            return new GeneratedFaultType[] { GeneratedFaultType.NMOS_DS_OPEN,
-                GeneratedFaultType.NMOS_DS_SHORT, GeneratedFaultType.NMOS_GATE_OPEN };
-        throw new IllegalArgumentException("No Task 41 candidate catalog for " + familyId);
-    }
-
     private static CandidateEvaluation findEvaluation(Vector<CandidateEvaluation> evaluations,
             GeneratedFaultType type) {
         return evaluations.get(findEvaluationIndex(evaluations, type));
@@ -443,6 +481,16 @@ final class Task41DeveloperVerifier {
     private static int findEvaluationIndex(Vector<CandidateEvaluation> evaluations,
             GeneratedFaultType type) {
         return findEvaluationIndex(evaluations, type, null);
+    }
+
+    private static int findEvaluationIndex(Vector<CandidateEvaluation> evaluations,
+            String hypothesisKey) {
+        if (hypothesisKey == null || hypothesisKey.length() == 0)
+            throw new IllegalArgumentException("Missing Task 41 hypothesis key");
+        for (int index = 0; index < evaluations.size(); index++)
+            if (hypothesisKey.equals(evaluations.get(index).hypothesisKey)) return index;
+        throw new IllegalStateException("Task 41 candidate hypothesis was not evaluated: " +
+            hypothesisKey);
     }
 
     private static int findEvaluationIndex(Vector<CandidateEvaluation> evaluations,
@@ -1235,10 +1283,7 @@ final class Task41DeveloperVerifier {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
         for (String familyId : families) {
             if (isControlledIndicatorFamily(familyId)) continue;
-            GeneratedBoardInstance representative =
-                QuickPlayFamilyRegistry.generate(familyId, 0);
-            count += GeneratedDiagnosticSolvabilityAdmission.getAdmittedCandidateCount(
-                representative.getFaultCandidates());
+            count += normalAdmittedCandidates(familyId, 0).size();
         }
         return count;
     }
@@ -1268,35 +1313,49 @@ final class Task41DeveloperVerifier {
 
     private static Vector<Route> normalRoutes() {
         Vector<Route> routes = new Vector<Route>();
-        routes.add(new Route(QuickPlayFamilyRegistry.LED_INDICATOR, 0,
-            GeneratedFaultType.RESISTOR_OPEN));
-        routes.add(new Route(QuickPlayFamilyRegistry.LED_INDICATOR, 0,
-            GeneratedFaultType.RESISTOR_INCORRECT_VALUE));
-        routes.add(new Route(QuickPlayFamilyRegistry.LED_INDICATOR, 0,
-            GeneratedFaultType.LED_OPEN));
-        routes.add(new Route(QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR, 0,
-            GeneratedFaultType.DIODE_OPEN));
-        routes.add(new Route(QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR, 0,
-            GeneratedFaultType.RESISTOR_OPEN));
-        routes.add(new Route(QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR, 0,
-            GeneratedFaultType.RESISTOR_INCORRECT_VALUE));
-        routes.add(new Route(QuickPlayFamilyRegistry.RC_DELAY, 0,
-            GeneratedFaultType.CAPACITOR_OPEN));
-        routes.add(new Route(QuickPlayFamilyRegistry.RC_DELAY, 2,
-            GeneratedFaultType.CAPACITOR_SHORT));
-        routes.add(new Route(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH, 0,
-            GeneratedFaultType.TRANSISTOR_CE_OPEN));
-        routes.add(new Route(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH, 1,
-            GeneratedFaultType.TRANSISTOR_CE_SHORT));
-        routes.add(new Route(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH, 2,
-            GeneratedFaultType.BASE_RESISTOR_OPEN));
-        routes.add(new Route(QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH, 0,
-            GeneratedFaultType.NMOS_DS_OPEN));
-        routes.add(new Route(QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH, 1,
-            GeneratedFaultType.NMOS_DS_SHORT));
-        routes.add(new Route(QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH, 2,
-            GeneratedFaultType.NMOS_GATE_OPEN));
+        for (String familyId : QuickPlayFamilyRegistry.getNormalPlayerFamilyIds()) {
+            if (isControlledIndicatorFamily(familyId)) continue;
+            GeneratedBoardInstance representative = QuickPlayFamilyRegistry.generate(familyId, 0);
+            for (GeneratedFaultCandidate candidate : GeneratedFaultServiceabilityAdmission
+                    .getAdmittedCandidates(representative.getFaultCandidates())) {
+                long seed = normalFixtureSeed(familyId, candidate.getFault().getType());
+                // Preserve the established seed/type corpus while requiring the
+                // exact semantic hypothesis in that seed's admitted catalog.
+                GeneratedFaultCandidate selected = GeneratedFaultEngine.selectHypothesis(
+                    candidate.getHypothesisKey(), normalAdmittedCandidates(familyId, seed));
+                routes.add(new Route(familyId, seed, selected.getFault().getType(),
+                    selected.getFault().getTargetComponentId(), null,
+                    selected.getHypothesisKey(),
+                    representative.getPcbLayout().getLayoutAlgorithmVersion()));
+            }
+        }
         return routes;
+    }
+
+    private static long normalFixtureSeed(String familyId, GeneratedFaultType type) {
+        if (QuickPlayFamilyRegistry.RC_DELAY.equals(familyId) &&
+                type == GeneratedFaultType.CAPACITOR_SHORT) return 2;
+        if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId)) {
+            if (type == GeneratedFaultType.TRANSISTOR_CE_SHORT) return 1;
+            if (type == GeneratedFaultType.BASE_RESISTOR_OPEN) return 2;
+        }
+        if (QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId)) {
+            if (type == GeneratedFaultType.NMOS_DS_SHORT) return 1;
+            if (type == GeneratedFaultType.NMOS_GATE_OPEN) return 2;
+        }
+        return 0;
+    }
+
+    private static Vector<GeneratedFaultCandidate> normalAdmittedCandidates(String familyId,
+            long seed) {
+        GeneratedBoardInstance representative = QuickPlayFamilyRegistry.generate(familyId, seed);
+        Vector<GeneratedFaultCandidate> admitted =
+            GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(
+                representative.getFaultCandidates());
+        if (admitted.isEmpty())
+            throw new IllegalStateException("Task 41 family has no admitted hypotheses: " +
+                familyId + "/" + seed);
+        return admitted;
     }
 
     private static void settleReady(CirSim sim, GeneratedBoardInstance instance) {
@@ -1343,7 +1402,8 @@ final class Task41DeveloperVerifier {
         for (GeneratedDiagnosticSolvabilityEvidence route : evidence)
             for (GeneratedDiagnosticSample sample : route.getSolverSamples()) {
                 if (result.length() != 0) result.append(",");
-                result.append(route.getRouteId()).append("@").append(route.getSeed())
+                result.append(route.getHypothesisKey()).append("@").append(route.getRouteId())
+                    .append("@").append(route.getSeed())
                     .append("#").append(sample.getSampleId()).append("=")
                     .append(sample.getValue()).append("~")
                     .append(sample.getComparisonTolerance());
@@ -1365,7 +1425,8 @@ final class Task41DeveloperVerifier {
         StringBuilder result = new StringBuilder();
         for (GeneratedDiagnosticSolvabilityEvidence route : evidence) {
             if (result.length() != 0) result.append(",");
-            result.append(route.getRouteId()).append("@").append(route.getSeed())
+            result.append(route.getHypothesisKey()).append("@").append(route.getRouteId())
+                .append("@").append(route.getSeed())
                 .append("=").append(route.getEquivalentRepairClass()).append("|")
                 .append(route.getRepairSemantics().stableDescription());
         }
@@ -1396,25 +1457,47 @@ final class Task41DeveloperVerifier {
         final GeneratedFaultType type;
         /** Optional stable owner key for same-type composed candidates. */
         final String targetComponentId;
+        /** Optional stable semantic hypothesis identity. */
+        final String hypothesisKey;
+        /** Layout algorithm carried by the owner through proof replay. */
+        final int layoutAlgorithmVersion;
         /** Original versioned composition request retained across proof replay. */
         final BoundedAssemblyRequest request;
 
         Route(String familyId, long seed, GeneratedFaultType type) {
-            this(familyId, seed, type, null, null);
+            this(familyId, seed, type, null, null, null,
+                SeededPcbLayoutGenerator.CURRENT_VERSION);
         }
 
         Route(String familyId, long seed, GeneratedFaultType type,
                 String targetComponentId) {
-            this(familyId, seed, type, targetComponentId, null);
+            this(familyId, seed, type, targetComponentId, null, null,
+                SeededPcbLayoutGenerator.CURRENT_VERSION);
         }
 
         Route(String familyId, long seed, GeneratedFaultType type,
                 String targetComponentId, BoundedAssemblyRequest request) {
+            this(familyId, seed, type, targetComponentId, request, null,
+                SeededPcbLayoutGenerator.CURRENT_VERSION);
+        }
+
+        Route(String familyId, long seed, GeneratedFaultType type,
+                String targetComponentId, BoundedAssemblyRequest request,
+                String hypothesisKey) {
+            this(familyId, seed, type, targetComponentId, request, hypothesisKey,
+                SeededPcbLayoutGenerator.CURRENT_VERSION);
+        }
+
+        Route(String familyId, long seed, GeneratedFaultType type,
+                String targetComponentId, BoundedAssemblyRequest request,
+                String hypothesisKey, int layoutAlgorithmVersion) {
             this.familyId = familyId;
             this.seed = seed;
             this.type = type;
             this.targetComponentId = targetComponentId;
             this.request = request;
+            this.hypothesisKey = hypothesisKey;
+            this.layoutAlgorithmVersion = layoutAlgorithmVersion;
         }
 
         GeneratedBoardInstance generate() {
@@ -1459,11 +1542,13 @@ final class Task41DeveloperVerifier {
                 return result;
             }
             if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId))
-                return new LedIndicatorGenerator().generateForFaultVerification(seed, type);
+                return new LedIndicatorGenerator(layoutAlgorithmVersion)
+                    .generateForFaultVerification(seed, type);
             if (QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR.equals(familyId))
-                return new DiodeProtectedIndicatorGenerator().generate(seed);
+                return new DiodeProtectedIndicatorGenerator(layoutAlgorithmVersion).generate(seed);
             if (QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR.equals(familyId))
-                return new ParallelDualIndicatorGenerator().generateForFaultVerification(seed, type);
+                return new ParallelDualIndicatorGenerator(layoutAlgorithmVersion)
+                    .generateForFaultVerification(seed, type);
             if (QuickPlayFamilyRegistry.RC_DELAY.equals(familyId))
                 return new RcDelayGenerator().generateForFaultVerification(seed, type);
             if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId))
@@ -1477,6 +1562,7 @@ final class Task41DeveloperVerifier {
     private static final class CandidateEvaluation {
         final GeneratedFaultType type;
         final String targetComponentId;
+        final String hypothesisKey;
         final DiagnosticSignature signature;
         final GeneratedDiagnosticSolvabilityEvidence evidence;
         final String topologyVariantId;
@@ -1486,8 +1572,17 @@ final class Task41DeveloperVerifier {
                 DiagnosticSignature signature,
                 GeneratedDiagnosticSolvabilityEvidence evidence, String topologyVariantId,
                 String layoutFingerprint) {
+            this(type, targetComponentId, null, signature, evidence, topologyVariantId,
+                layoutFingerprint);
+        }
+
+        CandidateEvaluation(GeneratedFaultType type, String targetComponentId,
+                String hypothesisKey, DiagnosticSignature signature,
+                GeneratedDiagnosticSolvabilityEvidence evidence, String topologyVariantId,
+                String layoutFingerprint) {
             this.type = type;
             this.targetComponentId = targetComponentId;
+            this.hypothesisKey = hypothesisKey;
             this.signature = signature;
             this.evidence = evidence;
             this.topologyVariantId = topologyVariantId;

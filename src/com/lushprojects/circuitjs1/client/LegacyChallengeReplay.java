@@ -14,22 +14,35 @@ final class LegacyChallengeReplay {
     static GeneratedBoardInstance generate(ChallengeDescriptor descriptor) {
         requireSupported(descriptor);
         return QuickPlayFamilyRegistry.generate(descriptor.getDeviceIntent().getId(),
-            descriptor.getRootSeed());
+            descriptor.getRootSeed(), layoutAlgorithmVersion(descriptor));
+    }
+
+    static int layoutAlgorithmVersion(ChallengeDescriptor descriptor) {
+        requireSupported(descriptor);
+        return descriptor.getGenerator().getVersion() == ChallengeDescriptor.LEGACY_GENERATOR_VERSION ?
+            SeededPcbLayoutGenerator.LEGACY_VERSION : SeededPcbLayoutGenerator.CURRENT_VERSION;
     }
 
     /** Resolve every effective input before constructing any live elements. */
     static void requireSupported(ChallengeDescriptor descriptor) {
         ChallengeContractException.required(descriptor, "descriptor");
-        requireIdentity(descriptor.getGenerator(), ChallengeDescriptor.LEGACY_GENERATOR_ID,
-            ChallengeDescriptor.LEGACY_GENERATOR_VERSION, "generator");
+        if (!ChallengeDescriptor.LEGACY_GENERATOR_ID.equals(descriptor.getGenerator().getId()))
+            reject(ChallengeContractException.Code.UNSUPPORTED_ID, "generator");
+        int generatorVersion = descriptor.getGenerator().getVersion();
+        if (generatorVersion != ChallengeDescriptor.LEGACY_GENERATOR_VERSION &&
+                generatorVersion != ChallengeDescriptor.CORRECTED_SEEDED_GENERATOR_VERSION)
+            reject(ChallengeContractException.Code.UNSUPPORTED_VERSION, "generator");
         if (!QuickPlayFamilyRegistry.isNormalPlayerEligible(descriptor.getDeviceIntent().getId()))
             reject(ChallengeContractException.Code.UNSUPPORTED_ID, "device-intent");
         if (descriptor.getDeviceIntent().getVersion() != ChallengeDescriptor.LEGACY_INTENT_VERSION)
             reject(ChallengeContractException.Code.UNSUPPORTED_VERSION, "device-intent");
+        if (generatorVersion == ChallengeDescriptor.CORRECTED_SEEDED_GENERATOR_VERSION &&
+                !QuickPlayFamilyRegistry.usesSeededLayout(descriptor.getDeviceIntent().getId()))
+            reject(ChallengeContractException.Code.UNSUPPORTED_VERSION, "generator");
         requireIdentity(descriptor.getDifficultyProfile(), ChallengeDescriptor.LEGACY_DIFFICULTY_ID,
             ChallengeDescriptor.LEGACY_DIFFICULTY_VERSION, "difficulty-profile");
-        // CURRENT changing must not silently reinterpret an old descriptor.
-        // Leaf algorithm changes also require a new explicit generator version.
+        // Package geometry remains v3. A02 seeded placement/ranking is selected
+        // independently by generator version 2; version 1 dispatch is retained.
         if (descriptor.getGeometryVersion().getValue() != ChallengeDescriptor.LEGACY_GEOMETRY_VERSION ||
                 PcbGeometryContractVersion.CURRENT != ChallengeDescriptor.LEGACY_GEOMETRY_VERSION)
             reject(ChallengeContractException.Code.UNSUPPORTED_VERSION, "geometry");
@@ -46,7 +59,8 @@ final class LegacyChallengeReplay {
         ChallengeContractException.required(descriptor, "descriptor");
         StringBuilder result = new StringBuilder(descriptor.toCanonical());
         result.append("\nnamed-derivation=").append(NamedRandomStreams.DERIVATION_VERSION)
-            .append("\nnamed-stream-use=reserved-not-consumed-by-legacy-leaf@1");
+            .append("\nnamed-stream-use=reserved-not-consumed-by-legacy-leaf@")
+            .append(descriptor.getGenerator().getVersion());
         try {
             requireSupported(descriptor);
             result.append("\nreplay-resolution=supported;admission=not-assessed-by-description");
@@ -79,6 +93,6 @@ final class LegacyChallengeReplay {
     }
 
     private static void reject(ChallengeContractException.Code code, String field) {
-        throw new ChallengeContractException(code, field, "Input is not supported by legacy-leaf@1");
+        throw new ChallengeContractException(code, field, "Input is not supported by the leaf replay adapter");
     }
 }

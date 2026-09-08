@@ -1,0 +1,52 @@
+{
+  "protocol": "TSJ-A02-LEGACY-COMPATIBILITY-1",
+  "baselineSha": "1eff2278ccd53181951c19d2965f0b32d9f0a126",
+  "sourceDigest": "4af6d7db262522e8e2e264c48f6615a81fe18fa4fc52ef4813b1b4c1fab9d737",
+  "executionDigest": "3a025afffeadd246bb906e996bdc1fc7d40816ef18700d83fabfd8298302d571",
+  "comparison": "recursive exact equality of every field in both complete compiled reports, including all eight cases per task",
+  "differenceCount": 0,
+  "results": [
+    {
+      "task": 48,
+      "status": "PASS",
+      "assertions": 755,
+      "seeds": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "-9223372036854775808",
+        "9223372036854775807",
+        "9007199254740993",
+        "-9007199254740993"
+      ],
+      "normalizedReportSha256": "491c485687b4208d00ca4d5bf7925dbf4181673ea27b81cb8b66328ba14ba60e",
+      "originalOwnerRestored": true,
+      "candidateCleanup": "PASS",
+      "baselineReportExactlyEqual": true,
+      "geometryVersion": 3,
+      "generatorVersion": 2
+    },
+    {
+      "task": 49,
+      "status": "PASS",
+      "assertions": 1053,
+      "seeds": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "-9223372036854775808",
+        "9223372036854775807",
+        "9007199254740993",
+        "-9007199254740993"
+      ],
+      "normalizedReportSha256": "dbc7f4369c5ec1dc33c0cf2f3eadd071430b1833943191352e5b26bb532cc694",
+      "originalOwnerRestored": true,
+      "candidateCleanup": "PASS",
+      "baselineReportExactlyEqual": true,
+      "geometryVersion": 3,
+      "generatorVersion": 3
+    }
+  ]
+}

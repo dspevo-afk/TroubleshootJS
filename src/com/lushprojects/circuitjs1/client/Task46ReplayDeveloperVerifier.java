@@ -27,8 +27,10 @@ final class Task46ReplayDeveloperVerifier {
         GeneratedBoardInstance original = sim.getGeneratedBoardInstance();
         require(original != null && sim.getGeneratedChallengeController() != null &&
             sim.getGeneratedChallengeController().isReady(), "initial legacy challenge is not ready");
-        final ChallengeDescriptor descriptor = ChallengeDescriptor.legacy(
-            original.getCircuitFamilyId(), original.getSeed());
+        final ChallengeDescriptor descriptor = original.getPcbLayout().getLayoutAlgorithmVersion() ==
+                SeededPcbLayoutGenerator.CURRENT_VERSION ?
+            ChallengeDescriptor.correctedSeeded(original.getCircuitFamilyId(), original.getSeed()) :
+            ChallengeDescriptor.legacy(original.getCircuitFamilyId(), original.getSeed());
         final String canonical = descriptor.toCanonical();
         final String originalScenario = scenarioSnapshot(sim);
         final String beforeDiagnostics = sim.dumpCircuit();
@@ -44,7 +46,8 @@ final class Task46ReplayDeveloperVerifier {
             beforeDiagnostics.equals(sim.dumpCircuit()), "rejection changed the live challenge");
 
         GeneratedBoardInstance direct = QuickPlayFamilyRegistry.generate(
-            descriptor.getDeviceIntent().getId(), descriptor.getRootSeed());
+            descriptor.getDeviceIntent().getId(), descriptor.getRootSeed(),
+            LegacyChallengeReplay.layoutAlgorithmVersion(descriptor));
         GeneratedBoardInstance replay = LegacyChallengeReplay.generate(ChallengeDescriptor.parse(canonical));
         assertFresh(original, direct);
         assertFresh(direct, replay);
@@ -142,6 +145,8 @@ final class Task46ReplayDeveloperVerifier {
      */
     private static String generationSnapshot(GeneratedBoardInstance instance) {
         List<String> rows = new ArrayList<String>();
+        boolean correctedSeeded = instance.getPcbLayout().getLayoutAlgorithmVersion() ==
+            SeededPcbLayoutGenerator.CURRENT_VERSION;
         TroubleshootBoard board = instance.getBoard();
         rows.add("identity|" + board.getId() + "|" + instance.getCircuitFamilyId() + "|" +
             instance.getTopologyVariantId() + "|" + Long.toString(instance.getSeed()));
@@ -203,11 +208,18 @@ final class Task46ReplayDeveloperVerifier {
         GeneratedChallengeDefinition challenge = instance.getChallengeDefinition();
         rows.add("challenge|" + challenge.getId() + "|" + Long.toString(challenge.getSelectionSeed()));
         rows.add("selected-fault|" + fault(challenge.getFault()));
+        if (correctedSeeded) {
+            rows.add("layout-algorithm|" + instance.getPcbLayout().getLayoutAlgorithmVersion());
+            rows.add("selected-hypothesis|" + challenge.getFault().getHypothesisKey());
+            for (String key : instance.getDiagnosticSolvabilityContract().getHypothesisKeys())
+                rows.add("admitted-hypothesis|" + key);
+        }
         rows.add("retest|" + instance.getCustomerRetestProfile().getStableId());
         rows.add("layout-v" + PcbGeometryContractVersion.CURRENT + "|" +
             instance.getPcbLayout().geometryFingerprint());
         Collections.sort(rows);
-        StringBuilder result = new StringBuilder("TSJ-REPLAY-SNAPSHOT-1");
+        StringBuilder result = new StringBuilder(correctedSeeded ?
+            "TSJ-REPLAY-SNAPSHOT-2" : "TSJ-REPLAY-SNAPSHOT-1");
         for (String row : rows) result.append('\n').append(row.length()).append(':').append(row);
         return result.toString();
     }
@@ -270,9 +282,10 @@ final class Task46ReplayDeveloperVerifier {
     private static int verifyRejections(ChallengeDescriptor descriptor) {
         int count = 0;
         String encoded = descriptor.toCanonical();
-        count += reject(encoded.replace("generator=legacy-leaf@1", "generator=legacy-leaf@2"),
+        String generator = "generator=" + descriptor.getGenerator().toString();
+        count += reject(encoded.replace(generator, "generator=legacy-leaf@99"),
             ChallengeContractException.Code.UNSUPPORTED_VERSION, "generator");
-        count += reject(encoded.replace("generator=legacy-leaf@1", "generator=unknown@1"),
+        count += reject(encoded.replace(generator, "generator=unknown@1"),
             ChallengeContractException.Code.UNSUPPORTED_ID, "generator");
         String intent = "device-intent=" + descriptor.getDeviceIntent().getId() + "@1";
         count += reject(encoded.replace(intent, "device-intent=" + descriptor.getDeviceIntent().getId() + "@2"),

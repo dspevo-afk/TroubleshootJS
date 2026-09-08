@@ -1,0 +1,18 @@
+[java-version:stderr] openjdk version "1.8.0_502"
+[java-version:stderr] OpenJDK Runtime Environment (Temurin)(build 1.8.0_502-b07)
+[java-version:stderr] OpenJDK 64-Bit Server VM (Temurin)(build 25.502-b07, mixed mode)
+[gwt-compile:stdout] Compiling module com.lushprojects.circuitjs1.circuitjs1
+[gwt-compile:stdout]    Compiling 5 permutations
+[gwt-compile:stdout]       Compiling permutation 0...
+[gwt-compile:stdout]       Compiling permutation 1...
+[gwt-compile:stdout]       Compiling permutation 2...
+[gwt-compile:stdout]       Compiling permutation 3...
+[gwt-compile:stdout]       Compiling permutation 4...
+[gwt-compile:stdout]    Compile of permutations succeeded
+[gwt-compile:stdout]    Compilation succeeded -- 53.082s
+[gwt-compile:stdout] Linking into <repository>\war\circuitjs1
+[gwt-compile:stdout]    Link succeeded
+[gwt-compile:stdout]    Linking succeeded -- 1.292s
+EXIT: 0
+Source digest: 4af6d7db262522e8e2e264c48f6615a81fe18fa4fc52ef4813b1b4c1fab9d737
+Execution digest: 3a025afffeadd246bb906e996bdc1fc7d40816ef18700d83fabfd8298302d571

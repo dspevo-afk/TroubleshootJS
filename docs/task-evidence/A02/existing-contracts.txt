@@ -1,0 +1,28 @@
+A02 existing affected pure gates; JDK javac 1.8.0_502; source candidate based on 1eff2278.
+These gates do not qualify CircuitJS, GWT, browser interaction or later edits to their consumed sources.
+COMMAND: scripts/verify-challenge-contracts.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07
+JDK: javac 1.8.0_502
+Python: Python 3.13.14
+PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact
+PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus
+CLEANUP: challenge contract classes and task-owned scratch removed.
+EXIT: 0
+COMMAND: scripts/verify-block-contracts.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07
+JDK: javac 1.8.0_502
+PASS: Task44 9 groups, 247 assertions; no simulator dependency
+PASS: Task45 202 assertions
+CLEANUP: contract classes and task-owned scratch removed.
+EXIT: 0
+COMMAND: scripts/verify-assembly-contracts.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07
+JDK: javac 1.8.0_502
+Python: Python 3.13.14
+PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact
+PASS: Task47 pure assembly contracts 269 assertions
+PASS: Task48 pure controlled-indicator contracts 224 assertions
+PASS: Task48 switched-low-side compatibility 12 assertions
+PASS: Task49 pure value synthesis 137 assertions
+PASS: Task49 independent value synthesis oracle 8 seeds; catalog equations exact
+PASS: Task48 independent assembly oracle 8 seeds; two physical fault decisions
+PASS: Task47 independent assembly oracle 8 seeds
+CLEANUP: assembly contract classes and task-owned scratch removed.
+EXIT: 0

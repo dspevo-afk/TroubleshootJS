@@ -1,0 +1,43 @@
+{
+  "reviewer": "/root/a02_independent_review",
+  "nickname": "Banach",
+  "requestedModel": "gpt-5.6-luna",
+  "requestedReasoning": "max",
+  "speed": "Default; no separate speed control exposed",
+  "independent": true,
+  "readOnly": true,
+  "initialDisposition": "BLOCKED",
+  "findings": [
+    {
+      "id": "R1",
+      "cause": "CODE",
+      "impact": "BLOCKER",
+      "boundary": "Task41 live admission proof",
+      "finding": "Unsorted NPN proof keys compared with sorted contract keys.",
+      "repair": "Sort the proved key vector after canonical population validation; exercise live NPN proof."
+    },
+    {
+      "id": "R2",
+      "cause": "TEST/TOOL",
+      "impact": "BLOCKER",
+      "boundary": "Task41 normal diagnostic corpus",
+      "finding": "Seed-zero-only enumeration omitted established RC seed2 and NPN/NMOS seed1/2 variants.",
+      "repair": "Restore historical seed/type map; exact canonical hypothesis selection and per-family/seed duplicate scope; real corpus regeneration regression."
+    }
+  ],
+  "initialIndependentChecks": "JDK8 Candidate suite PASS; NPN key-order probe demonstrated divergence. F5/F6 review clear.",
+  "resources": "Reviewer reports no remaining owned resources.",
+  "deltaDisposition": "PASS",
+  "finalCandidate": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "c54876b0559bac5d06713e7ce7424acfb3d8feec428ec716321086563daedda7",
+    "ScriptDigest": "8c4e4bbf4939cbc3c9bd32fb7be0bb57b98e35fe7291ef27498aef62360a966c",
+    "WebDigest": "e36cb851b0a4d85085e572d721a9f5d64919af88e4a86ef9fca41ce64ea44f1b",
+    "Digest": "9592cd56c77db015231cc58cdbbf0f65c52f034c3a80216523a73cdfd4673029",
+    "FileCount": 1300
+  },
+  "independentDeltaChecks": "Actual full native All suite: Candidate PASS, Geometry66, Replay112; cleanup PASS. Sorted live proof, historical fixtures, exact identity and A02 bounded settlement/cleanup reviewed.",
+  "nonblocking": "normalHypothesisKeys is sorted after duplicate checking but otherwise unused; optional cleanup outside scope.",
+  "closureDocumentationReview": "PASS",
+  "closureDocumentationNote": "Independent reviewer verified roadmap/report/README/architecture and candidate identity; the only requested correction was replacing the pending receipt after that review completed. JSON and documentation diff rechecked."
+}

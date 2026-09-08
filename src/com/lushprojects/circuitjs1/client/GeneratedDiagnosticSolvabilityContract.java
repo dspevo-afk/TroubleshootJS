@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
+import java.util.Collections;
 
 /** Immutable v1 contract carried by every generated board challenge. */
 final class GeneratedDiagnosticSolvabilityContract {
@@ -18,13 +19,15 @@ final class GeneratedDiagnosticSolvabilityContract {
     private final int admittedCandidateCount;
     private final int admittedPhysicalOwnerCount;
     private final GeneratedDiagnosticOwnerDiversity ownerDiversity;
+    private final Vector<String> hypothesisKeys;
     private final Vector<GeneratedDiagnosticPlan> plans;
     private final AdmissionMode admissionMode;
 
     private GeneratedDiagnosticSolvabilityContract(String routeId, String familyId,
             String topologyVariantId, long seed, int admittedCandidateCount,
             int admittedPhysicalOwnerCount, GeneratedDiagnosticOwnerDiversity ownerDiversity,
-            Vector<GeneratedDiagnosticPlan> plans, AdmissionMode admissionMode) {
+            Vector<String> hypothesisKeys, Vector<GeneratedDiagnosticPlan> plans,
+            AdmissionMode admissionMode) {
         this.routeId = routeId;
         this.familyId = familyId;
         this.topologyVariantId = topologyVariantId;
@@ -32,6 +35,8 @@ final class GeneratedDiagnosticSolvabilityContract {
         this.admittedCandidateCount = admittedCandidateCount;
         this.admittedPhysicalOwnerCount = admittedPhysicalOwnerCount;
         this.ownerDiversity = ownerDiversity;
+        this.hypothesisKeys = new Vector<String>(hypothesisKeys);
+        Collections.sort(this.hypothesisKeys);
         this.plans = new Vector<GeneratedDiagnosticPlan>(plans);
         this.admissionMode = admissionMode;
     }
@@ -41,13 +46,15 @@ final class GeneratedDiagnosticSolvabilityContract {
         if (familyId == null || topologyVariantId == null || candidates == null)
             throw new IllegalArgumentException("Incomplete diagnostic solvability contract");
         Vector<GeneratedDiagnosticPlan> plans = GeneratedDiagnosticPlanCatalog.forFamily(familyId);
+        Vector<String> hypothesisKeys = GeneratedDiagnosticSolvabilityAdmission
+            .getHypothesisKeys(candidates);
         GeneratedDiagnosticOwnerDiversity ownerDiversity =
             GeneratedDiagnosticSolvabilityAdmission.getOwnerDiversity(candidates);
         return new GeneratedDiagnosticSolvabilityContract(familyId + "/" + topologyVariantId,
             familyId, topologyVariantId, seed,
-            GeneratedDiagnosticSolvabilityAdmission.getAdmittedCandidateCount(candidates),
+            hypothesisKeys.size(),
             GeneratedDiagnosticSolvabilityAdmission.getPhysicalOwnerCount(candidates),
-            ownerDiversity, plans, AdmissionMode.NORMAL);
+            ownerDiversity, hypothesisKeys, plans, AdmissionMode.NORMAL);
     }
 
     /**
@@ -58,13 +65,15 @@ final class GeneratedDiagnosticSolvabilityContract {
             String topologyVariantId, long seed, Vector<GeneratedFaultCandidate> candidates) {
         if (familyId == null || topologyVariantId == null || candidates == null)
             throw new IllegalArgumentException("Incomplete developer diagnostic fixture");
+        Vector<String> hypothesisKeys = GeneratedDiagnosticSolvabilityAdmission
+            .getHypothesisKeys(candidates);
         GeneratedDiagnosticOwnerDiversity ownerDiversity =
             GeneratedDiagnosticSolvabilityAdmission.getOwnerDiversity(candidates);
         return new GeneratedDiagnosticSolvabilityContract(familyId + "/" + topologyVariantId,
             familyId, topologyVariantId, seed,
-            GeneratedDiagnosticSolvabilityAdmission.getAdmittedCandidateCount(candidates),
+            hypothesisKeys.size(),
             GeneratedDiagnosticSolvabilityAdmission.getPhysicalOwnerCount(candidates),
-            ownerDiversity, new Vector<GeneratedDiagnosticPlan>(),
+            ownerDiversity, hypothesisKeys, new Vector<GeneratedDiagnosticPlan>(),
             AdmissionMode.DEVELOPER_FIXTURE);
     }
 
@@ -75,6 +84,9 @@ final class GeneratedDiagnosticSolvabilityContract {
     int getAdmittedCandidateCount() { return admittedCandidateCount; }
     int getAdmittedPhysicalOwnerCount() { return admittedPhysicalOwnerCount; }
     GeneratedDiagnosticOwnerDiversity getOwnerDiversity() { return ownerDiversity; }
+    Vector<String> getHypothesisKeys() {
+        return new Vector<String>(hypothesisKeys);
+    }
     boolean isDeveloperFixture() { return admissionMode == AdmissionMode.DEVELOPER_FIXTURE; }
     Vector<GeneratedDiagnosticPlan> getPlans() {
         return new Vector<GeneratedDiagnosticPlan>(plans);
@@ -119,11 +131,13 @@ final class GeneratedDiagnosticSolvabilityContract {
             .getAdmittedCandidateCount(instance.getFaultCandidates());
         int actualOwners = GeneratedDiagnosticSolvabilityAdmission
             .getPhysicalOwnerCount(instance.getFaultCandidates());
+        Vector<String> actualHypothesisKeys = GeneratedDiagnosticSolvabilityAdmission
+            .getHypothesisKeys(instance.getFaultCandidates());
         GeneratedDiagnosticOwnerDiversity actualDiversity =
             GeneratedDiagnosticSolvabilityAdmission.getOwnerDiversity(
                 instance.getFaultCandidates());
         if (actualCandidates != admittedCandidateCount || actualOwners != admittedPhysicalOwnerCount ||
-                actualDiversity != ownerDiversity)
+                actualDiversity != ownerDiversity || !actualHypothesisKeys.equals(hypothesisKeys))
             throw new IllegalArgumentException("Diagnostic solvability candidate metrics changed");
     }
 }

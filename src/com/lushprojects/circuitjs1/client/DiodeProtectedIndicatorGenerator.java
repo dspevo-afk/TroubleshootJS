@@ -6,8 +6,13 @@ import java.util.Vector;
 class DiodeProtectedIndicatorGenerator {
     static final String FAMILY_ID = "DIODE_PROTECTED_INDICATOR";
     static final String DIRECT_SERIES_VARIANT = "DIRECT_SERIES_DIODE";
-    private static final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR =
-        new SeededPcbLayoutGenerator();
+    private final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR;
+
+    DiodeProtectedIndicatorGenerator() { this(SeededPcbLayoutGenerator.CURRENT_VERSION); }
+
+    DiodeProtectedIndicatorGenerator(int layoutAlgorithmVersion) {
+        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator(layoutAlgorithmVersion);
+    }
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
     private static final double[] RESISTOR_VALUES = { 330, 680, 1000 };
 
@@ -75,14 +80,14 @@ class DiodeProtectedIndicatorGenerator {
         Vector<GeneratedFaultCandidate> faultCandidates =
             new Vector<GeneratedFaultCandidate>();
         faultCandidates.add(GeneratedFaultEngine.diodeShort("DIODE_D1_SHORT", FAMILY_ID,
-            seed, "D1", diodeShortSwitch, includeDeveloperShort));
+            seed, "D1", diodeShortSwitch, false));
         faultCandidates.add(GeneratedFaultEngine.diodeOpen("DIODE_D1_OPEN", FAMILY_ID,
             seed, "D1", faultSwitch));
         faultCandidates.add(GeneratedFaultEngine.connectorOpenPath("DIODE_J1_OPEN_PATH",
             FAMILY_ID, seed, "J1", connectorFaultSwitch, false));
         GeneratedFaultEngine.clearAll(faultCandidates);
         GeneratedFaultCandidate selectedFault = includeDeveloperShort ?
-            GeneratedFaultEngine.select(GeneratedFaultType.DIODE_SHORT, faultCandidates) :
+            GeneratedFaultEngine.selectForDeveloperVerification(GeneratedFaultType.DIODE_SHORT, faultCandidates) :
             GeneratedFaultEngine.select(seed, faultCandidates);
         for (GeneratedFaultCandidate candidate : faultCandidates)
             for (CircuitElm privateElement : candidate.getPrivateSimulationElements())

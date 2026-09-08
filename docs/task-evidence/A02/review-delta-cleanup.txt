@@ -1,0 +1,26 @@
+
+ProcessId  ProcessStartTicks TerminationProven NaturalExit
+---------  ----------------- ----------------- -----------
+   527920 639244365842446523              True       False
+{
+    "Success":  true,
+    "Known":  true,
+    "HasListeners":  false,
+    "Listeners":  [
+
+                  ],
+    "ListenerOwnerKind":  "none",
+    "ListenerOwnerProof":  "",
+    "ListenerOwnerEvidence":  "",
+    "Source":  "netstat",
+    "Error":  ""
+}
+PASS: final preview process and port8899 absent
+PASS: all recorded delta/build/native processes absent
+
+
+
+Browser tabs after close: []
+Native final exit: 0; CLEANUP: A02 JVM contract classes and scratch removed.
+
+Build final exit: 0

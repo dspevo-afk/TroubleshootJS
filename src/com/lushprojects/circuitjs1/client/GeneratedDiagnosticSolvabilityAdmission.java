@@ -154,27 +154,24 @@ final class GeneratedDiagnosticSolvabilityAdmission {
     }
 
     static int getAdmittedCandidateCount(Vector<GeneratedFaultCandidate> candidates) {
-        int count = 0;
-        if (candidates != null)
-            for (GeneratedFaultCandidate candidate : candidates)
-                if (isAdmitted(candidate)) count++;
-        return count;
+        return getAdmittedCandidates(candidates).size();
     }
 
     static boolean isAdmitted(GeneratedFaultCandidate candidate) {
-        return candidate != null && candidate.isCompatible() &&
-            candidate.getServiceability() != null && candidate.getServiceability().isAdmissible();
+        return GeneratedFaultServiceabilityAdmission.isAdmitted(candidate);
+    }
+
+    static Vector<GeneratedFaultCandidate> getAdmittedCandidates(
+            Vector<GeneratedFaultCandidate> candidates) {
+        return GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(candidates);
+    }
+
+    static Vector<String> getHypothesisKeys(Vector<GeneratedFaultCandidate> candidates) {
+        return GeneratedFaultServiceabilityAdmission.getHypothesisKeys(candidates);
     }
 
     static int getPhysicalOwnerCount(Vector<GeneratedFaultCandidate> candidates) {
-        Vector<String> owners = new Vector<String>();
-        if (candidates != null)
-            for (GeneratedFaultCandidate candidate : candidates)
-                if (isAdmitted(candidate)) {
-                    String owner = candidate.getServiceability().getLocus().getOwnerId();
-                    if (!owners.contains(owner)) owners.add(owner);
-                }
-        return owners.size();
+        return GeneratedFaultServiceabilityAdmission.getPhysicalOwnerCount(candidates);
     }
 
     static GeneratedDiagnosticOwnerDiversity getOwnerDiversity(

@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "candidate": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "c54876b0559bac5d06713e7ce7424acfb3d8feec428ec716321086563daedda7",
+    "ScriptDigest": "8c4e4bbf4939cbc3c9bd32fb7be0bb57b98e35fe7291ef27498aef62360a966c",
+    "WebDigest": "e36cb851b0a4d85085e572d721a9f5d64919af88e4a86ef9fca41ce64ea44f1b",
+    "Digest": "9592cd56c77db015231cc58cdbbf0f65c52f034c3a80216523a73cdfd4673029",
+    "FileCount": 1300
+  },
+  "comparison": "Every field of all eight cases in each actual full report, compared with fresh accepted-baseline report",
+  "results": [
+    {
+      "task": 48,
+      "status": "PASS",
+      "assertions": 755,
+      "everyFullReportFieldEqual": true,
+      "baselineDigest": "0b45e6eb7887e496714c6ec3aaf0338f63b3efe7d5340b44f61f9cfc4ecaa8f4",
+      "finalDigest": "0b45e6eb7887e496714c6ec3aaf0338f63b3efe7d5340b44f61f9cfc4ecaa8f4"
+    },
+    {
+      "task": 49,
+      "status": "PASS",
+      "assertions": 1053,
+      "everyFullReportFieldEqual": true,
+      "baselineDigest": "78bb0f2bf55718a06bf465c8d0b1d79e5b5173668ef6dc0b99fb158f6f4d19c1",
+      "finalDigest": "78bb0f2bf55718a06bf465c8d0b1d79e5b5173668ef6dc0b99fb158f6f4d19c1"
+    }
+  ]
+}

@@ -403,6 +403,9 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootTask49VerificationComplete;
 	boolean troubleshootTask49ForcedFailure;
 	String troubleshootTask49Seed;
+	boolean troubleshootA02Verification;
+	boolean troubleshootA02VerificationComplete;
+	boolean troubleshootA02ForcedFailure;
 	boolean troubleshootA01Measurement;
 	boolean troubleshootA01MeasurementComplete;
 	boolean troubleshootA01ForcedFailure;
@@ -562,6 +565,10 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjTask49Fail", false);
 	    troubleshootTask49Seed = troubleshootTask49Verification ?
 		qp.getValue("tsjTask49Seed") : null;
+	    troubleshootA02Verification = troubleshootDebug &&
+		qp.getBooleanValue("tsjVerifyA02", false);
+	    troubleshootA02ForcedFailure = troubleshootA02Verification &&
+		qp.getBooleanValue("tsjA02Fail", false);
 	    troubleshootA01Measurement = troubleshootDebug &&
 		qp.getBooleanValue("tsjMeasureA01", false);
 	    troubleshootA01ForcedFailure = troubleshootA01Measurement &&
@@ -4680,7 +4687,7 @@ MouseOutHandler, MouseWheelHandler {
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5081,6 +5088,26 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootA02Verification &&
+		!troubleshootA02VerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		generatedChallengeController != null && generatedChallengeController.isReady()) {
+		developerVerifierRunning = true;
+		troubleshootA02VerificationComplete = true;
+		publishBrowserVerificationResult("RUNNING:a02");
+		try {
+		    publishA02Evidence(A02CorrectnessDeveloperVerifier.verify(this,
+			troubleshootA02ForcedFailure));
+		    publishBrowserVerificationResult("PASS:a02");
+		} catch (Throwable failure) {
+		    publishBrowserVerificationResult("FAIL:a02:" + failure.getMessage());
+		    if (failure instanceof Error) throw (Error) failure;
+		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+		    throw new IllegalStateException("A02 verification failed", failure);
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	    if (!developerVerifierRunning && troubleshootTask47Verification &&
 		!troubleshootTask47VerificationComplete &&
 		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5197,7 +5224,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5268,6 +5295,10 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishTask49Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-task49-report", evidence);
+    }-*/;
+
+    private static native void publishA02Evidence(String evidence) /*-{
+	$doc.documentElement.setAttribute("data-tsj-a02-report", evidence);
     }-*/;
 
     void publishA01EvidenceForDeveloperVerification(String evidence) {

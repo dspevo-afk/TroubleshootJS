@@ -1,0 +1,15 @@
+PASS: A02CandidateContractTest
+
+A02_BEND_SCORE straight-subdivision legacy=3399.2749999999996;corrected=3364.2749999999996;delta=-35.0
+A02_LEGACY family=LED;seed=0;score=4062.212935131351;geometrySha256=c20e36edeba41c7811701a0487f23459dea8eb021237cab82dfdb640df73d4e6
+A02_BEND_RANKING family=LED;seed=0;legacyViableCandidates=5;changedScores=0;legacyBest=4062.212935131351;rescoredBest=4062.212935131351;winnerChanged=false;rescoredWinner=c20e36edeba41c7811701a0487f23459dea8eb021237cab82dfdb640df73d4e6
+A02_LEGACY family=LED;seed=2;score=4070.3997483181643;geometrySha256=e3433fcb63516dad9f0548430168c193392f6f47d70a6e703f149e88cd16aac6
+A02_BEND_RANKING family=LED;seed=2;legacyViableCandidates=5;changedScores=0;legacyBest=4070.3997483181643;rescoredBest=4070.3997483181643;winnerChanged=false;rescoredWinner=e3433fcb63516dad9f0548430168c193392f6f47d70a6e703f149e88cd16aac6
+A02_LEGACY family=DIODE;seed=0;score=5049.174070430738;geometrySha256=94720e880f39fb716fd923d9f657979c8b22ec3820a9a5091e02281b18bac9b7
+A02_BEND_RANKING family=DIODE;seed=0;legacyViableCandidates=5;changedScores=0;legacyBest=5049.174070430738;rescoredBest=5049.174070430738;winnerChanged=false;rescoredWinner=94720e880f39fb716fd923d9f657979c8b22ec3820a9a5091e02281b18bac9b7
+A02_LEGACY family=PARALLEL;seed=3;score=6831.519925716576;geometrySha256=80dab4a641cca6f8fa659d102c7b2909ced1bb752d4d48bb149b47ed36c98e0c
+A02_BEND_RANKING family=PARALLEL;seed=3;legacyViableCandidates=5;changedScores=0;legacyBest=6831.519925716576;rescoredBest=6831.519925716576;winnerChanged=false;rescoredWinner=80dab4a641cca6f8fa659d102c7b2909ced1bb752d4d48bb149b47ed36c98e0c
+A02_PLACEMENT legacy=360,320;current=240,160;raw=160,160
+PASS: A02GeometryContractTest 66 assertions
+
+PASS: A02ReplayContractTest assertions=112
