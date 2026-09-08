@@ -1,0 +1,35 @@
+{
+  "protocol": "TSJ-A01-SEQUENTIAL-TIMING-REGRESSION-1",
+  "status": "PASS",
+  "falsePassReproductions": [
+    {
+      "case": "sixteen 4 ms attempts with totalElapsedMs 4",
+      "attemptCount": 16,
+      "attemptElapsedMs": 4,
+      "sequentialSumMs": 64,
+      "claimedTotalMs": 4,
+      "publishedChecker": "ACCEPT",
+      "correctedChecker": "REJECT",
+      "diagnostic": "aggregate/sequential timing inconsistency"
+    },
+    {
+      "case": "sixteen 5000 ms attempts with totalElapsedMs 5000",
+      "attemptCount": 16,
+      "attemptElapsedMs": 5000,
+      "sequentialSumMs": 80000,
+      "claimedTotalMs": 5000,
+      "publishedChecker": "ACCEPT",
+      "correctedChecker": "REJECT",
+      "diagnostic": "aggregate/sequential timing inconsistency",
+      "frozenTotalBudgetMs": 30000
+    }
+  ],
+  "positiveControls": [
+    {"case": "total equals sequential attempt sum", "attemptElapsedMs": 4, "sequentialSumMs": 64, "totalMs": 64, "result": "ACCEPT"},
+    {"case": "legitimate overhead within budget", "attemptElapsedMs": 4, "sequentialSumMs": 64, "totalMs": 100, "result": "ACCEPT"},
+    {"case": "total equals frozen total budget", "attemptElapsedMs": 4, "sequentialSumMs": 64, "totalMs": 30000, "result": "ACCEPT"},
+    {"case": "zero-resolution attempt measurements", "attemptElapsedMs": 0, "sequentialSumMs": 0, "totalMs": 0, "result": "ACCEPT"},
+    {"case": "total just below sequential attempt sum", "attemptElapsedMs": 4, "sequentialSumMs": 64, "totalMs": 63, "result": "REJECT"}
+  ],
+  "implementation": "scripts/a01.py report_from_value() now requires totalElapsedMs >= sum(attempt elapsedMs) without tolerance and retains the frozen upper bound."
+}

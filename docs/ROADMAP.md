@@ -854,7 +854,8 @@ This is a readable planning order, not a second dependency definition. The exact
 ### A01 · Reference-board manifests and reproducible measurement harness
 
 **Type / status:** Required early evidence gate; IMPLEMENTED — ACCEPTED after the
-bounded qualification-integrity corrective pass and fresh independent review.
+bounded qualification-integrity corrections, final sequential aggregate-timing
+correction and fresh independent review.
 
 **Purpose and reason:** Expose 60/100-part costs early instead of discovering them after the content library depends on untested assumptions.
 
@@ -866,16 +867,21 @@ bounded qualification-integrity corrective pass and fresh independent review.
 
 **Exact deliverable:** RB15/RB30/RB56/RB100 functional inventories; architecture-stage manifests; versioned workload counters; an identified reference machine; cold/warm run protocol and frozen qualification budget process. An owner-authorized desktop exception is valid when the host is fully identified and the evidence explicitly makes no modest-machine portability claim; a separate modest-host run remains future evidence.
 
-**Corrective-pass closure:** The collector now fails closed on wrapper
-exceptions while retaining diagnostic terminal/report/cleanup/error fields; the
-independent checker enforces finite bounded timing and trace intervals; and the
-preview-served execution provenance is bound through Java and the collector to
-the checker. Fresh two-corpus evidence, forced-failure/debug-off canaries and a
-read-only final review are recorded in the [A01 evidence packet](task-evidence/A01/README.md)
-and its `corrected-*` summaries. The single-corpus checker allowance remains a
-documented future hardening item. The implementation is recorded in
-`fdabfea1ab6ea0324ba39d76b6ad4173e9bea869`; the documentation/evidence commit
-is the final publication commit named in the task handoff.
+**Corrective-pass closure:** The collector fails closed on wrapper exceptions
+while retaining diagnostic terminal/report/cleanup/error fields; the checker
+enforces finite bounded timing and trace intervals; and preview-served execution
+provenance is bound through Java and the collector to the checker. Because the
+16 attempts execute serially, the final checker additionally requires
+`totalElapsedMs >= sum(attempt.elapsedMs)` while permitting legitimate overhead.
+Fresh deterministic regressions, dependency-audited two-corpus Browser evidence,
+forced-failure/debug-off canaries and independent review are recorded in the
+[A01 evidence packet](task-evidence/A01/README.md), its `corrected-*` summaries
+and its `sequential-*` summaries. The single-corpus checker allowance and absent
+injected cleanup-failure canary remain documented future hardening items. The
+initial integrity correction is recorded in
+`fdabfea1ab6ea0324ba39d76b6ad4173e9bea869`; its published handoff tip is
+`4b1e6668ec03440210ee2617c92ea57fa8d7cb0b`, and the final sequential correction
+commit is named in the publication handoff.
 
 **Acceptance:** Count physical packages separately from solver elements; expose pads/nets/raw and canonical segments, hypothesis count and matrix metrics. Run available small baselines plus bounded synthetic 20/40/60/100 structural/solver pilots; record unsupported stages rather than fake playable boards. Each 16-attempt corpus records 32 accepted solver steps (64 across pilot and holdout), browser viewport/DPR, timing p50/p95/worst, failure outcomes, memory availability and bounded cancellation.
 
@@ -896,11 +902,11 @@ is the final publication commit named in the task handoff.
 **Current implementation evidence (2026-09-07):** RB15/RB30/RB56/RB100
 architecture manifests, the versioned CircuitJS 20/40/60/100 ladder route,
 pilot/holdout receipts, frozen budgets, debug-off suppression and forced-failure
-cleanup are implemented and pass their focused checks. The final source/build
-fingerprints and compact receipts are recorded in
+cleanup are implemented and pass their focused checks. The final checker closes
+the sequential aggregate-timing false-pass; source/build/execution identities,
+regressions and dependency-audited receipts are recorded in
 [`docs/task-evidence/A01/`](task-evidence/A01/README.md). The required fresh
-independent Luna delta review passed; no A02 work is started by this
-implementation.
+independent review passed; no A02 work is started by this implementation.
 
 <a id="m-a02"></a>
 ### A02 · Close known predicate and geometry correctness seams

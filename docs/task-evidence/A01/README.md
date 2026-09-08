@@ -1,6 +1,63 @@
 # A01 — reference manifests and reproducible measurement harness
 
-Status: IMPLEMENTED — CORRECTIVE PASS ACCEPTED after fresh independent final review. Base: `3b4fd13db927a673a1d106bdb1ac7d19af9dea12`; implementation commit: `fdabfea1ab6ea0324ba39d76b6ad4173e9bea869`; branch `codex/task43p-final-recovery`.
+Status: IMPLEMENTED — ACCEPTED after the final sequential timing correction and fresh independent review. Base: `4b1e6668ec03440210ee2617c92ea57fa8d7cb0b`; branch `codex/task43p-final-recovery`; the final publication commit is named in the task handoff.
+
+## Current sequential timing correction — 2026-09-07
+
+The Java verifier runs the 16 corpus attempts strictly sequentially: each
+size/seed pair completes its cold attempt and cleanup before its warm attempt,
+then the next pair begins. The aggregate `totalElapsedMs` starts before those
+loops and includes legitimate cleanup/loop overhead. The checker therefore now
+requires the aggregate to be at least the sum of all included attempt
+`elapsedMs` values, without an arbitrary tolerance, while retaining the finite,
+nonnegative, per-attempt, trace-interval and frozen 30,000 ms upper-bound
+checks. Zero-millisecond clock-resolution observations remain valid.
+
+The focused integrity suite adds the two confirmed false-pass reproductions,
+a total just below the sequential sum, exact-sum/overhead/30-second-boundary
+controls, and zero-resolution coverage. The published checker accepted both
+synthetic false passes; the corrected checker rejects both with
+`aggregate/sequential timing inconsistency`. See
+[`sequential-timing-regression-summary.json`](sequential-timing-regression-summary.json).
+
+Final-candidate Browser receipts are retained outside the repository in the
+task-owned run `a01-sequential-20260907-2030`. They were originally collected
+fresh from the exact current source/build/served-execution identity and are
+reused after a closed dependency audit rather than recollected for ceremony.
+A fresh current-checker run over the raw receipts passes: pilot and holdout each
+have 16 attempts and 32 accepted steps; the pair has 32 attempts and 64 accepted
+steps. Their summaries and the final source/execution identity are
+[`sequential-pilot-summary.json`](sequential-pilot-summary.json),
+[`sequential-holdout-summary.json`](sequential-holdout-summary.json),
+[`sequential-check-summary.json`](sequential-check-summary.json), and
+[`sequential-timing-identity-summary.json`](sequential-timing-identity-summary.json).
+The unchanged five-permutation Java/GWT build is reused under the documented
+dependency boundary; its build fingerprint is unchanged.
+
+Fresh independent read-only reviewer `/root/a01_final_sanity_review`
+(Copernicus) found no blocker in N00, integrated A01, the sequential timing
+correction, raw Browser receipts, build reuse or cleanup state. The dispatch
+requested `gpt-5.6-luna` at MAX reasoning; effective runtime model/reasoning
+metadata was not exposed. Its sole nonblocking finding was stale A01 roadmap
+lineage wording. The wording is corrected in the current documentation delta,
+and the same reviewer passed its targeted read-only review. See
+[`sequential-review-summary.json`](sequential-review-summary.json).
+
+## Final evidence classification
+
+- **FRESH:** Python A01 qualification-integrity regressions, Node collection-
+  integrity regressions, reference-manifest validation, identity calculation,
+  raw-receipt checker, published-versus-corrected false-pass falsifier, and
+  working-tree whitespace check.
+- **REUSED AFTER DEPENDENCY AUDIT:** the two raw Browser collections, because
+  their exact source/build/execution fingerprints match the current candidate;
+  the previous forced-failure, debug-off and preview-cleanup canaries, whose
+  Java, collector, preview and isolation paths are unchanged; and the prior
+  five-permutation OBF build, because no Java/GWT/build input or compiled output
+  changed.
+- **NOT APPLICABLE:** a new production build or visible normal-player flow;
+  this checker/test/documentation correction changes neither production input
+  nor normal-player behavior.
 
 ## Lineage and corrective scope
 

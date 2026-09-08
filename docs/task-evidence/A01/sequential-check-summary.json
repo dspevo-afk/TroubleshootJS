@@ -1,0 +1,16 @@
+{
+  "protocol": "TSJ-A01-SEQUENTIAL-CHECK-SUMMARY-1",
+  "status": "PASS",
+  "receipts": [
+    "external task-owned run/a01-sequential-20260907-2030/pilot-0.json",
+    "external task-owned run/a01-sequential-20260907-2030/holdout-1.json"
+  ],
+  "reports": 2,
+  "corpora": ["holdout", "pilot"],
+  "attempts": 32,
+  "acceptedSteps": 64,
+  "expectedAcceptedSteps": 64,
+  "sourceFingerprint": "c0e8c09a199fed191cebb83991e85721884d1590831e7502549f66111a8d0555",
+  "buildFingerprint": "3e8c48662a6f9d82017310b230e8a618af762702b8c2a6f7a77317ce97cce883",
+  "executionDigest": "2d37950397cf9b47728b152193e3d8eca51a3a92e44aa234ce4ecfc41f6d7605"
+}

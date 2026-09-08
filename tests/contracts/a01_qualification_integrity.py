@@ -175,18 +175,39 @@ def receipt(corpus, status="PASS", terminal=None, cleanup="PASS"):
     }
 
 
+def set_attempt_timing(value, elapsed_ms, total_elapsed_ms=None):
+    report_value = value["report"]
+    trace = [
+        {"event": "constructed", "ms": 0},
+        {"event": "analyzed", "ms": elapsed_ms // 4},
+        {"event": "step1", "ms": elapsed_ms // 2},
+        {"event": "step2", "ms": (elapsed_ms * 3) // 4},
+        {"event": "finished", "ms": elapsed_ms},
+    ]
+    for item in report_value["attempts"]:
+        item["elapsedMs"] = elapsed_ms
+        item["timingTrace"] = copy.deepcopy(trace)
+    report_value["performance"]["p50AttemptElapsedMs"] = elapsed_ms
+    report_value["performance"]["p95AttemptElapsedMs"] = elapsed_ms
+    report_value["performance"]["worstAttemptElapsedMs"] = elapsed_ms
+    report_value["totalElapsedMs"] = (elapsed_ms * len(report_value["attempts"])
+                                       if total_elapsed_ms is None else total_elapsed_ms)
+
+
 def write_json(directory, name, value):
     path = directory / name
     path.write_text(json.dumps(value) + "\n", encoding="utf-8")
     return path
 
 
-def expect_rejected(label, values, directory):
+def expect_rejected(label, values, directory, diagnostic=None):
     paths = [write_json(directory, f"{label}-{index}.json", value)
              for index, value in enumerate(values)]
     try:
         A01.check_measurements([str(path) for path in paths])
-    except ValueError:
+    except ValueError as error:
+        if diagnostic is not None:
+            assert diagnostic in str(error), (label, str(error))
         return
     raise AssertionError(label + " was accepted")
 
@@ -202,6 +223,21 @@ def main():
             str(write_json(root, "holdout.json", holdout)),
         ])
         assert accepted["reports"] == 2 and accepted["acceptedSteps"] == 64
+
+        exact_sum = copy.deepcopy(pilot)
+        exact_sum["report"]["totalElapsedMs"] = 64
+        A01.report_from_value(exact_sum, "exact-sequential-sum")
+
+        overhead = copy.deepcopy(pilot)
+        A01.report_from_value(overhead, "legitimate-overhead")
+
+        total_budget = copy.deepcopy(pilot)
+        total_budget["report"]["totalElapsedMs"] = A01.MAX_TOTAL_ELAPSED_MS
+        A01.report_from_value(total_budget, "exact-total-budget")
+
+        zero_resolution = copy.deepcopy(pilot)
+        set_attempt_timing(zero_resolution, 0, 0)
+        A01.report_from_value(zero_resolution, "zero-resolution-timing")
 
         cleanup_failed = copy.deepcopy(pilot)
         cleanup_failed["status"] = "INFRASTRUCTURE_FAILURE"
@@ -222,6 +258,21 @@ def main():
         excessive_total = copy.deepcopy(pilot)
         excessive_total["report"]["totalElapsedMs"] = 30001
         expect_rejected("excessive-total", [excessive_total], root)
+
+        short_aggregate = copy.deepcopy(pilot)
+        short_aggregate["report"]["totalElapsedMs"] = 4
+        expect_rejected("sixteen-four-ms-total-four", [short_aggregate], root,
+                        "aggregate/sequential timing inconsistency")
+
+        long_attempts = copy.deepcopy(pilot)
+        set_attempt_timing(long_attempts, 5000, 5000)
+        expect_rejected("sixteen-five-second-total-five-second", [long_attempts], root,
+                        "aggregate/sequential timing inconsistency")
+
+        below_sum = copy.deepcopy(pilot)
+        below_sum["report"]["totalElapsedMs"] = 63
+        expect_rejected("total-just-below-sequential-sum", [below_sum], root,
+                        "aggregate/sequential timing inconsistency")
 
         missing_total = copy.deepcopy(pilot)
         missing_total["report"].pop("totalElapsedMs")
@@ -268,10 +319,17 @@ def main():
         "protocol": "TSJ-A01-INTEGRITY-REGRESSIONS-1",
         "cases": [
             "valid pilot + holdout aggregate",
+            "total equals sequential attempt sum",
+            "total exceeds sequential sum for legitimate overhead",
+            "total equals frozen total budget",
+            "zero-resolution attempt measurements remain valid",
             "cleanup-failed collection retained/rejected",
             "terminal/report contradiction retained/rejected",
             "recorded error cannot coexist with PASS",
             "excessive total elapsed rejected",
+            "sixteen 4 ms attempts with total 4 ms rejected",
+            "sixteen 5000 ms attempts with total 5000 ms rejected",
+            "total just below sequential attempt sum rejected",
             "missing total elapsed rejected",
             "trace outside attempt interval rejected",
             "served artifact identity mismatch rejected",

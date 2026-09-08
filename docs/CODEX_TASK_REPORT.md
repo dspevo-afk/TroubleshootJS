@@ -1,6 +1,70 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A01 corrective pass COMPLETE — 2026-09-07
+## Current checkpoint - A01 sequential timing correction COMPLETE — 2026-09-07
+
+- **Scope/candidate:** The remaining A01 sequential aggregate-timing defect is
+  corrected on top of published HEAD `4b1e6668ec03440210ee2617c92ea57fa8d7cb0b`
+  on `codex/task43p-final-recovery`. The implementation delta remains limited
+  to `scripts/a01.py` and its focused Python contract suite; A01 evidence/report
+  documentation and the A01 roadmap status wording are reconciled for closure.
+  A02 remains explicitly unstarted.
+- **N00 sanity:** PASS. `55cac1d24528a26505f540ee52f85631e0add4d2`
+  changed only `docs/ROADMAP.md` and this report, retained accepted Task49
+  `3de4da1d3bad3ed532e6c327b24195bc3138ed15` and its evidence unchanged, and
+  preserved the coherent Task49 -> N00 -> A01 -> A02 dependency direction.
+  Completed history remains intact and A02/later cards remain UNSTARTED.
+- **Root cause/fix:** `A01MeasurementVerifier.verify()` runs cold/warm attempts
+  serially; the checker previously compared `totalElapsedMs` only to the
+  longest attempt. `report_from_value()` now requires the aggregate to be at
+  least the exact sum of all included attempt intervals, with no tolerance,
+  while retaining finite/nonnegative checks, per-attempt limits, trace bounds,
+  and the frozen 30,000 ms total ceiling. The diagnostic is
+  `aggregate/sequential timing inconsistency`.
+- **Fresh deterministic validation:** The Python A01 qualification-integrity
+  suite, Node collector-integrity suite, reference-manifest check, current
+  identity check, raw-receipt pair check and `git diff --check` PASS. A direct
+  published-versus-current falsifier confirms that the `4b1e666` checker accepts
+  both synthetic false passes (16×4 ms/total 4 ms and 16×5000 ms/total 5000 ms),
+  while the corrected checker rejects both and rejects 63 ms below the 64 ms
+  sum. Exact sum, legitimate overhead, exact 30,000 ms boundary,
+  zero-resolution timing and pilot+holdout 32-attempt/64-step controls PASS.
+- **Browser evidence — REUSED AFTER DEPENDENCY AUDIT:** The retained raw Browser
+  pilot and holdout were originally collected from this exact final source,
+  build and served-execution identity. A fresh checker run against the unchanged
+  receipts PASS: each has 16 attempts/32 accepted steps, with aggregate/attempt
+  sums of 33/13 ms and 32/13 ms; the pair has 32 attempts/64 accepted steps.
+  Both collection receipts, reports and cleanup states are PASS, both tabs are
+  closed, and neither receipt records an error. The prior forced-failure,
+  debug-off and preview-cleanup canaries are reused only across unchanged Java,
+  collector and preview paths; they are not relabeled as newly run evidence.
+- **Build — REUSED AFTER DEPENDENCY AUDIT:** No current change touches
+  `build.xml`, `src/`, `war/circuitjs.html` or compiled output. The existing
+  five-permutation OBF build therefore remains valid at build fingerprint
+  `3e8c48662a6f9d82017310b230e8a618af762702b8c2a6f7a77317ce97cce883`.
+  Current source and execution identities are recorded in
+  [sequential-timing-identity-summary.json](task-evidence/A01/sequential-timing-identity-summary.json).
+- **Resources:** Collection tabs are closed. The supported stop wrapper failed
+  closed because its launch parent had exited; the exact preview PID/start/
+  command and kernel listener proof were revalidated through
+  `VerifierIsolation.psm1`, exact termination succeeded, listener absence and
+  state removal were proven. The closure audit finds no Browser tabs, port 8899
+  listener or matching task preview process.
+- **Review/publication:** Fresh independent read-only reviewer
+  `/root/a01_final_sanity_review` (Copernicus) PASS with no blocker after
+  inspecting the complete N00/A01 lineage, working-tree candidate, raw receipts,
+  timing regressions, provenance, build reuse and resource state. The dispatch
+  requested `gpt-5.6-luna` at MAX reasoning; effective runtime model/reasoning
+  metadata was not exposed. Its sole nonblocking roadmap-wording finding is
+  reconciled in this candidate, and the same reviewer passed the targeted
+  documentation delta review. No commit, push or completion email is claimed
+  in this checkpoint. See
+  [sequential-review-summary.json](task-evidence/A01/sequential-review-summary.json).
+- **Follow-ups:** The single-corpus checker allowance and absence of an injected
+  cleanup-failure canary remain nonblocking future hardening items.
+- **Next:** Perform final staged checks and the normal publication sequence,
+  then stop. A02 remains unstarted.
+
+## Historical checkpoint - A01 corrective pass COMPLETE — 2026-09-07
 
 - **Scope/candidate:** This owner-authorized pass repairs exactly three A01
   qualification-integrity findings on top of documentation successor

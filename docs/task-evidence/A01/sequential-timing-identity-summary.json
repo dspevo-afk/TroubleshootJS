@@ -1,0 +1,29 @@
+{
+  "protocol": "TSJ-A01-SEQUENTIAL-TIMING-IDENTITY-1",
+  "status": "PASS",
+  "candidate": {
+    "baseHead": "4b1e6668ec03440210ee2617c92ea57fa8d7cb0b",
+    "worktreeChanges": [
+      "scripts/a01.py",
+      "tests/contracts/a01_qualification_integrity.py",
+      "docs/ROADMAP.md",
+      "docs/task-evidence/A01/*",
+      "docs/CODEX_TASK_REPORT.md"
+    ],
+    "sourceFingerprint": "c0e8c09a199fed191cebb83991e85721884d1590831e7502549f66111a8d0555",
+    "buildFingerprint": "3e8c48662a6f9d82017310b230e8a618af762702b8c2a6f7a77317ce97cce883"
+  },
+  "compiledPermutationCount": 5,
+  "executionProvenance": {
+    "protocol": "troubleshootjs-execution-provenance-v1",
+    "sourceDigest": "0cf569e9b6cd4ac99f16180e7a891eb7186c8355f74018fc78df258e86f7eba0",
+    "scriptDigest": "e365c92d8497190521217dc23de5c1324bf0d82f45a47f043ee9a33762741758",
+    "webDigest": "7776fed4fd089a1f80c4d559a9e4a28e3c63b2dadba8141881f5cf388b6a87d6",
+    "executionDigest": "2d37950397cf9b47728b152193e3d8eca51a3a92e44aa234ce4ecfc41f6d7605",
+    "fileCount": 1298
+  },
+  "buildReuse": {
+    "status": "REUSED",
+    "reason": "The correction changes only the checker and its qualification-integrity tests; Java, GWT inputs, and compiled war output are unchanged. The unchanged five-permutation OBF build remains bound by the same build fingerprint."
+  }
+}

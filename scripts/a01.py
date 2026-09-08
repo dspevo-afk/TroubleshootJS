@@ -508,8 +508,9 @@ def report_from_value(value, name):
         integer(baseline.get(field), name + " baseline " + field)
     require(report.get("originalOwnerRestored") is True and report.get("cleanup") == "PASS",
             name + " owner cleanup")
-    require(total_elapsed >= max(item["elapsedMs"] for item in attempts),
-            name + " aggregate timing precedes an attempt")
+    sequential_elapsed = sum(item["elapsedMs"] for item in attempts)
+    require(total_elapsed >= sequential_elapsed,
+            name + " aggregate/sequential timing inconsistency")
     validate_performance(report, attempts, name)
     return report
 
