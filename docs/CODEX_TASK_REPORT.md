@@ -1,6 +1,94 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A02 IMPLEMENTED — ACCEPTED — 2026-09-08
+## Current checkpoint - A03 COMPLETE — QUALIFIED — 2026-09-08
+
+- **Scope/base:** A03 adds stable role/instance and variant identities, explicit
+  device buses, immutable bounded realization manifests, and pinned replay on
+  `codex/task43p-final-recovery` above accepted A02 base
+  `363244c0483ec665feff3cb8f40fab09851c7b98`. A04 and all later milestones
+  remain UNSTARTED. The complete intended working-tree delta is still
+  uncommitted at this checkpoint; final publication is the next and only action.
+- **Qualification:** The exact 899-file A03 source inventory matches this
+  checkout. JDK 8u502/GWT 2.7 compiled all five OBF production permutations.
+  The compiled v6 runtime receipt is `PASS`, `Gate=All`, nine routes and
+  `cleanup=true`; its source, script, web, execution, preview and verifier
+  identities exactly match the final candidate. Compiled identity vectors and
+  all three manifests byte-match JVM receipts. Task48 and Task49 complete
+  reports byte-match fresh accepted-base reports (755 and 1,053 assertions).
+- **Verifier recovery:** Complete `scripts/verify-gate-b.ps1` with repository
+  JDK 8u502 exited `0`. It passed the strict ownership/receipt matrix,
+  including PID reuse, escaped-grandchild, null-command helper,
+  unrelated-process survival, containment launch/recovery, and cleanup
+  negatives, without weakening the 500 ms ownership contract.
+- **Review:** A fresh Luna MAX read-only implementation review and targeted v6
+  evidence review PASS. The only follow-up is deliberately unsupported
+  interpretation-bearing saved-action round-trip data; current A03 replay
+  rejects it rather than reinterpreting it.
+- **Resources:** No current task-owned browser or verifier process/listener
+  remains from v6. The older `6cdab3121a5446ca9a622be3357e0e07` run is
+  preserved as historical failure evidence: its original PID/ports are absent,
+  but its legacy profile/claim/manifest lacks the reviewed recovery receipt and
+  containment launch and is not relabeled as cleaned.
+- **Next:** Stage the qualified A03 implementation, verifier recovery,
+  evidence and documentation; commit and push normally. Do not start A04.
+
+## Historical pre-recovery checkpoint - A03 qualification incomplete — 2026-09-08
+
+- **Scope/base:** Stable role/instance and variant identities, explicit device
+  buses, immutable bounded realization manifests and pinned replay. Clean entry
+  on `codex/task43p-final-recovery` at
+  `363244c0483ec665feff3cb8f40fab09851c7b98`. A02 remains accepted; A04 and later
+  milestones remain UNSTARTED. The current candidate is this base plus the
+  A03 diff. Source SHA256 is
+  `ac3500c7d899fe21489ef7a501de44329ed1df1017fe3e8a15f219d35340233a`
+  (899-file inventory in the evidence packet). A03 is not accepted; no commit,
+  push, or completion email has been attempted. Final tracked/new-file whitespace
+  checks PASS; index is empty; all 899 source hashes still match native/build/review.
+  The worktree intentionally retains only the A03 source/tooling/docs/evidence diff.
+- **Investigation/design:** Read-only Luna MAX identity and replay maps located
+  the F9 seam in `BoundedAssemblyPlan.resolveNets/Union`. Independent Luna MAX
+  model challenge PASS: retain legacy rendered net IDs/signatures; declare
+  semantic buses separately, qualify internal identities by variant, validate
+  every manifest choice before mutable assembly, and freeze leaf replay 3/4.
+- **Boundary:** New manifest replay covers the existing bounded 1/2/3 plans.
+  Leaf replay remains the existing descriptor adapter. Future state/import
+  fields are data contracts only. No saved-game UI, MCU, importer or A04 work.
+- **Validation plan:** A03 native and compiled exact vectors/canaries; existing
+  block/challenge/assembly/A02 native suites; final JDK8/GWT2.7 five-permutation
+  build; Task41/46/47/48/49 and relevant leaf/composed runtime regression; exact
+  accepted Task48/49 report comparison; basic small/composed corpus timings;
+  fresh integrated independent review. See the A03 evidence packet for the
+  closed acceptance table as execution evidence is collected.
+- **Completed checks:** JDK8 Task44/45, Task46 (including independent exact seed
+  oracle), and Task47/48/49 pure contracts/reference oracles PASS. These suites
+  exercise the unchanged identity subset (four SHA256 fingerprints rechecked).
+  A03 native shared vectors (109 assertions), actual bounded replay/saved actions
+  (29 assertions), and all three A02 suites PASS. Exact UTF-8 parity files are
+  emitted directly by Java. Final candidate JDK8/GWT2.7 build PASS, all five
+  permutations (65.83 s, exit 0); the accepted-base export also built all five.
+  Fresh Luna MAX integrated code review PASS for bounded scope. One nonblocking
+  future-hook limitation is retained: interpretation-bearing saved-action data
+  cannot yet round-trip its identity projection. Current replay rejects those
+  interpretation fields. Runtime parity remains unproven.
+- **Environment/resources:** Built-in shell startup failed; Desktop Commander
+  provides working file/process access. Repository bounded JDK8 probe PASS with
+  process termination and scratch cleanup. Root owns integration, runtime gates
+  and documentation; implementation files have returned to root ownership.
+  Root retains one uniquely owned OS-temp accepted-source export and receipts.
+  TCP preview smoke failed the unchanged 500 ms ownership deadline with cleanup
+  PASS. Existing HTTP.sys reached CDP but exposed response handling and retained
+  browser cleanup proof failures (root PID 212748/start 639244439669691746,
+  port 58648, run `6cdab3121a5446ca9a622be3357e0e07`). The transient child is
+  now absent, but the launch parent exited; existing strict cleanup cannot
+  recover the orphaned run. Retain its browser/profile/claim and baseline export.
+  Preview cleanup completed. Native scratch was removed; pre-existing `.tmp`
+  content remains intact. No cleanup or runtime PASS is claimed for this run.
+- **Next:** A supported, reviewed cleanup path for the exact orphaned run
+  is required before
+  rerunning the repaired smoke and compiled parity/legacy report gates with
+  qualified cleanup. Do not bypass the ownership contract or begin A04.
+
+## Historical checkpoint - A02 IMPLEMENTED — ACCEPTED — 2026-09-08
 
 - **Scope/base:** F3 canonical admission and explicit hypothesis identity, F5
   direction bends, F6 connected placement, and necessary replay dispatch only.

@@ -1,0 +1,259 @@
+{
+    "protocol":  "a03-final-candidate-fingerprint-v1",
+    "base":  "363244c0483ec665feff3cb8f40fab09851c7b98",
+    "branch":  "codex/task43p-final-recovery",
+    "candidateSha256":  "1b1135d6baccb4d7957777ac9835b57319c82092615111ba89f74ed9e0a3cabf",
+    "hashInput":  "UTF-8(path=lowercase-file-sha256 joined by LF; self excluded)",
+    "selfExcluded":  "docs/task-evidence/A03/candidate-final-files.json",
+    "fileCount":  62,
+    "files":  [
+                  {
+                      "path":  "docs/ARCHITECTURE.md",
+                      "sha256":  "074087e616a110f4ba73d0fb1c6bc6f19653f37b5acd050d260041653ab62d71"
+                  },
+                  {
+                      "path":  "docs/CODEX_TASK_REPORT.md",
+                      "sha256":  "967d05aa0a570f7ea5ecebfd14c1a78f94b9095663950cfe5949ef68f71f1bf4"
+                  },
+                  {
+                      "path":  "docs/ROADMAP.md",
+                      "sha256":  "d99670ae0ba9c22252b4cc5457e279d397cfb5e6cab859f74a9ba7621dadb0c8"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/baseline-task48-fresh.json",
+                      "sha256":  "8d0d6d6065d9c9970b06a37c4df2be9c720459142a53845096bda8465b0baa05"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/baseline-task49-fresh.json",
+                      "sha256":  "2572fd2f0fcf90398640201ea14b648f0359a02da56eec78bc842cadb0d2a57d"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/browser-blocker.txt",
+                      "sha256":  "feab01089ab3d256b3b982eaadfbe7d5a89800a00495170f3e722dba7dd61f10"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/candidate-files.json",
+                      "sha256":  "fa272f5bba60fcd58be5d15c191b49af54edcf1ada9465edbf799ff10afc9998"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/candidate-source-files.json",
+                      "sha256":  "827ab0f9e785a5537f465d1c58d774728e2583852b211637195d22a70eb34190"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/closure-reconciliation.md",
+                      "sha256":  "82797fb2f5e57467f9fe82ceee5cd2cd6526fa6830fead657bee20a5eafc754a"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/independent-final-review.md",
+                      "sha256":  "2fd9e1ba2af443a256ad629461e6d9d8e656f1d68cbecc4437a041fe1b94c05a"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/independent-review.txt",
+                      "sha256":  "7a7db75faa6a5af1d8f174be24a443e346316dd03eb783d51d82bdf503456a3b"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-manifest-1.txt",
+                      "sha256":  "3e72355e1e2da8a90059dfc482718085a65d2421a82ceaaf13f91608bbe415c9"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-manifest-2.txt",
+                      "sha256":  "39a622ebe68280b955aabe0f33b298f62cfd60dff598f4d26b76dec17b63bab1"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-manifest-3.txt",
+                      "sha256":  "6f16853e2bb287b3c734e6e188b5ca0cfa0c6af815eb8371ff376d5e2f5a2705"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery.txt",
+                      "sha256":  "2f578a1dce55a15cebad6d3b4bfc5e02b13a2851c18b61c8c38c37554063f070"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery.txt.manifest-1.txt",
+                      "sha256":  "3e72355e1e2da8a90059dfc482718085a65d2421a82ceaaf13f91608bbe415c9"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery.txt.manifest-2.txt",
+                      "sha256":  "39a622ebe68280b955aabe0f33b298f62cfd60dff598f4d26b76dec17b63bab1"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery.txt.manifest-3.txt",
+                      "sha256":  "6f16853e2bb287b3c734e6e188b5ca0cfa0c6af815eb8371ff376d5e2f5a2705"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery.txt.vectors.txt",
+                      "sha256":  "347d74d2bebbf95b93182fcc01af28a9050a3d6a7bca7e5d8a93f4dd47df8d44"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery-v4.txt",
+                      "sha256":  "65fb0ff42c484847edbcce7220c8ee3059b06ceebb111d5327e00ae671ac5698"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery-v4.txt.manifest-1.txt",
+                      "sha256":  "3e72355e1e2da8a90059dfc482718085a65d2421a82ceaaf13f91608bbe415c9"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery-v4.txt.manifest-2.txt",
+                      "sha256":  "39a622ebe68280b955aabe0f33b298f62cfd60dff598f4d26b76dec17b63bab1"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery-v4.txt.manifest-3.txt",
+                      "sha256":  "6f16853e2bb287b3c734e6e188b5ca0cfa0c6af815eb8371ff376d5e2f5a2705"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-recovery-v4.txt.vectors.txt",
+                      "sha256":  "347d74d2bebbf95b93182fcc01af28a9050a3d6a7bca7e5d8a93f4dd47df8d44"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-vectors.txt",
+                      "sha256":  "347d74d2bebbf95b93182fcc01af28a9050a3d6a7bca7e5d8a93f4dd47df8d44"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/native-build-summary.txt",
+                      "sha256":  "24e11037f75a7df67868bef83c24c153fc02edac86d2a5f996e170a2cba5ccd1"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/native-regressions.txt",
+                      "sha256":  "d41fc3a01e7570ca5c0cba2af65084fd4b77a3cf33d313c8f00dcc8ec06be93e"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/README.md",
+                      "sha256":  "5a1c0369ce6a8e6f7182d484729d7553c68b22ab23bccc6b403f374e10f8c8ae"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-all-final.json",
+                      "sha256":  "5fc7bee35d37caa732d79a8ce2f1cfff03f23cb9bf1fe0962b61761283e5db3e"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-all-final-recovery-v2.json",
+                      "sha256":  "88c2734797c4b8de61a615254ad91def7a98e9d972d2d6eac4c76dce6fcb6649"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-all-final-recovery-v3.json",
+                      "sha256":  "124e16b2c1d563fe4d33c0e22b590ffe22ff071420763d2c772544e79e529f59"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-all-final-recovery-v4.json",
+                      "sha256":  "141bb9d12c1a70c708aaa1d8efcc915042fa8d6731e55069c97def04b2cac7fe"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-all-final-recovery-v5.json",
+                      "sha256":  "1a842daddca13c031beed22201a5e214af18d77b3e6c480e2c91d6ce347a5f0f"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-all-final-recovery-v6.json",
+                      "sha256":  "7f895afb1940496e5236cdde702de069dd58f2a582be08999f7381d1ee36764e"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-all-final-verified.json",
+                      "sha256":  "ce7ce40c75aa476681be8aa910bd05595199f1b657961cd248396ae477b3d72e"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-all-recovery.json",
+                      "sha256":  "6b42c3934b575717576a1b62f2db58f22794eae8afbcce546424de474a0e4bc0"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-task41-recovery.json",
+                      "sha256":  "9c7eb094ac6cd039d3477123a76e81c024fd04dff9c800891ea61b7f280b8582"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/runtime-task41-recovery-pass.json",
+                      "sha256":  "a25aa9bfb26dab1c1d54bec56c9ea5f1589d302481cf3b73e2c124f994be59e5"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/transport-smoke-2.json",
+                      "sha256":  "20f777e73284980a01dc7bbbe8d2e590c14efdf51279b5a2d24f946677e48e39"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/transport-smoke-httpsys.json",
+                      "sha256":  "3373485c90acb58d6843f6293a55d8317f2fbdefea390e48510f66d860c53b1c"
+                  },
+                  {
+                      "path":  "scripts/VerifierIsolation.psm1",
+                      "sha256":  "202867ead5c38202538ae0e22991ecd6bc5fb0d12f8c9e66860b23ef31425676"
+                  },
+                  {
+                      "path":  "scripts/verify-a03-browser.ps1",
+                      "sha256":  "5a1ed8b15bdee42e1759458e4c8d07ddb9f6db388f5db09adb0d4e2a75af953c"
+                  },
+                  {
+                      "path":  "scripts/verify-a03-contracts.ps1",
+                      "sha256":  "ba97eb6495a4bae21564e097d9612d2c312d9355358eb0ba0448f91802bf7817"
+                  },
+                  {
+                      "path":  "scripts/verify-assembly-contracts.ps1",
+                      "sha256":  "150fbf7e2409affda46815f481ed20ad09345e4189838b84af575c7b5cc352fa"
+                  },
+                  {
+                      "path":  "scripts/verify-block-contracts.ps1",
+                      "sha256":  "1d6c4ecaec491ca10915a3be0eb11910e463b0b425477f947fcf9c26b82a42e7"
+                  },
+                  {
+                      "path":  "scripts/verify-browser.ps1",
+                      "sha256":  "45e542afb7d5e499b05ee426bdec9900504a64d5da82ee2e10bfd39014bf35a5"
+                  },
+                  {
+                      "path":  "scripts/verify-challenge-contracts.ps1",
+                      "sha256":  "c9a9d68e52e96d92c0e3f15bc5058338b967227b2bf6ead4eb147265eba1c2be"
+                  },
+                  {
+                      "path":  "scripts/verify-gate-b.ps1",
+                      "sha256":  "a2707683a8358f179b3b2b1e688a1433018c8d551b357421a7ef1668cec0d682"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/A03IdentityContractVectors.java",
+                      "sha256":  "347b1e03c827dc9872c82afd4429f2be39383fceb833a1b090a35b8fb73d50e9"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/A03IdentityDeveloperVerifier.java",
+                      "sha256":  "d02dd05a5df82858ac8ab3e09a638e247d3e8d7853a9a3b877f5907e6f247d50"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/A03RealizationReplay.java",
+                      "sha256":  "3fa0f95c4f51f9640f07c3d7c09e8d4ebc2bb71d7ecc5e43dc937650648d5142"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/BlockNamespace.java",
+                      "sha256":  "983f1c34d55546c02ea9b465f3d0f6ca708116641a7c6b2468e475c4755cf010"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/BlockRealizationIdentity.java",
+                      "sha256":  "51ecdc095886fd47e6842aaeda056f30110fd81d8cb4760671c1086a70683132"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/BoundedAssemblyPlan.java",
+                      "sha256":  "35ba3d18b5dceded8b100cad4a04208a3ad53262fd80c8181532094090ba6106"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java",
+                      "sha256":  "f12a68f92ae1322e5ed49a44765e24fabd94c5a9da073e7351e404b168f9fc6d"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+                      "sha256":  "69581fd7ae054cf4618581d73b8f932bd37b2832d63b01f4523c68ed265825d5"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/DeviceBusBindings.java",
+                      "sha256":  "ac4dcff42599b7054cbe7387b81f978c338c1a0a40105f6d3026db9aa52e7332"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/LegacyChallengeReplay.java",
+                      "sha256":  "5d6cd357f8f8ba844f6185cbd2d4ba977a66f9f945d5764699c0ec46ed14861c"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+                      "sha256":  "06625e1fe6c1ccc125ca955d43be08d8b4c23bcde880d0d555119cf484ab2a8e"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/RealizationManifest.java",
+                      "sha256":  "eeb0417fc97ccc06ed388b5b367c0d836f5ca8ae7e0afb14f9a1598f8937924e"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+                      "sha256":  "ddca0853a5ebc80d566824831b706d2551c3c1e3a1c6d41549b324a0d84ddbb7"
+                  },
+                  {
+                      "path":  "tests/contracts/A03IdentityContractTest.java",
+                      "sha256":  "9572e74c9a5a8bea5747366449aecd505266f02e39e9b8cbd68eb709868714eb"
+                  }
+              ]
+}

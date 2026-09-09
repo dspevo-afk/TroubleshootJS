@@ -78,6 +78,8 @@ try {
         'src/com/lushprojects/circuitjs1/client/BlockContractException.java',
         'src/com/lushprojects/circuitjs1/client/FunctionalBlockDescriptor.java',
         'src/com/lushprojects/circuitjs1/client/BlockNamespace.java',
+        'src/com/lushprojects/circuitjs1/client/BlockRealizationIdentity.java',
+        'src/com/lushprojects/circuitjs1/client/DeviceBusBindings.java',
         'src/com/lushprojects/circuitjs1/client/ElectricalContractException.java',
         'src/com/lushprojects/circuitjs1/client/ElectricalPortContract.java',
         'src/com/lushprojects/circuitjs1/client/ElectricalBlockContract.java',

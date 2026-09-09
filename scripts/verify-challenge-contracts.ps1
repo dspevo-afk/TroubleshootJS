@@ -77,6 +77,7 @@ try {
         'src/com/lushprojects/circuitjs1/client/BlockContractException.java',
         'src/com/lushprojects/circuitjs1/client/FunctionalBlockDescriptor.java',
         'src/com/lushprojects/circuitjs1/client/BlockNamespace.java',
+        'src/com/lushprojects/circuitjs1/client/BlockRealizationIdentity.java',
         'src/com/lushprojects/circuitjs1/client/FunctionalBlockExamples.java',
         'src/com/lushprojects/circuitjs1/client/PcbGeometryContractVersion.java',
         'src/com/lushprojects/circuitjs1/client/ChallengeContractException.java',

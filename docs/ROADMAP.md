@@ -946,14 +946,17 @@ diode/parallel proofs, restored 14-route Task41 corpus and 755/1053-assertion
 Task48/49 replay checks PASS. The legacy full reports match every baseline field.
 Independent Luna MAX review and targeted repair review PASS. See
 [A02 evidence](task-evidence/A02/README.md) for identities, retained failures,
-limits, dependency-audited evidence reuse and cleanup. A03 remains UNSTARTED.
+limits, dependency-audited evidence reuse and cleanup. A03 was unstarted at that handoff; its current status is below.
 
 **Direct later dependents:** [A03](#m-a03), [A09](#m-a09), [P01](#m-p01).
 
 <a id="m-a03"></a>
 ### A03 · Stable design identities, device buses and complete replay manifests
 
-**Type / status:** Required foundation; UNSTARTED.
+**Type / status:** Required foundation; COMPLETE — QUALIFIED FOR PUBLICATION.
+The final source, compiled runtime, cleanup/recovery, compatibility and Gate B
+evidence are closed in [A03 evidence](task-evidence/A03/README.md). A04 and later
+milestones remain UNSTARTED.
 
 **Purpose and reason:** Keep optional/repeated blocks, alternative topologies, physical repairs and future saves from inheriting unstable union-find or collection identities.
 

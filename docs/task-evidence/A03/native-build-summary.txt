@@ -1,0 +1,30 @@
+A03 native/build qualification — 2026-09-08
+Base: 363244c0483ec665feff3cb8f40fab09851c7b98
+Branch: codex/task43p-final-recovery
+Source fingerprint: ac3500c7d899fe21489ef7a501de44329ed1df1017fe3e8a15f219d35340233a
+Inventory: candidate-source-files.json (899 source files, exact SHA256 per file).
+
+PASS scripts/verify-a03-contracts.ps1 -JavaHome <selected-JDK8> -Contract All -ReceiptOutputPath <owned-temp>/a03-jvm-receipt.txt
+JDK: javac 1.8.0_502; actual sources compiled with -source 7 -target 7.
+Only the accepted unrelated Task35 developer-verifier javac incompatibility uses a fail-closed stub; no A03 production class is stubbed.
+Shared identity corpus: 109 assertions. Actual bounded replay/saved-action contracts: 29 assertions.
+A02CandidateContractTest PASS; A02GeometryContractTest 66 assertions PASS; A02ReplayContractTest 112 assertions PASS.
+Exit 0; 16.47 seconds; owned compiled classes and scratch cleanup PASS.
+Exact UTF-8 parity files: jvm-vectors.txt and jvm-manifest-1/2/3.txt.
+Files contain 17505 / 20121 / 63897 / 66531 bytes respectively; no CR or newline normalization.
+JVM timing corpus: two shared vector runs 292.585 ms; three captures 477.001 ms; six resolves 139.985 ms.
+Timings include cold initialization and are scale sanity observations, not performance guarantees.
+
+PASS scripts/build.ps1 -JavaHome <selected-JDK8> -Target Compile -Style OBF
+JDK 1.8.0_502 / repository GWT 2.7; all five production permutations.
+Compiler 61.923 s; linker 1.384 s; wrapper 65.83 s; exit 0.
+Earlier diagnostic candidate build and accepted-base export build also passed all five permutations.
+
+Existing pure regression reuse: native-regressions.txt. All four changed identity dependency hashes were rechecked byte-exact after final native/build execution.
+The later compiled v6 receipt closes JVM/GWT byte parity, real
+solver/coordinate canaries, and the complete Task41/46/47/48/49/A02 runtime
+matrix; see runtime-all-final-recovery-v6.json and closure-reconciliation.md.
+Task48 and Task49 full reports exactly match the fresh accepted-base reports.
+Final complete Gate B passed with JDK 8u502. A fresh independent implementation
+and provenance review PASSed; one future-hook follow-up remains. A03 is
+qualified for normal publication.

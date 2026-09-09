@@ -41,6 +41,7 @@ final class BoundedAssemblyPlan {
     private final String faultBlockKey;
     private final Map<String, String> decisionOwners;
     private final String semanticSignature;
+    private final DeviceBusBindings deviceBuses;
     private final ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe;
 
     private BoundedAssemblyPlan(BoundedAssemblyRequest request,
@@ -52,7 +53,7 @@ final class BoundedAssemblyPlan {
             String faultDecisionKey, String faultBlockKey,
             Map<String, String> decisionOwners, String semanticSignature,
             Collection<DeviceAdapterContract> deviceAdapters,
-            boolean controlledIndicator,
+            boolean controlledIndicator, DeviceBusBindings deviceBuses,
             ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe) {
         this.request = request;
         this.namespace = namespace;
@@ -72,6 +73,10 @@ final class BoundedAssemblyPlan {
         this.deviceAdapters = Collections.unmodifiableList(
                 new ArrayList<DeviceAdapterContract>(deviceAdapters));
         this.controlledIndicator = controlledIndicator;
+        if (deviceBuses == null) {
+            throw new IllegalArgumentException("Device bus bindings are required");
+        }
+        this.deviceBuses = deviceBuses;
         this.resolvedLoadRecipe = resolvedLoadRecipe;
     }
 
@@ -103,8 +108,12 @@ final class BoundedAssemblyPlan {
             descriptors.add(contribution.getDescriptor());
         }
         BlockNamespace namespace = new BlockNamespace(DEVICE_SCHEMA_ID,
-                DEVICE_SCHEMA_VERSION, descriptors);
+                DEVICE_SCHEMA_VERSION, descriptors,
+                realizationIdentities(contributions.values(),
+                        Collections.<DeviceAdapterContract>emptyList()));
         NetResolution nets = resolveNets(request, namespace, contributions);
+        DeviceBusBindings deviceBuses = deviceBusBindings(request, namespace,
+                contributions, nets, false);
 
         String faultDecisionKey = ResistiveBlockContributions
                 .chooseFaultDecision(request.getDescriptor().getRootSeed());
@@ -126,7 +135,8 @@ final class BoundedAssemblyPlan {
         return new BoundedAssemblyPlan(request, namespace, contributions,
                 nets.aliases, nets.portNets, nets.provenance, faultDecisionKey,
                 faultBlockKey, owners, signature,
-                Collections.<DeviceAdapterContract>emptyList(), false, null);
+                Collections.<DeviceAdapterContract>emptyList(), false,
+                deviceBuses, null);
     }
 
     /** Resolve one of the two normal diagnostic fault targets explicitly. */
@@ -199,8 +209,16 @@ final class BoundedAssemblyPlan {
         contributions.put(driver.getDescriptor().getInstanceKey(), driver);
         contributions.put(load.getDescriptor().getInstanceKey(), load);
         validateControlledContributions(request, contributions);
+        namespace = new BlockNamespace(
+                BoundedAssemblyRequest.CONTROLLED_INTENT_ID,
+                BoundedAssemblyRequest.CONTROLLED_INTENT_VERSION,
+                request.getNamespaceDescriptors(),
+                realizationIdentities(contributions.values(),
+                        request.getDeviceAdapters()));
 
         NetResolution nets = resolveNets(request, namespace, contributions);
+        DeviceBusBindings deviceBuses = deviceBusBindings(request, namespace,
+                contributions, nets, true);
         String faultBlockKey = ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY
                 .equals(decision)
                 ? ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY
@@ -217,7 +235,7 @@ final class BoundedAssemblyPlan {
         return new BoundedAssemblyPlan(request, namespace, contributions,
                 nets.aliases, nets.portNets, nets.provenance, decision,
                 faultBlockKey, owners, signature, request.getDeviceAdapters(), true,
-                resolvedLoadRecipe);
+                deviceBuses, resolvedLoadRecipe);
     }
 
     /** Return the declared-policy preflight result without allocating anything. */
@@ -277,6 +295,34 @@ final class BoundedAssemblyPlan {
     String getFaultBlockKey() { return faultBlockKey; }
     Map<String, String> getDecisionOwners() { return decisionOwners; }
     String getSemanticSignature() { return semanticSignature; }
+    DeviceBusBindings getDeviceBuses() { return deviceBuses; }
+
+    String durableIdFor(String blockKey, EntityKind kind, String localId) {
+        return namespace.durableIdFor(blockKey, kind, localId);
+    }
+
+    String durableIdFor(ComposedBlockContribution block, EntityKind kind,
+            String localId) {
+        if (block == null) {
+            throw new IllegalArgumentException("Block contribution is required");
+        }
+        return durableIdFor(block.getDescriptor().getInstanceKey(), kind,
+                localId);
+    }
+
+    String durableNetFor(String blockKey, String localNetId) {
+        String qualified = namespace.idFor(blockKey, EntityKind.NET,
+                localNetId);
+        return deviceBuses.durableNetFor(qualified);
+    }
+
+    String durableNetFor(ComposedBlockContribution block, String localNetId) {
+        if (block == null) {
+            throw new IllegalArgumentException("Block contribution is required");
+        }
+        return durableNetFor(block.getDescriptor().getInstanceKey(),
+                localNetId);
+    }
 
     String idFor(String blockKey, EntityKind kind, String localId) {
         return namespace.idFor(blockKey, kind, localId);
@@ -627,6 +673,130 @@ final class BoundedAssemblyPlan {
             result.add(ref.getBlockKey() + "/" + ref.getPortId());
         }
         return result;
+    }
+
+    private static List<BlockRealizationIdentity> realizationIdentities(
+            Collection<ComposedBlockContribution> contributions,
+            Collection<DeviceAdapterContract> adapters) {
+        if (contributions == null || adapters == null) {
+            throw new IllegalArgumentException(
+                    "Realization sources are required");
+        }
+        ArrayList<BlockRealizationIdentity> result =
+                new ArrayList<BlockRealizationIdentity>();
+        for (ComposedBlockContribution contribution : contributions) {
+            if (contribution == null) {
+                throw new IllegalArgumentException(
+                        "Contribution is required for realization");
+            }
+            FunctionalBlockDescriptor descriptor =
+                    contribution.getDescriptor();
+            result.add(new BlockRealizationIdentity(
+                    descriptor.getInstanceKey(),
+                    new ChallengeDescriptor.VersionedId(
+                            realizationRole(descriptor.getInstanceKey()), 1),
+                    new ChallengeDescriptor.VersionedId(
+                            contribution.getProviderTypeId(),
+                            contribution.getProviderVersion()),
+                    new ChallengeDescriptor.VersionedId(
+                            descriptor.getTypeId(),
+                            descriptor.getSchemaVersion())));
+        }
+        for (DeviceAdapterContract adapter : adapters) {
+            if (adapter == null) {
+                throw new IllegalArgumentException(
+                        "Adapter is required for realization");
+            }
+            FunctionalBlockDescriptor descriptor = adapter.getDescriptor();
+            result.add(new BlockRealizationIdentity(
+                    descriptor.getInstanceKey(),
+                    new ChallengeDescriptor.VersionedId(
+                            realizationRole(descriptor.getInstanceKey()), 1),
+                    new ChallengeDescriptor.VersionedId(
+                            descriptor.getTypeId(), descriptor.getSchemaVersion()),
+                    new ChallengeDescriptor.VersionedId(
+                            descriptor.getTypeId(), descriptor.getSchemaVersion())));
+        }
+        return result;
+    }
+
+    private static String realizationRole(String instanceKey) {
+        if (ResistiveBlockContributions.SOURCE_BLOCK_KEY.equals(instanceKey)) {
+            return "source";
+        }
+        if (ResistiveBlockContributions.LOAD_BLOCK_KEY.equals(instanceKey)) {
+            return "load";
+        }
+        if (ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY
+                .equals(instanceKey)) {
+            return "driver";
+        }
+        if (DeviceAdapterContract.POWER_ADAPTER_KEY.equals(instanceKey)) {
+            return "power-input";
+        }
+        if (DeviceAdapterContract.CONTROL_ADAPTER_KEY.equals(instanceKey)) {
+            return "control-input";
+        }
+        throw new IllegalArgumentException(
+                "Unknown realization role for " + instanceKey);
+    }
+
+    private static DeviceBusBindings deviceBusBindings(
+            BoundedAssemblyRequest request, BlockNamespace namespace,
+            Map<String, ComposedBlockContribution> contributions,
+            NetResolution nets, boolean controlled) {
+        if (request == null || namespace == null || contributions == null
+                || nets == null) {
+            throw new IllegalArgumentException(
+                    "Device bus binding inputs are required");
+        }
+        return new DeviceBusBindings(namespace,
+                deviceBusDeclarations(namespace, controlled), nets.aliases);
+    }
+
+    private static Collection<DeviceBusBindings.Declaration>
+            deviceBusDeclarations(BlockNamespace namespace, boolean controlled) {
+        ArrayList<DeviceBusBindings.Declaration> result =
+                new ArrayList<DeviceBusBindings.Declaration>();
+        if (!controlled) {
+            result.add(new DeviceBusBindings.Declaration("power-supply",
+                    Arrays.asList(net(namespace, "source", "SUPPLY")),
+                    Collections.singletonList("VIN_INPUT/positive")));
+            result.add(new DeviceBusBindings.Declaration("signal",
+                    Arrays.asList(net(namespace, "source", "OUT"),
+                            net(namespace, "load", "SUPPLY")),
+                    Collections.<String>emptyList()));
+            result.add(new DeviceBusBindings.Declaration("power-return",
+                    Arrays.asList(net(namespace, "source", "RETURN"),
+                            net(namespace, "load", "RETURN")),
+                    Collections.singletonList("VIN_INPUT/return")));
+        } else {
+            result.add(new DeviceBusBindings.Declaration("load-power",
+                    Arrays.asList(net(namespace, "power-adapter", "OUTPUT"),
+                            net(namespace, "load", "SUPPLY")),
+                    Collections.singletonList("LOAD_VIN_INPUT/positive")));
+            result.add(new DeviceBusBindings.Declaration("control-input",
+                    Arrays.asList(net(namespace, "control-adapter", "OUTPUT"),
+                            net(namespace, "driver", "CONTROL")),
+                    Collections.singletonList("CONTROL_VIN_INPUT/positive")));
+            result.add(new DeviceBusBindings.Declaration("switched-low-side",
+                    Arrays.asList(net(namespace, "driver", "SWITCHED_SINK"),
+                            net(namespace, "load", "SWITCHED_LOAD")),
+                    Collections.<String>emptyList()));
+            result.add(new DeviceBusBindings.Declaration("common-return",
+                    Arrays.asList(net(namespace, "power-adapter", "RETURN"),
+                            net(namespace, "control-adapter", "RETURN"),
+                            net(namespace, "driver", "RETURN"),
+                            net(namespace, "load", "RETURN")),
+                    Arrays.asList("LOAD_VIN_INPUT/return",
+                            "CONTROL_VIN_INPUT/return")));
+        }
+        return result;
+    }
+
+    private static String net(BlockNamespace namespace, String blockKey,
+            String localNetId) {
+        return namespace.idFor(blockKey, EntityKind.NET, localNetId);
     }
 
     private static NetResolution resolveNets(BoundedAssemblyRequest request,

@@ -15,6 +15,7 @@ $script:VerifierRunOwnedPreviewHttpSysProofMarker = [object]::new()
 # A copied protocol-shaped object must never authorize the natural-exit lane.
 $script:VerifierBrowserDrainScopeMarker = [object]::new()
 $script:VerifierBrowserDrainAttestationMarker = [object]::new()
+$script:VerifierBrowserDrainPendingNaturalExitMarker = [object]::new()
 $script:VerifierBrowserDrainScopes = New-Object Collections.ArrayList
 $script:VerifierBrowserCloseAttempts = @{}
 
@@ -169,7 +170,13 @@ function Resolve-VerifierBrowserPath([string]$RequestedPath = '') {
         $programRoots = @(
             $env:ProgramW6432,
             $env:ProgramFiles,
-            ${env:ProgramFiles(x86)}
+            ${env:ProgramFiles(x86)},
+            # A 32-bit host can omit ProgramW6432/ProgramFiles(x86) even
+            # when Edge is installed there.  The special-folder APIs expose
+            # both canonical install roots independently of the launching
+            # shell's environment block.
+            [Environment]::GetFolderPath([Environment+SpecialFolder]::ProgramFiles),
+            [Environment]::GetFolderPath([Environment+SpecialFolder]::ProgramFilesX86)
         )
         foreach ($programRoot in $programRoots) {
             if (-not [String]::IsNullOrWhiteSpace([string]$programRoot)) {
@@ -2667,6 +2674,149 @@ function Assert-VerifierSerializedBrowserSessionRecord($Session,
              $Session.profileInspectionFailed)) {
         Throw-VerifierInfrastructure "$Label marked completion without retained profile cleanup proof."
     }
+    $receiptProperty = $Session.PSObject.Properties['recoveryReceipt']
+    if ($null -ne $receiptProperty -and $null -ne $receiptProperty.Value) {
+        $receipt = $receiptProperty.Value
+        Assert-VerifierSerializedObject $receipt ($Label + ' recovery receipt')
+        foreach ($name in @('protocol', 'authorityToken', 'issuedUtc', 'state',
+                'boundUtc', 'closedUtc', 'closeAttemptedUtc', 'runId',
+                'repositoryIdentity', 'worktreeRoot', 'routeId', 'routeName',
+                'browserPath', 'profile', 'leaseId', 'rootProcessCommandLine')) {
+            $allowEmpty = $name -in @('boundUtc', 'closedUtc', 'closeAttemptedUtc',
+                'rootProcessCommandLine')
+            [void](Assert-VerifierSerializedString $receipt $name `
+                ($Label + ' recovery receipt') -AllowEmpty:$allowEmpty)
+        }
+        foreach ($number in @(
+                [pscustomobject]@{ Name = 'cdpPort'; Minimum = 1L; Maximum = 65535L }
+                [pscustomobject]@{ Name = 'rootProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'rootProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+                [pscustomobject]@{ Name = 'rootParentProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'rootParentProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+                [pscustomobject]@{ Name = 'listenerProcessId'; Minimum = 0L; Maximum = [int]::MaxValue }
+                [pscustomobject]@{ Name = 'listenerProcessStartTicks'; Minimum = 0L; Maximum = [long]::MaxValue }
+            )) {
+            [void](Assert-VerifierSerializedIntegral $receipt $number.Name $number.Minimum `
+                $number.Maximum ($Label + ' recovery receipt'))
+        }
+        [void](Assert-VerifierSerializedBoolean $receipt 'closeAttempted' `
+            ($Label + ' recovery receipt'))
+        foreach ($timestamp in @(
+                [pscustomobject]@{ Name = 'issuedUtc'; Required = $true },
+                [pscustomobject]@{ Name = 'boundUtc'; Required = ($receipt.state -eq 'bound' -or
+                    ($receipt.state -eq 'closed' -and -not [String]::IsNullOrWhiteSpace($receipt.boundUtc))) },
+                [pscustomobject]@{ Name = 'closedUtc'; Required = ($receipt.state -eq 'closed') },
+                [pscustomobject]@{ Name = 'closeAttemptedUtc'; Required = [bool]$receipt.closeAttempted }
+            )) {
+            $timestampValue = [string]$receipt.$($timestamp.Name)
+            if ($timestamp.Required -and [String]::IsNullOrWhiteSpace($timestampValue)) {
+                Throw-VerifierInfrastructure "$Label recovery receipt omitted required timestamp '$($timestamp.Name)'."
+            }
+            if (-not [String]::IsNullOrWhiteSpace($timestampValue)) {
+                [void](ConvertTo-VerifierStrictTimestampText $timestampValue $false `
+                    ($Label + ' recovery receipt ' + $timestamp.Name))
+            }
+        }
+        if ($receipt.protocol -cne 'troubleshootjs-verifier-browser-recovery-v1' -or
+                -not (Test-VerifierBrowserRecoveryAuthorityToken $receipt.authorityToken) -or
+                $receipt.state -cnotin @('issued', 'bound', 'closed') -or
+                $receipt.runId -cne $Session.runId -or
+                $receipt.repositoryIdentity -cne $Session.repositoryIdentity -or
+                -not (Test-VerifierCanonicalWindowsPathValue $receipt.worktreeRoot $Session.worktreeRoot) -or
+                $receipt.routeId -cne $Session.routeId -or
+                $receipt.routeName -cne $Session.routeName -or
+                -not (Test-VerifierCanonicalWindowsPathValue $receipt.browserPath $Session.browserPath) -or
+                -not (Test-VerifierCanonicalWindowsPathValue $receipt.profile $Session.profile) -or
+                $receipt.leaseId -eq '' -or [int]$receipt.cdpPort -ne [int]$Session.cdpPort) {
+            Throw-VerifierInfrastructure "$Label recovery receipt did not match the serialized browser session identity."
+        }
+        $hasSerializedRootTuple = ([int]$receipt.rootProcessId -gt 0 -or
+            [long]$receipt.rootProcessStartTicks -gt 0 -or
+            [int]$receipt.rootParentProcessId -gt 0 -or
+            [long]$receipt.rootParentProcessStartTicks -gt 0 -or
+            -not [String]::IsNullOrWhiteSpace($receipt.rootProcessCommandLine))
+        $hasSerializedListenerTuple = ([int]$receipt.listenerProcessId -gt 0 -or
+            [long]$receipt.listenerProcessStartTicks -gt 0)
+        $serializedBoundState = ($receipt.state -eq 'bound' -or
+            ($receipt.state -eq 'closed' -and
+             -not [String]::IsNullOrWhiteSpace($receipt.boundUtc)))
+        if (($receipt.state -eq 'issued' -and
+                ($hasSerializedRootTuple -or $hasSerializedListenerTuple -or
+                 -not [String]::IsNullOrWhiteSpace($receipt.boundUtc) -or
+                 -not [String]::IsNullOrWhiteSpace($receipt.closedUtc) -or
+                 [bool]$receipt.closeAttempted)) -or
+                ($receipt.state -eq 'bound' -and
+                 -not [String]::IsNullOrWhiteSpace($receipt.closedUtc)) -or
+                ($serializedBoundState -and
+                 (-not $hasSerializedRootTuple -or -not $hasSerializedListenerTuple)) -or
+                ($receipt.state -eq 'closed' -and $serializedBoundState -and
+                 -not [bool]$receipt.closeAttempted) -or
+                ($receipt.state -eq 'closed' -and -not $serializedBoundState -and
+                 ($hasSerializedRootTuple -or $hasSerializedListenerTuple -or
+                  [bool]$receipt.closeAttempted))) {
+            Throw-VerifierInfrastructure "$Label recovery receipt carried contradictory bound/closed lifecycle evidence."
+        }
+    if ($Session.cleanupResult -eq 'complete' -and $receipt.state -ne 'closed') {
+        Throw-VerifierInfrastructure "$Label serialized a completed session without a closed recovery receipt."
+    }
+    $containmentLaunchProperty = $Session.PSObject.Properties['containmentLaunch']
+    if ($null -eq $containmentLaunchProperty -or $null -eq $containmentLaunchProperty.Value) {
+        # Older completed/bound evidence predates the launch ledger.  Preserve
+        # that narrow read-only compatibility, but never let an issued session
+        # without a launch record become eligible for recovery.
+        if ($null -ne $receipt -and $receipt.state -in @('bound', 'closed') -and
+                [int]$Session.processId -gt 0) {
+            return
+        }
+        Throw-VerifierInfrastructure "$Label omitted its durable containment-launch record."
+    }
+    $containmentLaunch = $containmentLaunchProperty.Value
+    Assert-VerifierSerializedObject $containmentLaunch ($Label + ' containment launch')
+    foreach ($name in @('protocol', 'jobName', 'state', 'launchedUtc')) {
+        $allowEmpty = $name -eq 'launchedUtc'
+        [void](Assert-VerifierSerializedString $containmentLaunch $name `
+            ($Label + ' containment launch') -AllowEmpty:$allowEmpty)
+    }
+    [void](Assert-VerifierSerializedIntegral $containmentLaunch 'launchProcessId' 0 `
+        ([int]::MaxValue) ($Label + ' containment launch'))
+    if ($containmentLaunch.protocol -cne
+            'troubleshootjs-verifier-browser-containment-launch-v1' -or
+            [String]::IsNullOrWhiteSpace([string]$containmentLaunch.jobName) -or
+            $containmentLaunch.state -cnotin @('unlaunched', 'launch-pending', 'launched')) {
+        Throw-VerifierInfrastructure "$Label containment launch carried an unknown protocol, job name, or lifecycle state."
+    }
+    if ($containmentLaunch.state -in @('unlaunched', 'launch-pending')) {
+        if ([int]$containmentLaunch.launchProcessId -ne 0 -or
+                -not [String]::IsNullOrWhiteSpace([string]$containmentLaunch.launchedUtc)) {
+            Throw-VerifierInfrastructure "$Label unlaunched/pending containment record carried a process identity or timestamp."
+        }
+        if ($containmentLaunch.state -eq 'launch-pending' -and
+                ($receipt.state -ne 'issued' -or [int]$Session.processId -ne 0 -or
+                 [long]$Session.processStartTicks -ne 0 -or
+                 [int]$Session.processParentProcessId -ne 0 -or
+                 [long]$Session.processParentProcessStartTicks -ne 0 -or
+                 -not [String]::IsNullOrWhiteSpace([string]$Session.processCommandLine))) {
+            Throw-VerifierInfrastructure "$Label pending containment record did not retain one exact issued, rootless recovery state."
+        }
+    } else {
+        if ([int]$containmentLaunch.launchProcessId -le 0 -or
+                [String]::IsNullOrWhiteSpace([string]$containmentLaunch.launchedUtc)) {
+            Throw-VerifierInfrastructure "$Label launched containment record omitted its exact PID or timestamp."
+        }
+        [void](ConvertTo-VerifierStrictTimestampText $containmentLaunch.launchedUtc $false `
+            ($Label + ' containment launch launchedUtc') -AllowJsonDateTime)
+        if ([int]$Session.processId -gt 0 -and
+                [int]$containmentLaunch.launchProcessId -ne [int]$Session.processId) {
+            Throw-VerifierInfrastructure "$Label containment launch PID disagreed with its complete browser root identity."
+        }
+    }
+    if ($null -ne $receipt -and $receipt.state -in @('bound', 'closed') -and
+            ($containmentLaunch.state -ne 'launched' -or
+             [int]$Session.processId -le 0 -or
+             [int]$containmentLaunch.launchProcessId -ne [int]$Session.processId)) {
+        Throw-VerifierInfrastructure "$Label bound/closed receipt did not retain its exact launched containment root."
+    }
+}
 }
 
 function Assert-VerifierSerializedServerRecord($Server,
@@ -2764,6 +2914,585 @@ function Assert-VerifierSerializedServerRecord($Server,
     }
     if ($Server.owner -ceq 'run' -and $null -eq $Server.leaseProcessProofRequired) {
         Throw-VerifierInfrastructure "$Label omitted its run-owned lease process-proof Boolean."
+    }
+}
+
+function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
+    # This is intentionally a narrow deserializer, not a general retained-run
+    # importer. It accepts exactly one failed/bound CDP browser session with
+    # no preview owner, then reconstructs only the live objects required to
+    # send Browser.close and finish the exact existing lease transaction.
+    if (-not (Test-VerifierStrictStringValue $ManifestPath) -or
+            [String]::IsNullOrWhiteSpace($ManifestPath)) {
+        Throw-VerifierInfrastructure 'Retained browser recovery requires one exact non-empty manifest path.'
+    }
+    $requestedManifestPath = Get-VerifierFullPath $ManifestPath
+    Assert-VerifierNoReparseAncestors $requestedManifestPath
+    if (-not (Test-Path -LiteralPath $requestedManifestPath -PathType Leaf -ErrorAction Stop)) {
+        Throw-VerifierInfrastructure "Retained browser recovery manifest was not an existing file: $requestedManifestPath"
+    }
+    try {
+        $manifestText = Get-Content -LiteralPath $requestedManifestPath -Raw -ErrorAction Stop
+        $manifest = ConvertFrom-VerifierDurableJson $manifestText
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not read retained browser recovery manifest: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+    Assert-VerifierSerializedObject $manifest 'retained browser recovery manifest'
+    foreach ($name in @('protocol', 'runId', 'repositoryIdentity', 'worktreeRoot',
+            'runRoot', 'runNamespaceRoot', 'evidenceDirectory',
+            'evidenceNamespaceRoot', 'manifestPath', 'createdUtc', 'baseUrl',
+            'previewNonce')) {
+        $allowEmpty = $name -eq 'baseUrl'
+        [void](Assert-VerifierSerializedString $manifest $name `
+            'retained browser recovery manifest' -AllowEmpty:$allowEmpty)
+    }
+    [void](ConvertTo-VerifierStrictTimestampText $manifest.createdUtc $false `
+        'retained browser recovery manifest createdUtc' -AllowJsonDateTime)
+    if ($manifest.protocol -cne 'troubleshootjs-verifier-run-v1' -or
+            $manifest.baseUrl -cne '') {
+        Throw-VerifierInfrastructure 'Retained browser recovery manifest carried an unsupported protocol or active preview URL.'
+    }
+    foreach ($collectionName in @('leases', 'browserSessions', 'artifacts')) {
+        $property = $manifest.PSObject.Properties[$collectionName]
+        if ($null -eq $property -or $null -eq $property.Value -or
+                $property.Value -is [string] -or
+                -not ($property.Value -is [Collections.IEnumerable])) {
+            Throw-VerifierInfrastructure "Retained browser recovery manifest omitted its exact '$collectionName' collection."
+        }
+    }
+    $cleanupProperty = $manifest.PSObject.Properties['cleanup']
+    if ($null -eq $cleanupProperty -or $null -eq $cleanupProperty.Value) {
+        Throw-VerifierInfrastructure 'Retained browser recovery manifest omitted its cleanup record.'
+    }
+    $cleanup = $cleanupProperty.Value
+    Assert-VerifierSerializedObject $cleanup 'retained browser recovery cleanup record'
+    [void](Assert-VerifierSerializedString $cleanup 'state' `
+        'retained browser recovery cleanup record')
+    [void](Assert-VerifierSerializedString $cleanup 'completedUtc' `
+        'retained browser recovery cleanup record' -AllowEmpty:$true)
+    $cleanupErrorsProperty = $cleanup.PSObject.Properties['errors']
+    if ($null -eq $cleanupErrorsProperty -or $null -eq $cleanupErrorsProperty.Value -or
+            $cleanupErrorsProperty.Value -is [string] -or
+            -not ($cleanupErrorsProperty.Value -is [Collections.IEnumerable])) {
+        Throw-VerifierInfrastructure 'Retained browser recovery cleanup record omitted its exact errors collection.'
+    }
+    if ($cleanup.state -cnotin @('pending', 'infrastructure-failure') -or
+            ($cleanup.state -ceq 'pending' -and
+             -not [String]::IsNullOrWhiteSpace([string]$cleanup.completedUtc))) {
+        Throw-VerifierInfrastructure 'Retained browser recovery accepts only a pending or failed, nonterminal cleanup record.'
+    }
+    if (-not [String]::IsNullOrWhiteSpace([string]$cleanup.completedUtc)) {
+        [void](ConvertTo-VerifierStrictTimestampText $cleanup.completedUtc $false `
+            'retained browser recovery cleanup completedUtc' -AllowJsonDateTime)
+    }
+    foreach ($errorText in @($cleanup.errors)) {
+        if (-not (Test-VerifierStrictStringValue $errorText)) {
+            Throw-VerifierInfrastructure 'Retained browser recovery cleanup errors contained a malformed value.'
+        }
+    }
+    $leases = @($manifest.leases)
+    $sessions = @($manifest.browserSessions)
+    if ($leases.Count -ne 1 -or $sessions.Count -ne 1) {
+        Throw-VerifierInfrastructure 'Retained browser recovery requires exactly one retained CDP lease and browser session.'
+    }
+    $serializedLease = $leases[0]
+    $serializedSession = $sessions[0]
+    Assert-VerifierSerializedLeaseRecord $serializedLease 'retained browser recovery lease'
+    Assert-VerifierSerializedBrowserSessionRecord $serializedSession `
+        'retained browser recovery session'
+    $serverProperty = $manifest.PSObject.Properties['server']
+    if ($null -eq $serverProperty -or $null -eq $serverProperty.Value) {
+        Throw-VerifierInfrastructure 'Retained browser recovery manifest omitted its ownerless server record.'
+    }
+    Assert-VerifierSerializedServerRecord $serverProperty.Value `
+        'retained browser recovery server'
+    if ($serverProperty.Value.owner -cne 'none') {
+        Throw-VerifierInfrastructure 'Retained browser recovery refuses a manifest that owns a preview/server resource.'
+    }
+    $lease = ConvertFrom-VerifierSerializedLeaseRecord $serializedLease `
+        'retained browser recovery lease'
+    $receiptProperty = $serializedSession.PSObject.Properties['recoveryReceipt']
+    if ($null -eq $receiptProperty -or $null -eq $receiptProperty.Value -or
+            $receiptProperty.Value -is [array]) {
+        Throw-VerifierInfrastructure 'Retained browser recovery requires one durable recovery receipt.'
+    }
+    $serializedReceipt = $receiptProperty.Value
+    $recoveryMode = ''
+    $boundRecovery = ($lease.Kind -ceq 'cdp' -and $lease.Status -ceq 'bound' -and
+        $lease.ClaimState -ceq 'bound' -and $lease.ReleaseState -ceq 'active' -and
+        $lease.ReleaseJournalState -ceq 'active' -and $lease.Registered -and
+        $lease.ProcessProofRequired -and
+        $serializedSession.cdpLeasePath -ceq $lease.Path -and
+        [int]$serializedSession.cdpPort -eq [int]$lease.Port -and
+        [int]$serializedSession.processId -eq [int]$lease.BoundProcessId -and
+        [long]$serializedSession.processStartTicks -eq
+            [long]$lease.BoundProcessStartTicks -and
+        [int]$lease.ListenerProcessId -eq [int]$lease.BoundProcessId -and
+        [long]$lease.ListenerProcessStartTicks -eq
+            [long]$lease.BoundProcessStartTicks -and
+        $serializedReceipt.state -ceq 'bound' -and
+        -not [bool]$serializedReceipt.closeAttempted -and
+        $serializedSession.status -cin @('cleanup-failed', 'attached') -and
+        $serializedSession.cleanupResult -cin @('infrastructure-failure', 'pending'))
+    $issuedContainedLaunch = ($null -ne $serializedSession.PSObject.Properties['containmentLaunch'] -and
+        $null -ne $serializedSession.containmentLaunch -and
+        (($serializedSession.containmentLaunch.state -ceq 'launched' -and
+          [int]$serializedSession.containmentLaunch.launchProcessId -gt 0) -or
+         ($serializedSession.containmentLaunch.state -ceq 'launch-pending' -and
+          [int]$serializedSession.containmentLaunch.launchProcessId -eq 0 -and
+          [String]::IsNullOrWhiteSpace([string]$serializedSession.containmentLaunch.launchedUtc))))
+    $issuedContainedRecovery = ($lease.Kind -ceq 'cdp' -and $lease.Status -ceq 'leased' -and
+        $lease.ClaimState -ceq 'held' -and $lease.ReleaseState -ceq 'active' -and
+        $lease.ReleaseJournalState -ceq 'active' -and $lease.Registered -and
+        -not $lease.ProcessProofRequired -and
+        [int]$lease.BoundProcessId -eq 0 -and
+        [long]$lease.BoundProcessStartTicks -eq 0 -and
+        [int]$lease.ListenerProcessId -eq 0 -and
+        [long]$lease.ListenerProcessStartTicks -eq 0 -and
+        $serializedSession.cdpLeasePath -ceq $lease.Path -and
+        [int]$serializedSession.cdpPort -eq [int]$lease.Port -and
+        [int]$serializedSession.processId -eq 0 -and
+        [long]$serializedSession.processStartTicks -eq 0 -and
+        [int]$serializedSession.processParentProcessId -eq 0 -and
+        [long]$serializedSession.processParentProcessStartTicks -eq 0 -and
+        [String]::IsNullOrWhiteSpace([string]$serializedSession.processCommandLine) -and
+        $serializedReceipt.state -ceq 'issued' -and
+        -not [bool]$serializedReceipt.closeAttempted -and
+        $serializedSession.status -cin @('leased', 'startup-failed', 'cleanup-failed') -and
+        $serializedSession.cleanupResult -cin @('pending', 'infrastructure-failure') -and
+        $issuedContainedLaunch)
+    if ($boundRecovery) {
+        $recoveryMode = 'bound'
+    } elseif ($issuedContainedRecovery) {
+        $recoveryMode = 'issued-contained'
+    } else {
+        Throw-VerifierInfrastructure 'Retained browser recovery lease/session association was neither one exact bound tuple nor one issued contained-launch tuple.'
+    }
+
+    $worktreeRoot = Get-VerifierFullPath $manifest.worktreeRoot
+    $runRoot = Get-VerifierFullPath $manifest.runRoot
+    $runNamespaceRoot = Get-VerifierFullPath $manifest.runNamespaceRoot
+    $evidenceDirectory = Get-VerifierFullPath $manifest.evidenceDirectory
+    $evidenceNamespaceRoot = Get-VerifierFullPath $manifest.evidenceNamespaceRoot
+    $expectedManifestPath = Get-VerifierFullPath (Join-Path $runRoot 'manifest.json')
+    $expectedPortLeaseRoot = Get-VerifierFullPath (Join-Path $runRoot 'port-leases')
+    $expectedNamespaceRoot = Get-VerifierFullPath (Join-Path `
+        (Join-Path (Join-Path ([IO.Path]::GetTempPath()) 'TroubleshootJS') 'verify') `
+        ([string]$manifest.repositoryIdentity))
+    if (-not (Test-VerifierCanonicalWindowsPathValue $requestedManifestPath $expectedManifestPath) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $manifest.manifestPath $expectedManifestPath) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $runNamespaceRoot $expectedNamespaceRoot) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $lease.WorktreeRoot $worktreeRoot) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $serializedSession.worktreeRoot $worktreeRoot) -or
+            $manifest.repositoryIdentity -cne (Get-VerifierRepositoryIdentity $worktreeRoot)) {
+        Throw-VerifierInfrastructure 'Retained browser recovery manifest did not match its exact physical worktree/run namespace identity.'
+    }
+    Assert-VerifierNoReparseAncestors $runRoot
+    Assert-VerifierNoReparseAncestors $evidenceNamespaceRoot
+    [void](Assert-VerifierPhysicalOwnedPath $runNamespaceRoot $runRoot)
+    [void](Assert-VerifierPhysicalOwnedPath $runRoot $expectedManifestPath)
+    [void](Assert-VerifierPhysicalOwnedPath $runRoot $expectedPortLeaseRoot)
+    [void](Assert-VerifierPhysicalOwnedPath $expectedPortLeaseRoot $lease.Path)
+    [void](Assert-VerifierPhysicalOwnedPath $runRoot $serializedSession.profile)
+    [void](Assert-VerifierPhysicalOwnedPath $evidenceNamespaceRoot $evidenceDirectory)
+    if (-not (Test-VerifierCanonicalWindowsPathValue $serializedSession.profile $lease.ProfilePath)) {
+        Throw-VerifierInfrastructure 'Retained browser recovery session and lease disagreed on the owned profile path.'
+    }
+
+    $receipt = $receiptProperty.Value
+    $liveReceipt = [pscustomobject]@{
+        Protocol = [string]$receipt.protocol
+        AuthorityToken = [string]$receipt.authorityToken
+        IssuedUtc = ConvertTo-VerifierStrictTimestampText $receipt.issuedUtc $false `
+            'retained browser recovery receipt issuedUtc' -AllowJsonDateTime
+        State = [string]$receipt.state
+        BoundUtc = ConvertTo-VerifierStrictTimestampText $receipt.boundUtc $true `
+            'retained browser recovery receipt boundUtc' -AllowJsonDateTime
+        ClosedUtc = ConvertTo-VerifierStrictTimestampText $receipt.closedUtc $true `
+            'retained browser recovery receipt closedUtc' -AllowJsonDateTime
+        CloseAttempted = [bool]$receipt.closeAttempted
+        CloseAttemptedUtc = ConvertTo-VerifierStrictTimestampText `
+            $receipt.closeAttemptedUtc $true `
+            'retained browser recovery receipt closeAttemptedUtc' -AllowJsonDateTime
+        RunId = [string]$receipt.runId
+        RepositoryIdentity = [string]$receipt.repositoryIdentity
+        WorktreeRoot = [string]$receipt.worktreeRoot
+        RouteId = [string]$receipt.routeId
+        RouteName = [string]$receipt.routeName
+        BrowserPath = [string]$receipt.browserPath
+        Profile = [string]$receipt.profile
+        LeaseId = [string]$receipt.leaseId
+        CdpPort = [int]$receipt.cdpPort
+        RootProcessId = [int]$receipt.rootProcessId
+        RootProcessStartTicks = [long]$receipt.rootProcessStartTicks
+        RootParentProcessId = [int]$receipt.rootParentProcessId
+        RootParentProcessStartTicks = [long]$receipt.rootParentProcessStartTicks
+        RootProcessCommandLine = [string]$receipt.rootProcessCommandLine
+        ListenerProcessId = [int]$receipt.listenerProcessId
+        ListenerProcessStartTicks = [long]$receipt.listenerProcessStartTicks
+    }
+    $liveLease = [pscustomobject]@{
+        LeaseId = [string]$lease.LeaseId; Kind = [string]$lease.Kind
+        Port = [int]$lease.Port; Path = [string]$lease.Path
+        RunId = [string]$lease.RunId; RepositoryIdentity = [string]$lease.RepositoryIdentity
+        WorktreeRoot = [string]$lease.WorktreeRoot; Status = [string]$lease.Status
+        Registered = [bool]$lease.Registered; ClaimName = [string]$lease.ClaimName
+        ClaimState = [string]$lease.ClaimState; ClaimOwnerPid = [int]$lease.ClaimOwnerPid
+        ClaimOwnerStartTicks = [long]$lease.ClaimOwnerStartTicks
+        BoundProcessId = [int]$lease.BoundProcessId
+        BoundProcessStartTicks = [long]$lease.BoundProcessStartTicks
+        ListenerProcessId = [int]$lease.ListenerProcessId
+        ListenerProcessStartTicks = $lease.ListenerProcessStartTicks
+        ListenerOwnerKind = [string]$lease.ListenerOwnerKind
+        ListenerOwnerProof = [string]$lease.ListenerOwnerProof
+        ListenerOwnerEvidence = [string]$lease.ListenerOwnerEvidence
+        BindValidatedUtc = [string]$lease.BindValidatedUtc
+        ReleasedUtc = [string]$lease.ReleasedUtc
+        ClaimMutex = $null; AuthorizationProof = $null
+        ProfilePath = [string]$lease.ProfilePath; OwnerType = 'none'
+        ProfileInspectionFailed = $false; BrowserPath = [string]$lease.BrowserPath
+        ReleaseState = [string]$lease.ReleaseState
+        ReleaseJournalState = [string]$lease.ReleaseJournalState
+        ReleaseBlocked = [bool]$lease.ReleaseBlocked
+        ReleaseBlockReason = [string]$lease.ReleaseBlockReason
+        MutexReleased = [bool]$lease.MutexReleased
+        ListenerInspectionSuccess = [bool]$lease.ListenerInspectionSuccess
+        ListenerInspectionKnown = [bool]$lease.ListenerInspectionKnown
+        ListenerHasListeners = $lease.ListenerHasListeners
+        ListenerAbsent = $lease.ListenerAbsent
+        ListenerInspectionUtc = [string]$lease.ListenerInspectionUtc
+        ProcessProofRequired = [bool]$lease.ProcessProofRequired
+        ProcessTerminationProven = [bool]$lease.ProcessTerminationProven
+        ProcessAbsent = [bool]$lease.ProcessAbsent
+        RetainedRecoveryAuthority = $null
+    }
+    $liveContainmentLaunch = if ($null -eq $serializedSession.PSObject.Properties['containmentLaunch'] -or
+            $null -eq $serializedSession.containmentLaunch) {
+        $null
+    } else {
+        $serializedLaunch = $serializedSession.containmentLaunch
+        [pscustomobject]@{
+            Protocol = [string]$serializedLaunch.protocol
+            JobName = [string]$serializedLaunch.jobName
+            State = [string]$serializedLaunch.state
+            LaunchProcessId = [int]$serializedLaunch.launchProcessId
+            LaunchedUtc = ConvertTo-VerifierStrictTimestampText $serializedLaunch.launchedUtc `
+                $true 'retained browser recovery containment launch launchedUtc' -AllowJsonDateTime
+        }
+    }
+    $liveSession = [pscustomobject]@{
+        RunId = [string]$serializedSession.runId
+        RepositoryIdentity = [string]$serializedSession.repositoryIdentity
+        WorktreeRoot = [string]$serializedSession.worktreeRoot
+        RouteId = [string]$serializedSession.routeId
+        RouteName = [string]$serializedSession.routeName
+        CdpPort = [int]$serializedSession.cdpPort
+        BrowserPath = [string]$serializedSession.browserPath
+        Lease = $liveLease; Profile = [string]$serializedSession.profile
+        ProcessId = [int]$serializedSession.processId
+        ProcessStartTicks = [long]$serializedSession.processStartTicks
+        ProcessParentProcessId = [int]$serializedSession.processParentProcessId
+        ProcessParentProcessStartTicks = [long]$serializedSession.processParentProcessStartTicks
+        ProcessCommandLine = [string]$serializedSession.processCommandLine
+        TargetId = [string]$serializedSession.targetId
+        ExpectedUrl = [string]$serializedSession.expectedUrl
+        Status = [string]$serializedSession.status
+        CleanupResult = [string]$serializedSession.cleanupResult
+        Error = [string]$serializedSession.error
+        ProfileInspectionFailed = [bool]$serializedSession.profileInspectionFailed
+        ProfileProcessScanCompleted = [bool]$serializedSession.profileProcessScanCompleted
+        RecoveryReceipt = $liveReceipt
+        ContainmentLaunch = $liveContainmentLaunch
+        Runtime = [pscustomobject]@{ Browser = $null; Socket = $null; ContainmentJob = $null }
+    }
+    $server = $serverProperty.Value
+    $liveServer = [pscustomobject]@{
+        Owner = [string]$server.owner; BaseUrl = [string]$server.baseUrl
+        Port = [int]$server.port; ProcessId = [int]$server.processId
+        ProcessStartTicks = [long]$server.processStartTicks
+        ProcessParentProcessId = [int]$server.processParentProcessId
+        ProcessParentProcessStartTicks = [long]$server.processParentProcessStartTicks
+        ProcessCommandLine = [string]$server.processCommandLine
+        Script = [string]$server.script; State = [string]$server.state
+        RepositoryRoot = [string]$server.repositoryRoot; WebRoot = [string]$server.webRoot
+        IdentityProtocol = [string]$server.identityProtocol
+        IdentityVerified = [bool]$server.identityVerified
+        CallerOwned = [bool]$server.callerOwned
+        StdoutLog = [string]$server.stdoutLog; StderrLog = [string]$server.stderrLog
+        CleanupResult = [string]$server.cleanupResult; Error = [string]$server.error
+        Nonce = [string]$server.nonce; RunId = [string]$server.runId
+        Lease = $null; Process = $null
+        ProcessIdentityKnown = [bool]$server.processIdentityKnown
+        OwnershipUncertain = [bool]$server.ownershipUncertain
+        ProcessTerminationProven = [bool]$server.processTerminationProven
+        ProcessAbsent = [bool]$server.processAbsent
+        ListenerInspectionProven = [bool]$server.listenerInspectionProven
+        ListenerAbsent = $server.listenerAbsent
+    }
+    $liveLeases = New-Object Collections.ArrayList
+    [void]$liveLeases.Add($liveLease)
+    $liveSessions = New-Object Collections.ArrayList
+    [void]$liveSessions.Add($liveSession)
+    $liveArtifacts = New-Object Collections.ArrayList
+    foreach ($artifact in @($manifest.artifacts)) { [void]$liveArtifacts.Add([string]$artifact) }
+    $liveErrors = New-Object Collections.ArrayList
+    foreach ($errorText in @($cleanup.errors)) { [void]$liveErrors.Add([string]$errorText) }
+    $context = [pscustomobject]@{
+        Protocol = 'troubleshootjs-verifier-run-v1'; RunId = [string]$manifest.runId
+        PreviewNonce = [string]$manifest.previewNonce
+        RepositoryIdentity = [string]$manifest.repositoryIdentity
+        WorktreeRoot = $worktreeRoot; RunRoot = $runRoot
+        RunNamespaceRoot = $runNamespaceRoot; EvidenceDirectory = $evidenceDirectory
+        EvidenceNamespaceRoot = $evidenceNamespaceRoot; ManifestPath = $expectedManifestPath
+        PortLeaseRoot = $expectedPortLeaseRoot
+        CreatedUtc = ConvertTo-VerifierStrictTimestampText $manifest.createdUtc $false `
+            'retained browser recovery manifest createdUtc' -AllowJsonDateTime
+        BaseUrl = ''; Server = $liveServer; LeaseRecords = $liveLeases
+        BrowserSessions = $liveSessions; Artifacts = $liveArtifacts
+        CleanupState = [string]$cleanup.state
+        CleanupCompletedUtc = ConvertTo-VerifierStrictTimestampText `
+            $cleanup.completedUtc $true `
+            'retained browser recovery cleanup completedUtc' -AllowJsonDateTime
+        CleanupErrors = $liveErrors
+        TestHooks = [pscustomobject]@{
+            FailNextManifestWrite = $false; FailNextClaimWrite = $false
+            FailNextLeaseRelease = $false; FailNextLeaseMutexDispose = $false
+            FailNextFinalManifestWrite = $false; FailNextPostDeleteFinalManifestWrite = $false
+            FailNextPostDeleteJournalWrite = $false; FailNextPostDeleteBeforeFinalState = $false
+            FailNextBrowserLeaseManifestWrite = $false; FailNextPreviewIdentityCapture = $false
+            FailNextBrowserContainmentHandleAcquire = $false
+            FailNextBrowserContainmentLaunchLedgerPublish = $false
+            FailNextIssuedContainedRecovery = $false
+            FailNextIssuedContainedRecoveryListenerBind = $false
+            BrowserDrainAfterInitialGraphSignalPath = ''
+            BrowserDrainAfterInitialGraphReadyPath = ''
+            BrowserDrainAfterInitialGraphSignalWritten = $false
+        }
+        ManifestWritePhase = ''
+    }
+    return [pscustomobject]@{
+        Context = $context; Lease = $liveLease; Session = $liveSession; Mode = $recoveryMode
+    }
+}
+
+function Assert-VerifierRetainedBrowserRecoveryClaimRecord($Context, $Lease) {
+    [void](Assert-VerifierPhysicalOwnedPath $Context.PortLeaseRoot $Lease.Path)
+    if (-not (Test-Path -LiteralPath $Lease.Path -PathType Leaf -ErrorAction Stop)) {
+        Throw-VerifierInfrastructure 'Retained browser recovery exact claim record was missing before Browser.close.'
+    }
+    try {
+        $claim = ConvertFrom-VerifierDurableJson (Get-Content -LiteralPath $Lease.Path -Raw -ErrorAction Stop)
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not read retained browser recovery exact claim record: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+    Assert-VerifierSerializedObject $claim 'retained browser recovery exact claim record'
+    foreach ($name in @('protocol', 'runId', 'repositoryIdentity', 'worktreeRoot',
+            'leaseId', 'path', 'kind', 'mutexName')) {
+        [void](Assert-VerifierSerializedString $claim $name `
+            'retained browser recovery exact claim record')
+    }
+    foreach ($number in @('port', 'ownerPid', 'ownerStartTicks')) {
+        $maximum = if ($number -like '*Ticks') { [long]::MaxValue } else { [int]::MaxValue }
+        if ($null -eq $claim.PSObject.Properties[$number] -or
+                -not (Test-VerifierStrictIntegralValue $claim.$number 1 $maximum)) {
+            Throw-VerifierInfrastructure "Retained browser recovery exact claim record omitted '$number'."
+        }
+    }
+    if ($claim.protocol -cne 'troubleshootjs-verifier-port-claim-v1' -or
+            $claim.runId -cne $Context.RunId -or
+            $claim.repositoryIdentity -cne $Context.RepositoryIdentity -or
+            -not (Test-VerifierCanonicalWindowsPathValue $claim.worktreeRoot $Context.WorktreeRoot) -or
+            $claim.leaseId -cne $Lease.LeaseId -or
+            -not (Test-VerifierCanonicalWindowsPathValue $claim.path $Lease.Path) -or
+            $claim.kind -cne $Lease.Kind -or [int]$claim.port -ne [int]$Lease.Port -or
+            $claim.mutexName -cne $Lease.ClaimName -or
+            [int]$claim.ownerPid -ne [int]$Lease.ClaimOwnerPid -or
+            [long]$claim.ownerStartTicks -ne [long]$Lease.ClaimOwnerStartTicks) {
+        Throw-VerifierInfrastructure 'Retained browser recovery exact claim record changed or belonged to another run.'
+    }
+}
+
+function Enter-VerifierRetainedBrowserRecoveryLease($Context, $Lease) {
+    $originalOwner = [pscustomobject]@{
+        ProcessId = [int]$Lease.ClaimOwnerPid
+        ProcessStartTicks = [long]$Lease.ClaimOwnerStartTicks
+    }
+    $beforeLock = Confirm-VerifierRecordedProcessAbsent $originalOwner `
+        'retained browser recovery original claim owner'
+    if (-not $beforeLock.QueryProven -or -not $beforeLock.Absent -or $beforeLock.Replaced) {
+        Throw-VerifierInfrastructure 'Retained browser recovery cannot acquire a claim while its original owner is live or PID-reused.'
+    }
+    if ($script:VerifierHeldPortClaims.ContainsKey([string]$Lease.ClaimName) -or
+            $script:VerifierHeldPortMutexes.ContainsKey([string]$Lease.ClaimName)) {
+        Throw-VerifierInfrastructure 'Retained browser recovery found an in-process claim/mutex collision for its exact port.'
+    }
+    $mutex = $null
+    $lockHeld = $false
+    $mapsRegistered = $false
+    try {
+        $created = $false
+        $mutex = [Threading.Mutex]::new($false, [string]$Lease.ClaimName, [ref]$created)
+        try {
+            $lockHeld = [bool]$mutex.WaitOne(0)
+        } catch [Threading.AbandonedMutexException] {
+            # The old owner was independently proved absent above. The OS has
+            # transferred this exact abandoned named mutex to this recovery
+            # process; retain and release it through the ordinary lease path.
+            $lockHeld = $true
+        }
+        if (-not $lockHeld) {
+            Throw-VerifierInfrastructure 'Retained browser recovery could not acquire its exact named claim mutex immediately.'
+        }
+        $afterLock = Confirm-VerifierRecordedProcessAbsent $originalOwner `
+            'retained browser recovery original claim owner'
+        if (-not $afterLock.QueryProven -or -not $afterLock.Absent -or $afterLock.Replaced) {
+            Throw-VerifierInfrastructure 'Retained browser recovery original claim owner changed while the exact mutex was acquired.'
+        }
+        $Lease.ClaimMutex = $mutex
+        $script:VerifierHeldPortClaims[[string]$Lease.ClaimName] = [string]$Context.RunId
+        $script:VerifierHeldPortMutexes[[string]$Lease.ClaimName] = $mutex
+        $mapsRegistered = $true
+        $Lease.RetainedRecoveryAuthority = [pscustomobject]@{
+            Protocol = 'troubleshootjs-verifier-retained-browser-recovery-v1'
+            ManifestPath = [string]$Context.ManifestPath
+            RecoveryProcessId = [int]$PID
+            RecoveryProcessStartTicks = Get-VerifierCurrentProcessStartTicks
+            ClaimOwnerPid = [int]$Lease.ClaimOwnerPid
+            ClaimOwnerStartTicks = [long]$Lease.ClaimOwnerStartTicks
+            ClaimMutex = $mutex; LockHeld = $true
+        }
+        [void](Get-VerifierRetainedBrowserRecoveryLeaseAuthority $Context $Lease)
+        Assert-VerifierRetainedBrowserRecoveryClaimRecord $Context $Lease
+        Assert-VerifierDurableManifestContext $Context
+        return
+    } catch {
+        if ($mapsRegistered) {
+            [void]$script:VerifierHeldPortClaims.Remove([string]$Lease.ClaimName)
+            [void]$script:VerifierHeldPortMutexes.Remove([string]$Lease.ClaimName)
+        }
+        $Lease.RetainedRecoveryAuthority = $null
+        $Lease.ClaimMutex = $null
+        if ($null -ne $mutex) {
+            if ($lockHeld) { try { $mutex.ReleaseMutex() } catch { } }
+            try { $mutex.Dispose() } catch { }
+        }
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not enter retained browser recovery: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
+function Exit-VerifierRetainedBrowserRecoveryLease($Lease) {
+    if ($null -eq $Lease -or
+            $null -eq $Lease.PSObject.Properties['RetainedRecoveryAuthority'] -or
+            $null -eq $Lease.RetainedRecoveryAuthority) {
+        return
+    }
+    $authority = $Lease.RetainedRecoveryAuthority
+    $cleanupErrors = New-Object Collections.ArrayList
+    $mutex = if ($authority.PSObject.Properties['ClaimMutex']) { $authority.ClaimMutex } else { $null }
+    if ($null -ne $mutex -and $mutex.GetType() -eq [Threading.Mutex] -and
+            -not $Lease.MutexReleased) {
+        try { $mutex.ReleaseMutex() } catch {
+            [void]$cleanupErrors.Add('could not release retained browser recovery mutex: ' +
+                (Get-VerifierErrorMessage $_))
+        }
+    }
+    if ($null -ne $mutex -and $mutex.GetType() -eq [Threading.Mutex] -and
+            -not $Lease.MutexReleased) {
+        try { $mutex.Dispose() } catch {
+            [void]$cleanupErrors.Add('could not dispose retained browser recovery mutex: ' +
+                (Get-VerifierErrorMessage $_))
+        }
+        $Lease.ClaimMutex = $null
+    }
+    if ($script:VerifierHeldPortClaims.ContainsKey([string]$Lease.ClaimName) -and
+            [string]$script:VerifierHeldPortClaims[[string]$Lease.ClaimName] -eq [string]$Lease.RunId) {
+        [void]$script:VerifierHeldPortClaims.Remove([string]$Lease.ClaimName)
+    }
+    if ($script:VerifierHeldPortMutexes.ContainsKey([string]$Lease.ClaimName) -and
+            [object]::ReferenceEquals($script:VerifierHeldPortMutexes[[string]$Lease.ClaimName], $mutex)) {
+        [void]$script:VerifierHeldPortMutexes.Remove([string]$Lease.ClaimName)
+    }
+    if ($authority.PSObject.Properties['LockHeld']) { $authority.LockHeld = $false }
+    $Lease.RetainedRecoveryAuthority = $null
+    if ($cleanupErrors.Count -gt 0) {
+        Throw-VerifierInfrastructure ($cleanupErrors -join '; ')
+    }
+}
+
+function Invoke-VerifierRetainedBrowserRecovery([string]$ManifestPath,
+        [switch]$TestFailAfterIssuedContainedRootReattestation) {
+    $rehydrated = New-VerifierRetainedBrowserRecoveryContext $ManifestPath
+    $context = $rehydrated.Context
+    $lease = $rehydrated.Lease
+    $session = $rehydrated.Session
+    $recoveryMode = [string]$rehydrated.Mode
+    if ($TestFailAfterIssuedContainedRootReattestation) {
+        if ($recoveryMode -ne 'issued-contained') {
+            Throw-VerifierInfrastructure 'Issued-contained reattestation test hook requires exactly one issued contained recovery record.'
+        }
+        # Gate B uses this one-shot failure only to prove that a real retained
+        # root reattestation cannot publish a partial tuple before listener
+        # binding. It removes authority rather than widening it.
+        $context.TestHooks.FailNextIssuedContainedRecoveryListenerBind = $true
+    }
+    $failure = $null
+    $cleanupResult = $null
+    try {
+        Enter-VerifierRetainedBrowserRecoveryLease $context $lease
+        # Persist the recovery intent before Browser.close. An interruption
+        # here remains an eligible bound/unattempted receipt; an interruption
+        # after the close-attempt journal remains safely non-retriable.
+        $context.CleanupState = 'pending'
+        $context.CleanupCompletedUtc = ''
+        if ($recoveryMode -eq 'bound') {
+            $session.Status = 'attached'
+        } elseif ($recoveryMode -eq 'issued-contained') {
+            # The durable PID/job record is intentionally not a close
+            # capability. Complete-VerifierBrowserSession must first re-prove
+            # the exact contained root and listener, bind a receipt, and only
+            # then reach its Browser.close-only shutdown lane.
+            $session.Status = 'startup-failed'
+        } else {
+            Throw-VerifierInfrastructure 'Retained browser recovery selected an unknown durable recovery mode.'
+        }
+        $session.CleanupResult = 'pending'
+        $session.Error = ''
+        $lease.ReleaseBlocked = $false
+        $lease.ReleaseBlockReason = ''
+        Assert-VerifierDurableManifestContext $context
+        Write-VerifierManifest $context
+        $cleanupResult = Complete-VerifierRun $context
+        if ($null -eq $cleanupResult -or
+                $null -eq $cleanupResult.PSObject.Properties['Success'] -or
+                -not $cleanupResult.Success -or
+                $session.CleanupResult -ne 'complete' -or
+                $session.RecoveryReceipt.State -ne 'closed') {
+            Throw-VerifierInfrastructure 'Retained browser recovery did not reach complete browser, receipt, lease, and run cleanup proof.'
+        }
+    } catch {
+        $failure = $_
+    }
+    $exitFailure = $null
+    try { Exit-VerifierRetainedBrowserRecoveryLease $lease } catch { $exitFailure = $_ }
+    if ($null -ne $failure) {
+        if ($null -ne $exitFailure) {
+            Throw-VerifierInfrastructure ('Retained browser recovery failed and recovery-mutex cleanup was unproven: ' +
+                (Get-VerifierErrorMessage $failure) + '; ' + (Get-VerifierErrorMessage $exitFailure))
+        }
+        if (Test-VerifierInfrastructureError $failure) { throw $failure }
+        Throw-VerifierInfrastructure ('Retained browser recovery failed: ' +
+            (Get-VerifierErrorMessage $failure))
+    }
+    if ($null -ne $exitFailure) { throw $exitFailure }
+    return [pscustomobject]@{
+        Success = $true; ManifestPath = [string]$context.ManifestPath
+        RunId = [string]$context.RunId; Port = [int]$lease.Port
     }
 }
 
@@ -3043,6 +3772,267 @@ function Assert-VerifierDurableServerLease($Context,
     Throw-VerifierInfrastructure "$Label used an unknown exact Owner value '$($server.Owner)'."
 }
 
+function New-VerifierBrowserRecoveryAuthorityToken() {
+    $generator = [Security.Cryptography.RandomNumberGenerator]::Create()
+    $bytes = New-Object byte[] 32
+    try {
+        $generator.GetBytes($bytes)
+        return [BitConverter]::ToString($bytes).Replace('-', '').ToLowerInvariant()
+    } finally {
+        $generator.Dispose()
+    }
+}
+
+function Test-VerifierBrowserRecoveryAuthorityToken($Value) {
+    return (Test-VerifierStrictStringValue $Value) -and
+        ([regex]::IsMatch([string]$Value, '\A[0-9a-f]{64}\z'))
+}
+
+function Assert-VerifierDurableBrowserRecoveryReceipt($Session, $Context,
+        [string]$Label = 'browser recovery receipt') {
+    if ($null -eq $Session -or $null -eq $Session.PSObject.Properties['RecoveryReceipt'] -or
+            $null -eq $Session.RecoveryReceipt) {
+        # Existing retained sessions predate the recovery capability. They may
+        # use only the original parent-anchored cleanup path; recovery never
+        # treats a legacy marker tuple as an authority.
+        return $null
+    }
+    $receipt = $Session.RecoveryReceipt
+    if ($receipt -is [array]) {
+        Throw-VerifierInfrastructure "$Label was not one exact receipt object."
+    }
+    foreach ($propertyName in @('Protocol', 'AuthorityToken', 'IssuedUtc', 'State',
+            'BoundUtc', 'ClosedUtc', 'CloseAttemptedUtc', 'RunId',
+            'RepositoryIdentity', 'WorktreeRoot', 'RouteId', 'RouteName',
+            'BrowserPath', 'Profile', 'LeaseId', 'RootProcessCommandLine')) {
+        $property = $receipt.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or -not (Test-VerifierStrictStringValue $property.Value)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact string '$propertyName'."
+        }
+    }
+    foreach ($propertyName in @('CdpPort', 'RootProcessId', 'RootProcessStartTicks',
+            'RootParentProcessId', 'RootParentProcessStartTicks',
+            'ListenerProcessId', 'ListenerProcessStartTicks')) {
+        $property = $receipt.PSObject.Properties[$propertyName]
+        $maximum = if ($propertyName -like '*Ticks') { [long]::MaxValue } else { [int]::MaxValue }
+        if ($null -eq $property -or -not (Test-VerifierStrictIntegralValue $property.Value 0 $maximum)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact integral '$propertyName'."
+        }
+    }
+    $closeAttemptedProperty = $receipt.PSObject.Properties['CloseAttempted']
+    if ($null -eq $closeAttemptedProperty -or
+            -not (Test-VerifierStrictBooleanValue $closeAttemptedProperty.Value)) {
+        Throw-VerifierInfrastructure "$Label omitted its exact CloseAttempted Boolean."
+    }
+    if ($receipt.Protocol -cne 'troubleshootjs-verifier-browser-recovery-v1' -or
+            -not (Test-VerifierBrowserRecoveryAuthorityToken $receipt.AuthorityToken) -or
+            $receipt.State -cnotin @('issued', 'bound', 'closed')) {
+        Throw-VerifierInfrastructure "$Label carried an unknown protocol, authority token, or lifecycle state."
+    }
+    foreach ($timestamp in @(
+            [pscustomobject]@{ Name = 'IssuedUtc'; Required = $true },
+            [pscustomobject]@{ Name = 'BoundUtc'; Required = ($receipt.State -eq 'bound' -or
+                ($receipt.State -eq 'closed' -and -not [String]::IsNullOrWhiteSpace($receipt.BoundUtc))) },
+            [pscustomobject]@{ Name = 'ClosedUtc'; Required = ($receipt.State -eq 'closed') },
+            [pscustomobject]@{ Name = 'CloseAttemptedUtc'; Required = [bool]$receipt.CloseAttempted }
+        )) {
+        $value = [string]$receipt.$($timestamp.Name)
+        if ($timestamp.Required -and [String]::IsNullOrWhiteSpace($value)) {
+            Throw-VerifierInfrastructure "$Label omitted required timestamp '$($timestamp.Name)'."
+        }
+        if (-not [String]::IsNullOrWhiteSpace($value)) {
+            [void](ConvertTo-VerifierStrictTimestampText $value $false ($Label + ' ' + $timestamp.Name))
+        }
+    }
+    if (($receipt.State -eq 'issued' -and
+            (-not [String]::IsNullOrWhiteSpace($receipt.BoundUtc) -or
+             -not [String]::IsNullOrWhiteSpace($receipt.ClosedUtc) -or
+             $receipt.CloseAttempted)) -or
+            ($receipt.State -eq 'bound' -and -not [String]::IsNullOrWhiteSpace($receipt.ClosedUtc))) {
+        Throw-VerifierInfrastructure "$Label carried contradictory lifecycle timestamps."
+    }
+    if ($null -eq $Session.PSObject.Properties['Lease'] -or $null -eq $Session.Lease) {
+        Throw-VerifierInfrastructure "$Label omitted the session's exact lease binding."
+    }
+    if ($receipt.RunId -cne $Session.RunId -or
+            $receipt.RepositoryIdentity -cne $Session.RepositoryIdentity -or
+            -not (Test-VerifierCanonicalWindowsPathValue $receipt.WorktreeRoot $Session.WorktreeRoot) -or
+            $receipt.RouteId -cne $Session.RouteId -or
+            $receipt.RouteName -cne $Session.RouteName -or
+            -not (Test-VerifierCanonicalWindowsPathValue $receipt.BrowserPath $Session.BrowserPath) -or
+            -not (Test-VerifierCanonicalWindowsPathValue $receipt.Profile $Session.Profile) -or
+            $receipt.LeaseId -cne $Session.Lease.LeaseId -or
+            [int]$receipt.CdpPort -ne [int]$Session.CdpPort) {
+        Throw-VerifierInfrastructure "$Label did not match the exact browser session identity."
+    }
+    if ($null -ne $Context -and
+            ($receipt.RunId -cne $Context.RunId -or
+             $receipt.RepositoryIdentity -cne $Context.RepositoryIdentity -or
+             -not (Test-VerifierCanonicalWindowsPathValue $receipt.WorktreeRoot $Context.WorktreeRoot))) {
+        Throw-VerifierInfrastructure "$Label did not match the exact verifier context identity."
+    }
+    $hasRootTuple = ([int]$receipt.RootProcessId -gt 0 -or
+        [long]$receipt.RootProcessStartTicks -gt 0 -or
+        [int]$receipt.RootParentProcessId -gt 0 -or
+        [long]$receipt.RootParentProcessStartTicks -gt 0 -or
+        -not [String]::IsNullOrWhiteSpace($receipt.RootProcessCommandLine))
+    $hasListenerTuple = ([int]$receipt.ListenerProcessId -gt 0 -or
+        [long]$receipt.ListenerProcessStartTicks -gt 0)
+    if ($receipt.State -eq 'issued') {
+        if ($hasRootTuple -or $hasListenerTuple) {
+            Throw-VerifierInfrastructure "$Label issued state carried a partial root or listener binding."
+        }
+    } elseif ($receipt.State -eq 'bound' -or
+            ($receipt.State -eq 'closed' -and
+             -not [String]::IsNullOrWhiteSpace($receipt.BoundUtc))) {
+        if (-not $hasRootTuple -or -not $hasListenerTuple) {
+            Throw-VerifierInfrastructure "$Label $($receipt.State) state omitted its bound root or listener identity."
+        }
+        [void](Assert-VerifierDurableProcessIdentityTuple $receipt `
+            -ProcessIdPropertyName 'RootProcessId' `
+            -ProcessStartPropertyName 'RootProcessStartTicks' `
+            -ParentProcessIdPropertyName 'RootParentProcessId' `
+            -ParentProcessStartPropertyName 'RootParentProcessStartTicks' `
+            -CommandLinePropertyName 'RootProcessCommandLine' `
+            -Label ($Label + ' bound root'))
+        if ([int]$receipt.ListenerProcessId -le 0 -or
+                [long]$receipt.ListenerProcessStartTicks -le 0) {
+            Throw-VerifierInfrastructure "$Label $($receipt.State) state omitted a positive listener PID/start identity."
+        }
+        if ([int]$Session.ProcessId -le 0 -or [long]$Session.ProcessStartTicks -le 0 -or
+                [int]$Session.ProcessParentProcessId -le 0 -or
+                [long]$Session.ProcessParentProcessStartTicks -le 0 -or
+                [String]::IsNullOrWhiteSpace([string]$Session.ProcessCommandLine) -or
+                [int]$receipt.RootProcessId -ne [int]$Session.ProcessId -or
+                [long]$receipt.RootProcessStartTicks -ne [long]$Session.ProcessStartTicks -or
+                [int]$receipt.RootParentProcessId -ne [int]$Session.ProcessParentProcessId -or
+                [long]$receipt.RootParentProcessStartTicks -ne
+                    [long]$Session.ProcessParentProcessStartTicks -or
+                -not (Test-VerifierCommandLineEquivalent $receipt.RootProcessCommandLine `
+                    $Session.ProcessCommandLine) -or
+                [int]$receipt.ListenerProcessId -ne [int]$Session.Lease.ListenerProcessId -or
+                [long]$receipt.ListenerProcessStartTicks -ne
+                    [long]$Session.Lease.ListenerProcessStartTicks -or
+                [int]$Session.Lease.BoundProcessId -ne [int]$Session.ProcessId -or
+                [long]$Session.Lease.BoundProcessStartTicks -ne
+                    [long]$Session.ProcessStartTicks) {
+            Throw-VerifierInfrastructure "$Label bound tuple did not match the exact session and lease identity."
+        }
+        if ($receipt.State -eq 'closed' -and -not $receipt.CloseAttempted) {
+            Throw-VerifierInfrastructure "$Label closed a bound receipt without a durable close-attempt journal."
+        }
+    } elseif ($receipt.State -eq 'closed') {
+        # A lease can be rolled back before the browser ever binds.  Preserve
+        # that revocation explicitly as a closed *unbound* receipt instead of
+        # inventing a root/listener tuple. It cannot authorize shutdown: it
+        # carries no bound identity and no close attempt.
+        if ($hasRootTuple -or $hasListenerTuple -or $receipt.CloseAttempted -or
+                -not [String]::IsNullOrWhiteSpace($receipt.BoundUtc)) {
+            Throw-VerifierInfrastructure "$Label closed an unbound receipt with root/listener or close-attempt evidence."
+        }
+    }
+    if ($Session.CleanupResult -eq 'complete' -and $receipt.State -ne 'closed') {
+        Throw-VerifierInfrastructure "$Label was not durably closed with its completed browser session."
+    }
+    return $receipt
+}
+
+function Assert-VerifierDurableBrowserContainmentLaunch($Session, $Context,
+        [string]$Label = 'browser containment launch') {
+    if ($null -eq $Session) {
+        Throw-VerifierInfrastructure "$Label omitted its browser session."
+    }
+    $receipt = Assert-VerifierDurableBrowserRecoveryReceipt $Session $Context `
+        ($Label + ' recovery receipt')
+    $launchProperty = $Session.PSObject.Properties['ContainmentLaunch']
+    if ($null -eq $launchProperty -or $null -eq $launchProperty.Value) {
+        # Bound historical sessions have an independent, complete receipt/root
+        # tuple. They remain readable, but an issued session must carry the
+        # post-CreateProcess launch ledger before it can ever be resumed.
+        $legacyIdentity = Assert-VerifierDurableProcessIdentityTuple $Session `
+            -ProcessIdPropertyName 'ProcessId' `
+            -ProcessStartPropertyName 'ProcessStartTicks' `
+            -ParentProcessIdPropertyName 'ProcessParentProcessId' `
+            -ParentProcessStartPropertyName 'ProcessParentProcessStartTicks' `
+            -CommandLinePropertyName 'ProcessCommandLine' `
+            -Label ($Label + ' legacy process identity')
+        if ($null -ne $receipt -and $receipt.State -in @('bound', 'closed') -and
+                $legacyIdentity.State -eq 'positive') {
+            return $null
+        }
+        Throw-VerifierInfrastructure "$Label omitted its durable containment-launch record."
+    }
+    $launch = $launchProperty.Value
+    if ($launch -is [array]) {
+        Throw-VerifierInfrastructure "$Label was not one exact containment-launch object."
+    }
+    foreach ($propertyName in @('Protocol', 'JobName', 'State', 'LaunchedUtc')) {
+        $property = $launch.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or -not (Test-VerifierStrictStringValue $property.Value)) {
+            Throw-VerifierInfrastructure "$Label omitted or malformed its exact string '$propertyName'."
+        }
+    }
+    $launchPidProperty = $launch.PSObject.Properties['LaunchProcessId']
+    if ($null -eq $launchPidProperty -or
+            -not (Test-VerifierStrictIntegralValue $launchPidProperty.Value 0 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed its exact launch PID."
+    }
+    if ($launch.Protocol -cne 'troubleshootjs-verifier-browser-containment-launch-v1' -or
+            $launch.State -cnotin @('unlaunched', 'launch-pending', 'launched')) {
+        Throw-VerifierInfrastructure "$Label carried an unknown protocol or lifecycle state."
+    }
+    if ($null -eq $receipt) {
+        Throw-VerifierInfrastructure "$Label cannot derive a containment job without one durable recovery receipt."
+    }
+    $expectedJobName = Get-VerifierBrowserContainmentJobName $Context $Session
+    if ([String]::IsNullOrWhiteSpace([string]$launch.JobName) -or
+            $launch.JobName -cne $expectedJobName) {
+        Throw-VerifierInfrastructure "$Label did not retain the exact derived containment-job identity."
+    }
+    $sessionIdentity = Assert-VerifierDurableProcessIdentityTuple $Session `
+        -ProcessIdPropertyName 'ProcessId' `
+        -ProcessStartPropertyName 'ProcessStartTicks' `
+        -ParentProcessIdPropertyName 'ProcessParentProcessId' `
+        -ParentProcessStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandLinePropertyName 'ProcessCommandLine' `
+        -Label ($Label + ' browser process identity')
+    if ($launch.State -in @('unlaunched', 'launch-pending')) {
+        if ([int]$launch.LaunchProcessId -ne 0 -or
+                -not [String]::IsNullOrWhiteSpace([string]$launch.LaunchedUtc) -or
+                $sessionIdentity.State -ne 'absent') {
+            Throw-VerifierInfrastructure "$Label unlaunched/pending state carried a root identity or timestamp."
+        }
+        if ($launch.State -eq 'launch-pending' -and
+                ($receipt.State -ne 'issued' -or $receipt.CloseAttempted -or
+                 $Session.Status -notin @('leased', 'startup-failed', 'cleanup-failed'))) {
+            Throw-VerifierInfrastructure "$Label pending state did not retain one exact issued, rootless recovery lifecycle."
+        }
+    } else {
+        if ([int]$launch.LaunchProcessId -le 0 -or
+                [String]::IsNullOrWhiteSpace([string]$launch.LaunchedUtc)) {
+            Throw-VerifierInfrastructure "$Label launched state omitted its exact root PID or timestamp."
+        }
+        [void](ConvertTo-VerifierStrictTimestampText $launch.LaunchedUtc $false `
+            ($Label + ' LaunchedUtc'))
+        if ($sessionIdentity.State -eq 'positive' -and
+                [int]$launch.LaunchProcessId -ne [int]$sessionIdentity.ProcessId) {
+            Throw-VerifierInfrastructure "$Label launch PID disagreed with the complete browser root identity."
+        }
+    }
+    # A closed receipt can record either a completed bound shutdown or an
+    # explicit pre-bind revocation.  Only the former has a root/listener tuple
+    # that must match a launched containment record.
+    $receiptHasBoundRoot = ($receipt.State -eq 'bound' -or
+        ($receipt.State -eq 'closed' -and
+         -not [String]::IsNullOrWhiteSpace([string]$receipt.BoundUtc)))
+    if ($receiptHasBoundRoot -and
+            ($launch.State -ne 'launched' -or $sessionIdentity.State -ne 'positive' -or
+             [int]$launch.LaunchProcessId -ne [int]$sessionIdentity.ProcessId)) {
+        Throw-VerifierInfrastructure "$Label bound/closed receipt did not retain its exact launched containment root."
+    }
+    return $launch
+}
+
 function Assert-VerifierDurableBrowserSession($Session, $Context,
         [string]$Label = 'verifier browser session') {
     if ($null -eq $Session) {
@@ -3110,6 +4100,9 @@ function Assert-VerifierDurableBrowserSession($Session, $Context,
             -not (@($Context.LeaseRecords) -contains $leaseProperty.Value)) {
         Throw-VerifierInfrastructure "$Label did not reference a lease in the exact run lease ledger."
     }
+    [void](Assert-VerifierDurableBrowserRecoveryReceipt $Session $Context ($Label + ' recovery receipt'))
+    [void](Assert-VerifierDurableBrowserContainmentLaunch $Session $Context `
+        ($Label + ' containment launch'))
     if ($Session.CleanupResult -ceq 'complete') {
         if ($Session.Status -cne 'cleaned' -or
                 -not $Session.ProfileProcessScanCompleted -or
@@ -4151,6 +5144,45 @@ function Get-VerifierManifestView($Context) {
             cleanupResult = $_.CleanupResult
             profileProcessScanCompleted = Get-VerifierManifestBooleanValue $_ 'ProfileProcessScanCompleted'
             profileInspectionFailed = Get-VerifierManifestBooleanValue $_ 'ProfileInspectionFailed'
+            recoveryReceipt = if ($null -eq $_.PSObject.Properties['RecoveryReceipt'] -or
+                    $null -eq $_.RecoveryReceipt) { $null } else {
+                [ordered]@{
+                    protocol = $_.RecoveryReceipt.Protocol
+                    authorityToken = $_.RecoveryReceipt.AuthorityToken
+                    issuedUtc = $_.RecoveryReceipt.IssuedUtc
+                    state = $_.RecoveryReceipt.State
+                    boundUtc = $_.RecoveryReceipt.BoundUtc
+                    closedUtc = $_.RecoveryReceipt.ClosedUtc
+                    closeAttempted = $_.RecoveryReceipt.CloseAttempted
+                    closeAttemptedUtc = $_.RecoveryReceipt.CloseAttemptedUtc
+                    runId = $_.RecoveryReceipt.RunId
+                    repositoryIdentity = $_.RecoveryReceipt.RepositoryIdentity
+                    worktreeRoot = $_.RecoveryReceipt.WorktreeRoot
+                    routeId = $_.RecoveryReceipt.RouteId
+                    routeName = $_.RecoveryReceipt.RouteName
+                    browserPath = $_.RecoveryReceipt.BrowserPath
+                    profile = $_.RecoveryReceipt.Profile
+                    leaseId = $_.RecoveryReceipt.LeaseId
+                    cdpPort = $_.RecoveryReceipt.CdpPort
+                    rootProcessId = $_.RecoveryReceipt.RootProcessId
+                    rootProcessStartTicks = $_.RecoveryReceipt.RootProcessStartTicks
+                    rootParentProcessId = $_.RecoveryReceipt.RootParentProcessId
+                    rootParentProcessStartTicks = $_.RecoveryReceipt.RootParentProcessStartTicks
+                    rootProcessCommandLine = $_.RecoveryReceipt.RootProcessCommandLine
+                    listenerProcessId = $_.RecoveryReceipt.ListenerProcessId
+                    listenerProcessStartTicks = $_.RecoveryReceipt.ListenerProcessStartTicks
+                }
+            }
+            containmentLaunch = if ($null -eq $_.PSObject.Properties['ContainmentLaunch'] -or
+                    $null -eq $_.ContainmentLaunch) { $null } else {
+                [ordered]@{
+                    protocol = $_.ContainmentLaunch.Protocol
+                    jobName = $_.ContainmentLaunch.JobName
+                    state = $_.ContainmentLaunch.State
+                    launchProcessId = $_.ContainmentLaunch.LaunchProcessId
+                    launchedUtc = $_.ContainmentLaunch.LaunchedUtc
+                }
+            }
             error = $_.Error
         }
     })
@@ -4598,8 +5630,12 @@ function New-VerifierRunContext($WorktreeRoot, $EvidenceParent = '',
                   FailNextPostDeleteFinalManifestWrite = $false
                   FailNextPostDeleteJournalWrite = $false
                   FailNextPostDeleteBeforeFinalState = $false
-                  FailNextBrowserLeaseManifestWrite = $false
-                  FailNextPreviewIdentityCapture = $false
+                   FailNextBrowserLeaseManifestWrite = $false
+                   FailNextPreviewIdentityCapture = $false
+                   FailNextBrowserContainmentHandleAcquire = $false
+                   FailNextBrowserContainmentLaunchLedgerPublish = $false
+                   FailNextIssuedContainedRecovery = $false
+                   FailNextIssuedContainedRecoveryListenerBind = $false
                  BrowserDrainAfterInitialGraphSignalPath = ''
                  BrowserDrainAfterInitialGraphReadyPath = ''
                  BrowserDrainAfterInitialGraphSignalWritten = $false
@@ -5172,6 +6208,85 @@ function Test-VerifierSameRootBrowserListenerEligibility($Inspection,
     return $true
 }
 
+function Test-VerifierSameRootBrowserLiveIdentity($OwnerRecord, $CurrentRoot,
+        $ProcessId, $ProcessStartTicks) {
+    # The same-root CDP listener is a narrow proof path. It deliberately
+    # reuses the already fresh root record from the listener boundary instead
+    # of starting another full root WMI census, then independently proves the
+    # recorded launch parent. This keeps the existing 500 ms ownership budget
+    # intact without making a PID/start tuple sufficient on its own.
+    if ($null -eq $OwnerRecord -or $null -eq $CurrentRoot -or
+            -not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ProcessStartTicks 1)) {
+        return $false
+    }
+    foreach ($propertyName in @('ProcessId', 'ProcessStartTicks',
+            'ProcessParentProcessId', 'ProcessParentProcessStartTicks',
+            'ProcessCommandLine', 'BrowserPath', 'Profile', 'RunId',
+            'RepositoryIdentity', 'CdpPort')) {
+        if (-not $OwnerRecord.PSObject.Properties[$propertyName]) { return $false }
+    }
+    if (-not (Test-VerifierStrictIntegralValue $OwnerRecord.ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $OwnerRecord.ProcessStartTicks 1) -or
+            -not (Test-VerifierStrictIntegralValue $OwnerRecord.ProcessParentProcessId `
+                1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $OwnerRecord.ProcessParentProcessStartTicks 1) -or
+            -not (Test-VerifierStrictIntegralValue $OwnerRecord.CdpPort 1 65535) -or
+            -not (Test-VerifierStrictStringValue $OwnerRecord.ProcessCommandLine) -or
+            -not (Test-VerifierStrictStringValue $OwnerRecord.BrowserPath) -or
+            -not (Test-VerifierStrictStringValue $OwnerRecord.Profile) -or
+            -not (Test-VerifierStrictStringValue $OwnerRecord.RunId) -or
+            -not (Test-VerifierStrictStringValue $OwnerRecord.RepositoryIdentity) -or
+            [String]::IsNullOrWhiteSpace([string]$OwnerRecord.ProcessCommandLine) -or
+            [String]::IsNullOrWhiteSpace([string]$OwnerRecord.BrowserPath) -or
+            [String]::IsNullOrWhiteSpace([string]$OwnerRecord.Profile) -or
+            [String]::IsNullOrWhiteSpace([string]$OwnerRecord.RunId) -or
+            [String]::IsNullOrWhiteSpace([string]$OwnerRecord.RepositoryIdentity)) {
+        return $false
+    }
+    foreach ($propertyName in @('ProcessId', 'ProcessStartTicks',
+            'ParentProcessId', 'CommandLine', 'Name', 'ExecutablePath')) {
+        if (-not $CurrentRoot.PSObject.Properties[$propertyName]) { return $false }
+    }
+    if (-not (Test-VerifierStrictIntegralValue $CurrentRoot.ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $CurrentRoot.ProcessStartTicks 1) -or
+            -not (Test-VerifierStrictIntegralValue $CurrentRoot.ParentProcessId `
+                1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictStringValue $CurrentRoot.CommandLine) -or
+            [String]::IsNullOrWhiteSpace([string]$CurrentRoot.CommandLine) -or
+            [int]$CurrentRoot.ProcessId -ne [int]$ProcessId -or
+            [int]$CurrentRoot.ProcessId -ne [int]$OwnerRecord.ProcessId -or
+            [long]$CurrentRoot.ProcessStartTicks -ne [long]$ProcessStartTicks -or
+            [long]$CurrentRoot.ProcessStartTicks -ne [long]$OwnerRecord.ProcessStartTicks -or
+            [int]$CurrentRoot.ParentProcessId -ne [int]$OwnerRecord.ProcessParentProcessId -or
+            -not (Test-VerifierConfiguredExecutableIdentity $OwnerRecord.BrowserPath `
+                $CurrentRoot -RequireExecutablePath) -or
+            -not (Test-VerifierCommandLineEquivalent $CurrentRoot.CommandLine `
+                $OwnerRecord.ProcessCommandLine)) {
+        return $false
+    }
+    foreach ($switch in @(
+            [pscustomobject]@{ Name = '--user-data-dir'; Value = [string]$OwnerRecord.Profile }
+            [pscustomobject]@{ Name = '--tsj-verifier-run'; Value = [string]$OwnerRecord.RunId }
+            [pscustomobject]@{ Name = '--tsj-verifier-worktree'; Value = [string]$OwnerRecord.RepositoryIdentity }
+            [pscustomobject]@{ Name = '--remote-debugging-port'; Value = [string]$OwnerRecord.CdpPort }
+        )) {
+        if (-not (Test-VerifierCommandLineSwitch $CurrentRoot.CommandLine `
+                $switch.Name $switch.Value)) {
+            return $false
+        }
+    }
+    try {
+        $currentParent = Get-VerifierCurrentProcessRecordById `
+            ([int]$CurrentRoot.ParentProcessId)
+        return ($null -ne $currentParent -and
+            [long]$currentParent.ProcessStartTicks -eq
+                [long]$OwnerRecord.ProcessParentProcessStartTicks)
+    } catch {
+        return $false
+    }
+}
+
 function Test-VerifierLiveListenerInspectionAuthorization($Inspection,
         $PreviewContext, $PreviewOwner, $AuthorizedProcessId,
         $AuthorizedProcessStartTicks, $AuthorizationProof = $null) {
@@ -5359,6 +6474,21 @@ function Test-VerifierLiveListenerInspectionAuthorization($Inspection,
             $attemptInspection $attemptListeners $PreviewOwner `
             $AuthorizedProcessId $AuthorizedProcessStartTicks $null
         if ($sameRootBrowserListenerSet) {
+            $currentRoot = $null
+            try {
+                $currentRoot = Get-VerifierCurrentProcessRecordById `
+                    ([int]$AuthorizedProcessId)
+            } catch { return $false }
+            if ($retryBudget.ElapsedTicks -lt $retryBudgetTicks -and
+                    $null -ne $currentRoot -and
+                    (Test-VerifierSameRootBrowserLiveIdentity $PreviewOwner `
+                        $currentRoot $AuthorizedProcessId $AuthorizedProcessStartTicks) -and
+                    $retryBudget.ElapsedTicks -lt $retryBudgetTicks) {
+                return $true
+            }
+            # Retain the pre-existing PID-scoped proof for a constrained
+            # synthetic/current-process view. It never reaches the complete
+            # descendant snapshot, and a failed proof remains fail closed.
             foreach ($listener in $attemptListeners) {
                 if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
                     return $false
@@ -5367,18 +6497,10 @@ function Test-VerifierLiveListenerInspectionAuthorization($Inspection,
                 try {
                     $belongs = Test-VerifierListenerBelongsToOwner $PreviewOwner `
                         $listener $AuthorizedProcessId $AuthorizedProcessStartTicks $null
-                } catch {
+                } catch { return $false }
+                if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks -or -not $belongs) {
                     return $false
                 }
-                if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                    return $false
-                }
-                if (-not $belongs) {
-                    return $false
-                }
-            }
-            if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                return $false
             }
             return $true
         }
@@ -5814,6 +6936,7 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
         # Browser ownership requires a fresh root and listener liveness proof
         # on every attempt.  The direct retained-process canary has its own
         # exact Process-object proof and intentionally follows the old path.
+        $currentRoot = $null
         if ($null -eq $PreviewListenerOwner -and $null -ne $OwnerRecord -and
                 ($OwnerRecord.PSObject.Properties['Profile'] -or
                  $OwnerRecord.PSObject.Properties['Script'])) {
@@ -5835,7 +6958,14 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
             Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
                 "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
                 }
-                $currentListener = Get-VerifierCurrentProcessRecordById ([int]$listener.ProcessId)
+                $currentListener = if ([int]$listener.ProcessId -eq
+                        [int]$currentRoot.ProcessId -and
+                        [long]$listener.ProcessStartTicks -eq
+                            [long]$currentRoot.ProcessStartTicks) {
+                    $currentRoot
+                } else {
+                    Get-VerifierCurrentProcessRecordById ([int]$listener.ProcessId)
+                }
                 if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
             Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
                 }
@@ -5857,6 +6987,27 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
         $sameRootBrowserListenerSet = Test-VerifierSameRootBrowserListenerEligibility `
             $inspection $listeners $OwnerRecord $ProcessId $ProcessStartTicks `
             $PreviewListenerOwner
+        if ($sameRootBrowserListenerSet) {
+            $proofStage = 'browser-root-listener-fast-identity'
+            if ($null -ne $currentRoot -and
+                    (Test-VerifierSameRootBrowserLiveIdentity $OwnerRecord `
+                        $currentRoot $ProcessId $ProcessStartTicks)) {
+                if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
+                    Throw-VerifierInfrastructure ('Port lease ownership proof exceeded its bounded monotonic deadline. ' +
+                        "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
+                }
+                return [pscustomobject]@{
+                    Inspection = $inspection; Listeners = @($listeners); Snapshot = @()
+                    AuthorizationProof = $kernelAuthorizationProof
+                    ProofStage = $proofStage
+                    ProofElapsedMilliseconds = [long]$proofStageStopwatch.ElapsedMilliseconds
+                }
+            }
+            # A synthetic/test host can expose only a PID/start current view.
+            # Keep the original PID-scoped proof below as a fail-closed
+            # compatibility fallback; it still receives Snapshot=$null and
+            # never broadens the same-root listener into a descendant census.
+        }
 
         $ownerBrowserPath = if ($null -ne $OwnerRecord -and
                 $OwnerRecord.PSObject.Properties['BrowserPath']) {
@@ -6056,7 +7207,7 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
 }
 
 function Confirm-VerifierPortLeaseBound($Context, $Lease, $ProcessId,
-        $ProcessStartTicks, $OwnerRecord = $null) {
+        $ProcessStartTicks, $OwnerRecord = $null, [switch]$DeferManifestWrite) {
     [void](Assert-VerifierContextPreflight $Context 'port lease bind context' `
         -RequiredProperties @('RunId', 'RepositoryIdentity', 'PortLeaseRoot'))
     # Complete all raw context/server/lease/owner fields before any listener
@@ -6142,7 +7293,9 @@ function Confirm-VerifierPortLeaseBound($Context, $Lease, $ProcessId,
     if ($Lease.PSObject.Properties['ProcessProofRequired']) {
         $Lease.ProcessProofRequired = $true
     }
-    Write-VerifierManifest $Context
+    if (-not $DeferManifestWrite) {
+        Write-VerifierManifest $Context
+    }
 }
 
 function Release-VerifierPortLease($Context, $Lease) {
@@ -6174,6 +7327,8 @@ function Release-VerifierPortLease($Context, $Lease) {
         }
     }
     Assert-VerifierDurableLeaseRecord $Lease $Context 'port lease release'
+    $retainedRecoveryAuthority = Get-VerifierRetainedBrowserRecoveryLeaseAuthority `
+        $Context $Lease 'port lease release retained browser recovery authority'
     # Every successful release path, including durable terminal recovery,
     # must begin from the exact canonical listener owner tuple.  Do not let a
     # terminal state or a missing claim bypass owner-proof validation.
@@ -6397,7 +7552,14 @@ function Release-VerifierPortLease($Context, $Lease) {
         if ($releaseState -notin @('complete', 'os-released', 'claim-delete-failed') -and
                 ([int]$Lease.ClaimOwnerPid -ne [int]$PID -or
                  [long]$Lease.ClaimOwnerStartTicks -ne (Get-VerifierCurrentProcessStartTicks))) {
-            Throw-VerifierInfrastructure "Refusing to release port $($Lease.Port): claim process identity changed."
+            # A normal lease may only be released by the process that acquired
+            # it. The one narrow exception is a retained browser session whose
+            # original claimant is positively absent, whose exact mutex was
+            # reacquired by this process, and whose in-memory capability was
+            # created by the durable manifest recovery entry point above.
+            if ($null -eq $retainedRecoveryAuthority) {
+                Throw-VerifierInfrastructure "Refusing to release port $($Lease.Port): claim process identity changed."
+            }
         }
         $browserPath = if ($Lease.PSObject.Properties['BrowserPath']) { [string]$Lease.BrowserPath } else { '' }
         $leaseRunId = if ($Lease.PSObject.Properties['RunId']) { [string]$Lease.RunId } else { [string]$Context.RunId }
@@ -6726,6 +7888,27 @@ function New-VerifierBrowserLease($Context, $RouteName, $BrowserPath = '') {
         $lease.ProfilePath = Get-VerifierFullPath $profile
         $lease.OwnerType = 'browser'
         $lease.BrowserPath = [string]$BrowserPath
+        # This durable receipt is deliberately distinct from the ordinary
+        # parent/child identity. It is a fresh capability embedded in the
+        # launched browser command and is not sufficient on its own to stop a
+        # process. Recovery requires its later root/listener binding as well as
+        # current PID/start, executable, command, profile, and parent-absence
+        # proofs.
+        $recoveryReceipt = [pscustomobject]@{
+            Protocol = 'troubleshootjs-verifier-browser-recovery-v1'
+            AuthorityToken = (New-VerifierBrowserRecoveryAuthorityToken)
+            IssuedUtc = (Get-VerifierUtcText)
+            State = 'issued'; BoundUtc = ''; ClosedUtc = ''
+            CloseAttempted = $false; CloseAttemptedUtc = ''
+            RunId = $Context.RunId; RepositoryIdentity = $Context.RepositoryIdentity
+            WorktreeRoot = $Context.WorktreeRoot; RouteId = $routeId; RouteName = $RouteName
+            BrowserPath = [string]$lease.BrowserPath; Profile = Get-VerifierFullPath $profile
+            LeaseId = [string]$lease.LeaseId; CdpPort = [int]$lease.Port
+            RootProcessId = 0; RootProcessStartTicks = 0L
+            RootParentProcessId = 0; RootParentProcessStartTicks = 0L
+            RootProcessCommandLine = ''
+            ListenerProcessId = 0; ListenerProcessStartTicks = 0L
+        }
         # Construct and validate the complete live session schema before adding
         # it to the durable context. In particular, WorktreeRoot is part of the
         # run identity and must never be omitted from the first session write.
@@ -6740,7 +7923,14 @@ function New-VerifierBrowserLease($Context, $RouteName, $BrowserPath = '') {
             ProcessCommandLine = ''; TargetId = ''; ExpectedUrl = ''
             Status = 'leased'; CleanupResult = 'pending'; Error = ''
             ProfileInspectionFailed = $false; ProfileProcessScanCompleted = $false
-            Runtime = [pscustomobject]@{ Browser = $null; Socket = $null }
+            RecoveryReceipt = $recoveryReceipt
+            ContainmentLaunch = $null
+            Runtime = [pscustomobject]@{ Browser = $null; Socket = $null; ContainmentJob = $null }
+        }
+        $browserLeaseSessionRecord.ContainmentLaunch = [pscustomobject]@{
+            Protocol = 'troubleshootjs-verifier-browser-containment-launch-v1'
+            JobName = Get-VerifierBrowserContainmentJobName $Context $browserLeaseSessionRecord
+            State = 'unlaunched'; LaunchProcessId = 0; LaunchedUtc = ''
         }
         Assert-VerifierDurableBrowserSession $browserLeaseSessionRecord $Context `
             'browser lease session'
@@ -6790,6 +7980,191 @@ function New-VerifierBrowserLease($Context, $RouteName, $BrowserPath = '') {
         Throw-VerifierInfrastructure ('Browser lease construction failed: ' +
             (Get-VerifierErrorMessage $sessionFailure))
     }
+}
+
+function Set-VerifierBrowserRecoveryReceiptBound($Context, $SessionRecord) {
+    [void](Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+        'browser recovery receipt bind session')
+    $receiptProperty = $SessionRecord.PSObject.Properties['RecoveryReceipt']
+    if ($null -eq $receiptProperty -or $null -eq $receiptProperty.Value) {
+        Throw-VerifierInfrastructure 'A newly launched browser session omitted its recovery receipt.'
+    }
+    $receipt = $receiptProperty.Value
+    if ($receipt.State -ne 'issued' -or $receipt.CloseAttempted -or
+            [int]$SessionRecord.ProcessId -le 0 -or
+            [long]$SessionRecord.ProcessStartTicks -le 0 -or
+            [int]$SessionRecord.ProcessParentProcessId -le 0 -or
+            [long]$SessionRecord.ProcessParentProcessStartTicks -le 0 -or
+            [String]::IsNullOrWhiteSpace([string]$SessionRecord.ProcessCommandLine) -or
+            $SessionRecord.Status -ne 'attached' -or
+            $SessionRecord.Lease.Status -ne 'bound' -or
+            $SessionRecord.Lease.ClaimState -ne 'bound' -or
+            [int]$SessionRecord.Lease.BoundProcessId -ne [int]$SessionRecord.ProcessId -or
+            [long]$SessionRecord.Lease.BoundProcessStartTicks -ne
+                [long]$SessionRecord.ProcessStartTicks -or
+            [int]$SessionRecord.Lease.ListenerProcessId -ne [int]$SessionRecord.ProcessId -or
+            [long]$SessionRecord.Lease.ListenerProcessStartTicks -ne
+                [long]$SessionRecord.ProcessStartTicks -or
+            -not (Test-VerifierCommandLineSwitch $SessionRecord.ProcessCommandLine `
+                '--tsj-verifier-recovery-token' $receipt.AuthorityToken)) {
+        Throw-VerifierInfrastructure 'Browser recovery receipt could not bind the exact launched root/listener tuple.'
+    }
+    $receipt.RootProcessId = [int]$SessionRecord.ProcessId
+    $receipt.RootProcessStartTicks = [long]$SessionRecord.ProcessStartTicks
+    $receipt.RootParentProcessId = [int]$SessionRecord.ProcessParentProcessId
+    $receipt.RootParentProcessStartTicks = [long]$SessionRecord.ProcessParentProcessStartTicks
+    $receipt.RootProcessCommandLine = [string]$SessionRecord.ProcessCommandLine
+    $receipt.ListenerProcessId = [int]$SessionRecord.Lease.ListenerProcessId
+    $receipt.ListenerProcessStartTicks = [long]$SessionRecord.Lease.ListenerProcessStartTicks
+    $receipt.BoundUtc = Get-VerifierUtcText
+    $receipt.State = 'bound'
+    [void](Assert-VerifierDurableBrowserRecoveryReceipt $SessionRecord $Context `
+        'browser recovery receipt bound state')
+}
+
+function Get-VerifierBindingPropertySnapshot($Object, [string[]]$PropertyNames) {
+    if ($null -eq $Object -or $null -eq $PropertyNames) {
+        Throw-VerifierInfrastructure 'Browser bind transaction snapshot omitted its exact object/property set.'
+    }
+    $snapshot = @{}
+    foreach ($propertyName in $PropertyNames) {
+        $property = $Object.PSObject.Properties[$propertyName]
+        $snapshot[$propertyName] = [pscustomobject]@{
+            Present = ($null -ne $property)
+            Value = if ($null -eq $property) { $null } else { $property.Value }
+        }
+    }
+    return $snapshot
+}
+
+function Restore-VerifierBindingPropertySnapshot($Object, $Snapshot) {
+    if ($null -eq $Object -or $null -eq $Snapshot) {
+        Throw-VerifierInfrastructure 'Browser bind transaction restore omitted its exact object/property snapshot.'
+    }
+    foreach ($propertyName in @($Snapshot.Keys)) {
+        $entry = $Snapshot[$propertyName]
+        if ($null -eq $entry -or -not (Test-VerifierStrictBooleanValue $entry.Present)) {
+            Throw-VerifierInfrastructure 'Browser bind transaction restore carried a malformed property snapshot.'
+        }
+        $property = $Object.PSObject.Properties[$propertyName]
+        if ($entry.Present) {
+            if ($null -eq $property) {
+                Add-Member -InputObject $Object -MemberType NoteProperty -Name $propertyName `
+                    -Value $entry.Value
+            } else {
+                $property.Value = $entry.Value
+            }
+        } elseif ($null -ne $property) {
+            [void]$Object.PSObject.Properties.Remove($propertyName)
+        }
+    }
+}
+
+function New-VerifierBrowserBindTransactionSnapshot($SessionRecord) {
+    if ($null -eq $SessionRecord -or $null -eq $SessionRecord.Lease -or
+            $null -eq $SessionRecord.RecoveryReceipt -or
+            $null -eq $SessionRecord.ContainmentLaunch) {
+        Throw-VerifierInfrastructure 'Browser bind transaction snapshot omitted one exact session lifecycle record.'
+    }
+    return [pscustomobject]@{
+        Session = Get-VerifierBindingPropertySnapshot $SessionRecord @(
+            'ProcessId', 'ProcessStartTicks', 'ProcessParentProcessId',
+            'ProcessParentProcessStartTicks', 'ProcessCommandLine', 'Status',
+            'CleanupResult', 'Error', 'TargetId')
+        Lease = Get-VerifierBindingPropertySnapshot $SessionRecord.Lease @(
+            'ListenerInspectionSuccess', 'ListenerInspectionKnown', 'ListenerHasListeners',
+            'ListenerAbsent', 'ListenerProcessId', 'ListenerProcessStartTicks',
+            'ListenerOwnerKind', 'ListenerOwnerProof', 'ListenerOwnerEvidence',
+            'ListenerInspectionUtc', 'AuthorizationProof', 'BoundProcessId',
+            'BoundProcessStartTicks', 'BindValidatedUtc', 'ClaimState', 'Status',
+            'ProcessProofRequired')
+        Receipt = Get-VerifierBindingPropertySnapshot $SessionRecord.RecoveryReceipt @(
+            'RootProcessId', 'RootProcessStartTicks', 'RootParentProcessId',
+            'RootParentProcessStartTicks', 'RootProcessCommandLine', 'ListenerProcessId',
+            'ListenerProcessStartTicks', 'BoundUtc', 'State')
+        Launch = Get-VerifierBindingPropertySnapshot $SessionRecord.ContainmentLaunch @(
+            'LaunchProcessId', 'LaunchedUtc', 'State')
+    }
+}
+
+function Restore-VerifierBrowserBindTransactionSnapshot($SessionRecord, $Snapshot) {
+    if ($null -eq $SessionRecord -or $null -eq $Snapshot) {
+        Throw-VerifierInfrastructure 'Browser bind transaction restore omitted its exact session snapshot.'
+    }
+    Restore-VerifierBindingPropertySnapshot $SessionRecord $Snapshot.Session
+    Restore-VerifierBindingPropertySnapshot $SessionRecord.Lease $Snapshot.Lease
+    Restore-VerifierBindingPropertySnapshot $SessionRecord.RecoveryReceipt $Snapshot.Receipt
+    Restore-VerifierBindingPropertySnapshot $SessionRecord.ContainmentLaunch $Snapshot.Launch
+}
+
+function Invoke-VerifierBrowserBindTransaction($Context, $SessionRecord, $RootRecord,
+        [scriptblock]$BindLease, [string]$TargetId = '') {
+    if ($null -eq $RootRecord -or $null -eq $BindLease -or
+            -not (Test-VerifierStrictStringValue $TargetId) -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ProcessStartTicks 1) -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ParentProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ParentProcessStartTicks 1) -or
+            -not (Test-VerifierStrictStringValue $RootRecord.CommandLine) -or
+            [String]::IsNullOrWhiteSpace([string]$RootRecord.CommandLine)) {
+        Throw-VerifierInfrastructure 'Browser bind transaction omitted one complete exact root/listener proof input.'
+    }
+    $snapshot = New-VerifierBrowserBindTransactionSnapshot $SessionRecord
+    try {
+        # No tuple, lease, or receipt mutation is durable until the complete
+        # root/listener proof has run and the bound receipt is ready to commit
+        # in the same manifest replacement. A crash before that write leaves
+        # the prior issued containment ledger as the only recovery authority.
+        $SessionRecord.ProcessId = [int]$RootRecord.ProcessId
+        $SessionRecord.ProcessStartTicks = [long]$RootRecord.ProcessStartTicks
+        $SessionRecord.ProcessParentProcessId = [int]$RootRecord.ParentProcessId
+        $SessionRecord.ProcessParentProcessStartTicks = [long]$RootRecord.ParentProcessStartTicks
+        $SessionRecord.ProcessCommandLine = [string]$RootRecord.CommandLine
+        $SessionRecord.Status = 'started'
+        $SessionRecord.CleanupResult = 'pending'
+        $SessionRecord.Error = ''
+        [void](& $BindLease $SessionRecord)
+        $SessionRecord.TargetId = $TargetId
+        $SessionRecord.Status = 'attached'
+        Set-VerifierBrowserRecoveryReceiptBound $Context $SessionRecord
+        [void](Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+            'browser bind transaction committed state')
+        Write-VerifierManifest $Context
+    } catch {
+        Restore-VerifierBrowserBindTransactionSnapshot $SessionRecord $snapshot
+        throw
+    }
+}
+
+function Record-VerifierBrowserRecoveryCloseAttempt($Context, $SessionRecord) {
+    $receiptProperty = if ($null -eq $SessionRecord) { $null } else {
+        $SessionRecord.PSObject.Properties['RecoveryReceipt']
+    }
+    if ($null -eq $receiptProperty -or $null -eq $receiptProperty.Value) { return }
+    [void](Assert-VerifierDurableBrowserRecoveryReceipt $SessionRecord $Context `
+        'browser recovery close-attempt receipt')
+    $receipt = $receiptProperty.Value
+    if ($receipt.State -ne 'bound' -or $receipt.CloseAttempted) {
+        Throw-VerifierInfrastructure 'Browser recovery receipt does not authorize another uncertain close attempt.'
+    }
+    $receipt.CloseAttempted = $true
+    $receipt.CloseAttemptedUtc = Get-VerifierUtcText
+    [void](Assert-VerifierDurableBrowserRecoveryReceipt $SessionRecord $Context `
+        'browser recovery close-attempt state')
+    Write-VerifierManifest $Context
+}
+
+function Close-VerifierBrowserRecoveryReceipt($SessionRecord) {
+    $receiptProperty = if ($null -eq $SessionRecord) { $null } else {
+        $SessionRecord.PSObject.Properties['RecoveryReceipt']
+    }
+    if ($null -eq $receiptProperty -or $null -eq $receiptProperty.Value) { return }
+    $receipt = $receiptProperty.Value
+    if ($receipt.State -notin @('issued', 'bound')) {
+        Throw-VerifierInfrastructure 'Browser recovery receipt was already closed or carried an unknown lifecycle state.'
+    }
+    $receipt.State = 'closed'
+    $receipt.ClosedUtc = Get-VerifierUtcText
 }
 
 function Select-VerifierRelevantProcessRecords($Snapshot, $BrowserPath = '',
@@ -6873,7 +8248,13 @@ function Select-VerifierRelevantProcessRecords($Snapshot, $BrowserPath = '',
                 ($profileMatch -or $runMatch -or $scriptMatch -or $nonceMatch)) {
             Throw-VerifierInfrastructure 'A relevant browser candidate carried an explicit null Name field.'
         }
-        if (-not ($nameMatch -or $profileMatch -or $identityMatch)) { continue }
+        # A same-named browser alone is not an ownership claim. Treating every
+        # unrelated Edge/Chrome peer as relevant both blocks user processes on
+        # transient inspection races and tempts later cleanup code to reason
+        # about an unowned graph. The root must carry its exact profile/route
+        # markers here; markerless same-executable helpers are admitted only
+        # after the verified root's PPID traversal below.
+        if (-not ($profileMatch -or $identityMatch)) { continue }
         if ($processId -le 0) {
             Throw-VerifierInfrastructure 'A relevant browser candidate omitted a positive ProcessId.'
         }
@@ -7353,6 +8734,684 @@ function Get-VerifierProcessSnapshotWithFallback([string]$Purpose = 'process') {
     }
 }
 
+function Initialize-VerifierBrowserContainmentJobApi() {
+    # A sampled PPID graph cannot prove that a short-lived direct child did not
+    # leave an otherwise uninspectable orphan behind.  Every newly launched
+    # browser is therefore created atomically in one named Windows job with
+    # breakaway disabled.  The kernel retains every live descendant in that
+    # job, including a child whose command line cannot be read, so an empty
+    # member list after Browser.close is a stronger containment proof than a
+    # filtered process/profile scan.
+    $typeName = 'VerifierBrowserContainmentJobApi'
+    $loadedType = ([System.Management.Automation.PSTypeName]$typeName).Type
+    if ($null -ne $loadedType) { return $loadedType }
+    $source = @'
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
+
+public sealed class VerifierBrowserContainmentJobApi : IDisposable {
+    private const uint EXTENDED_STARTUPINFO_PRESENT = 0x00080000;
+    private const uint CREATE_NO_WINDOW = 0x08000000;
+    private const uint CREATE_SUSPENDED = 0x00000004;
+    private const uint JOB_OBJECT_QUERY = 0x0004;
+    private const int JOB_OBJECT_BASIC_PROCESS_ID_LIST = 3;
+    private const int JOB_OBJECT_EXTENDED_LIMIT_INFORMATION = 9;
+    private const int ERROR_ALREADY_EXISTS = 183;
+    private const int ERROR_MORE_DATA = 234;
+    private const uint JOB_OBJECT_LIMIT_BREAKAWAY_OK = 0x00000800;
+    private const uint JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK = 0x00001000;
+    private const uint JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE = 0x00002000;
+    private const int PROCESS_ID_LIST_HEADER_BYTES = 8;
+    private const uint WAIT_OBJECT_0 = 0x00000000;
+    private const uint INVALID_RESUME_COUNT = 0xFFFFFFFF;
+    private static readonly IntPtr PROC_THREAD_ATTRIBUTE_JOB_LIST =
+        (IntPtr)0x0002000D;
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    private struct STARTUPINFO {
+        public int cb;
+        public string lpReserved;
+        public string lpDesktop;
+        public string lpTitle;
+        public int dwX;
+        public int dwY;
+        public int dwXSize;
+        public int dwYSize;
+        public int dwXCountChars;
+        public int dwYCountChars;
+        public int dwFillAttribute;
+        public int dwFlags;
+        public short wShowWindow;
+        public short cbReserved2;
+        public IntPtr lpReserved2;
+        public IntPtr hStdInput;
+        public IntPtr hStdOutput;
+        public IntPtr hStdError;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct STARTUPINFOEX {
+        public STARTUPINFO StartupInfo;
+        public IntPtr lpAttributeList;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct PROCESS_INFORMATION {
+        public IntPtr hProcess;
+        public IntPtr hThread;
+        public int dwProcessId;
+        public int dwThreadId;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct JOBOBJECT_BASIC_LIMIT_INFORMATION {
+        public long PerProcessUserTimeLimit;
+        public long PerJobUserTimeLimit;
+        public uint LimitFlags;
+        public UIntPtr MinimumWorkingSetSize;
+        public UIntPtr MaximumWorkingSetSize;
+        public uint ActiveProcessLimit;
+        public UIntPtr Affinity;
+        public uint PriorityClass;
+        public uint SchedulingClass;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct IO_COUNTERS {
+        public ulong ReadOperationCount;
+        public ulong WriteOperationCount;
+        public ulong OtherOperationCount;
+        public ulong ReadTransferCount;
+        public ulong WriteTransferCount;
+        public ulong OtherTransferCount;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct JOBOBJECT_EXTENDED_LIMIT_INFORMATION {
+        public JOBOBJECT_BASIC_LIMIT_INFORMATION BasicLimitInformation;
+        public IO_COUNTERS IoInfo;
+        public UIntPtr ProcessMemoryLimit;
+        public UIntPtr JobMemoryLimit;
+        public UIntPtr PeakProcessMemoryUsed;
+        public UIntPtr PeakJobMemoryUsed;
+    }
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    private static extern IntPtr CreateJobObject(IntPtr attributes, string name);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    private static extern IntPtr OpenJobObject(uint desiredAccess,
+        [MarshalAs(UnmanagedType.Bool)] bool inheritHandle, string name);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CloseHandle(IntPtr handle);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool InitializeProcThreadAttributeList(IntPtr list,
+        int attributeCount, int flags, ref IntPtr size);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool UpdateProcThreadAttribute(IntPtr list, uint flags,
+        IntPtr attribute, IntPtr value, IntPtr size, IntPtr previousValue,
+        IntPtr returnSize);
+
+    [DllImport("kernel32.dll")]
+    private static extern void DeleteProcThreadAttributeList(IntPtr list);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CreateProcess(string applicationName,
+        StringBuilder commandLine, IntPtr processAttributes, IntPtr threadAttributes,
+        [MarshalAs(UnmanagedType.Bool)] bool inheritHandles, uint creationFlags,
+        IntPtr environment, string currentDirectory, ref STARTUPINFOEX startupInfo,
+        out PROCESS_INFORMATION processInformation);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool QueryInformationJobObject(IntPtr job,
+        int informationClass, IntPtr information, uint informationLength,
+        out uint returnLength);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool QueryInformationJobObject(IntPtr job,
+        int informationClass, out JOBOBJECT_EXTENDED_LIMIT_INFORMATION information,
+        uint informationLength, out uint returnLength);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool SetInformationJobObject(IntPtr job,
+        int informationClass, ref JOBOBJECT_EXTENDED_LIMIT_INFORMATION information,
+        uint informationLength);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool DuplicateHandle(IntPtr sourceProcess,
+        IntPtr sourceHandle, IntPtr targetProcess, out IntPtr targetHandle,
+        uint desiredAccess, [MarshalAs(UnmanagedType.Bool)] bool inheritHandle,
+        uint options);
+
+    [DllImport("kernel32.dll")]
+    private static extern IntPtr GetCurrentProcess();
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern uint ResumeThread(IntPtr thread);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool TerminateProcess(IntPtr process, uint exitCode);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
+
+    private IntPtr handle;
+    public string Name { get; private set; }
+
+    private VerifierBrowserContainmentJobApi(IntPtr value, string name) {
+        handle = value;
+        Name = name;
+    }
+
+    private static bool IsInvalid(IntPtr value) {
+        return value == IntPtr.Zero || value == new IntPtr(-1);
+    }
+
+    private void AssertOpen() {
+        if (IsInvalid(handle)) {
+            throw new ObjectDisposedException("VerifierBrowserContainmentJobApi");
+        }
+    }
+
+    private void AssertNoBreakaway() {
+        AssertOpen();
+        JOBOBJECT_EXTENDED_LIMIT_INFORMATION information;
+        uint returned;
+        if (!QueryInformationJobObject(handle,
+                JOB_OBJECT_EXTENDED_LIMIT_INFORMATION, out information,
+                (uint)Marshal.SizeOf(typeof(JOBOBJECT_EXTENDED_LIMIT_INFORMATION)),
+                out returned)) {
+            throw new Win32Exception(Marshal.GetLastWin32Error(),
+                "Could not inspect browser containment job limits.");
+        }
+        uint breakaway = JOB_OBJECT_LIMIT_BREAKAWAY_OK |
+            JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK;
+        if ((information.BasicLimitInformation.LimitFlags & breakaway) != 0) {
+            throw new InvalidOperationException(
+                "Browser containment job permits process breakaway.");
+        }
+        if ((information.BasicLimitInformation.LimitFlags &
+                JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE) == 0) {
+            throw new InvalidOperationException(
+                "Browser containment job does not kill contained remnants when its final handle closes.");
+        }
+    }
+
+    private void ConfigureNoBreakawayKillOnClose() {
+        AssertOpen();
+        JOBOBJECT_EXTENDED_LIMIT_INFORMATION information =
+            new JOBOBJECT_EXTENDED_LIMIT_INFORMATION();
+        information.BasicLimitInformation.LimitFlags =
+            JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+        if (!SetInformationJobObject(handle,
+                JOB_OBJECT_EXTENDED_LIMIT_INFORMATION, ref information,
+                (uint)Marshal.SizeOf(typeof(JOBOBJECT_EXTENDED_LIMIT_INFORMATION)))) {
+            throw new Win32Exception(Marshal.GetLastWin32Error(),
+                "Could not configure browser containment job limits.");
+        }
+        AssertNoBreakaway();
+    }
+
+    public static VerifierBrowserContainmentJobApi CreateNew(string name) {
+        if (String.IsNullOrWhiteSpace(name)) {
+            throw new ArgumentException("A browser containment job needs a name.",
+                "name");
+        }
+        IntPtr created = CreateJobObject(IntPtr.Zero, name);
+        int error = Marshal.GetLastWin32Error();
+        if (IsInvalid(created)) {
+            throw new Win32Exception(error,
+                "Could not create browser containment job.");
+        }
+        if (error == ERROR_ALREADY_EXISTS) {
+            CloseHandle(created);
+            throw new InvalidOperationException(
+                "Browser containment job name was already present.");
+        }
+        VerifierBrowserContainmentJobApi result =
+            new VerifierBrowserContainmentJobApi(created, name);
+        try {
+            result.ConfigureNoBreakawayKillOnClose();
+            return result;
+        } catch {
+            result.Dispose();
+            throw;
+        }
+    }
+
+    public static VerifierBrowserContainmentJobApi OpenExisting(string name) {
+        if (String.IsNullOrWhiteSpace(name)) {
+            throw new ArgumentException("A browser containment job needs a name.",
+                "name");
+        }
+        IntPtr opened = OpenJobObject(JOB_OBJECT_QUERY, false, name);
+        if (IsInvalid(opened)) {
+            throw new Win32Exception(Marshal.GetLastWin32Error(),
+                "Could not open browser containment job.");
+        }
+        VerifierBrowserContainmentJobApi result =
+            new VerifierBrowserContainmentJobApi(opened, name);
+        try {
+            result.AssertNoBreakaway();
+            return result;
+        } catch {
+            result.Dispose();
+            throw;
+        }
+    }
+
+    public int Launch(string applicationName, string commandLine,
+        string currentDirectory) {
+        AssertOpen();
+        AssertNoBreakaway();
+        if (String.IsNullOrWhiteSpace(applicationName) ||
+                String.IsNullOrWhiteSpace(commandLine)) {
+            throw new ArgumentException(
+                "Browser containment launch requires an application and command line.");
+        }
+        IntPtr attributeList = IntPtr.Zero;
+        IntPtr attributeListSize = IntPtr.Zero;
+        IntPtr jobValue = IntPtr.Zero;
+        PROCESS_INFORMATION processInformation = new PROCESS_INFORMATION();
+        bool initialized = false;
+        bool createdProcess = false;
+        bool resumed = false;
+        try {
+            InitializeProcThreadAttributeList(IntPtr.Zero, 1, 0,
+                ref attributeListSize);
+            int initialError = Marshal.GetLastWin32Error();
+            if (attributeListSize == IntPtr.Zero) {
+                throw new Win32Exception(initialError,
+                    "Could not size browser containment launch attributes.");
+            }
+            attributeList = Marshal.AllocHGlobal(attributeListSize);
+            if (!InitializeProcThreadAttributeList(attributeList, 1, 0,
+                    ref attributeListSize)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not initialize browser containment launch attributes.");
+            }
+            initialized = true;
+            jobValue = Marshal.AllocHGlobal(IntPtr.Size);
+            Marshal.WriteIntPtr(jobValue, handle);
+            if (!UpdateProcThreadAttribute(attributeList, 0,
+                    PROC_THREAD_ATTRIBUTE_JOB_LIST, jobValue,
+                    (IntPtr)IntPtr.Size, IntPtr.Zero, IntPtr.Zero)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not bind the browser launch to its containment job.");
+            }
+            STARTUPINFOEX startupInfo = new STARTUPINFOEX();
+            startupInfo.StartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFOEX));
+            startupInfo.lpAttributeList = attributeList;
+            if (!CreateProcess(applicationName, new StringBuilder(commandLine),
+                    IntPtr.Zero, IntPtr.Zero, false,
+                    EXTENDED_STARTUPINFO_PRESENT | CREATE_NO_WINDOW | CREATE_SUSPENDED, IntPtr.Zero,
+                    currentDirectory, ref startupInfo, out processInformation)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not atomically launch browser in its containment job.");
+            }
+            if (processInformation.dwProcessId <= 0) {
+                throw new InvalidOperationException(
+                    "Browser containment launch returned an invalid PID.");
+            }
+            createdProcess = true;
+            IntPtr childJobHandle;
+            if (!DuplicateHandle(GetCurrentProcess(), handle,
+                    processInformation.hProcess, out childJobHandle,
+                    JOB_OBJECT_QUERY, false, 0)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not retain the browser containment job in its exact root process.");
+            }
+            // childJobHandle belongs to the suspended root process. It is a
+            // query-only, non-inheritable lifetime reference; the root cannot
+            // use it to assign, terminate, or break away other job members.
+            if (ResumeThread(processInformation.hThread) == INVALID_RESUME_COUNT) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not resume the atomically contained browser root.");
+            }
+            resumed = true;
+            return processInformation.dwProcessId;
+        } catch (Exception launchFailure) {
+            if (createdProcess && !resumed &&
+                    processInformation.hProcess != IntPtr.Zero) {
+                bool terminated = TerminateProcess(processInformation.hProcess, 2);
+                uint waited = WaitForSingleObject(processInformation.hProcess, 5000);
+                if (!terminated || waited != WAIT_OBJECT_0) {
+                    throw new InvalidOperationException(
+                        "Browser containment launch rollback could not prove suspended-root termination.",
+                        launchFailure);
+                }
+            }
+            throw;
+        } finally {
+            if (processInformation.hThread != IntPtr.Zero) {
+                CloseHandle(processInformation.hThread);
+            }
+            if (processInformation.hProcess != IntPtr.Zero) {
+                CloseHandle(processInformation.hProcess);
+            }
+            if (jobValue != IntPtr.Zero) { Marshal.FreeHGlobal(jobValue); }
+            if (initialized) { DeleteProcThreadAttributeList(attributeList); }
+            if (attributeList != IntPtr.Zero) { Marshal.FreeHGlobal(attributeList); }
+        }
+    }
+
+    public int[] GetMemberProcessIds() {
+        AssertOpen();
+        AssertNoBreakaway();
+        uint capacity = (uint)(PROCESS_ID_LIST_HEADER_BYTES +
+            (IntPtr.Size * 16));
+        for (int attempt = 0; attempt < 8; attempt++) {
+            IntPtr buffer = Marshal.AllocHGlobal((int)capacity);
+            try {
+                uint required;
+                bool success = QueryInformationJobObject(handle,
+                    JOB_OBJECT_BASIC_PROCESS_ID_LIST, buffer, capacity,
+                    out required);
+                if (!success) {
+                    int error = Marshal.GetLastWin32Error();
+                    if (error != ERROR_MORE_DATA) {
+                        throw new Win32Exception(error,
+                            "Could not inspect browser containment job members.");
+                    }
+                    uint next = required > capacity ? required :
+                        capacity + (uint)(IntPtr.Size * 16);
+                    if (next > 1024 * 1024) {
+                        throw new InvalidOperationException(
+                            "Browser containment job member list was unreasonably large.");
+                    }
+                    capacity = next;
+                    continue;
+                }
+                int assigned = Marshal.ReadInt32(buffer, 0);
+                int count = Marshal.ReadInt32(buffer, 4);
+                if (assigned < 0 || count < 0 || count > assigned ||
+                        PROCESS_ID_LIST_HEADER_BYTES +
+                        ((long)count * IntPtr.Size) > capacity) {
+                    throw new InvalidOperationException(
+                        "Browser containment job returned a malformed member list.");
+                }
+                List<int> members = new List<int>();
+                HashSet<int> seen = new HashSet<int>();
+                for (int index = 0; index < count; index++) {
+                    long raw = IntPtr.Size == 8 ? Marshal.ReadInt64(buffer,
+                        PROCESS_ID_LIST_HEADER_BYTES + (index * IntPtr.Size)) :
+                        Marshal.ReadInt32(buffer,
+                        PROCESS_ID_LIST_HEADER_BYTES + (index * IntPtr.Size));
+                    if (raw <= 0 || raw > Int32.MaxValue ||
+                            !seen.Add((int)raw)) {
+                        throw new InvalidOperationException(
+                            "Browser containment job returned an invalid or duplicate member PID.");
+                    }
+                    members.Add((int)raw);
+                }
+                return members.ToArray();
+            } finally {
+                Marshal.FreeHGlobal(buffer);
+            }
+        }
+        throw new InvalidOperationException(
+            "Browser containment job membership changed too quickly to inspect safely.");
+    }
+
+    public void Dispose() {
+        if (!IsInvalid(handle)) {
+            IntPtr closing = handle;
+            handle = IntPtr.Zero;
+            if (!CloseHandle(closing)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not close browser containment job handle.");
+            }
+        }
+    }
+}
+'@
+    try {
+        Add-Type -TypeDefinition $source -Language CSharp `
+            -ReferencedAssemblies @('System.dll', 'System.Core.dll') -ErrorAction Stop | Out-Null
+    } catch {
+        Throw-VerifierInfrastructure ('Could not load the browser containment-job helper: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+    $loadedType = ([System.Management.Automation.PSTypeName]$typeName).Type
+    if ($null -eq $loadedType) {
+        Throw-VerifierInfrastructure 'The browser containment-job helper did not load a usable type.'
+    }
+    return $loadedType
+}
+
+function Get-VerifierBrowserContainmentJobName($Context, $SessionRecord) {
+    [void](Assert-VerifierDurableBrowserRecoveryReceipt $SessionRecord $Context `
+        'browser containment-job receipt')
+    $receipt = $SessionRecord.RecoveryReceipt
+    if ($null -eq $receipt -or -not (Test-VerifierBrowserRecoveryAuthorityToken `
+            $receipt.AuthorityToken)) {
+        Throw-VerifierInfrastructure 'Browser containment-job derivation requires an exact durable recovery receipt.'
+    }
+    $material = ([string]$Context.RunId + "`n" + [string]$Context.RepositoryIdentity +
+        "`n" + [string]$SessionRecord.RouteId + "`n" +
+        [string]$receipt.AuthorityToken)
+    $hasher = [Security.Cryptography.SHA256]::Create()
+    try {
+        $digest = [BitConverter]::ToString($hasher.ComputeHash(
+            [Text.Encoding]::UTF8.GetBytes($material))).Replace('-', '').ToLowerInvariant()
+        return 'Local\TroubleshootJS.Verifier.BrowserContainment.' + $digest
+    } finally {
+        $hasher.Dispose()
+    }
+}
+
+function New-VerifierBrowserContainmentJob($Context, $SessionRecord) {
+    $type = Initialize-VerifierBrowserContainmentJobApi
+    $name = Get-VerifierBrowserContainmentJobName $Context $SessionRecord
+    try {
+        $job = $type::CreateNew($name)
+        if ($null -eq $job -or $job.GetType() -ne $type -or $job.Name -cne $name) {
+            Throw-VerifierInfrastructure 'Browser containment-job construction returned an invalid exact job identity.'
+        }
+        return $job
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not create the exact browser containment job: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
+function Prepare-VerifierBrowserContainmentLaunch($Context, $SessionRecord,
+        $ContainmentJob) {
+    [void](Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+        'browser containment launch preparation session')
+    $launch = Assert-VerifierDurableBrowserContainmentLaunch $SessionRecord $Context `
+        'browser containment launch preparation record'
+    $type = Initialize-VerifierBrowserContainmentJobApi
+    $expectedJobName = Get-VerifierBrowserContainmentJobName $Context $SessionRecord
+    if ($null -eq $launch -or $launch.State -ne 'unlaunched' -or
+            [int]$launch.LaunchProcessId -ne 0 -or
+            -not [String]::IsNullOrWhiteSpace([string]$launch.LaunchedUtc) -or
+            $SessionRecord.RecoveryReceipt.State -ne 'issued' -or
+            $SessionRecord.RecoveryReceipt.CloseAttempted -or
+            $SessionRecord.Status -ne 'leased' -or
+            $null -eq $ContainmentJob -or $ContainmentJob.GetType() -ne $type -or
+            $ContainmentJob.Name -cne $expectedJobName -or
+            $launch.JobName -cne $expectedJobName) {
+        Throw-VerifierInfrastructure 'Browser containment launch preparation was not one exact unlaunched issued state.'
+    }
+    # Persist this intent before native CreateProcess. The atomic job launch can
+    # succeed immediately after the call boundary; a crash before its PID is
+    # published must remain recoverable by reopening this exact named job and
+    # reattesting a root that carries the opaque receipt capability.
+    $launch.State = 'launch-pending'
+    try {
+        [void](Assert-VerifierDurableBrowserContainmentLaunch $SessionRecord $Context `
+            'browser containment launch pending state')
+        Write-VerifierManifest $Context
+    } catch {
+        $launch.State = 'unlaunched'
+        throw
+    }
+}
+
+function Set-VerifierBrowserContainmentLaunch($Context, $SessionRecord,
+        $ContainmentJob, $ProcessId) {
+    [void](Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+        'browser containment launch session')
+    if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Browser containment launch returned a malformed positive process ID.'
+    }
+    $launch = Assert-VerifierDurableBrowserContainmentLaunch $SessionRecord $Context `
+        'browser containment launch record'
+    if ($null -eq $launch -or $launch.State -ne 'launch-pending' -or
+            [int]$launch.LaunchProcessId -ne 0 -or
+            -not [String]::IsNullOrWhiteSpace([string]$launch.LaunchedUtc)) {
+        Throw-VerifierInfrastructure 'Browser containment launch was not in the exact durable launch-pending state.'
+    }
+    $type = Initialize-VerifierBrowserContainmentJobApi
+    $expectedJobName = Get-VerifierBrowserContainmentJobName $Context $SessionRecord
+    if ($null -eq $ContainmentJob -or $ContainmentJob.GetType() -ne $type -or
+            $ContainmentJob.Name -cne $expectedJobName -or
+            $launch.JobName -cne $expectedJobName) {
+        Throw-VerifierInfrastructure 'Browser containment launch did not retain its exact typed job identity.'
+    }
+    # Publish the atomically assigned CreateProcess PID before the first
+    # fallible Process handle, WMI identity, CDP, or listener operation. The
+    # job name plus this PID are recovery evidence, not a termination grant.
+    $launch.LaunchProcessId = [int]$ProcessId
+    $launch.LaunchedUtc = Get-VerifierUtcText
+    $launch.State = 'launched'
+    [void](Assert-VerifierDurableBrowserContainmentLaunch $SessionRecord $Context `
+        'browser containment launched state')
+}
+
+function Get-VerifierBrowserContainmentJobForSession($Context, $SessionRecord) {
+    $type = Initialize-VerifierBrowserContainmentJobApi
+    $name = Get-VerifierBrowserContainmentJobName $Context $SessionRecord
+    if ($null -ne $SessionRecord -and $SessionRecord.PSObject.Properties['Runtime'] -and
+            $null -ne $SessionRecord.Runtime -and
+            $SessionRecord.Runtime.PSObject.Properties['ContainmentJob'] -and
+            $null -ne $SessionRecord.Runtime.ContainmentJob) {
+        $runtimeJob = $SessionRecord.Runtime.ContainmentJob
+        if ($runtimeJob.GetType() -ne $type -or $runtimeJob.Name -cne $name) {
+            Throw-VerifierInfrastructure 'Browser session carried a foreign or malformed runtime containment-job handle.'
+        }
+        try { [void]$runtimeJob.GetMemberProcessIds() } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ('Could not inspect the runtime browser containment job: ' +
+                (Get-VerifierErrorMessage $_))
+        }
+        return [pscustomobject]@{ Job = $runtimeJob; DisposeAfterUse = $false }
+    }
+    try {
+        $opened = $type::OpenExisting($name)
+        if ($null -eq $opened -or $opened.GetType() -ne $type -or $opened.Name -cne $name) {
+            Throw-VerifierInfrastructure 'Browser containment-job recovery opened an invalid exact job identity.'
+        }
+        return [pscustomobject]@{ Job = $opened; DisposeAfterUse = $true }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not reopen the exact browser containment job: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
+function Assert-VerifierBrowserContainmentJobContainsRoot($ContainmentJob,
+        $RootRecord) {
+    if ($null -eq $ContainmentJob -or $null -eq $RootRecord -or
+            -not $RootRecord.PSObject.Properties['ProcessId'] -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ProcessId 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Browser containment membership proof omitted an exact root identity.'
+    }
+    try {
+        $members = @($ContainmentJob.GetMemberProcessIds())
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not inspect browser containment membership: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+    $rootPid = [int]$RootRecord.ProcessId
+    if ($members.Count -eq 0 -or $members -notcontains $rootPid) {
+        Throw-VerifierInfrastructure "Browser containment job did not retain exact root PID $rootPid before Browser.close."
+    }
+    return @($members)
+}
+
+function Wait-VerifierBrowserContainmentJobEmpty($ContainmentJob, $Budget,
+        [long]$BudgetTicks) {
+    if ($null -eq $ContainmentJob -or $null -eq $Budget) {
+        Throw-VerifierInfrastructure 'Browser containment quiescence omitted its exact job or shutdown budget.'
+    }
+    while ($true) {
+        Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+        try {
+            $members = @($ContainmentJob.GetMemberProcessIds())
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ('Could not prove browser containment job quiescence: ' +
+                (Get-VerifierErrorMessage $_))
+        }
+        if ($members.Count -eq 0) { return }
+        Start-Sleep -Milliseconds 25
+        Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+    }
+}
+
+function Dispose-VerifierBrowserContainmentJob($SessionRecord) {
+    if ($null -eq $SessionRecord -or -not $SessionRecord.PSObject.Properties['Runtime'] -or
+            $null -eq $SessionRecord.Runtime -or
+            -not $SessionRecord.Runtime.PSObject.Properties['ContainmentJob'] -or
+            $null -eq $SessionRecord.Runtime.ContainmentJob) {
+        return
+    }
+    $job = $SessionRecord.Runtime.ContainmentJob
+    try {
+        $job.Dispose()
+        $SessionRecord.Runtime.ContainmentJob = $null
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not dispose the browser containment-job handle: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
+function Start-VerifierBrowserProcessInContainmentJob($ContainmentJob,
+        $FilePath, $Arguments, [string]$WorkingDirectory) {
+    $invocation = Assert-VerifierProcessInvocationBoundary $FilePath $Arguments
+    if ($null -eq $ContainmentJob -or
+            $ContainmentJob.GetType() -ne (Initialize-VerifierBrowserContainmentJobApi)) {
+        Throw-VerifierInfrastructure 'Browser containment launch omitted the exact typed job handle.'
+    }
+    $working = Get-VerifierFullPath $WorkingDirectory
+    $commandLine = (ConvertTo-VerifierWindowsArgument $invocation.FilePath)
+    if (@($invocation.Arguments).Count -gt 0) {
+        $commandLine += ' ' + (ConvertTo-VerifierArgumentString $invocation.Arguments)
+    }
+    try {
+        $processId = [int]$ContainmentJob.Launch($invocation.FilePath,
+            $commandLine, $working)
+        if ($processId -le 0) {
+            Throw-VerifierInfrastructure 'Atomically contained browser launch returned an invalid process ID.'
+        }
+        return $processId
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not atomically launch the browser in its containment job: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
 function Get-VerifierProcessRecordsByIdWithFallback($ProcessId,
         [string]$Purpose = 'current process') {
     if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue))) {
@@ -7730,6 +9789,78 @@ function Confirm-VerifierRecordedProcessAbsent($Recorded, [string]$Role = 'owned
         return [pscustomobject]@{ QueryProven = $true; Absent = $false; Replaced = $false; Current = $current }
     }
     Throw-VerifierInfrastructure "$Role PID $($Recorded.ProcessId) was present but its ownership markers were incomplete."
+}
+
+function Get-VerifierRetainedBrowserRecoveryLeaseAuthority($Context, $Lease,
+        [string]$Label = 'retained browser recovery lease authority') {
+    # Ordinary live leases deliberately carry no recovery authority.  A
+    # retained-session recovery installs this in-memory capability only after
+    # it has acquired the exact named mutex and proved the original claimer
+    # absent without PID reuse.  It is never serialized or inferred from a
+    # marker/profile/PID alone.
+    if ($null -eq $Lease -or
+            $null -eq $Lease.PSObject.Properties['RetainedRecoveryAuthority'] -or
+            $null -eq $Lease.RetainedRecoveryAuthority) {
+        return $null
+    }
+    $authority = $Lease.RetainedRecoveryAuthority
+    if ($authority -is [array]) {
+        Throw-VerifierInfrastructure "$Label was not one exact recovery authority object."
+    }
+    foreach ($propertyName in @('Protocol', 'ManifestPath')) {
+        $property = $authority.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or -not (Test-VerifierStrictStringValue $property.Value) -or
+                [String]::IsNullOrWhiteSpace([string]$property.Value)) {
+            Throw-VerifierInfrastructure "$Label omitted its exact non-empty '$propertyName' field."
+        }
+    }
+    foreach ($propertyName in @('RecoveryProcessId', 'ClaimOwnerPid')) {
+        $property = $authority.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictIntegralValue $property.Value 1 ([int]::MaxValue))) {
+            Throw-VerifierInfrastructure "$Label omitted its exact positive '$propertyName' field."
+        }
+    }
+    foreach ($propertyName in @('RecoveryProcessStartTicks', 'ClaimOwnerStartTicks')) {
+        $property = $authority.PSObject.Properties[$propertyName]
+        if ($null -eq $property -or
+                -not (Test-VerifierStrictIntegralValue $property.Value 1 ([long]::MaxValue))) {
+            Throw-VerifierInfrastructure "$Label omitted its exact positive '$propertyName' field."
+        }
+    }
+    foreach ($propertyName in @('ClaimMutex', 'LockHeld')) {
+        if ($null -eq $authority.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted '$propertyName'."
+        }
+    }
+    if ($authority.Protocol -cne 'troubleshootjs-verifier-retained-browser-recovery-v1' -or
+            -not (Test-VerifierStrictBooleanValue $authority.LockHeld) -or
+            -not $authority.LockHeld -or
+            [int]$authority.RecoveryProcessId -ne [int]$PID -or
+            [long]$authority.RecoveryProcessStartTicks -ne
+                (Get-VerifierCurrentProcessStartTicks) -or
+            [int]$authority.ClaimOwnerPid -ne [int]$Lease.ClaimOwnerPid -or
+            [long]$authority.ClaimOwnerStartTicks -ne
+                [long]$Lease.ClaimOwnerStartTicks -or
+            $null -eq $Lease.PSObject.Properties['ClaimMutex'] -or
+            $null -eq $Lease.ClaimMutex -or
+            $Lease.ClaimMutex.GetType() -ne [Threading.Mutex] -or
+            -not [object]::ReferenceEquals($authority.ClaimMutex, $Lease.ClaimMutex) -or
+            $null -eq $Context -or
+            -not (Test-VerifierCanonicalWindowsPathValue $authority.ManifestPath `
+                $Context.ManifestPath)) {
+        Throw-VerifierInfrastructure "$Label did not retain the exact current recovery lock and original claim association."
+    }
+    $originalClaimOwner = [pscustomobject]@{
+        ProcessId = [int]$authority.ClaimOwnerPid
+        ProcessStartTicks = [long]$authority.ClaimOwnerStartTicks
+    }
+    $absence = Confirm-VerifierRecordedProcessAbsent $originalClaimOwner `
+        'retained browser recovery original claim owner'
+    if (-not $absence.QueryProven -or -not $absence.Absent -or $absence.Replaced) {
+        Throw-VerifierInfrastructure "$Label could not prove the original claim owner absent without PID reuse."
+    }
+    return $authority
 }
 
 function Confirm-VerifierReleasedListener($Port, $ExpectedProcessId = 0,
@@ -8466,9 +10597,12 @@ function Get-VerifierCurrentOwnedDescendantWithRetry($OwnerRecord, $Recorded) {
                         [string]$Recorded.ProcessId + ': ' + (Get-VerifierErrorMessage $_))
                 }
             }
-            if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                Throw-VerifierInfrastructure 'Browser descendant identity retry exceeded its monotonic startup budget.'
-            }
+            # The bounded startup window governs publication of the first
+            # complete executable-path observation.  The proof below re-reads
+            # every exact identity field and may itself take longer than that
+            # observation window on a busy WMI provider; it is not another
+            # path-publication retry and it still rejects every changed,
+            # missing, malformed, or exited process result.
             if ($null -eq $verified -or
                     $null -eq $verified.PSObject.Properties['Record'] -or
                     -not (Test-VerifierDescendantExecutableIdentity $OwnerRecord $verified.Record)) {
@@ -8859,6 +10993,74 @@ function Get-VerifierCurrentProcessIdentityWithRetry($ProcessId,
     Throw-VerifierInfrastructure 'Current process identity retry produced no proof.'
 }
 
+function Get-VerifierFreshLaunchedBrowserIdentity($BrowserProcess, [int]$CdpPort,
+        [string]$RunId, [string]$BrowserPath, [DateTime]$Deadline) {
+    # Browser startup may publish a complete root/listener before the first
+    # Win32_Process identity query can finish inside its 500 ms proof budget.
+    # Keep that per-proof deadline unchanged. This launch-only helper retains
+    # one Process handle and permits at most three fresh proofs while the
+    # route deadline remains open; it never publishes a partial tuple or
+    # substitutes a process found by PID.
+    if ($null -eq $BrowserProcess -or $BrowserProcess.GetType() -ne
+            [Diagnostics.Process] -or
+            -not (Test-VerifierStrictIntegralValue $CdpPort 1 65535) -or
+            -not (Test-VerifierStrictStringValue $RunId) -or
+            [String]::IsNullOrWhiteSpace($RunId) -or
+            -not (Test-VerifierStrictStringValue $BrowserPath) -or
+            [String]::IsNullOrWhiteSpace($BrowserPath) -or
+            $Deadline -eq [DateTime]::MinValue) {
+        Throw-VerifierInfrastructure 'Fresh browser identity startup received malformed retained-process or route identity input.'
+    }
+    $browserProcessId = 0
+    try { $browserProcessId = [int]$BrowserProcess.Id } catch {
+        Throw-VerifierInfrastructure ('Could not read the retained launched browser PID: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+    if ($browserProcessId -le 0) {
+        Throw-VerifierInfrastructure 'Fresh browser identity startup received a non-positive retained browser PID.'
+    }
+    $browserProcessStartTicks = Get-VerifierProcessStartTicks $BrowserProcess
+    $lastError = $null
+    for ($attempt = 1; $attempt -le 3; $attempt++) {
+        if ([DateTime]::UtcNow -ge $Deadline) {
+            Throw-VerifierInfrastructure 'Fresh browser identity startup exhausted its route deadline before an exact proof.'
+        }
+        try {
+            [void]$BrowserProcess.Refresh()
+            if ([bool]$BrowserProcess.HasExited -or
+                    [int]$BrowserProcess.Id -ne $browserProcessId -or
+                    (Get-VerifierProcessStartTicks $BrowserProcess) -ne
+                        $browserProcessStartTicks) {
+                Throw-VerifierInfrastructure 'Fresh browser identity startup lost its exact retained root PID/start identity.'
+            }
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ('Could not refresh the retained launched browser identity: ' +
+                (Get-VerifierErrorMessage $_))
+        }
+        try {
+            return (Get-VerifierCurrentProcessIdentityWithRetry $browserProcessId `
+                $browserProcessStartTicks 0 '' '' $CdpPort $RunId '' 0 $BrowserPath)
+        } catch {
+            $lastError = $_
+            $message = Get-VerifierErrorMessage $_
+            $transientPublicationDelay = $message -match
+                'Current process identity retry exceeded its monotonic startup budget\.'
+            if (-not $transientPublicationDelay -or $attempt -ge 3) {
+                if (Test-VerifierInfrastructureError $_) { throw }
+                Throw-VerifierInfrastructure ('Fresh browser identity startup failed: ' + $message)
+            }
+            if ([DateTime]::UtcNow.AddMilliseconds(100) -ge $Deadline) {
+                Throw-VerifierInfrastructure ('Fresh browser identity startup could not retry within the route deadline: ' +
+                    $message)
+            }
+            Start-Sleep -Milliseconds 100
+        }
+    }
+    Throw-VerifierInfrastructure ('Fresh browser identity startup exhausted its bounded proof attempts: ' +
+        (Get-VerifierErrorMessage $lastError))
+}
+
 function Get-VerifierCommandLineSwitchPresence($CommandLine, [string]$Switch,
         [string]$ExpectedValue) {
     $present = $false
@@ -9174,7 +11376,8 @@ function Add-VerifierBrowserDrainHandle($DrainScope, $Process,
     [void]$registration.Item2.Add($Process)
 }
 
-function New-VerifierBrowserDrainAttestation($DrainScope, $Record, $Process) {
+function New-VerifierBrowserDrainAttestation($DrainScope, $Record, $Process,
+        [switch]$ObservationOnly) {
     Assert-VerifierBrowserDrainScope $DrainScope
     if ($null -eq $Record -or $Record -is [array]) {
         Throw-VerifierInfrastructure 'Browser drain attestation omitted its exact descendant record.'
@@ -9191,11 +11394,12 @@ function New-VerifierBrowserDrainAttestation($DrainScope, $Record, $Process) {
             -not (Test-VerifierStrictIntegralValue $Record.ParentProcessId 1 ([int]::MaxValue)) -or
             -not (Test-VerifierStrictIntegralValue $Record.ParentProcessStartTicks 1 ([long]::MaxValue)) -or
             -not (Test-VerifierStrictStringValue $Record.Name) -or
-            [String]::IsNullOrWhiteSpace([string]$Record.Name) -or
             -not (Test-VerifierStrictStringValue $Record.ExecutablePath) -or
-            [String]::IsNullOrWhiteSpace([string]$Record.ExecutablePath) -or
             -not (Test-VerifierStrictStringValue $Record.CommandLine) -or
-            [String]::IsNullOrWhiteSpace([string]$Record.CommandLine)) {
+            ((-not $ObservationOnly) -and
+                ([String]::IsNullOrWhiteSpace([string]$Record.Name) -or
+                 [String]::IsNullOrWhiteSpace([string]$Record.ExecutablePath) -or
+                 [String]::IsNullOrWhiteSpace([string]$Record.CommandLine)))) {
         Throw-VerifierInfrastructure 'Browser drain attestation record carried incomplete or malformed immutable identity scalars.'
     }
     if ($null -eq $Process -or $Process.GetType() -ne [Diagnostics.Process] -or
@@ -9249,6 +11453,7 @@ function New-VerifierBrowserDrainAttestation($DrainScope, $Record, $Process) {
         ([string]$Record.CommandLine))
     $attestation = [pscustomobject]@{
         Protocol = 'browser-drain-attestation-v1'
+        Mode = if ($ObservationOnly) { 'natural-close-observation' } else { 'termination' }
         Marker = $script:VerifierBrowserDrainAttestationMarker
         Scope = $DrainScope
         Record = $Record
@@ -9278,6 +11483,9 @@ function Get-VerifierBrowserDrainAttestation($DrainScope, $Record) {
     if ($null -eq $attestation -or
             -not $attestation.PSObject.Properties['Protocol'] -or
             [string]$attestation.Protocol -cne 'browser-drain-attestation-v1' -or
+            -not $attestation.PSObject.Properties['Mode'] -or
+            -not (Test-VerifierStrictStringValue $attestation.Mode) -or
+            $attestation.Mode -cnotin @('termination', 'natural-close-observation') -or
             -not $attestation.PSObject.Properties['Marker'] -or
             -not [object]::ReferenceEquals($attestation.Marker,
                 $script:VerifierBrowserDrainAttestationMarker) -or
@@ -9337,6 +11545,7 @@ function Get-VerifierBrowserDrainAttestation($DrainScope, $Record) {
     if ($actual.Count -ne 7 -or $tuple.Count -ne 7) {
         Throw-VerifierInfrastructure 'Browser drain attestation carried an incomplete immutable scalar identity.'
     }
+    $observationOnly = ($attestation.Mode -ceq 'natural-close-observation')
     if (-not (Test-VerifierStrictIntegralValue $attestation.ProcessId 1 ([int]::MaxValue)) -or
             -not (Test-VerifierStrictIntegralValue $attestation.ProcessStartTicks 1 ([long]::MaxValue)) -or
             -not (Test-VerifierStrictIntegralValue $attestation.ParentProcessId 1 ([int]::MaxValue)) -or
@@ -9344,6 +11553,10 @@ function Get-VerifierBrowserDrainAttestation($DrainScope, $Record) {
             -not (Test-VerifierStrictStringValue $attestation.Name) -or
             -not (Test-VerifierStrictStringValue $attestation.ExecutablePath) -or
             -not (Test-VerifierStrictStringValue $attestation.CommandLine) -or
+            ((-not $observationOnly) -and
+                ([String]::IsNullOrWhiteSpace([string]$attestation.Name) -or
+                 [String]::IsNullOrWhiteSpace([string]$attestation.ExecutablePath) -or
+                 [String]::IsNullOrWhiteSpace([string]$attestation.CommandLine))) -or
             [int]$attestation.ProcessId -ne [int]$identity.Item1 -or
             [long]$attestation.ProcessStartTicks -ne [long]$identity.Item2 -or
             [int]$attestation.ParentProcessId -ne [int]$identity.Item3 -or
@@ -9371,6 +11584,10 @@ function Get-VerifierBrowserDrainAttestation($DrainScope, $Record) {
             -not (Test-VerifierStrictStringValue $Record.Name) -or
             -not (Test-VerifierStrictStringValue $Record.ExecutablePath) -or
             -not (Test-VerifierStrictStringValue $Record.CommandLine) -or
+            ((-not $observationOnly) -and
+                ([String]::IsNullOrWhiteSpace([string]$Record.Name) -or
+                 [String]::IsNullOrWhiteSpace([string]$Record.ExecutablePath) -or
+                 [String]::IsNullOrWhiteSpace([string]$Record.CommandLine))) -or
             [int]$Record.ProcessId -ne [int]$identity.Item1 -or
             [long]$Record.ProcessStartTicks -ne [long]$identity.Item2 -or
             [int]$Record.ParentProcessId -ne [int]$identity.Item3 -or
@@ -9381,6 +11598,126 @@ function Get-VerifierBrowserDrainAttestation($DrainScope, $Record) {
         Throw-VerifierInfrastructure 'Attested browser descendant record changed its immutable identity after discovery.'
     }
     return $attestation
+}
+
+function Assert-VerifierBrowserDrainTerminationAttestation($DrainScope, $Record) {
+    $attestation = Get-VerifierBrowserDrainAttestation $DrainScope $Record
+    if ($attestation.Mode -cne 'termination') {
+        Throw-VerifierInfrastructure 'An observation-only browser descendant can never enter a termination-capable drain path.'
+    }
+    return $attestation
+}
+
+function Set-VerifierBrowserDrainPendingNaturalExit($DrainScope, $Record) {
+    # This state is a reference-bound capability on the original attested
+    # record, never a claim that a PID is absent. It records only that its
+    # retained native handle has observed an exit while the independent WMI
+    # view is still transient. Callers must retry the existing bounded drain.
+    [void](Get-VerifierBrowserDrainAttestation $DrainScope $Record)
+    if ($Record.PSObject.Properties['VerifierPendingNaturalExit']) {
+        if (-not [object]::ReferenceEquals($Record.VerifierPendingNaturalExit,
+                $script:VerifierBrowserDrainPendingNaturalExitMarker)) {
+            Throw-VerifierInfrastructure 'Browser drain pending natural-exit state was copied, forged, or replaced.'
+        }
+        return
+    }
+    $Record | Add-Member -NotePropertyName VerifierPendingNaturalExit `
+        -NotePropertyValue $script:VerifierBrowserDrainPendingNaturalExitMarker
+}
+
+function Test-VerifierBrowserDrainPendingNaturalExit($DrainScope, $Record) {
+    if ($null -eq $Record -or $Record -is [array] -or
+            -not $Record.PSObject.Properties['VerifierPendingNaturalExit']) {
+        return $false
+    }
+    [void](Get-VerifierBrowserDrainAttestation $DrainScope $Record)
+    if (-not [object]::ReferenceEquals($Record.VerifierPendingNaturalExit,
+            $script:VerifierBrowserDrainPendingNaturalExitMarker)) {
+        Throw-VerifierInfrastructure 'Browser drain pending natural-exit state was copied, forged, or replaced.'
+    }
+    return $true
+}
+
+function Clear-VerifierBrowserDrainPendingNaturalExit($DrainScope, $Record) {
+    if (-not (Test-VerifierBrowserDrainPendingNaturalExit $DrainScope $Record)) {
+        return
+    }
+    [void]$Record.PSObject.Properties.Remove('VerifierPendingNaturalExit')
+}
+
+function Get-VerifierNaturalExitCurrentAbsenceObservation($ProcessId) {
+    # This observation is deliberately narrower than the general current-process
+    # lookup. It is reachable only after a retained, attested native handle has
+    # already proved its own exact PID/start identity and exited. Windows can
+    # retain that just-exited PID briefly in Win32_Process. That lag is neither
+    # absence nor a new ownership target: return a nonterminal observation and
+    # let the caller retry within its existing whole-drain deadline.
+    if (-not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Natural-exit absence observation requires an exact positive PID.'
+    }
+    $ProcessId = [int]$ProcessId
+    $nativeAbsentOrExited = $false
+    try {
+        $nativeRecords = @(Get-Process -Id $ProcessId -ErrorAction Stop)
+    } catch {
+        $category = if ($_.PSObject.Properties['CategoryInfo'] -and
+                $_.CategoryInfo.PSObject.Properties['Category']) {
+            [string]$_.CategoryInfo.Category
+        } else { '' }
+        if ($category -ne 'ObjectNotFound') {
+            Throw-VerifierInfrastructure "Could not query natural-exit native PID ${ProcessId}: $(Get-VerifierErrorMessage $_)"
+        }
+        $nativeRecords = @()
+        $nativeAbsentOrExited = $true
+    }
+    if (-not $nativeAbsentOrExited) {
+        if ($nativeRecords.Count -ne 1 -or $null -eq $nativeRecords[0] -or
+                $nativeRecords[0].GetType() -ne [Diagnostics.Process]) {
+            Throw-VerifierInfrastructure "Natural-exit native PID $ProcessId was missing or ambiguous."
+        }
+        $native = $nativeRecords[0]
+        try {
+            $native.Refresh()
+            if ([int]$native.Id -ne $ProcessId) {
+                Throw-VerifierInfrastructure "Natural-exit native PID $ProcessId changed during observation."
+            }
+            $nativeAbsentOrExited = [bool]$native.HasExited
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure "Could not refresh natural-exit native PID ${ProcessId}: $(Get-VerifierErrorMessage $_)"
+        }
+        if (-not $nativeAbsentOrExited) {
+            # A live native process is never inferred from its PID alone. Let
+            # the shared full current-identity boundary establish whether it is
+            # a retained identity or a reused/mismatched PID, then make the
+            # caller reject it as a present process.
+            $current = Get-VerifierCurrentProcessRecordById $ProcessId
+            if ($null -eq $current) {
+                Throw-VerifierInfrastructure "Natural-exit native PID $ProcessId was live while its current identity was absent."
+            }
+            return [pscustomobject]@{ Absent = $false; Transient = $false; Current = $current }
+        }
+    }
+    try {
+        $wmiRecords = @(Get-VerifierProcessRecordsByIdWithFallback $ProcessId `
+            'natural-exit post-handle absence')
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure "Could not query natural-exit Win32_Process PID ${ProcessId}: $(Get-VerifierErrorMessage $_)"
+    }
+    if ($wmiRecords.Count -eq 0) {
+        return [pscustomobject]@{ Absent = $true; Transient = $false; Current = $null }
+    }
+    if ($wmiRecords.Count -ne 1 -or $null -eq $wmiRecords[0] -or
+            -not $wmiRecords[0].PSObject.Properties['ProcessId'] -or
+            -not (Test-VerifierStrictIntegralValue $wmiRecords[0].ProcessId 1 ([int]::MaxValue)) -or
+            [int]$wmiRecords[0].ProcessId -ne $ProcessId) {
+        Throw-VerifierInfrastructure "Natural-exit Win32_Process PID $ProcessId was malformed or ambiguous."
+    }
+    # A well-formed WMI record alongside an absent/exited fresh native process
+    # is an unproven transition, not a permission to accept absence or stop a
+    # process. A later independent observation must show both sources empty.
+    return [pscustomobject]@{ Absent = $false; Transient = $true; Current = $null }
 }
 
 function Get-VerifierBrowserDrainNaturalExitResult($DrainScope, $Record) {
@@ -9426,15 +11763,17 @@ function Get-VerifierBrowserDrainNaturalExitResult($DrainScope, $Record) {
     if (-not $hasExited) { return $null }
 
     # A natural exit is accepted only after two bounded, independent current
-    # PID/WMI absence observations. A present/reused PID or either unreadable
-    # view remains infrastructure failure and never reaches Stop-Process.
+    # PID/WMI absence observations. A transient post-exit WMI record returns to
+    # the caller's existing bounded drain loop; a present/reused PID or either
+    # unreadable view remains infrastructure failure and never reaches
+    # Stop-Process.
     for ($observation = 1; $observation -le 2; $observation++) {
         if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
             Throw-VerifierInfrastructure 'Browser drain natural-exit proof expired before a current absence observation.'
         }
-        $current = $null
+        $absence = $null
         try {
-            $current = Get-VerifierCurrentProcessRecordById $handlePid
+            $absence = Get-VerifierNaturalExitCurrentAbsenceObservation $handlePid
         } catch {
             if (Test-VerifierInfrastructureError $_) { throw }
             Throw-VerifierInfrastructure ("Could not confirm natural exit for browser drain PID ${handlePid}: " +
@@ -9443,7 +11782,15 @@ function Get-VerifierBrowserDrainNaturalExitResult($DrainScope, $Record) {
         if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
             Throw-VerifierInfrastructure 'Browser drain natural-exit current absence observation exceeded its bounded interval.'
         }
-        if ($null -ne $current) {
+        if ($null -eq $absence -or
+                -not $absence.PSObject.Properties['Absent'] -or
+                -not $absence.PSObject.Properties['Transient'] -or
+                $absence.Absent.GetType() -ne [bool] -or
+                $absence.Transient.GetType() -ne [bool]) {
+            Throw-VerifierInfrastructure 'Browser drain natural-exit absence observation was malformed.'
+        }
+        if ([bool]$absence.Transient) { return $null }
+        if (-not [bool]$absence.Absent) {
             Throw-VerifierInfrastructure "Browser drain PID $handlePid had a current/reused process identity after its attested handle exited."
         }
         if ($observation -lt 2) {
@@ -9483,7 +11830,7 @@ function Get-VerifierPreviouslyAttestedBrowserDescendantExit($DrainScope, $Candi
         $priorRecord = $binding.Item2
         # Validate the private binding before reading public record fields.
         # Copied, mutated, substituted, or cross-scope capabilities stay fatal.
-        [void](Get-VerifierBrowserDrainAttestation $DrainScope $priorRecord)
+        [void](Assert-VerifierBrowserDrainTerminationAttestation $DrainScope $priorRecord)
         # WMI uses UInt32 PIDs and the native fallback uses Int32. Compare
         # only after raw integral validation, without boxed-type inequality.
         foreach ($field in @('ProcessId', 'ParentProcessId')) {
@@ -9525,7 +11872,14 @@ function Get-VerifierPreviouslyAttestedBrowserDescendantExit($DrainScope, $Candi
     if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
         Throw-VerifierInfrastructure 'Repeated browser descendant exit proof exceeded its bounded interval.'
     }
-    if ($null -eq $naturalExit) { return $null }
+    if ($null -eq $naturalExit) {
+        # Do not turn a post-exit WMI lag into either absence or a termination
+        # target. Preserve only the original capability and let the caller's
+        # existing whole-drain deadline obtain a fresh, complete proof.
+        Set-VerifierBrowserDrainPendingNaturalExit $DrainScope $retainedRecord
+        return $retainedRecord
+    }
+    Clear-VerifierBrowserDrainPendingNaturalExit $DrainScope $retainedRecord
     return $retainedRecord
 }
 
@@ -9751,6 +12105,630 @@ function Get-VerifierDescendantProcessRecords($RootOwnerRecord, $Snapshot,
         [void]$result.Add($verified.Record)
     }
     return @($result)
+}
+
+function Assert-VerifierBoundReceiptObservationRawRecord($Record,
+        [string]$Label = 'bound-receipt browser descendant observation') {
+    # This is deliberately an observation boundary, not a termination
+    # boundary. A protected Chromium helper may expose a null command line,
+    # but it must still present an exact current PID/PPID/creation record
+    # before the receipt lane is allowed to ask the exact browser root to
+    # close itself. CreationDate is mandatory in this special lane: native
+    # fallback records lack an atomic creation observation, so accepting them
+    # would permit a PID reuse to masquerade as the earlier snapshot child.
+    if ($null -eq $Record -or $Record -is [array]) {
+        Throw-VerifierInfrastructure "$Label was null or an array before protected-helper observation."
+    }
+    foreach ($propertyName in @('ProcessId', 'ParentProcessId', 'Name',
+            'ExecutablePath', 'CommandLine', 'CreationDate')) {
+        if (-not $Record.PSObject.Properties[$propertyName]) {
+            Throw-VerifierInfrastructure "$Label omitted '$propertyName' before protected-helper observation."
+        }
+    }
+    if (-not (Test-VerifierStrictIntegralValue $Record.ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $Record.ParentProcessId 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure "$Label carried malformed positive PID/parent identity."
+    }
+    foreach ($propertyName in @('Name', 'ExecutablePath', 'CommandLine')) {
+        $value = $Record.PSObject.Properties[$propertyName].Value
+        if ($null -ne $value -and -not (Test-VerifierStrictStringValue $value)) {
+            Throw-VerifierInfrastructure "$Label carried malformed '$propertyName' observation data."
+        }
+    }
+    $creationDate = $Record.PSObject.Properties['CreationDate'].Value
+    if ($null -eq $creationDate -or $creationDate.GetType() -ne [DateTime]) {
+        Throw-VerifierInfrastructure "$Label omitted or malformed its exact CreationDate observation."
+    }
+    try {
+        if ([long]$creationDate.ToUniversalTime().Ticks -le 0) {
+            Throw-VerifierInfrastructure "$Label carried a non-positive CreationDate observation."
+        }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ("Could not normalize $Label CreationDate observation: " +
+            (Get-VerifierErrorMessage $_))
+    }
+    return $Record
+}
+
+function Get-VerifierBoundReceiptObservationCreationTicks($Record,
+        [string]$Label = 'bound-receipt browser descendant observation') {
+    [void](Assert-VerifierBoundReceiptObservationRawRecord $Record $Label)
+    try {
+        $ticks = [long]$Record.CreationDate.ToUniversalTime().Ticks
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ("Could not read $Label CreationDate ticks: " +
+            (Get-VerifierErrorMessage $_))
+    }
+    if ($ticks -le 0) {
+        Throw-VerifierInfrastructure "$Label carried a non-positive CreationDate identity."
+    }
+    return $ticks
+}
+
+function Assert-VerifierBoundReceiptObservationMatchesRetainedProcess($Record,
+        [long]$RetainedProcessStartTicks,
+        [string]$Label = 'bound-receipt browser descendant observation') {
+    $creationTicks = Get-VerifierBoundReceiptObservationCreationTicks $Record $Label
+    if (-not (Test-VerifierStrictIntegralValue $RetainedProcessStartTicks 1 ([long]::MaxValue))) {
+        Throw-VerifierInfrastructure "$Label omitted a positive retained Process start identity."
+    }
+    # Win32_Process CreationDate is represented at microsecond precision while
+    # Process.StartTime retains 100 ns ticks. A difference of at most nine ticks
+    # is the exact conversion remainder, not a broad time tolerance. Anything
+    # outside that one representational unit is a PID/start replacement.
+    $difference = [Math]::Abs([long]$RetainedProcessStartTicks - [long]$creationTicks)
+    if ($difference -gt 9L) {
+        Throw-VerifierInfrastructure "$Label PID $($Record.ProcessId) changed its exact creation/start identity before retained-handle attestation."
+    }
+    return
+}
+
+function Test-VerifierBoundReceiptObservationRawEquivalent($Expected, $Current) {
+    try {
+        [void](Assert-VerifierBoundReceiptObservationRawRecord $Expected `
+            'expected bound-receipt browser descendant observation')
+        [void](Assert-VerifierBoundReceiptObservationRawRecord $Current `
+            'current bound-receipt browser descendant observation')
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not validate protected-helper observation equivalence: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+    foreach ($propertyName in @('ProcessId', 'ParentProcessId', 'Name',
+            'ExecutablePath', 'CommandLine')) {
+        if (-not [object]::Equals(
+                $Expected.PSObject.Properties[$propertyName].Value,
+                $Current.PSObject.Properties[$propertyName].Value)) {
+            return $false
+        }
+    }
+    return ((Get-VerifierBoundReceiptObservationCreationTicks $Expected `
+            'expected bound-receipt browser descendant observation') -eq
+        (Get-VerifierBoundReceiptObservationCreationTicks $Current `
+            'current bound-receipt browser descendant observation'))
+}
+
+function Confirm-VerifierBoundReceiptObservedChildAbsent($Candidate,
+        $ParentRecord) {
+    # A direct protected helper can finish while its native handle is being
+    # acquired. That race is acceptable only after two fresh native/WMI absence
+    # views prove both the exact helper and every child still attributed to its
+    # original PID are gone. Windows retains a child's creator PID after that
+    # parent exits, so querying that PID closes the otherwise-untracked
+    # grandchild branch. A reuse, live helper, late grandchild, malformed view,
+    # or unresolved WMI transition never authorizes Browser.close.
+    [void](Assert-VerifierBoundReceiptObservationRawRecord $Candidate `
+        'bound-receipt disappearing protected-helper candidate')
+    if ($null -eq $ParentRecord -or
+            -not $ParentRecord.PSObject.Properties['Process'] -or
+            $null -eq $ParentRecord.Process -or
+            $ParentRecord.Process.GetType() -ne [Diagnostics.Process] -or
+            -not $ParentRecord.PSObject.Properties['ProcessId'] -or
+            -not $ParentRecord.PSObject.Properties['ProcessStartTicks'] -or
+            -not (Test-VerifierStrictIntegralValue $ParentRecord.ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ParentRecord.ProcessStartTicks 1 ([long]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Bound-receipt disappearing protected-helper candidate omitted its exact live parent handle.'
+    }
+    $candidatePid = [int]$Candidate.ProcessId
+    $parentPid = [int]$ParentRecord.ProcessId
+    $proofBudget = [Diagnostics.Stopwatch]::StartNew()
+    $proofBudgetTicks = [long][Math]::Ceiling(
+        ([double][Diagnostics.Stopwatch]::Frequency * 500) / 1000.0)
+    $absenceViews = 0
+    while ($absenceViews -lt 2) {
+        if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
+            Throw-VerifierInfrastructure "Bound-receipt disappearing protected-helper PID $candidatePid did not reach two complete helper-and-child absence views."
+        }
+        try {
+            $ParentRecord.Process.Refresh()
+            if ([bool]$ParentRecord.Process.HasExited -or
+                    [int]$ParentRecord.Process.Id -ne $parentPid -or
+                    [long](Get-VerifierProcessStartTicks $ParentRecord.Process) -ne
+                        [long]$ParentRecord.ProcessStartTicks) {
+                Throw-VerifierInfrastructure "Bound-receipt parent PID $parentPid changed while child PID $candidatePid disappearance was being proven."
+            }
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ("Could not inspect bound-receipt parent PID ${parentPid} while child PID ${candidatePid} disappeared: " +
+                (Get-VerifierErrorMessage $_))
+        }
+        $current = Get-VerifierProcessById $candidatePid
+        if ($null -ne $current) {
+            if ($current.GetType() -ne [Diagnostics.Process]) {
+                Throw-VerifierInfrastructure "Bound-receipt disappearing protected-helper PID $candidatePid returned a malformed current Process object."
+            }
+            try {
+                $current.Refresh()
+                if (-not [bool]$current.HasExited) {
+                    Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $candidatePid remained live or was reused during disappearance proof."
+                }
+                if ([int]$current.Id -ne $candidatePid) {
+                    Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $candidatePid changed during disappearance proof."
+                }
+            } catch {
+                if (Test-VerifierInfrastructureError $_) { throw }
+                Throw-VerifierInfrastructure ("Could not refresh disappearing bound-receipt protected-helper PID ${candidatePid}: " +
+                    (Get-VerifierErrorMessage $_))
+            }
+        }
+        $byId = @()
+        $byParent = @()
+        $byCandidate = @()
+        try {
+            $byId = @(Get-VerifierProcessRecordsByIdWithFallback $candidatePid `
+                'bound-receipt disappearing protected-helper identity')
+            $byParent = @(Get-VerifierProcessRecordsByParentWithFallback $parentPid `
+                'bound-receipt disappearing protected-helper parent')
+            $byCandidate = @(Get-VerifierProcessRecordsByParentWithFallback $candidatePid `
+                'bound-receipt disappearing protected-helper children')
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ("Could not confirm disappearing bound-receipt protected-helper PID ${candidatePid}: " +
+                (Get-VerifierErrorMessage $_))
+        }
+        if ($byId.Count -gt 1) {
+            Throw-VerifierInfrastructure "Bound-receipt disappearing protected-helper PID $candidatePid had ambiguous current WMI identity."
+        }
+        $completeAbsence = ($byId.Count -eq 0)
+        if ($byId.Count -eq 1 -and
+                -not (Test-VerifierBoundReceiptObservationRawEquivalent $Candidate $byId[0])) {
+            Throw-VerifierInfrastructure "Bound-receipt disappearing protected-helper PID $candidatePid changed or was reused during absence proof."
+        }
+        foreach ($child in $byParent) {
+            [void](Assert-VerifierBoundReceiptObservationRawRecord $child `
+                "bound-receipt disappearing protected-helper child query under PID $parentPid")
+            if ([int]$child.ParentProcessId -ne $parentPid) {
+                Throw-VerifierInfrastructure "Bound-receipt disappearing protected-helper child query returned an invalid parent for PID $($child.ProcessId)."
+            }
+            if ([int]$child.ProcessId -eq $candidatePid) {
+                if (-not (Test-VerifierBoundReceiptObservationRawEquivalent $Candidate $child)) {
+                    Throw-VerifierInfrastructure "Bound-receipt disappearing protected-helper PID $candidatePid changed in its parent query."
+                }
+                $completeAbsence = $false
+            }
+        }
+        foreach ($grandchild in $byCandidate) {
+            [void](Assert-VerifierBoundReceiptObservationRawRecord $grandchild `
+                "bound-receipt disappearing protected-helper child query under PID $candidatePid")
+            if ([int]$grandchild.ParentProcessId -ne $candidatePid) {
+                Throw-VerifierInfrastructure "Bound-receipt disappearing protected-helper child query returned an invalid parent for PID $($grandchild.ProcessId)."
+            }
+            # Even an already-exited WMI residue prevents this view from being
+            # an absence proof. A surviving markerless grandchild remains in
+            # this set and causes the bounded loop to fail closed.
+            $completeAbsence = $false
+        }
+        if ($completeAbsence) {
+            $absenceViews++
+        } else {
+            $absenceViews = 0
+        }
+        if ($absenceViews -lt 2) {
+            Start-Sleep -Milliseconds 25
+        }
+    }
+    return $true
+}
+
+function Confirm-VerifierBoundReceiptObservedLeafNaturalExit($DrainScope,
+        $ParentRecord, $SnapshotByParent) {
+    # A protected helper can be retained while live, then naturally exit
+    # before its own breadth-first child query. This is safe only for a leaf:
+    # its retained native handle must prove the exact exit, and both the
+    # original complete snapshot and a fresh query must show no child branch.
+    # A root, a snapshot child, a late child, a transient WMI record, or a
+    # reused PID remains fail-closed and never authorizes Browser.close.
+    Assert-VerifierBrowserDrainScope $DrainScope `
+        'bound-receipt exited protected-helper leaf scope'
+    if ($null -eq $ParentRecord -or $ParentRecord -is [array] -or
+            $null -eq $SnapshotByParent -or -not ($SnapshotByParent -is [hashtable]) -or
+            -not $ParentRecord.PSObject.Properties['ProcessId'] -or
+            -not (Test-VerifierStrictIntegralValue $ParentRecord.ProcessId `
+                1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Bound-receipt exited protected-helper leaf omitted its exact retained identity or snapshot graph.'
+    }
+    $parentPid = [int]$ParentRecord.ProcessId
+    if ($SnapshotByParent.ContainsKey($parentPid) -and
+            @($SnapshotByParent[$parentPid]).Count -gt 0) {
+        Throw-VerifierInfrastructure "Bound-receipt exited protected-helper PID $parentPid retained a snapshot child branch during census."
+    }
+    $proofBudget = [Diagnostics.Stopwatch]::StartNew()
+    $proofBudgetTicks = [long][Math]::Ceiling(
+        ([double][Diagnostics.Stopwatch]::Frequency * 500) / 1000.0)
+    while ($true) {
+        $natural = Get-VerifierBrowserDrainNaturalExitResult $DrainScope $ParentRecord
+        if ($null -ne $natural) {
+            $lateChildren = @()
+            try {
+                $lateChildren = @(Get-VerifierProcessRecordsByParentWithFallback $parentPid `
+                    'bound-receipt exited protected-helper leaf children')
+            } catch {
+                if (Test-VerifierInfrastructureError $_) { throw }
+                Throw-VerifierInfrastructure ("Could not inspect children of exited bound-receipt protected-helper PID ${parentPid}: " +
+                    (Get-VerifierErrorMessage $_))
+            }
+            foreach ($lateChild in $lateChildren) {
+                [void](Assert-VerifierBoundReceiptObservationRawRecord $lateChild `
+                    "bound-receipt exited protected-helper child under PID $parentPid")
+                if ([int]$lateChild.ParentProcessId -ne $parentPid) {
+                    Throw-VerifierInfrastructure "Bound-receipt exited protected-helper PID $parentPid returned a child with a mismatched parent."
+                }
+            }
+            if ($lateChildren.Count -gt 0) {
+                Throw-VerifierInfrastructure "Bound-receipt exited protected-helper PID $parentPid retained a late child branch during census."
+            }
+            return $true
+        }
+        if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
+            Throw-VerifierInfrastructure "Bound-receipt exited protected-helper PID $parentPid did not reach a complete natural-exit proof during census."
+        }
+        Start-Sleep -Milliseconds 25
+    }
+}
+
+function Get-VerifierBoundReceiptNaturalShutdownDescendants($RootRecord,
+        $Snapshot, $DrainScope) {
+    # The bound receipt authorizes Browser.close for its exact root only. It
+    # never authorizes a PID/PPID stop of a helper. Before that close, retain
+    # every live current descendant under the exact root (including a helper
+    # whose command line is inaccessible) behind a native handle. Each must
+    # later exit naturally and pass two fresh absence observations.
+    Assert-VerifierBrowserDrainScope $DrainScope `
+        'bound-receipt protected-helper observation scope'
+    if ($null -eq $RootRecord -or $null -eq $Snapshot) {
+        Throw-VerifierInfrastructure 'Bound-receipt natural shutdown omitted its root or complete process snapshot.'
+    }
+    [void](Assert-VerifierRawProcessIdentityRecord $RootRecord `
+        'bound-receipt natural shutdown root' -RequireParentStart)
+    if (-not $RootRecord.PSObject.Properties['Process'] -or
+            $null -eq $RootRecord.Process -or
+            $RootRecord.Process.GetType() -ne [Diagnostics.Process]) {
+        Throw-VerifierInfrastructure 'Bound-receipt natural shutdown root omitted its retained Process handle.'
+    }
+    try {
+        $RootRecord.Process.Refresh()
+        if ([bool]$RootRecord.Process.HasExited -or
+                [int]$RootRecord.Process.Id -ne [int]$RootRecord.ProcessId -or
+                [long](Get-VerifierProcessStartTicks $RootRecord.Process) -ne
+                    [long]$RootRecord.ProcessStartTicks) {
+            Throw-VerifierInfrastructure 'Bound-receipt natural shutdown root changed before protected-helper census.'
+        }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not inspect the bound-receipt natural shutdown root: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+
+    $snapshotByParent = @{}
+    foreach ($snapshotRecord in @($Snapshot)) {
+        if ($null -eq $snapshotRecord -or $snapshotRecord -is [array] -or
+                -not $snapshotRecord.PSObject.Properties['ProcessId'] -or
+                -not $snapshotRecord.PSObject.Properties['ParentProcessId']) {
+            Throw-VerifierInfrastructure 'Complete bound-receipt process snapshot contained a malformed raw record.'
+        }
+        if (-not (Test-VerifierStrictIntegralValue $snapshotRecord.ProcessId 0 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $snapshotRecord.ParentProcessId 0 ([int]::MaxValue))) {
+            Throw-VerifierInfrastructure 'Complete bound-receipt process snapshot contained malformed PID/parent data.'
+        }
+        if ([int]$snapshotRecord.ProcessId -eq 0 -or
+                [int]$snapshotRecord.ParentProcessId -eq 0) {
+            continue
+        }
+        [void](Assert-VerifierBoundReceiptObservationRawRecord $snapshotRecord `
+            'complete bound-receipt process snapshot record')
+        $parentPid = [int]$snapshotRecord.ParentProcessId
+        if (-not $snapshotByParent.ContainsKey($parentPid)) {
+            $snapshotByParent[$parentPid] = New-Object Collections.ArrayList
+        }
+        [void]$snapshotByParent[$parentPid].Add($snapshotRecord)
+    }
+
+    $observedByPid = @{}
+    $observedByPid[[int]$RootRecord.ProcessId] = $RootRecord
+    $pendingParents = New-Object Collections.Generic.Queue[int]
+    $pendingParents.Enqueue([int]$RootRecord.ProcessId)
+    $descendants = New-Object Collections.ArrayList
+    $depthByPid = @{}
+    $depthByPid[[int]$RootRecord.ProcessId] = 0
+    while ($pendingParents.Count -gt 0) {
+        $parentPid = $pendingParents.Dequeue()
+        if (-not $observedByPid.ContainsKey($parentPid) -or
+                -not $depthByPid.ContainsKey($parentPid)) {
+            Throw-VerifierInfrastructure 'Bound-receipt protected-helper census lost a verified parent identity.'
+        }
+        $parentRecord = $observedByPid[$parentPid]
+        $parentExited = $false
+        try {
+            $parentRecord.Process.Refresh()
+            if ([bool]$parentRecord.Process.HasExited) {
+                $parentExited = $true
+            } elseif ([int]$parentRecord.Process.Id -ne $parentPid -or
+                    [long](Get-VerifierProcessStartTicks $parentRecord.Process) -ne
+                        [long]$parentRecord.ProcessStartTicks) {
+                Throw-VerifierInfrastructure "Bound-receipt protected-helper parent PID $parentPid changed during census."
+            }
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ("Could not inspect bound-receipt protected-helper parent PID ${parentPid}: " +
+                (Get-VerifierErrorMessage $_))
+        }
+        if ($parentExited) {
+            if ($parentPid -eq [int]$RootRecord.ProcessId) {
+                Throw-VerifierInfrastructure 'Bound-receipt natural shutdown root exited during protected-helper census.'
+            }
+            [void](Confirm-VerifierBoundReceiptObservedLeafNaturalExit $DrainScope `
+                $parentRecord $snapshotByParent)
+            continue
+        }
+
+        $candidatesByPid = @{}
+        if ($snapshotByParent.ContainsKey($parentPid)) {
+            foreach ($snapshotChild in @($snapshotByParent[$parentPid])) {
+                [void](Assert-VerifierBoundReceiptObservationRawRecord $snapshotChild `
+                    "bound-receipt snapshot child under PID $parentPid")
+                $childPid = [int]$snapshotChild.ProcessId
+                if ([int]$snapshotChild.ParentProcessId -ne $parentPid -or
+                        $candidatesByPid.ContainsKey($childPid)) {
+                    Throw-VerifierInfrastructure "Bound-receipt snapshot child graph was ambiguous under PID $parentPid."
+                }
+                $candidatesByPid[$childPid] = $snapshotChild
+            }
+        }
+        $queriedChildren = @()
+        try {
+            $queriedChildren = @(Get-VerifierProcessRecordsByParentWithFallback $parentPid `
+                'bound-receipt exact browser descendant')
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ("Could not query bound-receipt children of PID ${parentPid}: " +
+                (Get-VerifierErrorMessage $_))
+        }
+        foreach ($queriedChild in $queriedChildren) {
+            [void](Assert-VerifierBoundReceiptObservationRawRecord $queriedChild `
+                "bound-receipt exact child under PID $parentPid")
+            $childPid = [int]$queriedChild.ProcessId
+            if ([int]$queriedChild.ParentProcessId -ne $parentPid) {
+                Throw-VerifierInfrastructure "Bound-receipt exact child query returned a mismatched parent for PID $childPid."
+            }
+            if ($candidatesByPid.ContainsKey($childPid)) {
+                if (-not (Test-VerifierBoundReceiptObservationRawEquivalent `
+                        $candidatesByPid[$childPid] $queriedChild)) {
+                    Throw-VerifierInfrastructure "Bound-receipt snapshot and exact child query disagreed for PID $childPid."
+                }
+            } else {
+                $candidatesByPid[$childPid] = $queriedChild
+            }
+        }
+
+        foreach ($candidate in @($candidatesByPid.Values | Sort-Object { [int]$_.ProcessId })) {
+            [void](Assert-VerifierBoundReceiptObservationRawRecord $candidate `
+                "bound-receipt protected-helper candidate under PID $parentPid")
+            $childPid = [int]$candidate.ProcessId
+            if ($childPid -eq $parentPid -or $observedByPid.ContainsKey($childPid)) {
+                Throw-VerifierInfrastructure "Bound-receipt protected-helper graph reused or cycled PID $childPid."
+            }
+            $childProcess = Get-VerifierProcessById $childPid
+            if ($null -eq $childProcess -or $childProcess.GetType() -ne [Diagnostics.Process]) {
+                if ($snapshotByParent.ContainsKey($childPid) -and
+                        @($snapshotByParent[$childPid]).Count -gt 0) {
+                    Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid disappeared before native retention but had an unretained snapshot descendant."
+                }
+                [void](Confirm-VerifierBoundReceiptObservedChildAbsent $candidate $parentRecord)
+                continue
+            }
+            try {
+                $childProcess.Refresh()
+                if ([bool]$childProcess.HasExited -or [int]$childProcess.Id -ne $childPid) {
+                    if ($snapshotByParent.ContainsKey($childPid) -and
+                            @($snapshotByParent[$childPid]).Count -gt 0) {
+                        Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid exited before native retention but had an unretained snapshot descendant."
+                    }
+                    [void](Confirm-VerifierBoundReceiptObservedChildAbsent $candidate $parentRecord)
+                    continue
+                }
+            } catch {
+                if (Test-VerifierInfrastructureError $_) { throw }
+                Throw-VerifierInfrastructure ("Could not inspect bound-receipt protected-helper PID ${childPid}: " +
+                    (Get-VerifierErrorMessage $_))
+            }
+            $childStart = 0L
+            try {
+                $childStart = [long](Get-VerifierProcessStartTicks $childProcess)
+            } catch {
+                $startCaptureError = $_
+                $childExitedDuringStartCapture = $false
+                try {
+                    $childProcess.Refresh()
+                    if ([int]$childProcess.Id -ne $childPid) {
+                        Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid changed during start-identity capture."
+                    }
+                    $childExitedDuringStartCapture = [bool]$childProcess.HasExited
+                } catch {
+                    if (Test-VerifierInfrastructureError $_) { throw }
+                    Throw-VerifierInfrastructure ("Could not recheck bound-receipt protected-helper PID ${childPid} after start-identity capture failed: " +
+                        (Get-VerifierErrorMessage $_))
+                }
+                if (-not $childExitedDuringStartCapture) {
+                    if (Test-VerifierInfrastructureError $startCaptureError) { throw $startCaptureError }
+                    Throw-VerifierInfrastructure ("Could not establish bound-receipt protected-helper PID ${childPid} start identity: " +
+                        (Get-VerifierErrorMessage $startCaptureError))
+                }
+                # The handle was live at the preceding refresh but exited
+                # before its start identity could be pinned. It remains a
+                # disappearing candidate, never an implicit leaf: an original
+                # snapshot child still blocks Browser.close and the live parent
+                # plus two fresh absence views must prove the whole branch.
+                if ($snapshotByParent.ContainsKey($childPid) -and
+                        @($snapshotByParent[$childPid]).Count -gt 0) {
+                    Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid exited during start-identity capture but had an unretained snapshot descendant."
+                }
+                [void](Confirm-VerifierBoundReceiptObservedChildAbsent $candidate $parentRecord)
+                continue
+            }
+            if ($childStart -le 0) {
+                Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid had no positive start identity."
+            }
+            Assert-VerifierBoundReceiptObservationMatchesRetainedProcess $candidate `
+                $childStart "bound-receipt protected-helper PID $childPid"
+            $currentRecords = @()
+            try {
+                $currentRecords = @(Get-VerifierProcessRecordsByIdWithFallback $childPid `
+                    'bound-receipt protected-helper current identity')
+            } catch {
+                if (Test-VerifierInfrastructureError $_) { throw }
+                Throw-VerifierInfrastructure ("Could not re-query bound-receipt protected-helper PID ${childPid}: " +
+                    (Get-VerifierErrorMessage $_))
+            }
+            if ($currentRecords.Count -ne 1 -or $null -eq $currentRecords[0] -or
+                    -not (Test-VerifierBoundReceiptObservationRawEquivalent `
+                        $candidate $currentRecords[0])) {
+                Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid changed or became ambiguous during census."
+            }
+            $recheckedChildStart = 0L
+            try {
+                $recheckedChildStart = [long](Get-VerifierProcessStartTicks $childProcess)
+            } catch {
+                $recheckError = $_
+                $childExitedDuringRecheck = $false
+                try {
+                    $childProcess.Refresh()
+                    if ([int]$childProcess.Id -ne $childPid) {
+                        Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid changed during recheck identity capture."
+                    }
+                    $childExitedDuringRecheck = [bool]$childProcess.HasExited
+                } catch {
+                    if (Test-VerifierInfrastructureError $_) { throw }
+                    Throw-VerifierInfrastructure ("Could not recheck bound-receipt protected-helper PID ${childPid} after its identity recheck failed: " +
+                        (Get-VerifierErrorMessage $_))
+                }
+                if (-not $childExitedDuringRecheck) {
+                    if (Test-VerifierInfrastructureError $recheckError) { throw $recheckError }
+                    Throw-VerifierInfrastructure ("Could not recheck bound-receipt protected-helper PID ${childPid} start identity: " +
+                        (Get-VerifierErrorMessage $recheckError))
+                }
+                if ($snapshotByParent.ContainsKey($childPid) -and
+                        @($snapshotByParent[$childPid]).Count -gt 0) {
+                    Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid exited during identity recheck but had an unretained snapshot descendant."
+                }
+                [void](Confirm-VerifierBoundReceiptObservedChildAbsent $candidate $parentRecord)
+                continue
+            }
+            if ($recheckedChildStart -ne $childStart) {
+                Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid changed its retained PID/start identity during census."
+            }
+            $childRecord = [pscustomobject]@{
+                Process = $childProcess
+                ProcessId = $childPid
+                ProcessStartTicks = $childStart
+                ParentProcessId = $parentPid
+                ParentProcessStartTicks = [long]$parentRecord.ProcessStartTicks
+                Name = if ($null -eq $candidate.Name) { '' } else { [string]$candidate.Name }
+                ExecutablePath = if ($null -eq $candidate.ExecutablePath) { '' } else {
+                    [string]$candidate.ExecutablePath }
+                CommandLine = if ($null -eq $candidate.CommandLine) { '' } else {
+                    [string]$candidate.CommandLine }
+                VerifierDepth = [int]$depthByPid[$parentPid] + 1
+                ObservationOnly = $true
+            }
+            $attestation = New-VerifierBrowserDrainAttestation $DrainScope `
+                $childRecord $childProcess -ObservationOnly
+            $childRecord | Add-Member -NotePropertyName VerifierDrainAttestation `
+                -NotePropertyValue $attestation -Force
+            $observedByPid[$childPid] = $childRecord
+            $depthByPid[$childPid] = [int]$childRecord.VerifierDepth
+            [void]$descendants.Add($childRecord)
+            $pendingParents.Enqueue($childPid)
+        }
+    }
+    return @($descendants)
+}
+
+function Wait-VerifierBoundReceiptNaturalShutdownDescendants($DrainScope,
+        $RootRecord, $DescendantRecords, $Budget, [long]$BudgetTicks) {
+    Assert-VerifierBrowserDrainScope $DrainScope `
+        'bound-receipt natural shutdown wait scope'
+    if ($null -eq $RootRecord -or $null -eq $DescendantRecords) {
+        Throw-VerifierInfrastructure 'Bound-receipt natural shutdown wait omitted its root or protected-helper census.'
+    }
+    $records = @($RootRecord) + @($DescendantRecords)
+    $seen = @{}
+    while ($true) {
+        Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+        $allAbsent = $true
+        foreach ($record in $records) {
+            if ($null -eq $record -or -not $record.PSObject.Properties['ProcessId'] -or
+                    -not (Test-VerifierStrictIntegralValue $record.ProcessId 1 ([int]::MaxValue))) {
+                Throw-VerifierInfrastructure 'Bound-receipt natural shutdown wait carried an invalid retained process record.'
+            }
+            $pid = [int]$record.ProcessId
+            if ($seen.ContainsKey($pid) -and -not [object]::ReferenceEquals($seen[$pid], $record)) {
+                Throw-VerifierInfrastructure "Bound-receipt natural shutdown wait carried duplicate retained PID $pid."
+            }
+            $seen[$pid] = $record
+            $natural = Get-VerifierBrowserDrainNaturalExitResult $DrainScope $record
+            if ($null -eq $natural) { $allAbsent = $false }
+            Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+        }
+        if ($allAbsent) { return }
+        Start-Sleep -Milliseconds 25
+        Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+    }
+}
+
+function Assert-VerifierBoundReceiptNaturalShutdownNoLateDescendants($RootRecord,
+        $DescendantRecords) {
+    if ($null -eq $RootRecord -or $null -eq $DescendantRecords) {
+        Throw-VerifierInfrastructure 'Bound-receipt post-close proof omitted its root or protected-helper census.'
+    }
+    $knownPids = @{}
+    foreach ($record in @($RootRecord) + @($DescendantRecords)) {
+        if ($null -eq $record -or -not $record.PSObject.Properties['ProcessId'] -or
+                -not (Test-VerifierStrictIntegralValue $record.ProcessId 1 ([int]::MaxValue))) {
+            Throw-VerifierInfrastructure 'Bound-receipt post-close proof carried an invalid retained PID.'
+        }
+        $knownPids[[int]$record.ProcessId] = $true
+    }
+    foreach ($parentPid in @($knownPids.Keys)) {
+        $lateChildren = @()
+        try {
+            $lateChildren = @(Get-VerifierProcessRecordsByParentWithFallback ([int]$parentPid `
+                ) 'bound-receipt post-close browser descendant')
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ("Could not query bound-receipt post-close children of PID ${parentPid}: " +
+                (Get-VerifierErrorMessage $_))
+        }
+        foreach ($lateChild in $lateChildren) {
+            [void](Assert-VerifierBoundReceiptObservationRawRecord $lateChild `
+                "bound-receipt post-close child under PID $parentPid")
+            if ([int]$lateChild.ParentProcessId -ne [int]$parentPid) {
+                Throw-VerifierInfrastructure "Bound-receipt post-close child query returned a mismatched parent for PID $($lateChild.ProcessId)."
+            }
+            Throw-VerifierInfrastructure "A protected, late, or uninspectable browser helper PID $($lateChild.ProcessId) remained after Browser.close; profile and lease cleanup are retained."
+        }
+    }
 }
 
 function Remove-VerifierBrowserProfile($Context, $ProfileRecord) {
@@ -10044,6 +13022,7 @@ function Stop-VerifierBrowserProcessTreeToFixedPointCore($Context, $OwnerRoot,
 
         if ($children.Count -gt 0) {
             $stableEmptySnapshots = 0
+            $pendingNaturalExit = $false
             foreach ($childToStop in @($children | Sort-Object `
                     @{Expression={ [int]$_.VerifierDepth }; Descending=$true},
                     @{Expression={ [int]$_.ProcessId }; Descending=$true})) {
@@ -10053,6 +13032,23 @@ function Stop-VerifierBrowserProcessTreeToFixedPointCore($Context, $OwnerRoot,
                 # handle has naturally exited, prove two independent current
                 # PID/WMI absences and skip Stop-Process entirely.
                 $knownChild = $knownByPid[$childPid]
+                [void](Assert-VerifierBrowserDrainTerminationAttestation `
+                    $DrainScope $knownChild)
+                if (Test-VerifierBrowserDrainPendingNaturalExit $DrainScope $knownChild) {
+                    $naturalExit = Get-VerifierBrowserDrainNaturalExitResult `
+                        $DrainScope $knownChild
+                    if ($null -ne $naturalExit) {
+                        Clear-VerifierBrowserDrainPendingNaturalExit `
+                            $DrainScope $knownChild
+                        continue
+                    }
+                    # A retained exact handle is already exited, but WMI has
+                    # not yet supplied two empty current observations. It is
+                    # never eligible for Stop-Process; retry the bounded outer
+                    # drain rather than treating the stale record as absence.
+                    $pendingNaturalExit = $true
+                    continue
+                }
                 $naturalExit = Get-VerifierBrowserDrainNaturalExitResult `
                     $DrainScope $knownChild
                 if ($null -ne $naturalExit) { continue }
@@ -10079,6 +13075,9 @@ function Stop-VerifierBrowserProcessTreeToFixedPointCore($Context, $OwnerRoot,
                     'fixed-point current child process handle')
                 [void](Stop-VerifierVerifiedProcessExactly $verifiedChild.Process `
                     ([long]$verifiedChild.Record.ProcessStartTicks) 5000 $verifiedChild.Record)
+            }
+            if ($pendingNaturalExit) {
+                Start-Sleep -Milliseconds 25
             }
             continue
         }
@@ -10359,6 +13358,317 @@ function Send-VerifierBrowserCloseAndReadAcknowledgement($Socket, $Budget,
     }
 }
 
+function Test-VerifierBrowserLaunchParentAbsentForRecovery($SessionRecord) {
+    if ($null -eq $SessionRecord -or
+            -not $SessionRecord.PSObject.Properties['ProcessParentProcessId'] -or
+            -not $SessionRecord.PSObject.Properties['ProcessParentProcessStartTicks'] -or
+            -not (Test-VerifierStrictIntegralValue $SessionRecord.ProcessParentProcessId `
+                1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $SessionRecord.ProcessParentProcessStartTicks 1)) {
+        Throw-VerifierInfrastructure 'Browser parent-exit recovery requires the recorded launch parent PID/start tuple.'
+    }
+    # Get-VerifierCurrentProcessRecordById accepts absence only after both the
+    # Process and Win32_Process views agree. Presence (including PID reuse) is
+    # deliberately left on the original parent-anchored cleanup path.
+    return ($null -eq (Get-VerifierCurrentProcessRecordById ([int]$SessionRecord.ProcessParentProcessId)))
+}
+
+function Get-VerifierBrowserReceiptNaturalShutdownRoot($Context, $SessionRecord,
+        $OwnerRoot, [switch]$RequireLaunchParentAbsent,
+        [switch]$AfterCloseAttemptJournal) {
+    [void](Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+        'browser parent-exit recovery session')
+    Assert-VerifierBrowserShutdownOwner $SessionRecord $OwnerRoot
+    $receipt = Assert-VerifierDurableBrowserRecoveryReceipt $SessionRecord $Context `
+        'browser parent-exit recovery receipt'
+    # The public cleanup entry always requires a fresh receipt.  The one
+    # post-journal revalidation below is deliberately narrower: it is reached
+    # only by the same stack frame after the durable pre-send journal succeeds,
+    # and it proves that the root/listener did not change in that tiny interval.
+    # It never reopens an already attempted receipt to a new cleanup entry.
+    $receiptAttemptStateMatches = if ($AfterCloseAttemptJournal) {
+        [bool]$receipt.CloseAttempted
+    } else {
+        -not [bool]$receipt.CloseAttempted
+    }
+    if ($null -eq $receipt -or $receipt.State -ne 'bound' -or
+            -not $receiptAttemptStateMatches -or $SessionRecord.Status -ne 'attached') {
+        Throw-VerifierInfrastructure 'Browser parent-exit recovery requires one fresh, bound, unattempted recovery receipt.'
+    }
+    $parentRecord = [pscustomobject]@{
+        ProcessId = [int]$receipt.RootParentProcessId
+        ProcessStartTicks = [long]$receipt.RootParentProcessStartTicks
+    }
+    if ($RequireLaunchParentAbsent) {
+        $parentAbsence = Confirm-VerifierRecordedProcessAbsent $parentRecord `
+            'browser parent-exit recovery launch parent'
+        if (-not $parentAbsence.QueryProven -or -not $parentAbsence.Absent -or
+                $parentAbsence.Replaced) {
+            Throw-VerifierInfrastructure 'Browser parent-exit recovery could not prove the exact launch parent absent without PID reuse.'
+        }
+    } else {
+        # The ordinary receipt lane retains the historical parent anchor. It
+        # is allowed only while that exact launcher identity is still live;
+        # a vanished or reused parent selects the separate recovery-only
+        # branch above, never a PID-only fallback.
+        $currentParent = Get-VerifierCurrentProcessRecordById `
+            ([int]$receipt.RootParentProcessId)
+        if ($null -eq $currentParent -or
+                [long]$currentParent.ProcessStartTicks -ne
+                    [long]$receipt.RootParentProcessStartTicks) {
+            Throw-VerifierInfrastructure 'Browser receipt natural shutdown could not prove the exact live launch parent identity.'
+        }
+    }
+    $current = Get-VerifierCurrentProcessRecordById ([int]$receipt.RootProcessId)
+    if ($null -eq $current -or
+            [int]$current.ProcessId -ne [int]$SessionRecord.ProcessId -or
+            [long]$current.ProcessStartTicks -ne [long]$SessionRecord.ProcessStartTicks -or
+            [int]$current.ParentProcessId -ne [int]$SessionRecord.ProcessParentProcessId -or
+            -not (Test-VerifierConfiguredExecutableIdentity $SessionRecord.BrowserPath $current `
+                -RequireExecutablePath) -or
+            -not (Test-VerifierCommandLineEquivalent $current.CommandLine `
+                $SessionRecord.ProcessCommandLine) -or
+            -not (Test-VerifierCommandLineEquivalent $current.CommandLine `
+                $receipt.RootProcessCommandLine)) {
+        Throw-VerifierInfrastructure 'Browser parent-exit recovery root no longer matches its exact PID/start/executable/command tuple.'
+    }
+    foreach ($switch in @(
+            [pscustomobject]@{ Name = '--user-data-dir'; Value = [string]$SessionRecord.Profile }
+            [pscustomobject]@{ Name = '--remote-debugging-port'; Value = [string]$SessionRecord.CdpPort }
+            [pscustomobject]@{ Name = '--tsj-verifier-run'; Value = [string]$SessionRecord.RunId }
+            [pscustomobject]@{ Name = '--tsj-verifier-route'; Value = [string]$SessionRecord.RouteId }
+            [pscustomobject]@{ Name = '--tsj-verifier-worktree'; Value = [string]$SessionRecord.RepositoryIdentity }
+            [pscustomobject]@{ Name = '--tsj-verifier-recovery-token'; Value = [string]$receipt.AuthorityToken }
+        )) {
+        if (-not (Test-VerifierCommandLineSwitch $current.CommandLine $switch.Name $switch.Value)) {
+            Throw-VerifierInfrastructure "Browser parent-exit recovery root omitted its exact $($switch.Name) authority marker."
+        }
+    }
+    return [pscustomobject]@{
+        ProcessId = [int]$current.ProcessId
+        ProcessStartTicks = [long]$current.ProcessStartTicks
+        ParentProcessId = [int]$current.ParentProcessId
+        ParentProcessStartTicks = [long]$receipt.RootParentProcessStartTicks
+        CommandLine = [string]$current.CommandLine
+        Name = [string]$current.Name
+        ExecutablePath = [string]$current.ExecutablePath
+        VerifierDepth = 0
+        Process = $current.Process
+    }
+}
+
+function Get-VerifierBrowserParentExitRecoveryRoot($Context, $SessionRecord,
+        $OwnerRoot) {
+    return (Get-VerifierBrowserReceiptNaturalShutdownRoot $Context $SessionRecord `
+        $OwnerRoot -RequireLaunchParentAbsent)
+}
+
+function Assert-VerifierBrowserParentExitRecoveryListener($Context, $SessionRecord,
+        $RootRecord) {
+    $receipt = Assert-VerifierDurableBrowserRecoveryReceipt $SessionRecord $Context `
+        'browser parent-exit listener receipt'
+    $lease = $SessionRecord.Lease
+    Assert-VerifierDurableLeaseRecord $lease $Context 'browser parent-exit listener lease'
+    if ($null -eq $receipt -or $receipt.State -ne 'bound' -or
+            $lease.Status -ne 'bound' -or $lease.ClaimState -ne 'bound' -or
+            [int]$lease.BoundProcessId -ne [int]$RootRecord.ProcessId -or
+            [long]$lease.BoundProcessStartTicks -ne [long]$RootRecord.ProcessStartTicks -or
+            [int]$lease.ListenerProcessId -ne [int]$RootRecord.ProcessId -or
+            [long]$lease.ListenerProcessStartTicks -ne [long]$RootRecord.ProcessStartTicks -or
+            [int]$receipt.ListenerProcessId -ne [int]$RootRecord.ProcessId -or
+            [long]$receipt.ListenerProcessStartTicks -ne [long]$RootRecord.ProcessStartTicks) {
+        Throw-VerifierInfrastructure 'Browser parent-exit recovery listener did not retain its exact bound root/listener tuple.'
+    }
+    $inspection = Get-VerifierLoopbackListenerRecords ([int]$SessionRecord.CdpPort) -PreferNetstat
+    if (-not (Test-VerifierListenerInspectionSchema $inspection) -or
+            -not $inspection.Success -or -not $inspection.Known -or
+            -not $inspection.HasListeners) {
+        Throw-VerifierInfrastructure 'Browser parent-exit recovery could not prove a current listener for its exact CDP port.'
+    }
+    $listeners = @($inspection.Listeners)
+    if ($listeners.Count -eq 0) {
+        Throw-VerifierInfrastructure 'Browser parent-exit recovery listener inspection returned no exact listener records.'
+    }
+    foreach ($listener in $listeners) {
+        if (-not (Test-VerifierListenerRecordSchema $listener) -or
+                $listener.ListenerOwnerKind -ne $script:VerifierUserProcessOwnerKind -or
+                [int]$listener.Port -ne [int]$SessionRecord.CdpPort -or
+                [int]$listener.ProcessId -ne [int]$RootRecord.ProcessId -or
+                [long]$listener.ProcessStartTicks -ne [long]$RootRecord.ProcessStartTicks) {
+            Throw-VerifierInfrastructure 'Browser parent-exit recovery rejected a foreign, replaced, or malformed CDP listener owner.'
+        }
+        $currentListener = Get-VerifierCurrentProcessRecordById ([int]$listener.ProcessId)
+        if ($null -eq $currentListener -or
+                [long]$currentListener.ProcessStartTicks -ne [long]$listener.ProcessStartTicks -or
+                -not (Test-VerifierCommandLineEquivalent $currentListener.CommandLine `
+                    $RootRecord.CommandLine)) {
+            Throw-VerifierInfrastructure 'Browser parent-exit recovery listener owner changed during exact current identity validation.'
+        }
+    }
+    return $inspection
+}
+
+function Assert-VerifierBrowserParentExitRecoveryListenerAbsent($SessionRecord) {
+    $inspection = Get-VerifierLoopbackListenerRecords ([int]$SessionRecord.CdpPort) -PreferNetstat
+    if (-not (Test-VerifierListenerInspectionSchema $inspection) -or
+            -not $inspection.Success -or -not $inspection.Known -or
+            $inspection.HasListeners) {
+        Throw-VerifierInfrastructure 'Browser parent-exit recovery did not prove its exact CDP listener absent after Browser.close.'
+    }
+}
+
+function Wait-VerifierBrowserParentExitRecoveryProfileQuiescence($SessionRecord,
+        $Budget, [long]$BudgetTicks) {
+    while ($true) {
+        Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+        $snapshot = @(Get-VerifierBrowserProcessSnapshot $SessionRecord.BrowserPath `
+            $SessionRecord.Profile $SessionRecord.RunId $SessionRecord.RepositoryIdentity `
+            $SessionRecord.CdpPort)
+        $references = @(Get-VerifierProfileReferenceRecords $snapshot $SessionRecord.Profile)
+        if ($references.Count -eq 0) { return }
+        Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+        Start-Sleep -Milliseconds 50
+    }
+}
+
+function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $SessionRecord,
+        $OwnerRoot, [switch]$RequireLaunchParentAbsent) {
+    # This receipt-bound natural shutdown lane never terminates by PID and
+    # never walks an unanchored child tree. With a live parent it retains that
+    # exact parent identity; after the launcher exits it requires positive
+    # parent absence without PID reuse. In both modes a fresh receipt binds
+    # the still-live root to its exact listener before Browser.close.
+    $budget = [Diagnostics.Stopwatch]::StartNew()
+    $budgetTicks = [long][Math]::Ceiling(
+        ([double][Diagnostics.Stopwatch]::Frequency * 15000) / 1000.0)
+    $scope = New-VerifierBrowserDrainScope
+    $browserSocket = $null
+    $protectedDescendants = @()
+    $containmentLease = $null
+    $failure = $null
+    $disposeErrors = New-Object Collections.ArrayList
+    try {
+        $rootRecord = Get-VerifierBrowserReceiptNaturalShutdownRoot $Context `
+            $SessionRecord $OwnerRoot -RequireLaunchParentAbsent:$RequireLaunchParentAbsent
+        $rootAttestation = New-VerifierBrowserDrainAttestation $scope $rootRecord $rootRecord.Process
+        $rootRecord | Add-Member -NotePropertyName VerifierDrainAttestation `
+            -NotePropertyValue $rootAttestation -Force
+        $containmentLease = Get-VerifierBrowserContainmentJobForSession `
+            $Context $SessionRecord
+        [void](Assert-VerifierBrowserContainmentJobContainsRoot `
+            $containmentLease.Job $rootRecord)
+        [void](Assert-VerifierBrowserParentExitRecoveryListener $Context $SessionRecord $rootRecord)
+        Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        $version = Invoke-RestMethod -Uri (
+            'http://127.0.0.1:' + [string]$SessionRecord.CdpPort + '/json/version') -TimeoutSec 2
+        Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        $endpoint = Get-VerifierBrowserShutdownEndpoint $version $SessionRecord.CdpPort
+        $remainingMs = [int][Math]::Floor(
+            (($budgetTicks - $budget.ElapsedTicks) * 1000.0) / [Diagnostics.Stopwatch]::Frequency)
+        if ($remainingMs -le 0) {
+            Throw-VerifierInfrastructure 'Browser parent-exit recovery exhausted its budget before CDP connection.'
+        }
+        $browserSocket = Connect-VerifierCdpSocket $endpoint (
+            [DateTime]::UtcNow.AddMilliseconds([Math]::Min(2000, $remainingMs)))
+        Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        $currentRoot = Get-VerifierBrowserReceiptNaturalShutdownRoot $Context `
+            $SessionRecord $OwnerRoot -RequireLaunchParentAbsent:$RequireLaunchParentAbsent
+        if (-not (Test-VerifierCurrentProcessRecordMatches $rootRecord $currentRoot)) {
+            Throw-VerifierInfrastructure 'Browser parent-exit recovery root changed immutable identity before Browser.close.'
+        }
+        [void](Assert-VerifierBrowserParentExitRecoveryListener $Context $SessionRecord $currentRoot)
+        # A receipt never grants helper termination. It does require a full
+        # current PPID census before Browser.close so protected/null-command
+        # Edge helpers are retained behind native handles and must naturally
+        # disappear with the exact root. A helper that cannot later prove that
+        # exit blocks profile/lease cleanup; it is never guessed or stopped.
+        # Use the raw complete snapshot here, not the marker-selection helper:
+        # a current protected descendant can disappear between that helper's
+        # marker filter and its live Process lookup. The root/listener has
+        # already passed the receipt authority proof above; this census owns
+        # no process and validates every reachable child itself.
+        $precloseSnapshot = @(Get-VerifierProcessSnapshotWithFallback `
+            'bound-receipt protected-helper census')
+        $protectedDescendants = @(Get-VerifierBoundReceiptNaturalShutdownDescendants `
+            $rootRecord $precloseSnapshot $scope)
+        $rootBeforeJournal = Get-VerifierBrowserReceiptNaturalShutdownRoot $Context `
+            $SessionRecord $OwnerRoot -RequireLaunchParentAbsent:$RequireLaunchParentAbsent
+        if (-not (Test-VerifierCurrentProcessRecordMatches $rootRecord $rootBeforeJournal)) {
+            Throw-VerifierInfrastructure 'Browser parent-exit recovery root changed during protected-helper census.'
+        }
+        [void](Assert-VerifierBrowserParentExitRecoveryListener $Context $SessionRecord $rootBeforeJournal)
+        Record-VerifierBrowserRecoveryCloseAttempt $Context $SessionRecord
+        $rootAtSend = Get-VerifierBrowserReceiptNaturalShutdownRoot $Context `
+            $SessionRecord $OwnerRoot -RequireLaunchParentAbsent:$RequireLaunchParentAbsent `
+            -AfterCloseAttemptJournal
+        if (-not (Test-VerifierCurrentProcessRecordMatches $rootRecord $rootAtSend)) {
+            Throw-VerifierInfrastructure 'Browser parent-exit recovery root changed after close-attempt journaling.'
+        }
+        [void](Assert-VerifierBrowserParentExitRecoveryListener $Context $SessionRecord $rootAtSend)
+        # This is the final authorization point. The exact root is still a
+        # member of the no-breakaway job, which remains authoritative through
+        # Browser.close and root termination even if a helper is too brief or
+        # too protected for a PPID snapshot to retain.
+        [void](Assert-VerifierBrowserContainmentJobContainsRoot `
+            $containmentLease.Job $rootAtSend)
+        $attemptKey = Get-VerifierBrowserCloseAttemptKey $SessionRecord
+        $script:VerifierBrowserCloseAttempts[$attemptKey] = $true
+        $SessionRecord.Runtime | Add-Member -NotePropertyName GracefulCloseAttempted `
+            -NotePropertyValue $true -Force
+        Send-VerifierBrowserCloseAndReadAcknowledgement $browserSocket $budget $budgetTicks
+        Wait-VerifierBoundReceiptNaturalShutdownDescendants $scope $rootRecord `
+            $protectedDescendants $budget $budgetTicks
+        Assert-VerifierBoundReceiptNaturalShutdownNoLateDescendants $rootRecord `
+            $protectedDescendants
+        # An empty kernel job membership is the final containment proof. If a
+        # direct helper started and exited between sampled PPID queries while
+        # leaving a markerless descendant, that descendant remains a job
+        # member and blocks profile/claim cleanup without any PID stop.
+        Wait-VerifierBrowserContainmentJobEmpty $containmentLease.Job `
+            $budget $budgetTicks
+        Wait-VerifierBrowserParentExitRecoveryProfileQuiescence $SessionRecord $budget $budgetTicks
+        Assert-VerifierBrowserParentExitRecoveryListenerAbsent $SessionRecord
+        Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        return [pscustomobject]@{
+            ProcessTerminationProven = $true
+            NaturalShutdownProven = $true
+            ParentExitRecovery = $true
+        }
+    } catch {
+        $failure = $_
+    } finally {
+        if ($null -ne $browserSocket) {
+            try { $browserSocket.Abort() } catch { [void]$disposeErrors.Add((Get-VerifierErrorMessage $_)) }
+            try { $browserSocket.Dispose() } catch { [void]$disposeErrors.Add((Get-VerifierErrorMessage $_)) }
+        }
+        try {
+            foreach ($errorText in @(Dispose-VerifierBrowserDrainScope $scope)) {
+                [void]$disposeErrors.Add($errorText)
+            }
+        } catch { [void]$disposeErrors.Add((Get-VerifierErrorMessage $_)) }
+        if ($null -ne $containmentLease -and $containmentLease.DisposeAfterUse) {
+            try { $containmentLease.Job.Dispose() } catch {
+                [void]$disposeErrors.Add((Get-VerifierErrorMessage $_))
+            }
+        }
+    }
+    if ($disposeErrors.Count -gt 0) {
+        Throw-VerifierInfrastructure ('Browser parent-exit recovery resource disposal was unproven: ' +
+            ($disposeErrors -join '; ') + '; ' + (Get-VerifierErrorMessage $failure))
+    }
+    if ($null -ne $failure) {
+        if (Test-VerifierInfrastructureError $failure) { throw $failure }
+        Throw-VerifierInfrastructure ('Browser parent-exit recovery failed: ' +
+            (Get-VerifierErrorMessage $failure))
+    }
+}
+
+function Close-VerifierBrowserSessionAfterLaunchParentExit($Context, $SessionRecord,
+        $OwnerRoot) {
+    return (Close-VerifierBrowserSessionWithBoundRecoveryReceipt $Context `
+        $SessionRecord $OwnerRoot -RequireLaunchParentAbsent)
+}
+
 function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerRoot) {
     # This is an additional positive natural-shutdown lane, not permission to
     # adopt a missing root or terminate a child after its ancestry has gone.
@@ -10454,6 +13764,7 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
         # Record the attempt BEFORE sending: even a partial send or a dropped
         # acknowledgement can never select the force-stop path on retry.
+        Record-VerifierBrowserRecoveryCloseAttempt $Context $SessionRecord
         $script:VerifierBrowserCloseAttempts[$attemptKey] = $true
         $SessionRecord.Runtime | Add-Member -NotePropertyName GracefulCloseAttempted `
             -NotePropertyValue $true -Force
@@ -10509,6 +13820,286 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
     return $result
 }
 
+function Get-VerifierIssuedContainedBrowserIdentity($Context, $SessionRecord,
+        $ContainmentJob, $RecoveryAuthority = $null) {
+    [void](Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+        'issued contained-browser identity session')
+    $receipt = Assert-VerifierDurableBrowserRecoveryReceipt $SessionRecord $Context `
+        'issued contained-browser identity receipt'
+    $launch = Assert-VerifierDurableBrowserContainmentLaunch $SessionRecord $Context `
+        'issued contained-browser identity launch'
+    $identity = Assert-VerifierDurableProcessIdentityTuple $SessionRecord `
+        -ProcessIdPropertyName 'ProcessId' `
+        -ProcessStartPropertyName 'ProcessStartTicks' `
+        -ParentProcessIdPropertyName 'ProcessParentProcessId' `
+        -ParentProcessStartPropertyName 'ProcessParentProcessStartTicks' `
+        -CommandLinePropertyName 'ProcessCommandLine' `
+        -Label 'issued contained-browser identity session root'
+    if ($null -eq $receipt -or $receipt.State -ne 'issued' -or
+            $receipt.CloseAttempted -or $null -eq $launch -or
+            $launch.State -notin @('launch-pending', 'launched') -or
+            ($launch.State -eq 'launch-pending' -and
+             ([int]$launch.LaunchProcessId -ne 0 -or
+              -not [String]::IsNullOrWhiteSpace([string]$launch.LaunchedUtc))) -or
+            ($launch.State -eq 'launched' -and [int]$launch.LaunchProcessId -le 0) -or
+            $identity.State -ne 'absent' -or $null -eq $ContainmentJob) {
+        Throw-VerifierInfrastructure 'Issued contained-browser recovery did not begin from one exact issued, unbound launch record.'
+    }
+    $lease = $SessionRecord.Lease
+    $expectedParentId = [int]$lease.ClaimOwnerPid
+    $expectedParentStartTicks = [long]$lease.ClaimOwnerStartTicks
+    $candidateProcessId = 0
+    if ($launch.State -eq 'launched') {
+        $candidateProcessId = [int]$launch.LaunchProcessId
+    } else {
+        # `launch-pending` was durably written before atomic CreateProcess. A
+        # crash can therefore leave no PID in the manifest even though the
+        # root's query-only job handle keeps this exact job open. Derive one
+        # candidate only from current members whose immutable parent and image
+        # identity match the original launch tuple; the full opaque command
+        # capability is checked again below before any bind mutation.
+        $members = @($ContainmentJob.GetMemberProcessIds())
+        if ($members.Count -eq 0) {
+            Throw-VerifierInfrastructure 'Issued pending containment launch had no current job member to reattest.'
+        }
+        $candidates = New-Object Collections.ArrayList
+        foreach ($memberProcessId in $members) {
+            $member = Get-VerifierCurrentProcessRecordById ([int]$memberProcessId)
+            if ($null -eq $member -or [int]$member.ProcessId -ne [int]$memberProcessId -or
+                    [long]$member.ProcessStartTicks -le 0) {
+                Throw-VerifierInfrastructure 'Issued pending containment launch had an uninspectable job member.'
+            }
+            if ([int]$member.ParentProcessId -eq $expectedParentId -and
+                    (Test-VerifierConfiguredExecutableIdentity `
+                        ([string]$SessionRecord.BrowserPath) $member -RequireExecutablePath)) {
+                [void]$candidates.Add($member)
+            }
+        }
+        if ($candidates.Count -ne 1) {
+            Throw-VerifierInfrastructure 'Issued pending containment launch did not retain exactly one current root candidate.'
+        }
+        $candidateProcessId = [int]$candidates[0].ProcessId
+    }
+    $record = $null
+    $process = $null
+    if ($null -eq $RecoveryAuthority) {
+        $current = Get-VerifierCurrentProcessIdentityWithRetry `
+            $candidateProcessId 0 $expectedParentId '' '' `
+            ([int]$SessionRecord.CdpPort) ([string]$SessionRecord.RunId) '' `
+            $expectedParentStartTicks ([string]$SessionRecord.BrowserPath)
+        $record = $current.Record
+        $process = $current.Process
+    } else {
+        # The original launcher was positively proved absent while the exact
+        # retained claim mutex was reacquired. Its PID/start tuple is therefore
+        # the durable parent attestation; do not demand a live parent merely to
+        # rehydrate the already contained root.
+        $current = Get-VerifierCurrentProcessRecordById $candidateProcessId
+        if ($null -eq $current -or
+                [int]$current.ProcessId -ne $candidateProcessId -or
+                [long]$current.ProcessStartTicks -le 0 -or
+                [int]$current.ParentProcessId -ne $expectedParentId -or
+                -not (Test-VerifierConfiguredExecutableIdentity `
+                    ([string]$SessionRecord.BrowserPath) $current -RequireExecutablePath)) {
+            Throw-VerifierInfrastructure 'Issued contained-browser recovery root did not retain its exact live PID/start/parent/executable identity.'
+        }
+        $parentAbsence = Confirm-VerifierRecordedProcessAbsent ([pscustomobject]@{
+            ProcessId = $expectedParentId
+            ProcessStartTicks = $expectedParentStartTicks
+        }) 'issued contained-browser recovery original launch parent'
+        if (-not $parentAbsence.QueryProven -or -not $parentAbsence.Absent -or
+                $parentAbsence.Replaced) {
+            Throw-VerifierInfrastructure 'Issued contained-browser recovery could not re-prove its original launch parent absent without PID reuse.'
+        }
+        $currentAgain = Get-VerifierCurrentProcessRecordById $candidateProcessId
+        if ($null -eq $currentAgain -or
+                [int]$currentAgain.ProcessId -ne [int]$current.ProcessId -or
+                [long]$currentAgain.ProcessStartTicks -ne [long]$current.ProcessStartTicks -or
+                [int]$currentAgain.ParentProcessId -ne [int]$current.ParentProcessId -or
+                -not (Test-VerifierCommandLineEquivalent $currentAgain.CommandLine $current.CommandLine) -or
+                -not (Test-VerifierConfiguredExecutableIdentity `
+                    ([string]$SessionRecord.BrowserPath) $currentAgain -RequireExecutablePath)) {
+            Throw-VerifierInfrastructure 'Issued contained-browser recovery root changed during its current identity recheck.'
+        }
+        $record = [pscustomobject]@{
+            ProcessId = [int]$currentAgain.ProcessId
+            ProcessStartTicks = [long]$currentAgain.ProcessStartTicks
+            ParentProcessId = [int]$currentAgain.ParentProcessId
+            ParentProcessStartTicks = $expectedParentStartTicks
+            CommandLine = [string]$currentAgain.CommandLine
+            Name = [string]$currentAgain.Name
+            ExecutablePath = [string]$currentAgain.ExecutablePath
+        }
+        $process = $currentAgain.Process
+    }
+    foreach ($switch in @(
+            [pscustomobject]@{ Name = '--user-data-dir'; Value = [string]$SessionRecord.Profile }
+            [pscustomobject]@{ Name = '--remote-debugging-port'; Value = [string]$SessionRecord.CdpPort }
+            [pscustomobject]@{ Name = '--tsj-verifier-run'; Value = [string]$SessionRecord.RunId }
+            [pscustomobject]@{ Name = '--tsj-verifier-route'; Value = [string]$SessionRecord.RouteId }
+            [pscustomobject]@{ Name = '--tsj-verifier-worktree'; Value = [string]$SessionRecord.RepositoryIdentity }
+            [pscustomobject]@{ Name = '--tsj-verifier-recovery-token'; Value = [string]$receipt.AuthorityToken }
+        )) {
+        if (-not (Test-VerifierCommandLineSwitch $record.CommandLine $switch.Name $switch.Value)) {
+            Throw-VerifierInfrastructure "Issued contained-browser recovery root omitted its exact $($switch.Name) authority marker."
+        }
+    }
+    return [pscustomobject]@{ Record = $record; Process = $process }
+}
+
+function Confirm-VerifierIssuedContainedBrowserLeaseBound($Context, $SessionRecord,
+        $RootRecord, $ContainmentJob, [switch]$DeferManifestWrite) {
+    [void](Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+        'issued contained-browser bind session')
+    $recoveryAuthority = Get-VerifierRetainedBrowserRecoveryLeaseAuthority `
+        $Context $SessionRecord.Lease 'issued contained-browser bind recovery authority'
+    if ($null -eq $recoveryAuthority -or $null -eq $RootRecord -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ProcessStartTicks 1) -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ParentProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $RootRecord.ParentProcessStartTicks 1) -or
+            -not (Test-VerifierStrictStringValue $RootRecord.CommandLine) -or
+            [String]::IsNullOrWhiteSpace([string]$RootRecord.CommandLine)) {
+        Throw-VerifierInfrastructure 'Issued contained-browser bind omitted its exact recovery authority or complete root tuple.'
+    }
+    $lease = $SessionRecord.Lease
+    if ($lease.Kind -ne 'cdp' -or $lease.Status -ne 'leased' -or
+            $lease.ClaimState -ne 'held' -or $lease.ReleaseState -ne 'active' -or
+            $lease.ReleaseJournalState -ne 'active' -or -not $lease.Registered -or
+            $lease.ProcessProofRequired -or $lease.ReleaseBlocked -or
+            $lease.MutexReleased -or [int]$lease.BoundProcessId -ne 0 -or
+            [long]$lease.BoundProcessStartTicks -ne 0 -or
+            [int]$lease.ListenerProcessId -ne 0 -or
+            [long]$lease.ListenerProcessStartTicks -ne 0 -or
+            [int]$RootRecord.ParentProcessId -ne [int]$lease.ClaimOwnerPid -or
+            [long]$RootRecord.ParentProcessStartTicks -ne [long]$lease.ClaimOwnerStartTicks) {
+        Throw-VerifierInfrastructure 'Issued contained-browser bind did not retain the exact unbound claim/root lifecycle.'
+    }
+    [void](Assert-VerifierBrowserContainmentJobContainsRoot $ContainmentJob $RootRecord)
+    if ($Context.PSObject.Properties['TestHooks'] -and
+            $Context.TestHooks.PSObject.Properties['FailNextIssuedContainedRecoveryListenerBind'] -and
+            [bool]$Context.TestHooks.FailNextIssuedContainedRecoveryListenerBind) {
+        $Context.TestHooks.FailNextIssuedContainedRecoveryListenerBind = $false
+        Throw-VerifierInfrastructure 'Injected issued-contained browser recovery listener-bind failure after root reattestation.'
+    }
+    $inspection = Get-VerifierLoopbackListenerRecords ([int]$SessionRecord.CdpPort) -PreferNetstat
+    if (-not (Test-VerifierListenerInspectionSchema $inspection) -or
+            -not $inspection.Success -or -not $inspection.Known -or
+            -not $inspection.HasListeners) {
+        Throw-VerifierInfrastructure 'Issued contained-browser bind could not prove one current CDP listener inspection.'
+    }
+    $listeners = @($inspection.Listeners)
+    if ($listeners.Count -eq 0) {
+        Throw-VerifierInfrastructure 'Issued contained-browser bind returned no current CDP listener records.'
+    }
+    foreach ($listener in $listeners) {
+        if (-not (Test-VerifierListenerRecordSchema $listener) -or
+                $listener.ListenerOwnerKind -ne $script:VerifierUserProcessOwnerKind -or
+                [int]$listener.Port -ne [int]$SessionRecord.CdpPort -or
+                [int]$listener.ProcessId -ne [int]$RootRecord.ProcessId -or
+                [long]$listener.ProcessStartTicks -ne [long]$RootRecord.ProcessStartTicks) {
+            Throw-VerifierInfrastructure 'Issued contained-browser bind rejected a foreign, replaced, or malformed CDP listener owner.'
+        }
+        $currentListener = Get-VerifierCurrentProcessRecordById ([int]$listener.ProcessId)
+        if ($null -eq $currentListener -or
+                [long]$currentListener.ProcessStartTicks -ne [long]$listener.ProcessStartTicks -or
+                [int]$currentListener.ParentProcessId -ne [int]$RootRecord.ParentProcessId -or
+                -not (Test-VerifierCommandLineEquivalent $currentListener.CommandLine $RootRecord.CommandLine) -or
+                -not (Test-VerifierConfiguredExecutableIdentity `
+                    ([string]$SessionRecord.BrowserPath) $currentListener -RequireExecutablePath)) {
+            Throw-VerifierInfrastructure 'Issued contained-browser bind listener changed during exact root identity validation.'
+        }
+    }
+    # This is deliberately narrower than the ordinary bind path: the original
+    # launch parent is absent and was authenticated by the retained recovery
+    # capability above. The exact no-breakaway job, launch PID, current root,
+    # and listener are all re-proven before mutating the held lease.
+    $lease.ListenerInspectionSuccess = $inspection.Success
+    $lease.ListenerInspectionKnown = $inspection.Known
+    $lease.ListenerHasListeners = $inspection.HasListeners
+    $lease.ListenerAbsent = -not $inspection.HasListeners
+    $lease.ListenerProcessId = [int]$listeners[0].ProcessId
+    $lease.ListenerProcessStartTicks = [long]$listeners[0].ProcessStartTicks
+    $lease.ListenerOwnerKind = [string]$inspection.ListenerOwnerKind
+    $lease.ListenerOwnerProof = [string]$inspection.ListenerOwnerProof
+    $lease.ListenerOwnerEvidence = [string]$inspection.ListenerOwnerEvidence
+    $lease.ListenerInspectionUtc = Get-VerifierUtcText
+    $lease.BoundProcessId = [int]$RootRecord.ProcessId
+    $lease.BoundProcessStartTicks = [long]$RootRecord.ProcessStartTicks
+    $lease.BindValidatedUtc = Get-VerifierUtcText
+    $lease.ClaimState = 'bound'
+    $lease.Status = 'bound'
+    $lease.ProcessProofRequired = $true
+    if (-not $DeferManifestWrite) {
+        Write-VerifierManifest $Context
+    }
+}
+
+function Resume-VerifierIssuedContainedBrowserSession($Context, $SessionRecord) {
+    [void](Assert-VerifierDurableBrowserSession $SessionRecord $Context `
+        'issued contained-browser resume session')
+    $receipt = Assert-VerifierDurableBrowserRecoveryReceipt $SessionRecord $Context `
+        'issued contained-browser resume receipt'
+    $launch = Assert-VerifierDurableBrowserContainmentLaunch $SessionRecord $Context `
+        'issued contained-browser resume launch'
+    if ($null -eq $receipt -or $receipt.State -ne 'issued' -or
+            $receipt.CloseAttempted -or $null -eq $launch -or
+            $launch.State -notin @('launch-pending', 'launched') -or
+            ($launch.State -eq 'launch-pending' -and
+             ([int]$launch.LaunchProcessId -ne 0 -or
+              -not [String]::IsNullOrWhiteSpace([string]$launch.LaunchedUtc))) -or
+            ($launch.State -eq 'launched' -and [int]$launch.LaunchProcessId -le 0) -or
+            $SessionRecord.Status -notin @('leased', 'startup-failed', 'cleanup-failed')) {
+        Throw-VerifierInfrastructure 'Issued contained-browser resume was not an eligible unbound launch failure.'
+    }
+    if ($Context.PSObject.Properties['TestHooks'] -and
+            $Context.TestHooks.PSObject.Properties['FailNextIssuedContainedRecovery'] -and
+            [bool]$Context.TestHooks.FailNextIssuedContainedRecovery) {
+        $Context.TestHooks.FailNextIssuedContainedRecovery = $false
+        Throw-VerifierInfrastructure 'Injected issued-contained browser recovery failure before root reattestation.'
+    }
+    $containmentLease = Get-VerifierBrowserContainmentJobForSession $Context $SessionRecord
+    if ($null -eq $SessionRecord.Runtime.ContainmentJob) {
+        $SessionRecord.Runtime.ContainmentJob = $containmentLease.Job
+    }
+    if ($launch.State -eq 'launched') {
+        $placeholderRoot = [pscustomobject]@{ ProcessId = [int]$launch.LaunchProcessId }
+        [void](Assert-VerifierBrowserContainmentJobContainsRoot $containmentLease.Job $placeholderRoot)
+    }
+    $recoveryAuthority = Get-VerifierRetainedBrowserRecoveryLeaseAuthority `
+        $Context $SessionRecord.Lease 'issued contained-browser resume recovery authority'
+    $identity = Get-VerifierIssuedContainedBrowserIdentity $Context $SessionRecord `
+        $containmentLease.Job $recoveryAuthority
+    $rootRecord = $identity.Record
+    [void](Assert-VerifierBrowserContainmentJobContainsRoot $containmentLease.Job $rootRecord)
+    $resumeSnapshot = New-VerifierBrowserBindTransactionSnapshot $SessionRecord
+    try {
+        if ($launch.State -eq 'launch-pending') {
+            Set-VerifierBrowserContainmentLaunch $Context $SessionRecord `
+                $containmentLease.Job ([int]$rootRecord.ProcessId)
+        }
+        $bindLease = if ($null -eq $recoveryAuthority) {
+            {
+                param($boundSession)
+                Confirm-VerifierPortLeaseBound $Context $boundSession.Lease `
+                    $boundSession.ProcessId $boundSession.ProcessStartTicks $boundSession `
+                    -DeferManifestWrite
+            }
+        } else {
+            {
+                param($boundSession)
+                Confirm-VerifierIssuedContainedBrowserLeaseBound $Context $boundSession `
+                    $rootRecord $containmentLease.Job -DeferManifestWrite
+            }
+        }
+        Invoke-VerifierBrowserBindTransaction $Context $SessionRecord $rootRecord $bindLease
+    } catch {
+        Restore-VerifierBrowserBindTransactionSnapshot $SessionRecord $resumeSnapshot
+        throw
+    }
+    $SessionRecord.Runtime.Browser = $identity.Process
+}
+
 function Complete-VerifierBrowserSession($Context, $SessionRecord) {
     # Durable validation is the cleanup entry boundary.  This must run before
     # even reading CleanupResult: a malformed terminal-looking record is not a
@@ -10516,6 +14107,15 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
     Assert-VerifierDurableManifestContext $Context
     Assert-VerifierDurableBrowserSession $SessionRecord $Context `
         'browser cleanup session'
+    # The present verifier creates a receipt before a browser profile/claim is
+    # allocated. A record without it is historical retained evidence, not a
+    # legacy authority to issue Browser.close or to fall back to PID/PPID
+    # cleanup. Keep its resources intact and report typed infrastructure.
+    $requiredRecoveryReceipt = Assert-VerifierDurableBrowserRecoveryReceipt `
+        $SessionRecord $Context 'browser cleanup required recovery receipt'
+    if ($null -eq $requiredRecoveryReceipt) {
+        Throw-VerifierInfrastructure 'Browser cleanup requires one durable recovery receipt; missing receipts are retained and never legacy-fallback cleaned.'
+    }
     $cleanupErrors = New-Object Collections.ArrayList
     $processTerminationProven = $false
     # Establish the exact filesystem/session owner before any process
@@ -10532,6 +14132,19 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
         if ([string]$SessionRecord.CleanupResult -eq 'complete') { return }
         if (-not $SessionRecord.PSObject.Properties['ProcessId']) {
             Throw-VerifierInfrastructure 'Browser cleanup session omitted its process identity.'
+        }
+        if ([int]$SessionRecord.ProcessId -le 0) {
+            $launch = Assert-VerifierDurableBrowserContainmentLaunch $SessionRecord $Context `
+                'browser cleanup issued containment launch'
+            if ($null -ne $launch -and
+                    (($launch.State -eq 'launched' -and
+                      [int]$launch.LaunchProcessId -gt 0) -or
+                     ($launch.State -eq 'launch-pending' -and
+                      [int]$launch.LaunchProcessId -eq 0)) -and
+                    $requiredRecoveryReceipt.State -eq 'issued' -and
+                    -not $requiredRecoveryReceipt.CloseAttempted) {
+                Resume-VerifierIssuedContainedBrowserSession $Context $SessionRecord
+            }
         }
         if ([int]$SessionRecord.ProcessId -le 0) {
             # A browser session without a positive root identity has no
@@ -10606,27 +14219,47 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
         }
         Assert-VerifierBrowserCloseNotAttempted $SessionRecord
 
-        # This scan is mandatory even when the recorded PID is zero, stale, or
-        # already gone. Deleting a profile without a successful full process
-        # inspection would make a foreign/stale browser process adoptable.
+        # A fresh, bound receipt gives an exact root/listener authority for a
+        # Browser.close-only natural exit only after its protected-helper
+        # census has retained native observations. Unbound/failed startup
+        # sessions retain the original complete-census path. Missing receipts
+        # were rejected at this cleanup entry boundary and never fall back.
+        $recoveryReceipt = $requiredRecoveryReceipt
+        $useBoundReceiptNaturalShutdown = ($SessionRecord.Status -ceq 'attached' -and
+            $null -ne $recoveryReceipt -and $recoveryReceipt.State -eq 'bound' -and
+            -not $recoveryReceipt.CloseAttempted)
         $snapshot = $null
-        try {
-            $snapshot = @(Get-VerifierBrowserOwnershipSnapshot `
-                $ownerRoot.BrowserPath $ownerRoot.Profile $ownerRoot.RunId `
-                $ownerRoot.RepositoryIdentity $ownerRoot.CdpPort)
-            $SessionRecord.ProfileProcessScanCompleted = $true
-        } catch {
-            $SessionRecord.ProfileInspectionFailed = $true
-            $SessionRecord.Lease.ProfileInspectionFailed = $true
-            throw
+        if (-not $useBoundReceiptNaturalShutdown) {
+            try {
+                $snapshot = @(Get-VerifierBrowserOwnershipSnapshot `
+                    $ownerRoot.BrowserPath $ownerRoot.Profile $ownerRoot.RunId `
+                    $ownerRoot.RepositoryIdentity $ownerRoot.CdpPort)
+                $SessionRecord.ProfileProcessScanCompleted = $true
+            } catch {
+                $SessionRecord.ProfileInspectionFailed = $true
+                $SessionRecord.Lease.ProfileInspectionFailed = $true
+                throw
+            }
         }
 
         if ([int]$SessionRecord.ProcessId -gt 0) {
-            # Keep the verified root alive while repeatedly draining a complete
-            # current graph. A one-time descendant list is not a termination
-            # proof: Chromium/Edge helpers may appear after any snapshot.
+            # A receipt-bound Browser.close path proves the exact root/listener
+            # immediately before send and proves root exit, listener absence,
+            # and profile quiescence afterward. The older route retains its
+            # complete graph/descendant proof and fixed-point termination.
             $drainResult = if ($SessionRecord.Status -ceq 'attached') {
-                Close-VerifierBrowserSessionNaturally $Context $SessionRecord $ownerRoot
+                if ($useBoundReceiptNaturalShutdown) {
+                    if (Test-VerifierBrowserLaunchParentAbsentForRecovery $SessionRecord) {
+                        Close-VerifierBrowserSessionAfterLaunchParentExit $Context $SessionRecord $ownerRoot
+                    } else {
+                        Close-VerifierBrowserSessionWithBoundRecoveryReceipt `
+                            $Context $SessionRecord $ownerRoot
+                    }
+                } elseif (Test-VerifierBrowserLaunchParentAbsentForRecovery $SessionRecord) {
+                    Close-VerifierBrowserSessionAfterLaunchParentExit $Context $SessionRecord $ownerRoot
+                } else {
+                    Close-VerifierBrowserSessionNaturally $Context $SessionRecord $ownerRoot
+                }
             } else {
                 Stop-VerifierBrowserProcessTreeToFixedPoint $Context $ownerRoot 15000
             }
@@ -10663,15 +14296,31 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
         Remove-VerifierBrowserProfile $Context ([pscustomobject]@{
             Profile = $ownerRoot.Profile
         })
+        # Bound-receipt cleanup reached an empty no-breakaway job before the
+        # profile deletion above. Release this in-memory handle only after the
+        # terminal filesystem proof; a failed cleanup keeps the named kernel
+        # containment object recoverable while any member remains alive.
+        Dispose-VerifierBrowserContainmentJob $SessionRecord
+        Close-VerifierBrowserRecoveryReceipt $SessionRecord
         $SessionRecord.Status = 'cleaned'
         $SessionRecord.CleanupResult = 'complete'
         $SessionRecord.Error = ''
         $SessionRecord.Runtime.Browser = $null
         Write-VerifierManifest $Context
     } catch {
+        $priorFailure = if ($SessionRecord.PSObject.Properties['Error'] -and
+                (Test-VerifierStrictStringValue $SessionRecord.Error) -and
+                -not [String]::IsNullOrWhiteSpace([string]$SessionRecord.Error)) {
+            [string]$SessionRecord.Error
+        } else { '' }
+        $cleanupFailure = Get-VerifierErrorMessage $_
         $SessionRecord.Status = 'cleanup-failed'
         $SessionRecord.CleanupResult = 'infrastructure-failure'
-        $SessionRecord.Error = Get-VerifierErrorMessage $_
+        $SessionRecord.Error = if ([String]::IsNullOrWhiteSpace($priorFailure)) {
+            $cleanupFailure
+        } else {
+            'prior: ' + $priorFailure + '; cleanup: ' + $cleanupFailure
+        }
         # A failed browser-root proof must also block the independent final
         # lease-drain pass in Complete-VerifierRun.  Without this durable
         # blocker, a later filtered profile scan could release the claim after
@@ -10725,6 +14374,8 @@ function New-VerifierBrowserSession($Context, $RouteName, $Url,
     $browserSessionRecord = New-VerifierBrowserLease $Context $RouteName $BrowserPath
     $browserSessionRecord.ExpectedUrl = $Url
     $browserSessionRecord.RunId = $Context.RunId
+    $containmentJob = $null
+    $containedLaunchProcessId = 0
     try {
         if (-not (Test-Path -LiteralPath $BrowserPath -PathType Leaf)) {
             Throw-VerifierInfrastructure "Browser executable was not found: $BrowserPath"
@@ -10734,30 +14385,52 @@ function New-VerifierBrowserSession($Context, $RouteName, $Url,
             "--remote-debugging-port=$($browserSessionRecord.CdpPort)",
             "--tsj-verifier-run=$($Context.RunId)",
             "--tsj-verifier-route=$($browserSessionRecord.RouteId)",
-            "--tsj-verifier-worktree=$($Context.RepositoryIdentity)", 'about:blank')
-        $browser = Start-VerifierProcess $BrowserPath $arguments
+            "--tsj-verifier-worktree=$($Context.RepositoryIdentity)",
+            "--tsj-verifier-recovery-token=$($browserSessionRecord.RecoveryReceipt.AuthorityToken)",
+            'about:blank')
+        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        # The browser root enters its named no-breakaway job in the same
+        # CreateProcess operation that starts it.  Assigning a job after a
+        # normal launch would leave a child-creation gap and cannot prove
+        # containment of a transient, markerless helper.
+        $containmentJob = New-VerifierBrowserContainmentJob $Context $browserSessionRecord
+        $browserSessionRecord.Runtime.ContainmentJob = $containmentJob
+        Prepare-VerifierBrowserContainmentLaunch $Context $browserSessionRecord $containmentJob
+        $containedLaunchProcessId = Start-VerifierBrowserProcessInContainmentJob $containmentJob `
+            $BrowserPath $arguments $Context.WorktreeRoot
+        if ($Context.PSObject.Properties['TestHooks'] -and
+                $Context.TestHooks.PSObject.Properties['FailNextBrowserContainmentLaunchLedgerPublish'] -and
+                [bool]$Context.TestHooks.FailNextBrowserContainmentLaunchLedgerPublish) {
+            $Context.TestHooks.FailNextBrowserContainmentLaunchLedgerPublish = $false
+            Throw-VerifierInfrastructure 'Injected post-CreateProcess containment launch-ledger publication failure.'
+        }
+        Set-VerifierBrowserContainmentLaunch $Context $browserSessionRecord `
+            $containmentJob $containedLaunchProcessId
+        # Persist the only durable post-CreateProcess identity before trying to
+        # obtain a Process handle. If that read, WMI, CDP, or listener binding
+        # fails, the named no-breakaway job and the launch PID remain available
+        # to the exact issued-session recovery path.
+        Write-VerifierManifest $Context
+        $containmentJob = $null
+        if ($Context.PSObject.Properties['TestHooks'] -and
+                $Context.TestHooks.PSObject.Properties['FailNextBrowserContainmentHandleAcquire'] -and
+                [bool]$Context.TestHooks.FailNextBrowserContainmentHandleAcquire) {
+            $Context.TestHooks.FailNextBrowserContainmentHandleAcquire = $false
+            Throw-VerifierInfrastructure 'Injected post-containment-launch Process-handle acquisition failure.'
+        }
+        $browser = Get-Process -Id $containedLaunchProcessId -ErrorAction Stop
+        $browser.Refresh()
+        if ([bool]$browser.HasExited -or [int]$browser.Id -ne $containedLaunchProcessId) {
+            Throw-VerifierInfrastructure "Atomically contained browser PID $containedLaunchProcessId exited before its retained handle could be established."
+        }
         $browserSessionRecord.Runtime.Browser = $browser
         # Keep the durable session at its exact absent tuple until the live
         # process has passed every identity check.  A failed WMI/parent/command
         # read must not leave ProcessId/StartTicks partially published for the
         # catch block's manifest write; the retained runtime handle remains
         # diagnostic evidence, while cleanup fails closed without a root proof.
-        $browserProcessId = [int]$browser.Id
-        $browserProcessStartTicks = Get-VerifierProcessStartTicks $browser
-        $browserIdentity = Get-VerifierCurrentProcessIdentityWithRetry $browserProcessId `
-            $browserProcessStartTicks 0 '' '' $browserSessionRecord.CdpPort $Context.RunId '' `
-            0 $BrowserPath
-        $browserProcessParentProcessId = [int]$browserIdentity.Record.ParentProcessId
-        $browserProcessParentProcessStartTicks = [long]$browserIdentity.Record.ParentProcessStartTicks
-        $browserProcessCommandLine = [string]$browserIdentity.Record.CommandLine
-        $browserSessionRecord.ProcessId = $browserProcessId
-        $browserSessionRecord.ProcessStartTicks = $browserProcessStartTicks
-        $browserSessionRecord.ProcessParentProcessId = $browserProcessParentProcessId
-        $browserSessionRecord.ProcessParentProcessStartTicks = $browserProcessParentProcessStartTicks
-        $browserSessionRecord.ProcessCommandLine = $browserProcessCommandLine
-        $browserSessionRecord.Status = 'started'
-        Write-VerifierManifest $Context
-        $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        $browserIdentity = Get-VerifierFreshLaunchedBrowserIdentity $browser `
+            $browserSessionRecord.CdpPort $Context.RunId $BrowserPath $deadline
         $target = $null
         do {
             if ($browser.HasExited) {
@@ -10777,15 +14450,20 @@ function New-VerifierBrowserSession($Context, $RouteName, $Url,
                 [int]$targetUri.Port -ne [int]$browserSessionRecord.CdpPort) {
             Throw-VerifierInfrastructure "CDP target was not on the owned loopback port."
         }
-        # Prove the exact loopback listener and owner before attaching a CDP
-        # socket or marking the browser lease bound.
-        Confirm-VerifierPortLeaseBound $Context $browserSessionRecord.Lease $browserSessionRecord.ProcessId `
-            $browserSessionRecord.ProcessStartTicks $browserSessionRecord
+        # Prove the exact loopback listener and commit root/lease/receipt as one
+        # manifest replacement. A failure before that commit restores the
+        # issued containment ledger, rather than publishing a tuple that cannot
+        # independently authorize either recovery mode.
+        $bindLease = {
+            param($boundSession)
+            Confirm-VerifierPortLeaseBound $Context $boundSession.Lease `
+                $boundSession.ProcessId $boundSession.ProcessStartTicks $boundSession `
+                -DeferManifestWrite
+        }
+        Invoke-VerifierBrowserBindTransaction $Context $browserSessionRecord `
+            $browserIdentity.Record $bindLease ([string]$target.id)
         $socket = Connect-VerifierCdpSocket $targetUri $deadline
         $browserSessionRecord.Runtime.Socket = $socket
-        $browserSessionRecord.TargetId = [string]$target.id
-        $browserSessionRecord.Status = 'attached'
-        Write-VerifierManifest $Context
         return [pscustomobject]@{
             Browser = $browser; Socket = $socket; Profile = $browserSessionRecord.Profile
             CdpPort = $browserSessionRecord.CdpPort; RouteId = $browserSessionRecord.RouteId
@@ -10793,6 +14471,12 @@ function New-VerifierBrowserSession($Context, $RouteName, $Url,
         }
     } catch {
         $startupError = $_
+        if ($null -ne $containmentJob -and $containedLaunchProcessId -le 0) {
+            try {
+                $containmentJob.Dispose()
+                $browserSessionRecord.Runtime.ContainmentJob = $null
+            } catch { }
+        }
         $browserSessionRecord.Status = 'startup-failed'
         $browserSessionRecord.CleanupResult = 'pending'
         $browserSessionRecord.Error = Get-VerifierErrorMessage $startupError
@@ -11683,6 +15367,7 @@ Export-ModuleMember -Function @(
     'Test-VerifierCommandLineEquivalent',
     'New-VerifierBrowserLease', 'New-VerifierBrowserSession',
     'Complete-VerifierBrowserSession', 'Connect-VerifierCdpSocket',
+    'Invoke-VerifierRetainedBrowserRecovery',
     'Register-VerifierEvidenceArtifact',
     'Set-VerifierCallerOwnedPreview', 'Start-VerifierOwnedPreview',
     'Test-VerifierPreviewCleanupReadiness',

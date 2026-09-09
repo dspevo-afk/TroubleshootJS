@@ -1,0 +1,49 @@
+{
+    "protocol":  "troubleshootjs-a03-browser-report-v1",
+    "gate":  "Task41",
+    "smoke":  false,
+    "runId":  "b22af82858394c808a3ec738789fe664",
+    "repositoryIdentity":  "20cd7fcd353094d844fb",
+    "sourceDigests":  {
+                          "verifierIsolation":  "6ab3fe10f7bc36665e4027f45ec5ef5f80b4a01d7c9eca4012ee55ce3568eb90",
+                          "previewScript":  "ecb510e020ee1c5322c312f0cbec049924903f13d693d660ff1eef6f93324ae4",
+                          "sourceDigest":  "0815187350cfb5c9ebd847d7ee43434ad21102aab0dbdede3cf2f5029bead8c5",
+                          "scriptDigest":  "ea05de751d85d55426559c89c506a05a1b793988bb497d6486c62ce5935b01f2",
+                          "webDigest":  "f2130ed99309780f05a48aafd28cc5f79c19b6f2afdace1fcf0efcfff806d1ff",
+                          "executionDigest":  "5c66a2a21f2006882268ecdee43c4292955f9726fceadb5cc51039c52e11379b",
+                          "executionFileCount":  1308
+                      },
+    "previewIdentity":  {
+                            "protocol":  "troubleshootjs-preview-identity-v1",
+                            "verifierRunId":  "b22af82858394c808a3ec738789fe664",
+                            "previewPort":  56245,
+                            "processId":  140352,
+                            "processStartTicks":  639244907663601312,
+                            "sourceDigest":  "0815187350cfb5c9ebd847d7ee43434ad21102aab0dbdede3cf2f5029bead8c5",
+                            "scriptDigest":  "ea05de751d85d55426559c89c506a05a1b793988bb497d6486c62ce5935b01f2",
+                            "webDigest":  "f2130ed99309780f05a48aafd28cc5f79c19b6f2afdace1fcf0efcfff806d1ff",
+                            "executionDigest":  "5c66a2a21f2006882268ecdee43c4292955f9726fceadb5cc51039c52e11379b",
+                            "executionFileCount":  1308
+                        },
+    "status":  "INFRASTRUCTURE_FAILURE",
+    "routes":  [
+
+               ],
+    "failure":  {
+                    "kind":  "infrastructure",
+                    "phase":  "browser",
+                    "operation":  "route-task41",
+                    "elapsedMs":  300125,
+                    "remainingDeadlineMs":  0,
+                    "error":  "VERIFIER_INFRASTRUCTURE: task41 did not provide its required compiled report before the bounded deadline."
+                },
+    "cleanup":  {
+                    "success":  true,
+                    "errors":  {
+
+                               },
+                    "diagnostic":  {
+
+                                   }
+                }
+}

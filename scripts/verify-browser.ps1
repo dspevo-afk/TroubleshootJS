@@ -7857,8 +7857,32 @@ function Invoke-GateBListenerProofCanary() {
         ProcessCommandLine = ''; TargetId = ''; ExpectedUrl = ''
         Status = 'cleaned'; CleanupResult = 'complete'; Error = ''
         ProfileInspectionFailed = $false; ProfileProcessScanCompleted = $true
-        Lease = $userLease
+        Lease = $userLease; RecoveryReceipt = $null; ContainmentLaunch = $null
     }
+    # The terminal, unbound session shape remains durable only when it records
+    # both the revoked receipt and its never-launched containment ledger.
+    $validSession.RecoveryReceipt = [pscustomobject]@{
+        Protocol = 'troubleshootjs-verifier-browser-recovery-v1'
+        AuthorityToken = (('a' * 64) -join '')
+        IssuedUtc = '2026-09-08T00:00:00.0000000Z'
+        State = 'closed'; BoundUtc = ''; ClosedUtc = '2026-09-08T00:00:01.0000000Z'
+        CloseAttempted = $false; CloseAttemptedUtc = ''
+        RunId = $validSession.RunId; RepositoryIdentity = $validSession.RepositoryIdentity
+        WorktreeRoot = $validSession.WorktreeRoot; RouteId = $validSession.RouteId
+        RouteName = $validSession.RouteName; BrowserPath = $validSession.BrowserPath
+        Profile = $validSession.Profile; LeaseId = $userLease.LeaseId
+        CdpPort = $validSession.CdpPort; RootProcessId = 0; RootProcessStartTicks = 0L
+        RootParentProcessId = 0; RootParentProcessStartTicks = 0L
+        RootProcessCommandLine = ''; ListenerProcessId = 0; ListenerProcessStartTicks = 0L
+    }
+    $validSession.ContainmentLaunch = & $module[0] {
+        param($fixtureContext, $fixtureSession)
+        [pscustomobject]@{
+            Protocol = 'troubleshootjs-verifier-browser-containment-launch-v1'
+            JobName = Get-VerifierBrowserContainmentJobName $fixtureContext $fixtureSession
+            State = 'unlaunched'; LaunchProcessId = 0; LaunchedUtc = ''
+        }
+    } $identityContext $validSession
     $absenceIdentity = Assert-VerifierDurableProcessIdentityTuple $validSession `
         -ProcessIdPropertyName 'ProcessId' `
         -ProcessStartPropertyName 'ProcessStartTicks' `
@@ -7878,6 +7902,21 @@ function Invoke-GateBListenerProofCanary() {
     $positiveSession.ProcessParentProcessStartTicks = $userProcessStartTicks
     $positiveSession.ProcessCommandLine = 'powershell.exe -NoProfile'
     $positiveSession.Lease = $userLease
+    $positiveSession.RecoveryReceipt.State = 'closed'
+    $positiveSession.RecoveryReceipt.BoundUtc = '2026-09-08T00:00:01.0000000Z'
+    $positiveSession.RecoveryReceipt.ClosedUtc = '2026-09-08T00:00:02.0000000Z'
+    $positiveSession.RecoveryReceipt.CloseAttempted = $true
+    $positiveSession.RecoveryReceipt.CloseAttemptedUtc = '2026-09-08T00:00:02.0000000Z'
+    $positiveSession.RecoveryReceipt.RootProcessId = $PID
+    $positiveSession.RecoveryReceipt.RootProcessStartTicks = $userProcessStartTicks
+    $positiveSession.RecoveryReceipt.RootParentProcessId = $PID
+    $positiveSession.RecoveryReceipt.RootParentProcessStartTicks = $userProcessStartTicks
+    $positiveSession.RecoveryReceipt.RootProcessCommandLine = 'powershell.exe -NoProfile'
+    $positiveSession.RecoveryReceipt.ListenerProcessId = $PID
+    $positiveSession.RecoveryReceipt.ListenerProcessStartTicks = $userProcessStartTicks
+    $positiveSession.ContainmentLaunch.State = 'launched'
+    $positiveSession.ContainmentLaunch.LaunchProcessId = $PID
+    $positiveSession.ContainmentLaunch.LaunchedUtc = '2026-09-08T00:00:00.0000000Z'
     $positiveIdentity = Assert-VerifierDurableProcessIdentityTuple $positiveSession `
         -ProcessIdPropertyName 'ProcessId' `
         -ProcessStartPropertyName 'ProcessStartTicks' `

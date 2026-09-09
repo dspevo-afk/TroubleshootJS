@@ -1,0 +1,27 @@
+# A03 native compatibility gates
+Base: 363244c0483ec665feff3cb8f40fab09851c7b98
+Candidate: base plus A03 identity boundary and explicit script dependencies.
+Toolchain: javac 1.8.0_502; Python 3.13.14.
+Each command selected the repository JDK 8 with -JavaHome.
+
+PASS scripts/verify-block-contracts.ps1
+  Exit 0; 3.33 seconds; Task44: 247 assertions / 9 groups; Task45: 202 assertions.
+PASS scripts/verify-challenge-contracts.ps1
+  Exit 0; 2.63 seconds; Task46: 410 assertions / 36 negative cases.
+  Independent seed oracle: 22 vectors; literal TSV/Java correspondence exact.
+PASS scripts/verify-assembly-contracts.ps1
+  Exit 0; 4.49 seconds.
+  Task47: 269 assertions; Task48: 224 assertions; switched-low-side: 12 assertions.
+  Task49: 137 assertions.
+  Independent Task47, Task48 and Task49 oracles: eight explicit seeds each.
+  Task48 oracle preserves two physical fault decisions; Task49 catalog equations exact.
+
+All three gates proved process termination and removed their compiled classes
+and task-owned scratch. Receipts are pure contract evidence, not solver or
+browser qualification. Final source dependency reconciliation remains pending.
+
+Changed production inputs at the completed native gate boundary (SHA-256):
+BlockNamespace.java 983f1c34d55546c02ea9b465f3d0f6ca708116641a7c6b2468e475c4755cf010
+BlockRealizationIdentity.java 51ecdc095886fd47e6842aaeda056f30110fd81d8cb4760671c1086a70683132
+DeviceBusBindings.java ac4dcff42599b7054cbe7387b81f978c338c1a0a40105f6d3026db9aa52e7332
+BoundedAssemblyPlan.java 35ba3d18b5dceded8b100cad4a04208a3ad53262fd80c8181532094090ba6106

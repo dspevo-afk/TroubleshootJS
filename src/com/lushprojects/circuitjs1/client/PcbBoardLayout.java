@@ -91,7 +91,7 @@ class PcbBoardLayout {
     PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray,
             int layoutAlgorithmVersion) {
         if (layoutAlgorithmVersion != SeededPcbLayoutGenerator.LEGACY_VERSION &&
-                layoutAlgorithmVersion != SeededPcbLayoutGenerator.CURRENT_VERSION)
+                layoutAlgorithmVersion != SeededPcbLayoutGenerator.CORRECTED_VERSION)
             throw new IllegalArgumentException("Unsupported PCB layout algorithm version: " +
                 layoutAlgorithmVersion);
         this.width = width;

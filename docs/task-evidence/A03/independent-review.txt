@@ -1,0 +1,33 @@
+Independent integrated A03 review — 2026-09-08
+# Historical/superseded qualification conclusion
+
+This preserved 2026-09-08 source review remains evidence for its bounded code
+findings. Its runtime/cleanup blocker was resolved by the later v6 receipt and
+fresh final review; see `runtime-all-final-recovery-v6.json`,
+`closure-reconciliation.md`, and `independent-final-review.md`. Do not treat
+the historical qualification wording below as current status.
+
+Reviewer: a03_integrated_review (Luna MAX requested; default non-Fast speed, no speed selector exposed).
+Read-only reviewer; no implementation or test-oracle ownership. Root adjudication follows.
+Candidate source fingerprint: ac3500c7d899fe21489ef7a501de44329ed1df1017fe3e8a15f219d35340233a.
+
+PASS for bounded A03 code scope:
+- Role/instance/provider/variant identities are coherent and immutable.
+- DSU roots, solver nodes, drawing coordinates, allocation order and legacy semantic signatures do not enter durable identity.
+- Explicit device bus keys survive alias-representative changes; repeated blocks retain local identities.
+- Ordering, framing, exact signed-long/binary64 encoding, defensive copies and immutable encoding caching are coherent.
+- Required version pins, pre-allocation replay checks, stale-action rejection and frozen leaf layout dispatch are coherent.
+- Solver/coordinate poison coverage is structurally meaningful; actual compiled execution remains unqualified.
+- Unsupported future state and interpretation data reject in current bounded replay.
+No correctness blocker found in the supported implementation scope.
+
+FOLLOW-UP / CODE — future interpretation-bearing saved-action data:
+RealizationManifest.identityCanonical emits origin=1|~|~|<interpretation> as its identity projection.
+ImportOrigin.parse requires a real origin ID and rejects the '~' projection sentinel.
+SavedActionReference.capture reparses that identity string, so capture cannot round-trip an interpretation-bearing manifest.
+Root agrees this is nonblocking for A03's current bounded replay, which explicitly rejects interpretation fields. Complete manifest encode/decode still preserves the reserved fields.
+Before enabling imported-interpretation saved actions, give identity projections their own validation path and add that round-trip regression. Do not broaden the present runtime contract implicitly.
+
+Overall A03 qualification remains BLOCKED, independently of this code-review PASS:
+missing compiled parity/runtime/legacy full-report evidence and unresolved retained browser cleanup. See browser-blocker.txt.
+No independent runtime PASS, cleanup PASS, commit, or publication is claimed.

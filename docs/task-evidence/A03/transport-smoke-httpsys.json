@@ -1,0 +1,61 @@
+{
+    "protocol":  "troubleshootjs-a03-browser-report-v1",
+    "gate":  "A03",
+    "smoke":  true,
+    "runId":  "6cdab3121a5446ca9a622be3357e0e07",
+    "repositoryIdentity":  "35f928aa55de9606ae58",
+    "sourceDigests":  {
+                          "verifierIsolation":  "c15265d560cce7b64ff367f156d91c0806453c08a4d81fff1d6e4c3d33c30571",
+                          "previewScript":  "3644b2183b21b8c80071ab824dc967bb87ab72ec0656bcbbb4661ab30d2dd53c",
+                          "sourceDigest":  "047c7e7c974b6401c13d083db41e3510e745d9e32213418efd6fdc1688e571e8",
+                          "scriptDigest":  "9a0f9a3860a5d9cd0f37a5f85a771e37d508691a983c1f6fdff8595a7b1c1828",
+                          "webDigest":  "e36cb851b0a4d85085e572d721a9f5d64919af88e4a86ef9fca41ce64ea44f1b",
+                          "executionDigest":  "2bc387cbc39156fea297c8898be1122b97e93fcec3aa8d2c35b16e11e164d6fd",
+                          "executionFileCount":  1300
+                      },
+    "previewIdentity":  {
+                            "protocol":  "troubleshootjs-preview-identity-v1",
+                            "verifierRunId":  "6cdab3121a5446ca9a622be3357e0e07",
+                            "previewPort":  56588,
+                            "processId":  328408,
+                            "processStartTicks":  639244439449818344,
+                            "sourceDigest":  "047c7e7c974b6401c13d083db41e3510e745d9e32213418efd6fdc1688e571e8",
+                            "scriptDigest":  "9a0f9a3860a5d9cd0f37a5f85a771e37d508691a983c1f6fdff8595a7b1c1828",
+                            "webDigest":  "e36cb851b0a4d85085e572d721a9f5d64919af88e4a86ef9fca41ce64ea44f1b",
+                            "executionDigest":  "2bc387cbc39156fea297c8898be1122b97e93fcec3aa8d2c35b16e11e164d6fd",
+                            "executionFileCount":  1300
+                        },
+    "status":  "INFRASTRUCTURE_FAILURE",
+    "routes":  [
+
+               ],
+    "failure":  {
+                    "kind":  "infrastructure",
+                    "phase":  "browser",
+                    "operation":  "route-transport-smoke",
+                    "elapsedMs":  133,
+                    "remainingDeadlineMs":  89863,
+                    "error":  "VERIFIER_INFRASTRUCTURE: Runtime.evaluate returned a malformed result."
+                },
+    "cleanup":  {
+                    "success":  false,
+                    "errors":  [
+                                   "VERIFIER_INFRASTRUCTURE: The relevant browser ownership process snapshot contained PID 405968 that could not be inspected. [activeDrains=1; priorBindings=1; parent=212748; processType=utility; utilitySubtype=winrt_app_id.mojom.WinrtAppIdService; callers=Assert-VerifierProcessSnapshotComplete\u003eGet-VerifierBrowserOwnershipSnapshot\u003eClose-VerifierBrowserSessionNaturally\u003eComplete-VerifierBrowserSession\u003eComplete-VerifierRun\u003e\u003cScriptBlock\u003e\u003e\u003cScriptBlock\u003e]",
+                                   "VERIFIER_INFRASTRUCTURE: Port 58648 release is blocked because ownership remains uncertain: browser root/descendant cleanup proof failed",
+                                   "VERIFIER_INFRASTRUCTURE: Port 58648 release is blocked because ownership remains uncertain: browser root/descendant cleanup proof failed",
+                                   "VERIFIER_INFRASTRUCTURE: Port 58648 release is blocked because ownership remains uncertain: browser root/descendant cleanup proof failed",
+                                   "Port 58648 retained a live claim handle after cleanup.",
+                                   "Port 58648 retained its exact claim file after cleanup.",
+                                   "Port 58648 retained its owned profile after cleanup.",
+                                   "Port 58648 listener inspection failed after cleanup: VERIFIER_INFRASTRUCTURE: The recorded owner for released port 58648 is still listening."
+                               ],
+                    "diagnostic":  {
+                                       "kind":  "infrastructure",
+                                       "phase":  "cleanup",
+                                       "operation":  "Complete-VerifierRun",
+                                       "elapsedMs":  21117,
+                                       "remainingDeadlineMs":  null,
+                                       "error":  "VERIFIER_INFRASTRUCTURE: The relevant browser ownership process snapshot contained PID 405968 that could not be inspected. [activeDrains=1; priorBindings=1; parent=212748; processType=utility; utilitySubtype=winrt_app_id.mojom.WinrtAppIdService; callers=Assert-VerifierProcessSnapshotComplete\u003eGet-VerifierBrowserOwnershipSnapshot\u003eClose-VerifierBrowserSessionNaturally\u003eComplete-VerifierBrowserSession\u003eComplete-VerifierRun\u003e\u003cScriptBlock\u003e\u003e\u003cScriptBlock\u003e]"
+                                   }
+                }
+}

@@ -19,8 +19,15 @@ final class LegacyChallengeReplay {
 
     static int layoutAlgorithmVersion(ChallengeDescriptor descriptor) {
         requireSupported(descriptor);
-        return descriptor.getGenerator().getVersion() == ChallengeDescriptor.LEGACY_GENERATOR_VERSION ?
-            SeededPcbLayoutGenerator.LEGACY_VERSION : SeededPcbLayoutGenerator.CURRENT_VERSION;
+        int generatorVersion = descriptor.getGenerator().getVersion();
+        if (generatorVersion == ChallengeDescriptor.LEGACY_GENERATOR_VERSION)
+            return SeededPcbLayoutGenerator.LEGACY_VERSION;
+        if (generatorVersion == ChallengeDescriptor.CORRECTED_SEEDED_GENERATOR_VERSION)
+            return SeededPcbLayoutGenerator.CORRECTED_VERSION;
+        // Keep this defensive branch explicit if a future caller bypasses the
+        // current support gate; old descriptors never inherit CURRENT.
+        reject(ChallengeContractException.Code.UNSUPPORTED_VERSION, "generator");
+        return SeededPcbLayoutGenerator.LEGACY_VERSION;
     }
 
     /** Resolve every effective input before constructing any live elements. */

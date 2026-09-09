@@ -13,7 +13,9 @@ import java.util.Vector;
 class SeededPcbLayoutGenerator {
     /** Layout algorithm versions are independent of the package geometry schema. */
     static final int LEGACY_VERSION = 3;
-    static final int CURRENT_VERSION = 4;
+    /** Frozen A02 correction; never infer this from a mutable CURRENT value. */
+    static final int CORRECTED_VERSION = 4;
+    static final int CURRENT_VERSION = CORRECTED_VERSION;
     private static final int CANVAS_WIDTH = 1040;
     private static final int CANVAS_HEIGHT = 520;
     private static final int GRID = 10;
@@ -43,7 +45,7 @@ class SeededPcbLayoutGenerator {
         if (footprintRegistry == null)
             throw new IllegalArgumentException("Missing PCB footprint registry");
         if (layoutAlgorithmVersion != LEGACY_VERSION &&
-                layoutAlgorithmVersion != CURRENT_VERSION)
+                layoutAlgorithmVersion != CORRECTED_VERSION)
             throw new IllegalArgumentException("Unsupported PCB layout algorithm version: " +
                 layoutAlgorithmVersion);
         this.footprintRegistry = footprintRegistry;
@@ -183,7 +185,7 @@ class SeededPcbLayoutGenerator {
         int targetX;
         int targetY;
         Vector<TopologyPlacementGraph.PadLink> links = topology.getLinksFor(component.getId());
-        if (layoutAlgorithmVersion == CURRENT_VERSION) {
+        if (layoutAlgorithmVersion == CORRECTED_VERSION) {
             Point target = weightedConnectedTarget(prototype, placed, links,
                 fallbackX, fallbackY);
             targetX = target.x;

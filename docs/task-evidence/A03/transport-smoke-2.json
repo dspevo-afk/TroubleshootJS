@@ -1,0 +1,40 @@
+{
+    "protocol":  "troubleshootjs-a03-browser-report-v1",
+    "gate":  "A03",
+    "smoke":  true,
+    "runId":  "e94f503215694e91a89b6b7c4c4c7956",
+    "repositoryIdentity":  "35f928aa55de9606ae58",
+    "sourceDigests":  {
+                          "verifierIsolation":  "c15265d560cce7b64ff367f156d91c0806453c08a4d81fff1d6e4c3d33c30571",
+                          "previewScript":  "3644b2183b21b8c80071ab824dc967bb87ab72ec0656bcbbb4661ab30d2dd53c",
+                          "sourceDigest":  "",
+                          "scriptDigest":  "",
+                          "webDigest":  "",
+                          "executionDigest":  "",
+                          "executionFileCount":  0
+                      },
+    "previewIdentity":  {
+
+                        },
+    "status":  "INFRASTRUCTURE_FAILURE",
+    "routes":  [
+
+               ],
+    "failure":  {
+                    "kind":  "infrastructure",
+                    "phase":  "preview",
+                    "operation":  "Start-VerifierOwnedPreview",
+                    "elapsedMs":  18237,
+                    "remainingDeadlineMs":  null,
+                    "error":  "VERIFIER_INFRASTRUCTURE: Port lease ownership proof exceeded its bounded monotonic deadline."
+                },
+    "cleanup":  {
+                    "success":  true,
+                    "errors":  {
+
+                               },
+                    "diagnostic":  {
+
+                                   }
+                }
+}

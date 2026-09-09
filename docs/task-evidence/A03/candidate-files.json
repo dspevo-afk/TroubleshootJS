@@ -1,0 +1,145 @@
+{
+    "protocol":  "a03-uncommitted-candidate-v1",
+    "base":  "363244c0483ec665feff3cb8f40fab09851c7b98",
+    "branch":  "codex/task43p-final-recovery",
+    "candidateSha256":  "dee3bc76c7ce8d98addba027e273f5e49152e8a14fb86e3b04fc6e8508b8a4b9",
+    "selfExcluded":  "docs/task-evidence/A03/candidate-files.json",
+    "files":  [
+                  {
+                      "path":  "docs/ARCHITECTURE.md",
+                      "sha256":  "3be820dcb5067bcbaaa3f4c814e5c0b7d81cb9f2583493d5afb5f73df0a741fc"
+                  },
+                  {
+                      "path":  "docs/CODEX_TASK_REPORT.md",
+                      "sha256":  "23a7c6d8fb3ad2aa07cbf9641c94a4fd4f4cf0aec6162a40028c0ef377e96b45"
+                  },
+                  {
+                      "path":  "docs/ROADMAP.md",
+                      "sha256":  "6dee57a40dbfdbe545e76601b757384876dc658ae59a225a202e714454e8b6fb"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/browser-blocker.txt",
+                      "sha256":  "7dffeca75fb50875570e62deeae5556d2f876d9358e2008c7cf3bd9fa0c22b1a"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/candidate-source-files.json",
+                      "sha256":  "827ab0f9e785a5537f465d1c58d774728e2583852b211637195d22a70eb34190"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/independent-review.txt",
+                      "sha256":  "e6ce7ca9edae4e7785baecbc538bad07d5070505374614df7b4f8c70f3393d3b"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-manifest-1.txt",
+                      "sha256":  "3e72355e1e2da8a90059dfc482718085a65d2421a82ceaaf13f91608bbe415c9"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-manifest-2.txt",
+                      "sha256":  "39a622ebe68280b955aabe0f33b298f62cfd60dff598f4d26b76dec17b63bab1"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-manifest-3.txt",
+                      "sha256":  "6f16853e2bb287b3c734e6e188b5ca0cfa0c6af815eb8371ff376d5e2f5a2705"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/jvm-vectors.txt",
+                      "sha256":  "347d74d2bebbf95b93182fcc01af28a9050a3d6a7bca7e5d8a93f4dd47df8d44"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/native-build-summary.txt",
+                      "sha256":  "428293c31efc1f8b0dd50549891d23149609ed0d6be8aa9cadf98b9589de1294"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/native-regressions.txt",
+                      "sha256":  "d41fc3a01e7570ca5c0cba2af65084fd4b77a3cf33d313c8f00dcc8ec06be93e"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/README.md",
+                      "sha256":  "a8b185c97604a8964a5e74da22c517eb97b92829d3e9a1529d65d6f9097e84c9"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/transport-smoke-2.json",
+                      "sha256":  "20f777e73284980a01dc7bbbe8d2e590c14efdf51279b5a2d24f946677e48e39"
+                  },
+                  {
+                      "path":  "docs/task-evidence/A03/transport-smoke-httpsys.json",
+                      "sha256":  "3373485c90acb58d6843f6293a55d8317f2fbdefea390e48510f66d860c53b1c"
+                  },
+                  {
+                      "path":  "scripts/verify-a03-browser.ps1",
+                      "sha256":  "382f21afd78ff98322951744f448ff8f3a3f0900fbc3b5a01d9c0de9185a841d"
+                  },
+                  {
+                      "path":  "scripts/verify-a03-contracts.ps1",
+                      "sha256":  "ba97eb6495a4bae21564e097d9612d2c312d9355358eb0ba0448f91802bf7817"
+                  },
+                  {
+                      "path":  "scripts/verify-assembly-contracts.ps1",
+                      "sha256":  "150fbf7e2409affda46815f481ed20ad09345e4189838b84af575c7b5cc352fa"
+                  },
+                  {
+                      "path":  "scripts/verify-block-contracts.ps1",
+                      "sha256":  "1d6c4ecaec491ca10915a3be0eb11910e463b0b425477f947fcf9c26b82a42e7"
+                  },
+                  {
+                      "path":  "scripts/verify-challenge-contracts.ps1",
+                      "sha256":  "c9a9d68e52e96d92c0e3f15bc5058338b967227b2bf6ead4eb147265eba1c2be"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/A03IdentityContractVectors.java",
+                      "sha256":  "347b1e03c827dc9872c82afd4429f2be39383fceb833a1b090a35b8fb73d50e9"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/A03IdentityDeveloperVerifier.java",
+                      "sha256":  "d02dd05a5df82858ac8ab3e09a638e247d3e8d7853a9a3b877f5907e6f247d50"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/A03RealizationReplay.java",
+                      "sha256":  "3fa0f95c4f51f9640f07c3d7c09e8d4ebc2bb71d7ecc5e43dc937650648d5142"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/BlockNamespace.java",
+                      "sha256":  "983f1c34d55546c02ea9b465f3d0f6ca708116641a7c6b2468e475c4755cf010"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/BlockRealizationIdentity.java",
+                      "sha256":  "51ecdc095886fd47e6842aaeda056f30110fd81d8cb4760671c1086a70683132"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/BoundedAssemblyPlan.java",
+                      "sha256":  "35ba3d18b5dceded8b100cad4a04208a3ad53262fd80c8181532094090ba6106"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java",
+                      "sha256":  "f12a68f92ae1322e5ed49a44765e24fabd94c5a9da073e7351e404b168f9fc6d"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+                      "sha256":  "69581fd7ae054cf4618581d73b8f932bd37b2832d63b01f4523c68ed265825d5"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/DeviceBusBindings.java",
+                      "sha256":  "ac4dcff42599b7054cbe7387b81f978c338c1a0a40105f6d3026db9aa52e7332"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/LegacyChallengeReplay.java",
+                      "sha256":  "5d6cd357f8f8ba844f6185cbd2d4ba977a66f9f945d5764699c0ec46ed14861c"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+                      "sha256":  "06625e1fe6c1ccc125ca955d43be08d8b4c23bcde880d0d555119cf484ab2a8e"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/RealizationManifest.java",
+                      "sha256":  "eeb0417fc97ccc06ed388b5b367c0d836f5ca8ae7e0afb14f9a1598f8937924e"
+                  },
+                  {
+                      "path":  "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+                      "sha256":  "ddca0853a5ebc80d566824831b706d2551c3c1e3a1c6d41549b324a0d84ddbb7"
+                  },
+                  {
+                      "path":  "tests/contracts/A03IdentityContractTest.java",
+                      "sha256":  "9572e74c9a5a8bea5747366449aecd505266f02e39e9b8cbd68eb709868714eb"
+                  }
+              ]
+}

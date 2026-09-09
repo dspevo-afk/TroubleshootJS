@@ -1,0 +1,37 @@
+# Historical A03 browser-blocker record — superseded by v6 recovery
+
+This is preserved failure evidence from before the reviewed recovery path. Do
+not treat its blocker or missing-qualification wording as current status:
+`runtime-all-final-recovery-v6.json` later passed Gate All with nine routes and
+durable cleanup true on the exact final source/script/web/verifier provenance.
+The old run's profile, claim and manifest remain retained historical artifacts;
+their process and listener are absent, but they are not retrospectively called
+cleaned.
+
+A03 browser qualification blocker — 2026-09-08
+Classification: BLOCKER / TEST-TOOL + ENVIRONMENT. No product failure is inferred.
+
+TCP smoke: existing VerifierIsolation/preview implementation, explicit Edge executable.
+Result: exit 2; Port lease ownership proof exceeded its bounded monotonic deadline.
+Cleanup: PASS. Selected ownership proof retains its original 500 ms monotonic deadline.
+Read-only timing: warm preview-shaped process snapshots 1.35–1.75 s; warm positive netstat listener reads 105–188 ms (cold 540 ms).
+
+Existing HTTP.sys smoke: preview ownership and browser/CDP attachment succeeded.
+Result: exit 2; initial runner leaked System.Threading.Tasks.VoidTaskResult into the CDP response pipeline.
+Root repaired Invoke-Cdp to suppress Send-Cdp output. Actual Task-await probe reproduced one VoidTaskResult; a focused send-output isolation canary PASS.
+The repaired live route has NOT RUN because retained cleanup is unresolved.
+
+HTTP.sys run: 6cdab3121a5446ca9a622be3357e0e07; repository identity 35f928aa55de9606ae58.
+Retained Edge root: PID 212748; start ticks 639244439669691746; CDP port 58648.
+Durable records: OS-temp/TroubleshootJS/verify/35f928aa55de9606ae58/6cdab3121a5446ca9a622be3357e0e07/manifest.json.
+Dedicated profile route: browser/ab2ac19fea264e5d9f9ca709a80c408a/profile under that run root.
+The first cleanup could not inspect transient WinrtAppId utility PID 405968. A later read-only view proved it absent and returned a complete 291-process snapshot.
+Root PID/start/executable/profile/run markers still matched the durable manifest.
+Launch parent PID 169720 has exited. Existing cleanup additionally requires its exact parent start identity and original live claim/context.
+No supported orphan-recovery lane was substituted. Browser/profile/lease evidence remain retained; cleanup is NOT PASS.
+The preview server PID 328408/start 639244439449818344, port 56588, records cleanup complete.
+The accepted-source comparison export is retained because its identity is referenced by this run.
+
+Missing qualification: JVM/GWT byte parity; real A03 solver/coordinate poison; forced-failure/debug-off canaries; Task41/46/47/48/49/A02 production reports; full accepted Task48/49 report comparison.
+Necessary unblock: restore a supported, reviewed cleanup path for this exact orphaned run, then rerun the repaired transport smoke and production gates with qualified cleanup.
+Do not waive 500 ms limits, infer cleanup from PID alone, delete retained claims/profiles, or publish A03 as accepted.

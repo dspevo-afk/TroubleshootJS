@@ -12,6 +12,7 @@ param(
     [switch]$GateBBrowserDescendantIdentityRetryProbe,
     [switch]$GateBBrowserDrainNaturalExitProbe,
     [switch]$GateBBrowserNaturalShutdownProbe,
+    [switch]$GateBBrowserContainmentProbe,
     [switch]$GateBListenerAuthorizationRetryProbe,
     [switch]$GateBDescendantSnapshotRefreshProbe,
     [switch]$GateBBrowserRootListenerFastPathProbe,
@@ -1066,14 +1067,78 @@ function Invoke-GateBSourceChecks() {
         'browser session startup transaction boundary could not be located'
     $browserSessionFunctionText = $browserSessionFunctionMatch.Groups[0].Value
     $browserIdentityCaptureIndex = $browserSessionFunctionText.IndexOf(
-        'Get-VerifierCurrentProcessIdentityWithRetry $browserProcessId',
+        'Get-VerifierFreshLaunchedBrowserIdentity $browser',
         [StringComparison]::Ordinal)
-    $browserSessionCommitIndex = $browserSessionFunctionText.IndexOf(
-        '$browserSessionRecord.ProcessId = $browserProcessId',
+    $browserBindTransactionIndex = $browserSessionFunctionText.IndexOf(
+        'Invoke-VerifierBrowserBindTransaction $Context $browserSessionRecord',
         [StringComparison]::Ordinal)
+    $browserSessionTupleAssignment = [regex]::IsMatch($browserSessionFunctionText,
+        '\$browserSessionRecord\.(?:ProcessId|ProcessStartTicks|ProcessParentProcessId|ProcessParentProcessStartTicks|ProcessCommandLine)\s*=')
     Assert-GateB ($browserIdentityCaptureIndex -ge 0 -and
-        $browserSessionCommitIndex -gt $browserIdentityCaptureIndex) `
-        'browser session startup publishes a partial PID/start tuple before complete identity capture'
+        $browserBindTransactionIndex -gt $browserIdentityCaptureIndex -and
+        -not $browserSessionTupleAssignment) `
+        'browser session startup does not keep its durable tuple absent until the atomic bind transaction follows complete identity capture'
+    $browserBindTransactionMatch = [regex]::Match($moduleText,
+        '(?ms)function\s+Invoke-VerifierBrowserBindTransaction\b.*?(?=\r?\nfunction\s+)')
+    $browserBindTransactionText = if ($browserBindTransactionMatch.Success) {
+        $browserBindTransactionMatch.Groups[0].Value
+    } else { '' }
+    $browserBindSnapshotIndex = $browserBindTransactionText.IndexOf(
+        'New-VerifierBrowserBindTransactionSnapshot $SessionRecord',
+        [StringComparison]::Ordinal)
+    $browserBindLeaseIndex = $browserBindTransactionText.IndexOf(
+        '& $BindLease $SessionRecord', [StringComparison]::Ordinal)
+    $browserBindManifestIndex = $browserBindTransactionText.IndexOf(
+        'Write-VerifierManifest $Context', [StringComparison]::Ordinal)
+    $browserBindRestoreIndex = $browserBindTransactionText.IndexOf(
+        'Restore-VerifierBrowserBindTransactionSnapshot $SessionRecord $snapshot',
+        [StringComparison]::Ordinal)
+    Assert-GateB ($browserBindTransactionMatch.Success -and
+        $browserBindSnapshotIndex -ge 0 -and $browserBindLeaseIndex -gt $browserBindSnapshotIndex -and
+        $browserBindManifestIndex -gt $browserBindLeaseIndex -and
+        $browserBindRestoreIndex -gt $browserBindManifestIndex) `
+        'browser bind transaction does not snapshot, prove the listener, atomically commit, and restore on failure'
+    $freshBrowserIdentityMatch = [regex]::Match($moduleText,
+        '(?ms)function\s+Get-VerifierFreshLaunchedBrowserIdentity\b.*?(?=\r?\nfunction\s+)')
+    Assert-GateB ($freshBrowserIdentityMatch.Success -and
+        $freshBrowserIdentityMatch.Groups[0].Value.IndexOf(
+            'Get-VerifierCurrentProcessIdentityWithRetry $browserProcessId',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $freshBrowserIdentityMatch.Groups[0].Value.IndexOf(
+            'Get-VerifierProcessStartTicks $BrowserProcess',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $freshBrowserIdentityMatch.Groups[0].Value.IndexOf('$attempt -le 3',
+            [StringComparison]::Ordinal) -ge 0) `
+        'fresh browser startup helper does not retain its exact handle/start and bounded complete identity proof'
+    $receiptRootMatch = [regex]::Match($moduleText,
+        '(?ms)function\s+Get-VerifierBrowserReceiptNaturalShutdownRoot\b.*?(?=\r?\nfunction\s+)')
+    $receiptShutdownMatch = [regex]::Match($moduleText,
+        '(?ms)function\s+Close-VerifierBrowserSessionWithBoundRecoveryReceipt\b.*?(?=\r?\nfunction\s+)')
+    $receiptJournalIndex = if ($receiptShutdownMatch.Success) {
+        $receiptShutdownMatch.Groups[0].Value.IndexOf(
+            'Record-VerifierBrowserRecoveryCloseAttempt $Context $SessionRecord',
+            [StringComparison]::Ordinal)
+    } else { -1 }
+    $receiptPostJournalProofIndex = if ($receiptJournalIndex -ge 0) {
+        $receiptShutdownMatch.Groups[0].Value.IndexOf('-AfterCloseAttemptJournal',
+            $receiptJournalIndex, [StringComparison]::Ordinal)
+    } else { -1 }
+    $receiptSendIndex = if ($receiptPostJournalProofIndex -ge 0) {
+        $receiptShutdownMatch.Groups[0].Value.IndexOf(
+            'Send-VerifierBrowserCloseAndReadAcknowledgement',
+            $receiptPostJournalProofIndex, [StringComparison]::Ordinal)
+    } else { -1 }
+    Assert-GateB ($receiptRootMatch.Success -and
+        $receiptRootMatch.Groups[0].Value.IndexOf(
+            '[switch]$AfterCloseAttemptJournal', [StringComparison]::Ordinal) -ge 0 -and
+        $receiptRootMatch.Groups[0].Value.IndexOf('$receiptAttemptStateMatches',
+            [StringComparison]::Ordinal) -ge 0 -and
+        $receiptJournalIndex -ge 0 -and
+        $receiptPostJournalProofIndex -gt $receiptJournalIndex -and
+        $receiptSendIndex -gt $receiptPostJournalProofIndex -and
+        $receiptShutdownMatch.Groups[0].Value -notmatch
+            '(?m)^\s*Assert-VerifierBrowserParentExitRecoveryListener\b') `
+        'receipt shutdown can retry a journaled close, skip its final identity proof, or leak listener proof output'
     $retryFunctionStart = $moduleText.IndexOf(
         'function Get-VerifierCurrentProcessIdentityWithRetry',
         [StringComparison]::Ordinal)
@@ -1302,11 +1367,13 @@ function Invoke-GateBSourceChecks() {
         'browser session startup catch does not retain the originating typed reason and evidence outcome'
     Assert-GateB ($gateText.IndexOf('$edgePath = Resolve-VerifierBrowserPath',
         [StringComparison]::Ordinal) -ge 0 -and
-        $gateText.IndexOf('$edgeProcess = Start-VerifierProcess $edgePath $arguments',
+        $gateText.IndexOf('$opened = New-VerifierBrowserSession $context',
             [StringComparison]::Ordinal) -ge 0 -and
-        $gateText.IndexOf('$descendants = @(Get-VerifierDescendantProcessRecords $session $snapshot)',
+        $gateText.IndexOf('$session = $opened.Record', [StringComparison]::Ordinal) -ge 0 -and
+        $gateText.IndexOf('$edgeProcess = $opened.Browser', [StringComparison]::Ordinal) -ge 0 -and
+        $gateText.IndexOf('RecoveryReceipt.State -ceq ''bound''',
             [StringComparison]::Ordinal) -ge 0) `
-        'real Edge canary is not using the shared resolver and complete ancestry cleanup path'
+        'real Edge canary is not using the shared resolver and bound durable receipt path'
     Assert-GateB ($gateText.IndexOf('Test-VerifierDescendantOwnership $owner $helperChild',
         [StringComparison]::Ordinal) -ge 0 -and
         $gateText.IndexOf('different-executable helper was accepted from PPID alone',
@@ -1537,18 +1604,13 @@ function Invoke-GateBProcessOwnershipCanary() {
     Assert-GateB ($selected.Count -eq 0) `
         'irrelevant PID0/null-command WMI records were treated as browser ownership'
 
-    $inaccessibleRelevant = [pscustomobject]@{
+    $inaccessibleUnmarkedPeer = [pscustomobject]@{
         ProcessId = 322; ParentProcessId = 1; Name = 'msedge.exe'; CommandLine = $null
     }
-    $inaccessibleObserved = $false
-    try {
-        [void](Select-VerifierRelevantProcessRecords @($inaccessibleRelevant) $browserPath $profile `
-            $runId $repositoryIdentity 45123)
-    } catch {
-        $inaccessibleObserved = Test-VerifierInfrastructureError $_
-    }
-    Assert-GateB $inaccessibleObserved `
-        'inaccessible relevant browser command-line record was not infrastructure failure'
+    $unmarkedPeerSelected = @(Select-VerifierRelevantProcessRecords `
+        @($inaccessibleUnmarkedPeer) $browserPath $profile $runId $repositoryIdentity 45123)
+    Assert-GateB ($unmarkedPeerSelected.Count -eq 0) `
+        'an unrelated same-executable browser peer was treated as an ownership candidate'
 
     $relevantCommand = 'msedge.exe --user-data-dir="' + $profile +
         '" --tsj-verifier-run=' + $runId + ' --tsj-verifier-worktree=' +
@@ -1573,7 +1635,9 @@ function Invoke-GateBProcessOwnershipCanary() {
             [pscustomobject]@{ Name = 'string CommandLine'; ProcessId = 325; ParentProcessId = 1; NameValue = 'msedge.exe'; CommandLine = 325 }
             [pscustomobject]@{ Name = 'array CommandLine'; ProcessId = 325; ParentProcessId = 1; NameValue = 'msedge.exe'; CommandLine = [object[]]@($relevantCommand, 'extra') }
             [pscustomobject]@{ Name = 'object CommandLine'; ProcessId = 325; ParentProcessId = 1; NameValue = 'msedge.exe'; CommandLine = [pscustomobject]@{ Value = $relevantCommand } }
-            [pscustomobject]@{ Name = 'null CommandLine'; ProcessId = 325; ParentProcessId = 1; NameValue = 'msedge.exe'; CommandLine = $null }
+            # Explicit null is an uninspectable, unmarked peer, covered above;
+            # it must stay outside ownership selection rather than be coerced
+            # into a malformed owned record.
         )) {
         $malformedObserved = $false
         try {
@@ -5059,6 +5123,7 @@ function Invoke-GateBDescendantCleanupCanary() {
         ('TroubleshootJS\gate-b-descendant-cleanup-' + [Guid]::NewGuid().ToString('N'))
     $context = $null
     $browserSessionRecord = $null
+    $containmentJob = $null
     $rootProcess = $null
     $rootIdentity = $null
     $descendantPids = @()
@@ -5150,7 +5215,32 @@ function Invoke-GateBDescendantCleanupCanary() {
             '--tsj-verifier-run', $runId,
             '--tsj-verifier-worktree', $repositoryIdentity,
             '--remote-debugging-port', [string]$port)
-        $rootProcess = Start-VerifierProcess $wscriptPath $rootArguments
+        # Use the real atomic containment boundary for this process-tree test:
+        # the same-executable markerless helper must remain in the job until
+        # fixed-point cleanup has independently discovered it.
+        $verifierModule = @(Get-Module VerifierIsolation | Select-Object -First 1)
+        if ($verifierModule.Count -ne 1) {
+            Throw-GateBInfrastructure 'end-to-end descendant canary could not enter the verifier containment launch boundary'
+        }
+        $containedLaunch = & $verifierModule[0] {
+            param($fixtureContext, $fixtureSession, $fixtureBrowserPath,
+                $fixtureArguments, $fixtureWorkingDirectory)
+            $job = New-VerifierBrowserContainmentJob $fixtureContext $fixtureSession
+            $fixtureSession.Runtime.ContainmentJob = $job
+            Prepare-VerifierBrowserContainmentLaunch $fixtureContext $fixtureSession $job
+            $processId = Start-VerifierBrowserProcessInContainmentJob `
+                -ContainmentJob $job -FilePath $fixtureBrowserPath `
+                -Arguments $fixtureArguments -WorkingDirectory $fixtureWorkingDirectory
+            Set-VerifierBrowserContainmentLaunch $fixtureContext $fixtureSession $job $processId
+            Write-VerifierManifest $fixtureContext
+            return [pscustomobject]@{ Job = $job; ProcessId = [int]$processId }
+        } $context $browserSessionRecord $wscriptPath $rootArguments $context.WorktreeRoot
+        if ($null -eq $containedLaunch -or $null -eq $containedLaunch.Job -or
+                -not (Test-VerifierStrictIntegralValue $containedLaunch.ProcessId 1 ([int]::MaxValue))) {
+            Throw-GateBInfrastructure 'end-to-end descendant containment launch did not return its exact job/PID tuple'
+        }
+        $containmentJob = $containedLaunch.Job
+        $rootProcess = Get-Process -Id ([int]$containedLaunch.ProcessId) -ErrorAction Stop
         $rootStart = [long](Get-VerifierProcessStartTicks $rootProcess)
         $rootIdentity = Get-VerifierCurrentProcessIdentity ([int]$rootProcess.Id) $rootStart `
             0 '' '' 0 $runId '' 0 $browserPath
@@ -5332,6 +5422,7 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
         ('TroubleshootJS\gate-b-late-markerless-' + [Guid]::NewGuid().ToString('N'))
     $context = $null
     $session = $null
+    $containmentJob = $null
     $rootProcess = $null
     $rootIdentity = $null
     $browserPath = ''
@@ -5424,7 +5515,32 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
             '--tsj-verifier-run', $runId,
             '--tsj-verifier-worktree', $repositoryIdentity,
             '--remote-debugging-port', [string]$port)
-        $rootProcess = Start-VerifierProcess $browserPath $rootArguments
+        # Launch the delayed-helper root through the exact production
+        # containment boundary. Its later markerless child therefore remains in
+        # the same no-breakaway job while the fixed-point drain discovers it.
+        $verifierModule = @(Get-Module VerifierIsolation | Select-Object -First 1)
+        if ($verifierModule.Count -ne 1) {
+            Throw-GateBInfrastructure 'late-markerless canary could not enter the verifier containment launch boundary'
+        }
+        $containedLaunch = & $verifierModule[0] {
+            param($fixtureContext, $fixtureSession, $fixtureBrowserPath,
+                $fixtureArguments, $fixtureWorkingDirectory)
+            $job = New-VerifierBrowserContainmentJob $fixtureContext $fixtureSession
+            $fixtureSession.Runtime.ContainmentJob = $job
+            Prepare-VerifierBrowserContainmentLaunch $fixtureContext $fixtureSession $job
+            $processId = Start-VerifierBrowserProcessInContainmentJob `
+                -ContainmentJob $job -FilePath $fixtureBrowserPath `
+                -Arguments $fixtureArguments -WorkingDirectory $fixtureWorkingDirectory
+            Set-VerifierBrowserContainmentLaunch $fixtureContext $fixtureSession $job $processId
+            Write-VerifierManifest $fixtureContext
+            return [pscustomobject]@{ Job = $job; ProcessId = [int]$processId }
+        } $context $session $browserPath $rootArguments $context.WorktreeRoot
+        if ($null -eq $containedLaunch -or $null -eq $containedLaunch.Job -or
+                -not (Test-VerifierStrictIntegralValue $containedLaunch.ProcessId 1 ([int]::MaxValue))) {
+            Throw-GateBInfrastructure 'late-markerless containment launch did not return its exact job/PID tuple'
+        }
+        $containmentJob = $containedLaunch.Job
+        $rootProcess = Get-Process -Id ([int]$containedLaunch.ProcessId) -ErrorAction Stop
         # Preserve the exact launch handle before any fallible identity query.
         # Do not publish a positive PID until its complete start/parent/command
         # tuple has been proved; cleanup must never serialize a mixed identity.
@@ -5581,8 +5697,21 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
             # exits; this path is allowed to recover its own exact fixture once
             # all process proof is complete.
             try {
+                $verifierModule = @(Get-Module VerifierIsolation | Select-Object -First 1)
+                if ($verifierModule.Count -ne 1) {
+                    Throw-GateBInfrastructure 'late-markerless canary could not enter the verifier containment/receipt recovery boundary'
+                }
                 Assert-VerifierBrowserProfileIsQuiescent $profile $session.BrowserPath `
                     $runId $repositoryIdentity $port
+                & $verifierModule[0] {
+                    param($fixtureSession)
+                    $job = $fixtureSession.Runtime.ContainmentJob
+                    if ($null -eq $job -or @($job.GetMemberProcessIds()).Count -ne 0) {
+                        Throw-VerifierInfrastructure 'late-markerless canary containment job was not exactly empty after root/helper absence proof.'
+                    }
+                    Dispose-VerifierBrowserContainmentJob $fixtureSession
+                } $session
+                $containmentJob = $null
                 $session.Lease.ReleaseBlocked = $false
                 $session.Lease.ReleaseBlockReason = ''
                 Release-VerifierPortLease $context $session.Lease
@@ -5593,6 +5722,10 @@ function Invoke-GateBLateMarkerlessCleanupCanary() {
                 if (Test-Path -LiteralPath $profile) {
                     Throw-GateBInfrastructure 'late-markerless retained-resource recovery left its exact profile behind'
                 }
+                & $verifierModule[0] {
+                    param($fixtureSession)
+                    Close-VerifierBrowserRecoveryReceipt $fixtureSession
+                } $session
                 $session.Status = 'cleaned'
                 $session.CleanupResult = 'complete'
                 $session.Error = ''
@@ -5762,11 +5895,38 @@ function Invoke-GateBRootGoneCleanupCanary() {
             '--tsj-verifier-run', $runId,
             '--tsj-verifier-worktree', $repositoryIdentity,
             '--remote-debugging-port', [string]$port)
-        $rootProcess = Start-VerifierProcess $browserPath $rootArguments
+        # Exercise the same atomic no-breakaway launch boundary as production.
+        # The markerless helper inherits this job from its WScript root, while
+        # the canary retains the original handle until that helper's natural
+        # exit has been proved during the deliberate root-gone recovery.
+        $verifierModule = @(Get-Module VerifierIsolation | Select-Object -First 1)
+        if ($verifierModule.Count -ne 1) {
+            Throw-GateBInfrastructure 'root-gone canary could not enter the verifier containment launch boundary'
+        }
+        $containedLaunch = & $verifierModule[0] {
+            param($fixtureContext, $fixtureSession, $fixtureBrowserPath,
+                $fixtureArguments, $fixtureWorkingDirectory)
+            $job = New-VerifierBrowserContainmentJob $fixtureContext $fixtureSession
+            $fixtureSession.Runtime.ContainmentJob = $job
+            Prepare-VerifierBrowserContainmentLaunch $fixtureContext $fixtureSession $job
+            $processId = Start-VerifierBrowserProcessInContainmentJob `
+                -ContainmentJob $job -FilePath $fixtureBrowserPath `
+                -Arguments $fixtureArguments -WorkingDirectory $fixtureWorkingDirectory
+            Set-VerifierBrowserContainmentLaunch $fixtureContext $fixtureSession $job $processId
+            Write-VerifierManifest $fixtureContext
+            return [pscustomobject]@{ Job = $job; ProcessId = [int]$processId }
+        } $context $session $browserPath $rootArguments $context.WorktreeRoot
+        if ($null -eq $containedLaunch -or $null -eq $containedLaunch.Job -or
+                -not (Test-VerifierStrictIntegralValue $containedLaunch.ProcessId 1 ([int]::MaxValue))) {
+            Throw-GateBInfrastructure 'root-gone canary containment launch did not return its exact job/PID tuple'
+        }
+        $containmentJob = $containedLaunch.Job
+        $rootProcessId = [int]$containedLaunch.ProcessId
         # Retain the launch handle before any fallible identity query.  Do not
         # publish a positive PID into the durable session until its complete
         # start/parent/command tuple has been proved; the durable schema must
         # never contain an intentionally mixed identity.
+        $rootProcess = Get-Process -Id $rootProcessId -ErrorAction Stop
         $session.Runtime.Browser = $rootProcess
         $rootStartTicks = Get-VerifierProcessStartTicks $rootProcess
         $rootIdentity = Get-VerifierCurrentProcessIdentity ([int]$rootProcess.Id) `
@@ -5978,8 +6138,21 @@ function Invoke-GateBRootGoneCleanupCanary() {
                 $null -ne $helperProcess -and $helperProcess.HasExited -and
                 $cleanupErrors.Count -eq 0) {
             try {
+                $verifierModule = @(Get-Module VerifierIsolation | Select-Object -First 1)
+                if ($verifierModule.Count -ne 1) {
+                    Throw-GateBInfrastructure 'root-gone canary could not enter the verifier containment/receipt recovery boundary'
+                }
                 Assert-VerifierBrowserProfileIsQuiescent $profile $session.BrowserPath `
                     $runId $repositoryIdentity $port
+                & $verifierModule[0] {
+                    param($fixtureSession)
+                    $job = $fixtureSession.Runtime.ContainmentJob
+                    if ($null -eq $job -or @($job.GetMemberProcessIds()).Count -ne 0) {
+                        Throw-VerifierInfrastructure 'root-gone canary containment job was not exactly empty after the helper natural-exit proof.'
+                    }
+                    Dispose-VerifierBrowserContainmentJob $fixtureSession
+                } $session
+                $containmentJob = $null
                 $session.Lease.ReleaseBlocked = $false
                 $session.Lease.ReleaseBlockReason = ''
                 Release-VerifierPortLease $context $session.Lease
@@ -5990,6 +6163,17 @@ function Invoke-GateBRootGoneCleanupCanary() {
                 if (Test-Path -LiteralPath $profile) {
                     Throw-GateBInfrastructure 'root-gone canary recovery left its exact profile behind'
                 }
+                # This fixture allocated a receipt but never used the production
+                # browser bind path. Close it as an unbound revocation only
+                # after the helper, profile, and lease are all proven absent.
+                & $verifierModule[0] {
+                    param($fixtureSession)
+                    Close-VerifierBrowserRecoveryReceipt $fixtureSession
+                } $session
+                Assert-GateB ($session.RecoveryReceipt.State -ceq 'closed' -and
+                    -not [bool]$session.RecoveryReceipt.CloseAttempted -and
+                    [String]::IsNullOrWhiteSpace([string]$session.RecoveryReceipt.BoundUtc)) `
+                    'root-gone canary did not retain an exact closed-unbound receipt after fixture recovery'
                 $session.Status = 'cleaned'
                 $session.CleanupResult = 'complete'
                 $session.Error = ''
@@ -6084,53 +6268,28 @@ function Invoke-GateBRealEdgeOwnershipCanary() {
             Throw-GateBInfrastructure 'the shared Edge resolver returned a non-existent executable.'
         }
         $context = New-VerifierRunContext $repositoryRoot $canaryRoot
-        $session = New-VerifierBrowserLease $context 'real-edge-ownership' $edgePath
+        # Exercise the production session path rather than reconstructing a
+        # transient root tuple in this canary.  The durable session cannot be
+        # written with ProcessId alone, and the production path records the
+        # full PID/start/parent/command receipt before it is persisted.
+        $opened = New-VerifierBrowserSession $context 'real-edge-ownership' `
+            'about:blank' $edgePath 30
+        $session = $opened.Record
+        $edgeProcess = $opened.Browser
         $profile = [string]$session.Profile
         $runId = [string]$context.RunId
         $port = [int]$session.CdpPort
-        $arguments = @(
-            '--headless=new', '--disable-gpu', '--disable-sync', '--no-first-run',
-            '--no-default-browser-check', '--remote-debugging-address=127.0.0.1',
-            '--user-data-dir=' + $profile,
-            '--remote-debugging-port=' + [string]$port,
-            '--tsj-verifier-run=' + $runId,
-            '--tsj-verifier-worktree=' + [string]$context.RepositoryIdentity,
-            'about:blank'
-        )
-        $edgeProcess = Start-VerifierProcess $edgePath $arguments
-        # Retain the process object and PID before any fallible start/identity
-        # query. A delayed bind or identity failure must never release this
-        # lease and later let a different Edge instance inherit the port.
-        $session.Runtime.Browser = $edgeProcess
-        $session.ProcessId = [int]$edgeProcess.Id
-        $session.Status = 'started'
-        Write-VerifierManifest $context
-        $session.ProcessStartTicks = Get-VerifierProcessStartTicks $edgeProcess
-        $identity = Get-VerifierCurrentProcessIdentity $session.ProcessId `
-            $session.ProcessStartTicks 0 '' '' $port $runId '' 0 $edgePath
-        $session.ProcessParentProcessId = [int]$identity.Record.ParentProcessId
-        $session.ProcessParentProcessStartTicks = [long]$identity.Record.ParentProcessStartTicks
-        $session.ProcessCommandLine = [string]$identity.Record.CommandLine
-        Write-VerifierManifest $context
 
-        $deadline = [DateTime]::UtcNow.AddSeconds(30)
-        $descendants = @()
-        do {
-            $edgeProcess.Refresh()
-            if ([bool]$edgeProcess.HasExited) {
-                Throw-GateBInfrastructure 'real Edge exited before an owned descendant and listener could be proven.'
-            }
-            $snapshot = @(Get-VerifierBrowserOwnershipSnapshot $edgePath $profile $runId `
-                $context.RepositoryIdentity $port)
-            $descendants = @(Get-VerifierDescendantProcessRecords $session $snapshot)
-            if ($descendants.Count -gt 0) { break }
-            Start-Sleep -Milliseconds 200
-        } while ([DateTime]::UtcNow -lt $deadline)
-        if ($descendants.Count -eq 0) {
-            Throw-GateBInfrastructure 'real Edge did not expose a complete owned descendant graph within the canary bound.'
-        }
-        Confirm-VerifierPortLeaseBound $context $session.Lease $session.ProcessId `
-            $session.ProcessStartTicks $session
+        Assert-GateB ($session.Status -ceq 'attached' -and
+            $session.Lease.Status -ceq 'bound' -and
+            $session.RecoveryReceipt.State -ceq 'bound' -and
+            [int]$session.RecoveryReceipt.RootProcessId -eq [int]$session.ProcessId -and
+            [long]$session.RecoveryReceipt.RootProcessStartTicks -eq
+                [long]$session.ProcessStartTicks -and
+            [int]$session.RecoveryReceipt.ListenerProcessId -eq [int]$session.ProcessId -and
+            [long]$session.RecoveryReceipt.ListenerProcessStartTicks -eq
+                [long]$session.ProcessStartTicks) `
+            'real Edge session did not bind an exact root/listener recovery receipt'
         Complete-VerifierBrowserSession $context $session
         if (-not $edgeProcess.WaitForExit(5000)) {
             Throw-GateBInfrastructure 'real Edge root did not complete its bounded cleanup wait.'
@@ -6191,15 +6350,18 @@ function Invoke-GateBRealEdgeOwnershipCanary() {
         }
     }
     if ($cleanupErrors.Count -gt 0) {
+        $primaryDetail = if ($null -ne $primaryFailure) {
+            'primary=' + (Get-VerifierErrorMessage $primaryFailure) + '; '
+        } else { '' }
         Throw-GateBInfrastructure ('real Edge ownership canary cleanup was not proven; evidence was retained at ' +
-            $canaryRoot + ': ' + ($cleanupErrors -join '; '))
+            $canaryRoot + ': ' + $primaryDetail + ($cleanupErrors -join '; '))
     }
     if ($null -ne $primaryFailure) {
         if (Test-VerifierInfrastructureError $primaryFailure) { throw $primaryFailure }
         Throw-GateBInfrastructure ('real Edge ownership canary failed: ' +
             (Get-VerifierErrorMessage $primaryFailure))
     }
-    Write-Host 'PASS:real Edge markerless-descendant ancestry, profile, claim, listener, and evidence cleanup canary'
+    Write-Host 'PASS:real Edge exact receipt/root/listener, profile, claim, and evidence cleanup canary'
 }
 
 function Invoke-GateBBrowserIdentityRetryCanary() {
@@ -6414,6 +6576,10 @@ function Invoke-GateBBrowserDescendantIdentityRetryCanary() {
                     Mode = 'once-typed-failure'; Records = @($completeRecord)
                 }
                 [pscustomobject]@{
+                    Name = 'delayed-final-proof'
+                    Mode = 'delayed-final-proof'; Records = @($completeRecord)
+                }
+                [pscustomobject]@{
                     Name = 'delayed-proof'
                     Mode = 'delayed-proof'; Records = @($completeRecord)
                 }
@@ -6440,6 +6606,9 @@ function Invoke-GateBBrowserDescendantIdentityRetryCanary() {
                 Set-Item Function:\Get-VerifierCurrentOwnedProcessOnce -Force -Value {
                     $state = $script:GateBDescendantRetryState
                     $state.Once++
+                    if ($state.Mode -eq 'delayed-final-proof') {
+                        Start-Sleep -Milliseconds 600
+                    }
                     if ($state.Mode -eq 'once-typed-failure') {
                         Throw-VerifierInfrastructure 'synthetic termination-boundary failure'
                     }
@@ -6496,6 +6665,7 @@ function Invoke-GateBBrowserDescendantIdentityRetryCanary() {
     $nullProcess = @($probe | Where-Object Name -eq 'null-process')
     $malformedProcess = @($probe | Where-Object Name -eq 'malformed-process')
     $onceFailure = @($probe | Where-Object Name -eq 'once-typed-failure')
+    $delayedFinal = @($probe | Where-Object Name -eq 'delayed-final-proof')
     $delayed = @($probe | Where-Object Name -eq 'delayed-proof')
     Assert-GateB ($transient.Count -eq 1 -and $transient[0].Accepted -and
         $transient[0].TypedFailure -eq $false -and
@@ -6518,11 +6688,15 @@ function Invoke-GateBBrowserDescendantIdentityRetryCanary() {
             [int]$negative[0].OnceAttempts -eq 1) `
             'null/malformed Process or a termination-boundary failure was retried or accepted'
     }
+    Assert-GateB ($delayedFinal.Count -eq 1 -and $delayedFinal[0].Accepted -and
+        -not $delayedFinal[0].TypedFailure -and [int]$delayedFinal[0].Attempts -eq 1 -and
+        [int]$delayedFinal[0].OnceAttempts -eq 1) `
+        'complete descendant identity observed within its retry bound was rejected because later exact validation was slow'
     Assert-GateB ($delayed.Count -eq 1 -and -not $delayed[0].Accepted -and
         $delayed[0].TypedFailure -and [int]$delayed[0].Attempts -eq 1 -and
         [int]$delayed[0].OnceAttempts -eq 0) `
         'delayed complete descendant proof was accepted after the monotonic retry budget'
-    Write-Host 'PASS:browser descendant identity retry recovers only a transient empty path and rejects identity, termination, and Process-object failures immediately'
+    Write-Host 'PASS:browser descendant identity retry bounds path publication, permits later exact proof, and rejects identity, termination, and Process-object failures immediately'
 }
 
 function Invoke-GateBBrowserDrainNaturalExitCanary() {
@@ -6532,13 +6706,16 @@ function Invoke-GateBBrowserDrainNaturalExitCanary() {
     }
     $probe = & $module[0] {
         $cases = New-Object Collections.ArrayList
-        $oldCurrent = (Get-Command Get-VerifierCurrentProcessRecordById `
+        $oldAbsence = (Get-Command Get-VerifierNaturalExitCurrentAbsenceObservation `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $oldWmiById = (Get-Command Get-VerifierProcessRecordsByIdWithFallback `
             -CommandType Function -ErrorAction Stop).ScriptBlock
         $oldAttestation = (Get-Command Get-VerifierBrowserDrainAttestation `
             -CommandType Function -ErrorAction Stop).ScriptBlock
         $oldStart = (Get-Command Get-VerifierRetainedProcessStartTimeValue `
             -CommandType Function -ErrorAction Stop).ScriptBlock
-        $script:GateBDrainOriginalCurrent = $oldCurrent
+        $script:GateBDrainOriginalAbsence = $oldAbsence
+        $script:GateBDrainOriginalWmiById = $oldWmiById
         $script:GateBDrainOriginalAttestation = $oldAttestation
         $script:GateBDrainOriginalStart = $oldStart
         function New-DrainCanaryFixture([int]$Milliseconds = 1200) {
@@ -6692,24 +6869,58 @@ function Invoke-GateBBrowserDrainNaturalExitCanary() {
             } 'exited-retained-handle-start-mismatch')
             Set-Item Function:\Get-VerifierRetainedProcessStartTimeValue -Force -Value $oldStart
             foreach ($delayAt in @(1, 2)) {
-                $script:GateBDrainCurrentCalls = 0
+                $script:GateBDrainAbsenceCalls = 0
                 $script:GateBDrainDelayAt = $delayAt
-                Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+                Set-Item Function:\Get-VerifierNaturalExitCurrentAbsenceObservation -Force -Value {
                     param($ProcessId)
-                    $script:GateBDrainCurrentCalls++
-                    if ($script:GateBDrainCurrentCalls -eq $script:GateBDrainDelayAt) {
+                    $script:GateBDrainAbsenceCalls++
+                    if ($script:GateBDrainAbsenceCalls -eq $script:GateBDrainDelayAt) {
                         Start-Sleep -Milliseconds 650
                     }
-                    & $script:GateBDrainOriginalCurrent $ProcessId
+                    & $script:GateBDrainOriginalAbsence $ProcessId
                 }
                 [void](Assert-DrainCanaryTypedFailure {
                     Get-VerifierBrowserDrainNaturalExitResult $positive.Scope $positive.Record
                 } ('delayed-current-view-' + $delayAt))
-                if ($script:GateBDrainCurrentCalls -ne $delayAt) {
+                if ($script:GateBDrainAbsenceCalls -ne $delayAt) {
                     Throw-VerifierInfrastructure 'browser drain continued to another current view after its deadline.'
                 }
             }
-            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value $oldCurrent
+            Set-Item Function:\Get-VerifierNaturalExitCurrentAbsenceObservation -Force -Value $oldAbsence
+
+            # The retained native handle already proves the exiting process's
+            # PID/start identity. A stale-but-well-formed WMI record must not
+            # turn that into a cleanup pass or a process stop; the next
+            # independent empty observation is the only accepted absence.
+            $script:GateBDrainWmiLagCalls = 0
+            Set-Item Function:\Get-VerifierProcessRecordsByIdWithFallback -Force -Value {
+                param($ProcessId, $Purpose)
+                $script:GateBDrainWmiLagCalls++
+                if ($script:GateBDrainWmiLagCalls -eq 1) {
+                    return @([pscustomobject]@{ ProcessId = [int]$ProcessId })
+                }
+                return @()
+            }
+            $laggedNatural = Get-VerifierBrowserDrainNaturalExitResult $positive.Scope `
+                $positive.Record
+            if ($null -ne $laggedNatural -or $script:GateBDrainWmiLagCalls -ne 1) {
+                Throw-VerifierInfrastructure 'browser drain accepted a retained exited process before the stale WMI record cleared.'
+            }
+            $settledNatural = Get-VerifierBrowserDrainNaturalExitResult $positive.Scope `
+                $positive.Record
+            if ($null -eq $settledNatural -or -not [bool]$settledNatural.NaturalExit -or
+                    -not [bool]$settledNatural.TerminationProven -or
+                    $script:GateBDrainWmiLagCalls -ne 3) {
+                Throw-VerifierInfrastructure 'browser drain did not accept a retained exited process only after two fresh empty WMI observations.'
+            }
+            Set-Item Function:\Get-VerifierProcessRecordsByIdWithFallback -Force -Value {
+                param($ProcessId, $Purpose)
+                return @([pscustomobject]@{ ProcessId = [int]$ProcessId + 1 })
+            }
+            [void](Assert-DrainCanaryTypedFailure {
+                Get-VerifierBrowserDrainNaturalExitResult $positive.Scope $positive.Record
+            } 'malformed-stale-wmi-pid')
+            Set-Item Function:\Get-VerifierProcessRecordsByIdWithFallback -Force -Value $oldWmiById
 
             # Missing/unverified handle and copied/foreign scope/attestation
             # cases must fail before any current-process fallback is accepted.
@@ -6806,24 +7017,27 @@ function Invoke-GateBBrowserDrainNaturalExitCanary() {
             if (-not $presence.Process.WaitForExit(5000)) {
                 Throw-VerifierInfrastructure 'browser drain PID-reuse child did not exit in its bound.'
             }
-            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+            Set-Item Function:\Get-VerifierNaturalExitCurrentAbsenceObservation -Force -Value {
                 param($ProcessId)
-                return [pscustomobject]@{ ProcessId = [int]$ProcessId }
+                return [pscustomobject]@{
+                    Absent = $false; Transient = $false
+                    Current = [pscustomobject]@{ ProcessId = [int]$ProcessId }
+                }
             }
             [void](Assert-DrainCanaryTypedFailure {
                 Get-VerifierBrowserDrainNaturalExitResult $presence.Scope `
                     $presence.Record
             } 'pid-reuse-current-presence')
-            Set-Item Function:\Get-VerifierCurrentProcessRecordById -Force -Value {
+            Set-Item Function:\Get-VerifierNaturalExitCurrentAbsenceObservation -Force -Value {
                 param($ProcessId)
-                Throw-VerifierInfrastructure 'injected current-view failure'
+                Throw-VerifierInfrastructure 'injected current absence-view failure'
             }
             [void](Assert-DrainCanaryTypedFailure {
                 Get-VerifierBrowserDrainNaturalExitResult $presence.Scope `
                     $presence.Record
             } 'current-view-failure')
-            Set-Item Function:\Get-VerifierCurrentProcessRecordById `
-                -Force -Value $oldCurrent
+            Set-Item Function:\Get-VerifierNaturalExitCurrentAbsenceObservation `
+                -Force -Value $oldAbsence
 
             # A live retained handle takes the ordinary current-identity/stop
             # lane. The natural helper must return null and leave it alive.
@@ -6879,6 +7093,8 @@ function Invoke-GateBBrowserDrainNaturalExitCanary() {
                 CopiedForeignScope = $true
                 PidReusePresence = $true
                 CurrentViewFailure = $true
+                WmiLagRetry = $true
+                MalformedWmiLag = $true
                 LiveOrdinaryStop = [bool]$liveStopped
                 OwnershipMismatch = $true
                 ExactScopeAndHandle = $true
@@ -6887,8 +7103,10 @@ function Invoke-GateBBrowserDrainNaturalExitCanary() {
                 DisposedHandle = $true
             }
         } finally {
-            Set-Item Function:\Get-VerifierCurrentProcessRecordById `
-                -Force -Value $oldCurrent
+            Set-Item Function:\Get-VerifierNaturalExitCurrentAbsenceObservation `
+                -Force -Value $oldAbsence
+            Set-Item Function:\Get-VerifierProcessRecordsByIdWithFallback `
+                -Force -Value $oldWmiById
             Set-Item Function:\Get-VerifierBrowserDrainAttestation -Force -Value $oldAttestation
             Set-Item Function:\Get-VerifierRetainedProcessStartTimeValue -Force -Value $oldStart
             $cleanupErrors = New-Object Collections.ArrayList
@@ -6909,8 +7127,9 @@ function Invoke-GateBBrowserDrainNaturalExitCanary() {
                     }
                 } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
             }
-            foreach ($variable in @('GateBDrainOriginalCurrent', 'GateBDrainOriginalAttestation',
-                    'GateBDrainOriginalStart', 'GateBDrainCurrentCalls', 'GateBDrainDelayAt')) {
+            foreach ($variable in @('GateBDrainOriginalAbsence', 'GateBDrainOriginalWmiById',
+                    'GateBDrainOriginalAttestation', 'GateBDrainOriginalStart',
+                    'GateBDrainAbsenceCalls', 'GateBDrainWmiLagCalls', 'GateBDrainDelayAt')) {
                 Remove-Variable -Scope Script -Name $variable -ErrorAction SilentlyContinue
             }
             if ($cleanupErrors.Count -gt 0) {
@@ -6922,11 +7141,12 @@ function Invoke-GateBBrowserDrainNaturalExitCanary() {
     Assert-GateB ([bool]$probe.Positive -and [bool]$probe.MissingHandle -and
         [bool]$probe.StartMismatch -and [bool]$probe.CopiedForeignScope -and
         [bool]$probe.PidReusePresence -and [bool]$probe.CurrentViewFailure -and
+        [bool]$probe.WmiLagRetry -and [bool]$probe.MalformedWmiLag -and
         [bool]$probe.LiveOrdinaryStop -and [bool]$probe.OwnershipMismatch -and
         [bool]$probe.ExactScopeAndHandle -and [bool]$probe.WholeCallDeadline -and
         [bool]$probe.ExitedStartIdentity -and [bool]$probe.DisposedHandle) `
         'browser drain retained-handle natural-exit canary did not validate every positive/negative lane'
-    Write-Host 'PASS:browser drain retained-handle natural-exit proof, exact absence, live stop, and typed negative lanes'
+    Write-Host 'PASS:browser drain retained-handle natural-exit proof, stale-WMI retry, exact absence, live stop, and typed negative lanes'
 }
 
 function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
@@ -7029,11 +7249,14 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
             ChildExited = $false
             ChildCurrentCalls = 0
             NaturalCurrentCalls = 0
+            NaturalWmiAbsenceCalls = 0
             PreviouslyAttestedCalls = 0
             InNatural = $false
             LateProofSlept = $false
             NonNullExitedLookups = 0
             UnattestedNonNullExitedLookups = 0
+            TransientWmiCalls = 0
+            TransientNonNullExitedLookups = 0
             FinalNonNullExitProcessByIdCalls = 0
             FinalNonNullExitLiveLookups = 0
             FinalNonNullExitLookups = 0
@@ -7199,12 +7422,15 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
             $state.ChildExited = $Exited
             $state.ChildCurrentCalls = 0
             $state.NaturalCurrentCalls = 0
+            $state.NaturalWmiAbsenceCalls = 0
         }
         # Capture real child records before installing lower-provider seams.
         # Release signals are held until each fixture has reached its intended
         # attestation/disappearance phase.
         $positive = New-PairedDescendantFixture
         [void]$fixtures.Add($positive)
+        $transientWmi = New-PairedDescendantFixture
+        [void]$fixtures.Add($transientWmi)
         $missing = New-PairedDescendantFixture
         [void]$fixtures.Add($missing)
         $missingExited = New-PairedDescendantFixture
@@ -7232,11 +7458,6 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                 if ([int]$ProcessId -eq [int]$stateValue.ChildPid) {
                     $stateValue.ChildCurrentCalls++
                     if ($stateValue.InNatural) { $stateValue.NaturalCurrentCalls++ }
-                    if ($stateValue.Mode -eq 'late-proof' -and
-                            $stateValue.InNatural -and -not $stateValue.LateProofSlept) {
-                        $stateValue.LateProofSlept = $true
-                        Start-Sleep -Milliseconds 650
-                    }
                     if ($stateValue.Mode -eq 'typed-current-exit' -and
                             -not $stateValue.InNatural -and
                             $stateValue.ChildCurrentCalls -eq 1) {
@@ -7320,7 +7541,7 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                         Throw-VerifierInfrastructure 'paired final non-null exit proof performed an unexpected extra Process lookup.'
                     }
                     if ($stateValue.ChildExited -and
-                            $stateValue.Mode -in @('normal', 'initial-exited-miss')) {
+                            $stateValue.Mode -in @('normal', 'initial-exited-miss', 'transient-wmi')) {
                         $stale = $stateValue.ChildCurrent.Process
                         if ($null -ne $stale -and
                                 $stale.GetType() -eq [Diagnostics.Process]) {
@@ -7329,6 +7550,8 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                                 if ([bool]$stale.HasExited) {
                                     if ($stateValue.Mode -eq 'normal') {
                                         $stateValue.NonNullExitedLookups++
+                                    } elseif ($stateValue.Mode -eq 'transient-wmi') {
+                                        $stateValue.TransientNonNullExitedLookups++
                                     } else {
                                         $stateValue.UnattestedNonNullExitedLookups++
                                     }
@@ -7355,6 +7578,24 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                     return @($stateValue.RootWmi)
                 }
                 if ([int]$ProcessId -eq [int]$stateValue.ChildPid) {
+                    if ($stateValue.Mode -eq 'transient-wmi') {
+                        $stateValue.TransientWmiCalls++
+                        if ($stateValue.TransientWmiCalls -eq 1) {
+                            return @($stateValue.ChildWmi)
+                        }
+                        return @()
+                    }
+                    if ($stateValue.ChildExited -and
+                            $stateValue.Mode -in @('normal', 'initial-null-exit',
+                                'typed-current-exit', 'final-nonnull-exit', 'late-proof')) {
+                        $stateValue.NaturalWmiAbsenceCalls++
+                        if ($stateValue.Mode -eq 'late-proof' -and
+                                -not $stateValue.LateProofSlept) {
+                            $stateValue.LateProofSlept = $true
+                            Start-Sleep -Milliseconds 650
+                        }
+                        return @()
+                    }
                     return @($stateValue.ChildWmi)
                 }
                 return & $script:GateBPairedOriginalById $ProcessId $Label
@@ -7410,8 +7651,47 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                     [long]$second[0].ProcessStartTicks -ne $firstStart -or
                     [int]$state.NonNullExitedLookups -lt 1 -or
                     [int]$state.PreviouslyAttestedCalls -ne 1 -or
-                    [int]$state.NaturalCurrentCalls -ne 2) {
+                    [int]$state.NaturalWmiAbsenceCalls -ne 2) {
                 Throw-VerifierInfrastructure 'paired browser descendant natural exit did not return the original attested record after two current absence proofs.'
+            }
+
+            # A well-formed WMI record can survive briefly after the retained
+            # native handle has exited. It is neither accepted as absence nor
+            # turned into a Stop-Process target: preserve only the original
+            # attested record, mark it privately pending, then require two
+            # fresh empty observations on the next bounded attempt.
+            Set-PairedChildState $transientWmi 'normal' $false
+            $transientFirst = @(Invoke-PairedDescendant $transientWmi)
+            if ($transientFirst.Count -ne 1 -or
+                    $transientFirst[0].Process.GetType() -ne [Diagnostics.Process]) {
+                Throw-VerifierInfrastructure 'paired transient-WMI fixture did not produce a live attested record.'
+            }
+            $transientRecord = $transientFirst[0]
+            $transientProcess = $transientRecord.Process
+            $beforeTransientHelpers = [int]$state.PreviouslyAttestedCalls
+            Release-PairedDescendantFixture $transientWmi
+            Set-PairedChildState $transientWmi 'transient-wmi' $true
+            $state.TransientWmiCalls = 0
+            $transientPending = @(Invoke-PairedDescendant $transientWmi)
+            if ($transientPending.Count -ne 1 -or
+                    -not [object]::ReferenceEquals($transientPending[0], $transientRecord) -or
+                    -not [object]::ReferenceEquals($transientPending[0].Process, $transientProcess) -or
+                    -not $transientPending[0].PSObject.Properties['VerifierPendingNaturalExit'] -or
+                    -not [object]::ReferenceEquals($transientPending[0].VerifierPendingNaturalExit,
+                        $script:VerifierBrowserDrainPendingNaturalExitMarker) -or
+                    [int]$state.TransientWmiCalls -ne 1 -or
+                    [int]$state.TransientNonNullExitedLookups -lt 1 -or
+                    [int]$state.PreviouslyAttestedCalls -ne ($beforeTransientHelpers + 1)) {
+                Throw-VerifierInfrastructure 'paired transient-WMI exit did not retain only the original pending attestation.'
+            }
+            $transientSettled = @(Invoke-PairedDescendant $transientWmi)
+            if ($transientSettled.Count -ne 1 -or
+                    -not [object]::ReferenceEquals($transientSettled[0], $transientRecord) -or
+                    -not [object]::ReferenceEquals($transientSettled[0].Process, $transientProcess) -or
+                    $transientSettled[0].PSObject.Properties['VerifierPendingNaturalExit'] -or
+                    [int]$state.TransientWmiCalls -ne 3 -or
+                    [int]$state.PreviouslyAttestedCalls -ne ($beforeTransientHelpers + 2)) {
+                Throw-VerifierInfrastructure 'paired transient-WMI exit did not retry to two fresh empty absence observations.'
             }
 
             # The same attested natural exit must also be accepted when the
@@ -7434,7 +7714,7 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                     -not [object]::ReferenceEquals($InvokeNullInitial[0].Process, $nullInitialProcess) -or
                     [int]$state.NullInitialLookups -lt 1 -or
                     [int]$state.PreviouslyAttestedCalls -ne ($nullInitialBeforeHelpers + 1) -or
-                    [int]$state.NaturalCurrentCalls -ne 2) {
+                    [int]$state.NaturalWmiAbsenceCalls -ne 2) {
                 Throw-VerifierInfrastructure 'paired null-initial natural exit did not return the original attested record after two current absence proofs.'
             }
 
@@ -7458,7 +7738,7 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                     -not [object]::ReferenceEquals($duringProof[0], $currentFirstRecord) -or
                     -not [object]::ReferenceEquals($duringProof[0].Process, $currentFirstProcess) -or
                     [int]$state.PreviouslyAttestedCalls -ne ($beforeCurrentExitHelpers + 1) -or
-                    [int]$state.NaturalCurrentCalls -ne 2) {
+                    [int]$state.NaturalWmiAbsenceCalls -ne 2) {
                 Throw-VerifierInfrastructure 'paired browser descendant current-proof exit did not reuse the original attestation and its two absence proofs.'
             }
 
@@ -7493,7 +7773,7 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                     [int]$state.FinalNonNullExitReleaseCalls -ne 1 -or
                     -not [bool]$state.ChildExited -or
                     [int]$state.PreviouslyAttestedCalls -ne ($beforeFinalExitHelpers + 1) -or
-                    [int]$state.NaturalCurrentCalls -ne 2) {
+                    [int]$state.NaturalWmiAbsenceCalls -ne 2) {
                 Throw-VerifierInfrastructure 'paired final non-null exit did not traverse the final exited-Process guard, retain the original attestation, and prove two current absences.'
             }
 
@@ -7586,11 +7866,12 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
             $state.Candidate = $positive.Candidate
             $state.ChildCurrentCalls = 0
             $state.NaturalCurrentCalls = 0
+            $state.NaturalWmiAbsenceCalls = 0
             $state.LateProofSlept = $false
             [void](Assert-PairedTypedFailure {
                 [void](Invoke-PairedDescendant $positive)
             } 'late-absence-proof')
-            if (-not $state.LateProofSlept -or [int]$state.NaturalCurrentCalls -ne 1) {
+            if (-not $state.LateProofSlept -or [int]$state.NaturalWmiAbsenceCalls -ne 1) {
                 Throw-VerifierInfrastructure 'late natural-exit absence proof did not stop inside the bounded helper.'
             }
 
@@ -7605,7 +7886,7 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
                 [void](Invoke-PairedDescendant $missing)
             } 'first-ever-unattested-missing-child')
             if ([int]$state.PreviouslyAttestedCalls -ne ($beforeMissingHelpers + 1) -or
-                    [int]$state.NaturalCurrentCalls -ne 0) {
+                    [int]$state.NaturalWmiAbsenceCalls -ne 0) {
                 Throw-VerifierInfrastructure 'first-ever missing child was treated as a retained natural exit.'
             }
 
@@ -7620,7 +7901,7 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
             } 'first-ever-unattested-exited-child')
             if ([int]$state.UnattestedNonNullExitedLookups -lt 1 -or
                     [int]$state.PreviouslyAttestedCalls -ne ($beforeMissingExitedHelpers + 1) -or
-                    [int]$state.NaturalCurrentCalls -ne 0) {
+                    [int]$state.NaturalWmiAbsenceCalls -ne 0) {
                 Throw-VerifierInfrastructure 'first-ever exited child was treated as a retained natural exit.'
             }
 
@@ -7630,6 +7911,7 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
             return [pscustomobject]@{
                 PositiveInitialAttestation = $true
                 PositiveNonNullExitedLookup = ([int]$state.NonNullExitedLookups -gt 0)
+                TransientWmiRetry = $true
                 PositiveNullInitialLookupExit = ([int]$state.NullInitialLookups -gt 0)
                 PositiveCurrentProofExit = $true
                 PositiveFinalNonNullExitGuard = ([int]$state.FinalNonNullExitLookups -eq 1 -and
@@ -7668,6 +7950,7 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
     }
     Assert-GateB ([bool]$probe.PositiveInitialAttestation -and
         [bool]$probe.PositiveNonNullExitedLookup -and
+        [bool]$probe.TransientWmiRetry -and
         [bool]$probe.PositiveNullInitialLookupExit -and
         [bool]$probe.PositiveCurrentProofExit -and
         [bool]$probe.PositiveFinalNonNullExitGuard -and
@@ -7681,7 +7964,807 @@ function Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary() {
         [bool]$probe.LateProofRejected -and
         [bool]$probe.NoNaturalExitStop) `
         'paired browser descendant disappearance canary did not validate every positive/negative lane'
-    Write-Host 'PASS:paired browser descendant natural-exit retention, final exited-Process guard, current-proof race, identity/attestation negatives, bounded absence, and no-stop contract'
+    Write-Host 'PASS:paired browser descendant natural-exit retention, transient-WMI retry, final exited-Process guard, current-proof race, identity/attestation negatives, bounded absence, and no-stop contract'
+}
+
+function Invoke-GateBBrowserContainmentJobCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for the browser containment-job canary.'
+    }
+    $probe = & $module[0] {
+        $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
+            ('TroubleshootJS\gate-b-browser-containment-' + [Guid]::NewGuid().ToString('N'))
+        $signalPath = Join-Path $canaryRoot 'release.signal'
+        $job = $null
+        $reopenedJob = $null
+        $parent = $null
+        $jobEmpty = $false
+        $jobDisposed = $false
+        $remnantsTerminated = $false
+        $retainedProcesses = New-Object Collections.ArrayList
+        $releaseWritten = $false
+        $cleanupErrors = New-Object Collections.ArrayList
+        try {
+            New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
+            $api = Initialize-VerifierBrowserContainmentJobApi
+            $jobName = 'Local\TroubleshootJS.Verifier.GateBContainment.' +
+                [Guid]::NewGuid().ToString('N')
+            $job = $api::CreateNew($jobName)
+            $shell = (Get-Command powershell.exe -ErrorAction Stop).Source
+            $escapedSignal = $signalPath.Replace("'", "''")
+            $childScript = "while (-not [IO.File]::Exists('$escapedSignal')) { Start-Sleep -Milliseconds 25 }"
+            $encodedChild = [Convert]::ToBase64String(
+                [Text.Encoding]::Unicode.GetBytes($childScript))
+            $escapedShell = $shell.Replace("'", "''")
+            # The atomically contained parent starts this child and exits.
+            # The child then proves that job membership survives a parent exit
+            # without relying on a readable browser marker or a PID/PPID stop.
+            $parentScript = "Start-Process -FilePath '$escapedShell' -ArgumentList @(" +
+                "'-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-EncodedCommand','$encodedChild') " +
+                '-WindowStyle Hidden | Out-Null'
+            $parentPid = [int](Start-VerifierBrowserProcessInContainmentJob `
+                -ContainmentJob $job -FilePath $shell -Arguments @(
+                    '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy',
+                    'Bypass', '-Command', $parentScript) `
+                -WorkingDirectory (Get-Location).Path)
+            $parent = Get-Process -Id $parentPid -ErrorAction Stop
+            $parent.Refresh()
+            if ([bool]$parent.HasExited -or [int]$parent.Id -ne $parentPid) {
+                Throw-VerifierInfrastructure 'browser containment canary did not retain a live Process handle after its durable launch PID.'
+            }
+            if (-not $parent.WaitForExit(5000)) {
+                Throw-VerifierInfrastructure 'browser containment canary parent did not exit naturally.'
+            }
+            $parent.Refresh()
+            if (-not [bool]$parent.HasExited) {
+                Throw-VerifierInfrastructure 'browser containment canary parent had no proven natural exit.'
+            }
+            $retainedAfterParentExit = $false
+            for ($attempt = 0; $attempt -lt 80; $attempt++) {
+                $members = @($job.GetMemberProcessIds())
+                if ($members.Count -gt 0 -and $members -notcontains $parentPid) {
+                    $retainedAfterParentExit = $true
+                    break
+                }
+                Start-Sleep -Milliseconds 25
+            }
+            if (-not $retainedAfterParentExit) {
+                Throw-VerifierInfrastructure 'browser containment canary did not retain the post-parent descendant in its exact job.'
+            }
+            # The verifier's original job handle can now disappear.  The
+            # launched parent was the only root-held query reference and has
+            # exited, so KILL_ON_JOB_CLOSE must naturally terminate every
+            # exact remaining job member instead of allowing this child to
+            # outlive its root.  Issued-contained recovery has a live browser
+            # root holding the same query-only reference; that distinct path
+            # is exercised below by Invoke-GateBIssuedContainedBrowserRecoveryCanary.
+            foreach ($memberId in $members) {
+                if ([int]$memberId -eq $parentPid) { continue }
+                try {
+                    $memberProcess = Get-Process -Id ([int]$memberId) -ErrorAction Stop
+                    $memberProcess.Refresh()
+                    if ([bool]$memberProcess.HasExited -or [int]$memberProcess.Id -ne [int]$memberId) {
+                        Throw-VerifierInfrastructure "browser containment canary could not retain a live exact job member PID $memberId before final-handle close."
+                    }
+                    [void]$retainedProcesses.Add($memberProcess)
+                } catch {
+                    if (Test-VerifierInfrastructureError $_) { throw }
+                    Throw-VerifierInfrastructure ('browser containment canary could not capture an exact retained job member before final-handle close: ' +
+                        (Get-VerifierErrorMessage $_))
+                }
+            }
+            if ($retainedProcesses.Count -eq 0) {
+                Throw-VerifierInfrastructure 'browser containment canary had no exact live descendant handle before final-handle close.'
+            }
+            $job.Dispose()
+            $job = $null
+            $jobDisposed = $true
+            foreach ($retainedProcess in @($retainedProcesses)) {
+                if (-not $retainedProcess.WaitForExit(5000)) {
+                    Throw-VerifierInfrastructure "browser containment canary exact member PID $($retainedProcess.Id) survived final containment-handle close."
+                }
+                $retainedProcess.Refresh()
+                if (-not [bool]$retainedProcess.HasExited) {
+                    Throw-VerifierInfrastructure "browser containment canary exact member PID $($retainedProcess.Id) had no proven termination after final containment-handle close."
+                }
+            }
+            $remnantsTerminated = $true
+            $jobWasClosed = $false
+            try {
+                $unexpectedJob = $api::OpenExisting($jobName)
+                try {
+                    $unexpectedMembers = @($unexpectedJob.GetMemberProcessIds())
+                    Throw-VerifierInfrastructure ('browser containment canary left a reopenable job after its final handle closed' +
+                        " [members=$($unexpectedMembers -join ',')].")
+                } finally {
+                    $unexpectedJob.Dispose()
+                }
+            } catch {
+                if (Test-VerifierInfrastructureError $_) { throw }
+                $jobWasClosed = $true
+            }
+            if (-not $jobWasClosed) {
+                Throw-VerifierInfrastructure 'browser containment canary did not prove the final containment handle and job name were gone.'
+            }
+            $jobEmpty = $true
+            return [pscustomobject]@{
+                ParentExited = [bool]$parent.HasExited
+                DescendantRetained = $retainedAfterParentExit
+                RemnantsTerminatedOnFinalHandleClose = $remnantsTerminated
+                JobClosedAfterFinalHandleClose = $jobWasClosed
+            }
+        } finally {
+            if (-not $releaseWritten -and (Test-Path -LiteralPath $canaryRoot)) {
+                try {
+                    [IO.File]::WriteAllText($signalPath, 'cleanup-release')
+                    $releaseWritten = $true
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($jobDisposed -and -not $remnantsTerminated -and
+                    -not $releaseWritten -and (Test-Path -LiteralPath $canaryRoot)) {
+                try {
+                    [IO.File]::WriteAllText($signalPath, 'post-close-cleanup-release')
+                    $releaseWritten = $true
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($jobDisposed -and -not $remnantsTerminated) {
+                foreach ($retainedProcess in @($retainedProcesses)) {
+                    try {
+                        if (-not [bool]$retainedProcess.HasExited -and
+                                -not $retainedProcess.WaitForExit(5000)) {
+                            throw "Exact containment canary member PID $($retainedProcess.Id) remained alive after its natural release signal."
+                        }
+                    } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+                }
+            }
+            $cleanupJob = if ($null -ne $reopenedJob) { $reopenedJob } else { $job }
+            if ($null -ne $cleanupJob -and -not $jobEmpty) {
+                try {
+                    $cleanupBudget = [Diagnostics.Stopwatch]::StartNew()
+                    $cleanupTicks = [long][Math]::Ceiling(
+                        ([double][Diagnostics.Stopwatch]::Frequency * 15000) / 1000.0)
+                    Wait-VerifierBrowserContainmentJobEmpty $cleanupJob $cleanupBudget $cleanupTicks
+                    $jobEmpty = $true
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $parent) {
+                try { $parent.Dispose() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            foreach ($retainedProcess in @($retainedProcesses)) {
+                try { $retainedProcess.Dispose() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $reopenedJob) {
+                try { $reopenedJob.Dispose() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $job) {
+                try { $job.Dispose() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($jobEmpty -and (Test-Path -LiteralPath $canaryRoot)) {
+                try {
+                    Remove-VerifierOwnedTree (Get-VerifierFullPath ([IO.Path]::GetTempPath())) $canaryRoot
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($cleanupErrors.Count -gt 0) {
+                Throw-VerifierInfrastructure ('browser containment canary cleanup failed: ' +
+                    ($cleanupErrors -join '; '))
+            }
+        }
+    }
+    Assert-GateB ($probe.ParentExited -and $probe.DescendantRetained -and
+        $probe.RemnantsTerminatedOnFinalHandleClose -and
+        $probe.JobClosedAfterFinalHandleClose) `
+        'browser containment job did not retain an exact descendant then terminate it when the final root/verifier handle closed'
+    Write-Host 'PASS:atomically assigned no-breakaway browser job retained a post-parent descendant, then KILL_ON_JOB_CLOSE removed it with the final exact handle'
+}
+
+function Invoke-GateBIssuedContainedBrowserRecoveryCanary([switch]$LaunchLedgerPublication) {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for the issued-contained recovery canary.'
+    }
+    $canaryRoot = Join-Path ([IO.Path]::GetTempPath()) `
+        ('TroubleshootJS\gate-b-issued-contained-recovery-' + [Guid]::NewGuid().ToString('N'))
+    $childScriptPath = Join-Path $canaryRoot 'issued-contained-child.ps1'
+    $childResultPath = Join-Path $canaryRoot 'issued-contained-child.json'
+    $recoveryScriptPath = Join-Path $canaryRoot 'issued-contained-recovery.ps1'
+    $recoveryFailureResultPath = Join-Path $canaryRoot 'issued-contained-recovery-failure.json'
+    $recoverySuccessResultPath = Join-Path $canaryRoot 'issued-contained-recovery-success.json'
+    $runRoot = ''
+    $manifestPath = ''
+    $primaryFailure = $null
+    $cleanupErrors = New-Object Collections.ArrayList
+    $failureMode = if ($LaunchLedgerPublication) { 'ledger' } else { 'handle' }
+    try {
+        New-Item -ItemType Directory -Path $canaryRoot -Force -ErrorAction Stop | Out-Null
+        $childSource = @'
+param([string]$ModulePath, [string]$RepositoryRoot, [string]$CanaryRoot, [string]$ResultPath,
+    [string]$FailureMode)
+$ErrorActionPreference = 'Stop'
+# Import-Module has no -LiteralPath parameter. ModulePath is passed as one
+# exact generated path argument by this canary; -Force makes this child load
+# the candidate implementation rather than a prior session module.
+Import-Module $ModulePath -Force
+$context = New-VerifierRunContext $RepositoryRoot $CanaryRoot
+if ($FailureMode -eq 'handle') {
+    $context.TestHooks.FailNextBrowserContainmentHandleAcquire = $true
+    $expectedFailure = 'post-containment-launch Process-handle acquisition failure'
+} elseif ($FailureMode -eq 'ledger') {
+    $context.TestHooks.FailNextBrowserContainmentLaunchLedgerPublish = $true
+    $expectedFailure = 'post-CreateProcess containment launch-ledger publication failure'
+} else {
+    exit 4
+}
+$context.TestHooks.FailNextIssuedContainedRecovery = $true
+$threw = $false
+$message = ''
+try {
+    [void](New-VerifierBrowserSession $context 'issued-contained-recovery' 'about:blank' '' 45)
+} catch {
+    $threw = Test-VerifierInfrastructureError $_
+    $message = Get-VerifierErrorMessage $_
+}
+$manifest = Get-Content -LiteralPath $context.ManifestPath -Raw | ConvertFrom-Json
+$session = @($manifest.browserSessions)[0]
+$result = [ordered]@{
+    threw = $threw
+    message = $message
+    manifestPath = $context.ManifestPath
+    runRoot = $context.RunRoot
+    cleanupState = $manifest.cleanup.state
+    sessionStatus = $session.status
+    cleanupResult = $session.cleanupResult
+    receiptState = $session.recoveryReceipt.state
+    launchState = $session.containmentLaunch.state
+    launchProcessId = $session.containmentLaunch.launchProcessId
+    sessionProcessId = $session.processId
+    failureMode = $FailureMode
+}
+[IO.File]::WriteAllText($ResultPath, ($result | ConvertTo-Json -Compress), [Text.UTF8Encoding]::new($false))
+if (-not $threw -or $message -notmatch $expectedFailure) { exit 3 }
+exit 0
+'@
+        [IO.File]::WriteAllText($childScriptPath, $childSource,
+            [Text.UTF8Encoding]::new($false))
+        $recoverySource = @'
+param([string]$ModulePath, [string]$ManifestPath, [string]$ResultPath,
+    [switch]$InjectListenerBindFailure)
+$ErrorActionPreference = 'Stop'
+Import-Module $ModulePath -Force
+$success = $false
+$typed = $false
+$message = ''
+try {
+    if ($InjectListenerBindFailure) {
+        [void](Invoke-VerifierRetainedBrowserRecovery $ManifestPath `
+            -TestFailAfterIssuedContainedRootReattestation)
+    } else {
+        [void](Invoke-VerifierRetainedBrowserRecovery $ManifestPath)
+    }
+    $success = $true
+} catch {
+    $typed = Test-VerifierInfrastructureError $_
+    $message = Get-VerifierErrorMessage $_
+}
+[IO.File]::WriteAllText($ResultPath, ([ordered]@{
+    success = $success
+    typed = $typed
+    message = $message
+    manifestPath = $ManifestPath
+} | ConvertTo-Json -Compress), [Text.UTF8Encoding]::new($false))
+exit 0
+'@
+        [IO.File]::WriteAllText($recoveryScriptPath, $recoverySource,
+            [Text.UTF8Encoding]::new($false))
+        $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
+        $child = Invoke-GateBBoundedProcess $powershell @(
+            '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+            '-File', $childScriptPath,
+            '-ModulePath', (Join-Path $PSScriptRoot 'VerifierIsolation.psm1'),
+            '-RepositoryRoot', $repositoryRoot,
+            '-CanaryRoot', $canaryRoot,
+            '-ResultPath', $childResultPath,
+            '-FailureMode', $failureMode) 90000 'issued-contained browser recovery child'
+        Assert-GateB ($child.TerminationProven -and [int]$child.ExitCode -eq 0 -and
+            (Test-Path -LiteralPath $childResultPath -PathType Leaf)) `
+            'issued-contained recovery child did not terminate with its exact durable failure evidence'
+        $childResult = Get-Content -LiteralPath $childResultPath -Raw | ConvertFrom-Json
+        $manifestPath = Get-VerifierFullPath ([string]$childResult.manifestPath)
+        $runRoot = Get-VerifierFullPath ([string]$childResult.runRoot)
+        # New-VerifierBrowserSession records the failed session transaction but
+        # does not complete the enclosing run. Its run cleanup stays pending so
+        # the separate retained-recovery process can resume the exact receipt.
+        $expectedLaunchState = if ($LaunchLedgerPublication) { 'launch-pending' } else { 'launched' }
+        $expectedFailure = if ($LaunchLedgerPublication) {
+            'post-CreateProcess containment launch-ledger publication failure'
+        } else {
+            'post-containment-launch Process-handle acquisition failure'
+        }
+        $launchEvidenceValid = if ($LaunchLedgerPublication) {
+            [int]$childResult.launchProcessId -eq 0
+        } else {
+            [int]$childResult.launchProcessId -gt 0
+        }
+        Assert-GateB ($childResult.threw -and
+            $childResult.failureMode -eq $failureMode -and
+            $childResult.message -match $expectedFailure -and
+            $childResult.cleanupState -eq 'pending' -and
+            $childResult.sessionStatus -eq 'cleanup-failed' -and
+            $childResult.cleanupResult -eq 'infrastructure-failure' -and
+            $childResult.receiptState -eq 'issued' -and
+            $childResult.launchState -eq $expectedLaunchState -and
+            $launchEvidenceValid -and
+            [int]$childResult.sessionProcessId -eq 0) `
+            'post-CreateProcess failure did not retain only the exact issued containment job/launch evidence for durable recovery'
+        Assert-GateB (Test-Path -LiteralPath $manifestPath -PathType Leaf) `
+            'issued-contained recovery child did not retain its exact failed manifest'
+        $listenerBindRecovery = Invoke-GateBBoundedProcess $powershell @(
+            '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+            '-File', $recoveryScriptPath,
+            '-ModulePath', (Join-Path $PSScriptRoot 'VerifierIsolation.psm1'),
+            '-ManifestPath', $manifestPath,
+            '-ResultPath', $recoveryFailureResultPath,
+            '-InjectListenerBindFailure') 90000 'issued-contained post-reattest listener recovery'
+        Assert-GateB ($listenerBindRecovery.TerminationProven -and
+            [int]$listenerBindRecovery.ExitCode -eq 0 -and
+            (Test-Path -LiteralPath $recoveryFailureResultPath -PathType Leaf)) `
+            'issued-contained post-reattest listener recovery child did not terminate with exact failure evidence'
+        $listenerBindFailure = Get-Content -LiteralPath $recoveryFailureResultPath -Raw | ConvertFrom-Json
+        Assert-GateB (-not $listenerBindFailure.success -and $listenerBindFailure.typed) `
+            'issued-contained recovery did not fail closed at the injected post-reattest listener boundary'
+        $postBindFailureManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+        $postBindFailureSession = @($postBindFailureManifest.browserSessions)[0]
+        $postBindFailureLease = @($postBindFailureManifest.leases)[0]
+        $postBindLaunchEvidenceValid = if ($LaunchLedgerPublication) {
+            [int]$postBindFailureSession.containmentLaunch.launchProcessId -eq 0
+        } else {
+            [int]$postBindFailureSession.containmentLaunch.launchProcessId -gt 0
+        }
+        Assert-GateB ($postBindFailureManifest.cleanup.state -eq 'infrastructure-failure' -and
+            $postBindFailureSession.status -eq 'cleanup-failed' -and
+            $postBindFailureSession.cleanupResult -eq 'infrastructure-failure' -and
+            $postBindFailureSession.error -match
+                'listener-bind failure after root reattestation' -and
+            $postBindFailureSession.recoveryReceipt.state -eq 'issued' -and
+            [int]$postBindFailureSession.processId -eq 0 -and
+            [long]$postBindFailureSession.processStartTicks -eq 0 -and
+            [int]$postBindFailureSession.processParentProcessId -eq 0 -and
+            [long]$postBindFailureSession.processParentProcessStartTicks -eq 0 -and
+            [string]::IsNullOrWhiteSpace([string]$postBindFailureSession.processCommandLine) -and
+            $postBindFailureSession.containmentLaunch.state -eq $expectedLaunchState -and
+            $postBindLaunchEvidenceValid -and
+            $postBindFailureLease.status -eq 'leased' -and
+            $postBindFailureLease.claimState -eq 'held' -and
+            [int]$postBindFailureLease.boundProcessId -eq 0 -and
+            [int]$postBindFailureLease.listenerProcessId -eq 0) `
+            'post-reattest listener failure published a partial root/lease/receipt state instead of the exact issued containment ledger'
+        $recoveryChild = Invoke-GateBBoundedProcess $powershell @(
+            '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+            '-File', $recoveryScriptPath,
+            '-ModulePath', (Join-Path $PSScriptRoot 'VerifierIsolation.psm1'),
+            '-ManifestPath', $manifestPath,
+            '-ResultPath', $recoverySuccessResultPath) 90000 'issued-contained final retained recovery'
+        Assert-GateB ($recoveryChild.TerminationProven -and
+            [int]$recoveryChild.ExitCode -eq 0 -and
+            (Test-Path -LiteralPath $recoverySuccessResultPath -PathType Leaf)) `
+            'issued-contained final retained recovery child did not terminate with exact result evidence'
+        $recovery = Get-Content -LiteralPath $recoverySuccessResultPath -Raw | ConvertFrom-Json
+        Assert-GateB ($recovery.success -and $recovery.manifestPath -ceq $manifestPath) `
+            'issued-contained recovery did not complete the exact retained browser transaction'
+        $finalManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+        $finalSession = @($finalManifest.browserSessions)[0]
+        $finalLease = @($finalManifest.leases)[0]
+        Assert-GateB ($finalManifest.cleanup.state -eq 'complete' -and
+            $finalSession.status -eq 'cleaned' -and
+            $finalSession.cleanupResult -eq 'complete' -and
+            $finalSession.recoveryReceipt.state -eq 'closed' -and
+            $finalSession.containmentLaunch.state -eq 'launched' -and
+            ((-not $LaunchLedgerPublication -and
+              [int]$finalSession.containmentLaunch.launchProcessId -eq
+                [int]$childResult.launchProcessId) -or
+             ($LaunchLedgerPublication -and
+              [int]$finalSession.containmentLaunch.launchProcessId -gt 0)) -and
+            $finalLease.status -eq 'released' -and
+            $finalLease.claimState -eq 'released' -and
+            -not (Test-Path -LiteralPath $finalLease.path) -and
+            -not (Test-Path -LiteralPath $finalSession.profile)) `
+            'issued-contained recovery did not close the receipt and release only its exact profile/claim resources'
+        # The final root's duplicated query handle is released after its job
+        # membership drains. Do not repeatedly reopen the named job here: each
+        # probe itself prolongs the kernel object's lifetime. One bounded grace
+        # interval followed by one exact open attempt proves the name vanished.
+        Start-Sleep -Milliseconds 10000
+        $jobDisposed = & $module[0] {
+            param($innerContext, $innerSession)
+            $jobName = [string]$innerSession.containmentLaunch.jobName
+            $api = Initialize-VerifierBrowserContainmentJobApi
+            try {
+                $job = $api::OpenExisting($jobName)
+                try { return $false } finally { $job.Dispose() }
+            } catch { return $true }
+        } $null $finalSession
+        Assert-GateB $jobDisposed `
+            'issued-contained recovery left the exact browser containment job reopenable after natural Browser.close'
+    } catch {
+        $primaryFailure = $_
+    } finally {
+        if ($null -eq $primaryFailure -and -not [String]::IsNullOrWhiteSpace($runRoot) -and
+                (Test-Path -LiteralPath $runRoot)) {
+            try {
+                $verifyRoot = Join-Path ([IO.Path]::GetTempPath()) 'TroubleshootJS\verify'
+                Remove-VerifierOwnedTree $verifyRoot $runRoot
+            } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+        }
+        if ($null -eq $primaryFailure -and (Test-Path -LiteralPath $canaryRoot)) {
+            try {
+                Remove-VerifierOwnedTree (Get-VerifierFullPath ([IO.Path]::GetTempPath())) $canaryRoot
+            } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+        }
+    }
+    if ($null -ne $primaryFailure) {
+        if (Test-VerifierInfrastructureError $primaryFailure) { throw $primaryFailure }
+        Throw-GateBInfrastructure ('issued-contained browser recovery canary failed; exact retained evidence remains at ' +
+            $canaryRoot + ': ' + (Get-VerifierErrorMessage $primaryFailure))
+    }
+    if ($cleanupErrors.Count -gt 0) {
+        Throw-GateBInfrastructure ('issued-contained browser recovery canary cleanup failed: ' +
+            ($cleanupErrors -join '; '))
+    }
+    if ($LaunchLedgerPublication) {
+        Write-Host 'PASS:pre-ledger durable launch intent reattached the exact contained root after parent exit and recovered it without PID termination'
+    } else {
+        Write-Host 'PASS:post-CreateProcess handle failure retained the exact no-breakaway launch ledger and recovered it after parent exit without PID termination'
+    }
+}
+
+function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
+    $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+    if ($module.Count -ne 1) {
+        Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for the bound-receipt recovery boundary canary.'
+    }
+    $missingReceipt = & $module[0] {
+        $savedManifest = (Get-Command Assert-VerifierDurableManifestContext `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $savedSession = (Get-Command Assert-VerifierDurableBrowserSession `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $savedWrite = (Get-Command Write-VerifierManifest `
+            -CommandType Function -ErrorAction Stop).ScriptBlock
+        $script:GateBBoundReceiptMissingWrites = 0
+        try {
+            Set-Item Function:\Assert-VerifierDurableManifestContext -Force -Value { param($Context) }
+            Set-Item Function:\Assert-VerifierDurableBrowserSession -Force -Value {
+                param($Session, $Context, $Label)
+            }
+            Set-Item Function:\Write-VerifierManifest -Force -Value {
+                param($Context)
+                $script:GateBBoundReceiptMissingWrites++
+            }
+            $typed = $false
+            try {
+                Complete-VerifierBrowserSession ([pscustomobject]@{}) `
+                    ([pscustomobject]@{ RecoveryReceipt = $null })
+            } catch { $typed = Test-VerifierInfrastructureError $_ }
+            return [pscustomobject]@{
+                Typed = $typed; Writes = [int]$script:GateBBoundReceiptMissingWrites
+            }
+        } finally {
+            Set-Item Function:\Assert-VerifierDurableManifestContext -Force -Value $savedManifest
+            Set-Item Function:\Assert-VerifierDurableBrowserSession -Force -Value $savedSession
+            Set-Item Function:\Write-VerifierManifest -Force -Value $savedWrite
+            Remove-Variable -Name GateBBoundReceiptMissingWrites -Scope Script `
+                -Force -ErrorAction SilentlyContinue
+        }
+    }
+
+    $protectedHelper = & $module[0] {
+        $functionNames = @(
+            'Get-VerifierProcessById',
+            'Get-VerifierProcessRecordsByIdWithFallback',
+            'Get-VerifierProcessRecordsByParentWithFallback',
+            'Get-VerifierProcessStartTicks',
+            'Stop-VerifierVerifiedProcessExactly')
+        $saved = @{}
+        foreach ($name in $functionNames) {
+            $saved[$name] = (Get-Command $name -CommandType Function -ErrorAction Stop).ScriptBlock
+        }
+        $scope = $null
+        $reuseScope = $null
+        $escapedGrandchildScope = $null
+        $startCaptureScope = $null
+        $leafNatural = $false
+        $leafSnapshotRejected = $false
+        $startCaptureExitAccepted = $false
+        $child = $null
+        $releasePath = Join-Path ([IO.Path]::GetTempPath()) `
+            ('TroubleshootJS-gate-b-bound-receipt-' + [Guid]::NewGuid().ToString('N') + '.signal')
+        $cleanupErrors = New-Object Collections.ArrayList
+        try {
+            $shell = (Get-Command powershell.exe -ErrorAction Stop).Source
+            $command = "while (-not [IO.File]::Exists('$releasePath')) { Start-Sleep -Milliseconds 25 }"
+            $child = Start-VerifierProcess $shell @(
+                '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy',
+                'Bypass', '-Command', $command)
+            $childWmi = @(& $saved['Get-VerifierProcessRecordsByIdWithFallback'] `
+                ([int]$child.Id) 'bound-receipt protected-helper fixture')
+            if ($childWmi.Count -ne 1 -or $null -eq $childWmi[0]) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture had no unique current WMI record.'
+            }
+            $rootProcess = Get-Process -Id ([int]$PID) -ErrorAction Stop
+            $rootWmi = @(& $saved['Get-VerifierProcessRecordsByIdWithFallback'] `
+                ([int]$PID) 'bound-receipt protected-helper root')
+            if ($rootWmi.Count -ne 1 -or $null -eq $rootWmi[0]) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture could not retain its current root record.'
+            }
+            $rawChild = [pscustomobject]@{
+                ProcessId = [int]$childWmi[0].ProcessId
+                ParentProcessId = [int]$childWmi[0].ParentProcessId
+                Name = if ($childWmi[0].PSObject.Properties['Name']) {
+                    [string]$childWmi[0].Name
+                } else { 'powershell.exe' }
+                ExecutablePath = $shell
+                # Null is the protected/uninspectable helper condition. The
+                # receipt path must retain it for natural shutdown rather than
+                # ignore it or authorize a stop by PID/PPID.
+                CommandLine = $null
+                CreationDate = $childWmi[0].CreationDate
+            }
+            if ([int]$rawChild.ParentProcessId -ne [int]$PID) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture was not a direct child of the canary root.'
+            }
+            $rootRecord = [pscustomobject]@{
+                Process = $rootProcess; ProcessId = [int]$PID
+                ProcessStartTicks = [long](Get-VerifierProcessStartTicks $rootProcess)
+                ParentProcessId = [int]$rootWmi[0].ParentProcessId
+                ParentProcessStartTicks = 1L
+                Name = if ($rootWmi[0].PSObject.Properties['Name']) {
+                    [string]$rootWmi[0].Name
+                } else { 'powershell.exe' }
+                ExecutablePath = $shell
+                CommandLine = [string]$rootWmi[0].CommandLine
+            }
+            if ([long]$rootRecord.ProcessStartTicks -le 0 -or
+                    [String]::IsNullOrWhiteSpace($rootRecord.CommandLine)) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture could not retain a complete live root identity.'
+            }
+            $state = [pscustomobject]@{
+                RootPid = [int]$PID; ChildPid = [int]$rawChild.ProcessId
+                ChildProcess = $child; RawChild = $rawChild; ChildPresent = $true
+                IdentityMode = 'current'; HideDirectChild = $false
+                ReusedRawChild = $null; EscapedGrandchild = $null
+                FailStartCapture = $false
+                StopCalls = 0
+            }
+            $state.ReusedRawChild = [pscustomobject]@{
+                ProcessId = [int]$rawChild.ProcessId
+                ParentProcessId = [int]$rawChild.ParentProcessId
+                Name = [string]$rawChild.Name
+                ExecutablePath = [string]$rawChild.ExecutablePath
+                CommandLine = $null
+                CreationDate = $rawChild.CreationDate.AddSeconds(1)
+            }
+            $state.EscapedGrandchild = [pscustomobject]@{
+                ProcessId = 2147482999
+                ParentProcessId = [int]$rawChild.ProcessId
+                Name = 'markerless-grandchild.exe'
+                ExecutablePath = $shell
+                CommandLine = $null
+                CreationDate = $rawChild.CreationDate.AddSeconds(2)
+            }
+            $script:GateBBoundReceiptState = $state
+            Set-Item Function:\Get-VerifierProcessById -Force -Value {
+                param($ProcessId)
+                $s = $script:GateBBoundReceiptState
+                if ([int]$ProcessId -eq [int]$s.ChildPid) {
+                    if ($s.HideDirectChild) { return $null }
+                    return $s.ChildProcess
+                }
+                return & $saved['Get-VerifierProcessById'] $ProcessId
+            }
+            Set-Item Function:\Get-VerifierProcessRecordsByIdWithFallback -Force -Value {
+                param($ProcessId, $Purpose)
+                $s = $script:GateBBoundReceiptState
+                if ([int]$ProcessId -eq [int]$s.ChildPid) {
+                    if ($s.IdentityMode -eq 'reused') { return @($s.ReusedRawChild) }
+                    if ($s.ChildPresent) { return @($s.RawChild) }
+                    return @()
+                }
+                return & $saved['Get-VerifierProcessRecordsByIdWithFallback'] $ProcessId $Purpose
+            }
+            Set-Item Function:\Get-VerifierProcessRecordsByParentWithFallback -Force -Value {
+                param($ParentProcessId, $Purpose)
+                $s = $script:GateBBoundReceiptState
+                if ([int]$ParentProcessId -eq [int]$s.RootPid) {
+                    if ($s.ChildPresent) { return @($s.RawChild) }
+                    return @()
+                }
+                if ([int]$ParentProcessId -eq [int]$s.ChildPid) {
+                    if ($s.HideDirectChild) { return @($s.EscapedGrandchild) }
+                    return @()
+                }
+                return & $saved['Get-VerifierProcessRecordsByParentWithFallback'] $ParentProcessId $Purpose
+            }
+            Set-Item Function:\Get-VerifierProcessStartTicks -Force -Value {
+                param($Process, $StartTimeAccessor = $null)
+                $s = $script:GateBBoundReceiptState
+                $processId = 0
+                try { $processId = [int]$Process.Id } catch { $processId = 0 }
+                if ($processId -eq [int]$s.ChildPid -and $s.FailStartCapture) {
+                    $s.FailStartCapture = $false
+                    [IO.File]::WriteAllText($releasePath, 'start-identity-race')
+                    if (-not $s.ChildProcess.WaitForExit(15000)) {
+                        Throw-VerifierInfrastructure 'bound-receipt protected-helper start-capture fixture did not naturally exit.'
+                    }
+                    $s.ChildPresent = $false
+                    Throw-VerifierInfrastructure 'Injected protected-helper exit during retained start-identity capture.'
+                }
+                return & $saved['Get-VerifierProcessStartTicks'] $Process $StartTimeAccessor
+            }
+            Set-Item Function:\Stop-VerifierVerifiedProcessExactly -Force -Value {
+                param($Context, $Record, $WaitMilliseconds)
+                $script:GateBBoundReceiptState.StopCalls++
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper canary observed an unauthorized stop attempt.'
+            }
+            $scope = New-VerifierBrowserDrainScope
+            $snapshot = @(
+                $rawChild,
+                [pscustomobject]@{
+                    ProcessId = 2147483000; ParentProcessId = 1; Name = 'unrelated.exe'
+                    ExecutablePath = $shell; CommandLine = $null
+                    CreationDate = $rootWmi[0].CreationDate
+                })
+            $descendants = @(Get-VerifierBoundReceiptNaturalShutdownDescendants `
+                $rootRecord $snapshot $scope)
+            if ($descendants.Count -ne 1 -or -not $descendants[0].ObservationOnly -or
+                    $descendants[0].CommandLine -cne '' -or
+                    $descendants[0].Process.GetType() -ne [Diagnostics.Process]) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper was not retained as one observation-only natural-shutdown record.'
+            }
+            # The visible tuple is intentionally unchanged while CreationDate
+            # differs. A PID reuse cannot be adopted just because name/path/
+            # command data still resemble the original protected helper.
+            $reusedRejected = $false
+            $state.IdentityMode = 'reused'
+            $reuseScope = New-VerifierBrowserDrainScope
+            try {
+                [void]@(Get-VerifierBoundReceiptNaturalShutdownDescendants `
+                    $rootRecord $snapshot $reuseScope)
+            } catch {
+                $reusedRejected = Test-VerifierInfrastructureError $_
+            } finally {
+                $state.IdentityMode = 'current'
+                if ($null -ne $reuseScope) {
+                    try {
+                        foreach ($failure in @(Dispose-VerifierBrowserDrainScope $reuseScope)) {
+                            [void]$cleanupErrors.Add([string]$failure)
+                        }
+                    } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+                    $reuseScope = $null
+                }
+            }
+            if (-not $reusedRejected) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper census accepted a same-visible-field PID/start reuse.'
+            }
+            # A direct helper that vanished before native retention could have
+            # spawned this otherwise markerless/null-command grandchild after
+            # the snapshot. The census must retain the run rather than allow
+            # Browser.close based on an unprovable PID absence.
+            $escapedGrandchildRejected = $false
+            $state.HideDirectChild = $true
+            $escapedGrandchildScope = New-VerifierBrowserDrainScope
+            try {
+                [void]@(Get-VerifierBoundReceiptNaturalShutdownDescendants `
+                    $rootRecord $snapshot $escapedGrandchildScope)
+            } catch {
+                $escapedGrandchildRejected = Test-VerifierInfrastructureError $_
+            } finally {
+                $state.HideDirectChild = $false
+                if ($null -ne $escapedGrandchildScope) {
+                    try {
+                        foreach ($failure in @(Dispose-VerifierBrowserDrainScope $escapedGrandchildScope)) {
+                            [void]$cleanupErrors.Add([string]$failure)
+                        }
+                    } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+                    $escapedGrandchildScope = $null
+                }
+            }
+            if (-not $escapedGrandchildRejected) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper census accepted a disappearing direct child with an escaped grandchild.'
+            }
+            # Exit after the initial live Refresh but before the first retained
+            # start-identity read. The candidate has no snapshot descendants,
+            # so only the existing parent-plus-two-absence proof may permit it
+            # to disappear before native attestation.
+            $state.FailStartCapture = $true
+            $startCaptureScope = New-VerifierBrowserDrainScope
+            $startCaptureDescendants = @(Get-VerifierBoundReceiptNaturalShutdownDescendants `
+                $rootRecord $snapshot $startCaptureScope)
+            $startCaptureExitAccepted = ($startCaptureDescendants.Count -eq 0 -and
+                -not $state.ChildPresent -and [int]$state.StopCalls -eq 0)
+            if (-not $startCaptureExitAccepted) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper start-identity race was not resolved through exact natural absence proof.'
+            }
+            # The retained direct helper has now naturally exited after its
+            # original live attestation. Its leaf branch is safe to omit from
+            # further census only after exact natural-exit and child-absence
+            # proof; a snapshot child must still reject fail-closed.
+            $leafNatural = Confirm-VerifierBoundReceiptObservedLeafNaturalExit `
+                $scope $descendants[0] @{}
+            $leafSnapshot = @{}
+            $leafSnapshot[[int]$rawChild.ProcessId] = New-Object Collections.ArrayList
+            [void]$leafSnapshot[[int]$rawChild.ProcessId].Add($state.EscapedGrandchild)
+            try {
+                [void](Confirm-VerifierBoundReceiptObservedLeafNaturalExit `
+                    $scope $descendants[0] $leafSnapshot)
+            } catch {
+                $leafSnapshotRejected = Test-VerifierInfrastructureError $_
+            }
+            if (-not $leafSnapshotRejected) {
+                Throw-VerifierInfrastructure 'bound-receipt exited protected-helper leaf accepted an unretained snapshot child branch.'
+            }
+            $natural = Get-VerifierBrowserDrainNaturalExitResult $scope $descendants[0]
+            if ($null -eq $natural -or [int]$state.StopCalls -ne 0) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper natural exit was not proven without a stop attempt.'
+            }
+            return [pscustomobject]@{
+                Retained = $true; Natural = $true; ReuseRejected = $reusedRejected
+                EscapedGrandchildRejected = $escapedGrandchildRejected
+                StartCaptureExitAccepted = [bool]$startCaptureExitAccepted
+                LeafNatural = [bool]$leafNatural
+                LeafSnapshotRejected = [bool]$leafSnapshotRejected
+                Stops = [int]$state.StopCalls
+            }
+        } finally {
+            if ($null -ne $child) {
+                try {
+                    $child.Refresh()
+                    if (-not $child.HasExited) {
+                        [IO.File]::WriteAllText($releasePath, 'cleanup-release')
+                        [void]$child.WaitForExit(15000)
+                    }
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $scope) {
+                try {
+                    foreach ($failure in @(Dispose-VerifierBrowserDrainScope $scope)) {
+                        [void]$cleanupErrors.Add([string]$failure)
+                    }
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $startCaptureScope) {
+                try {
+                    foreach ($failure in @(Dispose-VerifierBrowserDrainScope $startCaptureScope)) {
+                        [void]$cleanupErrors.Add([string]$failure)
+                    }
+                } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if ($null -ne $child) {
+                try { $child.Dispose() } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+            }
+            if (Test-Path -LiteralPath $releasePath) {
+                try { Remove-Item -LiteralPath $releasePath -Force -ErrorAction Stop } catch {
+                    [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_))
+                }
+            }
+            foreach ($name in $functionNames) {
+                Set-Item -LiteralPath ('Function:\' + $name) -Value $saved[$name] -Force
+            }
+            Remove-Variable -Name GateBBoundReceiptState -Scope Script -Force `
+                -ErrorAction SilentlyContinue
+            if ($cleanupErrors.Count -gt 0) {
+                Throw-VerifierInfrastructure ('bound-receipt protected-helper fixture cleanup failed: ' +
+                    ($cleanupErrors -join '; '))
+            }
+        }
+    }
+    Assert-GateB ($missingReceipt.Typed -and $missingReceipt.Writes -eq 0) `
+        'browser cleanup accepted a missing receipt or reached a legacy cleanup/write path'
+    Assert-GateB ($protectedHelper.Retained -and $protectedHelper.Natural -and
+        $protectedHelper.ReuseRejected -and $protectedHelper.EscapedGrandchildRejected -and
+        $protectedHelper.StartCaptureExitAccepted -and
+        $protectedHelper.LeafNatural -and $protectedHelper.LeafSnapshotRejected -and
+        $protectedHelper.Stops -eq 0) `
+        'bound receipt did not retain an uninspectable helper, prove an exited leaf, reject PID/start reuse and unretained child branches, and avoid stops'
+    Write-Host 'PASS:bound receipt rejects missing authority, PID/start reuse, and unretained child branches while naturally proving null-command helpers and exited leaves'
 }
 
 function Invoke-GateBBrowserNaturalShutdownCanary() {
@@ -10408,6 +11491,26 @@ function New-GateBCanaryBrowserRecord($Context, $Lease, [string]$RouteName,
         New-Item -ItemType Directory -Path $profile -Force -ErrorAction Stop | Out-Null
         $Lease.ProfilePath = Get-VerifierFullPath $profile
         $Lease.OwnerType = 'browser'
+        # Even synthetic startup-failure fixtures participate in the current
+        # durable receipt contract. They remain in the issued/unbound state,
+        # which cannot authorize Browser.close but lets the existing exact
+        # process-tree cleanup exercise its intended pre-bind path.
+        $recoveryReceipt = [pscustomobject]@{
+            Protocol = 'troubleshootjs-verifier-browser-recovery-v1'
+            AuthorityToken = (([Guid]::NewGuid().ToString('N') +
+                [Guid]::NewGuid().ToString('N')).ToLowerInvariant())
+            IssuedUtc = Get-VerifierUtcText
+            State = 'issued'; BoundUtc = ''; ClosedUtc = ''
+            CloseAttempted = $false; CloseAttemptedUtc = ''
+            RunId = $Context.RunId; RepositoryIdentity = $Context.RepositoryIdentity
+            WorktreeRoot = $Context.WorktreeRoot; RouteId = $routeId; RouteName = $RouteName
+            BrowserPath = $BrowserPath; Profile = Get-VerifierFullPath $profile
+            LeaseId = $Lease.LeaseId; CdpPort = $Lease.Port
+            RootProcessId = 0; RootProcessStartTicks = 0L
+            RootParentProcessId = 0; RootParentProcessStartTicks = 0L
+            RootProcessCommandLine = ''
+            ListenerProcessId = 0; ListenerProcessStartTicks = 0L
+        }
         $record = [pscustomobject]@{
             RunId = $Context.RunId; RepositoryIdentity = $Context.RepositoryIdentity
             WorktreeRoot = $Context.WorktreeRoot
@@ -10419,8 +11522,24 @@ function New-GateBCanaryBrowserRecord($Context, $Lease, [string]$RouteName,
             TargetId = ''; ExpectedUrl = ''
             Status = 'leased'; CleanupResult = 'pending'; Error = ''
             ProfileInspectionFailed = $false; ProfileProcessScanCompleted = $false
-            Runtime = [pscustomobject]@{ Browser = $null; Socket = $null }
+            RecoveryReceipt = $recoveryReceipt
+            ContainmentLaunch = $null
+            Runtime = [pscustomobject]@{
+                Browser = $null; Socket = $null; ContainmentJob = $null
+            }
         }
+        $module = @(Get-Module VerifierIsolation | Select-Object -First 1)
+        if ($module.Count -ne 1) {
+            Throw-GateBInfrastructure 'VerifierIsolation module was unavailable for the canary containment launch record.'
+        }
+        $record.ContainmentLaunch = & $module[0] {
+            param($innerContext, $innerRecord)
+            [pscustomobject]@{
+                Protocol = 'troubleshootjs-verifier-browser-containment-launch-v1'
+                JobName = Get-VerifierBrowserContainmentJobName $innerContext $innerRecord
+                State = 'unlaunched'; LaunchProcessId = 0; LaunchedUtc = ''
+            }
+        } $Context $record
         [void]$Context.BrowserSessions.Add($record)
         Write-VerifierManifest $Context
         return $record
@@ -12361,6 +13480,10 @@ function Invoke-GateBIsolationCanary([switch]$SkipArgumentPathCanary) {
         # of the supplemental live-Edge lane while still exercising the exact
         # root executable/parent/start/profile/port ownership proof.
         $browserPath = (Get-Command wscript.exe -ErrorAction Stop).Source
+        $verifierModule = @(Get-Module VerifierIsolation | Select-Object -First 1)
+        if ($verifierModule.Count -ne 1) {
+            Throw-GateBInfrastructure 'isolation canary could not enter the verifier containment launch boundary'
+        }
         if (-not $SkipArgumentPathCanary) {
             Invoke-GateBArgumentPathCanary $canaryRoot
         }
@@ -12737,12 +13860,28 @@ function Invoke-GateBIsolationCanary([switch]$SkipArgumentPathCanary) {
         # proves the exact current process and full descendant graph, so this
         # path exercises the same fail-closed ownership contract as a real
         # browser session.
-        $rootProcessA = Start-VerifierProcess $browserPath @(
+        $launchProcessIdA = & $verifierModule[0] {
+            param($fixtureContext, $fixtureRecord, $fixtureBrowserPath,
+                $fixtureArguments, $fixtureWorkingDirectory)
+            $job = New-VerifierBrowserContainmentJob $fixtureContext $fixtureRecord
+            $fixtureRecord.Runtime.ContainmentJob = $job
+            Prepare-VerifierBrowserContainmentLaunch $fixtureContext $fixtureRecord $job
+            $processId = Start-VerifierBrowserProcessInContainmentJob `
+                -ContainmentJob $job -FilePath $fixtureBrowserPath `
+                -Arguments $fixtureArguments -WorkingDirectory $fixtureWorkingDirectory
+            Set-VerifierBrowserContainmentLaunch $fixtureContext $fixtureRecord $job $processId
+            Write-VerifierManifest $fixtureContext
+            return [int]$processId
+        } $contextA $recordA $browserPath @(
             '//B', $rootScript,
             '--user-data-dir', $recordA.Profile,
             '--tsj-verifier-run', $contextA.RunId,
             '--tsj-verifier-worktree', $contextA.RepositoryIdentity,
-            '--remote-debugging-port', [string]$recordA.CdpPort)
+            '--remote-debugging-port', [string]$recordA.CdpPort) $contextA.WorktreeRoot
+        if (-not (Test-VerifierStrictIntegralValue $launchProcessIdA 1 ([int]::MaxValue))) {
+            Throw-GateBInfrastructure 'isolation canary containment launch A did not return its exact root PID'
+        }
+        $rootProcessA = Get-Process -Id ([int]$launchProcessIdA) -ErrorAction Stop
         $recordA.Runtime.Browser = $rootProcessA
         $rootStartA = Get-VerifierProcessStartTicks $rootProcessA
         $rootIdentityA = Get-VerifierCurrentProcessIdentity $rootProcessA.Id $rootStartA `
@@ -12795,17 +13934,55 @@ function Invoke-GateBIsolationCanary([switch]$SkipArgumentPathCanary) {
         Stop-GateBExactProcess $foreignProfileProcess
         $foreignProfileProcess = $null
 
+        # The deliberate missing-root negative above leaves this synthetic
+        # record in cleanup-failed/blocked state. Reconstruct only its original
+        # issued, rootless fixture lifecycle after the foreign process is gone;
+        # production recovery never clears a failed cleanup record this way.
+        Assert-GateB ([int]$recordB.ProcessId -eq 0 -and
+            [long]$recordB.ProcessStartTicks -eq 0 -and
+            [int]$recordB.ProcessParentProcessId -eq 0 -and
+            [long]$recordB.ProcessParentProcessStartTicks -eq 0 -and
+            [string]$recordB.ProcessCommandLine -eq '' -and
+            $recordB.RecoveryReceipt.State -eq 'issued' -and
+            -not [bool]$recordB.RecoveryReceipt.CloseAttempted -and
+            $recordB.ContainmentLaunch.State -eq 'unlaunched') `
+            'foreign-profile negative did not retain the exact rootless issued fixture state'
+        $recordB.Status = 'leased'
+        $recordB.CleanupResult = 'pending'
+        $recordB.Error = ''
+        $recordB.Lease.ReleaseBlocked = $false
+        $recordB.Lease.ReleaseBlockReason = ''
+        $recordB.Lease.ProcessTerminationProven = $false
+        $recordB.Lease.ProcessAbsent = $false
+        Write-VerifierManifest $contextB
+
         # Restore B to a real, positively identified synthetic browser root
         # only after the stale/foreign-profile negative proof has completed.
         # This lets the positive cleanup path satisfy the root-gone contract
         # without weakening the required fail-closed behavior for a missing
         # recorded root.
-        $rootProcessB = Start-VerifierProcess $browserPath @(
+        $launchProcessIdB = & $verifierModule[0] {
+            param($fixtureContext, $fixtureRecord, $fixtureBrowserPath,
+                $fixtureArguments, $fixtureWorkingDirectory)
+            $job = New-VerifierBrowserContainmentJob $fixtureContext $fixtureRecord
+            $fixtureRecord.Runtime.ContainmentJob = $job
+            Prepare-VerifierBrowserContainmentLaunch $fixtureContext $fixtureRecord $job
+            $processId = Start-VerifierBrowserProcessInContainmentJob `
+                -ContainmentJob $job -FilePath $fixtureBrowserPath `
+                -Arguments $fixtureArguments -WorkingDirectory $fixtureWorkingDirectory
+            Set-VerifierBrowserContainmentLaunch $fixtureContext $fixtureRecord $job $processId
+            Write-VerifierManifest $fixtureContext
+            return [int]$processId
+        } $contextB $recordB $browserPath @(
             '//B', $rootScript,
             '--user-data-dir', $recordB.Profile,
             '--tsj-verifier-run', $contextB.RunId,
             '--tsj-verifier-worktree', $contextB.RepositoryIdentity,
-            '--remote-debugging-port', [string]$recordB.CdpPort)
+            '--remote-debugging-port', [string]$recordB.CdpPort) $contextB.WorktreeRoot
+        if (-not (Test-VerifierStrictIntegralValue $launchProcessIdB 1 ([int]::MaxValue))) {
+            Throw-GateBInfrastructure 'isolation canary containment launch B did not return its exact root PID'
+        }
+        $rootProcessB = Get-Process -Id ([int]$launchProcessIdB) -ErrorAction Stop
         $recordB.Runtime.Browser = $rootProcessB
         $rootStartB = Get-VerifierProcessStartTicks $rootProcessB
         $rootIdentityB = Get-VerifierCurrentProcessIdentity $rootProcessB.Id $rootStartB `
@@ -12816,10 +13993,6 @@ function Invoke-GateBIsolationCanary([switch]$SkipArgumentPathCanary) {
         $recordB.ProcessParentProcessStartTicks = [long]$rootIdentityB.Record.ParentProcessStartTicks
         $recordB.ProcessCommandLine = [string]$rootIdentityB.Record.CommandLine
         $recordB.Status = 'started'
-        $recordB.CleanupResult = 'pending'
-        $recordB.Error = ''
-        $recordB.Lease.ReleaseBlocked = $false
-        $recordB.Lease.ReleaseBlockReason = ''
         Write-VerifierManifest $contextB
         Complete-VerifierBrowserSession $contextB $recordB
         Assert-GateB (-not (Test-Path -LiteralPath $recordB.Profile)) `
@@ -13533,8 +14706,16 @@ function Invoke-GateBDriver() {
             return 0
         }
         if ($GateBBrowserNaturalShutdownProbe) {
+            Invoke-GateBBrowserContainmentJobCanary
+            Invoke-GateBIssuedContainedBrowserRecoveryCanary
+            Invoke-GateBIssuedContainedBrowserRecoveryCanary -LaunchLedgerPublication
+            Invoke-GateBBoundReceiptRecoveryBoundaryCanary
             Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary
             Invoke-GateBBrowserNaturalShutdownCanary
+            return 0
+        }
+        if ($GateBBrowserContainmentProbe) {
+            Invoke-GateBBrowserContainmentJobCanary
             return 0
         }
         if ($GateBListenerAuthorizationRetryProbe) {
@@ -13657,6 +14838,10 @@ function Invoke-GateBDriver() {
         Invoke-GateBListenerInspectionFailureCheck
         Invoke-GateBCdpHandshakeCanary
         Invoke-GateBCdpReferenceCanary
+        Invoke-GateBBrowserContainmentJobCanary
+        Invoke-GateBIssuedContainedBrowserRecoveryCanary
+        Invoke-GateBIssuedContainedBrowserRecoveryCanary -LaunchLedgerPublication
+        Invoke-GateBBoundReceiptRecoveryBoundaryCanary
         Invoke-GateBBrowserPrecloseAttestedDisappearanceCanary
         Invoke-GateBBrowserNaturalShutdownCanary
         Invoke-GateBDriverInfrastructureCheck

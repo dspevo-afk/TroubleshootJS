@@ -26,10 +26,58 @@ final class BoundedGeneratedBoardAssembler {
     private static final String BOARD_ID = "RESISTIVE_COUPLING";
     private static final String POWER_INPUT_ID = "VIN_INPUT";
     private static final double SUPPLY_VOLTAGE = 5.0;
+    // The bounded generator owns these existing model choices. A03 records
+    // their exact values rather than relying on a later model default.
+    static final String CONTROLLED_LED_MODEL = "default-led";
+    static final double CONTROLLED_NMOS_THRESHOLD_VOLTS = 1.5;
+    static final double CONTROLLED_NMOS_BETA = 10.0;
     private static final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR =
         new SeededPcbLayoutGenerator(SeededPcbLayoutGenerator.LEGACY_VERSION);
 
     private BoundedGeneratedBoardAssembler() { }
+
+    /**
+     * A03's package/input description reuses the actual layout and nameplate
+     * construction path. No CircuitElm or physical runtime is allocated here.
+     */
+    static PlanPhysicalChoices describePhysicalChoices(BoundedAssemblyPlan plan) {
+        if (plan == null) throw new IllegalArgumentException("Missing assembly plan");
+        Context context = new Context(plan, null);
+        context.buildBoardAndSpecifications();
+        PcbBoardLayout layout = context.createPlannedLayout();
+        layout.validateGeometry(context.board);
+        return new PlanPhysicalChoices(layout, context.specifications, context.board);
+    }
+
+    /** Immutable copied choices; board coordinates and runtime owners are absent. */
+    static final class PlanPhysicalChoices {
+        private final Map<String, PhysicalGeometryRealization> packages;
+        private final Map<String, Double> inputVoltages;
+        private final int layoutVersion;
+
+        PlanPhysicalChoices(PcbBoardLayout layout,
+                BoardPhysicalSpecifications specifications, TroubleshootBoard board) {
+            TreeMap<String, PhysicalGeometryRealization> packageMap =
+                new TreeMap<String, PhysicalGeometryRealization>();
+            for (PcbComponentPlacement placement : layout.getComponents())
+                if (packageMap.put(placement.getComponentId(),
+                        PhysicalGeometryRealization.fromPlacement(placement)) != null)
+                    throw new IllegalArgumentException("Duplicate package realization");
+            TreeMap<String, Double> inputs = new TreeMap<String, Double>();
+            for (String inputId : board.getPowerInputIds()) {
+                PowerInputNameplate plate = specifications.getPowerInputNameplate(inputId);
+                if (plate == null) throw new IllegalArgumentException("Missing input nameplate");
+                inputs.put(inputId, plate.getNominalVoltage());
+            }
+            this.packages = Collections.unmodifiableMap(packageMap);
+            this.inputVoltages = Collections.unmodifiableMap(inputs);
+            this.layoutVersion = layout.getLayoutAlgorithmVersion();
+        }
+
+        Map<String, PhysicalGeometryRealization> getPackages() { return packages; }
+        Map<String, Double> getInputVoltages() { return inputVoltages; }
+        int getLayoutVersion() { return layoutVersion; }
+    }
 
     /** Meaningful private-construction boundaries exposed only to developer proofs. */
     enum Stage {
@@ -83,6 +131,16 @@ final class BoundedGeneratedBoardAssembler {
             BoundedAssemblyPlan.resolve(request) :
             BoundedAssemblyPlan.resolveForDiagnosticFault(request,
                 qualifiedTargetComponentId);
+        return assemblePlan(plan, probe, null);
+    }
+
+    /** A03 replay validates all recorded choices before allocating elements. */
+    static Result replay(RealizationManifest manifest) {
+        return assemblePlan(A03RealizationReplay.resolve(manifest), null, manifest);
+    }
+
+    private static Result assemblePlan(BoundedAssemblyPlan plan, FailureProbe probe,
+            RealizationManifest expectedManifest) {
         Context context = new Context(plan, probe);
         try {
             context.begin(Stage.MAPPING);
@@ -106,7 +164,7 @@ final class BoundedGeneratedBoardAssembler {
             context.begin(Stage.VALIDATION);
             context.buildInstance();
             context.after(Stage.VALIDATION);
-            return context.result();
+            return context.result(expectedManifest);
         } catch (Throwable failure) {
             boolean cleanupSucceeded = context.dispose();
             throw new AssemblyFailure(context.getCurrentStage(), context.allocatedElementCount(),
@@ -209,10 +267,18 @@ final class BoundedGeneratedBoardAssembler {
         private final BoundedAssemblyPlan plan;
         private final Map<String, RuntimeTarget> runtimeTargets;
         private final Map<String, EndpointManifest> endpointManifest;
+        private final RealizationManifest realizationManifest;
 
         Result(GeneratedBoardInstance instance, BoundedAssemblyPlan plan,
                 Map<String, RuntimeTarget> runtimeTargets,
                 Map<String, EndpointManifest> endpointManifest) {
+            this(instance, plan, runtimeTargets, endpointManifest, null);
+        }
+
+        Result(GeneratedBoardInstance instance, BoundedAssemblyPlan plan,
+                Map<String, RuntimeTarget> runtimeTargets,
+                Map<String, EndpointManifest> endpointManifest,
+                RealizationManifest expectedManifest) {
             if (instance == null || plan == null || runtimeTargets == null ||
                     endpointManifest == null)
                 throw new IllegalArgumentException("Incomplete bounded assembly result");
@@ -222,8 +288,16 @@ final class BoundedGeneratedBoardAssembler {
                 new TreeMap<String, RuntimeTarget>(runtimeTargets));
             this.endpointManifest = Collections.unmodifiableMap(
                 new TreeMap<String, EndpointManifest>(endpointManifest));
+            RealizationManifest observed = A03RealizationReplay.capture(plan,
+                new PlanPhysicalChoices(instance.getPcbLayout(),
+                    instance.getPhysicalSpecifications(), instance.getBoard()));
+            if (expectedManifest != null && !expectedManifest.identityCanonical().equals(
+                    observed.identityCanonical()))
+                throw new IllegalStateException("Realization changed during bounded assembly");
+            this.realizationManifest = expectedManifest == null ? observed : expectedManifest;
         }
 
+        RealizationManifest getRealizationManifest() { return realizationManifest; }
         GeneratedBoardInstance getInstance() { return instance; }
         BoundedAssemblyPlan getPlan() { return plan; }
         Map<String, RuntimeTarget> getRuntimeTargets() { return runtimeTargets; }
@@ -708,7 +782,7 @@ final class BoundedGeneratedBoardAssembler {
             controlledLed = new LEDElm(snap(620), snap(176));
             add(controlledLed);
             controlledLed.drag(snap(620), snap(256));
-            controlledLed.modelName = "default-led";
+            controlledLed.modelName = CONTROLLED_LED_MODEL;
             controlledLed.setup();
             controlledLed.colorR = 1;
             controlledLed.colorG = 0;
@@ -743,8 +817,8 @@ final class BoundedGeneratedBoardAssembler {
             controlledQ1 = new NMosfetElm(snap(720), snap(288));
             add(controlledQ1);
             controlledQ1.drag(snap(800), snap(288));
-            controlledQ1.vt = 1.5;
-            controlledQ1.beta = 10.0;
+            controlledQ1.vt = CONTROLLED_NMOS_THRESHOLD_VOLTS;
+            controlledQ1.beta = CONTROLLED_NMOS_BETA;
             controlledRpd = resistor(640, 96, 640, 176,
                 ControlledIndicatorBlockContributions.RPD_OHMS);
             CircuitPostMeasurementEndpoint rgPublicEndpoint =
@@ -951,13 +1025,19 @@ final class BoundedGeneratedBoardAssembler {
         private WireElm controlledPullDownReturn;
         private WireElm controlledSourceReturn;
 
+        private PcbBoardLayout createPlannedLayout() {
+            return plan.isControlledIndicator() ?
+                ControlledIndicatorPcbLayoutFactory.create(board, specifications, plan) :
+                PCB_LAYOUT_GENERATOR.generate(board,
+                    plan.getRequest().getDescriptor().getRootSeed());
+        }
+
         void bindMappingsAndLayout() {
             if (plan.isControlledIndicator()) {
                 bindControlledMappingsAndLayout();
                 return;
             }
-            layout = PCB_LAYOUT_GENERATOR.generate(board, plan.getRequest().getDescriptor()
-                .getRootSeed());
+            layout = createPlannedLayout();
             layout.validateGeometry(board);
             for (String block : new String[] { "source", "load" }) {
                 String componentId = plan.idFor(block, EntityKind.COMPONENT, "R1");
@@ -985,7 +1065,7 @@ final class BoundedGeneratedBoardAssembler {
         }
 
         private void bindControlledMappingsAndLayout() {
-            layout = ControlledIndicatorPcbLayoutFactory.create(board, specifications, plan);
+            layout = createPlannedLayout();
             layout.validateGeometry(board);
             addControlledEndpointManifest("power-adapter", "J1.1", "J1_1");
             addControlledEndpointManifest("power-adapter", "J1.2", "J1_2");
@@ -1448,8 +1528,8 @@ final class BoundedGeneratedBoardAssembler {
             runtime.validate();
         }
 
-        Result result() {
-            return new Result(instance, plan, runtimeTargets, endpointManifest);
+        Result result(RealizationManifest expectedManifest) {
+            return new Result(instance, plan, runtimeTargets, endpointManifest, expectedManifest);
         }
 
         void begin(Stage stage) {

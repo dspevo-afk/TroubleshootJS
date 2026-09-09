@@ -4,6 +4,73 @@ CircuitJS remains the electrical simulation engine. TroubleshootJS layers its
 challenge, board, and instrument behavior around that engine rather than
 replacing its electrical results.
 
+## Durable design identity and realization replay — A03
+
+A03 is qualified for normal publication; the closed gate record is in
+[the A03 evidence packet](task-evidence/A03/README.md). A04 remains unstarted.
+
+`BlockNamespace.idFor()` retains the Task44 encoding and its accepted callers.
+The new explicit `BlockRealizationIdentity` separates a caller-supplied repeated
+instance key, semantic role version, contribution provider version, and
+descriptor topology/schema variant. Role/port identities belong to the device
+interface; component, terminal, endpoint, pad and local-net identities belong
+to the implementing variant. Replacing unlike internals therefore changes
+their durable IDs while a truthful unchanged external interface can remain
+stable. Collection positions, allocation order and random cursors are absent.
+
+`DeviceBusBindings` owns explicit device-scoped bus declarations. A declaration
+names a semantic bus and its conductive anchors; external supply/return
+references permit real external singleton buses. It validates the existing
+electrical partition and maps every local net to its explicit bus or its
+variant-owned unjoined local identity. Conflicting bus owners, duplicate
+declarations, missing merged-bus declarations and dangling aliases reject.
+A lexically earlier alias changes the alias population without renaming the
+bus. Repeated blocks retain distinct terminals while connecting to that bus.
+
+The legacy `BoundedAssemblyPlan.resolveNets()` DSU representative remains the
+rendered/logical BoardNet projection used by accepted Task47/48/49 reports.
+It is temporary electrical equivalence machinery, not the new durable bus
+identity. CircuitJS analyzed nodes, live endpoint bindings and acquired
+physical inventory IDs remain separate runtime concerns. A02 diagnostic
+hypothesis keys remain diagnosis-specific identities, not bus or part IDs.
+
+`RealizationManifest` is an immutable data envelope, not a save-game owner.
+Its schema contains the exact `ChallengeDescriptor`, block realizations,
+required algorithm-owner pins, typed resolved choices, local-net/conductor
+bindings and declared durable targets. Canonical records use deterministic
+ordering and explicit framing; signed long seeds stay canonical decimal
+integers. Replay-consumed finite numeric values use exact binary64 encoding.
+Collections are defensively copied and canonical encodings are retained once
+per immutable manifest, so local saved-action checks do not recanonicalize the
+board. There are no CircuitElm references, solver nodes, board coordinates,
+random state or mutable runtime graphs. Package selections retain the actual
+package ID, geometry variant/transform and contract version; drawing geometry
+is reconstructed by its pinned owner.
+
+`A03RealizationReplay` is deliberately limited to bounded generator versions
+1/2/3. It checks the recorded envelope against the explicitly selected pure
+plan and actual package/input construction path before mutable assembly.
+Version and resolved-choice disagreement rejects; an unknown or missing pin
+never selects CURRENT. The assembled result captures the actual realization
+and checks it again for replay. Layout, geometry, named streams, diagnostic
+policy, resolved values, model choices, packages and routing are pinned to
+their existing versioned owners; A03 introduces no pretend engine versions.
+
+Leaf replay continues through `ChallengeDescriptor` and
+`LegacyChallengeReplay`: legacy-leaf@1 selects layout 3, corrected
+legacy-leaf@2 selects layout 4, and geometry remains independently versioned.
+No general durable leaf-bus or leaf-manifest replay adapter is claimed.
+Existing Task48/49 descriptors, resolved recipes and legacy report signatures
+retain their meaning; those signatures are not copied into durable identity.
+
+Optional typed contracts reserve future model/state schema, program/provider,
+import-origin and interpretation references. Origin metadata and file hashes
+are informational provenance; interpretation references are identity-bearing.
+Current bounded runtime replay rejects unsupported future execution/state or
+interpretation data. A data-only saved-action reference binds a declared target
+to one exact realization and rejects stale identity. These hooks implement no
+firmware, importer, persistence service, gameplay save UI or historical migration.
+
 ## Functional block descriptions and namespaces — Task 44
 
 `FunctionalBlockDescriptor` is an immutable local contribution description,
