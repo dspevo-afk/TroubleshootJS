@@ -58,10 +58,12 @@ final class A04ConstructionDeveloperVerifier {
                 throw new AssertionError("a04-explicit-failure-canary");
 
             verifyConstructionContext(sim, originalOwner);
-            for (int index = 0; index < SEEDS.length; index++) {
-                CaseResult sample = verifyCase(sim, original, originalOwner,
-                    SEEDS[index], index + 1, candidates);
-                cases.add(sample);
+            for (long seed : SEEDS) {
+                cases.add(verifyCase(sim, original, originalOwner, seed,
+                    BoundedAssemblyRequest.forCanary(seed), "resistive", candidates));
+                cases.add(verifyCase(sim, original, originalOwner, seed,
+                    BoundedAssemblyRequest.forControlledIndicator(seed),
+                    "controlled", candidates));
             }
             require(coordinateIsolationProof && explicitJoinsProof &&
                 terminalCorrespondenceProof && failureIsolationProof &&
@@ -111,23 +113,24 @@ final class A04ConstructionDeveloperVerifier {
     }
 
     private static CaseResult verifyCase(CirSim sim, Task41SimulationSnapshot original,
-            GeneratedBoardInstance originalOwner, long seed, int version,
+            GeneratedBoardInstance originalOwner, long seed,
+            BoundedAssemblyRequest request, String route,
             Vector<GeneratedBoardInstance> candidates) {
-        BoundedAssemblyRequest request = requestFor(version, seed);
         long start = System.currentTimeMillis();
         BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
-        verifyPlanContract(plan, version, seed);
+        verifyPlanContract(plan, route, seed);
         String canonical = A03RealizationReplay.capture(plan).toCanonical();
         RealizationManifest parsed = RealizationManifest.parse(canonical);
         contract(canonical.equals(parsed.toCanonical()),
-            "A03 manifest round-trip changed for construction version " + version);
+            "A03 manifest round-trip changed for current " + route);
         BoundedAssemblyPlan replay = A03RealizationReplay.resolve(parsed);
         contract(plan.getSemanticSignature().equals(replay.getSemanticSignature()),
-            "A03 replay changed construction semantics for version " + version);
-        contract(parsed.getDescriptor().getGenerator().getVersion() == version,
-            "A03 generator version changed for construction version " + version);
+            "A03 replay changed construction semantics for current " + route);
+        contract(parsed.getDescriptor().getGenerator().getVersion() ==
+            BoundedAssemblyRequest.GENERATOR_VERSION,
+            "current generator version changed for " + route);
         contract(parsed.getDescriptor().getRootSeed() == seed,
-            "A03 exact seed changed for construction version " + version);
+            "A03 exact seed changed for current " + route);
 
         long assemblyStart = System.currentTimeMillis();
         BoundedGeneratedBoardAssembler.Result result =
@@ -151,28 +154,26 @@ final class A04ConstructionDeveloperVerifier {
         String originalDump = firstDump(sim);
         FreshGeneratedRuntimeInstallation.installComposition(sim, candidate, false);
         GeneratedRuntimeDeveloperSettlement.settle(sim, candidate,
-            "a04-construction-v" + Integer.toString(version));
+            "a04-construction-" + route);
         runtime(sim.getGeneratedBoardInstance() == candidate,
             "candidate was not published as the active owner");
         runtime(sim.getGeneratedChallengeController() != null &&
             sim.getGeneratedChallengeController().isReady() &&
             sim.isGeneratedRuntimeSettled(), "candidate did not settle through CircuitJS");
-        verifyRuntimeCorrespondence(sim, candidate, plan, version);
+        verifyRuntimeCorrespondence(sim, candidate, plan, route);
 
         original.restore(sim);
         original.assertRestored(sim);
         runtime(originalOwner == sim.getGeneratedBoardInstance(),
-            "original owner was not restored after candidate " + version);
+            "original owner was not restored after candidate " + route);
         runtime(originalDump.equals(firstDump(sim)),
-            "original solver element changed after candidate " + version);
-        return new CaseResult(version, Long.toString(seed),
-            candidate.getSimulationElements().size(),
-            plan.getElectricalRealizationSpec().getPackageMap().getPackageCount(),
-            plan.getElectricalRealizationSpec().getPackageMap().getUnitCount(),
-            elapsed(start), assemblyElapsed, canonical.length());
+            "original solver element changed after candidate " + route);
+        return new CaseResult(route, Long.toString(seed),
+            plan.getRequest().getDescriptor().getGenerator().getVersion(),
+            elapsed(start), assemblyElapsed, true, true);
     }
 
-    private static void verifyPlanContract(BoundedAssemblyPlan plan, int version,
+    private static void verifyPlanContract(BoundedAssemblyPlan plan, String route,
             long seed) {
         ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
         contract(spec != null && spec.getVersion() == ElectricalRealizationSpec.VERSION,
@@ -192,7 +193,7 @@ final class A04ConstructionDeveloperVerifier {
             contract(unit.getPackageTerminalByUnitTerminal().size() > 0,
                 "physical unit has no terminal map: " + entry.getKey());
         }
-        if (version == 1) {
+        if ("resistive".equals(route)) {
             provider(spec, "source", ResistiveBlockContributions.SOURCE_TYPE_ID, 1);
             provider(spec, "load", ResistiveBlockContributions.LOAD_TYPE_ID, 1);
             element(spec, "source", "R1", "RESISTOR", "1", 0, "2", 1);
@@ -208,7 +209,7 @@ final class A04ConstructionDeveloperVerifier {
         } else {
             provider(spec, "driver", ControlledIndicatorBlockContributions.DRIVER_TYPE_ID, 1);
             provider(spec, "load", ControlledIndicatorBlockContributions.LOAD_TYPE_ID,
-                version == 3 ? ControlledIndicatorBlockContributions.VALUE_LOAD_VERSION : 1);
+                ControlledIndicatorBlockContributions.LOAD_VERSION);
             element(spec, "driver", "RG", "RESISTOR", "1", 0, "2", 1);
             element(spec, "driver", "RPD", "RESISTOR", "1", 0, "2", 1);
             element(spec, "driver", "Q1", "NMOS", "G", 0, "S", 1, "D", 2);
@@ -234,15 +235,10 @@ final class A04ConstructionDeveloperVerifier {
             contract(spec.getElementDeclaration("load", "LED1").getPostIndex("A") == 0 &&
                 spec.getElementDeclaration("load", "LED1").getPostIndex("K") == 1,
                 "LED polarity changed");
-            if (version == 3) {
-                contract(plan.getResolvedLoadRecipe() != null &&
-                    spec.getResolvedLoadRecipe() == plan.getResolvedLoadRecipe(),
-                    "v3 recipe identity was not preserved");
-                recipeIdentityProof = true;
-            } else {
-                contract(spec.getResolvedLoadRecipe() == null,
-                    "non-v3 construction synthesized a recipe");
-            }
+            contract(plan.getResolvedLoadRecipe() != null &&
+                spec.getResolvedLoadRecipe() == plan.getResolvedLoadRecipe(),
+                "resolved recipe identity was not preserved");
+            recipeIdentityProof = true;
         }
         contract(seed == plan.getRequest().getDescriptor().getRootSeed(),
             "resolved plan seed changed");
@@ -267,12 +263,12 @@ final class A04ConstructionDeveloperVerifier {
     }
 
     private static void verifyRuntimeCorrespondence(CirSim sim,
-            GeneratedBoardInstance instance, BoundedAssemblyPlan plan, int version) {
+            GeneratedBoardInstance instance, BoundedAssemblyPlan plan, String route) {
         runtime(sim.nodeList != null && sim.nodeList.size() > 0,
             "settled candidate has no CircuitJS node graph");
         TroubleshootBoard board = instance.getBoard();
         ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
-        if (version == 1) {
+        if ("resistive".equals(route)) {
             int sourceSupply = node(board, plan.idFor("source", FunctionalBlockDescriptor.EntityKind.PAD, "R1.1"));
             int sourceSignal = node(board, plan.idFor("source", FunctionalBlockDescriptor.EntityKind.PAD, "R1.2"));
             int loadSignal = node(board, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "R1.1"));
@@ -499,8 +495,8 @@ final class A04ConstructionDeveloperVerifier {
         terminals.add("P2");
         terminals.add("VCC");
         terminals.add("GND");
-        PhysicalPackage shared = new PhysicalPackage("A04_SHARED_PACKAGE",
-            terminals, new Vector<String>());
+        PhysicalPackage shared = PhysicalPackage.developerPackageWithGenericGeometry(
+            "A04_SHARED_PACKAGE", terminals, new Vector<String>(), false);
         Map<String, PhysicalPackage> packages = new HashMap<String, PhysicalPackage>();
         packages.put("board/U1", shared);
         Map<String, String> owners = new HashMap<String, String>();
@@ -587,13 +583,6 @@ final class A04ConstructionDeveloperVerifier {
             net.equals(mapping.getNetId()) && mapping.getComponentId().equals(
                 spec.getComponentId(owner, local)),
             "terminal/package/net mapping changed: " + owner + "/" + local + "." + terminal);
-    }
-
-    private static BoundedAssemblyRequest requestFor(int version, long seed) {
-        if (version == 1) return BoundedAssemblyRequest.forCanary(seed);
-        if (version == 2) return BoundedAssemblyRequest.forControlledIndicator(seed);
-        if (version == 3) return BoundedAssemblyRequest.forControlledIndicatorValues(seed);
-        throw new IllegalArgumentException("Unsupported A04 construction version " + version);
     }
 
     private static void dispose(CirSim sim, GeneratedBoardInstance candidate,
@@ -718,37 +707,34 @@ final class A04ConstructionDeveloperVerifier {
     }
 
     private static final class CaseResult {
-        final int generatorVersion;
+        final String route;
         final String seed;
-        final int elementCount;
-        final int packageCount;
-        final int unitCount;
+        final int generatorVersion;
         final long elapsedMs;
         final long assemblyMs;
-        final int manifestBytes;
+        final boolean replayVerified;
+        final boolean ownerRestored;
 
-        CaseResult(int generatorVersion, String seed, int elementCount,
-                int packageCount, int unitCount, long elapsedMs,
-                long assemblyMs, int manifestBytes) {
-            this.generatorVersion = generatorVersion;
+        CaseResult(String route, String seed, int generatorVersion,
+                long elapsedMs, long assemblyMs, boolean replayVerified,
+                boolean ownerRestored) {
+            this.route = route;
             this.seed = seed;
-            this.elementCount = elementCount;
-            this.packageCount = packageCount;
-            this.unitCount = unitCount;
+            this.generatorVersion = generatorVersion;
             this.elapsedMs = elapsedMs;
             this.assemblyMs = assemblyMs;
-            this.manifestBytes = manifestBytes;
+            this.replayVerified = replayVerified;
+            this.ownerRestored = ownerRestored;
         }
 
         String toJson() {
-            return "{\"generatorVersion\":" + generatorVersion +
+            return "{\"route\":" + q(route) +
                 ",\"seed\":" + q(seed) +
-                ",\"elementCount\":" + elementCount +
-                ",\"packageCount\":" + packageCount +
-                ",\"unitCount\":" + unitCount +
+                ",\"generatorVersion\":" + generatorVersion +
+                ",\"replayVerified\":" + (replayVerified ? "true" : "false") +
+                ",\"ownerRestored\":" + (ownerRestored ? "true" : "false") +
                 ",\"elapsedMs\":" + elapsedMs +
-                ",\"assemblyMs\":" + assemblyMs +
-                ",\"manifestBytes\":" + manifestBytes + "}";
+                ",\"assemblyMs\":" + assemblyMs + "}";
         }
     }
 }

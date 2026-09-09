@@ -221,8 +221,7 @@ final class Task41DeveloperVerifier {
                         owner.getBehaviorContract()).getPlan().getRequest();
             }
             Route route = new Route(owner.getCircuitFamilyId(), owner.getSeed(), null,
-                null, preservedRequest, null,
-                owner.getPcbLayout().getLayoutAlgorithmVersion());
+                null, preservedRequest, null);
             Vector<CandidateEvaluation> evaluations = evaluateCandidateGroup(sim, route, owner);
             Vector<String> equivalentClasses = classifyCandidateEquivalence(evaluations,
                 owner.getCircuitFamilyId(), owner.getSeed());
@@ -360,7 +359,7 @@ final class Task41DeveloperVerifier {
                     result.add(new Route(route.familyId, route.seed,
                         candidate.getFault().getType(),
                         candidate.getFault().getTargetComponentId(), route.request,
-                        candidate.getHypothesisKey(), route.layoutAlgorithmVersion));
+                        candidate.getHypothesisKey()));
             }
             if (result.isEmpty()) {
                 // The fallback is only for the detached verifier route.  A
@@ -368,10 +367,10 @@ final class Task41DeveloperVerifier {
                 // above fails explicitly when it does not.
                 result.add(new Route(route.familyId, route.seed,
                     GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("driver", "RG"),
-                    route.request, null, route.layoutAlgorithmVersion));
+                    route.request, null));
                 result.add(new Route(route.familyId, route.seed,
                     GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("load", "RLOAD"),
-                    route.request, null, route.layoutAlgorithmVersion));
+                    route.request, null));
             }
             return result;
         }
@@ -399,7 +398,7 @@ final class Task41DeveloperVerifier {
         for (GeneratedFaultCandidate candidate : admitted)
             result.add(new Route(route.familyId, route.seed,
                 candidate.getFault().getType(), candidate.getFault().getTargetComponentId(),
-                route.request, candidate.getHypothesisKey(), route.layoutAlgorithmVersion));
+                route.request, candidate.getHypothesisKey()));
         return result;
     }
 
@@ -944,8 +943,7 @@ final class Task41DeveloperVerifier {
             ControlledIndicatorDeviceBehavior behavior =
                 (ControlledIndicatorDeviceBehavior) instance.getBehaviorContract();
             BoundedAssemblyPlan plan = behavior.getPlan();
-            if (plan.isControlledIndicatorValues())
-                return plan.getResolvedLoadRecipe().getSelectedCatalogEntryId();
+            return plan.getResolvedLoadRecipe().getSelectedCatalogEntryId();
         }
         PhysicalSpecification specification = instance.getPhysicalSpecifications()
             .getSpecification(componentId);
@@ -1325,8 +1323,7 @@ final class Task41DeveloperVerifier {
                     candidate.getHypothesisKey(), normalAdmittedCandidates(familyId, seed));
                 routes.add(new Route(familyId, seed, selected.getFault().getType(),
                     selected.getFault().getTargetComponentId(), null,
-                    selected.getHypothesisKey(),
-                    representative.getPcbLayout().getLayoutAlgorithmVersion()));
+                    selected.getHypothesisKey()));
             }
         }
         return routes;
@@ -1459,45 +1456,32 @@ final class Task41DeveloperVerifier {
         final String targetComponentId;
         /** Optional stable semantic hypothesis identity. */
         final String hypothesisKey;
-        /** Layout algorithm carried by the owner through proof replay. */
-        final int layoutAlgorithmVersion;
         /** Original versioned composition request retained across proof replay. */
         final BoundedAssemblyRequest request;
 
         Route(String familyId, long seed, GeneratedFaultType type) {
-            this(familyId, seed, type, null, null, null,
-                SeededPcbLayoutGenerator.CURRENT_VERSION);
+            this(familyId, seed, type, null, null, null);
         }
 
         Route(String familyId, long seed, GeneratedFaultType type,
                 String targetComponentId) {
-            this(familyId, seed, type, targetComponentId, null, null,
-                SeededPcbLayoutGenerator.CURRENT_VERSION);
+            this(familyId, seed, type, targetComponentId, null, null);
         }
 
         Route(String familyId, long seed, GeneratedFaultType type,
                 String targetComponentId, BoundedAssemblyRequest request) {
-            this(familyId, seed, type, targetComponentId, request, null,
-                SeededPcbLayoutGenerator.CURRENT_VERSION);
+            this(familyId, seed, type, targetComponentId, request, null);
         }
 
         Route(String familyId, long seed, GeneratedFaultType type,
                 String targetComponentId, BoundedAssemblyRequest request,
                 String hypothesisKey) {
-            this(familyId, seed, type, targetComponentId, request, hypothesisKey,
-                SeededPcbLayoutGenerator.CURRENT_VERSION);
-        }
-
-        Route(String familyId, long seed, GeneratedFaultType type,
-                String targetComponentId, BoundedAssemblyRequest request,
-                String hypothesisKey, int layoutAlgorithmVersion) {
             this.familyId = familyId;
             this.seed = seed;
             this.type = type;
             this.targetComponentId = targetComponentId;
             this.request = request;
             this.hypothesisKey = hypothesisKey;
-            this.layoutAlgorithmVersion = layoutAlgorithmVersion;
         }
 
         GeneratedBoardInstance generate() {
@@ -1521,8 +1505,7 @@ final class Task41DeveloperVerifier {
                         behavior.getPlan().getRequest().getDescriptor().getGenerator()
                             .getVersion() == request.getDescriptor().getGenerator().getVersion(),
                         "Task 41 controlled proof lost the versioned request/recipe");
-                    if (request.getDescriptor().getGenerator().getVersion() ==
-                            BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION) {
+                    {
                         String loadComponentId = behavior.getPlan().idFor("load",
                             FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD");
                         PhysicalSpecification loadSpecification = result.getPhysicalSpecifications()
@@ -1530,24 +1513,24 @@ final class Task41DeveloperVerifier {
                         ControlledIndicatorValueSynthesis.ResolvedRecipe recipe =
                             behavior.getPlan().getResolvedLoadRecipe();
                         require(recipe != null && loadSpecification instanceof ResistorNameplate,
-                            "Task 41 v3 proof lost selected recipe/physical specification");
+                            "Task 41 current proof lost selected recipe/physical specification");
                         ResistorNameplate loadNameplate = (ResistorNameplate) loadSpecification;
                         require(loadComponentId.equals(loadNameplate.getSpecificationId()) &&
                             loadNameplate.getNominalResistanceOhms() == recipe.getResistanceOhms() &&
                             loadNameplate.getTolerancePercent() == recipe.getTolerancePercent() &&
                             loadNameplate.getRatedWattage() == recipe.getRatedWatts(),
-                            "Task 41 v3 proof lost physical recipe correspondence");
+                            "Task 41 current proof lost physical recipe correspondence");
                     }
                 }
                 return result;
             }
             if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId))
-                return new LedIndicatorGenerator(layoutAlgorithmVersion)
+                return new LedIndicatorGenerator()
                     .generateForFaultVerification(seed, type);
             if (QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR.equals(familyId))
-                return new DiodeProtectedIndicatorGenerator(layoutAlgorithmVersion).generate(seed);
+                return new DiodeProtectedIndicatorGenerator().generate(seed);
             if (QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR.equals(familyId))
-                return new ParallelDualIndicatorGenerator(layoutAlgorithmVersion)
+                return new ParallelDualIndicatorGenerator()
                     .generateForFaultVerification(seed, type);
             if (QuickPlayFamilyRegistry.RC_DELAY.equals(familyId))
                 return new RcDelayGenerator().generateForFaultVerification(seed, type);

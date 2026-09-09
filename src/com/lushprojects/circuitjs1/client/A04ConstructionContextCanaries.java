@@ -39,6 +39,8 @@ final class A04ConstructionContextCanaries {
         try {
             sameContextCoordinateAndBridgeProof();
             multiTerminalAllocationOrder();
+            sameBoardAbortIsolation();
+            equalValuedAttemptBoundary();
             scopedOwnershipNegatives();
             completionNegatives();
             completedReceiptRevocation();
@@ -66,12 +68,17 @@ final class A04ConstructionContextCanaries {
 
     private ElectricalConstructionContext begin(BoundedAssemblyPlan plan,
             ElectricalConstructionContext.FailureProbe probe) {
-        ElectricalConstructionContext context = ElectricalConstructionContext.begin(
-            plan.getElectricalRealizationSpec(),
+        ElectricalConstructionContext context = beginOnBoard(plan,
             A04ConstructionDeveloperVerifier.contextBoard(plan.getElectricalRealizationSpec()),
             probe);
         owned.add(context);
         return context;
+    }
+
+    private ElectricalConstructionContext beginOnBoard(BoundedAssemblyPlan plan,
+            TroubleshootBoard board, ElectricalConstructionContext.FailureProbe probe) {
+        return ElectricalConstructionContext.begin(plan.getElectricalRealizationSpec(), board,
+            probe);
     }
 
     private void close(ElectricalConstructionContext context) {
@@ -81,6 +88,131 @@ final class A04ConstructionContextCanaries {
 
     private BoundedAssemblyPlan resistive() {
         return BoundedAssemblyPlan.resolve(BoundedAssemblyRequest.forCanary(1L));
+    }
+
+    /** A failed speculative context may revoke only its own shared board pads. */
+    private void sameBoardAbortIsolation() {
+        final BoundedAssemblyPlan plan = resistive();
+        final TroubleshootBoard board = A04ConstructionDeveloperVerifier.contextBoard(
+            plan.getElectricalRealizationSpec());
+        final ElectricalConstructionContext first = beginOnBoard(plan, board, null);
+        final ElectricalConstructionContext second = beginOnBoard(plan, board, null);
+        owned.add(first);
+        owned.add(second);
+        constructResistive(plan, first, false);
+        final ConstructionReceipt firstReceipt = first.getReceipt();
+        String sourcePad = plan.idFor("source", FunctionalBlockDescriptor.EntityKind.PAD,
+            "R1.1");
+        CircuitMeasurementEndpoint firstEndpoint = board.getSimulationBindings().getEndpoint(
+            sourcePad);
+        check(firstEndpoint != null,
+            "first context did not install its shared board endpoint");
+        check(firstReceipt.getElements().size() == first.getAllocatedElementCount(),
+            "first context receipt was not usable before the competing abort");
+        String sourceId = plan.idFor("source", FunctionalBlockDescriptor.EntityKind.COMPONENT,
+            "R1");
+        check(firstReceipt.getComponentBindings().hasComponentBinding(sourceId),
+            "first context receipt lost its component binding before the competing abort");
+        board.getSimulationBindings().markDeveloperVerificationReady();
+        check(board.getSimulationBindings().isDeveloperVerificationReady(),
+            "first context did not establish board readiness");
+        check(second.abort(null), "second context did not certify its cleanup");
+        check(board.getSimulationBindings().getEndpoint(sourcePad) == firstEndpoint,
+            "aborting a second context revoked the first context's board endpoint");
+        check(firstReceipt.getElements().size() == first.getAllocatedElementCount()
+                && firstReceipt.getComponentBindings().hasComponentBinding(sourceId),
+            "aborting a second context revoked the first context receipt");
+        check(board.getSimulationBindings().isDeveloperVerificationReady(),
+            "aborting a second context invalidated first context readiness");
+        close(first);
+        check(board.getSimulationBindings().getEndpoint(sourcePad) == null,
+            "first context cleanup did not revoke its own board endpoint");
+        check(!board.getSimulationBindings().isDeveloperVerificationReady(),
+            "first context cleanup left stale board readiness");
+    }
+
+    /** Equal-valued plans still require exact metadata, runtime, and receipt ownership. */
+    private void equalValuedAttemptBoundary() {
+        final BoundedAssemblyPlan firstPlan = resistive();
+        final BoundedAssemblyPlan secondPlan = resistive();
+        check(firstPlan != secondPlan && firstPlan.getSemanticSignature().equals(
+            secondPlan.getSemanticSignature()),
+            "equal-valued construction attempts were not independently allocated");
+        final PhysicalConstructionMetadata firstMetadata =
+            PhysicalConstructionMaterializer.describe(firstPlan);
+        final PhysicalConstructionMetadata secondMetadata =
+            PhysicalConstructionMaterializer.describe(secondPlan);
+        final ElectricalConstructionContext first = beginOnBoard(firstPlan,
+            firstMetadata.getBoard(), null);
+        final ElectricalConstructionContext second = beginOnBoard(secondPlan,
+            secondMetadata.getBoard(), null);
+        owned.add(first);
+        owned.add(second);
+        constructResistive(firstPlan, first, false);
+        constructResistive(secondPlan, second, false);
+        final ConstructionReceipt firstReceipt = first.getReceipt();
+        final ConstructionReceipt secondReceipt = second.getReceipt();
+        check(first.getReceipt() == firstReceipt && second.getReceipt() == secondReceipt,
+            "construction context did not retain its canonical issued receipt");
+        check(firstReceipt.belongsToFinishedContext(firstPlan.getElectricalRealizationSpec(),
+                firstMetadata.getBoard()), "first receipt lost exact context ownership");
+        check(secondReceipt.belongsToFinishedContext(secondPlan.getElectricalRealizationSpec(),
+                secondMetadata.getBoard()), "second receipt lost exact context ownership");
+
+        final ConstructionReceipt forgedReceipt = new ConstructionReceipt(
+            firstReceipt.getSpec(), secondReceipt.getElements(),
+            new java.util.TreeMap<String, ElectricalConstructionContext.ElementHandle>(),
+            new java.util.TreeMap<String, ElectricalConstructionContext.SecondaryHandle>(),
+            new java.util.TreeMap<String, ContributionConstructionReceipt>(),
+            secondReceipt.getComponentBindings(), secondReceipt.getPowerBindings(),
+            secondReceipt.getConnectionBindings(), secondReceipt.getDeviceReceipt(),
+            secondReceipt.getAllocatedElementCount(), secondReceipt.getBindingCount(),
+            secondReceipt.getJoinCount(), secondReceipt.getBridgeCounts(), false, null, first);
+        check(!forgedReceipt.belongsToFinishedContext(firstPlan.getElectricalRealizationSpec(),
+                firstMetadata.getBoard()), "a copied receipt acquired issued-receipt authority");
+        PhysicalBoardRuntime forgedRuntime = new PhysicalBoardRuntime(firstMetadata.getBoard());
+        boolean rejectedAtOwnershipBoundary = false;
+        try {
+            PhysicalConstructionMaterializer.materialize(forgedRuntime, firstMetadata,
+                firstPlan, forgedReceipt);
+        } catch (IllegalArgumentException expected) {
+            rejectedAtOwnershipBoundary = expected.getMessage().contains(
+                "receipt belongs to another construction context");
+        }
+        check(rejectedAtOwnershipBoundary,
+            "forged receipt was not rejected at the pre-mutation ownership boundary");
+        check(forgedRuntime.getSlots().isEmpty() && forgedRuntime.getPhysicalParts().isEmpty(),
+            "forged receipt mutated the physical runtime before rejection");
+
+        final PhysicalBoardRuntime foreignRuntime = new PhysicalBoardRuntime(
+            secondMetadata.getBoard());
+        reject(new Runnable() { public void run() {
+            PhysicalConstructionMaterializer.materialize(foreignRuntime, firstMetadata,
+                firstPlan, firstReceipt);
+        } }, "runtime from another equal-valued attempt");
+
+        final PhysicalBoardRuntime foreignMetadataRuntime = new PhysicalBoardRuntime(
+            firstMetadata.getBoard());
+        reject(new Runnable() { public void run() {
+            PhysicalConstructionMaterializer.materialize(foreignMetadataRuntime,
+                secondMetadata, firstPlan, firstReceipt);
+        } }, "metadata from another equal-valued attempt");
+
+        final PhysicalBoardRuntime foreignReceiptRuntime = new PhysicalBoardRuntime(
+            secondMetadata.getBoard());
+        reject(new Runnable() { public void run() {
+            PhysicalConstructionMaterializer.materialize(foreignReceiptRuntime,
+                secondMetadata, secondPlan, firstReceipt);
+        } }, "receipt from another equal-valued attempt");
+
+        PhysicalBoardRuntime validRuntime = new PhysicalBoardRuntime(firstMetadata.getBoard());
+        PhysicalMaterializationReceipt materialized = PhysicalConstructionMaterializer.materialize(
+            validRuntime, firstMetadata, firstPlan, firstReceipt);
+        check(materialized.getConstructionReceipt() == firstReceipt
+                && materialized.getRuntime() == validRuntime,
+            "valid physical materialization lost exact attempt identity");
+        close(second);
+        close(first);
     }
 
     /** Derived NMOS posts must be inspected only after owned configuration. */
@@ -260,6 +392,8 @@ final class A04ConstructionContextCanaries {
 
     private void completionNegatives() {
         final BoundedAssemblyPlan plan = resistive();
+        final int expectedElementCount = plan.getElectricalRealizationSpec()
+            .getElementDeclarations().size();
         final ElectricalConstructionContext missingComponent = begin(plan, null);
         final ElectricalConstructionContext.Scope scope = source(missingComponent);
         ElectricalConstructionContext.ElementHandle resistor = scope.resistor(
@@ -272,12 +406,16 @@ final class A04ConstructionContextCanaries {
         reject(new Runnable() { public void run() {
             constructResistive(plan, missingPad, true);
         } }, "global completion with every element but one missing board pad");
-        check(missingPad.getAllocatedElementCount() == 16,
+        check(missingPad.getAllocatedElementCount() == expectedElementCount,
             "missing-pad negative did not reach the complete allocation inventory");
     }
 
     private void completedReceiptRevocation() {
         BoundedAssemblyPlan plan = resistive();
+        final int expectedElementCount = plan.getElectricalRealizationSpec()
+            .getElementDeclarations().size();
+        final int expectedUnitCount = plan.getElectricalRealizationSpec()
+            .getPackageMap().getUnitCount();
         final ElectricalConstructionContext context = begin(plan, null);
         constructResistive(plan, context, false);
         final ConstructionReceipt receipt = context.getReceipt();
@@ -294,17 +432,17 @@ final class A04ConstructionContextCanaries {
                 "detachable connection copied the canonical persistent board endpoint");
         final String sourceId = plan.idFor("source", FunctionalBlockDescriptor.EntityKind.COMPONENT, "R1");
         final String sourcePad = plan.idFor("source", FunctionalBlockDescriptor.EntityKind.PAD, "R1.1");
-        check(context.isFinished() && receipt.getElements().size() == 16,
+        check(context.isFinished() && receipt.getElements().size() == expectedElementCount,
             "completed context lost its exact allocation inventory");
         check(receipt.getContribution("source").getUnits().size() +
             receipt.getContribution("load").getUnits().size() +
-            receipt.getDeviceReceipt().getUnits().size() == 3,
+            receipt.getDeviceReceipt().getUnits().size() == expectedUnitCount,
             "completed context silently omitted a physical unit");
         reject(new Runnable() { public void run() {
             context.scope("source", ResistiveBlockContributions.SOURCE_TYPE_ID, 1);
         } }, "new scope after global completion");
         close(context);
-        check(context.isAborted() && context.getAllocatedElementCount() == 16,
+        check(context.isAborted() && context.getAllocatedElementCount() == expectedElementCount,
             "abort lost its frozen allocation accounting");
         reject(new Runnable() { public void run() { receipt.getElements(); } },
             "old receipt exporting a disposed candidate graph");

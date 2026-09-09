@@ -1,251 +1,216 @@
-# TroubleshootJS: Large-Board Architecture and Development Roadmap
+# TroubleshootJS: Current-Only Development Roadmap
 
-**Edition:** 2.1, final amendment reconciliation of the approved-in-principle large-board plan
-**Prepared:** 2026-09-06; amendment reconciliation: 2026-09-07
-**Repository:** `dspevo-afk/TroubleshootJS`
-**Destination:** `docs/ROADMAP.md`
-**Owner input:** Edition 2.1 normalized UTF-8/LF SHA-256 `37114b3d32a4b04b8c00d2d939f63a9e7108b33f87ddc4dbb745a6bfc90e85be`
-**Source baseline:** `3de4da1d3bad3ed532e6c327b24195bc3138ed15`, accepted Task49 on `codex/task43p-final-recovery`; direct Task48 parent `62c878b8f381e3418214a93a46d3e8d2d9693b3e`
-**Task49 status:** ACCEPTED at the named SHA with its reviewed evidence, versions, catalog bounds and retained limitations.
-**Current adoption state:** N00 document/lineage adoption is COMPLETE; Edition 2.1 is adopted against the accepted Task49 handoff. Repository publication follows the required final status-delta review, final document/staged checks and normal commit/push; the exact N00 commit SHA, remote verification and notification outcome belong only in the final handoff.
-**Authority:** This is the adopted Edition 2.1 roadmap. It does not authorize implementation, change a branch, or certify any future capability; A01 requires separate owner authorization.
+**Edition:** 3.0, complete replacement for Edition 2.1<br>
+**Prepared:** September 9, 2026<br>
+**Repository:** `dspevo-afk/TroubleshootJS`<br>
+**Drop-in destination:** `docs/ROADMAP.md`<br>
+**Reviewed implementation baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
+**Commit:** `Complete A04 provider-owned electrical construction`<br>
+**Branch observed during review:** `codex/task43p-final-recovery`<br>
+**Latest completed task:** **R00: Current-only development baseline and provider-boundary cleanup**<br>
+**Immediate next task:** **A05**, unstarted; begin only when authorized.
 
-> **The destination has changed.** Routine 5–20-part boards, normal 20–40-part boards, advanced 40–60-part appliance/control boards, and a constrained but genuinely procedural approximately 100-part board are explicit targets. The old recommendation to treat 75–100 parts as unnecessary unless later justified is superseded. Algorithm choices remain evidence-driven; the product targets do not quietly disappear when an algorithm fails.
->
-> **Historical preparation context:** Edition 2.1 was prepared while Task49 was active and before its final candidate was reviewed. N00 now reconciles the accepted handoff recorded below. Preserve this context as history; no earlier preparation text is a current Task49 status claim.
+> Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
-> **Amendment boundary:** Edition 2.1 preserves Edition 2.0's architecture, completed history, required Q60/Q100 targets, and Task49 protection. It incorporates the independent-review amendments in [I5]: honest dense-board inspection, small SMD architecture canaries, capability-conditional repair dependencies, rolling playable checks, bounded IC/MCU/display/instrument vocabulary, and staged CircuitJS import. These additions are planned contracts, not implemented features or a new source audit. A capability listed here is not automatically a release prerequisite.
+This is a self-contained replacement roadmap, not an amendment to apply over the old one. No companion dependency file, old task report, Library attachment, external roadmap or historical appendix is required to interpret its future scope. Repository source/evidence paths in Section 10 establish the review basis, not mandatory frozen outputs. The roadmap does not itself execute changes; the separately supplied next prompt authorizes R00 implementation and adoption.
 
-## Document map
+The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. Seven are delivered entries including the qualified R00 correction, and the other 66 are unstarted feature/qualification nodes. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
 
-1. [Executive verdict and changed decisions](#executive)
-2. [Evidence boundary and Task49 impact](#evidence)
-3. [Target architecture and ownership](#architecture)
+## Navigation
+
+1. [Product direction and current-only policy](#policy)
+2. [Reviewed baseline and R00 exit conditions](#baseline)
+3. [Target architecture and capability boundaries](#architecture)
 4. [Functional taxonomy and reference boards](#reference-boards)
-5. [Architecture decision tables](#decisions)
-6. [Scalability, model, diagnostic and test plans](#scale-plan)
-7. [Milestone catalog and execution graph](#milestones)
-8. [Audit reconciliation and risk register](#reconciliation)
-9. [Migration, history, adoption and sources](#migration)
+5. [Architecture decisions and alternatives](#decisions)
+6. [Scale, physics, interaction and validation](#validation)
+7. [Milestone catalog and execution order](#milestones)
+8. [Capability-conditional dependency rules](#capabilities)
+9. [Risk register, non-goals and completion](#risks)
+10. [Review basis, adoption and change ledger](#sources)
 
-All sections describe a proposed architecture unless explicitly marked **CODE**, **RETAINED EVIDENCE**, or **PRIOR EXPERIMENT**. IDs A/P/U/E/D/Q/REL/X, plus the later MCU/IMPORT lanes, replace the *remaining* old task numbers; Tasks1–49 retain their identities. The migration table accounts for the former Tasks50–89. Historical evidence remains historical, not a standing instruction to repeat Task43.
+<a id="policy"></a>
+# 1. Product direction and current-only policy
 
-<a id="executive"></a>
-# 1. Executive verdict
+## 1.1 What the game is
 
-## 1.1 Direct answers
+TroubleshootJS is a free, open-source, PCB-first electronics troubleshooting game around CircuitJS. The player receives an incomplete customer complaint, examines an unfamiliar board, chooses measurements, isolates faults, makes physical repairs and verifies restored customer function. It is not a schematic quiz, generic PCB CAD package or a test-framework demonstration.
 
-| Question | Reconciled judgment | What would establish or falsify it |
-|---|---|---|
-| Can the project credibly target procedural 50–60-part appliance/control boards? | **Yes as an engineering direction, not as a proven present capability.** Constrained hierarchical composition, a causal model vocabulary, a new physical realization boundary, and scalable admission are required. | Q60 must qualify heterogeneous generated boards with distinct internal implementations, real mains/low-voltage behavior within a declared model envelope, ordinary diagnosis/repair, and measured performance. |
-| Is a constrained 100-part board a reasonable stretch target? | **Yes.** It is not an arbitrary-netlist guarantee and cannot be satisfied by tiling a tiny board or drawing inert filler. | Q100 requires approximately 100 physical packages with actual purpose, generated structural variation, full correspondence, playable diagnostics, and the same declared resource policy. |
-| Can CircuitJS remain the solver? | **Retain it as the working choice.** The inspected code has circuit stamping, transformer coupling, relay/inductor models, and time-domain stepping. That supports investigation, not a large-board or offline-converter performance guarantee. [R05–R08] | A07 and E06 test the difficult small models and 20/40/60/100-part solver fixtures early. Replace or restructure a narrow solver boundary only if recorded evidence defeats the required fidelity or cost contract. |
-| Should the block architecture evolve or be replaced? | **Preserve the accepted identity, port, recipe, and runtime foundations; replace the bounded device-specific realization and diagnostic dispatch seams.** Do not rewrite the entire application. [R02, R09] | A04/A05/A11 must add ordinary variants and repeated blocks without new device branches in generic construction, diagnostics, routing, or UI. |
-| Do we need two layers? | **Design the physical substrate for two layers now and require a real comparison prototype early.** Limited two-layer routing with explicit via costs is the preferred advanced-board path, subject to P07/P09 evidence. | Compare the same circuits under one layer, sparse crossovers, restricted two layers, and fuller two layers before committing the advanced content library. No measured success-rate claim is made here. |
-| What role should factory jumpers play? | Sparse, explicitly raised routing crossovers, not a substitute for competent placement or an unlimited workaround. | P06 proves underpasses and electrical ownership. P09 freezes count/density/cost policy from matched-corpus evidence. Player repair jumpers remain different objects. |
-| Biggest blockers? | Device-specific construction; centralized proof; missing durable/layer-aware copper; coordinate/view coupling; incomplete domain/model semantics; singleton-sensitive solver execution. | The early A/P foundation gates address these before 30/60-part consumers accumulate. |
+Generation should produce meaningful structural variation: roles, implementations, sensible values, packages, support circuits, layout and fault choices. Healthy auxiliary circuitry is allowed and must perform a real function. Wrong repairs remain possible and have their modeled electrical consequences. Valid alternative repairs can succeed when they restore the required behavior. Difficulty comes from electrical reasoning, not inaccessible controls or hidden simulator tricks.
 
-**There is no honest architectural promise that eliminates all future surprises.** The purpose of this roadmap is to expose the expensive failure modes with small, falsifiable experiments before dozens of features depend on them. More development time is useful when it buys a missing contract or evidence. Time spent building speculative frameworks is not insurance.
+The targets remain routine 5-20-part boards, normal 20-40-part boards, advanced 40-60-part appliance/control boards and a constrained genuinely procedural approximately 100-part family. Q60 and Q100 are required targets. The EASY/MEDIUM/HARD/PSYCHOTIC progression remains; PSYCHOTIC is expert reasoning over interacting electrical conditions, not padding the board with inert parts.
 
-## 1.2 What changes from the previous roadmap
+**Visual difficulty is allowed. Interaction dishonesty is not.** A dense board need not be comfortable to understand at overview scale. Required markings, exposed terminals and controls must be accurately inspectable and usable through supported zoom/loupe/side views. No enormous invisible hit regions, hidden essential switches or visual disclosure of the selected fault.
 
-The previous plan correctly protected a small playable product. It did not treat 50–60 parts and a constrained 100-part board as commitments. This edition makes the following deliberate changes:
+## 1.2 Explicit owner decision: no historical development compatibility
 
-* Hierarchical composition, explicit implementation variants, dynamic board envelopes, coherent navigation, and scalable diagnostic ownership become foundations, not optional improvements after content growth.
-* Two-layer representation and a real routing/view/probe prototype move before copper-repair APIs and before advanced-board expansion. Full unrestricted two-layer search remains a choice, not a mandate.
-* Source/reference semantics, stored-energy readiness, AC measurement, and the limits of simplified power-converter models move before mains-bearing content. A DC source wearing a transformer drawing is not an acceptable converter.
-* Small high-risk solver/model pilots and 60/100-part structural cost probes happen early. Fully playable qualification still progresses through 15, 30, 56, and 100 physical parts.
-* Production diagnostic proof is separated from developer orchestration. Proof optimization is constrained by an explicit hypothesis set and valid receipts, not by selectively forgetting difficult faults.
-* Alpha is an intermediate low-voltage learning release, not the end of the product. Beta requires the advanced Q60 surface. The mature target includes Q100 and genuinely calibrated PSYCHOTIC content.
-* Save/replay, event history, model versions, and long-session ownership are designed early enough to avoid rebuilding them after layers, cuts, damage, and complex inventory arrive.
+No backward compatibility with prior TroubleshootJS implementations is required unless the owner later approves a concrete external support contract. This includes previous challenge generators, layouts, replay/saved-state formats, numerical version identifiers, public/internal class names, constructors, aliases, registries, serialized identifiers, snapshots, golden reports and test expectations.
 
-This is not permission to implement every algorithm in a routing textbook. It is permission, when each milestone is authorized, to make necessary architectural changes instead of preserving weak seams merely to keep a short task list.
+An intentional correction may change old seeds' selected circuits, geometry, fault distributions, ID spellings, output bytes, report shape and construction order. Update all current callers and tests. Remove the obsolete path rather than add a compatibility facade. Reject incompatible artifacts before changing live state; do not silently reinterpret old bytes as the current format.
 
-## 1.3 Final amendment policy: difficult boards, honest bench access
+Reproducibility remains a current requirement: the same supported current implementation, inputs/settings and seed produce the same discrete selected design. Transport full signed-long seeds exactly. Named random streams keep unrelated concerns isolated within that current contract. A build/schema/model epoch or a single current manifest can identify interpretation; it does not require retaining old implementations. Keep distinct currently useful variants as variants, not historical revisions disguised as variants.
 
-**Visual difficulty is allowed. Interaction dishonesty is not.** Dense, intimidating, cluttered-looking but electrically purposeful boards need not be comfortably readable at fit-board scale. Tracing, recognizing markings, identifying subsystems and understanding state may require real work. The player must nevertheless be able to inspect an exposed surface, magnify it, place the intended probe accurately, operate every required control, and obtain every advertised observation.
+Current save/resume, reset and in-game history are not abolished. U06 qualifies the current supported format. Development updates may invalidate old saves/challenges. An alpha, beta or mature release label does not automatically establish an indefinite compatibility promise. Any future promise must identify the real users/data, supported versions, cost and retirement policy and receive explicit owner approval.
 
-The Spacebar loupe in U01 provides temporary, cursor-centered physical inspection without changing the circuit or creating oversized invisible targets. This is inspection assistance, not diagnostic guidance: it does not identify the faulty region, label hidden nets, disclose original values, or suggest the next correct probe. Necessary markings and surfaces must become inspectable at supported magnification; an inaccessible pin or dishonest hit region is not legitimate difficulty.
+## 1.3 What still matters
 
-Long-range ICs, basic MCU control, displays, richer instruments and import-to-challenge are now explicit lanes. Their interfaces influence foundations now; their implementation is later and tied to actual consuming content. The baseline 40–60-part qualification may use component-level repair with no E08 trace actions. Neither Q60 nor Q100 waits for MCU, display, import, signal-injection or logic-analyzer work unless its chosen family explicitly uses that capability. The required scale targets and expert-reasoning PSYCHOTIC goal are unchanged.
+Keep real solver-backed behavior, coherent active state, identity through current operations, correct physical/electrical correspondence, truthful measurements, privacy of the answer, reproducibility and failure isolation. These are current game requirements, not immunity for any old implementation. Existing tests are evidence of behavior, not authority over the owner's revised contract.
 
-<a id="evidence"></a>
-# 2. Evidence boundary and current-task protection
+CircuitJS is the working electrical backbone because replacing it would require substantial new evidence, not because its menus, API spellings, file readers or internal code are sacred. Retire unused upstream-facing compatibility surfaces when actual caller analysis demonstrates a benefit and current behavior remains correct. Do not casually delete numerical stabilization or replace the solver/build chain during R00. Legal notices, credentials, unrelated files, the user's processes and active work remain protected; permission to retire code is not permission for destructive repository or machine cleanup.
 
-## 2.1 What was actually examined for Edition 2.0
+## 1.4 Current validation instead of historical equality
 
-**HISTORICAL CODE / CONNECTED DATA (Edition 2.0 preparation):** At that pinned read, the development branch pointed to Task48 SHA `62c878b8f381e3418214a93a46d3e8d2d9693b3e`. Its published report recorded fixed-value, small-layout, two-owner composition and no Task49 implementation at that time. The owner's statement that Task49 was underway governed that historical preparation context; it was not evidence that its local implementation had been reviewed. [R01]
+| Retired obligation | Current requirement |
+|---|---|
+| Old generator revisions still execute | Current useful content executes; incompatible old artifacts reject clearly. |
+| An old seed produces old pixels/IDs/reports | Current generation is deterministic, physically correct and usable. |
+| Exact old stage/element counts | Current construction ownership, endpoint truth and failure cleanup are correct. |
+| Task48/49 manifests/reports remain byte-identical | Current recipes, packages, values, ratings, faults and repair behavior agree across layers. |
+| Every old test and development route must pass | Applicable current invariants have independent, effective tests. Retired behavior tests are removed or replaced. |
+| Historical compatibility tests count as gameplay | A real current challenge can be diagnosed, repaired and retested through ordinary workbench actions. |
 
-**SOURCE INPUT:** The entire new large-board brief, the prior architecture audit, and the prior replacement roadmap were available as local attachments. The brief supplies the changed targets and required investigations. The earlier audit supplies its fourteen findings, explicit coverage limits, source index, and helper-level experiments. Neither is treated as an implementation certificate. [I1–I3]
+A failed applicable correctness test must be repaired or replaced with a reviewed better oracle, not ignored. An obsolete behavior test is not a blocker once its contract is intentionally retired and replacement coverage exists. Historical equality is never used to preserve a known bug.
 
-**FRESH TARGETED READS:** This reconciliation reread relevant construction, admission, candidate filtering, fixed generator bounds, package geometry, raw trace representation, shared simulator state, transformer, relay, floating-reference, and scope-sampling code. The source ledger identifies the actual ranges. Other detailed paths already present in the conversation and the same-SHA audit were reused as prior evidence, not relabeled fresh all-source inspection. [R02–R11]
+<a id="baseline"></a>
+# 2. Reviewed baseline and R00 exit conditions
 
-**HISTORICAL NOT PERFORMED (Edition 2.0 preparation):** No production edits, JDK8/GWT build, browser playthrough, large-board generation benchmark, 100-part circuit solve, full source sweep, local Task49 inspection, or independent subagent review was performed for that planning document. No subagents were available or represented as having run in that preparation. Container network retrieval was unavailable; connected GitHub reads supplied the source excerpts. Document dependency checks and arithmetic are not application tests. These limits do not override the accepted Task49 packet or the current N00 checks.
+## 2.1 What the reviewed commit establishes
 
-The earlier audit's 33-file coverage remains limited. Its extracted Java/helper experiments were not production acceptance tests. The new roadmap does not turn those limitations into a claim of whole-project correctness.
+A04 at `cc3532e8d138424ce986aa8f9b76688ec315f0a0` is the starting implementation, not something to revert. Its recorded evidence reports passing native checks, the five-permutation JDK8/GWT build, compiled A04 conformance, the then-selected electrical/repair regressions, cleanup and independent static review. The recorded review is not represented as having run the browser gates; the implementation root ran those separately.
 
-**HISTORICAL EDITION 2.1 PREPARATION:** The complete Edition 2.0 roadmap and its graph, plus the complete final-amendment brief [I5], were the basis of this revision before N00 adoption. No new repository/source investigation, runtime benchmark, Task49 inspection or independent subagent review was claimed by that preparation. The original source evidence and audit findings below retain their dates, scope and uncertainty. New engineering details are proposed acceptance contracts derived from the amendments, not newly discovered implementation facts. N00's subsequent document-preservation, dependency and coverage checks and independent review are recorded separately below as completed adoption evidence; this preparation text remains historical and does not certify implementation.
+The new scoped construction and physical declaration boundaries are useful. Materialization is still bounded to fixed parts and mutable resistors. Multi-unit package fixtures prove a data/conformance shape, not a working IC/MCU library. No A05, large-board, importer, general mutation rollback or save UI is qualified by A04.
 
-## 2.2 Preserved foundations and seams to replace
+This planning review read the exact commit, targeted implementation/callers and the recorded evidence. It did not independently rerun a full production build or browser playthrough. An attempted independent native test invocation was blocked by the execution interface and supplied no result; recorded passing receipts remain attributed to the A04 implementation run. Document checks for this edition do not certify the application.
 
-| Current foundation | Preserve | Change deliberately |
-|---|---|---|
-| Stable local descriptors and namespaced IDs | Logical component/terminal identities, explicit references, deterministic encoding. | Give durable device buses explicit identities; do not persist a union-find representative as the only meaning of a joined net. |
-| Typed electrical preflight | Pure rejection before allocation; unknown is not compatible; references do not merge by label. | Add runtime source state, loading, sequencing, instrument reference, and isolation proof. Port metadata alone is insufficient. |
-| One generated aggregate and physical inventory | One installed challenge, one authoritative mutable graph, one physical-part registry. | Constrained construction providers and private proof contexts, not one complete runtime per block. |
-| Package-owned geometry | Terminal identity, mounted/loose geometry, legal interaction envelopes. | One pose/side transform; layer-aware copper access; frozen snapshots; no mutable alias behind a cached fingerprint. |
-| CircuitJS measurement/solver boundary | Real electrical observations and active stimulus; functional repair/retest. | Reusable bounded stepping and observation receipts independent of UI frames; qualify floating references and instrument loading. |
-| Bounded resistor transactions and fresh-owner installation | Proven compensation, disjoint owners, failure isolation. | Generalize through a second real part category before broad mutation; do not claim arbitrary same-owner rollback is already supported. |
-| Named randomness and versioned replay | Exact signed seed transport and concern isolation. | Pin implementation/model/geometry/route/proof versions and accepted choices where public replay requires them. |
-| Existing tests and physical correspondence | Known falsifiers, positive controls, endpoint truth. | Provider conformance and representative scale corpora rather than multiplying every seed by every feature. |
+The committed Edition 2.1 roadmap has contradictory status text: its A04 card says complete/qualified, while Section 7.1 still calls A04 validation-blocked and directs qualification closure. This edition removes that contradiction. The new next task is a deliberate policy/consolidation correction, not a claim that the delivered A04 is still unfinished.
 
-## 2.3 Task49 impact
+## 2.2 Concrete cleanup findings
 
-**Disposition: accepted at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`.** Task49 establishes one bounded intent-driven value-synthesis proof for the controlled-indicator LED load. Its single immutable resolved-value recipe remains compatible with the long-term construction architecture and is the input to N00 and later providers.
+| Finding at reviewed baseline | Required disposition |
+|---|---|
+| Leaf replay supports old and corrected layout revisions; older placement/scoring still has reachable defaults | Remove obsolete revision dispatch and make the corrected current implementation authoritative across current callers. Keep genuinely different current leaf families. |
+| Historical fixed-value controlled route and version-1 fault reinterpretation | Use one truthful current recipe per useful content variant. Fix the descriptor itself to describe its real fault and target; remove special reinterpretation of an OPEN wrapper as an incorrect-value fault. |
+| Old and durable IDs coexist partly to preserve historical report text | Use explicit current component/terminal/bus identities in the affected plan-to-runtime flow. Remove history-only aliases/translators; keep legitimate logical/physical/solver mapping boundaries. |
+| Physical materializer/declaration ordering depends on controlled versus resistive history | Enumerate declared current nets/parts/owners deterministically. Do not require old component/slot order, exact intermediate count or hardcoded source/driver/load naming in generic code. |
+| Three A04 physical-provider hardening follow-ups | Close them before new A05 providers can depend on the boundary: full pad/component/net correspondence; secondary/attachment/fault backing ownership; same plan/spec/metadata/receipt construction provenance. |
+| Package-less rejecting constructors and implicit package selection | Remove obsolete entry points after migrating current callers. Require explicit package choice where the current architecture needs it. |
+| Whole historical report/golden equality and duplicated gate wrappers | Establish current contract checks and one maintained invocation surface; retain useful independent oracles and test-runner safety. Historical scripts may be deleted after useful coverage is migrated. |
 
-The accepted version boundary is `bounded-assembler@3`, `controlled-indicator@1`, `resistor-led-load@2`, `controlled-led-load-e12@1`, and geometry version 3. Task48's legacy controlled route remains `bounded-assembler@2`. Task49 admits the existing axial catalog candidates 270 ohms / 5% / 0.25 W and 330 ohms / 5% / 0.22 W. Generator2 remains fixed at 330 ohms / 0.25 W with its exact legacy meaning; named Task49 selection uses the block-scoped VALUES stream and does not reseed unrelated fault, scenario, placement, routing or presentation decisions.
+These findings do not prove a currently reachable player crash. The missing materializer checks are documented nonblocking limitations under the old closed coordinator; expansion makes them worth fixing now. Residual family knowledge in a supposedly generic boundary is architectural debt even when the current two fixtures pass.
 
-The accepted contract retains exact legacy Task48 version preservation, canonical finite catalog choices, truthful ratings and supported package identity, one recipe consumed by graph, physical specification and replacement semantics, actual healthy CircuitJS validation, and no new design math in the generic assembler.
+## 2.3 R00 implementation checkpoints
 
-Three retained boundaries preserve the accepted Task49 scope:
+**R00-A: current contract and inventory.** Confirm the actual branch/HEAD/diff, read applicable instructions and callers, and adopt this policy in AGENTS.md/ARCHITECTURE.md/ROADMAP.md before implementation. Produce one compact inventory classifying actual retirement candidates as obsolete revision, current feature, useful test oracle, current domain mapping or unrelated upstream infrastructure. Select the current content and replacement tests. Do not create a new permanent policy framework or a milestone per deletion.
 
-1. The resolved-value result is a block contribution, not a new independent board/runtime owner. It remains transportable as immutable data into A04.
-2. Original resistor values remain available through physical bands and legitimate measurement, not an added numeric original-value panel. The accepted result does not override original-value privacy.
-3. The bounded load and one physical package do not establish arbitrary intent enforcement or multiple package choices. The constrained result is not a general design API.
+**R00-B: consolidate the current pipeline.** Build forward from A04. Retire obsolete versions, behavior, API entry points and history-only mappings. Keep or migrate current simple resistor fixtures and current controlled-indicator content; do not remove useful families to evade test failures. Normalize the actual contribution fault data so validation, injection and repair agree without legacy branches. Migrate current identity and physical declarations together. Remove concrete device/net/order knowledge from the generic materializer where declarations already supply it. Do not merely move a giant switch into a renamed generic helper.
 
-Future review of a changed descriptor must still reject silently reinterpreting an old descriptor, independently hardcoding the selected value elsewhere, or accepting formula-only behavior. Those are boundaries on future changes; the larger roadmap is not a reason to reopen the accepted Task49 implementation.
+**R00-C: enforce the provider boundary.** Before any physical mutation, establish that plan, immutable electrical spec, metadata and live construction receipt belong to the same construction attempt. Matching IDs or equal serialized contents alone do not establish live ownership. Validate declared component/pad/net/terminal coverage against the spec and package map, including exact allowed relationships. Secondary paths, attachment wires and fault backings must belong to the correct declared physical/electrical participant, not just have a matching class/kind. Keep explicit device-owned bridges and legitimate shared package relationships. Add misuse tests plus valid controls; no universal hostile-Java sandbox or deep rollback engine.
 
-**Eligibility follow-up resolved in A02:** Canonical admission now drives selection, counts and live proof enumeration, with explicit hypothesis identity and fail-closed population checks. The two accepted controlled candidates remain admitted and serviceable; fresh Task48/49 full-report comparisons are unchanged, so their accepted meanings are preserved. The prior compatibility/type-only mismatch remains documented in the A02 baseline evidence; A01 is not reopened.
+**R00-D: current tests and playable acceptance.** Remove obsolete tests after migrating their still-useful invariants. Keep current seed transport/determinism, independent geometry/electrical checks, and negative ownership/failure tests. Run one final production build and focused compiled verification against the integrated candidate. Exercise ordinary diagnosis, removal/replacement, wrong repair, correct repair, power/reset and customer retest on a current challenge traversing the affected path.
 
-Retained limits are one load-block value policy, two admitted generated values and one truthful axial resistor package; no manufacturing certification, arbitrary part search, support-block or Task50 implementation, PCB scaling improvement, diagnostic eligibility redesign, bend-count correction or connected-placement correction. The [accepted Task49 evidence packet](task-evidence/task-49/README.md), its [independent review](task-evidence/task-49/review.json) and the Task49 report remain the qualification source. N00 imports this exact SHA, contract, evidence and limits without inventing another approval artifact or reopening the accepted implementation.
+A composed fixture may use an existing developer launch solely to select/install the board if that is its only current entry. Record this limitation, then use ordinary visible workbench actions; no private state mutation may substitute for diagnosis/repair. Do not claim the normal menu already uses the new pipeline. A05 must close normal-player launch integration for its new provider/variant path. Also check affected currently available leaf routes. A leaf-only playthrough cannot establish that new composed construction works.
+
+## 2.4 Closed R00 exit set
+
+1. Obsolete revision selectors, bug-preserving algorithms, compatibility-only APIs and fault reinterpretations in the scoped retirement inventory are removed; remaining matches have a specific current purpose.
+2. Current useful content traverses a coherent current construction/identity/physical path. Unknown/retired artifact or provider inputs fail before live mutation.
+3. All three A04 boundary follow-ups have explicit current implementation and negative tests, or have been eliminated by a simpler design whose behavior is independently tested.
+4. Tests assert current game contracts. No test is required solely to reproduce old report bytes, historical ID strings, incidental solver node numbering or stage counts. Current JVM/GWT parity and tolerated electrical checks remain when actually relevant.
+5. The actual production build, focused compiled electrical/physical checks, ordinary workbench behavior and affected lifecycle/cleanup gates pass on the integrated candidate. Unsupported or blocked gates are reported honestly, never marked passed.
+6. One fresh independent read-only review checks the integrated diff, original revised requirement and relevant tests, with a focused delta review after any repairs.
+7. AGENTS.md, ARCHITECTURE.md and this roadmap agree: R00 complete only after qualification, A05 next/unstarted. The current task report has a compact checkpoint; old checkpoints do not remain active instructions.
+
+R00 is one corrective task with these checkpoints. Do not freeze a new series of R00-era replay versions or create another long historical certification campaign.
 
 <a id="architecture"></a>
-# 3. Target architecture
+# 3. Target architecture and capability boundaries
 
-## 3.1 One immutable design; one live electrical truth
+## 3.1 One resolved design; one active electrical truth
 
 ```text
-DeviceIntent + versioned SupportedEnvelope + exact root seed
-  |
-  v
-Functional requirements and region relationships
-  -> compatible BlockFamily / ImplementationVariant choices
+Current device intent + supported envelope + exact seed
+  -> functional roles and region relationships
+  -> compatible current family/implementation choices
   -> explicit interfaces, source/reference domains and device buses
-  -> resolved values, model choices, package realizations
-  -> immutable ElectricalRealizationPlan
-  |
-  +-> cheap semantic / physical-demand checks
-  +-> private healthy solver proof
-  +-> PhysicalRealizationPlan: outlines, poses, copper, vias, factory links
-  +-> independent physical connectivity and accessible-target proof
-  +-> bounded fault hypotheses + executable diagnostic/repair plans
-  +-> proof receipts + symptom projection + difficulty assessment
-  |
-  v
-QualifiedChallengeArtifact
-  |
-  v
-atomic fresh-owner publication
-  |
-  v
-ONE live challenge/runtime + physical parts + current connectivity
-  -> CircuitJS -> observations -> instruments / retest / rendering
+  -> immutable resolved values, model choices, packages and electrical plan
+  -> cheap semantic/physical-demand checks
+  -> private healthy CircuitJS validation
+  -> physical realization, copper/access/correspondence validation
+  -> canonical serviceable fault hypotheses and bounded diagnostic proof
+  -> current complaint/presentation projection
+  -> atomic installation of one player runtime
+  -> ordinary measurement, physical mutation, repair and customer retest
 ```
 
-These are responsibility names, not an instruction to create one class per box. Use existing collaborators where they fit. A block hierarchy is a hierarchy of *design contributions*, not nested `GeneratedBoardInstance` objects. Design math may reject or propose; it cannot generate player voltage readings. Rendering may display a solved state; it cannot create connectivity.
+Keep request, resolved immutable plan and mutable installed state distinct. A replay artifact records the current resolved design and interpretation; it is not a second live truth store. Providers declare local contributions and supported capabilities. Generic orchestration coordinates stages and owned publication; it does not learn individual resistor/transistor/family names.
 
-## 3.2 Functional roles are requirements, not frozen circuits
+## 3.2 Ownership map
 
-A role states required behavior at its interfaces: operating voltage/current range, input polarity, loading, reference domains, allowable timing, protection requirements, observations, and repair affordances. A block family offers named, qualified implementation variants. Each variant has explicit assumptions and guarantees, its own local topology and values, model fidelity, physical package options, and diagnostic contributions.
+| Concern | Owner and boundary |
+|---|---|
+| Functional intent and variant selection | Current device-intent resolver and provider registration; no selected-fault-based topology cheating. |
+| Local parts/terminals/values/models | Explicit immutable provider contributions and resolved recipes. |
+| Device buses and cross-block joins | Device-owned declarations and one constrained construction context. |
+| Solver elements and mutable bindings | One active construction/runtime owner; no provider-owned nested simulator. |
+| Physical packages/poses/copper | Physical realization providers and generic current materialization with exact correspondence. |
+| Fault eligibility, observations and repair classes | Production hypothesis/diagnostic services with provider-local supported behavior. |
+| Measurements and instrument stimulus | Shared CircuitJS observation/active-measurement boundary. |
+| Physical repair, inventory and damage | Runtime and part/conductor lifecycle providers; one mutation owner. |
+| Camera, loupe, rendering and accessibility | Shared view transformation and non-spoiling projections; no electrical authority. |
+| Current save/resume and imports | Input/reconstruction adapters into native current services, not alternate runtimes. |
+| Test execution and evidence | Independent consumers of current contracts, separate from player admission and physical truth. |
 
-For example, a low-voltage switched-load requirement might resolve to a BJT low-side stage or an NMOS low-side stage. They need not have identical gate/base inputs or diagnostic readings. Compatibility includes the adapter and drive capability needed to make each realization satisfy the same device function. Selecting a high-side implementation is not accomplished by renaming a low-side net. A five-volt supply role may resolve to a linear regulator when input/headroom/load permit it, a qualified buck model, or an isolated-converter-plus-regulator chain. These implementations are not universally interchangeable.
+## 3.3 Three graphs, not three competing truths
 
-The device grammar decides which alternatives are valid together. It prohibits incompatible source architectures, impossible timing, unsupported references, or unsafe measurement requirements before expensive search. Optional support has a real electrical function and a documented interface effect. No random part is added merely to increase a difficulty score.
+The logical design graph describes intended components, terminals and buses. The physical conductor graph describes pads, copper edges, vias, barrels and current cuts/repairs. The live solver graph implements the active electrical state. A cut can split conductors belonging to one intended bus; a legitimate repair can reconnect them differently. Those representations need explicit mappings, not one collapsed identifier.
 
-At least two genuinely different implementations and repeated instances must prove each important extension seam before it is called generic. Avoid a universal circuit language: use typed Java data/contracts and explicit providers compatible with the existing build. Registry bootstrap may change when adding a provider; generic engines should not acquire provider-specific branches.
+Stable semantic identity is not a union-find root, a solver node number, array position, pixel coordinate or old report string. It survives harmless current redraw/view operations and supported mutations. Replacing a topology creates distinct internal terminals rather than pretending incompatible pins are identical. Source/reference labels do not join circuits. Current physical realization fingerprints invalidate stale actions and caches; a genuinely changed realization may reject old development data.
 
-## 3.3 Ownership map
+## 3.4 Construction and pluggability
 
-| Concern | Authoritative owner | Forbidden second authority |
-|---|---|---|
-| Functional intent and permitted device topology | Device grammar / requirement resolver | Renderer or scenario text choosing electrical topology. |
-| Local electrical implementation | Versioned block/element provider through a constrained construction context | A block privately publishing a second board, source registry, inventory or fault engine. |
-| Global IDs and explicit connections | Device namespace / bus resolver | Lexicographic representative, collection index, physical position or solver node number as durable ID. |
-| Resolved part value/rating | Immutable recipe from Task49 and later compatible providers | Independent constants in assembler, markings, replacement catalogs and behavior checks. |
-| Pristine conductive structure | Versioned physical realization with conductor graph and provenance | A net label pretending two disconnected pieces of copper are joined. |
-| Current connectivity after actions | Mutation-owned conductor/part state, projected to the one live solver | Renderer deciding a cut electrically, or UI state directly toggling repair success. |
-| Electrical behavior | CircuitJS element/model implementations | External ideal supply or scripted animation making the board appear functional. |
-| Model fidelity and exposed observations | Versioned model contract plus independent qualification | A hidden averaging shortcut that fabricates switching waveforms or omits visible parts. |
-| Probe accessibility | Package/surface definitions transformed into the active view | Oversized invisible hitboxes or debug coordinate shortcuts. |
-| Diagnostic eligibility and proof | Production hypothesis/plan service | Family-specific developer switch, hidden target ID, or timing-dependent sampling as proof. |
-| Evidence reuse | Immutable, complete-key proof receipt | Sharing mutable candidate graphs, trusting a stale PASS, or hashing only the root seed. |
-| Session/history/save | Session coordinator and versioned semantic state | Serialized solver matrix/node identities or a second inventory in the Shop. |
+A provider has a compact declaration of its electrical units, part/package ownership, terminals, resolved values, fault/serviceability and supported physical behavior. One package may contain multiple modeled units with shared power/reset/clock terminals. One unit is not automatically one solver element or one replaceable part. A quad IC or resistor network is one physical package when modeled that way.
 
-## 3.4 The three graphs must be explicit
+The restricted context owns allocations/bindings and records ownership before failing initialization can strand resources. Cross-owner joins go through explicit device contracts. Completion requires declared bindings; failure/abort revokes candidate receipts and releases only owned state. A generic materializer must not decide that a driver always has RG/RPD/Q1 or that a load always owns LED_NODE. Small existing devices prove the seam; A05 proves real alternate/repeated consumers and A11 measures extension cost.
 
-The **logical design graph** records intended component terminals and bus relationships. The **physical conductor graph** records actual pad surfaces, copper edges, plated barrels, vias, and factory connections. The **live solver graph** is the electrical realization of current part and conductor state.
+Preserve short physical designators separately from long semantic identity. Original component values are visible only through legitimate markings/measurement, not an added original-value answer panel. Supply/runtime parameters, physical ratings and replacement semantics consume one resolved authority.
 
-They are related views, not interchangeable structures. Their transformations require provenance and correspondence checks. A pristine connected bus can split after a trace cut without renaming every original component or pretending the original bus name still guarantees conductivity. A repair can reconnect it by a different allowed path. Union-find is useful for deriving current connected components; its root is not a permanent repair identity.
+## 3.5 Solver, time and model limits
 
-Before trace cutting, conductor identity must survive harmless redraw, pan, zoom, serialization and lossless path subdivision. Saved actions must carry the physical realization version/fingerprint and a semantic segment/locus identity. A later reroute that changes the physical conductor network requires explicit incompatibility handling or a validated mapping; nearest-pixel repair migration is forbidden.
+CircuitJS remains the working solver. Its singleton-sensitive context is not made independent by constructing two Java objects. Start with serialized owned proof execution and bounded simulation-time stepping. Private proofs cannot advance the player's circuit or publish stale state. Parallel geometry search is a separate decision; parallel live solvers require real isolation and their own evidence. GWT code is not presumed worker-safe merely because it is placed behind a worker wrapper.
 
-## 3.5 Solver isolation and scheduling
+Simulation time, rendering time, work counters and wall-clock cancellation are distinct. Host speed can change yielding or resource failure, not choose a different successful fault/design. Stateful IC/MCU/display models advance on accepted simulation steps or declared scheduled events, not browser frames or repeated nonlinear trial evaluations. Specify tie ordering, reset/startup, phase and finite feedback work.
 
-**CODE:** `CircuitElm.sim` is static; existing scope code also reads `CirSim.theSim`. Constructing two Java objects in the same realm does not prove two independent simulators. [R05, R08]
+Models declare supported I-V/loading, startup, dropout, storage, bandwidth, protection, fault behavior and observables. An averaged converter can be legitimate but cannot claim resolved switching waveforms or decorative individually probeable parts with no causal role. Numerical reference stabilization is not a physical ground or invisible component the player can repair. Qualified observations use declared physical predicates and numerical tolerances, not bit-identical trajectories across all browsers.
 
-A07 initially exposes serialized, private proof execution through a narrow adapter around the existing backend. Each proof has a request identity, immutable inputs, owned elements, bounded stepping, explicit completion/failure, and cleanup. It cannot advance the player's live circuit or publish stale state. Immutable placement/routing candidates may later be evaluated in parallel if the environment supports it. Parallel live CircuitJS candidates require independent execution realms or proven instance-scoped state, and their own qualification.
+## 3.6 Future seams without speculative frameworks
 
-Do not assume that moving the existing compiler output into a Web Worker makes DOM-linked GWT code worker-safe. Worker extraction, separate browser contexts, or backend isolation is a conditional engineering decision after the dependency inventory and serial benchmark. Task41's accepted fresh-candidate/untouched-owner discipline remains valid until a replacement earns equivalence evidence.
+Small architecture canaries must keep shared-package units, surface-only pads, stateful scheduling, explicit design origin and separate capability claims representable. The required 0805/SOT-23 fixtures and small scheduled-state checks remain. They do not qualify finished ICs, MCUs, SMD gameplay or imports. Add concrete serialization/model fields when a real current consumer requires them; do not retain an unused general future-state framework solely because a hypothetical old manifest encoded it.
 
-## 3.6 Time, energy, and fidelity are part of the contract
+Electrical support, physical realization, diagnostic observation, repair serviceability, dynamic state and import capability are separate claims. A recognized CircuitJS element is not automatically a replaceable PCB component or a fair fault candidate.
 
-The simulation clock, user-interface clock, generation-work counters and observation windows are different. A slower computer may yield more often or fail a resource deadline; it must not silently choose a different circuit, fault, event schedule or accepted observation.
+## 3.7 Twelve-step import-to-challenge contract
 
-Models declare what they preserve: static I–V behavior, loading, startup, dropout, stored energy, control response, failure behavior, relevant bandwidth, and observable terminals. A macro-model is acceptable inside CircuitJS when its terminal currents/voltages and state evolve causally from the actual electrical inputs. Qualification must cover load variation, loss of input, enable, residual energy, protection and the faults advertised for that model.
+IMPORT-1 establishes the complete bounded passive/DC path; later stages expand supported elements. The importer is an authoring/input adapter into native current services.
 
-An averaged converter cannot claim a resolved switching waveform. A block-level abstraction cannot display a dozen individually probeable, removable external parts while ignoring their state. Either those visible parts causally participate in the model, the diagnostic vocabulary is explicitly limited and independently proved, or the abstraction is represented honestly as one packaged module. Package count does not count hidden mathematical elements and cannot be padded with decorations.
+1. Retain source bytes or an explicitly user-resolved source artifact, hash, current parser/interpretation identity and bounded size/work limits. Parse in isolated owned staging; no script execution, arbitrary embedded network fetch or current-board mutation.
+2. Recover the supported schematic electrical connectivity before PCB placement. Persist explicit import-local component/unit/terminal/bus assignments; source coordinates and solver nodes are not durable repair IDs.
+3. Account for every source element using the six dispositions in Section 5.7: directly supported PCB component; supported with package choice; supported external source/load/control; supported as an honest packaged module; electrically supported, not physically serviceable; unsupported. Unresolved conditions are explicit. No silent drops or silent model/package substitutions.
+4. Resolve sources, controls, references and loads. Where ambiguous, the author identifies external versus on-board roles; an ideal source is not automatically a PCB package.
+5. Declare healthy customer intent: allowed inputs/power/control sequences, outputs and meaningful expected behavior. Suggest only unambiguous facts; do not guess intent from net labels or current measurements.
+6. Map supported packages, units, shared pins, polarity, values/ratings and physical roles without silently rewriting electrical topology to ease routing.
+7. Verify actual healthy behavior over declared operating states through the shared CircuitJS execution boundary. Convergence alone is not function.
+8. Enumerate only supported, causal and physically serviceable faults with stable current hypothesis identity and seeded selection.
+9. Reject no-op symptoms, unmodeled numerical behavior, inaccessible observations, impossible repairs and indistinguishable non-equivalent causes. Do not relax the native diagnostic contract for imported input.
+10. Use the native physicalization, layer/copper/access, renderer, probing, inventory, repair and retest services. Routing exhaustion is an explicit bounded rejection, not permission for hidden wires.
+11. Record current source interpretation, accepted mappings, packages/models/values, healthy intent, physical realization, selected fault and relevant proof/state dependencies. A hash without source bytes is not a replay recipe; obsolete development interpretations may reject.
+12. Publish an exact element/feature support matrix and per-file unsupported/needs-input reasons. Share source/manifest deliberately; do not leak hidden fault/answer information in ordinary player complaint, accessibility or share projections.
 
-## 3.7 Versioned artifacts, not an eternal frozen application
-
-A qualified challenge pins the descriptor schema, device grammar, block implementations, named-stream derivation/revisions, value policy, electrical model set, package geometry, placement/router policy, physical realization, fault library and proof semantics needed for its supported meaning. They need not all be independent top-level fields immediately; one versioned manifest can reference them. The requirement is complete interpretation, not a large number of version numbers.
-
-Stable identity is distinct from stable selection. Adding a new eligible implementation or fault can change a new generator's selection distribution. It cannot silently change an old supported version. Preserve the old resolver or reject it explicitly according to the published support policy. Semantic equivalence does not require pixel-identical cosmetic shading.
-
-For public reproducibility, preserve both the request and a digest of the resolved artifact; persist the resolved choice manifest where regeneration alone would be fragile. Floating-point solver results use declared tolerances and physical predicates, not an unsupported promise of bit-identical trajectories across every browser.
-
-## 3.8 Forward-compatible IC, state and capability contracts
-
-The long-range electrical vocabulary uses the same role → family → implementation → resolved recipe → physical realization chain. An IC is a physical package with declared electrical pins, not a shortcut around power, loading, probing or repair. A provider may implement several functional units inside one package, but it must state the shared power/reset/clock relationships and unit-to-pin correspondence. A quad device or resistor network is counted as one physical package when represented as one; separate schematic units cannot silently become separately replaceable packages.
-
-A powered logic output is not an unconditional Boolean voltage source. Its model declares supply/reset dependence, thresholds, drive topology, finite drive/loading, input behavior, output limits and the supported power-loss/brownout envelope. Analog ICs likewise declare supply and input/output operating limits, saturation and reference dependence. Unsupported common-mode, timing or loading conditions cannot be converted into falsely precise readings. Exact commercial-part fidelity is not presumed from a familiar functional label such as “555-style” or “ULN2003-style.”
-
-Stateful providers participate in A07's simulation-time execution, A08's lifecycle and U06's explicit state schemas. Their state transitions occur at the accepted electrical/event boundary; repeated nonlinear trial iterations cannot accidentally advance a counter twice. Internal clock phase, pending semantic events, reset priority, startup initialization and event-tie ordering are part of the versioned model contract. Feedback that cannot settle within the finite event budget rejects or reports a supported numerical failure, rather than spinning indefinitely or sampling browser frames.
-
-These compatibility requirements belong to foundation contracts now. E09–E14 and MCU-1/MCU-2 implement the actual later vocabulary. Synthetic shape/event canaries do not qualify a real microcontroller, and the foundation does not wait for a finished MCU, display or importer.
-
-## 3.9 Imported designs converge on native challenge services
-
-```text
-CircuitJS file bytes + source/content hash + parser/import version
-  -> isolated parse/load interpretation
-  -> element capability classification + ambiguity report
-  -> author-approved import manifest: sources, controls, outputs, healthy intent
-  -> stable logical design + package/unit/terminal mappings
-  -> the SAME native resolved-plan and healthy-verification services
-  -> the SAME physical placement/routing/layers/correspondence services
-  -> the SAME supported fault/diagnostic/repair/retest services
-  -> qualified challenge artifact + replay provenance
-  -> the SAME fresh-owner publication and player workbench
-```
-
-The importer is an input adapter and authoring boundary, not a second electrical solver, fault engine, board runtime, PCB renderer or inventory. Reuse/adapt the real CircuitJS parser/load semantics where possible, but isolate them from the player's installed graph. Parsing must not execute an embedded script, fetch arbitrary external resources or replace a live owner as a side effect.
-
-Imported schematic coordinates may be inputs to recovering CircuitJS's electrical connectivity during interpretation. They are not automatically physical PCB positions and cannot be retained as the durable identity of components, pins, nets or repairs. A deterministic import-local identity assignment is persisted in the accepted manifest. Exact content replay reuses that mapping; changed files receive an explicit new interpretation or reviewed migration, not a guessed cross-version identity match. Symmetric/duplicate elements and ambiguous multi-unit packages need explicit canonicalization or author annotation rather than unstable array-order naming.
-
-A solved imported circuit is not automatically a meaningful challenge. The author identifies or accepts unambiguous suggestions for sources, controls, customer states, outputs and healthy expectations. The importer must not manufacture a customer's intended function from whatever measurements happen to be present. Unsupported electrical, physical, serviceability or functional contracts produce structured capability results before challenge publication. Section 6.11 and IMPORT-1 through IMPORT-5 define the bounded implementation sequence.
+Changed input is a new interpretation unless an explicit current mapping proves continuity. This is not a historical file-migration service. Full arbitrary import, scripting or community ecosystem is not promised.
 
 <a id="reference-boards"></a>
-# 4. Functional taxonomy and permanent reference boards
+# 4. Functional taxonomy and reference boards
+
+These are current product targets and comparison fixtures, not constraints to reproduce old generator outputs. Counts are purposeful physical packages, not simulated element totals or drawings. Component allocations remain design budgets until qualified by the owning content task.
 
 ## 4.1 Initial implementation vocabulary
 
@@ -289,9 +254,9 @@ For this first fixture the sensor/interlock is an externally player-operated low
 
 A low-voltage board with a 12 V source, 5 V regulated/control rail, two sensor channels, two output drivers, indication and real connectors. The allocation is 4 entry/protection parts, 4 regulator/filter parts, 8 sensor-conditioning parts, 10 dual-driver/output parts, 2 status parts and 2 additional connectors: **30 physical packages**.
 
-Required structural variants include alternative BJT/MOSFET driver populations and at least two accepted sensor/reference arrangements. The 5 V rail must be produced by the modeled regulator, not an unrelated external ideal rail. Q30 qualifies 20–40 parts as normal procedural content, including partial-power and loading cases. It is not satisfied by merely instantiating RB15 twice with no interaction.
+Required structural variants include alternative BJT/MOSFET driver populations and at least two accepted sensor/reference arrangements. The 5 V rail must be produced by the modeled regulator, not an unrelated external ideal rail. Q30 qualifies 20-40 parts as normal procedural content, including partial-power and loading cases. It is not satisfied by merely instantiating RB15 twice with no interaction.
 
-## 4.5 RB56: the 50–60-part appliance/control north star
+## 4.5 RB56: the 50-60-part appliance/control north star
 
 ```text
 simulated 120 VAC input
@@ -351,7 +316,7 @@ Q100 is a required mature-target qualification, not an optional benchmark that c
 |---|---|---|
 | Architecture fixture | Counted roles, interfaces, domains, model/fault requirements and failure expectations are specified. | A01 specifies all four early. |
 | Structural/generation fixture | Actual immutable recipe and global identities are produced, including invalid cases. | A04/A05; Q15/Q30/Q60/Q100 progressively qualify real content. |
-| Physical routing fixture | Actual package geometry, net membership, routing policy and layer/crossover evidence exist. | P03–P09 include reduced and full-count structural probes before the full electronics library exists. |
+| Physical routing fixture | Actual package geometry, net membership, routing policy and layer/crossover evidence exist. | P03-P09 include reduced and full-count structural probes before the full electronics library exists. |
 | Solver fixture | Real or explicitly bounded model-backed circuit is analyzed and stepped; cost/fidelity recorded. | A07/E06 run small difficult pilots and 20/40/60/100 aggregate loads early. |
 | Diagnostic fixture | Selected hypothesis population, legal observation policy and reachable repair/retest are proved. | A09/D01; qualification gates integrate exact content. |
 | Playable qualification | Normal UI, correct markings, navigation, inputs, instruments, repair, save where advertised, and resource budgets pass. | Q15, Q30, Q60, Q100. |
@@ -361,46 +326,64 @@ A physical-only 100-part fixture is useful early evidence, but it is not an elec
 
 ---
 
-## 4.8 Long-range component and instrument coverage
 
-This table accounts for the requested vocabulary without creating a milestone for every part. Each entry is a family-level plan, not a promise that every named device is currently implemented. Existing smaller milestone scopes stay intact; later families consume their contracts. An entry does not become a Q60/Q100 prerequisite unless the qualified family uses it.
+## 4.8 Extended vocabulary and bench capabilities
 
-| Capability group | Explicit coverage | Placement and qualification boundary |
+| Group | Included direction | Qualification boundary |
 |---|---|---|
-| Passive parts and networks | Resistors, resistor networks, capacitors/electrolytics, inductors, chokes, transformers, potentiometers/trimmers, thermistors, MOVs and fuses. | Existing E01/E02/E04/E05 plus later E09/E12 models and X02 only when damage behavior is advertised. Distinguish one packaged network from independent replaceable parts; no inert filler. |
-| Basic semiconductor and protection families | Standard and Zener diodes, TVS/clamp devices, bridge rectifiers, BJTs and MOSFETs. | E01–E06 retain their bounded content. Later provider additions must qualify thresholds, polarity, limits, loading and fault effects actually modeled. No full transient/EMC claim. |
-| AC switching | SCRs, TRIACs, optotriacs, optocouplers, zero-cross sensing/control; heater, AC motor/solenoid and isolated AC switching examples. | E13 after source/reference, AC and instrument contracts. Each variant states latching/commutation/load limits; not required for a relay-switched baseline Q60. |
-| Small analog ICs | Comparator, Schmitt comparator, op-amp, follower/buffer, amplifier, threshold/reference and useful active-filter functions. | E04 remains the initial bounded proof; E09 adds an explicit powered analog-IC family. Input/output/supply envelope and saturation are qualified; no invented rail-to-rail behavior. |
-| Combinational logic | Inverter, AND, OR, NAND, NOR, XOR and Schmitt-trigger functions. | E09. Actual supply/input/output pin behavior, finite loading and powered/unpowered semantics; no universal HDL. |
-| Sequential logic and clocks | SR latch, D flip-flop, useful JK flip-flop, counters, simple shift registers; crystals, ceramic resonators, oscillator modules and RC clocks. | E10. State, clocks, reset/set, initialization, partial power and timing are deterministic and instrument-observable. Crystals are not decorative and RF fidelity is not promised. |
-| Timing | 555-style monostable/astable/triggered configurations; transistor/RC, comparator/Schmitt and qualified alternate IC implementations. | E07. Reset/enable, threshold/control pins and surrounding timing components are causal within each qualified configuration. |
-| Specialized small ICs | Transistor-array/ULN2003-style drivers; analog switches; mux/demux; voltage references; simple current-sense amplifiers; optocouplers/isolated digital interfaces; LED/display and simple power-driver functions; reset/brownout supervisors. | E12 demand-selected provider groups. Their acceptance is local to the selected function; no blanket catalog implementation or Q60 prerequisite. |
-| Basic microcontrollers | Power/reset/brownout, GPIO direction/threshold/loading, pulls, limited ADC, PWM/timers, deterministic startup and bounded appliance-control behavior. | MCU-1 compares implementation methods; MCU-2 qualifies the chosen bounded runtime and electrical board integration. No arbitrary firmware/IDE or hidden-firmware puzzle. |
-| Displays | Single-digit common-anode/common-cathode seven-segment LEDs, segment pins/current limits and justified segment faults; later multi-digit scanning, drivers, status codes, bargraphs or indicator arrays. | E11. Display output comes from actual segment currents and simulation-time scan behavior, not scenario text. Graphical LCD/OLED remains outside the baseline plan unless a later product need justifies it. |
-| Sensors | Thermistor, photoresistor, Hall-effect, reed/limit switch, pressure abstraction, potentiometric position and simple current-sense input. | E04 extensions and E12 where a powered IC is needed. Required conditions have normal player stimuli; failure hypotheses distinguish sensor, supply, reference and interconnect. |
-| Machine/user inputs | Pushbuttons, toggles, DIP switches, useful rotary selectors, configuration jumpers, connectors and headers. | A05/E04/U04 with source/operation contracts. Configuration is a real modeled connection/state, not an answer selector. |
-| Loads and outputs | LEDs/displays, buzzers, relay coils/contacts, solenoids, DC motors/fans, heaters and generic external loads. | E01/E03/E11/E13/E14. Off-board loads remain connector-bound external objects and never inflate PCB component counts. |
-| Reversing/motor control | Relay reversing, discrete BJT/MOSFET H-bridges and a simple packaged motor driver. | E14. Diagnose supply, drive, current path, protection, direction, enable and load response; no detailed commutation or arbitrary motor firmware. |
-| Power and references | Simulated 120 VAC, rectification/bulk storage/isolation/offline conversion, 24/12/5/3.3 V domains, LDO/buck variants, protection/current limits, partial power/backfeed, reference devices and useful reset supervisors. | Preserve A06/A07/E01–E06. E12/MCU providers add narrower contracts when used; no claims of construction safety or unmodeled converter dynamics. |
-| Interconnect and physical substrate | Terminal blocks, headers, keyed/ribbon-style multi-pin connectors, real raised factory crossovers, vias, top/bottom copper and surface pads. | P01/P02/P06/P07; actual cable/harness use needs explicit external connectivity. Factory crossovers remain distinct from E08 player repair wires. |
-| Bench instruments | Existing/planned DC V, AC V, resistance, continuity, diode, capacitance when justified, frequency and scope; later two channels, conditional logic capture, injection, current insertion and ESR. | U02/U03/U09–U12 and X08. Every instrument states electrical interaction, range, reference, limitations, cleanup and physical operation. Listing is not enablement. |
-| Community circuit content | Broad but explicitly supported CircuitJS import, including sources/controls/loads, package mapping, healthy intent, faults and replay. | IMPORT-1–IMPORT-5 use the native architecture and publish a capability matrix. Unsupported files get reasons, not silently altered netlists. |
+| Passive and interconnect | Resistors/networks, capacitors, diodes/Zeners/TVS, fuses, connectors, testpoints, factory links and later copper repair. | Honest packages/pins, causal modeled effects and current serviceability. |
+| Switching and output | BJT/NMOS/PNP/PMOS where supported, relay drivers, regulators, isolated converters, SCR/TRIAC, zero-cross, reversing/H-bridge and external loads. | Drive/source/reference/loading/energy limits and meaningful control sequences. |
+| Analog/control ICs | Comparator/Schmitt, op-amp/buffer/amplifier, reference, active filter, driver array, analog switch/mux, current-sense and optocoupled interfaces. | Real power/shared pins, finite drive and declared operating envelope. |
+| Logic and timing | Combinational logic, latches/flip-flops, counters, shift registers, 555-style timers, RC/crystal/resonator/oscillator alternatives. | Shared simulation time, reset/startup/clock loss, finite events and honest bandwidth. |
+| MCU and displays | One bounded MCU approach; limited GPIO/ADC/PWM/timers; seven-segment static and qualified scanned displays/status outputs. | Causal pin behavior, package ownership, current state/resume and no private-answer shortcut. |
+| Bench instruments | Reference-aware DMM, one-channel scope then two channels; conditional logic probe/capture, electrical signal injection, in-series current, ESR and capacitance. | Actual electrical connections, burden, range, reference, supported timing, lifecycle and diagnostic need. |
+| Imports | Passive/DC, nonlinear/RC, selected IC/control, power/dynamic and broad supported community subset. | Complete twelve-step native pipeline with author intent and explicit unsupported results. |
+| Advanced diagnosis | Intermittent events, causal secondary damage/thermal, customer returns, optional scoring and bounded multiple faults. | Real causal effects, reproducibility, observable hypotheses and reachable repair; expert difficulty calibration. |
 
-## 4.9 Optional evolution of the reference-board families
+Optional RB15/RB30/RB56/RB100 variants may incorporate IC, MCU, display or imported-design capabilities. They inherit only the capabilities actually consumed. They do not replace the base allocation with inert decorative parts or make every native reference board wait for all later lanes.
 
-The RB15/RB30/RB56/RB100 base allocations and count rules above remain unchanged. The following are additional future variants, not replacements for their primary qualification fixtures and not mandatory additions to each board. Each adopted variant receives its own manifest, actual package count, model/instrument bundle and qualification receipt at the corresponding Q gate.
+## 4.9 Grouped fault library
 
-| Future variant | Purpose and contents | Additional consumed capabilities |
+| Owner group | Supported future failure vocabulary | Guardrail |
 |---|---|---|
-| RB30-CONTROL | Add a comparator/interlock or 555-style timing alternative to the existing low-voltage sensor/output purpose. | E09 for powered IC implementation, E07 for timer configurations, E10 only for stateful logic used; U03 where time observations are required. |
-| RB56-LOGIC | A discrete/logic-controlled appliance implementation with powered latch/flip-flop/interlock behavior and an encoded status output. | E09/E10; E11 for a seven-segment status display or another declared status-output provider; E07 only if selected timing uses it. |
-| RB56-MCU | Bounded MCU with real sensor inputs, relay/MOSFET outputs and seven-segment status; power/reset/clock/supply defects remain plausible external causes. | MCU-2, E11 and the actual source/sensor/driver providers. No firmware decompilation; tools selected from the proven observation plan. |
-| RB100-MIXED | Optional mixed analog/logic/MCU/multi-rail/relay/AC-control realization, structurally different from the base recipe. | Only the E09–E14/MCU/instrument capabilities actually selected. It cannot turn those into prerequisites for the base Q100 family. |
+| Resistors/networks | Open and supported value drift high/low. | Nominal markings are not a hidden fault readout; shared-package repair is real. |
+| Capacitors | Open, short, reduced capacitance, leakage; ESR only with a qualified model. | Stored energy and electrical diagnostic response, never metadata-only measurement. |
+| Diodes/Zeners/TVS | Open/short, leakage, changed clamp and reversed installation as modeled. | Polarity, load, reference and stress envelope are qualified. |
+| BJT/MOSFET | Open/short paths, stuck conduction and supported drive damage. | Distinguish device defects from source/drive/reference faults. |
+| IC/MCU | Dead package, supported stuck pins/drive degradation, clock/reset/state faults when meaningful. | External missing reset/clock/supply is not automatically an internal package defect; no firmware decompilation. |
+| Relay/load control | Coil open, stuck contacts, high contact resistance and driver faults. | Separate coil/contact/driver physical and electrical ownership. |
+| Connector/copper | Open terminal, high-resistance connection, broken trace; later via/conductor faults. | Precise physical locus and a real repair operation; E08 only when consumed. |
+| Power path | Fuse/regulator/rectifier/startup/feedback faults and partial rail collapse. | Every visible component matters to the modeled function. |
+| Sensors/inputs | Open, short, biased/stuck response and reference/supply failure. | Relevant stimulus is player-operable and separates plausible causes. |
+| Composite/time | Intermittent behavior, secondary damage and bounded multiple faults. | No unexplained randomness; qualify joint effects rather than infer them from isolated passes. |
 
-At least one future variant in this lane must exercise a stateful logic provider, an explicit IC package, a display or encoded status output, and alternate implementation families. E10/E11/MCU-2 maintain that coverage as their later integration deliverables. A variant can satisfy it without an MCU. The existence of this future demonstration does not block the baseline Q60/Q100 or change their required-target status.
+A valid equivalent-repair class can avoid demanding identification of an inaccessible internal semiconductor. It cannot be used to hide non-equivalent causes that need different repairs.
+
+## 4.10 Additional capability-gap dispositions
+
+These are the Edition 2.1 gap categories carried into the current-only plan. "Foundational" means a necessary current seam or small canary, not permission to implement the entire future feature now.
+
+| Gap or capability | Disposition | Owner and limit |
+|---|---|---|
+| Shared-package units, common IC supplies and resistor-network identity | Foundational now | A04/R00/A11/P01 keep explicit package/unit/pin correspondence and honest counts; actual new IC runtime support belongs to its later consumer. |
+| Provider state, clock phase and deterministic event ordering | Foundational seam now | A03/A07/A08/U06 support current identity and finite state/events; small scheduled-state checks, not a firmware framework. |
+| Surface-only pads and face-specific mounting | Required architecture canaries now | P01/P02/U01 exercise 0805/SOT-23, optional SOIC, without enabling BGA/reflow or a full SMD catalog. |
+| Untrusted import names/models/resources and input size | Foundational trust boundary; implementation later | A03/A10/U04 allow explicit provenance and safe presentation; IMPORT-1 implements isolated bounded ingestion, not arbitrary script/network access. |
+| Watchdog and reset/brownout supervisors | Planned later | E12/MCU-2 for a selected causal control model, with deterministic reset behavior. |
+| EEPROM-like configuration/calibration or nonvolatile state | Conditional | MCU-2/U06 only when current content needs retention; define power-loss/update semantics, not a general memory/firmware emulator. |
+| Calibration and trimmer service actions | Planned later | E04/E09/U04 expose actual electrical adjustment when diagnosis/retest needs it; never a hidden correct-repair button. |
+| Harness pin swaps, high-resistance contacts and cracked-solder-style opens | Conditional | A09 with appropriate E01/E08 or part/connector mutation provider; precise physical locus, causal effect and real repair. |
+| Battery-backed rails and supercapacitor/backup state | Conditional | E01/A06/U06 when a family consumes independent/residual power; no assumption that global OFF discharges everything. |
+| Fan tachometer, load feedback and bounded plant coupling | Conditional | E04/E14 when external electrical response matters; no full motor/mechanical/fluid simulator or off-board package-count inflation. |
+| UART/I2C/SPI and held/stuck bus lines | Conditional | Later E10/E12/MCU/U10 only with finite electrical loading/pulls/timing and available observations; no protocol ecosystem prerequisite. |
+| Probe clips, common grounds, burden/fuses and coated-copper access | Foundational truth; richer gestures conditional | P02/U02 set access/reference rules; U09/U12 qualify consumed scope/current behavior. Cosmetic clips or scraping are not universal blockers. |
+| Keypads, encoders and scanned input matrices | Conditional | E04/E10/MCU-2 when a current control family needs them; real scanning/input, not a scenario shortcut. |
+| Graphical LCD/OLED, arbitrary firmware/IDE/HDL/protocol stacks, RF/EMC, phone/BGA density and manufacturing reflow/DRC | Outside required core | Separate evidence-backed product authorization; basic MCU/display/import support does not imply these projects. |
 
 <a id="decisions"></a>
-# 5. Required architecture decisions
+# 5. Architecture decisions and alternatives
+
+The comparison dimensions below remain planning decisions. They do not claim measured success rates or require preserving old implementations in the shipped runtime. A small independent reference algorithm may remain test-only when it gives a useful current oracle.
 
 ## 5.1 One-layer versus two-layer strategy
 
@@ -419,24 +402,21 @@ The scores below are **ESTIMATED architectural judgments**, not measured routing
 | Expected total performance potential | 3 | 3 | 4 | 3 |
 | Deterministic implementation feasibility | 5 | 5 | 5 | 5 |
 | Plausible control-board appearance | 4 | 4 | 5 | 5 |
-| Usefulness for heterogeneous 50–60 parts | 2 | 3 | 5 | 5 |
+| Usefulness for heterogeneous 50-60 parts | 2 | 3 | 5 | 5 |
 | Usefulness for constrained 100 parts | 1 | 3 | 4 | 5 |
 
-**Recommended path:** preserve the old one-layer resolver; introduce an explicit two-layer-capable conductor/surface model; implement correct one-layer routing and sparse crossover prototypes; compare restricted and fuller two-layer prototypes; freeze a hybrid policy. Routine small content should prefer readable one-layer boards. Advanced content should normally allow two copper layers with a cost for vias and unnecessary transitions. Full two-layer search should be enabled where it earns better success/quality/cost results than the restricted policy.
+**Recommended path:** use one corrected current one-layer implementation while introducing an explicit two-layer-capable conductor/surface model; implement correct one-layer routing and sparse crossover prototypes; compare restricted and fuller two-layer prototypes; freeze a hybrid policy. Routine small content should prefer readable one-layer boards. Advanced content should normally allow two copper layers with a cost for vias and unnecessary transitions. Full two-layer search should be enabled where it earns better success/quality/cost results than the restricted policy.
 
 A hybrid policy selects a supported fabrication/inspection style from the versioned content envelope. Difficulty may restrict permitted layout styles or assistance, but may not hide the board's only required observable surface or make a fault impossible to reach. A user must be able to inspect either physical face. An optional translucent opposite-side overlay is a view aid, not a new conductor or a secretly probeable front-side object.
 
-Two layers do not double the number of components that can fit. Package area and human access still constrain placement. At a fixed grid, adding a second layer approximately doubles layer-indexed search states and introduces transition edges; fewer detours or retries might offset that cost. That is a **CODE-DERIVED model expectation**, not a runtime measurement. Independently routed layers still require a single combined connectivity/ownership proof.
-
-External grounding: KiCad's documented model distinguishes tracks on copper layers, plated through-hole pads, non-plated holes and vias. That supports the physical primitive vocabulary here, not a proposal to import its entire editor or manufacturing rule system. [W1]
-
+Two layers do not double the number of components that can fit. Package area and human access still constrain placement. At a fixed grid, adding a second layer approximately doubles layer-indexed search states and introduces transition edges; fewer detours or retries might offset that cost. That is a
 ## 5.2 Functional block architecture comparison
 
 | Concern | Current bounded path | Proposed mature boundary |
 |---|---|---|
 | Meaning of a block | Known contribution shapes plus device-specific construction. | A named electrical purpose with qualified implementation variants. |
 | Repeated instances | Explicit driver/load/source names in a bounded plan. | Stable device-assigned role instance keys; local IDs remain unchanged under insertion/reordering. |
-| Values | Task48 constants; Task49 supplies the accepted resolved recipe. | One immutable resolved recipe, consumed by construction, physical specs and catalog expectations. |
+| Values | The delivered current controlled load has an immutable bounded resolved recipe. | One immutable resolved recipe, consumed by construction, physical specs and catalog expectations. |
 | Electrical construction | Generic-named assembler knows concrete devices. | Block/element provider emits typed construction contributions through one owned context. |
 | Interconnection | Explicit proposed joins and union aliases. | Typed device buses and explicit inter-domain adapters; union representatives are derived. |
 | Physical layout | Small authored factory or flat generic layout. | Device-owned hierarchical realization using provider-local shape/escape constraints. |
@@ -463,7 +443,7 @@ The placement problem uses nets as hyperedges or explicit bus demands, not the p
 
 | Technique | What it addresses | Classification / decision | Required falsifier |
 |---|---|---|---|
-| Existing sequential router | Small one-layer routes with fixed grid/escapes. | Preserve as a versioned baseline. | Known infeasible case remains a bounded rejection; source changes do not silently reinterpret old output. |
+| Current sequential router | Small current one-layer routes with fixed grid/escapes. | Retain only while it is useful current functionality or a test-only oracle; replace obsolete runtime revisions. | Known infeasible cases reject within bounds; current corrected outputs are independently validated, not matched to old coordinates. |
 | Canonical order and constrained-net priority | Avoid easy routes consuming scarce escapes/channels first. | Foundational. Net role comes from metadata, not a name containing GND. | Reordered declaration input produces the same result; constrained escape fixture improves without hidden shorts. |
 | Multi-terminal trees/trunks | Excess star length and duplicated high-fan-out branches. | Likely needed; bounded tree/MST-like heuristics before advanced optimization. | Every pad connects; overlapping same-net branches are counted once in actual copper metrics. |
 | Escape/channel planning | Package exits and region bottlenecks. | Foundational for larger heterogeneous boards. | A plan with adequate area but impossible interface capacity rejects before detailed routing. |
@@ -473,8 +453,6 @@ The placement problem uses nets as hyperedges or explicit bus demands, not the p
 | Restricted two-layer routing | Cross-region crossings and rail/signal separation with limited transitions. | Preferred advanced path after P07 comparison. | Cross-layer overlap is not an electrical join without a plated pad/via; every real transition is present. |
 | Fuller two-layer routing | Remaining advanced cases needing both layers more freely. | Conditional enablement behind the same physical contracts. | Better whole-pipeline results, not just lower wirelength at unacceptable via count or probe complexity. |
 | Arbitrary multilayer/planes/optimal Steiner solver | Manufacturing/high-density goals beyond the stated target. | Do not build now. | Reconsider only through a new owner-approved product requirement. |
-
-VTR documents bounded Pathfinder-style iterations and present/historical congestion costs. These are useful algorithmic precedents for P05, not evidence that an FPGA router is a drop-in PCB router or that its default parameters fit TroubleshootJS. [W2]
 
 ## 5.5 Diagnostic admission alternatives
 
@@ -492,51 +470,49 @@ Let H be admitted fault hypotheses, O executable observation actions, and K the 
 
 A selected challenge must have a legal policy that distinguishes its admitted non-equivalent alternatives. Tests may use representative combinations; the *runtime claim* must still match the exact candidate set it admits. Hitting a proof budget yields a classified rejection, not an automatic PASS or hidden shrinking of the hypothesis list.
 
-<a id="scaling"></a>
-## 5.6 Bounded microcontroller implementation decision
 
-MCU-1 must compare these alternatives using the same small electrical I/O and reset/time/state fixture before selecting an implementation. The assessments below are design tradeoffs, not benchmark or implementation claims. Basic MCU support is a planned product goal; arbitrary firmware is not.
+## 5.6 Bounded MCU approach
 
-| Approach | Benefit to investigate | Principal risk | Required decision evidence |
+| Alternative | Useful benefit | Main cost/risk | Required comparison |
 |---|---|---|---|
-| Deterministic behavioral MCU model | Narrow, explicit appliance/control semantics, bounded state and direct electrical pin contracts. | Scripted outputs could ignore real supply/reset/input loading or conceal an implausible internal behavior. | Power-loss/reset/brownout, loaded GPIO, ADC/PWM timing, causal external-clock behavior when exposed, repeatable saved state and runtime cost. |
-| Constrained state-machine/control-script model | Reusable control programs and interlocks without a general CPU or IDE. | A universal DSL or unrestricted evaluator could become a second simulator, security surface or hidden firmware puzzle. | Finite instruction/state set, deterministic budgets, typed pin/event operations, sandboxed/data-only input, explicit failure behavior and qualified observable black-box functions. |
-| Limited emulation of one very small real architecture | A narrow real execution model may improve confidence in specific timing/state behavior. | Instruction/cycle/peripheral fidelity, firmware packaging and verification can dominate the product. | License/provenance review when implementation is chosen; actually implemented instructions/peripherals; bounded workload, reset/power/clock coupling, supported firmware contract and no implication of arbitrary binary compatibility. |
-| Narrow hybrid or another justified approach | Behavioral pins/peripherals plus a small deterministic control engine may preserve useful semantics with less scope. | Two authorities can disagree about time, drive state, supply or persistence. | One declared owner of electrical pin behavior and control state; parity against the common fixture; explicit limits and absence of duplicated physics. |
+| Deterministic behavioral provider | Small causal appliance-control model integrated with existing solver time. | Accidentally ignores real pins/loading or becomes a scenario oracle. | Same VCC/reset/GPIO/ADC/PWM fixture and diagnostic observables. |
+| Restricted state machine/control script | Explicit state/transitions and bounded event vocabulary. | New execution language/security scope or insufficient electrical coupling. | Finite work, pin-driven transitions, reset/startup and no arbitrary code. |
+| One tiny-architecture emulator | More authentic instruction/program timing when it materially matters. | CPU/peripheral/library complexity unrelated to player diagnosis. | Evidence that required observations justify additional cost. |
+| Narrow hybrid | Combines electrical I/O with bounded internal control. | Duplicate state/time owners and unclear fidelity. | One authoritative event/state contract and matched observables. |
 
-The initial comparison covers only powered/unpowered/reset, digital I/O and direction, pulls, limited ADC-like input, PWM/timer output, startup, one sensor/interlock/relay sequence and saved state. Add multiplexed display driving only with an accepted E11 provider. Prefer the least complex approach that passes these contracts; do not announce a winner from terminology alone. A failure to meet timing/causality requirements returns a bounded redesign decision, not a false MCU implementation claim.
+MCU-1 records an evidence-based choice; MCU-2 implements only that choice. No hidden firmware inspection is required to solve the game.
 
-## 5.7 Import capability negotiation, not “everything imports”
+## 5.7 Import capability negotiation
 
-Every source element must appear in the interpretation report with one primary disposition and any unresolved conditions. A missing physical/fault capability cannot be disguised as successful challenge conversion.
+Each source element receives one primary disposition and any unresolved conditions. These are current capability distinctions, not historical file-support promises.
 
-| Element disposition | Meaning | Required handling |
-|---|---|---|
-| Directly supported PCB component | An accepted element/model, package, pin map and physical role exist. | Map it through normal providers and retain exact provenance. Fault selection still needs separate serviceability/diagnostic qualification. |
-| Supported with package choice | Electrical interpretation is supported but more than one real physical mapping is possible. | Require an explicit compatible package/unit grouping choice; do not silently choose a misleading pin map. |
-| Supported external source/load/control | It belongs to the bench/customer interface rather than the PCB population. | Map to a declared source, load, connector or player stimulus with operating states and references. |
-| Supported as an honest packaged module | The supported model is an opaque terminal-level function. | Count and expose one package; do not draw fictitious serviceable internals. |
-| Electrically supported, not physically serviceable | The solver can represent it but physical observation or repair is not yet qualified. | Report the limitation. It may remain healthy fixed support only if the selected challenge contract permits it; it is not automatically a fault owner. If its presence defeats physicalization or intended operation, reject the challenge. |
-| Unsupported | Parsing, model, physical mapping or required behavior is outside the accepted subset. | Name the exact element/contract and stage. Preserve source, never silently delete, substitute or relabel it as supported. |
+| Element disposition | Meaning and required handling |
+|---|---|
+| Directly supported PCB component | A current element/model, package, pin map and physical role exist. Map through native providers with provenance; fault serviceability and diagnosis still require separate qualification. |
+| Supported with package choice | Electrical interpretation works but multiple physical mappings are possible. Require an explicit compatible package or unit-grouping choice, never a guessed pin map. |
+| Supported external source/load/control | The element is a bench/customer participant rather than a PCB package. Map its real source/load/connector/stimulus role, operating states and references. |
+| Supported as an honest packaged module | The supported model is an opaque terminal-level function. Expose/count one real package without fictitious serviceable internal parts. |
+| Electrically supported, not physically serviceable | The solver model exists but physical observation/repair is not qualified. Explain the limit; allow healthy fixed support only when the selected challenge permits it. It is not automatically a fault owner, and the challenge rejects if its presence defeats required physicalization or function. |
+| Unsupported | Parsing, model, physical mapping or required behavior is outside the current subset. Name the exact element/contract/stage; retain the source without silently dropping, substituting or calling it supported. |
 
-An aggregate import can be NEEDS_AUTHOR_INPUT, UNSUPPORTED_CAPABILITY, HEALTHY_VERIFICATION_FAILED, PHYSICALIZATION_REJECTED, DIAGNOSTIC_REJECTED, CANCELLED or QUALIFIED. Exact serialized names are selected at implementation, but these meanings must remain distinct. “Circuit parses” and “healthy solve converges” are partial receipts, not final qualification.
+Aggregate results distinguish NEEDS_AUTHOR_INPUT, UNSUPPORTED_CAPABILITY, HEALTHY_VERIFICATION_FAILED, PHYSICALIZATION_REJECTED, DIAGNOSTIC_REJECTED, CANCELLED and QUALIFIED. These meanings stay distinct; implementation may choose serialized names without historical compatibility obligations. Parsing and convergence are partial evidence, not playable qualification. The twelve-step contract in Section 3 remains required for admitted imports.
 
-<a id="scale-plan"></a>
-# 6. Scale, physics, interaction, and qualification plan
+<a id="validation"></a>
+# 6. Scale, physics, interaction and validation
 
-## 6.1 Mandatory component scaling table
+## 6.1 Scale bands and workload design
 
-Only Task48's seven-part authored proof is supported by the inspected retained qualification. The following five requested bands use **ESTIMATED mixed-package planning ranges**. Counts depend heavily on connectors, IC pin counts, package mix, net fan-out and layout style. Segment estimates refer to meaningful canonical route segments, not every ten-unit grid vertex. They are workload design aids, never pass thresholds or forecasts.
+The following five bands use **ESTIMATED mixed-package planning ranges**. Counts depend heavily on connectors, IC pin counts, package mix, net fan-out and layout style. Segment estimates refer to meaningful canonical route segments, not every ten-unit grid vertex. They are workload design aids, never pass thresholds or forecasts.
 
 | Physical parts | Estimated pads | Estimated logical nets | Estimated canonical route segments | Primary fan-out/placement concern | Validation/solver/diagnostic concern | Required architecture |
 |---:|---:|---:|---:|---|---|---|
-| 10 | 20–40 | 8–18 | 25–80 | A connector or a shared return can dominate a small cluster. | Fixed overhead and false metrics can dominate; physical count says little about nonlinear steps. | Current comparison baseline; corrected metrics; exact IDs and recipes. |
-| 20 | 45–85 | 15–35 | 60–180 | Package area, escapes and first multi-region joins. | Fixed generic outline already fails some mixtures; repeated proof overhead grows with H. | Dynamic sizing, poses, first hierarchy, production proof boundary. |
-| 40 | 95–180 | 30–65 | 140–400 | Multiple connectors, buses, mixed multi-pin packages and rails. | Segment/pad candidate-pair work and loading interactions become material suspects. | Trunks, bounded recovery, indexed candidates, coherent viewport, Q30 envelope. |
-| 60 | 145–270 | 45–100 | 240–700 | Isolation region, conversion, repeated drivers and shared support. | Nonlinear/time-scale behavior and candidate separation can cost more than placement. | Layer policy, credible converters, AC/scope semantics, proof receipts and Q60. |
-| 100 | 250–460 | 75–160 | 450–1,300 | Global channel demand, interface cuts, high-fan-out rails and dense local regions. | Long sessions, proof population, waveform storage and raw route complexity need separate bounds. | Hierarchical refinement, qualified two-layer/link policy, bounded scheduling, Q100. |
+| 10 | 20-40 | 8-18 | 25-80 | A connector or a shared return can dominate a small cluster. | Fixed overhead and false metrics can dominate; physical count says little about nonlinear steps. | Current comparison baseline; corrected metrics; exact IDs and recipes. |
+| 20 | 45-85 | 15-35 | 60-180 | Package area, escapes and first multi-region joins. | Fixed generic outline already fails some mixtures; repeated proof overhead grows with H. | Dynamic sizing, poses, first hierarchy, production proof boundary. |
+| 40 | 95-180 | 30-65 | 140-400 | Multiple connectors, buses, mixed multi-pin packages and rails. | Segment/pad candidate-pair work and loading interactions become material suspects. | Trunks, bounded recovery, indexed candidates, coherent viewport, Q30 envelope. |
+| 60 | 145-270 | 45-100 | 240-700 | Isolation region, conversion, repeated drivers and shared support. | Nonlinear/time-scale behavior and candidate separation can cost more than placement. | Layer policy, credible converters, AC/scope semantics, proof receipts and Q60. |
+| 100 | 250-460 | 75-160 | 450-1,300 | Global channel demand, interface cuts, high-fan-out rails and dense local regions. | Long sessions, proof population, waveform storage and raw route complexity need separate bounds. | Hierarchical refinement, qualified two-layer/link policy, bounded scheduling, Q100. |
 
-The second table makes the per-band algorithm concerns explicit. It is **CODE-DERIVED for the existing mechanisms and ESTIMATED for future populations**, not a runtime forecast. Let C be components, P pads, S canonical conductive segments, H admitted fault hypotheses, O diagnostic observations and G routing-grid states. None of H, S or the reduced solver matrix size is determined by C alone.
+The second table makes the per-band algorithm concerns explicit. It is **PLANNING ESTIMATES and algorithmic risk hypotheses**, not a runtime forecast. Let C be components, P pads, S canonical conductive segments, H admitted fault hypotheses, O diagnostic observations and G routing-grid states. None of H, S or the reduced solver matrix size is determined by C alone.
 
 | Physical scale | Placement / route demand | Physical validation | Solver concern | Diagnostic concern | Rendering / targeting concern |
 |---|---|---|---|---|---|
@@ -546,21 +522,21 @@ The second table makes the per-band algorithm concerns explicit. It is **CODE-DE
 | ~60 | Larger heterogeneous packages, domain barriers and inter-region traffic require qualified layer/channel policy. | Per-layer contact, barrels, cuts and stale-cache negatives matter; worst-case contact checks remain quadratic. | Offline conversion and mixed time scales may dominate a much larger but linear board. | Local certificates require global loading/reference context; adaptive partitions and receipts must preserve coverage. | Both board faces, powered state, instruments and lifted/loose parts must remain usable together. |
 | ~100 | Bounded hierarchical search, congestion recovery and a constrained package/net envelope are required. | Large raw grid walks cannot become the durable trace representation; test dense adversarial cases as well as normal boards. | Aggregate matrix cost and time windows are measured separately from component count; isolated backend only if qualified. | Cold proof cost, memory, cancellation and the declared hypothesis population are all release dimensions. | Test full-count navigation and long-session inventories; no hidden-hitbox or invisible-layer shortcut. |
 
-For the current style of dense matrix implementation, factorization cost depends on reduced matrix dimension, and nonlinear iterations may require repeated factorization. Linear matrices can reuse a factorization while their coefficients remain unchanged. The prior code review identified these paths, but it did not measure their limits. [I2 S21] A07 therefore records matrix dimension and actual factorization/restamp counts rather than converting “100 physical parts” into an invented solver runtime.
+For the current style of dense matrix implementation, factorization cost depends on reduced matrix dimension, and nonlinear iterations may require repeated factorization. Linear matrices can reuse a factorization while their coefficients remain unchanged. The prior code review identified these paths, but it did not measure their limits. A07 therefore records matrix dimension and actual factorization/restamp counts rather than converting “100 physical parts” into an invented solver runtime.
 
 The raw grid representation may contain many more segments. With S segments, an all-pairs pass examines S(S−1)/2 unordered pairs: 1,000 gives 499,500; 5,000 gives 12,497,500. A spatial broad phase reduces likely comparisons but does not guarantee subquadratic worst-case behavior for arbitrarily overlapping data. Dense adversarial fixtures remain necessary.
 
-The existing generic router has a 720×400 working outline, grid step 10, at most 80 attempts and a target of five viable candidates. These are **CODE** facts, not future design limits. [R03] The earlier packing result, one connector plus seventeen shortest-span resistors exceeding its available inflated-courtyard area, remains a specific necessary-area counterexample. It is not a universal eighteen-part limit. [I2, F4]
+The existing generic router has a 720×400 working outline, grid step 10, at most 80 attempts and a target of five viable candidates. These are **CODE** facts, not future design limits. The earlier packing result, one connector plus seventeen shortest-span resistors exceeding its available inflated-courtyard area, remains a specific necessary-area counterexample. It is not a universal eighteen-part limit.
 
 For a rectangular routing grid, direction-aware state count scales approximately with grid width × grid height × allowed layers × direction states. Growing both physical dimensions and refining the grid can be much more expensive than adding another board layer. P03/P04 therefore compare outline/grid/channel choices jointly, instead of fixing a poor grid and repeatedly inflating the board.
 
 ## 6.2 Supported envelope, not a magic component limit
 
-Every qualified generator/profile carries a versioned envelope covering: physical package count and mix; pin count; net count and maximum fan-out; number of source/reference domains; region count and interface demand; allowed aspect ratios and area; allowed rotations; copper layers; trace/clearance classes; link/via budgets; route representation size; candidate hypotheses; nonlinear/model classes; simulation windows; live and loose inventory; and minimum usable surface separation at a supported inspection zoom/loupe scale, not mandatory comfort at fit-board overview.
+Every qualified generator/profile carries a versioned envelope covering: physical package count and mix; pin count; net count and maximum fan-out; number of source/reference domains; region count and interface demand; allowed aspect ratios and area; allowed rotations; copper layers; trace/clearance classes; link/via budgets; route representation size; candidate hypotheses; nonlinear/model classes; simulation windows; live and loose inventory; and minimum usable surface separation.
 
 Area is selected from actual package/keepout demand plus a measured routing allowance and bounded shape alternatives. Numerical coordinate units are explicit. Legacy canvas units must not be silently relabeled millimeters or used to claim manufacturing clearance. Scaling a physical envelope and zooming the camera are different operations.
 
-The contract rejects requests it does not support. Rejection categories include declaration error, unsupported model, incompatible domain, physical infeasibility lower bound, placement exhaustion, route exhaustion, physical validation failure, numerical nonconvergence, diagnostic ambiguity, repair-unreachable, stale/cancelled work, and infrastructure failure. Unknown exceptions are defects. They must not be swallowed as ordinary failed layout attempts for another 79 retries. [R03]
+The contract rejects requests it does not support. Rejection categories include declaration error, unsupported model, incompatible domain, physical infeasibility lower bound, placement exhaustion, route exhaustion, physical validation failure, numerical nonconvergence, diagnostic ambiguity, repair-unreachable, stale/cancelled work, and infrastructure failure. Unknown exceptions are defects. They must not be swallowed as ordinary failed layout attempts for another 79 retries.
 
 ## 6.3 Copper, packages, and two-layer interaction
 
@@ -578,32 +554,30 @@ Trace cutting acts on a declared physical locus. A cut severs the correct conduc
 
 The new target includes simulated 120 VAC, rectified high-voltage storage, isolated and non-isolated supplies, 24/12/5/3.3 V rails, partial power, backfeed, current limits, protection and instrument references. These are explicit modeling requirements, not evidence that current metadata or existing low-voltage controllers already implement them.
 
-**CODE:** CircuitJS's inspected floating-node path stamps a 100 MΩ numerical connection to the solver reference for otherwise unconnected nodes. [R06] Numerical gauge handling must not become a physical earth conductor, a hidden power return, a fictitious meter result, or an apparent failure of isolation. A06/A07 test insertion/reordering, independent floating supplies, transformer/relay isolation, high-impedance measurement and instrument loading. Merely deleting the stabilizer is not a valid fix; singularity and convergence must remain well-defined.
+Numerical reference stabilization and gauge handling must not become a physical earth conductor, a hidden power return, a fictitious meter result, or an apparent failure of isolation. A06/A07 test insertion/reordering, independent floating supplies, transformer/relay isolation, high-impedance measurement and instrument loading. Merely deleting the stabilizer is not a valid fix; singularity and convergence must remain well-defined.
 
 | Function | First modeling approach | Required behavior | Explicit limit |
 |---|---|---|---|
 | AC source and entry | CircuitJS AC source with bounded source impedance and actual isolation switches. | RMS/peak conventions, polarity, source state, partial power and load effects. | No utility-grid or safety certification claim. |
 | Bridge and bulk storage | Actual diodes/bridge-equivalent connections and capacitor model. | Rectification, ripple within supported sampling, charging and discharge, open/short effects. | No claimed surge/EMC fidelity without a qualified model. |
-| Transformer/isolation | Existing coupled-winding backend qualified with realistic bounded parameters. | Separate winding references, energy transfer, load dependence and accessible terminal measurements. | No magnetic-core design/saturation claim from the simple linear coupled-inductor model. [R07] |
+| Transformer/isolation | Existing coupled-winding backend qualified with realistic bounded parameters. | Separate winding references, energy transfer, load dependence and accessible terminal measurements. | No magnetic-core design/saturation claim from the simple linear coupled-inductor model. |
 | Offline converter | Compare switching-detail pilot with a causally stamped averaged/behavioral model. | Input draw, available power, enable, startup/dropout, load regulation, energy storage and admitted faults. | No fabricated switching waveform or inert external parts. |
 | Regulator/buck/LDO | Qualified rail-producing provider, not a separate ideal source. | Headroom, line/load behavior, enable, overload behavior and relevant storage. | Only the documented operating envelope and failure vocabulary. |
-| Relay/driver | Qualify current relay model and explicitly modeled driver/clamp. | Pickup/dropout, coil/contact separation, contact leakage/resistance and fault semantics. | The existing relay approximation and reported current behavior need testing; do not assume ideal open contacts. [R07] |
+| Relay/driver | Qualify current relay model and explicitly modeled driver/clamp. | Pickup/dropout, coil/contact separation, contact leakage/resistance and fault semantics. | The existing relay approximation and reported current behavior need testing; do not assume ideal open contacts. |
 | Fuse/clamp/protection | Rating/state model tied to solved current/voltage and simulated duration. | Healthy survival, bounded overload response and actual graph changes. | No arbitrary damage roll; no compliance or fire-risk certification. |
 | Sensor/interlock | Solver-backed input/conditioning with ordinary player stimulus. | Reference, loading, threshold and partial-power behavior. | No hidden-only switch that the player cannot reproduce. |
 
-Manufacturer documentation establishes that real flyback controllers can provide isolated constant-voltage/current regulation and have explicit startup/control behavior. It is background for selecting causal observables, not a CircuitJS validation result or a component-level design recipe. [W3]
-
 “Board power off” means the selected real sources are isolated. It does not mean all capacitors are discharged, that an external load cannot backfeed, or that every reference is at earth potential. Active meters require both the necessary source isolation and the relevant stored-energy/readiness contract. Start conservatively with all relevant board sources isolated; relax to domain-local permissions only with a proved reachable-energy boundary. Do not derive permission solely from a UI toggle.
 
-A conventional earth-referenced scope lead and an isolated differential measurement are different modeled connections. The player-facing instrument must clearly state which it is. A reference lead that creates a real connection must affect the graph; an unsupported hazardous/common-mode measurement must fail explicitly rather than report a plausible but false number. Tektronix documents the distinction between earth-referenced scope commons and floating/differential measurements; that is why the simulated connection semantics must be explicit. [W4] These are simulated training contracts, not instructions for live mains work.
+A conventional earth-referenced scope lead and an isolated differential measurement are different modeled connections. The player-facing instrument must clearly state which it is. A reference lead that creates a real connection must affect the graph; an unsupported hazardous/common-mode measurement must fail explicitly rather than report a plausible but false number. These are simulated training contracts, not instructions for live mains work.
 
 ## 6.5 Large-board viewport and accessibility
 
 One `BoardViewTransform` or equivalent owns board-to-screen and inverse mapping, device-pixel ratio, pan, zoom, active face, and region focus. Pads, leads, selection, traces, hit tests and probe markers consume the same transformed geometry. The parts tray and instrument controls are screen-space workbench chrome and must not force the entire PCB to shrink.
 
-Require fit-board, zoom-to-selection, ordinary pan, temporary cursor-centered Spacebar inspection, and a way to recover orientation after focusing a region. Fit-board is an overview, not a guarantee that every part or marking is readable without inspection. A minimap is conditional on measured navigation difficulty. Face flipping must keep semantic targets stable and invalidate only genuinely inaccessible/stale targets. Hidden backside geometry cannot silently capture a front-side click. If targets overlap on screen, provide explicit visible disambiguation or require zoom rather than enlarging invisible hit areas.
+Require fit-board, zoom-to-selection, ordinary pan, and a way to recover orientation after focusing a region. A minimap is conditional on measured navigation difficulty. Face flipping must keep semantic targets stable and invalidate only genuinely inaccessible/stale targets. Hidden backside geometry cannot silently capture a front-side click. If targets overlap on screen, provide explicit visible disambiguation or require zoom rather than enlarging invisible hit areas.
 
-Static copper/package projections may be cached by immutable realization and view version. Dynamic part state, lifted leads, damage, selection and solver intensity have separate invalidation. Level-of-detail may simplify shading and text in the overview. It must preserve current probe locations and must make necessary polarity, terminals, physical markings and copper inspectable through supported zoom or the loupe; it must not erase them from the inspection view or require an inaccessible observation. An unreadable overview is not itself a board-rejection reason. Accessibility exposes the same physical/public information, not hidden original values or fault IDs.
+Static copper/package projections may be cached by immutable realization and view version. Dynamic part state, lifted leads, damage, selection and solver intensity have separate invalidation. Level-of-detail may simplify shading and text; it may not erase necessary polarity, terminals, fault-relevant markings, current probe locations or the only understandable route across a barrier. Accessibility exposes the same physical/public information, not hidden original values or fault IDs.
 
 ## 6.6 Diagnostic proof at scale
 
@@ -617,429 +591,233 @@ Receipts are keyed by the complete relevant immutable input context: implementat
 
 Cache signature partitions and replay stable observations where justified. Do not share live mutable graphs merely because their descriptors match. If a numerical action depends on temporal state, the receipt includes its initial-state and simulation-time contract. Reusing an endpoint after board replacement is never valid. Proof interruption yields CANCELLED/STALE, not a partial PASS.
 
-## 6.7 Performance contract and reference machine
 
-The brief explicitly rejects ordinary three-minute admission as success. That is a product constraint, not a measured current time. Qualification must set materially more responsive cold/warm budgets rather than silently accepting that delay or hiding it behind pre-cached demonstrations. No measured 60/100-part budgets exist in this review. A01 must select and name an actual modest reference machine and record CPU, RAM, integrated/discrete graphics, OS/browser versions, resolution, device-pixel ratio, power mode, build hash, background conditions and cold/warm-cache protocol. The owner's fast desktop may be a secondary test host; it is not automatically a modest baseline.
+## 6.7 Performance contract and reference host
 
-Candidate **UX TARGETS**, to be ratified after A01 pilot measurements rather than advertised as current capability: ordinary input response within about 100 ms at the 95th percentile; responsive pan/zoom at at least 30 frames per second during the prescribed navigation test; generation/proof work that yields regularly instead of locking the UI. These are proposed product goals, not benchmark results. Generation time, memory, solver throughput and cancellation latency must receive explicit numeric budgets in A01 based on the selected host and pilot results. A release gate cannot pass with those fields still unspecified.
+Use the delivered A01 methodology and actual current host/corpus receipts, not a newly invented benchmark. The exact modest reference host and its CPU/RAM/graphics, OS/browser, resolution/device-pixel ratio, power/background conditions, build and cold/warm protocol must be documented for qualification. The owner's fast desktop is not automatically the modest-machine baseline.
 
-Record cold and warm generation separately, including p50/p95, worst case and failure counts across a preregistered corpus. Count every attempt and rejection, not only successful seeds. Freeze budgets before optimization and holdout qualification. If a target is missed, optimize, constrain an openly declared envelope or request an owner-approved budget change; do not quietly revise the threshold to match a bad result. Multi-minute ordinary admission is not acceptable under the brief.
+The product direction rejects routine multi-minute admission as acceptable gameplay. A04's documented 300-second Task41 developer-route window is not a player latency budget. The original planning goals of approximately 100 ms p95 ordinary input response and at least 30 fps prescribed navigation are **UX targets**, not measurements established by this review. Rerate generation, cancellation, memory, stepping and rendering budgets from actual pilots before the corresponding qualification; do not silently raise a failing threshold.
 
-| Stage | Deterministic work counters | Observed performance / resource data |
+Report p50/p95/worst time, failures and rejection stages over a predeclared corpus. Count unsuccessful attempts and cold starts. Keep deterministic work caps separate from wall-clock cancellation; a race or slower host must not pick a different successful candidate. Parallel candidates, if introduced, publish in canonical order rather than first-finisher order.
+
+| Stage | Work/correctness counters | Cost evidence |
 |---|---|---|
-| Grammar/value resolution | Choices, static rejections, finite candidates. | Elapsed time and allocations. |
-| Placement | Outline/pose alternatives, candidate evaluations, fallbacks. | Time, peak geometry and index memory. |
-| Routing | Expanded states, queue peak, nets, recovery passes, vias, links. | Time, peak resident data and rejected-attempt cost. |
-| Validation | Broad-phase pairs, exact contacts, DSU operations, full/incremental passes. | Time and independently verified equivalence. |
-| Solver | Reduced matrix size, voltage sources, nonlinear subiterations, restamps, accepted simulation steps. | Simulated seconds per real second, convergence failures, memory. |
-| Diagnostics | Hypotheses, observations, partitions, solves, repair/retest runs, cache hits with provenance. | Cold/warm admission time and cancellation latency. |
-| View/input | Visible primitives, transformed targets, index queries, redraw invalidations. | Frame cost, input-to-feedback latency and peak projection data. |
-| Long session | Parts acquired/removed, active/inactive elements, history and waveform samples. | Retained heap/objects, cleanup after owner replacement, degradation slope. |
+| Resolution | Eligible choices, static rejects, value candidates. | Time and allocations. |
+| Placement/routing | Outlines/poses, candidates, states/queue, net degree, reroute passes, vias/links. | Cold/warm time, peak data, failed-attempt cost. |
+| Physical validation | Raw/canonical segments, candidate pairs, exact contacts, connectivity operations. | Reference/current equivalence and measured hotspots. |
+| Solver | Reduced matrix, nonlinear subiterations, restamps, accepted simulation steps. | Simulated/wall time, convergence failures and memory. |
+| Diagnostic proof | Hypotheses, observations, partitions, solves, repair/retest and context-valid cache hits. | Admission/cancellation time and complete coverage. |
+| View/input | Visible primitives, transforms, targeting and redraw invalidation. | Frame cost and input latency. |
+| Long session | Acquired/loose parts, active/inactive elements, history and sample retention. | Retained-object growth, owner release and latency slope. |
 
-Deterministic budgets bound work and guarantee a reproducible success or exhaustion decision. Wall-clock deadlines may cancel with a resource/infrastructure result; they must not pick a different successful candidate. Parallel results are committed in canonical candidate order, never “whichever finishes first.”
+## 6.8 Current test architecture
 
-## 6.8 Test architecture and independent oracles
+Use four layers: cheap pure descriptor/identity/geometry/provider checks; focused actual CircuitJS electrical and lifecycle checks; a small current ordinary-player integration set; and larger held-out scale/reliability qualification only at the appropriate gates. Independent handwritten or simple reference oracles must not simply call the same production helper being tested.
 
-Use cheap pure contracts and provider conformance for exhaustive small finite states: IDs, source permissions, pin maps, declared poses, stage outcomes, candidate predicates, recipe/version parsing and short failure-stage tables. Use deterministic structural corpora for package mixes, connector order, domains, fan-out and physical congestion. Use selected solver integration for meaningful combinations of loading, state, fault, repair and model fidelity. Use pairwise coverage only when interactions are not known to require higher-order combinations; it is a test-design heuristic, not a correctness theorem.
+Retain exact current integer/seed/identity encoding checks where required; retain actual JVM/GWT parity where consumed; evaluate electrical observations with declared physical expectations and tolerances. Historical report equality, previous-build pixels and incidental solver nodes are not authoritative. Test-only device fixtures can be modernized without preserving old generator descriptors.
 
-Maintain three deliberately independent references: a small brute-force geometric contact checker; a simple serial full-candidate diagnostic proof; and direct model/physics fixtures. Fast spatial indexes, cached receipts and incremental validation must agree with these on small exhaustive and adversarial cases. A production plan and a verifier derived from the same incorrect recipe are not independent evidence.
+Important negatives include malformed/partial input, mismatched plan/spec/receipt, cross-owner binding, wrong terminal/net, aliased immutable geometry, illegal via/layer contact, source contention, stale callback/publication, active meter contamination, unsupported/empty hypothesis sets, unavailable controls, numerical failure and wrong repair accepted. A forced failure must reach a terminal failure rather than hang or emit a passing receipt.
 
-Every layer gets intentional negatives: malformed data; aliased/mutated geometry; illegal via; accidental cross-domain join; unsatisfied role; absent source; stale callback; active meter contamination; nonfinite solve; impossible healthy target; indistinguishable non-equivalent faults; cut on the wrong physical layer; unsupported old version; and a forced failure that reaches terminal FAIL/nonzero status rather than RUNNING forever.
+Separate application failure, unsupported/resource exhaustion and verification-infrastructure failure. A skipped, blocked, timed-out or absent test is not a pass. A visible playthrough may establish a player behavior gate but does not certify a broken CDP wrapper. Manual/automated evidence may be chosen to match the current gate before running it; do not change the gate after failure merely to obtain a green result.
 
-Maintain a training/development corpus and a frozen holdout corpus drawn from the same advertised envelope. Report acceptance rate, quality distribution and stage failures; do not select only attractive examples. Exact rates and sample sizes are frozen by the qualifying task before changes are evaluated. The small finite package/pose space can be exhaustive even when the full circuit cross-product cannot.
+Use one inexpensive preview/transport preflight when needed, not repeated full builds while the host cannot launch. Reuse unchanged infrastructure certification with an explicit dependency check. Full Gate B recertification is required only when the changed tool/resource boundary actually consumes it; it is not an automatic consequence of new gameplay source or report formatting. Resource cleanup still uses exact owned identities and no broad process killing.
 
-Long-session qualification includes repeated replacements, legitimate retained loose parts, measurements, source operations, waveform sampling, saves/resumes and board succession. An initial planning corpus should include at least a hundred owner/repair cycles and a separate accumulated-inventory case, with larger stress cases chosen from measured growth. Those are **test targets**, not product limits or evidence of a leak. Preserve user-owned parts/history unless a published user action disposes of them.
+## 6.9 Rolling playable integration
 
-Final source candidates require the actual JDK8/GWT production build and selected normal-player browser workflows. Reuse previous evidence only with an exact dependency justification. Successful Computer Use interaction does not certify a failed CDP wrapper. No test failure is reclassified as PASS because another route worked.
-
-
----
-
-## 6.9 Rolling playable integration during architecture work
-
-Maintain a small living end-to-end canary at the following existing boundaries. These are acceptance clauses, not new numbered milestones. Use the smallest current real challenge and the ordinary workbench/repair capabilities already accepted at that point, so the canary does not manufacture a dependency on a later release or instrument.
-
-| Boundary | Required route through the changed seam | Must not be substituted |
+| Boundary | Required current path | Not sufficient |
 |---|---|---|
-| After A05 | Generation → new provider/variant construction where available → installation → normal player interaction → diagnosis → physical repair → retest. | An isolated contribution fixture, a build-only PASS or a legacy-only route presented as proof of the new provider. |
-| After A09 and again after A10 | Production fault hypotheses → proof; then staged generation/proof/publication under A10 → normal actions → diagnosis → repair → customer retest. | Developer-only private state manipulation, stale evidence after consumed code changes or a proof requiring hidden controls. |
-| After P04 | Actual generated PCB → placement/routing representation → rendering → independent physical correspondence → ordinary probing and component repair/retest where relevant. | A routed picture with no playable electrical backing or isolated geometry tests only. |
-| After U01 | Overview → pan/permanent zoom → Space press/move/release → supported board flip/layer view → probing/component interaction → repair/retest. | Giant invisible hitboxes, changed target identity, comfort-at-overview as a new fairness requirement or debug-only coordinate input. |
+| R00 | Corrected current construction/identity, ordinary diagnosis, wrong and valid repair, retest, reset/power and affected owner cleanup. | Only deleting tests, a build-only pass or a leaf path that bypasses the changed composed seam. |
+| A05 | New provider/variant generation, normal-player launch, installation, diagnosis, physical repair and retest. | Metadata-only variant, hidden private repair or old leaf-only playthrough. |
+| A09 and A10 | Production hypothesis proof; then bounded generation/publication; ordinary repair/retest. | Developer orchestration supplying a hidden action or a stale receipt. |
+| P04 | Current PCB placement/routing, independent correspondence, visible probing and current repair. | A routed picture with no electrical backing. |
+| U01 | Overview, pan/permanent zoom, Space loupe lifecycle, supported flip/layer access, probing and repair/retest. | Giant hitboxes, debug-only coordinates or camera changes that alter identity. |
 
-The canaries remain small and relatively inexpensive. They are not permission to rerun every historical Task43 matrix, create screenshot spam or reopen accepted history. They do not replace Q15/Q30/Q60/Q100. Dependency-aware evidence reuse remains available, but changed integration seams receive actual fresh proof. A failed canary blocks dependent architecture expansion until the affected seam works; unrelated optional lanes need not stop.
+Keep these canaries small and relevant. They do not reopen the historical Task43 campaign or replace Q15/Q30/Q60/Q100. Changed seams require current proof; unaffected proof can be reused with exact dependency reasoning. Stop dependent expansion when the current route is broken, without blocking unrelated optional investigations.
 
-## 6.10 IC/MCU/display timing and bench-instrument contracts
+## 6.10 Long-session and corpus policy
 
-**ICs and state:** Power and reference pins are modeled participants. Digital thresholds, hysteresis, output drive limits, loading, reset/set priority and initialization are explicit. The unknown/unsupported timing region is not arbitrarily converted into a deterministic zero. Model documentation distinguishes a qualified deterministic approximation from an unmodeled real-device effect. No metastability or RF behavior is promised simply because a flip-flop or crystal appears.
+Use development and frozen holdout corpora drawn from the advertised current envelope. Record success/failure and quality distributions rather than cherry-picking attractive seeds. An initial long-session planning workload includes at least one hundred owner/repair cycles and a separate accumulated-inventory case, adjusted by measured growth. These are test targets, not proven current performance or arbitrary product limits.
 
-**MCU control:** The initial program is a bounded, versioned black-box appliance function. The player troubleshoots power, reset, clocks, pins, sensors, drivers and loads, not hidden source code. Pin-stuck, package-dead or internal modeled-state faults are admitted only with an observable, repairable contract; an external held reset or missing pull-up remains an external cause. VCC/reset loss cannot leave an output magically driving its previous voltage. High-impedance/off, backfeed, pulls, analog conversion and PWM are modeled only within stated limits.
+Legitimately retained loose parts and in-game history are not memory leaks. Replaced owners should release their handlers, temporary sources, solver graphs and stale callbacks. Bound waveform/history storage explicitly where appropriate. Current saves/resumes, source changes and repeated repair interact with that lifecycle and need combined checks.
 
-**State and time:** Event phase, clock source, initialization, provider version, modeled registers/latches, timers, ADC/PWM state and semantic pending events are captured when exact resume is advertised. A resume/restart difference is visible. At different paint rates the accepted simulation-time event/observation sequence remains the same. State clocks do not secretly advance during a cancelled proof or use host sleep as simulated elapsed time. Shared solver globals continue to forbid assumed independent numerical contexts.
+## 6.11 Stateful devices and instruments
 
-**Clock vocabulary:** Crystal, resonator, oscillator-module and RC-clock models declare which oscillation/startup/clock-loss observables are supported. A visible external oscillator network must influence the MCU or sequential device when that network is the selected clock source. Otherwise the package declares an internal oscillator and no decorative external crystal is added. Missing-clock diagnosis requires a legitimate available observation, not a hidden register inspection.
+Stateful devices declare supplies, reset/clock priority, input thresholds/loading, initialization and supported bandwidth. Unknown or unsupported timing is not silently converted to a convenient logical zero. External clock networks must causally drive the device when shown; otherwise the package declares an internal clock. Display brightness integrates actual solved segment currents over bounded simulation-time history; the renderer cannot read a desired numeral or advance state.
 
-**Display causality:** Common-anode/common-cathode pin maps and current-limiting paths are explicit. A single-digit display derives lit segments from solved currents. A multiplexed display uses actual digit-select/segment-drive timing and a bounded perceptual integration of those solved currents for rendering; the renderer does not advance simulation or read a desired numeral from scenario metadata. Duty cycle, missing common/driver, open segment, supply collapse, missing scan and unsupported sampling are independently testable. Status/error codes can be outputs of the modeled control function; they must not disclose a selected hidden fault ID.
-
-**Useful instruments, bounded scope:** U03 stays the one-channel foundation; U09 is the planned two-channel troubleshooting expansion. U10 is a conditional logic probe followed, when justified, by 2–4-channel capture. U11 supplies conditional real electrical signal injection. U12 qualifies current insertion and optionally ESR only with a defensible model and content need; X08 retains conditional capacitance. No release waits for these extensions unless it advertises them or a selected diagnostic policy needs them.
-
-For every enabled instrument, publish the electrical connection/stimulus, input burden/loading, range and overrange, reference constraints, timing/bandwidth, unavailable states, cancellation/cleanup and visible player operation. Two scope channels may share a common reference only if that physical instrument model says so; differential math does not secretly provide galvanic isolation. Logic thresholds use the relevant supplied reference, not a global 5 V assumption. A current mode requires a real in-series path and modeled burden/protection policy rather than reading an arbitrary hidden branch current. ESR cannot be inferred from a configured metadata field and shown as a measurement.
-
-## 6.11 CircuitJS import-to-challenge implementation contract
-
-The long-range goal is broad support for ordinary community circuits inside a declared capability envelope, not an arbitrary-file guarantee. IMPORT-1 establishes a complete small passive/DC route; later import stages expand accepted element/behavior groups. The pipeline below applies at every stage.
-
-1. **Ingest reproducibly and safely.** Retain source bytes or an explicitly resolvable source artifact, content hash, detected format, parser/model versions and bounded input limits. Reuse/adapt CircuitJS parser/load semantics where possible. Parse in an owned staging context; malformed data, oversized graphs, recursive constructs, unsupported models or embedded external-resource/script requests cannot mutate the player's current board. Imported names/labels are untrusted display text.
-2. **Interpret connectivity before physical placement.** Recover the actual supported CircuitJS connection semantics. Assign and persist stable import-local component/unit/terminal/bus identities. Schematic wire vertices and coordinates may explain electrical connection in the source, but are not PCB placements or durable identity keys. Resolve symmetric duplicates and multi-unit packages explicitly. Reordered or edited input is a new content/interpretation version unless a reviewed mapping proves continuity.
-3. **Classify every element.** Use the six dispositions in Section 5.7 and an explicit support matrix. Record parse support, electrical support, package mapping, external role, observation capability, fault/serviceability and model limitations separately. An unsupported element never disappears silently.
-4. **Resolve sources, controls and loads.** Determine with author confirmation where ambiguous whether each ideal source/switch/ground/load is an on-board component, external connector/source/load, customer control, stimulus or unsupported construct. An ideal simulator voltage source is not automatically a mounted PCB package. External loads do not inflate board counts.
-5. **Declare functional intent.** The manifest/wizard records actual power sources/references, allowed operating states, player stimuli, customer outputs and healthy predicates/windows. Automatic suggestions are allowed only when unambiguous and author-confirmed as required. Examples such as “12 V input,” “fan output” or “status LED” are author intent, not facts guessed from a convenient net name. No expected function means no automatic faulted challenge.
-6. **Map physical components.** Choose supported packages, real pin order, designators, ratings/specifications, mounting sides and useful region constraints. Verify equivalence of the imported electrical function before/after mapping. No electrical topology or part values are rewritten merely to make routing easy; an explicitly permitted representation change requires independent correspondence and a new receipt.
-7. **Verify healthy operation first.** Run the real interpreted graph across all declared relevant input/power states using the normal execution service. Convergence alone is insufficient. Unsupported or contradictory intended healthy behavior stops challenge generation before fault injection.
-8. **Enumerate only legitimate faults.** Use the native canonical hypothesis service with supported physical owners, qualified effects, actual serviceability and a meaningful symptom. Seeded selection is mandatory. Electrically supported but unserviceable fixed support is not automatically a candidate.
-9. **Reject bad faulted candidates honestly.** No-op symptoms, unsupported numerical failure, inaccessible observations, unavailable stimuli, impossible repairs or indistinguishable non-equivalent causes reject with a stage/reason. Do not relax diagnostic correctness because the circuit came from a user.
-10. **Use native physicalization and play.** Normal placement, routing, layers/vias/crossovers, physical validation, renderer, probing, repair and customer retest apply. Routing failure rejects a realization or exhausts the finite normal search; it never licenses an imported-only hidden connection or topology rewrite.
-11. **Pin replay interpretation.** The qualified artifact records input hash plus available source, import/parser schema and versions, accepted mappings/unit grouping, package choices, functional manifest, values/models, physical realization and policy, selected fault, observation/repair contract and proof versions. A file hash alone is not a replay recipe. No live solver-node or source-coordinate repair identities are serialized.
-12. **Explain the envelope.** Maintain a versioned element/import-feature support matrix and a per-file report with exact unsupported elements, ambiguity and failure stage. Successful subsets are published as subsets. Separate author-visible source/manifest details from ordinary technician-facing complaint/UI/share projections. A user who supplied a schematic may remember it; no false anti-cheat claim is made.
-
-IMPORT-1 covers small supported passive/DC circuits. IMPORT-2 expands diode/transistor/RC families. IMPORT-3 expands accepted small-IC/control content, with MCU/display/timer capabilities only when actually consumed. IMPORT-4 adds supported multi-rail/relay/dynamic circuits; mains/offline conversion is separately conditional on E05/E06. IMPORT-5 qualifies a broader, versioned supported subset through a frozen varied import corpus. IMPORT-3 and IMPORT-4 need not become a needless serial chain when their actual supported capabilities are independent.
-
-## 6.12 Grouped fault-library expansion and serviceability
-
-These are future capability categories, not a requirement to implement every fault now. A09 owns canonical hypotheses and eligibility; electrical providers own the causal healthy/fault model; A08/E08 own applicable physical actions; X01/X02 own later intermittent/damage evolution. Every admitted mode requires a supported healthy model, physical owner, accessible observations, reachable repair and functional retest.
-
-| Owner family | Future modes within a defensible model | Required guardrail |
-|---|---|---|
-| Resistor/network | Open, supported value drift high/low. | Physical markings describe nominal identity, not a hidden fault readout; network/package repair boundaries are real. |
-| Capacitor | Open, short, reduced capacitance, leakage; ESR degradation only with an accepted equivalent model. | Stored energy, active-meter restrictions and timing/frequency observations remain causal; no metadata-only ESR/capacitance reading. |
-| Diode/Zener/TVS | Open, short, leakage and supported changed clamp behavior; reversed installation where relevant. | Qualify polarity, reference, load and stress envelope; do not promise unmodeled transient physics. |
-| BJT/MOSFET | Open junction/path, short path, stuck conduction, supported base/gate drive damage. | Distinguish package defects from upstream driver/supply/reference causes and secondary damage. |
-| IC/MCU | Dead package, supported stuck input/output or drive degradation; clock/reset/supply effects; modeled state faults only when meaningful. | Missing external clock/reset/supply is not automatically an IC fault. No required decompilation or private-register answer. |
-| Relay | Coil open, stuck-open/closed contacts, coil/driver issues, modeled high contact resistance. | Coil/contact/driver ownership stays distinct; real load and source limitations apply. |
-| Connector/interconnect | Open terminal, modeled high-resistance/poor connection, broken trace; later via/open-conductor faults. | Stable terminal/conductor locus and accepted repair action are required. Trace/via repair content adds E08 only when consumed. |
-| Power path | Fuse open, regulator/rectifier/startup/feedback failure, partial rail collapse. | Every counted visible part affects actual power/feedback behavior; use permitted source/instrument contracts. |
-| Sensor/input | Open, short, biased or stuck response, supply/reference failure. | Normal player stimulus and separating observations exist across operating states. |
-| Later composite behavior | Intermittent events, secondary damage, carefully bounded multiple faults. | Existing X01/X02/X06 entry rules remain; no automatic enabling or unexplained randomness. |
-
-Condition-related symptoms can be difficult without identifying the exact failed semiconductor internally. Equivalent repairs are acceptable only when the admitted hypothesis class and physical repair semantics genuinely agree. Do not prune inconvenient causes or treat a package label as proof of an internal fault.
+Every enabled instrument declares electrical connection/stimulus, burden/loading, range/overrange, reference, timing window, unavailable states and cancellation/cleanup. Two scope channels share a ground only when the instrument model says so. Differential math does not create galvanic isolation. Current measurement needs an actual series path; ESR/capacitance need actual supported stimulus-response behavior. Private model fields are not measurements.
 
 <a id="milestones"></a>
-# 7. Milestone catalog and execution graph
+# 7. Milestone catalog and execution order
 
-## 7.1 How to execute this plan
+## 7.1 Status and authority
 
-The identifiers below replace only future work after accepted Task49 and N00. They are dependency nodes, not permission to launch every worker at once. A card is a bounded roadmap contract, not an implementation prompt. Its authorized implementation may split into reviewed sub-checkpoints when the concrete design needs them; record the split without weakening its parent acceptance claim.
+T49, N00 and A01-A04 are delivered baseline entries. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. R00 is COMPLETE and QUALIFIED under the owner's implementation request; current evidence is indexed in [the R00 packet](task-evidence/R00/README.md). A05 is next and unstarted, as is every remaining feature node. Qualification uses the built-in Browser for current compiled and player checks; the unchanged isolated CLI launcher's ownership deadline remains a separately reported infrastructure limitation.
 
-**Status after N00 adoption:** T49 is accepted at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`; N00 document/lineage adoption is COMPLETE and Edition 2.1 is adopted. A01, A02 and A03 are IMPLEMENTED — ACCEPTED; A04 is IMPLEMENTED — VALIDATION BLOCKED; A05 and every later card remain UNSTARTED. Repository publication follows the required final status-delta review, final document/staged checks and normal commit/push handoff. No `[x]` here means “expected to pass.” T48 remains the accepted historical prerequisite of T49. A required evaluation may legitimately choose not to adopt a sophisticated algorithm; that is a completed decision, not a claim that the declined algorithm was implemented.
+A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
-**Conditional use rule:** A content/profile/release that consumes an optional capability adds that capability's accepted implementation as a hard dependency. Otherwise, its decision/skip does not block unrelated work. Every qualification gate tests the actual current integration, including new provider state in saves, measurements and retest. An earlier PASS never automatically qualifies later consumers.
+The hard prerequisites on the cards are authoritative. The phase map is a readable sequence, not a second conflicting dependency system. Conditional capabilities are resolved per Section 8. All future foundation expansion descends from R00; this prevents another active writer from extending the old contract while it is being retired.
 
-**Work order after accepted T49 and N00 adoption:** A01 → A02 → A03 → A04 qualification closure → A05. A04's implementation is present but remains validation-blocked; no A05 work begins until its required gates are closed. Read-only investigation may run concurrently; implementation begins only after all prerequisite investigations for that boundary have returned and been reconciled. One owner integrates shared-core changes. Separate directories are not proof of independent runtime contracts.
+## 7.2 Preferred work order
 
-**Early hard-question lanes:** A06/A07 bring source/reference and solver feasibility forward. P01/P02 freeze coordinate/copper identity before P03–P09. A04/A05 replace construction knowledge before additional blocks. A09/D01 replace diagnostic centralization before large hypothesis sets. Do not postpone E06's small converter pilots until a complete RB56 is assembled.
+| Lane | Order and boundary |
+|---|---|
+| Completed correction / next | R00-A/B/C/D qualified as one task; separately authorize A05 next. |
+| Early foundations | A05, A06/A07 and P01/P02, after their actual prerequisites; shared code has one owner. |
+| Working small-board platform | A08/A09/A11, U01, P03/P04, E01/E03, A10, Q15, U04/U05 and REL-A when its scope is ready. |
+| Normal boards | P05-P09, U02/U03, E02/E04, D01, Q30, U06/U07. |
+| Advanced boards | Early E06 feasibility through A07; full E05/E06, Q60 and HARD calibration, REL-B. E08 only for consuming trace-repair content. |
+| Mature target | Q100, separately selected advanced X work, X05 expert calibration, X09 and REL-1. |
+| Later vocabulary | E09-E14, U09-U12, MCU-1/2 and IMPORT-1..5 at their actual dependencies and chosen content priority, not as blanket native-release blockers. |
 
-**Model/delegation policy:** Follow the current AGENTS.md and explicitly requested runtime settings. For the owner's requested arrangement use Astra MAX as root and actual Luna MAX leaf investigators/coders/reviewers, normal speed where exposed, no invented model metadata or silent downgrade. The Edition 2.1 planning preparation used no subagents; that historical statement does not describe the current N00 writer/reviewer sequence. Future implementation must never start a coder while prerequisite investigators are still working. Send material findings and decisions, not liveness commentary; preserve independent review and treat workers professionally.
+A01/A07 investigate 60/100-part structural/solver costs long before final playable qualification. Q30 and physical-layer investigation do not wait for an alpha announcement when their prerequisites are available. Later optional lanes may be prioritized explicitly without claiming that all are required for the base game.
 
-## 7.2 Phase map and qualification ladders
+## 7.3 Milestone cards
 
-| Lane | Main nodes | Boundary that must not be skipped |
-|---|---|---|
-| Adoption | T49 (accepted) → N00 (complete) | Exact accepted Task49 handoff, document/dependency checks and independent review; publication follows the final handoff contract and no N00 SHA is fabricated. |
-| Architecture | A01–A11 | Stable manifests, constrained providers, source/solver ownership, fault/diagnostic contracts. |
-| Physical | P01–P09 with U01 | Layer/copper identity before routing consumers, two-layer comparison before advanced policy. |
-| Electrical vocabulary | E01–E08 core; E09–E14 later groups | Source consequences and reference/measurement models before mains and harmful repair; later IC/display/AC-control/motor groups only for consuming content. |
-| Workbench/session | U01–U08 core; U09–U12 later instruments | Coherent transforms, Spacebar inspection and state/history; later instruments only when qualified and consumed. |
-| Scale | Q15 → Q30 → Q60 → Q100 | Structural, physical, solver, diagnostic and player stages pass independently. |
-| Product release | REL-A → REL-B → REL-1 | Alpha is intermediate; beta needs Q60; mature advertised stretch needs Q100. |
-| Advanced skill | D01, U05, X01–X08, X05 | Difficulty uses proved observations and skilled-user evidence, not raw part count. |
-| Basic MCU | MCU-1 → MCU-2 | Compare bounded methods before implementing causal I/O/time/state; not arbitrary firmware. |
-| CircuitJS import | IMPORT-1 → IMPORT-2 → independent IMPORT-3/IMPORT-4 coverage → IMPORT-5 | Explicit capability negotiation and healthy intent before native physical/fault qualification; not universal import. |
-
-Several streams can progress before a release. Q30 and the physical-layer investigation need not wait for an alpha announcement. E05/E06 pilots need not wait for beta. X01/X02 production expansion remains after beta by preferred product sequence, while their interfaces and solver-time/state needs are represented earlier. A01/A07 explicitly probe full-count structural/solver costs long before Q100's final playable qualification.
-
-A recommended planning order, subject to actual dependencies and separately granted scope, is:
-
-```text
-Accepted T49 handoff: `3de4da1d3bad3ed532e6c327b24195bc3138ed15`
-N00 document/lineage adoption (COMPLETE; Edition 2.1 adopted)
-A01, A02, A03
-A04/A05 and A06/A07 and P01/P02
-A08/A09/A11; U01; P03/P04; E01/E03
-A10; Q15; U04/U05; REL-A when ready
-P05/P06/P07/P08/P09; U02/U03; E02/E04; D01
-Q30; U06/U07
-E05/E06; E08 only for a trace-repair-consuming family; Q60; HARD calibration; REL-B
-Q100 and advanced X work as separately authorized
-X05 expert calibration; X09 support; REL-1
-```
-
-This is a readable planning order, not a second dependency definition. The exact prerequisites on each card govern; for example E02 requires E01 but does not require finishing REL-A. The historical Edition 2.0 package named `research/RECONCILED_ROADMAP_GRAPH.json`; that companion is absent from this checkout and is not a dependency. The in-document card graph in Sections 7.2–7.3 is authoritative here, and no missing artifact is inferred or fabricated.
-
-**Preferred timing for the new lanes:** After stable native small/multi-rail board contracts, E09/E10/E11 can expand control and display vocabulary in separately authorized steps. U09 follows the useful one-channel scope; U10–U12 require a demonstrated diagnostic use. Specialized E12–E14, basic MCU implementation and broad import qualification are long-range work, commonly after the advanced beta unless the owner explicitly selects an earlier consuming family. Small compatibility canaries belong to the foundations now. This preference does not add REL-B, Q60 or Q100 as a hard prerequisite of the providers being qualified, and it does not add those providers as hard prerequisites of the base releases.
-
-## 7.3 Roadmap cards
-
-## Current work
+The shared current-only policy and validation rules apply to every card. There is no per-card historical replay preservation clause. Additional provider/model state is qualified only when a feature consumes it.
 
 <a id="m-t49"></a>
-### T49 · Intent-driven value synthesis v1: accepted bounded contract
 
-**Type / status:** ACCEPTED — completed task; `3de4da1d3bad3ed532e6c327b24195bc3138ed15` on `codex/task43p-final-recovery`.
+### T49 · Intent-driven value synthesis baseline
 
-**Purpose and reason:** Preserve the accepted one-block value-synthesis proof as the bounded input to the new roadmap. The larger product vision does not expand or reinterpret this result.
+**Status:** DELIVERED BASELINE.
 
-**Architectural owner / affected systems:** Existing value/contribution owners, bounded request/plan, physical specifications and CircuitJS integration.
+**Hard prerequisites:** None in the current catalog; delivered pre-roadmap baseline.
 
-**Hard prerequisites:** accepted Task48, direct parent `62c878b8f381e3418214a93a46d3e8d2d9693b3e`.
+**Delivered basis:** `3de4da1d3bad3ed532e6c327b24195bc3138ed15`. One immutable, bounded resolved-value recipe for the controlled-indicator load. Electrical values, markings, ratings and replacement semantics consume the same recipe.
 
-**Must not be coupled:** No Task50, new router, generic diagnostic redesign, or roadmap adoption while the current writer is working.
+**Current disposition:** Fixed historical generator revisions are not supported merely because this task introduced them.
 
-**Exact deliverable:** One immutable resolved recipe from a finite standard/catalog candidate set, deterministic VALUES selection, truthful ratings, and explicit replay version boundary. The accepted versions are `bounded-assembler@3`, `controlled-indicator@1`, `resistor-led-load@2`, `controlled-led-load-e12@1`, and geometry version 3; the legacy controlled route remains `bounded-assembler@2`.
+**Evidence boundary:** Recorded implementation/evidence, not a fresh runtime certification by this roadmap. Changes are permitted when they improve the current game; revalidate affected current behavior.
 
-**Acceptance:** The [retained Task49 packet](task-evidence/task-49/README.md) and its [independent review](task-evidence/task-49/review.json) record real healthy solver behavior, both admitted repair owners, correct markings/catalog correspondence, legacy Task48 replay, negative rejection and independent review under the original prompt.
-
-**Important negative tests:** Impossible intent; under-rated candidate; order-sensitive selection; duplicated nominal value authority; old descriptor routed through a changed algorithm; original numeric-value leakage.
-
-**Performance / scalability evidence:** The [accepted Task49 evidence packet](task-evidence/task-49/README.md), its [independent review](task-evidence/task-49/review.json) and source candidate, with recorded reuse and fresh checks. This card does not add a larger-board or general synthesis claim.
-
-**Architectural risk:** Overgeneralizing a narrow result or declaring completion without compiled/player evidence.
-
-**Expected extension and scale effects:** Pluggability: supplies the value authority later providers consume. Scale: avoids repeated value tables; does not qualify larger boards.
-
-**Replay / versioning:** Generator3 uses the accepted Task49 value policy and block-scoped VALUES stream. Generator2 remains fixed at 330 ohms / 0.25 W with its exact legacy meaning; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Accepted catalog and retained limits:** The two admitted generated values are 270 ohms / 5% / 0.25 W / `AXIAL_RESISTOR` and 330 ohms / 5% / 0.22 W / `AXIAL_RESISTOR`. The result remains one load-block policy and one truthful axial resistor package. It does not claim manufacturing certification, a general circuit-design engine, arbitrary part search, support-block or Task50 work, PCB scaling, diagnostic eligibility, bend-count or connected-placement correction.
-
-**Task49 impact:** Accepted contract and immutable recipe are preserved by all later milestones; N00 adopts this exact result without reopening its implementation.
-
-**Direct later dependents:** [N00](#m-n00).
-
-
-## Adoption
+**Direct hard dependents:** [N00](#m-n00).
 
 <a id="m-n00"></a>
-### N00 · Post-49 acceptance, lineage and roadmap adoption
 
-**Type / status:** Required adoption gate; COMPLETE — document/lineage adoption and Edition 2.1 accepted. Repository publication follows the final handoff contract.
+### N00 · Prior roadmap adoption
 
-**Purpose and reason:** Prevent the new plan from trampling the actual Task49 result or resurrecting obsolete milestones.
+**Status:** DELIVERED BASELINE.
 
-**Architectural owner / affected systems:** Owner review, current task report and roadmap/evidence maintenance; exact Git lineage and owner-input preservation before authorized publication.
+**Hard prerequisites:** [T49](#m-t49)
 
-**Hard prerequisites:** [T49](#m-t49).
+**Delivered basis:** `55cac1d`. The previous roadmap was adopted. This is historical document bookkeeping, not a compatibility engine.
 
-**Must not be coupled:** No forced branch merge, branch deletion, broad cleanup, or implementation bundled with adoption.
+**Current disposition:** No second lineage-preservation ceremony or mandatory byte-preserved completed ledger.
 
-**Exact deliverable:** Accepted Task49 SHA and qualification linked into the current checkpoint; this edition adopted with one immediate next authorized boundary and explicit old-task migration. N00 changes only `docs/ROADMAP.md` and `docs/CODEX_TASK_REPORT.md`.
+**Evidence boundary:** Recorded implementation/evidence, not a fresh runtime certification by this roadmap. Changes are permitted when they improve the current game; revalidate affected current behavior.
 
-**Acceptance:** Task48 ancestry, actual Task49 versions, limitations, evidence and review are reconciled. Focused document/dependency checks PASS and the fresh independent Turing Luna MAX document review PASS; repository publication is handled by the final status-delta, staged-check and normal commit/push handoff. Existing evidence and unrelated work remain intact; no future task is silently marked complete.
-
-**Important negative tests:** Stale master; unreviewed descendant; invented approval; active concurrent writer; dropped Task49 limitation; historical appendix interpreted as current instructions.
-
-**Performance / scalability evidence:** Exact branch/SHA/input hash, owner-original preservation diff and evidence references, including the final normalized UTF-8/LF roadmap hash in the current task report. Document-only checks do not require a compiler or browser; the exact N00 commit SHA is recorded only in the final handoff after publication.
-
-**Architectural risk:** Stale replacement document overwriting newer truth.
-
-**Expected extension and scale effects:** Pluggability: no code effect. Scale: makes later qualification traceable.
-
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract and immutable recipe; N00 is the completed adoption gate before A01.
-
-**Direct later dependents:** [A01](#m-a01).
-
-
-## Architecture foundations
+**Direct hard dependents:** [A01](#m-a01).
 
 <a id="m-a01"></a>
+
 ### A01 · Reference-board manifests and reproducible measurement harness
 
-**Type / status:** Required early evidence gate; IMPLEMENTED — ACCEPTED after the
-bounded qualification-integrity corrections, final sequential aggregate-timing
-correction and fresh independent review.
+**Status:** DELIVERED BASELINE.
 
-**Purpose and reason:** Expose 60/100-part costs early instead of discovering them after the content library depends on untested assumptions.
+**Hard prerequisites:** [N00](#m-n00)
 
-**Architectural owner / affected systems:** Fixture/corpus tooling and evidence schema, with adapters to existing generation, geometry, solver and browser paths.
+**Delivered basis:** `1eff2278ccd53181951c19d2965f0b32d9f0a126`. Reference manifests, workload counters and bounded solver/structural pilots. Retain useful measurement methodology and distinguish synthetic fixtures from playable boards.
 
-**Hard prerequisites:** [N00](#m-n00).
+**Current disposition:** Intentionally changed fixtures may be rebaselined; old manifests and timings are not immutable product outputs.
 
-**Must not be coupled:** Do not wait for mains, a finished generic router, or playable RB100 to begin cost probes; do not claim these probes qualify those capabilities.
+**Evidence boundary:** Recorded implementation/evidence, not a fresh runtime certification by this roadmap. Changes are permitted when they improve the current game; revalidate affected current behavior.
 
-**Exact deliverable:** RB15/RB30/RB56/RB100 functional inventories; architecture-stage manifests; versioned workload counters; an identified reference machine; cold/warm run protocol and frozen qualification budget process. An owner-authorized desktop exception is valid when the host is fully identified and the evidence explicitly makes no modest-machine portability claim; a separate modest-host run remains future evidence.
-
-**Corrective-pass closure:** The collector fails closed on wrapper exceptions
-while retaining diagnostic terminal/report/cleanup/error fields; the checker
-enforces finite bounded timing and trace intervals; and preview-served execution
-provenance is bound through Java and the collector to the checker. Because the
-16 attempts execute serially, the final checker additionally requires
-`totalElapsedMs >= sum(attempt.elapsedMs)` while permitting legitimate overhead.
-Fresh deterministic regressions, dependency-audited two-corpus Browser evidence,
-forced-failure/debug-off canaries and independent review are recorded in the
-[A01 evidence packet](task-evidence/A01/README.md), its `corrected-*` summaries
-and its `sequential-*` summaries. The single-corpus checker allowance and absent
-injected cleanup-failure canary remain documented future hardening items. The
-initial integrity correction is recorded in
-`fdabfea1ab6ea0324ba39d76b6ad4173e9bea869`; its published handoff tip is
-`4b1e6668ec03440210ee2617c92ea57fa8d7cb0b`, and the final sequential correction
-commit is named in the publication handoff.
-
-**Acceptance:** Count physical packages separately from solver elements; expose pads/nets/raw and canonical segments, hypothesis count and matrix metrics. Run available small baselines plus bounded synthetic 20/40/60/100 structural/solver pilots; record unsupported stages rather than fake playable boards. Each 16-attempt corpus records 32 accepted solver steps (64 across pilot and holdout), browser viewport/DPR, timing p50/p95/worst, failure outcomes, memory availability and bounded cancellation.
-
-**Important negative tests:** Inert filler counted as function; only successful seeds retained; timing influencing candidate identity; undefined machine; wall-clock claims without traces.
-
-**Performance / scalability evidence:** Baseline distributions, failures and counters. Set numeric stage/resource budgets before each qualification run, using measured pilots and user latency targets.
-
-**Architectural risk:** Benchmarks optimized for attractive fixtures or instrumented code changing semantics.
-
-**Expected extension and scale effects:** Pluggability: one reusable conformance/measurement entry. Scale: early separation of solver, router, proof and UI costs.
-
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [A02](#m-a02), [A07](#m-a07), [P08](#m-p08).
-
-**Current implementation evidence (2026-09-07):** RB15/RB30/RB56/RB100
-architecture manifests, the versioned CircuitJS 20/40/60/100 ladder route,
-pilot/holdout receipts, frozen budgets, debug-off suppression and forced-failure
-cleanup are implemented and pass their focused checks. The final checker closes
-the sequential aggregate-timing false-pass; source/build/execution identities,
-regressions and dependency-audited receipts are recorded in
-[`docs/task-evidence/A01/`](task-evidence/A01/README.md). The required fresh
-independent review passed; no A02 work is started by this implementation.
+**Direct hard dependents:** [A02](#m-a02), [A07](#m-a07), [P08](#m-p08).
 
 <a id="m-a02"></a>
-### A02 · Close known predicate and geometry correctness seams
 
-**Type / status:** Required correctness gate; IMPLEMENTED — ACCEPTED.
+### A02 · Candidate, bend-count and placement correctness baseline
 
-**Purpose and reason:** Fix the small known inconsistencies before trusting expanded metrics or fault populations: audit F3, F5 and F6.
+**Status:** DELIVERED BASELINE.
 
-**Architectural owner / affected systems:** Candidate eligibility/identity; PcbBoardLayout bend metrics; connected-placement coordinate arithmetic and focused tests.
+**Hard prerequisites:** [A01](#m-a01)
 
-**Hard prerequisites:** [A01](#m-a01).
+**Delivered basis:** `363244c0483ec665feff3cb8f40fab09851c7b98`. Consistent candidate eligibility/hypothesis accounting, direction-based bend counts, and corrected connected-placement arithmetic.
 
-**Must not be coupled:** No global rerouter, Task43 reopening, or full provider redesign inside these corrections.
+**Current disposition:** R00 removes obsolete arithmetic/scoring and historical snapshot branches rather than reverting these fixes.
 
-**Exact deliverable:** One admitted-candidate predicate, explicit hypothesis keys, direction-based bend semantics, documented local/global coordinates, and surgical versioned corrections after a preserved baseline.
+**Evidence boundary:** Recorded implementation/evidence, not a fresh runtime certification by this roadmap. Changes are permitted when they improve the current game; revalidate affected current behavior.
 
-**Acceptance:** Compatible but unserviceable candidates are excluded consistently; same-owner distinct supported hypotheses are not silently merged; straight subdivision does not add bends; translated inputs translate targets exactly once. Re-run affected old and new path tests.
-
-**Important negative tests:** Compatible/unserviceable open; two hypotheses on one owner; unequal collinear segments; reversal versus bend; translation and boundary inputs; candidate count/proof divergence.
-
-**Performance / scalability evidence:** Repository-native reproductions of prior helper findings and before/after metrics. Prove reachability/impact separately from helper correctness.
-
-**Architectural risk:** A metric fix silently changing old replay, or local patches masking an incomplete placement model.
-
-**Expected extension and scale effects:** Pluggability: one eligibility contract. Scale: reliable input metrics and fewer misleading retries.
-
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**A02 acceptance evidence (2026-09-08):** Repository-native before/after
-reproductions and focused Candidate/Geometry66/Replay112 checks PASS. One
-canonical admitted population and explicit same-owner hypothesis keys now feed
-selection/count/proof; bend counting uses direction; connected placement applies
-world translation once. Final JDK8/GWT2.7 five-permutation build, live NPN/LED/
-diode/parallel proofs, restored 14-route Task41 corpus and 755/1053-assertion
-Task48/49 replay checks PASS. The legacy full reports match every baseline field.
-Independent Luna MAX review and targeted repair review PASS. See
-[A02 evidence](task-evidence/A02/README.md) for identities, retained failures,
-limits, dependency-audited evidence reuse and cleanup. A03 was unstarted at that handoff; its current status is below.
-
-**Direct later dependents:** [A03](#m-a03), [A09](#m-a09), [P01](#m-p01).
+**Direct hard dependents:** [A03](#m-a03), [A09](#m-a09), [P01](#m-p01).
 
 <a id="m-a03"></a>
-### A03 · Stable design identities, device buses and complete replay manifests
 
-**Type / status:** Required foundation; COMPLETE - PUBLISHED AND ACCEPTED.
-The final source, compiled runtime, cleanup/recovery, compatibility and Gate B
-evidence are closed in [A03 evidence](task-evidence/A03/README.md). Published in
-`1d995d4f5b21142d4ca5643ede546afdfe51340f`; the user subsequently authorized A04.
-Historical A03 publication-freeze receipts remain unchanged.
+### A03 · Stable design identities and current resolved-design manifests
 
-**Purpose and reason:** Keep optional/repeated blocks, alternative topologies, physical repairs and future saves from inheriting unstable union-find or collection identities.
+**Status:** DELIVERED BASELINE.
 
-**Architectural owner / affected systems:** BlockNamespace, descriptor/replay adapters, device-bus resolution and proposed immutable realization manifest.
+**Hard prerequisites:** [A02](#m-a02)
 
-**Hard prerequisites:** [A02](#m-a02).
+**Delivered basis:** `1d995d4f5b21142d4ca5643ede546afdfe51340f`. Explicit role/instance and device-bus identities plus bounded resolved-design manifests, separate from transient solver nodes.
 
-**Must not be coupled:** No serialization of CircuitJS node numbers, arbitrary migrations, cloud accounts or mandatory mutable saves.
+**Current disposition:** R00 consolidates current identity consumers and retires historical replay translations. Persistence and import are not already implemented.
 
-**Exact deliverable:** Stable role-instance and bus keys; explicit local aliases and variant-local identities; pinned generator/value/model/package/geometry/routing/proof versions; canonical resolved-choice records where needed for replay.
+**Evidence boundary:** Recorded implementation/evidence, not a fresh runtime certification by this roadmap. Changes are permitted when they improve the current game; revalidate affected current behavior.
 
-**Acceptance:** Insertion/reordering leaves unchanged semantic identities intact; replacing a topology does not pretend unlike internal terminals are the same; explicit buses survive lexically earlier aliases; unsupported versions reject without reinterpretation.
-
-**Important negative tests:** Lexically earlier joined net; repeated block type; namespace collision; missing version; silently rounded long seed; stale saved cut against a different realization.
-
-**Performance / scalability evidence:** JVM/GWT exact identity vectors and corpus replay; distinguish exact discrete identity from tolerance-based electrical reproduction.
-
-**Architectural risk:** An all-purpose identity framework or an impossible eternal replay promise.
-
-**Expected extension and scale effects:** Pluggability: variants declare identities locally. Scale: safe composition, caching and persistence keys.
-
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Future state/import compatibility now:** Reserve explicit versioned model-state schemas and model/program identifiers for later sequential logic and MCU providers, plus import-origin identity and interpretation-manifest references for IMPORT-1. Pure fixtures may prove field preservation and safe unknown-version rejection; no MCU or importer implementation is required here. Imported file hashes are provenance, not automatic device-bus IDs. Source drawing coordinates and transient solver nodes cannot become durable package, terminal or saved-action identities.
-
-**Direct later dependents:** [A04](#m-a04), [A06](#m-a06), [P01](#m-p01), [P02](#m-p02), [U01](#m-u01), [U06](#m-u06), [MCU-1](#m-mcu-1), [IMPORT-1](#m-import-1).
+**Direct hard dependents:** [A04](#m-a04), [P01](#m-p01), [P02](#m-p02), [U01](#m-u01), [U06](#m-u06), [MCU-1](#m-mcu-1), [IMPORT-1](#m-import-1).
 
 <a id="m-a04"></a>
-### A04 · Constrained provider-owned electrical construction
 
-**Type / status:** Required foundation; COMPLETE - QUALIFIED.
-The final native, production build, compiled conformance/regression, replay,
-cleanup and independent review gates pass; see [A04 evidence](task-evidence/A04/README.md).
-Three nonblocking materializer hardening follow-ups are recorded there.
-A05 and later milestones remain UNSTARTED.
+### A04 · Provider-owned electrical construction baseline
 
-**Purpose and reason:** Replace concrete-device construction in BoundedGeneratedBoardAssembler before more devices depend on its switches.
+**Status:** DELIVERED BASELINE.
 
-**Architectural owner / affected systems:** Immutable electrical realization plan, block construction providers and one restricted global allocation/binding context.
+**Hard prerequisites:** [A03](#m-a03)
 
-**Hard prerequisites:** [A03](#m-a03).
+**Delivered basis:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`. Scoped electrical construction, explicit device joins, package/unit declarations and bounded physical materialization for existing resistor and controlled-indicator content.
 
-**Must not be coupled:** No broad leaf-family conversion, universal DSL, circuit-design math inside the assembler, or provider-owned full PCB.
+**Current disposition:** R00 removes historical staging/interpretation paths, corrects residual generic-layer family knowledge, and closes three provider-boundary hardening follow-ups before expansion.
 
-**Exact deliverable:** Provider seam proven by the existing resistive canary and controlled-indicator path; terminal/part/fault mappings; a single global board/runtime; private solver-witness coordinates isolated from physical layout coordinates.
+**Evidence boundary:** Recorded implementation/evidence, not a fresh runtime certification by this roadmap. Changes are permitted when they improve the current game; revalidate affected current behavior.
 
-**Acceptance:** Providers allocate only their declared contributions through the context; cross-block joins are device-owned; every element/part/binding has one owner; coincident solver coordinates cannot create unintended joins; legacy versioned realizations remain qualified.
+**Direct hard dependents:** [R00](#m-r00), [A08](#m-a08), [A09](#m-a09), [A11](#m-a11), [E02](#m-e02), [IMPORT-1](#m-import-1).
 
-**Important negative tests:** Duplicate allocation; undeclared terminal; bypassed device join; foreign runtime; failed halfway construction; accidental coordinate contact; same recipe independently re-derived.
+<a id="m-r00"></a>
 
-**Performance / scalability evidence:** Construction conformance, independent terminal correspondence and failure cleanup; record central-file edits for the two migrations.
+### R00 · Current-only development baseline and provider-boundary cleanup
 
-**Architectural risk:** Replacing explicit code with a universal circuit DSL or allowing providers to construct nested live simulations.
+**Status:** COMPLETE - QUALIFIED, 2026-09-09. Current source/build/native/compiled/player gates and independent review pass; [evidence and limits](task-evidence/R00/README.md). The isolated CLI wrapper is not certified by the alternative product evidence.
 
-**Expected extension and scale effects:** Pluggability: removes ordinary device knowledge from the assembler. Scale: repeatable local construction without competing owners.
+**Hard prerequisites:** [A04](#m-a04)
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Priority / applicability:** Required immediate correction, before A05 and all new foundation expansion.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
+**Purpose and reason:** Remove the compatibility obligations already embedded across A02-A04 before A05 adds more consumers. Build forward from the delivered A04 commit, not from an old checkout.
 
-**Future IC/import construction compatibility now:** A physical package may contain several modeled electrical units with shared supply pins; one visible package is not necessarily one CircuitJS element. Keep an explicit provider-declared unit-to-package/terminal map and honest counts. Later powered logic, display and MCU providers, and imported designs, must enter this same constrained construction context. Do not allocate a second live runtime or an imported-only assembler. Prove the mapping shape with small data/conformance canaries now; leave concrete IC/MCU/import libraries to their named lanes.
+**Architectural owner / affected systems:** Current request/resolved-plan/identity pipeline; electrical and physical declarations; bounded materializer; current verification entry points; AGENTS.md, ARCHITECTURE.md and this roadmap.
 
-**Direct later dependents:** [A05](#m-a05), [A08](#m-a08), [A09](#m-a09), [A11](#m-a11), [E02](#m-e02), [IMPORT-1](#m-import-1).
+**Must not be coupled:** No A05 alternate-family feature, universal provider DSL, full leaf-to-composition rewrite, full persistence service, build migration, solver rewrite or blanket verifier-isolation rewrite. Stale documentation is fixed here, not a separate milestone.
+
+**Exact deliverable:** One current supported interpretation per live content variant; obsolete replay/geometry/scoring/snapshot branches removed; truthful typed fault recipes; explicit package construction; current identity flow without historical-report adapters; checked declaration/plan/spec/receipt correspondence; generic enumeration of declared nets, parts and ownership; one current acceptance entry point with focused tests and a real workbench check.
+
+**Acceptance:** All R00 exit conditions in Section 2 pass. Old artifact versions are rejected clearly before live mutation. Old report bytes, generator outputs, ID spellings, intermediate element counts and stage order are not gates. Current useful leaf families and composed content are not silently removed to make tests pass. All three A04 hardening findings are closed or superseded by a simpler boundary with equivalent current negative checks.
+
+**Important negative tests:** Wrong plan/spec/receipt even with matching string IDs; swapped part/pad/net; foreign or opposite-terminal backing; inappropriate secondary/fault/attachment backing; stale or aborted receipt; missing/duplicate ownership; old descriptor silently reinterpreted; current fault kind mislabeled; unknown current provider; failed build of an actual supported path; wrong repair accepted.
+
+**Performance / scalability evidence:** Record focused test/build cost and current generation success/failure outcomes. Run one final production build after integration and selected compiled/current-player checks. No full historical matrix or full Gate B recertification unless its consumed implementation changes.
+
+**Architectural risk:** A deletion-only patch can hide lost coverage or move device knowledge to a new god class. Removing the historical adapter is not enough if an old default still selects the obsolete algorithm.
+
+**Direct hard dependents:** [A05](#m-a05), [A06](#m-a06), [P01](#m-p01).
 
 <a id="m-a05"></a>
+
 ### A05 · Functional-role families, alternate implementations and repeated instances
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [R00](#m-r00)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Make functional composition produce genuinely different circuits rather than repeated fixed templates.
 
 **Architectural owner / affected systems:** Device-intent resolver, block-family/variant registry, typed assumptions/guarantees and existing value recipes.
 
-**Hard prerequisites:** [A04](#m-a04).
-
-**Must not be coupled:** No arbitrary netlist generator, every electronics topology, or new difficulty labels.
+**Must not be coupled:** No arbitrary-netlist generator, every electronic topology, new difficulty label, or dormant historical compatibility adapter. Existing current leaf content may keep an independent current provider until deliberate migration; it may not keep obsolete algorithm revisions solely for replay.
 
 **Exact deliverable:** At least two qualified implementations of one role, such as BJT and NMOS low-side control, plus repeated instances and a purposeful healthy-support contribution.
 
-**Acceptance:** The same device requirement can select structurally different valid circuits; adapters/loading assumptions are explicit; unchanged local values keep named streams; support performs a real function and participates in retest.
+**Acceptance:** At least two structurally different implementations satisfy one current device intent through the same construction contracts; repeated instances have collision-free identity; genuine healthy support affects solved function and participates in retest. No new ordinary device-specific branches appear in generic assembly, physical materialization, replay capture, routing or UI. Current deterministic concern isolation is checked without historical generator parity.
 
 **Important negative tests:** Variant needing unavailable drive current; unsupported high-side substitution; unconnected decorative support; repeated-instance collision; topology chosen from selected fault metadata.
 
@@ -1049,24 +827,23 @@ A05 and later milestones remain UNSTARTED.
 
 **Expected extension and scale effects:** Pluggability: ordinary variants live in providers. Scale: hierarchical vocabulary with cheap incompatibility pruning.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Rolling playable integration:** Generate and install an actual current composed challenge through the new provider/variant path, then use ordinary player controls for diagnosis, physical repair and customer retest. If this path is still developer-only, close the normal-player launch integration here. An old leaf-only playthrough or metadata-only fixture cannot qualify A05.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Rolling playable integration canary:** Before dependent architecture expands, run the smallest currently supported playable composed challenge through actual generation, installation, ordinary player input, diagnosis, repair and customer retest. Exercise the new variant/provider construction path where available. This is one small integration receipt, not four new milestones or the full historical browser matrix. If the new path cannot yet host the complete loop, close that integration gap inside A05 rather than substituting a metadata-only fixture or claiming only the legacy path proves it.
-
-**Direct later dependents:** [A10](#m-a10), [P03](#m-p03), [E02](#m-e02), [E03](#m-e03), [E04](#m-e04), [E07](#m-e07), [E09](#m-e09), [E11](#m-e11), [E13](#m-e13), [E14](#m-e14), [IMPORT-2](#m-import-2), [Q15](#m-q15).
+**Direct hard dependents:** [A10](#m-a10), [P03](#m-p03), [E02](#m-e02), [E03](#m-e03), [E04](#m-e04), [E07](#m-e07), [E09](#m-e09), [E11](#m-e11), [E13](#m-e13), [E14](#m-e14), [IMPORT-2](#m-import-2), [Q15](#m-q15).
 
 <a id="m-a06"></a>
+
 ### A06 · Power, reference, isolation and operating-state contracts
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [R00](#m-r00)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Design multi-rail and mains/low-voltage semantics before source and instrument implementations encode conflicting meanings.
 
 **Architectural owner / affected systems:** Typed domain/preflight contracts, source/load capability descriptions, operating-state model and measurement-reference policy.
-
-**Hard prerequisites:** [A03](#m-a03).
 
 **Must not be coupled:** No regulator library, offline converter implementation, mains certification or settings-owned power semantics.
 
@@ -1082,30 +859,29 @@ A05 and later milestones remain UNSTARTED.
 
 **Expected extension and scale effects:** Pluggability: source and instrument providers declare contracts. Scale: typed multi-domain composition.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Future provider contract:** Keep power/reset/clock/brownout, thresholds, finite drive, loading and partial-power assumptions representable. Unknown or out-of-envelope state is explicit. Use a small current consumer/canary, not an unused MCU framework.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Future powered-IC contract now:** Allow providers to declare power, reset, clock, brownout, digital-input thresholds, output topology/limits and partial-power/backfeed assumptions alongside analog loading/reference contracts. UNKNOWN and model-out-of-envelope states remain explicit; adding a digital output does not grant an unlimited ideal driver. These are compatibility requirements for E09/E10/MCU-2, not permission to implement an MCU during A06.
-
-**Direct later dependents:** [A07](#m-a07), [A09](#m-a09), [P03](#m-p03), [U02](#m-u02), [E01](#m-e01), [E05](#m-e05), [E09](#m-e09), [E12](#m-e12), [MCU-1](#m-mcu-1).
+**Direct hard dependents:** [A07](#m-a07), [A09](#m-a09), [P03](#m-p03), [U02](#m-u02), [E01](#m-e01), [E05](#m-e05), [E09](#m-e09), [E12](#m-e12), [MCU-1](#m-mcu-1).
 
 <a id="m-a07"></a>
+
 ### A07 · Bounded solver execution, observation and high-risk model pilots
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A01](#m-a01), [A06](#m-a06)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Find whether CircuitJS can support the intended dynamics and proof workload before a large provider library relies on it.
 
 **Architectural owner / affected systems:** CircuitJS adapter, serialized execution owner, stepping/settlement/observation boundary and profiling fixtures.
 
-**Hard prerequisites:** [A01](#m-a01), [A06](#m-a06).
-
 **Must not be coupled:** Do not wait for full E06 or Q100. Prototype hard model classes in private fixtures; no wholesale solver replacement without a recorded failed requirement.
 
 **Exact deliverable:** Bounded simulation-time execution independent of paint; explicit numeric failures and cancellation; reference-sensitivity tests; isolated small relay/transformer/nonlinear/converter pilots; matrix-cost probes at 20/40/60/100 parts.
 
-**Acceptance:** One solver owner per legacy static context; independent CirSim objects are not assumed isolated; observations identify settled simulation state; no fake stabilization current becomes a physical component; convergence and model limits are reported.
+**Acceptance:** One solver owner per singleton-sensitive CircuitJS context; observations identify the solved simulation state; cancellation cannot advance the player graph; numerical stabilization is not counted or displayed as a physical part. Report singularity, nonconvergence and model limits. GWT/JDK modernization is a separate evidence-driven decision, not a compatibility duty.
 
 **Important negative tests:** Concurrent ownership attempt; stale result publication; nonfinite/singular solve; nonconvergence; time-step sensitivity; false earth reference; cancelled proof mutating the player board.
 
@@ -1115,26 +891,25 @@ A05 and later milestones remain UNSTARTED.
 
 **Expected extension and scale effects:** Pluggability: solver access through a narrow execution API. Scale: measured headroom and a path to isolated workers only if needed.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Future state boundary:** Provide one deterministic accepted-step or scheduled simulation-time boundary for stateful IC/MCU/display providers. Define simultaneous-event ordering, startup/clock phase, cancellation and finite delta/feedback work. A synthetic scheduled-state canary is sufficient now; do not implement a CPU emulator or parallel live CirSim instances.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Future discrete-event compatibility now:** Reserve one deterministic simulation-time event boundary for sequential IC/MCU/scan-state providers. Update causal device state at accepted simulation steps or explicitly scheduled event instants, not each browser frame or repeated nonlinear trial iteration. Simultaneous-event ordering, startup/clock phase, cancellation and a finite feedback/delta-iteration limit must be explicit. A small synthetic scheduled-state canary is sufficient here. Concrete clock, MCU and display providers qualify their actual time resolution and cost later; no CPU emulator or second electrical simulation is required.
-
-**Direct later dependents:** [A08](#m-a08), [A09](#m-a09), [A10](#m-a10), [U02](#m-u02), [U03](#m-u03), [U10](#m-u10), [E01](#m-e01), [E06](#m-e06), [E10](#m-e10), [MCU-1](#m-mcu-1).
+**Direct hard dependents:** [A08](#m-a08), [A09](#m-a09), [A10](#m-a10), [U02](#m-u02), [U03](#m-u03), [U10](#m-u10), [E01](#m-e01), [E06](#m-e06), [E10](#m-e10), [MCU-1](#m-mcu-1).
 
 <a id="m-a08"></a>
+
 ### A08 · Multi-provider mutation and failure-isolated physical lifecycle
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A04](#m-a04), [A07](#m-a07)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Generalize proven resistor compensation through a second real mutable part category before relay, capacitor and copper actions proliferate.
 
 **Architectural owner / affected systems:** PhysicalBoardRuntime, slot/part providers, mutation transaction boundary, source/measurement settlement and fresh-owner installation.
 
-**Hard prerequisites:** [A04](#m-a04), [A07](#m-a07).
-
-**Must not be coupled:** No universal undo engine, unbounded nested transactions or migration of every old provider in one task.
+**Must not be coupled:** No universal undo engine, unbounded nested transactions or migration of every current provider in one task. Obsolete entry points touched by the conversion are removed rather than left as shims.
 
 **Exact deliverable:** Restricted prepare/commit/abort interface; immutable operation intent; validation and compensation receipts; at least resistor plus diode/capacitor lifecycle conformance.
 
@@ -1148,24 +923,23 @@ A05 and later milestones remain UNSTARTED.
 
 **Expected extension and scale effects:** Pluggability: common lifecycle with provider-owned electrical mutations. Scale: predictable repair cost and state integrity.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Future stateful lifecycle:** The restricted lifecycle accommodates provider-owned internal state and scheduled events without persisting executable callbacks. Removal, replacement, supply loss and model reset are distinct operations. Add actual stateful qualification only with consuming content.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Future stateful-package lifecycle now:** The prepare/commit/abort and fresh-owner contracts must accommodate a provider's explicit resettable/serializable internal state, scheduled events and drive configuration without storing executable callbacks as durable state. Removing a powered IC, replacing it, losing its supply and resetting its model are different operations. Later stateful providers extend this contract with real failure tests; do not claim generic deep rollback or implement every IC now.
-
-**Direct later dependents:** [A11](#m-a11), [U02](#m-u02), [U06](#m-u06), [U11](#m-u11), [U12](#m-u12), [E01](#m-e01), [E03](#m-e03), [E06](#m-e06), [E08](#m-e08), [E09](#m-e09), [E11](#m-e11), [E13](#m-e13), [E14](#m-e14), [MCU-2](#m-mcu-2), [IMPORT-1](#m-import-1), [Q15](#m-q15), [X02](#m-x02), [X06](#m-x06), [X08](#m-x08).
+**Direct hard dependents:** [A11](#m-a11), [U02](#m-u02), [U06](#m-u06), [U11](#m-u11), [U12](#m-u12), [E01](#m-e01), [E03](#m-e03), [E06](#m-e06), [E08](#m-e08), [E09](#m-e09), [E11](#m-e11), [E13](#m-e13), [E14](#m-e14), [MCU-2](#m-mcu-2), [IMPORT-1](#m-import-1), [Q15](#m-q15), [X02](#m-x02), [X06](#m-x06), [X08](#m-x08).
 
 <a id="m-a09"></a>
+
 ### A09 · Production fault hypotheses and executable diagnostic providers
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A02](#m-a02), [A04](#m-a04), [A06](#m-a06), [A07](#m-a07)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Remove ordinary production admission dependence on family-specific developer dispatch without removing the proof.
 
 **Architectural owner / affected systems:** Production hypothesis/diagnostic service; block-owned fault and observation/repair providers; developer verifier as independent client.
-
-**Hard prerequisites:** [A02](#m-a02), [A04](#m-a04), [A06](#m-a06), [A07](#m-a07).
 
 **Must not be coupled:** No brute-force all-conceivable-fault catalog, multiple faults, unsafe snapshot reuse or reduced correctness to save time.
 
@@ -1175,32 +949,31 @@ A05 and later milestones remain UNSTARTED.
 
 **Important negative tests:** Same owner with different fault mechanisms; missing repair; identical observations but non-equivalent repairs; hidden-answer-based plan; unavailable input/instrument; stale proof or empty proof accepted.
 
-**Performance / scalability evidence:** Comparison with the existing serial proof on the supported corpus; independent falsifiers and actual player-action reachability.
+**Performance / scalability evidence:** Measure the supported serial proof corpus and compare new provider behavior using current physical/electrical invariants and independent falsifiers, not exact historical report equality.
 
 **Architectural risk:** Renaming Task41DeveloperVerifier while leaving all family branches centralized.
 
 **Expected extension and scale effects:** Pluggability: new fault/variant adds a provider contribution. Scale: structured hypothesis accounting for D01.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Rolling playable integration:** Exercise one real current challenge through production hypotheses/proof, publication, ordinary diagnosis, physical repair and retest. Developer verification is an independent client, not a hidden action source.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
+**Future fault vocabulary:** Keep package defects distinct from missing external power/reference/reset/clock. Admitted effects need a causal healthy model, an identified physical owner, observable distinction or a genuine equivalent repair, and reachable repair/retest.
 
-**Rolling playable integration canary:** Run one real playable challenge through the new production hypotheses and proof, publication, ordinary diagnosis, physical repair and customer retest. The developer verifier may independently observe the result but may not supply a hidden action that the player cannot perform. This canary is repeated at A10 with its staging/job boundary and is not a substitute for Q15/Q30/Q60/Q100.
-
-**Future fault vocabulary compatibility now:** Hypotheses distinguish a package defect, an external supply/reference/reset/clock failure and a symptom at an output. The phrase “MCU output dead” is not automatically an MCU-owned fault. A fault may enter normal play only when its healthy model supports the effect, the physical owner is identified, advertised observations separate non-equivalent causes, and repair/retest is reachable. The grouped long-range fault matrix in Section 6.12 maps later categories without demanding their implementation at this gate.
-
-**Direct later dependents:** [A10](#m-a10), [A11](#m-a11), [U05](#m-u05), [E04](#m-e04), [E07](#m-e07), [E09](#m-e09), [E13](#m-e13), [E14](#m-e14), [MCU-1](#m-mcu-1), [IMPORT-1](#m-import-1), [D01](#m-d01), [X01](#m-x01).
+**Direct hard dependents:** [A10](#m-a10), [A11](#m-a11), [U05](#m-u05), [E04](#m-e04), [E07](#m-e07), [E09](#m-e09), [E13](#m-e13), [E14](#m-e14), [MCU-1](#m-mcu-1), [IMPORT-1](#m-import-1), [D01](#m-d01), [X01](#m-x01).
 
 <a id="m-a10"></a>
+
 ### A10 · Staged generation jobs, deterministic budgets and proof receipts
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A05](#m-a05), [A07](#m-a07), [A09](#m-a09), [P02](#m-p02)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Keep hierarchical generation bounded, cancellable and diagnosable before the variant space grows.
 
 **Architectural owner / affected systems:** Generation job coordinator over immutable plans, stage results, solver/physical services and atomic publication.
-
-**Hard prerequisites:** [A05](#m-a05), [A07](#m-a07), [A09](#m-a09), [P02](#m-p02).
 
 **Must not be coupled:** No full Cartesian generation, arbitrary parallel solver contexts, or published PASS before final stage qualification.
 
@@ -1216,62 +989,57 @@ A05 and later milestones remain UNSTARTED.
 
 **Expected extension and scale effects:** Pluggability: services expose stage contracts. Scale: cheap rejection first and reproducible work ceilings.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Rolling playable integration:** Run current staged generation, healthy solve, physical validation, complete hypothesis proof and atomic publication through ordinary diagnosis/repair/retest. Reuse the scenario shape, not old passing receipts after consumed code changes.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
+**Future design origins:** Native generation and later author-approved imports enter the same immutable resolved-plan services. Design origin is provenance, not a second runtime/PCB pipeline. Add actual import/state receipt fields when consumed; retain only inexpensive explicit seams before then.
 
-**Rolling playable integration canary:** Exercise one small real challenge through production fault hypotheses, staged generation, proof, atomic publication, ordinary player actions, diagnosis, repair and customer retest. Reuse the A09 scenario shape, not an obsolete PASS tied to different consumed code. No GUI shortcut, injected answer or empty proof is acceptable. Keep the run bounded and curated; it does not reopen Task43 or expand into a combinatorial browser matrix.
-
-**Native/imported origin compatibility now:** Permit a resolved design origin to be native generation or a later accepted import manifest. Both converge on the same immutable plans, source controls, physical realization, fault admission, proof receipts and publication. Origin-specific ingestion cannot bypass healthy verification or produce a second PCB pipeline. Receipt keys must eventually include imported content/manifest/model versions and stateful initial-state/event contracts when consumed; shape/version canaries suffice until those lanes are implemented.
-
-**Direct later dependents:** [U04](#m-u04), [U05](#m-u05), [U06](#m-u06), [IMPORT-1](#m-import-1), [D01](#m-d01), [Q15](#m-q15).
+**Direct hard dependents:** [U04](#m-u04), [U05](#m-u05), [U06](#m-u06), [IMPORT-1](#m-import-1), [D01](#m-d01), [Q15](#m-q15).
 
 <a id="m-a11"></a>
+
 ### A11 · Provider conformance, registry consistency and extension-cost proof
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Make the 8–9/10 pluggability goal falsifiable rather than an architecture-document compliment.
+**Hard prerequisites:** [A04](#m-a04), [A08](#m-a08), [A09](#m-a09)
+
+**Priority / applicability:** Required foundation
+
+**Purpose and reason:** Make the 8-9/10 pluggability goal falsifiable rather than an architecture-document compliment.
 
 **Architectural owner / affected systems:** Provider/registry bootstrap, reusable conformance harness and source dependency checks.
-
-**Hard prerequisites:** [A04](#m-a04), [A08](#m-a08), [A09](#m-a09).
 
 **Must not be coupled:** No cosmetic mass splitting of large files, automatic reflection-based discovery, or dedicated cleanup of harmless legacy menus.
 
 **Exact deliverable:** One declared provider registration surface; tests for model/terminal/package/mutation/diagnostic consistency; an ordinary additional variant implemented as an extension exercise.
 
-**Acceptance:** An ordinary supported variant requires no new device-specific branch in generic assembly, diagnosis, routing or UI. Novel physics may change the adapter explicitly. Missing or conflicting providers fail before publication.
+**Acceptance:** An ordinary supported variant requires provider-local additions and one declared registration surface, with no new device-specific branch in generic assembly, physical materialization, diagnosis, replay serialization, routing or UI. Novel physics can change an explicit adapter. Missing/conflicting registrations fail before publication; record actual central knowledge changed, not an arbitrary file-count slogan.
 
 **Important negative tests:** Duplicate type/version; missing footprint/renderer; inconsistent pin mapping; feature recognized in one registry but not another; generic layer importing an individual device implementation.
 
-**Performance / scalability evidence:** Actual changed-file/category ledger, test/build cost and preserved old routes. Score by core knowledge changed, not an arbitrary two-file limit.
+**Performance / scalability evidence:** Actual changed-file/category ledger, test/build cost and current supported routes. Score by core knowledge changed, not an arbitrary two-file limit.
 
 **Architectural risk:** Generating boilerplate or another universal registry before interfaces have real consumers.
 
 **Expected extension and scale effects:** Pluggability: measurable provider-local extension. Scale: qualification cost grows with contracts, not combinations.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Future capabilities:** Model availability, package/pin mapping, physical serviceability, instruments and serializable state are separate claims. A future import support matrix derives from the same registrations. Electrical support alone does not qualify a physical challenge.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Future capability negotiation now:** Model availability, package/terminal mapping, fault serviceability, observation instruments and serializable state are separate capability claims. A provider accepted electrically does not thereby qualify for physical challenge import. Allow an explicit support matrix to be generated from the same declared registrations later, without making every imported CircuitJS element or every listed future IC a current implementation obligation.
-
-**Direct later dependents:** [U07](#m-u07), [IMPORT-1](#m-import-1), [IMPORT-5](#m-import-5), [Q15](#m-q15), [REL-A](#m-rel-a), [Q100](#m-q100).
-
-
-## Physical realization
+**Direct hard dependents:** [U07](#m-u07), [IMPORT-1](#m-import-1), [IMPORT-5](#m-import-5), [Q15](#m-q15), [REL-A](#m-rel-a), [Q100](#m-q100).
 
 <a id="m-p01"></a>
+
 ### P01 · Physical coordinates, immutable poses and package orientation
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A02](#m-a02), [A03](#m-a03), [R00](#m-r00)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Decouple physical board extent from screen size and establish one truthful transform before larger layouts or layers.
 
 **Architectural owner / affected systems:** Package geometry/placement, board coordinate contract, immutable physical snapshots and pose adapters.
-
-**Hard prerequisites:** [A02](#m-a02), [A03](#m-a03).
 
 **Must not be coupled:** No arbitrary continuous rotation, manufactured-millimeter claims, 3D mesh engine or route redesign.
 
@@ -1281,32 +1049,29 @@ A05 and later milestones remain UNSTARTED.
 
 **Important negative tests:** Aliased PcbTraceGeometry arrays; 90-degree pin-order permutation; mirrored polarity; integer overflow; nominal shape changed without version; body transformed but probe left behind.
 
-**Performance / scalability evidence:** Exhaustive declared finite poses and independent forward/inverse transform checks; legacy geometry/version regressions.
+**Performance / scalability evidence:** Exhaustive declared finite current poses, independent forward/inverse transform checks and affected current physical/probe behavior. No historical geometry replay requirement.
 
 **Architectural risk:** Repeating Task43 by giving drawing and interaction different geometry authorities.
 
 **Expected extension and scale effects:** Pluggability: packages declare valid poses locally. Scale: larger extents without shrinking or warping parts.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**SMD architecture canaries:** Required developer-only 0805-style and SOT-23-style fixtures, optional SOIC, exercise explicit mounting side, package-declared rotation and surface-pad geometry. No implicit through-hole barrel or both-face terminal. These are architecture checks, not SMD gameplay, BGA or reflow support.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Developer-only SMD architecture canaries:** Include one two-terminal 0805-style passive and one SOT-23-style three-terminal package, with an optional SOIC-style multi-pin canary when useful. Qualify package-local surface pads, a declared component mounting side, finite allowed rotations, terminal identity, body/pad/lead projection and correct front/back viewing. Board-view reflection is not a change to the mounted part's electrical pin mapping.
-
-These fixtures test the geometry contract; they do not enable SMD gameplay, lead-lift/reflow rules, a broad package library or manufacturing DRC. Use representative geometry rather than claiming vendor-dimensional accuracy. Through-hole and surface-mount capabilities must be explicit: do not assign a drilled/plated barrel, both-face terminal or through-hole removal affordance merely because a generic package constructor used to assume one.
-
-**Direct later dependents:** [P02](#m-p02), [P03](#m-p03), [U01](#m-u01), [E03](#m-e03), [E09](#m-e09), [E11](#m-e11).
+**Direct hard dependents:** [P02](#m-p02), [P03](#m-p03), [U01](#m-u01), [E03](#m-e03), [E09](#m-e09), [E11](#m-e11).
 
 <a id="m-p02"></a>
+
 ### P02 · Durable layer-aware copper and conductive-surface model
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [P01](#m-p01), [A03](#m-a03)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Establish the physical connectivity identity needed by vias, layers, cuts and saves before routing consumers harden.
 
 **Architectural owner / affected systems:** PhysicalRealizationPlan/conductor graph, pad/surface definitions, correspondence projection and read-only geometry views.
-
-**Hard prerequisites:** [P01](#m-p01), [A03](#m-a03).
 
 **Must not be coupled:** This is not a full two-layer autorouter, Gerber model, plane solver or permission to expose unqualified hidden copper.
 
@@ -1316,32 +1081,31 @@ These fixtures test the geometry contract; they do not enable SMD gameplay, lead
 
 **Important negative tests:** Via without valid layer endpoints; NPTH conducts; hidden same-net bridge; cut identity from polyline index; local rerender renames copper; unrelated layers short at a crossing.
 
-**Performance / scalability evidence:** Small independent geometric/conductor oracle and round-trip identity fixtures. Include both layer and one-layer compatibility cases.
+**Performance / scalability evidence:** Small independent geometric/conductor oracle and round-trip identity fixtures. Include current one-layer and two-layer physical correctness cases.
 
 **Architectural risk:** Collapsing logical net identity into current connectivity or keeping mutable geometry behind proof caches.
 
 **Expected extension and scale effects:** Pluggability: new physical actions consume conductor contracts. Scale: avoids a later layers/cuts/save format rewrite.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**SMD architecture canaries:** Use the P01 surface-package fixtures to prove face/layer-specific copper access and absence of an invented plated barrel. A top-only surface pad cannot be probed from the underside just because projected coordinates coincide.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
+**Current identity rule:** Conductor identity survives view changes and supported current path subdivision. A genuine reroute is a new current realization; old development artifacts may be rejected. Do not build a historical cut-migration service.
 
-**Surface-mount conductor/access canaries:** Consume P01's 0805-style and SOT-23-style fixtures. A surface pad contacts copper on its declared layer only and has no plated barrel unless a separate real via/barrel is explicitly present. A pin is not duplicated on both faces; a backside conductor connected through a real via is a different accessible surface with proven correspondence, not a fabricated second copy of the component terminal. Component mounting side, copper layer and viewed face are separate properties.
-
-Positives cover valid surface-pad contact, an explicit via to another layer and front/back projection. Negatives cover a phantom barrel, opposite-layer short at the same XY coordinate, unexposed backside pin capture, rotated pin permutation and auto-generated cross-layer connectivity. Preserve these developer-only canaries in the P08 independent oracle and U01 loupe tests. No SMD-dominant/BGA product, paste/stencil model, reflow workflow or unrestricted SMD catalog is authorized.
-
-**Direct later dependents:** [A10](#m-a10), [P03](#m-p03), [P04](#m-p04), [P06](#m-p06), [P08](#m-p08), [U01](#m-u01), [U06](#m-u06), [E05](#m-e05), [E08](#m-e08).
+**Direct hard dependents:** [A10](#m-a10), [P03](#m-p03), [P04](#m-p04), [P06](#m-p06), [P08](#m-p08), [U01](#m-u01), [U06](#m-u06), [E05](#m-e05), [E08](#m-e08).
 
 <a id="m-p03"></a>
+
 ### P03 · Demand-based board sizing and hierarchical placement
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A05](#m-a05), [A06](#m-a06), [P01](#m-p01), [P02](#m-p02)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Replace the fixed generic placement area with constrained physical planning suitable for multiple functional regions.
 
 **Architectural owner / affected systems:** Device physical-demand estimator, bounded outline/aspect candidates, regional placement and local refinement service.
-
-**Hard prerequisites:** [A05](#m-a05), [A06](#m-a06), [P01](#m-p01), [P02](#m-p02).
 
 **Must not be coupled:** No universal CAD placer, cosmetic footprint shrinkage or electrical topology change to force a fit.
 
@@ -1351,28 +1115,27 @@ Positives cover valid surface-pad contact, an explicit via to another layer and 
 
 **Important negative tests:** Area-only feasibility claim; connector facing outward; disconnected island region; insufficient access; unlimited outline growth; visually labeled faulty region; impossible domain separation accepted.
 
-**Performance / scalability evidence:** Matched flat/authored/hierarchical corpus, area/utilization definitions, rejection reasons and cost. Retain a fixed baseline before optimization.
+**Performance / scalability evidence:** Matched flat/authored/hierarchical corpus, area/utilization definitions, rejection reasons and cost. Record a fixed comparison corpus before optimization; the old implementation need not ship.
 
 **Architectural risk:** Rigid regions reducing routability or giant empty boards disguising poor search.
 
 **Expected extension and scale effects:** Pluggability: roles supply physical constraints, not coordinates. Scale: explicit board demand and routing space.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [P04](#m-p04), [Q15](#m-q15).
+**Direct hard dependents:** [P04](#m-p04), [Q15](#m-q15).
 
 <a id="m-p04"></a>
+
 ### P04 · Canonical multi-terminal routing and escape planning
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [P02](#m-p02), [P03](#m-p03)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Route actual net demand efficiently and truthfully instead of inheriting root-star and raw-grid assumptions.
 
 **Architectural owner / affected systems:** Net routing service, escape/channel planner, canonical path representation and versioned route scoring.
-
-**Hard prerequisites:** [P02](#m-p02), [P03](#m-p03).
 
 **Must not be coupled:** No exact universal Steiner optimizer, planes, clearance relaxation or change to component electrical values.
 
@@ -1388,24 +1151,21 @@ Positives cover valid surface-pad contact, an explicit via to another layer and 
 
 **Expected extension and scale effects:** Pluggability: net roles drive generic routing. Scale: shorter paths and smaller validation/render workloads.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Rolling playable integration canary:** Route an actual small generated board using the new representation, render its PCB, independently verify physical/solver correspondence, and complete ordinary probing, diagnosis, repair and retest where the challenge requires them. Isolated geometry fixtures alone do not qualify P04. Use the current accepted playable runtime and physical actions; do not add a hard prerequisite on later E08 trace-cut gameplay, U01's full navigation feature set, or Q15. The canary only requires the playable path already maintained through A05 and the available physical interaction adapter.
-
-**Direct later dependents:** [P05](#m-p05), [P06](#m-p06), [P08](#m-p08), [IMPORT-1](#m-import-1), [Q15](#m-q15).
+**Direct hard dependents:** [P05](#m-p05), [P06](#m-p06), [P08](#m-p08), [IMPORT-1](#m-import-1), [Q15](#m-q15).
 
 <a id="m-p05"></a>
+
 ### P05 · Bounded rerouting and congestion recovery
 
-**Type / status:** Required recovery evaluation; sophisticated negotiated congestion conditional; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [P04](#m-p04)
+
+**Priority / applicability:** Required recovery evaluation; sophisticated negotiated congestion conditional
 
 **Purpose and reason:** Provide principled recovery from route-order congestion before compensating with excessive links or board area.
 
 **Architectural owner / affected systems:** Route candidate scheduler, obstacle occupancy and deterministic conflict selection.
-
-**Hard prerequisites:** [P04](#m-p04).
 
 **Must not be coupled:** No compulsory Pathfinder clone or universal routing guarantee. Algorithm choice follows measured PCB evidence, not FPGA analogy alone.
 
@@ -1421,22 +1181,21 @@ Positives cover valid surface-pad contact, an explicit via to another layer and 
 
 **Expected extension and scale effects:** Pluggability: generic recovery independent of device type. Scale: addresses practical congestion while keeping a finite budget.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [P07](#m-p07), [P09](#m-p09).
+**Direct hard dependents:** [P07](#m-p07), [P09](#m-p09).
 
 <a id="m-p06"></a>
+
 ### P06 · True raised factory-crossover prototype and sparse-link policy
 
-**Type / status:** Required prototype; routine link use conditional on P09; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [P02](#m-p02), [P04](#m-p04)
+
+**Priority / applicability:** Required prototype; routine link use conditional on P09
 
 **Purpose and reason:** Qualify factory links as real physical crossovers before using them as a routing escape hatch.
 
 **Architectural owner / affected systems:** Factory-link package/provider, layer/height-aware obstacle policy and construction/correspondence adapter.
-
-**Hard prerequisites:** [P02](#m-p02), [P04](#m-p04).
 
 **Must not be coupled:** No player repair wire semantics, unlimited jumper coverage, ideal zero-resistance stamp singularities or fake courtyard exemptions.
 
@@ -1452,22 +1211,21 @@ Positives cover valid surface-pad contact, an explicit via to another layer and 
 
 **Expected extension and scale effects:** Pluggability: one real component capability. Scale: sparse useful crossovers, not a substitute for layers.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [P07](#m-p07), [P09](#m-p09).
+**Direct hard dependents:** [P07](#m-p07), [P09](#m-p09).
 
 <a id="m-p07"></a>
+
 ### P07 · Required two-layer routing, viewing and interaction comparison
 
-**Type / status:** Mandatory investigation and working prototype; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [P05](#m-p05), [P06](#m-p06), [U01](#m-u01)
+
+**Priority / applicability:** Mandatory investigation and working prototype
 
 **Purpose and reason:** Determine with actual matched fixtures whether limited two-layer routing is the correct advanced-board strategy.
 
 **Architectural owner / affected systems:** Layer-aware routing prototype, via provider, per-layer validation and physical-side interaction.
-
-**Hard prerequisites:** [P05](#m-p05), [P06](#m-p06), [U01](#m-u01).
 
 **Must not be coupled:** No more than two copper layers, full CAD feature set, plane pours or forced unrestricted via use.
 
@@ -1483,22 +1241,21 @@ Positives cover valid surface-pad contact, an explicit via to another layer and 
 
 **Expected extension and scale effects:** Pluggability: shared layer contract across consumers. Scale: early feasibility evidence for 60/100 targets.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [P09](#m-p09).
+**Direct hard dependents:** [P09](#m-p09).
 
 <a id="m-p08"></a>
+
 ### P08 · Scalable physical validation and projection caches
 
-**Type / status:** Required scale qualification; individual optimizations evidence-selected; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [P02](#m-p02), [P04](#m-p04), [A01](#m-a01)
+
+**Priority / applicability:** Required scale qualification; individual optimizations evidence-selected
 
 **Purpose and reason:** Control geometry costs while preserving the independent correctness boundary.
 
 **Architectural owner / affected systems:** Physical validator, spatial broad-phase index, immutable geometry snapshots and projection-cache invalidation.
-
-**Hard prerequisites:** [P02](#m-p02), [P04](#m-p04), [A01](#m-a01).
 
 **Must not be coupled:** No spatial index solely for elegance; do not replace exact checks with bounding-box guesses.
 
@@ -1514,22 +1271,23 @@ Positives cover valid surface-pad contact, an explicit via to another layer and 
 
 **Expected extension and scale effects:** Pluggability: uniform geometry query boundary. Scale: measured broad-phase and cache gains.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Reference oracle rule:** Keep the simple brute-force validator only as an independent small-case correctness oracle. It is not a shipped historical runtime and must not retain obsolete scoring bugs. Fast/current and reference implementations agree on the current physical contract.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [P09](#m-p09).
+**Direct hard dependents:** [P09](#m-p09).
 
 <a id="m-p09"></a>
+
 ### P09 · Production physical envelope and layer-strategy qualification
 
-**Type / status:** Required physical policy gate; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [P05](#m-p05), [P06](#m-p06), [P07](#m-p07), [P08](#m-p08), [U01](#m-u01)
+
+**Priority / applicability:** Required physical policy gate
 
 **Purpose and reason:** Freeze the actual routing/view/interaction policy before medium-board content and physical repair build on it.
 
 **Architectural owner / affected systems:** SupportedEnvelope registry and physical pipeline qualification.
-
-**Hard prerequisites:** [P05](#m-p05), [P06](#m-p06), [P07](#m-p07), [P08](#m-p08), [U01](#m-u01).
 
 **Must not be coupled:** No claim of completed Q60/Q100 playability; no forced feature implementation merely because a prototype exists.
 
@@ -1545,33 +1303,29 @@ Positives cover valid surface-pad contact, an explicit via to another layer and 
 
 **Expected extension and scale effects:** Pluggability: content requests a declared envelope. Scale: evidence-bound 30/60/100 physical evolution.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [E08](#m-e08), [IMPORT-4](#m-import-4), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100).
-
-
-## Workbench and product
+**Direct hard dependents:** [E08](#m-e08), [IMPORT-4](#m-import-4), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100).
 
 <a id="m-u01"></a>
+
 ### U01 · Coherent large-board viewport and side-aware targeting
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Allow realistically dense overviews while guaranteeing truthful magnified inspection and accurate probing of exposed physical targets.
+**Hard prerequisites:** [P01](#m-p01), [P02](#m-p02), [A03](#m-a03)
+
+**Priority / applicability:** Required foundation
+
+**Purpose and reason:** Prevent larger boards from becoming microscopic or dishonest to probe.
 
 **Architectural owner / affected systems:** Workbench viewport/renderer, one forward/inverse transform, target resolver and marker projection.
 
-**Hard prerequisites:** [P01](#m-p01), [P02](#m-p02), [A03](#m-a03).
-
 **Must not be coupled:** No mandatory 3D engine, touchscreen redesign or answer-highlighting region map.
 
-**Exact deliverable:** Pan, permanent zoom, fit-board/selection and functional-region navigation; separate tray chrome; board-side flipping and layer visibility; explicit ambiguous-target handling; and a cursor-centered temporary Spacebar loupe. Minimap only if navigation evidence justifies it.
+**Exact deliverable:** Pan, permanent zoom, fit-board/selection, functional-region navigation, separate tray chrome, explicit board-side/layer view, truthful ambiguous-target handling, and a temporary cursor-centered Spacebar inspection loupe. Add a minimap only if measured navigation warrants it.
 
-**Acceptance:** Target identity survives every view operation; markers track the same physical terminal; exposed markings and targets are accurately inspectable at supported zoom/loupe scale; releasing Space restores the exact captured permanent view; flipping is not electrical remapping; hidden or occluded copper is not accidentally hit. Dense or intimidating overview appearance is allowed.
+**Acceptance:** Rendering, targeting, probe markers and accessibility use the same composed transform. Space press captures the permanent view; move tracks the cursor; optional temporary wheel magnification does not mutate permanent zoom; release restores exactly. Focus loss, modal entry, pointer cancellation and scene replacement dismiss the loupe safely. Exposed surfaces/markings are inspectable; hidden or occluded copper cannot be hit; board flip does not remap electrical identity. Dense intimidating overview is allowed.
 
-**Important negative tests:** Device-pixel-ratio/resize mismatch; oversized invisible hitbox; arbitrary overlap ownership; probe or selected part retargeted by magnification; stuck loupe after lost key-up/blur; Space typed in a dialog activating the board; wheel changing permanent zoom while held; SMD pin acquiring a false opposite-face target; tray geometry stretching with board zoom.
+**Important negative tests:** Stuck loupe on focus/modal loss; pan/zoom changed after release; markers drift; huge invisible targets; wrong-layer pad hit; top-only SMD pad exposed on bottom; transform used by rendering but not input; hidden fault data in accessibility labels.
 
 **Performance / scalability evidence:** Input/frame measurements on 15/30/56/100 structural fixtures and real operator probe trials.
 
@@ -1579,32 +1333,25 @@ Positives cover valid surface-pad contact, an explicit via to another layer and 
 
 **Expected extension and scale effects:** Pluggability: render providers consume a view transform. Scale: navigable larger boards without shrinking physical truth.
 
-**Replay / versioning:** Pure camera/loupe changes do not change challenge replay, package, placement, trace, conductor, ProbeTarget or accessibility identity. A separately versioned electrical/physical realization change remains subject to the existing replay contract.
+**SMD integration:** Carry P01/P02 0805/SOT-23 developer fixtures through visible view/flip/loupe and legitimate probing. The player-facing SMD catalog remains later.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
+**Rolling playable integration:** Perform overview, pan/zoom, Space press/move/release, supported flip, ordinary probing, component interaction and repair/retest on a current generated board.
 
-**Spacebar inspection contract:** Holding Space over the active board starts temporary magnification centered on the current mouse position. Moving the pointer while held moves the inspected region. Releasing Space immediately restores the exact saved permanent camera state, rather than recomputing fit-board. Optional wheel adjustment while held affects temporary magnification only. Pan, permanent zoom, fit-board/selection, board flipping and ordinary layer visibility remain available outside the temporary gesture.
-
-Use one composed view transform and its inverse for the displayed frame, pointer resolution and probe markers. Capture the permanent view once at activation; keep the loupe's center/scale transient. Do not recursively calculate the inspection center from an already magnified result. Rendering and hit resolution for an input event must use the same frame-consistent transformation. Pointer placement or component interaction through the loupe resolves the actual underlying accessible physical surface, with unchanged target ownership. No second hit map or giant invisible click rectangle is allowed.
-
-The view operation must not mutate board-space coordinates, package/placement/trace geometry, conductive identity, ProbeTarget identity, hit-test ownership, solver state, challenge replay or accessibility semantics. Release, focus loss, cancellation and a modal transition end the transient view safely without leaving Space latched; repeats do not overwrite the saved view. Text inputs, browser shortcuts and unrelated controls do not become board commands. A resize may require reprojecting the same saved camera into the new viewport but must not silently change its permanent pan/zoom or run fit-board. An equivalent accessible inspection control may expose the same public physical information, never hidden diagnostic answers.
-
-**SMD canary integration:** Reuse the developer-only 0805-style and SOT-23-style P01/P02 fixtures on their actual mounting faces. Verify exposed pads/lead surfaces through normal zoom, loupe, finite rotation and front/back views. A same-coordinate location on the opposite face is not automatically an electrical terminal. Optional SOIC canaries follow the same rule.
-
-**Rolling playable check:** After U01, an existing small real board must pass overview, pan, permanent zoom, press/move/release loupe, supported flip/layer views, red/black probing, component interaction, diagnosis, repair and retest. Check stable physical target identity across all views and exact permanent-camera restoration. Record input latency and transient-view allocations without imposing overview comfort as a fairness rule.
-
-**Direct later dependents:** [P07](#m-p07), [P09](#m-p09), [U02](#m-u02), [U04](#m-u04), [U08](#m-u08), [E08](#m-e08), [E11](#m-e11), [IMPORT-1](#m-import-1), [Q15](#m-q15), [X09](#m-x09).
+**Direct hard dependents:** [P07](#m-p07), [P09](#m-p09), [U02](#m-u02), [U04](#m-u04), [U08](#m-u08), [E08](#m-e08), [E11](#m-e11), [IMPORT-1](#m-import-1), [Q15](#m-q15), [X09](#m-x09).
 
 <a id="m-u02"></a>
+
 ### U02 · Reference-aware measurements and shared observation boundary
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A06](#m-a06), [A07](#m-a07), [A08](#m-a08), [U01](#m-u01)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Provide trustworthy multi-domain and AC measurements before mains-bearing challenges depend on them.
 
 **Architectural owner / affected systems:** Instrument providers, finite-load/stimulus adapters, observation service and source/energy readiness.
-
-**Hard prerequisites:** [A06](#m-a06), [A07](#m-a07), [A08](#m-a08), [U01](#m-u01).
 
 **Must not be coupled:** No direct reads of configured R/C as a substitute for active measurement; no new model fidelity promised by the instrument.
 
@@ -1620,26 +1367,23 @@ The view operation must not mutate board-space coordinates, package/placement/tr
 
 **Expected extension and scale effects:** Pluggability: modes share observation/lifecycle services. Scale: no repeated bespoke solver manipulation per instrument.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Instrument envelope extension rule:** DC voltage, AC voltage, resistance, continuity, diode, frequency/scope and conditionally capacitance retain their real interaction contracts. U09 adds two-channel scope; U10 adds conditional logic tools; U11 adds conditional injection; U12 reserves current insertion and evidence-justified ESR. Every enabled mode states electrical loading/stimulus, range/overrange, reference, bandwidth or timing where relevant, cleanup, and visible physical operation. Listing a mode here does not enable it or create a prerequisite for an unrelated board.
-
-**Direct later dependents:** [U03](#m-u03), [U08](#m-u08), [U10](#m-u10), [U11](#m-u11), [U12](#m-u12), [E05](#m-e05), [E09](#m-e09), [E12](#m-e12), [IMPORT-1](#m-import-1), [Q30](#m-q30), [X08](#m-x08).
+**Direct hard dependents:** [U03](#m-u03), [U08](#m-u08), [U10](#m-u10), [U11](#m-u11), [U12](#m-u12), [E05](#m-e05), [E09](#m-e09), [E12](#m-e12), [IMPORT-1](#m-import-1), [Q30](#m-q30), [X08](#m-x08).
 
 <a id="m-u03"></a>
+
 ### U03 · Oscilloscope and frequency with solver-time fidelity
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [U02](#m-u02), [A07](#m-a07)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Make dynamic faults observable before timers or offline conversion claim diagnostic readiness.
 
 **Architectural owner / affected systems:** Solver observation stream, scope/frequency instrument providers and bounded waveform buffers.
 
-**Hard prerequisites:** [U02](#m-u02), [A07](#m-a07).
-
-**Must not be coupled:** No requirement for U09 two-channel expansion, U10 digital analysis or protocol decoding at this one-channel foundation; no switching-ripple view for a model that omits it.
+**Must not be coupled:** No multi-channel analyzer, digital protocol decoder or guaranteed switching-ripple view for a model that omits it.
 
 **Exact deliverable:** One-channel initial scope, reference choice, trigger, time/voltage scale, finite sample policy and frequency extraction; no invented waveform for averaged models.
 
@@ -1653,26 +1397,21 @@ The view operation must not mutate board-space coordinates, package/placement/tr
 
 **Expected extension and scale effects:** Pluggability: temporal tools consume one observation contract. Scale: bounded data instead of unlimited sample retention.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Preserved long-range scope goal:** U03 is the one-channel foundation, not the final capability ceiling. U09 extends it to a useful two-channel troubleshooting scope with independent vertical scales, shared solver-time alignment/timebase, edge trigger, qualified AC/DC coupling, explicit references, supported differential views, frequency/period and bounded waveform retention. Advanced protocol analysis is separate and conditional, not required by either scope stage. No advertised switching trace may be synthesized from an averaged model that lacks that waveform.
-
-**Direct later dependents:** [U09](#m-u09), [E06](#m-e06), [E07](#m-e07), [E10](#m-e10), [E13](#m-e13), [E14](#m-e14), [IMPORT-4](#m-import-4), [Q60](#m-q60), [X01](#m-x01).
-
-**Conditional later consumers:** [E11](#m-e11) when qualifying multiplexed/scanned behavior requiring solver-time waveform observations.; [IMPORT-2](#m-import-2) when selected temporal import requires waveform/frequency observations.
+**Direct hard dependents:** [U09](#m-u09), [E06](#m-e06), [E07](#m-e07), [E10](#m-e10), [E13](#m-e13), [E14](#m-e14), [IMPORT-4](#m-import-4), [Q60](#m-q60), [X01](#m-x01).
 
 <a id="m-u04"></a>
+
 ### U04 · Explicit sessions, Resources, Settings and honest catalog surface
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A10](#m-a10), [U01](#m-u01)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Provide a usable product loop without making menu or Shop code an electrical owner.
 
 **Architectural owner / affected systems:** Session coordinator, typed launch request, public reference content, presentation settings and catalog projections.
-
-**Hard prerequisites:** [A10](#m-a10), [U01](#m-u01).
 
 **Must not be coupled:** No dependency on every future catalog family, scoring, economy or mobile support.
 
@@ -1688,24 +1427,21 @@ The view operation must not mutate board-space coordinates, package/placement/tr
 
 **Expected extension and scale effects:** Pluggability: typed session and catalog requests. Scale: one product orchestration surface across many devices.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Future authoring boundary:** Later CircuitJS import enters through an author/import wizard, not the ordinary technician-facing workbench's hidden-answer fields. Imported source, mapping choices and declared healthy expectations remain authoring/developer data. Normal play retains public markings, available controls and observations only. A user who authored the circuit may already know its design; this is not a promise to erase that knowledge or to secure client-side hidden information.
-
-**Direct later dependents:** [U05](#m-u05), [U06](#m-u06), [IMPORT-1](#m-import-1), [REL-A](#m-rel-a), [X09](#m-x09).
+**Direct hard dependents:** [U05](#m-u05), [U06](#m-u06), [IMPORT-1](#m-import-1), [REL-A](#m-rel-a), [X09](#m-x09).
 
 <a id="m-u05"></a>
+
 ### U05 · Computed difficulty and staged profile calibration
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A09](#m-a09), [A10](#m-a10), [U04](#m-u04), [Q15](#m-q15)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Make difficulty a proved property of diagnosis, not the number of parts or a hidden change to physics.
 
 **Architectural owner / affected systems:** DifficultyProfile/Assessment, diagnostic evidence, physical envelope and assistance policy.
-
-**Hard prerequisites:** [A09](#m-a09), [A10](#m-a10), [U04](#m-u04), [Q15](#m-q15).
 
 **Must not be coupled:** Initial U05 completion does not enable HARD or PSYCHOTIC. Those need Q60/REL-B or X05 evidence respectively.
 
@@ -1721,28 +1457,27 @@ The view operation must not mutate board-space coordinates, package/placement/tr
 
 **Expected extension and scale effects:** Pluggability: features contribute evidence, not labels. Scale: several honest difficulty dimensions.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [REL-A](#m-rel-a), [REL-B](#m-rel-b), [X05](#m-x05), [X07](#m-x07).
+**Direct hard dependents:** [REL-A](#m-rel-a), [REL-B](#m-rel-b), [X05](#m-x05), [X07](#m-x07).
 
 <a id="m-u06"></a>
+
 ### U06 · Semantic history, durable resume and distinct sharing contracts
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [U04](#m-u04), [A08](#m-a08), [A03](#m-a03), [P02](#m-p02), [A10](#m-a10)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Avoid inventing persistence after layers, physical repairs and larger inventories already rely on transient identity.
 
 **Architectural owner / affected systems:** Session history, versioned save/restore coordinator, part inventory serialization and replay adapters.
 
-**Hard prerequisites:** [U04](#m-u04), [A08](#m-a08), [A03](#m-a03), [P02](#m-p02), [A10](#m-a10).
-
 **Must not be coupled:** No scoring, multiple faults, cloud account or economy required. New E08/X02 state providers must later extend and requalify this contract.
 
-**Exact deliverable:** Pristine descriptor sharing distinct from mutable-state artifacts; semantic operation/history schema; bounded saved state including part identity, conductor changes, source state and supported dynamic state.
+**Exact deliverable:** Separate pristine challenge sharing from mutable session saves. Provide current semantic operations/history, part/inventory identity, physical modifications, source state and explicitly supported dynamic state. Use a current schema/build or model epoch; incompatible development saves reject without mutation and without a migration chain.
 
-**Acceptance:** Fresh reconstruction reproduces supported physical/electrical state without serializing matrix/node identities; old versions explicitly resolve or reject; stateful elements either serialize necessary internal state or expose an honest restart/resume distinction.
+**Acceptance:** Current-format reconstruction reproduces declared physical/electrical state without solver matrix/node identity. Stateful elements serialize necessary current internal state or disclose restart versus exact resume. File validation completes before publication. No historic descriptor, old save reader, byte-identical previous-build replay or auto-migration is required.
 
 **Important negative tests:** Nearest-pixel cut migration; overwritten original part; resumed capacitor silently discharged; partial file accepted; stale cached proof trusted after state import; fault answer in visible share text.
 
@@ -1752,26 +1487,23 @@ The view operation must not mutate board-space coordinates, package/placement/tr
 
 **Expected extension and scale effects:** Pluggability: provider state contracts. Scale: saves survive larger designs and longer sessions.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Future state and imports:** When consumed, provider schemas cover modeled registers/latches, GPIO drive, clock phase, timers/ADC/PWM, simulation time and semantic pending events. Imported artifacts include retrievable source bytes, content hash, current accepted interpretation/mappings and healthy intent. No arbitrary URL fetching, host closures, executable payloads or private-answer leakage. These implementations are not prerequisites until advertised.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Future provider-state and imported-artifact compatibility:** Sequential ICs and MCU models later supply bounded schemas for registers/control state, GPIO directions/latches, ADC/PWM/timer state as modeled, reset/brownout state, clock phase, simulation time and pending semantic events. Their providers requalify resume; unsupported state yields an explicit restart/incompatible result, not a misleading exact-resume claim. The current U06 gate need not wait for those providers.
-
-Imported challenge artifacts later retain retrievable source content (or an explicitly user-resolved source dependency), its hash, parser/import versions, accepted mappings and healthy manifest alongside the normal physical/fault/proof versions. A hash without the bytes is not a reproducible import. Do not auto-fetch arbitrary embedded URLs or serialize solver matrices, transient node numbers, host closures or executable code. Imported-source sharing is deliberate; source or manifest details must not leak through normal-player report text.
-
-**Direct later dependents:** [U07](#m-u07), [MCU-2](#m-mcu-2), [IMPORT-5](#m-import-5), [REL-B](#m-rel-b), [X02](#m-x02), [X04](#m-x04), [X07](#m-x07), [X09](#m-x09).
+**Direct hard dependents:** [U07](#m-u07), [MCU-2](#m-mcu-2), [IMPORT-5](#m-import-5), [REL-B](#m-rel-b), [X02](#m-x02), [X04](#m-x04), [X07](#m-x07), [X09](#m-x09).
 
 <a id="m-u07"></a>
+
 ### U07 · Long-session, inventory and browser reliability envelope
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [U06](#m-u06), [Q30](#m-q30), [A11](#m-a11)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Qualify the growing bench and session, not just the original component count.
 
 **Architectural owner / affected systems:** Runtime lifetime/disposal, inventory/history/waveform retention and browser performance tests.
-
-**Hard prerequisites:** [U06](#m-u06), [Q30](#m-q30), [A11](#m-a11).
 
 **Must not be coupled:** No global process killing, silent history truncation or unrequested destructive cleanup.
 
@@ -1787,22 +1519,21 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: explicit lifecycle conformance. Scale: large board plus long session remains usable.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [Q60](#m-q60), [REL-B](#m-rel-b), [Q100](#m-q100).
+**Direct hard dependents:** [Q60](#m-q60), [REL-B](#m-rel-b), [Q100](#m-q100).
 
 <a id="m-u08"></a>
+
 ### U08 · Envelope-safe physical markings and dynamic indication
 
-**Type / status:** Planned polish; required only where advertised or needed for legibility; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Preserve the old visual-realism goals without letting cosmetic drawing become a second geometry or electrical authority.
+**Hard prerequisites:** [U01](#m-u01), [U02](#m-u02), [Q15](#m-q15)
+
+**Priority / applicability:** Planned polish; required only where advertised or needed for legibility
+
+**Purpose and reason:** Improve current physical realism without letting cosmetic drawing become a second geometry or electrical authority.
 
 **Architectural owner / affected systems:** Physical render providers, immutable nameplates, solved operational-state projection and accessibility presentation.
-
-**Hard prerequisites:** [U01](#m-u01), [U02](#m-u02), [Q15](#m-q15).
 
 **Must not be coupled:** Not a blocker for a correctly readable alpha, solver model, relay or routing algorithm; no photorealistic/3D framework.
 
@@ -1818,160 +1549,133 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: providers own appearance within declared envelopes. Scale: clearer inspection with bounded drawing cost.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-
-## Later bench instruments
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-u09"></a>
+
 ### U09 · Useful two-channel troubleshooting oscilloscope
 
-**Type / status:** Planned later scope expansion; required only when advertised or consumed; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Extend the accepted one-channel foundation into a practical technician instrument without becoming a high-end digital scope simulator.
+**Hard prerequisites:** [U03](#m-u03)
 
-**Architectural owner / affected systems:** Existing observation/trigger providers, instrument-reference boundary, scope views and bounded waveform storage.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [U03](#m-u03).
+**Purpose and reason:** Extend the useful one-channel scope when current content benefits from simultaneous observations.
 
-**Must not be coupled:** No logic analyzer, protocol decoder, arbitrary channel count or blanket Q60/Q100 prerequisite. One-channel U03 remains independently useful.
+**Architectural owner / affected systems:** Shared observation/sampling service, scope channels and workbench presentation.
 
-**Exact deliverable:** Two channels with independent vertical scales, a shared solver-time timebase, selectable edge trigger, qualified AC/DC coupling, frequency/period measurements, explicit input references and supported differential views. Retained waveforms use bounded storage and provenance.
+**Must not be coupled:** No general laboratory suite, network scope, mains isolation certification or mandatory U10/U11/U12 dependency.
 
-**Acceptance:** Both traces represent actual electrically loaded inputs sampled under one time contract; channel skew, aliasing and insufficient windows are explicit. Shared grounds follow the selected physical instrument model; differential math does not confer isolation. Freeze/unfreeze, channel removal, power changes, mutation and board succession invalidate or retain samples according to explicit provenance.
+**Exact deliverable:** Two independently scaled channels on one simulation-time base; selectable edge trigger; qualified AC/DC coupling, reference models and differential math; frequency/period and bounded retained waveforms.
 
-**Important negative tests:** Channels sample different paint frames; hidden common-ground short; false isolated differential input; clipping shown as clean waveform; stale second channel after replacement; averaged converter draws invented switching pulses; unbounded history.
+**Acceptance:** Both traces come from actually loaded electrical inputs. Channel skew, aliasing and insufficient windows are explicit. Shared grounds follow the selected instrument model; differential subtraction does not create isolation. Freeze/resume, channel removal, power, probe, mutation and owner changes handle buffer provenance correctly.
 
-**Performance / scalability evidence:** Same-time known waveform/phase fixtures, timestep/window comparisons, trigger and coupling tests, real two-probe interactions and memory/frame cost on the reference host. These are future required measurements, not current results.
+**Important negative tests:** False isolation; channel cross-wiring; unrelated acquisition clocks; stale capture after owner replacement; one channel silently drops loading; clipped/undersampled data presented as exact.
 
-**Architectural risk:** Copying a rich UI before reference/loading/time semantics are shared, or conflating differential voltage arithmetic with a differential instrument.
+**Performance / scalability evidence:** Two-channel sampled fixtures, phase/time alignment, buffer caps and input/frame latency during solving.
 
-**Expected extension and scale effects:** Pluggability: adds a consumer of U03 rather than a second sampler. Scale: two-channel costs and buffers stay bounded.
+**Architectural risk:** Duplicating the scope engine or confusing display history with simulation state.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** Expansion does not retroactively make U03 depend on U09. Optional advanced protocol analysis requires a later distinct product decision, not a checkbox in this milestone.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-u10"></a>
+
 ### U10 · Conditional logic probe and small logic capture
 
-**Type / status:** Conditional on a supported digital diagnostic need; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Expose useful logic-state and edge observations for sequential logic, scanned displays or MCU I/O without a full logic-analyzer product.
+**Hard prerequisites:** [U02](#m-u02), [A07](#m-a07), [E10](#m-e10)
 
-**Architectural owner / affected systems:** Threshold/reference-aware instrument providers over the accepted solver-time observation stream.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [U02](#m-u02), [A07](#m-a07), [E10](#m-e10).
+**Purpose and reason:** Supply a legal diagnostic observation when qualified digital content actually needs one.
 
-**Must not be coupled:** No Saleae clone, broad protocol decoding, fixed universal logic voltage or mandatory MCU/display support.
+**Architectural owner / affected systems:** Reference-aware electrical observation providers and bounded logic presentation.
 
-**Exact deliverable:** Begin with a logic probe showing qualified LOW/HIGH/unknown/pulse states. Add bounded 2–4-channel edge/state capture only if a selected diagnostic policy demonstrates the need. Use explicit thresholds, hysteresis where modeled, finite loading, reference and range.
+**Must not be coupled:** No protocol decoder ecosystem, HDL simulator or blanket release dependency; enable only with a consuming family.
 
-**Acceptance:** State and edge capture derive from solved pin voltages and simulation time; unknown thresholds, unpowered domains, floating pins and out-of-range signals remain honest. Capture depth/event rate is finite; reset/probe/mutation/cancel behavior is defined. A real digital challenge gains a legal observation path, not private register access.
+**Exact deliverable:** First a logic probe with LOW/HIGH/unknown/pulse states; then bounded 2-4-channel edge capture only when a demonstrated current diagnostic use warrants it. Declare loading, thresholds, hysteresis, range, reference and sampling.
 
-**Important negative tests:** Reads an internal GPIO Boolean instead of loaded pin voltage; global 5 V threshold on another rail; frame-based pulses; ambiguous voltage forced HIGH; reference mismatch ignored; lost-edge data silently displayed as complete; stale event buffer.
+**Acceptance:** Logic states and transitions derive from solved pin voltages and simulation time. Unpowered, floating, ambiguous and out-of-range inputs stay explicit. Capture rate/depth is bounded; reset, cancellation, probe moves and owner changes are coherent. No private-register reading substitutes for pin measurement.
 
-**Performance / scalability evidence:** Compare edge timestamps and threshold classifications against independent small electrical fixtures, including close events and changed paint rates. Measure event/buffer limits and real player capture operation.
+**Important negative tests:** Global 5 V threshold assumption; floating input called LOW; frame-rate edge counting; omitted probe loading; hidden latch revealed instead of terminal voltage.
 
-**Architectural risk:** A digital convenience instrument revealing internal state or promising bandwidth its sampling cannot support.
+**Performance / scalability evidence:** Threshold/range sweeps, clock/edge fixtures, capacity/exhaustion and current diagnostic playthrough.
 
-**Expected extension and scale effects:** Pluggability: reuses electrical reference and observation contracts. Scale: bounded state/event capture avoids waveform overcollection.
+**Architectural risk:** A metadata-only digital instrument or unbounded event log.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** Entry receipt identifies the consuming family and why U03 or ordinary DMM observations are insufficient or needlessly burdensome. A logic probe can qualify without implementing multi-channel capture. No base qualification gate waits for this optional lane.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-u11"></a>
+
 ### U11 · Conditional bench signal generation and diagnostic injection
 
-**Type / status:** Conditional on a real analog/control diagnostic use; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Support signal tracing and controlled excitation of amplifiers, filters, sensor conditioning and comparator/timing circuits using a real electrical source.
+**Hard prerequisites:** [E01](#m-e01), [U02](#m-u02), [A08](#m-a08)
 
-**Architectural owner / affected systems:** Existing source/stimulus registration, measurement/mutation lifecycle and deterministic waveform generation within CircuitJS.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [E01](#m-e01), [U02](#m-u02), [A08](#m-a08).
+**Purpose and reason:** Allow player-chosen causal stimulus when a real analog or control diagnostic need exists.
 
-**Must not be coupled:** No inject-the-correct-answer button, hidden circuit repair, unlimited ideal drive or automatic source selection based on the selected fault.
+**Architectural owner / affected systems:** Owned source/instrument provider and the current mutation/measurement lifecycle.
 
-**Exact deliverable:** A bounded waveform/source set with amplitude, offset, frequency, reference, source impedance, allowed connection and current/voltage limits. The source is physically attached to a legitimate accessible point and removed through the owned lifecycle.
+**Must not be coupled:** No arbitrary signal library or required feature for boards that do not need injection.
 
-**Acceptance:** Injection changes the solved graph and measured response; it interacts with existing sources and loading according to its declared model. Source conflict, overrange, partial power, cancellation and board replacement have safe explicit outcomes. The player chooses the experiment; scenario metadata does not choose a secret correct waveform.
+**Exact deliverable:** Bounded waveform types with amplitude, offset, frequency, reference, impedance and voltage/current limits; legitimate physical attachment points and owned removal.
 
-**Important negative tests:** Post-solve waveform overlay; existing source magically disabled; dangling injected element after cancellation; floating reference mistaken for ground; bypasses component fault; infinite drive hides loading; stale scheduled source event.
+**Acceptance:** Injection changes the solved circuit and loaded response. Source conflict, partial power, overload and cancellation have explicit modeled or unsupported outcomes. Ordinary controls select the experiment; private scenario metadata never chooses the correct signal.
 
-**Performance / scalability evidence:** Known transfer/threshold fixtures, source-contention and finite-impedance tests, actual connect/adjust/disconnect workflow and memory/cleanup under repeated use.
+**Important negative tests:** Decorative waveform; source remains after exit; wrong owner mutated; injection bypasses isolation; ideal unlimited driver where finite impedance was promised.
 
-**Architectural risk:** Creating another independent source owner or an electrical shortcut disguised as a diagnostic aid.
+**Performance / scalability evidence:** Healthy/faulted stimulus fixtures, loaded response, cancellation/cleanup and one current diagnostic benefit.
 
-**Expected extension and scale effects:** Pluggability: uses E01/A08 source and mutation contracts. Scale: one bounded source policy rather than custom injection per circuit.
+**Architectural risk:** A second source owner or generator UI determining electrical behavior.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** Only the consuming family adds this dependency. No bench generator is required merely because E09 includes amplifiers or a future analog filter could use one.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-u12"></a>
+
 ### U12 · Conditional current insertion and advanced DMM diagnostics
 
-**Type / status:** Conditional independent meter capabilities, not an all-modes bundle; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Reserve honest current and ESR diagnostics without conflating configured component parameters with actual instrument measurements.
+**Hard prerequisites:** [U02](#m-u02), [A08](#m-a08), [E01](#m-e01)
 
-**Architectural owner / affected systems:** DMM mode providers, accessible connection/mutation contracts, finite instrument models and capacitor model qualification.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [U02](#m-u02), [A08](#m-a08), [E01](#m-e01).
+**Purpose and reason:** Fill real current-measurement or ESR diagnostic gaps rather than adding misleading readouts.
 
-**Must not be coupled:** No requirement to implement current and ESR together; no mandatory ESR for capacitance, no current clamp inferred from inaccessible internal branches, no blanket release dependency.
+**Architectural owner / affected systems:** Active-instrument source/connection model, protected insertion and DMM UI.
 
-**Exact deliverable:** For current mode, a defensible in-series insertion path with burden, range/overrange and modeled protection/connection semantics. For ESR, only after content establishes need and a supported capacitor equivalent model exists, a finite electrical stimulus/observation method with power/discharge readiness and stated limitations.
+**Must not be coupled:** No all-modes requirement. X08 remains the separate conditional capacitance measurement lane.
 
-**Acceptance:** Current display is derived from the actual inserted instrument branch under the solved circuit. Misconnection has the declared real electrical outcome or is explicitly unsupported; it is not silently repaired. ESR is derived from an actual supported test response, not a saved ESR field, and states its frequency/parallel-path limits. Each capability qualifies its own cleanup/reference/physical workflow.
+**Exact deliverable:** Current mode uses an actual in-series path with declared burden, range/overrange, reference and protection. ESR is separately conditional on a qualified capacitor model and uses a bounded electrical stimulus/response method.
 
-**Important negative tests:** Current taken from a hidden configured branch; no insertion burden; graph not restored on exit; powered ESR stimulus; direct CapacitorElm metadata read; leakage/parallel path misreported as exact ESR; unsupported model displayed as measured zero.
+**Acceptance:** Current comes from the inserted instrument branch, not arbitrary private branch metadata. Misconnection has the declared modeled consequence or is explicitly unsupported. ESR states frequency, charge-readiness, uncertainty and parallel-path limits and is never a configured-value readout.
 
-**Performance / scalability evidence:** Per-capability independent known-circuit, reference, overrange and failure-restoration tests; bounded stimulus/sample windows; actual player connection and repeated-use evidence.
+**Important negative tests:** Parallel ammeter treated as harmless; missing burden; retained test source; hidden ESR field returned as a measurement; charged capacitor treated as ready.
 
-**Architectural risk:** A meter feature that looks familiar but teaches a physically false measurement method.
+**Performance / scalability evidence:** Current/range/burden and misconnection fixtures; separate ESR electrical and diagnostic evidence if enabled.
 
-**Expected extension and scale effects:** Pluggability: shares U02 observation and A08 mutation ownership. Scale: only demanded meter providers and finite transactions are added.
+**Architectural risk:** Bundling unrelated modes or implying precision outside a supported physical model.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** X08 remains the separate conditional capacitance milestone. A static qualified ESR-equivalent capacitor model does not inherently require X02 dynamic damage or X01 intermittency. Missing model support blocks ESR alone, not current mode or unrelated Q60/Q100 content.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-
-## Electrical vocabulary
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-e01"></a>
+
 ### E01 · Source limits, external loads and protection foundation
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A06](#m-a06), [A07](#m-a07), [A08](#m-a08)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Establish electrical consequences before richer faults and player wires can create shorts or overloads.
 
 **Architectural owner / affected systems:** Source/load providers, CircuitJS current-limit behavior, protection/fuse models and damage observations.
-
-**Hard prerequisites:** [A06](#m-a06), [A07](#m-a07), [A08](#m-a08).
 
 **Must not be coupled:** No mains certification, complete power-electronics library or dependency on trace repair.
 
@@ -1987,22 +1691,21 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: reusable source and protection contracts. Scale: multi-source realism without per-device safety hacks.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [U11](#m-u11), [U12](#m-u12), [E02](#m-e02), [E03](#m-e03), [E05](#m-e05), [E08](#m-e08), [E11](#m-e11), [E13](#m-e13), [E14](#m-e14), [IMPORT-1](#m-import-1), [Q15](#m-q15), [X02](#m-x02).
+**Direct hard dependents:** [U11](#m-u11), [U12](#m-u12), [E02](#m-e02), [E03](#m-e03), [E05](#m-e05), [E08](#m-e08), [E11](#m-e11), [E13](#m-e13), [E14](#m-e14), [IMPORT-1](#m-import-1), [Q15](#m-q15), [X02](#m-x02).
 
 <a id="m-e02"></a>
+
 ### E02 · Rail-producing regulator implementations
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [E01](#m-e01), [A04](#m-a04), [A05](#m-a05)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Provide real reusable 12/5/3.3 V rail behavior with distinct implementation choices.
 
 **Architectural owner / affected systems:** Regulation block families, value/rating recipes, source/load assumptions and model providers.
-
-**Hard prerequisites:** [E01](#m-e01), [A04](#m-a04), [A05](#m-a05).
 
 **Must not be coupled:** No offline converter design, arbitrary buck magnetics optimizer or automatic support for every nominal rail.
 
@@ -2018,22 +1721,21 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: interchangeable qualified rail roles. Scale: multi-rail systems without family clones.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [E04](#m-e04), [E06](#m-e06), [IMPORT-4](#m-import-4), [Q30](#m-q30).
+**Direct hard dependents:** [E04](#m-e04), [E06](#m-e06), [IMPORT-4](#m-import-4), [Q30](#m-q30).
 
 <a id="m-e03"></a>
+
 ### E03 · Relay and switched-output families with alternate drivers
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [E01](#m-e01), [A05](#m-a05), [A08](#m-a08), [P01](#m-p01)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Prove electromechanical composition and driver diversity on a useful low-voltage controlled load.
 
 **Architectural owner / affected systems:** Relay package/model, BJT/NMOS driver providers, protection and fault/mutation contracts.
-
-**Hard prerequisites:** [E01](#m-e01), [A05](#m-a05), [A08](#m-a08), [P01](#m-p01).
 
 **Must not be coupled:** No contact arcing/EMC certification or mains load admission before E05 and the applicable instruments.
 
@@ -2049,24 +1751,21 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: real variant and multi-terminal provider proof. Scale: reusable output channels, not copied device branches.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [E14](#m-e14), [IMPORT-4](#m-import-4), [Q15](#m-q15), [Q30](#m-q30).
-
-**Conditional later consumers:** [MCU-2](#m-mcu-2) when selected MCU board uses the qualified relay/output family.
+**Direct hard dependents:** [E14](#m-e14), [IMPORT-4](#m-import-4), [Q15](#m-q15), [Q30](#m-q30).
 
 <a id="m-e04"></a>
+
 ### E04 · Sensor conditioning, references and control decisions
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [E02](#m-e02), [A05](#m-a05), [A09](#m-a09)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Add unfamiliar but understandable control behavior beyond a single high/low switch.
 
 **Architectural owner / affected systems:** Sensor/stimulus, conditioning, divider/reference and comparator/interlock providers.
-
-**Hard prerequisites:** [E02](#m-e02), [A05](#m-a05), [A09](#m-a09).
 
 **Must not be coupled:** No broad op-amp library, unbounded noisy analog campaign or fake sensor animation.
 
@@ -2082,26 +1781,21 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: alternate sensor/control roles. Scale: realistic interactions and richer fault hypotheses.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Vocabulary placement:** This bounded sensor/comparator proof remains unchanged in size. It establishes the seam later used for thermistors, photoresistors, Hall/reed/limit/pressure/position/current-sense inputs, potentiometers and trimmers. A stimulus needed for diagnosis must be player-operable and affect the modeled input. E09 extends explicit comparator/Schmitt/op-amp/buffer/amplifier/reference/filter IC models with supply, common-mode, output, loading and saturation limits; it is not a new prerequisite for this existing E04 proof.
-
-**Direct later dependents:** [Q30](#m-q30).
-
-**Conditional later consumers:** [MCU-2](#m-mcu-2) when selected MCU board uses the qualified sensor/conditioning family.
+**Direct hard dependents:** [Q30](#m-q30).
 
 <a id="m-e05"></a>
+
 ### E05 · AC input, rectification, bulk energy and isolation qualification
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [E01](#m-e01), [A06](#m-a06), [U02](#m-u02), [P02](#m-p02)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Build the physical/electrical mains foundation before an appliance board can be advertised.
 
 **Architectural owner / affected systems:** AC source, bridge/diode, capacitor, transformer/isolation, protection and measurement providers.
-
-**Hard prerequisites:** [E01](#m-e01), [A06](#m-a06), [U02](#m-u02), [P02](#m-p02).
 
 **Must not be coupled:** No physical high-voltage construction guide, actual equipment safety certification, EMI/filter-attenuation claim or complete offline converter yet.
 
@@ -2117,24 +1811,21 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: foundational mains-side providers. Scale: credible mixed-domain composition.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [E06](#m-e06), [E13](#m-e13), [Q60](#m-q60), [X08](#m-x08).
-
-**Conditional later consumers:** [IMPORT-4](#m-import-4) when input includes accepted AC/mains/isolation behavior.
+**Direct hard dependents:** [E06](#m-e06), [E13](#m-e13), [Q60](#m-q60), [X08](#m-x08).
 
 <a id="m-e06"></a>
+
 ### E06 · Causal offline-converter model and fidelity decision gate
 
-**Type / status:** Required advanced-board blocker and early model decision; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [E05](#m-e05), [E02](#m-e02), [A07](#m-a07), [U03](#m-u03), [A08](#m-a08)
+
+**Priority / applicability:** Required advanced-board blocker and early model decision
 
 **Purpose and reason:** Test the hardest appliance-board model before a 56-part product is built around an ideal-supply shortcut.
 
 **Architectural owner / affected systems:** Power-conversion block/model provider, fidelity contract and independent electrical/diagnostic qualification.
-
-**Hard prerequisites:** [E05](#m-e05), [E02](#m-e02), [A07](#m-a07), [U03](#m-u03), [A08](#m-a08).
 
 **Must not be coupled:** No commercial SMPS design tool, magnetics optimization, EMC certification or hidden external physics engine replacing CircuitJS.
 
@@ -2150,24 +1841,21 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: explicit fidelity-aware converter implementations. Scale: enables realistic mains regions without transistor-level modeling of everything.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [Q60](#m-q60).
-
-**Conditional later consumers:** [IMPORT-4](#m-import-4) when input includes the accepted offline-converter model.
+**Direct hard dependents:** [Q60](#m-q60).
 
 <a id="m-e07"></a>
+
 ### E07 · Triggered timers, oscillators and frequency behavior
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [U03](#m-u03), [A05](#m-a05), [A09](#m-a09)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Add temporal difficulty only after players have truthful ways to observe it.
 
 **Architectural owner / affected systems:** Timer/oscillator block variants, trigger/stimulus capabilities and temporal diagnostic contracts.
-
-**Hard prerequisites:** [U03](#m-u03), [A05](#m-a05), [A09](#m-a09).
 
 **Must not be coupled:** Not required for static Q30/Q60 variants unless their advertised behavior uses it; no MCU/protocol framework.
 
@@ -2183,28 +1871,23 @@ Imported challenge artifacts later retain retrievable source content (or an expl
 
 **Expected extension and scale effects:** Pluggability: temporal providers use existing role/instrument seams. Scale: useful complexity without unrestricted digital systems.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Implementation vocabulary:** Include a bounded 555-style implementation among timing alternatives where appropriate. Real supplies, timing/control pins, loading, reset and supported operating limits apply. A known part label is not an exact commercial-model guarantee.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Explicit 555-style implementation family:** Include a qualified 555-style timer as an important implementation candidate for monostable, astable and triggered timing, with supply, trigger, reset/enable, threshold and control-pin behavior within a declared envelope. Qualify each supported configuration rather than claiming every 555 variant or exact commercial part behavior. External timing resistors/capacitors and control/reset connections must causally affect timing and outputs.
-
-Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualified timing-IC implementations under the same functional role. E10 later adds crystals, ceramic resonators, RC clocks and oscillator modules where useful; a real clock must disappear or change when its modeled external clock network fails. Do not advertise RF-level crystal/startup fidelity or a waveform absent from the chosen model. Surrounding-component faults may explain an incorrect frequency without assuming the timer package is dead.
-
-**Direct later dependents:** [IMPORT-4](#m-import-4).
-
-**Conditional later consumers:** [E10](#m-e10) when selected sequential/clock variant uses the accepted timer/oscillator implementation.; [IMPORT-3](#m-import-3) when input uses a supported 555/timer implementation.
+**Direct hard dependents:** [IMPORT-4](#m-import-4).
 
 <a id="m-e08"></a>
+
 ### E08 · Player repair jumpers, copper cuts and physical restoration
 
-**Type / status:** Planned important repair capability; a required dependency only for content or releases consuming these actions; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Add general repair actions only after copper identity, layers and source consequences are coherent.
+**Hard prerequisites:** [E01](#m-e01), [A08](#m-a08), [P02](#m-p02), [U01](#m-u01), [P09](#m-p09)
+
+**Priority / applicability:** Planned important capability; required only for consuming content or advertised operations.
+
+**Purpose and reason:** Add real player copper repair operations when content consumes them. Component-only advanced boards do not depend on this capability.
 
 **Architectural owner / affected systems:** Mutation-owned conductor graph, player wire inventory, accessible-surface targets and solver projection.
-
-**Hard prerequisites:** [E01](#m-e01), [A08](#m-a08), [P02](#m-p02), [U01](#m-u01), [P09](#m-p09).
 
 **Must not be coupled:** No arbitrary CAD editing, automatic correct repair, infinite current protection or claim of supported saved repair state until U06 requalification.
 
@@ -2220,487 +1903,389 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: actions consume conductor contracts. Scale: one repair model for both one- and two-layer boards.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Type and scope:** Planned important repair capability; required only for content or release claims that consume cuts, repair jumpers, copper restoration or bypass actions.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
+**Dependency condition:** Q60 and Q100 do not have an unconditional E08 prerequisite. A specific trace-repair family adds E08 and requalifies its current session/history providers.
 
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-**Conditional later consumers:** [Q60](#m-q60) when selected Q60 family advertises or consumes trace cutting, player-installed jumper, physical trace restoration or bypass repair.
-
-
-## Later electrical vocabulary
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-e09"></a>
+
 ### E09 · Powered analog and combinational IC provider vocabulary
 
-**Type / status:** Planned later grouped IC capability; consumed families select the subset; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Make ordinary small IC packages explicit extensions rather than ideal logic widgets with hidden supplies or a central new circuit dispatcher.
+**Hard prerequisites:** [A05](#m-a05), [A06](#m-a06), [A08](#m-a08), [A09](#m-a09), [U02](#m-u02), [P01](#m-p01)
 
-**Architectural owner / affected systems:** Versioned electrical model/block providers, shared-package terminal mapping, package geometry, fault/repair and reference-aware observations.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [A05](#m-a05), [A06](#m-a06), [A08](#m-a08), [A09](#m-a09), [U02](#m-u02), [P01](#m-p01).
+**Purpose and reason:** Add useful small ICs without bypassing real supplies, loading, limits or physical ownership.
 
-**Must not be coupled:** No universal gate-level HDL, entire op-amp library, firmware engine, fake rail-to-rail guarantee or automatic Q60/Q100 dependency.
+**Architectural owner / affected systems:** Powered-IC electrical providers, shared-package/pin maps and package-level repair.
 
-**Exact deliverable:** A common powered-IC contract plus bounded analog and combinational provider subfamilies. Analog coverage includes comparator/Schmitt comparator, op-amp, follower/buffer, amplifier and threshold/reference/active-filter variants where useful. Logic coverage includes inverter, AND/OR/NAND/NOR/XOR and Schmitt-trigger functions. Select representative initial implementations and record exactly which are qualified.
+**Must not be coupled:** No complete commercial library or exact-device fidelity promise; no automatic prerequisite for base relay-only boards.
 
-**Acceptance:** Real supply/input/output pins, permitted supply/common-mode ranges, input thresholds, output limits, finite drive/loading, saturation and power-loss behavior match the selected model. Multi-unit packages retain one physical owner and correct shared pins. At least one analog and one combinational circuit passes physical probing, a meaningful fault, package-level repair and retest.
+**Exact deliverable:** Incremental analog and combinational groups: comparator/Schmitt, op-amp, buffer/follower, amplification/reference/filter variants; inverter, AND/OR/NAND/NOR/XOR and Schmitt logic. Select bounded representative implementations and publish exactly which are qualified.
 
-**Important negative tests:** Unlimited ideal output; output active after supply loss; missing reference; hidden supply pin; duplicated physical package for schematic units; unsupported rail-to-rail operation accepted; failure mode not supported by healthy model; wrong pin order.
+**Acceptance:** Actual supply/input/output pins, common-mode and supply ranges, finite drive, thresholds, saturation and power-loss behavior match the model. Multi-unit packages have one physical owner and honest shared pins. At least one analog and one combinational circuit pass physical probing, meaningful fault, package repair and retest.
 
-**Performance / scalability evidence:** Small independent operating-envelope and loading matrices, allowed/invalid package maps, actual pin measurements and end-to-end variant conformance. Record nonlinear/convergence cost instead of assuming every model is cheap.
+**Important negative tests:** Ideal output while unpowered; separate replacement of one internal unit; swapped shared supply; missing loading; out-of-range operation reported as exact.
 
-**Architectural risk:** Naming familiar ICs without their relevant electrical limits or making a universal abstraction from one example.
+**Performance / scalability evidence:** Small powered/unpowered/input/load sweeps, package/unit mapping checks and integrated workbench examples.
 
-**Expected extension and scale effects:** Pluggability: powered analog/logic variants remain provider-local. Scale: useful control diversity without per-device engine edits.
+**Architectural risk:** An IC label becoming a shortcut to hidden ideal behavior.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** E04 remains the earlier bounded comparator/sensor proof and is not rewritten. E07 may implement a bounded 555-style provider before this broader vocabulary; shared contracts can later be reconciled without making every analog/logic type a timer prerequisite.
-
-**Direct later dependents:** [E10](#m-e10), [E12](#m-e12), [MCU-2](#m-mcu-2), [IMPORT-3](#m-import-3).
+**Direct hard dependents:** [E10](#m-e10), [E12](#m-e12), [MCU-2](#m-mcu-2), [IMPORT-3](#m-import-3).
 
 <a id="m-e10"></a>
+
 ### E10 · Sequential logic, clocks and reset-state vocabulary
 
-**Type / status:** Planned later stateful electrical capability; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Add real sequencing causes such as missing clock, held reset or loading rather than diagnosing every control symptom as a dead package.
+**Hard prerequisites:** [E09](#m-e09), [A07](#m-a07), [U03](#m-u03)
 
-**Architectural owner / affected systems:** Stateful IC providers using accepted simulation-time events, clock/reset models and physical pin/fault contracts.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [E09](#m-e09), [A07](#m-a07), [U03](#m-u03).
+**Purpose and reason:** Make state, clocks and reset causal and diagnosable before stateful control content grows.
 
-**Must not be coupled:** No universal digital simulator, RF oscillator fidelity, arbitrary firmware, MCU prerequisite or browser-frame-driven state.
+**Architectural owner / affected systems:** Stateful electrical providers on the shared simulation-time event boundary.
 
-**Exact deliverable:** Representative SR latch, D flip-flop, useful JK flip-flop, counter and simple shift-register providers, qualified incrementally. Explicit clock/reset/set, startup initialization, power-loss/brownout where modeled and output loading. Include bounded crystal/resonator, oscillator-module or RC clock alternatives according to actual content needs.
+**Must not be coupled:** No HDL engine, arbitrary firmware, RF/metastability claim or automatic full MCU requirement.
 
-**Acceptance:** Transitions occur on declared simulation-time events and loaded pin conditions. Reset/set/clock priority and indeterminate/out-of-envelope regions are specified. A missing external clock stops the stateful function when that clock is selected; power/reset loss behaves causally. Internal state can be reconstructed or explicitly resumed under U06 when advertised. At least one future reference variant exercises stateful logic, an IC package and observable encoded/status output.
+**Exact deliverable:** Incremental representative SR latch, D flip-flop, useful JK flip-flop, counter and shift-register providers; explicit reset/set/clock/startup priority and output loading. Qualified crystal/resonator, oscillator-module or RC alternatives only where consumed.
 
-**Important negative tests:** State advances per paint or twice per nonlinear iteration; spontaneous default HIGH from unknown input; hidden clock persists after external oscillator removal; reset ignored on power change; invalid initialization silently accepted; loaded output differs from unmeasured internal bit.
+**Acceptance:** Transitions occur on declared electrical and simulation-time events, not paint frames or nonlinear trial iterations. Missing selected external clock stops the function; power/reset loss is causal. Indeterminate/out-of-envelope regions are honest. Current resume is qualified when advertised and future reference variants exercise stateful logic with observable output.
 
-**Performance / scalability evidence:** Finite truth/state transition cases, bounded simultaneous-edge/feedback cases, clock-phase and timestep comparisons, clock-loss/reset diagnosis and real repair/retest. Measure events per accepted step and retained state.
+**Important negative tests:** Double count per solver iteration; ignored reset; phantom external crystal; output held indefinitely after power loss; lost phase on claimed exact resume.
 
-**Architectural risk:** Unbounded zero-time event loops or deterministic-looking behavior unsupported at the model timing boundary.
+**Performance / scalability evidence:** Event-order, timestep and clock-loss fixtures, finite feedback budgets and current probe/scope diagnosis.
 
-**Expected extension and scale effects:** Pluggability: stateful parts use shared lifecycle/time contracts. Scale: finite state/event vocabulary gives meaningful complexity without CPU-scale simulation.
+**Architectural risk:** Creating a second clock or electrical truth through a UI event loop.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** External clock components matter when visible and functionally selected. A model declaring an internal oscillator must not draw an inert external crystal. Sequential source/clock fixtures use real electrical events; later MCU implementation is not needed to test them. E07 is required only for a variant actually using its timer implementation, not all E10 providers.
-
-**Conditional prerequisites:** [E07](#m-e07) only when selected sequential/clock variant uses the accepted timer/oscillator implementation.
-
-**Direct later dependents:** [U10](#m-u10), [MCU-2](#m-mcu-2), [IMPORT-3](#m-import-3).
+**Direct hard dependents:** [U10](#m-u10), [MCU-2](#m-mcu-2), [IMPORT-3](#m-import-3).
 
 <a id="m-e11"></a>
+
 ### E11 · Seven-segment and simple scanned-display providers
 
-**Type / status:** Planned later display capability; staged static then scanned support; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Make missing segments, dim digits, failed commons and scan/driver problems into real electrical symptoms rather than drawing hidden scenario numbers.
+**Hard prerequisites:** [A05](#m-a05), [A08](#m-a08), [E01](#m-e01), [P01](#m-p01), [U01](#m-u01)
 
-**Architectural owner / affected systems:** Display package/model/renderer providers, segment-current observations and existing source/drive/physical repair services.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [A05](#m-a05), [A08](#m-a08), [E01](#m-e01), [P01](#m-p01), [U01](#m-u01).
+**Purpose and reason:** Show actual electrically driven status without reading the intended answer from scenario data.
 
-**Must not be coupled:** No mandatory MCU or E10 for a directly driven single digit; no graphical LCD/OLED system, layout answer leak or display requirement for base Q60/Q100.
+**Architectural owner / affected systems:** Physical display packages, electrical segment/drive models and render projections.
 
-**Exact deliverable:** Single-digit seven-segment LED package with explicit common-anode/common-cathode alternatives, actual segment pins, current limiting and justified open-segment faults. Later bounded multi-digit multiplexing, driver ICs, scanned status/error codes, bargraphs or indicator arrays as demanded.
+**Must not be coupled:** No graphical LCD/OLED stack; scanning consumers add E10/A07 or MCU capabilities only when actually used.
 
-**Acceptance:** Pin maps and segment currents agree in electrical, package, rendered and probe views. Common/segment resistance and drive limits are real. Multiplexed light output is a view of actual simulation-time drive/current history with bounded integration; no scenario-number shortcut. Missing common, driver/scan, supply or segment causes a distinct modeled symptom and lawful repair/retest.
+**Exact deliverable:** Single-digit seven-segment package with common-anode and common-cathode variants, real pins, current limiting and meaningful open-segment faults; later bounded scanning, drivers, arrays/bargraphs and status codes as needed.
 
-**Important negative tests:** Numeral read from fault/scenario metadata; common polarity silently swapped; no current limiting; LED lit without current; visual refresh creates scan timing; dead digit displayed correctly by UI; each internal segment counted as a separate package; unbounded brightness history.
+**Acceptance:** Pin maps, polarity and segment currents agree across solver, package, renderer and probe targets. Multiplexed brightness is a bounded view of actual digit/segment drive history; rendering cannot advance the model. Supply, common, segment, driver and scan failures have causal supported symptoms and package/part repair.
 
-**Performance / scalability evidence:** Finite segment/pin and polarity matrix, current/drive cases and real player symptom diagnosis. Multiplexed qualification adds solver-time waveform/duty-cycle tests and bounded render/storage cost.
+**Important negative tests:** Desired numeral rendered without current; wrong common polarity; unlimited drive; invisible scan loss; inaccessible common pin; stale brightness after removal.
 
-**Architectural risk:** Rendering a plausible display while the electrical model never actually drives its pins.
+**Performance / scalability evidence:** Static segment-current fixtures, optional duty-cycle/scan evidence and one integrated current display diagnosis.
 
-**Expected extension and scale effects:** Pluggability: one package/display provider serves direct, logic and later MCU drive. Scale: multiplexing is bounded and shares observations.
+**Architectural risk:** A display painted over a state label rather than a circuit.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Conditional prerequisites:** [U03](#m-u03) only when: Qualifying multiplexed/scanned behavior requiring solver-time waveform observations.
-
-**Capability boundary:** Initial direct-drive qualification has no MCU dependency. Scanned-display qualification adds U03 for required time observations and uses qualified electrical drivers or a small deterministic electrical test source. A whole logic/MCU-controlled display board consumes both providers in its own family manifest; the display provider and MCU provider must not hard-depend on each other.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-**Conditional later consumers:** [MCU-2](#m-mcu-2) when selected MCU board uses a seven-segment/scanned display.; [IMPORT-3](#m-import-3) when input uses the qualified display provider.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-e12"></a>
+
 ### E12 · Specialized driver, reference and interface IC families
 
-**Type / status:** Planned later demand-selected provider groups; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Cover high-value appliance/control building blocks while keeping each implementation bounded and independently qualified.
+**Hard prerequisites:** [E09](#m-e09), [A06](#m-a06), [U02](#m-u02)
 
-**Architectural owner / affected systems:** Electrical model and family providers, explicit pin/package mappings, assumptions/guarantees and diagnostic conformance.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [E09](#m-e09), [A06](#m-a06), [U02](#m-u02).
+**Purpose and reason:** Add compact practical control vocabulary without one roadmap milestone per part.
 
-**Must not be coupled:** No requirement to build every named IC or a new milestone per device; no implicit isolation, perfect reference or unlimited drive.
+**Architectural owner / affected systems:** Demand-selected powered-IC groups using common electrical/physical contracts.
 
-**Exact deliverable:** Incremental provider groups for ULN2003-style transistor-array drivers; analog switches and mux/demux; voltage references/current-sense amplifiers; optocouplers/qualified isolated digital interfaces; display/simple power drivers; reset/brownout supervisors where useful.
+**Must not be coupled:** Only needed groups are implemented; no commercial-device completeness or universal interface support.
 
-**Acceptance:** Each selected group declares supplies, shared pins, references, loading, enable/selection behavior, output limits, isolation where modeled and a credible operating envelope. A visible optocoupler has separate causal input/output sides; a mux routes an actual modeled path; an array shares one physical package with defined channel semantics. Faults are serviceable only at honest physical boundaries.
+**Exact deliverable:** Incremental ULN2003-style driver arrays; analog switches and mux/demux; references/current-sense amplifiers; optocouplers and qualified isolated interfaces; simple display/power drivers; reset/brownout supervisors.
 
-**Important negative tests:** Labels substitute for isolation; ideal mux ignores on-path/loading behavior; wrong common pin; one failed array channel becomes a fictitious loose package; disabled driver still supplies current; reference unaffected by removed causal parts; unsupported transient claim.
+**Acceptance:** Each chosen group declares supplies, shared pins, references, finite loading/drive, enable/selection and supported limits. Optocoupler sides stay electrically separate but causally linked. A mux routes an actual modeled path. Arrays have one replaceable package with honest channel semantics.
 
-**Performance / scalability evidence:** Group-specific small operating/selection/loading matrices and one meaningful integrated diagnostic case per adopted provider; exact supported and unsupported functions are published.
+**Important negative tests:** Optocoupler joins grounds; ideal array with no common/supply effect; disconnected enable; channels counted as separate packages; out-of-envelope voltage magically clipped.
 
-**Architectural risk:** An enormous undifferentiated IC library or false equivalence among devices sharing a name.
+**Performance / scalability evidence:** Per-group current/load/isolation and control sweeps plus meaningful fault/serviceability checks.
 
-**Expected extension and scale effects:** Pluggability: ordinary driver/interface additions use provider contracts. Scale: heterogeneous functions without generic-engine surgery.
+**Architectural risk:** A broad catalog without qualified electrical or repair behavior.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** Group acceptance is incremental and consumers require only the group used. No broad catalog-complete receipt is inferred from the first transistor-array example. Keyed/ribbon multi-pin interconnect can mature through existing package/interconnect providers without becoming a separate required electronics engine.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-**Conditional later consumers:** [IMPORT-3](#m-import-3) when input uses an accepted specialized IC/interface group.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-e13"></a>
+
 ### E13 · AC semiconductor switching and zero-cross control
 
-**Type / status:** Planned later AC-control family; not required for relay-only Q60; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Represent useful heater, AC motor/solenoid and optically isolated control alternatives beyond relay contacts.
+**Hard prerequisites:** [E05](#m-e05), [E01](#m-e01), [A05](#m-a05), [A08](#m-a08), [A09](#m-a09), [U03](#m-u03)
 
-**Architectural owner / affected systems:** SCR/TRIAC/optotriac/zero-cross block providers, source/load models, isolation/reference policy and temporal diagnostics.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [E05](#m-e05), [E01](#m-e01), [A05](#m-a05), [A08](#m-a08), [A09](#m-a09), [U03](#m-u03).
+**Purpose and reason:** Enable causal AC-control troubleshooting when a selected family needs it.
 
-**Must not be coupled:** No full mains transient, RF/EMC, contact-arcing or commercial-device fidelity; no dependency for a baseline relay-controlled appliance family.
+**Architectural owner / affected systems:** SCR/TRIAC, optically coupled control, zero-cross observation and supported load providers.
 
-**Exact deliverable:** Representative SCR/TRIAC latching paths, optotriac/optocoupler input/output behavior, zero-cross detection/control and a bounded switched-load application. Qualify only the selected phase/zero-cross/load modes.
+**Must not be coupled:** Not a prerequisite for relay-only Q60; no mains hardware certification or unrestricted switching model.
 
-**Acceptance:** Gate/control, latching/holding and supported commutation behavior arise from the modeled current/voltage/time state. Isolation and zero-cross observation use actual terminals. Drive loss, load change, stuck/open switch and missing zero-cross causes remain observable and repairable with the advertised tools.
+**Exact deliverable:** Representative SCR/TRIAC latching paths, optotriac/optocoupler input-output behavior, real zero-cross detection/control and a bounded switched-load application. Explicitly select phase, zero-cross and load modes.
 
-**Important negative tests:** Boolean switch with no latching behavior while advertised as a TRIAC; zero crossing read from a scenario clock; isolated sides share a physical return; inductive behavior claimed outside envelope; missing input power but load remains driven; unavailable scope observation.
+**Acceptance:** Gate drive, holding/latching and commutation follow actual modeled voltage/current/time. Isolation and zero-cross signals use real terminals. Drive loss, stuck/open switching and missing zero-cross causes are observable, serviceable and repairable with advertised instruments.
 
-**Performance / scalability evidence:** Known AC source/load and gate-timing fixtures, current-zero/voltage-zero distinctions when supported, timestep sensitivity and actual diagnosis/retest under the declared load envelope.
+**Important negative tests:** TRIAC follows arbitrary Boolean state; nonzero-current commutation ignored; optotriac shorts domains; render-time zero crossing; absent load dependencies.
 
-**Architectural risk:** A familiar mains-control symbol teaching electrical behavior the simplified model does not preserve.
+**Performance / scalability evidence:** Current/phase/hold and timing fixtures, supported inductive/resistive envelope and normal diagnostic actions.
 
-**Expected extension and scale effects:** Pluggability: AC output functions are alternate qualified implementations. Scale: realistic appliance diversity within a bounded temporal budget.
+**Architectural risk:** Implying arbitrary AC/power fidelity from one simple load fixture.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** E05/E06 remain the native mains/power foundation. A particular AC-switching family adds E13; Q60/Q100 do not inherit it merely because AC exists elsewhere on a reference board.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-**Conditional later consumers:** [IMPORT-4](#m-import-4) when input uses accepted semiconductor AC switching.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-e14"></a>
+
 ### E14 · Bounded reversing, H-bridge and motor/load control
 
-**Type / status:** Planned later motor-control family; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Support diagnosis of direction/enable, drive, supply and protection in electrical reversing systems without an embedded motor-control project.
+**Hard prerequisites:** [E01](#m-e01), [E03](#m-e03), [A05](#m-a05), [A08](#m-a08), [A09](#m-a09), [U03](#m-u03)
 
-**Architectural owner / affected systems:** Relay/discrete/package output-stage providers, bounded external load/plant models and source/diagnostic services.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [E01](#m-e01), [E03](#m-e03), [A05](#m-a05), [A08](#m-a08), [A09](#m-a09), [U03](#m-u03).
+**Purpose and reason:** Support reversing and drive faults through credible electrical consequences.
 
-**Must not be coupled:** No detailed motor commutation, arbitrary firmware, full mechanics/fluid simulation or off-board loads counted as PCB parts.
+**Architectural owner / affected systems:** Output-stage implementation variants, current paths and bounded external-load/stimulus models.
 
-**Exact deliverable:** Compare relay reversing, discrete BJT/MOSFET H-bridge and simple packaged-driver variants for an explicitly supported load. Include current path, permitted switching sequence, protection, direction and enable semantics.
+**Must not be coupled:** No full motor commutation or plant dynamics unless a separately chosen observation needs them.
 
-**Acceptance:** Actual solved output/current changes with drive, supply and load; illegal overlap or shoot-through has the selected real modeled consequence or is explicitly unsupported, not silently repaired. Player-operated load/stimulus and allowed protection/current limit behavior are declared. External feedback is modeled only when the family consumes it.
+**Exact deliverable:** Compare relay reversing, discrete BJT/MOSFET H-bridge and a simple packaged-driver variant for an explicitly supported load. Define enable, direction, permitted sequences, current paths and protection. Add external feedback only when consumed.
 
-**Important negative tests:** Motor animation declares direction with no electrical change; high/low drives ignore reference; reverse command bypasses power limits; impossible ideal driver current; clockless fake PWM; missing flyback/protection effect; invisible second source drives load.
+**Acceptance:** Solved output/current responds to supply, drive and load. Illegal overlap/shoot-through has declared modeled consequences or is rejected as unsupported rather than silently repaired. Player-operable stimulus and controls make supported faults diagnosable.
 
-**Performance / scalability evidence:** Small direction/enable/load and drive-failure corpus, timing/current-limit tests, output probing and repair/retest. Measure solver/event cost for each implementation before larger integration.
+**Important negative tests:** Both legs driven with no consequence; independent scenario direction state; missing flyback/return path; invisible off-board feedback required to solve a fault.
 
-**Architectural risk:** A plant abstraction hiding the electrical symptom or a driver model too detailed for the advertised interactive envelope.
+**Performance / scalability evidence:** Drive-state/load/partial-power cases, transition/current limits and workbench repair/retest.
 
-**Expected extension and scale effects:** Pluggability: alternative output implementations satisfy explicit role contracts. Scale: causal off-board loads keep PCB counts and runtime honest.
+**Architectural risk:** Starting a full mechanical motor simulator to support a bounded electrical lesson.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-**Conditional later consumers:** [IMPORT-4](#m-import-4) when input uses the accepted motor-control family.
-
-
-## Basic microcontroller lane
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-mcu-1"></a>
+
 ### MCU-1 · Bounded microcontroller approach comparison and contract
 
-**Type / status:** Planned later required decision before basic MCU implementation; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Choose a credible basic appliance-controller model before firmware/runtime assumptions fossilize.
+**Hard prerequisites:** [A03](#m-a03), [A06](#m-a06), [A07](#m-a07), [A09](#m-a09)
 
-**Architectural owner / affected systems:** Model fidelity and electrical/event-state contract design; read-only comparative prototype/evidence work when this future milestone is authorized.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [A03](#m-a03), [A06](#m-a06), [A07](#m-a07), [A09](#m-a09).
+**Purpose and reason:** Choose a small causal control model before building an embedded ecosystem.
 
-**Must not be coupled:** No Arduino/PlatformIO/MPLAB substitute, general firmware emulator, CPU architecture project or requirement that Q60/Q100 use an MCU.
+**Architectural owner / affected systems:** Electrical execution adapter, provider-owned state and bounded program/model description.
 
-**Exact deliverable:** Compare deterministic behavioral MCU, constrained state-machine/control script, limited emulation of one tiny architecture and a justified narrow hybrid/alternative. Use the same bounded GPIO/reset/ADC/PWM/sensor-interlock fixture and select one method with an explicit support envelope.
+**Must not be coupled:** No arbitrary firmware support, general IDE, CPU-architecture project or protocol ecosystem.
 
-**Acceptance:** Chosen method states pin drive/loading, supplies/reset/brownout, clocks, initialization, control-state/time ownership, deterministic replay, resume support, observables, failure/repair semantics, program format and execution budgets. No arbitrary firmware promise. A qualified black-box application can be diagnosed electrically without decompilation.
+**Exact deliverable:** Compare deterministic behavioral MCU, bounded state-machine/control script, limited emulation of one tiny architecture and justified narrow hybrid using the same GPIO/reset/ADC/PWM/sensor-interlock fixture. Select one method and explicit support envelope.
 
-**Important negative tests:** Selection justified only by model name; output continues without VCC/reset; external crystal is decorative; program reads hidden fault ID; event time uses browser frames; unbounded control script; save format stores executable callbacks.
+**Acceptance:** The choice states supply/reset/brownout, pin loading/finite drive, clocks, initialization, time/state ownership, current replay/resume, observables, fault/repair semantics and finite execution budgets. Players can diagnose the black-box function electrically without firmware decompilation.
 
-**Performance / scalability evidence:** Matched limited prototypes or executable feasibility fixtures, exact model versions, event/solve counts, source-loading cases, memory and reference-host runtime. Explain any untested alternative instead of claiming a benchmark comparison that was not run.
+**Important negative tests:** Program ignores VCC/reset; outputs are ideal private-state values; host time advances device state; arbitrary scripts execute; unsupported peripherals silently succeed.
 
-**Architectural risk:** Choosing realistic-sounding emulation that consumes the project, or a behavioral model with fake causality.
+**Performance / scalability evidence:** Matched pilot observables, execution costs, determinism and integration risks, not speculative benchmark promises.
 
-**Expected extension and scale effects:** Pluggability: a small qualified control-program/IO interface rather than firmware-specific core branches. Scale: explicit time/event/state budgets.
+**Architectural risk:** Choosing an emulator before the required diagnostic fidelity is understood.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** Basic MCU support remains a planned destination even if the first candidate approach fails. Record a bounded redesign and missing proof, not a claim that all firmware or all appliance MCUs are supported. Real firmware execution, if later selected at all, remains one narrow separately approved product scope.
-
-**Direct later dependents:** [MCU-2](#m-mcu-2).
+**Direct hard dependents:** [MCU-2](#m-mcu-2).
 
 <a id="m-mcu-2"></a>
+
 ### MCU-2 · Causal basic MCU runtime and appliance-control integration
 
-**Type / status:** Planned later bounded MCU implementation and qualification; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Implement the selected qualified black-box controller and prove real electrical operation around and through it.
+**Hard prerequisites:** [MCU-1](#m-mcu-1), [E09](#m-e09), [E10](#m-e10), [A08](#m-a08), [U06](#m-u06)
 
-**Architectural owner / affected systems:** Powered stateful MCU package/model provider, deterministic bounded program/control contract, accepted event scheduler and provider-state serialization.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [MCU-1](#m-mcu-1), [E09](#m-e09), [E10](#m-e10), [A08](#m-a08), [U06](#m-u06).
+**Purpose and reason:** Implement the selected small MCU approach through the ordinary native game pipeline.
 
-**Must not be coupled:** No arbitrary firmware import/IDE, required decompilation, hidden-state diagnostic answer or automatic requirement for every reference board.
+**Architectural owner / affected systems:** One selected bounded MCU provider, shared simulation events and current session reconstruction.
 
-**Exact deliverable:** Powered/unpowered/reset and modeled brownout states; GPIO directions/pulls/thresholds/finite drive; limited ADC-like inputs; PWM/timer outputs; deterministic startup and a sensor/interlock/output application. Expose only supported clock/ADC/peripheral behavior. Include a board integration and resume/replay receipt.
+**Must not be coupled:** Only the selected bounded program/peripherals; no arbitrary firmware or automatic display/import dependency.
 
-**Acceptance:** VCC/reset/clock/input changes causally alter operation; a loaded output is measured electrically rather than by reading its internal latch. External resistors/oscillators/reset/drivers/sensors participate where shown. Program/model/state versions replay exactly at declared discrete semantics with numerical tolerances stated. A meaningful fault can be isolated and repaired using ordinary tools without hidden firmware knowledge.
+**Exact deliverable:** Powered/unpowered/reset and modeled brownout states; GPIO directions/pulls/thresholds/finite drive; limited ADC-like inputs; PWM/timers; deterministic startup and a sensor/interlock/output application. Include physical board integration and current-format resume/replay.
 
-**Important negative tests:** Supply absent but outputs still driven; reset does not cancel output/events; duplicate time advancement; unqualified ADC precision; output stuck fault indistinguishable from missing pull-up but admitted; corrupted snapshot silently accepted; failed proof publishes control state to current player owner.
+**Acceptance:** VCC/reset/selected clock and input changes causally alter behavior. Loaded outputs are measured electrically. External pulls, clocks, reset networks, sensors and drivers affect the function when shown. State reconstruction matches the declared current semantics/tolerances. A meaningful fault is diagnosed and repaired without private firmware state.
 
-**Performance / scalability evidence:** Startup/power/reset/brownout and direction/loading matrices; clock/ADC/PWM time fixtures; fresh-process state resume; varied paint-rate comparison; cancelled-job isolation; one actual board diagnosis/repair/retest and measured event/memory/runtime cost.
+**Important negative tests:** External reset misclassified as dead MCU; invisible ideal drive; removed MCU schedules new events; duplicated resume timer; unsupported state falsely resumed exactly.
 
-**Architectural risk:** Invisible control software bypassing CircuitJS or persisted internal state making replay noncausal.
+**Performance / scalability evidence:** Supply/reset/clock/load/state sweeps and one ordinary-player board diagnosis, repair, retest and supported resume.
 
-**Expected extension and scale effects:** Pluggability: MCU variants/programs consume provider-local contracts. Scale: bounded state and peripherals instead of an arbitrary embedded platform.
+**Architectural risk:** A second live simulator, timer owner or private answer source inside the MCU wrapper.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** A planned RB56-MCU variant may add E11 seven-segment status and E03/E04 sensor/output providers; its own capability manifest carries those dependencies. MCU-2 can first qualify with a smaller LED/output board and need not wait for Q60 or Q100. Later missing-clock, stuck-pin or dead-package faults require separate supported effect/repair evidence; modeled-state corruption cannot require decompiling firmware.
-
-**Conditional prerequisites:** [E11](#m-e11) only when selected MCU board uses a seven-segment/scanned display. [E03](#m-e03) only when selected MCU board uses the qualified relay/output family. [E04](#m-e04) only when selected MCU board uses the qualified sensor/conditioning family.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-**Conditional later consumers:** [IMPORT-3](#m-import-3) when input uses the specifically supported basic MCU model; not arbitrary firmware.
-
-
-## CircuitJS import-to-challenge lane
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-import-1"></a>
+
 ### IMPORT-1 · CircuitJS import foundation and passive/DC challenge proof
 
-**Type / status:** Planned later complete bounded import vertical slice; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Establish the entire honest source-to-playable pipeline on small supported passive/DC circuits before expanding its parser/model coverage.
+**Hard prerequisites:** [A03](#m-a03), [A04](#m-a04), [A08](#m-a08), [A09](#m-a09), [A10](#m-a10), [A11](#m-a11), [P04](#m-p04), [U01](#m-u01), [U02](#m-u02), [U04](#m-u04), [E01](#m-e01)
 
-**Architectural owner / affected systems:** Isolated CircuitJS parser/load adapter, import capability matrix and author manifest/wizard feeding native plan/qualification/publication services.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [A03](#m-a03), [A04](#m-a04), [A08](#m-a08), [A09](#m-a09), [A10](#m-a10), [A11](#m-a11), [P04](#m-p04), [U01](#m-u01), [U02](#m-u02), [U04](#m-u04), [E01](#m-e01).
+**Purpose and reason:** Turn a finite supported passive/DC input into an honest playable challenge, not merely parse a schematic.
 
-**Must not be coupled:** No universal CircuitJS-file promise, parallel imported-board renderer, arbitrary external downloads/scripts, automatic healthy-intent invention or change to native generation.
+**Architectural owner / affected systems:** Isolated import interpretation and authoring adapter feeding the native resolved-plan pipeline.
 
-**Exact deliverable:** Retained source/hash/parser/import versions; exact per-element classification into the six Section 5.7 dispositions; stable logical IDs and package/unit/pin mappings; source/control/load role choices; author-declared healthy states/outputs; native PCB, seeded serviceable fault and a complete diagnosis/repair/retest challenge for the finite passive/DC subset.
+**Must not be coupled:** No arbitrary CircuitJS file support, community catalog or unrestricted parser resources.
 
-**Acceptance:** Parsing occurs in an owned staging context and cannot alter current play. Every source element is accounted for. Original connectivity matches the interpreted model; schematic coordinates are not PCB placement/identity. Healthy function is verified before fault injection. Ambiguities require explicit author choices; unsupported cases explain exact elements/contracts. Native physical/correspondence/diagnostic services qualify final play and exact replay.
+**Exact deliverable:** Retained source bytes/hash/current parser identity; six-way per-element capability accounting; stable import-local IDs and package/unit/pins; source/control/load roles; author-declared healthy states/outputs; native PCB, seeded serviceable fault and complete diagnosis/repair/retest.
 
-**Important negative tests:** Unknown element silently deleted; ideal source drawn as an invented PCB part; grounded isolated reference; input parsed but healthy target unknown; root seed only replay with missing source bytes; duplicate/symmetric identity drift; guessed package; file alters live owner; unsafe name/script/URL or oversized input.
+**Acceptance:** All twelve import steps in Section 3 apply. Parsing cannot mutate current play or execute embedded content. Every element is accounted for. Connectivity is interpreted before physical placement; ambiguous role/intent requires author input. Healthy function precedes faults. Final physical, diagnostic and current-reproduction checks use native services.
 
-**Performance / scalability evidence:** Frozen small import corpus with valid, malformed, ambiguous and unsupported files; electrical equivalence and pin-map negatives; real wizard/player flow; deterministic fault/replay; parse/generation/diagnostic cost and source-size limits.
+**Important negative tests:** Dropped unsupported part; schematic coordinate used as repair ID; missing healthy intent guessed; hidden ideal supply; script/network side effect; import-only shortcut around native validation.
 
-**Architectural risk:** A convenient parser shortcut publishing an unserviceable or functionless challenge.
+**Performance / scalability evidence:** Varied finite passive/DC corpus with failures, capability reports and one full playable vertical slice.
 
-**Expected extension and scale effects:** Pluggability: one origin adapter into native engines. Scale: cheap negotiation before expensive physical/diagnostic work.
+**Architectural risk:** A parallel imported-only assembler or false universal-import promise.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** Use existing parser semantics where practical; identify any unsupported format/model rather than maintaining an unrelated silent parser. All twelve Section 6.11 contracts apply even to this small subset. Preserve source artifacts in replay packages or disclose the required missing source dependency; a hash by itself is insufficient.
-
-**Direct later dependents:** [IMPORT-2](#m-import-2).
+**Direct hard dependents:** [IMPORT-2](#m-import-2).
 
 <a id="m-import-2"></a>
+
 ### IMPORT-2 · Diode, transistor and RC import support
 
-**Type / status:** Planned later supported-subset expansion; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Expand ordinary analog/DC community imports without weakening healthy verification, package mapping or serviceability.
+**Hard prerequisites:** [IMPORT-1](#m-import-1), [A05](#m-a05)
 
-**Architectural owner / affected systems:** Import mapping providers and native diode/BJT/MOSFET/capacitor, source, observation and diagnostic contracts.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [IMPORT-1](#m-import-1), [A05](#m-a05).
+**Purpose and reason:** Expand the supported subset without weakening the complete import-to-play contract.
 
-**Must not be coupled:** No all-semiconductor support, IC/MCU dependency, new physics from parser names or unqualified temporal scope claim.
+**Architectural owner / affected systems:** Current nonlinear/temporal import mappings into existing native providers.
 
-**Exact deliverable:** Versioned mappings for selected supported diode/transistor/RC constructs, initial-state interpretation, model/polarity correspondence, explicit package choices and supported fault modes. Retain the IMPORT-1 ingestion and manifest contracts.
+**Must not be coupled:** No arbitrary analog models; unsupported elements retain explicit capability results.
 
-**Acceptance:** Each admitted circuit has declared input/output/healthy conditions and real supported nonlinear/temporal behavior. Capacitor state and active-meter readiness are explicit. Imported model parameters are retained or explicitly rejected if unsupported. Package/mutation/fault correspondence is checked through the native workbench.
+**Exact deliverable:** Selected diode/transistor/RC construct mappings, actual model/polarity correspondence, explicit package choices and initial-state interpretation; supported causal faults and serviceability.
 
-**Important negative tests:** Transistor pin order guessed; custom model silently replaced; polarized capacitor reversed; parser drops initial energy; healthy imported circuit has no meaningful target; no-op/unrepairable fault accepted; temporal observation assumed available.
+**Acceptance:** Each admitted design has declared inputs, outputs and healthy conditions with real qualified nonlinear/temporal behavior. Preserve the requested source model parameters within the current interpretation or explicitly reject unsupported ones. Charge/readiness, package mapping, mutation and faults pass native checks.
 
-**Performance / scalability evidence:** Small nonlinear and RC import corpus with polarity, unsupported-model and initial-state cases; before/after electrical checks, selected real repairs and stage-specific cost reports.
+**Important negative tests:** Reversed diode silently corrected; unsupported transistor model replaced without declaration; charged capacitor initialized incorrectly; source edit reuses stale mapping.
 
-**Architectural risk:** Claiming broad support from a few circuit names while model details or pin mappings are lost.
+**Performance / scalability evidence:** Model/polarity/timing fixtures and varied small current nonlinear import playthroughs.
 
-**Expected extension and scale effects:** Pluggability: mapping providers extend the existing import support matrix. Scale: bounded per-category qualification rather than new imported runtime.
+**Architectural risk:** Treating syntax support as electrical or physical support.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** A selected temporal diagnostic adds an accepted instrument such as U03 only when actually needed. RC/DC content does not automatically wait for all timing or digital libraries.
-
-**Conditional prerequisites:** [U03](#m-u03) only when selected temporal import requires waveform/frequency observations.
-
-**Direct later dependents:** [IMPORT-3](#m-import-3), [IMPORT-4](#m-import-4).
+**Direct hard dependents:** [IMPORT-3](#m-import-3), [IMPORT-4](#m-import-4).
 
 <a id="m-import-3"></a>
+
 ### IMPORT-3 · Supported small-IC and control-circuit imports
 
-**Type / status:** Planned later IC/control import subset; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Import qualified powered analog, combinational and sequential constructs with their real supplies, state and package groupings.
+**Hard prerequisites:** [IMPORT-2](#m-import-2), [E09](#m-e09), [E10](#m-e10)
 
-**Architectural owner / affected systems:** IC import mapping providers, accepted model/state contracts and author-confirmed physical/functional manifests.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [IMPORT-2](#m-import-2), [E09](#m-e09), [E10](#m-e10).
+**Purpose and reason:** Import useful small control circuits without inventing package or supply semantics.
 
-**Must not be coupled:** No arbitrary IC catalog, MCU firmware conversion, automatic package grouping guess or mandatory display/MCU for all files.
+**Architectural owner / affected systems:** IC/unit/package interpretation, powered/stateful providers and author intent.
 
-**Exact deliverable:** Supported IC/control mappings including multi-unit packages and shared supplies, clock/reset/initialization semantics and declared source/control/output behavior. Explicitly classify electrically supported but nonserviceable constructs.
+**Must not be coupled:** MCU, display and timer capability is added only for inputs that actually consume it; no blanket IMPORT-4 dependency.
 
-**Acceptance:** Mapped packages preserve physical pin/unit ownership and powered/stateful semantics. Healthy and faulted behavior uses accepted observations and time contracts. Hidden simulator supplies must be mapped honestly or rejected; missing functional intent remains a wizard requirement. Replay pins state/model/import interpretation.
+**Exact deliverable:** Selected IC/control mappings including multi-unit packages, shared supplies, clocks/reset/startup and sources/controls/outputs. Classify electrically supported but nonserviceable constructs explicitly.
 
-**Important negative tests:** One schematic unit becomes a separate replaceable package; implicit supply fabricated; clock/reset discarded; internal Boolean exposed as pin measurement; unsupported custom IC accepted; required physical pin inaccessible; unsaved sequential state changes replay.
+**Acceptance:** Physical package/pin/unit ownership and powered/stateful behavior remain truthful. Healthy/fault proof uses supported observations and simulation time. Hidden supplies are mapped honestly or rejected. Missing customer intent needs author input. Current artifacts record actual interpretation and model state.
 
-**Performance / scalability evidence:** Finite IC/control corpus with missing-supply, ambiguous-unit and unsupported-element negatives; actual pin probes, diagnosis/repair/retest and exact manifest replay.
+**Important negative tests:** Internal units split into replaceable packages; floating hidden supply made ideal; private IC register used for diagnosis; unsupported timing implicitly assumed.
 
-**Architectural risk:** A schematic abstraction that cannot be given an honest physical package or observable fault.
+**Performance / scalability evidence:** Small IC holdout fixtures, supply/reset/timing variation and supported current physical repair.
 
-**Expected extension and scale effects:** Pluggability: physical mapping and stateful providers remain explicit. Scale: reusable import capabilities rather than per-circuit special cases.
+**Architectural risk:** An importer that recognizes an IC name but cannot represent a real supported package.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** A file using a 555-style timer, display, specialized interface or basic MCU adds the accepted E07/E11/E12/MCU-2 capability it consumes. No arbitrary firmware interpretation is added by this importer stage.
-
-**Conditional prerequisites:** [E07](#m-e07) only when input uses a supported 555/timer implementation. [E11](#m-e11) only when input uses the qualified display provider. [E12](#m-e12) only when input uses an accepted specialized IC/interface group. [MCU-2](#m-mcu-2) only when input uses the specifically supported basic MCU model; not arbitrary firmware.
-
-**Direct later dependents:** [IMPORT-5](#m-import-5).
-
-**Conditional later consumers:** [IMPORT-4](#m-import-4) when input consumes IC/control mappings from that accepted stage.
+**Direct hard dependents:** [IMPORT-5](#m-import-5).
 
 <a id="m-import-4"></a>
+
 ### IMPORT-4 · Multi-rail, relay and dynamic-circuit imports
 
-**Type / status:** Planned later independent power/dynamic import subset; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Qualify imported circuits whose behavior depends on multiple sources/references, switching, timing or external loads.
+**Hard prerequisites:** [IMPORT-2](#m-import-2), [E02](#m-e02), [E03](#m-e03), [E07](#m-e07), [U03](#m-u03), [P09](#m-p09)
 
-**Architectural owner / affected systems:** Import source/domain/operating manifests and existing power, relay, temporal, physical and diagnostic services.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [IMPORT-2](#m-import-2), [E02](#m-e02), [E03](#m-e03), [E07](#m-e07), [U03](#m-u03), [P09](#m-p09).
+**Purpose and reason:** Support declared dynamic circuits and multiple references through usable current instruments.
 
-**Must not be coupled:** No requirement to finish IMPORT-3 for an otherwise supported non-IC circuit; no arbitrary mains/converter or high-frequency fidelity promise.
+**Architectural owner / affected systems:** Power/dynamic source and initial-state interpretation with shared native qualification.
 
-**Exact deliverable:** Versioned mappings for qualified multi-rail, relay and dynamic circuits, source/reference and initial-state annotations, finite operational profiles and instrument requirements. Reuse the same supported physical envelope and bounded generation jobs.
+**Must not be coupled:** Mains/offline inputs add E05/E06 only when consumed; no automatic serial dependence on IMPORT-3.
 
-**Acceptance:** Partial power, source contention, backfeed, stored energy and clock/switching observations match the supported model. Declared customer operating sequences establish healthy behavior and faulty symptoms. Required source/load/control actions are player-operable; layer/copper mapping and physical repair remain native.
+**Exact deliverable:** Qualified multi-rail/relay/dynamic mappings, source/reference and initial-state annotations, finite customer operating sequences and instrument requirements. Use native bounded jobs and physical envelope.
 
-**Important negative tests:** Every ground label merged; bench load counted as PCB part; ideal regulator substituted silently; hidden switching waveform; scope reference shorts ignored; partial-power false-off; circuit converges only under an undeclared verifier stimulus.
+**Acceptance:** Partial power, contention, backfeed, stored energy and clock/switch observations match the supported model. Customer sequences define healthy and faulty function. Necessary controls are player-accessible and layer/copper/repair behavior remains native.
 
-**Performance / scalability evidence:** Cross-domain and temporal import corpus with reference/power/stimulus negatives, solver/copper correspondence, real operating sequence and current replay/save integration when advertised.
+**Important negative tests:** Isolated returns merged by label; unsupported stored energy discarded; required control unavailable; imported model bypasses source protection; current interpretation uses stale cached proof.
 
-**Architectural risk:** Importing structurally valid files whose references, dynamics or operating contract are not supported.
+**Performance / scalability evidence:** Varied supported dynamic sequences, reference sensitivity, current physical/playable correspondence and bounded work.
 
-**Expected extension and scale effects:** Pluggability: power/dynamic adapters reuse accepted provider contracts. Scale: more useful inputs without a new solver or router.
+**Architectural risk:** A large successful solve being mistaken for a qualified diagnosable challenge.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** Mains/isolation or offline-conversion files require E05/E06 respectively; AC semiconductor or motor-control files require E13/E14 when used. IC-containing files require the relevant IMPORT-3 mappings. These are file-specific capability requirements, not all unconditional prerequisites of this stage.
-
-**Conditional prerequisites:** [IMPORT-3](#m-import-3) only when input consumes IC/control mappings from that accepted stage. [E05](#m-e05) only when input includes accepted AC/mains/isolation behavior. [E06](#m-e06) only when input includes the accepted offline-converter model. [E13](#m-e13) only when input uses accepted semiconductor AC switching. [E14](#m-e14) only when input uses the accepted motor-control family.
-
-**Direct later dependents:** [IMPORT-5](#m-import-5).
+**Direct hard dependents:** [IMPORT-5](#m-import-5).
 
 <a id="m-import-5"></a>
+
 ### IMPORT-5 · Broad supported CircuitJS subset and community qualification
 
-**Type / status:** Planned later import product qualification; not universal import; UNSTARTED.
+**Status:** UNSTARTED.
 
-**Purpose and reason:** Turn the bounded import slices into a maintainable broadly useful product feature with a transparent versioned support envelope.
+**Hard prerequisites:** [IMPORT-3](#m-import-3), [IMPORT-4](#m-import-4), [A11](#m-a11), [U06](#m-u06)
 
-**Architectural owner / affected systems:** Import support registry/matrix, independent corpus qualification, author workflow, source/replay packaging and normal player services.
+**Priority / applicability:** Planned later or conditional capability. Required only for its selected consuming content/advertised support; not a blanket base-release prerequisite.
 
-**Hard prerequisites:** [IMPORT-3](#m-import-3), [IMPORT-4](#m-import-4), [A11](#m-a11), [U06](#m-u06).
+**Purpose and reason:** Publish a broad but explicit usable subset instead of claiming every file imports.
 
-**Must not be coupled:** No guarantee for every imaginable CircuitJS element/format, every future IC/instrument or arbitrary firmware; no Q60/Q100 import prerequisite.
+**Architectural owner / affected systems:** Import support matrix, author workflow, current portable artifacts and holdout qualification.
 
-**Exact deliverable:** A published element/import-feature matrix, categorized community-style holdout corpus, deterministic capability reports, usable author annotation flow and portable source-plus-manifest replay. Selected physical scale bands are declared and qualified, not inferred from file parsing.
+**Must not be coupled:** No full community ecosystem, arbitrary source execution or unconditional dependency for native releases.
 
-**Acceptance:** Every included element/model combination either enters the shared native pipeline truthfully or receives an exact unsupported/needs-input reason. No silent drops or electrical rewrites. Healthy intent precedes seeded faults; diagnosis/serviceability/repair and physical correspondence pass on the accepted subset. Old supported source formats/versions replay or reject with a clear policy.
+**Exact deliverable:** Element/import-feature matrix generated from current capabilities, varied community-style corpus, deterministic reports, usable author annotation and source-plus-current-manifest sharing. Declare actual qualified physical scale bands.
 
-**Important negative tests:** Success rate calculated after deleting unsupported inputs; failed files hidden; source bytes absent from supposedly portable artifact; edited file reuses stale proof; author source leaks through normal gameplay text; importer support matrix contradicts actual registration; all high-cost cases filtered without published bounds.
+**Acceptance:** Every included element/model either enters the shared pipeline truthfully or has an exact unsupported/needs-input result. No silent drops or electrical rewrites. Healthy intent, seeded faults, diagnosis/serviceability and physical repair pass on the chosen subset. Incompatible old interpretations/formats may reject; no historical reader is required.
 
-**Performance / scalability evidence:** Frozen valid/invalid/ambiguous/unsupported holdout with per-stage outcomes and modest-host cost; native/imported same-circuit parity; source hash/manifest and corrupted-state tests; actual author-to-player flow. Real community files require permission/provenance handling at implementation, not assumptions here.
+**Important negative tests:** Hash with no source bytes; known unsupported constructs disappear; scale inferred from parsing; unknown interpretation accepted; source/answer leaks through normal share text.
 
-**Architectural risk:** Marketing a curated import demo as universal conversion or allowing parser/version drift to invalidate physical replay.
+**Performance / scalability evidence:** Frozen varied holdout including failures, author usability, bounded artifact size and current reconstruction.
 
-**Expected extension and scale effects:** Pluggability: mappings follow registered capabilities. Scale: finite supported subsets and honest rejection avoid unbounded arbitrary-netlist obligations.
+**Architectural risk:** Scope expanding to universal import or indefinite parser/model compatibility.
 
-**Replay / versioning:** Pin each consumed model, provider, package, program/import or instrument policy version as relevant; preserve already supported Task48/49 and native/imported replay interpretations.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits. This is later separately authorized work after N00; consume the accepted recipe and foundation contracts.
-
-**Capability boundary:** IMPORT-3 and IMPORT-4 converge here but retain their earlier independent progress. A chosen imported Q60/Q100 family also passes that scale gate; native Q60/Q100 does not wait for IMPORT-5. The author may know the original schematic; normal-player privacy still prevents accidental answer disclosure, not determined local inspection.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-
-## Diagnostic scale
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-d01"></a>
+
 ### D01 · Scalable diagnostic partitions and context-valid proof reuse
 
-**Type / status:** Required foundation; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A09](#m-a09), [A10](#m-a10), [Q15](#m-q15)
+
+**Priority / applicability:** Required foundation
 
 **Purpose and reason:** Prevent proof cost from overtaking simulation while keeping the entire admitted hypothesis contract honest.
 
 **Architectural owner / affected systems:** Production diagnostic planner, observation partitions, proof receipt cache and serial reference verifier.
-
-**Hard prerequisites:** [A09](#m-a09), [A10](#m-a10), [Q15](#m-q15).
 
 **Must not be coupled:** No shared mutable solver-state cache, brute-force every conceivable fault or random candidate sampling presented as exhaustive admission.
 
@@ -2716,31 +2301,27 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: diagnostic contracts stay provider-owned. Scale: fewer repeated full installs without unsafe same-owner reuse.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [X01](#m-x01), [X05](#m-x05), [X06](#m-x06).
-
-
-## Scale gates
+**Direct hard dependents:** [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [X01](#m-x01), [X05](#m-x05), [X06](#m-x06).
 
 <a id="m-q15"></a>
+
 ### Q15 · Heterogeneous 15-part procedural control-board qualification
 
-**Type / status:** Required scale gate; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A05](#m-a05), [A08](#m-a08), [A10](#m-a10), [A11](#m-a11), [P03](#m-p03), [P04](#m-p04), [U01](#m-u01), [E01](#m-e01), [E03](#m-e03)
+
+**Priority / applicability:** Required scale gate
 
 **Purpose and reason:** Prove the construction/ownership architecture with a useful board larger than the old bounded indicator.
 
 **Architectural owner / affected systems:** RB15 device intent and independent integrated qualification across generation, physical, solver, diagnostic and player layers.
 
-**Hard prerequisites:** [A05](#m-a05), [A08](#m-a08), [A10](#m-a10), [A11](#m-a11), [P03](#m-p03), [P04](#m-p04), [U01](#m-u01), [E01](#m-e01), [E03](#m-e03).
-
 **Must not be coupled:** No mains, two-layer normal-play requirement, scoring or advanced profile needed for this gate.
 
 **Exact deliverable:** A real approximately 15-part low-voltage multi-block board with purposeful support, relay/control/load behavior and at least two structurally different qualified implementations.
 
-**Acceptance:** Manifest-to-playable stages pass; the same functional intent yields different internal designs; every counted package is causal; all admitted faults have legal repair/retest; held-out seeds remain within the declared 5–20-part envelope.
+**Acceptance:** Manifest-to-playable stages pass; the same functional intent yields different internal designs; every counted package is causal; all admitted faults have legal repair/retest; held-out seeds remain within the declared 5-20-part envelope.
 
 **Important negative tests:** Authored full-board layout disguised as general procedural proof; copied tile; unsupported hypothesis; inaccessible terminal; fixed answer despite changed internal topology.
 
@@ -2750,26 +2331,25 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: first integrated extension proof. Scale: routine-small envelope, not yet 40/60/100 support.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [U05](#m-u05), [U08](#m-u08), [D01](#m-d01), [Q30](#m-q30), [REL-A](#m-rel-a).
+**Direct hard dependents:** [U05](#m-u05), [U08](#m-u08), [D01](#m-d01), [Q30](#m-q30), [REL-A](#m-rel-a).
 
 <a id="m-q30"></a>
-### Q30 · Normal 20–40-part multi-rail procedural qualification
 
-**Type / status:** Required normal-medium gate; UNSTARTED.
+### Q30 · Normal 20-40-part multi-rail procedural qualification
+
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [Q15](#m-q15), [E02](#m-e02), [E03](#m-e03), [E04](#m-e04), [D01](#m-d01), [P09](#m-p09), [U02](#m-u02)
+
+**Priority / applicability:** Required normal-medium gate
 
 **Purpose and reason:** Prove the middle scale where multiple regions, domains and alternate implementations become normal.
 
 **Architectural owner / affected systems:** RB30 device-intent family and integrated supported-envelope qualification.
 
-**Hard prerequisites:** [Q15](#m-q15), [E02](#m-e02), [E03](#m-e03), [E04](#m-e04), [D01](#m-d01), [P09](#m-p09), [U02](#m-u02).
-
 **Must not be coupled:** No need for every future instrument or advanced intermittent/damage feature; temporal variants require E07/U03 when used.
 
-**Exact deliverable:** Approximately 30-part heterogeneous multi-rail control board plus a held-out 20–40-part corpus, repeated output channels and structurally different implementations of shared roles.
+**Exact deliverable:** Approximately 30-part heterogeneous multi-rail control board plus a held-out 20-40-part corpus, repeated output channels and structurally different implementations of shared roles.
 
 **Acceptance:** Generation, routing, domain behavior, partial power, normal diagnostics and repair meet the frozen budget; no generic layer gains device-specific branches; selected layer strategy is inspectable and comprehensible.
 
@@ -2781,31 +2361,27 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: ordinary mixed content uses the same services. Scale: normal medium support becomes evidence, not expectation.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [U07](#m-u07), [Q60](#m-q60).
-
-
-## Release gates
+**Direct hard dependents:** [U07](#m-u07), [Q60](#m-q60).
 
 <a id="m-rel-a"></a>
+
 ### REL-A · Limited desktop alpha: architecture learning release
 
-**Type / status:** Required intermediate release gate; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [Q15](#m-q15), [U04](#m-u04), [U05](#m-u05), [A11](#m-a11)
+
+**Priority / applicability:** Required intermediate release gate
 
 **Purpose and reason:** Obtain real player feedback without pretending the final large-board target has already been achieved.
 
 **Architectural owner / affected systems:** Release qualification over the accepted small-board profile and session surface.
 
-**Hard prerequisites:** [Q15](#m-q15), [U04](#m-u04), [U05](#m-u05), [A11](#m-a11).
-
 **Must not be coupled:** No scoring, economy, mobile, all instruments, Q100 or PSYCHOTIC required.
 
-**Exact deliverable:** Explicit low-voltage 5–20-part alpha support statement, EASY/MEDIUM availability, usable Resources/Settings, replay and honest catalog/navigation.
+**Exact deliverable:** Explicit low-voltage 5-20-part alpha support statement, EASY/MEDIUM availability, usable Resources/Settings, replay and honest catalog/navigation.
 
-**Acceptance:** Advertised routes pass diagnostic/physical/player/privacy/focus gates; known limitations and bug-report identity are documented; unsupported mains/layers/profiles are not advertised.
+**Acceptance:** Advertised current routes pass electrical, physical, diagnosis/repair/retest, privacy and focus checks. Record current limitations and reproducible bug-report identity. No unsupported mains, layers, profiles or historical save/challenge support is advertised.
 
 **Important negative tests:** Developer entry mistaken for normal play; unknown replay silently substituted; modal input reaches hidden board; mock feature presented as gameplay.
 
@@ -2815,29 +2391,25 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: checks integrated boundaries. Scale: provides human evidence, not a large-board certificate.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [REL-B](#m-rel-b).
-
-
-## Scale gates
+**Direct hard dependents:** [REL-B](#m-rel-b).
 
 <a id="m-q60"></a>
-### Q60 · Advanced 40–60-part appliance/control-board qualification
 
-**Type / status:** Required primary product target; UNSTARTED.
+### Q60 · Advanced 40-60-part appliance/control-board qualification
+
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)
+
+**Priority / applicability:** Required primary product target
 
 **Purpose and reason:** Deliver the new primary product target, including meaningful mains-side power conversion and low-voltage control/output behavior.
 
 **Architectural owner / affected systems:** RB56 intent family and whole-device electrical/physical/diagnostic qualification.
 
-**Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01).
+**Must not be coupled:** No claim of arbitrary 60-part netlists; no multiple faults or every temporal feature required, but every advertised operation/model must be qualified.
 
-**Must not be coupled:** No arbitrary 60-part netlist promise; no blanket dependency on E08, MCU, display, import, every logic IC, two-channel scope, logic analyzer or signal injection. Every operation/model actually advertised by the chosen family must still be qualified.
-
-**Exact deliverable:** The approximately 56-part reference board and varied 40–60-part derivatives with mains entry, causal isolated conversion, multiple rails, sensors, relays and support; alternative real internal implementations.
+**Exact deliverable:** The approximately 56-part reference board and varied 40-60-part derivatives with mains entry, causal isolated conversion, multiple rails, sensors, relays and support; alternative real internal implementations.
 
 **Acceptance:** Each declared reference-board stage passes; package count is honest; mains/isolation/storage/loading behavior meets model contracts; all required measurements and repairs are accessible; admission and interactive budgets pass; HARD calibration can use measured evidence.
 
@@ -2849,33 +2421,27 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: serious heterogeneous content without core surgery. Scale: real advanced support, not merely structural routing.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Capability condition:** A component-repair-only RB56 has no E08 prerequisite. Trace cutting, player jumpers, restoration or bypass content adds E08. MCU, displays, importer and extra instruments are dependencies only when the selected family actually consumes them; otherwise the base Q60 remains independent.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Conditional prerequisites:** [E08](#m-e08) only when the selected Q60 family advertises or consumes trace cutting, player-installed jumpers, physical trace restoration or bypass repair. Component-only diagnosis and replacement remain a valid complete Q60 route. The family capability manifest must state which path is qualified; a release advertising E08 cannot inherit a component-only receipt as proof of trace repair.
-
-**Amended qualification boundary:** MCU, IC/display variants and imported origins are independent capability bundles, not mandatory baseline implementations. Requalify Q60 for each added family at its actual advertised scale and tools. U06/U07 test only installed state providers: their presence in this hard prerequisite chain does not indirectly make E08 or future MCU/import state mandatory.
-
-**Direct later dependents:** [REL-B](#m-rel-b), [Q100](#m-q100), [X05](#m-x05), [X06](#m-x06).
-
-
-## Release gates
+**Direct hard dependents:** [REL-B](#m-rel-b), [Q100](#m-q100), [X05](#m-x05), [X06](#m-x06).
 
 <a id="m-rel-b"></a>
+
 ### REL-B · Advanced desktop beta and HARD-profile release
 
-**Type / status:** Required advanced release gate; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07)
+
+**Priority / applicability:** Required advanced release gate
 
 **Purpose and reason:** Release the advanced appliance/control surface only after its full operating and session behavior is credible.
 
 **Architectural owner / affected systems:** Release, profile calibration, source/version manifests and published support envelope.
 
-**Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07).
-
 **Must not be coupled:** PSYCHOTIC, Q100, economy, mobile and optional advanced faults are not beta prerequisites unless advertised.
 
-**Exact deliverable:** Beta support for EASY/MEDIUM/HARD and the qualified 40–60-part family, durable sessions/replay as advertised, source/reference instrumentation and honest layer policy.
+**Exact deliverable:** Beta support for EASY/MEDIUM/HARD and the qualified 40-60-part family, durable sessions/replay as advertised, source/reference instrumentation and honest layer policy.
 
 **Acceptance:** HARD has a fresh Q60-based calibration receipt; every advertised repair/instrument/source/catalog/save state is validated; unsupported fidelity is documented; non-spoiling bug reports reproduce failures.
 
@@ -2887,25 +2453,21 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: full provider integration remains consistent. Scale: advanced use publicly supportable.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [X01](#m-x01), [X02](#m-x02), [X04](#m-x04), [X05](#m-x05), [X09](#m-x09), [REL-1](#m-rel-1).
-
-
-## Scale gates
+**Direct hard dependents:** [X01](#m-x01), [X02](#m-x02), [X04](#m-x04), [X05](#m-x05), [X09](#m-x09), [REL-1](#m-rel-1).
 
 <a id="m-q100"></a>
+
 ### Q100 · Constrained 100-part procedural stretch qualification
 
-**Type / status:** Required architectural stretch target, not an optional backlog; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [Q60](#m-q60), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01), [A11](#m-a11)
+
+**Priority / applicability:** Required architectural stretch target, not an optional backlog
 
 **Purpose and reason:** Prove the explicit stretch target without arbitrary-netlist promises or tiling tricks.
 
 **Architectural owner / affected systems:** RB100 intent family, supported-envelope policy and independent scale qualification.
-
-**Hard prerequisites:** [Q60](#m-q60), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01), [A11](#m-a11).
 
 **Must not be coupled:** No need to route every arbitrary 100-part netlist. Early 100-part pilots remain mandatory even though final Q100 follows Q60.
 
@@ -2919,29 +2481,25 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Architectural risk:** Compounding weaknesses that were harmless at 30 parts; restricted fixtures advertised as universal routing.
 
-**Expected extension and scale effects:** Pluggability: new complex device remains composition data/providers. Scale: legitimate declared 75–100 stretch envelope.
+**Expected extension and scale effects:** Pluggability: new complex device remains composition data/providers. Scale: legitimate declared 75-100 stretch envelope.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Capability condition:** The approximately 100-part stretch remains required, not an optional backlog. Resolve only capabilities used by the selected family. Do not turn every later vocabulary or importer lane into a release prerequisite.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Consumed-capability boundary:** Q100 remains required. Its default hard chain inherits the corrected component-repair-capable Q60 path, not unconditional E08 or all later vocabulary. A mixed analog/logic/MCU/display/AC-control RB100 variant is planned as an optional extension of the reference family; qualifying that variant requires its actual providers and instruments, not adding them to every RB100 implementation. The exact supported realization and capability bundle must be stated in each receipt.
-
-**Direct later dependents:** [REL-1](#m-rel-1).
-
-
-## Advanced capability
+**Direct hard dependents:** [REL-1](#m-rel-1).
 
 <a id="m-x01"></a>
+
 ### X01 · Deterministic intermittent and state-dependent faults
 
-**Type / status:** Required long-range advanced capability; profile use separately admitted; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [A09](#m-a09), [D01](#m-d01), [U03](#m-u03), [REL-B](#m-rel-b)
+
+**Priority / applicability:** Required long-range advanced capability; profile use separately admitted
 
 **Purpose and reason:** Introduce real intermittent troubleshooting only after observation and diagnostic planning can support it.
 
 **Architectural owner / affected systems:** Fault event scheduler, solver-time state transitions and temporal diagnostic providers.
-
-**Hard prerequisites:** [A09](#m-a09), [D01](#m-d01), [U03](#m-u03), [REL-B](#m-rel-b).
 
 **Must not be coupled:** No universal contact physics, automatic PSYCHOTIC label or requirement that every advanced board be intermittent.
 
@@ -2957,22 +2515,21 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: events are fault providers. Scale: bounded temporal hypotheses.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-x02"></a>
+
 ### X02 · Expanded causal stress and secondary damage
 
-**Type / status:** Required long-range consequence capability; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [E01](#m-e01), [A08](#m-a08), [U06](#m-u06), [REL-B](#m-rel-b)
+
+**Priority / applicability:** Required long-range consequence capability
 
 **Purpose and reason:** Model consequences beyond the original resistor case without confounding initial faults and player-caused failures.
 
 **Architectural owner / affected systems:** Part stress/damage providers, solver observations, lifetime/history and source limits.
-
-**Hard prerequisites:** [E01](#m-e01), [A08](#m-a08), [U06](#m-u06), [REL-B](#m-rel-b).
 
 **Must not be coupled:** Does not depend on X01 intermittency or X03 thermal unless the selected model actually consumes them.
 
@@ -2988,22 +2545,21 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: damage belongs to component providers. Scale: composable consequences.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [X03](#m-x03), [X04](#m-x04).
+**Direct hard dependents:** [X03](#m-x03), [X04](#m-x04).
 
 <a id="m-x03"></a>
+
 ### X03 · Thermal approximation where diagnosis justifies it
 
-**Type / status:** Conditional: documented diagnostic or failure-timing need; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [X02](#m-x02)
+
+**Priority / applicability:** Conditional: documented diagnostic or failure-timing need
 
 **Purpose and reason:** Add heating/cooling only when an admitted scenario needs thermal timing or an observable physical clue.
 
 **Architectural owner / affected systems:** Derived thermal state provider from solved dissipation and bounded time history.
-
-**Hard prerequisites:** [X02](#m-x02).
 
 **Must not be coupled:** No finite-element thermal solver, photoreal camera or prerequisite for ordinary saves/returns.
 
@@ -3019,22 +2575,21 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: optional derived-state provider. Scale: bounded extra state only where used.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-x04"></a>
+
 ### X04 · Persistent customer returns and service intervals
 
-**Type / status:** Planned advanced capability; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [X02](#m-x02), [U06](#m-u06), [REL-B](#m-rel-b)
+
+**Priority / applicability:** Planned advanced capability
 
 **Purpose and reason:** Extend immediate retest into plausible later consequences while preserving the actual serviced board.
 
 **Architectural owner / affected systems:** Job history, service-interval simulator and complaint projection over current part/damage state.
-
-**Hard prerequisites:** [X02](#m-x02), [U06](#m-u06), [REL-B](#m-rel-b).
 
 **Must not be coupled:** Thermal and intermittency are dependencies only for return models that use them; no economy required.
 
@@ -3050,22 +2605,23 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: complaints consume outcome evidence. Scale: meaningful longitudinal sessions.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Current persistence rule:** Persist current customer-return history and changed physical state for the supported development format. In-game history is valuable gameplay state; it does not require reopening every previous executable or historical save schema.
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-x05"></a>
+
 ### X05 · Expert-calibrated PSYCHOTIC admission
 
-**Type / status:** Required mature-product profile gate; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [Q60](#m-q60), [U05](#m-u05), [D01](#m-d01), [REL-B](#m-rel-b)
+
+**Priority / applicability:** Required mature-product profile gate
 
 **Purpose and reason:** Produce difficulty that challenges experienced technicians through reasoning rather than patience or pixel hunting.
 
 **Architectural owner / affected systems:** Advanced profile calibration, diagnostic evidence and blinded technician evaluation.
-
-**Hard prerequisites:** [Q60](#m-q60), [U05](#m-u05), [D01](#m-d01), [REL-B](#m-rel-b).
 
 **Must not be coupled:** Q100 and multiple faults are not necessary for every PSYCHOTIC challenge. A profile using X01/X02/X03 adds those as explicit dependencies.
 
@@ -3081,24 +2637,21 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: evidence-driven profiles reuse providers. Scale: advanced reasoning independent of board size.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Stateful/digital expert-content opportunities:** Later E09/E10/MCU/display/AC-control variants may deepen PSYCHOTIC through a latch held in reset by a rising rail, a missing clock, a missing external pull-up, a shifted comparator reference, a PWM driver collapsing under load, a failed zero-cross path, a timing-network drift or a dead multiplexed digit/scan path. Several subsystems may produce the same customer complaint. These are optional evidence-backed implementations, not a requirement that every expert board contain an MCU or 100 parts. Normal public pin/function information and bench inspection remain available; no hidden-firmware decompilation, inaccessible pins or answer-revealing UI is allowed.
-
-**Direct later dependents:** [REL-1](#m-rel-1).
+**Direct hard dependents:** [REL-1](#m-rel-1).
 
 <a id="m-x06"></a>
+
 ### X06 · Bounded multiple-fault decision and optional proof
 
-**Type / status:** Conditional; explicit skip is valid; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [D01](#m-d01), [A08](#m-a08), [Q60](#m-q60)
+
+**Priority / applicability:** Conditional; explicit skip is valid
 
 **Purpose and reason:** Permit controlled combinations only when they add genuine diagnostic value beyond one fault.
 
 **Architectural owner / affected systems:** Joint hypothesis provider, interaction/repair equivalence and device-level admission.
-
-**Hard prerequisites:** [D01](#m-d01), [A08](#m-a08), [Q60](#m-q60).
 
 **Must not be coupled:** Not a prerequisite for PSYCHOTIC, scoring, beta or basic history.
 
@@ -3114,22 +2667,21 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: bounded composable hypotheses. Scale: deliberately controlled joint work.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-x07"></a>
+
 ### X07 · Optional diagnostic-efficiency scoring
 
-**Type / status:** Optional product capability; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [U06](#m-u06), [U05](#m-u05)
+
+**Priority / applicability:** Optional product capability
 
 **Purpose and reason:** Provide useful feedback without changing electrical behavior or forcing one correct sequence.
 
 **Architectural owner / affected systems:** Observed action/history scoring service and result presentation.
-
-**Hard prerequisites:** [U06](#m-u06), [U05](#m-u05).
 
 **Must not be coupled:** No prerequisite for save/resume, multi-fault, returns, alpha or beta.
 
@@ -3145,22 +2697,21 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: pure observer over history. Scale: bounded aggregation.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-x08"></a>
+
 ### X08 · Conditional active capacitance measurement
 
-**Type / status:** Conditional on an admitted diagnostic need; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [E05](#m-e05), [U02](#m-u02), [A08](#m-a08)
+
+**Priority / applicability:** Conditional on an admitted diagnostic need
 
 **Purpose and reason:** Add capacitance mode only when a real diagnostic gap justifies a defensible active method.
 
 **Architectural owner / affected systems:** Active instrument provider, energy readiness and temporary CircuitJS stimulus.
-
-**Hard prerequisites:** [E05](#m-e05), [U02](#m-u02), [A08](#m-a08).
 
 **Must not be coupled:** No prerequisite on an oscillator merely because it had a lower old task number; not required for all advanced profiles.
 
@@ -3176,31 +2727,27 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: another instrument provider. Scale: bounded additional proof cost.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
-
-
-## Productization
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
 <a id="m-x09"></a>
+
 ### X09 · Mature packaging, accessibility and support policy
 
-**Type / status:** Required mature-product support gate; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [REL-B](#m-rel-b), [U01](#m-u01), [U04](#m-u04), [U06](#m-u06)
+
+**Priority / applicability:** Required mature-product support gate
 
 **Purpose and reason:** Make the qualified product usable and supportable beyond the development environment.
 
 **Architectural owner / affected systems:** Release packaging, public documentation, accessibility audit and supported-browser/offline/deployment policy.
 
-**Hard prerequisites:** [REL-B](#m-rel-b), [U01](#m-u01), [U04](#m-u04), [U06](#m-u06).
-
 **Must not be coupled:** Touch/mobile, cloud accounts, economy and hosted deployment remain separately scoped decisions, not assumed prerequisites.
 
-**Exact deliverable:** Reproducible distribution, attribution/license review, non-spoiling bug reports, full promised desktop accessibility and explicit support/retirement/version policy.
+**Exact deliverable:** Reproducible distribution, attribution/license/dependency review, non-spoiling bug reports, promised desktop accessibility and an explicit current-format support/retirement statement. Maintain a single current reader until a separately authorized compatibility promise creates a real requirement.
 
-**Acceptance:** Install/launch/replay/save recovery works on supported environments; advertised controls remain accessible without hidden answers; legal/dependency notices and distribution permissions are reviewed against actual dependencies.
+**Acceptance:** Install, launch, current challenge reproduction, current saves and recovery work on advertised environments. Published support explicitly states that development updates may invalidate artifacts. Alpha, beta or version 1 labels do not silently create cross-version support promises. Review actual distribution permissions and notices before release.
 
 **Important negative tests:** Hosted-only accidental data loss; stale service worker loads incompatible code; support claim for untested browser; screen-reader reveals hidden value; missing attribution.
 
@@ -3210,33 +2757,29 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: contributor documentation reflects real seams. Scale: supportable larger product.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
-
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
-
-**Direct later dependents:** [REL-1](#m-rel-1).
-
-
-## Release gates
+**Direct hard dependents:** [REL-1](#m-rel-1).
 
 <a id="m-rel-1"></a>
+
 ### REL-1 · Mature product readiness with 60-part core and 100-part stretch
 
-**Type / status:** Required final product gate; UNSTARTED.
+**Status:** UNSTARTED.
+
+**Hard prerequisites:** [Q100](#m-q100), [X05](#m-x05), [X09](#m-x09), [REL-B](#m-rel-b)
+
+**Priority / applicability:** Required final product gate
 
 **Purpose and reason:** Close the promised product, not merely the numbered queue.
 
 **Architectural owner / affected systems:** Owner release decision over advertised capability manifests, independent reviews and qualification receipts.
 
-**Hard prerequisites:** [Q100](#m-q100), [X05](#m-x05), [X09](#m-x09), [REL-B](#m-rel-b).
-
 **Must not be coupled:** No completion requirement for optional X03/X06/X07/X08, mobile, economy or universal PCB design unless the product explicitly advertises them.
 
-**Exact deliverable:** Mature supported surface including advanced Q60 families, constrained Q100 capability, all four calibrated profiles, truthful model/layer limits and maintained replay/session behavior.
+**Exact deliverable:** Mature current product with advanced Q60 families, qualified constrained Q100, four calibrated profiles, truthful model/layer limits and current challenge/session behavior.
 
-**Acceptance:** All advertised contracts pass their exact final corpus; no unresolved severe correctness/fidelity/ownership blocker remains; expert difficulty and modest-machine budgets are evidenced; compatibility policy is actionable.
+**Acceptance:** All currently advertised contracts pass their final corpus. No unresolved severe correctness, fidelity or ownership defect remains. Expert difficulty and modest-machine budgets have evidence. Any cross-version compatibility promise must be separately owner-approved; maturity alone does not create one.
 
-**Important negative tests:** Stretch feature disabled but still advertised; benchmark-only 100-part proof; unreviewed final source delta; missing old replay resolution; cosmetic profile label.
+**Important negative tests:** Stretch feature disabled but still advertised; benchmark-only 100-part proof; unreviewed final source delta; broken current reproduction or unsupported-artifact rejection; cosmetic profile label.
 
 **Performance / scalability evidence:** Final representative release matrix, independent review, reproducible build/distribution and documented remaining optional work.
 
@@ -3244,437 +2787,134 @@ Compare suitable 555-based, transistor/RC, comparator/Schmitt and later qualifie
 
 **Expected extension and scale effects:** Pluggability: mature extension-cost target demonstrated. Scale: explicit core and constrained stretch commitments realized.
 
-**Replay / versioning:** New contracts are versioned; accepted Task48/49 descriptors retain their reviewed meaning.
+**Direct hard dependents:** None in this catalog; any actual consuming capability must still be qualified..
 
-**Task49 impact:** Preserve the accepted bounded Task49 contract, versions, catalog bounds and retained limits; consume its immutable recipe after N00.
+<a id="capabilities"></a>
+# 8. Capability-conditional dependency rules
 
-**Direct later dependents:** None unconditionally; later use is governed by the consuming capability manifest.
+The base hard graph is not the graph of every possible future product. A selected family names the current providers it actually uses: design origin, source/reference/load controls, packages/models, instruments, repair actions, state and diagnostic policy. Add only those capability prerequisites to that qualification instance. A release advertising a feature needs its current integrated evidence; merely mentioning a lane does not add a dependency.
 
-
-
----
-
-<a id="reconciliation"></a>
-# 8. Audit reconciliation, risk register and remaining brick walls
-
-## 8.1 Disposition of all fourteen original findings
-
-These findings retain the confidence limits of the original audit. Rechecking an unchanged source mechanism is not a fresh production reproduction. “Close” means the owning milestone supplies the named evidence; nothing in this table declares a fix already implemented.
-
-| Finding | Baseline evidence and confidence | New disposition / owner | Minimum closure evidence and new risk |
-|---|---|---|---|
-| **F1: device construction concentrated in the bounded assembler** | HIGH, high-confidence code finding. Fresh source still allocates the controlled circuit and knows its parts/constants. [R02; I2 S7–S9] | Task49 supplies resolved values; **A04/A05/A11** replace ordinary device-specific construction and prove variant-local extension. Required before more content relies on this pattern. | Migrate two real implementations and add an ordinary variant without a new generic branch. Avoid a universal DSL or provider-owned nested simulation. |
-| **F2: production admission calls family-specific developer orchestration** | HIGH, proven call linkage, not measured large-board cost. `validateLive` still calls `Task41DeveloperVerifier`. [R09] | **A09/D01** own production hypothesis/plan execution and scale proof. Keep developer tests as independent consumers. | Provider-owned plans, parity with the serial reference, failure isolation and explicit population accounting. Merely renaming the verifier is not closure. |
-| **F3: candidate eligibility and proof enumeration disagree — resolved in A02** | HIGH before extension, code-supported latent mismatch; current two-owner pool does not demonstrate failure. Controlled proof filters compatibility/type and deduplicates by target, not the full admitted predicate. [R10; I2 S20/E2] | **A02**, before new fault populations; A09 retains complete hypothesis identity. | Compatible-but-unserviceable negative, multiple faults on one owner, count/selection/proof consistency. Do not reduce the count to hide mismatches. |
-| **F4: fixed generic physical capacity** | HIGH, proven inequality for one package mixture, not a universal eighteen-part limit. Current outline remains 720 × 400. [R03; I2 E2] | **A01/P03/P09**. Dynamic bounded sizing and hierarchical placement are now required foundations because the product target changed. | Preserve baseline failures, measure mixed packages and route demand, qualify actual larger envelopes. Larger outlines must not merely transfer the problem into unreadable rendering. |
-| **F5: bend-count semantics — resolved in A02** | MEDIUM, prior extracted helper execution; whole-player failure not demonstrated. Unequal collinear segment lengths count as bends. [I2 S13/E1] | **A02**, before new physical corpus scores are trusted. | Direction-change and subdivision-invariance tests, appropriate reversal/self-intersection handling, affected version/replay qualification. |
-| **F6: connected-placement extra center offset — resolved in A02** | MEDIUM, prior arithmetic/translation reproduction; actual rejection impact unmeasured. [I2 S11/E1] | **A02/P01**, before hierarchical placement reuses the calculation. | Repository-native translated-world test and a coherent local/global coordinate contract. Preserve before/after evidence rather than changing several heuristics at once. |
-| **F7: raw grid vertices and repeated segment-pair work** | MEDIUM, high-confidence mechanism; timings and practical limit unmeasured. [I2 S11/S13] | **P04/P08**, with A01 measurements. | Canonical contact-preserving paths, accurate unique-reuse metrics, independent broad-phase equivalence, measured cost. Simplification must not erase escape witnesses or repair loci. |
-| **F8: fit-only view and minimum visible sizes** | MEDIUM, code-derived interaction risk for larger boards; no measured hundred-part UI failure. [I2 S15] | **U01**, now a required foundation, not deferred polish. | One transform and coherent visible/hit/marker geometry, zoom/side access, ordinary operator trials. Do not solve it with oversized invisible targets. |
-| **F9: lexicographic merged-net representative** | MEDIUM, proven canonicalization mechanism. Unchanged local IDs remain stable, while a representative can change with a new alias. [I2 S9] | **A03/P02**, before general optional/repeated composition, cuts and persistence. | Stable device-bus identity or validated retained aliases; earlier lexical insertion test; no saved identity bound solely to a DSU root. |
-| **F10: numerical floating-reference ties** | MEDIUM in the old bounded product; a high-priority future correctness boundary for isolated/high-impedance domains. Current solver stamps 100 MΩ reference ties. [R06] | **A06/A07/E05/U02**, before isolated mains content. | Differential/reference sensitivity, insertion/order invariance where appropriate, instrument loading and singularity behavior. Do not blindly delete stabilization or present it as physical ground. |
-| **F11: bench/runtime growth beyond initial board** | MEDIUM, moderate-confidence scale hypothesis; no leak proved. Inventory and retained parts are legitimate state. [I2 S16/S17] | **U06/U07/Q60/Q100**. | Repeated-session growth, active/inactive elements, legitimate loose-part access, owner disposal and bounded buffers. Never “fix” retention by silently deleting player parts. |
-| **F12: long semantic IDs and generic return labels** | LOW–MEDIUM, high-confidence future presentation debt. [I2 S11/S15] | **A03/U01/U04/A06**. | Short physical designators and meaningful domain/reference labels are separate projections of stable IDs; no hidden answer leakage. |
-| **F13: false dependency chains** | MEDIUM, roadmap inference rather than production defect. [I2 S3] | **This edition's DAG and migration table**, maintained by N00. | Actual consumers determine prerequisites; release labels and lower task numbers do not invent them. Parallel writers must still respect shared ownership. |
-| **F14: unused visualKind / thin wrappers / old menus** | LOW, harmless boilerplate or legacy ugliness in the reviewed scope. [I2 S12/S21] | **Leave alone**, or remove incidentally when an authorized change naturally owns it. | A local test/diff is sufficient if cleaned. No standalone refactor campaign and no prerequisite on the 100-part target. |
-
-The old timing recommendations in I2 are superseded where they conflict with the explicit larger target. The findings themselves are not inflated into “the whole application is broken.” In particular, F4 is a limitation of the current generic placer, not proof that every authored board fails, and F11 is not a discovered memory leak.
-
-## 8.2 Additional findings or implications exposed by this reconciliation
-
-| ID | Evidence / confidence | Meaning for the new architecture | Owning gate |
-|---|---|---|---|
-| **N1: trace geometry exposes mutable array aliases** | CODE, proven representation: constructor retains input arrays and getters return them. No current user-visible exploit or corruption was executed. [R04] | Cached fingerprints, immutable plans and incremental validation cannot trust such an object as a frozen value. Copy/freeze under a versioned boundary; do not cache around mutable aliases. | P01/P02/P08. |
-| **N2: no durable copper-segment/layer identity in current trace carrier** | CODE, proven fields in `PcbTraceGeometry`; it carries net and endpoint IDs plus coordinate arrays. [R04] | Via, cross-layer contact, segment repair and save identity need an explicit conductor model. This cannot safely be postponed until a renderer has already implemented layers. | A03/P02 before P04/E08/U06. |
-| **N3: singleton-sensitive solver and observation context** | CODE, `CircuitElm.sim` is static and ScopePlot reads `CirSim.theSim`. [R05/R08] | Creating two CirSim instances in one execution realm does not prove isolation. Start serialized; qualify a real isolated backend before parallel numerical proofs. | A07/A10. |
-| **N4: all RuntimeExceptions treated as layout-attempt failures** | CODE, `generate` catches RuntimeException and proceeds through its attempt loop. [R03] | A new programmer error could be mislabeled congestion/exhaustion. Expected search rejection needs a typed result; unexpected faults must retain diagnostics and stop the affected job. | A10/P04/P05. |
-| **N5: inherited transformer/relay models have bounded semantics** | CODE, selected transformer and relay model ranges; no fresh numerical fidelity test. [R07] | Coupled winding equations and approximate relay contacts are useful starting points, not proof of offline-converter dynamics, contact leakage observations or power-domain realism. | A07/E03/E05/E06. |
-| **N6: physical population and model fidelity can conflict** | INFERENCE from the new RB56/RB100 target and the proposed use of behavioral converters. | A low-cost model that ignores individually visible external parts cannot support their promised measurements/faults. An opaque module must be counted and exposed honestly. | A01/A05/E06 before Q60. |
-
-These are not reasons to abandon the existing code. They are concrete reasons to establish ownership and fidelity boundaries before larger consumers make them expensive to change.
-
-## 8.3 Five ways this plan could still hit a wall two years later
-
-### Wall 1: functional contracts are too weak to compose real circuits
-
-**Failure:** Every block passes in isolation, but mixed variants fail from loading, reference, headroom, startup or feedback interactions. “Equivalent role” turns out to mean only that both have a similarly named port.
-
-**Early detection:** A05 proves structurally distinct implementations against assumptions/guarantees, then Q15/Q30 combine them under changing loads and source states. E06 validates the hard converter boundary before RB56 becomes product content.
-
-**Design correction already in this plan:** Electrical plans carry explicit source/reference/loading/model contracts and causally relevant physical components. Local certificates never replace whole-device healthy and diagnostic proof. A new variant that cannot meet the role is rejected or gets an explicit adapter/role subtype, not a special-case UI patch.
-
-**Residual uncertainty:** The exact useful library and model fidelity cannot be fully specified before the real pilots. A failed model test must change the model scope or adapter, not silently reduce the 60/100-part product requirement.
-
-### Wall 2: logical net, physical copper and live repair identity diverge
-
-**Failure:** The board can draw two layers but trace cutting still operates on a logical bus. Vias, parallel paths and saved cuts start disconnecting the wrong branch. Fixing it requires replacing the routing, mutation and persistence representations together.
-
-**Early detection:** P02 introduces a conductor graph and validates branched nets, layer crossings and barrels before production layer routing, E08 cuts or U06 saves. P01 prevents mutable geometry aliases from defeating those proofs.
-
-**Design correction already in this plan:** Stable device buses describe design intent; stable conductor loci describe physical connectivity; current mutation state projects to the solver. Lossless segment subdivision preserves identity or explicit provenance; actual reroutes are versioned and incompatible saves reject safely.
-
-**Residual uncertainty:** The cheapest general graph-to-CircuitJS projection for arbitrary cuts still needs a focused implementation and performance proof. It is not solved merely by naming three graphs.
-
-### Wall 3: diagnostic proof consumes the entire generation budget
-
-**Failure:** Dozens of owners, variants and temporal states multiply full candidate installations and repeated repairs. A performance patch starts sampling faults and admitting boards without proving their advertised hypothesis set.
-
-**Early detection:** A01 records proof work separately; A09 provides complete hypothesis accounting; D01 compares optimized partitions/receipts against a serial reference before Q30 expands the normal range.
-
-**Design correction already in this plan:** Cheap serviceability and structural pruning, provider-owned plans, global-context checks, bounded adaptive observations and complete-key receipts. Qualified hypotheses may be limited by a declared content envelope, but omitted candidates are not falsely counted as admitted or proved. The chosen fault itself always has the required whole-device evidence.
-
-**Residual uncertainty:** Some real circuit variants may be diagnostically indistinguishable with the available instruments. Reject or add a genuine observation/repair capability; do not manipulate meter readings to force separation.
-
-### Wall 4: mixed time scales or solver globals defeat interactivity
-
-**Failure:** A mains converter needs tiny steps while a relay or sensor sequence needs seconds; repeated proofs monopolize the UI. A worker “optimization” accidentally shares static CircuitJS state or loses model state between slices.
-
-**Early detection:** A07 starts small stiff/nonlinear and aggregate 60/100-part pilots early. E06 compares necessary detailed observations with a qualified averaged model. U03 measures waveform fidelity and data cost separately from drawing.
-
-**Design correction already in this plan:** One serialized numerical owner initially; bounded stepping, cancellation and observation semantics; explicit fidelity/observation limitations; immutable transferable plans. An isolated execution realm or backend extraction is conditional on measured need and requires a real isolation proof.
-
-**Residual uncertainty:** No benchmark here establishes that the current solver meets the full target. A recorded repeated failure after appropriate model/adapter optimization can justify replacing a narrow execution/matrix boundary. Age alone cannot.
-
-### Wall 5: technically valid boards are unpleasant or not genuinely difficult
-
-**Failure:** RB100 generates and solves but users cannot follow references, distinguish layers or reach dense terminals. PSYCHOTIC is slow navigation and random guessing rather than technical reasoning.
-
-**Early detection:** U01 includes operator targeting on full-count structural fixtures; U05 measures diagnostic features; Q30/Q60 include actual play; X05 uses skilled electronics troubleshooters and unseen variants.
-
-**Design correction already in this plan:** Coherent pan/zoom/side access, short physical labels, no invisible enlarged targets, observable power/control interactions, multiple legal diagnostic paths and held-out expert calibration. The UI may help inspect a physical region without highlighting the culprit.
-
-**Residual uncertainty:** Human difficulty and enjoyment cannot be certified from code alone. User trials are part of the architecture evidence, not decorative post-release polish.
-
-### Additional wall: MCU state or simulated time becomes a second truth
-
-**Failure:** Control outputs continue after supply/reset loss, depend on UI frames, lose clock phase on resume, or require hidden firmware knowledge to diagnose. A behavioral shortcut appears functional but ignores exposed external clock/reset/driver parts.
-
-**Detection and deadline:** A03/A06/A07/A08/U06 define state/time/ownership compatibility now. MCU-1 compares implementations with an identical electrical fixture; MCU-2 must pass power/reset/brownout, loaded GPIO, clock loss, ADC/PWM timing, reproducible initialization, interrupted-proof and saved-state tests before an MCU-consuming family is advertised. Measure events/accepted step, memory and runtime on the named host; a paint-rate test is not a solver performance benchmark.
-
-**Mitigation:** One solver-owned electrical pin model and bounded simulation-time control state; a versioned qualified black-box program; semantic pending events in snapshots; no arbitrary firmware, UI-owned outputs or unqualified exact resume. External circuitry remains causal when drawn and exposed. This does not block a non-MCU Q60/Q100 family.
-
-### Additional wall: imported schematics cannot become honest physical challenges
-
-**Failure:** Solver nodes or schematic coordinates become permanent identities, an ideal source is drawn as a PCB part, unsupported constructs disappear, packages/pins are guessed, or the importer invents “healthy” behavior from a file with no declared purpose. An imported-only renderer or fault shortcut bypasses normal serviceability.
-
-**Detection and deadline:** A03/A04/A10/A11/U04/U06 reserve identity, origin, capability and artifact boundaries now. IMPORT-1 must close the complete passive/DC path including an ambiguous-source/intent case before the accepted subset expands. IMPORT-2–IMPORT-5 repeat correspondence, supported-package, meaningful-fault and replay checks for each new category; none may inherit a parsing-only PASS as challenge qualification.
-
-**Mitigation:** Reuse actual parser semantics in a bounded staging context, preserve input content/hash/version, persist accepted mappings, classify every element, request author annotation only where needed, verify healthy intent before fault injection, and use the native physical/diagnostic/mutation/publication pipeline. Unsupported formats or unavailable source bytes fail explicitly. Import is not a prerequisite for native Q60/Q100.
-
-## 8.4 Ranked architectural risk register
-
-Severity below describes **impact if the future risk materializes**, not a claim that the current small playable product has that defect. Likelihood is an engineering judgment based on the inspected seams and new requirements; it is not a statistical prediction.
-
-| Risk | Severity | Likelihood | Earliest detection | Mitigation / accountable boundary | Deadline |
-|---|---|---|---|---|---|
-| RISK01: weak variant assumptions allow electrically incompatible composition | HIGH | High | A05 mixed-variant tests | Typed assumptions/guarantees, actual adapter and whole-device proof | Before Q30 content library expands |
-| RISK02: physical copper identity cannot support layers/cuts/resume | HIGH | High without change | P02 branched/layer fixtures | Three-graph provenance, stable loci and versioned immutable realization | Before P04, E08 or U06 consumers |
-| RISK03: converter abstraction removes diagnostic causality | HIGH | High | A07 pilot / E06 model gate | Compare fidelity tiers, require causal visible parts and explicit observables | Before Q60 board implementation depends on model |
-| RISK04: numerical ground/reference assumptions create false isolation/readings | HIGH | Medium–high | A06/A07 floating fixtures | Separate physical references from solver gauge; finite instrument models | Before E05 mains/isolation admission |
-| RISK05: repeated full diagnostic proofs dominate generation | HIGH | High | A01 counters / D01 comparison | Structured hypothesis set, partitions, receipts, deterministic budgets | Before Q30 normal content expands |
-| RISK06: unsafe concurrency aliases solver or old session state | HIGH | Medium–high | A07/A10 failure tests | Serialized owner first; isolated backend only after explicit qualification | Before any parallel numerical execution |
-| RISK07: fixed area/region rigidity prevents realistic package mix | HIGH | High for current generic path | A01/P03 demand/placement corpus | Bounded dynamic sizing, hierarchy plus global feedback, explicit barriers | Before Q30 physical support claim |
-| RISK08: route representation/validation becomes dominant | MEDIUM–HIGH | Medium | P04/P08 counts and timing | Canonical segments, broad-phase candidates, independent exact oracle | Before Q60 budget freeze |
-| RISK09: variant/candidate explosion creates unpredictable work | HIGH | High without bounds | A10 stage/exhaustion tests | Constraint pruning, finite vocabulary, declared budgets and typed failures | Before generic production generation |
-| RISK10: geometry/proof cache silently accepts stale state | HIGH | Medium | P01/P08/D01 adversarial tests | Immutable snapshots, complete keys, explicit invalidation, reference parity | Before any cache used for admission |
-| RISK11: UI transforms and hidden layers break target truth | HIGH | Medium–high | U01/P07 operator trials | One transform, side/access policy, visible disambiguation | Before two-layer normal play |
-| RISK12: long inventory/history grows without lifetime boundaries | MEDIUM–HIGH | Medium; leak unproved | U07 repeated-session workload | Accountable retention/disposal and bounded observation buffers | Before Q60 long-session claim |
-| RISK13: replay promises exceed numerical/model compatibility | HIGH | Medium | A03/U06 cross-version tests | Version manifests, supported tolerance/state contract and safe rejection | Before public saved-state/sharing promises |
-| RISK14: expensive test Cartesian product overwhelms development | MEDIUM–HIGH | High without layering | A11 qualification-cost ledger | Small exhaustive conformance, selected integration, independent holdout | Before multiple new block families |
-| RISK15: hard labels reward clutter, guessing or UI familiarity | MEDIUM–HIGH | Medium–high | U05 and skilled-user trials | Evidence features plus blinded expert calibration | Before HARD/PSYCHOTIC publication |
-| RISK16: stale roadmap or pipeline status causes unauthorized work | HIGH | Medium | N00 and each handoff | One live task checkpoint, explicit owner authorization, immutable evidence | Before post-49 implementation |
-| RISK17: earlier software assumptions leak into mains safety claims | HIGH | Medium | E05 and X09 review | Explicit educational model limits; no manufactured safety certificate | Before public mains content |
-
-A high-impact unproved risk gets a detection experiment and deadline. It does not automatically get a rewrite. When a gate falsifies the proposed approach, update its design and downstream dependency contract before implementation proceeds; do not keep moving the pass threshold.
-
-**Additional amendment risks (proposed, not newly observed code defects):**
-
-| ID | Severity / likelihood judgment | Early detection | Required mitigation before consumption |
-|---|---|---|---|
-| RISK18: transient loupe changes identity or leaves stale camera/input state | HIGH / medium | U01 transformation and ordinary input canaries | One temporary view composition, exact permanent-state restoration, lifecycle cancellation and unchanged physical/accessibility identity. |
-| RISK19: through-hole assumptions make surface packages impossible | HIGH / medium | P01/P02 developer 0805/SOT-23 fixtures and U01 integration | Explicit mounting side and surface-pad layer, no implied barrel/both-face pin; full SMD gameplay stays deferred. |
-| RISK20: stateful IC/MCU model ignores power or loses replay phase | HIGH / medium | A07/U06 compatibility, MCU-1/MCU-2 electrical and resume tests | Bounded accepted-step events, explicit reset/clock/state, finite pin drive and complete model/program/version receipts. |
-| RISK21: imported file has no meaningful healthy or serviceable interpretation | HIGH / high for arbitrary input | IMPORT-1 complete pipeline, staged support matrix | Explicit source/control/package/intent negotiation; honest unsupported result; native qualification with retained source provenance. |
-| RISK22: future vocabulary becomes an accidental blanket release dependency | HIGH / medium | Document DAG plus per-family capability closure at N00 and qualification | No unconditional new-lane ancestors of Q60/Q100; E08 only for consumed repair actions; safe conditional capability selection and acyclic resolved bundles. |
-
-## 8.5 Architecture change and compatibility policy
-
-Use incremental replacement behind versioned boundaries. Keep legacy Task48 and the actual approved Task49 replay adapters as compatibility paths until an explicit supported-version decision retires them. New providers do not inherit a requirement to reproduce an old bug under a new version. Conversely, a bug fix must not silently alter an accepted old descriptor that the product still promises to replay.
-
-Named streams stabilize random *concerns and tuples*, not the output of every selection under a changed eligible population. An added compatible variant may legitimately change the selected candidate if the versioned eligible set changes. Preserve unchanged stream tuples and declare the algorithm/population version; do not promise that an expanded fault library can never change fault selection. Durable identity must remain separate from the sampled choice.
-
-A proof receipt is an evidence object, not a second authorization registry. The current task report and the owner's actual approval remain authoritative for accepting an implementation. A simulator runtime owns mutable parts and conductive state; the generation manifest and immutable recipes do not become a competing live truth store.
-
-## 8.6 Do not build yet
-
-| Attractive expansion | Disposition | Trigger that could justify it |
+| Capability | Add only when | Typical possible consumers |
 |---|---|---|
-| Universal circuit-design DSL or symbolic synthesizer | Do not build. Use constrained providers with explicit role/variant contracts. | Repeated real implementations demonstrate stable declarative structure that materially reduces errors. |
-| Wholesale CircuitJS/GWT/JDK rewrite | Do not begin from age or file size alone. | A07/E06 show a required fidelity/runtime/API constraint that cannot be addressed with a narrow qualified adapter or extraction. |
-| Parallel live CirSim instances in one realm | Forbidden as an assumed optimization. | A real isolated execution design proves state separation and deterministic result publication. |
-| Arbitrary deep same-owner snapshots | Deferred. Keep the accepted fresh-owner/limited transaction model. | A concrete measured need plus full state inventory, failure restoration and equivalence proof. |
-| Exact global Steiner routing / unbounded negotiated search | Overkill until measured. | P05/P07 show the bounded alternatives cannot support the agreed corpus within its budgets. |
-| More than two layers, planes and buried/blind microvia systems | Outside this target. | A later explicit product change and demonstrated failure of the constrained two-layer envelope. |
-| Mandatory manufacturing CAD/DRC/Gerber support | Not part of the product. | Separate product decision, not a workaround for simulator correctness. |
-| SMD-dominant or BGA-scale boards | Full gameplay remains later; developer-only 0805/SOT-23 architecture canaries are required in P01/P02/U01 now. | A later product use case and qualified package/service/access models; canaries alone do not enable SMD gameplay, BGA, reflow or manufacturing DRC. |
-| High-fidelity EMC, RF, contact arcing, magnetics optimization | Not required for the stated educational scope. | A specific advertised observation/failure needs a separately qualified model. |
-| Full microcontroller firmware/protocol ecosystem | Still deferred; basic bounded MCU support is explicitly planned in MCU-1/MCU-2. | A separate later product decision for one narrow real architecture only after comparison; no arbitrary firmware, general IDE, CPU-architecture project or protocol ecosystem is implied by basic MCU I/O. |
-| Minimap, GPU rendering, WebGL or complex spatial trees everywhere | Conditional. | Measured navigation/render/index workload exceeds the declared budget; a small fix is insufficient. |
-| Many simultaneous faults as default | Do not build. | X06 proves a small joint-fault family adds fair diagnostic value. |
-| Economy, progression locks and money | Separate optional product decision. | Real catalogs/history exist and a gameplay need is demonstrated; no electrical correctness depends on money. |
-| Touch/mobile rewrite | Separate responsive/accessibility scope. | Desktop behavior and target access are stable and the owner chooses mobile as an advertised platform. |
-| “Secure” client-side hidden fault encryption | Not a substitute for non-spoiling UI. | A separate anti-cheat/network product requirement; no promise that locally simulated secrets cannot be inspected. |
-| Cosmetic source cleanup before foundations | Defer unless directly adjacent. | Proven bug, dependency leak or measured development cost; size alone is not a defect. |
+| [E08](#m-e08) | The family advertises trace cuts, player repair jumpers, restoration or bypass actions. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [U06](#m-u06), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [U09](#m-u09) | Two-channel scope is advertised or required for diagnosis. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [U10](#m-u10) | A selected digital diagnostic policy requires logic probing/capture. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [U11](#m-u11) | A selected diagnostic policy requires signal injection. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [U12](#m-u12) | Current insertion or qualified ESR is advertised or needed. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [E09](#m-e09) | A selected family actually includes a powered IC capability in this group. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [E10](#m-e10) | A selected family actually includes sequential logic; E11 scanning may consume it. | [E11](#m-e11), [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [E11](#m-e11) | A selected family includes the supported display/scan capability. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [E12](#m-e12) | A selected family uses one of the specialized provider groups. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [E13](#m-e13) | A selected family uses SCR/TRIAC or zero-cross AC control. | [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [E14](#m-e14) | A selected family uses reversing/H-bridge/load control. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [MCU-2](#m-mcu-2) | A selected family or imported input actually consumes the bounded MCU. | [IMPORT-3](#m-import-3), [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [IMPORT-1](#m-import-1) | A qualification instance is a passive/DC imported design. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [IMPORT-2](#m-import-2) | An imported instance needs this nonlinear/RC subset. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [IMPORT-3](#m-import-3) | An imported instance needs the selected IC/control subset. | [Q15](#m-q15), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-A](#m-rel-a), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [IMPORT-4](#m-import-4) | An imported instance needs the selected power/dynamic subset. | [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100), [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
+| [IMPORT-5](#m-import-5) | A release advertises the broader community-qualified import product. | [REL-B](#m-rel-b), [REL-1](#m-rel-1) |
 
-### Modernization decision threshold
+MCU/display/import/extra-instrument lanes have no unconditional path into the base Q15/Q30/Q60/Q100 or release prerequisites. E08 is absent from the base Q60 hard prerequisites. An RB56-MCU family adds MCU-2 and the exact display/driver/instrument capabilities it uses; an ordinary component-repair RB56 does not. Imported families add the minimal importer stage and its real native capabilities, not every stage.
 
-Revisit a specific legacy boundary when one of these is recorded: the required model cannot converge or represent an advertised observable under a defensible approximation; serialized execution cannot meet measured responsiveness and cannot be isolated cleanly; required browser APIs cannot be integrated through a narrow compatible bridge; supported build/runtime dependencies cannot be maintained securely/reproducibly; or repeated measured build cost blocks reasonable qualification despite layered tests. Investigate the smallest replacement first: observation/execution owner, isolated computation wrapper, model component, build toolchain or matrix backend. A frontend or complete simulation rewrite is a separate decision with migration, parity and rollback evidence.
+E11 scanned implementations add the actual event/state/driver capability selected, whether E10, MCU-2 or another qualified current provider; static displays do not wait for an MCU. Imported mains/offline designs add E05/E06; those are not blanket passive/DC importer dependencies. Conditional support never means an advertised feature is untested.
 
-## 8.7 Non-negotiable completion discipline
+Validate cycles and prerequisites for the hard graph and for every chosen conditional bundle. Do not allow a provider to require the completed board whose purpose is to qualify it. A scope needing both a provider-state qualification and board-level acceptance can sequence provider/local proof first, then consuming integration, without inventing a cycle. Preferred timing does not override actual data/runtime dependencies or shared-file ownership.
 
-Freeze each authorized milestone's supported corpus, model limits and acceptance criteria before implementation. Concrete newly found correctness defects can add necessary tests; unrelated historical problems and aesthetic wishes cannot expand the finish line forever. An unexpected runtime error, failed negative control or violated ownership boundary is not ordinary generation rejection.
+<a id="risks"></a>
+# 9. Risk register, non-goals and completion
 
-Finish with the actual final source candidate, selected affected regression gates, independent review, accurate limitations, intentional staged diff, normal configured-upstream publication and the current repository notification protocol. Do not claim a publication, cleanup or email that did not occur. Keep the current task report compact and preserve detailed evidence separately.
+## 9.1 Original audit findings reconciled to the current direction
 
-Neither this document nor its dependency graph authorizes ongoing multi-task execution. The owner chooses scope. A future broad authorization may group independent nodes, but prerequisites and one-writer/shared-resource constraints remain real.
+These are design/maintenance risks with different evidence levels, not a claim that the whole game is broken. Earlier audit labels remain useful references; they do not mandate preserving earlier code or rerunning earlier campaigns.
 
-
----
-
-## 8.8 Final capability-gap sweep and dispositions
-
-The requested vocabulary is mapped in Section 4.8 and the new cards. The following additional gaps were considered as architectural possibilities, not discovered implementation defects. No new milestone per component is created. “Now” means foundation compatibility or a small developer canary in this roadmap after N00 adoption, never an expansion of the accepted Task49 scope.
-
-| Candidate | Classification | Placement / reason / limit |
+| Finding | Current disposition and owner | Required evidence |
 |---|---|---|
-| Shared-package units, common IC power and resistor-network identity | FOUNDATIONAL NOW | A04/A11/P01 and import manifests must distinguish logical units from one physical package; prevents false part counts and impossible individual-unit repair. No immediate IC library required. |
-| Versioned provider state, clock phase and bounded event ordering | FOUNDATIONAL NOW | A03/A07/A08/U06. A shape/synthetic-event fixture prevents later MCU/scan/save incompatibility without implementing firmware now. |
-| Surface-only pads and face-specific mounting | ARCHITECTURAL CANARY NOW | P01/P02/U01 mandatory 0805/SOT-23 examples; optional SOIC; no BGA/reflow/catalog expansion. |
-| Untrusted imported names, models, external references and input size | FOUNDATIONAL NOW | A03/A10/U04 define trust/origin boundaries; IMPORT-1 implements bounded parser isolation, explicit unsupported resources and safe display. No arbitrary script execution or silent network fetch. |
-| Watchdog and reset/brownout supervisors | PLANNED LATER | E12/MCU-2 only for a selected control model; deterministic reset behavior and electrical cause. No full embedded-debug environment. |
-| Nonvolatile configuration/calibration/EEPROM-like state | CONDITIONAL | Add a narrow provider-state contract under MCU-2/U06 if a board depends on retained configuration; record power-loss/update semantics. No generic memory/firmware emulator. |
-| Calibration and trimmer service actions | PLANNED LATER | E04/E09/U04 may expose a real adjustment when a diagnostic/retest contract needs it; adjustment is electrical, not a “repair correctly” button. |
-| Harness pin swaps, high-resistance contacts and cracked-solder-style opens | CONDITIONAL | A09 with E01/E08 or an accepted connector/part mutation provider. Require a precise physical locus, modeled effect and actual repair; not random visual damage. |
-| Battery-backed rails, supercapacitor/backup state | CONDITIONAL | E01/A06/U06 when a selected board needs residual/independent power; no new chemistry model or assumption that global OFF removes all energy. |
-| Fan tachometer, load feedback and simple electromechanical plant coupling | CONDITIONAL | E04/E14 bounded external-load/stimulus providers when causality matters. Do not require full motor commutation, mechanical/thermal fluid simulation or count off-board plant parts. |
-| UART/I2C/SPI and bus-held/stuck-line diagnosis | CONDITIONAL | Later E10/E12/MCU/U10 content decision with real loading, pull-ups, timing and observable bus behavior; no protocol ecosystem or decoder prerequisite for present goals. |
-| Probe clips, shared grounds, meter burden/fuse and access to coated copper | FOUNDATIONAL NOW for truthful connection/access; richer interactions CONDITIONAL | P02/U02 define what is exposed and how the instrument connects. U09/U12 qualify common-reference and current-path behavior. Cosmetic clips or scraping/rework gestures are not universal prerequisites. |
-| Keypads, encoders and scanned input matrices | CONDITIONAL | E04/E10/MCU-2 when a real control family needs them; external electrical scanning and user input are causal, not a scenario-state shortcut. |
-| Graphical LCD/OLED, unrestricted firmware/IDE, full HDL/protocol stack, RF/EMC, BGA/mobile-phone density and manufacturing reflow/DRC | OUT OF SCOPE for this plan's required core | Separate evidence-backed product decision only; basic MCU/logic/display/import capability does not imply any of these. |
+| F1: centralized device construction | A04 delivered a useful seam; R00 removes remaining historical/generic-layer coupling; A05/A11 prove extension. | Two current content paths, declaration-driven materialization and an ordinary variant without new generic device branches. |
+| F2: developer-owned production proof | A09/D01 separate production hypothesis execution from developer tests. | Current reachable diagnostic actions, complete hypothesis accounting and independent falsifiers. |
+| F3: inconsistent candidate eligibility | A02 delivered a correction; retain current semantics through R00/A09. | Serviceability, same-owner distinct hypotheses and selection/count/proof agreement. |
+| F4: fixed physical capacity | P03/P09 plus A01 counters. | Mixed packages, current variable outlines/placement and usable larger boards, not merely a bigger image. |
+| F5: incorrect bend counting | Corrected in A02; retire old metric in R00. | Direction/subdivision-invariance and independently correct route scores. |
+| F6: connected-placement center offset | Corrected in A02; retire obsolete arithmetic in R00, extend coordinate contract in P01. | Translation, local pad offset and boundary tests on the current caller. |
+| F7: raw vertices and repeated contact work | P04/P08. | Contact-preserving canonical segments, current oracle equivalence and measured hotspots. |
+| F8: fit-only interaction | U01. | One transform for view/hit/marker/accessibility, Space loupe, side access and real player input. |
+| F9: union-find representatives used as identity | A03 added explicit identities; R00 consolidates their current consumers; P02 adds conductor semantics. | Earlier lexical alias/reorder tests and no persistent solver/DSU/pixel IDs. |
+| F10: floating-reference numerical ties | A06/A07/U02/E05. | Reference sensitivity, burden/isolation behavior and honest unsupported states; do not blindly delete stabilizing solver mechanisms. |
+| F11: bench/session growth | U06/U07 and scale gates. | Distinguish legitimate retained parts from leaked owners; bound histories/waveforms and measure actual growth. |
+| F12: semantic IDs leak into presentation | R00/A03 plus U01/U04/A06. | Short current physical designators and meaningful reference labels, separate from identity/private answers. |
+| F13: invented dependency chains | This edition and per-family capability resolution. | Acyclic hard/resolved graphs; no blanket MCU/import/E08 release dependency; honest actual consumers. |
+| F14: unused wrappers/visual tags/old menus | Delete verified obsolete code when the R00 inventory or a current task owns its callers. Retain useful current adapters. | Caller analysis and current tests, not deletion quotas or source age. |
 
-## 8.9 Capability manifests prevent dependency inflation
+## 9.2 Additional current risks
 
-A qualification instance names its design origin, functional family/variant, package/model versions, instruments, source/load controls, diagnostic policy, physical repair actions and persisted state. Resolve only those accepted providers into that instance's dependency closure. A roadmap lane's existence is not an automatic dependency edge.
-
-The hard graph removes E08 from Q60. A trace-repair Q60 instance adds E08; a component-only Q60 instance does not. An RB56-MCU instance adds MCU-2 and the actual display/driver/instrument capabilities it consumes; the baseline RB56 stays valid without them. An imported family adds the minimum accepted importer stage covering its input plus normal model/physical/diagnostic qualification, not every stage or every community element. Q100 remains required under the same rule.
-
-The new implementation lanes are E09–E14, MCU-1/MCU-2, U09–U12 and IMPORT-1–IMPORT-5. They have no unconditional edge into Q15/Q30/Q60/Q100, REL-A, REL-B or REL-1. User-authorized future product adoption can select them without changing that rule. A release advertising one of them must include its current integration receipt; conditional never means untested advertised functionality.
-
-Run cycle checks on both the hard graph and the resolved conditional graph for each chosen family. Detect indirect dependencies through session/save/reliability cards, not only direct edges. Preferred implementation sequence is not a hard dependency, and a provider must not depend on the completed board whose purpose is to qualify that provider. Shared production code still requires coherent integration ownership even when two roadmap lanes are logically independent.
-
-<a id="migration"></a>
-# 9. Migration, preserved history and adoption
-
-## 9.1 Mapping the former Tasks50–89
-
-The new IDs replace future tasks, not completed implementation history. The old task names remain searchable below. An old task's intent may now span an early architecture boundary and a later capability/qualification. Do not execute an old prompt solely because a former number is lower.
-
-| Former milestone | New owner(s) | Disposition and reason |
-|---|---|---|
-| Task49: intent-driven value synthesis | T49 (accepted) → N00; consumed by A04/A05 | Preserve the accepted bounded contract, exact versions/catalog values, legacy generator2 meaning and retained limits. No redesign merely for convenience. |
-| Pre-Task50 eligibility/physical-smoke gate | A01/A02, then A04/A05/P03/Q15 | Superseded as an active milestone. Its reproducible reference/scale measurement groundwork moves to A01; canonical candidate eligibility, bend-count and connected-placement corrections move to A02; broader physical/router scalability continues in later P-track gates. |
-| Task50: purposeful auxiliary/support block | A05/Q15; integrated through later reference boards | The former standalone sequencing is superseded by the new functional/provider/content architecture. Keep real functional support through provider construction and unaffected-function retest instead of another bounded assembler branch. |
-| Task51: composed acceptance/rejection pipeline | A09/A10/D01 | Split production proof ownership, generation orchestration and scalable diagnostic strategy. |
-| Task52: layout stress corpus/telemetry | A01, P03–P09, Q15/Q30/Q60/Q100 | Start measurements early, then qualify every explicit scale band. Separate structural probes from playable claims. |
-| Task53: region-aware placement | P01/P03 | Promote coordinate/pose correctness and demand-based hierarchical placement to foundations. |
-| Task54: high-degree tree/trunk routing | P04 | Integrate into a coherent multi-terminal routing baseline with semantic priorities. |
-| Task55: bounded rip-up/reroute | P05 | Required recovery investigation, with negotiated congestion only when evidence justifies it. |
-| Task56: generated link fallback | P06/P09 | Require a truthful raised-crossover prototype; sparse use and policy remain measured choices. |
-| Task56(A): two-sided prototype | P02/P07/P09/U01 | No longer “only after everything else fails.” Representation and working comparison are mandatory early investigations. |
-| Task57: supported physical scalability | P09 plus Q15/Q30/Q60/Q100 | Split physical envelope from electrical/diagnostic/player qualification at actual scale. |
-| Task58: difficulty foundation | U05/A09/D01 | Computed evidence, legal plans and profile constraints, not raw part counts. |
-| Task59: EASY/MEDIUM calibration | U05/REL-A | Preserve truthful initial profiles while advanced profiles wait for their evidence. |
-| Task60: Resources | U04 | Can use existing physical/public information without waiting for every future feature. |
-| Task61: Settings/shell truthfulness | U04/X09 | Presentation/accessibility settings and honest navigation; no physics or inventory ownership in the shell. |
-| Task62 and Task62A: menu, sessions, replay/results | A03/U04/U06 | Identity and session boundaries precede richer persistence. Menu remains orchestration only. |
-| Task63: desktop alpha | REL-A | Intermediate qualified low-voltage release, not the final target or a reason to defer expensive architectural questions. |
-| Task64: static axial/PCB realism | U08 | Retain as envelope-safe polish, not a prerequisite for unrelated circuits. |
-| Task65: continuous LED physical lens | U08/U02 | One solved intensity source; accessibility-safe equivalent observations; no second brightness physics. |
-| Task66: relay-driver block | E03/A05 | Alternate BJT/MOSFET implementations, proper package/fault semantics, source foundations first. |
-| Task67 and Task67A: independent rails/source/reference contracts | A06/A07/E01 | Move architecture early; no circular dependence on a relay that already needs it. |
-| Task68: regulator/multi-rail block | E02/E06 | Separate low-voltage regulation from high-risk offline conversion and its fidelity gate. |
-| Task69: sensor/comparator | E04/A05 | Player-stimulated alternate conditioning/control implementations with explicit references/loading. |
-| Task70 and Task70A: authoritative Shop/catalog | U04/A08/A11 | Existing providers may supply an honest catalog without waiting for all future part families. |
-| Task71: player jumpers | E08 | Requires source consequences, conductor identity and side/access semantics; distinct from factory links. |
-| Task72: copper identity and cutting | P02/E08 | Move identity before routing/layers/persistence consumers; later implement physical cutting. |
-| Task73: trace repair | E08/U06 | Functional alternatives and saved conductor state share one mutation model. |
-| Task74 and Task74A: fuse/protection | E01/E03/E05/X02 | Basic source/protection semantics early; richer part stress only when models are qualified. |
-| Task75 and Task75A: bench supply/current limit/source consequences | A06/E01/U02 | Real source behavior before harmful repairs or short-fault admission; not a late UI clamp. |
-| Task76: scope | A07/U02/U03 | Shared bounded observations and instrument references before temporal/mains diagnostic content. |
-| Task77: triggered timer | E07 | Only after normal observation and player trigger exist. |
-| Task78: frequency/oscillator | U03/E07 | Measurement and block behavior remain separate, solver-time-backed contracts. |
-| Task79: capacitance decision/proof | X08 | Conditional diagnostic need; no false dependency on an unrelated oscillator. |
-| Task80: HARD calibration | U05/Q30/Q60/REL-B | Real advanced corpus, source/repair/instrument capabilities actually consumed, and fresh calibration. |
-| Task80(A): beta | REL-B | Now explicitly requires the primary 40–60-part product surface. |
-| Task81: intermittency | X01 | Deterministic real graph/state events with ordinary capture/retest. |
-| Task82: secondary damage | X02 | Solved cause, duration and retained physical owner; not automatically dependent on intermittency. |
-| Task83: thermal approximation | X03 | Conditional diagnostic or timing value, not compulsory scenery. |
-| Task84: customer returns/history | U06/X04 | Persist actual serviced state; thermal/intermittent dependencies only where the chosen model consumes them. |
-| Task85: PSYCHOTIC | X05 | Explicit expert calibration and held-out variant trials. No promise that component count alone creates difficulty. |
-| Task86: multiple-fault decision | X06 | Conditional bounded joint proof, never default arbitrary combinations. |
-| Task87 and Task87A: history/scoring | U06/X07 | Semantic history early; scoring optional observer, not a save prerequisite. |
-| Task88: mutable save/resume | A03/P02/A08/U06/U07 | Schema and ownership early; actual stateful resume must prove supported model state, not serialize transient solver nodes. |
-| Task89, Task89A and Task89B: sharing | A03/U04/U06 | Pristine challenge sharing separate from mutable progress. Versions, privacy and safe rejection apply to both. |
-| Former post-beta appliance-scale backlog | E05/E06/Q60 | Promoted to an explicit primary product target, not deferred until a future product-need debate. |
-| Former 75–100-part optional stress concept | A01/A07/P07/Q100 | Promoted to early architecture probes and required final constrained stretch qualification. |
-| Mature/1.0 previously unnumbered | REL-1 | Explicit readiness node for the actually promised mature surface; not merely exhaustion of tasks. |
-
-### What the new numbering prevents
-
-The old prompt “do Task50 next” is ambiguous after N00 adopts this edition. Use the new ID and title in all new prompts and evidence directories. Existing `task-49` records keep their original identity. New evidence can use `docs/task-evidence/A04/` or an equally consistent documented convention; do not rename old evidence merely for aesthetic uniformity.
-
-Each node may be implemented in smaller coherent reviewed changes, but no parent becomes accepted until all of its actual required deliverables pass. Prototypes, architecture fixtures, implemented providers, playable qualification and release gates remain distinct statuses.
-
-<a id="completed-ledger"></a>
-## 9.2 Preserved completed ledger
-
-The following summarizes accepted history through the accepted Task49 baseline at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`, whose direct parent is the pinned Task48 baseline. It is carried forward from the previous roadmap, not recertified by this planning exercise. Detailed contemporary requirements, failures and qualification remain in the repository's immutable history and existing task-evidence directories. Task49's accepted contract, evidence and retained limits are recorded in the T49 card and packet.
-
-| Task | Accepted completed result |
+| Risk | Owning response |
 |---|---|
-| 1 | Reproducible JDK8/GWT build and development workflow. |
-| 2 | Improved red/black probe controls and instrument pointer behavior. |
-| 3 | Measurement endpoint and CircuitJS adapter boundary. |
-| 4 | Active-measurement session and initial board-power safety boundary. |
-| 5 | Stable board, component, pad, net, binding, and external-input model. |
-| 6 | First seeded generated LED-indicator family and logical/simulation binding. |
-| 7 | Family-agnostic generated-board ownership and solver-gated verification. |
-| 8 | Real external board-power isolation distinct from simulation RUN/STOP. |
-| 9 | Solver-backed resistance measurement and hardened transaction lifecycle. |
-| 10 | Continuity policy over the resistance primitive. |
-| 11 | Finite-compliance diode test and semantic probe/cleanup correction. |
-| 12 | Reversible lead lift, reconnect, remove, and restore graph mutations. |
-| 13 | Interactive PCB-primary workbench and physical parts tray. |
-| 14 | Solver-validated open-resistor challenge and gated lifecycle. |
-| 15 | Electrically real resistor replacement, physical isolation, and functional repair. |
-| 16 | Solver-backed 10 MOhm DC voltmeter loading and lifted-lead behavior. |
-| 17 | Retained-probe refresh correctness and stable physical-part probe identity. |
-| 18 | Unlimited resistor catalog and normal-player replacement validation. |
-| 19 | Family-agnostic generated-board replacement state boundary. |
-| 20 | Visible development-preview repair. |
-| 21 | Post-refactor validation and preview hardening. |
-| 22 | Self-contained deterministic browser verification. |
-| 23 | Replaceable silicon-diode challenge family. |
-| 24 | Replaceable LED identity and persistent preview behavior. |
-| 25 | First seeded procedural one-sided PCB layout generator. |
-| 26 | Routing, clearance, escape, and physical-believability hardening. |
-| 27 | Genuine parallel circuit, KCL, and in-circuit parallel measurement. |
-| 28 | Compact topology-aware placement, derived outline, and routing courtyards. |
-| 29 | Component-identification fidelity and original-value privacy. |
-| 30 | Generic functional completion contract. |
-| 31 | Seeded fault engine and compatible real graph effects. |
-| 32 | Solver-compatible scenarios and customer complaints. |
-| 33 | Wrong-repair semantics and post-repair solver validation. |
-| 34 | Resistor ratings and solver-derived stress/damage v1. |
-| 34(A) | Physical runtime, workbench, renderer, and instrument extensibility hardening. |
-| 35 | Generalized physical specifications, catalogs, packages, and inventory identity. |
-| 35(A) | Quick Play and normal-player Finish Job loop. |
-| 36 | Capacitor foundation, stored-energy safety, and RC temporal family. |
-| 37 | NPN low-side switch and corrected control/state/layout behavior. |
-| 38 | NMOS low-side switch and corrected physical control/gate topology. |
-| 39 | Player-operable inputs and solver-backed customer retest. |
-| 40 | Physical fault-locus and serviceability admission. |
-| 41 | Diagnostic solvability proof and deterministic complexity evidence. |
-| 42 | Existing-family diagnostic diversity, including a second LED physical owner. |
-| 43 | Versioned package geometry and physical interaction-envelope contract, with final integrated acceptance. |
-| Post-43 Gate A/B | Mainline/evidence consolidation and verification/isolation qualification, under their recorded bounds. |
-| 43P | Bounded runtime/integrity reconciliation, C1/C2 correction, and accepted handoff. Historical wider-proof limits are not erased. |
-| 44 | Immutable functional block descriptions and stable namespaces. |
-| 45 | Typed electrical-domain/port metadata and pure compatibility preflight. |
-| 46 | Versioned challenge descriptor, named streams, constraints, and explicit legacy replay. |
-| Composition Entry Gate | Settled actionability, stale-work guards, fresh-owner publication, bounded resistor compensation, and selected correspondence/cleanup proof. |
-| 47 | Two-block developer resistive canary and bounded contribution/assembly contracts. |
-| 48 | Playable composed controlled-indicator proof with normal input, diagnosis, physical repair, and customer retest. |
-| 49 | **ACCEPTED** at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`; direct parent `62c878b8f381e3418214a93a46d3e8d2d9693b3e`, with the bounded versions, values, evidence and retained limits recorded in the T49 card. |
+| Materializer accepts foreign/mismatched plan/spec/receipt or backing relationships | R00 closes the three A04 follow-ups before provider expansion with valid and deliberately wrong-input cases. |
+| Cleanup becomes another permanent framework or historical version | One R00 correction, compact checkpoint and current tests; no new epoch-specific resolver family or certification hierarchy. |
+| “Generic” code still names driver/load/RG/RLOAD/LED_NODE | R00 declaration-driven core; A05 proves another variant; A11 examines where knowledge was added, not only file counts. |
+| Two physical units are silently forced to equal two packages | Keep explicit package/unit mapping, prove small shared-unit shape now, qualify actual runtime support with later IC consumers. Do not claim arbitrary multi-unit materialization from a data-only canary. |
+| Solver/model fidelity cannot meet the advanced target | A07 small high-risk pilots and E06 compare bounded current alternatives before full RB56; change the necessary boundary on evidence. |
+| Diagnostic work grows faster than the circuit library | A09/D01 valid local/global proof contracts, complete context keys and measured coverage; no cheating by omitting difficult hypotheses. |
+| Dense layers create unprobeable or misleading boards | P01/P02/U01 surface/mount/loupe checks and P07/P09 real side/layer comparison. |
+| Stateful IC/MCU creates a second time/state truth | One accepted-step/event owner, finite event work, power/reset effects and current resume qualification. |
+| Import looks successful but lacks a meaningful repairable challenge | Twelve-step contract, author healthy intent, explicit support matrix and native playthroughs. |
+| Long-range lanes consume all near-term effort | Small necessary seams now, actual later libraries only for selected content, visible working integration at named boundaries. |
 
-## 9.3 Adoption and current checkpoint
+## 9.3 Do not build without a concrete need
 
-This file is a replacement roadmap, not an `AGENTS.md`, `ARCHITECTURE.md` or task-report replacement. Task49 is accepted at the named SHA. N00 is the completed document/lineage adoption gate: it inspected the accepted evidence and preserved its limitations while adopting this Edition 2.1 roadmap.
+No universal circuit-design DSL or symbolic synthesizer; no blanket CircuitJS/GWT/JDK/frontend rewrite; no assumed parallel live solver contexts; no arbitrary deep snapshot/rollback system; no unbounded globally optimal router; no more-than-two-layer manufacturing CAD/Gerbers; no BGA/mobile-phone density or reflow simulator; no high-fidelity RF/EMC/arcing/magnetics design; no arbitrary firmware/HDL/protocol ecosystem; no economy/progression dependency; no client-side encryption pretending to secure local simulated answers; no GPU/WebGL/minimap/spatial-tree project absent measured need.
 
-Do not overwrite the task report with this document, mark the proposed classes as already implemented, force a branch merge or delete old worktrees. The current accepted baseline is the actual reviewed Task49 handoff at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`, not an imagined commit containing this roadmap. The pinned Task48 SHA remains the direct parent and historical source-read baseline. Publication of this adoption candidate still follows the final status-delta review, final document/staged checks and normal commit/push contract; its exact SHA, remote verification and notification outcome belong in the final handoff.
+These are scope controls, not preservation guarantees. Replace an inherited boundary when real model fidelity, API, runtime isolation, secure/reproducible maintenance or measured development cost requires it. Investigate the smallest effective replacement first and qualify current behavior. No old class or test has veto power merely because it already exists.
 
-**Immediate next boundary after N00 adoption:** A01 — Reference-board manifests and reproducible measurement harness — was separately authorized and is now IMPLEMENTED — ACCEPTED. A02 is now IMPLEMENTED — ACCEPTED; A03 is the next unstarted boundary. No support-block, former Task50 or large-board implementation starts automatically because the roadmap is installed.
+## 9.4 Definition of done
 
-The standalone Markdown contains the active plan in full. Historical package references to the old audit, dependency/traceability manifest and document-check results are background provenance only; absent companions are not runtime dependencies or additional approval bureaucracy.
+Freeze a compact current acceptance set before implementation. New evidence of a real current correctness defect can add an appropriate test; unrelated archaeology or aesthetics cannot move the finish line indefinitely. Resolve blockers, run affected current checks on the integrated candidate, obtain one independent review and perform targeted delta checks after repairs.
 
-## 9.4 Keeping the roadmap useful
+Document what changed and why, evidence and its limits, current support scope, real follow-ups, branch/commit and next unstarted task. Keep report/log artifacts small enough to be useful. Git is the archive; old reports may remain historical records but are not byte-preserved product gates and are not active instructions. Do not keep many copied whole-repository hash inventories or repetitive manifests solely for ceremonial provenance; record the candidate and relevant dependency evidence needed to identify the executed code.
 
-After each accepted node, update only its real status and source/evidence references, the current checkpoint, and any dependency consequences. Keep exactly one immediate next authorized scope. Record reasons for rejected algorithms and missing support rather than re-running abandoned experiments from scratch.
-
-If evidence changes a design, record: original assumption; failing fixture; measured or observed behavior; alternatives considered; chosen correction; versions affected; reused evidence invalidated; and downstream gates requiring requalification. Do not rewrite failed evidence as though the successful design had always existed.
-
-Practical pluggability is reviewed at A11, Q30, Q60 and Q100 using real feature additions. The mature goal is roughly 8–9/10: an ordinary supported block/variant is provider-local and does not add device knowledge to generic systems. A truly novel electrical model may properly need a solver adapter, package, mutation/fault semantics and tests. Counting total changed files without classifying their responsibilities is not the metric.
+Use normal scoped staging and configured-upstream publication under AGENTS.md. No history rewriting, broad reset/clean, unrelated branch deletion, user-data loss or process-name-based killing. Final source/build, current tests, independent review, safe owned cleanup and honest publication/email status remain real responsibilities.
 
 <a id="sources"></a>
-## 9.5 Sources and actual coverage
+# 10. Review basis, adoption and change ledger
 
-### Planning inputs
+## 10.1 Source basis and limits
 
-| ID | Input | Use and boundary |
-|---|---|---|
-| **I1** | Owner's attached `Pasted markdown(9).md`, full large-board architecture brief | Authoritative changed product targets, required investigations and roadmap deliverables. Its statements about current code were checked where indicated, not assumed universal truth. |
-| **I2** | `TroubleshootJS_Architecture_Roadmap_Audit.md`, prior audit at the pinned Task48 SHA | Fourteen findings, named 33-file coverage, source S1–S23 index and prior E1/E2 helper experiments. The supplied package named `research/TROUBLESHOOTJS_ARCHITECTURE_AUDIT_2026-09-06.md`; that historical companion is absent from this checkout. Its old small-product priorities are superseded. |
-| **I3** | Prior supplied replacement `ROADMAP.md`, edition post-Task49 1.0 | Completed ledger, previous dependency corrections and migration coverage. This edition replaces its future sequence; it is not an additional live roadmap. |
-| **I4** | In-conversation authorized Task49 prompt and owner's active-work statement | Historical input that protected current bounded value synthesis before review; its earlier no-completion inference is superseded by the accepted Task49 handoff above. |
-| **I5** | Owner's complete final-amendment brief, `Pasted markdown(10).md` | Historical authority for this preservation-first Edition 2.1 reconciliation, explicit additions, conditional Q60/E08 correction and Task49 protection. The named archive `research/ROADMAP_AMENDMENT_BRIEF_2026-09-07.md` is not present in this checkout. |
-| **I6** | Complete supplied `TroubleshootJS_Reconciled_Roadmap.md`, Edition 2.0, and its bundled graph | Exact amendment base. Existing cards/decisions/history are retained except the requested scoped amendments and their consistency updates. Source hash and preservation checks are in the document receipt. |
+This edition is grounded in the source Edition 2.1 product scope and its adopted roadmap at the reviewed commit, the exact A04 diff and selected current construction/materialization/identity call paths. The earlier Edition 2.0 detailed architecture comparison tables, reference allocations and planning ranges are retained as design proposals where the Edition 2.1 amendments did not replace them. They are not new benchmarks or claims of current scale qualification.
 
-### Edition 2.0 source reads, preserved as historical evidence
+| Source | What it supports |
+|---|---|
+| Git commit `cc3532e8d138424ce986aa8f9b76688ec315f0a0` and parent `1d995d4f5b21142d4ca5643ede546afdfe51340f` | Actual A04 change boundary, published implementation and preceding A03 base. |
+| `docs/ROADMAP.md` at that commit, especially Sections 7.1 and A04 | Edition 2.1 scope, actual dependency cards and contradictory stale A04 status text. |
+| [A04 evidence](task-evidence/A04/README.md) and [closure reconciliation](task-evidence/A04/closure-reconciliation.md) | Reported current scope, compiled/electrical/repair results, comparison policy, environment limits and bounded materializer capability. |
+| [A04 independent review](task-evidence/A04/independent-review.md) | Static review attribution, three nonblocking boundary-hardening findings and their original scope rationale. |
+| [A04 native/build summary](task-evidence/A04/native-build-summary.md) | Recorded actual native/build commands and results, not a fresh rerun by this author. |
+| `PhysicalConstructionMaterializer.java`, `PhysicalConstructionProvider.java`, `PhysicalConstructionPartDeclaration.java` | Current family/order coupling, historical fault reinterpretation and declaration/backing/receipt validation boundaries. |
+| `ElectricalRealizationSpec.java`, `ElectricalConstructionContext.java`, `BoundedGeneratedBoardAssembler.java` | Scoped ownership and spec/receipt relationships, current construction coordination and historical version consumers. |
+| Earlier A02/A03 evidence and the current owners they introduced | Corrected metrics/placement, current identity concepts and the historical replay/report obligations selected for retirement. |
+| Owner instructions in this conversation, September 9, 2026 | No historical development compatibility requirement; keep the game working; a full replacement roadmap and correction-or-A05 prompt. |
 
-All repository links below are pinned to `62c878b8f381e3418214a93a46d3e8d2d9693b3e`. “Read” denotes source inspection, not executed acceptance. Fresh ranges overlap the prior audit and must not be added to its file count as if every file were new.
+The proposed R00 design and sequence are engineering judgments derived from those observations. The review is targeted, not an exhaustive bug-free certificate for the repository. No deletion count, usage-credit savings, percentage of wasted development time or large-board performance guarantee is claimed.
 
-| ID | Pinned source | Actual inspection / use |
-|---|---|---|
-| **R01** | [`CODEX_TASK_REPORT.md`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/docs/CODEX_TASK_REPORT.md#L1-L67) | Current Task48 qualification/status; separately fetched branch collection. Source report is retained evidence, not rerun tests. |
-| **R02** | [`BoundedGeneratedBoardAssembler.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java#L570-L815) | Fresh selected construction, explicit fixed controlled-device allocation and solver/board binding. |
-| **R03** | [`SeededPcbLayoutGenerator.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java#L1-L89) | Fresh fixed outline/grid/attempt bounds, generate loop and RuntimeException handling. |
-| **R04** | [`PcbTraceGeometry.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/PcbTraceGeometry.java) | Fresh full short carrier; fields, constructor aliases and array getters. |
-| **R05** | [`CircuitElm.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/CircuitElm.java#L35-L130) | Fresh selected static simulator context, element state and initialization. |
-| **R06** | [`CirSim.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/CirSim.java#L2320-L2430) | Fresh selected node/reference handling and 100 MΩ numerical stabilization. |
-| **R07** | [`TransformerElm.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/TransformerElm.java#L1-L260); [`RelayElm.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/RelayElm.java#L1-L300) | Fresh selected coupled-winding stamping and approximate coil/contact model, including reported current limitations. |
-| **R08** | [`Scope.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/Scope.java#L1-L175) | Fresh selected ScopePlot sampling, ring storage and global simulator-time dependency. |
-| **R09** | [`GeneratedDiagnosticSolvabilityAdmission.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java#L1-L70) | Fresh production validateLive/developer-verifier call boundary and physical access checks. |
-| **R10** | [`Task41DeveloperVerifier.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/Task41DeveloperVerifier.java#L277-L360) | Fresh candidate grouping/filter/deduplication and per-candidate installation. |
-| **R11** | [`PhysicalPackageGeometry.java`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/src/com/lushprojects/circuitjs1/client/PhysicalPackageGeometry.java#L1-L230) | Fresh selected immutable geometry/copies, translation and horizontal mirror projection. |
-| **R12** | [`ROADMAP.md`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/docs/ROADMAP.md); [`ARCHITECTURE.md`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/docs/ARCHITECTURE.md); [`AGENTS.md`](https://github.com/dspevo-afk/TroubleshootJS/blob/62c878b8f381e3418214a93a46d3e8d2d9693b3e/AGENTS.md) | Prior same-SHA reads in this conversation/audit, used for contracts and history; not labeled new exhaustive reads. |
+## 10.2 Adoption
 
-The branch collection was also fetched directly through connected GitHub at the pinned historical baseline and listed `codex/task43p-final-recovery` at the Task48 SHA, with `master` at the older post-43 baseline. No published Task49 implementation was present in that historical read. The accepted Task49 handoff is now the named SHA recorded at the top; the older source read cannot override it.
+Replace the full `docs/ROADMAP.md` with this file. During R00, reconcile current HEAD and any intervening work first. Update contradictory compatibility clauses in AGENTS.md and implemented ownership in ARCHITECTURE.md; do not just append a new rule below contradictory old rules. Existing historical reports remain historical. Their assertions are not imported as new required gates.
 
-### Prior source evidence reused at the same immutable baseline
+No external graph file is required. The optional validation report delivered with this edition is generated from its cards and is not a competing authority. If the repository later maintains a machine-readable graph, regenerate it from the current cards and validate all references/cycles; do not point to a missing old `research/RECONCILED_ROADMAP_GRAPH.json`.
 
-I2's Appendix A records the actual earlier 33-file review. Relevant reused paths include `BoundedAssemblyRequest`, `BoundedAssemblyPlan`, `ChallengeDescriptor`, `NamedRandomStreams`, `BlockNamespace`, `PortCompatibilityPreflight`, `TopologyPlacementGraph`, `PhysicalPackages`, `PcbFootprint`, `PcbBoardLayout`, the workbench controller/renderer, generated instance/runtime, fresh installation, resistor transaction, challenge lifecycle, measurement adapter/controller, instrument providers, power controller, fault candidate/contracts and selected development/build documentation.
+After actual R00 completion, record its commit/evidence and mark A05 as the next unstarted node. Later completions update one current checkpoint and their card status. Do not rewrite a historical success as failure merely because the implementation has intentionally changed, and do not reuse that success as qualification of a changed current contract.
 
-Those paths are not represented as newly executed or exhaustively re-reviewed here. The unchanged source pin makes them useful prior evidence, not a whole-project clean bill of health. The prior audit's helper-level bend/placement experiments and packing arithmetic remain **PRIOR EXPERIMENT/CODE-DERIVED**, not live browser findings.
+## 10.3 Edition 3.0 change ledger
 
-### External primary references retained from Edition 2.0
+| Change | Effect |
+|---|---|
+| Retire blanket historical compatibility | Removes Task48/49 preservation clauses, obsolete descriptor obligations and historical report/golden equality from future acceptance. |
+| Add R00 after delivered A04 | One bounded current-only cleanup plus the three materializer hardening checks before new consumers. |
+| Update early frontier dependencies | A05 depends on R00; A06 depends on R00; P01 also depends on R00. This places future expansion behind the reset without changing the product targets. |
+| Reconcile current status | A04 is delivered at the reviewed SHA; stale validation-blocked text is removed; A05 remains unstarted. |
+| Retain corrected A02 and useful A03/A04 concepts | No rollback of real fixes; implementations and data encodings may be simplified or replaced. |
+| Carry all Edition 2.1 capability lanes forward | IC/logic/display, MCU, instruments, import and grouped fault vocabulary remain explicitly scoped. |
+| Retain dense-board interaction amendments | Spacebar loupe, shared transforms, focus/cancel behavior and 0805/SOT-23 architecture canaries remain. |
+| Keep E08 capability-conditional | Component-repair-only Q60/Q100 are not blocked by trace-repair gameplay. |
+| Replace historical qualification with current acceptance | One integrated build, focused current electrical/physical/ownership tests and ordinary-player checks, with honest infrastructure evidence separation. |
+| Make roadmap self-contained | Full cards, scope, reference allocations, comparisons, limits, risks and dependency rules are here; no required external roadmap patch or graph. |
 
-| ID | Primary reference | Limited use |
-|---|---|---|
-| **W1** | [KiCad PCB Editor documentation, 7.0](https://docs.kicad.org/7.0/en/pcbnew/pcbnew.html) | Primary reference for pad/layer/plating vocabulary. Through-hole pads have plated multi-layer connectivity; NPTH has no electrical connection. Not a routing-performance benchmark. |
-| **W2** | [VTR/VPR command-line documentation](https://docs.verilogtorouting.org/en/latest/vpr/command_line_usage/) | Primary reference for bounded router iterations and present/history congestion controls. FPGA routing context, not proof that Pathfinder is a drop-in PCB solution. |
-| **W3** | [Texas Instruments UCC28713 product documentation](https://www.ti.com/product/UCC28713) | Example of an isolated flyback regulation/control function whose startup, load and input dependence motivate model observables. Not a qualified CircuitJS model. |
-| **W4** | [Tektronix Floating Oscilloscope Measurements and Operator Protection](https://www.tek.com/fr/documents/technical-brief/floating-oscilloscope-measurements-and-operator-protection) | Primary source distinguishing earth-referenced commons from floating/differential measurement. Used for conceptual reference modeling, not as live-work instructions. |
-
-External references supply physical vocabulary and examples of real model/algorithm concepts. They do not establish that TroubleshootJS currently implements those concepts, that a specific PCB algorithm will meet the target, or that CircuitJS has passed the proposed mains/100-part tests. All scored strategy comparisons and future architecture choices are this roadmap's judgments.
-
-### Verification performed on this document
-
-The historical Edition 2.1 preparation receipt described checks for preserved and added milestone IDs, required card fields, known hard/conditional prerequisite references, graph acyclicity, reverse dependencies, former-task coverage, audit findings, completed history, base reference-board allocations, internal links and package integrity. That preparation receipt treated Task49 as active; it is historical evidence and does not certify N00. N00's completed document/dependency checks verified those preservation properties against the accepted Task49 lineage, the in-document card graph, the conditional Q60 closure, the retained Q100/PSYCHOTIC contracts, and the current two-file diff: 72 unique milestone IDs, 248 hard edges and 16 conditional edges, acyclic graphs, reverse references, internal links, history/future fields and 12 named negative canaries all passed. These structural checks do not prove implementation feasibility or absence of future design defects.
-
-**These are document checks only.** They are not production builds, solver benchmarks, browser or player validation, or GitHub Actions certification. The fresh Turing Luna MAX review is an independent document review, not runtime evidence. N00 adds no production, test, script, source or configuration changes and does not authorize A01 or later implementation.
-
-## 9.6 Final architectural position
-
-Retain the simulator and the useful identity/geometry/runtime foundations. Replace the central construction and diagnostic seams before the library grows. Make copper identity, domain/reference behavior and model fidelity explicit before layers, mains, cuts and persistence depend on them. Run early difficult-model and full-count cost probes, then qualify progressively richer real boards. Treat the 40–60-part goal and the constrained 100-part goal as commitments to investigate and deliver, not wishes to remove when inconvenient.
-
-The plan cannot guarantee that no difficult redesign remains. It can require that each expensive assumption earns evidence while it is still local enough to change. That is the difference between deliberate architecture and simply hoping later tasks will repair earlier shortcuts.
+**Success is a maintainable current game that works. It is not a perfect reenactment of every previous development milestone.**

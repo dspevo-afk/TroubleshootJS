@@ -744,7 +744,7 @@ final class PortCompatibilityPreflight {
         // Diagnostic address for a syntactically valid but undeclared tuple.
         // idFor intentionally rejects this tuple; no declared entity is created.
         // Keep the literal v1 address covered by the independent namespace oracle.
-        return "tsj-block-v1/" + namespace.getDeviceSchemaId() + "@" +
+        return "tsj-preflight-v1/" + namespace.getDeviceSchemaId() + "@" +
             namespace.getDeviceSchemaVersion() + "/" + ref.getBlockKey() + "/port/" + ref.getPortId();
     }
     private static boolean isVoltageDriver(ElectricalPortContract port) {

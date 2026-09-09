@@ -26,17 +26,15 @@ final class Task46ReplayDeveloperVerifier {
             "developer boundary is required");
         GeneratedBoardInstance original = sim.getGeneratedBoardInstance();
         require(original != null && sim.getGeneratedChallengeController() != null &&
-            sim.getGeneratedChallengeController().isReady(), "initial legacy challenge is not ready");
-        final ChallengeDescriptor descriptor = original.getPcbLayout().getLayoutAlgorithmVersion() ==
-                SeededPcbLayoutGenerator.CURRENT_VERSION ?
-            ChallengeDescriptor.correctedSeeded(original.getCircuitFamilyId(), original.getSeed()) :
-            ChallengeDescriptor.legacy(original.getCircuitFamilyId(), original.getSeed());
+            sim.getGeneratedChallengeController().isReady(), "initial current challenge is not ready");
+        final ChallengeDescriptor descriptor = ChallengeDescriptor.current(
+            original.getCircuitFamilyId(), original.getSeed());
         final String canonical = descriptor.toCanonical();
         final String originalScenario = scenarioSnapshot(sim);
         final String beforeDiagnostics = sim.dumpCircuit();
         final int beforeAnalysis = sim.analysisCountForDeveloperVerification;
-        final String diagnostics = LegacyChallengeReplay.describe(descriptor);
-        require(diagnostics.equals(LegacyChallengeReplay.describe(descriptor)) &&
+        final String diagnostics = LeafChallengeReplay.describe(descriptor);
+        require(diagnostics.equals(LeafChallengeReplay.describe(descriptor)) &&
             original == sim.getGeneratedBoardInstance() &&
             beforeDiagnostics.equals(sim.dumpCircuit()) &&
             beforeAnalysis == sim.analysisCountForDeveloperVerification,
@@ -46,16 +44,15 @@ final class Task46ReplayDeveloperVerifier {
             beforeDiagnostics.equals(sim.dumpCircuit()), "rejection changed the live challenge");
 
         GeneratedBoardInstance direct = QuickPlayFamilyRegistry.generate(
-            descriptor.getDeviceIntent().getId(), descriptor.getRootSeed(),
-            LegacyChallengeReplay.layoutAlgorithmVersion(descriptor));
-        GeneratedBoardInstance replay = LegacyChallengeReplay.generate(ChallengeDescriptor.parse(canonical));
+            descriptor.getDeviceIntent().getId(), descriptor.getRootSeed());
+        GeneratedBoardInstance replay = LeafChallengeReplay.generate(ChallengeDescriptor.parse(canonical));
         assertFresh(original, direct);
         assertFresh(direct, replay);
         require(replay != original, "replay reused the installed owner");
         final String expected = generationSnapshot(direct);
         requireSnapshotEqual(expected, generationSnapshot(replay));
         require(expected.equals(generationSnapshot(replay)) &&
-            diagnostics.equals(LegacyChallengeReplay.describe(descriptor)),
+            diagnostics.equals(LeafChallengeReplay.describe(descriptor)),
             "inspection changed replay metadata");
         require(expectedFault(descriptor).equals(replay.getChallengeDefinition().getFault().getType().name()),
             "accepted corpus selected a different fault");
@@ -81,7 +78,7 @@ final class Task46ReplayDeveloperVerifier {
             // A fresh challenge is deliberately distinct from restoring or
             // resetting one of the already exercised runtime owners.
             try {
-                GeneratedBoardInstance restored = LegacyChallengeReplay.generate(
+                GeneratedBoardInstance restored = LeafChallengeReplay.generate(
                     ChallengeDescriptor.parse(canonical));
                 assertFresh(replay, restored);
                 require(restored != original && restored != direct, "cleanup reused an old owner");
@@ -94,14 +91,14 @@ final class Task46ReplayDeveloperVerifier {
                 throw cleanup;
             }
         }
-        return new Result(diagnostics, expected, "TSJ-TASK46-REPLAY-1\nfamily=" +
+        return new Result(diagnostics, expected, "TSJ-TASK46-REPLAY-2\nfamily=" +
             descriptor.getDeviceIntent().getId() + "\nseed=" + Long.toString(descriptor.getRootSeed()) +
             "\nfault=" + replay.getChallengeDefinition().getFault().getId() +
             "\ngeometry-version=" + descriptor.getGeometryVersion().getValue() +
             "\nsemantic-snapshot-equal=true\nfresh-owners=true\nhealthy-faulted-ready=true" +
             "\nscenario=" + replayScenario + "\nrejected-unsupported-inputs=" + rejections +
-            "\ncleanup=fresh-challenge-ready\nnormal-admission=initial-legacy-route;" +
-            "paired-installs=developer-verification");
+            "\ncleanup=fresh-challenge-ready\nnormal-admission=initial-current-route;" +
+            "single-current-install=developer-verification");
     }
 
     private static void installAndSettle(CirSim sim, GeneratedBoardInstance instance) {
@@ -145,7 +142,7 @@ final class Task46ReplayDeveloperVerifier {
      */
     private static String generationSnapshot(GeneratedBoardInstance instance) {
         List<String> rows = new ArrayList<String>();
-        boolean correctedSeeded = instance.getPcbLayout().getLayoutAlgorithmVersion() ==
+        boolean currentLayout = instance.getPcbLayout().getLayoutAlgorithmVersion() ==
             SeededPcbLayoutGenerator.CURRENT_VERSION;
         TroubleshootBoard board = instance.getBoard();
         rows.add("identity|" + board.getId() + "|" + instance.getCircuitFamilyId() + "|" +
@@ -208,7 +205,7 @@ final class Task46ReplayDeveloperVerifier {
         GeneratedChallengeDefinition challenge = instance.getChallengeDefinition();
         rows.add("challenge|" + challenge.getId() + "|" + Long.toString(challenge.getSelectionSeed()));
         rows.add("selected-fault|" + fault(challenge.getFault()));
-        if (correctedSeeded) {
+        if (currentLayout) {
             rows.add("layout-algorithm|" + instance.getPcbLayout().getLayoutAlgorithmVersion());
             rows.add("selected-hypothesis|" + challenge.getFault().getHypothesisKey());
             for (String key : instance.getDiagnosticSolvabilityContract().getHypothesisKeys())
@@ -218,8 +215,7 @@ final class Task46ReplayDeveloperVerifier {
         rows.add("layout-v" + PcbGeometryContractVersion.CURRENT + "|" +
             instance.getPcbLayout().geometryFingerprint());
         Collections.sort(rows);
-        StringBuilder result = new StringBuilder(correctedSeeded ?
-            "TSJ-REPLAY-SNAPSHOT-2" : "TSJ-REPLAY-SNAPSHOT-1");
+        StringBuilder result = new StringBuilder("TSJ-REPLAY-SNAPSHOT-2");
         for (String row : rows) result.append('\n').append(row.length()).append(':').append(row);
         return result.toString();
     }
@@ -283,7 +279,7 @@ final class Task46ReplayDeveloperVerifier {
         int count = 0;
         String encoded = descriptor.toCanonical();
         String generator = "generator=" + descriptor.getGenerator().toString();
-        count += reject(encoded.replace(generator, "generator=legacy-leaf@99"),
+        count += reject(encoded.replace(generator, "generator=leaf@99"),
             ChallengeContractException.Code.UNSUPPORTED_VERSION, "generator");
         count += reject(encoded.replace(generator, "generator=unknown@1"),
             ChallengeContractException.Code.UNSUPPORTED_ID, "generator");
@@ -292,9 +288,9 @@ final class Task46ReplayDeveloperVerifier {
             ChallengeContractException.Code.UNSUPPORTED_VERSION, "device-intent");
         count += reject(encoded.replace(intent, "device-intent=UNKNOWN_FAMILY@1"),
             ChallengeContractException.Code.UNSUPPORTED_ID, "device-intent");
-        count += reject(encoded.replace("difficulty-profile=legacy-default@1", "difficulty-profile=legacy-default@2"),
+        count += reject(encoded.replace("difficulty-profile=quick-play@1", "difficulty-profile=quick-play@2"),
             ChallengeContractException.Code.UNSUPPORTED_VERSION, "difficulty-profile");
-        count += reject(encoded.replace("difficulty-profile=legacy-default@1", "difficulty-profile=future-profile@1"),
+        count += reject(encoded.replace("difficulty-profile=quick-play@1", "difficulty-profile=future-profile@1"),
             ChallengeContractException.Code.UNSUPPORTED_ID, "difficulty-profile");
         count += reject(encoded.replace("geometry=3", "geometry=4"),
             ChallengeContractException.Code.UNSUPPORTED_VERSION, "geometry");
@@ -331,11 +327,11 @@ final class Task46ReplayDeveloperVerifier {
     private static int reject(String canonical, ChallengeContractException.Code code, String field) {
         ChallengeDescriptor descriptor = ChallengeDescriptor.parse(canonical);
         try {
-            LegacyChallengeReplay.generate(descriptor);
+            LeafChallengeReplay.generate(descriptor);
         } catch (ChallengeContractException expected) {
             require(expected.getCode() == code && field.equals(expected.getFieldId()),
                 "unsupported input reported a different stable rejection: " + expected.getMessage());
-            require(LegacyChallengeReplay.describe(descriptor).indexOf(
+            require(LeafChallengeReplay.describe(descriptor).indexOf(
                 "replay-rejection=" + code.name() + ";field=" + field) >= 0,
                 "diagnostics omitted the deterministic replay rejection");
             return 1;

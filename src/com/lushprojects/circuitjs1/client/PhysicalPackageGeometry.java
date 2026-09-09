@@ -231,12 +231,6 @@ final class PhysicalPackageGeometry {
             return terminal == null ? null : translated(terminal.getLead(lifted).getBounds());
         }
 
-        /** Legacy board-side alias retained for existing PCB pad consumers. */
-        Point getProbePoint(int index) { return getBoardPadProbeCenter(index); }
-
-        /** Legacy board-side alias retained for existing PCB pad consumers. */
-        Rectangle getProbeBounds(int index) { return getBoardPadProbeBounds(index); }
-
         private Rectangle translated(Rectangle value) {
             return new Rectangle(checkedAdd(value.x, x), checkedAdd(value.y, y),
                 value.width, value.height);
@@ -306,12 +300,6 @@ final class PhysicalPackageGeometry {
 
         Point getConnectedBoardEndPoint() { return connectedLead.getEndPoint(); }
         Point getLiftedFreeEndPoint() { return liftedLead.getEndPoint(); }
-
-        /** Legacy board-side alias; it is never the component-lead surface. */
-        Point getProbeCenter() { return getBoardPadProbeCenter(); }
-
-        /** Legacy board-side alias; it is never the component-lead surface. */
-        Rectangle getProbeBounds() { return getBoardPadProbeBounds(); }
 
         Lead getConnectedLead() { return connectedLead.copy(); }
         Lead getLiftedLead() { return liftedLead.copy(); }

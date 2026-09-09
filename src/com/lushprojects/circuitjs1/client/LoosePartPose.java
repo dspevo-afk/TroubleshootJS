@@ -66,7 +66,7 @@ final class LoosePartPose {
             PhysicalPackage.GeometryVariant defaultVariant = physicalPackage.getGeometryVariant(
                 physicalPackage.getDefaultLooseGeometryVariantKey());
             if (defaultVariant == null || defaultVariant.getGeometry() !=
-                    physicalPackage.getDefaultLooseGeometry() ||
+                    physicalPackage.getGeometry() ||
                     !physicalPackage.acceptsGeometry(defaultVariant.getGeometry()))
                 throw new IllegalStateException("Package has no canonical loose geometry: " +
                     physicalPackage.getId());

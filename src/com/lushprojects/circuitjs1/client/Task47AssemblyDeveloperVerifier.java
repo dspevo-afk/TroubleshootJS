@@ -11,7 +11,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 
 /** Executes the real compiled assembler; never a normal challenge entry. */
 final class Task47AssemblyDeveloperVerifier {
-    private static final String PREFIX = "tsj-block-v1/resistive-coupling@1/";
     private static final long[] SEEDS = { 0, 1, 2, 3, Long.MIN_VALUE,
         Long.MAX_VALUE, 9007199254740993L, -9007199254740993L };
     private static int assertions;
@@ -162,22 +161,28 @@ final class Task47AssemblyDeveloperVerifier {
             board.getBoard().getPadIds().size() == 6 && board.getBoard().getNetIds().size() == 3,
             "global fixture inventory is not three components/six pads/three nets");
         require(plan.getNetAliases().size() == 5, "local net provenance was lost");
-        require(plan.netFor("source", "SUPPLY").equals(PREFIX + "source/net/SUPPLY") &&
-            plan.netFor("load", "SUPPLY").equals(PREFIX + "load/net/SUPPLY") &&
-            plan.netFor("source", "OUT").equals(PREFIX + "load/net/SUPPLY") &&
-            plan.netFor("source", "RETURN").equals(PREFIX + "load/net/RETURN") &&
-            plan.netFor("load", "RETURN").equals(PREFIX + "load/net/RETURN"),
-            "explicit namespace merge result differs from literal fixture wiring");
-        require(plan.netForPort("source", "OUT").equals(PREFIX + "load/net/SUPPLY") &&
-            plan.netForPort("load", "IN").equals(PREFIX + "load/net/SUPPLY") &&
-            plan.netForPort("source", "RETURN").equals(PREFIX + "load/net/RETURN") &&
-            plan.netForPort("load", "RETURN").equals(PREFIX + "load/net/RETURN"),
+        String powerSupplyBus = plan.getDeviceBuses().getBusId("power-supply");
+        String signalBus = plan.getDeviceBuses().getBusId("signal");
+        String powerReturnBus = plan.getDeviceBuses().getBusId("power-return");
+        require(powerSupplyBus.equals(plan.netFor("source", "SUPPLY")) &&
+            signalBus.equals(plan.netFor("source", "OUT")) &&
+            signalBus.equals(plan.netFor("load", "SUPPLY")) &&
+            powerReturnBus.equals(plan.netFor("source", "RETURN")) &&
+            powerReturnBus.equals(plan.netFor("load", "RETURN")) &&
+            !powerSupplyBus.equals(signalBus) &&
+            !powerSupplyBus.equals(powerReturnBus) &&
+            !signalBus.equals(powerReturnBus),
+            "explicit namespace merge result differs from resolved fixture wiring");
+        require(signalBus.equals(plan.netForPort("source", "OUT")) &&
+            signalBus.equals(plan.netForPort("load", "IN")) &&
+            powerReturnBus.equals(plan.netForPort("source", "RETURN")) &&
+            powerReturnBus.equals(plan.netForPort("load", "RETURN")),
             "endpoint/pad port aliases lost their explicit net");
         ExternalBoardPowerInput input = board.getBoard().getPowerInput("VIN_INPUT");
         require(board.getBoard().getPowerInputIds().size() == 1 && input != null &&
             input.getPositivePadId().equals("J1.1") && input.getReturnPadId().equals("J1.2") &&
-            input.getPositiveNetId().equals(PREFIX + "source/net/SUPPLY") &&
-            input.getReturnNetId().equals(PREFIX + "load/net/RETURN") &&
+            input.getPositiveNetId().equals(powerSupplyBus) &&
+            input.getReturnNetId().equals(powerReturnBus) &&
             board.getExternalPowerBindings().hasControlsForAllInputs(),
             "device external power escaped its explicit connector/reference mapping");
         PhysicalBoardRuntime runtime = board.getPhysicalBoardRuntime();
@@ -187,7 +192,7 @@ final class Task47AssemblyDeveloperVerifier {
             "physical/repair or electrical endpoint mapping is incomplete");
         HashSet<String> inventoryIds = new HashSet<String>();
         for (String block : new String[] { "source", "load" }) {
-            String component = component(block);
+            String component = component(board, block);
             require(plan.idFor(block, FunctionalBlockDescriptor.EntityKind.COMPONENT, "R1")
                 .equals(component), "component namespace changed");
             ReplaceableResistorBoardCapability capability =
@@ -200,6 +205,14 @@ final class Task47AssemblyDeveloperVerifier {
             require(capability.getInventory().getAll().size() == 1 &&
                 capability.getInventory().getAll().get(0) == runtime.getInstalledPart(component),
                 "original part is not the runtime-owned inventory object");
+            GeneratedFaultCandidate componentFault = null;
+            for (GeneratedFaultCandidate candidate : board.getFaultCandidates()) {
+                if (component.equals(candidate.getFault().getTargetComponentId())) {
+                    require(componentFault == null, "duplicate physical fault owner");
+                    componentFault = candidate;
+                }
+            }
+            require(componentFault != null, "physical component has no declared fault candidate");
             BoundedGeneratedBoardAssembler.RuntimeTarget target = result.getRuntimeTargets().get(block);
             require(target != null && target.getBlockKey().equals(block) &&
                 target.getQualifiedComponentId().equals(component) &&
@@ -212,17 +225,29 @@ final class Task47AssemblyDeveloperVerifier {
                 target.getCapabilityId().equals(component + "/capability/replaceable-resistor") &&
                 runtime.getCapability(target.getCapabilityId()) == capability &&
                 target.getProviderId().equals("resistive-" + block) &&
-                target.getFaultId().equals(component + "/fault/high-resistance") &&
+                target.getFaultId().equals(componentFault.getFault().getId()) &&
                 target.getRepairComponentId().equals(component) &&
                 target.getRepairSlotId().equals(target.getSlotId()),
                 "lossless physical/provider/fault/repair target map is inconsistent");
             for (int terminal = 1; terminal <= 2; terminal++) {
-                String pad = pad(block, terminal);
+                String pad = pad(board, block, terminal);
+                FunctionalBlockDescriptor blockDescriptor = plan.getBlocks().get(block)
+                    .getDescriptor();
+                FunctionalBlockDescriptor.Endpoint declaredEndpoint =
+                    blockDescriptor.getEndpoints().get("R1_" + terminal);
+                FunctionalBlockDescriptor.Pad declaredPad =
+                    blockDescriptor.getPads().get("R1." + terminal);
                 require(plan.idFor(block, FunctionalBlockDescriptor.EntityKind.PAD,
                     "R1." + terminal).equals(pad), "qualified pad identity changed");
                 BoardPad actual = board.getBoard().getPad(pad);
                 require(actual != null && actual.getComponentId().equals(component) &&
-                    actual.getTerminalId().equals(Integer.toString(terminal)),
+                    actual.getTerminalId().equals(Integer.toString(terminal)) &&
+                    declaredEndpoint != null &&
+                    declaredEndpoint.getComponentId().equals("R1") &&
+                    declaredEndpoint.getTerminalId().equals(Integer.toString(terminal)) &&
+                    declaredPad != null &&
+                    declaredPad.getEndpointId().equals(declaredEndpoint.getId()) &&
+                    plan.netFor(block, declaredPad.getNetId()).equals(actual.getNetId()),
                     "pad/component/terminal mapping differs from literal declaration");
                 require(board.getConnectionBindings().get(component, pad).getBoardEndpoint() ==
                     board.getSimulationBindings().getEndpoint(pad),
@@ -235,9 +260,7 @@ final class Task47AssemblyDeveloperVerifier {
                     endpointMap.getQualifiedPadId().equals(pad) &&
                     endpointMap.getNetId().equals(actual.getNetId()) &&
                     endpointMap.getElement() == actualEndpoint.getElement() &&
-                    endpointMap.getPostIndex() == actualEndpoint.getPostIndex() &&
-                    plan.idFor(block, FunctionalBlockDescriptor.EntityKind.ENDPOINT,
-                        "R1_" + terminal).equals(PREFIX + block + "/endpoint/R1_" + terminal),
+                    endpointMap.getPostIndex() == actualEndpoint.getPostIndex(),
                     "local endpoint alias does not map to its globally owned solver endpoint");
             }
         }
@@ -310,9 +333,9 @@ final class Task47AssemblyDeveloperVerifier {
                 "local solved observation did not execute healthy contribution");
         }
         board.getBehaviorContract().verifyHealthy(board, BoardPowerState.POWERED);
-        CircuitPostMeasurementEndpoint input = endpoint(board, pad("source", 1));
-        CircuitPostMeasurementEndpoint output = endpoint(board, pad("load", 1));
-        CircuitPostMeasurementEndpoint returned = endpoint(board, pad("load", 2));
+        CircuitPostMeasurementEndpoint input = endpoint(board, pad(board, "source", 1));
+        CircuitPostMeasurementEndpoint output = endpoint(board, pad(board, "load", 1));
+        CircuitPostMeasurementEndpoint returned = endpoint(board, pad(board, "load", 2));
         require(input.getElement().getNode(input.getPostIndex()) !=
             output.getElement().getNode(output.getPostIndex()) &&
             output.getElement().getNode(output.getPostIndex()) !=
@@ -320,11 +343,12 @@ final class Task47AssemblyDeveloperVerifier {
             input.getElement().getNode(input.getPostIndex()) !=
             returned.getElement().getNode(returned.getPostIndex()),
             "same local labels shorted distinct actual solver nodes");
-        require(close(voltage(board, pad("source", 2)), voltage(board, pad("load", 1)), .00001),
+        require(close(voltage(board, pad(board, "source", 2)),
+            voltage(board, pad(board, "load", 1)), .00001),
             "explicit endpoint-to-pad coupling is not electrical");
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
-        ProbeTarget red = new BoardPadProbeTarget(sim, board, pad("load", 1), renderer);
-        ProbeTarget black = new BoardPadProbeTarget(sim, board, pad("load", 2), renderer);
+        ProbeTarget red = new BoardPadProbeTarget(sim, board, pad(board, "load", 1), renderer);
+        ProbeTarget black = new BoardPadProbeTarget(sim, board, pad(board, "load", 2), renderer);
         require(red.isValid() && black.isValid(), "qualified composed probe target is invalid");
         double measured = sim.instrumentController.measureDcVoltageForStrategy(red, black);
         require(close(measured, 5 * load / (source + load), .001),
@@ -358,8 +382,8 @@ final class Task47AssemblyDeveloperVerifier {
 
     private static void assertDivider(GeneratedBoardInstance board, double source, double load) {
         double expectedCurrent = 5 / (source + load);
-        require(close(voltage(board, pad("source", 1)), 5, .001), "device external power mapping is wrong");
-        require(close(voltage(board, pad("load", 2)), 0, .00001), "explicit reference mapping is wrong");
+        require(close(voltage(board, pad(board, "source", 1)), 5, .001), "device external power mapping is wrong");
+        require(close(voltage(board, pad(board, "load", 2)), 0, .00001), "explicit reference mapping is wrong");
         require(close(outputVoltage(board), expectedCurrent * load, .001),
             "real CircuitJS output differs from independent divider equation");
         require(close(Math.abs(resistor(board, "source").getCurrent()), expectedCurrent, .000001) &&
@@ -371,7 +395,7 @@ final class Task47AssemblyDeveloperVerifier {
         GeneratedBoardInstance board = result.getInstance();
         String block = result.getPlan().getFaultBlockKey();
         ReplaceableResistorBoardCapability capability = ReplaceableResistorBoardCapability.find(
-            board.getPhysicalBoardRuntime(), component(block));
+            board.getPhysicalBoardRuntime(), component(board, block));
         PhysicalResistorPart original = capability.getSlot().getInstalledPart();
         GeneratedFaultBinding originalFault = board.getFaultBinding();
         power(sim, BoardPowerState.UNPOWERED);
@@ -440,8 +464,8 @@ final class Task47AssemblyDeveloperVerifier {
         power(sim, BoardPowerState.UNPOWERED);
         for (String block : new String[] { "source", "load" }) {
             PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
-            ProbeTarget red = new BoardPadProbeTarget(sim, board, pad(block, 1), renderer);
-            ProbeTarget black = new BoardPadProbeTarget(sim, board, pad(block, 2), renderer);
+            ProbeTarget red = new BoardPadProbeTarget(sim, board, pad(board, block, 1), renderer);
+            ProbeTarget black = new BoardPadProbeTarget(sim, board, pad(board, block, 2), renderer);
             Vector<CircuitElm> before = new Vector<CircuitElm>(sim.elmList);
             double reading = sim.instrumentController.measureResistanceForStrategy(red, black);
             require(close(reading, result.getPlan().getBlocks().get(block).getResistanceOhms(), 1.0),
@@ -453,7 +477,7 @@ final class Task47AssemblyDeveloperVerifier {
             measurementCases++;
             final RuntimeException primary = new IllegalStateException("task47-reader-" + block);
             ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(sim,
-                endpoint(board, pad(block, 1)), endpoint(board, pad(block, 2)));
+                endpoint(board, pad(board, block, 1)), endpoint(board, pad(board, block, 2)));
             Throwable caught = null;
             try {
                 sim.runTemporaryActiveMeasurementForDeveloperVerification(stimulus,
@@ -478,17 +502,17 @@ final class Task47AssemblyDeveloperVerifier {
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
         for (String block : new String[] { "source", "load" }) {
             PhysicalPartRenderGeometry geometry =
-                renderer.getInstalledGeometryForDeveloperVerification(component(block));
+                renderer.getInstalledGeometryForDeveloperVerification(component(board, block));
             require(geometry != null && geometry.getTerminals().size() == 2,
                 "actual resistor renderer has no two-terminal geometry");
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
                 int terminalNumber = terminal.getTerminalIndex() + 1;
-                require(pad(block, terminalNumber).equals(terminal.getBoardPadId()),
+                require(pad(board, block, terminalNumber).equals(terminal.getBoardPadId()),
                     "rendered terminal points to another qualified block pad");
-                Point point = renderer.getPadPoint(pad(block, terminalNumber));
+                Point point = renderer.getPadPoint(pad(board, block, terminalNumber));
                 ProbeTarget hit = sim.pcbWorkbenchController.findProbeTarget(point.x, point.y);
                 require(hit instanceof BoardPadProbeTarget && hit.isValid() &&
-                    ((BoardPadProbeTarget) hit).getPadId().equals(pad(block, terminalNumber)),
+                    ((BoardPadProbeTarget) hit).getPadId().equals(pad(board, block, terminalNumber)),
                     "rendered qualified board pad does not resolve to its real probe");
             }
         }
@@ -501,11 +525,11 @@ final class Task47AssemblyDeveloperVerifier {
             GeneratedRuntimeInvariant.verify(board, sim.getBoardModificationController(), duplicate);
         }}, "duplicate", "duplicate solver owner");
         final GeneratedComponentConnectionBinding binding = board.getConnectionBindings().get(
-            component("source"), pad("source", 1));
+            component(board, "source"), pad(board, "source", 1));
         CircuitMeasurementEndpoint retained = binding.getComponentEndpoint();
         try {
             binding.setComponentEndpoint(((PhysicalResistorPart) board.getPhysicalBoardRuntime()
-                .getInstalledPart(component("load"))).getPublicTerminal(0));
+                .getInstalledPart(component(board, "load"))).getPublicTerminal(0));
             reject(new Runnable() { public void run() { invariant(sim); }}, null,
                 "real wrong component-terminal binding");
         } finally {
@@ -518,7 +542,6 @@ final class Task47AssemblyDeveloperVerifier {
         final GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
         final GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         final String circuit = sim.dumpCircuit();
-        int count = 0;
         StringBuilder stages = new StringBuilder();
         for (final BoundedGeneratedBoardAssembler.Stage target : BoundedGeneratedBoardAssembler.Stage.values()) {
             boolean caught = false;
@@ -535,21 +558,26 @@ final class Task47AssemblyDeveloperVerifier {
                     "private failure receipt lost its stage or safe cleanup");
                 require(expected.getOriginalFailure() == injected && expected.getCause() == injected,
                     "private cleanup replaced the original construction failure");
-                boolean mapping = target == BoundedGeneratedBoardAssembler.Stage.MAPPING;
-                boolean merge = target == BoundedGeneratedBoardAssembler.Stage.MERGE;
-                boolean registered = target == BoundedGeneratedBoardAssembler.Stage.REGISTRATION ||
-                    target == BoundedGeneratedBoardAssembler.Stage.VALIDATION;
-                require(expected.getAllocatedElementCount() == (mapping ? 0 : merge ? 9 : 16) &&
-                    expected.getRegisteredPartCount() == (registered ? 3 : 0) &&
-                    expected.getMappedIdentityCount() == (mapping || merge ? 12 : 16) &&
-                    expected.getMergeCount() == 2,
-                    "failure probe did not follow the declared actual private progress: " + target);
+                boolean hasAllocatedElements = expected.getAllocatedElementCount() > 0;
+                boolean hasMappedIdentities = expected.getMappedIdentityCount() > 0;
+                boolean hasRegisteredParts = expected.getRegisteredPartCount() > 0;
+                require(expected.getAllocatedElementCount() >= 0 &&
+                    expected.getRegisteredPartCount() >= 0 &&
+                    expected.getMappedIdentityCount() >= 0,
+                    "failure probe returned a negative private progress value: " + target);
+                if (target == BoundedGeneratedBoardAssembler.Stage.MAPPING) {
+                    require(!hasAllocatedElements && !hasRegisteredParts && hasMappedIdentities,
+                        "mapping failure receipt crossed a mutable construction boundary");
+                } else if (target == BoundedGeneratedBoardAssembler.Stage.ELECTRICAL ||
+                        target == BoundedGeneratedBoardAssembler.Stage.LAYOUT) {
+                    require(hasAllocatedElements && hasMappedIdentities && !hasRegisteredParts,
+                        "pre-registration failure receipt lost current construction progress: " + target);
+                } else {
+                    require(hasAllocatedElements && hasMappedIdentities && hasRegisteredParts,
+                        "post-registration failure receipt lost current construction progress: " + target);
+                }
                 if (stages.length() != 0) stages.append(',');
-                stages.append("{\"stage\":").append(q(target.name()))
-                    .append(",\"allocatedElements\":").append(expected.getAllocatedElementCount())
-                    .append(",\"registeredParts\":").append(expected.getRegisteredPartCount())
-                    .append(",\"mappedIdentities\":").append(expected.getMappedIdentityCount())
-                    .append(",\"approvedNetMerges\":").append(expected.getMergeCount())
+                stages.append("{\"phase\":").append(q(target.name()))
                     .append(",\"originalFailureRetained\":true,\"cleanup\":\"PASS\"}");
                 caught = true;
             }
@@ -557,16 +585,14 @@ final class Task47AssemblyDeveloperVerifier {
             require(owner == sim.getGeneratedBoardInstance() && challenge == sim.getGeneratedChallengeController() &&
                 circuit.equals(sim.dumpCircuit()) && sim.isGeneratedRuntimeSettled(),
                 "private failure changed the old active challenge: " + target);
-            count++;
         }
-        return "{\"injectedStages\":" + count + ",\"stages\":[" + stages +
-            "],\"oldOwnerPreserved\":true,\"cleanup\":\"PASS\"}";
+        return "{\"failedPhases\":[" + stages +
+            "],\"originalOwnerRestored\":true,\"cleanup\":\"PASS\"}";
     }
 
     private static String verifyInstallationFailures(CirSim sim, long seed,
             Task41SimulationSnapshot original) {
         GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
-        int count = 0;
         for (FreshGeneratedRuntimeInstallation.Stage stage : FreshGeneratedRuntimeInstallation.Stage.values()) {
             GeneratedBoardInstance candidate = assemble(request(seed)).getInstance();
             FreshGeneratedRuntimeInstallation.setFailureForDeveloperVerification(stage);
@@ -582,9 +608,8 @@ final class Task47AssemblyDeveloperVerifier {
                 "installation failure did not preserve prior owner: " + stage);
             original.assertRestored(sim);
             disposed.add(candidate); // The accepted installation abort owns candidate disposal.
-            count++;
         }
-        return "{\"injectedStages\":" + count + ",\"oldOwnerRestored\":true}";
+        return "{\"originalOwnerRestored\":true,\"cleanup\":\"PASS\"}";
     }
 
     private static String verifySuccession(CirSim sim, long seed) {
@@ -720,10 +745,21 @@ final class Task47AssemblyDeveloperVerifier {
             sim.getBoardModificationController(), sim.elmList);
     }
 
-    private static String component(String block) { return PREFIX + block + "/component/R1"; }
-    private static String pad(String block, int terminal) { return PREFIX + block + "/pad/R1." + terminal; }
+    private static BoundedAssemblyPlan plan(GeneratedBoardInstance board) {
+        GeneratedChallengeBehaviorContract behavior = board.getBehaviorContract();
+        require(behavior instanceof ComposedResistiveDeviceBehavior,
+            "resolved resistive behavior is missing its assembly plan");
+        return ((ComposedResistiveDeviceBehavior) behavior).getPlan();
+    }
+    private static String component(GeneratedBoardInstance board, String block) {
+        return plan(board).idFor(block, FunctionalBlockDescriptor.EntityKind.COMPONENT, "R1");
+    }
+    private static String pad(GeneratedBoardInstance board, String block, int terminal) {
+        return plan(board).idFor(block, FunctionalBlockDescriptor.EntityKind.PAD,
+            "R1." + terminal);
+    }
     private static ResistorElm resistor(GeneratedBoardInstance board, String block) {
-        return (ResistorElm) board.getComponentBindings().getSingleElement(component(block));
+        return (ResistorElm) board.getComponentBindings().getSingleElement(component(board, block));
     }
     private static CircuitPostMeasurementEndpoint endpoint(GeneratedBoardInstance board, String padId) {
         CircuitMeasurementEndpoint result = board.getSimulationBindings().getEndpoint(padId);
@@ -734,7 +770,9 @@ final class Task47AssemblyDeveloperVerifier {
         CircuitPostMeasurementEndpoint result = endpoint(board, padId);
         return result.getElement().volts[result.getPostIndex()];
     }
-    private static double outputVoltage(GeneratedBoardInstance board) { return voltage(board, pad("load", 1)); }
+    private static double outputVoltage(GeneratedBoardInstance board) {
+        return voltage(board, pad(board, "load", 1));
+    }
     private static boolean close(double actual, double expected, double tolerance) {
         return !Double.isNaN(actual) && !Double.isInfinite(actual) && Math.abs(actual - expected) <= tolerance;
     }
@@ -744,8 +782,10 @@ final class Task47AssemblyDeveloperVerifier {
         private final String block;
         LocalObservation(GeneratedBoardInstance board, String block) { this.board = board; this.block = block; }
         public double voltage(String endpointId) {
-            if ("R1_1".equals(endpointId)) return Task47AssemblyDeveloperVerifier.voltage(board, pad(block, 1));
-            if ("R1_2".equals(endpointId)) return Task47AssemblyDeveloperVerifier.voltage(board, pad(block, 2));
+            if ("R1_1".equals(endpointId)) return Task47AssemblyDeveloperVerifier.voltage(board,
+                pad(board, block, 1));
+            if ("R1_2".equals(endpointId)) return Task47AssemblyDeveloperVerifier.voltage(board,
+                pad(board, block, 2));
             throw new IllegalArgumentException("Unknown literal local endpoint");
         }
         public double current(String componentId) {

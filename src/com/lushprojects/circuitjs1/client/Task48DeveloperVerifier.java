@@ -342,7 +342,7 @@ final class Task48DeveloperVerifier {
     private static String verifyConstructionFailures(final CirSim sim, long seed) {
         GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
         String circuit = sim.dumpCircuit();
-        int count = 0;
+        StringBuilder failedPhases = new StringBuilder();
         for (final BoundedGeneratedBoardAssembler.Stage target : BoundedGeneratedBoardAssembler.Stage.values()) {
             final RuntimeException injected = new IllegalStateException("task48-private-" + target);
             boolean caught = false;
@@ -357,9 +357,11 @@ final class Task48DeveloperVerifier {
             }
             require(caught && owner == sim.getGeneratedBoardInstance() && circuit.equals(sim.dumpCircuit()) &&
                 sim.isGeneratedRuntimeSettled(), "construction stage failed to preserve original owner: " + target);
-            count++;
+            if (failedPhases.length() != 0) failedPhases.append(',');
+            failedPhases.append('"').append(target.name()).append('"');
         }
-        return "{\"injectedStages\":" + count + ",\"oldOwnerPreserved\":true,\"cleanup\":\"PASS\"}";
+        return "{\"failedPhases\":[" + failedPhases +
+            "],\"originalOwnerPreserved\":true,\"cleanup\":\"PASS\"}";
     }
 
     private static void verifyAdmissionRejections(CirSim sim) {
@@ -400,7 +402,7 @@ final class Task48DeveloperVerifier {
 
     private static String verifyInstallationFailures(CirSim sim, long seed, Task41SimulationSnapshot snapshot) {
         GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
-        int count = 0;
+        StringBuilder failedPhases = new StringBuilder();
         for (FreshGeneratedRuntimeInstallation.Stage stage : FreshGeneratedRuntimeInstallation.Stage.values()) {
             GeneratedBoardInstance candidate = assemble(BoundedAssemblyRequest.forControlledIndicator(seed)).getInstance();
             FreshGeneratedRuntimeInstallation.setFailureForDeveloperVerification(stage);
@@ -412,9 +414,11 @@ final class Task48DeveloperVerifier {
             require(caught && sim.getGeneratedBoardInstance() == owner, "installation did not restore old owner: " + stage);
             snapshot.assertRestored(sim);
             disposed.add(candidate);
-            count++;
+            if (failedPhases.length() != 0) failedPhases.append(',');
+            failedPhases.append('"').append(stage.name()).append('"');
         }
-        return "{\"injectedStages\":" + count + ",\"originalRestored\":true}";
+        return "{\"failedPhases\":[" + failedPhases +
+            "],\"originalOwnerRestored\":true}";
     }
 
     private static String verifyDetachedInitialOwner(CirSim sim, Task41SimulationSnapshot original, long seed) {

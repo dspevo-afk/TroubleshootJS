@@ -316,7 +316,8 @@ final class ElectricalUnitPackageMapContractTest {
     private static PhysicalPackage packageOf(String id, String... terminalIds) {
         Vector<String> terminals = new Vector<String>();
         terminals.addAll(Arrays.asList(terminalIds));
-        return new PhysicalPackage(id, terminals, new Vector<String>());
+        return PhysicalPackage.developerPackageWithGenericGeometry(id, terminals,
+                new Vector<String>(), false);
     }
 
     private static Map<String, PhysicalPackage> packages(String componentId,

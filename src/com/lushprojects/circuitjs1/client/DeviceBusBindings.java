@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 /**
  * Immutable projection from temporary electrical equivalence classes to
- * explicit device buses or variant-owned local nets.
+ * explicit device buses or current semantic local nets.
  */
 final class DeviceBusBindings {
     static final String ENCODING_PREFIX = "tsj-bus-v1/";
@@ -123,9 +123,9 @@ final class DeviceBusBindings {
                     "Electrical alias map is required");
         }
 
-        Map<String, String> localNetIds = namespace.getDurableLocalNetIds();
+        java.util.Set<String> semanticNetIds = namespace.getSemanticNetIds();
         TreeMap<String, String> normalized = normalizeAliases(
-                localNetIds.keySet(), electricalAliases);
+                semanticNetIds, electricalAliases);
         TreeMap<String, TreeSet<String>> groups = groupAliases(normalized);
         TreeMap<String, Declaration> declarationMap =
                 new TreeMap<String, Declaration>();
@@ -229,17 +229,17 @@ final class DeviceBusBindings {
                 ArrayList<String> members = new ArrayList<String>();
                 for (String alias : entry.getValue()) {
                     durable.put(alias, id);
-                    members.add(localNetIds.get(alias));
+                    members.add(alias);
                 }
                 Collections.sort(members);
                 aliasesByBus.put(id, Collections.unmodifiableList(members));
             } else {
                 for (String alias : entry.getValue()) {
-                    durable.put(alias, localNetIds.get(alias));
+                    durable.put(alias, alias);
                 }
             }
         }
-        if (durable.size() != localNetIds.size()) {
+        if (durable.size() != semanticNetIds.size()) {
             throw new BlockContractException(
                     BlockContractException.Code.MISSING_DECLARATION,
                     "electricalAliases", null,
@@ -253,7 +253,7 @@ final class DeviceBusBindings {
         this.busIds = Collections.unmodifiableMap(ids);
     }
 
-    Map<String, String> getDurableNets() {
+    Map<String, String> getNetBindings() {
         return durableNets;
     }
 
@@ -279,11 +279,11 @@ final class DeviceBusBindings {
         return getBusId(semanticKey);
     }
 
-    String durableNetFor(String legacyQualifiedNet) {
-        String result = durableNets.get(legacyQualifiedNet);
+    String netFor(String semanticNetId) {
+        String result = durableNets.get(semanticNetId);
         if (result == null) {
             throw new IllegalArgumentException(
-                    "Unknown namespace net " + legacyQualifiedNet);
+                    "Unknown namespace net " + semanticNetId);
         }
         return result;
     }

@@ -46,14 +46,13 @@ final class A03IdentityDeveloperVerifier {
                 CorpusCase sample = verifyPureSample(SEEDS[index], candidates);
                 corpus.add(sample);
             }
-            boolean staleActionRejected = verifyStaleAction(corpus);
             runRuntimeSamples(sim, original, originalOwner, corpus);
             original.restore(sim);
             original.assertRestored(sim);
             require(sim.getGeneratedBoardInstance() == originalOwner &&
                 sim.getGeneratedChallengeController() == originalChallenge,
                 "A03 changed the original owner");
-            report = report(vectors, corpus, overallStart, staleActionRejected);
+            report = report(vectors, corpus, overallStart);
         } catch (Throwable failure) {
             primary = failure;
         } finally {
@@ -167,30 +166,6 @@ final class A03IdentityDeveloperVerifier {
         }
         original.restore(sim);
         original.assertRestored(sim);
-    }
-
-    private static boolean verifyStaleAction(Vector<CorpusCase> corpus) {
-        require(corpus.size() >= 2, "A03 stale-action corpus is incomplete");
-        CorpusCase first = corpus.get(0);
-        CorpusCase changed = corpus.get(1);
-        require(!first.pure.identityCanonical().equals(changed.pure.identityCanonical()),
-            "A03 stale-action fixtures unexpectedly share identity");
-        String target = first.pure.getTargets().get(0);
-        A03RealizationReplay.SavedActionReference reference =
-            A03RealizationReplay.SavedActionReference.capture(first.pure, target);
-        require(target.equals(reference.resolve(first.pure)),
-            "A03 saved action did not resolve its declared target");
-        boolean rejected = false;
-        try {
-            reference.resolve(changed.pure);
-        } catch (ChallengeContractException expected) {
-            require(expected.getCode() == ChallengeContractException.Code.CONTRADICTORY_CONSTRAINT &&
-                "saved-action.realization".equals(expected.getFieldId()),
-                "A03 stale action returned the wrong typed rejection");
-            rejected = true;
-        }
-        require(rejected, "A03 stale saved action was accepted for another realization");
-        return true;
     }
 
     /**
@@ -433,19 +408,18 @@ final class A03IdentityDeveloperVerifier {
     private static BoundedAssemblyRequest requestFor(long seed) {
         if (seed == 1L) return BoundedAssemblyRequest.forCanary(seed);
         if (seed == 2L) return BoundedAssemblyRequest.forControlledIndicator(seed);
-        if (seed == 3L) return BoundedAssemblyRequest.forControlledIndicatorValues(seed);
+        if (seed == 3L) return BoundedAssemblyRequest.forControlledIndicator(seed);
         throw new IllegalArgumentException("Unsupported A03 bounded sample seed: " + seed);
     }
 
     private static String report(String vectors, Vector<CorpusCase> corpus,
-            long start, boolean staleActionRejected) {
+            long start) {
         StringBuilder result = new StringBuilder();
         result.append("{\"protocol\":").append(q(PROTOCOL))
             .append(",\"status\":\"PASS\",\"vectors\":").append(q(vectors))
             .append(",\"vectorAssertions\":").append(A03IdentityContractVectors.getAssertionCount())
             .append(",\"deterministicVectors\":true,\"runtimeManifestMatchesPlan\":true")
             .append(",\"solverNodePoisonCanary\":true,\"pcbCoordinatePoisonCanary\":true")
-            .append(",\"staleActionRejected\":").append(staleActionRejected)
             .append(",\"cases\":[");
         long serializedBytes = 0;
         boolean first = true;

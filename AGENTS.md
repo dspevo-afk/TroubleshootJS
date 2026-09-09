@@ -1,7 +1,7 @@
 # AGENTS.md — TroubleshootJS
 
 Standing repository instructions | Astra Max / Luna flat orchestration
-Policy revision: 2026-09-05
+Policy revision: 2026-09-09
 
 This is a complete root-file replacement, not an appendix to an older
 agent hierarchy. It governs work in this repository without authorizing
@@ -102,10 +102,20 @@ request after each small fix; respect dependencies and required gates. It does
 not authorize the next unrequested phase, unrelated backlog, or a rewrite.
 
 Prefer surgical root-cause fixes, existing adapters/services/registries, and
-small testable changes. Preserve working behavior and compatibility. No
+small testable changes. Preserve the current game's required behavior. No
 opportunistic dependency upgrades, framework migrations, formatting churn,
 duplicate state owners, or broad god-class decomposition. Do not impose a
 fake two-file limit when a correct repair genuinely requires more files.
+
+Historical TroubleshootJS development compatibility is not a product contract.
+Retire obsolete generator revisions, internal APIs, identity translations,
+formats and tests when the current task owns their callers. Migrate current
+consumers and retain useful current features and independent test oracles;
+do not keep an obsolete implementation behind a facade, flag or overload.
+Reject incompatible artifacts before live mutation. Current determinism,
+electrical/physical truth, ownership, instruments, valid repairs and privacy
+remain required. A future cross-version support promise needs explicit owner
+approval identifying the actual supported users, data and versions.
 
 ## Delegation, ownership, and independent review
 
@@ -337,7 +347,10 @@ isolate necessary upstream CircuitJS changes and preserve mergeability.
   and map the PCB. Reject invalid/uninteresting generations instead of hiding
   them. Supporting healthy circuitry is not automatically faulty.
 - **Reproducibility matters.** Preserve seeded topology, parameter, layout, and
-  fault generation for a given version/settings contract. Tests select explicit
+  fault generation within the supported current implementation/settings contract.
+  Transport complete signed-long seeds exactly and isolate random concerns.
+  Development corrections may change old outputs; a current schema/model epoch
+  identifies interpretation without retaining historical resolvers. Tests select explicit
   representative families/topologies and known boundary/regression seeds rather
   than hoping a random draw reaches the changed path.
 - **Mutations are electrical, not decorative.** Removal, lead lifting,
@@ -367,7 +380,7 @@ isolate necessary upstream CircuitJS changes and preserve mergeability.
   behavior under relevant power/input conditions. Preserve valid alternative
   repairs instead of requiring a click on the originally faulted component.
 
-These rules preserve existing behavior; descriptions of possible instruments,
+These rules define current game requirements; descriptions of possible instruments,
 board features, or damage systems are not permission to implement future
 roadmap features during a focused task.
 

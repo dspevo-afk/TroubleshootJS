@@ -11,11 +11,7 @@ class LedIndicatorGenerator {
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
     private static final double[] RESISTOR_VALUES = { 330, 680, 1000 };
 
-    LedIndicatorGenerator() { this(SeededPcbLayoutGenerator.CURRENT_VERSION); }
-
-    LedIndicatorGenerator(int layoutAlgorithmVersion) {
-        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator(layoutAlgorithmVersion);
-    }
+    LedIndicatorGenerator() { PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator(); }
 
     GeneratedBoardInstance generate(long seed) {
         return generate(seed, null);
@@ -248,9 +244,12 @@ class LedIndicatorGenerator {
         board.addNet(new BoardNet("LED_NODE"));
         board.addNet(new BoardNet("GND"));
 
-        board.addComponent(new BoardComponent("J1", "CONNECTOR"));
-        board.addComponent(new BoardComponent("R1", "RESISTOR"));
-        board.addComponent(new BoardComponent("LED1", "LED"));
+        board.addComponent(new BoardComponent("J1", "CONNECTOR",
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
+        board.addComponent(new BoardComponent("R1", "RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
+        board.addComponent(new BoardComponent("LED1", "LED",
+            PhysicalPackages.THROUGH_HOLE_LED));
 
         board.addPad(new BoardPad("J1.1", "J1", "1", "VIN"));
         board.addPad(new BoardPad("J1.2", "J1", "2", "GND"));

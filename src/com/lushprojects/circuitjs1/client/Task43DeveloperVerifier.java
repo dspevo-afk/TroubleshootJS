@@ -52,7 +52,7 @@ final class Task43DeveloperVerifier {
             "Package has non-positive dimensions: " + physicalPackage.getId());
         require(packageTerminals.equals(geometry.getTerminalIds()),
             "Package terminal IDs are not stable in geometry: " + physicalPackage.getId());
-        require(variants.size() > 0 && physicalPackage.getDefaultLooseGeometry() == geometry &&
+        require(variants.size() > 0 && physicalPackage.getGeometry() == geometry &&
                 physicalPackage.getGeometryVariant(
                     physicalPackage.getDefaultLooseGeometryVariantKey()) != null,
             "Package has no explicit default loose projection: " + physicalPackage.getId());
@@ -184,7 +184,7 @@ final class Task43DeveloperVerifier {
             PhysicalPackageGeometry.Lead lifted = terminal.getLiftedLead();
             require(terminal.getTerminalId().equals(physicalPackage.getTerminalIds().get(index)) &&
                     contains(boardProbe, pad) && contains(boardProbe, terminal.getPadCenter()) &&
-                    terminal.getProbeBounds().equals(boardProbe) &&
+                    terminal.getBoardPadProbeBounds().equals(boardProbe) &&
                     contains(selection, boardProbe) && contains(drag, boardProbe) &&
                     contains(courtyard, pad) && contains(selection, connected.getBounds()) &&
                     contains(selection, lifted.getBounds()) && contains(drag, connected.getBounds()) &&
@@ -261,7 +261,7 @@ final class Task43DeveloperVerifier {
                     pad.getEscapeLength() == terminal.getEscapeLength() &&
                     pad.getPadBounds().equals(placed.getPadBounds(index)) &&
                     pad.getProbeBounds().equals(placed.getBoardPadProbeBounds(index)) &&
-                    placement.getProbeBounds(index).equals(
+                    placement.getBoardPadProbeBounds(index).equals(
                         placed.getBoardPadProbeBounds(index)),
                 "Pad geometry diverged from package terminal: " + physicalPackage.getId());
         }
@@ -287,7 +287,6 @@ final class Task43DeveloperVerifier {
         assertTranslated(original.getRoutingCourtyard(), moved.getRoutingCourtyard(), dx, dy);
         for (int index = 0; index < component.getPadIds().size(); index++) {
             assertTranslated(original.getPadBounds(index), moved.getPadBounds(index), dx, dy);
-            assertTranslated(original.getProbeBounds(index), moved.getProbeBounds(index), dx, dy);
             assertTranslated(original.getBoardPadProbeBounds(index),
                 moved.getBoardPadProbeBounds(index), dx, dy);
             assertTranslated(original.getComponentLeadProbeBounds(index),
@@ -343,25 +342,30 @@ final class Task43DeveloperVerifier {
 
         PhysicalPackageGeometry generic = developer.getGeometry();
         PcbComponentPlacement genericProjection = PcbComponentPlacement.fromPhysicalGeometry(
-            "TASK43_GENERIC_COMPAT", 40, 40, generic);
+            "TASK43_GENERIC_COMPAT", 40, 40, developer, generic);
         require(genericProjection.getPhysicalPackage() != null &&
                 genericProjection.getPhysicalPackage().isDeveloperGeneric() &&
                 genericProjection.getPhysicalGeometry() == generic,
-            "Generic compatibility projection did not become package-backed");
-        expectRejectedPackageLessPlacement(production);
+            "Explicit generic package placement did not remain package-backed");
+        expectRejectedMismatchedPackagePlacement(production);
         boolean productionLooseRejected = false;
         try {
             PcbComponentPlacement.fromPhysicalGeometry("TASK43_PRODUCTION_LOOSE", 40, 40,
-                source);
+                production, PhysicalPackageGeometry.generic(production.getTerminalIds(), false));
         } catch (IllegalArgumentException expected) {
             productionLooseRejected = true;
         }
         require(productionLooseRejected,
-            "Loose placement inferred a production variant without a package");
+            "Production package accepted undeclared generic geometry");
 
-        PhysicalPackage legacy = new PhysicalPackage("TASK43_LEGACY_GENERIC", 2);
-        require(legacy.isDeveloperGeneric() && legacy.getGeometry().isDeveloperGeneric(),
-            "Legacy no-geometry package boundary is not explicitly generic");
+        Vector<String> genericTerminals = new Vector<String>();
+        genericTerminals.add("1");
+        genericTerminals.add("2");
+        PhysicalPackage genericPackage = PhysicalPackage.developerPackageWithGenericGeometry(
+            "TASK43_GENERIC_FACTORY", genericTerminals, new Vector<String>(), false);
+        require(genericPackage.isDeveloperGeneric() &&
+                genericPackage.getGeometry().isDeveloperGeneric(),
+            "Explicit generic package factory lost its developer marker");
     }
 
     private static void verifyGeneratedIdentity(GeneratedBoardInstance instance) {
@@ -566,17 +570,17 @@ final class Task43DeveloperVerifier {
             "Geometry contract version is hidden from placement physical identity");
     }
 
-    private static void expectRejectedPackageLessPlacement(PhysicalPackage source) {
-        PhysicalPackageGeometry geometry = source.getGeometry();
-        PhysicalPackageGeometry.Placement placed = geometry.placedAt(40, 40);
+    private static void expectRejectedMismatchedPackagePlacement(PhysicalPackage source) {
+        PhysicalPackageGeometry foreignGeometry = PhysicalPackageGeometry.generic(
+            source.getTerminalIds(), false);
         boolean rejected = false;
         try {
-            new PcbComponentPlacement("TASK43_PACKAGELESS", 40, 40, geometry.getWidth(),
-                geometry.getHeight(), placed.getBodyKeepOut(), placed.getRoutingCourtyard());
+            PcbComponentPlacement.fromPhysicalGeometry("TASK43_MISMATCHED_PACKAGE", 40, 40,
+                source, foreignGeometry);
         } catch (IllegalArgumentException expected) {
             rejected = true;
         }
-        require(rejected, "Package-less placement compatibility was accepted for production");
+        require(rejected, "Mismatched explicit package geometry was accepted");
     }
 
     private static void verifySelectedGeometryLifecycleCanary() {
@@ -656,7 +660,7 @@ final class Task43DeveloperVerifier {
             replacement, new Rectangle(960, 20, 220, 650), 0);
         require(unboundReplacementPose.getSourceRealization() == null &&
                 unboundReplacementPose.getSourceGeometry() ==
-                    physicalPackage.getDefaultLooseGeometry(),
+                    physicalPackage.getGeometry(),
             "Unbound replacement did not use the package-owned default loose geometry");
         require(slot.remove() == part && !part.isInstalled(),
             "Replacement canary could not enter final physical removal state");

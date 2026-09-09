@@ -28,7 +28,8 @@ final class RcDelayPcbLayoutFactory {
             long seed, String r1VariantKey, String r2VariantKey) {
         requireVariationMode(variationMode);
         PcbBoardLayout layout = new PcbBoardLayout(1400, 800,
-            new Rectangle(40, 30, 770, 430), new Rectangle(850, 125, 150, 255));
+            new Rectangle(40, 30, 770, 430), new Rectangle(850, 125, 150, 255),
+            SeededPcbLayoutGenerator.CURRENT_VERSION);
         addComponents(layout, board, seed, r1VariantKey, r2VariantKey);
         addTraces(layout);
         addLabels(layout);

@@ -169,7 +169,7 @@ final class ArchitectureDeveloperVerifier {
         board.addComponent(new BoardComponent("PWR_IN", "CONNECTOR",
             PhysicalPackages.developerConnectorForCount(pinCount)));
         BoardComponent multiTerminal = new BoardComponent("U" + pinCount,
-            "DEV_CANARY_" + pinCount);
+            "DEV_CANARY_" + pinCount, developerPackageForCount(pinCount));
         board.addComponent(multiTerminal);
         for (int index = 1; index <= pinCount; index++)
             board.addPad(new BoardPad("PWR_IN." + index, "PWR_IN", String.valueOf(index),
@@ -179,6 +179,14 @@ final class ArchitectureDeveloperVerifier {
                 multiTerminal.getId(), String.valueOf(index), "Z_CANARY_NET_" + index));
         board.validate();
         return board;
+    }
+
+    private static PhysicalPackage developerPackageForCount(int pinCount) {
+        if (pinCount == 3) return PhysicalPackages.DEV_CANARY_3;
+        if (pinCount == 4) return PhysicalPackages.DEV_CANARY_4;
+        if (pinCount == 5) return PhysicalPackages.DEV_CANARY_5;
+        if (pinCount == 6) return PhysicalPackages.DEV_CANARY_6;
+        throw new IllegalArgumentException("Unsupported developer package count: " + pinCount);
     }
 
     private static TroubleshootBoard createInternalConnectivityCanary(int pinCount) {

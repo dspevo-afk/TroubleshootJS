@@ -24,7 +24,6 @@ final class PhysicalConstructionPartDeclaration {
     private final String ownerKey;
     private final String providerId;
     private final int providerVersion;
-    private final String runtimeProviderId;
     private final String componentId;
     private final PhysicalPackage physicalPackage;
     private final String publicType;
@@ -60,7 +59,6 @@ final class PhysicalConstructionPartDeclaration {
         if (builder.providerVersion < 1)
             throw new IllegalArgumentException("Invalid physical provider version");
         providerVersion = builder.providerVersion;
-        runtimeProviderId = required(builder.runtimeProviderId, "runtimeProviderId");
         componentId = required(builder.componentId, "componentId");
         if (builder.physicalPackage == null)
             throw new IllegalArgumentException("Physical package is required");
@@ -139,13 +137,13 @@ final class PhysicalConstructionPartDeclaration {
     }
 
     static Builder builder(String constructionOwnerKey, String ownerKey,
-            String providerId, int providerVersion, String runtimeProviderId,
+            String providerId, int providerVersion,
             String componentId, PhysicalPackage physicalPackage, String publicType,
             String designator, PhysicalSpecification specification,
             PhysicalNameplate nameplate, String backingOwnerKey,
             String backingElementId, PartPolicy policy) {
         return new Builder(constructionOwnerKey, ownerKey, providerId, providerVersion,
-            runtimeProviderId, componentId, physicalPackage, publicType, designator,
+            componentId, physicalPackage, publicType, designator,
             specification, nameplate, backingOwnerKey, backingElementId, policy);
     }
 
@@ -154,7 +152,6 @@ final class PhysicalConstructionPartDeclaration {
         private final String ownerKey;
         private final String providerId;
         private final int providerVersion;
-        private final String runtimeProviderId;
         private final String componentId;
         private final PhysicalPackage physicalPackage;
         private final String publicType;
@@ -184,7 +181,7 @@ final class PhysicalConstructionPartDeclaration {
             new ArrayList<PhysicalConstructionTerminalDeclaration>();
 
         private Builder(String constructionOwnerKey, String ownerKey,
-                String providerId, int providerVersion, String runtimeProviderId,
+                String providerId, int providerVersion,
                 String componentId, PhysicalPackage physicalPackage, String publicType,
                 String designator, PhysicalSpecification specification,
                 PhysicalNameplate nameplate, String backingOwnerKey,
@@ -193,7 +190,6 @@ final class PhysicalConstructionPartDeclaration {
             this.ownerKey = ownerKey;
             this.providerId = providerId;
             this.providerVersion = providerVersion;
-            this.runtimeProviderId = runtimeProviderId;
             this.componentId = componentId;
             this.physicalPackage = physicalPackage;
             this.publicType = publicType;
@@ -274,7 +270,6 @@ final class PhysicalConstructionPartDeclaration {
     String getOwnerKey() { return ownerKey; }
     String getProviderId() { return providerId; }
     int getProviderVersion() { return providerVersion; }
-    String getRuntimeProviderId() { return runtimeProviderId; }
     String getComponentId() { return componentId; }
     PhysicalPackage getPhysicalPackage() { return physicalPackage; }
     String getPublicType() { return publicType; }
@@ -326,10 +321,28 @@ final class PhysicalConstructionTerminalDeclaration {
     private final String endpointId;
     private final String manifestKey;
     private final String manifestBlockKey;
+    /*
+     * These three fields are the physical-to-electrical correspondence proof.
+     * Older unit tests construct a terminal with the seven-field convenience
+     * constructor; such declarations remain useful as pure shape canaries but
+     * cannot pass a materializer correspondence check until the provider has
+     * supplied the exact owner/local/component identity.
+     */
+    private final String ownerKey;
+    private final String localId;
+    private final String componentId;
 
     PhysicalConstructionTerminalDeclaration(String padId, String terminalId,
             String packageTerminalId, String netId, String endpointId,
             String manifestKey, String manifestBlockKey) {
+        this(padId, terminalId, packageTerminalId, netId, endpointId,
+            manifestKey, manifestBlockKey, null, null, null);
+    }
+
+    PhysicalConstructionTerminalDeclaration(String padId, String terminalId,
+            String packageTerminalId, String netId, String endpointId,
+            String manifestKey, String manifestBlockKey, String ownerKey,
+            String localId, String componentId) {
         this.padId = required(padId, "padId");
         this.terminalId = required(terminalId, "terminalId");
         this.packageTerminalId = required(packageTerminalId, "packageTerminalId");
@@ -337,6 +350,9 @@ final class PhysicalConstructionTerminalDeclaration {
         this.endpointId = required(endpointId, "endpointId");
         this.manifestKey = required(manifestKey, "manifestKey");
         this.manifestBlockKey = required(manifestBlockKey, "manifestBlockKey");
+        this.ownerKey = optional(ownerKey, "ownerKey");
+        this.localId = optional(localId, "localId");
+        this.componentId = optional(componentId, "componentId");
     }
 
     String getPadId() { return padId; }
@@ -346,10 +362,22 @@ final class PhysicalConstructionTerminalDeclaration {
     String getEndpointId() { return endpointId; }
     String getManifestKey() { return manifestKey; }
     String getManifestBlockKey() { return manifestBlockKey; }
+    String getOwnerKey() { return ownerKey; }
+    String getLocalId() { return localId; }
+    String getComponentId() { return componentId; }
+    boolean hasElectricalProvenance() {
+        return ownerKey != null && localId != null && componentId != null;
+    }
 
     private static String required(String value, String field) {
         if (value == null || value.length() == 0)
             throw new IllegalArgumentException("Missing physical terminal " + field);
+        return value;
+    }
+
+    private static String optional(String value, String field) {
+        if (value != null && value.length() == 0)
+            throw new IllegalArgumentException("Empty physical terminal " + field);
         return value;
     }
 }
@@ -399,37 +427,41 @@ final class PhysicalConstructionDeclarations {
     private final List<PhysicalConstructionPartDeclaration> localParts;
     private final List<PhysicalConstructionPartDeclaration> deviceParts;
     private final List<PhysicalExternalInputDeclaration> externalInputs;
+    private final String boardFamilyId;
+    private final String boardName;
 
     PhysicalConstructionDeclarations(List<PhysicalConstructionPartDeclaration> localParts,
             List<PhysicalConstructionPartDeclaration> deviceParts,
-            List<PhysicalExternalInputDeclaration> externalInputs) {
+            List<PhysicalExternalInputDeclaration> externalInputs,
+            String boardFamilyId, String boardName) {
         this.localParts = immutable(localParts, "localParts");
         this.deviceParts = immutable(deviceParts, "deviceParts");
         this.externalInputs = immutable(externalInputs, "externalInputs");
+        this.boardFamilyId = required(boardFamilyId, "boardFamilyId");
+        this.boardName = required(boardName, "boardName");
     }
 
     List<PhysicalConstructionPartDeclaration> getLocalParts() { return localParts; }
     List<PhysicalConstructionPartDeclaration> getDeviceParts() { return deviceParts; }
     List<PhysicalExternalInputDeclaration> getExternalInputs() { return externalInputs; }
+    String getBoardFamilyId() { return boardFamilyId; }
+    String getBoardName() { return boardName; }
 
     List<PhysicalConstructionPartDeclaration> getBoardParts() {
         ArrayList<PhysicalConstructionPartDeclaration> result =
             new ArrayList<PhysicalConstructionPartDeclaration>();
         result.addAll(localParts);
         result.addAll(deviceParts);
-        return Collections.unmodifiableList(result);
-    }
-
-    List<PhysicalConstructionPartDeclaration> getSlotParts(boolean controlled) {
-        ArrayList<PhysicalConstructionPartDeclaration> result =
-            new ArrayList<PhysicalConstructionPartDeclaration>();
-        if (controlled) {
-            result.addAll(localParts);
-            result.addAll(deviceParts);
-        } else {
-            result.addAll(deviceParts);
-            result.addAll(localParts);
-        }
+        Collections.sort(result, new java.util.Comparator<PhysicalConstructionPartDeclaration>() {
+            @Override public int compare(PhysicalConstructionPartDeclaration first,
+                    PhysicalConstructionPartDeclaration second) {
+                int byComponent = first.getComponentId().compareTo(second.getComponentId());
+                if (byComponent != 0) return byComponent;
+                int byOwner = first.getOwnerKey().compareTo(second.getOwnerKey());
+                if (byOwner != 0) return byOwner;
+                return first.getDesignator().compareTo(second.getDesignator());
+            }
+        });
         return Collections.unmodifiableList(result);
     }
 
@@ -441,44 +473,75 @@ final class PhysicalConstructionDeclarations {
                 throw new IllegalArgumentException("Null physical declaration in " + field);
         return Collections.unmodifiableList(new ArrayList<T>(values));
     }
+
+    private static String required(String value, String field) {
+        if (value == null || value.length() == 0)
+            throw new IllegalArgumentException("Missing physical declaration " + field);
+        return value;
+    }
 }
 
 /** Board/specification envelope produced once before any physical runtime mutation. */
 final class PhysicalConstructionMetadata {
+    private final BoundedAssemblyPlan plan;
+    private final ElectricalRealizationSpec spec;
     private final TroubleshootBoard board;
     private final BoardPhysicalSpecifications specifications;
     private final PhysicalConstructionDeclarations declarations;
 
-    PhysicalConstructionMetadata(TroubleshootBoard board,
+    PhysicalConstructionMetadata(BoundedAssemblyPlan plan,
+            ElectricalRealizationSpec spec, TroubleshootBoard board,
             BoardPhysicalSpecifications specifications,
             PhysicalConstructionDeclarations declarations) {
-        if (board == null || specifications == null || declarations == null)
+        if (plan == null || spec == null || board == null || specifications == null ||
+                declarations == null)
             throw new IllegalArgumentException("Incomplete physical construction metadata");
+        if (plan.getElectricalRealizationSpec() != spec)
+            throw new IllegalArgumentException("Physical metadata belongs to another electrical spec");
+        this.plan = plan;
+        this.spec = spec;
         this.board = board;
         this.specifications = specifications;
         this.declarations = declarations;
     }
 
     TroubleshootBoard getBoard() { return board; }
+    BoundedAssemblyPlan getPlan() { return plan; }
+    ElectricalRealizationSpec getSpec() { return spec; }
     BoardPhysicalSpecifications getSpecifications() { return specifications; }
     PhysicalConstructionDeclarations getDeclarations() { return declarations; }
 }
 
 /** Receipt returned by the generic physical materializer. */
 final class PhysicalMaterializationReceipt {
+    private final BoundedAssemblyPlan plan;
+    private final ElectricalRealizationSpec spec;
+    private final ConstructionReceipt constructionReceipt;
     private final PhysicalBoardRuntime runtime;
     private final Map<String, BoundedGeneratedBoardAssembler.RuntimeTarget> runtimeTargets;
     private final List<GeneratedFaultCandidate> candidates;
     private final GeneratedFaultCandidate selectedCandidate;
     private final Map<String, LEDElm> operationalLeds;
 
-    PhysicalMaterializationReceipt(PhysicalBoardRuntime runtime,
+    PhysicalMaterializationReceipt(BoundedAssemblyPlan plan,
+            ElectricalRealizationSpec spec, ConstructionReceipt constructionReceipt,
+            PhysicalBoardRuntime runtime,
             Map<String, BoundedGeneratedBoardAssembler.RuntimeTarget> runtimeTargets,
             List<GeneratedFaultCandidate> candidates,
             GeneratedFaultCandidate selectedCandidate, Map<String, LEDElm> operationalLeds) {
-        if (runtime == null || runtimeTargets == null || candidates == null ||
+        if (plan == null || spec == null || constructionReceipt == null || runtime == null ||
+                runtimeTargets == null || candidates == null ||
                 selectedCandidate == null || operationalLeds == null)
             throw new IllegalArgumentException("Incomplete physical materialization receipt");
+        if (plan.getElectricalRealizationSpec() != spec ||
+                constructionReceipt.getSpec() != spec ||
+                constructionReceipt.getBoard() != runtime.getBoard())
+            throw new IllegalArgumentException("Physical receipt provenance mismatch");
+        if (!constructionReceipt.belongsToFinishedContext(spec, runtime.getBoard()))
+            throw new IllegalArgumentException("Physical receipt belongs to another construction context");
+        this.plan = plan;
+        this.spec = spec;
+        this.constructionReceipt = constructionReceipt;
         this.runtime = runtime;
         this.runtimeTargets = Collections.unmodifiableMap(
             new TreeMap<String, BoundedGeneratedBoardAssembler.RuntimeTarget>(runtimeTargets));
@@ -490,6 +553,9 @@ final class PhysicalMaterializationReceipt {
     }
 
     PhysicalBoardRuntime getRuntime() { return runtime; }
+    BoundedAssemblyPlan getPlan() { return plan; }
+    ElectricalRealizationSpec getSpec() { return spec; }
+    ConstructionReceipt getConstructionReceipt() { return constructionReceipt; }
     Map<String, BoundedGeneratedBoardAssembler.RuntimeTarget> getRuntimeTargets() {
         return runtimeTargets;
     }

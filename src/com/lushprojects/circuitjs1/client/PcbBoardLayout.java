@@ -85,14 +85,13 @@ class PcbBoardLayout {
 
     PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray) {
         this(width, height, boardOutline, partsTray,
-            SeededPcbLayoutGenerator.LEGACY_VERSION);
+            SeededPcbLayoutGenerator.CURRENT_VERSION);
     }
 
     PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray,
             int layoutAlgorithmVersion) {
-        if (layoutAlgorithmVersion != SeededPcbLayoutGenerator.LEGACY_VERSION &&
-                layoutAlgorithmVersion != SeededPcbLayoutGenerator.CORRECTED_VERSION)
-            throw new IllegalArgumentException("Unsupported PCB layout algorithm version: " +
+        if (layoutAlgorithmVersion != SeededPcbLayoutGenerator.CURRENT_VERSION)
+            throw new IllegalArgumentException("Unsupported retired PCB layout algorithm version: " +
                 layoutAlgorithmVersion);
         this.width = width;
         this.height = height;
@@ -381,7 +380,7 @@ class PcbBoardLayout {
                     pad.getEscapeDy() != terminal.getEscapeDy() ||
                     pad.getEscapeLength() != terminal.getEscapeLength() ||
                     !pad.getPadBounds().equals(placed.getPadBounds(index)) ||
-                !pad.getProbeBounds().equals(placed.getProbeBounds(index)))
+                !pad.getProbeBounds().equals(placed.getBoardPadProbeBounds(index)))
                 throw new IllegalStateException("PCB pad diverged from package geometry: " +
                 padIds.get(index));
         }
@@ -401,7 +400,7 @@ class PcbBoardLayout {
         for (int terminal = 0; terminal < component.getPadIds().size(); terminal++) {
             requireInside(placement.getPadBounds(terminal), boardOutline,
                 "component pad " + placement.getComponentId() + "/" + terminal);
-            requireInside(placement.getProbeBounds(terminal), boardOutline,
+            requireInside(placement.getBoardPadProbeBounds(terminal), boardOutline,
                 "component board-pad probe " + placement.getComponentId() + "/" + terminal);
             requireInside(placement.getLeadBounds(terminal), boardOutline,
                 "component lead " + placement.getComponentId() + "/" + terminal);
@@ -947,25 +946,8 @@ class PcbBoardLayout {
         return bends;
     }
 
-    /** Preserve the pre-A02 raw-displacement metric for legacy layout scores. */
-    private int getLegacyTraceBendCount(PcbTraceGeometry trace) {
-        int bends = 0;
-        int[] xPoints = trace.getXPoints();
-        int[] yPoints = trace.getYPoints();
-        for (int index = 2; index < xPoints.length; index++) {
-            int firstDx = xPoints[index - 1] - xPoints[index - 2];
-            int firstDy = yPoints[index - 1] - yPoints[index - 2];
-            int secondDx = xPoints[index] - xPoints[index - 1];
-            int secondDy = yPoints[index] - yPoints[index - 1];
-            if (firstDx != secondDx || firstDy != secondDy)
-                bends++;
-        }
-        return bends;
-    }
-
     private int getRouteQualityBendCount(PcbTraceGeometry trace) {
-        return layoutAlgorithmVersion == SeededPcbLayoutGenerator.LEGACY_VERSION ?
-            getLegacyTraceBendCount(trace) : getTraceBendCount(trace);
+        return getTraceBendCount(trace);
     }
 
     double getTraceDetourRatio(PcbTraceGeometry trace) {
@@ -1080,7 +1062,7 @@ class PcbBoardLayout {
             if (geometry != null) {
                 for (int index = 0; index < geometry.getTerminals().size(); index++) {
                     result = union(result, component.getPadBounds(index));
-                    result = union(result, component.getProbeBounds(index));
+                    result = union(result, component.getBoardPadProbeBounds(index));
                     result = union(result, component.getLeadBounds(index));
                     result = union(result, component.getLeadBounds(index, true));
                     result = union(result, component.getComponentLeadProbeBounds(index));

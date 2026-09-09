@@ -18,9 +18,7 @@ final class PcbR2DeveloperVerifier {
     }
 
     private static void verifyGeometryContractVersion() {
-        require(PcbGeometryContractVersion.CURRENT == EXPECTED_GEOMETRY_CONTRACT_VERSION &&
-                PcbGeometryContractVersion.CURRENT_VALUE ==
-                    EXPECTED_GEOMETRY_CONTRACT_VERSION,
+        require(PcbGeometryContractVersion.CURRENT == EXPECTED_GEOMETRY_CONTRACT_VERSION,
             "R-2 geometry contract version is not 3");
         Vector<PhysicalPackage> packages =
             StandardPcbFootprintProviders.createRegistry().getRegisteredPackages();
@@ -697,13 +695,17 @@ final class PcbR2DeveloperVerifier {
         }
         require(foreignRejected, "R-2 foreign production geometry was not rejected");
 
-        boolean packageLessRejected = false;
+        boolean undeclaredGenericRejected = false;
         try {
-            PcbComponentPlacement.fromPhysicalGeometry("R2_PACKAGELESS", 280, 220, source);
+            PcbComponentPlacement.fromPhysicalGeometry("R2_UNDECLARED_GENERIC", 280, 220,
+                physicalPackage,
+                PhysicalPackageGeometry.generic(physicalPackage.getTerminalIds(), false));
         } catch (IllegalArgumentException expected) {
-            packageLessRejected = messageContains(expected, "Only marked developer geometry may be projected");
+            undeclaredGenericRejected = messageContains(expected,
+                "Foreign or undeclared package geometry");
         }
-        require(packageLessRejected, "R-2 package-less production geometry was not rejected");
+        require(undeclaredGenericRejected,
+            "R-2 undeclared generic geometry was not rejected");
     }
 
     private static void verifyPackageIdentityRejectedByBoardValidation() {
@@ -963,8 +965,8 @@ final class PcbR2DeveloperVerifier {
             return padOutside ? shiftedOutside(source) : source;
         }
 
-        public Rectangle getProbeBounds(int index) {
-            Rectangle source = super.getProbeBounds(index);
+        public Rectangle getBoardPadProbeBounds(int index) {
+            Rectangle source = super.getBoardPadProbeBounds(index);
             return probeOutside ? shiftedOutside(source) : source;
         }
 

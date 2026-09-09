@@ -89,23 +89,23 @@ final class Task46ContractVectors {
     }
 
     private static void descriptorRoundTrips(StringBuilder output) {
-        ChallengeDescriptor legacy = ChallengeDescriptor.legacy("LED_INDICATOR", 0L);
-        String expected = "tsj-challenge/1\n"
+        ChallengeDescriptor current = ChallengeDescriptor.current("LED_INDICATOR", 0L);
+        String expected = "tsj-challenge/2\n"
             + "constraints=" + UNSPECIFIED_CONSTRAINTS + "\n"
             + "device-intent=LED_INDICATOR@1\n"
-            + "difficulty-profile=legacy-default@1\n"
-            + "generator=legacy-leaf@1\n"
+            + "difficulty-profile=quick-play@1\n"
+            + "generator=leaf@1\n"
             + "geometry=3\n"
             + "root-seed=0";
-        equal(expected, legacy.toCanonical(), "legacy canonical ordering");
-        ChallengeDescriptor parsedLegacy = ChallengeDescriptor.parse(expected);
-        equal(expected, parsedLegacy.toCanonical(), "legacy canonical round trip");
-        equal(0L, parsedLegacy.getRootSeed(), "legacy seed");
-        equal("legacy-leaf", parsedLegacy.getGenerator().getId(), "legacy generator id");
-        equal(1, parsedLegacy.getGenerator().getVersion(), "legacy generator version");
-        equal("LED_INDICATOR", parsedLegacy.getDeviceIntent().getId(), "legacy family id");
-        equal(3, parsedLegacy.getGeometryVersion().getValue(), "legacy geometry version");
-        check(parsedLegacy.getConstraints().isUnspecified(), "legacy constraints are explicitly unspecified");
+        equal(expected, current.toCanonical(), "current canonical ordering");
+        ChallengeDescriptor parsedCurrent = ChallengeDescriptor.parse(expected);
+        equal(expected, parsedCurrent.toCanonical(), "current canonical round trip");
+        equal(0L, parsedCurrent.getRootSeed(), "current seed");
+        equal("leaf", parsedCurrent.getGenerator().getId(), "current generator id");
+        equal(1, parsedCurrent.getGenerator().getVersion(), "current generator version");
+        equal("LED_INDICATOR", parsedCurrent.getDeviceIntent().getId(), "current family id");
+        equal(3, parsedCurrent.getGeometryVersion().getValue(), "current geometry version");
+        check(parsedCurrent.getConstraints().isUnspecified(), "current constraints are explicitly unspecified");
 
         long[] seedBoundaries = {
             0L, -1L, Integer.MAX_VALUE, (long) Integer.MAX_VALUE + 1L,
@@ -114,7 +114,7 @@ final class Task46ContractVectors {
             Long.MAX_VALUE, Long.MIN_VALUE
         };
         for (long seed : seedBoundaries) {
-            ChallengeDescriptor boundary = ChallengeDescriptor.legacy(
+            ChallengeDescriptor boundary = ChallengeDescriptor.current(
                 "LED_INDICATOR", seed);
             String text = boundary.toCanonical();
             equal(Long.toString(seed), fieldValue(text, "root-seed"),
@@ -131,7 +131,7 @@ final class Task46ContractVectors {
             GenerationConstraints.AllowedInstruments.only(
                 Arrays.asList("DIODE", "DC_VOLTAGE")));
         ChallengeDescriptor descriptor = new ChallengeDescriptor(
-            1, 9007199254740993L,
+            ChallengeDescriptor.SCHEMA_VERSION, 9007199254740993L,
             new ChallengeDescriptor.VersionedId("generator-x", 4),
             new ChallengeDescriptor.VersionedId("intent-x", 2),
             new ChallengeDescriptor.VersionedId("profile-x", 9),
@@ -142,7 +142,7 @@ final class Task46ContractVectors {
         equal(9007199254740993L,
             ChallengeDescriptor.parse(canonical).getRootSeed(),
             "full descriptor preserves 2^53 plus one");
-        equal(1, descriptor.getSchemaVersion(), "descriptor schema version");
+        equal(2, descriptor.getSchemaVersion(), "descriptor schema version");
         equal(4, descriptor.getGenerator().getVersion(), "generator version");
         equal(2, descriptor.getDeviceIntent().getVersion(), "intent version");
         equal(9, descriptor.getDifficultyProfile().getVersion(), "profile version");
@@ -169,7 +169,7 @@ final class Task46ContractVectors {
         String permutedDescriptor = permuteDescriptorLines(canonical);
         equal(canonical, ChallengeDescriptor.parse(permutedDescriptor).toCanonical(),
             "descriptor field permutation canonicalizes");
-        output.append("descriptor.legacy=").append(escape(canonicalOf(legacy))).append('\n');
+        output.append("descriptor.current=").append(escape(canonicalOf(current))).append('\n');
         output.append("descriptor.full=").append(escape(canonical)).append('\n');
         output.append("descriptor.permutation=PASS\n");
 
@@ -247,9 +247,9 @@ final class Task46ContractVectors {
     }
 
     private static void descriptorNegativeCases(StringBuilder output) {
-        final String base = ChallengeDescriptor.legacy("LED_INDICATOR", 0L).toCanonical();
+        final String base = ChallengeDescriptor.current("LED_INDICATOR", 0L).toCanonical();
         expect(ChallengeContractException.Code.UNSUPPORTED_VERSION, new Runnable() { public void run() {
-            ChallengeDescriptor.parse(base.replace("tsj-challenge/1", "tsj-challenge/2"));
+            ChallengeDescriptor.parse(base.replace("tsj-challenge/2", "tsj-challenge/1"));
         }}, "descriptor unsupported schema");
         expect(ChallengeContractException.Code.MISSING_FIELD, new Runnable() { public void run() {
             ChallengeDescriptor.parse(removeDescriptorField(base, "generator"));
@@ -261,7 +261,7 @@ final class Task46ContractVectors {
             ChallengeDescriptor.parse(base + "\nunknown=x");
         }}, "descriptor unknown field");
         expect(ChallengeContractException.Code.INVALID_ENCODING, new Runnable() { public void run() {
-            ChallengeDescriptor.parse(base.replace("tsj-challenge/1", "not-a-descriptor"));
+            ChallengeDescriptor.parse(base.replace("tsj-challenge/2", "not-a-descriptor"));
         }}, "descriptor invalid header");
         expect(ChallengeContractException.Code.INVALID_ENCODING, new Runnable() { public void run() {
             ChallengeDescriptor.parse(replaceDescriptorField(base, "root-seed", "+0"));
@@ -293,7 +293,7 @@ final class Task46ContractVectors {
             new ChallengeDescriptor.VersionedId("id", 0);
         }}, "descriptor nonpositive identity version");
         expect(ChallengeContractException.Code.UNSUPPORTED_VERSION, new Runnable() { public void run() {
-            new ChallengeDescriptor(2, 0L,
+            new ChallengeDescriptor(1, 0L,
                 new ChallengeDescriptor.VersionedId("g", 1),
                 new ChallengeDescriptor.VersionedId("i", 1),
                 new ChallengeDescriptor.VersionedId("p", 1),

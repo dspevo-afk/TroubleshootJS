@@ -28,9 +28,6 @@ final class ComposedBlockContribution {
         double resistance(String localComponentId);
     }
 
-    /** Source-compatible alias for callers that use the longer name. */
-    interface LocalObservation extends Observation { }
-
     /** Classification from actual measured current, never from a fault ID. */
     enum ObservationResult {
         CONDUCTING,
@@ -47,25 +44,17 @@ final class ComposedBlockContribution {
         private final String secondPadLocalId;
         private final double resistanceOhms;
         private final double ratedWatts;
+        private final String packageId;
         private final ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedRecipe;
         private final boolean mutable;
 
         ResistorRecipe(String componentLocalId, String firstEndpointLocalId,
                 String secondEndpointLocalId, String firstPadLocalId,
                 String secondPadLocalId, double resistanceOhms,
-                double ratedWatts) {
+                double ratedWatts, String packageId, boolean mutable) {
             this(componentLocalId, firstEndpointLocalId, secondEndpointLocalId,
                     firstPadLocalId, secondPadLocalId, resistanceOhms,
-                    ratedWatts, null, true);
-        }
-
-        ResistorRecipe(String componentLocalId, String firstEndpointLocalId,
-                String secondEndpointLocalId, String firstPadLocalId,
-                String secondPadLocalId, double resistanceOhms,
-                double ratedWatts, boolean mutable) {
-            this(componentLocalId, firstEndpointLocalId, secondEndpointLocalId,
-                    firstPadLocalId, secondPadLocalId, resistanceOhms,
-                    ratedWatts, null, mutable);
+                    ratedWatts, packageId, null, mutable);
         }
 
         ResistorRecipe(String componentLocalId, String firstEndpointLocalId,
@@ -76,13 +65,14 @@ final class ComposedBlockContribution {
             this(componentLocalId, firstEndpointLocalId, secondEndpointLocalId,
                     firstPadLocalId, secondPadLocalId,
                     required(resolvedRecipe, "resolvedRecipe").getResistanceOhms(),
-                    resolvedRecipe.getRatedWatts(), resolvedRecipe, mutable);
+                    resolvedRecipe.getRatedWatts(), resolvedRecipe.getPackageId(),
+                    resolvedRecipe, mutable);
         }
 
         private ResistorRecipe(String componentLocalId, String firstEndpointLocalId,
                 String secondEndpointLocalId, String firstPadLocalId,
                 String secondPadLocalId, double resistanceOhms,
-                double ratedWatts,
+                double ratedWatts, String packageId,
                 ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedRecipe,
                 boolean mutable) {
             this.componentLocalId = FunctionalBlockDescriptor.requireId(
@@ -100,12 +90,13 @@ final class ComposedBlockContribution {
             this.resistanceOhms = resistanceOhms == 0.0 ? 0.0
                     : resistanceOhms;
             this.ratedWatts = ratedWatts == 0.0 ? 0.0 : ratedWatts;
+            this.packageId = FunctionalBlockDescriptor.requireId(packageId,
+                    "recipe.packageId");
             this.resolvedRecipe = resolvedRecipe;
             this.mutable = mutable;
         }
 
         String getComponentLocalId() { return componentLocalId; }
-        String getLocalComponentId() { return componentLocalId; }
         String getFirstEndpointLocalId() { return firstEndpointLocalId; }
         String getSecondEndpointLocalId() { return secondEndpointLocalId; }
         String getFirstPadLocalId() { return firstPadLocalId; }
@@ -121,7 +112,7 @@ final class ComposedBlockContribution {
             return resolvedRecipe == null ? 5.0 : resolvedRecipe.getTolerancePercent();
         }
         String getPackageId() {
-            return resolvedRecipe == null ? null : resolvedRecipe.getPackageId();
+            return packageId;
         }
         String getCatalogEntryId() {
             return resolvedRecipe == null ? null : resolvedRecipe.getCatalogEntryId();
@@ -166,7 +157,6 @@ final class ComposedBlockContribution {
                     "nmos.modelId");
         }
         String getComponentLocalId() { return componentLocalId; }
-        String getLocalComponentId() { return componentLocalId; }
         String getGateEndpointLocalId() { return gateEndpointLocalId; }
         String getDrainEndpointLocalId() { return drainEndpointLocalId; }
         String getSourceEndpointLocalId() { return sourceEndpointLocalId; }
@@ -174,7 +164,6 @@ final class ComposedBlockContribution {
         String getDrainPadLocalId() { return drainPadLocalId; }
         String getSourcePadLocalId() { return sourcePadLocalId; }
         String getModelId() { return modelId; }
-        String getModel() { return modelId; }
         @Override public String toString() {
             return componentLocalId + "=" + modelId + "(" + gateEndpointLocalId
                     + "," + drainEndpointLocalId + "," + sourceEndpointLocalId + ")";
@@ -204,13 +193,11 @@ final class ComposedBlockContribution {
                     "led.modelId");
         }
         String getComponentLocalId() { return componentLocalId; }
-        String getLocalComponentId() { return componentLocalId; }
         String getAnodeEndpointLocalId() { return anodeEndpointLocalId; }
         String getCathodeEndpointLocalId() { return cathodeEndpointLocalId; }
         String getAnodePadLocalId() { return anodePadLocalId; }
         String getCathodePadLocalId() { return cathodePadLocalId; }
         String getModelId() { return modelId; }
-        String getModel() { return modelId; }
         @Override public String toString() {
             return componentLocalId + "=" + modelId + "(" + anodeEndpointLocalId
                     + "," + cathodeEndpointLocalId + ")";
@@ -236,7 +223,6 @@ final class ComposedBlockContribution {
         }
         Kind getKind() { return kind; }
         String getTargetComponentLocalId() { return targetComponentLocalId; }
-        String getTargetLocalComponentId() { return targetComponentLocalId; }
         double getEffectiveResistanceOhms() { return effectiveResistanceOhms; }
         @Override public String toString() {
             return kind + ":" + targetComponentLocalId + ":"
@@ -263,22 +249,6 @@ final class ComposedBlockContribution {
     ComposedBlockContribution(String providerTypeId, int providerVersion,
             FunctionalBlockDescriptor descriptor,
             ElectricalBlockContract electricalContract,
-            ResistorRecipe resistorRecipe, String faultLocalId,
-            double faultEffectiveOhms, String repairLocalComponentId,
-            Collection<String> inputRequirements,
-            Collection<String> retestRequirements) {
-        this(providerTypeId, providerVersion, descriptor, electricalContract,
-                singleton(required(resistorRecipe, "resistorRecipe")),
-                Collections.<NmosRecipe>emptyList(),
-                Collections.<LedRecipe>emptyList(),
-                new FaultSpec(FaultSpec.Kind.OPEN, faultLocalId,
-                        faultEffectiveOhms), repairLocalComponentId, inputRequirements,
-                retestRequirements, null, true);
-    }
-
-    ComposedBlockContribution(String providerTypeId, int providerVersion,
-            FunctionalBlockDescriptor descriptor,
-            ElectricalBlockContract electricalContract,
             Map<String, ResistorRecipe> resistorRecipes,
             Collection<NmosRecipe> nmosRecipes, Collection<LedRecipe> ledRecipes,
             FaultSpec faultSpec, String repairLocalComponentId,
@@ -287,7 +257,7 @@ final class ComposedBlockContribution {
         this(providerTypeId, providerVersion, descriptor, electricalContract,
                 resistorRecipes, nmosRecipes, ledRecipes, faultSpec,
                 repairLocalComponentId, inputRequirements, retestRequirements,
-                null, false);
+                null);
     }
 
     ComposedBlockContribution(String providerTypeId, int providerVersion,
@@ -299,22 +269,6 @@ final class ComposedBlockContribution {
             Collection<String> inputRequirements,
             Collection<String> retestRequirements,
             ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedValueRecipe) {
-        this(providerTypeId, providerVersion, descriptor, electricalContract,
-                resistorRecipes, nmosRecipes, ledRecipes, faultSpec,
-                repairLocalComponentId, inputRequirements, retestRequirements,
-                resolvedValueRecipe, false);
-    }
-
-    private ComposedBlockContribution(String providerTypeId, int providerVersion,
-            FunctionalBlockDescriptor descriptor,
-            ElectricalBlockContract electricalContract,
-            Map<String, ResistorRecipe> resistorRecipes,
-            Collection<NmosRecipe> nmosRecipes, Collection<LedRecipe> ledRecipes,
-            FaultSpec faultSpec, String repairLocalComponentId,
-            Collection<String> inputRequirements,
-            Collection<String> retestRequirements,
-            ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedValueRecipe,
-            boolean legacy) {
         this.providerTypeId = FunctionalBlockDescriptor.requireId(
                 providerTypeId, "providerTypeId");
         FunctionalBlockDescriptor.requirePositiveVersion(providerVersion,
@@ -337,6 +291,7 @@ final class ComposedBlockContribution {
         this.nmosRecipes = immutableNmos(nmosRecipes);
         this.ledRecipes = immutableLeds(ledRecipes);
         this.faultSpec = required(faultSpec, "faultSpec");
+        requireDeclared(descriptor, faultSpec.getTargetComponentLocalId());
         this.faultLocalId = faultSpec.getTargetComponentLocalId();
         this.faultEffectiveOhms = faultSpec.getEffectiveResistanceOhms();
         if (this.resistorRecipes.isEmpty() &&
@@ -353,6 +308,8 @@ final class ComposedBlockContribution {
         if (!descriptor.getComponents().containsKey(repairLocalComponentId)) {
             throw new IllegalArgumentException("Repair component is undeclared");
         }
+        if (!repairLocalComponentId.equals(faultSpec.getTargetComponentLocalId()))
+            throw new IllegalArgumentException("Fault and repair must name the same component");
         this.inputRequirements = immutableRequirements(inputRequirements,
                 "inputRequirements");
         this.retestRequirements = immutableRequirements(retestRequirements,
@@ -390,15 +347,10 @@ final class ComposedBlockContribution {
     double getRatedWatts() { return resistorRecipe == null ? 0.0 : resistorRecipe.getRatedWatts(); }
     String getFaultLocalId() { return faultLocalId; }
     double getFaultEffectiveOhms() { return faultEffectiveOhms; }
-    double getFaultEffectiveResistanceOhms() { return faultEffectiveOhms; }
     String getRepairLocalComponentId() { return repairLocalComponentId; }
-    String getRepairTargetLocalComponentId() { return repairLocalComponentId; }
     List<String> getInputRequirements() { return inputRequirements; }
     List<String> getRetestRequirements() { return retestRequirements; }
     ControlledIndicatorValueSynthesis.ResolvedRecipe getResolvedValueRecipe() {
-        return resolvedValueRecipe;
-    }
-    ControlledIndicatorValueSynthesis.ResolvedRecipe getResolvedRecipe() {
         return resolvedValueRecipe;
     }
 
@@ -458,16 +410,8 @@ final class ComposedBlockContribution {
                 ? ObservationResult.LOW_CURRENT : ObservationResult.CONDUCTING;
     }
 
-    String observeName(Observation observation) {
-        return observe(observation).name();
-    }
-
     /** Stable semantic fingerprint used by pure replay checks. */
     String semanticSignature() {
-        if (resistorRecipe != null && resistorRecipes.size() == 1
-                && nmosRecipes.isEmpty() && ledRecipes.isEmpty()) {
-            return legacySemanticSignature();
-        }
         StringBuilder result = new StringBuilder();
         result.append(providerTypeId).append('@').append(providerVersion)
                 .append('|').append(descriptorSignature(descriptor))
@@ -483,22 +427,6 @@ final class ComposedBlockContribution {
                 .append("|retest=").append(retestRequirements);
         if (resolvedValueRecipe != null)
             result.append("|resolved=").append(resolvedValueRecipe.semanticSignature());
-        return result.toString();
-    }
-
-    private String legacySemanticSignature() {
-        StringBuilder result = new StringBuilder();
-        result.append(providerTypeId).append('@').append(providerVersion)
-                .append('|').append(descriptorSignature(descriptor))
-                .append('|').append(contractSignature(electricalContract))
-                .append("|component=").append(getComponentLocalId())
-                .append("|resistance=").append(Double.toString(getResistanceOhms()))
-                .append("|rated=").append(Double.toString(getRatedWatts()))
-                .append("|fault=").append(faultLocalId).append(':')
-                .append(Double.toString(faultEffectiveOhms))
-                .append("|repair=").append(repairLocalComponentId)
-                .append("|input=").append(inputRequirements)
-                .append("|retest=").append(retestRequirements);
         return result.toString();
     }
 
@@ -717,12 +645,6 @@ final class ComposedBlockContribution {
                 throw new IllegalArgumentException("Duplicate LED recipe " + value.getComponentLocalId());
         }
         return Collections.unmodifiableMap(copy);
-    }
-
-    private static Map<String, ResistorRecipe> singleton(ResistorRecipe value) {
-        TreeMap<String, ResistorRecipe> result = new TreeMap<String, ResistorRecipe>();
-        if (value != null) result.put(value.getComponentLocalId(), value);
-        return result;
     }
 
     private static void requireDeclared(FunctionalBlockDescriptor descriptor,

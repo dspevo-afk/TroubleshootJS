@@ -379,7 +379,7 @@ final class PhysicalPartRenderDeveloperVerifier {
             "Loose context did not expose its pose source geometry: " + label);
         if (expectedRealization == null)
             require(pose.getSourceRealization() == null && pose.getSourceGeometry() ==
-                    physicalPackage.getDefaultLooseGeometry(),
+                    physicalPackage.getGeometry(),
                 "Unbound loose part did not use the package canonical default: " + label);
         else
             require(pose.getSourceRealization() == expectedRealization &&

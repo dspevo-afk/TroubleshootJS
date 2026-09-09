@@ -73,7 +73,7 @@ final class PcbFootprint {
             Point pad = placed.getPadPoint(index);
             pads.add(new PcbPadPlacement(ids.get(index), pad.x, pad.y, terminal.getEscapeDx(),
                 terminal.getEscapeDy(), terminal.getEscapeLength(), placed.getPadBounds(index),
-                placed.getProbeBounds(index)));
+                placed.getBoardPadProbeBounds(index)));
         }
         return new PcbFootprint(placement, pads);
     }
@@ -166,7 +166,7 @@ final class PcbFootprint {
                     pad.getEscapeDy() != terminal.getEscapeDy() ||
                     pad.getEscapeLength() != terminal.getEscapeLength() ||
                     !pad.getPadBounds().equals(placed.getPadBounds(index)) ||
-                    !pad.getProbeBounds().equals(placed.getProbeBounds(index)))
+                    !pad.getProbeBounds().equals(placed.getBoardPadProbeBounds(index)))
                 throw new IllegalArgumentException("Footprint pad diverges from package geometry: " +
                     pad.getPadId());
         }

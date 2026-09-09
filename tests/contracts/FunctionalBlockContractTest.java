@@ -53,11 +53,11 @@ public final class FunctionalBlockContractTest {
             }
         }
         BlockNamespace namespace = new BlockNamespace("controlled-indicator", 1, list(driver, load));
-        equal("tsj-block-v1/controlled-indicator@1/driver/component/Q1",
+        equal("tsj-preflight-v1/controlled-indicator@1/driver/component/Q1",
             namespace.idFor("driver", EntityKind.COMPONENT, "Q1"));
-        equal("tsj-block-v1/controlled-indicator@1/driver/pad/Q1.G",
+        equal("tsj-preflight-v1/controlled-indicator@1/driver/pad/Q1.G",
             namespace.idFor("driver", EntityKind.PAD, "Q1.G"));
-        equal("tsj-block-v1/controlled-indicator@1/driver/endpoint/Q1.G",
+        equal("tsj-preflight-v1/controlled-indicator@1/driver/endpoint/Q1.G",
             namespace.idFor("driver", EntityKind.ENDPOINT, "Q1.G"));
     }
 
@@ -69,15 +69,15 @@ public final class FunctionalBlockContractTest {
             list(new Role("same", Requirement.REQUIRED, list(ref(EntityKind.NET, "same")))),
             list(new Port("same", "same", ref(EntityKind.NET, "same"))));
         BlockNamespace n = new BlockNamespace("device", 1, list(same));
-        equal("tsj-block-v1/device@1/one/component/same", n.idFor("one", EntityKind.COMPONENT, "same"));
-        equal("tsj-block-v1/device@1/one/pad/same", n.idFor("one", EntityKind.PAD, "same"));
-        equal("tsj-block-v1/device@1/one/net/same", n.idFor("one", EntityKind.NET, "same"));
-        equal("tsj-block-v1/device@1/one/endpoint/same", n.idFor("one", EntityKind.ENDPOINT, "same"));
-        equal("tsj-block-v1/device@1/one/port/same", n.idFor("one", EntityKind.PORT, "same"));
-        equal("tsj-block-v1/device@1/one/role/same", n.idFor("one", EntityKind.ROLE, "same"));
-        equal("tsj-block-v1/device@2/one/net/same",
+        equal("tsj-preflight-v1/device@1/one/component/same", n.idFor("one", EntityKind.COMPONENT, "same"));
+        equal("tsj-preflight-v1/device@1/one/pad/same", n.idFor("one", EntityKind.PAD, "same"));
+        equal("tsj-preflight-v1/device@1/one/net/same", n.idFor("one", EntityKind.NET, "same"));
+        equal("tsj-preflight-v1/device@1/one/endpoint/same", n.idFor("one", EntityKind.ENDPOINT, "same"));
+        equal("tsj-preflight-v1/device@1/one/port/same", n.idFor("one", EntityKind.PORT, "same"));
+        equal("tsj-preflight-v1/device@1/one/role/same", n.idFor("one", EntityKind.ROLE, "same"));
+        equal("tsj-preflight-v1/device@2/one/net/same",
             new BlockNamespace("device", 2, list(same)).idFor("one", EntityKind.NET, "same"));
-        equal("tsj-block-v1/device-two@1/one/net/same",
+        equal("tsj-preflight-v1/device-two@1/one/net/same",
             new BlockNamespace("device-two", 1, list(same)).idFor("one", EntityKind.NET, "same"));
 
         Fixture dottedA = new Fixture("a.b");
@@ -85,8 +85,8 @@ public final class FunctionalBlockContractTest {
         Fixture dottedB = new Fixture("a");
         dottedB.nets.add("b.c");
         BlockNamespace dotted = new BlockNamespace("d", 1, list(dottedA.build(), dottedB.build()));
-        equal("tsj-block-v1/d@1/a.b/net/c", dotted.idFor("a.b", EntityKind.NET, "c"));
-        equal("tsj-block-v1/d@1/a/net/b.c", dotted.idFor("a", EntityKind.NET, "b.c"));
+        equal("tsj-preflight-v1/d@1/a.b/net/c", dotted.idFor("a.b", EntityKind.NET, "c"));
+        equal("tsj-preflight-v1/d@1/a/net/b.c", dotted.idFor("a", EntityKind.NET, "b.c"));
         check(!dotted.idFor("a.b", EntityKind.NET, "c").equals(dotted.idFor("a", EntityKind.NET, "b.c")),
             "accepted delimiter-like local IDs cannot cross segment boundaries");
     }
@@ -107,10 +107,10 @@ public final class FunctionalBlockContractTest {
             list(second, forward, optional), list(forward));
         for (List<FunctionalBlockDescriptor> blocks : arrangements) {
             BlockNamespace n = new BlockNamespace("device", 3, blocks);
-            equal("tsj-block-v1/device@3/driver/pad/X.1", n.idFor("driver", EntityKind.PAD, "X.1"));
-            equal("tsj-block-v1/device@3/driver/net/rail", n.idFor("driver", EntityKind.NET, "rail"));
+            equal("tsj-preflight-v1/device@3/driver/pad/X.1", n.idFor("driver", EntityKind.PAD, "X.1"));
+            equal("tsj-preflight-v1/device@3/driver/net/rail", n.idFor("driver", EntityKind.NET, "rail"));
             if (n.getBlocks().containsKey("second")) {
-                equal("tsj-block-v1/device@3/second/pad/X.1", n.idFor("second", EntityKind.PAD, "X.1"));
+                equal("tsj-preflight-v1/device@3/second/pad/X.1", n.idFor("second", EntityKind.PAD, "X.1"));
             }
         }
         final BlockNamespace n = new BlockNamespace("device", 1, list(forward));
@@ -279,7 +279,7 @@ public final class FunctionalBlockContractTest {
         blocks.clear();
         unmodifiable(new Runnable() { public void run() { n.getBlocks().clear(); }});
         for (int i = 0; i < 20; i++) {
-            equal("tsj-block-v1/device@1/block/pad/X.1", n.idFor("block", EntityKind.PAD, "X.1"));
+            equal("tsj-preflight-v1/device@1/block/pad/X.1", n.idFor("block", EntityKind.PAD, "X.1"));
             equal(2, d.getPads().size());
         }
     }

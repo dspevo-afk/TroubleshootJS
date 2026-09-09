@@ -4,127 +4,89 @@ CircuitJS remains the electrical simulation engine. TroubleshootJS layers its
 challenge, board, and instrument behavior around that engine rather than
 replacing its electrical results.
 
-## Durable design identity and realization replay — A03
+The current development contract is Edition 3.0 of [ROADMAP.md](ROADMAP.md).
+Historical generators, serialized formats, ID spellings, stage counts and
+golden reports are not compatibility obligations. Current solver truth,
+physical correspondence, coherent ownership, deterministic inputs, truthful
+instruments, valid repair behavior and answer privacy remain required. The
+[current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
+older evidence packets describe their own historical candidates.
 
-A03 is accepted at `1d995d4f5b21142d4ca5643ede546afdfe51340f`; its closed gate
-record is in [A03 evidence](task-evidence/A03/README.md). A04 construction and
-replay compatibility are qualified in [A04 evidence](task-evidence/A04/README.md).
+## Current design identity and reconstruction
 
-`BlockNamespace.idFor()` retains the Task44 encoding and its accepted callers.
-The new explicit `BlockRealizationIdentity` separates a caller-supplied repeated
-instance key, semantic role version, contribution provider version, and
-descriptor topology/schema variant. Role/port identities belong to the device
-interface; component, terminal, endpoint, pad and local-net identities belong
-to the implementing variant. Replacing unlike internals therefore changes
-their durable IDs while a truthful unchanged external interface can remain
-stable. Collection positions, allocation order and random cursors are absent.
+`BlockNamespace.idFor()` is the semantic encoder for the resolved composition.
+`BlockRealizationIdentity` records the stable instance key, role, provider and
+schema variant. Resolved component, endpoint, pad, local-net, role and port IDs
+carry the provider/variant envelope; component-terminal tuples use the same
+owner. Collection positions, allocation order and random cursors are absent.
+The pure port preflight uses explicitly provisional addresses before provider
+selection. Those addresses are not persisted as board/report identities.
 
-`DeviceBusBindings` owns explicit device-scoped bus declarations. A declaration
-names a semantic bus and its conductive anchors; external supply/return
-references permit real external singleton buses. It validates the existing
-electrical partition and maps every local net to its explicit bus or its
-variant-owned unjoined local identity. Conflicting bus owners, duplicate
-declarations, missing merged-bus declarations and dangling aliases reject.
-A lexically earlier alias changes the alias population without renaming the
-bus. Repeated blocks retain distinct terminals while connecting to that bus.
+`DeviceBusBindings` owns declared device buses and their conductive anchors.
+It validates the temporary electrical equivalence partition, then maps each
+semantic local net to its explicit bus or its unjoined semantic identity.
+External supply/return references permit real singleton buses. Conflicting bus
+owners, missing merged-bus declarations and dangling aliases reject. The plan,
+electrical spec and BoardNet construction consume this mapping. A lexical union
+representative is never the board net ID. Physical conductors, acquired parts,
+CircuitJS analyzed nodes and live endpoint ownership retain separate mappings.
+Matching immutable IDs never authorizes a different construction attempt.
 
-The legacy `BoundedAssemblyPlan.resolveNets()` DSU representative remains the
-rendered/logical BoardNet projection used by accepted Task47/48/49 reports.
-It is temporary electrical equivalence machinery, not the new durable bus
-identity. CircuitJS analyzed nodes, live endpoint bindings and acquired
-physical inventory IDs remain separate runtime concerns. A02 diagnostic
-hypothesis keys remain diagnosis-specific identities, not bus or part IDs.
+`RealizationManifest` schema 2 contains the current descriptor, block
+realizations, algorithm pins, resolved choices, net/conductor bindings and
+actual target identities. Records use deterministic framing and ordering;
+seeds retain exact signed-long decimal transport and finite numeric choices
+retain exact binary64 encoding. There are no live CircuitElm references,
+mutable graphs, solver-node numbers or future saved-program/state envelopes.
 
-`RealizationManifest` is an immutable data envelope, not a save-game owner.
-Its schema contains the exact `ChallengeDescriptor`, block realizations,
-required algorithm-owner pins, typed resolved choices, local-net/conductor
-bindings and declared durable targets. Canonical records use deterministic
-ordering and explicit framing; signed long seeds stay canonical decimal
-integers. Replay-consumed finite numeric values use exact binary64 encoding.
-Collections are defensively copied and canonical encodings are retained once
-per immutable manifest, so local saved-action checks do not recanonicalize the
-board. There are no CircuitElm references, solver nodes, board coordinates,
-random state or mutable runtime graphs. Package selections retain the actual
-package ID, geometry variant/transform and contract version; drawing geometry
-is reconstructed by its pinned owner.
+`A03RealizationReplay` resolves only `bounded-assembler@4`, validates its exact
+current recipe and physical choices before mutable assembly, and checks the
+captured result again afterward. Retired or unknown schemas, algorithms,
+packages or choices reject. The six current leaf families use
+`LeafChallengeReplay` with `leaf@1`; no general leaf composition or saved-game
+adapter is implemented. Package geometry remains independently at contract 3.
 
-`A03RealizationReplay` is deliberately limited to bounded generator versions
-1/2/3. It checks the recorded envelope against the explicitly selected pure
-plan and actual package/input construction path before mutable assembly.
-Version and resolved-choice disagreement rejects; an unknown or missing pin
-never selects CURRENT. The assembled result captures the actual realization
-and checks it again for replay. Layout, geometry, named streams, diagnostic
-policy, resolved values, model choices, packages and routing are pinned to
-their existing versioned owners; A03 introduces no pretend engine versions.
+## Provider-owned electrical and physical construction
 
-Leaf replay continues through `ChallengeDescriptor` and
-`LegacyChallengeReplay`: legacy-leaf@1 selects layout 3, corrected
-legacy-leaf@2 selects layout 4, and geometry remains independently versioned.
-No general durable leaf-bus or leaf-manifest replay adapter is claimed.
-Existing Task48/49 descriptors, resolved recipes and legacy report signatures
-retain their meaning; those signatures are not copied into durable identity.
+`ElectricalRealizationSpec` and `ElectricalUnitPackageMap` carry provider
+declarations, resolved values, physical units, packages, terminals and explicit
+joins. `ElectricalConstructionContext` is the single private allocation and
+binding owner. Local providers allocate declared elements within their own
+solver reservations; `BoundedElectricalDeviceConstructionAdapter` owns external
+supplies, connectors, command control and exact cross-provider bridges.
 
-Optional typed contracts reserve future model/state schema, program/provider,
-import-origin and interpretation references. Origin metadata and file hashes
-are informational provenance; interpretation references are identity-bearing.
-Current bounded runtime replay rejects unsupported future execution/state or
-interpretation data. A data-only saved-action reference binds a declared target
-to one exact realization and rejects stale identity. These hooks implement no
-firmware, importer, persistence service, gameplay save UI or historical migration.
+`BoundedGeneratedBoardAssembler` resolves the plan, describes the board, iterates
+local provider declarations, completes the device joins, builds the layout and
+materializes one runtime. Its failure boundaries are mapping, electrical
+construction, layout, registration and validation. It has no historical source-
+half stage, fixed-versus-resolved load branch or provider-specific physical part
+registration. The current resistive and controlled compositions remain bounded
+device recipes; A05's new provider/variant selection is unstarted.
 
-## Constrained provider-owned electrical construction — A04
+`PhysicalConstructionProvider` declares nets, package-backed parts, terminals,
+nameplates, runtime backing and fault/repair policy. The generic materializer
+consumes those declarations in deterministic order without naming the
+resistive/controlled families or their source/driver/load nets. Supported
+materialization categories remain fixed parts and mutable resistors.
 
-A04 moves ordinary construction knowledge out of the bounded assembler while
-keeping CircuitJS as the sole electrical authority. `ElectricalRealizationSpec`
-and `ElectricalUnitPackageMap` carry immutable provider declarations, resolved
-values, units, packages, terminals and explicit joins. `ElectricalConstructionContext`
-is the restricted allocation/binding owner: providers may allocate only declared
-elements and terminals, while device-owned composition performs the cross-provider
-joins and produces one completed construction receipt.
+The physical boundary validates each declared component, pad, net and terminal
+against the electrical specification and package/unit map. Secondary paths,
+attachments and fault backings must match the precise declared component and
+terminal relationships; a same-kind element from elsewhere is insufficient.
+Plan/spec/metadata and completed receipt/runtime ownership are checked before
+physical allocation. Each context issues one canonical receipt; a copied
+receipt cannot acquire that context's authority. Runtime provider metadata is
+derived from the same validated provider ID, without a separate alias input.
+Shared-package mapping has bounded data controls, not a
+claim of arbitrary multi-unit runtime support.
 
-`ElectricalConstructionProvider` and
-`BoundedElectricalDeviceConstructionAdapter` supply the existing resistive and
-controlled-indicator versions 1/2/3. `PhysicalConstructionProvider` and
-`PhysicalConstructionPartDeclaration` then describe the corresponding physical
-parts, specifications, nameplates, backing identities and bounded fault/repair
-policies without holding live CircuitJS or board state. The generic
-`PhysicalConstructionMaterializer` consumes those declarations and the completed
-receipt to populate the one assembler-owned runtime, inventory and fault targets;
-it currently supports the existing fixed-part and mutable-resistor categories.
-
-`BoundedGeneratedBoardAssembler` remains a coordinator for device composition,
-layout and public result projections. It no longer contains a second named
-RG/RPD/Q1/RLOAD/LED/J1/J2 physical-construction branch; the providers own local
-declarations and the materializer owns their generic realization. The boundary
-does not introduce a universal circuit DSL, nested live simulations, new device
-families or an additional PCB/runtime owner.
-
-Physical materialization remains bounded to existing fixed parts and mutable
-resistors. Private solver coordinates belong to each construction attempt, not
-to durable IDs or physical PCB placement. Ownership is recorded immediately on
-allocation, before potentially failing initialization; multi-terminal posts are
-validated only after configuration. Typed device bridges still validate exact
-ordered endpoints and cross-owner joins before global completion.
-
-A completed local scope must have bound its declared physical units. Abort
-invalidates candidate receipts and clears its private pad/component/power and
-connection registries; it never deletes an active unrelated graph. Persistent
-board pads remain on device copper when a detachable lead is removed, and
-connection bindings retain the exact canonical pad endpoint object.
-
-The new physical declaration test preserves v1's historical fault label and
-incorrect-resistance policy, rather than treating its legacy OPEN wrapper as a
-new switch fault. Controlled versions retain the true RG/RLOAD open-switch
-backings. Task49 construction consumes the existing resolved recipe unchanged.
-
-A04's final native, five-permutation JDK8/GWT, three-route compiled conformance,
-nine-route legacy electrical/physical/repair corpus, replay parity, cleanup, and
-independent review pass; see [A04 evidence](task-evidence/A04/README.md).
-Unchanged canonical manifests remain byte-exact. Transient solver node numbers
-and tolerance-qualified live numerical observations are not durable identity.
-The three documented nonblocking materializer hardening follow-ups should be
-addressed before admitting independently supplied future provider inputs. A05
-and later milestones remain unstarted.
+Allocation records ownership before potentially failing initialization. A
+completed scope must have bound all its units. Abort revokes its receipts and
+clears the private registries without touching an unrelated active owner.
+Persistent board pads remain on device copper during lead removal; connection
+bindings retain their exact canonical endpoint objects. The resistive recipe
+names incorrect resistance at R1 with a 100000-ohm effect directly; controlled
+RG/RLOAD faults name their real open-switch backing.
 
 ## Functional block descriptions and namespaces — Task 44
 
@@ -146,29 +108,31 @@ collections. `BlockContractException` identifies malformed IDs, duplicates,
 missing declarations, dangling references, contradictory roles and invalid
 attachments with stable codes and field/entity IDs.
 
-`BlockNamespace` owns only immutable lookup and local-to-global ID derivation for
-one device schema. Encoding version 1 is
-`tsj-block-v1/<device-schema>@<positive-schema-version>/<instance>/<kind>/<local>`.
-All input IDs match `[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}`; the separators, escapes,
-whitespace and Unicode are rejected. Kind tokens are `component`, `pad`, `net`,
-`endpoint`, `port`, and `role`. The grammar makes the tuple unambiguous. The
-device schema version explicitly distinguishes namespace schemas; the block
-type version and parameter values do not silently rename local entities. A new
-encoding requires a new prefix. Duplicate instance keys fail; there is no
-suffixing, allocation counter or global UUID. Insertion, removal and reordering
-of optional blocks leave every unchanged tuple's ID intact.
+`BlockNamespace` owns immutable lookup and ID derivation for one device schema.
+Resolved IDs use
+`tsj-realization-v1/<device>@<version>/<instance>/<provider>@<version>/<variant>@<version>/<kind>/<local>`.
+Provisional preflight addresses use the distinct `tsj-preflight-v1` prefix.
+Local IDs match `[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}`; separators, whitespace and
+Unicode reject. Terminal tuples are framed when dot-separated local names would
+be ambiguous. Duplicate instances fail, and unchanged semantic tuples remain
+stable under unrelated inventory reordering. No allocation counter or global
+UUID supplies design identity.
 
 Blocks own these local descriptions and ports. Device intent owns proposed
-interblock wiring; the future assembler alone owns runtime allocation and net
-merging. Semantic IDs are distinct from solver nodes, acquired physical-part
+interblock wiring; the assembler owns runtime allocation and net merging. Semantic IDs are distinct from solver nodes, acquired physical-part
 identity and owner authorization. `FunctionalBlockExamples` contains only small
 NMOS driver and resistor/LED load descriptor fixtures. They create no playable
 block or board. Task 45 adds separate electrical metadata at the immutable port
-ID/attachment seam; runtime composition remains gated by the later roadmap.
+ID/attachment seam used by current bounded composition.
 
-The focused Java contract harness explicitly compiles and exercises these
-otherwise-unreferenced production classes without the solver/GWT runtime. The
-normal five-permutation JDK8/GWT build remains a separate production gate.
+`scripts/verify-current-contracts.ps1` compiles current client sources once and
+exercises 14 Java contract suites plus independent seed/value equations and
+the browser report protocol. Its native tests do not establish solved behavior;
+the five-permutation JDK8/GWT build and `verify-a03-browser.ps1 -Gate Current`
+remain separate production gates. Explicit generic packages serve developer
+fixtures; package-less constructors, implicit geometry projection and duplicate
+loose-geometry and board-probe aliases are retired. Local package keep-outs,
+their placed projections and physical lead probes retain distinct APIs.
 
 ## Electrical port metadata and preflight — Task 45
 
@@ -226,12 +190,12 @@ load/control input mappings. It verifies the separate J1/J2 boundary and assigns
 roles without a family switch or numeric value table in the generic checker.
 These adapters are callable metadata utilities, not new production admission
 gates; existing generators, seeds, electrical graphs and player behavior retain
-their accepted paths. Runtime composition remains unstarted.
+their current paths. Current bounded composition consumes separate typed providers.
 
 ## Challenge description, named streams and leaf replay — Task 46
 
 `ChallengeDescriptor` is an immutable request, independent of a generated board,
-solver state or random cursor. Schema 1 binds a signed 64-bit root seed,
+solver state or random cursor. Schema 2 binds a signed 64-bit root seed,
 generator ID/version, device-intent ID/version, difficulty-profile ID/version,
 the existing `PcbGeometryContractVersion`, and complete `GenerationConstraints`.
 Its bounded ASCII canonical representation uses sorted fields, versioned IDs
@@ -273,21 +237,15 @@ empty/duplicate sets reject. A changed eligible population may change selection.
 | Constraints/profile/geometry | Bound replay inputs; do not reseed unrelated named concerns |
 | Task 44 namespace and runtime owner | Separate identities; no runtime objects enter the descriptor |
 
-`LegacyChallengeReplay` resolves `legacy-leaf@1`, intent version 1 for the six
-existing family IDs, `legacy-default@1`, geometry version 3 and entirely
-unspecified constraints. It explicitly selects layout algorithm 3 through
-`QuickPlayFamilyRegistry.generate(familyId, long, layoutAlgorithmVersion)`.
-A02 adds `legacy-leaf@2` for the LED, diode and parallel seeded families,
-selecting corrected layout algorithm 4. Ordinary generation uses algorithm 4
-for those families; fixed families retain algorithm 3. Package geometry stays
-at version 3. Neither dispatch remaps seeds,
-replace legacy randomness or override fault/scenario selection. Every call
-constructs a fresh runtime owner. Any specified constraint rejects before
-generation; the adapter makes no claim that a requested diagnostic depth was
-achieved. Geometry-version drift rejects instead of silently reinterpreting an
-old descriptor. Future leaf algorithm changes need an explicit replay version
-and preservation or explicit rejection of the old one. All new named streams
-are reserved and **not consumed by legacy-leaf@1**.
+`LeafChallengeReplay` accepts only `leaf@1`, current family intent version 1,
+`quick-play@1`, geometry 3 and unspecified constraints. It reaches each current
+family directly with the exact seed. All layouts report the current corrected
+algorithm epoch 4; package geometry remains 3. The leaf families keep their
+existing useful random decision schemes and fault/scenario selection. Named
+streams support current composed generation and concern-isolation tests; they
+do not pretend to replace leaf randomness. Every reconstruction creates a fresh
+owner. Specified unsupported constraints and retired/unknown artifacts reject
+before generation rather than selecting a fallback implementation.
 
 The explicit `tsjDebug=true&tsjVerifyTask46=true` route executes the same pure
 contract corpus used by JDK8, publishes canonical string outputs and compares
@@ -362,14 +320,14 @@ adds a player menu entry. Qualification status and exact evidence remain in the
 
 ## Bounded assembly and executable contributions — Task 47
 
-`BoundedAssemblyRequest` binds `bounded-assembler@1`, the `resistive-coupling@1`
+`BoundedAssemblyRequest` binds `bounded-assembler@4`, the `resistive-coupling@1`
 intent, `developer-canary@1`, geometry 3 and an exact signed 64-bit seed to
 explicit block declarations and device wiring. `BoundedAssemblyPlan` resolves
 the typed resistor-source/load providers and requires Task 45 COMPATIBLE before
 mutable allocation. It rejects altered electrical facts, unknown versions,
 changed fixed wiring and unsupported specified constraints. Supported count
 ranges must include two blocks, three components (including J1) and one explicitly
-joined reference domain. Legacy descriptor/random behavior is unchanged.
+joined reference domain. Historical generator revisions reject before allocation.
 
 `ComposedBlockContribution` carries immutable local resistor recipes, endpoint/
 pad/net declarations, healthy predicates, observed-current semantics, a local
@@ -379,11 +337,12 @@ VALUES/revision-1 streams use the independent source/load keys and `resistance`;
 the device FAULT/revision-1 stream uses `selected-fault`. Exact stable decision
 keys map to qualified owners. No qualified ID is sanitized into a local key.
 
-The plan preserves every Task 44 identity and local net alias. Only the explicit
-OUT-to-IN and RETURN-to-RETURN connections join the two blocks. Equal local
-SUPPLY labels do not join nets. Canonical merged net IDs are the least qualified
-member and retain explicit connection provenance. The board contains separate
-source-supply, loaded-output and return nets.
+The plan retains semantic local nets and explicit connection provenance. Only
+the declared OUT-to-IN and RETURN-to-RETURN connections join the two blocks.
+Equal local SUPPLY labels do not join nets. Device buses name the separate
+source-supply, loaded-output and return networks independently of union order.
+The local fault recipe explicitly declares kind, physical target and effect;
+no OPEN wrapper is reinterpreted by version.
 
 `BoundedGeneratedBoardAssembler` constructs one private board, CircuitJS graph,
 binding set, physical runtime and generated instance. Per-slot resistor inventory
@@ -394,11 +353,10 @@ Device-owned J1 and a controlled 5 V external input complete the envelope.
 The existing package/layout infrastructure supplies its three-component PCB.
 No complete leaf generator or hidden child board is used.
 
-`GeneratedFaultLocus` accepts the exact Task 44 v1 component namespace at its
-component-owner boundary. It reuses the local-ID validator and requires a
-canonical positive int schema version. Legacy simple IDs and forbidden private
-identity tokens retain their rules; qualified terminal/path IDs and wrong
-namespace kinds remain rejected.
+`GeneratedFaultLocus` validates current qualified component identities at its
+owner boundary. Simple leaf component IDs retain their current grammar.
+Qualified terminal/path IDs, wrong namespace kinds and private identity tokens
+remain rejected.
 
 `ComposedResistiveDeviceBehavior` executes the local contribution rules and checks
 the actual coupled divider. Existing fault effects, physical resistor replacement,
@@ -410,8 +368,8 @@ construction stage and cleanup outcome; publication uses the accepted disjoint
 
 The explicit developer-fixture diagnostic contract validates identity and owner
 metrics while carrying no Task 41 plan. The generated-instance overload accepts
-it only with developer-only mode; normal diagnostic admission rejects it. Old
-constructors retain the normal contract. This is a fixture envelope, not a new
+it only with developer-only mode; normal diagnostic admission rejects it. The
+normal contract remains distinct. This is a fixture envelope, not a new
 admitted player family.
 
 `tsjDebug=true&tsjVerifyTask47=true` runs the compiled assembler's finite proof and
@@ -424,18 +382,16 @@ recorded in the [Task 47 packet](task-evidence/task-47/README.md); Task 48 is se
 
 ## Controlled-indicator composition — Task 48
 
-`BoundedAssemblyRequest.forControlledIndicator` selects `bounded-assembler@2`,
-`controlled-indicator@1` intent/profile and geometry version 3. The accepted
-resistive `@1` identity and six-family Quick Play registry retain their behavior.
-The existing assembler resolves two immutable contributions and two explicit
-device adapters into one board, CircuitJS graph, generated instance and physical
-runtime. No child board is constructed. The only randomized choice is one
-initial fault from the named FAULT stream; signed-long seeds remain canonical
-decimal strings throughout descriptor and browser replay.
+`BoundedAssemblyRequest.forControlledIndicator` selects `bounded-assembler@4`,
+`controlled-indicator@1` intent/profile and geometry 3. The same current generator
+also serves the distinct resistive intent. Two immutable contributions and two
+device adapters produce one board, CircuitJS graph and runtime. Named VALUES
+selects the resolved load recipe and named FAULT selects the initial fault.
+Signed-long seeds remain canonical decimal strings throughout reconstruction.
 
 The driver contributes mutable RG (1 kOhm), fixed RPD (100 kOhm) and the existing
-NMOS model. The load contributes mutable RLOAD (330 Ohm) and the existing LED
-model. Device adapters own J1 supply and J2 control, their external sources and
+NMOS model. The load contributes mutable RLOAD from its resolved catalog recipe and the
+existing LED model. Device adapters own J1 supply and J2 control, their external sources and
 isolation switches. Seven components, fifteen pads and six conductive nets are
 resolved through `BlockNamespace`, including all contribution/adaptor aliases.
 `SwitchedLowSideContract` is a bounded typed sinking relation with actual supply,
@@ -479,22 +435,18 @@ The ordinary CircuitJS update refreshes cached control state when the same
 generated owner changes from pending to settled, including the PCB rendering
 return path; it does not clear readiness flags to enable a control.
 
-`tsjDebug=true&tsjVerifyTask48=true` runs bounded implementation qualification;
-real visible normal-player acceptance is a separate gate. The
-[Task48 packet](task-evidence/task-48/README.md) records the exact candidate,
-qualification status and retained limits. This adds neither value synthesis nor
-a general device generator.
+Current compiled checks exercise implementation, solver behavior and lifecycle;
+visible normal-player diagnosis/repair/retest remains a separate gate. Historical
+Task48/49 packets describe the earlier accepted candidates, not required current
+outputs.
 
-## Intent-driven load values — Task 49
+## Resolved controlled-indicator load recipe
 
-`BoundedAssemblyRequest.forControlledIndicatorValues` declares the existing
-controlled-indicator composition under `bounded-assembler@3`. Its load provider
-is `resistor-led-load@2`: the request contains an unresolved functional intent,
-and `BoundedAssemblyPlan` selects one immutable recipe before any CircuitJS
-element is allocated. Generator2 keeps the fixed 330-ohm/0.25-W recipe, old
-descriptor meaning, ordinary URL and sidebar entry. Generator3 uses the explicit
-ordinary `tsjChallenge=controlled-indicator-values&seed=<canonical-long>` route.
-Intent/profile, namespace and physical geometry versions remain unchanged.
+The load provider is `resistor-led-load@2`: the request declares a functional
+intent and the plan resolves one immutable recipe before any CircuitJS element
+is allocated. There is no separate supported fixed-value generator or values URL.
+The retired `controlled-indicator-values` URL reports unsupported input before
+installing a challenge. The ordinary controlled-indicator entry uses the recipe.
 
 `ControlledIndicatorValueSynthesis` owns the bounded design policy. It reads the
 actual request's typed supply/load/sink ports and low-side relationship, rejects
@@ -523,13 +475,13 @@ contains no candidate search or design equations. Color bands, workbench detail,
 and diagnostic repair metadata consume the selected part. The unrestricted
 replacement catalog still permits incorrect and alternative repairs.
 
-`ControlledIndicatorDeviceBehavior` reads the v3 recipe envelope and checks
+`ControlledIndicatorDeviceBehavior` reads the resolved recipe envelope and checks
 settled CircuitJS currents/voltages, branch consistency, LED operation and the
 installed part's rating. Healthy LOW/HIGH verification precedes fault injection;
 customer OFF/ON retest remains solver-backed and judges function. Task41's
 diagnostic candidate routes carry the original immutable versioned request, so
-both fault owners are evaluated with the same selected value. Generator2's
-behavior bounds and diagnostic semantics are preserved.
+both fault owners are evaluated with the same selected value. Their bounds and
+physical markings come from that same current recipe.
 
 The separate `tsjDebug=true&tsjVerifyTask49=true` verifier exercises replay,
 physical correspondence, real diagnostic admission, value corners, repairs,
@@ -1834,10 +1786,9 @@ keys to the contract, so two supported faults on one owner remain two hypotheses
 `PcbBoardLayout.getTraceBendCount()` compares direction signs using widened
 coordinate differences. Segment length does not matter, immediate reversals
 count, and repeated points are ignored without resetting the last direction.
-Geometry validation still rejects diagonals and degenerate segments. Algorithm
-3 retains the historical raw-displacement metric only for replay-sensitive
-quality admission and ranking; algorithm 4 uses direction bends. Trace arrays
-and the geometry fingerprint format are unchanged.
+Geometry validation rejects diagonals and degenerate segments. Current quality
+admission, ranking and snapshot metrics use direction bends; the historical
+raw-displacement branch is removed.
 
 Prototype footprint origins are (0,0) and their pads are local. Placed origins
 and pads use board coordinates. Algorithm 4's production connected-placement
@@ -1969,12 +1920,10 @@ Each `PhysicalPart` binds its carrier once; lift, reconnect, remove, and
 reinstall cannot change that realization. Replacement parts are new identities
 and receive the slot carrier when installed. An unassigned loose projection
 uses the package's declared default rather than inferring geometry from a
-package ID. Legacy no-geometry `PhysicalPackage` constructors are marked
-developer-generic compatibility boundaries, the authoritative constructor
-rejects null or generic production geometry, and package-less placement
-compatibility is rejected for production. Legacy `PcbPadPlacement`
-constructors remain untouched as a deprecated developer/compatibility seam;
-generated layouts continue to require package-backed placements.
+package ID. Current board components and component placements require explicit
+canonical packages and package-backed geometry. Obsolete rejecting component-
+placement overloads and implicit board-component package selection are removed.
+Any separate developer-only pad fixtures still undergo the layout geometry gate.
 
 The focused Task 43 verifier enumerates the package catalog and checks
 determinism, terminal order, translation, canonical-object identity,

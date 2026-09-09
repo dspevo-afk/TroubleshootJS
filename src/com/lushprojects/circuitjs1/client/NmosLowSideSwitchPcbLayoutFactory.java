@@ -33,7 +33,8 @@ final class NmosLowSideSwitchPcbLayoutFactory {
         requireVariationMode(variationMode);
         int s = variationMode * 10;
         PcbBoardLayout layout = new PcbBoardLayout(1300, 680,
-            new Rectangle(40 + s, 30, 1050, 570), new Rectangle(1150, 100, 130, 240));
+            new Rectangle(40 + s, 30, 1050, 570), new Rectangle(1150, 100, 130, 240),
+            SeededPcbLayoutGenerator.CURRENT_VERSION);
         addComponents(layout, board, seed, s, rloadVariantKey, rpdVariantKey);
         addTraces(layout);
         addLabels(layout, specifications, s);

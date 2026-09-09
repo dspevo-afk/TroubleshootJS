@@ -1,10 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
 class PcbPadPlacement {
-    // These defaults exist only for legacy package-less callers.  Authoritative
-    // package footprints always supply their declared pad/probe rectangles.
-    private static final int LEGACY_PAD_SIZE = 26;
-    private static final int LEGACY_PROBE_SIZE = 46;
     private final String padId;
     private final int x;
     private final int y;
@@ -13,17 +9,6 @@ class PcbPadPlacement {
     private final int escapeLength;
     private final Rectangle padBounds;
     private final Rectangle probeBounds;
-
-    PcbPadPlacement(String padId, int x, int y) {
-        this(padId, x, y, 0, 0, 0, centered(x, y, LEGACY_PAD_SIZE),
-            centered(x, y, LEGACY_PROBE_SIZE));
-    }
-
-    PcbPadPlacement(String padId, int x, int y, int escapeDx, int escapeDy,
-            int escapeLength) {
-        this(padId, x, y, escapeDx, escapeDy, escapeLength,
-            centered(x, y, LEGACY_PAD_SIZE), centered(x, y, LEGACY_PROBE_SIZE));
-    }
 
     PcbPadPlacement(String padId, int x, int y, int escapeDx, int escapeDy,
             int escapeLength, Rectangle padBounds, Rectangle probeBounds) {
@@ -69,10 +54,6 @@ class PcbPadPlacement {
                 dx * escapeDx + dy * escapeDy > escapeLength)
             return false;
         return dx * escapeDy - dy * escapeDx == 0;
-    }
-
-    private static Rectangle centered(int x, int y, int size) {
-        return new Rectangle(x - size / 2, y - size / 2, size, size);
     }
 
     private static boolean contains(Rectangle outer, int x, int y) {

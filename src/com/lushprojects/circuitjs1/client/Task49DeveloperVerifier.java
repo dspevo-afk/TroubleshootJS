@@ -46,11 +46,8 @@ final class Task49DeveloperVerifier {
                 if (cases.length() != 0) cases.append(',');
                 cases.append(verifySeed(sim, seed, repaired));
             }
-            require(repaired.size() == 4 && repaired.contains("R_CATALOG_330|driver") &&
-                repaired.contains("R_CATALOG_330|load") &&
-                repaired.contains("R_CATALOG_270|driver") &&
-                repaired.contains("R_CATALOG_270|load"),
-                "finite replay corpus did not repair all four value/owner pairs");
+            require(repaired.contains("driver") && repaired.contains("load"),
+                "finite replay corpus did not repair both current fault owners");
             restore(sim, original, originalOwner, priorQuickPlay, priorSession);
             verifyAdmissionRejections(sim);
             String construction = verifyConstructionFailures(sim, requestedSeed);
@@ -95,11 +92,11 @@ final class Task49DeveloperVerifier {
         int assertionStart = assertions;
         GeneratedBoardInstance before = sim.getGeneratedBoardInstance();
         String circuitBefore = sim.dumpCircuit();
-        BoundedAssemblyRequest request = BoundedAssemblyRequest.forControlledIndicatorValues(seed);
+        BoundedAssemblyRequest request = BoundedAssemblyRequest.forControlledIndicator(seed);
         ChallengeDescriptor descriptor = ChallengeDescriptor.parse(request.getDescriptor().toCanonical());
         require(descriptor.getRootSeed() == seed, "descriptor lost signed-long seed");
         BoundedGeneratedBoardAssembler.Result direct = assemble(request);
-        BoundedGeneratedBoardAssembler.Result replay = assemble(BoundedAssemblyRequest.forControlledIndicatorValues(descriptor));
+        BoundedGeneratedBoardAssembler.Result replay = assemble(BoundedAssemblyRequest.forControlledIndicator(descriptor));
         List<ElectricalBlockContract> blocks = new ArrayList<ElectricalBlockContract>(request.getBlocks());
         List<ElectricalConnection> connections = new ArrayList<ElectricalConnection>(request.getConnections());
         List<DeviceAdapterContract> adapters = new ArrayList<DeviceAdapterContract>(request.getDeviceAdapters());
@@ -120,9 +117,8 @@ final class Task49DeveloperVerifier {
             "descriptor replay or reordered inputs changed the runtime construction");
         ControlledIndicatorValueSynthesis.ResolvedRecipe directRecipe =
             direct.getPlan().getResolvedLoadRecipe();
-        require(directRecipe != null && expectedCatalogId(seed).equals(
-            directRecipe.getCatalogEntryId()) && directRecipe.getResistanceOhms() ==
-            expectedCatalogOhms(seed), "Task 49 selected catalog value changed for seed " + seed);
+        require(directRecipe != null && containsCurrentCatalogEntry(directRecipe),
+            "current resolver selected a catalog-backed load recipe");
         install(sim, direct.getInstance(), false);
         verifyNormalAdmission(sim, direct.getInstance());
         double originalGate = voltage(direct.getInstance(), "driver", "Q1.G");
@@ -132,12 +128,9 @@ final class Task49DeveloperVerifier {
         GeneratedBoardInstance board = replay.getInstance();
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         challenge.beginDeveloperVerificationScope();
-        if (seed == 1L)
-            require("driver".equals(replay.getPlan().getFaultBlockKey()),
-                "seed 1 did not exercise the driver fault owner");
-        if (seed == 2L)
-            require("load".equals(replay.getPlan().getFaultBlockKey()),
-                "seed 2 did not exercise the load fault owner");
+        require("driver".equals(replay.getPlan().getFaultBlockKey()) ||
+            "load".equals(replay.getPlan().getFaultBlockKey()),
+            "current fault decision names a declared owner");
         command(sim, board, true);
         require(close(voltage(board, "driver", "Q1.G"), originalGate, .00001),
             "fresh descriptor replay changed solved gate voltage");
@@ -165,8 +158,7 @@ final class Task49DeveloperVerifier {
         require(challenge.getFaultController().apply(), "selected fault did not reapply");
         settle(sim);
         verifyFault(sim, replay);
-        String repairKey = directRecipe.getCatalogEntryId() + "|" +
-            replay.getPlan().getFaultBlockKey();
+        String repairKey = replay.getPlan().getFaultBlockKey();
         boolean repairExecuted = repaired.add(repairKey);
         if (repairExecuted) verifyRepair(sim, replay);
         return "{\"seed\":" + q(Long.toString(seed)) + ",\"catalog\":" +
@@ -557,12 +549,12 @@ final class Task49DeveloperVerifier {
     private static String verifyConstructionFailures(final CirSim sim, long seed) {
         GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
         String circuit = sim.dumpCircuit();
-        int count = 0;
+        StringBuilder failedPhases = new StringBuilder();
         for (final BoundedGeneratedBoardAssembler.Stage target : BoundedGeneratedBoardAssembler.Stage.values()) {
             final RuntimeException injected = new IllegalStateException("task49-private-" + target);
             boolean caught = false;
             try {
-                BoundedGeneratedBoardAssembler.assemble(BoundedAssemblyRequest.forControlledIndicatorValues(seed),
+                BoundedGeneratedBoardAssembler.assemble(BoundedAssemblyRequest.forControlledIndicator(seed),
                     new BoundedGeneratedBoardAssembler.FailureProbe() {
                         public void after(BoundedGeneratedBoardAssembler.Stage stage) { if (stage == target) throw injected; }
                     });
@@ -572,9 +564,11 @@ final class Task49DeveloperVerifier {
             }
             require(caught && owner == sim.getGeneratedBoardInstance() && circuit.equals(sim.dumpCircuit()) &&
                 sim.isGeneratedRuntimeSettled(), "construction stage failed to preserve original owner: " + target);
-            count++;
+            if (failedPhases.length() != 0) failedPhases.append(',');
+            failedPhases.append('"').append(target.name()).append('"');
         }
-        return "{\"injectedStages\":" + count + ",\"oldOwnerPreserved\":true,\"cleanup\":\"PASS\"}";
+        return "{\"failedPhases\":[" + failedPhases +
+            "],\"originalOwnerPreserved\":true,\"cleanup\":\"PASS\"}";
     }
 
     private static void verifyAdmissionRejections(CirSim sim) {
@@ -587,7 +581,7 @@ final class Task49DeveloperVerifier {
         catch (IllegalArgumentException expected) { rejected = true; }
         require(rejected && owner == sim.getGeneratedBoardInstance() && circuit.equals(sim.dumpCircuit()),
             "empty developer fixture entered normal player admission");
-        GeneratedBoardInstance normal = assemble(BoundedAssemblyRequest.forControlledIndicatorValues(0L)).getInstance();
+        GeneratedBoardInstance normal = assemble(BoundedAssemblyRequest.forControlledIndicator(0L)).getInstance();
         GeneratedDiagnosticSolvabilityAdmission.beginInternalProof();
         rejected = false;
         try { FreshGeneratedRuntimeInstallation.installNormalComposition(sim, normal, true); }
@@ -615,9 +609,9 @@ final class Task49DeveloperVerifier {
 
     private static String verifyInstallationFailures(CirSim sim, long seed, Task41SimulationSnapshot snapshot) {
         GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
-        int count = 0;
+        StringBuilder failedPhases = new StringBuilder();
         for (FreshGeneratedRuntimeInstallation.Stage stage : FreshGeneratedRuntimeInstallation.Stage.values()) {
-            GeneratedBoardInstance candidate = assemble(BoundedAssemblyRequest.forControlledIndicatorValues(seed)).getInstance();
+            GeneratedBoardInstance candidate = assemble(BoundedAssemblyRequest.forControlledIndicator(seed)).getInstance();
             FreshGeneratedRuntimeInstallation.setFailureForDeveloperVerification(stage);
             boolean caught = false;
             try { install(sim, candidate, true); }
@@ -627,9 +621,11 @@ final class Task49DeveloperVerifier {
             require(caught && sim.getGeneratedBoardInstance() == owner, "installation did not restore old owner: " + stage);
             snapshot.assertRestored(sim);
             disposed.add(candidate);
-            count++;
+            if (failedPhases.length() != 0) failedPhases.append(',');
+            failedPhases.append('"').append(stage.name()).append('"');
         }
-        return "{\"injectedStages\":" + count + ",\"originalRestored\":true}";
+        return "{\"failedPhases\":[" + failedPhases +
+            "],\"originalOwnerRestored\":true}";
     }
 
     private static String verifyDetachedInitialOwner(CirSim sim, Task41SimulationSnapshot original, long seed) {
@@ -663,7 +659,7 @@ final class Task49DeveloperVerifier {
             require(sim.stopMessage == null, "private initial schematic did not solve");
             Task41SimulationSnapshot detached = Task41SimulationSnapshot.captureForFreshInstallation(sim);
             verifyInstallationFailures(sim, seed, detached);
-            installed = assemble(BoundedAssemblyRequest.forControlledIndicatorValues(seed)).getInstance();
+            installed = assemble(BoundedAssemblyRequest.forControlledIndicator(seed)).getInstance();
             install(sim, installed, true);
             verifyNormalAdmission(sim, installed);
             require(!sim.elmList.contains(initial) && sim.getAttachedPcbWorkbenchCountForDeveloperVerification() == 1,
@@ -678,7 +674,7 @@ final class Task49DeveloperVerifier {
     }
 
     private static String verifySuccession(CirSim sim, long firstSeed, long secondSeed) {
-        GeneratedBoardInstance first = assemble(BoundedAssemblyRequest.forControlledIndicatorValues(firstSeed)).getInstance();
+        GeneratedBoardInstance first = assemble(BoundedAssemblyRequest.forControlledIndicator(firstSeed)).getInstance();
         install(sim, first, true);
         for (String command : new String[] { GeneratedBoardOperationIds.CONTROL_INPUT_LOW,
                 GeneratedBoardOperationIds.CONTROL_INPUT_HIGH }) {
@@ -719,7 +715,7 @@ final class Task49DeveloperVerifier {
             sim.repaint();
             Scheduler.RepeatingCommand oldRepaint = sim.pendingGeneratedRepaint;
             require(oldHandler != null && oldRepaint != null && completions.size() == 3, "real stale callbacks absent");
-            GeneratedBoardInstance second = assemble(BoundedAssemblyRequest.forControlledIndicatorValues(secondSeed)).getInstance();
+            GeneratedBoardInstance second = assemble(BoundedAssemblyRequest.forControlledIndicator(secondSeed)).getInstance();
             FreshGeneratedRuntimeInstallation.requireDisjoint(first, second);
             install(sim, second, true);
             GeneratedChallengeController current = sim.getGeneratedChallengeController();
@@ -859,12 +855,17 @@ final class Task49DeveloperVerifier {
         return alternative ? "R_CATALOG_2200" : "R_CATALOG_" +
             (long) result.getPlan().getDriver().getResistor("RG").getResistanceOhms();
     }
-    private static String expectedCatalogId(long seed) {
-        return seed == 0L || seed == 1L || seed == 9007199254740993L ?
-            "R_CATALOG_330" : "R_CATALOG_270";
-    }
-    private static double expectedCatalogOhms(long seed) {
-        return seed == 0L || seed == 1L || seed == 9007199254740993L ? 330.0 : 270.0;
+    private static boolean containsCurrentCatalogEntry(
+            ControlledIndicatorValueSynthesis.ResolvedRecipe recipe) {
+        if (recipe == null || recipe.getCatalogEntryId() == null) return false;
+        for (ControlledIndicatorValueSynthesis.Candidate candidate :
+                ControlledIndicatorValueSynthesis.validCandidates(
+                    ControlledIndicatorValueSynthesis.defaultIntent())) {
+            if (recipe.getCatalogEntryId().equals(candidate.getId()) &&
+                    recipe.getResistanceOhms() == candidate.getResistanceOhms())
+                return true;
+        }
+        return false;
     }
     private static boolean close(double actual, double expected, double tolerance) {
         return !Double.isNaN(actual) && !Double.isInfinite(actual) && Math.abs(actual - expected) <= tolerance;

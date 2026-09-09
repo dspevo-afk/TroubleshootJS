@@ -188,7 +188,6 @@ final class ControlledIndicatorValueSynthesis {
         }
 
         ResistorCatalogEntry getCatalogEntry() { return catalogEntry; }
-        ResistorCatalogEntry getEntry() { return catalogEntry; }
         String getId() { return catalogEntry.getId(); }
         String getCatalogEntryId() { return catalogEntry.getId(); }
         double getNominalResistanceOhms() {

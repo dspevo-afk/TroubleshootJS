@@ -567,15 +567,6 @@ final class ElectricalRealizationSpec {
                 throw new IllegalArgumentException("Missing contribution " + ownerKey);
             contributionByOwner.put(ownerKey, contribution);
             String providerId = contribution.getProviderTypeId();
-            // The historical controlled contribution family ID is retained
-            // by the plan/runtime for A03 compatibility.  The construction
-            // boundary exposes the durable leaf provider IDs instead.
-            if (controlled &&
-                    ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(ownerKey))
-                providerId = ControlledIndicatorBlockContributions.DRIVER_TYPE_ID;
-            else if (controlled &&
-                    ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(ownerKey))
-                providerId = ControlledIndicatorBlockContributions.LOAD_TYPE_ID;
             int providerVersion = contribution.getProviderVersion();
             ArrayList<String> declaredElements = new ArrayList<String>();
             ArrayList<String> declaredUnits = new ArrayList<String>();
@@ -588,11 +579,7 @@ final class ElectricalRealizationSpec {
                 addElement(ownerKey, local, "RESISTOR", componentId,
                         map("1", 0, "2", 1));
                 declaredElements.add(local);
-                boolean declaresSecondary = !controlled ||
-                        (ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(ownerKey) &&
-                                "RG".equals(local)) ||
-                        (ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(ownerKey) &&
-                                "RLOAD".equals(local));
+                boolean declaresSecondary = recipe.isMutable();
                 if (declaresSecondary) {
                     addHelper(ownerKey, local + "_SECONDARY", "FAULT_HELPER", componentId,
                             map("1", 0, "2", 1), declaredElements);
@@ -700,12 +687,20 @@ final class ElectricalRealizationSpec {
                 addDeviceElement("RETURN_TRACE", "WIRE", map("1", 0, "2", 1), declaredElements);
                 addDeviceElement("GROUND", "GROUND", map("1", 0), declaredElements);
                 addDeviceElement("RETURN_BOTTOM", "WIRE", map("1", 0, "2", 1), declaredElements);
+                /* J1 is a device-owned component.  Its stable component ID is
+                 * still the public J1 identity, but the package/unit owner is
+                 * the device provider, matching the terminal mappings and the
+                 * physical declaration owner. */
                 addDeviceComponent("J1", PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
-                        "J1", declaredUnits);
+                        "device", declaredUnits);
                 addPadBinding("device", "J1", "1", "J1", "1",
                         contributionNet("source", "SUPPLY"));
                 addPadBinding("device", "J1", "2", "J1", "2",
                         contributionNet("load", "RETURN"));
+                addDeviceTerminal("device", "J1", "J1", PhysicalPackages.THROUGH_HOLE_CONNECTOR_2.getId(),
+                        "CONNECTOR", "1", contributionNet("source", "SUPPLY"));
+                addDeviceTerminal("device", "J1", "J1", PhysicalPackages.THROUGH_HOLE_CONNECTOR_2.getId(),
+                        "CONNECTOR", "2", contributionNet("load", "RETURN"));
                 addResistiveBridges();
                 addPowerInput(LEGACY_POWER_INPUT_ID,
                         requiredPadId("device", "J1.1"), requiredPadId("device", "J1.2"),
@@ -753,6 +748,14 @@ final class ElectricalRealizationSpec {
                 String returnNet = adapterNet(owner, "RETURN");
                 addPadBinding(owner, local, "1", componentId, "1", outputNet);
                 addPadBinding(owner, local, "2", componentId, "2", returnNet);
+                String adapterBacking = DeviceAdapterContract.POWER_ADAPTER_KEY.equals(owner) ?
+                        "LOAD_CONNECTOR" : "CONTROL_COMMAND";
+                addDeviceTerminal(owner, local, componentId,
+                        PhysicalPackages.THROUGH_HOLE_CONNECTOR_2.getId(), adapterBacking,
+                        "1", outputNet);
+                addDeviceTerminal(owner, local, componentId,
+                        PhysicalPackages.THROUGH_HOLE_CONNECTOR_2.getId(), adapterBacking,
+                        "2", returnNet);
                 addPowerInput(adapter.getExternalInputId(),
                         requiredPadId(owner, local + ".1"), requiredPadId(owner, local + ".2"),
                         outputNet, returnNet);
@@ -980,6 +983,15 @@ final class ElectricalRealizationSpec {
                 throw new IllegalArgumentException("Duplicate pad binding " + padId);
         }
 
+        private void addDeviceTerminal(String owner, String local, String componentId,
+                String packageId, String backingElement, String terminal, String netId) {
+            String key = terminalKey(owner, local, terminal);
+            if (terminals.put(key, new TerminalMapping(owner, local, terminal,
+                    componentId, packageId, terminal, netId,
+                    new EndpointRef("device", backingElement, terminal))) != null)
+                throw new IllegalArgumentException("Duplicate device terminal mapping " + key);
+        }
+
         private void addPowerInput(String inputId, String positivePadId,
                 String returnPadId, String positiveNetId, String returnNetId) {
             PowerInputSpec value = new PowerInputSpec(inputId, positivePadId,
@@ -1038,9 +1050,6 @@ final class ElectricalRealizationSpec {
         }
 
         private PhysicalPackage packageFor(ComposedBlockContribution.ResistorRecipe recipe) {
-            if (recipe.getPackageId() == null ||
-                    PhysicalPackages.AXIAL_RESISTOR.getId().equals(recipe.getPackageId()))
-                return PhysicalPackages.AXIAL_RESISTOR;
             if (PhysicalPackages.AXIAL_RESISTOR.getId().equals(recipe.getPackageId()))
                 return PhysicalPackages.AXIAL_RESISTOR;
             throw new IllegalArgumentException("Unsupported electrical package " +

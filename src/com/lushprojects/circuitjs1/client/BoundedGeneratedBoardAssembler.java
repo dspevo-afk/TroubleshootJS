@@ -7,7 +7,7 @@ import java.util.Vector;
 import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
 
 /**
- * The one device-owned assembly boundary for the Task 47 canary.
+ * The device-owned assembly boundary for the current bounded compositions.
  *
  * <p>Resolution is delegated to {@link BoundedAssemblyPlan}; this class then
  * allocates one complete board graph and one physical runtime in a private
@@ -21,13 +21,8 @@ final class BoundedGeneratedBoardAssembler {
         ComposedResistiveDeviceBehavior.TOPOLOGY_VARIANT_ID;
 
     static final String POWER_INPUT_ID = "VIN_INPUT";
-    // The bounded generator owns these existing model choices. A03 records
-    // their exact values rather than relying on a later model default.
-    static final String CONTROLLED_LED_MODEL = "default-led";
-    static final double CONTROLLED_NMOS_THRESHOLD_VOLTS = 1.5;
-    static final double CONTROLLED_NMOS_BETA = 10.0;
     private static final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR =
-        new SeededPcbLayoutGenerator(SeededPcbLayoutGenerator.LEGACY_VERSION);
+        new SeededPcbLayoutGenerator();
 
     private BoundedGeneratedBoardAssembler() { }
 
@@ -77,8 +72,8 @@ final class BoundedGeneratedBoardAssembler {
     /** Meaningful private-construction boundaries exposed only to developer proofs. */
     enum Stage {
         MAPPING,
-        MERGE,
-        SECOND_BLOCK,
+        ELECTRICAL,
+        LAYOUT,
         REGISTRATION,
         VALIDATION
     }
@@ -143,14 +138,13 @@ final class BoundedGeneratedBoardAssembler {
             context.prepareLogicalMapping();
             context.after(Stage.MAPPING);
 
-            context.begin(Stage.MERGE);
-            context.buildPrimaryCircuit();
-            context.after(Stage.MERGE);
+            context.begin(Stage.ELECTRICAL);
+            context.buildCircuit();
+            context.after(Stage.ELECTRICAL);
 
-            context.begin(Stage.SECOND_BLOCK);
-            context.buildSecondaryCircuit();
+            context.begin(Stage.LAYOUT);
             context.bindMappingsAndLayout();
-            context.after(Stage.SECOND_BLOCK);
+            context.after(Stage.LAYOUT);
 
             context.begin(Stage.REGISTRATION);
             context.buildPhysicalRuntime();
@@ -177,51 +171,6 @@ final class BoundedGeneratedBoardAssembler {
         return result;
     }
 
-    /** Stable qualified component identity used by device behavior and proofs. */
-    static String qualifiedComponent(GeneratedBoardInstance instance, String block) {
-        if (instance == null)
-            throw new IllegalArgumentException("Missing composed board instance");
-        return BoundedGeneratedBoardAssembler.componentId(instance.getCircuitFamilyId(),
-            instance.getSeed(), block);
-    }
-
-    /** Stable qualified pad identity used by device behavior and proofs. */
-    static String qualifiedPad(GeneratedBoardInstance instance, String block,
-            int terminal) {
-        if (instance == null)
-            throw new IllegalArgumentException("Missing composed board instance");
-        return BoundedGeneratedBoardAssembler.padId(instance.getCircuitFamilyId(),
-            instance.getSeed(), block, terminal);
-    }
-
-    private static String componentId(String ignoredFamily, long ignoredSeed,
-            String block) {
-        if (ControlledIndicatorDeviceBehavior.FAMILY_ID.equals(ignoredFamily)) {
-            String local = ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(block) ?
-                "RG" : ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(block) ?
-                "RLOAD" : block;
-            return ControlledIndicatorBlockContributions.componentId(
-                ControlledIndicatorBlockContributions.namespace(), block, local);
-        }
-        return "tsj-block-v1/resistive-coupling@1/" + block +
-            "/component/R1";
-    }
-
-    private static String padId(String ignoredFamily, long ignoredSeed,
-            String block, int terminal) {
-        if (terminal < 1 || terminal > 2)
-            throw new IllegalArgumentException("Invalid composed resistor terminal");
-        if (ControlledIndicatorDeviceBehavior.FAMILY_ID.equals(ignoredFamily)) {
-            String local = ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(block) ?
-                "RG" : ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(block) ?
-                "RLOAD" : block;
-            return ControlledIndicatorBlockContributions.padId(
-                ControlledIndicatorBlockContributions.namespace(), block, local + "." + terminal);
-        }
-        return "tsj-block-v1/resistive-coupling@1/" + block +
-            "/pad/R1." + terminal;
-    }
-
     /** Failure receipt preserving the original exception and private cleanup outcome. */
     static final class AssemblyFailure extends IllegalStateException {
         private final Stage stage;
@@ -246,13 +195,11 @@ final class BoundedGeneratedBoardAssembler {
         }
 
         Stage getStage() { return stage; }
-        Stage getFailureStage() { return stage; }
         int getAllocatedElementCount() { return allocatedElementCount; }
         int getRegisteredPartCount() { return registeredPartCount; }
         int getMappedIdentityCount() { return mappedIdentityCount; }
         int getMergeCount() { return mergeCount; }
         boolean isCleanupSucceeded() { return cleanupSucceeded; }
-        boolean getCleanupSucceeded() { return cleanupSucceeded; }
         Throwable getOriginalFailure() { return getCause(); }
     }
 
@@ -296,10 +243,7 @@ final class BoundedGeneratedBoardAssembler {
         GeneratedBoardInstance getInstance() { return instance; }
         BoundedAssemblyPlan getPlan() { return plan; }
         Map<String, RuntimeTarget> getRuntimeTargets() { return runtimeTargets; }
-        Map<String, RuntimeTarget> getMappingReceipt() { return runtimeTargets; }
         Map<String, EndpointManifest> getEndpointManifest() { return endpointManifest; }
-        Map<String, EndpointManifest> getChosenEndpointManifest() { return endpointManifest; }
-        Map<String, EndpointManifest> getEndpointMappings() { return endpointManifest; }
     }
 
     /** Immutable physical/fault/repair ownership record; IDs resolve through the runtime. */
@@ -337,14 +281,11 @@ final class BoundedGeneratedBoardAssembler {
         String getSlotId() { return slotId; }
         String getOriginalPartId() { return originalPartId; }
         String getInventoryViewId() { return inventoryViewId; }
-        String getInventoryId() { return inventoryViewId; }
         String getCapabilityId() { return capabilityId; }
         String getProviderId() { return providerId; }
         String getFaultId() { return faultId; }
         String getRepairComponentId() { return repairComponentId; }
-        String getRepairTargetComponentId() { return repairComponentId; }
         String getRepairSlotId() { return repairSlotId; }
-        String getRepairTargetSlotId() { return repairSlotId; }
     }
 
     /** Immutable record of a chosen real board endpoint and its actual CircuitJS post. */
@@ -393,11 +334,6 @@ final class BoundedGeneratedBoardAssembler {
         private PhysicalConstructionMetadata physicalMetadata;
         private ElectricalConstructionContext electricalConstruction;
         private ConstructionReceipt constructionReceipt;
-        private ContributionConstructionReceipt sourceReceipt;
-        private ContributionConstructionReceipt loadReceipt;
-        private ContributionConstructionReceipt driverReceipt;
-        private DeviceJoinReceipt deviceReceipt;
-        private BoundedElectricalDeviceConstructionAdapter.ResistiveStage resistiveStage;
         private GeneratedComponentBindings componentBindings;
         private GeneratedExternalPowerBindings powerBindings;
         private GeneratedComponentConnectionBindings connectionBindings;
@@ -423,138 +359,42 @@ final class BoundedGeneratedBoardAssembler {
             specifications = physicalMetadata.getSpecifications();
         }
 
-        /** Complete the pure logical namespace mapping before graph allocation. */
+        /** Resolve declared identities before graph allocation. */
         void prepareLogicalMapping() {
-            if (plan.isControlledIndicator()) {
-                prepareControlledLogicalMapping();
-                return;
-            }
             mappedIdentityCount = board.getComponentIds().size() + board.getPadIds().size() +
                 board.getNetIds().size();
-            for (String block : new String[] { "source", "load" }) {
-                // Resolve every identity that the later graph/physical stages
-                // will consume while the operation is still pure.
-                plan.idFor(block, EntityKind.COMPONENT, "R1");
-                plan.idFor(block, EntityKind.PAD, "R1.1");
-                plan.idFor(block, EntityKind.PAD, "R1.2");
-                plan.idFor(block, EntityKind.ENDPOINT, "R1_1");
-                plan.idFor(block, EntityKind.ENDPOINT, "R1_2");
-                plan.netFor(block, "RETURN");
-            }
-            plan.netFor("source", "SUPPLY");
-            plan.netFor("source", "OUT");
-        }
-
-        private void prepareControlledLogicalMapping() {
-            mappedIdentityCount = board.getComponentIds().size() + board.getPadIds().size() +
-                board.getNetIds().size();
-            for (String block : new String[] { "driver", "load" }) {
-                ComposedBlockContribution contribution = plan.getBlocks().get(block);
-                if (contribution == null)
-                    throw new IllegalStateException("Missing controlled block mapping: " + block);
-                for (String local : contribution.getResistors().keySet()) {
-                    plan.idFor(block, EntityKind.COMPONENT, local);
-                    ComposedBlockContribution.ResistorRecipe recipe =
-                        contribution.getResistor(local);
-                    plan.idFor(block, EntityKind.PAD, recipe.getFirstPadLocalId());
-                    plan.idFor(block, EntityKind.PAD, recipe.getSecondPadLocalId());
-                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getFirstEndpointLocalId());
-                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getSecondEndpointLocalId());
-                }
-                for (ComposedBlockContribution.NmosRecipe recipe :
-                        contribution.getNmosRecipes().values()) {
-                    plan.idFor(block, EntityKind.COMPONENT, recipe.getComponentLocalId());
-                    plan.idFor(block, EntityKind.PAD, recipe.getGatePadLocalId());
-                    plan.idFor(block, EntityKind.PAD, recipe.getDrainPadLocalId());
-                    plan.idFor(block, EntityKind.PAD, recipe.getSourcePadLocalId());
-                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getGateEndpointLocalId());
-                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getDrainEndpointLocalId());
-                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getSourceEndpointLocalId());
-                }
-                for (ComposedBlockContribution.LedRecipe recipe :
-                        contribution.getLedRecipes().values()) {
-                    plan.idFor(block, EntityKind.COMPONENT, recipe.getComponentLocalId());
-                    plan.idFor(block, EntityKind.PAD, recipe.getAnodePadLocalId());
-                    plan.idFor(block, EntityKind.PAD, recipe.getCathodePadLocalId());
-                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getAnodeEndpointLocalId());
-                    plan.idFor(block, EntityKind.ENDPOINT, recipe.getCathodeEndpointLocalId());
-                }
-                for (String net : contribution.getDescriptor().getNetIds())
+            for (Map.Entry<String, FunctionalBlockDescriptor> entry :
+                    plan.getNamespace().getBlocks().entrySet()) {
+                String block = entry.getKey();
+                FunctionalBlockDescriptor descriptor = entry.getValue();
+                for (String component : descriptor.getComponents().keySet())
+                    plan.idFor(block, EntityKind.COMPONENT, component);
+                for (String pad : descriptor.getPads().keySet())
+                    plan.idFor(block, EntityKind.PAD, pad);
+                for (String endpoint : descriptor.getEndpoints().keySet())
+                    plan.idFor(block, EntityKind.ENDPOINT, endpoint);
+                for (String net : descriptor.getNetIds())
                     plan.netFor(block, net);
             }
-            for (DeviceAdapterContract adapter : plan.getDeviceAdapters()) {
-                plan.idFor(adapter.getKey(), EntityKind.COMPONENT,
-                    adapter.getComponentLocalId());
-                plan.idFor(adapter.getKey(), EntityKind.PAD,
-                    adapter.getComponentLocalId() + ".1");
-                plan.idFor(adapter.getKey(), EntityKind.PAD,
-                    adapter.getComponentLocalId() + ".2");
-                plan.idFor(adapter.getKey(), EntityKind.ENDPOINT,
-                    adapter.getComponentLocalId() + "_1");
-                plan.idFor(adapter.getKey(), EntityKind.ENDPOINT,
-                    adapter.getComponentLocalId() + "_2");
-                for (String net : adapter.getDescriptor().getNetIds())
-                    plan.netFor(adapter.getKey(), net);
-            }
-            for (String block : new String[] { "driver", "load" })
-                for (String localNet : plan.getBlocks().get(block).getDescriptor().getNetIds())
-                    plan.netFor(block, localNet);
         }
 
-        /** Allocate the source half and the explicit output merge point. */
-        void buildPrimaryCircuit() {
-            if (electricalConstruction == null)
-                electricalConstruction = ElectricalConstructionContext.begin(
-                    plan.getElectricalRealizationSpec(), board, null);
-            if (plan.isControlledIndicator()) {
-                ElectricalRealizationSpec.ProviderDeclaration driverDeclaration =
-                    plan.getElectricalRealizationSpec().getProviderDeclaration("driver");
-                ElectricalRealizationSpec.ProviderDeclaration loadDeclaration =
-                    plan.getElectricalRealizationSpec().getProviderDeclaration("load");
-                driverReceipt = StandardElectricalConstructionProviders.provider(
-                    driverDeclaration.getProviderId(), driverDeclaration.getProviderVersion())
-                    .construct(driverDeclaration,
-                        electricalConstruction.scope("driver", driverDeclaration.getProviderId(),
-                            driverDeclaration.getProviderVersion()));
-                loadReceipt = StandardElectricalConstructionProviders.provider(
-                    loadDeclaration.getProviderId(), loadDeclaration.getProviderVersion())
-                    .construct(loadDeclaration,
-                        electricalConstruction.scope("load", loadDeclaration.getProviderId(),
-                            loadDeclaration.getProviderVersion()));
-                deviceReceipt = BoundedElectricalDeviceConstructionAdapter.constructControlled(
-                    plan, electricalConstruction, driverReceipt, loadReceipt);
-                electricalConstruction.finish();
-                adoptConstructionReceipt();
-                return;
+        /** Providers construct local elements; the device adapter owns cross-block joins. */
+        void buildCircuit() {
+            electricalConstruction = ElectricalConstructionContext.begin(
+                plan.getElectricalRealizationSpec(), board, null);
+            TreeMap<String, ContributionConstructionReceipt> contributions =
+                new TreeMap<String, ContributionConstructionReceipt>();
+            for (ElectricalRealizationSpec.ProviderDeclaration declaration :
+                    plan.getElectricalRealizationSpec().getProviderDeclarations().values()) {
+                if (declaration.isDeviceOwner()) continue;
+                contributions.put(declaration.getOwnerKey(),
+                    StandardElectricalConstructionProviders.provider(
+                        declaration.getProviderId(), declaration.getProviderVersion()).construct(
+                            declaration, electricalConstruction.scope(declaration.getOwnerKey(),
+                                declaration.getProviderId(), declaration.getProviderVersion())));
             }
-            sourceReceipt = StandardElectricalConstructionProviders.provider(
-                plan.getBlocks().get("source").getProviderTypeId(),
-                plan.getBlocks().get("source").getProviderVersion()).construct(
-                plan.getElectricalRealizationSpec().getProviderDeclaration("source"),
-                electricalConstruction.scope("source",
-                    plan.getBlocks().get("source").getProviderTypeId(),
-                    plan.getBlocks().get("source").getProviderVersion()));
-            resistiveStage = BoundedElectricalDeviceConstructionAdapter.beginResistive(
-                electricalConstruction, sourceReceipt);
-        }
-
-        /** Local controlled graph construction now belongs to bounded providers. */
-
-        /** Allocate the load half, complete board endpoint mapping, and route layout. */
-        void buildSecondaryCircuit() {
-            if (plan.isControlledIndicator()) {
-                if (constructionReceipt == null)
-                    throw new IllegalStateException("Controlled graph was not allocated");
-                return;
-            }
-            loadReceipt = StandardElectricalConstructionProviders.provider(
-                plan.getBlocks().get("load").getProviderTypeId(),
-                plan.getBlocks().get("load").getProviderVersion()).construct(
-                plan.getElectricalRealizationSpec().getProviderDeclaration("load"),
-                electricalConstruction.scope("load",
-                    plan.getBlocks().get("load").getProviderTypeId(),
-                    plan.getBlocks().get("load").getProviderVersion()));
-            deviceReceipt = resistiveStage.finish(loadReceipt);
+            BoundedElectricalDeviceConstructionAdapter.construct(plan, electricalConstruction,
+                contributions);
             electricalConstruction.finish();
             adoptConstructionReceipt();
         }
@@ -589,16 +429,11 @@ final class BoundedGeneratedBoardAssembler {
             for (PhysicalConstructionPartDeclaration part : physicalMetadata.getDeclarations()
                     .getDeviceParts())
                 addDeclaredEndpointManifests(part);
-            int mappedLocalEndpoints = 0;
             for (PhysicalConstructionPartDeclaration part : physicalMetadata.getDeclarations()
                     .getLocalParts()) {
                 addDeclaredEndpointManifests(part);
-                mappedLocalEndpoints += part.getTerminals().size();
             }
-            if (plan.isControlledIndicator())
-                mappedIdentityCount += board.getPadIds().size();
-            else
-                mappedIdentityCount += mappedLocalEndpoints;
+            mappedIdentityCount += endpointManifest.size();
         }
 
         private void addDeclaredEndpointManifests(PhysicalConstructionPartDeclaration part) {

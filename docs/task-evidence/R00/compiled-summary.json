@@ -1,0 +1,211 @@
+{
+  "protocol": "R00-CURRENT-PRODUCT-EVIDENCE-1",
+  "route": "built-in Browser; maintained pure report predicates",
+  "status": "PASS",
+  "provenance": {
+    "count": "1315",
+    "execution": "88f5654e86b15e38a8eb58685ab710af41ab12337e2034d9c3d7744d535efa30",
+    "scripts": "afe44516b126e28115d0254245cd0c7a13abe99fb7500181ca23547e3d7733eb",
+    "source": "e36de0c9eb252cf11ebc460e191773f31b59e1cae46f688bc8d24a0646d0b8d3",
+    "web": "2602380654a6f7326a5fe27fad57a0ba2ab3b7b36bec7e06c17f96a7ada6df5b"
+  },
+  "routes": [
+    {
+      "name": "a03",
+      "status": "PASS",
+      "verification": "PASS:a03",
+      "reports": [
+        {
+          "name": "a03",
+          "characters": 175946,
+          "sha256": "9c162a493a8ed469ad941b796fe361fa268a20ef6c07511b7d01b251651ef5b0",
+          "protocol": "TSJ-A03-IDENTITY-1",
+          "status": "PASS",
+          "vectorAssertions": 93,
+          "originalOwnerRestored": true,
+          "candidateCleanup": "PASS",
+          "caseCount": 3
+        }
+      ]
+    },
+    {
+      "name": "task46",
+      "status": "PASS",
+      "verification": "PASS:task46",
+      "reports": [
+        {
+          "name": "task46Parity",
+          "characters": 4738,
+          "sha256": "7bbf6739c314c6d9e9229d626ab0d7f7354a75e1e52a40660c67b23a9bcaa705"
+        },
+        {
+          "name": "task46Descriptor",
+          "characters": 1455,
+          "sha256": "caff293c3dc5a214399ce7198db57d47322057fb8b1e6be2464d915193a1eff6"
+        },
+        {
+          "name": "task46Snapshot",
+          "characters": 10686,
+          "sha256": "49e7afed45e23e564973b463adf4975d8a8249d9485abb3d66c821a65b5ef1b3"
+        },
+        {
+          "name": "task46Replay",
+          "characters": 478,
+          "sha256": "f0d44be4995f2f00af7e7896510e8b6903239227af3cdfb38fed4ef09f957444"
+        }
+      ]
+    },
+    {
+      "name": "task47",
+      "status": "PASS",
+      "verification": "PASS:task47",
+      "reports": [
+        {
+          "name": "task47",
+          "characters": 47652,
+          "sha256": "64c04a5f1f5396b8862bfbd0766d447c6a627aad92b2a9a9cc144b20804dd1f2",
+          "protocol": "TSJ-TASK47-ASSEMBLY-1",
+          "status": "PASS",
+          "assertions": 2305,
+          "measurementCases": 4,
+          "repairedOwners": 2,
+          "originalOwnerRestored": true,
+          "candidateCleanup": "PASS",
+          "caseCount": 8
+        }
+      ]
+    },
+    {
+      "name": "task48",
+      "status": "PASS",
+      "verification": "PASS:task48",
+      "reports": [
+        {
+          "name": "task48",
+          "characters": 154010,
+          "sha256": "a618041e7563b955166bd7482d94cf44d6fe0697dab51da91394758ef7bdc462",
+          "protocol": "TSJ-TASK48-1",
+          "status": "PASS",
+          "assertions": 755,
+          "measurementCases": 6,
+          "repairedOwners": 2,
+          "originalOwnerRestored": true,
+          "candidateCleanup": "PASS",
+          "caseCount": 8
+        }
+      ]
+    },
+    {
+      "name": "task49",
+      "status": "PASS",
+      "verification": "PASS:task49",
+      "reports": [
+        {
+          "name": "task49",
+          "characters": 155336,
+          "sha256": "bd2e17baf36de9a961f5f7c9294753b37e0143c6bef641a8ec882eeecd6c9513",
+          "protocol": "TSJ-TASK49-1",
+          "status": "PASS",
+          "assertions": 910,
+          "measurementCases": 6,
+          "repairedPairs": 2,
+          "originalOwnerRestored": true,
+          "candidateCleanup": "PASS",
+          "caseCount": 8
+        }
+      ]
+    },
+    {
+      "name": "a02",
+      "status": "PASS",
+      "verification": "PASS:a02",
+      "reports": [
+        {
+          "name": "a02",
+          "characters": 8027,
+          "sha256": "9eabebe5ef59ef158a28b00a2d9f9cc1717b7115aace08d5a1ce4480fab48b9b",
+          "protocol": "TSJ-A02-2",
+          "status": "PASS",
+          "originalOwnerRestored": true,
+          "candidateCleanup": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "a04",
+      "status": "PASS",
+      "verification": "PASS:a04",
+      "reports": [
+        {
+          "name": "a04",
+          "characters": 1114,
+          "sha256": "6e8d96a95fba2760915be7f6a691cb38b7b791a1366b1db5961d510105d79085",
+          "protocol": "TSJ-A04-CONSTRUCTION-1",
+          "status": "PASS",
+          "contractAssertions": 336,
+          "runtimeAssertions": 404,
+          "originalOwnerRestored": true,
+          "candidateCleanup": "PASS",
+          "caseCount": 6
+        }
+      ]
+    },
+    {
+      "name": "a04-forcedfailure",
+      "status": "PASS",
+      "verification": "FAIL:a04:a04-explicit-failure-canary",
+      "reports": [
+        {
+          "name": "a04",
+          "characters": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "name": "a04-debugoff",
+      "status": "PASS",
+      "verification": "",
+      "reports": [
+        {
+          "name": "a04",
+          "characters": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "parity": [
+    {
+      "name": "identity-vectors",
+      "status": "PASS",
+      "characters": 18811,
+      "sha256": "f3debb25a701fe8da74fbfe2bd8a63bd8d0ecf21b2031e56fe56754842616bc4"
+    },
+    {
+      "name": "resistive-manifest-seed1",
+      "status": "PASS",
+      "characters": 21070,
+      "sha256": "b8d30285d367af472581f930ce2c1b8b03b2840667561d178174590714838ca1"
+    },
+    {
+      "name": "controlled-manifest-seed2",
+      "status": "PASS",
+      "characters": 66633,
+      "sha256": "ac786bb672d8014d97a15f4822df43f5fe2b7c7b7830395ad011180a27fa5a72"
+    },
+    {
+      "name": "signed-seed-vectors",
+      "status": "PASS",
+      "characters": 4738,
+      "sha256": "7bbf6739c314c6d9e9229d626ab0d7f7354a75e1e52a40660c67b23a9bcaa705"
+    },
+    {
+      "name": "resolved-value-fault-descriptor",
+      "status": "PASS",
+      "caseCount": 8
+    }
+  ],
+  "cliWrapper": "BLOCKED: unchanged ownership deadline; separate from product evidence",
+  "validatedReaderScriptSha256": "698ee53a80af274e1e941199a3f11e226d431b2a88892c69e98e020fd10b0d25"
+}

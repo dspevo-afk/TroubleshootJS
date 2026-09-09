@@ -1,6 +1,5 @@
 package com.lushprojects.circuitjs1.client;
 
-import java.util.Arrays;
 import java.util.Vector;
 
 /**
@@ -229,12 +228,12 @@ final class ComposedResistiveDeviceBehavior implements GeneratedChallengeBehavio
         return post.getElement().getPostVoltage(post.getPostIndex());
     }
 
-    private static boolean outputIsLow(GeneratedBoardInstance instance) {
+    private boolean outputIsLow(GeneratedBoardInstance instance) {
         try {
             CircuitMeasurementEndpoint output = instance.getSimulationBindings().getEndpoint(
-                BoundedGeneratedBoardAssembler.qualifiedPad(instance, "load", 1));
+                plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "R1.1"));
             CircuitMeasurementEndpoint returned = instance.getSimulationBindings().getEndpoint(
-                BoundedGeneratedBoardAssembler.qualifiedPad(instance, "load", 2));
+                plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "R1.2"));
             if (!(output instanceof CircuitPostMeasurementEndpoint) ||
                     !(returned instanceof CircuitPostMeasurementEndpoint)) return false;
             CircuitPostMeasurementEndpoint a = (CircuitPostMeasurementEndpoint) output;
@@ -248,9 +247,9 @@ final class ComposedResistiveDeviceBehavior implements GeneratedChallengeBehavio
         }
     }
 
-    private static boolean loadCurrentIsLow(GeneratedBoardInstance instance) {
+    private boolean loadCurrentIsLow(GeneratedBoardInstance instance) {
         try {
-            String id = BoundedGeneratedBoardAssembler.qualifiedComponent(instance, "load");
+            String id = plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "R1");
             CircuitElm element = instance.getComponentBindings().getSingleElement(id);
             return element instanceof ResistorElm && finite(element.getCurrent()) &&
                 Math.abs(element.getCurrent()) < 0.0001;
@@ -286,14 +285,12 @@ final class ComposedResistiveDeviceBehavior implements GeneratedChallengeBehavio
         return !Double.isNaN(value) && !Double.isInfinite(value);
     }
 
-    private static final class LocalObservation implements ComposedBlockContribution.Observation {
+    private final class LocalObservation implements ComposedBlockContribution.Observation {
         private final GeneratedBoardInstance instance;
-        private final ComposedResistiveDeviceBehavior behavior;
         private final String block;
 
         LocalObservation(GeneratedBoardInstance instance, String block) {
             this.instance = instance;
-            this.behavior = null;
             this.block = block;
         }
 
@@ -301,7 +298,7 @@ final class ComposedResistiveDeviceBehavior implements GeneratedChallengeBehavio
             if (!"R1_1".equals(endpointId) && !"R1_2".equals(endpointId))
                 throw new IllegalArgumentException("Unknown composed local endpoint: " + endpointId);
             int terminal = "R1_1".equals(endpointId) ? 1 : 2;
-            String pad = BoundedGeneratedBoardAssembler.qualifiedPad(instance, block, terminal);
+            String pad = plan.idFor(block, FunctionalBlockDescriptor.EntityKind.PAD, "R1." + terminal);
             CircuitMeasurementEndpoint endpoint = instance.getSimulationBindings().getEndpoint(pad);
             if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
                 throw new IllegalStateException("Composed local endpoint has no CircuitJS post: " + pad);
@@ -312,7 +309,7 @@ final class ComposedResistiveDeviceBehavior implements GeneratedChallengeBehavio
         public double current(String componentId) {
             if (!"R1".equals(componentId))
                 throw new IllegalArgumentException("Unknown composed local component: " + componentId);
-            String qualified = BoundedGeneratedBoardAssembler.qualifiedComponent(instance, block);
+            String qualified = plan.idFor(block, FunctionalBlockDescriptor.EntityKind.COMPONENT, "R1");
             CircuitElm element = instance.getComponentBindings().getSingleElement(qualified);
             if (!(element instanceof ResistorElm))
                 throw new IllegalStateException("Composed local component is not a resistor");
@@ -322,7 +319,7 @@ final class ComposedResistiveDeviceBehavior implements GeneratedChallengeBehavio
         public double resistance(String componentId) {
             if (!"R1".equals(componentId))
                 throw new IllegalArgumentException("Unknown composed local component: " + componentId);
-            String qualified = BoundedGeneratedBoardAssembler.qualifiedComponent(instance, block);
+            String qualified = plan.idFor(block, FunctionalBlockDescriptor.EntityKind.COMPONENT, "R1");
             CircuitElm element = instance.getComponentBindings().getSingleElement(qualified);
             if (!(element instanceof ResistorElm))
                 throw new IllegalStateException("Composed local component is not a resistor");

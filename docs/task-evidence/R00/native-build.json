@@ -1,0 +1,53 @@
+{
+  "protocol": "R00-NATIVE-BUILD-1",
+  "date": "2026-09-09",
+  "baseCommit": "cc3532e8d138424ce986aa8f9b76688ec315f0a0",
+  "sourceSha256": "e36de0c9eb252cf11ebc460e191773f31b59e1cae46f688bc8d24a0646d0b8d3",
+  "scriptSha256": "afe44516b126e28115d0254245cd0c7a13abe99fb7500181ca23547e3d7733eb",
+  "native": {
+    "status": "PASS",
+    "exitCode": 0,
+    "command": "scripts/verify-current-contracts.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -PythonExe <CPython-3.12.8> -ReceiptOutputPath <owned-temp>/native-receipt.txt",
+    "results": [
+      "PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus",
+      "PASS: Task44 9 groups, 247 assertions; no simulator dependency",
+      "PASS: Task45 202 assertions",
+      "PASS: current resistive assembly contracts 241 assertions",
+      "PASS: current controlled-indicator contracts 176 assertions",
+      "PASS: current switched-low-side compatibility 12 assertions",
+      "PASS: current value synthesis 113 assertions",
+      "PASS: A03IdentityContractTest assertions=21",
+      "PASS: A02CandidateContractTest",
+      "PASS: A02GeometryContractTest 32 assertions",
+      "PASS: A02ReplayContractTest assertions=148",
+      "PASS: ElectricalUnitPackageMapContractTest assertions=37",
+      "PASS: A04ConstructionContractTest assertions=272",
+      "PASS: A04PhysicalDeclarationContractTest assertions=532",
+      "PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact",
+      "PASS: current value synthesis oracle 8 seeds; bounded4/schema2 catalog equations exact",
+      "PASS: A04 report contracts assertions=109",
+      "PASS: current contracts; 14 Java suites, independent seed/value oracles and report protocol.",
+      "CLEANUP: current JVM contract classes and task-owned scratch removed."
+    ],
+    "cleanup": "PASS",
+    "limitation": "Pure Java contracts use the existing fail-closed Task35 JVM stub; actual GWT production code and compiled solver gates are separate."
+  },
+  "build": {
+    "status": "PASS",
+    "exitCode": 0,
+    "command": "scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF -Target Compile",
+    "host": "PowerShell 7 / Windows; JDK 8u502; GWT 2.7.0",
+    "permutations": 5,
+    "compileSeconds": 61.327,
+    "linkSeconds": 1.353,
+    "cleanup": "PASS"
+  },
+  "readerDelta": {
+    "status": "PASS",
+    "command": "tests/contracts/a04-report-contract.ps1",
+    "assertions": 114,
+    "exitCode": 0,
+    "scriptSha256": "698ee53a80af274e1e941199a3f11e226d431b2a88892c69e98e020fd10b0d25",
+    "reusedEvidence": "Java source and compiled web hashes unchanged; only A02 protocol predicate and focused tests changed. Full native Java/build/browser results remain from the recorded execution."
+  }
+}

@@ -107,6 +107,10 @@ final class ElectricalConstructionContext {
     private int frozenJoinCount;
     private Throwable abortFailure;
     private boolean cleanupSucceeded = true;
+    /* One canonical receipt is issued per construction attempt.  Keeping the
+     * identity on the context lets provenance checks reject package-local
+     * copies that reuse this attempt's spec/board with another receipt body. */
+    private ConstructionReceipt issuedReceipt;
 
     private ElectricalConstructionContext(ElectricalRealizationSpec spec,
             TroubleshootBoard board, FailureProbe probe) {
@@ -195,11 +199,18 @@ final class ElectricalConstructionContext {
     ConstructionReceipt getReceipt() {
         if (!finished && !aborted)
             throw new IllegalStateException("Construction is not finished");
-        return new ConstructionReceipt(spec, elements, handles, secondaryPaths,
-                contributionReceipts, componentBindings, powerBindings,
-                connectionBindings, deviceReceipt, frozenAllocatedCount,
-                frozenBindingCount, frozenJoinCount, bridgeCounts, aborted, abortFailure,
-                this);
+        if (issuedReceipt == null) {
+            issuedReceipt = new ConstructionReceipt(spec, elements, handles, secondaryPaths,
+                    contributionReceipts, componentBindings, powerBindings,
+                    connectionBindings, deviceReceipt, frozenAllocatedCount,
+                    frozenBindingCount, frozenJoinCount, bridgeCounts, aborted, abortFailure,
+                    this);
+        }
+        return issuedReceipt;
+    }
+
+    boolean isIssuedReceipt(ConstructionReceipt candidate) {
+        return candidate != null && issuedReceipt == candidate;
     }
 
     boolean abort(Throwable failure) {
@@ -257,7 +268,7 @@ final class ElectricalConstructionContext {
     }
 
     private Throwable clearPrivateBindings(Throwable failure) {
-        try { board.getSimulationBindings().clearForAbortedConstruction(board); }
+        try { board.getSimulationBindings().clearForAbortedConstruction(board, this); }
         catch (Throwable problem) { failure = retain(failure, problem); }
         try { componentBindings.clearForAbortedConstruction(board); }
         catch (Throwable problem) { failure = retain(failure, problem); }
@@ -270,6 +281,8 @@ final class ElectricalConstructionContext {
 
     boolean isFinished() { return finished; }
     boolean isAborted() { return aborted; }
+    TroubleshootBoard getBoard() { return board; }
+    ElectricalRealizationSpec getSpec() { return spec; }
     int getAllocatedElementCount() { return frozenOr(elements.size(), frozenAllocatedCount); }
     int getBindingCount() { return frozenBindingCount; }
     int getJoinCount() { return frozenJoinCount; }
@@ -962,7 +975,7 @@ final class ElectricalConstructionContext {
         String padId = spec.getPadId(ownerKey, padLocalId);
         if (!spec.getPadBindings().containsKey(padId))
             throw new IllegalArgumentException("Pad has no exact electrical binding declaration: " + padId);
-        board.getSimulationBindings().bindPad(padId, endpoint.asEndpoint());
+        board.getSimulationBindings().bindPad(this, padId, endpoint.asEndpoint());
         if (!boundPadIds.add(padId))
             throw new IllegalStateException("Duplicate board pad binding: " + padId);
         after(Boundary.BIND);
@@ -1771,6 +1784,16 @@ final class ConstructionReceipt {
         this.context = context;
     }
     ElectricalRealizationSpec getSpec() { return spec; }
+    boolean belongsToFinishedContext(ElectricalRealizationSpec expectedSpec,
+            TroubleshootBoard expectedBoard) {
+        return context != null && context.isIssuedReceipt(this)
+                && context.isFinished() && !context.isAborted()
+                && context.getSpec() == expectedSpec && context.getBoard() == expectedBoard;
+    }
+    TroubleshootBoard getBoard() {
+        if (context != null) return context.getBoard();
+        return componentBindings.getBoardForRuntimeValidation();
+    }
     Vector<CircuitElm> getElements() { ensureAccessible(); return new Vector<CircuitElm>(elements); }
     int getAllocatedElementCount() { return allocatedCount; }
     int getBindingCount() { return bindingCount; }

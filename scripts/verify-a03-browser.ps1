@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02', 'All')]
-    [string]$Gate = 'A03',
+    [ValidateSet('Current', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
+    [string]$Gate = 'Current',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
     [AllowEmptyString()]
@@ -386,18 +386,21 @@ function Test-A04Report([object]$Value) {
             $parsed.candidateCleanup -isnot [string] -or
             $parsed.candidateCleanup -cne 'PASS' -or
             -not $parsed.PSObject.Properties['cases'] -or
-            $parsed.cases -isnot [array] -or $parsed.cases.Count -ne 3) { return $false }
-    $versions = @()
+            $parsed.cases -isnot [array] -or $parsed.cases.Count -ne 6) { return $false }
+    $caseKeys = @()
     foreach ($case in $parsed.cases) {
-        if ($null -eq $case -or -not $case.PSObject.Properties['generatorVersion'] -or
-                -not (Test-VerifierStrictIntegralValue $case.generatorVersion 1L 3L)) {
+        if ($null -eq $case -or -not $case.PSObject.Properties['route'] -or
+                $case.route -isnot [string] -or
+                @('resistive', 'controlled') -notcontains $case.route -or
+                -not $case.PSObject.Properties['seed'] -or $case.seed -isnot [string] -or
+                $case.seed -notin @('1', '2', '3') -or
+                -not $case.PSObject.Properties['generatorVersion'] -or
+                -not (Test-VerifierStrictIntegralValue $case.generatorVersion 4L 4L)) {
             return $false
         }
-        if (-not $case.PSObject.Properties['seed'] -or $case.seed -isnot [string] -or
-                $case.seed -cne [string]$case.generatorVersion) { return $false }
-        foreach ($name in @('elementCount', 'packageCount', 'unitCount', 'manifestBytes')) {
+        foreach ($name in @('replayVerified', 'ownerRestored')) {
             if (-not $case.PSObject.Properties[$name] -or
-                    -not (Test-VerifierStrictIntegralValue $case.$name 1L ([long]::MaxValue))) {
+                    $case.$name -isnot [bool] -or -not $case.$name) {
                 return $false
             }
         }
@@ -407,13 +410,10 @@ function Test-A04Report([object]$Value) {
                 return $false
             }
         }
-        $packages = if ($case.generatorVersion -eq 1) { 3 } else { 7 }
-        $elements = if ($case.generatorVersion -eq 1) { 16 } else { 30 }
-        if ($case.packageCount -ne $packages -or $case.unitCount -ne $packages -or
-                $case.elementCount -ne $elements) { return $false }
-        $versions += [int]$case.generatorVersion
+        $caseKeys += ($case.route + ':' + $case.seed)
     }
-    return (($versions | Sort-Object) -join ',') -ceq '1,2,3'
+    return (($caseKeys | Sort-Object -Unique) -join ',') -ceq
+        'controlled:1,controlled:2,controlled:3,resistive:1,resistive:2,resistive:3'
 }
 
 function Test-RouteReady($Kind, $Reports) {
@@ -477,7 +477,7 @@ function Test-RouteReady($Kind, $Reports) {
         }
         'a02' {
             return $verification -ceq 'PASS:a02' -and
-                (Test-JsonReport $Reports.a02 'TSJ-A02-1')
+                (Test-JsonReport $Reports.a02 'TSJ-A02-2')
         }
         default { return $false }
     }
@@ -517,7 +517,31 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
             query = 'tsjChallenge=led&seed=3&tsjVerifyA02=true&tsjDebug=true&running=true';
             reportNames = @('a02') }
     )
-    # A04 is explicitly selected; historical All retains its original nine routes.
+    # Current is the one maintained browser corpus.  It selects the affected
+    # identity/seed, assembly, geometry and physical routes and adds the A04
+    # forced-failure/debug-off canaries.
+    if ($SelectedGate -ceq 'Current') {
+        $currentNames = @('a03', 'task46', 'task47', 'task48', 'task49', 'a02')
+        $current = New-Object Collections.Generic.List[object]
+        foreach ($currentName in $currentNames) {
+            $matches = @($all | Where-Object { $_.name -ceq $currentName })
+            if ($matches.Count -ne 1) {
+                throw ("Current browser corpus route '$currentName' was not uniquely defined.")
+            }
+            [void]$current.Add($matches[0])
+        }
+        [void]$current.Add([pscustomobject]@{ name = 'a04'; kind = 'a04';
+            query = 'tsjChallenge=led&seed=3&tsjVerifyA04=true&tsjDebug=true&running=true';
+            reportNames = @('a04') })
+        [void]$current.Add([pscustomobject]@{ name = 'a04-forcedfailure'; kind = 'a04-forced';
+            query = 'tsjChallenge=led&seed=3&tsjVerifyA04=true&tsjA04Fail=true&tsjDebug=true&running=true';
+            reportNames = @('a04') })
+        [void]$current.Add([pscustomobject]@{ name = 'a04-debugoff'; kind = 'a04-debugoff';
+            query = 'tsjChallenge=led&seed=3&tsjVerifyA04=true&tsjA04Fail=true&running=true';
+            reportNames = @('a04') })
+        return $current.ToArray()
+    }
+    # A04 is explicitly selected for its positive and negative physical paths.
     if ($SelectedGate -ceq 'A04') {
         return @(
             [pscustomobject]@{ name = 'a04'; kind = 'a04';
@@ -531,7 +555,6 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
                 reportNames = @('a04') }
         )
     }
-    if ($SelectedGate -ceq 'All') { return $all }
     if ($SelectedGate -ceq 'A03') { return $all[0..2] }
     $name = $SelectedGate.ToLowerInvariant()
     return @($all | Where-Object { $_.name -ceq $name })
@@ -580,9 +603,9 @@ try {
     $definitions = @(Get-RouteDefinitions $Gate ([bool]$Smoke))
     $expectedRouteCount = if ($Smoke) { 1 } else {
         switch ($Gate) {
+            'Current' { 9 }
             'A03' { 3 }
             'A04' { 3 }
-            'All' { 9 }
             default { 1 }
         }
     }

@@ -8,10 +8,8 @@ class DiodeProtectedIndicatorGenerator {
     static final String DIRECT_SERIES_VARIANT = "DIRECT_SERIES_DIODE";
     private final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR;
 
-    DiodeProtectedIndicatorGenerator() { this(SeededPcbLayoutGenerator.CURRENT_VERSION); }
-
-    DiodeProtectedIndicatorGenerator(int layoutAlgorithmVersion) {
-        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator(layoutAlgorithmVersion);
+    DiodeProtectedIndicatorGenerator() {
+        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator();
     }
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
     private static final double[] RESISTOR_VALUES = { 330, 680, 1000 };
@@ -192,10 +190,14 @@ class DiodeProtectedIndicatorGenerator {
         board.addNet(new BoardNet("DIODE_OUT"));
         board.addNet(new BoardNet("LED_NODE"));
         board.addNet(new BoardNet("GND"));
-        board.addComponent(new BoardComponent("J1", "CONNECTOR"));
-        board.addComponent(new BoardComponent("D1", "DIODE"));
-        board.addComponent(new BoardComponent("R1", "RESISTOR"));
-        board.addComponent(new BoardComponent("LED1", "LED"));
+        board.addComponent(new BoardComponent("J1", "CONNECTOR",
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
+        board.addComponent(new BoardComponent("D1", "DIODE",
+            PhysicalPackages.AXIAL_DIODE));
+        board.addComponent(new BoardComponent("R1", "RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
+        board.addComponent(new BoardComponent("LED1", "LED",
+            PhysicalPackages.THROUGH_HOLE_LED));
         board.addPad(new BoardPad("J1.1", "J1", "1", "VIN"));
         board.addPad(new BoardPad("J1.2", "J1", "2", "GND"));
         board.addPad(new BoardPad("D1.A", "D1", "A", "VIN"));

@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Independent Task 49 catalog/value and named-stream oracle."""
+"""Independent current catalog/value and named-stream oracle.
+
+The Java contract emits one bounded4/schema2 observation row per signed seed.
+This module recomputes the catalog equations, stream choice, fault choice and
+canonical descriptor without importing the production resolver.
+"""
 
 from __future__ import print_function
 
@@ -56,9 +61,9 @@ def expected_descriptor(seed):
                    "domains=~;input-transitions=~;instruments=~;isolation-actions=~;"
                    "parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;"
                    "temporal-evidence=~;temporal-samples=~")
-    return ("tsj-challenge/1|constraints=" + constraints +
+    return ("tsj-challenge/2|constraints=" + constraints +
             "|device-intent=controlled-indicator@1|difficulty-profile=controlled-indicator@1"
-            "|generator=bounded-assembler@3|geometry=3|root-seed=" + str(seed))
+            "|generator=bounded-assembler@4|geometry=3|root-seed=" + str(seed))
 
 
 def expected_row(seed, reference):
@@ -123,13 +128,13 @@ def verify(path):
             raise AssertionError("seed %d selected %s, expected the independent fault decision" %
                                  (seed, observed["fault"]))
         if observed["descriptor"] != expected_descriptor(seed):
-            raise AssertionError("seed %d descriptor is not the complete canonical Task 49 descriptor" % seed)
-    print("PASS: Task49 independent value synthesis oracle %d seeds; catalog equations exact" % len(SEEDS))
+            raise AssertionError("seed %d descriptor is not the complete canonical bounded4/schema2 descriptor" % seed)
+    print("PASS: current value synthesis oracle %d seeds; bounded4/schema2 catalog equations exact" % len(SEEDS))
 
 
 def main(argv):
     if len(argv) != 2:
-        raise AssertionError("usage: task49_value_synthesis_reference.py RECEIPT")
+        raise AssertionError("usage: task49_value_synthesis_reference.py CURRENT_VALUE_RECEIPT")
     verify(argv[1])
     return 0
 
@@ -138,5 +143,5 @@ if __name__ == "__main__":
     try:
         sys.exit(main(sys.argv))
     except (AssertionError, OSError, ValueError, KeyError, TypeError) as error:
-        print("FAIL: Task49 independent value synthesis oracle: %s" % error)
+        print("FAIL: current value synthesis oracle: %s" % error)
         sys.exit(1)

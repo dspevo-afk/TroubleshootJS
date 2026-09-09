@@ -50,16 +50,15 @@ public final class A03IdentityContractVectors {
     private static void namespaceVectors(NamespaceFixture fixture,
             StringBuilder receipt) {
         BlockNamespace namespace = fixture.namespace;
-        check(namespace.instanceIdFor("u1").equals(
-                "tsj-role-v1/a03-device@7/u1/driver@1"),
-                "instance role identity changed");
-        check(namespace.durableIdFor("u1", EntityKind.ROLE, "control").equals(
-                "tsj-role-v1/a03-device@7/u1/driver@1/control"),
+        check(namespace.idFor("u1", EntityKind.ROLE, "control").equals(
+                "tsj-realization-v1/a03-device@7/u1/nmos-provider@1/"
+                + "nmos-low-side-driver@1/role/control"),
                 "role identity changed");
-        check(namespace.durableIdFor("u1", EntityKind.PORT, "control").equals(
-                "tsj-port-v1/a03-device@7/u1/driver@1/control"),
+        check(namespace.idFor("u1", EntityKind.PORT, "control").equals(
+                "tsj-realization-v1/a03-device@7/u1/nmos-provider@1/"
+                + "nmos-low-side-driver@1/port/control"),
                 "port identity changed");
-        check(namespace.durableTerminalIdFor("u1", "Q1", "G").equals(
+        check(namespace.terminalIdFor("u1", "Q1", "G").equals(
                 "tsj-realization-v1/a03-device@7/u1/nmos-provider@1/"
                 + "nmos-low-side-driver@1/terminal/Q1.G"),
                 "terminal identity changed");
@@ -70,53 +69,46 @@ public final class A03IdentityContractVectors {
 
         // Repeated instances remain distinct even when they have the same
         // descriptor type and the same provider/variant.
-        check(!namespace.instanceIdFor("u1").equals(namespace.instanceIdFor("u2")),
+        check(!namespace.idFor("u1", EntityKind.ROLE, "control").equals(namespace.idFor("u2", EntityKind.ROLE, "control")),
                 "repeated block instances collapsed");
-        check(!namespace.durableTerminalIdFor("u1", "Q1", "G").equals(
-                namespace.durableTerminalIdFor("u2", "Q1", "G")),
+        check(!namespace.terminalIdFor("u1", "Q1", "G").equals(
+                namespace.terminalIdFor("u2", "Q1", "G")),
                 "repeated terminal identities collapsed");
-        check(namespace.durableIdFor("u1", EntityKind.ROLE, "control").equals(
-                namespace.durableIdFor("u1", EntityKind.ROLE, "control")),
+        check(namespace.idFor("u1", EntityKind.ROLE, "control").equals(
+                namespace.idFor("u1", EntityKind.ROLE, "control")),
                 "role identity was not deterministic");
 
         NamespaceFixture reordered = namespaceFixture(true, true, false);
-        check(namespace.instanceIdFor("u1").equals(reordered.namespace.instanceIdFor("u1"))
-                && namespace.durableTerminalIdFor("u2", "Q1", "D").equals(
-                        reordered.namespace.durableTerminalIdFor("u2", "Q1", "D")),
+        check(namespace.idFor("u1", EntityKind.ROLE, "control").equals(reordered.namespace.idFor("u1", EntityKind.ROLE, "control"))
+                && namespace.terminalIdFor("u2", "Q1", "D").equals(
+                        reordered.namespace.terminalIdFor("u2", "Q1", "D")),
                 "block or realization reorder renamed an existing identity");
 
         NamespaceFixture withoutUnrelated = namespaceFixture(false, false, false);
-        check(namespace.instanceIdFor("u1").equals(
-                withoutUnrelated.namespace.instanceIdFor("u1"))
-                && namespace.durableIdFor("u2", EntityKind.COMPONENT, "Q1").equals(
-                        withoutUnrelated.namespace.durableIdFor(
+        check(namespace.idFor("u1", EntityKind.ROLE, "control").equals(
+                withoutUnrelated.namespace.idFor("u1", EntityKind.ROLE, "control"))
+                && namespace.idFor("u2", EntityKind.COMPONENT, "Q1").equals(
+                        withoutUnrelated.namespace.idFor(
                                 "u2", EntityKind.COMPONENT, "Q1")),
                 "unrelated block insertion renamed an existing identity");
 
         final NamespaceFixture alternateProvider = namespaceFixture(true, false, true);
-        check(namespace.instanceIdFor("u1").equals(
-                alternateProvider.namespace.instanceIdFor("u1"))
-                && namespace.durableIdFor("u1", EntityKind.PORT, "control").equals(
-                        alternateProvider.namespace.durableIdFor(
+        check(!namespace.idFor("u1", EntityKind.ROLE, "control").equals(
+                alternateProvider.namespace.idFor("u1", EntityKind.ROLE, "control"))
+                && !namespace.idFor("u1", EntityKind.PORT, "control").equals(
+                        alternateProvider.namespace.idFor(
                                 "u1", EntityKind.PORT, "control")),
-                "external role/port identity was tied to provider variant");
-        check(namespace.durableIdFor("u1", EntityKind.ROLE, "control").equals(
-                alternateProvider.namespace.durableIdFor(
-                        "u1", EntityKind.ROLE, "control"))
-                && namespace.durableIdFor("u1", EntityKind.PORT, "control").equals(
-                        alternateProvider.namespace.durableIdFor(
-                                "u1", EntityKind.PORT, "control")),
-                "alternate topology changed an external role or port identity");
-        check(!namespace.durableTerminalIdFor("u1", "Q1", "G").equals(
-                alternateProvider.namespace.durableTerminalIdFor(
+                "provider/variant did not qualify role and port identity");
+        check(!namespace.terminalIdFor("u1", "Q1", "G").equals(
+                alternateProvider.namespace.terminalIdFor(
                         "u1", "Q2", "GATE"))
-                && !namespace.durableIdFor("u1", EntityKind.COMPONENT, "Q1").equals(
-                        alternateProvider.namespace.durableIdFor(
+                && !namespace.idFor("u1", EntityKind.COMPONENT, "Q1").equals(
+                        alternateProvider.namespace.idFor(
                                 "u1", EntityKind.COMPONENT, "Q2")),
                 "unlike variant internals were falsely assigned one identity");
         expectBlockFailure(new Action() {
             @Override public void run() {
-                alternateProvider.namespace.durableTerminalIdFor(
+                alternateProvider.namespace.terminalIdFor(
                         "u1", "Q1", "G");
             }
         }, BlockContractException.Code.DANGLING_REFERENCE, "terminalName",
@@ -158,13 +150,13 @@ public final class A03IdentityContractVectors {
             }
         }, "mutable realization view");
 
-        receipt.append("namespace.instance=").append(namespace.instanceIdFor("u1"))
+        receipt.append("namespace.instance=").append(namespace.idFor("u1", EntityKind.ROLE, "control"))
                 .append('\n');
         receipt.append("namespace.component=")
-                .append(namespace.durableIdFor("u1", EntityKind.COMPONENT, "Q1"))
+                .append(namespace.idFor("u1", EntityKind.COMPONENT, "Q1"))
                 .append('\n');
         receipt.append("namespace.terminal=")
-                .append(namespace.durableTerminalIdFor("u1", "Q1", "G"))
+                .append(namespace.terminalIdFor("u1", "Q1", "G"))
                 .append('\n');
         receipt.append("case=namespace PASS\n");
     }
@@ -178,19 +170,16 @@ public final class A03IdentityContractVectors {
         String u1Load = fixture.alias("u1", "load");
         String u2Load = fixture.alias("u2", "load");
         String u3Supply = fixture.alias("u3", "supply");
-        Map<String, String> durable = buses.getDurableNets();
+        Map<String, String> durable = buses.getNetBindings();
         check(busId.equals(durable.get(u2Load))
                 && busId.equals(durable.get(u3Supply)),
                 "declared electrical aliases did not share the named bus");
         check(durable.get(fixture.alias("u1", "return")).equals(
-                fixture.namespace.getDurableLocalNetIds().get(
-                        fixture.alias("u1", "return"))),
+                fixture.alias("u1", "return")),
                 "unbound local net was not retained as a local identity");
         List<String> reverse = buses.getBusAliases().get(busId);
-        check(reverse != null && reverse.contains(
-                fixture.namespace.getDurableLocalNetIds().get(u2Load))
-                && reverse.contains(
-                        fixture.namespace.getDurableLocalNetIds().get(u3Supply)),
+        check(reverse != null && reverse.contains(u2Load)
+                && reverse.contains(u3Supply),
                 "bus reverse aliases lost durable local aliases");
 
         // The newly joined u1/load alias is lexically earlier than u2/load.
@@ -203,10 +192,10 @@ public final class A03IdentityContractVectors {
                 && !earlierRepresentative.equals(originalRepresentative)
                 && earlierRepresentative.equals(earlier.alias("u1", "load")),
                 "lexically earlier electrical representative renamed the durable bus");
-        check(earlier.buses.getDurableNets().get(
+        check(earlier.buses.getNetBindings().get(
                 earlier.alias("u1", "load")).equals(earlierBus),
                 "earlier alias did not resolve to the named bus");
-        check(earlier.buses.getDurableNets().get(
+        check(earlier.buses.getNetBindings().get(
                 earlier.alias("u2", "load")).equals(earlierBus),
                 "existing alias changed bus membership");
 
@@ -291,21 +280,21 @@ public final class A03IdentityContractVectors {
 
     private static void manifestVectors(NamespaceFixture fixture,
             StringBuilder receipt) {
-        RealizationManifest manifest = manifest(fixture, 0L, false, false,
-                "import-a", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        RealizationManifest manifest = manifest(fixture, 0L);
         String canonical = manifest.toCanonical();
         RealizationManifest parsed = RealizationManifest.parse(canonical);
         check(parsed.toCanonical().equals(canonical),
                 "manifest canonical round-trip changed bytes");
         check(parsed.identityCanonical().equals(manifest.identityCanonical()),
                 "manifest identity round-trip changed bytes");
-        check(canonical.startsWith("tsj-realization/1\ndescriptor="),
+        check(canonical.startsWith("tsj-realization/"
+                + RealizationManifest.VERSION + "\ndescriptor="),
                 "manifest header or descriptor framing changed");
         check(canonical.indexOf("\nversion=") > 0
                 && canonical.indexOf("\nchoice=") > 0
-                && canonical.indexOf("\nnet=") > 0
-                && canonical.indexOf("\ntarget=") > 0
-                && canonical.indexOf("\nfuture=1:~") > 0,
+                 && canonical.indexOf("\nnet=") > 0
+                 && canonical.indexOf("\ntarget=") > 0
+                 && canonical.indexOf("\nfuture=") < 0,
                 "manifest omitted a required framed field");
 
         check(RealizationManifest.Choice.number("nominal", 330.0)
@@ -318,19 +307,11 @@ public final class A03IdentityContractVectors {
                 .toCanonical().equals("parts|ids|a,z"),
                 "ID choice ordering is not canonical");
         check(RealizationManifest.Choice.version("layout",
-                new ChallengeDescriptor.VersionedId("pcb-layout", 3))
-                .toCanonical().equals("layout|version|pcb-layout@3"),
+                new ChallengeDescriptor.VersionedId("pcb-layout",
+                        SeededPcbLayoutGenerator.CURRENT_VERSION))
+                .toCanonical().equals("layout|version|pcb-layout@"
+                        + SeededPcbLayoutGenerator.CURRENT_VERSION),
                 "version choice is not canonical");
-
-        RealizationManifest changedOrigin = manifest(fixture, 0L, false, false,
-                "import-b", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-        check(manifest.identityCanonical().equals(changedOrigin.identityCanonical())
-                && !manifest.toCanonical().equals(changedOrigin.toCanonical()),
-                "informational import provenance changed realization identity");
-        RealizationManifest interpreted = manifest(fixture, 0L, true, false,
-                "import-b", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-        check(!manifest.identityCanonical().equals(interpreted.identityCanonical()),
-                "identity-bearing interpretation was discarded");
 
         final String missingVersion = removeFirstRecord(canonical, "version");
         String missingVersionFailure = expectChallengeFailure(new Action() {
@@ -338,13 +319,14 @@ public final class A03IdentityContractVectors {
         }, ChallengeContractException.Code.MISSING_FIELD, "versions",
                 "missing required version pin");
         final String unknownVersion = canonical.replace(
-                "layout|pcb-layout@3", "layout|pcb-layout@9");
+                "layout|pcb-layout@" + SeededPcbLayoutGenerator.CURRENT_VERSION,
+                "layout|pcb-layout@9");
         String unknownVersionFailure = expectChallengeFailure(new Action() {
             @Override public void run() { RealizationManifest.parse(unknownVersion); }
         }, ChallengeContractException.Code.UNSUPPORTED_VERSION, "version.owner",
                 "unknown version pin");
         final String duplicateTarget = appendRecord(canonical, "target",
-                fixture.namespace.instanceIdFor("u1"));
+                fixture.namespace.idFor("u1", EntityKind.ROLE, "control"));
         expectFailure(new Action() {
             @Override public void run() { RealizationManifest.parse(duplicateTarget); }
         }, "duplicate target");
@@ -353,29 +335,26 @@ public final class A03IdentityContractVectors {
                 RealizationManifest.Choice.parse("n|number|ffffffffffffffff");
             }
         }, "nonfinite number choice");
+        final String retiredFuture = appendRecord(canonical, "future", "~");
         expectChallengeFailure(new Action() {
-            @Override public void run() {
-                new RealizationManifest.FutureStateContract(2,
-                        new ChallengeDescriptor.VersionedId("model", 1),
-                        new ChallengeDescriptor.VersionedId("state", 1), null, null);
-            }
-        }, ChallengeContractException.Code.UNSUPPORTED_VERSION,
-                "future.schemaVersion", "unsupported future schema");
+            @Override public void run() { RealizationManifest.parse(retiredFuture); }
+        }, ChallengeContractException.Code.UNKNOWN_FIELD, "future",
+                "retired future state field");
 
         // Constructor collections are copied before publication.
         final List<BlockRealizationIdentity> blocks = new ArrayList<
                 BlockRealizationIdentity>(fixture.realizations);
         final List<RealizationManifest.VersionPin> versions =
-                new ArrayList<RealizationManifest.VersionPin>(pins(false));
+                new ArrayList<RealizationManifest.VersionPin>(pins());
         final List<RealizationManifest.Choice> choices =
                 new ArrayList<RealizationManifest.Choice>(choices(0L));
         final List<RealizationManifest.NetBinding> nets =
                 new ArrayList<RealizationManifest.NetBinding>(netBindings(fixture));
         final List<String> targets = new ArrayList<String>(targets(fixture));
-        final RealizationManifest copied = new RealizationManifest(1,
+        final RealizationManifest copied = new RealizationManifest(
+                RealizationManifest.VERSION,
                 BoundedAssemblyRequest.descriptor(0L), blocks, versions, choices,
-                nets, targets, null,
-                new RealizationManifest.ImportOrigin(1, "copy", null, null));
+                nets, targets);
         blocks.clear();
         versions.clear();
         choices.clear();
@@ -406,8 +385,7 @@ public final class A03IdentityContractVectors {
         long[] seeds = { 0L, 1L, -1L, Long.MAX_VALUE, Long.MIN_VALUE,
                 9007199254740993L, -9007199254740993L };
         for (long seed : seeds) {
-            RealizationManifest manifest = manifest(fixture, seed, false, false,
-                    "seed", null);
+            RealizationManifest manifest = manifest(fixture, seed);
             RealizationManifest parsed = RealizationManifest.parse(
                     manifest.toCanonical());
             check(parsed.getDescriptor().getRootSeed() == seed,
@@ -430,20 +408,21 @@ public final class A03IdentityContractVectors {
                 9007199254740993L };
         for (String family : families) {
             for (long seed : seeds) {
-                ChallengeDescriptor legacy = ChallengeDescriptor.legacy(family, seed);
-                ChallengeDescriptor corrected = ChallengeDescriptor.correctedSeeded(
-                        family, seed);
-                LegacyChallengeReplay.requireSupported(legacy);
-                LegacyChallengeReplay.requireSupported(corrected);
-                check(LegacyChallengeReplay.layoutAlgorithmVersion(legacy) == 3,
-                        "legacy descriptor inherited a current layout version");
-                check(LegacyChallengeReplay.layoutAlgorithmVersion(corrected) == 4,
-                        "corrected descriptor lost its explicit layout version");
-                check(legacy.getRootSeed() == seed && corrected.getRootSeed() == seed,
-                        "legacy/replay seed changed");
+                ChallengeDescriptor descriptor = ChallengeDescriptor.current(family, seed);
+                ChallengeDescriptor parsed = ChallengeDescriptor.parse(
+                        descriptor.toCanonical());
+                check(parsed.getSchemaVersion() == ChallengeDescriptor.SCHEMA_VERSION
+                        && parsed.getRootSeed() == seed,
+                        "current descriptor schema or seed changed");
+                check(parsed.getGenerator().getId().equals("leaf")
+                        && parsed.getGenerator().getVersion() == 1,
+                        "current leaf generator identity changed");
             }
         }
-        receipt.append("legacy-layout=3 corrected-layout=4 geometry=3\n");
+        receipt.append("current-schema=").append(ChallengeDescriptor.SCHEMA_VERSION)
+                .append(" leaf-generator=").append(ChallengeDescriptor.LEAF_GENERATOR_VERSION)
+                .append(" geometry=").append(BoundedAssemblyRequest.GEOMETRY_VERSION)
+                .append('\n');
         receipt.append("case=replay-version PASS\n");
     }
 
@@ -481,12 +460,12 @@ public final class A03IdentityContractVectors {
                         "tuple", new ChallengeDescriptor.VersionedId("role", 1),
                         new ChallengeDescriptor.VersionedId("provider", 1),
                         new ChallengeDescriptor.VersionedId("tuple-block", 1))));
-        String first = namespace.durableTerminalIdFor("tuple", "A", "B.C");
-        String second = namespace.durableTerminalIdFor("tuple", "A.B", "C");
+        String first = namespace.terminalIdFor("tuple", "A", "B.C");
+        String second = namespace.terminalIdFor("tuple", "A.B", "C");
         check(!first.equals(second),
                 "component/terminal dotted tuple identities collided");
-        check(first.equals(namespace.durableTerminalIdFor("tuple", "A", "B.C"))
-                && second.equals(namespace.durableTerminalIdFor("tuple", "A.B", "C")),
+        check(first.equals(namespace.terminalIdFor("tuple", "A", "B.C"))
+                && second.equals(namespace.terminalIdFor("tuple", "A.B", "C")),
                 "component/terminal tuple identity was construction-order dependent");
     }
 
@@ -578,48 +557,42 @@ public final class A03IdentityContractVectors {
         return new FunctionalBlockDescriptor.LocalRef(kind, id);
     }
 
-    private static RealizationManifest manifest(NamespaceFixture fixture, long seed,
-            boolean interpreted, boolean future, String originId, String hash) {
-        RealizationManifest.ImportOrigin origin = originId == null ? null
-                : new RealizationManifest.ImportOrigin(1, originId, hash,
-                        interpreted ? new ChallengeDescriptor.VersionedId(
-                                "interpretation", 1) : null);
-        RealizationManifest.FutureStateContract futureState = future
-                ? new RealizationManifest.FutureStateContract(1,
-                        new ChallengeDescriptor.VersionedId("sequential-model", 1),
-                        new ChallengeDescriptor.VersionedId("state-schema", 1),
-                        new ChallengeDescriptor.VersionedId("program", 1),
-                        new ChallengeDescriptor.VersionedId("provider", 1))
-                : null;
-        return new RealizationManifest(1, BoundedAssemblyRequest.descriptor(seed),
+    private static RealizationManifest manifest(NamespaceFixture fixture,
+            long seed) {
+        return new RealizationManifest(RealizationManifest.VERSION,
+                BoundedAssemblyRequest.descriptor(seed),
                 new ArrayList<BlockRealizationIdentity>(fixture.realizations),
-                pins(false), choices(seed), netBindings(fixture), targets(fixture),
-                futureState, origin);
+                pins(), choices(seed), netBindings(fixture), targets(fixture));
     }
 
-    private static List<RealizationManifest.VersionPin> pins(boolean controlledValues) {
+    private static List<RealizationManifest.VersionPin> pins() {
         ArrayList<RealizationManifest.VersionPin> result =
                 new ArrayList<RealizationManifest.VersionPin>();
         result.add(new RealizationManifest.VersionPin(
                 RealizationManifest.VersionPin.Concern.GEOMETRY,
-                new ChallengeDescriptor.VersionedId("pcb-geometry", 3)));
+                new ChallengeDescriptor.VersionedId("pcb-geometry",
+                        BoundedAssemblyRequest.GEOMETRY_VERSION)));
         result.add(new RealizationManifest.VersionPin(
                 RealizationManifest.VersionPin.Concern.LAYOUT,
-                new ChallengeDescriptor.VersionedId("pcb-layout", 3)));
+                new ChallengeDescriptor.VersionedId("pcb-layout",
+                        SeededPcbLayoutGenerator.CURRENT_VERSION)));
         result.add(new RealizationManifest.VersionPin(
                 RealizationManifest.VersionPin.Concern.ROUTING,
-                new ChallengeDescriptor.VersionedId("bounded-assembler", 1)));
+                new ChallengeDescriptor.VersionedId("bounded-assembler",
+                        BoundedAssemblyRequest.GENERATOR_VERSION)));
         result.add(new RealizationManifest.VersionPin(
                 RealizationManifest.VersionPin.Concern.VALUES,
                 new ChallengeDescriptor.VersionedId(
-                        controlledValues ? "controlled-led-load-e12" : "bounded-assembler",
-                        controlledValues ? 1 : 1)));
+                        "bounded-assembler",
+                        BoundedAssemblyRequest.GENERATOR_VERSION)));
         result.add(new RealizationManifest.VersionPin(
                 RealizationManifest.VersionPin.Concern.MODELS,
-                new ChallengeDescriptor.VersionedId("bounded-assembler", 1)));
+                new ChallengeDescriptor.VersionedId("bounded-assembler",
+                        BoundedAssemblyRequest.GENERATOR_VERSION)));
         result.add(new RealizationManifest.VersionPin(
                 RealizationManifest.VersionPin.Concern.PACKAGES,
-                new ChallengeDescriptor.VersionedId("bounded-assembler", 1)));
+                new ChallengeDescriptor.VersionedId("bounded-assembler",
+                        BoundedAssemblyRequest.GENERATOR_VERSION)));
         result.add(new RealizationManifest.VersionPin(
                 RealizationManifest.VersionPin.Concern.DIAGNOSTIC,
                 new ChallengeDescriptor.VersionedId(
@@ -643,10 +616,8 @@ public final class A03IdentityContractVectors {
 
     private static List<RealizationManifest.NetBinding> netBindings(
             NamespaceFixture fixture) {
-        String loadAlias = fixture.namespace.getDurableLocalNetIds().get(
-                fixture.alias("u2", "load"));
-        String returnAlias = fixture.namespace.getDurableLocalNetIds().get(
-                fixture.alias("u1", "return"));
+        String loadAlias = fixture.alias("u2", "load");
+        String returnAlias = fixture.alias("u1", "return");
         return Arrays.asList(new RealizationManifest.NetBinding(loadAlias,
                         fixture.buses.getBusId("shared-load")),
                 new RealizationManifest.NetBinding(returnAlias, returnAlias));
@@ -654,33 +625,32 @@ public final class A03IdentityContractVectors {
 
     private static List<String> targets(NamespaceFixture fixture) {
         TreeSet<String> result = new TreeSet<String>();
-        result.addAll(fixture.namespace.getDurableLocalNetIds().values());
+        result.addAll(fixture.namespace.getSemanticNetIds());
         result.add(fixture.buses.getBusId("shared-load"));
         for (Map.Entry<String, FunctionalBlockDescriptor> entry
                 : fixture.namespace.getBlocks().entrySet()) {
             String instance = entry.getKey();
             FunctionalBlockDescriptor block = entry.getValue();
-            result.add(fixture.namespace.instanceIdFor(instance));
             for (String component : block.getComponents().keySet()) {
-                result.add(fixture.namespace.durableIdFor(instance,
+                result.add(fixture.namespace.idFor(instance,
                         EntityKind.COMPONENT, component));
                 for (String terminal : block.getComponents().get(component)
                         .getTerminalIds()) {
-                    result.add(fixture.namespace.durableTerminalIdFor(instance,
+                    result.add(fixture.namespace.terminalIdFor(instance,
                             component, terminal));
                 }
             }
             for (String pad : block.getPads().keySet())
-                result.add(fixture.namespace.durableIdFor(instance,
+                result.add(fixture.namespace.idFor(instance,
                         EntityKind.PAD, pad));
             for (String endpoint : block.getEndpoints().keySet())
-                result.add(fixture.namespace.durableIdFor(instance,
+                result.add(fixture.namespace.idFor(instance,
                         EntityKind.ENDPOINT, endpoint));
             for (String role : block.getRoles().keySet())
-                result.add(fixture.namespace.durableIdFor(instance,
+                result.add(fixture.namespace.idFor(instance,
                         EntityKind.ROLE, role));
             for (String port : block.getPorts().keySet())
-                result.add(fixture.namespace.durableIdFor(instance,
+                result.add(fixture.namespace.idFor(instance,
                         EntityKind.PORT, port));
         }
         return new ArrayList<String>(result);
@@ -737,7 +707,7 @@ public final class A03IdentityContractVectors {
         BlockNamespace namespace = new BlockNamespace("a03-device", 7, blocks,
                 realizations);
         TreeMap<String, String> aliases = new TreeMap<String, String>();
-        for (String alias : namespace.getDurableLocalNetIds().keySet())
+        for (String alias : namespace.getSemanticNetIds())
             aliases.put(alias, alias);
         DeviceBusBindings buses = null;
         if (includeExtra) {

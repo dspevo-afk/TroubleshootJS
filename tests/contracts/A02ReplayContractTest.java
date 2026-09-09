@@ -1,61 +1,66 @@
 package com.lushprojects.circuitjs1.client;
 
-/** A02's narrow dispatch boundary; the existing suites qualify assembly recipes. */
+/** Current-only leaf descriptor and replay dispatch contract. */
 public final class A02ReplayContractTest {
     private static int assertions;
 
     public static void main(String[] args) {
-        String[] seeded = { "LED_INDICATOR", "DIODE_PROTECTED_INDICATOR",
-            "PARALLEL_DUAL_INDICATOR" };
-        long[] seeds = { 0, 2, 3, Long.MIN_VALUE, Long.MAX_VALUE };
-        for (String family : seeded) {
+        CirSim sim = new CirSim();
+        sim.gridSize = 16;
+        sim.gridMask = ~(sim.gridSize - 1);
+        sim.gridRound = sim.gridSize / 2 - 1;
+        CircuitElm.sim = sim;
+        String[] families = { QuickPlayFamilyRegistry.LED_INDICATOR,
+            QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR,
+            QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR,
+            QuickPlayFamilyRegistry.RC_DELAY,
+            QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH,
+            QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH };
+        long[] seeds = { 0L, 2L, Long.MIN_VALUE, Long.MAX_VALUE };
+        for (String family : families) {
             for (long seed : seeds) {
-                ChallengeDescriptor legacy = ChallengeDescriptor.parse(
-                    ChallengeDescriptor.legacy(family, seed).toCanonical());
-                ChallengeDescriptor corrected = ChallengeDescriptor.parse(
-                    ChallengeDescriptor.correctedSeeded(family, seed).toCanonical());
-                LegacyChallengeReplay.requireSupported(legacy);
-                LegacyChallengeReplay.requireSupported(corrected);
-                require(legacy.getGenerator().getVersion() == 1 &&
-                    corrected.getGenerator().getVersion() == 2, "explicit generator version");
-                require(legacy.getGeometryVersion().getValue() == 3 &&
-                    corrected.getGeometryVersion().getValue() == 3 &&
-                    PcbGeometryContractVersion.CURRENT == 3, "package contract remains v3");
-                require(LegacyChallengeReplay.layoutAlgorithmVersion(legacy) == 3 &&
-                    LegacyChallengeReplay.layoutAlgorithmVersion(corrected) == 4,
-                    "old/new descriptor dispatches to old/new algorithm");
-                require(legacy.getRootSeed() == seed && corrected.getRootSeed() == seed,
-                    "exact signed seed retained");
-                require(LegacyChallengeReplay.describe(legacy).contains(
-                    "reserved-not-consumed-by-legacy-leaf@1") &&
-                    LegacyChallengeReplay.describe(corrected).contains(
-                    "reserved-not-consumed-by-legacy-leaf@2"), "versioned diagnostics");
-                reject(corrected.toCanonical().replace("geometry=3", "geometry=4"),
-                    ChallengeContractException.Code.UNSUPPORTED_VERSION, "geometry");
-                reject(corrected.toCanonical().replace("legacy-leaf@2", "legacy-leaf@99"),
-                    ChallengeContractException.Code.UNSUPPORTED_VERSION, "generator");
+                ChallengeDescriptor descriptor = ChallengeDescriptor.parse(
+                    ChallengeDescriptor.current(family, seed).toCanonical());
+                LeafChallengeReplay.requireSupported(descriptor);
+                require(descriptor.getSchemaVersion() == ChallengeDescriptor.SCHEMA_VERSION,
+                    "current schema version");
+                require("leaf".equals(descriptor.getGenerator().getId()) &&
+                    descriptor.getGenerator().getVersion() == 1,
+                    "current leaf generator identity");
+                require(descriptor.getGeometryVersion().getValue() == 3 &&
+                    PcbGeometryContractVersion.CURRENT == 3,
+                    "geometry contract remains independently versioned");
+                require(LeafChallengeReplay.layoutAlgorithmVersion(descriptor) ==
+                    SeededPcbLayoutGenerator.CURRENT_VERSION,
+                    "current replay reaches the current layout");
+                require(descriptor.getRootSeed() == seed, "exact signed seed retained");
+                GeneratedBoardInstance replay = LeafChallengeReplay.generate(descriptor);
+                require(replay.getPcbLayout().getLayoutAlgorithmVersion() ==
+                    SeededPcbLayoutGenerator.CURRENT_VERSION,
+                    "replayed board uses current layout");
             }
         }
-        for (String fixed : new String[] { "RC_DELAY", "NPN_LOW_SIDE_SWITCH", "NMOS_LOW_SIDE_SWITCH" }) {
-            ChallengeDescriptor legacy = ChallengeDescriptor.legacy(fixed, 0);
-            LegacyChallengeReplay.requireSupported(legacy);
-            require(LegacyChallengeReplay.layoutAlgorithmVersion(legacy) == 3,
-                "fixed legacy family remains supported");
-            reject(ChallengeDescriptor.correctedSeeded(fixed, 0).toCanonical(),
-                ChallengeContractException.Code.UNSUPPORTED_VERSION, "generator");
-        }
-        reject(ChallengeDescriptor.correctedSeeded("UNKNOWN_FAMILY", 0).toCanonical(),
+
+        ChallengeDescriptor current = ChallengeDescriptor.current(
+            QuickPlayFamilyRegistry.LED_INDICATOR, 0L);
+        reject(current.toCanonical().replace("tsj-challenge/2", "tsj-challenge/1"),
+            ChallengeContractException.Code.UNSUPPORTED_VERSION, "schemaVersion");
+        reject(current.toCanonical().replace("leaf@1", "legacy-leaf@1"),
+            ChallengeContractException.Code.UNSUPPORTED_ID, "generator");
+        reject(current.toCanonical().replace("geometry=3", "geometry=4"),
+            ChallengeContractException.Code.UNSUPPORTED_VERSION, "geometry");
+        reject(ChallengeDescriptor.current("UNKNOWN_FAMILY", 0L).toCanonical(),
             ChallengeContractException.Code.UNSUPPORTED_ID, "device-intent");
         System.out.println("PASS: A02ReplayContractTest assertions=" + assertions);
     }
 
     private static void reject(String encoded, ChallengeContractException.Code code, String field) {
         try {
-            LegacyChallengeReplay.requireSupported(ChallengeDescriptor.parse(encoded));
-            throw new AssertionError("Accepted unsupported replay: " + field);
+            LeafChallengeReplay.requireSupported(ChallengeDescriptor.parse(encoded));
+            throw new AssertionError("Accepted unsupported current replay: " + field);
         } catch (ChallengeContractException failure) {
             require(failure.getCode() == code && field.equals(failure.getFieldId()),
-                "stable replay rejection " + field);
+                "stable current replay rejection " + field);
         }
     }
 

@@ -49,25 +49,6 @@ final class PhysicalPackage {
     private final boolean developerGeneric;
     private final PcbGeometryContractVersion geometryContractVersion;
 
-    /** Legacy constructor retained only as a marked developer-generic boundary. */
-    PhysicalPackage(String id, int terminalCount) {
-        this(id, terminalIdsForCount(terminalCount), new Vector<String>(), false,
-            PhysicalPackageGeometry.generic(terminalIdsForCount(terminalCount), false), true);
-    }
-
-    /** Legacy constructor retained only as a marked developer-generic boundary. */
-    PhysicalPackage(String id, Vector<String> terminalIds, Vector<String> internalConnections) {
-        this(id, terminalIds, internalConnections, false,
-            PhysicalPackageGeometry.generic(terminalIds, false), true);
-    }
-
-    /** Legacy constructor retained only as a marked developer-generic boundary. */
-    PhysicalPackage(String id, Vector<String> terminalIds, Vector<String> internalConnections,
-            boolean connector) {
-        this(id, terminalIds, internalConnections, connector,
-            PhysicalPackageGeometry.generic(terminalIds, connector), true);
-    }
-
     /** Authoritative production constructor; geometry may not be null or generic. */
     PhysicalPackage(String id, Vector<String> terminalIds, Vector<String> internalConnections,
             boolean connector, PhysicalPackageGeometry geometry) {
@@ -196,33 +177,12 @@ final class PhysicalPackage {
             GeometryVariantSelection.FIXED_DEFAULT, true);
     }
 
-    /**
-     * Explicit compatibility adapter for the old generic placement factory. It
-     * is deliberately impossible to use with production geometry.
-     */
-    static PhysicalPackage developerProjectionForGeometry(String componentId,
-            PhysicalPackageGeometry geometry) {
-        if (componentId == null || componentId.trim().length() == 0 || geometry == null ||
-                !geometry.isDeveloperGeneric())
-            throw new IllegalArgumentException("Only marked developer geometry may be projected");
-        Vector<String> terminals = geometry.getTerminalIds();
-        Vector<String> connections = new Vector<String>();
-        Vector<GeometryVariant> catalog = singletonVariants(geometry, true);
-        catalog.set(0, new GeometryVariant("DEVELOPER_PROJECTION", "DEVELOPER_GENERIC",
-            geometry));
-        return new PhysicalPackage("DEVELOPER_PROJECTION_" + componentId, terminals, connections,
-            false, geometry, catalog, "DEVELOPER_PROJECTION",
-            GeometryVariantSelection.FIXED_DEFAULT, true);
-    }
-
     String getId() { return id; }
     int getTerminalCount() { return terminalIds.size(); }
     Vector<String> getTerminalIds() { return new Vector<String>(terminalIds); }
     boolean isConnector() { return connector; }
 
-    /** Package-declared default loose projection; retained under the legacy name. */
     PhysicalPackageGeometry getGeometry() { return geometry; }
-    PhysicalPackageGeometry getDefaultLooseGeometry() { return geometry; }
     String getDefaultLooseGeometryVariantKey() { return defaultLooseGeometryVariantKey; }
     GeometryVariantSelection getGeometryVariantSelection() { return geometryVariantSelection; }
     boolean isDeveloperGeneric() { return developerGeneric; }
@@ -321,15 +281,6 @@ final class PhysicalPackage {
         Vector<GeometryVariant> result = new Vector<GeometryVariant>();
         result.add(new GeometryVariant(developerGeneric ? "DEVELOPER_DEFAULT" : "DEFAULT",
             developerGeneric ? "DEVELOPER_GENERIC" : "IDENTITY", geometry));
-        return result;
-    }
-
-    private static Vector<String> terminalIdsForCount(int count) {
-        if (count < 1)
-            throw new IllegalArgumentException("Physical package must have a terminal");
-        Vector<String> result = new Vector<String>();
-        for (int index = 1; index <= count; index++)
-            result.add(String.valueOf(index));
         return result;
     }
 

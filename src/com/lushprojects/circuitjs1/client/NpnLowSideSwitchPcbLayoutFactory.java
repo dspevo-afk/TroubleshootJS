@@ -34,7 +34,8 @@ final class NpnLowSideSwitchPcbLayoutFactory {
         requireVariationMode(variationMode);
         int s = variationMode * 10;
         PcbBoardLayout layout = new PcbBoardLayout(1400, 800,
-            new Rectangle(40 + s, 30, 1150, 720), new Rectangle(1200, 125, 150, 255));
+            new Rectangle(40 + s, 30, 1150, 720), new Rectangle(1200, 125, 150, 255),
+            SeededPcbLayoutGenerator.CURRENT_VERSION);
         addComponents(layout, board, seed, s, rloadVariantKey, rbVariantKey, rpdVariantKey);
         addTraces(layout, s);
         addLabels(layout, specifications, s);

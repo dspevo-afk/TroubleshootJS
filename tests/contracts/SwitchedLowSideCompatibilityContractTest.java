@@ -40,7 +40,7 @@ public final class SwitchedLowSideCompatibilityContractTest {
         verifyUnsafeOffVoltage(request);
         verifyBroadSupplyGuarantee(request);
         verifyUntypedOpenDrain(request);
-        System.out.println("PASS: Task48 switched-low-side compatibility "
+        System.out.println("PASS: current switched-low-side compatibility "
                 + assertions + " assertions");
     }
 

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "scripts/VerifierIsolation.psm1",
+    "sha256": "202867ead5c38202538ae0e22991ecd6bc5fb0d12f8c9e66860b23ef31425676",
+    "unchangedFromA04": true
+  },
+  {
+    "path": "scripts/preview.ps1",
+    "sha256": "ecb510e020ee1c5322c312f0cbec049924903f13d693d660ff1eef6f93324ae4",
+    "unchangedFromA04": true
+  },
+  {
+    "path": "scripts/start-preview.ps1",
+    "sha256": "85b74ee74199da43272c63bd6372c45d5654e128e327fc02dd4e4d55ed3ab8f5",
+    "unchangedFromA04": true
+  },
+  {
+    "path": "scripts/stop-preview.ps1",
+    "sha256": "a0c91df5756bb78b7411c16df13f02647cbeff35c807c416920fd04f8756036e",
+    "unchangedFromA04": true
+  },
+  {
+    "path": "scripts/build.ps1",
+    "sha256": "523935bcaed57796b8e78e36df25d94a91c54464f21b1e32dcf877e83d81f5dd",
+    "unchangedFromA04": true
+  },
+  {
+    "path": "scripts/verify-browser.ps1",
+    "sha256": "45e542afb7d5e499b05ee426bdec9900504a64d5da82ee2e10bfd39014bf35a5",
+    "unchangedFromA04": true
+  }
+]

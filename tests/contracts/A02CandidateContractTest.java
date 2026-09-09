@@ -15,7 +15,7 @@ public final class A02CandidateContractTest {
         testContractAndProofPopulationUseKeys();
         testCanonicalKeyIsRuntimeStable();
         testActualRouteRegenerationAndLayoutVersion();
-        testHistoricalDiagnosticCorpus();
+        testCurrentDiagnosticCorpus();
         testProofPopulationDivergenceFailsClosed();
         System.out.println("PASS: A02CandidateContractTest");
     }
@@ -177,7 +177,6 @@ public final class A02CandidateContractTest {
         CircuitElm.sim = sim;
         GeneratedBoardInstance current = QuickPlayFamilyRegistry.generate(
             QuickPlayFamilyRegistry.LED_INDICATOR, 0);
-        GeneratedBoardInstance legacy = null;
         Vector<GeneratedBoardInstance> replays = new Vector<GeneratedBoardInstance>();
         try {
             testActualOwnerEnumeration(current);
@@ -196,33 +195,14 @@ public final class A02CandidateContractTest {
                     "current proof route changed layout or hypothesis identity");
             }
 
-            ChallengeDescriptor descriptor = ChallengeDescriptor.parse(
-                ChallengeDescriptor.legacy(QuickPlayFamilyRegistry.LED_INDICATOR, 0)
-                    .toCanonical());
-            legacy = LegacyChallengeReplay.generate(descriptor);
-            Vector<GeneratedFaultCandidate> legacyCandidates =
-                GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(
-                    legacy.getFaultCandidates());
-            require(!legacyCandidates.isEmpty(),
-                "legacy production route had no admitted hypotheses");
-            for (GeneratedFaultCandidate candidate : legacyCandidates) {
-                GeneratedBoardInstance replay = regenerate(legacy, candidate);
-                replays.add(replay);
-                require(replay.getPcbLayout().getLayoutAlgorithmVersion() ==
-                        SeededPcbLayoutGenerator.LEGACY_VERSION &&
-                    replay.getFaultBinding().getFault().getHypothesisKey().equals(
-                        candidate.getHypothesisKey()),
-                    "legacy proof route silently selected the current layout");
-            }
         } finally {
             dispose(current);
-            if (legacy != null) dispose(legacy);
             for (GeneratedBoardInstance replay : replays) dispose(replay);
         }
     }
 
-    /** The actual verifier corpus must retain every accepted seed/type case. */
-    private static void testHistoricalDiagnosticCorpus() {
+    /** The current verifier corpus must retain every accepted seed/type case. */
+    private static void testCurrentDiagnosticCorpus() {
         String[] expected = {
             "LED_INDICATOR/0/RESISTOR_OPEN", "LED_INDICATOR/0/RESISTOR_INCORRECT_VALUE",
             "LED_INDICATOR/0/LED_OPEN", "DIODE_PROTECTED_INDICATOR/0/DIODE_OPEN",
@@ -257,14 +237,14 @@ public final class A02CandidateContractTest {
                 GeneratedBoardInstance regenerated = (GeneratedBoardInstance) generate.invoke(route);
                 try {
                     require(key.get(route).equals(regenerated.getFaultBinding().getFault()
-                        .getHypothesisKey()), "historical corpus regenerated a different hypothesis");
+                        .getHypothesisKey()), "current corpus regenerated a different hypothesis");
                 } finally { dispose(regenerated); }
             }
-            require(actual.size() == expected.length, "historical corpus size changed");
+            require(actual.size() == expected.length, "current corpus size changed");
             for (String fixture : expected)
-                require(actual.contains(fixture), "missing historical corpus fixture: " + fixture);
+            require(actual.contains(fixture), "missing current corpus fixture: " + fixture);
         } catch (Exception failure) {
-            throw new AssertionError("actual historical Task41 corpus: " + failure);
+            throw new AssertionError("actual current Task41 corpus: " + failure);
         }
     }
 
@@ -275,11 +255,11 @@ public final class A02CandidateContractTest {
                 "com.lushprojects.circuitjs1.client.Task41DeveloperVerifier$Route");
             java.lang.reflect.Constructor<?> constructor = routeClass.getDeclaredConstructor(
                 String.class, long.class, GeneratedFaultType.class, String.class,
-                BoundedAssemblyRequest.class, String.class, int.class);
+                BoundedAssemblyRequest.class, String.class);
             constructor.setAccessible(true);
             Object route = constructor.newInstance(owner.getCircuitFamilyId(), owner.getSeed(),
                 candidate.getFault().getType(), candidate.getFault().getTargetComponentId(),
-                null, candidate.getHypothesisKey(), owner.getPcbLayout().getLayoutAlgorithmVersion());
+                null, candidate.getHypothesisKey());
             java.lang.reflect.Method generate = routeClass.getDeclaredMethod("generate");
             generate.setAccessible(true);
             return (GeneratedBoardInstance) generate.invoke(route);

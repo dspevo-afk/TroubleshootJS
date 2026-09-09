@@ -476,12 +476,14 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         if (instance == null || !instance.isDeveloperOnlyFaultRoute() ||
                 instance.getPcbLayout() == null || sim.pcbWorkbenchController == null)
             throw new IllegalStateException("Composed correspondence requires a rendered fixture");
-        String prefix = "tsj-block-v1/resistive-coupling@1/";
-        String source = prefix + "source/component/R1";
-        String load = prefix + "load/component/R1";
-        String supply = prefix + "source/net/SUPPLY";
-        String output = prefix + "load/net/SUPPLY";
-        String returned = prefix + "load/net/RETURN";
+        BoundedAssemblyPlan plan = resistivePlan(instance);
+        String source = plan.idFor("source", FunctionalBlockDescriptor.EntityKind.COMPONENT,
+            "R1");
+        String load = plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT,
+            "R1");
+        String supply = plan.netFor("source", "SUPPLY");
+        String output = plan.netFor("source", "OUT");
+        String returned = plan.netFor("source", "RETURN");
         Manifest manifest = new Manifest();
         addPackage(manifest, "J1", "THROUGH_HOLE_CONNECTOR_2", true);
         addPackage(manifest, source, "AXIAL_RESISTOR", false,
@@ -490,10 +492,14 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             "SPAN_220", "SPAN_240", "SPAN_260");
         addTerminal(manifest, "J1.1", "J1", "1", supply, "SwitchElm", 1);
         addTerminal(manifest, "J1.2", "J1", "2", returned, "GroundElm", 0);
-        addTerminal(manifest, prefix + "source/pad/R1.1", source, "1", supply, "WireElm", 1);
-        addTerminal(manifest, prefix + "source/pad/R1.2", source, "2", output, "WireElm", 0);
-        addTerminal(manifest, prefix + "load/pad/R1.1", load, "1", output, "WireElm", 1);
-        addTerminal(manifest, prefix + "load/pad/R1.2", load, "2", returned, "WireElm", 0);
+        addTerminal(manifest, plan.idFor("source", FunctionalBlockDescriptor.EntityKind.PAD,
+            "R1.1"), source, "1", supply, "WireElm", 1);
+        addTerminal(manifest, plan.idFor("source", FunctionalBlockDescriptor.EntityKind.PAD,
+            "R1.2"), source, "2", output, "WireElm", 0);
+        addTerminal(manifest, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD,
+            "R1.1"), load, "1", output, "WireElm", 1);
+        addTerminal(manifest, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD,
+            "R1.2"), load, "2", returned, "WireElm", 0);
         return verifyManifest(sim, instance, manifest);
     }
 
@@ -529,7 +535,8 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         /* This is the normal Task 41 contract, not a fixture validation. */
         GeneratedDiagnosticSolvabilityAdmission.validate(sim, instance);
 
-        Manifest manifest = controlledIndicatorManifest();
+        BoundedAssemblyPlan plan = controlledPlan(instance);
+        Manifest manifest = controlledIndicatorManifest(plan);
         String correspondence = verifyManifest(sim, instance, manifest);
         String resistorSemantics = verifyControlledResistorSemantics(sim, instance);
         return "{\"protocol\":\"TSJ-TASK48-PHYSICAL-CORRESPONDENCE-1\"," +
@@ -555,13 +562,16 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         require(!sim.activeMeasurementOverlay,
             "task48-resistor-semantics-active-measurement");
 
-        final String prefix = "tsj-block-v1/controlled-indicator@1/";
+        BoundedAssemblyPlan plan = controlledPlan(instance);
         final String[] components = {
-            prefix + "driver/component/RG", prefix + "load/component/RLOAD"
+            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RG"),
+            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD")
         };
         final String[][] pads = {
-            { prefix + "driver/pad/RG.1", prefix + "driver/pad/RG.2" },
-            { prefix + "load/pad/RLOAD.1", prefix + "load/pad/RLOAD.2" }
+            { plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.1"),
+                plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.2") },
+            { plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.1"),
+                plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.2") }
         };
         HashMap<String, Boolean> initialStates = new HashMap<String, Boolean>();
         for (int component = 0; component < components.length; component++) {
@@ -1883,18 +1893,27 @@ final class Task43PPhysicalTruthDeveloperVerifier {
     /** Literal Task 48 identity/terminal oracle.  Keep this independent of
      * any assembler plan or mapping receipt so a wrong mapping cannot teach
      * the verifier its own expected answer. */
-    private static Manifest controlledIndicatorManifest() {
-        final String prefix = "tsj-block-v1/controlled-indicator@1/";
-        final String driver = prefix + "driver/component/";
-        final String load = prefix + "load/component/";
-        final String powerAdapter = prefix + "power-adapter/component/";
-        final String controlAdapter = prefix + "control-adapter/component/";
-        final String output = prefix + "control-adapter/net/OUTPUT";
-        final String gate = prefix + "driver/net/GATE";
-        final String switchedSink = prefix + "driver/net/SWITCHED_SINK";
-        final String returned = prefix + "control-adapter/net/RETURN";
-        final String supply = prefix + "load/net/SUPPLY";
-        final String ledNode = prefix + "load/net/LED_NODE";
+    private static Manifest controlledIndicatorManifest(BoundedAssemblyPlan plan) {
+        final String driver = plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT,
+            "RG").substring(0, plan.idFor("driver",
+                FunctionalBlockDescriptor.EntityKind.COMPONENT, "RG").lastIndexOf("/RG")) + "/";
+        final String load = plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT,
+            "RLOAD").substring(0, plan.idFor("load",
+                FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD").lastIndexOf("/RLOAD")) + "/";
+        final String powerAdapter = plan.idFor("power-adapter",
+            FunctionalBlockDescriptor.EntityKind.COMPONENT, "J1").substring(0,
+                plan.idFor("power-adapter", FunctionalBlockDescriptor.EntityKind.COMPONENT,
+                    "J1").lastIndexOf("/J1")) + "/";
+        final String controlAdapter = plan.idFor("control-adapter",
+            FunctionalBlockDescriptor.EntityKind.COMPONENT, "J2").substring(0,
+                plan.idFor("control-adapter", FunctionalBlockDescriptor.EntityKind.COMPONENT,
+                    "J2").lastIndexOf("/J2")) + "/";
+        final String output = plan.netFor("control-adapter", "OUTPUT");
+        final String gate = plan.netFor("driver", "GATE");
+        final String switchedSink = plan.netFor("driver", "SWITCHED_SINK");
+        final String returned = plan.netFor("control-adapter", "RETURN");
+        final String supply = plan.netFor("load", "SUPPLY");
+        final String ledNode = plan.netFor("load", "LED_NODE");
 
         Manifest result = new Manifest();
         result.canonicalSeedText = true;
@@ -1911,43 +1930,78 @@ final class Task43PPhysicalTruthDeveloperVerifier {
 
         /* Adapters: their board-facing positive is the real SwitchElm post 1;
          * each external return is the real GroundElm post 0. */
-        addTerminal(result, prefix + "power-adapter/pad/J1.1", powerAdapter + "J1", "1",
+        addTerminal(result, plan.idFor("power-adapter", FunctionalBlockDescriptor.EntityKind.PAD,
+            "J1.1"), plan.idFor("power-adapter",
+                FunctionalBlockDescriptor.EntityKind.COMPONENT, "J1"), "1",
             supply, "SwitchElm", 1);
-        addTerminal(result, prefix + "power-adapter/pad/J1.2", powerAdapter + "J1", "2",
+        addTerminal(result, plan.idFor("power-adapter", FunctionalBlockDescriptor.EntityKind.PAD,
+            "J1.2"), plan.idFor("power-adapter",
+                FunctionalBlockDescriptor.EntityKind.COMPONENT, "J1"), "2",
             returned, "GroundElm", 0);
-        addTerminal(result, prefix + "control-adapter/pad/J2.1", controlAdapter + "J2", "1",
+        addTerminal(result, plan.idFor("control-adapter", FunctionalBlockDescriptor.EntityKind.PAD,
+            "J2.1"), plan.idFor("control-adapter",
+                FunctionalBlockDescriptor.EntityKind.COMPONENT, "J2"), "1",
             output, "SwitchElm", 1);
-        addTerminal(result, prefix + "control-adapter/pad/J2.2", controlAdapter + "J2", "2",
+        addTerminal(result, plan.idFor("control-adapter", FunctionalBlockDescriptor.EntityKind.PAD,
+            "J2.2"), plan.idFor("control-adapter",
+                FunctionalBlockDescriptor.EntityKind.COMPONENT, "J2"), "2",
             returned, "GroundElm", 0);
 
         /* RG and RLOAD are the only detachable parts.  The public board
          * endpoint is intentionally the surrounding WireElm (1 then 0),
          * while terminal 2's component-side endpoint is the retained fault
          * switch post 1.  resolveRetainedSolverEndpoint cross-checks both. */
-        addTerminal(result, prefix + "driver/pad/RG.1", driver + "RG", "1",
+        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.1"),
+            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RG"), "1",
             output, "WireElm", 1);
-        addTerminal(result, prefix + "driver/pad/RG.2", driver + "RG", "2",
+        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.2"),
+            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RG"), "2",
             gate, "WireElm", 0);
-        addTerminal(result, prefix + "driver/pad/RPD.1", driver + "RPD", "1",
+        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RPD.1"),
+            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RPD"), "1",
             gate, "ResistorElm", 0);
-        addTerminal(result, prefix + "driver/pad/RPD.2", driver + "RPD", "2",
+        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RPD.2"),
+            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RPD"), "2",
             returned, "ResistorElm", 1);
-        addTerminal(result, prefix + "driver/pad/Q1.G", driver + "Q1", "G",
+        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.G"),
+            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "Q1"), "G",
             gate, "NMosfetElm", 0);
-        addTerminal(result, prefix + "driver/pad/Q1.D", driver + "Q1", "D",
+        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.D"),
+            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "Q1"), "D",
             switchedSink, "NMosfetElm", 2);
-        addTerminal(result, prefix + "driver/pad/Q1.S", driver + "Q1", "S",
+        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.S"),
+            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "Q1"), "S",
             returned, "NMosfetElm", 1);
 
-        addTerminal(result, prefix + "load/pad/RLOAD.1", load + "RLOAD", "1",
+        addTerminal(result, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.1"),
+            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD"), "1",
             supply, "WireElm", 1);
-        addTerminal(result, prefix + "load/pad/RLOAD.2", load + "RLOAD", "2",
+        addTerminal(result, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.2"),
+            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD"), "2",
             ledNode, "WireElm", 0);
-        addTerminal(result, prefix + "load/pad/LED1.A", load + "LED1", "A",
+        addTerminal(result, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "LED1.A"),
+            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "LED1"), "A",
             ledNode, "LEDElm", 0);
-        addTerminal(result, prefix + "load/pad/LED1.K", load + "LED1", "K",
+        addTerminal(result, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "LED1.K"),
+            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "LED1"), "K",
             switchedSink, "LEDElm", 1);
         return result;
+    }
+
+    private static BoundedAssemblyPlan resistivePlan(GeneratedBoardInstance instance) {
+        if (instance == null || !(instance.getBehaviorContract() instanceof
+                ComposedResistiveDeviceBehavior))
+            throw new IllegalStateException(
+                "Resolved resistive behavior is missing its assembly plan");
+        return ((ComposedResistiveDeviceBehavior) instance.getBehaviorContract()).getPlan();
+    }
+
+    private static BoundedAssemblyPlan controlledPlan(GeneratedBoardInstance instance) {
+        if (instance == null || !(instance.getBehaviorContract() instanceof
+                ControlledIndicatorDeviceBehavior))
+            throw new IllegalStateException(
+                "Resolved controlled-indicator behavior is missing its assembly plan");
+        return ((ControlledIndicatorDeviceBehavior) instance.getBehaviorContract()).getPlan();
     }
 
     private static void addSwitchPackage(Manifest manifest, String componentId) {

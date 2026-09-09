@@ -50,24 +50,6 @@ final class PhysicalPackages {
 
     private PhysicalPackages() { }
 
-    /** Compatibility mapping occurs at logical-board construction, not in PCB providers. */
-    static PhysicalPackage forLegacyComponentType(String type) {
-        if ("CONNECTOR".equals(type)) return THROUGH_HOLE_CONNECTOR_2;
-        if ("RESISTOR".equals(type)) return AXIAL_RESISTOR;
-        if ("DIODE".equals(type)) return AXIAL_DIODE;
-        if ("LED".equals(type)) return THROUGH_HOLE_LED;
-        if ("NPN_TRANSISTOR".equals(type)) return TO92_NPN;
-        if ("NMOS_TRANSISTOR".equals(type)) return TO92_NMOS;
-        if ("CAPACITOR_ELECTROLYTIC".equals(type)) return RADIAL_ELECTROLYTIC_CAPACITOR;
-        if ("CAPACITOR_CERAMIC".equals(type)) return RADIAL_CERAMIC_CAPACITOR;
-        if ("MULTI_TERMINAL".equals(type)) return MULTI_TERMINAL;
-        if ("DEV_CANARY_3".equals(type)) return DEV_CANARY_3;
-        if ("DEV_CANARY_4".equals(type)) return DEV_CANARY_4;
-        if ("DEV_CANARY_5".equals(type)) return DEV_CANARY_5;
-        if ("DEV_CANARY_6".equals(type)) return DEV_CANARY_6;
-        return null;
-    }
-
     static PhysicalPackage developerConnectorForCount(int count) {
         if (count == 3) return DEV_CANARY_CONNECTOR_3;
         if (count == 4) return DEV_CANARY_CONNECTOR_4;

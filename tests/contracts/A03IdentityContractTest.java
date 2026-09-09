@@ -28,19 +28,17 @@ public final class A03IdentityContractTest {
         System.out.print(first);
         writeParity("vectors", first);
         boundedReplayCanaries();
-        savedActionCanary();
         System.out.println("A03_TIMING encoding-ns=" + encodingNanos
                 + " capture-ns=" + captureNanos
                 + " resolve-ns=" + resolveNanos);
         System.out.println("PASS: A03IdentityContractTest assertions=" + assertions);
     }
 
-    /** Exercise the actual pure adapter for all three bounded generations. */
+    /** Exercise the actual pure adapter for each current bounded intent. */
     private static void boundedReplayCanaries() {
         BoundedAssemblyRequest[] requests = {
             BoundedAssemblyRequest.forCanary(1L),
-            BoundedAssemblyRequest.forControlledIndicator(2L),
-            BoundedAssemblyRequest.forControlledIndicatorValues(3L)
+            BoundedAssemblyRequest.forControlledIndicator(2L)
         };
         List<RealizationManifest> manifests =
                 new ArrayList<RealizationManifest>();
@@ -68,30 +66,28 @@ public final class A03IdentityContractTest {
                     "decoded bounded plan changed semantic signature");
             manifests.add(manifest);
         }
-        require(manifests.get(0).getDescriptor().getGenerator().getVersion() == 1
-                && manifests.get(1).getDescriptor().getGenerator().getVersion() == 2
-                && manifests.get(2).getDescriptor().getGenerator().getVersion() == 3,
-                "bounded replay did not preserve explicit generator versions");
+        require(manifests.get(0).getDescriptor().getGenerator().getVersion()
+                == BoundedAssemblyRequest.GENERATOR_VERSION
+                && manifests.get(1).getDescriptor().getGenerator().getVersion()
+                == BoundedAssemblyRequest.GENERATOR_VERSION,
+                "bounded replay did not preserve current generator version");
         require(manifests.get(0).getDescriptor().getRootSeed() == 1L
-                && manifests.get(1).getDescriptor().getRootSeed() == 2L
-                && manifests.get(2).getDescriptor().getRootSeed() == 3L,
+                && manifests.get(1).getDescriptor().getRootSeed() == 2L,
                 "bounded replay did not preserve exact seeds");
         for (RealizationManifest manifest : manifests)
             emitReplayManifest(manifest);
 
-        RealizationManifest base = manifests.get(0);
-        final RealizationManifest withFuture = new RealizationManifest(
-                base.getSchemaVersion(), base.getDescriptor(), base.getBlocks(),
-                base.getVersionPins(), base.getChoices(), base.getNetBindings(),
-                base.getTargets(), new RealizationManifest.FutureStateContract(
-                        1, new ChallengeDescriptor.VersionedId("model", 1),
-                        new ChallengeDescriptor.VersionedId("state", 1), null,
-                        new ChallengeDescriptor.VersionedId("provider", 1)),
-                base.getImportOrigin());
+        final RealizationManifest base = manifests.get(0);
+
+        // Retired future-state metadata is rejected at the current parser
+        // boundary instead of being silently retained or interpreted.
+        final String retiredFuture = base.toCanonical() + "\nfuture=1:~";
         expectContractFailure(new Action() {
-            @Override public void run() { A03RealizationReplay.resolve(withFuture); }
-        }, ChallengeContractException.Code.UNSUPPORTED_VERSION, "future",
-                null, "future state reached current replay adapter");
+            @Override public void run() {
+                RealizationManifest.parse(retiredFuture);
+            }
+        }, ChallengeContractException.Code.UNKNOWN_FIELD, "future", null,
+                "retired future-state field was accepted");
 
         // Each mutation is structurally valid but semantically different. The
         // adapter must reject it before entering the mutable assembler.
@@ -103,7 +99,7 @@ public final class A03IdentityContractTest {
                         numeric.getNumberValue() + 1.0)),
                 "choice." + numericKey, "numeric choice");
 
-        RealizationManifest values = manifests.get(2);
+        RealizationManifest values = manifests.get(1);
         String modelKey = findChoiceKey(values,
                 RealizationManifest.Choice.Kind.TOKEN, ".model");
         RealizationManifest.Choice model = findChoice(values, modelKey);
@@ -126,13 +122,19 @@ public final class A03IdentityContractTest {
                         packageChoice.getTokenValue() + "-changed")),
                 "choice." + packageKey, "package choice");
 
-        RealizationManifest.VersionPin routing = findVersion(base,
+        final RealizationManifest.VersionPin routing = findVersion(base,
                 RealizationManifest.VersionPin.Concern.ROUTING);
-        expectReplayMismatch(replaceVersion(base,
-                RealizationManifest.VersionPin.Concern.ROUTING,
-                new ChallengeDescriptor.VersionedId(
-                        routing.getOwnerId(), routing.getOwnerVersionNumber() + 1)),
-                "version.routing", "version pin");
+        final int unsupportedRoutingVersion = routing.getOwnerVersionNumber() + 1;
+        expectContractFailure(new Action() {
+            @Override public void run() {
+                replaceVersion(base,
+                        RealizationManifest.VersionPin.Concern.ROUTING,
+                        new ChallengeDescriptor.VersionedId(
+                                routing.getOwnerId(), unsupportedRoutingVersion));
+            }
+        }, ChallengeContractException.Code.UNSUPPORTED_VERSION,
+                "version.owner", Integer.toString(unsupportedRoutingVersion),
+                "unsupported version pin was not rejected at construction");
 
         RealizationManifest unknownChoice = appendChoice(base,
                 RealizationManifest.Choice.token("unknown.injected.choice", "poison"));
@@ -179,45 +181,6 @@ public final class A03IdentityContractTest {
                 "default-led primitive model was not restored exactly");
     }
 
-    /** Verify stale saved-action references through the direct data contract. */
-    private static void savedActionCanary() {
-        final RealizationManifest manifest = A03RealizationReplay.capture(
-                BoundedAssemblyPlan.resolve(BoundedAssemblyRequest.forCanary(11L)));
-        final String target = manifest.getTargets().get(0);
-        A03RealizationReplay.SavedActionReference direct =
-                new A03RealizationReplay.SavedActionReference(1,
-                        manifest.identityCanonical(), target);
-        require(target.equals(direct.resolve(manifest)),
-                "saved action constructor did not retain its target");
-        expectContractFailure(new Action() {
-            @Override public void run() {
-                new A03RealizationReplay.SavedActionReference(2,
-                        "tsj-realization/1", target);
-            }
-        }, ChallengeContractException.Code.UNSUPPORTED_VERSION,
-                "saved.schemaVersion", null, "bad saved action schema");
-
-        final A03RealizationReplay.SavedActionReference reference =
-                A03RealizationReplay.SavedActionReference.capture(manifest, target);
-        require(target.equals(reference.resolve(manifest)),
-                "saved action did not resolve its declared target");
-        final RealizationManifest changed = A03RealizationReplay.capture(
-                BoundedAssemblyPlan.resolve(BoundedAssemblyRequest.forCanary(12L)));
-        expectContractFailure(new Action() {
-            @Override public void run() { reference.resolve(changed); }
-        }, ChallengeContractException.Code.CONTRADICTORY_CONSTRAINT,
-                "saved-action.realization", "STALE_REALIZATION",
-                "saved action unexpectedly accepted stale identity");
-
-        expectContractFailure(new Action() {
-            @Override public void run() {
-                A03RealizationReplay.SavedActionReference.capture(
-                        manifest, "missing-target");
-            }
-        }, ChallengeContractException.Code.MISSING_FIELD, "saved.target", null,
-                "saved action unexpectedly accepted missing target");
-    }
-
     /** Emit a length frame for parity with the compiled runtime verifier. */
     private static void emitReplayManifest(RealizationManifest manifest) {
         String canonical = manifest.identityCanonical();
@@ -225,8 +188,10 @@ public final class A03IdentityContractTest {
                 + manifest.getDescriptor().getGenerator().getVersion() + "|"
                 + manifest.getDescriptor().getRootSeed() + "|" + canonical.length());
         System.out.println(canonical);
-        writeParity("manifest-" + manifest.getDescriptor().getGenerator().getVersion(),
-                canonical);
+        String artifact = BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
+                manifest.getDescriptor().getDeviceIntent().getId())
+                ? "manifest-controlled" : "manifest-resistive";
+        writeParity(artifact, canonical);
     }
 
     private static void writeParity(String name, String canonical) {
@@ -284,8 +249,7 @@ public final class A03IdentityContractTest {
                 choices.set(i, replacement);
                 return new RealizationManifest(base.getSchemaVersion(),
                         base.getDescriptor(), base.getBlocks(), base.getVersionPins(),
-                        choices, base.getNetBindings(), base.getTargets(),
-                        base.getFutureState(), base.getImportOrigin());
+                        choices, base.getNetBindings(), base.getTargets());
             }
         }
         throw new AssertionError("choice not found: " + key);
@@ -298,8 +262,7 @@ public final class A03IdentityContractTest {
         choices.add(choice);
         return new RealizationManifest(base.getSchemaVersion(), base.getDescriptor(),
                 base.getBlocks(), base.getVersionPins(), choices,
-                base.getNetBindings(), base.getTargets(), base.getFutureState(),
-                base.getImportOrigin());
+                base.getNetBindings(), base.getTargets());
     }
 
     private static RealizationManifest replaceVersion(RealizationManifest base,
@@ -312,8 +275,7 @@ public final class A03IdentityContractTest {
                 versions.set(i, new RealizationManifest.VersionPin(concern, owner));
                 return new RealizationManifest(base.getSchemaVersion(),
                         base.getDescriptor(), base.getBlocks(), versions,
-                        base.getChoices(), base.getNetBindings(), base.getTargets(),
-                        base.getFutureState(), base.getImportOrigin());
+                        base.getChoices(), base.getNetBindings(), base.getTargets());
             }
         }
         throw new AssertionError("version pin not found: " + concern);

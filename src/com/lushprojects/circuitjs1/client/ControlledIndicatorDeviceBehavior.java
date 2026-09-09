@@ -20,9 +20,7 @@ final class ControlledIndicatorDeviceBehavior
     static final String CONTROL_POWER_INPUT_ID = "CONTROL_VIN_INPUT";
     static final double SUPPLY_VOLTAGE = 5.0;
 
-    private static final double MIN_LOAD_CURRENT = 0.008;
     private static final double MIN_LED_CURRENT = 0.005;
-    private static final double MAX_LOAD_CURRENT = 0.020;
     private static final double OFF_CURRENT = 0.000001;
     private static final double ON_VGS = 3.0;
     private static final double OFF_VGS = 0.1;
@@ -236,17 +234,16 @@ final class ControlledIndicatorDeviceBehavior
         double led = ledCurrent(instance);
         double mosfet = mosfetCurrent(instance);
         double supply = supplyVoltage(instance);
-        boolean task49 = plan.isControlledIndicatorValues();
         ResistorElm loadResistor = resistor(instance, "load", "RLOAD");
         double loadResistance = loadResistor.getResistance();
         double loadRatedWatts = loadRatedWatts(instance);
-        double minimumLoad = task49 ? plan.getResolvedLoadRecipe().getIntent()
-                .getTargetMinimumCurrentAmps() : MIN_LOAD_CURRENT;
-        double maximumLoad = task49 ? plan.getResolvedLoadRecipe().getIntent()
-                .getTypedDemandAmps() : MAX_LOAD_CURRENT;
-        double minimumSupply = task49 ? plan.getResolvedLoadRecipe().getIntent()
-                .getSourceMinimumVolts() : 4.0;
-        boolean electricalEnvelope = !task49 ||
+        double minimumLoad = plan.getResolvedLoadRecipe().getIntent()
+                .getTargetMinimumCurrentAmps();
+        double maximumLoad = plan.getResolvedLoadRecipe().getIntent()
+                .getTypedDemandAmps();
+        double minimumSupply = plan.getResolvedLoadRecipe().getIntent()
+                .getSourceMinimumVolts();
+        boolean electricalEnvelope =
                 (supply >= plan.getResolvedLoadRecipe().getIntent().getSourceMinimumVolts() &&
                  supply <= plan.getResolvedLoadRecipe().getIntent().getSourceMaximumVolts() &&
                  drainSourceVoltage(instance) >= plan.getResolvedLoadRecipe().getIntent()
@@ -265,9 +262,9 @@ final class ControlledIndicatorDeviceBehavior
                 load >= minimumLoad && load <= maximumLoad &&
                 led >= MIN_LED_CURRENT && Math.abs(load - led) < 0.0005 &&
                 Math.abs(load - mosfet) < 0.002 && gateSourceVoltage(instance) > ON_VGS &&
-                drainSourceVoltage(instance) <= ON_VDS && (!task49 ||
-                    drainSourceVoltage(instance) >= 0.0) &&
-                 (task49 ? supply >= minimumSupply : supply > minimumSupply) &&
+                drainSourceVoltage(instance) <= ON_VDS &&
+                drainSourceVoltage(instance) >= 0.0 &&
+                supply >= minimumSupply &&
                 controlVoltage(instance) > 3.0 && gateCurrent(instance) < 1.0e-9;
     }
 

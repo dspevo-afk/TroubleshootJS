@@ -13,7 +13,7 @@ final class QuickPlayFamilyRegistry {
     static final String RC_DELAY = "RC_DELAY";
     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
     static final String NMOS_LOW_SIDE_SWITCH = "NMOS_LOW_SIDE_SWITCH";
-    private static final long[] LEGACY_NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
+    private static final long[] BASE_NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
     // Keep the established LED seeds 0/2/3 unchanged; seed 4 is the first
     // normal envelope entry for the additional LED-owned fault route.
     private static final long[] LED_NORMAL_PLAYER_SEEDS = { 0, 2, 3, 4 };
@@ -41,27 +41,12 @@ final class QuickPlayFamilyRegistry {
     }
 
     static GeneratedBoardInstance generate(String familyId, long seed) {
-        return generate(familyId, seed, usesSeededLayout(familyId) ?
-            SeededPcbLayoutGenerator.CURRENT_VERSION : SeededPcbLayoutGenerator.LEGACY_VERSION);
-    }
-
-    static boolean usesSeededLayout(String familyId) {
-        return LED_INDICATOR.equals(familyId) || DIODE_PROTECTED_INDICATOR.equals(familyId) ||
-            PARALLEL_DUAL_INDICATOR.equals(familyId);
-    }
-
-    /** Descriptor replay must choose the algorithm, never inherit the default. */
-    static GeneratedBoardInstance generate(String familyId, long seed, int layoutAlgorithmVersion) {
-        if (layoutAlgorithmVersion != SeededPcbLayoutGenerator.LEGACY_VERSION &&
-                (layoutAlgorithmVersion != SeededPcbLayoutGenerator.CURRENT_VERSION ||
-                 !usesSeededLayout(familyId)))
-            throw new IllegalArgumentException("Unsupported leaf layout algorithm version");
         if (LED_INDICATOR.equals(familyId))
-            return new LedIndicatorGenerator(layoutAlgorithmVersion).generate(seed);
+            return new LedIndicatorGenerator().generate(seed);
         if (DIODE_PROTECTED_INDICATOR.equals(familyId))
-            return new DiodeProtectedIndicatorGenerator(layoutAlgorithmVersion).generate(seed);
+            return new DiodeProtectedIndicatorGenerator().generate(seed);
         if (PARALLEL_DUAL_INDICATOR.equals(familyId))
-            return new ParallelDualIndicatorGenerator(layoutAlgorithmVersion).generate(seed);
+            return new ParallelDualIndicatorGenerator().generate(seed);
         if (RC_DELAY.equals(familyId))
             return new RcDelayGenerator().generate(seed);
         if (NPN_LOW_SIDE_SWITCH.equals(familyId))
@@ -94,7 +79,6 @@ final class QuickPlayFamilyRegistry {
         if (LED_INDICATOR.equals(familyId)) return LED_NORMAL_PLAYER_SEEDS;
         if (NPN_LOW_SIDE_SWITCH.equals(familyId)) return NPN_NORMAL_PLAYER_SEEDS;
         if (NMOS_LOW_SIDE_SWITCH.equals(familyId)) return NMOS_NORMAL_PLAYER_SEEDS;
-        return
-            LEGACY_NORMAL_PLAYER_SEEDS;
+        return BASE_NORMAL_PLAYER_SEEDS;
     }
 }

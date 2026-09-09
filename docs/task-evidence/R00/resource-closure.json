@@ -1,0 +1,26 @@
+{
+  "protocol": "R00-RESOURCE-CLOSURE-1",
+  "status": "PASS",
+  "browser": "Task-created built-in tab closed",
+  "finalPreview": "Standard stop-preview.ps1 exited 0; PID 178148 terminated and port 8899 positively released",
+  "launcher": "Retained launcher execution exited 0",
+  "port8899Absent": true,
+  "previewStateAbsent": true,
+  "earlierFallback": {
+    "phase": "standard-preview-cleanup",
+    "operation": "exact task-launch PID/start/executable/command/parent-ID revalidation, native retained Process stop",
+    "proofElapsedMs": 74,
+    "proofLimitMs": 500,
+    "processAbsent": true,
+    "listenerAbsent": true,
+    "stateRemoved": true,
+    "status": "PASS",
+    "standardStopScript": "FAILED: launcher parent already absent; not relabeled PASS"
+  },
+  "nativeScratch": "Removed by maintained current runner, exit 0",
+  "failedBuildScratch": "Verified task-owned directory removed; original diagnostic process absent",
+  "curationScratch": "35 task-owned files (2919615 bytes), no reparse points; removed after evidence curation and completed review",
+  "workers": "All five assignments completed; no active worker-owned processes or scratch reported",
+  "unresolvedOwnedResources": "NONE",
+  "unrelatedResources": "Untouched"
+}

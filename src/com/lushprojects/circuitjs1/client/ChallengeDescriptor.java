@@ -12,18 +12,18 @@ import java.util.Map;
  * it before generation.</p>
  */
 final class ChallengeDescriptor {
-    static final int SCHEMA_VERSION = 1;
-    static final String LEGACY_GENERATOR_ID = "legacy-leaf";
-    static final int LEGACY_GENERATOR_VERSION = 1;
-    /** A02 corrects seeded placement/ranking; package geometry remains v3. */
-    static final int CORRECTED_SEEDED_GENERATOR_VERSION = 2;
-    static final String LEGACY_DIFFICULTY_ID = "legacy-default";
-    static final int LEGACY_DIFFICULTY_VERSION = 1;
-    static final int LEGACY_INTENT_VERSION = 1;
-    static final int LEGACY_GEOMETRY_VERSION = 3;
+    /** Current challenge descriptor epoch.  Older encodings are retired. */
+    static final int SCHEMA_VERSION = 2;
+    static final String LEAF_GENERATOR_ID = "leaf";
+    static final int LEAF_GENERATOR_VERSION = 1;
+    static final String QUICK_PLAY_DIFFICULTY_ID = "quick-play";
+    static final int QUICK_PLAY_DIFFICULTY_VERSION = 1;
+    static final int LEAF_INTENT_VERSION = 1;
+    /** Geometry contract is independent from the current layout algorithm. */
+    static final int GEOMETRY_VERSION = 3;
 
     private static final int MAX_ENCODING_LENGTH = 8192;
-    private static final String HEADER = "tsj-challenge/1";
+    private static final String HEADER = "tsj-challenge/2";
     private static final String[] FIELD_ORDER = {
         "constraints",
         "device-intent",
@@ -145,26 +145,16 @@ final class ChallengeDescriptor {
                 "constraints");
     }
 
-    static ChallengeDescriptor legacy(String familyId, long seed) {
+    /** Build the one current descriptor used by all replayable leaf families. */
+    static ChallengeDescriptor current(String familyId, long seed) {
         return new ChallengeDescriptor(
                 SCHEMA_VERSION,
                 seed,
-                new VersionedId(LEGACY_GENERATOR_ID,
-                        LEGACY_GENERATOR_VERSION),
-                new VersionedId(familyId, LEGACY_INTENT_VERSION),
-                new VersionedId(LEGACY_DIFFICULTY_ID,
-                        LEGACY_DIFFICULTY_VERSION),
-                new PcbGeometryContractVersion(LEGACY_GEOMETRY_VERSION),
-                GenerationConstraints.unspecified());
-    }
-
-    /** Current seeded leaf algorithm, with unchanged electrical/package inputs. */
-    static ChallengeDescriptor correctedSeeded(String familyId, long seed) {
-        return new ChallengeDescriptor(SCHEMA_VERSION, seed,
-                new VersionedId(LEGACY_GENERATOR_ID, CORRECTED_SEEDED_GENERATOR_VERSION),
-                new VersionedId(familyId, LEGACY_INTENT_VERSION),
-                new VersionedId(LEGACY_DIFFICULTY_ID, LEGACY_DIFFICULTY_VERSION),
-                new PcbGeometryContractVersion(LEGACY_GEOMETRY_VERSION),
+                new VersionedId(LEAF_GENERATOR_ID, LEAF_GENERATOR_VERSION),
+                new VersionedId(familyId, LEAF_INTENT_VERSION),
+                new VersionedId(QUICK_PLAY_DIFFICULTY_ID,
+                        QUICK_PLAY_DIFFICULTY_VERSION),
+                new PcbGeometryContractVersion(GEOMETRY_VERSION),
                 GenerationConstraints.unspecified());
     }
 

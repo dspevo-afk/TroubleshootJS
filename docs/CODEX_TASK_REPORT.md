@@ -1,6 +1,102 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A04 COMPLETE - QUALIFIED - 2026-09-09
+## Current checkpoint - R00 COMPLETE - QUALIFIED - 2026-09-09
+
+- **Scope/base:** Implement the authorized current-only baseline and all three
+  A04 physical-provider hardening follow-ups. Branch
+  `codex/task43p-final-recovery`, entry HEAD
+  `cc3532e8d138424ce986aa8f9b76688ec315f0a0`, configured upstream
+  `origin/codex/task43p-final-recovery`. The only entry change was the owner's
+  complete Edition 3.0 `docs/ROADMAP.md`; no untracked paths were present.
+- **Current contract:** Keep six useful leaf families, the simple resistive
+  composition and the controlled indicator with one resolved value recipe.
+  Retire historical descriptor/layout/fixed-value interpretations and aliases.
+  Use current semantic identities and explicit device buses, with separate
+  physical-conductor and solver bindings. A05 remains UNSTARTED.
+- **Candidate:** Final production source SHA-256
+  `e36de0c9eb252cf11ebc460e191773f31b59e1cae46f688bc8d24a0646d0b8d3`;
+  final script digest `698ee53a80af274e1e941199a3f11e226d431b2a88892c69e98e020fd10b0d25`.
+  The containing Git commit identifies the complete candidate; compact
+  evidence is indexed in [R00/README.md](task-evidence/R00/README.md).
+- **Hardening:** A validates exact component/package/unit/pad/net/terminal
+  correspondence; B validates precise secondary/attachment/fault backing;
+  C requires coherent plan/spec/metadata/runtime and the context's exact
+  issued receipt before mutation. Swapped/foreign/equal-valued attempts,
+  copied and aborted receipts reject. Positive bridges, canonical pad
+  endpoints and same-board context abort isolation remain qualified.
+- **Native/build:** PASS, exit 0 and cleanup PASS: 14 Java suites, independent
+  22 seed / 8 value vectors; final actual JDK 8u502/GWT2.7 build, five OBF
+  permutations (61.327 s compile, 1.353 s link). The final A02 report-reader
+  correction separately passes 114 protocol assertions, including rejection
+  of retired/unknown, failed and unfinished reports.
+- **Compiled:** All nine selected current routes PASS through built-in Browser
+  and the maintained report predicates, including expected forced failure and
+  debug-off privacy. Exact JVM/GWT identity, seed and resolved-recipe parity
+  passes. Task47/48/49: 2305/755/910 assertions with real measurement/repair
+  and cleanup checks. A04: 336 context / 404 runtime assertions, six current
+  construction cases; prior owners restored and cleanup PASS.
+- **Player/reuse:** Ordinary composed diagnosis, wrong repair rejected,
+  correct repair verified, HIGH/LOW, power/reset and active-meter cleanup
+  PASS; all six affected normal leaf routes PASS. Five real screenshots are
+  curated. Player evidence predates only developer-only Task47 oracle edits;
+  final compiled Java is freshly exercised. The last pure A02 report-reader
+  edit leaves source/web bytes unchanged, so build/native/browser evidence
+  is reused after an exact dependency audit and fresh reader validation.
+- **Review:** Fresh non-author Luna MAX integrated and corrective reviews
+  PASS; no unresolved blocker. Four authors and the reviewer completed their
+  assignments. The spawn interface exposes no speed control; default was used.
+- **Limitations:** The isolated CLI wrapper remains BLOCKED: two exit-2
+  failures exceeded the unchanged 500 ms port-ownership deadline before
+  application checks; both cleaned up. Equivalent product evidence does not
+  certify that wrapper. Initial build and preview-stop environment failures,
+  their diagnosis and exact cleanup are documented. Core isolation/build/
+  preview files are unchanged from A04. Historical matrices are NOT RUN and
+  are not R00 gates. A05 integration and arbitrary multi-unit runtime support
+  are not claimed.
+- **Resources/publication:** Final task-owned Browser tab, preview and
+  launcher are closed; standard stop positively released port 8899. All owned
+  execution/evidence scratch is removed; resource closure PASS. Root owns final Git audit,
+  normal push and completion email; their exact outcomes and SHA appear in
+  the final handoff after remote verification.
+- **Next:** A05 is the next unstarted milestone and requires its own request.
+
+### R00 retirement inventory and closed validation set
+
+| Actual entry path | Classification and current disposition |
+| --- | --- |
+| `ChallengeDescriptor` schema1; `LegacyChallengeReplay` old/corrected dispatch | Obsolete interpretations: schema2 and one current leaf resolver; old/unknown artifacts reject before allocation. Keep all six useful leaf families and exact signed-long transport. |
+| `SeededPcbLayoutGenerator` algorithms3/4; `PcbBoardLayout` old default and bend/snapshot branches | Obsolete revisions: retain corrected connected placement and direction bends as the only implementation, including fixed and composed callers. Keep independent geometric invariants rather than old coordinates. |
+| `BoundedAssemblyRequest/Plan` generator1/2/3 | Obsolete generator revisions: generator4 distinguishes current resistive and controlled intents; controlled uses the resolved recipe. Fixed numerical inputs remain only where useful to current tests. |
+| Resistive `ComposedBlockContribution` OPEN/high-resistance wrapper | Obsolete interpretation: declare `INCORRECT_RESISTANCE`, target `R1`, effect 100000 ohms at source; selection, injection and repair consume that declaration. |
+| `BlockNamespace`, `DeviceBusBindings`, DSU BoardNet projection | Current semantic identities and logical-bus mappings stay; remove duplicate historical-report translations and use explicit buses in current consumers. Live solver and physical ownership remain distinct. |
+| `A03RealizationReplay`, `RealizationManifest` | Current reconstruction/diagnostic data stays; retire multi-version resolution and unconsumed future state scaffolding. Current JVM/GWT identity parity remains an oracle. |
+| Controlled provider family-ID remap; fixed/resolved load registrations | Obsolete aliases/revisions: use actual provider IDs and one current resolved load provider. Preserve useful resistive and controlled content. |
+| Physical declarations/materializer/provider ordering | Current construction boundary: enumerate declared nets/parts/owners deterministically; remove generic family/net/stage knowledge and history-only ordering. |
+| Physical pad/package/terminal, helper/attachment/fault and receipt checks | Current integrity requirements: exact declared relationships and live ownership, with mismatches rejected before physical mutation. Keep explicit device bridges and bounded shared-package data controls. |
+| Rejecting placements; implicit `BoardComponent`/package factories; duplicate accessor aliases | Obsolete APIs: migrate current callers to explicit packages, then remove dead constructors/aliases. |
+| Historical report/golden equality and duplicate revision wrappers | Obsolete acceptance: remove after retaining seed, geometry, electrical, fault/repair, ownership and cleanup coverage in the maintained current suite. |
+| CircuitJS numerics, build chain, strict preview/isolation implementation | Unrelated infrastructure: retain; reuse qualification only for audited unchanged dependencies. |
+
+| Retired test cluster | Useful current coverage and replacement |
+| --- | --- |
+| Historical descriptor/generator successes and leaf revision replay | `Task46ContractVectors`, `A02ReplayContractTest` and current leaf replay retain exact signed seeds, determinism and concern isolation; retired schemas/epochs reject. Current JVM/GWT parity compares the same candidate, without historical fixtures. |
+| Old layout coordinates, bend scores and report snapshots | `A02GeometryContractTest` checks crossings, connected placement, package-backed pads and physical silkscreen labels, including long semantic IDs at seed 1. Six current leaf families remain in the candidate/replay corpus. |
+| Task47/Task48 golden receipts and fixed-versus-resolved interpretation parity | Current resistive/controlled assembly and switched-port tests retain typed connections, explicit bus equivalence, owner targets, permutation stability and rejection cases. Compiled checks retain solver behavior and repair; obsolete Python report encoders are retired. |
+| Historical Task49 descriptor bytes and duplicate getter aliases | Current value tests and the independent Python catalog/equation oracle cover eight explicit seeds, signed-long boundaries, admissible values, margins, typed request facts and independent fault/value streams. |
+| A03 historical report IDs, multi-version pins and future save-state fields | Shared identity vectors and native/compiled current manifests retain collision rejection, canonical capture/reconstruction and unsupported-input rejection. Logical buses, physical conductors and solver nodes remain separate domains. |
+| Old intermediate construction counts, stage order and mutable-first inventory order | Current spec-derived completeness and independent terminal fixtures replace incidental counts. A04 negative controls exercise the actual declaration/materializer boundary, exact component/terminal backings, aborted receipts and distinct construction attempts. |
+| Duplicate native milestone launchers | One `verify-current-contracts.ps1` compiles current client sources once and runs 14 Java suites, independent seed/value oracles and the maintained browser report protocol check. The unrelated Task35 JVM stub still fails closed; actual production GWT code is built separately. |
+
+| Required gate | Production path / verifier and oracle | Environment / scope |
+| --- | --- | --- |
+| Current pure contracts | `scripts/verify-current-contracts.ps1`; current descriptor/seed vectors, independent Python seed/value equations, independent geometry and terminal fixtures, provider mismatch controls | Explicit repository JDK8; installed Python; owned OS-temp outputs. Signed-long boundaries and named concerns; current resistive and controlled recipes. |
+| Final production build | `scripts/build.ps1 -JavaHome <verified-jdk8> -Style OBF -Target Compile` | Actual JDK 8u502/GWT2.7, five production permutations; final integrated source only. |
+| Compiled current behavior | Current compiled identity, construction, physical-truth, composed repair and lifecycle developer checks; selected current report protocol with forced-failure and debug-off controls | Built preview; exact source/execution identity; solver numerical tolerances and independent terminal relationships, not old report bytes/stage counts. |
+| Visible player flow | Current controlled indicator through ordinary diagnosis, wrong repair, valid repair, customer retest, power/reset; affected normal leaf routes | Built-in Browser preferred; real visible input, curated screenshots. Setup route and normal-menu availability reported separately. |
+| Independent review | Fresh non-author Luna MAX read-only integrated diff review plus targeted deltas | Original R00 requirement, retirement mapping, current checks and evidence; no author self-approval. |
+| Reconciliation/publication | Whitespace/staged/unstaged audit, normal configured-upstream push and remote SHA verification, then established Gmail notification | Root only; preserve unrelated work and precisely owned cleanup. |
+
+## Historical checkpoint - A04 COMPLETE - QUALIFIED - 2026-09-09
 
 - **Scope/base:** Provider-owned electrical construction for existing bounded versions 1/2/3 on `codex/task43p-final-recovery`, above accepted A03 `1d995d4f5b21142d4ca5643ede546afdfe51340f`. A05 and later milestones remain UNSTARTED.
 - **Implementation:** Plan-owned immutable electrical spec; scoped local providers; exact device-owned bridges; one global candidate allocation/binding context; provider-declared physical parts and a generic bounded materializer. No new family, solver, UI, importer, or general rollback framework.

@@ -23,10 +23,9 @@ final class A02CorrectnessDeveloperVerifier {
             "ready normal owner required");
         GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "a02-entry");
         require(sim.isGeneratedRuntimeSettled(), "settled normal owner required");
-        boolean seededLayout = QuickPlayFamilyRegistry.usesSeededLayout(owner.getCircuitFamilyId());
-        require(!seededLayout ||
-            owner.getPcbLayout().getLayoutAlgorithmVersion() == SeededPcbLayoutGenerator.CURRENT_VERSION,
-            "ordinary generation did not reach corrected seeded geometry");
+        require(owner.getPcbLayout().getLayoutAlgorithmVersion() ==
+            SeededPcbLayoutGenerator.CURRENT_VERSION,
+            "ordinary generation did not reach current geometry");
         Task41SimulationSnapshot original = Task41SimulationSnapshot.capture(sim);
         Vector<GeneratedBoardInstance> detached = new Vector<GeneratedBoardInstance>();
         String result = null;
@@ -53,50 +52,38 @@ final class A02CorrectnessDeveloperVerifier {
             require(provedKeys.contains(selectedKey), "selected hypothesis absent from exact proof");
             verifyUnserviceableExclusion(owner);
 
-            ChallengeDescriptor oldDescriptor = ChallengeDescriptor.legacy(
-                owner.getCircuitFamilyId(), owner.getSeed());
-            ChallengeDescriptor newDescriptor = seededLayout ? ChallengeDescriptor.correctedSeeded(
-                owner.getCircuitFamilyId(), owner.getSeed()) : oldDescriptor;
-            GeneratedBoardInstance legacy = LegacyChallengeReplay.generate(
-                ChallengeDescriptor.parse(oldDescriptor.toCanonical()));
-            detached.add(legacy);
-            GeneratedBoardInstance corrected = LegacyChallengeReplay.generate(
-                ChallengeDescriptor.parse(newDescriptor.toCanonical()));
-            detached.add(corrected);
-            require(legacy != corrected && legacy != owner && corrected != owner,
-                "replay reused a mutable owner");
-            legacy.getPcbLayout().validateGeometry(legacy.getBoard());
-            corrected.getPcbLayout().validateGeometry(corrected.getBoard());
-            require(legacy.getPcbLayout().getLayoutAlgorithmVersion() == 3 &&
-                corrected.getPcbLayout().getLayoutAlgorithmVersion() == (seededLayout ? 4 : 3),
-                "descriptor lost explicit geometry algorithm dispatch");
-            require(corrected.getPcbLayout().geometryFingerprint().equals(
-                owner.getPcbLayout().geometryFingerprint()), "normal/replayed corrected geometry differs");
-            require(selectedKey.equals(legacy.getFaultBinding().getFault().getHypothesisKey()) &&
-                selectedKey.equals(corrected.getFaultBinding().getFault().getHypothesisKey()),
-                "geometry version changed the retained fault selection");
-            require(legacy.getDiagnosticSolvabilityContract().getHypothesisKeys().equals(
-                corrected.getDiagnosticSolvabilityContract().getHypothesisKeys()),
-                "legacy/current hypothesis population differs unexpectedly");
-            sim.installGeneratedChallengeForDeveloperVerification(legacy);
-            GeneratedRuntimeDeveloperSettlement.settle(sim, legacy, "a02-legacy-admission");
-            Task41DeveloperVerifier.verifyAdmissionRoute(sim, legacy,
+            ChallengeDescriptor descriptor = ChallengeDescriptor.parse(
+                ChallengeDescriptor.current(owner.getCircuitFamilyId(), owner.getSeed())
+                    .toCanonical());
+            GeneratedBoardInstance replay = LeafChallengeReplay.generate(descriptor);
+            detached.add(replay);
+            require(replay != owner, "replay reused a mutable owner");
+            replay.getPcbLayout().validateGeometry(replay.getBoard());
+            require(replay.getPcbLayout().getLayoutAlgorithmVersion() ==
+                SeededPcbLayoutGenerator.CURRENT_VERSION,
+                "current descriptor did not select current geometry algorithm");
+            require(replay.getPcbLayout().geometryFingerprint().equals(
+                owner.getPcbLayout().geometryFingerprint()), "normal/replayed geometry differs");
+            require(selectedKey.equals(replay.getFaultBinding().getFault().getHypothesisKey()),
+                "current replay changed the retained fault selection");
+            sim.installGeneratedChallengeForDeveloperVerification(replay);
+            GeneratedRuntimeDeveloperSettlement.settle(sim, replay, "a02-current-replay");
+            Task41DeveloperVerifier.verifyAdmissionRoute(sim, replay,
                 sim.getGeneratedChallengeController());
             require(Task41DeveloperVerifier.getLastAdmissionEvidenceForDeveloperVerification()
-                .size() == admittedKeys.size(), "legacy proof lost admitted hypotheses");
+                .size() == admittedKeys.size(), "current replay lost admitted hypotheses");
             original.restore(sim);
             original.assertRestored(sim);
-            result = "{\"protocol\":\"TSJ-A02-1\",\"status\":\"PASS\",\"family\":" +
+            result = "{\"protocol\":\"TSJ-A02-2\",\"status\":\"PASS\",\"family\":" +
                 q(owner.getCircuitFamilyId()) + ",\"seed\":" + q(Long.toString(owner.getSeed())) +
                 ",\"hypothesisCount\":" + admittedKeys.size() + ",\"physicalOwnerCount\":" +
                 owner.getDiagnosticSolvabilityContract().getAdmittedPhysicalOwnerCount() +
                 ",\"admittedKeys\":" + strings(admittedKeys) + ",\"provedKeys\":" + strings(provedKeys) +
                 ",\"selectedHypothesisKey\":" + q(selectedKey) +
                 ",\"compatibleUnserviceableExcluded\":true,\"crossRuntimeHypothesisKey\":true," +
-                "\"legacy\":" + geometry(legacy, oldDescriptor) +
-                ",\"corrected\":" + geometry(corrected, newDescriptor) +
-                ",\"normalGeometryMatchesCorrectedReplay\":true," +
-                "\"geometryAndProbeValidation\":true,\"legacyAdmissionProof\":true," +
+                "\"current\":" + geometry(replay, descriptor) +
+                ",\"normalGeometryMatchesCurrentReplay\":true," +
+                "\"geometryAndProbeValidation\":true,\"currentAdmissionProof\":true," +
                 "\"originalOwnerRestored\":true," +
                 "\"candidateCleanup\":\"PASS\"}";
         } catch (Throwable failure) {

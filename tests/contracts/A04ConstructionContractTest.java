@@ -148,8 +148,9 @@ public final class A04ConstructionContractTest {
                 && load.getVersion() == 1, "resistive load provider identity");
         check("nmos-low-side-driver".equals(driver.getProviderId())
                 && driver.getVersion() == 1, "controlled driver provider identity");
-        check("resistor-led-load".equals(controlledLoad.getProviderId())
-                && controlledLoad.getVersion() == 1,
+        check(ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(
+                controlledLoad.getProviderId())
+                && controlledLoad.getVersion() == ControlledIndicatorBlockContributions.LOAD_VERSION,
                 "controlled load provider identity");
         check(StandardElectricalConstructionProviders.provider(
                 source.getProviderId(), source.getVersion()) == source,
@@ -178,9 +179,9 @@ public final class A04ConstructionContractTest {
         }, "unsupported provider version lookup");
     }
 
-    /** Check all three real plan families against independent electrical facts. */
+    /** Check the current resistive and controlled plans against independent electrical facts. */
     private static void planSpecAndElectricalCorrespondence() {
-        for (int version = 1; version <= 3; version++) {
+        for (int version : new int[] { 1, BoundedAssemblyRequest.GENERATOR_VERSION }) {
             BoundedAssemblyPlan plan = planFor(version, version);
             ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
             check(spec != null && spec.getVersion() == ElectricalRealizationSpec.VERSION,
@@ -211,16 +212,16 @@ public final class A04ConstructionContractTest {
             mapCompleteness(spec, "v" + version);
             reservationAndSupplyCorrespondence(spec, version);
 
-            if (version == 3) {
+            if (version != 1) {
                 ControlledIndicatorValueSynthesis.ResolvedRecipe planRecipe =
                         plan.getResolvedLoadRecipe();
                 check(planRecipe != null && spec.getResolvedLoadRecipe() == planRecipe,
-                        "v3 recipe was not passed through by object identity");
-                check(plan.getLoad().getResolvedRecipe() == planRecipe,
-                        "v3 load contribution does not retain the plan recipe identity");
+                        "current controlled recipe was not passed through by object identity");
+                check(plan.getLoad().getResolvedValueRecipe() == planRecipe,
+                        "current controlled load contribution does not retain the plan recipe identity");
             } else {
                 check(spec.getResolvedLoadRecipe() == null,
-                        "non-v3 spec unexpectedly synthesized a resolved recipe");
+                        "resistive spec unexpectedly synthesized a resolved recipe");
             }
         }
     }
@@ -253,7 +254,8 @@ public final class A04ConstructionContractTest {
     private static void assertControlledDeclarations(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec, int version) {
         provider(spec, "driver", "nmos-low-side-driver", 1);
-        provider(spec, "load", "resistor-led-load", version == 3 ? 2 : 1);
+        provider(spec, "load", "resistor-led-load",
+                ControlledIndicatorBlockContributions.LOAD_VERSION);
         element(spec, "driver", "RG", "RESISTOR", "1", 0, "2", 1);
         element(spec, "driver", "RPD", "RESISTOR", "1", 0, "2", 1);
         element(spec, "driver", "Q1", "NMOS", "G", 0, "S", 1, "D", 2);
@@ -428,7 +430,7 @@ public final class A04ConstructionContractTest {
     }
 
     private static void a03ManifestReplayPreservation() {
-        for (int version = 1; version <= 3; version++) {
+        for (int version : new int[] { 1, BoundedAssemblyRequest.GENERATOR_VERSION }) {
             long seed = version;
             BoundedAssemblyPlan plan = planFor(version, seed);
             String canonical = A03RealizationReplay.capture(plan).toCanonical();
@@ -438,11 +440,13 @@ public final class A04ConstructionContractTest {
                     "A03 v" + version + " manifest bytes changed after parse");
             check(plan.getSemanticSignature().equals(replay.getSemanticSignature()),
                     "A03 v" + version + " replay changed resolved semantics");
-            check(parsed.getDescriptor().getGenerator().getVersion() == version
+            check(parsed.getDescriptor().getGenerator().getVersion() ==
+                    BoundedAssemblyRequest.GENERATOR_VERSION
                     && parsed.getDescriptor().getRootSeed() == seed,
-                    "A03 manifest changed generator version or exact seed for v" + version);
-            check(canonical.indexOf("generator=bounded-assembler@" + version) >= 0,
-                    "A03 manifest omitted the pinned generator version for v" + version);
+                    "A03 manifest changed current generator version or exact seed for route " + version);
+            check(canonical.indexOf("generator=bounded-assembler@" +
+                    BoundedAssemblyRequest.GENERATOR_VERSION) >= 0,
+                    "A03 manifest omitted the current pinned generator version for route " + version);
         }
     }
 
@@ -450,10 +454,8 @@ public final class A04ConstructionContractTest {
         BoundedAssemblyRequest request;
         if (version == 1)
             request = BoundedAssemblyRequest.forCanary(seed);
-        else if (version == 2)
+        else if (version == BoundedAssemblyRequest.GENERATOR_VERSION)
             request = BoundedAssemblyRequest.forControlledIndicator(seed);
-        else if (version == 3)
-            request = BoundedAssemblyRequest.forControlledIndicatorValues(seed);
         else
             throw new IllegalArgumentException("Unsupported A04 test version");
         return BoundedAssemblyPlan.resolve(request);
@@ -462,7 +464,8 @@ public final class A04ConstructionContractTest {
     private static PhysicalPackage packageOf(String id, String... terminalIds) {
         Vector<String> terminals = new Vector<String>();
         terminals.addAll(Arrays.asList(terminalIds));
-        return new PhysicalPackage(id, terminals, new Vector<String>());
+        return PhysicalPackage.developerPackageWithGenericGeometry(id, terminals,
+                new Vector<String>(), false);
     }
 
     private static Map<String, String> pairs(String... values) {

@@ -4,7 +4,6 @@ package com.lushprojects.circuitjs1.client;
 final class PcbGeometryContractVersion {
     /** The geometry contract currently used by production package definitions. */
     static final int CURRENT = 3;
-    static final int CURRENT_VALUE = CURRENT;
 
     private final int value;
 

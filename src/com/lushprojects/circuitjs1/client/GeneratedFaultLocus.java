@@ -98,8 +98,11 @@ final class GeneratedFaultLocus {
     }
 
     private static boolean isQualifiedComponentId(String value) {
+        if (BlockNamespace.isQualifiedId(value,
+                FunctionalBlockDescriptor.EntityKind.COMPONENT))
+            return true;
         String[] fields = value.split("/", -1);
-        if (fields.length != 5 || !"tsj-block-v1".equals(fields[0]) ||
+        if (fields.length != 5 || !"tsj-device-v1".equals(fields[0]) ||
                 !"component".equals(fields[3]))
             return false;
         int separator = fields[1].lastIndexOf('@');

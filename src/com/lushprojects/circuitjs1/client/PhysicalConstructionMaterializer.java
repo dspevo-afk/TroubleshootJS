@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.Vector;
 
 import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
@@ -26,22 +27,14 @@ final class PhysicalConstructionMaterializer {
             StandardPhysicalConstructionProviders.describe(plan);
         validateDeclarations(plan, spec, declarations);
 
-        TroubleshootBoard board = new TroubleshootBoard(plan.isControlledIndicator() ?
-            ControlledIndicatorDeviceBehavior.FAMILY_ID : "RESISTIVE_COUPLING");
-        addEnvelopeNets(plan, board);
+        TroubleshootBoard board = new TroubleshootBoard(declarations.getBoardFamilyId());
+        addEnvelopeNets(spec, board);
 
-        /* Keep the accepted component/slot order explicit; it is not identity. */
-        for (PhysicalConstructionPartDeclaration part : declarations.getSlotParts(
-                plan.isControlledIndicator()))
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts())
             board.addComponent(new BoardComponent(part.getComponentId(), part.getPublicType(),
                 part.getPhysicalPackage(), part.getDesignator()));
 
-        /* Controlled legacy board pads expose adapters before local parts. */
-        ArrayList<PhysicalConstructionPartDeclaration> padParts =
-            new ArrayList<PhysicalConstructionPartDeclaration>();
-        padParts.addAll(declarations.getDeviceParts());
-        padParts.addAll(declarations.getLocalParts());
-        for (PhysicalConstructionPartDeclaration part : padParts)
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts())
             for (PhysicalConstructionTerminalDeclaration terminal : part.getTerminals())
                 board.addPad(new BoardPad(terminal.getPadId(), part.getComponentId(),
                     terminal.getTerminalId(), terminal.getNetId()));
@@ -52,29 +45,20 @@ final class PhysicalConstructionMaterializer {
         board.validate();
 
         BoardPhysicalSpecifications specifications = new BoardPhysicalSpecifications();
-        for (PhysicalConstructionPartDeclaration part : padParts)
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts())
             specifications.addPhysicalDefinition(part.getComponentId(),
                 part.getSpecification(), part.getNameplate(), part.getPhysicalPackage());
         for (PhysicalExternalInputDeclaration input : declarations.getExternalInputs())
             specifications.addPowerInputNameplate(new PowerInputNameplate(input.getInputId(),
                 input.getNominalVoltage()));
         specifications.seal();
-        return new PhysicalConstructionMetadata(board, specifications, declarations);
+        return new PhysicalConstructionMetadata(plan, spec, board, specifications, declarations);
     }
 
-    private static void addEnvelopeNets(BoundedAssemblyPlan plan, TroubleshootBoard board) {
-        if (plan.isControlledIndicator()) {
-            addNet(board, plan.netFor("load", "SUPPLY"));
-            addNet(board, plan.netFor("driver", "CONTROL"));
-            addNet(board, plan.netFor("load", "LED_NODE"));
-            addNet(board, plan.netFor("driver", "SWITCHED_SINK"));
-            addNet(board, plan.netFor("driver", "GATE"));
-            addNet(board, plan.netFor("driver", "RETURN"));
-        } else {
-            addNet(board, plan.netFor("source", "SUPPLY"));
-            addNet(board, plan.netFor("source", "OUT"));
-            addNet(board, plan.netFor("source", "RETURN"));
-        }
+    private static void addEnvelopeNets(ElectricalRealizationSpec spec,
+            TroubleshootBoard board) {
+        for (String netId : spec.getExpectedNetIds())
+            addNet(board, netId);
     }
 
     private static void addNet(TroubleshootBoard board, String netId) {
@@ -87,16 +71,31 @@ final class PhysicalConstructionMaterializer {
             ConstructionReceipt constructionReceipt) {
         if (runtime == null || metadata == null || plan == null || constructionReceipt == null)
             throw new IllegalArgumentException("Physical materialization inputs are required");
+        ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
+        if (metadata.getPlan() != plan || metadata.getSpec() != spec ||
+                constructionReceipt.getSpec() != spec)
+            throw new IllegalArgumentException("Physical materialization provenance mismatch");
+        if (!constructionReceipt.belongsToFinishedContext(spec, metadata.getBoard()))
+            throw new IllegalArgumentException("Physical materialization receipt belongs to another construction context");
         if (constructionReceipt.isAborted())
             throw new IllegalStateException("Cannot materialize an aborted electrical receipt");
-        if (runtime.getBoard() != metadata.getBoard())
+        if (constructionReceipt.getBoard() != metadata.getBoard() ||
+                runtime.getBoard() != metadata.getBoard())
             throw new IllegalArgumentException("Physical runtime belongs to another board");
+        if (!runtime.getSlots().isEmpty() || !runtime.getPhysicalParts().isEmpty())
+            throw new IllegalStateException("Physical runtime has already been materialized");
 
         PhysicalConstructionDeclarations declarations = metadata.getDeclarations();
+        /* Metadata is an immutable value, but it is still an input boundary:
+         * callers must not be able to pair a valid board/receipt with a
+         * declaration graph that was assembled by another provider.  Re-run
+         * the exact package, terminal, backing, and fault correspondence
+         * proof immediately before the first runtime mutation. */
+        validateDeclarations(plan, spec, declarations);
         Vector<GeneratedFaultCandidate> candidates = new Vector<GeneratedFaultCandidate>();
         TreeMap<String, GeneratedFaultCandidate> candidatesByComponent =
             new TreeMap<String, GeneratedFaultCandidate>();
-        for (PhysicalConstructionPartDeclaration part : declarations.getLocalParts()) {
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts()) {
             if (!part.hasFault())
                 continue;
             GeneratedFaultCandidate candidate = createCandidate(part, plan, constructionReceipt);
@@ -117,8 +116,7 @@ final class PhysicalConstructionMaterializer {
         selected = GeneratedFaultEngine.selectHypothesis(selected.getHypothesisKey(), candidates);
 
         TreeMap<String, PhysicalBoardSlot> slots = new TreeMap<String, PhysicalBoardSlot>();
-        for (PhysicalConstructionPartDeclaration part : declarations.getSlotParts(
-                plan.isControlledIndicator())) {
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts()) {
             if (slots.put(part.getComponentId(), runtime.createSlot(part.getComponentId())) != null)
                 throw new IllegalStateException("Duplicate physical slot declaration: " +
                     part.getComponentId());
@@ -128,20 +126,22 @@ final class PhysicalConstructionMaterializer {
             new TreeMap<String, BoundedGeneratedBoardAssembler.RuntimeTarget>();
         TreeMap<String, LEDElm> operationalLeds = new TreeMap<String, LEDElm>();
 
-        /* Append-only runtime order is part of the accepted physical receipt. */
-        for (PhysicalConstructionPartDeclaration part : declarations.getLocalParts())
+        /* Materialization follows the provider-declared board inventory.  The
+         * part policy selects the operation; category ordering is not a
+         * historical identity contract. */
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts()) {
             if (part.isMutableResistor())
                 materializeMutable(runtime, slots.get(part.getComponentId()), part, plan,
                     constructionReceipt, candidatesByComponent, selected, runtimeTargets);
-        for (PhysicalConstructionPartDeclaration part : declarations.getSlotParts(
-                plan.isControlledIndicator()))
-            if (!part.isMutableResistor())
+            else
                 materializeFixed(runtime, slots.get(part.getComponentId()), part,
                     constructionReceipt, operationalLeds);
+        }
 
         runtime.validateSupportedCompositionProviders();
         runtime.validate();
-        return new PhysicalMaterializationReceipt(runtime, runtimeTargets,
+        return new PhysicalMaterializationReceipt(plan, spec, constructionReceipt, runtime,
+            runtimeTargets,
             new ArrayList<GeneratedFaultCandidate>(candidates), selected, operationalLeds);
     }
 
@@ -251,7 +251,7 @@ final class PhysicalConstructionMaterializer {
                 part.getRepairComponentId());
         runtimeTargets.put(part.getOwnerKey(), new BoundedGeneratedBoardAssembler.RuntimeTarget(
             part.getOwnerKey(), part.getComponentId(), slot.getId(), original.getId(),
-            inventoryId, capabilityId, part.getRuntimeProviderId(),
+            inventoryId, capabilityId, part.getProviderId(),
             candidate.getFault().getId(), part.getRepairComponentId(), repairSlot.getId()));
     }
 
@@ -285,18 +285,20 @@ final class PhysicalConstructionMaterializer {
         return handle.getElement();
     }
 
-    private static void validateDeclarations(BoundedAssemblyPlan plan,
+    /**
+     * Validates provider declarations at the physical mutation boundary.
+     * Package-private visibility lets the native contract exercise this exact
+     * pre-mutation gate with deliberately foreign declarations.
+     */
+    static void validateDeclarations(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec, PhysicalConstructionDeclarations declarations) {
-        ArrayList<PhysicalConstructionPartDeclaration> all =
-            new ArrayList<PhysicalConstructionPartDeclaration>();
-        all.addAll(declarations.getLocalParts());
-        all.addAll(declarations.getDeviceParts());
-        if (all.size() != spec.getPackageMap().getPackageCount() ||
-                all.size() != spec.getPackageMap().getUnitCount())
+        List<PhysicalConstructionPartDeclaration> all = declarations.getBoardParts();
+        if (all.size() != spec.getPackageMap().getPackageCount())
             throw new IllegalStateException("Physical declaration/package count mismatch");
         TreeMap<String, PhysicalConstructionPartDeclaration> byComponent =
             new TreeMap<String, PhysicalConstructionPartDeclaration>();
         Set<String> padIds = new HashSet<String>();
+        Set<String> actualFaultComponents = new HashSet<String>();
         for (PhysicalConstructionPartDeclaration part : all) {
             if (byComponent.put(part.getComponentId(), part) != null)
                 throw new IllegalStateException("Duplicate physical component declaration: " +
@@ -316,163 +318,220 @@ final class PhysicalConstructionMaterializer {
                     part.getProviderVersion() != provider.getProviderVersion())
                 throw new IllegalStateException("Physical provider identity changed: " +
                     part.getComponentId());
-            ElectricalUnitPackageMap.Unit unit = unitFor(spec, part.getComponentId());
-            if (unit == null || !part.getOwnerKey().equals(unit.getOwnerKey()))
-                throw new IllegalStateException("Physical unit owner mismatch: " +
+            List<ElectricalUnitPackageMap.Unit> units = unitsFor(spec, part.getComponentId());
+            if (units.isEmpty())
+                throw new IllegalStateException("Physical component has no electrical unit: " +
                     part.getComponentId());
-            for (PhysicalConstructionTerminalDeclaration terminal : part.getTerminals()) {
-                String mappedPackageTerminal = unit.getPackageTerminalByUnitTerminal().get(
-                    terminal.getTerminalId());
-                if (!part.getPhysicalPackage().getTerminalIds().contains(
-                        terminal.getPackageTerminalId()) ||
-                        mappedPackageTerminal == null ||
-                        !mappedPackageTerminal.equals(terminal.getPackageTerminalId()) ||
-                        !padIds.add(terminal.getPadId()))
-                    throw new IllegalStateException("Incomplete physical terminal declaration: " +
+            for (ElectricalUnitPackageMap.Unit unit : units)
+                if (!part.getOwnerKey().equals(unit.getOwnerKey()))
+                    throw new IllegalStateException("Physical unit owner mismatch: " +
                         part.getComponentId());
-            }
+            validateTerminals(spec, part, units, padIds);
             validateBacking(spec, part);
-            validateFaultDeclaration(plan, spec, part);
+            validateFaultDeclaration(spec, part, provider);
+            if (part.hasFault()) actualFaultComponents.add(part.getComponentId());
         }
         if (!byComponent.keySet().equals(spec.getPackageMap().getPackages().keySet()))
             throw new IllegalStateException("Physical declarations do not cover package map");
-        validateFaultOwnerSet(plan, declarations);
-        validateInputDeclarations(plan, declarations);
+        Set<String> expectedFaultComponents = new HashSet<String>(
+            plan.getDecisionOwners().values());
+        if (!expectedFaultComponents.equals(actualFaultComponents))
+            throw new IllegalStateException("Physical fault declaration set changed");
+        validateInputDeclarations(spec, declarations);
     }
 
-    /**
-     * The contribution's fault metadata is not an authority for physical
-     * ownership.  Reconcile it with the accepted versioned assembler mapping
-     * so a malformed provider cannot make a self-consistent but foreign
-     * candidate declaration pass validation.
-     */
-    private static void validateFaultDeclaration(BoundedAssemblyPlan plan,
-            ElectricalRealizationSpec spec, PhysicalConstructionPartDeclaration part) {
-        if (!part.hasFault())
-            return;
-        ElectricalRealizationSpec.ProviderDeclaration provider =
-            spec.getProviderDeclaration(part.getOwnerKey());
-        if (provider == null || provider.getContribution() == null)
+    private static List<ElectricalUnitPackageMap.Unit> unitsFor(
+            ElectricalRealizationSpec spec, String componentId) {
+        ArrayList<ElectricalUnitPackageMap.Unit> result =
+            new ArrayList<ElectricalUnitPackageMap.Unit>();
+        for (ElectricalUnitPackageMap.Unit unit : spec.getPackageMap().getUnits().values())
+            if (componentId.equals(unit.getComponentId())) result.add(unit);
+        return result;
+    }
+
+    private static void validateTerminals(ElectricalRealizationSpec spec,
+            PhysicalConstructionPartDeclaration part,
+            List<ElectricalUnitPackageMap.Unit> units, Set<String> padIds) {
+        TreeSet<String> expectedTerminals = new TreeSet<String>();
+        TreeSet<String> expectedPackageTerminals = new TreeSet<String>();
+        for (ElectricalUnitPackageMap.Unit unit : units) {
+            expectedTerminals.addAll(unit.getTerminalIds());
+            expectedPackageTerminals.addAll(unit.getPackageTerminalByUnitTerminal().values());
+        }
+        TreeSet<String> actualTerminals = new TreeSet<String>();
+        TreeSet<String> actualPackageTerminals = new TreeSet<String>();
+        for (PhysicalConstructionTerminalDeclaration terminal : part.getTerminals()) {
+            if (!terminal.hasElectricalProvenance() ||
+                    !part.getOwnerKey().equals(terminal.getOwnerKey()) ||
+                    !part.getComponentId().equals(terminal.getComponentId()))
+                throw new IllegalStateException("Physical terminal provenance changed: " +
+                    part.getComponentId());
+            ElectricalRealizationSpec.TerminalMapping mapping = spec.getTerminalMapping(
+                terminal.getOwnerKey(), terminal.getLocalId(), terminal.getTerminalId());
+            ElectricalRealizationSpec.PadBindingSpec pad = spec.getPadBinding(
+                terminal.getPadId());
+            if (mapping == null || pad == null ||
+                    !part.getComponentId().equals(mapping.getComponentId()) ||
+                    !part.getComponentId().equals(pad.getComponentId()) ||
+                    !terminal.getPackageTerminalId().equals(mapping.getPackageTerminalId()) ||
+                    !terminal.getPackageTerminalId().equals(pad.getTerminalId()) ||
+                    !terminal.getNetId().equals(mapping.getNetId()) ||
+                    !terminal.getNetId().equals(pad.getNetId()) ||
+                    !terminal.getOwnerKey().equals(pad.getOwnerKey()) ||
+                    !terminal.getLocalId().equals(pad.getLocalId()) ||
+                    !terminal.getTerminalId().equals(pad.getTerminalId()) ||
+                    !pad.getPadId().equals(terminal.getPadId()) ||
+                    !actualTerminals.add(terminal.getTerminalId()) ||
+                    !actualPackageTerminals.add(terminal.getPackageTerminalId()) ||
+                    !padIds.add(terminal.getPadId()))
+                throw new IllegalStateException("Incomplete physical terminal declaration: " +
+                    part.getComponentId());
+            boolean matchedUnit = false;
+            for (ElectricalUnitPackageMap.Unit unit : units) {
+                String packageTerminal = unit.getPackageTerminalByUnitTerminal().get(
+                    terminal.getTerminalId());
+                if (terminal.getPackageTerminalId().equals(packageTerminal)) {
+                    matchedUnit = true;
+                    break;
+                }
+            }
+            if (!matchedUnit)
+                throw new IllegalStateException("Physical terminal is absent from unit map: " +
+                    part.getComponentId() + "/" + terminal.getTerminalId());
+        }
+        if (!expectedTerminals.equals(actualTerminals) ||
+                !expectedPackageTerminals.equals(actualPackageTerminals) ||
+                !expectedPackageTerminals.equals(new TreeSet<String>(
+                    part.getPhysicalPackage().getTerminalIds())))
+            throw new IllegalStateException("Physical terminal set does not match package/unit map: " +
+                part.getComponentId());
+    }
+
+    private static void validateFaultDeclaration(ElectricalRealizationSpec spec,
+            PhysicalConstructionPartDeclaration part,
+            ElectricalRealizationSpec.ProviderDeclaration provider) {
+        if (!part.hasFault()) return;
+        if (provider.getContribution() == null)
             throw new IllegalStateException("Faulted physical part has no local contribution: " +
                 part.getComponentId());
         ComposedBlockContribution contribution = provider.getContribution();
         ComposedBlockContribution.FaultSpec fault = contribution.getFaultSpec();
-        boolean legacyResistive = !plan.isControlledIndicator() &&
-            plan.getRequest().getDescriptor().getGenerator().getVersion() ==
-                BoundedAssemblyRequest.GENERATOR_VERSION;
-        String targetLocalId = legacyResistive ? contribution.getRepairLocalComponentId() :
-            fault.getTargetComponentLocalId();
-        String expectedComponentId = plan.idFor(part.getOwnerKey(), EntityKind.COMPONENT,
-            targetLocalId);
-        ComposedBlockContribution.FaultSpec.Kind expectedKind = legacyResistive ?
-            ComposedBlockContribution.FaultSpec.Kind.INCORRECT_RESISTANCE : fault.getKind();
-        String expectedFamily = plan.isControlledIndicator() ?
-            ControlledIndicatorDeviceBehavior.FAMILY_ID : BoundedGeneratedBoardAssembler.FAMILY_ID;
+        String targetLocalId = fault.getTargetComponentLocalId();
+        String expectedComponentId = spec.getComponentId(provider.getOwnerKey(), targetLocalId);
         if (!expectedComponentId.equals(part.getComponentId()) ||
-                expectedKind != part.getFaultKind() ||
+                !expectedComponentId.equals(part.getRepairComponentId()) ||
+                fault.getKind() != part.getFaultKind() ||
                 !contribution.getFaultLocalId().equals(part.getFaultLocalId()) ||
                 contribution.getFaultEffectiveOhms() != part.getFaultEffectiveOhms() ||
-                !expectedFamily.equals(part.getFaultFamilyId()) ||
                 !part.getOwnerKey().equals(part.getRepairOwnerKey()) ||
                 !contribution.getRepairLocalComponentId().equals(
                     part.getRepairLocalComponentId()) ||
-                !plan.idFor(part.getOwnerKey(), EntityKind.COMPONENT,
-                    contribution.getRepairLocalComponentId()).equals(part.getRepairComponentId()))
+                !provider.getOwnerKey().equals(part.getOwnerKey()))
             throw new IllegalStateException("Physical fault declaration changed accepted ownership: " +
                 part.getComponentId());
-        if (expectedKind == ComposedBlockContribution.FaultSpec.Kind.OPEN) {
+        PhysicalConstructionProvider physicalProvider =
+            StandardPhysicalConstructionProviders.provider(provider.getProviderId(),
+                provider.getProviderVersion());
+        if (!physicalProvider.getFaultFamilyId().equals(part.getFaultFamilyId()))
+            throw new IllegalStateException("Physical fault family provenance changed: " +
+                part.getComponentId());
+        if (fault.getKind() == ComposedBlockContribution.FaultSpec.Kind.OPEN) {
             String faultElement = targetLocalId + "_FAULT_SWITCH";
-            String faultOwner = PhysicalConstructionProviderSupport.requireElementOwner(
-                spec, part.getOwnerKey(), faultElement);
+            String faultOwner = provider.getOwnerKey();
             if (!faultOwner.equals(part.getFaultOwnerKey()) ||
                     !faultElement.equals(part.getFaultElementId()))
                 throw new IllegalStateException("Physical open fault switch changed ownership: " +
                     part.getComponentId());
+            requireElement(spec, faultOwner, faultElement, "SWITCH", part.getComponentId());
         } else if (part.getFaultOwnerKey() != null || part.getFaultElementId() != null) {
             throw new IllegalStateException("Physical value fault unexpectedly has a switch: " +
                 part.getComponentId());
         }
     }
 
-    private static void validateFaultOwnerSet(BoundedAssemblyPlan plan,
-            PhysicalConstructionDeclarations declarations) {
-        Set<String> expected = new HashSet<String>();
-        String[] owners = plan.isControlledIndicator() ?
-            new String[] { "driver", "load" } : new String[] { "source", "load" };
-        boolean legacyResistive = !plan.isControlledIndicator() &&
-            plan.getRequest().getDescriptor().getGenerator().getVersion() ==
-                BoundedAssemblyRequest.GENERATOR_VERSION;
-        for (String owner : owners) {
-            ComposedBlockContribution contribution = plan.getBlocks().get(owner);
-            if (contribution == null)
-                throw new IllegalStateException("Missing physical fault contribution: " + owner);
-            String local = legacyResistive ? contribution.getRepairLocalComponentId() :
-                contribution.getFaultSpec().getTargetComponentLocalId();
-            expected.add(plan.idFor(owner, EntityKind.COMPONENT, local));
-        }
-        Set<String> actual = new HashSet<String>();
-        for (PhysicalConstructionPartDeclaration part : declarations.getLocalParts())
-            if (part.hasFault()) actual.add(part.getComponentId());
-        if (!expected.equals(actual))
-            throw new IllegalStateException("Physical fault owner set changed: expected " +
-                expected + " but found " + actual);
-    }
-
-    private static ElectricalUnitPackageMap.Unit unitFor(ElectricalRealizationSpec spec,
-            String componentId) {
-        ElectricalUnitPackageMap.Unit result = null;
-        for (ElectricalUnitPackageMap.Unit unit : spec.getPackageMap().getUnits().values())
-            if (componentId.equals(unit.getComponentId())) {
-                if (result != null)
-                    throw new IllegalStateException("Multiple physical units share an unsupported visible part: " +
-                        componentId);
-                result = unit;
-            }
-        return result;
-    }
-
     private static void validateBacking(ElectricalRealizationSpec spec,
             PhysicalConstructionPartDeclaration part) {
         ElectricalRealizationSpec.ElementDeclaration primary =
             spec.getElementDeclaration(part.getBackingOwnerKey(), part.getBackingElementId());
-        if (primary == null || (primary.getComponentId() != null &&
-                !part.getComponentId().equals(primary.getComponentId())))
-            throw new IllegalStateException("Foreign primary physical backing: " +
-                part.getComponentId());
         String expectedKind = "RESISTOR".equals(part.getPublicType()) ? "RESISTOR" :
             "NMOS_TRANSISTOR".equals(part.getPublicType()) ? "NMOS" :
             "LED".equals(part.getPublicType()) ? "LED" : "SWITCH";
-        if (!expectedKind.equals(primary.getKind()))
-            throw new IllegalStateException("Primary physical backing kind mismatch: " +
+        if (primary == null || !part.getComponentId().equals(primary.getComponentId()) ||
+                !expectedKind.equals(primary.getKind()))
+            throw new IllegalStateException("Foreign primary physical backing: " +
                 part.getComponentId());
-        if (part.hasSecondary())
-            requireElement(spec, part.getSecondaryOwnerKey(), part.getSecondaryElementId(),
-                "FAULT_HELPER");
+
+        String localId = part.getTerminals().get(0).getLocalId();
+        if (part.hasSecondary()) {
+            ElectricalRealizationSpec.ElementDeclaration secondary =
+                spec.getElementDeclaration(part.getSecondaryOwnerKey(), part.getSecondaryElementId());
+            ElectricalRealizationSpec.TerminalMapping mapping = spec.getTerminalMapping(
+                part.getOwnerKey(), localId, "2");
+            ElectricalRealizationSpec.EndpointRef endpoint = mapping == null ? null :
+                mapping.getComponentEndpoint();
+            if (secondary == null || !"FAULT_HELPER".equals(secondary.getKind()) ||
+                    !part.getComponentId().equals(secondary.getComponentId()) || endpoint == null ||
+                    !part.getSecondaryOwnerKey().equals(endpoint.getOwnerKey()) ||
+                    !part.getSecondaryElementId().equals(endpoint.getElementId()) ||
+                    !"2".equals(endpoint.getTerminalId()))
+                throw new IllegalStateException("Foreign secondary physical backing: " +
+                    part.getComponentId());
+        }
         if (part.hasAttachments()) {
-            requireElement(spec, part.getFirstAttachmentOwnerKey(),
-                part.getFirstAttachmentElementId(), "WIRE");
-            requireElement(spec, part.getSecondAttachmentOwnerKey(),
-                part.getSecondAttachmentElementId(), "WIRE");
+            validateAttachment(spec, part, part.getFirstAttachmentOwnerKey(),
+                part.getFirstAttachmentElementId(), true, localId);
+            validateAttachment(spec, part, part.getSecondAttachmentOwnerKey(),
+                part.getSecondAttachmentElementId(), false, localId);
         }
         if (part.hasFault()) {
             if (part.getFaultKind() == ComposedBlockContribution.FaultSpec.Kind.OPEN)
-                requireElement(spec, part.getFaultOwnerKey(), part.getFaultElementId(), "SWITCH");
+                requireElement(spec, part.getFaultOwnerKey(), part.getFaultElementId(),
+                    "SWITCH", part.getComponentId());
             if (part.getFaultKind() == ComposedBlockContribution.FaultSpec.Kind.INCORRECT_RESISTANCE &&
                     part.getFaultElementId() != null)
                 throw new IllegalStateException("Incorrect-resistance physical fault has switch backing");
         }
     }
 
-    private static void requireElement(ElectricalRealizationSpec spec, String owner,
-            String id, String kind) {
+    private static void validateAttachment(ElectricalRealizationSpec spec,
+            PhysicalConstructionPartDeclaration part, String owner, String id,
+            boolean first, String localId) {
         ElectricalRealizationSpec.ElementDeclaration declaration =
             spec.getElementDeclaration(owner, id);
-        if (declaration == null || !kind.equals(declaration.getKind()))
+        if (declaration == null || !"WIRE".equals(declaration.getKind()))
+            throw new IllegalStateException("Missing or foreign physical attachment " + owner +
+                "/" + id);
+        String expectedLocal = localId + (first ? "_FIRST_ATTACHMENT" : "_SECOND_ATTACHMENT");
+        if (part.getOwnerKey().equals(owner)) {
+            if (!expectedLocal.equals(id))
+                throw new IllegalStateException("Attachment identity changed for " +
+                    part.getComponentId());
+            return;
+        }
+        if (!"device".equals(owner))
+            throw new IllegalStateException("Foreign attachment owner for " + part.getComponentId());
+        ElectricalRealizationSpec.TerminalMapping mapping = spec.getTerminalMapping(
+            part.getOwnerKey(), localId, first ? "1" : "2");
+        ElectricalRealizationSpec.EndpointRef expected = mapping == null ? null :
+            mapping.getComponentEndpoint();
+        ElectricalRealizationSpec.BridgeSpec bridge = spec.getBridgeSpecs().get(id);
+        if (bridge == null || expected == null ||
+                !(expected.equals(bridge.getFirst()) || expected.equals(bridge.getSecond())))
+            throw new IllegalStateException("Device attachment is not a declared bridge for " +
+                part.getComponentId());
+    }
+
+    private static void requireElement(ElectricalRealizationSpec spec, String owner,
+            String id, String kind, String componentId) {
+        ElectricalRealizationSpec.ElementDeclaration declaration =
+            spec.getElementDeclaration(owner, id);
+        if (declaration == null || !kind.equals(declaration.getKind()) ||
+                (componentId != null && !componentId.equals(declaration.getComponentId())))
             throw new IllegalStateException("Missing or foreign physical backing " + owner +
                 "/" + id);
     }
 
-    private static void validateInputDeclarations(BoundedAssemblyPlan plan,
+    private static void validateInputDeclarations(ElectricalRealizationSpec spec,
             PhysicalConstructionDeclarations declarations) {
         Set<String> inputs = new HashSet<String>();
         for (PhysicalExternalInputDeclaration input : declarations.getExternalInputs()) {
@@ -481,52 +540,18 @@ final class PhysicalConstructionMaterializer {
                     input.getInputId());
             if (input.getPositivePadId().equals(input.getReturnPadId()))
                 throw new IllegalStateException("External input uses one pad twice");
-            validateInput(plan, input);
-        }
-        if (inputs.size() != (plan.isControlledIndicator() ? 2 : 1))
-            throw new IllegalStateException("Physical external input count changed");
-    }
-
-    private static void validateInput(BoundedAssemblyPlan plan,
-            PhysicalExternalInputDeclaration input) {
-        if (!"device".equals(input.getProviderOwnerKey()) ||
-                input.getNominalVoltage() != ElectricalRealizationSpec.EXTERNAL_SUPPLY_VOLTS)
-            throw new IllegalStateException("Physical external input ownership changed: " +
+            ElectricalRealizationSpec.PowerInputSpec expected = spec.getPowerInputs().get(
                 input.getInputId());
-        if (!plan.isControlledIndicator()) {
-            if (!BoundedGeneratedBoardAssembler.POWER_INPUT_ID.equals(input.getInputId()) ||
-                    !"J1.1".equals(input.getPositivePadId()) ||
-                    !"J1.2".equals(input.getReturnPadId()) ||
-                    !plan.netFor("source", "SUPPLY").equals(input.getPositiveNetId()) ||
-                    !plan.netFor("source", "RETURN").equals(input.getReturnNetId()))
-                throw new IllegalStateException("Legacy physical power input mapping changed");
-            return;
+            if (expected == null || !"device".equals(input.getProviderOwnerKey()) ||
+                    input.getNominalVoltage() != ElectricalRealizationSpec.EXTERNAL_SUPPLY_VOLTS ||
+                    !expected.getPositivePadId().equals(input.getPositivePadId()) ||
+                    !expected.getReturnPadId().equals(input.getReturnPadId()) ||
+                    !expected.getPositiveNetId().equals(input.getPositiveNetId()) ||
+                    !expected.getReturnNetId().equals(input.getReturnNetId()))
+                throw new IllegalStateException("Physical external input mapping changed: " +
+                    input.getInputId());
         }
-        String expectedInput;
-        String expectedAdapter;
-        String expectedOutputNet;
-        if (ControlledIndicatorDeviceBehavior.LOAD_POWER_INPUT_ID.equals(input.getInputId())) {
-            expectedInput = ControlledIndicatorDeviceBehavior.LOAD_POWER_INPUT_ID;
-            expectedAdapter = DeviceAdapterContract.POWER_ADAPTER_KEY;
-            expectedOutputNet = plan.netFor("load", "SUPPLY");
-        } else if (ControlledIndicatorDeviceBehavior.CONTROL_POWER_INPUT_ID.equals(
-                input.getInputId())) {
-            expectedInput = ControlledIndicatorDeviceBehavior.CONTROL_POWER_INPUT_ID;
-            expectedAdapter = DeviceAdapterContract.CONTROL_ADAPTER_KEY;
-            expectedOutputNet = plan.netFor("driver", "CONTROL");
-        } else {
-            throw new IllegalStateException("Unknown controlled physical power input: " +
-                input.getInputId());
-        }
-        String local = DeviceAdapterContract.POWER_ADAPTER_KEY.equals(expectedAdapter) ?
-            "J1" : "J2";
-        if (!expectedInput.equals(input.getInputId()) ||
-                !plan.idFor(expectedAdapter, EntityKind.PAD, local + ".1").equals(
-                    input.getPositivePadId()) ||
-                !plan.idFor(expectedAdapter, EntityKind.PAD, local + ".2").equals(
-                    input.getReturnPadId()) || !expectedOutputNet.equals(input.getPositiveNetId()) ||
-                !plan.netFor(expectedAdapter, "RETURN").equals(input.getReturnNetId()))
-            throw new IllegalStateException("Controlled physical power input mapping changed: " +
-                input.getInputId());
+        if (!inputs.equals(spec.getPowerInputs().keySet()))
+            throw new IllegalStateException("Physical external input inventory changed");
     }
 }

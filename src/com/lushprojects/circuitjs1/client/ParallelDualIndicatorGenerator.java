@@ -9,10 +9,8 @@ class ParallelDualIndicatorGenerator {
     private static final String FAMILY_ID = "PARALLEL_DUAL_INDICATOR";
     private final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR;
 
-    ParallelDualIndicatorGenerator() { this(SeededPcbLayoutGenerator.CURRENT_VERSION); }
-
-    ParallelDualIndicatorGenerator(int layoutAlgorithmVersion) {
-        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator(layoutAlgorithmVersion);
+    ParallelDualIndicatorGenerator() {
+        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator();
     }
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
     private static final double[] R1_VALUES = { 330, 680, 1000 };
@@ -296,11 +294,16 @@ class ParallelDualIndicatorGenerator {
         board.addNet(new BoardNet("BRANCH1_NODE"));
         board.addNet(new BoardNet("BRANCH2_NODE"));
         board.addNet(new BoardNet("GND"));
-        board.addComponent(new BoardComponent("J1", "CONNECTOR"));
-        board.addComponent(new BoardComponent("R1", "RESISTOR"));
-        board.addComponent(new BoardComponent("LED1", "LED"));
-        board.addComponent(new BoardComponent("R2", "RESISTOR"));
-        board.addComponent(new BoardComponent("LED2", "LED"));
+        board.addComponent(new BoardComponent("J1", "CONNECTOR",
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
+        board.addComponent(new BoardComponent("R1", "RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
+        board.addComponent(new BoardComponent("LED1", "LED",
+            PhysicalPackages.THROUGH_HOLE_LED));
+        board.addComponent(new BoardComponent("R2", "RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
+        board.addComponent(new BoardComponent("LED2", "LED",
+            PhysicalPackages.THROUGH_HOLE_LED));
         board.addPad(new BoardPad("J1.1", "J1", "1", "VIN"));
         board.addPad(new BoardPad("J1.2", "J1", "2", "GND"));
         board.addPad(new BoardPad("R1.1", "R1", "1", "VIN"));

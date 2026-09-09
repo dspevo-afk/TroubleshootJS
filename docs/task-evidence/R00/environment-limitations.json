@@ -1,0 +1,47 @@
+{
+  "protocol": "R00-ENVIRONMENT-LIMITATIONS-1",
+  "cliWrapper": "BLOCKED",
+  "applicationChecksRun": 0,
+  "attempts": [
+    {
+      "runtime": "PowerShell 7",
+      "command": "scripts/verify-a03-browser.ps1 -Gate Current -Smoke -ForceTcpListener -TimeoutSeconds 90 -OutputPath <owned-temp>/report.json",
+      "status": "INFRASTRUCTURE_FAILURE",
+      "processExitCode": 2,
+      "failure": {
+        "kind": "infrastructure",
+        "phase": "preview",
+        "operation": "Start-VerifierOwnedPreview",
+        "elapsedMs": 22480,
+        "remainingDeadlineMs": null,
+        "error": "VERIFIER_INFRASTRUCTURE: Port lease ownership proof exceeded its bounded monotonic deadline."
+      },
+      "cleanup": {
+        "success": true,
+        "errors": null,
+        "diagnostic": {}
+      }
+    },
+    {
+      "runtime": "Windows PowerShell 5.1",
+      "command": "scripts/verify-a03-browser.ps1 -Gate Current -Smoke -ForceTcpListener -TimeoutSeconds 90 -OutputPath <owned-temp>/report.json",
+      "status": "INFRASTRUCTURE_FAILURE",
+      "processExitCode": 2,
+      "failure": {
+        "kind": "infrastructure",
+        "phase": "preview",
+        "operation": "Start-VerifierOwnedPreview",
+        "elapsedMs": 15037,
+        "remainingDeadlineMs": null,
+        "error": "VERIFIER_INFRASTRUCTURE: Port lease ownership proof exceeded its bounded monotonic deadline."
+      },
+      "cleanup": {
+        "success": true,
+        "errors": {},
+        "diagnostic": {}
+      }
+    }
+  ],
+  "diagnosis": "Bounded independent loopback listener query measured 639 ms cold; warm queries measured 417/167/148 ms. Both wrapper attempts exceeded the unchanged 500 ms port ownership proof before application execution. No unchanged full matrix was retried.",
+  "adjudication": "Use built-in Browser for the same current product routes and maintained pure report predicates. Product proof does not certify the blocked isolated CLI wrapper."
+}

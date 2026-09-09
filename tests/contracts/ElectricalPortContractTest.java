@@ -222,13 +222,13 @@ final class ElectricalPortContractTest {
                 returnPort("return", "gnd", ISO_MAIN,
                     ElectricalPortContract.MergePolicy.ALLOW)));
         BlockNamespace namespace = new BlockNamespace(DEVICE, 1, list(descriptor, second));
-        equal("tsj-block-v1/device@1/identity/port/out",
+        equal("tsj-preflight-v1/device@1/identity/port/out",
             namespace.idFor("identity", FunctionalBlockDescriptor.EntityKind.PORT, "out"));
-        equal("tsj-block-v1/device@1/identity/net/signal",
+        equal("tsj-preflight-v1/device@1/identity/net/signal",
             namespace.idFor("identity", FunctionalBlockDescriptor.EntityKind.NET, "signal"));
-        equal("tsj-block-v1/device@1/other/port/out",
+        equal("tsj-preflight-v1/device@1/other/port/out",
             namespace.idFor("other", FunctionalBlockDescriptor.EntityKind.PORT, "out"));
-        equal("tsj-block-v1/device@1/identity/port/out",
+        equal("tsj-preflight-v1/device@1/identity/port/out",
             namespace.idFor("identity", FunctionalBlockDescriptor.EntityKind.PORT, "out"));
     }
 
@@ -1311,7 +1311,7 @@ final class ElectricalPortContractTest {
     }
 
     private static String fullPort(String block, String port) {
-        return "tsj-block-v1/device@1/" + block + "/port/" + port;
+        return "tsj-preflight-v1/device@1/" + block + "/port/" + port;
     }
 
     private static PortSpec naAccess(PortSpec spec) {

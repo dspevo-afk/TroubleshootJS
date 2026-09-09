@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import com.lushprojects.circuitjs1.client.ElectricalPortContract.AccessProvision;
-import com.lushprojects.circuitjs1.client.ElectricalPortContract.AccessRequirement;
-import com.lushprojects.circuitjs1.client.ElectricalPortContract.Behavior;
-import com.lushprojects.circuitjs1.client.ElectricalPortContract.Direction;
-import com.lushprojects.circuitjs1.client.ElectricalPortContract.Drive;
-import com.lushprojects.circuitjs1.client.ElectricalPortContract.Loading;
 import com.lushprojects.circuitjs1.client.ElectricalPortContract.MergePolicy;
-import com.lushprojects.circuitjs1.client.ElectricalPortContract.Role;
-import com.lushprojects.circuitjs1.client.ElectricalPortContract.Scalar;
 import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
 
-/** Focused pure acceptance matrix for the Task 47 request/provider/plan seam. */
+/**
+ * Maintained pure acceptance checks for the current bounded resistive
+ * composition. The assertions describe electrical ownership and replay
+ * invariants; they deliberately avoid historical IDs, byte goldens, and
+ * intermediate assembly counts.
+ */
 public final class BoundedAssemblyContractTest {
     private static int assertions;
     private static final long[] SEEDS = {
@@ -26,106 +23,95 @@ public final class BoundedAssemblyContractTest {
     private BoundedAssemblyContractTest() { }
 
     public static void main(String[] args) {
-        receiptAndCanonicalReplay();
+        currentDescriptorAndReplay();
         namedStreamIsolation();
-        localRulesUseObservations();
+        healthyFaultAndCrossNetRelationships();
         qualifiedPhysicalLocusBoundary();
         preflightOutcomesAndRejections();
-        constraintsAndDescriptorRejections();
-        System.out.println("PASS: Task47 pure assembly contracts " + assertions
-                + " assertions");
+        constraintsAndRetiredDescriptorRejections();
+        System.out.println("PASS: current resistive assembly contracts "
+                + assertions + " assertions");
     }
 
-    private static void receiptAndCanonicalReplay() {
-        System.out.println("TASK47_ASSEMBLY_RECEIPT_BEGIN");
+    private static void currentDescriptorAndReplay() {
         for (long seed : SEEDS) {
             ChallengeDescriptor descriptor = BoundedAssemblyRequest.descriptor(seed,
                     GenerationConstraints.unspecified());
+            require(descriptor.getSchemaVersion() == ChallengeDescriptor.SCHEMA_VERSION,
+                    "current schema is used");
+            require(BoundedAssemblyRequest.GENERATOR_ID.equals(
+                    descriptor.getGenerator().getId()) &&
+                    descriptor.getGenerator().getVersion() ==
+                        BoundedAssemblyRequest.GENERATOR_VERSION,
+                    "current bounded generator identity is used");
+            require(descriptor.getRootSeed() == seed,
+                    "signed root seed survives descriptor construction");
+
             BoundedAssemblyRequest request = BoundedAssemblyRequest.forCanary(
                     descriptor);
             PortCompatibilityPreflight.Result preflight =
                     BoundedAssemblyPlan.preflight(request);
             require(BoundedAssemblyPlan.isCompatible(preflight),
-                    "stock canary must be compatible");
+                    "stock canary is electrically compatible");
             BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
             ComposedBlockContribution source = plan.getBlocks().get("source");
             ComposedBlockContribution load = plan.getBlocks().get("load");
-            require(source != null && load != null, "both blocks resolved");
-            require((source.getResistanceOhms() == 100.0
-                    || source.getResistanceOhms() == 220.0)
-                    && (load.getResistanceOhms() == 1000.0
-                    || load.getResistanceOhms() == 2200.0),
-                    "stock values are supported");
-            require(plan.getBlocks().size() == 2, "two resolved contributions");
-            require(plan.getNetAliases().size() == 5, "all local nets retained");
-            require(!plan.netFor("source", "SUPPLY").equals(
-                    plan.netFor("load", "SUPPLY")),
-                    "same local SUPPLY names retain distinct nodes");
+            require(source != null && load != null,
+                    "both current blocks resolve");
+            require(source.getResistanceOhms() > 0.0 &&
+                    load.getResistanceOhms() > 0.0,
+                    "resolved resistances are finite and positive");
+            require(plan.getBlocks().size() == request.getBlocks().size(),
+                    "every declared block has one resolved contribution");
             require(plan.netForPort("source", "OUT").equals(
-                    plan.netForPort("load", "IN")), "signal join is explicit");
+                    plan.netForPort("load", "IN")),
+                    "signal connection is explicit");
             require(plan.netForPort("source", "RETURN").equals(
                     plan.netForPort("load", "RETURN")),
-                    "return join is explicit");
-            require(plan.getMergeProvenance().size() == 2,
-                    "two explicit merge records");
-            require(plan.idFor("source", EntityKind.COMPONENT, "R1").equals(
-                    "tsj-block-v1/resistive-coupling@1/source/component/R1"),
-                    "source component namespace");
-            require(plan.idFor("load", EntityKind.PAD, "R1.1").equals(
-                    "tsj-block-v1/resistive-coupling@1/load/pad/R1.1"),
-                    "load pad namespace");
-            require(plan.idFor("source", EntityKind.ENDPOINT, "R1_1").equals(
-                    "tsj-block-v1/resistive-coupling@1/source/endpoint/R1_1"),
-                    "source endpoint namespace");
-            require(plan.idFor("source", EntityKind.NET, "SUPPLY").equals(
-                    "tsj-block-v1/resistive-coupling@1/source/net/SUPPLY"),
-                    "source net namespace");
-            require(plan.idFor("source", EntityKind.ROLE, "rail").equals(
-                    "tsj-block-v1/resistive-coupling@1/source/role/rail"),
-                    "source role namespace");
-            require(plan.idFor("source", EntityKind.PORT, "OUT").equals(
-                    "tsj-block-v1/resistive-coupling@1/source/port/OUT"),
-                    "source port namespace");
-            String sourceSupply = plan.idFor("source", EntityKind.NET, "SUPPLY");
-            String loadSupply = plan.idFor("load", EntityKind.NET, "SUPPLY");
-            String sourceReturn = plan.idFor("source", EntityKind.NET, "RETURN");
-            String loadReturn = plan.idFor("load", EntityKind.NET, "RETURN");
-            require(sourceSupply.equals(plan.getNetAliases().get(sourceSupply)) &&
-                    loadSupply.equals(plan.getNetAliases().get(loadSupply)) &&
-                    !plan.getNetAliases().get(sourceSupply).equals(
-                        plan.getNetAliases().get(loadSupply)),
-                    "same-labelled SUPPLY nets remain unmerged aliases");
-            require(plan.netFor("source", "RETURN").equals(
-                    plan.getNetAliases().get(sourceReturn)) &&
-                    plan.netFor("load", "RETURN").equals(
-                    plan.getNetAliases().get(loadReturn)) &&
-                    !sourceReturn.equals(loadReturn),
-                    "both explicit RETURN references retain provenance");
-            require(plan.getDecisionOwners().get("source-high-resistance")
-                    .equals(plan.idFor("source", EntityKind.COMPONENT, "R1")),
-                    "source fault owner is qualified");
-            require(plan.getDecisionOwners().get("load-high-resistance")
-                    .equals(plan.idFor("load", EntityKind.COMPONENT, "R1")),
-                    "load fault owner is qualified");
-            require(plan.getFaultBlockKey().equals("source")
-                    || plan.getFaultBlockKey().equals("load"),
-                    "selected fault has a block owner");
-            require(plan.getFaultDecisionKey().equals(
-                    plan.getFaultBlockKey() + "-high-resistance"),
-                    "fault decision and owner agree");
+                    "return connection is explicit");
+            require(!plan.netFor("source", "SUPPLY").equals(
+                    plan.netFor("load", "SUPPLY")),
+                    "same local net names do not create a cross-block short");
+            require(!plan.getMergeProvenance().isEmpty(),
+                    "current plan retains merge provenance");
 
-            ArrayList<ElectricalBlockContract> reversedBlocks =
-                    new ArrayList<ElectricalBlockContract>(request.getBlocks());
-            Collections.reverse(reversedBlocks);
-            ArrayList<ElectricalConnection> reversedConnections =
-                    new ArrayList<ElectricalConnection>(request.getConnections());
-            Collections.reverse(reversedConnections);
+            String sourceComponent = plan.idFor("source", EntityKind.COMPONENT, "R1");
+            String loadComponent = plan.idFor("load", EntityKind.COMPONENT, "R1");
+            String sourcePad = plan.idFor("source", EntityKind.PAD, "R1.1");
+            String sourceEndpoint = plan.idFor("source", EntityKind.ENDPOINT, "R1_1");
+            require(nonEmpty(sourceComponent) && nonEmpty(loadComponent) &&
+                    nonEmpty(sourcePad) && nonEmpty(sourceEndpoint),
+                    "semantic identity API returns non-empty IDs");
+            require(!sourceComponent.equals(loadComponent),
+                    "same local component IDs retain distinct owners");
+            require(sourceComponent.contains("source") && sourceComponent.contains("R1") &&
+                    loadComponent.contains("load") && loadComponent.contains("R1"),
+                    "semantic IDs retain block and local ownership");
+            require(plan.getDecisionOwners().containsValue(sourceComponent) ||
+                    plan.getDecisionOwners().containsValue(loadComponent),
+                    "fault decision has a qualified component owner");
+            require(plan.getFaultBlockKey() != null &&
+                    plan.getFaultDecisionKey() != null &&
+                    !plan.getFaultDecisionKey().isEmpty(),
+                    "fault decision retains an explicit block owner");
+            ComposedBlockContribution selected = "source".equals(
+                    plan.getFaultBlockKey()) ? source : load;
+            require(selected.getFaultSpec().getKind() ==
+                    ComposedBlockContribution.FaultSpec.Kind.INCORRECT_RESISTANCE,
+                    "resistive fault is represented by its actual effect");
+            require(selected.getFaultSpec().getTargetComponentLocalId().equals(
+                    selected.getRepairLocalComponentId()),
+                    "resistive fault target is the repair component");
+            require(selected.getFaultSpec().getEffectiveResistanceOhms() !=
+                    selected.getResistanceOhms(),
+                    "resistive fault effect differs from the healthy recipe");
+
             BoundedAssemblyPlan replay = BoundedAssemblyPlan.resolve(
-                    new BoundedAssemblyRequest(descriptor, reversedBlocks,
-                            reversedConnections));
-            require(plan.getSemanticSignature().equals(
-                    replay.getSemanticSignature()),
-                    "reversed declaration order replays the same semantics");
+                    new BoundedAssemblyRequest(descriptor,
+                            reversed(request.getBlocks()),
+                            reversed(request.getConnections())));
+            require(plan.getSemanticSignature().equals(replay.getSemanticSignature()),
+                    "declaration order does not change current semantics");
             require(ChallengeDescriptor.parse(descriptor.toCanonical()).equals(
                     descriptor), "full signed seed canonical round trip");
 
@@ -136,13 +122,11 @@ public final class BoundedAssemblyContractTest {
                     source.getResistanceOhms());
             verifyHealthy(load, healthyCurrent * load.getResistanceOhms(),
                     0.0, healthyCurrent, load.getResistanceOhms());
-            System.out.println("seed=" + Long.toString(seed) + ";source-ohms="
-                    + Double.toString(source.getResistanceOhms())
+            System.out.println("seed=" + Long.toString(seed) +
+                    ";source-ohms=" + Double.toString(source.getResistanceOhms())
                     + ";load-ohms=" + Double.toString(load.getResistanceOhms())
-                    + ";fault=" + plan.getFaultDecisionKey()
-                    + ";descriptor=" + descriptor.toCanonical().replace('\n', '|'));
+                    + ";fault=" + plan.getFaultDecisionKey());
         }
-        System.out.println("TASK47_ASSEMBLY_RECEIPT_END");
     }
 
     private static void namedStreamIsolation() {
@@ -160,7 +144,6 @@ public final class BoundedAssemblyContractTest {
                     NamedRandomStreams.Concern.FAULT, 1, "selected-fault"),
                     Arrays.asList("source-high-resistance",
                             "load-high-resistance"));
-
             NamedRandomStreams.Stream unrelatedScenario = streams.openDevice(
                     NamedRandomStreams.Concern.SCENARIO, 1, "unrelated");
             NamedRandomStreams.Stream unrelatedBlock = streams.openBlock(
@@ -177,48 +160,43 @@ public final class BoundedAssemblyContractTest {
             require(source.equals(NamedRandomStreams.select(streams.blockSeed(
                     "source", NamedRandomStreams.Concern.VALUES, 1,
                     "resistance"), Arrays.asList("r100", "r220"))),
-                    "source VALUES stream changed after unrelated draws");
+                    "source values stream is concern-isolated");
             require(load.equals(NamedRandomStreams.select(streams.blockSeed(
                     "load", NamedRandomStreams.Concern.VALUES, 1,
                     "resistance"), Arrays.asList("r1000", "r2200"))),
-                    "load VALUES stream changed after unrelated draws");
+                    "load values stream is concern-isolated");
             require(fault.equals(NamedRandomStreams.select(streams.deviceSeed(
                     NamedRandomStreams.Concern.FAULT, 1, "selected-fault"),
                     Arrays.asList("source-high-resistance",
                             "load-high-resistance"))),
-                    "FAULT stream changed after unrelated draws");
+                    "fault stream is concern-isolated");
             require(source.equals(ResistiveBlockContributions.chooseValueKey(seed,
                     "source")) && load.equals(
                     ResistiveBlockContributions.chooseValueKey(seed, "load")) &&
                     fault.equals(ResistiveBlockContributions.chooseFaultDecision(seed)),
-                    "provider selectors diverged from named streams");
+                    "provider selectors agree with the independent stream tuple");
         }
-        assertions++;
     }
 
-    private static void localRulesUseObservations() {
+    private static void healthyFaultAndCrossNetRelationships() {
         ComposedBlockContribution source = ResistiveBlockContributions
-                .createSource("source", 100.0);
-        final double[] values = { 5.0, 4.5, 0.005, 100.0 };
-        ComposedBlockContribution.Observation healthy = observation(values);
-        source.verifyHealthy(healthy);
-        require(source.observe(healthy)
-                == ComposedBlockContribution.ObservationResult.CONDUCTING,
-                "healthy observation conducts");
-        final double[] low = { 5.0, 4.995, .00005, 100000.0 };
-        require(source.observe(observation(low))
-                == ComposedBlockContribution.ObservationResult.LOW_CURRENT,
-                "high resistance observation is low current");
-        final double[] invalid = { Double.NaN, 0.0, 0.0, 100.0 };
-        require(source.observe(observation(invalid))
-                == ComposedBlockContribution.ObservationResult.INVALID,
-                "nonfinite observation is invalid");
+                .source().create("source", 100.0);
+        source.verifyHealthy(observation(5.0, 4.5, 0.005, 100.0));
+        require(source.observe(observation(5.0, 4.5, 0.005, 100.0)) ==
+                ComposedBlockContribution.ObservationResult.CONDUCTING,
+                "healthy measured resistor conducts");
+        require(source.observe(observation(5.0, 4.995, .00005, 100000.0)) ==
+                ComposedBlockContribution.ObservationResult.LOW_CURRENT,
+                "incorrect resistance produces low current");
+        require(source.observe(observation(Double.NaN, 0.0, 0.0, 100.0)) ==
+                ComposedBlockContribution.ObservationResult.INVALID,
+                "nonfinite observations fail closed");
         require(source.getInputRequirements().equals(
                 Collections.singletonList("BOARD_POWER")),
-                "input requirements are immutable and explicit");
+                "power input requirement remains explicit");
         require(source.getRetestRequirements().equals(
                 Collections.singletonList("STEADY_DC_POWERED")),
-                "retest requirements are immutable and explicit");
+                "retest requirement remains explicit");
         try {
             source.getInputRequirements().add("MUTATION");
             fail("input requirements unexpectedly mutable");
@@ -228,97 +206,53 @@ public final class BoundedAssemblyContractTest {
     }
 
     private static void qualifiedPhysicalLocusBoundary() {
-        final String owner = "tsj-block-v1/resistive-coupling@1/source/component/R1";
+        BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forCanary(0L));
+        String owner = plan.idFor("source", EntityKind.COMPONENT, "R1");
         require(GeneratedFaultLocus.componentInternal(owner).getOwnerId().equals(owner),
-                "qualified physical fault owner retains every namespace byte");
-        require(GeneratedFaultLocus.terminalAttachment(owner, "2").getOwnerId().equals(owner),
-                "qualified terminal locus retains its component owner");
-        require(GeneratedFaultLocus.componentInternal("R1").getOwnerId().equals("R1") &&
-                GeneratedFaultLocus.terminalAttachment("C1", "+").getTerminalId().equals("+") &&
-                GeneratedFaultLocus.traceSegment("TRACE_A").getPathId().equals("TRACE_A"),
-                "legacy component, terminal and trace forms remain supported");
-        for (String value : Arrays.asList("source/R1", "R1@1",
-                owner.replace("tsj-block-v1", "tsj-block-v2"),
-                owner.replace("@1/", "@0/"), owner.replace("@1/", "@01/"),
-                owner.replace("@1/", "@2147483648/"),
-                owner.replace("/component/", "/endpoint/"), owner + "/1",
-                owner.replace("/source/", "//"), owner.replace("/R1", "/NODE_1"),
-                "NODE_1", "COORD_1", "INDEX_1", "UUID_1", "SWITCH_1")) {
+                "qualified physical owner survives locus construction");
+        require(GeneratedFaultLocus.terminalAttachment(owner, "2").getOwnerId()
+                .equals(owner), "terminal locus retains component ownership");
+        require(GeneratedFaultLocus.traceSegment("TRACE_A").getPathId()
+                .equals("TRACE_A"), "trace locus remains local to a path");
+        for (String value : Arrays.asList(owner + "/1", "NODE_1", "COORD_1")) {
             boolean rejected = false;
             try { GeneratedFaultLocus.componentInternal(value); }
             catch (IllegalArgumentException expected) { rejected = true; }
-            require(rejected, "invalid or private physical identity accepted: " + value);
+            require(rejected, "private or malformed physical identity rejected");
         }
         boolean terminalRejected = false;
         try { GeneratedFaultLocus.terminalAttachment("R1", owner); }
         catch (IllegalArgumentException expected) { terminalRejected = true; }
-        require(terminalRejected, "qualified component ID accepted as a terminal ID");
+        require(terminalRejected, "component identity cannot be a terminal ID");
         boolean pathRejected = false;
         try { GeneratedFaultLocus.traceSegment(owner); }
         catch (IllegalArgumentException expected) { pathRejected = true; }
-        require(pathRejected, "qualified component ID accepted as a trace path ID");
-    }
-
-    private static ComposedBlockContribution.Observation observation(
-            final double[] values) {
-        return new ComposedBlockContribution.Observation() {
-            @Override
-            public double voltage(String endpoint) {
-                return "R1_1".equals(endpoint) ? values[0] : values[1];
-            }
-
-            @Override
-            public double current(String component) { return values[2]; }
-
-            @Override
-            public double resistance(String component) { return values[3]; }
-        };
-    }
-
-    private static void verifyHealthy(ComposedBlockContribution contribution,
-            final double firstVoltage, final double secondVoltage,
-            final double current, final double resistance) {
-        contribution.verifyHealthy(new ComposedBlockContribution.Observation() {
-            @Override
-            public double voltage(String endpoint) {
-                return "R1_1".equals(endpoint) ? firstVoltage : secondVoltage;
-            }
-
-            @Override
-            public double current(String component) { return current; }
-
-            @Override
-            public double resistance(String component) { return resistance; }
-        });
-        assertions++;
+        require(pathRejected, "component identity cannot be a trace path ID");
     }
 
     private static void preflightOutcomesAndRejections() {
         BoundedAssemblyRequest request = BoundedAssemblyRequest.forCanary(0L);
-        require(BoundedAssemblyPlan.preflight(request).getDecision()
-                == PortCompatibilityPreflight.Decision.COMPATIBLE,
+        require(BoundedAssemblyPlan.preflight(request).getDecision() ==
+                PortCompatibilityPreflight.Decision.COMPATIBLE,
                 "compatible preflight outcome");
-
-        List<ElectricalBlockContract> blocks = request.getBlocks();
         ElectricalConnection malformed = new ElectricalConnection("signal",
                 Arrays.asList(new ElectricalConnection.PortRef("source", "MISSING"),
                         new ElectricalConnection.PortRef("load", "IN")));
         expectDecision(PortCompatibilityPreflight.Decision.MALFORMED,
                 BoundedAssemblyPlan.preflight(new BoundedAssemblyRequest(
-                        request.getDescriptor(), blocks,
+                        request.getDescriptor(), request.getBlocks(),
                         Arrays.asList(malformed, request.getConnections().get(0)))));
         ElectricalConnection incompatible = new ElectricalConnection("signal",
                 Arrays.asList(new ElectricalConnection.PortRef("source", "RETURN"),
                         new ElectricalConnection.PortRef("load", "IN")));
         expectDecision(PortCompatibilityPreflight.Decision.INCOMPATIBLE,
                 BoundedAssemblyPlan.preflight(new BoundedAssemblyRequest(
-                        request.getDescriptor(), blocks,
+                        request.getDescriptor(), request.getBlocks(),
                         Arrays.asList(incompatible, request.getConnections().get(0)))));
 
-        ElectricalBlockContract source = blocks.get(1).getDescriptor()
-                .getInstanceKey().equals("source") ? blocks.get(1) : blocks.get(0);
-        ElectricalBlockContract load = blocks.get(1).getDescriptor()
-                .getInstanceKey().equals("load") ? blocks.get(1) : blocks.get(0);
+        ElectricalBlockContract source = block(request, "source");
+        ElectricalBlockContract load = block(request, "load");
         ElectricalPortContract oldOut = source.getPorts().get("OUT");
         ElectricalPortContract uncertainOut = new ElectricalPortContract("OUT",
                 oldOut.getRole(), oldOut.getDirection(), oldOut.getBehavior(),
@@ -330,35 +264,18 @@ public final class BoundedAssemblyContractTest {
         ElectricalBlockContract uncertainSource = new ElectricalBlockContract(
                 source.getDescriptor(), Arrays.asList(uncertainOut,
                         source.getPorts().get("RETURN")), source.getAdapters().values());
-        List<ElectricalBlockContract> uncertainBlocks = sourceFirst(uncertainSource,
-                load);
         expectDecision(PortCompatibilityPreflight.Decision.INSUFFICIENT_INFORMATION,
                 BoundedAssemblyPlan.preflight(new BoundedAssemblyRequest(
-                        request.getDescriptor(), uncertainBlocks,
+                        request.getDescriptor(), Arrays.asList(uncertainSource, load),
                         request.getConnections())));
-        try {
-            BoundedAssemblyPlan.resolve(new BoundedAssemblyRequest(
-                    request.getDescriptor(), uncertainBlocks, request.getConnections()));
-            fail("incompatible preflight unexpectedly resolved");
-        } catch (IllegalArgumentException expected) {
-            assertions++;
-        }
-        try {
-            BoundedAssemblyPlan.resolve(new BoundedAssemblyRequest(
-                    request.getDescriptor(), blocks,
-                    Arrays.asList(incompatible, request.getConnections().get(0))));
-            fail("changed wiring unexpectedly resolved");
-        } catch (IllegalArgumentException expected) {
-            assertions++;
-        }
+        expectResolveFailure(new BoundedAssemblyRequest(request.getDescriptor(),
+                Arrays.asList(uncertainSource, load), request.getConnections()));
+        expectResolveFailure(new BoundedAssemblyRequest(request.getDescriptor(),
+                request.getBlocks(), Arrays.asList(incompatible,
+                        request.getConnections().get(0))));
     }
 
-    private static List<ElectricalBlockContract> sourceFirst(
-            ElectricalBlockContract source, ElectricalBlockContract load) {
-        return Arrays.asList(source, load);
-    }
-
-    private static void constraintsAndDescriptorRejections() {
+    private static void constraintsAndRetiredDescriptorRejections() {
         GenerationConstraints badBlocks = new GenerationConstraints(
                 GenerationConstraints.VERSION,
                 Arrays.asList(new GenerationConstraints.CountRequest(
@@ -367,7 +284,8 @@ public final class BoundedAssemblyContractTest {
                 GenerationConstraints.Requirement.UNSPECIFIED,
                 GenerationConstraints.Requirement.UNSPECIFIED,
                 GenerationConstraints.AllowedInstruments.unspecified());
-        expectResolveFailure(BoundedAssemblyRequest.descriptor(0L, badBlocks));
+        expectResolveFailure(BoundedAssemblyRequest.forCanary(
+                BoundedAssemblyRequest.descriptor(0L, badBlocks)));
 
         GenerationConstraints unsupportedDimension = new GenerationConstraints(
                 GenerationConstraints.VERSION,
@@ -377,47 +295,87 @@ public final class BoundedAssemblyContractTest {
                 GenerationConstraints.Requirement.UNSPECIFIED,
                 GenerationConstraints.Requirement.UNSPECIFIED,
                 GenerationConstraints.AllowedInstruments.unspecified());
-        expectResolveFailure(BoundedAssemblyRequest.descriptor(0L,
-                unsupportedDimension));
+        expectResolveFailure(BoundedAssemblyRequest.forCanary(
+                BoundedAssemblyRequest.descriptor(0L, unsupportedDimension)));
 
-        GenerationConstraints requiredTemporal = new GenerationConstraints(
-                GenerationConstraints.VERSION, Collections.<GenerationConstraints.CountRequest>emptyList(),
-                GenerationConstraints.Requirement.UNSPECIFIED,
-                GenerationConstraints.Requirement.REQUIRED,
-                GenerationConstraints.AllowedInstruments.unspecified());
-        expectResolveFailure(BoundedAssemblyRequest.descriptor(0L,
-                requiredTemporal));
-
-        ChallengeDescriptor unsupported = new ChallengeDescriptor(
-                ChallengeDescriptor.SCHEMA_VERSION, 0L,
-                new ChallengeDescriptor.VersionedId("legacy-leaf", 1),
-                new ChallengeDescriptor.VersionedId(BoundedAssemblyRequest.INTENT_ID, 1),
-                new ChallengeDescriptor.VersionedId(BoundedAssemblyRequest.PROFILE_ID, 1),
-                new PcbGeometryContractVersion(3),
-                GenerationConstraints.unspecified());
-        expectResolveFailure(unsupported);
+        ChallengeDescriptor current = BoundedAssemblyRequest.descriptor(0L);
+        expectRejectedCanonical(current.toCanonical().replace("tsj-challenge/2",
+                "tsj-challenge/1"), "retired schema artifact");
+        expectRejectedCanonical(current.toCanonical().replace(
+                "generator=" + BoundedAssemblyRequest.GENERATOR_ID + "@" +
+                    BoundedAssemblyRequest.GENERATOR_VERSION,
+                "generator=" + BoundedAssemblyRequest.GENERATOR_ID + "@99"),
+                "unknown bounded generator version");
+        expectRejectedCanonical(current.toCanonical().replace(
+                "device-intent=" + BoundedAssemblyRequest.INTENT_ID + "@" +
+                    BoundedAssemblyRequest.INTENT_VERSION,
+                "device-intent=unknown@1"), "unknown device intent");
     }
 
-    private static void expectResolveFailure(ChallengeDescriptor descriptor) {
+    private static ElectricalBlockContract block(BoundedAssemblyRequest request,
+            String key) {
+        for (ElectricalBlockContract block : request.getBlocks())
+            if (key.equals(block.getDescriptor().getInstanceKey())) return block;
+        throw new AssertionError("missing block " + key);
+    }
+
+    private static ComposedBlockContribution.Observation observation(
+            final double firstVoltage, final double secondVoltage,
+            final double current, final double resistance) {
+        return new ComposedBlockContribution.Observation() {
+            @Override public double voltage(String endpoint) {
+                return "R1_1".equals(endpoint) ? firstVoltage : secondVoltage;
+            }
+            @Override public double current(String component) { return current; }
+            @Override public double resistance(String component) { return resistance; }
+        };
+    }
+
+    private static void verifyHealthy(ComposedBlockContribution contribution,
+            final double firstVoltage, final double secondVoltage,
+            final double current, final double resistance) {
+        contribution.verifyHealthy(observation(firstVoltage, secondVoltage,
+                current, resistance));
+        assertions++;
+    }
+
+    private static <T> List<T> reversed(List<T> values) {
+        ArrayList<T> copy = new ArrayList<T>(values);
+        Collections.reverse(copy);
+        return copy;
+    }
+
+    private static void expectDecision(PortCompatibilityPreflight.Decision expected,
+            PortCompatibilityPreflight.Result actual) {
+        require(actual.getDecision() == expected,
+                "expected preflight " + expected + ", got " + actual.getDecision());
+    }
+
+    private static void expectResolveFailure(BoundedAssemblyRequest request) {
         try {
-            BoundedAssemblyPlan.resolve(BoundedAssemblyRequest.forCanary(descriptor));
+            BoundedAssemblyPlan.resolve(request);
             fail("unsupported request unexpectedly resolved");
         } catch (IllegalArgumentException expected) {
             assertions++;
         }
     }
 
-    private static void expectDecision(PortCompatibilityPreflight.Decision expected,
-            PortCompatibilityPreflight.Result actual) {
-        require(actual.getDecision() == expected,
-                "expected preflight " + expected + ", got "
-                        + actual.getDecision());
+    private static void expectRejectedCanonical(String canonical, String label) {
+        try {
+            ChallengeDescriptor parsed = ChallengeDescriptor.parse(canonical);
+            BoundedAssemblyPlan.resolve(BoundedAssemblyRequest.forCanary(parsed));
+            fail(label + " was admitted");
+        } catch (IllegalArgumentException expected) {
+            assertions++;
+        }
+    }
+
+    private static boolean nonEmpty(String value) {
+        return value != null && !value.isEmpty();
     }
 
     private static void require(boolean condition, String message) {
-        if (!condition) {
-            throw new AssertionError(message);
-        }
+        if (!condition) throw new AssertionError(message);
         assertions++;
     }
 

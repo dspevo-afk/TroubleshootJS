@@ -18,32 +18,6 @@ class PcbComponentPlacement {
     private final PcbGeometryContractVersion geometryContractVersion;
     private final PhysicalGeometryRealization geometryRealization;
 
-    /** Legacy package-less constructor retained as a rejecting compatibility seam. */
-    PcbComponentPlacement(String componentId, int x, int y, int width, int height) {
-        this(componentId, x, y, width, height, new Rectangle(x, y, width, height),
-            new Rectangle(x, y, width, height));
-    }
-
-    /** Legacy package-less constructor retained as a rejecting compatibility seam. */
-    PcbComponentPlacement(String componentId, int x, int y, int width, int height,
-            Rectangle keepOut) {
-        this(componentId, x, y, width, height, keepOut, keepOut);
-    }
-
-    /** Legacy package-less constructor retained as a rejecting compatibility seam. */
-    PcbComponentPlacement(String componentId, int x, int y, int width, int height,
-            Rectangle keepOut, Rectangle routingCourtyard) {
-        this(componentId, x, y, width, height, keepOut, routingCourtyard, null, null);
-    }
-
-    /** Developer-only generic adapter; production geometry must name its package. */
-    PcbComponentPlacement(String componentId, int x, int y, int width, int height,
-            Rectangle keepOut, Rectangle routingCourtyard,
-            PhysicalPackageGeometry physicalGeometry) {
-        this(componentId, x, y, width, height, keepOut, routingCourtyard,
-            compatibilityPackage(componentId, physicalGeometry), physicalGeometry);
-    }
-
     PcbComponentPlacement(String componentId, int x, int y, int width, int height,
             Rectangle keepOut, Rectangle routingCourtyard, PhysicalPackage physicalPackage,
             PhysicalPackageGeometry physicalGeometry) {
@@ -118,15 +92,6 @@ class PcbComponentPlacement {
         return translatedTo(checkedAdd(this.x, dx), checkedAdd(this.y, dy));
     }
 
-    /** Explicit generic compatibility path; production geometry is rejected here. */
-    static PcbComponentPlacement fromPhysicalGeometry(String componentId, int x, int y,
-            PhysicalPackageGeometry geometry) {
-        PhysicalPackage packageProjection = compatibilityPackage(componentId, geometry);
-        if (packageProjection == null)
-            throw new IllegalArgumentException("Package-backed placement required: " + componentId);
-        return fromPhysicalGeometry(componentId, x, y, packageProjection, geometry);
-    }
-
     static PcbComponentPlacement fromPhysicalGeometry(String componentId, int x, int y,
             PhysicalPackage physicalPackage, PhysicalPackageGeometry geometry) {
         if (physicalPackage == null)
@@ -147,7 +112,6 @@ class PcbComponentPlacement {
     Rectangle getBounds() { return new Rectangle(x, y, width, height); }
     Rectangle getBodyBounds() { return placedGeometry().getBodyBounds(); }
     Rectangle getKeepOut() { return new Rectangle(keepOut); }
-    Rectangle getBodyKeepOut() { return getKeepOut(); }
     Rectangle getRoutingCourtyard() { return new Rectangle(routingCourtyard); }
     Rectangle getSelectionEnvelope() { return placedGeometry().getSelectionEnvelope(); }
     Rectangle getDragEnvelope() { return placedGeometry().getDragEnvelope(); }
@@ -196,10 +160,6 @@ class PcbComponentPlacement {
         return placedGeometry().getComponentLeadProbeBounds(index, lifted);
     }
 
-    /** Legacy board-side alias retained for existing PCB pad consumers. */
-    Point getProbePoint(int index) { return getBoardPadProbeCenter(index); }
-    /** Legacy board-side alias retained for existing PCB pad consumers. */
-    Rectangle getProbeBounds(int index) { return getBoardPadProbeBounds(index); }
     Rectangle getPadBounds(int index) { return placedGeometry().getPadBounds(index); }
     Point getPadPoint(int index) { return placedGeometry().getPadPoint(index); }
 
@@ -298,13 +258,6 @@ class PcbComponentPlacement {
                 !geometryContractVersion.equals(physicalGeometry.getGeometryContractVersion()))
             throw new IllegalArgumentException("Mismatched physical geometry realization: " +
                 componentId);
-    }
-
-    private static PhysicalPackage compatibilityPackage(String componentId,
-            PhysicalPackageGeometry geometry) {
-        if (geometry == null)
-            return null;
-        return PhysicalPackage.developerProjectionForGeometry(componentId, geometry);
     }
 
     private static void appendGeometry(StringBuilder result, PhysicalPackageGeometry geometry) {

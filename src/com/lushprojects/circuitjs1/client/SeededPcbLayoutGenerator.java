@@ -11,11 +11,8 @@ import java.util.Vector;
  * nets are supplied by the logical board and are never invented here.
  */
 class SeededPcbLayoutGenerator {
-    /** Layout algorithm versions are independent of the package geometry schema. */
-    static final int LEGACY_VERSION = 3;
-    /** Frozen A02 correction; never infer this from a mutable CURRENT value. */
-    static final int CORRECTED_VERSION = 4;
-    static final int CURRENT_VERSION = CORRECTED_VERSION;
+    /** Current corrected layout algorithm; package geometry remains contract v3. */
+    static final int CURRENT_VERSION = 4;
     private static final int CANVAS_WIDTH = 1040;
     private static final int CANVAS_HEIGHT = 520;
     private static final int GRID = 10;
@@ -29,27 +26,14 @@ class SeededPcbLayoutGenerator {
     private final int layoutAlgorithmVersion;
 
     SeededPcbLayoutGenerator() {
-        this(StandardPcbFootprintProviders.createRegistry(), CURRENT_VERSION);
-    }
-
-    SeededPcbLayoutGenerator(int layoutAlgorithmVersion) {
-        this(StandardPcbFootprintProviders.createRegistry(), layoutAlgorithmVersion);
+        this(StandardPcbFootprintProviders.createRegistry());
     }
 
     SeededPcbLayoutGenerator(PcbFootprintRegistry footprintRegistry) {
-        this(footprintRegistry, CURRENT_VERSION);
-    }
-
-    SeededPcbLayoutGenerator(PcbFootprintRegistry footprintRegistry,
-            int layoutAlgorithmVersion) {
         if (footprintRegistry == null)
             throw new IllegalArgumentException("Missing PCB footprint registry");
-        if (layoutAlgorithmVersion != LEGACY_VERSION &&
-                layoutAlgorithmVersion != CORRECTED_VERSION)
-            throw new IllegalArgumentException("Unsupported PCB layout algorithm version: " +
-                layoutAlgorithmVersion);
         this.footprintRegistry = footprintRegistry;
-        this.layoutAlgorithmVersion = layoutAlgorithmVersion;
+        this.layoutAlgorithmVersion = CURRENT_VERSION;
     }
 
     int getLayoutAlgorithmVersion() { return layoutAlgorithmVersion; }
@@ -185,35 +169,10 @@ class SeededPcbLayoutGenerator {
         int targetX;
         int targetY;
         Vector<TopologyPlacementGraph.PadLink> links = topology.getLinksFor(component.getId());
-        if (layoutAlgorithmVersion == CORRECTED_VERSION) {
-            Point target = weightedConnectedTarget(prototype, placed, links,
-                fallbackX, fallbackY);
-            targetX = target.x;
-            targetY = target.y;
-        } else {
-            // Preserve the legacy seeded placement arithmetic for replay.  The
-            // corrected path above deliberately starts its weighted accumulator
-            // at zero, while this path retains the historical center offset.
-            targetX = fallbackX;
-            targetY = fallbackY;
-            double targetWeight = 0;
-            for (TopologyPlacementGraph.PadLink link : links) {
-                PcbFootprint other = findFootprint(placed, link.getOtherComponentId());
-                if (other == null)
-                    continue;
-                PcbPadPlacement sourcePad = prototype.getPad(link.getPadId());
-                PcbPadPlacement otherPad = other.getPad(link.getOtherPadId());
-                targetX += (int) Math.round((otherPad.getX() - sourcePad.getX()) * link.getWeight());
-                targetY += (int) Math.round((otherPad.getY() - sourcePad.getY()) * link.getWeight());
-                targetWeight += link.getWeight();
-            }
-            if (targetWeight > 0) {
-                targetX = (int) Math.round((targetX - fallbackX) /
-                    targetWeight + fallbackX);
-                targetY = (int) Math.round((targetY - fallbackY) /
-                    targetWeight + fallbackY);
-            }
-        }
+        Point target = weightedConnectedTarget(prototype, placed, links,
+            fallbackX, fallbackY);
+        targetX = target.x;
+        targetY = target.y;
         targetX += random.nextInt(31) - 15;
         targetY += random.nextInt(31) - 15;
 
@@ -445,7 +404,7 @@ class SeededPcbLayoutGenerator {
         Collections.sort(componentIds);
         for (String componentId : componentIds) {
             PcbComponentPlacement placement = layout.getComponent(componentId);
-            String text = componentId;
+            String text = board.getComponent(componentId).getDisplayName();
             int width = textWidth(text, 14);
             Vector<Rectangle> candidates = getReferenceCandidates(placement, width, 18);
             Rectangle selected = chooseLabelPosition(layout, board, outline, candidates);

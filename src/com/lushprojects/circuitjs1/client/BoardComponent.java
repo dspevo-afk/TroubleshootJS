@@ -9,10 +9,6 @@ class BoardComponent {
     private final String displayName;
     private final Vector<String> padIds = new Vector<String>();
 
-    BoardComponent(String id, String type) {
-        this(id, type, PhysicalPackages.forLegacyComponentType(type));
-    }
-
     BoardComponent(String id, String type, PhysicalPackage physicalPackage) {
         this(id, type, physicalPackage, id);
     }

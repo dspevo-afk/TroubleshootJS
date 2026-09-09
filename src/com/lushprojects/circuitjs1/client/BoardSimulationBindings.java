@@ -1,6 +1,10 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 class BoardSimulationBindings {
@@ -8,15 +12,32 @@ class BoardSimulationBindings {
     private boolean constructionAborted;
     private final HashMap<String, CircuitMeasurementEndpoint> padEndpoints =
         new HashMap<String, CircuitMeasurementEndpoint>();
+    /**
+     * Construction contexts share this board-level endpoint map.  Retain the
+     * exact context that supplied each endpoint so aborting one speculative
+     * construction cannot revoke another context's live bindings.
+     */
+    private final HashMap<String, ElectricalConstructionContext> padOwners =
+        new HashMap<String, ElectricalConstructionContext>();
+    private final Set<ElectricalConstructionContext> abortedOwners =
+        new HashSet<ElectricalConstructionContext>();
     private boolean developerVerificationReady;
+    private ElectricalConstructionContext developerVerificationOwner;
 
     BoardSimulationBindings(TroubleshootBoard board) {
         this.board = board;
     }
 
     void bindPad(String padId, CircuitMeasurementEndpoint endpoint) {
-        if (constructionAborted)
+        bindPad(null, padId, endpoint);
+    }
+
+    void bindPad(ElectricalConstructionContext owner, String padId,
+            CircuitMeasurementEndpoint endpoint) {
+        if (constructionAborted || (owner == null && !abortedOwners.isEmpty()))
             throw new IllegalStateException("Construction bindings were revoked");
+        if (owner != null && (owner.getBoard() != board || abortedOwners.contains(owner)))
+            throw new IllegalStateException("Construction context does not own this board binding");
         if (board.getPad(padId) == null)
             throw new IllegalArgumentException("Unknown board pad: " + padId);
         if (endpoint == null)
@@ -24,6 +45,10 @@ class BoardSimulationBindings {
         if (padEndpoints.containsKey(padId))
             throw new IllegalArgumentException("Duplicate simulation binding for pad: " + padId);
         padEndpoints.put(padId, endpoint);
+        if (owner == null)
+            padOwners.remove(padId);
+        else
+            padOwners.put(padId, owner);
     }
 
     CircuitMeasurementEndpoint getEndpoint(String padId) {
@@ -51,6 +76,20 @@ class BoardSimulationBindings {
     void markDeveloperVerificationReady() {
         if (constructionAborted)
             throw new IllegalStateException("Construction bindings were revoked");
+        ElectricalConstructionContext owner = null;
+        for (ElectricalConstructionContext candidate : padOwners.values()) {
+            if (candidate == null) {
+                owner = null;
+                break;
+            }
+            if (owner == null)
+                owner = candidate;
+            else if (owner != candidate) {
+                owner = null;
+                break;
+            }
+        }
+        developerVerificationOwner = owner;
         developerVerificationReady = true;
     }
 
@@ -102,12 +141,44 @@ class BoardSimulationBindings {
 
     /** Clears only this exact private candidate owner after failed construction. */
     void clearForAbortedConstruction(TroubleshootBoard expectedBoard) {
-        if (expectedBoard == null || board != expectedBoard)
-            throw new IllegalArgumentException("Foreign construction binding owner");
-        constructionAborted = true;
-        padEndpoints.clear();
-        developerVerificationReady = false;
+        clearForAbortedConstruction(expectedBoard, null);
     }
 
-    boolean isConstructionAborted() { return constructionAborted; }
+    /** Clears only endpoints owned by this exact failed construction context. */
+    void clearForAbortedConstruction(TroubleshootBoard expectedBoard,
+            ElectricalConstructionContext owner) {
+        if (expectedBoard == null || board != expectedBoard)
+            throw new IllegalArgumentException("Foreign construction binding owner");
+        if (owner == null) {
+            constructionAborted = true;
+            padEndpoints.clear();
+            padOwners.clear();
+            developerVerificationReady = false;
+            developerVerificationOwner = null;
+        } else {
+            if (owner.getBoard() != board)
+                throw new IllegalArgumentException("Foreign construction context owner");
+            abortedOwners.add(owner);
+            boolean removed = false;
+            Iterator<Map.Entry<String, ElectricalConstructionContext>> iterator =
+                padOwners.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, ElectricalConstructionContext> entry = iterator.next();
+                if (entry.getValue() == owner) {
+                    padEndpoints.remove(entry.getKey());
+                    iterator.remove();
+                    removed = true;
+                }
+            }
+            if (developerVerificationOwner == owner ||
+                    (developerVerificationOwner == null && removed)) {
+                developerVerificationReady = false;
+                developerVerificationOwner = null;
+            }
+        }
+    }
+
+    boolean isConstructionAborted() {
+        return constructionAborted || !abortedOwners.isEmpty();
+    }
 }

@@ -1,0 +1,62 @@
+[
+  {
+    "family": "led",
+    "complete": true,
+    "reports": [],
+    "retestEnabled": true,
+    "source": "d6519d4d97a87804d9562c903c1a628c2b521bd7fc9058f1edcde4b1006a9f11",
+    "ticket": "Service Ticket\n\n\nIndicator does not light.\n\n\nCustomer retest: Observe the indicator after repair.\n\nRetest Customer",
+    "unrepairedRejected": true,
+    "url": "http://127.0.0.1:8899/circuitjs.html?tsjChallenge=led&seed=3"
+  },
+  {
+    "family": "diode",
+    "complete": true,
+    "reports": [],
+    "retestEnabled": true,
+    "source": "d6519d4d97a87804d9562c903c1a628c2b521bd7fc9058f1edcde4b1006a9f11",
+    "ticket": "Service Ticket\n\n\nIndicator does not light.\n\n\nCustomer retest: Observe the protected indicator after repair.\n\nRetest Customer",
+    "unrepairedRejected": true,
+    "url": "http://127.0.0.1:8899/circuitjs.html?tsjChallenge=diode&seed=3"
+  },
+  {
+    "family": "parallel",
+    "complete": true,
+    "reports": [],
+    "retestEnabled": true,
+    "source": "d6519d4d97a87804d9562c903c1a628c2b521bd7fc9058f1edcde4b1006a9f11",
+    "ticket": "Service Ticket\n\n\nThe two indicators do not behave the same.\n\n\nCustomer retest: Observe both indicators after repair.\n\nRetest Customer",
+    "unrepairedRejected": true,
+    "url": "http://127.0.0.1:8899/circuitjs.html?tsjChallenge=parallel&seed=3"
+  },
+  {
+    "family": "rc",
+    "complete": true,
+    "reports": [],
+    "retestEnabled": true,
+    "source": "d6519d4d97a87804d9562c903c1a628c2b521bd7fc9058f1edcde4b1006a9f11",
+    "ticket": "Service Ticket\n\n\nThe controller responds immediately after power-up.\n\n\nCustomer retest: Power the board ON, then power-cycle and observe the delayed output.\n\nPower-cycle and Retest Customer",
+    "unrepairedRejected": true,
+    "url": "http://127.0.0.1:8899/circuitjs.html?tsjChallenge=rc&seed=3"
+  },
+  {
+    "family": "npn",
+    "complete": true,
+    "reports": [],
+    "retestEnabled": true,
+    "source": "d6519d4d97a87804d9562c903c1a628c2b521bd7fc9058f1edcde4b1006a9f11",
+    "ticket": "Service Ticket\n\n\nThe controlled load does not switch on.\n\n\nCustomer retest: Set control HIGH and LOW and observe the controlled load response.\n\nSet control HIGH\nSet control LOW\nRetest Customer",
+    "unrepairedRejected": true,
+    "url": "http://127.0.0.1:8899/circuitjs.html?tsjChallenge=npn&seed=3"
+  },
+  {
+    "family": "nmos",
+    "complete": true,
+    "reports": [],
+    "retestEnabled": true,
+    "source": "d6519d4d97a87804d9562c903c1a628c2b521bd7fc9058f1edcde4b1006a9f11",
+    "ticket": "Service Ticket\n\n\nThe controlled load does not turn on.\n\n\nCustomer retest: Set control HIGH and LOW and observe the controlled load response.\n\nSet control HIGH\nSet control LOW\nRetest Customer",
+    "unrepairedRejected": true,
+    "url": "http://127.0.0.1:8899/circuitjs.html?tsjChallenge=nmos&seed=3"
+  }
+]

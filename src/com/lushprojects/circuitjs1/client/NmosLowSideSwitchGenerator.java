@@ -299,12 +299,18 @@ final class NmosLowSideSwitchGenerator {
         board.addNet(new BoardNet("LOAD_NODE"));
         board.addNet(new BoardNet("DRAIN"));
         board.addNet(new BoardNet("GND"));
-        board.addComponent(new BoardComponent("J1", "CONNECTOR"));
-        board.addComponent(new BoardComponent("J2", "CONNECTOR"));
-        board.addComponent(new BoardComponent("RLOAD", "RESISTOR"));
-        board.addComponent(new BoardComponent("RPD", "RESISTOR"));
-        board.addComponent(new BoardComponent("LED1", "LED"));
-        board.addComponent(new BoardComponent("Q1", "NMOS_TRANSISTOR"));
+        board.addComponent(new BoardComponent("J1", "CONNECTOR",
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
+        board.addComponent(new BoardComponent("J2", "CONNECTOR",
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
+        board.addComponent(new BoardComponent("RLOAD", "RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
+        board.addComponent(new BoardComponent("RPD", "RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
+        board.addComponent(new BoardComponent("LED1", "LED",
+            PhysicalPackages.THROUGH_HOLE_LED));
+        board.addComponent(new BoardComponent("Q1", "NMOS_TRANSISTOR",
+            PhysicalPackages.TO92_NMOS));
         addPad(board, "J1.1", "J1", "1", "LOAD_SUPPLY");
         addPad(board, "J1.2", "J1", "2", "GND");
         addPad(board, "J2.1", "J2", "1", "CONTROL_INPUT");

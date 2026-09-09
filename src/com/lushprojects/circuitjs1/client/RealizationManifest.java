@@ -19,9 +19,8 @@ import java.util.TreeSet;
  * choices needed to identify a resolved realization.</p>
  */
 final class RealizationManifest {
-    static final int VERSION = 1;
-    static final int VERSION1 = VERSION;
-    private static final String HEADER = "tsj-realization/1";
+    static final int VERSION = 2;
+    private static final String HEADER = "tsj-realization/2";
     private static final int MAX_ENCODING_LENGTH = 262144;
     private static final int MAX_FIELD_LENGTH = 32768;
     private static final int MAX_ID_LENGTH = 512;
@@ -38,16 +37,13 @@ final class RealizationManifest {
     private final List<Choice> choices;
     private final List<NetBinding> nets;
     private final List<String> targets;
-    private final FutureStateContract futureState;
-    private final ImportOrigin origin;
     private final String identityEncoding;
     private final String completeEncoding;
 
     RealizationManifest(int schemaVersion, ChallengeDescriptor descriptor,
             Collection<BlockRealizationIdentity> blocks,
             Collection<VersionPin> versions, Collection<Choice> choices,
-            Collection<NetBinding> nets, Collection<String> targets,
-            FutureStateContract futureState, ImportOrigin origin) {
+            Collection<NetBinding> nets, Collection<String> targets) {
         ChallengeContractException.positiveVersion(schemaVersion, "schemaVersion");
         if (schemaVersion != VERSION) {
             throw new ChallengeContractException(
@@ -63,10 +59,8 @@ final class RealizationManifest {
         this.nets = freezeNets(nets);
         this.targets = freezeTargets(targets);
         validateNetTargets(this.nets, this.targets);
-        this.futureState = futureState;
-        this.origin = origin;
-        this.identityEncoding = canonical(false, true);
-        this.completeEncoding = origin == null ? identityEncoding : canonical(true, false);
+        this.identityEncoding = canonical();
+        this.completeEncoding = identityEncoding;
     }
 
     int getSchemaVersion() { return schemaVersion; }
@@ -78,16 +72,13 @@ final class RealizationManifest {
     List<NetBinding> getNets() { return nets; }
     List<NetBinding> getNetBindings() { return nets; }
     List<String> getTargets() { return targets; }
-    FutureStateContract getFutureState() { return futureState; }
-    ImportOrigin getOrigin() { return origin; }
-    ImportOrigin getImportOrigin() { return origin; }
 
-    /** Canonical identity excluding source-origin ID and source hash. */
+    /** Canonical identity of the complete current realization. */
     String identityCanonical() {
         return identityEncoding;
     }
 
-    /** Canonical complete manifest including informational provenance. */
+    /** Canonical current manifest. */
     String toCanonical() {
         return completeEncoding;
     }
@@ -97,8 +88,7 @@ final class RealizationManifest {
         return toCanonical();
     }
 
-    private String canonical(boolean includeOrigin,
-            boolean identityProjection) {
+    private String canonical() {
         StringBuilder result = new StringBuilder(HEADER);
         result.append('\n');
         boolean first = true;
@@ -113,16 +103,6 @@ final class RealizationManifest {
             first = appendRecord(result, "net", net.toCanonical(), first);
         for (String target : targets)
             first = appendRecord(result, "target", target, first);
-        if (futureState != null)
-            first = appendRecord(result, "future", futureState.toCanonical(), first);
-        else
-            first = appendRecord(result, "future", "~", first);
-        if (includeOrigin && origin != null)
-            first = appendRecord(result, "origin", origin.toCanonical(), first);
-        else if (identityProjection && origin != null
-                && origin.getInterpretation() != null)
-            first = appendRecord(result, "origin",
-                    origin.identityProjectionCanonical(), first);
         if (result.length() > MAX_ENCODING_LENGTH) {
             throw new ChallengeContractException(
                     ChallengeContractException.Code.INVALID_ENCODING,
@@ -367,10 +347,6 @@ final class RealizationManifest {
         ArrayList<Choice> choices = new ArrayList<Choice>();
         ArrayList<NetBinding> nets = new ArrayList<NetBinding>();
         ArrayList<String> targets = new ArrayList<String>();
-        FutureStateContract futureState = null;
-        ImportOrigin origin = null;
-        boolean futureSeen = false;
-        boolean originSeen = false;
         int fieldCount = 0;
         while (cursor < value.length()) {
             int equals = value.indexOf('=', cursor);
@@ -429,24 +405,12 @@ final class RealizationManifest {
                 if (targets.size() >= MAX_TARGETS)
                     throw invalid("targets", "Too many durable targets");
                 targets.add(requireDurableId(payload, "target"));
-            } else if ("future".equals(field)) {
-                if (futureSeen)
-                    throw duplicate("future", "future");
-                futureSeen = true;
-                if (!"~".equals(payload))
-                    futureState = FutureStateContract.parse(payload);
-            } else if ("origin".equals(field)) {
-                if (originSeen)
-                    throw duplicate("origin", "origin");
-                originSeen = true;
-                if (!"~".equals(payload))
-                    origin = ImportOrigin.parse(payload);
             }
         }
         if (descriptor == null)
             throw missing("descriptor", "Manifest descriptor is required");
         return new RealizationManifest(VERSION, descriptor, blocks, versions,
-                choices, nets, targets, futureState, origin);
+                choices, nets, targets);
     }
 
     private static int parseFrameLength(String value, String field) {
@@ -475,8 +439,7 @@ final class RealizationManifest {
     private static boolean isField(String field) {
         return "descriptor".equals(field) || "block".equals(field)
                 || "version".equals(field) || "choice".equals(field)
-                || "net".equals(field) || "target".equals(field)
-                || "future".equals(field) || "origin".equals(field);
+                || "net".equals(field) || "target".equals(field);
     }
 
     private static void parseUnsupportedHeader(String value) {
@@ -657,11 +620,11 @@ final class RealizationManifest {
             switch (concern) {
             case LAYOUT:
                 knownId = "pcb-layout".equals(id);
-                knownVersion = version == 3;
+                knownVersion = version == SeededPcbLayoutGenerator.CURRENT_VERSION;
                 break;
             case GEOMETRY:
                 knownId = "pcb-geometry".equals(id);
-                knownVersion = version == 3;
+                knownVersion = version == BoundedAssemblyRequest.GEOMETRY_VERSION;
                 break;
             case DIAGNOSTIC:
                 knownId = "generated-diagnostic-solvability".equals(id);
@@ -675,13 +638,14 @@ final class RealizationManifest {
             case MODELS:
             case PACKAGES:
                 knownId = "bounded-assembler".equals(id);
-                knownVersion = version >= 1 && version <= 3;
+                knownVersion = version == BoundedAssemblyRequest.GENERATOR_VERSION;
                 break;
             case VALUES:
                 knownId = "bounded-assembler".equals(id)
                         || "controlled-led-load-e12".equals(id);
                 knownVersion = "controlled-led-load-e12".equals(id)
-                        ? version == 1 : version >= 1 && version <= 2;
+                        ? version == 1
+                        : version == BoundedAssemblyRequest.GENERATOR_VERSION;
                 break;
             default:
                 break;
@@ -912,199 +876,6 @@ final class RealizationManifest {
 
         @Override
         public String toString() { return toCanonical(); }
-    }
-
-    /** Data-only reservation for later sequential/model providers. */
-    static final class FutureStateContract {
-        static final int VERSION = 1;
-        static final int VERSION1 = VERSION;
-        private final int schemaVersion;
-        private final ChallengeDescriptor.VersionedId model;
-        private final ChallengeDescriptor.VersionedId stateSchema;
-        private final ChallengeDescriptor.VersionedId program;
-        private final ChallengeDescriptor.VersionedId provider;
-
-        FutureStateContract(int schemaVersion,
-                ChallengeDescriptor.VersionedId model,
-                ChallengeDescriptor.VersionedId stateSchema,
-                ChallengeDescriptor.VersionedId program,
-                ChallengeDescriptor.VersionedId provider) {
-            ChallengeContractException.positiveVersion(schemaVersion,
-                    "future.schemaVersion");
-            if (schemaVersion != VERSION)
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.UNSUPPORTED_VERSION,
-                        "future.schemaVersion", "Unsupported future state schema");
-            this.schemaVersion = schemaVersion;
-            this.model = ChallengeContractException.required(model,
-                    "future.model");
-            this.stateSchema = ChallengeContractException.required(stateSchema,
-                    "future.stateSchema");
-            this.program = program;
-            this.provider = provider;
-        }
-
-        int getSchemaVersion() { return schemaVersion; }
-        ChallengeDescriptor.VersionedId getModel() { return model; }
-        ChallengeDescriptor.VersionedId getStateSchema() { return stateSchema; }
-        ChallengeDescriptor.VersionedId getProgram() { return program; }
-        ChallengeDescriptor.VersionedId getProvider() { return provider; }
-
-        String toCanonical() {
-            return Integer.toString(schemaVersion) + "|" + model.toCanonical()
-                    + "|" + stateSchema.toCanonical() + "|"
-                    + optionalVersion(program) + "|" + optionalVersion(provider);
-        }
-
-        static FutureStateContract parse(String value) {
-            String[] fields = split(value, '|', "future", 5);
-            int version = parsePositiveInt(fields[0], "future.schemaVersion");
-            return new FutureStateContract(version,
-                    ChallengeDescriptor.VersionedId.parse(fields[1],
-                            "future.model"),
-                    ChallengeDescriptor.VersionedId.parse(fields[2],
-                            "future.stateSchema"),
-                    parseOptionalVersion(fields[3], "future.program"),
-                    parseOptionalVersion(fields[4], "future.provider"));
-        }
-
-        private static String optionalVersion(
-                ChallengeDescriptor.VersionedId value) {
-            return value == null ? "~" : value.toCanonical();
-        }
-
-        private static ChallengeDescriptor.VersionedId parseOptionalVersion(
-                String value, String field) {
-            return "~".equals(value) ? null
-                    : ChallengeDescriptor.VersionedId.parse(value, field);
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            if (!(other instanceof FutureStateContract)) return false;
-            FutureStateContract that = (FutureStateContract) other;
-            return schemaVersion == that.schemaVersion && model.equals(that.model)
-                    && stateSchema.equals(that.stateSchema)
-                    && equal(program, that.program) && equal(provider, that.provider);
-        }
-
-        @Override
-        public int hashCode() {
-            int result = 31 * schemaVersion + model.hashCode();
-            result = 31 * result + stateSchema.hashCode();
-            result = 31 * result + (program == null ? 0 : program.hashCode());
-            return 31 * result + (provider == null ? 0 : provider.hashCode());
-        }
-
-        private static boolean equal(Object first, Object second) {
-            return first == null ? second == null : first.equals(second);
-        }
-    }
-
-    /** Informational import provenance, with an optional identity-bearing interpretation. */
-    static final class ImportOrigin {
-        static final int VERSION = 1;
-        static final int VERSION1 = VERSION;
-        private final int schemaVersion;
-        private final String originId;
-        private final String sourceSha256;
-        private final ChallengeDescriptor.VersionedId interpretation;
-
-        ImportOrigin(int schemaVersion, String originId, String sourceSha256,
-                ChallengeDescriptor.VersionedId interpretation) {
-            ChallengeContractException.positiveVersion(schemaVersion,
-                    "origin.schemaVersion");
-            if (schemaVersion != VERSION)
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.UNSUPPORTED_VERSION,
-                        "origin.schemaVersion", "Unsupported import origin schema");
-            this.schemaVersion = schemaVersion;
-            this.originId = ChallengeContractException.id(originId,
-                    "origin.originId");
-            this.sourceSha256 = validateHash(sourceSha256);
-            this.interpretation = interpretation;
-        }
-
-        int getSchemaVersion() { return schemaVersion; }
-        String getOriginId() { return originId; }
-        String getSourceSha256() { return sourceSha256; }
-        String getSourceHash() { return sourceSha256; }
-        ChallengeDescriptor.VersionedId getInterpretation() {
-            return interpretation;
-        }
-
-        String toCanonical() {
-            return Integer.toString(schemaVersion) + "|" + originId + "|"
-                    + (sourceSha256 == null ? "~" : sourceSha256) + "|"
-                    + optionalVersion(interpretation);
-        }
-
-        private String identityProjectionCanonical() {
-            return Integer.toString(schemaVersion) + "|~|~|"
-                    + optionalVersion(interpretation);
-        }
-
-        static ImportOrigin parse(String value) {
-            String[] fields = split(value, '|', "origin", 4);
-            int version = parsePositiveInt(fields[0], "origin.schemaVersion");
-            if ("~".equals(fields[1]))
-                throw invalid("origin.originId", "Origin ID is required");
-            String hash = "~".equals(fields[2]) ? null
-                    : validateHash(fields[2]);
-            return new ImportOrigin(version, fields[1], hash,
-                    parseOptionalVersion(fields[3], "origin.interpretation"));
-        }
-
-        private static String optionalVersion(
-                ChallengeDescriptor.VersionedId value) {
-            return value == null ? "~" : value.toCanonical();
-        }
-
-        private static ChallengeDescriptor.VersionedId parseOptionalVersion(
-                String value, String field) {
-            return "~".equals(value) ? null
-                    : ChallengeDescriptor.VersionedId.parse(value, field);
-        }
-
-        private static String validateHash(String value) {
-            if (value == null) return null;
-            if (value.length() != 64)
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.INVALID_ENCODING,
-                        "origin.sourceSha256", "SHA-256 must be 64 lowercase hex characters");
-            for (int index = 0; index < value.length(); index++) {
-                char character = value.charAt(index);
-                if (!((character >= '0' && character <= '9')
-                        || (character >= 'a' && character <= 'f')))
-                    throw new ChallengeContractException(
-                            ChallengeContractException.Code.INVALID_ENCODING,
-                            "origin.sourceSha256", "SHA-256 must be lowercase hex");
-            }
-            return value;
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            if (!(other instanceof ImportOrigin)) return false;
-            ImportOrigin that = (ImportOrigin) other;
-            return schemaVersion == that.schemaVersion
-                    && originId.equals(that.originId)
-                    && equal(sourceSha256, that.sourceSha256)
-                    && equal(interpretation, that.interpretation);
-        }
-
-        @Override
-        public int hashCode() {
-            int result = 31 * schemaVersion + originId.hashCode();
-            result = 31 * result + (sourceSha256 == null ? 0 : sourceSha256.hashCode());
-            return 31 * result + (interpretation == null ? 0 : interpretation.hashCode());
-        }
-
-        private static boolean equal(Object first, Object second) {
-            return first == null ? second == null : first.equals(second);
-        }
     }
 
     private static void validateNumber(double value, String field) {

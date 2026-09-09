@@ -75,7 +75,8 @@ final class ControlledIndicatorPcbLayoutFactory {
         // the complete layout is assembled.  compactToContent performs one
         // whole-layout translation after all routes and labels exist.
         PcbBoardLayout layout = new PcbBoardLayout(1600, 1000,
-            new Rectangle(20, 20, 1200, 680), new Rectangle(1350, 100, 180, 300));
+            new Rectangle(20, 20, 1200, 680), new Rectangle(1350, 100, 180, 300),
+            SeededPcbLayoutGenerator.CURRENT_VERSION);
 
         addResistor(layout, board.getComponent(rg), 600, 500);
         addResistor(layout, board.getComponent(rpd), 300, 320);

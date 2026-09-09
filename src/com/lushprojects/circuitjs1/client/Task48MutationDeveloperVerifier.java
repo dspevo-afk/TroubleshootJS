@@ -10,10 +10,6 @@ import java.util.Vector;
  * one by copying a simulator snapshot.
  */
 final class Task48MutationDeveloperVerifier {
-    private static final String DRIVER_COMPONENT =
-        "tsj-block-v1/controlled-indicator@1/driver/component/RG";
-    private static final String LOAD_COMPONENT =
-        "tsj-block-v1/controlled-indicator@1/load/component/RLOAD";
     private static final String CATALOG_PROBE = "R_CATALOG_470";
     private static final String CATALOG_DAMAGE = "R_CATALOG_10";
 
@@ -37,6 +33,12 @@ final class Task48MutationDeveloperVerifier {
         require(board != null && ControlledIndicatorBlockContributions.FAMILY_ID.equals(
                 board.getCircuitFamilyId()) && !board.isDeveloperOnlyFaultRoute(),
             "normal controlled-indicator owner is required");
+        require(board.getBehaviorContract() instanceof ControlledIndicatorDeviceBehavior,
+            "resolved controlled-indicator behavior is missing its assembly plan");
+        final BoundedAssemblyPlan plan =
+            ((ControlledIndicatorDeviceBehavior) board.getBehaviorContract()).getPlan();
+        final String driverComponent = componentId(plan, "driver", "RG");
+        final String loadComponent = componentId(plan, "load", "RLOAD");
         require(challenge != null && challenge.isReady() &&
                 challenge.isDeveloperVerificationScopeActive() &&
                 board.getFaultBinding() != null && !board.getFaultBinding().isApplied(),
@@ -49,10 +51,10 @@ final class Task48MutationDeveloperVerifier {
 
         final ReplaceableResistorBoardCapability driver =
             ReplaceableResistorBoardCapability.find(board.getPhysicalBoardRuntime(),
-                DRIVER_COMPONENT);
+                driverComponent);
         final ReplaceableResistorBoardCapability load =
             ReplaceableResistorBoardCapability.find(board.getPhysicalBoardRuntime(),
-                LOAD_COMPONENT);
+                loadComponent);
         require(driver != null && load != null && driver != load &&
                 driver.getController() != null && load.getController() != null,
             "both composed resistor providers are required");
@@ -72,7 +74,7 @@ final class Task48MutationDeveloperVerifier {
             String loadEvidence = verifyProvider(sim, board, load, loadOriginal,
                 "RLOAD", true);
             String damageEvidence = verifySecondaryDamage(sim, board, load, loadOriginal,
-                retainedFault);
+                retainedFault, loadComponent);
 
             restoreOriginal(sim, board, driver, driverOriginal);
             restoreOriginal(sim, board, load, loadOriginal);
@@ -213,11 +215,11 @@ final class Task48MutationDeveloperVerifier {
 
     private static String verifySecondaryDamage(final CirSim sim, final GeneratedBoardInstance board,
             final ReplaceableResistorBoardCapability capability, final PhysicalResistorPart original,
-            final GeneratedFaultBinding retainedFault) {
+            final GeneratedFaultBinding retainedFault, final String loadComponent) {
         final ResistorSlotController slots = capability.getController();
         final ResistorStressDamageSystem stress = capability.getStressDamageSystem();
         final String componentId = capability.getSlot().getComponentId();
-        require(LOAD_COMPONENT.equals(componentId), "secondary damage uses RLOAD provider");
+        require(loadComponent.equals(componentId), "secondary damage uses RLOAD provider");
         final boolean loadOwnsSelectedFault = retainedFault.getFault().getTargetComponentId()
             .equals(componentId);
         require((loadOwnsSelectedFault && original.getFaultBinding() == retainedFault) ||
@@ -450,9 +452,11 @@ final class Task48MutationDeveloperVerifier {
                 }
             }
             appendResistorState(result, identities, board,
-                ReplaceableResistorBoardCapability.find(runtime, DRIVER_COMPONENT));
+                ReplaceableResistorBoardCapability.find(runtime,
+                    componentId(board, "driver", "RG")));
             appendResistorState(result, identities, board,
-                ReplaceableResistorBoardCapability.find(runtime, LOAD_COMPONENT));
+                ReplaceableResistorBoardCapability.find(runtime,
+                    componentId(board, "load", "RLOAD")));
             state = result.toString();
         }
 
@@ -496,6 +500,22 @@ final class Task48MutationDeveloperVerifier {
         for (int index = 0; index < first.size(); index++)
             if (first.get(index) != second.get(index)) return false;
         return true;
+    }
+
+    private static String componentId(GeneratedBoardInstance board, String block,
+            String localId) {
+        require(board != null && board.getBehaviorContract() instanceof
+            ControlledIndicatorDeviceBehavior,
+            "controlled-indicator plan is required for qualified component identity");
+        return componentId(((ControlledIndicatorDeviceBehavior) board.getBehaviorContract())
+            .getPlan(), block, localId);
+    }
+
+    private static String componentId(BoundedAssemblyPlan plan, String block,
+            String localId) {
+        require(plan != null && plan.isControlledIndicator(),
+            "controlled-indicator plan is required for qualified component identity");
+        return plan.idFor(block, FunctionalBlockDescriptor.EntityKind.COMPONENT, localId);
     }
 
     private static void require(boolean condition, String message) {

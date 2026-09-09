@@ -14,7 +14,7 @@ import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.Parameter;
 import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.Value;
 
 /**
- * Pure capture and replay adapter for the bounded assembly versions 1, 2, and 3.
+ * Pure capture and replay adapter for the current bounded assembly generator.
  *
  * <p>This class resolves and verifies the complete data identity before the
  * mutable assembler is entered.  It deliberately does not retain a runtime,
@@ -23,7 +23,6 @@ import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.Value;
 final class A03RealizationReplay {
     static final int VERSION = 1;
     static final String REPLAY_ID = "bounded-realization-replay";
-    static final int REPLAY_VERSION = VERSION;
 
     private static final String PCB_LAYOUT_ID = "pcb-layout";
     private static final String PCB_GEOMETRY_ID = "pcb-geometry";
@@ -66,7 +65,7 @@ final class A03RealizationReplay {
                 plan.getRequest().getDescriptor(),
                 namespace.getRealizations().values(),
                 versionPins(plan, physicalChoices),
-                choices, nets, targets, null, null);
+                choices, nets, targets);
     }
 
     static BoundedAssemblyPlan decodeAndResolve(String encoded) {
@@ -78,7 +77,6 @@ final class A03RealizationReplay {
             throw new ChallengeContractException(
                     ChallengeContractException.Code.MISSING_FIELD,
                     "manifest", "Manifest is required");
-        rejectFutureFields(manifest);
         BoundedAssemblyRequest request = requestFor(manifest.getDescriptor(),
                 manifest.getVersionPins());
         BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
@@ -94,19 +92,6 @@ final class A03RealizationReplay {
             RealizationManifest manifest) {
         return BoundedGeneratedBoardAssembler.replay(manifest);
     }
-    private static void rejectFutureFields(RealizationManifest manifest) {
-        if (manifest.getFutureState() != null)
-            throw new ChallengeContractException(
-                    ChallengeContractException.Code.UNSUPPORTED_VERSION,
-                    "future", "Future model state is not supported");
-        RealizationManifest.ImportOrigin origin = manifest.getOrigin();
-        if (origin != null && origin.getInterpretation() != null)
-            throw new ChallengeContractException(
-                    ChallengeContractException.Code.UNSUPPORTED_VERSION,
-                    "origin.interpretation",
-                    "Interpretation references are not supported");
-    }
-
     private static BoundedAssemblyRequest requestFor(
             ChallengeDescriptor descriptor,
             List<RealizationManifest.VersionPin> pins) {
@@ -175,15 +160,10 @@ final class A03RealizationReplay {
                         descriptor.getDeviceIntent().getId()))
             return BoundedAssemblyRequest.forCanary(descriptor);
         if (BoundedAssemblyRequest.GENERATOR_ID.equals(generator)
-                && version == BoundedAssemblyRequest.CONTROLLED_GENERATOR_VERSION
+                && version == BoundedAssemblyRequest.GENERATOR_VERSION
                 && BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
                         descriptor.getDeviceIntent().getId()))
             return BoundedAssemblyRequest.forControlledIndicator(descriptor);
-        if (BoundedAssemblyRequest.GENERATOR_ID.equals(generator)
-                && version == BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION
-                && BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
-                        descriptor.getDeviceIntent().getId()))
-            return BoundedAssemblyRequest.forControlledIndicatorValues(descriptor);
         throw new ChallengeContractException(
                 ChallengeContractException.Code.UNSUPPORTED_VERSION,
                 "descriptor.generator",
@@ -216,7 +196,7 @@ final class A03RealizationReplay {
             switch (concern) {
             case LAYOUT:
                 expectedId = PCB_LAYOUT_ID;
-                expectedVersion = SeededPcbLayoutGenerator.LEGACY_VERSION;
+                expectedVersion = SeededPcbLayoutGenerator.CURRENT_VERSION;
                 break;
             case ROUTING:
             case MODELS:
@@ -225,12 +205,13 @@ final class A03RealizationReplay {
                 expectedVersion = generatorVersion;
                 break;
             case VALUES:
-                expectedId = generatorVersion
-                        == BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION
+                expectedId = BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
+                        descriptor.getDeviceIntent().getId())
                         ? VALUES_ID : ROUTING_ID;
-                expectedVersion = generatorVersion
-                        == BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION
-                        ? 1 : generatorVersion;
+                expectedVersion = BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
+                        descriptor.getDeviceIntent().getId())
+                        ? ControlledIndicatorValueSynthesis.VALUES_REVISION
+                        : generatorVersion;
                 break;
             case GEOMETRY:
                 expectedId = PCB_GEOMETRY_ID;
@@ -316,9 +297,10 @@ final class A03RealizationReplay {
                 PCB_LAYOUT_ID, physicalChoices.getLayoutVersion()));
         result.add(pin(RealizationManifest.VersionPin.Concern.ROUTING,
                 ROUTING_ID, generatorVersion));
-        if (generatorVersion == BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION)
+        if (BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
+                descriptor.getDeviceIntent().getId()))
             result.add(pin(RealizationManifest.VersionPin.Concern.VALUES,
-                    VALUES_ID, 1));
+                    VALUES_ID, ControlledIndicatorValueSynthesis.VALUES_REVISION));
         else
             result.add(pin(RealizationManifest.VersionPin.Concern.VALUES,
                     ROUTING_ID, generatorVersion));
@@ -350,7 +332,6 @@ final class A03RealizationReplay {
                 : namespace.getBlocks().entrySet()) {
             String block = entry.getKey();
             FunctionalBlockDescriptor descriptor = entry.getValue();
-            addTarget(targets, namespace.instanceIdFor(block));
             addToken(choices, "block." + block + ".type",
                     descriptor.getTypeId() + "@" + descriptor.getSchemaVersion());
             addIds(choices, "block." + block + ".components",
@@ -374,10 +355,6 @@ final class A03RealizationReplay {
             captureBlockDetails(namespace, block, descriptor, plan,
                     choices, targets);
         }
-        for (BlockRealizationIdentity identity
-                : namespace.getRealizations().values()) {
-            addTarget(targets, namespace.instanceIdFor(identity.getInstanceKey()));
-        }
     }
 
     private static List<String> durableIds(BlockNamespace namespace,
@@ -385,9 +362,9 @@ final class A03RealizationReplay {
             List<String> targets) {
         ArrayList<String> result = new ArrayList<String>();
         for (String local : localIds) {
-            String durable = namespace.durableIdFor(block, kind, local);
-            result.add(durable);
-            addTarget(targets, durable);
+            String semantic = namespace.idFor(block, kind, local);
+            result.add(semantic);
+            addTarget(targets, semantic);
         }
         return result;
     }
@@ -415,16 +392,16 @@ final class A03RealizationReplay {
                 : descriptor.getEndpoints().entrySet()) {
             String local = entry.getKey();
             FunctionalBlockDescriptor.Endpoint endpoint = entry.getValue();
-            String durable = namespace.durableIdFor(block,
+            String semantic = namespace.idFor(block,
                     EntityKind.ENDPOINT, local);
-            String terminal = namespace.durableTerminalIdFor(block,
+            String terminal = namespace.terminalIdFor(block,
                     endpoint.getComponentId(), endpoint.getTerminalId());
             addToken(choices, "block." + block + ".endpoint." + local
-                    + ".component", namespace.durableIdFor(block,
+                    + ".component", namespace.idFor(block,
                             EntityKind.COMPONENT, endpoint.getComponentId()));
             addToken(choices, "block." + block + ".endpoint." + local
                     + ".terminal", terminal);
-            addTarget(targets, durable);
+            addTarget(targets, semantic);
             addTarget(targets, terminal);
         }
         for (Map.Entry<String, FunctionalBlockDescriptor.Pad> entry
@@ -432,14 +409,14 @@ final class A03RealizationReplay {
             String local = entry.getKey();
             FunctionalBlockDescriptor.Pad pad = entry.getValue();
             addToken(choices, "block." + block + ".pad." + local
-                    + ".endpoint", namespace.durableIdFor(block,
+                    + ".endpoint", namespace.idFor(block,
                             EntityKind.ENDPOINT, pad.getEndpointId()));
             addToken(choices, "block." + block + ".pad." + local
-                    + ".net", plan.durableNetFor(block, pad.getNetId()));
+                    + ".net", plan.netFor(block, pad.getNetId()));
         }
         for (String localNet : descriptor.getNetIds()) {
             addToken(choices, "block." + block + ".net." + localNet
-                    + ".conductor", plan.durableNetFor(block, localNet));
+                    + ".conductor", plan.netFor(block, localNet));
         }
         for (Map.Entry<String, FunctionalBlockDescriptor.Role> entry
                 : descriptor.getRoles().entrySet()) {
@@ -449,10 +426,10 @@ final class A03RealizationReplay {
                     + ".requirement", role.getRequirement().name());
             ArrayList<String> members = new ArrayList<String>();
             for (LocalRef member : role.getMembers()) {
-                String durable = namespace.durableIdFor(block,
+                String semantic = namespace.idFor(block,
                         member.getKind(), member.getId());
-                members.add(durable);
-                addTarget(targets, durable);
+                members.add(semantic);
+                addTarget(targets, semantic);
             }
             addIds(choices, "block." + block + ".role." + local
                     + ".members", members);
@@ -462,10 +439,10 @@ final class A03RealizationReplay {
             String local = entry.getKey();
             FunctionalBlockDescriptor.Port port = entry.getValue();
             addToken(choices, "block." + block + ".port." + local
-                    + ".role", namespace.durableIdFor(block,
+                    + ".role", namespace.idFor(block,
                             EntityKind.ROLE, port.getRoleId()));
             addToken(choices, "block." + block + ".port." + local
-                    + ".attachment", namespace.durableIdFor(block,
+                    + ".attachment", namespace.idFor(block,
                             port.getAttachment().getKind(),
                             port.getAttachment().getId()));
         }
@@ -476,10 +453,10 @@ final class A03RealizationReplay {
             List<String> targets) {
         ArrayList<String> result = new ArrayList<String>();
         for (String terminal : component.getTerminalIds()) {
-            String durable = namespace.durableTerminalIdFor(block,
+            String semantic = namespace.terminalIdFor(block,
                     component.getId(), terminal);
-            result.add(durable);
-            addTarget(targets, durable);
+            result.add(semantic);
+            addTarget(targets, semantic);
         }
         return result;
     }
@@ -488,13 +465,12 @@ final class A03RealizationReplay {
             List<RealizationManifest.NetBinding> nets,
             List<String> targets,
             List<RealizationManifest.Choice> choices) {
-        Map<String, String> localIds = namespace.getDurableLocalNetIds();
-        Map<String, String> durable = plan.getDeviceBuses().getDurableNets();
-        if (!localIds.keySet().equals(durable.keySet()))
+        Map<String, String> semanticNets = plan.getDeviceBuses().getNetBindings();
+        if (!namespace.getSemanticNetIds().equals(semanticNets.keySet()))
             throw mismatch("nets", "Device buses do not cover namespace nets");
-        for (Map.Entry<String, String> entry : localIds.entrySet()) {
-            String alias = entry.getValue();
-            String conductor = durable.get(entry.getKey());
+        for (Map.Entry<String, String> entry : semanticNets.entrySet()) {
+            String alias = entry.getKey();
+            String conductor = entry.getValue();
             if (conductor == null)
                 throw mismatch("nets", "Missing durable conductor");
             nets.add(new RealizationManifest.NetBinding(alias, conductor));
@@ -516,8 +492,6 @@ final class A03RealizationReplay {
             BlockNamespace namespace,
             List<RealizationManifest.Choice> choices,
             List<String> targets) {
-        Map<String, String> durableLocalNets =
-                namespace.getDurableLocalNetIds();
         for (DeviceBusBindings.Declaration declaration
                 : plan.getDeviceBuses().getDeclarations()) {
             String semanticKey = declaration.getSemanticKey();
@@ -525,11 +499,10 @@ final class A03RealizationReplay {
             addToken(choices, base + "semantic-key", semanticKey);
             ArrayList<String> anchors = new ArrayList<String>();
             for (String anchor : declaration.getAnchorAliases()) {
-                String durableAnchor = durableLocalNets.get(anchor);
-                if (durableAnchor == null)
+                if (!namespace.getSemanticNetIds().contains(anchor))
                     throw mismatch("nets.declaration", "Unknown bus anchor");
-                anchors.add(durableAnchor);
-                addTarget(targets, durableAnchor);
+                anchors.add(anchor);
+                addTarget(targets, anchor);
             }
             addIds(choices, base + "anchors", anchors);
             List<String> externalRefs = declaration.getExternalRefs();
@@ -553,7 +526,7 @@ final class A03RealizationReplay {
                 : plan.getRequest().getConnections()) {
             ArrayList<String> ports = new ArrayList<String>();
             for (ElectricalConnection.PortRef ref : connection.getPorts())
-                ports.add(namespace.durableIdFor(ref.getBlockKey(),
+                ports.add(namespace.idFor(ref.getBlockKey(),
                         EntityKind.PORT, ref.getPortId()));
             addToken(choices, "connection." + connection.getId()
                     + ".kind", connection.getKind().name());
@@ -612,7 +585,7 @@ final class A03RealizationReplay {
                 contract.getControlPort(), namespace);
         ArrayList<String> returns = new ArrayList<String>();
         for (ElectricalConnection.PortRef ref : contract.getReturnPorts())
-            returns.add(namespace.durableIdFor(ref.getBlockKey(),
+            returns.add(namespace.idFor(ref.getBlockKey(),
                     EntityKind.PORT, ref.getPortId()));
         addIds(choices, base + "return-ports", returns);
     }
@@ -620,7 +593,7 @@ final class A03RealizationReplay {
     private static void addPortRef(List<RealizationManifest.Choice> choices,
             String key, ElectricalConnection.PortRef ref,
             BlockNamespace namespace) {
-        addToken(choices, key, namespace.durableIdFor(ref.getBlockKey(),
+        addToken(choices, key, namespace.idFor(ref.getBlockKey(),
                 EntityKind.PORT, ref.getPortId()));
     }
     private static void captureAdapters(BoundedAssemblyPlan plan,
@@ -629,15 +602,15 @@ final class A03RealizationReplay {
         for (DeviceAdapterContract adapter : plan.getRequest().getDeviceAdapters()) {
             String base = "adapter." + adapter.getKey() + ".";
             addInteger(choices, base + "version", adapter.getVersion());
-            addToken(choices, base + "component", namespace.durableIdFor(
+            addToken(choices, base + "component", namespace.idFor(
                     adapter.getKey(), EntityKind.COMPONENT,
                     adapter.getComponentLocalId()));
             addToken(choices, base + "external-input",
                     adapter.getExternalInputId());
-            addToken(choices, base + "output-port", namespace.durableIdFor(
+            addToken(choices, base + "output-port", namespace.idFor(
                     adapter.getKey(), EntityKind.PORT,
                     adapter.getOutputPortId()));
-            addToken(choices, base + "return-port", namespace.durableIdFor(
+            addToken(choices, base + "return-port", namespace.idFor(
                     adapter.getKey(), EntityKind.PORT,
                     adapter.getReturnPortId()));
         }
@@ -665,21 +638,15 @@ final class A03RealizationReplay {
             addToken(choices, "recipe." + block + ".provider",
                     contribution.getProviderTypeId() + "@"
                             + contribution.getProviderVersion());
-            // Version 1 stores a fault label in the legacy FaultSpec wrapper;
-            // its assembler applies incorrect resistance to the repair resistor.
-            boolean legacyResistive = plan.getRequest().getDescriptor()
-                    .getGenerator().getVersion() == 1;
             addToken(choices, "recipe." + block + ".fault-kind",
-                    legacyResistive ? "INCORRECT_RESISTANCE"
-                            : contribution.getFaultSpec().getKind().name());
+                    contribution.getFaultSpec().getKind().name());
             addToken(choices, "recipe." + block + ".fault-target",
-                    namespace.durableIdFor(block, EntityKind.COMPONENT,
-                            legacyResistive ? contribution.getRepairLocalComponentId()
-                                    : contribution.getFaultSpec().getTargetComponentLocalId()));
+                    namespace.idFor(block, EntityKind.COMPONENT,
+                            contribution.getFaultSpec().getTargetComponentLocalId()));
             addNumber(choices, "recipe." + block + ".fault-effective",
                     contribution.getFaultSpec().getEffectiveResistanceOhms());
             addToken(choices, "recipe." + block + ".repair",
-                    namespace.durableIdFor(block, EntityKind.COMPONENT,
+                    namespace.idFor(block, EntityKind.COMPONENT,
                             contribution.getRepairLocalComponentId()));
             addIds(choices, "recipe." + block + ".inputs",
                     contribution.getInputRequirements());
@@ -692,15 +659,15 @@ final class A03RealizationReplay {
     private static void captureResistorRecipe(BlockNamespace namespace,
             String block, ComposedBlockContribution.ResistorRecipe recipe,
             String base, List<RealizationManifest.Choice> choices) {
-        addToken(choices, base + "component", namespace.durableIdFor(block,
+        addToken(choices, base + "component", namespace.idFor(block,
                 EntityKind.COMPONENT, recipe.getComponentLocalId()));
-        addToken(choices, base + "endpoint-1", namespace.durableIdFor(block,
+        addToken(choices, base + "endpoint-1", namespace.idFor(block,
                 EntityKind.ENDPOINT, recipe.getFirstEndpointLocalId()));
-        addToken(choices, base + "endpoint-2", namespace.durableIdFor(block,
+        addToken(choices, base + "endpoint-2", namespace.idFor(block,
                 EntityKind.ENDPOINT, recipe.getSecondEndpointLocalId()));
-        addToken(choices, base + "pad-1", namespace.durableIdFor(block,
+        addToken(choices, base + "pad-1", namespace.idFor(block,
                 EntityKind.PAD, recipe.getFirstPadLocalId()));
-        addToken(choices, base + "pad-2", namespace.durableIdFor(block,
+        addToken(choices, base + "pad-2", namespace.idFor(block,
                 EntityKind.PAD, recipe.getSecondPadLocalId()));
         addNumber(choices, base + "resistance", recipe.getResistanceOhms());
         addNumber(choices, base + "rated-watts", recipe.getRatedWatts());
@@ -719,20 +686,20 @@ final class A03RealizationReplay {
             List<RealizationManifest.Choice> choices) {
         String base = "recipe." + block + ".nmos."
                 + recipe.getComponentLocalId() + ".";
-        addToken(choices, base + "component", namespace.durableIdFor(block,
+        addToken(choices, base + "component", namespace.idFor(block,
                 EntityKind.COMPONENT, recipe.getComponentLocalId()));
         addToken(choices, base + "model", recipe.getModelId());
-        addToken(choices, base + "gate-endpoint", namespace.durableIdFor(block,
+        addToken(choices, base + "gate-endpoint", namespace.idFor(block,
                 EntityKind.ENDPOINT, recipe.getGateEndpointLocalId()));
-        addToken(choices, base + "drain-endpoint", namespace.durableIdFor(block,
+        addToken(choices, base + "drain-endpoint", namespace.idFor(block,
                 EntityKind.ENDPOINT, recipe.getDrainEndpointLocalId()));
-        addToken(choices, base + "source-endpoint", namespace.durableIdFor(block,
+        addToken(choices, base + "source-endpoint", namespace.idFor(block,
                 EntityKind.ENDPOINT, recipe.getSourceEndpointLocalId()));
-        addToken(choices, base + "gate-pad", namespace.durableIdFor(block,
+        addToken(choices, base + "gate-pad", namespace.idFor(block,
                 EntityKind.PAD, recipe.getGatePadLocalId()));
-        addToken(choices, base + "drain-pad", namespace.durableIdFor(block,
+        addToken(choices, base + "drain-pad", namespace.idFor(block,
                 EntityKind.PAD, recipe.getDrainPadLocalId()));
-        addToken(choices, base + "source-pad", namespace.durableIdFor(block,
+        addToken(choices, base + "source-pad", namespace.idFor(block,
                 EntityKind.PAD, recipe.getSourcePadLocalId()));
     }
     private static void captureLedRecipe(BlockNamespace namespace, String block,
@@ -740,16 +707,16 @@ final class A03RealizationReplay {
             List<RealizationManifest.Choice> choices) {
         String base = "recipe." + block + ".led."
                 + recipe.getComponentLocalId() + ".";
-        addToken(choices, base + "component", namespace.durableIdFor(block,
+        addToken(choices, base + "component", namespace.idFor(block,
                 EntityKind.COMPONENT, recipe.getComponentLocalId()));
         addToken(choices, base + "model", recipe.getModelId());
-        addToken(choices, base + "anode-endpoint", namespace.durableIdFor(block,
+        addToken(choices, base + "anode-endpoint", namespace.idFor(block,
                 EntityKind.ENDPOINT, recipe.getAnodeEndpointLocalId()));
-        addToken(choices, base + "cathode-endpoint", namespace.durableIdFor(block,
+        addToken(choices, base + "cathode-endpoint", namespace.idFor(block,
                 EntityKind.ENDPOINT, recipe.getCathodeEndpointLocalId()));
-        addToken(choices, base + "anode-pad", namespace.durableIdFor(block,
+        addToken(choices, base + "anode-pad", namespace.idFor(block,
                 EntityKind.PAD, recipe.getAnodePadLocalId()));
-        addToken(choices, base + "cathode-pad", namespace.durableIdFor(block,
+        addToken(choices, base + "cathode-pad", namespace.idFor(block,
                 EntityKind.PAD, recipe.getCathodePadLocalId()));
     }
     private static void captureFaults(BoundedAssemblyPlan plan,
@@ -875,31 +842,19 @@ final class A03RealizationReplay {
         addNumber(choices, base + "forward-drop", model.fwdrop);
     }
 
-    /** Map legacy/layout component keys to the explicit variant-owned ID. */
+    /** Accept only the current declared component or device-owned envelope. */
     private static String durablePhysicalComponentId(BlockNamespace namespace,
             String componentId) {
         if (componentId == null || componentId.length() == 0)
             throw mismatch("physical.component", "Missing component identity");
-        String match = null;
         for (Map.Entry<String, FunctionalBlockDescriptor> block
                 : namespace.getBlocks().entrySet()) {
             for (String local : block.getValue().getComponents().keySet()) {
-                String qualified = namespace.idFor(block.getKey(),
+                String semantic = namespace.idFor(block.getKey(),
                         EntityKind.COMPONENT, local);
-                String durable = namespace.durableIdFor(block.getKey(),
-                        EntityKind.COMPONENT, local);
-                if (componentId.equals(durable))
-                    return durable;
-                if (componentId.equals(qualified) || componentId.equals(local)) {
-                    if (match != null && !match.equals(durable))
-                        throw mismatch("physical.component",
-                                "Ambiguous legacy component identity");
-                    match = durable;
-                }
+                if (componentId.equals(semantic)) return componentId;
             }
         }
-        if (match != null)
-            return match;
         // The bounded resistive envelope owns J1 outside the functional
         // contribution namespace. Give it a deterministic device identity.
         if ("J1".equals(componentId))
@@ -996,88 +951,5 @@ final class A03RealizationReplay {
             throw new IllegalArgumentException("Missing durable target");
         if (!targets.contains(value))
             targets.add(value);
-    }
-    /**
-     * A saved repair/cut reference carries the complete identity that was
-     * observed when the action was created.
-     */
-    static final class SavedActionReference {
-        static final int VERSION = 1;
-        private final int schemaVersion;
-        private final String expectedIdentityCanonical;
-        private final String target;
-
-        SavedActionReference(int schemaVersion, String expectedIdentityCanonical,
-                String target) {
-            ChallengeContractException.positiveVersion(schemaVersion,
-                    "saved.schemaVersion");
-            if (schemaVersion != VERSION)
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.UNSUPPORTED_VERSION,
-                        "saved.schemaVersion", "Unsupported saved action schema");
-            if (expectedIdentityCanonical == null
-                    || expectedIdentityCanonical.length() == 0)
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.MISSING_FIELD,
-                        "saved.identity", "Identity is required");
-            RealizationManifest expected = RealizationManifest.parse(expectedIdentityCanonical);
-            if (!expected.identityCanonical().equals(expectedIdentityCanonical))
-                throw mismatch("saved.identity", "Saved identity must be canonical");
-            this.schemaVersion = schemaVersion;
-            this.expectedIdentityCanonical = expectedIdentityCanonical;
-            this.target = savedTarget(target);
-            if (!expected.getTargets().contains(this.target))
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.MISSING_FIELD,
-                        "saved.target", "Target is absent from realization");
-        }
-
-        static SavedActionReference capture(RealizationManifest manifest,
-                String target) {
-            if (manifest == null)
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.MISSING_FIELD,
-                        "manifest", "Manifest is required");
-            return new SavedActionReference(VERSION,
-                    manifest.identityCanonical(), target);
-        }
-
-        String resolve(RealizationManifest manifest) {
-            if (manifest == null)
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.MISSING_FIELD,
-                        "manifest", "Manifest is required");
-            if (!expectedIdentityCanonical.equals(manifest.identityCanonical()))
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.CONTRADICTORY_CONSTRAINT,
-                        "saved-action.realization", "STALE_REALIZATION");
-            if (!manifest.getTargets().contains(target))
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.MISSING_FIELD,
-                        "saved.target", "Target is absent from realization");
-            return target;
-        }
-
-        int getSchemaVersion() { return schemaVersion; }
-        String getExpectedIdentityCanonical() { return expectedIdentityCanonical; }
-        String getIdentityCanonical() { return expectedIdentityCanonical; }
-        String getTarget() { return target; }
-
-        private static String savedTarget(String value) {
-            if (value == null || value.length() == 0 || value.length() > 512)
-                throw new ChallengeContractException(
-                        ChallengeContractException.Code.INVALID_ID,
-                        "saved.target", "Target is missing or too long");
-            for (int index = 0; index < value.length(); index++) {
-                char c = value.charAt(index);
-                if (c < 0x21 || c > 0x7e || c == '|' || c == ','
-                        || c == '=') {
-                    throw new ChallengeContractException(
-                            ChallengeContractException.Code.INVALID_ID,
-                            "saved.target", "Target has unsupported characters");
-                }
-            }
-            return value;
-        }
     }
 }

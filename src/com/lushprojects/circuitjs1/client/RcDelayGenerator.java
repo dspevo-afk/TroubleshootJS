@@ -229,11 +229,14 @@ final class RcDelayGenerator {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID);
         board.addNet(new BoardNet("VIN")); board.addNet(new BoardNet("RC_OUT"));
         board.addNet(new BoardNet("GND"));
-        board.addComponent(new BoardComponent("J1", "CONNECTOR"));
+        board.addComponent(new BoardComponent("J1", "CONNECTOR",
+            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
         board.addComponent(new BoardComponent("J2", "CONNECTOR",
             PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2));
-        board.addComponent(new BoardComponent("R1", "RESISTOR"));
-        board.addComponent(new BoardComponent("R2", "RESISTOR"));
+        board.addComponent(new BoardComponent("R1", "RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
+        board.addComponent(new BoardComponent("R2", "RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
         board.addComponent(new BoardComponent("C1", "CAPACITOR",
             PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR));
         board.addComponent(new BoardComponent("C2", "CAPACITOR",

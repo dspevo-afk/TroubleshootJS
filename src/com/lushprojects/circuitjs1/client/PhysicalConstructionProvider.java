@@ -10,6 +10,11 @@ import java.util.Map;
 interface PhysicalConstructionProvider {
     String getProviderId();
     int getVersion();
+    /** Physical envelope identity supplied by the provider composition. */
+    String getBoardFamilyId();
+    String getBoardName();
+    /** Fault candidates use the same provider-owned family identity. */
+    String getFaultFamilyId();
     PhysicalConstructionContribution declare(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec,
             ElectricalRealizationSpec.ProviderDeclaration declaration);
@@ -46,10 +51,8 @@ final class StandardPhysicalConstructionProviders {
         new ResistivePhysicalProvider(ResistiveBlockContributions.LOAD_TYPE_ID);
     private static final PhysicalConstructionProvider CONTROLLED_DRIVER =
         new ControlledDriverPhysicalProvider();
-    private static final PhysicalConstructionProvider CONTROLLED_LOAD_V1 =
-        new ControlledLoadPhysicalProvider(ControlledIndicatorBlockContributions.VERSION);
-    private static final PhysicalConstructionProvider CONTROLLED_LOAD_V2 =
-        new ControlledLoadPhysicalProvider(ControlledIndicatorBlockContributions.VALUE_LOAD_VERSION);
+    private static final PhysicalConstructionProvider CONTROLLED_LOAD =
+        new ControlledLoadPhysicalProvider(ControlledIndicatorBlockContributions.LOAD_VERSION);
     private static final PhysicalConstructionProvider CONTROLLED_DEVICE =
         new DevicePhysicalProvider(true);
     private static final PhysicalConstructionProvider RESISTIVE_DEVICE =
@@ -68,11 +71,8 @@ final class StandardPhysicalConstructionProviders {
                 version == ControlledIndicatorBlockContributions.VERSION)
             return CONTROLLED_DRIVER;
         if (ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.VERSION)
-            return CONTROLLED_LOAD_V1;
-        if (ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.VALUE_LOAD_VERSION)
-            return CONTROLLED_LOAD_V2;
+                version == ControlledIndicatorBlockContributions.LOAD_VERSION)
+            return CONTROLLED_LOAD;
         if ("resistive-device-join".equals(providerId) && version == 1)
             return RESISTIVE_DEVICE;
         if ("controlled-device-join".equals(providerId) && version == 1)
@@ -92,39 +92,35 @@ final class StandardPhysicalConstructionProviders {
         ArrayList<PhysicalExternalInputDeclaration> inputs =
             new ArrayList<PhysicalExternalInputDeclaration>();
 
-        /*
-         * This is composition order, not identity resolution.  It preserves
-         * the accepted v1 slot/part order and controlled provider order while
-         * keeping the materializer independent of concrete component names.
-         */
-        if (plan.isControlledIndicator()) {
-            append(plan, spec, "driver", local, inputs);
-            append(plan, spec, "load", local, inputs);
-            append(plan, spec, "device", device, inputs);
-        } else {
-            append(plan, spec, "device", device, inputs);
-            append(plan, spec, "source", local, inputs);
-            append(plan, spec, "load", local, inputs);
+        String boardFamilyId = null;
+        String boardName = null;
+        for (ElectricalRealizationSpec.ProviderDeclaration declaration :
+                spec.getProviderDeclarations().values()) {
+            PhysicalConstructionProvider provider = provider(declaration.getProviderId(),
+                declaration.getProviderVersion());
+            if (boardFamilyId == null) {
+                boardFamilyId = provider.getBoardFamilyId();
+                boardName = provider.getBoardName();
+            } else if (!boardFamilyId.equals(provider.getBoardFamilyId()) ||
+                    !boardName.equals(provider.getBoardName())) {
+                throw new IllegalStateException("Physical providers disagree on board envelope");
+            }
+            PhysicalConstructionContribution contribution = provider.declare(plan, spec,
+                declaration);
+            if (contribution == null)
+                throw new IllegalStateException("Physical provider returned no contribution: " +
+                    declaration.getOwnerKey());
+            if (declaration.isDeviceOwner()) {
+                device.addAll(contribution.getParts());
+            } else {
+                local.addAll(contribution.getParts());
+            }
+            inputs.addAll(contribution.getExternalInputs());
         }
-        return new PhysicalConstructionDeclarations(local, device, inputs);
-    }
-
-    private static void append(BoundedAssemblyPlan plan, ElectricalRealizationSpec spec,
-            String ownerKey, List<PhysicalConstructionPartDeclaration> parts,
-            List<PhysicalExternalInputDeclaration> inputs) {
-        ElectricalRealizationSpec.ProviderDeclaration declaration =
-            spec.getProviderDeclaration(ownerKey);
-        if (declaration == null)
-            throw new IllegalStateException("Missing physical provider declaration: " + ownerKey);
-        PhysicalConstructionProvider provider = provider(declaration.getProviderId(),
-            declaration.getProviderVersion());
-        PhysicalConstructionContribution contribution = provider.declare(plan, spec,
-            declaration);
-        if (contribution == null)
-            throw new IllegalStateException("Physical provider returned no contribution: " +
-                ownerKey);
-        parts.addAll(contribution.getParts());
-        inputs.addAll(contribution.getExternalInputs());
+        if (boardFamilyId == null)
+            throw new IllegalStateException("No physical provider declarations");
+        return new PhysicalConstructionDeclarations(local, device, inputs,
+            boardFamilyId, boardName);
     }
 }
 
@@ -164,62 +160,61 @@ final class PhysicalConstructionProviderSupport {
         String manifestKey = ownerKey + "/" + endpointId;
         return new PhysicalConstructionTerminalDeclaration(padId, terminalId,
             mapping.getPackageTerminalId(), mapping.getNetId(), endpointId,
-            manifestKey, ownerKey);
+            manifestKey, ownerKey, ownerKey, localId, mapping.getComponentId());
     }
 
     static PhysicalConstructionTerminalDeclaration deviceTerminal(String padId,
             String terminalId, String netId, String endpointId, String manifestKey,
             String manifestBlockKey) {
         return new PhysicalConstructionTerminalDeclaration(padId, terminalId,
-            terminalId, netId, endpointId, manifestKey, manifestBlockKey);
+            terminalId, netId, endpointId, manifestKey, manifestBlockKey,
+            null, null, null);
     }
 
-    static String findElementOwner(ElectricalRealizationSpec spec,
-            String preferredOwner, String elementId) {
-        if (spec.getElementDeclaration(preferredOwner, elementId) != null)
-            return preferredOwner;
-        if (spec.getElementDeclaration("device", elementId) != null)
-            return "device";
-        String result = null;
-        for (ElectricalRealizationSpec.ElementDeclaration declaration :
-                spec.getElementDeclarations().values()) {
-            if (!elementId.equals(declaration.getElementId()))
-                continue;
-            if (result != null && !result.equals(declaration.getOwnerKey()))
-                throw new IllegalArgumentException("Ambiguous physical backing element " +
-                    elementId);
-            result = declaration.getOwnerKey();
-        }
-        return result;
+    static PhysicalConstructionTerminalDeclaration deviceTerminal(String padId,
+            String terminalId, String packageTerminalId, String netId, String endpointId,
+            String manifestKey, String manifestBlockKey, String ownerKey, String localId,
+            String componentId) {
+        return new PhysicalConstructionTerminalDeclaration(padId, terminalId,
+            packageTerminalId, netId, endpointId, manifestKey, manifestBlockKey,
+            ownerKey, localId, componentId);
     }
 
     static String requireElementOwner(ElectricalRealizationSpec spec,
-            String preferredOwner, String elementId) {
-        String result = findElementOwner(spec, preferredOwner, elementId);
-        if (result == null)
-            throw new IllegalArgumentException("Missing physical backing element " + elementId);
-        return result;
+            String expectedOwner, String elementId) {
+        if (spec.getElementDeclaration(expectedOwner, elementId) == null)
+            throw new IllegalArgumentException("Missing declared physical backing element " +
+                expectedOwner + "/" + elementId);
+        return expectedOwner;
     }
 
     static String findAttachmentOwner(ElectricalRealizationSpec spec,
             String ownerKey, String localId, boolean first) {
         String local = localId + (first ? "_FIRST_ATTACHMENT" : "_SECOND_ATTACHMENT");
-        String result = findElementOwner(spec, ownerKey, local);
-        if (result != null)
-            return result;
-        String legacyPrefix = "source".equals(ownerKey) ? "SOURCE" :
-            "load".equals(ownerKey) ? "LOAD" : null;
-        if (legacyPrefix == null)
-            return null;
-        return requireElementOwner(spec, ownerKey, legacyPrefix +
-            (first ? "_FIRST_ATTACHMENT" : "_SECOND_ATTACHMENT"));
+        if (spec.getElementDeclaration(ownerKey, local) != null)
+            return ownerKey;
+        ElectricalRealizationSpec.EndpointRef endpoint = new ElectricalRealizationSpec.EndpointRef(
+            ownerKey, localId + (first ? "" : "_SECONDARY"), first ? "1" : "2");
+        for (ElectricalRealizationSpec.BridgeSpec bridge : spec.getBridgeSpecs().values()) {
+            if (endpoint.equals(bridge.getFirst()) || endpoint.equals(bridge.getSecond()))
+                return requireElementOwner(spec, "device", bridge.getBridgeElementId());
+        }
+        return null;
     }
 
-    static String attachmentId(String ownerKey, String localId, boolean first) {
+    static String attachmentId(ElectricalRealizationSpec spec, String ownerKey,
+            String localId, boolean first) {
         String local = localId + (first ? "_FIRST_ATTACHMENT" : "_SECOND_ATTACHMENT");
-        if ("source".equals(ownerKey)) return "SOURCE" + (first ? "_FIRST_ATTACHMENT" : "_SECOND_ATTACHMENT");
-        if ("load".equals(ownerKey)) return "LOAD" + (first ? "_FIRST_ATTACHMENT" : "_SECOND_ATTACHMENT");
-        return local;
+        if (spec.getElementDeclaration(ownerKey, local) != null)
+            return local;
+        ElectricalRealizationSpec.EndpointRef endpoint = new ElectricalRealizationSpec.EndpointRef(
+            ownerKey, localId + (first ? "" : "_SECONDARY"), first ? "1" : "2");
+        for (ElectricalRealizationSpec.BridgeSpec bridge : spec.getBridgeSpecs().values()) {
+            if (endpoint.equals(bridge.getFirst()) || endpoint.equals(bridge.getSecond()))
+                return bridge.getBridgeElementId();
+        }
+        throw new IllegalArgumentException("Missing declared attachment for " + ownerKey +
+            "/" + local);
     }
 
     static PhysicalConstructionPartDeclaration.Builder base(BoundedAssemblyPlan plan,
@@ -230,9 +225,7 @@ final class PhysicalConstructionProviderSupport {
             PhysicalNameplate nameplate, String backingOwner, String backingElement,
             PhysicalConstructionPartDeclaration.PartPolicy policy) {
         return PhysicalConstructionPartDeclaration.builder(declaration.getOwnerKey(), ownerKey,
-            declaration.getProviderId(), declaration.getProviderVersion(),
-            declaration.getContribution() == null ? declaration.getProviderId() :
-                declaration.getContribution().getProviderTypeId(), componentId,
+            declaration.getProviderId(), declaration.getProviderVersion(), componentId,
             physicalPackage, publicType, designator, specification, nameplate,
             backingOwner, backingElement, policy);
     }
@@ -241,26 +234,12 @@ final class PhysicalConstructionProviderSupport {
             ElectricalRealizationSpec.ProviderDeclaration declaration,
             ComposedBlockContribution contribution,
             ComposedBlockContribution.ResistorRecipe recipe,
-            PhysicalConstructionPartDeclaration.Builder builder) {
+            PhysicalConstructionPartDeclaration.Builder builder, String faultFamilyId) {
         ComposedBlockContribution.FaultSpec fault = contribution.getFaultSpec();
-        /*
-         * The v1 resistive contribution predates FaultSpec's component-target
-         * vocabulary.  Its "high-resistance" value is a historical fault
-         * label, while the accepted assembler applies the value mutation to
-         * the contribution's repair component (R1).  Keep that label for the
-         * durable fault suffix; only use the repair ID to decide which recipe
-         * owns the physical fault.  Controlled v2/v3 use the typed target
-         * component directly and retain their RG/RLOAD suffixes.
-         */
-        boolean legacyResistive = !plan.isControlledIndicator() &&
-            plan.getRequest().getDescriptor().getGenerator().getVersion() ==
-                BoundedAssemblyRequest.GENERATOR_VERSION;
-        String targetLocalId = legacyResistive ? contribution.getRepairLocalComponentId() :
-            fault.getTargetComponentLocalId();
+        String targetLocalId = fault.getTargetComponentLocalId();
         if (!recipe.getComponentLocalId().equals(targetLocalId))
             return;
-        ComposedBlockContribution.FaultSpec.Kind kind = legacyResistive ?
-            ComposedBlockContribution.FaultSpec.Kind.INCORRECT_RESISTANCE : fault.getKind();
+        ComposedBlockContribution.FaultSpec.Kind kind = fault.getKind();
         String faultOwner = null;
         String faultElement = null;
         if (kind == ComposedBlockContribution.FaultSpec.Kind.OPEN) {
@@ -271,8 +250,7 @@ final class PhysicalConstructionProviderSupport {
             recipe.getComponentLocalId());
         builder.fault(kind, contribution.getFaultLocalId(),
             contribution.getFaultEffectiveOhms(),
-            plan.isControlledIndicator() ? ControlledIndicatorDeviceBehavior.FAMILY_ID :
-                BoundedGeneratedBoardAssembler.FAMILY_ID,
+            faultFamilyId,
             faultOwner, faultElement, declaration.getOwnerKey(),
             contribution.getRepairLocalComponentId(),
             componentId(plan, declaration.getOwnerKey(),
@@ -308,6 +286,9 @@ final class ResistivePhysicalProvider implements PhysicalConstructionProvider {
     ResistivePhysicalProvider(String providerId) { this.providerId = providerId; }
     public String getProviderId() { return providerId; }
     public int getVersion() { return ResistiveBlockContributions.VERSION; }
+    public String getBoardFamilyId() { return BoundedGeneratedBoardAssembler.FAMILY_ID; }
+    public String getBoardName() { return BoundedGeneratedBoardAssembler.FAMILY_ID; }
+    public String getFaultFamilyId() { return BoundedGeneratedBoardAssembler.FAMILY_ID; }
 
     public PhysicalConstructionContribution declare(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec,
@@ -337,21 +318,27 @@ final class ResistivePhysicalProvider implements PhysicalConstructionProvider {
             spec, componentId);
         ResistorNameplate specification = new ResistorNameplate(componentId,
             recipe.getResistanceOhms(), recipe.getTolerancePercent(), recipe.getRatedWatts());
+        /* Component identity stays fully qualified; the board marking is a
+         * concise physical reference designator.  The two resistive blocks
+         * both expose a logical R1, so the assembled board assigns distinct
+         * source/load markings. */
+        String designator = ResistiveBlockContributions.SOURCE_BLOCK_KEY.equals(owner) ?
+            "R1" : "R2";
         PhysicalConstructionPartDeclaration.Builder builder =
             PhysicalConstructionProviderSupport.base(plan, spec, declaration, owner, componentId,
-                physicalPackage, "RESISTOR", componentId, specification,
+                physicalPackage, "RESISTOR", designator, specification,
                 PhysicalConstructionProviderSupport.resistorNameplate(plan, componentId,
                     recipe.getComponentLocalId(), recipe), owner,
                 recipe.getComponentLocalId(), recipe.isMutable() ?
                     PhysicalConstructionPartDeclaration.PartPolicy.MUTABLE_RESISTOR :
                     PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
         String secondary = recipe.getComponentLocalId() + "_SECONDARY";
-        String secondaryOwner = PhysicalConstructionProviderSupport.findElementOwner(spec,
-            owner, secondary);
+        String secondaryOwner = recipe.isMutable() ?
+            PhysicalConstructionProviderSupport.requireElementOwner(spec, owner, secondary) : null;
         if (secondaryOwner != null) builder.secondary(secondaryOwner, secondary);
-        String firstId = PhysicalConstructionProviderSupport.attachmentId(owner,
+        String firstId = PhysicalConstructionProviderSupport.attachmentId(spec, owner,
             recipe.getComponentLocalId(), true);
-        String secondId = PhysicalConstructionProviderSupport.attachmentId(owner,
+        String secondId = PhysicalConstructionProviderSupport.attachmentId(spec, owner,
             recipe.getComponentLocalId(), false);
         String firstOwner = PhysicalConstructionProviderSupport.findAttachmentOwner(spec,
             owner, recipe.getComponentLocalId(), true);
@@ -362,7 +349,7 @@ final class ResistivePhysicalProvider implements PhysicalConstructionProvider {
                 componentId);
         builder.attachments(firstOwner, firstId, secondOwner, secondId);
         PhysicalConstructionProviderSupport.addResistorFault(plan, spec, declaration,
-            contribution, recipe, builder);
+            contribution, recipe, builder, getFaultFamilyId());
         builder.countInMappedIdentity(true)
             .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner,
                 recipe.getComponentLocalId(), recipe.getFirstPadLocalId(), "1",
@@ -378,6 +365,9 @@ final class ResistivePhysicalProvider implements PhysicalConstructionProvider {
 final class ControlledDriverPhysicalProvider implements PhysicalConstructionProvider {
     public String getProviderId() { return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID; }
     public int getVersion() { return ControlledIndicatorBlockContributions.VERSION; }
+    public String getBoardFamilyId() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
+    public String getBoardName() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
+    public String getFaultFamilyId() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
 
     public PhysicalConstructionContribution declare(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec,
@@ -416,8 +406,8 @@ final class ControlledDriverPhysicalProvider implements PhysicalConstructionProv
                     PhysicalConstructionPartDeclaration.PartPolicy.MUTABLE_RESISTOR :
                     PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
         String secondary = recipe.getComponentLocalId() + "_SECONDARY";
-        String secondaryOwner = PhysicalConstructionProviderSupport.findElementOwner(spec,
-            owner, secondary);
+        String secondaryOwner = recipe.isMutable() ?
+            PhysicalConstructionProviderSupport.requireElementOwner(spec, owner, secondary) : null;
         if (recipe.isMutable()) {
             if (secondaryOwner == null)
                 throw new IllegalArgumentException("Mutable driver resistor secondary is missing: " +
@@ -430,7 +420,7 @@ final class ControlledDriverPhysicalProvider implements PhysicalConstructionProv
             builder.attachments(owner, first, owner, second);
         }
         PhysicalConstructionProviderSupport.addResistorFault(plan, spec, declaration,
-            contribution, recipe, builder);
+            contribution, recipe, builder, getFaultFamilyId());
         builder.countInMappedIdentity(true)
             .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner,
                 recipe.getComponentLocalId(), recipe.getFirstPadLocalId(), "1",
@@ -451,8 +441,8 @@ final class ControlledDriverPhysicalProvider implements PhysicalConstructionProv
         PhysicalPackage physicalPackage = PhysicalConstructionProviderSupport.physicalPackage(
             spec, componentId);
         NmosSpecification specification = new NmosSpecification(componentId,
-            BoundedGeneratedBoardAssembler.CONTROLLED_NMOS_THRESHOLD_VOLTS,
-            BoundedGeneratedBoardAssembler.CONTROLLED_NMOS_BETA);
+            ElectricalRealizationSpec.CONTROLLED_NMOS_THRESHOLD_VOLTS,
+            ElectricalRealizationSpec.CONTROLLED_NMOS_BETA);
         PhysicalConstructionPartDeclaration.Builder builder =
             PhysicalConstructionProviderSupport.base(plan, spec, declaration, owner, componentId,
                 physicalPackage, "NMOS_TRANSISTOR", recipe.getComponentLocalId(), specification,
@@ -479,6 +469,9 @@ final class ControlledLoadPhysicalProvider implements PhysicalConstructionProvid
     ControlledLoadPhysicalProvider(int version) { this.version = version; }
     public String getProviderId() { return ControlledIndicatorBlockContributions.LOAD_TYPE_ID; }
     public int getVersion() { return version; }
+    public String getBoardFamilyId() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
+    public String getBoardName() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
+    public String getFaultFamilyId() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
 
     public PhysicalConstructionContribution declare(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec,
@@ -522,7 +515,7 @@ final class ControlledLoadPhysicalProvider implements PhysicalConstructionProvid
         builder.attachments(owner, recipe.getComponentLocalId() + "_FIRST_ATTACHMENT",
             owner, recipe.getComponentLocalId() + "_SECOND_ATTACHMENT");
         PhysicalConstructionProviderSupport.addResistorFault(plan, spec, declaration,
-            contribution, recipe, builder);
+            contribution, recipe, builder, getFaultFamilyId());
         builder.countInMappedIdentity(true)
             .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner,
                 recipe.getComponentLocalId(), recipe.getFirstPadLocalId(), "1",
@@ -544,7 +537,7 @@ final class ControlledLoadPhysicalProvider implements PhysicalConstructionProvid
             spec, componentId);
         /* The contribution's LED token is logical; the pinned CircuitJS model is explicit. */
         LedNameplate specification = new LedNameplate(componentId, "Generic red LED",
-            BoundedGeneratedBoardAssembler.CONTROLLED_LED_MODEL, 1, 0, 0);
+            ElectricalRealizationSpec.CONTROLLED_LED_MODEL, 1, 0, 0);
         PhysicalConstructionPartDeclaration.Builder builder =
             PhysicalConstructionProviderSupport.base(plan, spec, declaration, owner, componentId,
                 physicalPackage, "LED", recipe.getComponentLocalId(), specification,
@@ -569,13 +562,19 @@ final class DevicePhysicalProvider implements PhysicalConstructionProvider {
         return controlled ? "controlled-device-join" : "resistive-device-join";
     }
     public int getVersion() { return 1; }
+    public String getBoardFamilyId() {
+        return controlled ? ControlledIndicatorDeviceBehavior.FAMILY_ID :
+            BoundedGeneratedBoardAssembler.FAMILY_ID;
+    }
+    public String getBoardName() { return getBoardFamilyId(); }
+    public String getFaultFamilyId() { return getBoardFamilyId(); }
 
     public PhysicalConstructionContribution declare(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec,
             ElectricalRealizationSpec.ProviderDeclaration declaration) {
         PhysicalConstructionProviderSupport.requireDeclaration(declaration, getProviderId(),
             getVersion(), "device");
-        if (controlled != plan.isControlledIndicator())
+        if (controlled != "controlled-device-join".equals(declaration.getProviderId()))
             throw new IllegalArgumentException("Device physical provider envelope mismatch");
         return controlled ? controlled(plan, spec, declaration) : resistive(plan, spec, declaration);
     }
@@ -595,12 +594,14 @@ final class DevicePhysicalProvider implements PhysicalConstructionProvider {
                 new PhysicalNameplate("J1", "Power input connector"), "device", "CONNECTOR",
                 PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
         builder.countInMappedIdentity(false)
-            .terminal(PhysicalConstructionProviderSupport.deviceTerminal("J1.1", "1",
-                plan.netFor("source", "SUPPLY"), "J1_1", "J1.1", "J1"))
-            .terminal(PhysicalConstructionProviderSupport.deviceTerminal("J1.2", "2",
-                plan.netFor("source", "RETURN"), "J1_2", "J1.2", "J1"));
+            .terminal(PhysicalConstructionProviderSupport.deviceTerminal("J1.1", "1", "1",
+                plan.netFor("source", "SUPPLY"), "J1_1", "J1.1", "J1",
+                "device", "J1", componentId))
+            .terminal(PhysicalConstructionProviderSupport.deviceTerminal("J1.2", "2", "2",
+                plan.netFor("source", "RETURN"), "J1_2", "J1.2", "J1",
+                "device", "J1", componentId));
         PhysicalExternalInputDeclaration input = new PhysicalExternalInputDeclaration("device",
-            BoundedGeneratedBoardAssembler.POWER_INPUT_ID, "J1.1", "J1.2",
+            ElectricalRealizationSpec.LEGACY_POWER_INPUT_ID, "J1.1", "J1.2",
             plan.netFor("source", "SUPPLY"), plan.netFor("source", "RETURN"), 5.0);
         return new PhysicalConstructionContribution(Arrays.asList(builder.build()),
             Arrays.asList(input));
@@ -642,12 +643,14 @@ final class DevicePhysicalProvider implements PhysicalConstructionProvider {
                             "Load supply connector" : "Control input connector"),
                     "device", backing, PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
             builder.countInMappedIdentity(true)
-                .terminal(PhysicalConstructionProviderSupport.deviceTerminal(pad1, "1",
+                .terminal(PhysicalConstructionProviderSupport.deviceTerminal(pad1, "1", "1",
                     outputNet, adapter.getComponentLocalId() + "_1",
-                    key + "/" + adapter.getComponentLocalId() + "_1", key))
-                .terminal(PhysicalConstructionProviderSupport.deviceTerminal(pad2, "2",
+                    key + "/" + adapter.getComponentLocalId() + "_1", key,
+                    key, adapter.getComponentLocalId(), componentId))
+                .terminal(PhysicalConstructionProviderSupport.deviceTerminal(pad2, "2", "2",
                     returnNet, adapter.getComponentLocalId() + "_2",
-                    key + "/" + adapter.getComponentLocalId() + "_2", key));
+                    key + "/" + adapter.getComponentLocalId() + "_2", key,
+                    key, adapter.getComponentLocalId(), componentId));
             parts.add(builder.build());
             inputs.add(new PhysicalExternalInputDeclaration("device", inputId, pad1, pad2,
                 outputNet, returnNet, 5.0));

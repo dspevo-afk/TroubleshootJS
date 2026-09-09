@@ -90,8 +90,8 @@ final class BoundedAssemblyPlan {
             throw new IllegalArgumentException("Assembly request is required");
         }
 
-        if (isControlledDescriptor(request.getDescriptor()) ||
-                isControlledValuesDescriptor(request.getDescriptor())) {
+        validateCurrentGenerator(request.getDescriptor());
+        if (isControlledDescriptor(request.getDescriptor())) {
             return resolveControlled(request, null);
         }
 
@@ -118,6 +118,7 @@ final class BoundedAssemblyPlan {
         NetResolution nets = resolveNets(request, namespace, contributions);
         DeviceBusBindings deviceBuses = deviceBusBindings(request, namespace,
                 contributions, nets, false);
+        nets = bindDeviceNets(nets, deviceBuses);
 
         String faultDecisionKey = ResistiveBlockContributions
                 .chooseFaultDecision(request.getDescriptor().getRootSeed());
@@ -148,8 +149,8 @@ final class BoundedAssemblyPlan {
             BoundedAssemblyRequest request, String qualifiedTargetComponentId) {
         if (request == null)
             throw new IllegalArgumentException("Assembly request is required");
-        if (!isControlledDescriptor(request.getDescriptor()) &&
-                !isControlledValuesDescriptor(request.getDescriptor()))
+        validateCurrentGenerator(request.getDescriptor());
+        if (!isControlledDescriptor(request.getDescriptor()))
             throw new IllegalArgumentException(
                     "Diagnostic fault override requires controlled indicator");
         return resolveControlled(request, qualifiedTargetComponentId);
@@ -163,10 +164,35 @@ final class BoundedAssemblyPlan {
         validateControlledConstraints(request.getDescriptor().getConstraints());
         validateControlledWiring(request);
 
+        TreeMap<String, ComposedBlockContribution> contributions =
+                new TreeMap<String, ComposedBlockContribution>();
+        ComposedBlockContribution driver = ControlledIndicatorBlockContributions
+                .driver().create(ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
+                        ControlledIndicatorBlockContributions.faultForDecision(
+                                ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY));
+        ControlledIndicatorBlockContributions.FaultSpec loadFault =
+                ControlledIndicatorBlockContributions.faultForDecision(
+                    ControlledIndicatorBlockContributions.LOAD_FAULT_DECISION_KEY);
+        // Resolve exactly once from this request's typed electrical interfaces.
+        ControlledIndicatorValueSynthesis.Intent intent =
+                ControlledIndicatorValueSynthesis.fromRequest(request);
+        ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe =
+                ControlledIndicatorValueSynthesis.resolve(
+                        request.getDescriptor().getRootSeed(), intent);
+        ComposedBlockContribution load =
+                ControlledIndicatorBlockContributions.createResolvedValueLoad(
+                        ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
+                        loadFault, resolvedLoadRecipe);
+        contributions.put(driver.getDescriptor().getInstanceKey(), driver);
+        contributions.put(load.getDescriptor().getInstanceKey(), load);
+        validateControlledContributions(request, contributions);
         BlockNamespace namespace = new BlockNamespace(
                 BoundedAssemblyRequest.CONTROLLED_INTENT_ID,
                 BoundedAssemblyRequest.CONTROLLED_INTENT_VERSION,
-                request.getNamespaceDescriptors());
+                request.getNamespaceDescriptors(),
+                realizationIdentities(contributions.values(),
+                        request.getDeviceAdapters()));
+
         String driverOwner = namespace.idFor(
                 ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY, EntityKind.COMPONENT, "RG");
         String loadOwner = namespace.idFor(
@@ -183,46 +209,11 @@ final class BoundedAssemblyPlan {
             throw new IllegalArgumentException("Unsupported controlled fault target "
                     + qualifiedTargetComponentId);
         }
-        TreeMap<String, ComposedBlockContribution> contributions =
-                new TreeMap<String, ComposedBlockContribution>();
-        ComposedBlockContribution driver = ControlledIndicatorBlockContributions
-                .driver().create(ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
-                        ControlledIndicatorBlockContributions.faultForDecision(
-                                ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY));
-        ControlledIndicatorBlockContributions.FaultSpec loadFault =
-                ControlledIndicatorBlockContributions.faultForDecision(
-                    ControlledIndicatorBlockContributions.LOAD_FAULT_DECISION_KEY);
-        ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe = null;
-        ComposedBlockContribution load;
-        if (isControlledValuesDescriptor(request.getDescriptor())) {
-            // The immutable recipe is derived from this request's typed
-            // interfaces after the preflight above.  The standalone default
-            // intent is intentionally not a production input.
-            ControlledIndicatorValueSynthesis.Intent intent =
-                    ControlledIndicatorValueSynthesis.fromRequest(request);
-            resolvedLoadRecipe = ControlledIndicatorValueSynthesis.resolve(
-                     request.getDescriptor().getRootSeed(),
-                     intent);
-            load = ControlledIndicatorBlockContributions.createResolvedValueLoad(
-                    ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
-                    loadFault, resolvedLoadRecipe);
-        } else {
-            load = ControlledIndicatorBlockContributions.load().create(
-                    ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY, loadFault);
-        }
-        contributions.put(driver.getDescriptor().getInstanceKey(), driver);
-        contributions.put(load.getDescriptor().getInstanceKey(), load);
-        validateControlledContributions(request, contributions);
-        namespace = new BlockNamespace(
-                BoundedAssemblyRequest.CONTROLLED_INTENT_ID,
-                BoundedAssemblyRequest.CONTROLLED_INTENT_VERSION,
-                request.getNamespaceDescriptors(),
-                realizationIdentities(contributions.values(),
-                        request.getDeviceAdapters()));
 
         NetResolution nets = resolveNets(request, namespace, contributions);
         DeviceBusBindings deviceBuses = deviceBusBindings(request, namespace,
                 contributions, nets, true);
+        nets = bindDeviceNets(nets, deviceBuses);
         String faultBlockKey = ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY
                 .equals(decision)
                 ? ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY
@@ -248,20 +239,13 @@ final class BoundedAssemblyPlan {
         if (request == null) {
             throw new IllegalArgumentException("Assembly request is required");
         }
-        String schema = (isControlledDescriptor(request.getDescriptor()) ||
-                isControlledValuesDescriptor(request.getDescriptor()))
+        String schema = isControlledDescriptor(request.getDescriptor())
                 ? BoundedAssemblyRequest.CONTROLLED_INTENT_ID : DEVICE_SCHEMA_ID;
-        int version = (isControlledDescriptor(request.getDescriptor()) ||
-                isControlledValuesDescriptor(request.getDescriptor()))
+        int version = isControlledDescriptor(request.getDescriptor())
                 ? BoundedAssemblyRequest.CONTROLLED_INTENT_VERSION : DEVICE_SCHEMA_VERSION;
         return PortCompatibilityPreflight.check(schema, version,
                 request.getAllElectricalContracts(),
                 request.getConnections());
-    }
-
-    static PortCompatibilityPreflight.Result checkPreflight(
-            BoundedAssemblyRequest request) {
-        return preflight(request);
     }
 
     /** Fail closed for every result other than the explicit compatible state. */
@@ -287,7 +271,6 @@ final class BoundedAssemblyPlan {
     Map<String, ComposedBlockContribution> getBlocks() { return blocks; }
     List<DeviceAdapterContract> getDeviceAdapters() { return deviceAdapters; }
     boolean isControlledIndicator() { return controlledIndicator; }
-    boolean isControlledIndicatorValues() { return resolvedLoadRecipe != null; }
     ControlledIndicatorValueSynthesis.ResolvedRecipe getResolvedLoadRecipe() {
         return resolvedLoadRecipe;
     }
@@ -304,33 +287,6 @@ final class BoundedAssemblyPlan {
         return electricalRealizationSpec;
     }
 
-    String durableIdFor(String blockKey, EntityKind kind, String localId) {
-        return namespace.durableIdFor(blockKey, kind, localId);
-    }
-
-    String durableIdFor(ComposedBlockContribution block, EntityKind kind,
-            String localId) {
-        if (block == null) {
-            throw new IllegalArgumentException("Block contribution is required");
-        }
-        return durableIdFor(block.getDescriptor().getInstanceKey(), kind,
-                localId);
-    }
-
-    String durableNetFor(String blockKey, String localNetId) {
-        String qualified = namespace.idFor(blockKey, EntityKind.NET,
-                localNetId);
-        return deviceBuses.durableNetFor(qualified);
-    }
-
-    String durableNetFor(ComposedBlockContribution block, String localNetId) {
-        if (block == null) {
-            throw new IllegalArgumentException("Block contribution is required");
-        }
-        return durableNetFor(block.getDescriptor().getInstanceKey(),
-                localNetId);
-    }
-
     String idFor(String blockKey, EntityKind kind, String localId) {
         return namespace.idFor(blockKey, kind, localId);
     }
@@ -343,11 +299,7 @@ final class BoundedAssemblyPlan {
         return idFor(block.getDescriptor().getInstanceKey(), kind, localId);
     }
 
-    String qualifiedId(String blockKey, EntityKind kind, String localId) {
-        return idFor(blockKey, kind, localId);
-    }
-
-    /** Resolve a local net to its canonical merged qualified net ID. */
+    /** Resolve a local net to its declared device bus or semantic local net. */
     String netFor(String blockKey, String localNetId) {
         String qualified = namespace.idFor(blockKey, EntityKind.NET,
                 localNetId);
@@ -391,27 +343,23 @@ final class BoundedAssemblyPlan {
         }
         return owner;
     }
-    String getFaultOwnerId(String decisionKey) { return faultOwnerId(decisionKey); }
 
     private static boolean isControlledDescriptor(ChallengeDescriptor descriptor) {
         return descriptor != null
                 && descriptor.getGenerator().getId().equals(
                         BoundedAssemblyRequest.GENERATOR_ID)
                 && descriptor.getGenerator().getVersion()
-                        == BoundedAssemblyRequest.CONTROLLED_GENERATOR_VERSION
+                        == BoundedAssemblyRequest.GENERATOR_VERSION
                 && descriptor.getDeviceIntent().getId().equals(
                         BoundedAssemblyRequest.CONTROLLED_INTENT_ID);
     }
 
-    private static boolean isControlledValuesDescriptor(
-            ChallengeDescriptor descriptor) {
-        return descriptor != null
-                && BoundedAssemblyRequest.GENERATOR_ID.equals(
-                        descriptor.getGenerator().getId())
-                && descriptor.getGenerator().getVersion()
-                        == BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION
-                && BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
-                        descriptor.getDeviceIntent().getId());
+    private static void validateCurrentGenerator(ChallengeDescriptor descriptor) {
+        if (descriptor == null
+                || descriptor.getSchemaVersion() != ChallengeDescriptor.SCHEMA_VERSION
+                || !BoundedAssemblyRequest.GENERATOR_ID.equals(descriptor.getGenerator().getId())
+                || descriptor.getGenerator().getVersion() != BoundedAssemblyRequest.GENERATOR_VERSION)
+            throw new IllegalArgumentException("Unsupported or retired bounded generator");
     }
 
     private static void validateDescriptor(ChallengeDescriptor descriptor) {
@@ -439,10 +387,8 @@ final class BoundedAssemblyPlan {
         if (descriptor.getSchemaVersion() != ChallengeDescriptor.SCHEMA_VERSION
                 || !BoundedAssemblyRequest.GENERATOR_ID.equals(
                         descriptor.getGenerator().getId())
-                || (descriptor.getGenerator().getVersion()
-                        != BoundedAssemblyRequest.CONTROLLED_GENERATOR_VERSION &&
-                    descriptor.getGenerator().getVersion()
-                        != BoundedAssemblyRequest.CONTROLLED_VALUES_GENERATOR_VERSION)
+                || descriptor.getGenerator().getVersion()
+                        != BoundedAssemblyRequest.GENERATOR_VERSION
                 || !BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
                         descriptor.getDeviceIntent().getId())
                 || descriptor.getDeviceIntent().getVersion()
@@ -653,9 +599,8 @@ final class BoundedAssemblyPlan {
         for (ElectricalBlockContract declaration : request.getBlocks()) {
             String key = declaration.getDescriptor().getInstanceKey();
             ComposedBlockContribution expected = contributions.get(key);
-            if (isControlledValuesDescriptor(request.getDescriptor()) &&
-                    ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(key)) {
-                expected = ControlledIndicatorBlockContributions.valuesLoad().create(
+            if (ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(key)) {
+                expected = ControlledIndicatorBlockContributions.load().create(
                         ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY);
             }
             if (expected == null || !ComposedBlockContribution.sameContract(
@@ -874,11 +819,18 @@ final class BoundedAssemblyPlan {
             Collections.sort(ports);
             Collections.sort(nets);
             provenance.add("connection=" + connection.getId() + ";ports="
-                    + ports + ";nets=" + nets + ";canonical="
-                    + aliases.get(nets.get(0)));
+                    + ports + ";nets=" + nets);
         }
         Collections.sort(provenance);
         return new NetResolution(aliases, portNets, provenance);
+    }
+
+    private static NetResolution bindDeviceNets(NetResolution electrical,
+            DeviceBusBindings buses) {
+        TreeMap<String, String> ports = new TreeMap<String, String>();
+        for (Map.Entry<String, String> entry : electrical.portNets.entrySet())
+            ports.put(entry.getKey(), buses.netFor(entry.getValue()));
+        return new NetResolution(buses.getNetBindings(), ports, electrical.provenance);
     }
 
     private static String qualifiedAttachmentNet(BlockNamespace namespace,
@@ -923,7 +875,7 @@ final class BoundedAssemblyPlan {
             Map<String, String> owners,
             Collection<DeviceAdapterContract> adapters) {
         StringBuilder result = new StringBuilder();
-        result.append("tsj-bounded-assembly/1\n")
+        result.append("tsj-bounded-assembly/2\n")
                 .append(request.getDescriptor().toCanonical()).append('\n');
         for (ComposedBlockContribution contribution : contributions.values()) {
             result.append("block=").append(contribution.semanticSignature())

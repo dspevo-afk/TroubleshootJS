@@ -2,9 +2,12 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
 
@@ -25,9 +28,10 @@ public final class A04PhysicalDeclarationContractTest {
     public static void main(String[] args) {
         try {
             resistiveBothFaultDecisions();
-            controlledBothFaultDecisions(2);
-            controlledBothFaultDecisions(3);
+            controlledBothFaultDecisions();
             declarationValidationCanaries();
+            constructionProvenanceCanaries();
+            physicalBoundaryCanaries();
             System.out.println("PASS: A04PhysicalDeclarationContractTest assertions="
                     + assertions);
         } catch (Throwable failure) {
@@ -58,12 +62,11 @@ public final class A04PhysicalDeclarationContractTest {
         assertPhysical(loadPlan, 1, loadPlan.getFaultDecisionKey());
     }
 
-    /** Controlled v2/v3 expose both admitted targets through the diagnostic resolver. */
-    private static void controlledBothFaultDecisions(int version) {
-        long seed = version == 2 ? 47L : 49L;
-        BoundedAssemblyRequest request = version == 2
-                ? BoundedAssemblyRequest.forControlledIndicator(seed)
-                : BoundedAssemblyRequest.forControlledIndicatorValues(seed);
+    /** The current controlled route exposes both admitted targets through the diagnostic resolver. */
+    private static void controlledBothFaultDecisions() {
+        long seed = 49L;
+        int version = BoundedAssemblyRequest.GENERATOR_VERSION;
+        BoundedAssemblyRequest request = BoundedAssemblyRequest.forControlledIndicator(seed);
         BoundedAssemblyPlan shape = BoundedAssemblyPlan.resolve(request);
         String driverId = shape.idFor("driver", EntityKind.COMPONENT, "RG");
         String loadId = shape.idFor("load", EntityKind.COMPONENT, "RLOAD");
@@ -86,7 +89,8 @@ public final class A04PhysicalDeclarationContractTest {
         ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
         boolean controlled = version != 1;
 
-        check(plan.getRequest().getDescriptor().getGenerator().getVersion() == version,
+        check(plan.getRequest().getDescriptor().getGenerator().getVersion() ==
+                BoundedAssemblyRequest.GENERATOR_VERSION,
                 "generator version changed for v" + version);
         check(metadata.getBoard().getId().equals(controlled
                 ? ControlledIndicatorDeviceBehavior.FAMILY_ID
@@ -109,15 +113,14 @@ public final class A04PhysicalDeclarationContractTest {
                     { DeviceAdapterContract.POWER_ADAPTER_KEY, "J1" },
                     { DeviceAdapterContract.CONTROL_ADAPTER_KEY, "J2" } })
                 : Arrays.asList("J1");
-        check(componentIds(declarations.getLocalParts()).equals(localIds),
-                "local physical declaration order changed for v" + version);
-        check(componentIds(declarations.getDeviceParts()).equals(deviceIds),
-                "device physical declaration order changed for v" + version);
-        check(componentIds(declarations.getBoardParts()).equals(concat(localIds, deviceIds)),
-                "board physical declaration order changed for v" + version);
-        check(componentIds(declarations.getSlotParts(controlled)).equals(controlled
-                ? concat(localIds, deviceIds) : concat(deviceIds, localIds)),
-                "slot physical declaration order changed for v" + version);
+        check(new HashSet<String>(componentIds(declarations.getLocalParts())).equals(
+                new HashSet<String>(localIds)),
+                "local physical declaration coverage changed for v" + version);
+        check(new HashSet<String>(componentIds(declarations.getDeviceParts())).equals(
+                new HashSet<String>(deviceIds)),
+                "device physical declaration coverage changed for v" + version);
+        check(isSorted(componentIds(declarations.getBoardParts())),
+                "board slot declarations are not deterministic for v" + version);
 
         if (controlled)
             assertControlled(plan, version, declarations, spec);
@@ -125,15 +128,16 @@ public final class A04PhysicalDeclarationContractTest {
             assertResistive(plan, declarations, spec);
         assertPackageOwnership(declarations, spec);
         assertBoardPads(metadata.getBoard(), declarations);
+        assertElectricalTerminalCorrespondence(declarations, spec);
         assertInputs(plan, declarations.getExternalInputs(), controlled);
-        assertNetEnvelope(plan, metadata.getBoard(), controlled);
-        if (version == 3) {
+        assertNetEnvelope(metadata.getBoard(), spec);
+        if (version != 1) {
             ControlledIndicatorValueSynthesis.ResolvedRecipe recipe =
                     plan.getResolvedLoadRecipe();
             check(recipe != null && spec.getResolvedLoadRecipe() == recipe,
-                    "v3 resolved recipe identity was not retained");
-            check(plan.getLoad().getResolvedRecipe() == recipe,
-                    "v3 load contribution lost resolved recipe identity");
+                    "current resolved recipe identity was not retained");
+            check(plan.getLoad().getResolvedValueRecipe() == recipe,
+                    "current load contribution lost resolved recipe identity");
         } else {
             check(spec.getResolvedLoadRecipe() == null,
                     "non-v3 plan unexpectedly contains a resolved recipe");
@@ -142,17 +146,16 @@ public final class A04PhysicalDeclarationContractTest {
 
     private static void assertResistive(BoundedAssemblyPlan plan,
             PhysicalConstructionDeclarations declarations, ElectricalRealizationSpec spec) {
-        PhysicalConstructionPartDeclaration source = declarations.getLocalParts().get(0);
-        PhysicalConstructionPartDeclaration load = declarations.getLocalParts().get(1);
+        PhysicalConstructionPartDeclaration source = findPart(declarations, "source", "R1");
+        PhysicalConstructionPartDeclaration load = findPart(declarations, "load", "R1");
         assertResistiveResistor(plan, source, spec, "source", true);
         assertResistiveResistor(plan, load, spec, "load", false);
 
         PhysicalConstructionPartDeclaration connector = declarations.getDeviceParts().get(0);
         check("device".equals(connector.getConstructionOwnerKey())
-                && "J1".equals(connector.getOwnerKey())
+                && "device".equals(connector.getOwnerKey())
                 && "resistive-device-join".equals(connector.getProviderId())
-                && connector.getProviderVersion() == 1
-                && "resistive-device-join".equals(connector.getRuntimeProviderId()),
+                && connector.getProviderVersion() == 1,
                 "v1 connector provider ownership changed");
         check("J1".equals(connector.getComponentId())
                 && "CONNECTOR".equals(connector.getPublicType())
@@ -183,12 +186,11 @@ public final class A04PhysicalDeclarationContractTest {
         check(owner.equals(part.getConstructionOwnerKey()) && owner.equals(part.getOwnerKey())
                 && ("source".equals(owner) ? "resistive-source" : "resistive-load")
                     .equals(part.getProviderId())
-                && part.getProviderVersion() == 1
-                && part.getProviderId().equals(part.getRuntimeProviderId()),
+                && part.getProviderVersion() == 1,
                 "v1 " + owner + " provider ownership changed");
         check(componentId.equals(part.getComponentId())
                 && "RESISTOR".equals(part.getPublicType())
-                && componentId.equals(part.getDesignator())
+                && (source ? "R1" : "R2").equals(part.getDesignator())
                 && part.getPhysicalPackage() == PhysicalPackages.AXIAL_RESISTOR,
                 "v1 " + owner + " resistor identity/package changed");
         check(part.getSpecification() instanceof ResistorNameplate,
@@ -214,7 +216,7 @@ public final class A04PhysicalDeclarationContractTest {
                 "v1 " + owner + " backing/attachments changed");
         check(part.hasFault()
                 && part.getFaultKind() == ComposedBlockContribution.FaultSpec.Kind.INCORRECT_RESISTANCE
-                && ResistiveBlockContributions.FAULT_LOCAL_ID.equals(part.getFaultLocalId())
+                && "R1".equals(part.getFaultLocalId())
                 && part.getFaultEffectiveOhms() == ComposedBlockContribution.FAULT_RESISTANCE_OHMS
                 && BoundedGeneratedBoardAssembler.FAMILY_ID.equals(part.getFaultFamilyId())
                 && part.getFaultOwnerKey() == null && part.getFaultElementId() == null
@@ -232,12 +234,11 @@ public final class A04PhysicalDeclarationContractTest {
 
     private static void assertControlled(BoundedAssemblyPlan plan, int version,
             PhysicalConstructionDeclarations declarations, ElectricalRealizationSpec spec) {
-        List<PhysicalConstructionPartDeclaration> parts = declarations.getLocalParts();
-        assertControlledDriver(plan, parts.get(0), spec, "RG");
-        assertControlledDriverPulldown(plan, parts.get(1), spec);
-        assertControlledNmos(plan, parts.get(2), spec);
-        assertControlledLoad(plan, version, parts.get(3), spec);
-        assertControlledLed(plan, parts.get(4), spec);
+        assertControlledDriver(plan, findPart(declarations, "driver", "RG"), spec, "RG");
+        assertControlledDriverPulldown(plan, findPart(declarations, "driver", "RPD"), spec);
+        assertControlledNmos(plan, findPart(declarations, "driver", "Q1"), spec);
+        assertControlledLoad(plan, version, findPart(declarations, "load", "RLOAD"), spec);
+        assertControlledLed(plan, findPart(declarations, "load", "LED1"), spec);
 
         PhysicalConstructionPartDeclaration power = declarations.getDeviceParts().get(0);
         PhysicalConstructionPartDeclaration control = declarations.getDeviceParts().get(1);
@@ -254,8 +255,7 @@ public final class A04PhysicalDeclarationContractTest {
         String componentId = plan.idFor(owner, EntityKind.COMPONENT, local);
         check(owner.equals(part.getConstructionOwnerKey()) && owner.equals(part.getOwnerKey())
                 && ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(part.getProviderId())
-                && part.getProviderVersion() == 1
-                && ControlledIndicatorBlockContributions.FAMILY_ID.equals(part.getRuntimeProviderId()),
+                && part.getProviderVersion() == 1,
                 "controlled driver provider ownership changed");
         check(componentId.equals(part.getComponentId()) && "RESISTOR".equals(part.getPublicType())
                 && local.equals(part.getDesignator())
@@ -312,8 +312,8 @@ public final class A04PhysicalDeclarationContractTest {
                 "controlled Q1 specification type changed");
         NmosSpecification value = (NmosSpecification) part.getSpecification();
         check(componentId.equals(value.getSpecificationId())
-                && value.getThresholdVoltage() == BoundedGeneratedBoardAssembler.CONTROLLED_NMOS_THRESHOLD_VOLTS
-                && value.getBeta() == BoundedGeneratedBoardAssembler.CONTROLLED_NMOS_BETA,
+                && value.getThresholdVoltage() == ElectricalRealizationSpec.CONTROLLED_NMOS_THRESHOLD_VOLTS
+                && value.getBeta() == ElectricalRealizationSpec.CONTROLLED_NMOS_BETA,
                 "controlled Q1 specification changed");
         assertNameplate(part.getNameplate(), "Q1", "N-channel MOSFET", "Part",
                 "N-channel MOSFET");
@@ -337,8 +337,7 @@ public final class A04PhysicalDeclarationContractTest {
         ComposedBlockContribution.ResistorRecipe recipe = plan.getLoad().getResistor(local);
         check(owner.equals(part.getConstructionOwnerKey()) && owner.equals(part.getOwnerKey())
                 && ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(part.getProviderId())
-                && part.getProviderVersion() == (version == 3 ? 2 : 1)
-                && ControlledIndicatorBlockContributions.FAMILY_ID.equals(part.getRuntimeProviderId()),
+                && part.getProviderVersion() == ControlledIndicatorBlockContributions.LOAD_VERSION,
                 "controlled load provider ownership changed");
         check(componentId.equals(part.getComponentId()) && "RESISTOR".equals(part.getPublicType())
                 && local.equals(part.getDesignator())
@@ -349,15 +348,9 @@ public final class A04PhysicalDeclarationContractTest {
                 && value.getTolerancePercent() == recipe.getTolerancePercent()
                 && value.getRatedWattage() == recipe.getRatedWatts(),
                 "controlled RLOAD specification changed");
-        if (version == 2)
-            assertNameplate(part.getNameplate(), "RLOAD", "Load resistor markings",
-                    "Markings", "Color bands");
-        else {
-            PhysicalNameplate expected = recipe.getResolvedRecipe()
-                    .getPlayerVisibleNameplate();
-            assertNameplate(part.getNameplate(), "RLOAD", expected.getDisplayName(),
-                    expected.getWorkbenchDetailLabel(), expected.getWorkbenchDetailValue());
-        }
+        PhysicalNameplate expected = recipe.getResolvedRecipe().getPlayerVisibleNameplate();
+        assertNameplate(part.getNameplate(), "RLOAD", expected.getDisplayName(),
+                expected.getWorkbenchDetailLabel(), expected.getWorkbenchDetailValue());
         assertMutableControlledResistor(part, owner, local, componentId,
                 "RLOAD_FAULT_SWITCH", "RLOAD_FIRST_ATTACHMENT", "RLOAD_SECOND_ATTACHMENT");
         assertTerminal(part, 0, spec.getPadId(owner, "RLOAD.1"), "1", "1", "RLOAD_1",
@@ -379,7 +372,7 @@ public final class A04PhysicalDeclarationContractTest {
         LedNameplate value = (LedNameplate) part.getSpecification();
         check(componentId.equals(value.getSpecificationId())
                 && "Generic red LED".equals(value.getDisplayName())
-                && BoundedGeneratedBoardAssembler.CONTROLLED_LED_MODEL.equals(value.getModelName())
+                && ElectricalRealizationSpec.CONTROLLED_LED_MODEL.equals(value.getModelName())
                 && value.getRed() == 1.0 && value.getGreen() == 0.0 && value.getBlue() == 0.0,
                 "controlled LED specification changed");
         assertNameplate(part.getNameplate(), "LED1", "Generic red LED", null, null);
@@ -424,7 +417,6 @@ public final class A04PhysicalDeclarationContractTest {
         check("device".equals(part.getConstructionOwnerKey()) && owner.equals(part.getOwnerKey())
                 && "controlled-device-join".equals(part.getProviderId())
                 && part.getProviderVersion() == 1
-                && "controlled-device-join".equals(part.getRuntimeProviderId())
                 && componentId.equals(part.getComponentId())
                 && "CONNECTOR".equals(part.getPublicType()) && local.equals(part.getDesignator())
                 && part.getPhysicalPackage() == PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
@@ -501,6 +493,40 @@ public final class A04PhysicalDeclarationContractTest {
             }
     }
 
+    /** Every physical terminal must point at the exact spec-owned pad mapping. */
+    private static void assertElectricalTerminalCorrespondence(
+            PhysicalConstructionDeclarations declarations,
+            ElectricalRealizationSpec spec) {
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts()) {
+            Set<String> terminalIds = new HashSet<String>();
+            Set<String> padIds = new HashSet<String>();
+            for (PhysicalConstructionTerminalDeclaration terminal : part.getTerminals()) {
+                check(terminal.hasElectricalProvenance()
+                        && part.getOwnerKey().equals(terminal.getOwnerKey())
+                        && part.getComponentId().equals(terminal.getComponentId()),
+                        "terminal lost owner/component provenance for " + part.getComponentId());
+                ElectricalRealizationSpec.TerminalMapping mapping = spec.getTerminalMapping(
+                        terminal.getOwnerKey(), terminal.getLocalId(), terminal.getTerminalId());
+                ElectricalRealizationSpec.PadBindingSpec pad = spec.getPadBinding(
+                        terminal.getPadId());
+                check(mapping != null && pad != null
+                        && part.getComponentId().equals(mapping.getComponentId())
+                        && part.getComponentId().equals(pad.getComponentId())
+                        && terminal.getPackageTerminalId().equals(mapping.getPackageTerminalId())
+                        && terminal.getPackageTerminalId().equals(pad.getTerminalId())
+                        && terminal.getNetId().equals(mapping.getNetId())
+                        && terminal.getNetId().equals(pad.getNetId())
+                        && terminal.getOwnerKey().equals(pad.getOwnerKey())
+                        && terminal.getLocalId().equals(pad.getLocalId())
+                        && terminal.getTerminalId().equals(pad.getTerminalId())
+                        && terminalIds.add(terminal.getTerminalId())
+                        && padIds.add(terminal.getPadId()),
+                        "terminal/package/net/pad correspondence changed for " +
+                            part.getComponentId());
+            }
+        }
+    }
+
     private static void assertInputs(BoundedAssemblyPlan plan,
             List<PhysicalExternalInputDeclaration> inputs, boolean controlled) {
         check(inputs.size() == (controlled ? 2 : 1),
@@ -511,7 +537,7 @@ public final class A04PhysicalDeclarationContractTest {
                     "external input ownership/voltage changed");
         if (!controlled) {
             PhysicalExternalInputDeclaration input = inputs.get(0);
-            check(BoundedGeneratedBoardAssembler.POWER_INPUT_ID.equals(input.getInputId())
+            check(ElectricalRealizationSpec.LEGACY_POWER_INPUT_ID.equals(input.getInputId())
                     && "J1.1".equals(input.getPositivePadId())
                     && "J1.2".equals(input.getReturnPadId())
                     && plan.netFor("source", "SUPPLY").equals(input.getPositiveNetId())
@@ -541,23 +567,11 @@ public final class A04PhysicalDeclarationContractTest {
                 "controlled control power mapping changed");
     }
 
-    private static void assertNetEnvelope(BoundedAssemblyPlan plan, TroubleshootBoard board,
-            boolean controlled) {
-        Set<String> expected = new HashSet<String>();
-        if (controlled) {
-            expected.add(plan.netFor("load", "SUPPLY"));
-            expected.add(plan.netFor("driver", "CONTROL"));
-            expected.add(plan.netFor("load", "LED_NODE"));
-            expected.add(plan.netFor("driver", "SWITCHED_SINK"));
-            expected.add(plan.netFor("driver", "GATE"));
-            expected.add(plan.netFor("driver", "RETURN"));
-        } else {
-            expected.add(plan.netFor("source", "SUPPLY"));
-            expected.add(plan.netFor("source", "OUT"));
-            expected.add(plan.netFor("source", "RETURN"));
-        }
-        check(new HashSet<String>(board.getNetIds()).equals(expected),
-                "board net envelope changed");
+    private static void assertNetEnvelope(TroubleshootBoard board,
+            ElectricalRealizationSpec spec) {
+        check(new HashSet<String>(board.getNetIds()).equals(
+                new HashSet<String>(spec.getExpectedNetIds())),
+                "board net envelope changed from the electrical spec");
     }
 
     private static void assertTerminal(PhysicalConstructionPartDeclaration part, int index,
@@ -622,10 +636,228 @@ public final class A04PhysicalDeclarationContractTest {
         }, "duplicate terminal ID accepted");
     }
 
+    /** Plan/spec identity is part of the metadata boundary, not a value key. */
+    private static void constructionProvenanceCanaries() {
+        final BoundedAssemblyPlan resistive = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forCanary(17L));
+        final BoundedAssemblyPlan controlled = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forControlledIndicator(19L));
+        final PhysicalConstructionMetadata metadata = PhysicalConstructionMaterializer.describe(resistive);
+        check(metadata.getPlan() == resistive
+                && metadata.getSpec() == resistive.getElectricalRealizationSpec(),
+                "physical metadata did not retain exact plan/spec identity");
+        expectIllegal(new Runnable() {
+            @Override public void run() {
+                new PhysicalConstructionMetadata(resistive,
+                        controlled.getElectricalRealizationSpec(), metadata.getBoard(),
+                        metadata.getSpecifications(), metadata.getDeclarations());
+            }
+        }, "metadata accepted a spec from another construction plan");
+    }
+
+    /** Exercise the actual pre-mutation declaration gate with foreign records. */
+    private static void physicalBoundaryCanaries() {
+        final BoundedAssemblyPlan resistive = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forCanary(23L));
+        final PhysicalConstructionMetadata resistiveMetadata =
+                PhysicalConstructionMaterializer.describe(resistive);
+        final PhysicalConstructionDeclarations resistiveDeclarations =
+                resistiveMetadata.getDeclarations();
+        final ElectricalRealizationSpec resistiveSpec =
+                resistive.getElectricalRealizationSpec();
+
+        /* Valid device-owned bridge declarations remain an admitted control. */
+        PhysicalConstructionMaterializer.validateDeclarations(resistive, resistiveSpec,
+                resistiveDeclarations);
+        check(true, "valid device bridge declaration was rejected");
+
+        final PhysicalConstructionPartDeclaration source = findPart(
+                resistiveDeclarations, "source", "R1");
+        expectBoundaryReject(new Runnable() {
+            @Override public void run() {
+                PhysicalConstructionMaterializer.validateDeclarations(resistive, resistiveSpec,
+                    replacePart(resistiveDeclarations, copyPart(source, "swapped-pad")));
+            }
+        }, "physical boundary accepted a swapped pad/net declaration");
+        expectBoundaryReject(new Runnable() {
+            @Override public void run() {
+                PhysicalConstructionMaterializer.validateDeclarations(resistive, resistiveSpec,
+                    replacePart(resistiveDeclarations, copyPart(source, "foreign-provider")));
+            }
+        }, "physical boundary accepted a foreign provider identity");
+        expectBoundaryReject(new Runnable() {
+            @Override public void run() {
+                PhysicalConstructionMaterializer.validateDeclarations(resistive, resistiveSpec,
+                    replacePart(resistiveDeclarations, copyPart(source, "swapped-owner")));
+            }
+        }, "physical boundary accepted a foreign terminal owner declaration");
+        expectBoundaryReject(new Runnable() {
+            @Override public void run() {
+                PhysicalConstructionMaterializer.validateDeclarations(resistive, resistiveSpec,
+                    replacePart(resistiveDeclarations, copyPart(source, "foreign-secondary")));
+            }
+        }, "physical boundary accepted a same-kind foreign secondary");
+        expectBoundaryReject(new Runnable() {
+            @Override public void run() {
+                PhysicalConstructionMaterializer.validateDeclarations(resistive, resistiveSpec,
+                    replacePart(resistiveDeclarations, copyPart(source, "foreign-attachment")));
+            }
+        }, "physical boundary accepted a same-kind foreign attachment");
+
+        final BoundedAssemblyPlan controlled = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forControlledIndicator(29L));
+        final PhysicalConstructionMetadata controlledMetadata =
+                PhysicalConstructionMaterializer.describe(controlled);
+        final PhysicalConstructionDeclarations controlledDeclarations =
+                controlledMetadata.getDeclarations();
+        final ElectricalRealizationSpec controlledSpec =
+                controlled.getElectricalRealizationSpec();
+        PhysicalConstructionMaterializer.validateDeclarations(controlled, controlledSpec,
+                controlledDeclarations);
+        check(true, "valid controlled bridge declaration was rejected");
+        final PhysicalConstructionPartDeclaration gateResistor = findPart(
+                controlledDeclarations, "driver", "RG");
+        expectBoundaryReject(new Runnable() {
+            @Override public void run() {
+                PhysicalConstructionMaterializer.validateDeclarations(controlled, controlledSpec,
+                    replacePart(controlledDeclarations, copyPart(gateResistor, "foreign-fault")));
+            }
+        }, "physical boundary accepted a same-kind foreign fault switch");
+
+        sharedPackageControl();
+    }
+
+    /** A shared physical package with two explicit logical units is valid. */
+    private static void sharedPackageControl() {
+        Vector<String> terminals = new Vector<String>(Arrays.asList(
+                "P1", "P2", "VCC", "GND"));
+        PhysicalPackage shared = PhysicalPackage.developerPackageWithGenericGeometry(
+                "A04_SHARED_BOUNDARY_PACKAGE", terminals, new Vector<String>(), false);
+        String componentId = "board/U1";
+        String owner = "multi-unit";
+        Map<String, PhysicalPackage> packages = new HashMap<String, PhysicalPackage>();
+        packages.put(componentId, shared);
+        Map<String, String> owners = new HashMap<String, String>();
+        owners.put(componentId, owner);
+        Map<String, String> firstMap = new HashMap<String, String>();
+        firstMap.put("IN", "P1");
+        firstMap.put("OUT", "P2");
+        firstMap.put("VCC", "VCC");
+        firstMap.put("GND", "GND");
+        Map<String, String> secondMap = new HashMap<String, String>();
+        secondMap.put("A", "P2");
+        secondMap.put("K", "P1");
+        secondMap.put("VCC", "VCC");
+        secondMap.put("GND", "GND");
+        ElectricalUnitPackageMap.Unit first = new ElectricalUnitPackageMap.Unit(
+                owner, "analog", componentId, new ArrayList<String>(firstMap.keySet()),
+                firstMap);
+        ElectricalUnitPackageMap.Unit second = new ElectricalUnitPackageMap.Unit(
+                owner, "indicator", componentId, new ArrayList<String>(secondMap.keySet()),
+                secondMap);
+        ElectricalUnitPackageMap map = new ElectricalUnitPackageMap(
+                ElectricalUnitPackageMap.VERSION, packages, owners,
+                Arrays.asList(first, second));
+        check(map.getPackageCount() == 1 && map.getUnitCount() == 2,
+                "valid shared package control was split or dropped");
+        check("VCC".equals(first.getPackageTerminalByUnitTerminal().get("VCC"))
+                && "VCC".equals(second.getPackageTerminalByUnitTerminal().get("VCC"))
+                && "GND".equals(first.getPackageTerminalByUnitTerminal().get("GND"))
+                && "GND".equals(second.getPackageTerminalByUnitTerminal().get("GND")),
+                "valid shared package control lost explicit supply pin mappings");
+    }
+
+    private static PhysicalConstructionPartDeclaration findPart(
+            PhysicalConstructionDeclarations declarations, String owner, String local) {
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts())
+            if (owner.equals(part.getOwnerKey()) && local.equals(part.getBackingElementId()))
+                return part;
+        throw new AssertionError("Missing physical canary part " + owner + "/" + local);
+    }
+
+    private static PhysicalConstructionDeclarations replacePart(
+            PhysicalConstructionDeclarations declarations,
+            PhysicalConstructionPartDeclaration replacement) {
+        List<PhysicalConstructionPartDeclaration> local =
+                new ArrayList<PhysicalConstructionPartDeclaration>(declarations.getLocalParts());
+        List<PhysicalConstructionPartDeclaration> device =
+                new ArrayList<PhysicalConstructionPartDeclaration>(declarations.getDeviceParts());
+        boolean replaced = replacePart(local, replacement) || replacePart(device, replacement);
+        if (!replaced) throw new AssertionError("Canary replacement part was not found");
+        return new PhysicalConstructionDeclarations(local, device,
+                declarations.getExternalInputs(), declarations.getBoardFamilyId(),
+                declarations.getBoardName());
+    }
+
+    private static boolean replacePart(List<PhysicalConstructionPartDeclaration> parts,
+            PhysicalConstructionPartDeclaration replacement) {
+        for (int index = 0; index < parts.size(); index++) {
+            if (parts.get(index).getComponentId().equals(replacement.getComponentId())) {
+                parts.set(index, replacement);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static PhysicalConstructionPartDeclaration copyPart(
+            PhysicalConstructionPartDeclaration part, String tamper) {
+        PhysicalConstructionPartDeclaration.Builder builder =
+                PhysicalConstructionPartDeclaration.builder(part.getConstructionOwnerKey(),
+                    part.getOwnerKey(), "foreign-provider".equals(tamper) ?
+                        "foreign-provider" : part.getProviderId(), part.getProviderVersion(),
+                    part.getComponentId(),
+                    part.getPhysicalPackage(), part.getPublicType(), part.getDesignator(),
+                    part.getSpecification(), part.getNameplate(), part.getBackingOwnerKey(),
+                    part.getBackingElementId(), part.getPolicy());
+        if (part.hasSecondary()) {
+            String secondaryOwner = part.getSecondaryOwnerKey();
+            if ("foreign-secondary".equals(tamper))
+                secondaryOwner = "load";
+            builder.secondary(secondaryOwner, part.getSecondaryElementId());
+        }
+        if (part.hasAttachments()) {
+            String firstOwner = part.getFirstAttachmentOwnerKey();
+            String firstId = part.getFirstAttachmentElementId();
+            if ("foreign-attachment".equals(tamper))
+                firstId = "LOAD_FIRST_ATTACHMENT";
+            builder.attachments(firstOwner, firstId, part.getSecondAttachmentOwnerKey(),
+                    part.getSecondAttachmentElementId());
+        }
+        if (part.hasFault()) {
+            String faultOwner = part.getFaultOwnerKey();
+            String faultId = part.getFaultElementId();
+            if ("foreign-fault".equals(tamper)) {
+                faultOwner = "load";
+                faultId = "RLOAD_FAULT_SWITCH";
+            }
+            builder.fault(part.getFaultKind(), part.getFaultLocalId(),
+                    part.getFaultEffectiveOhms(), part.getFaultFamilyId(), faultOwner,
+                    faultId, part.getRepairOwnerKey(), part.getRepairLocalComponentId(),
+                    part.getRepairComponentId());
+        }
+        builder.countInMappedIdentity(part.isCountedInMappedIdentity());
+        for (int index = 0; index < part.getTerminals().size(); index++) {
+            PhysicalConstructionTerminalDeclaration terminal = part.getTerminals().get(index);
+            String owner = terminal.getOwnerKey();
+            String net = terminal.getNetId();
+            if (index == 0 && "swapped-pad".equals(tamper))
+                net = part.getTerminals().get(1).getNetId();
+            if (index == 0 && "swapped-owner".equals(tamper))
+                owner = "load";
+            builder.terminal(new PhysicalConstructionTerminalDeclaration(
+                    terminal.getPadId(), terminal.getTerminalId(),
+                    terminal.getPackageTerminalId(), net, terminal.getEndpointId(),
+                    terminal.getManifestKey(), terminal.getManifestBlockKey(), owner,
+                    terminal.getLocalId(), terminal.getComponentId()));
+        }
+        return builder.build();
+    }
+
     private static PhysicalConstructionPartDeclaration.Builder baseBuilder(String componentId,
             PhysicalConstructionPartDeclaration.PartPolicy policy) {
         return PhysicalConstructionPartDeclaration.builder("canary", "canary", "canary-provider",
-                1, "canary-runtime", componentId, PhysicalPackages.AXIAL_RESISTOR, "RESISTOR",
+                1, componentId, PhysicalPackages.AXIAL_RESISTOR, "RESISTOR",
                 "R", new ResistorNameplate(componentId, 100.0, 5.0),
                 new PhysicalNameplate(componentId, "Canary resistor"), "canary", "R", policy);
     }
@@ -650,6 +882,13 @@ public final class A04PhysicalDeclarationContractTest {
         return result;
     }
 
+    private static boolean isSorted(List<String> values) {
+        for (int index = 1; index < values.size(); index++)
+            if (values.get(index - 1).compareTo(values.get(index)) > 0)
+                return false;
+        return true;
+    }
+
     private static void check(boolean condition, String message) {
         assertions++;
         if (!condition) throw new AssertionError(message);
@@ -663,5 +902,18 @@ public final class A04PhysicalDeclarationContractTest {
             return;
         }
         throw new AssertionError("Expected IllegalArgumentException: " + message);
+    }
+
+    private static void expectBoundaryReject(Runnable action, String message) {
+        try {
+            action.run();
+        } catch (IllegalArgumentException expected) {
+            assertions++;
+            return;
+        } catch (IllegalStateException expected) {
+            assertions++;
+            return;
+        }
+        throw new AssertionError("Expected physical boundary rejection: " + message);
     }
 }

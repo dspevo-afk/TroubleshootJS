@@ -7,15 +7,13 @@ package com.lushprojects.circuitjs1.client;
  */
 final class StandardElectricalConstructionProviders {
     private static final ElectricalConstructionProvider RESISTIVE_SOURCE =
-            new ResistiveProvider(ResistiveBlockContributions.SOURCE_TYPE_ID, true);
+            new ResistiveProvider(ResistiveBlockContributions.SOURCE_TYPE_ID);
     private static final ElectricalConstructionProvider RESISTIVE_LOAD =
-            new ResistiveProvider(ResistiveBlockContributions.LOAD_TYPE_ID, false);
+            new ResistiveProvider(ResistiveBlockContributions.LOAD_TYPE_ID);
     private static final ElectricalConstructionProvider CONTROLLED_DRIVER =
             new ControlledDriverProvider();
     private static final ElectricalConstructionProvider CONTROLLED_LOAD =
-            new ControlledLoadProvider(ControlledIndicatorBlockContributions.VERSION);
-    private static final ElectricalConstructionProvider CONTROLLED_VALUE_LOAD =
-            new ControlledLoadProvider(ControlledIndicatorBlockContributions.VALUE_LOAD_VERSION);
+            new ControlledLoadProvider();
 
     private StandardElectricalConstructionProviders() { }
 
@@ -30,11 +28,8 @@ final class StandardElectricalConstructionProviders {
                 version == ControlledIndicatorBlockContributions.VERSION)
             return CONTROLLED_DRIVER;
         if (ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.VERSION)
+                version == ControlledIndicatorBlockContributions.LOAD_VERSION)
             return CONTROLLED_LOAD;
-        if (ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.VALUE_LOAD_VERSION)
-            return CONTROLLED_VALUE_LOAD;
         throw new IllegalArgumentException("Unknown electrical construction provider " +
                 providerId + "@" + version);
     }
@@ -46,11 +41,8 @@ final class StandardElectricalConstructionProviders {
 
     private static final class ResistiveProvider implements ElectricalConstructionProvider {
         private final String providerId;
-        private final boolean source;
-
-        ResistiveProvider(String providerId, boolean source) {
+        ResistiveProvider(String providerId) {
             this.providerId = providerId;
-            this.source = source;
         }
 
         public String getProviderId() { return providerId; }
@@ -128,13 +120,10 @@ final class StandardElectricalConstructionProviders {
             implements ElectricalConstructionProvider {
         private static final String LOGICAL_LED_MODEL = "LED";
         private static final String CIRCUITJS_LED_MODEL = ElectricalRealizationSpec.CONTROLLED_LED_MODEL;
-        private final int version;
-
-        ControlledLoadProvider(int version) { this.version = version; }
         public String getProviderId() {
             return ControlledIndicatorBlockContributions.LOAD_TYPE_ID;
         }
-        public int getVersion() { return version; }
+        public int getVersion() { return ControlledIndicatorBlockContributions.LOAD_VERSION; }
 
         public ContributionConstructionReceipt construct(
                 ElectricalRealizationSpec.ProviderDeclaration declaration,

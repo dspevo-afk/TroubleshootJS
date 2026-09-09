@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Map;
+
 /**
  * Device-owned construction for the bounded canaries.  It owns only external
  * supplies, isolation/connectors, command control, cross-block wires and
@@ -10,82 +12,70 @@ final class BoundedElectricalDeviceConstructionAdapter {
 
     private BoundedElectricalDeviceConstructionAdapter() { }
 
-    static DeviceJoinReceipt constructResistive(BoundedAssemblyPlan plan,
+    static DeviceJoinReceipt construct(BoundedAssemblyPlan plan,
             ElectricalConstructionContext context,
-            ContributionConstructionReceipt source,
-            ContributionConstructionReceipt load) {
-        return beginResistive(context, source).finish(load);
+            Map<String, ContributionConstructionReceipt> contributions) {
+        if (plan.isControlledIndicator())
+            return constructControlled(plan, context, contributions.get("driver"),
+                contributions.get("load"));
+        return constructResistive(context, contributions.get("source"),
+            contributions.get("load"));
     }
 
-    static ResistiveStage beginResistive(ElectricalConstructionContext context,
-            ContributionConstructionReceipt source) {
-        return new ResistiveStage(context, source);
+    private static DeviceJoinReceipt constructResistive(ElectricalConstructionContext context,
+            ContributionConstructionReceipt source, ContributionConstructionReceipt load) {
+        ElectricalConstructionContext.DeviceScope device = context.deviceScope("device");
+        ElectricalConstructionContext.ElementHandle supply = device.voltageSource(
+            "SUPPLY", 100, 320, 100, 160, SUPPLY_VOLTAGE);
+        ElectricalConstructionContext.ElementHandle isolation = device.switchElement(
+            "ISOLATION", 100, 160, 180, 160);
+        ElectricalConstructionContext.ElementHandle connector = device.switchElement(
+            "CONNECTOR", 180, 160, 220, 160);
+        ElectricalConstructionContext.ElementHandle supplyTrace = device.wire(
+            "SUPPLY_TRACE", 220, 160, 230, 160);
+        ElectricalConstructionContext.ElementHandle outputTrace = device.wire(
+            "OUTPUT_TRACE", 420, 160, 500, 160);
+        ElectricalConstructionContext.TerminalHandle sourceR1 =
+            device.terminal(source.getElement("R1"), "1");
+        ElectricalConstructionContext.TerminalHandle sourcePublic =
+            device.terminal(source.getElement("R1_SECONDARY"), "2");
+        ElectricalConstructionContext.ElementHandle sourceFirst = device.join(
+            "SOURCE_FIRST_ATTACHMENT", device.terminal(supplyTrace, "2"), sourceR1);
+        ElectricalConstructionContext.ElementHandle sourceSecond = device.join(
+            "SOURCE_SECOND_ATTACHMENT", sourcePublic, device.terminal(outputTrace, "1"));
+        ElectricalConstructionContext.ElementHandle returnTrace = device.wire(
+            "RETURN_TRACE", 740, 160, 740, 320);
+        ElectricalConstructionContext.ElementHandle ground = device.ground(
+            "GROUND", 740, 320, 740, 352);
+        device.wire("RETURN_BOTTOM", 100, 320, 740, 320);
+        ElectricalConstructionContext.TerminalHandle loadR1 =
+            device.terminal(load.getElement("R1"), "1");
+        ElectricalConstructionContext.TerminalHandle loadPublic =
+            device.terminal(load.getElement("R1_SECONDARY"), "2");
+        ElectricalConstructionContext.ElementHandle loadFirst = device.join(
+            "LOAD_FIRST_ATTACHMENT", device.terminal(outputTrace, "2"), loadR1);
+        ElectricalConstructionContext.ElementHandle loadSecond = device.join(
+            "LOAD_SECOND_ATTACHMENT", loadPublic, device.terminal(returnTrace, "1"));
+        device.bindComponent("device", "J1", connector, null);
+        device.bindPad("device", "J1.1", device.terminal(connector, "2"));
+        device.bindPad("device", "J1.2", device.terminal(ground, "1"));
+        device.bindPad("source", "R1.1", device.terminal(supplyTrace, "2"));
+        device.bindPad("source", "R1.2", device.terminal(outputTrace, "1"));
+        device.bindPad("load", "R1.1", device.terminal(outputTrace, "2"));
+        device.bindPad("load", "R1.2", device.terminal(returnTrace, "1"));
+        device.bindPower(BoundedGeneratedBoardAssembler.POWER_INPUT_ID, supply, isolation);
+        device.bindComponentConnection("source", "R1", "R1.1",
+            device.terminal(supplyTrace, "2"), sourceR1, sourceFirst);
+        device.bindComponentConnection("source", "R1", "R1.2",
+            device.terminal(outputTrace, "1"), sourcePublic, sourceSecond);
+        device.bindComponentConnection("load", "R1", "R1.1",
+            device.terminal(outputTrace, "2"), loadR1, loadFirst);
+        device.bindComponentConnection("load", "R1", "R1.2",
+            device.terminal(returnTrace, "1"), loadPublic, loadSecond);
+        return device.finish();
     }
 
-    /** Keeps the established source-half MERGE boundary without a second owner. */
-    static final class ResistiveStage {
-        private final ElectricalConstructionContext.DeviceScope device;
-        private final ElectricalConstructionContext.ElementHandle supply;
-        private final ElectricalConstructionContext.ElementHandle isolation;
-        private final ElectricalConstructionContext.ElementHandle connector;
-        private final ElectricalConstructionContext.ElementHandle supplyTrace;
-        private final ElectricalConstructionContext.ElementHandle outputTrace;
-        private final ElectricalConstructionContext.ElementHandle sourceFirst;
-        private final ElectricalConstructionContext.ElementHandle sourceSecond;
-        private final ElectricalConstructionContext.TerminalHandle sourceR1;
-        private final ElectricalConstructionContext.TerminalHandle sourcePublic;
-
-        private ResistiveStage(ElectricalConstructionContext context,
-                ContributionConstructionReceipt source) {
-            device = context.deviceScope("device");
-            supply = device.voltageSource("SUPPLY", 100, 320, 100, 160, SUPPLY_VOLTAGE);
-            isolation = device.switchElement("ISOLATION", 100, 160, 180, 160);
-            connector = device.switchElement("CONNECTOR", 180, 160, 220, 160);
-            supplyTrace = device.wire("SUPPLY_TRACE", 220, 160, 230, 160);
-            outputTrace = device.wire("OUTPUT_TRACE", 420, 160, 500, 160);
-            sourceR1 = device.terminal(source.getElement("R1"), "1");
-            sourcePublic = device.terminal(source.getElement("R1_SECONDARY"), "2");
-            sourceFirst = device.join("SOURCE_FIRST_ATTACHMENT",
-                device.terminal(supplyTrace, "2"), sourceR1);
-            sourceSecond = device.join("SOURCE_SECOND_ATTACHMENT", sourcePublic,
-                device.terminal(outputTrace, "1"));
-        }
-
-        DeviceJoinReceipt finish(ContributionConstructionReceipt load) {
-            ElectricalConstructionContext.ElementHandle returnTrace = device.wire(
-                "RETURN_TRACE", 740, 160, 740, 320);
-            ElectricalConstructionContext.ElementHandle ground = device.ground(
-                "GROUND", 740, 320, 740, 352);
-            device.wire("RETURN_BOTTOM", 100, 320, 740, 320);
-            ElectricalConstructionContext.TerminalHandle loadR1 =
-                device.terminal(load.getElement("R1"), "1");
-            ElectricalConstructionContext.TerminalHandle loadPublic =
-                device.terminal(load.getElement("R1_SECONDARY"), "2");
-            ElectricalConstructionContext.ElementHandle loadFirst = device.join(
-                "LOAD_FIRST_ATTACHMENT", device.terminal(outputTrace, "2"), loadR1);
-            ElectricalConstructionContext.ElementHandle loadSecond = device.join(
-                "LOAD_SECOND_ATTACHMENT", loadPublic, device.terminal(returnTrace, "1"));
-            device.bindComponent("device", "J1", connector, null);
-            device.bindPad("device", "J1.1", device.terminal(connector, "2"));
-            device.bindPad("device", "J1.2", device.terminal(ground, "1"));
-            device.bindPad("source", "R1.1", device.terminal(supplyTrace, "2"));
-            device.bindPad("source", "R1.2", device.terminal(outputTrace, "1"));
-            device.bindPad("load", "R1.1", device.terminal(outputTrace, "2"));
-            device.bindPad("load", "R1.2", device.terminal(returnTrace, "1"));
-            device.bindPower(BoundedGeneratedBoardAssembler.POWER_INPUT_ID, supply, isolation);
-            device.bindComponentConnection("source", "R1", "R1.1",
-                device.terminal(supplyTrace, "2"), sourceR1, sourceFirst);
-            device.bindComponentConnection("source", "R1", "R1.2",
-                device.terminal(outputTrace, "1"), sourcePublic, sourceSecond);
-            device.bindComponentConnection("load", "R1", "R1.1",
-                device.terminal(outputTrace, "2"), loadR1, loadFirst);
-            device.bindComponentConnection("load", "R1", "R1.2",
-                device.terminal(returnTrace, "1"), loadPublic, loadSecond);
-            return device.finish();
-        }
-    }
-
-    static DeviceJoinReceipt constructControlled(BoundedAssemblyPlan plan,
+    private static DeviceJoinReceipt constructControlled(BoundedAssemblyPlan plan,
             ElectricalConstructionContext context,
             ContributionConstructionReceipt driver,
             ContributionConstructionReceipt load) {

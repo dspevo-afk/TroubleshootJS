@@ -1036,12 +1036,7 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	}
 	else if ("controlled-indicator-values".equals(troubleshootChallenge)) {
-	    try {
-		openControlledIndicatorValuesChallenge(parseControlledIndicatorSeed(controlledIndicatorSeedText));
-	    } catch (Throwable failure) {
-		Window.alert("The challenge could not be opened. Check the seed and try again.");
-		console("controlled_indicator_values_entry_failure: " + failure.getMessage());
-	    }
+	    Window.alert("This retired challenge format is unsupported. Open a current challenge.");
 	}
 	else if ("parallel".equals(troubleshootFixture))
 	    installGeneratedBoard(generateParallelBoard(troubleshootFixtureSeed));
@@ -4804,29 +4799,6 @@ MouseOutHandler, MouseWheelHandler {
 	    return round < 0 || round > 9 ? 0 : round;
 	} catch (NumberFormatException e) {
 	    return 0;
-	}
-    }
-
-    /** Explicit Task 49 route; the ordinary controlled-indicator entry remains v2. */
-    void openControlledIndicatorValuesChallenge(long seed) {
-	if (!canOpenControlledIndicatorChallenge())
-	    throw new IllegalStateException("Challenge entry is not currently actionable");
-	boolean priorQuickPlay = quickPlayActive;
-	QuickPlaySession priorSession = quickPlaySession;
-	try {
-	    BoundedGeneratedBoardAssembler.Result result = BoundedGeneratedBoardAssembler.assemble(
-		BoundedAssemblyRequest.forControlledIndicatorValues(seed));
-	    quickPlayActive = false;
-	    quickPlaySession = null;
-	    FreshGeneratedRuntimeInstallation.installNormalComposition(this, result.getInstance(), true);
-	} catch (Throwable failure) {
-	    quickPlayActive = priorQuickPlay;
-	    quickPlaySession = priorSession;
-	    if (failure instanceof Error) throw (Error) failure;
-	    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-	    throw new IllegalStateException("Controlled indicator values installation failed", failure);
-	} finally {
-	    refreshChallengeInteractionState();
 	}
     }
 

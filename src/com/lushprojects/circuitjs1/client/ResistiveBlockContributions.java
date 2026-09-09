@@ -64,16 +64,6 @@ final class ResistiveBlockContributions {
                 + typeId + "@" + version);
     }
 
-    static ComposedBlockContribution createSource(String blockKey,
-            double resistanceOhms) {
-        return SOURCE.create(blockKey, resistanceOhms);
-    }
-
-    static ComposedBlockContribution createLoad(String blockKey,
-            double resistanceOhms) {
-        return LOAD.create(blockKey, resistanceOhms);
-    }
-
     /** Deterministically choose a supported resistor value from a named stream. */
     static double chooseValue(long rootSeed, String blockKey) {
         String key = chooseValueKey(rootSeed, blockKey);
@@ -144,10 +134,15 @@ final class ResistiveBlockContributions {
             ComposedBlockContribution.ResistorRecipe recipe =
                     new ComposedBlockContribution.ResistorRecipe(
                             "R1", "R1_1", "R1_2", "R1.1", "R1.2",
-                            resistanceOhms, ComposedBlockContribution.RATED_WATTS);
+                            resistanceOhms, ComposedBlockContribution.RATED_WATTS,
+                            PhysicalPackages.AXIAL_RESISTOR.getId(), true);
             return new ComposedBlockContribution(typeId, VERSION, descriptor,
-                    electrical, recipe, FAULT_LOCAL_ID,
-                    ComposedBlockContribution.FAULT_RESISTANCE_OHMS, "R1",
+                    electrical, Collections.singletonMap("R1", recipe),
+                    Collections.<ComposedBlockContribution.NmosRecipe>emptyList(),
+                    Collections.<ComposedBlockContribution.LedRecipe>emptyList(),
+                    new ComposedBlockContribution.FaultSpec(
+                            ComposedBlockContribution.FaultSpec.Kind.INCORRECT_RESISTANCE,
+                            "R1", ComposedBlockContribution.FAULT_RESISTANCE_OHMS), "R1",
                     Arrays.asList("BOARD_POWER"),
                     Arrays.asList("STEADY_DC_POWERED"));
         }
