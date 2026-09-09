@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('A03', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02', 'All')]
+    [ValidateSet('A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02', 'All')]
     [string]$Gate = 'A03',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
@@ -309,7 +309,7 @@ function Get-RouteReports($Socket, [DateTime]$Deadline) {
 (()=>{const d=document.documentElement;const get=n=>d.getAttribute(n)||'';return {
   url:location.href,ready:document.readyState,
   verification:get('data-tsj-verification'),
-  a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
+  a04:get('data-tsj-a04-report'),a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
   task46Parity:get('data-tsj-task46-parity'),
   task46Descriptor:get('data-tsj-task46-descriptor'),
   task46Snapshot:get('data-tsj-task46-snapshot'),
@@ -367,6 +367,55 @@ function Test-Task41Report([object]$Value) {
         $text -match '(?m);result=PASS$'
 }
 
+function Test-A04Report([object]$Value) {
+    $text = Get-ExactReportText $Value
+    if (-not (Test-JsonReport $text 'TSJ-A04-CONSTRUCTION-1')) { return $false }
+    try { $parsed = $text | ConvertFrom-Json -ErrorAction Stop } catch { return $false }
+    foreach ($name in @('contractAssertions', 'runtimeAssertions')) {
+        if (-not $parsed.PSObject.Properties[$name] -or
+                -not (Test-VerifierStrictIntegralValue $parsed.$name 1L ([long]::MaxValue))) {
+            return $false
+        }
+    }
+    foreach ($name in @('coordinateIsolation', 'explicitJoins', 'terminalCorrespondence',
+            'failureIsolation', 'recipeIdentity', 'multiUnitPackage', 'originalOwnerRestored')) {
+        if (-not $parsed.PSObject.Properties[$name] -or
+                $parsed.$name -isnot [bool] -or -not $parsed.$name) { return $false }
+    }
+    if (-not $parsed.PSObject.Properties['candidateCleanup'] -or
+            $parsed.candidateCleanup -isnot [string] -or
+            $parsed.candidateCleanup -cne 'PASS' -or
+            -not $parsed.PSObject.Properties['cases'] -or
+            $parsed.cases -isnot [array] -or $parsed.cases.Count -ne 3) { return $false }
+    $versions = @()
+    foreach ($case in $parsed.cases) {
+        if ($null -eq $case -or -not $case.PSObject.Properties['generatorVersion'] -or
+                -not (Test-VerifierStrictIntegralValue $case.generatorVersion 1L 3L)) {
+            return $false
+        }
+        if (-not $case.PSObject.Properties['seed'] -or $case.seed -isnot [string] -or
+                $case.seed -cne [string]$case.generatorVersion) { return $false }
+        foreach ($name in @('elementCount', 'packageCount', 'unitCount', 'manifestBytes')) {
+            if (-not $case.PSObject.Properties[$name] -or
+                    -not (Test-VerifierStrictIntegralValue $case.$name 1L ([long]::MaxValue))) {
+                return $false
+            }
+        }
+        foreach ($name in @('elapsedMs', 'assemblyMs')) {
+            if (-not $case.PSObject.Properties[$name] -or
+                    -not (Test-VerifierStrictIntegralValue $case.$name 0L ([long]::MaxValue))) {
+                return $false
+            }
+        }
+        $packages = if ($case.generatorVersion -eq 1) { 3 } else { 7 }
+        $elements = if ($case.generatorVersion -eq 1) { 16 } else { 30 }
+        if ($case.packageCount -ne $packages -or $case.unitCount -ne $packages -or
+                $case.elementCount -ne $elements) { return $false }
+        $versions += [int]$case.generatorVersion
+    }
+    return (($versions | Sort-Object) -join ',') -ceq '1,2,3'
+}
+
 function Test-RouteReady($Kind, $Reports) {
     $verification = Get-ExactReportText $Reports.verification
     switch ($Kind) {
@@ -387,6 +436,21 @@ function Test-RouteReady($Kind, $Reports) {
                 [bool]$Reports.normalReady.retestCustomerReady -and
                 $verification -notmatch '(?i)(?:^|:)a03(?:$|:)' -and
                 [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a03))
+        }
+        'a04' {
+            $report = Get-ExactReportText $Reports.a04
+            return $verification -ceq 'PASS:a04' -and
+                (Test-A04Report $report)
+        }
+        'a04-forced' {
+            return $verification -ceq 'FAIL:a04:a04-explicit-failure-canary' -and
+                [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a04))
+        }
+        'a04-debugoff' {
+            return [bool]$Reports.normalReady.programReady -and
+                [bool]$Reports.normalReady.retestCustomerReady -and
+                $verification -notmatch '(?i)(?:^|:)a04(?:$|:)' -and
+                [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a04))
         }
         'task41' {
             return $verification -ceq 'PASS:task41' -and
@@ -453,6 +517,20 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
             query = 'tsjChallenge=led&seed=3&tsjVerifyA02=true&tsjDebug=true&running=true';
             reportNames = @('a02') }
     )
+    # A04 is explicitly selected; historical All retains its original nine routes.
+    if ($SelectedGate -ceq 'A04') {
+        return @(
+            [pscustomobject]@{ name = 'a04'; kind = 'a04';
+                query = 'tsjChallenge=led&seed=3&tsjVerifyA04=true&tsjDebug=true&running=true';
+                reportNames = @('a04') },
+            [pscustomobject]@{ name = 'a04-forcedfailure'; kind = 'a04-forced';
+                query = 'tsjChallenge=led&seed=3&tsjVerifyA04=true&tsjA04Fail=true&tsjDebug=true&running=true';
+                reportNames = @('a04') },
+            [pscustomobject]@{ name = 'a04-debugoff'; kind = 'a04-debugoff';
+                query = 'tsjChallenge=led&seed=3&tsjVerifyA04=true&tsjA04Fail=true&running=true';
+                reportNames = @('a04') }
+        )
+    }
     if ($SelectedGate -ceq 'All') { return $all }
     if ($SelectedGate -ceq 'A03') { return $all[0..2] }
     $name = $SelectedGate.ToLowerInvariant()
@@ -503,6 +581,7 @@ try {
     $expectedRouteCount = if ($Smoke) { 1 } else {
         switch ($Gate) {
             'A03' { 3 }
+            'A04' { 3 }
             'All' { 9 }
             default { 1 }
         }
@@ -544,7 +623,7 @@ try {
             $reports = Get-RouteReports $session.Socket $routeDeadline
             if (Test-RouteReady $definition.kind $reports) { break }
             if ((Get-ExactReportText $reports.verification) -like 'FAIL:*' -and
-                    $definition.kind -notin @('a03-forced')) {
+                    $definition.kind -notin @('a03-forced', 'a04-forced')) {
                 Throw-AppFailure ("$($definition.name) reported " +
                     (Get-ExactReportText $reports.verification))
             }

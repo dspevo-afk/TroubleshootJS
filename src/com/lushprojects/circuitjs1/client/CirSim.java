@@ -406,6 +406,9 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA03Verification;
 	boolean troubleshootA03VerificationComplete;
 	boolean troubleshootA03ForcedFailure;
+	boolean troubleshootA04Verification;
+	boolean troubleshootA04VerificationComplete;
+	boolean troubleshootA04ForcedFailure;
 	boolean troubleshootA02Verification;
 	boolean troubleshootA02VerificationComplete;
 	boolean troubleshootA02ForcedFailure;
@@ -572,6 +575,10 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjVerifyA03", false);
 	    troubleshootA03ForcedFailure = troubleshootA03Verification &&
 		qp.getBooleanValue("tsjA03Fail", false);
+	    troubleshootA04Verification = troubleshootDebug &&
+		qp.getBooleanValue("tsjVerifyA04", false);
+	    troubleshootA04ForcedFailure = troubleshootA04Verification &&
+		qp.getBooleanValue("tsjA04Fail", false);
 	    troubleshootA02Verification = troubleshootDebug &&
 		qp.getBooleanValue("tsjVerifyA02", false);
 	    troubleshootA02ForcedFailure = troubleshootA02Verification &&
@@ -4694,7 +4701,7 @@ MouseOutHandler, MouseWheelHandler {
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5116,6 +5123,27 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootA04Verification &&
+		!troubleshootA04VerificationComplete &&
+		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		generatedChallengeController != null && generatedChallengeController.isReady() &&
+		isGeneratedRuntimeSettled()) {
+		developerVerifierRunning = true;
+		troubleshootA04VerificationComplete = true;
+		publishBrowserVerificationResult("RUNNING:a04");
+		try {
+		    publishA04Evidence(A04ConstructionDeveloperVerifier.verify(this,
+			troubleshootA04ForcedFailure));
+		    publishBrowserVerificationResult("PASS:a04");
+		} catch (Throwable failure) {
+		    publishBrowserVerificationResult("FAIL:a04:" + failure.getMessage());
+		    if (failure instanceof Error) throw (Error) failure;
+		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+		    throw new IllegalStateException("A04 verification failed", failure);
+		} finally {
+		    developerVerifierRunning = false;
+		}
+	    }
 	    if (!developerVerifierRunning && troubleshootA02Verification &&
 		!troubleshootA02VerificationComplete &&
 		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5252,7 +5280,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5327,6 +5355,10 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishA03Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-a03-report", evidence);
+    }-*/;
+
+    private static native void publishA04Evidence(String evidence) /*-{
+	$doc.documentElement.setAttribute("data-tsj-a04-report", evidence);
     }-*/;
 
     private static native void publishA02Evidence(String evidence) /*-{

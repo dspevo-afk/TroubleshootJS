@@ -852,16 +852,16 @@ final class A03RealizationReplay {
             return;
         addToken(choices, "model.nmos.id", "NMOS_TRANSISTOR");
         addNumber(choices, "model.nmos.threshold-volts",
-                BoundedGeneratedBoardAssembler.CONTROLLED_NMOS_THRESHOLD_VOLTS);
+                ElectricalRealizationSpec.CONTROLLED_NMOS_THRESHOLD_VOLTS);
         addNumber(choices, "model.nmos.beta",
-                BoundedGeneratedBoardAssembler.CONTROLLED_NMOS_BETA);
+                ElectricalRealizationSpec.CONTROLLED_NMOS_BETA);
 
         DiodeModel.createModelMap();
         DiodeModel model = DiodeModel.modelMap.get(
-                BoundedGeneratedBoardAssembler.CONTROLLED_LED_MODEL);
+                ElectricalRealizationSpec.CONTROLLED_LED_MODEL);
         if (model == null)
             throw mismatch("model.led", "Missing default-led model");
-        String base = "model.led." + BoundedGeneratedBoardAssembler.CONTROLLED_LED_MODEL
+        String base = "model.led." + ElectricalRealizationSpec.CONTROLLED_LED_MODEL
                 + ".";
         addToken(choices, base + "id", model.name);
         addInteger(choices, base + "flags", model.flags);

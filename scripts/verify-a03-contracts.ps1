@@ -3,10 +3,11 @@ param(
     [string]$JavaHome = $env:JAVA_HOME,
     [ValidateSet('All', 'Identity')]
     [string]$Contract = 'All',
-    [string]$ReceiptOutputPath = ''
+    [string]$ReceiptOutputPath = '',
+    [switch]$A04
 )
 
-# Executes the real client classes on JDK8 for A03 identity and A02 compatibility contracts.
+# Executes real client classes on JDK8 for A03/A02 contracts and optional A04 construction contracts.
 # This is not a JVM solver substitute or production/browser qualification.
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -71,6 +72,9 @@ final class PhysicalSpecificationDeveloperVerifier {
     $testClasses = @('A03IdentityContractTest')
     if ($Contract -eq 'All') {
         $testClasses += @('A02CandidateContractTest', 'A02GeometryContractTest', 'A02ReplayContractTest')
+    }
+    if ($A04) {
+        $testClasses += @('ElectricalUnitPackageMapContractTest', 'A04ConstructionContractTest', 'A04PhysicalDeclarationContractTest')
     }
     foreach ($testClass in $testClasses) {
         $testSource = Join-Path $repositoryRoot ('tests/contracts/' + $testClass + '.java')

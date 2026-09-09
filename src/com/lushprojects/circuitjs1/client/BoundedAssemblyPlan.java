@@ -43,6 +43,7 @@ final class BoundedAssemblyPlan {
     private final String semanticSignature;
     private final DeviceBusBindings deviceBuses;
     private final ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe;
+    private final ElectricalRealizationSpec electricalRealizationSpec;
 
     private BoundedAssemblyPlan(BoundedAssemblyRequest request,
             BlockNamespace namespace,
@@ -78,6 +79,9 @@ final class BoundedAssemblyPlan {
         }
         this.deviceBuses = deviceBuses;
         this.resolvedLoadRecipe = resolvedLoadRecipe;
+        this.electricalRealizationSpec = ElectricalRealizationSpec.fromResolved(
+                request, namespace, this.blocks, this.deviceAdapters, this.netAliases,
+                resolvedLoadRecipe, controlledIndicator);
     }
 
     /** Resolve the supplied request using only the typed local registry. */
@@ -296,6 +300,9 @@ final class BoundedAssemblyPlan {
     Map<String, String> getDecisionOwners() { return decisionOwners; }
     String getSemanticSignature() { return semanticSignature; }
     DeviceBusBindings getDeviceBuses() { return deviceBuses; }
+    ElectricalRealizationSpec getElectricalRealizationSpec() {
+        return electricalRealizationSpec;
+    }
 
     String durableIdFor(String blockKey, EntityKind kind, String localId) {
         return namespace.durableIdFor(blockKey, kind, localId);

@@ -6,8 +6,9 @@ replacing its electrical results.
 
 ## Durable design identity and realization replay — A03
 
-A03 is qualified for normal publication; the closed gate record is in
-[the A03 evidence packet](task-evidence/A03/README.md). A04 remains unstarted.
+A03 is accepted at `1d995d4f5b21142d4ca5643ede546afdfe51340f`; its closed gate
+record is in [A03 evidence](task-evidence/A03/README.md). A04 construction and
+replay compatibility are qualified in [A04 evidence](task-evidence/A04/README.md).
 
 `BlockNamespace.idFor()` retains the Task44 encoding and its accepted callers.
 The new explicit `BlockRealizationIdentity` separates a caller-supplied repeated
@@ -70,6 +71,60 @@ Current bounded runtime replay rejects unsupported future execution/state or
 interpretation data. A data-only saved-action reference binds a declared target
 to one exact realization and rejects stale identity. These hooks implement no
 firmware, importer, persistence service, gameplay save UI or historical migration.
+
+## Constrained provider-owned electrical construction — A04
+
+A04 moves ordinary construction knowledge out of the bounded assembler while
+keeping CircuitJS as the sole electrical authority. `ElectricalRealizationSpec`
+and `ElectricalUnitPackageMap` carry immutable provider declarations, resolved
+values, units, packages, terminals and explicit joins. `ElectricalConstructionContext`
+is the restricted allocation/binding owner: providers may allocate only declared
+elements and terminals, while device-owned composition performs the cross-provider
+joins and produces one completed construction receipt.
+
+`ElectricalConstructionProvider` and
+`BoundedElectricalDeviceConstructionAdapter` supply the existing resistive and
+controlled-indicator versions 1/2/3. `PhysicalConstructionProvider` and
+`PhysicalConstructionPartDeclaration` then describe the corresponding physical
+parts, specifications, nameplates, backing identities and bounded fault/repair
+policies without holding live CircuitJS or board state. The generic
+`PhysicalConstructionMaterializer` consumes those declarations and the completed
+receipt to populate the one assembler-owned runtime, inventory and fault targets;
+it currently supports the existing fixed-part and mutable-resistor categories.
+
+`BoundedGeneratedBoardAssembler` remains a coordinator for device composition,
+layout and public result projections. It no longer contains a second named
+RG/RPD/Q1/RLOAD/LED/J1/J2 physical-construction branch; the providers own local
+declarations and the materializer owns their generic realization. The boundary
+does not introduce a universal circuit DSL, nested live simulations, new device
+families or an additional PCB/runtime owner.
+
+Physical materialization remains bounded to existing fixed parts and mutable
+resistors. Private solver coordinates belong to each construction attempt, not
+to durable IDs or physical PCB placement. Ownership is recorded immediately on
+allocation, before potentially failing initialization; multi-terminal posts are
+validated only after configuration. Typed device bridges still validate exact
+ordered endpoints and cross-owner joins before global completion.
+
+A completed local scope must have bound its declared physical units. Abort
+invalidates candidate receipts and clears its private pad/component/power and
+connection registries; it never deletes an active unrelated graph. Persistent
+board pads remain on device copper when a detachable lead is removed, and
+connection bindings retain the exact canonical pad endpoint object.
+
+The new physical declaration test preserves v1's historical fault label and
+incorrect-resistance policy, rather than treating its legacy OPEN wrapper as a
+new switch fault. Controlled versions retain the true RG/RLOAD open-switch
+backings. Task49 construction consumes the existing resolved recipe unchanged.
+
+A04's final native, five-permutation JDK8/GWT, three-route compiled conformance,
+nine-route legacy electrical/physical/repair corpus, replay parity, cleanup, and
+independent review pass; see [A04 evidence](task-evidence/A04/README.md).
+Unchanged canonical manifests remain byte-exact. Transient solver node numbers
+and tolerance-qualified live numerical observations are not durable identity.
+The three documented nonblocking materializer hardening follow-ups should be
+addressed before admitting independently supplied future provider inputs. A05
+and later milestones remain unstarted.
 
 ## Functional block descriptions and namespaces — Task 44
 

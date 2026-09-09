@@ -1,0 +1,68 @@
+{
+  "protocol": "a04-compatibility-reconciliation-v1",
+  "status": "PASS",
+  "baseline": "1d995d4f5b21142d4ca5643ede546afdfe51340f",
+  "routes": {
+    "task41": {
+      "completeReportByteEqual": true
+    },
+    "task46": {
+      "completeReportByteEqual": true
+    },
+    "a02": {
+      "completeReportByteEqual": true
+    },
+    "task47": {
+      "completeReportByteEqual": false,
+      "incidentalNodeDifferences": 48,
+      "floatingDifferences": 0,
+      "maxFloatingDelta": 0.0,
+      "terminalPartitionCases": 8,
+      "allOtherFieldsExact": true,
+      "maximumFractionOfExistingTolerance": 0.0
+    },
+    "task48": {
+      "completeReportByteEqual": false,
+      "incidentalNodeDifferences": 120,
+      "floatingDifferences": 256,
+      "maxFloatingDelta": 9.172564929826876e-10,
+      "terminalPartitionCases": 8,
+      "allOtherFieldsExact": true,
+      "maximumFractionOfExistingTolerance": 1.1053127831765905e-08
+    },
+    "task49": {
+      "completeReportByteEqual": false,
+      "incidentalNodeDifferences": 120,
+      "floatingDifferences": 246,
+      "maxFloatingDelta": 1.216083234112375e-09,
+      "terminalPartitionCases": 8,
+      "allOtherFieldsExact": true,
+      "maximumFractionOfExistingTolerance": 1.4653920183955624e-08
+    }
+  },
+  "identity": {
+    "vectors": {
+      "nativeCompiledBaselineExact": true,
+      "bytes": 17505,
+      "sha256": "347d74d2bebbf95b93182fcc01af28a9050a3d6a7bca7e5d8a93f4dd47df8d44"
+    },
+    "manifest-1": {
+      "nativeCompiledBaselineExact": true,
+      "bytes": 20121,
+      "sha256": "3e72355e1e2da8a90059dfc482718085a65d2421a82ceaaf13f91608bbe415c9"
+    },
+    "manifest-2": {
+      "nativeCompiledBaselineExact": true,
+      "bytes": 63897,
+      "sha256": "39a622ebe68280b955aabe0f33b298f62cfd60dff598f4d26b76dec17b63bab1"
+    },
+    "manifest-3": {
+      "nativeCompiledBaselineExact": true,
+      "bytes": 66531,
+      "sha256": "6f16853e2bb287b3c734e6e188b5ca0cfa0c6af815eb8371ff376d5e2f5a2705"
+    }
+  },
+  "observationComparison": "Original acceptance tests unchanged. Supplemental comparison allows only transient solver-node bijections and finite live numerical differences <=1e-8; every diagnostic sample also remains inside its existing tolerance. Every other report field is exact.",
+  "baselineReceiptSha256": "7f895afb1940496e5236cdde702de069dd58f2a582be08999f7381d1ee36764e",
+  "finalReceiptSha256": "c225a3e46cf8ce7a7620139b6e70a7e5a442173aaa3202da80f5ceaa9d13ea9f"
+}

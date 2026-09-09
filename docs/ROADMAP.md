@@ -729,11 +729,11 @@ Condition-related symptoms can be difficult without identifying the exact failed
 
 The identifiers below replace only future work after accepted Task49 and N00. They are dependency nodes, not permission to launch every worker at once. A card is a bounded roadmap contract, not an implementation prompt. Its authorized implementation may split into reviewed sub-checkpoints when the concrete design needs them; record the split without weakening its parent acceptance claim.
 
-**Status after N00 adoption:** T49 is accepted at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`; N00 document/lineage adoption is COMPLETE and Edition 2.1 is adopted. A01 and A02 are now IMPLEMENTED — ACCEPTED; A03 and every later card remain UNSTARTED. Repository publication follows the required final status-delta review, final document/staged checks and normal commit/push handoff. No `[x]` here means “expected to pass.” T48 remains the accepted historical prerequisite of T49. A required evaluation may legitimately choose not to adopt a sophisticated algorithm; that is a completed decision, not a claim that the declined algorithm was implemented.
+**Status after N00 adoption:** T49 is accepted at `3de4da1d3bad3ed532e6c327b24195bc3138ed15`; N00 document/lineage adoption is COMPLETE and Edition 2.1 is adopted. A01, A02 and A03 are IMPLEMENTED — ACCEPTED; A04 is IMPLEMENTED — VALIDATION BLOCKED; A05 and every later card remain UNSTARTED. Repository publication follows the required final status-delta review, final document/staged checks and normal commit/push handoff. No `[x]` here means “expected to pass.” T48 remains the accepted historical prerequisite of T49. A required evaluation may legitimately choose not to adopt a sophisticated algorithm; that is a completed decision, not a claim that the declined algorithm was implemented.
 
 **Conditional use rule:** A content/profile/release that consumes an optional capability adds that capability's accepted implementation as a hard dependency. Otherwise, its decision/skip does not block unrelated work. Every qualification gate tests the actual current integration, including new provider state in saves, measurements and retest. An earlier PASS never automatically qualifies later consumers.
 
-**Work order after accepted T49 and N00 adoption:** A01 → A02 → A03. Then begin explicitly authorized, non-overlapping architecture/physical tracks. Read-only investigation may run concurrently; implementation begins only after all prerequisite investigations for that boundary have returned and been reconciled. One owner integrates shared-core changes. Separate directories are not proof of independent runtime contracts.
+**Work order after accepted T49 and N00 adoption:** A01 → A02 → A03 → A04 qualification closure → A05. A04's implementation is present but remains validation-blocked; no A05 work begins until its required gates are closed. Read-only investigation may run concurrently; implementation begins only after all prerequisite investigations for that boundary have returned and been reconciled. One owner integrates shared-core changes. Separate directories are not proof of independent runtime contracts.
 
 **Early hard-question lanes:** A06/A07 bring source/reference and solver feasibility forward. P01/P02 freeze coordinate/copper identity before P03–P09. A04/A05 replace construction knowledge before additional blocks. A09/D01 replace diagnostic centralization before large hypothesis sets. Do not postpone E06's small converter pilots until a complete RB56 is assembled.
 
@@ -953,10 +953,11 @@ limits, dependency-audited evidence reuse and cleanup. A03 was unstarted at that
 <a id="m-a03"></a>
 ### A03 · Stable design identities, device buses and complete replay manifests
 
-**Type / status:** Required foundation; COMPLETE — QUALIFIED FOR PUBLICATION.
+**Type / status:** Required foundation; COMPLETE - PUBLISHED AND ACCEPTED.
 The final source, compiled runtime, cleanup/recovery, compatibility and Gate B
-evidence are closed in [A03 evidence](task-evidence/A03/README.md). A04 and later
-milestones remain UNSTARTED.
+evidence are closed in [A03 evidence](task-evidence/A03/README.md). Published in
+`1d995d4f5b21142d4ca5643ede546afdfe51340f`; the user subsequently authorized A04.
+Historical A03 publication-freeze receipts remain unchanged.
 
 **Purpose and reason:** Keep optional/repeated blocks, alternative topologies, physical repairs and future saves from inheriting unstable union-find or collection identities.
 
@@ -989,7 +990,11 @@ milestones remain UNSTARTED.
 <a id="m-a04"></a>
 ### A04 · Constrained provider-owned electrical construction
 
-**Type / status:** Required foundation; UNSTARTED.
+**Type / status:** Required foundation; COMPLETE - QUALIFIED.
+The final native, production build, compiled conformance/regression, replay,
+cleanup and independent review gates pass; see [A04 evidence](task-evidence/A04/README.md).
+Three nonblocking materializer hardening follow-ups are recorded there.
+A05 and later milestones remain UNSTARTED.
 
 **Purpose and reason:** Replace concrete-device construction in BoundedGeneratedBoardAssembler before more devices depend on its switches.
 

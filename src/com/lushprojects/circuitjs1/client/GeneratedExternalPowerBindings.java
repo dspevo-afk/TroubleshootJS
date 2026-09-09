@@ -5,6 +5,7 @@ import java.util.Vector;
 
 class GeneratedExternalPowerBindings {
     private final TroubleshootBoard board;
+    private boolean constructionAborted;
     private final HashMap<String, ExternalPowerSimulationBinding> powerBindings =
         new HashMap<String, ExternalPowerSimulationBinding>();
 
@@ -15,6 +16,8 @@ class GeneratedExternalPowerBindings {
     TroubleshootBoard getBoardForRuntimeValidation() { return board; }
 
     void bindPowerInput(String powerInputId, ExternalPowerSimulationBinding binding) {
+        if (constructionAborted)
+            throw new IllegalStateException("Construction bindings were revoked");
         if (board.getPowerInput(powerInputId) == null)
             throw new IllegalArgumentException("Unknown board power input: " + powerInputId);
         if (binding == null)
@@ -82,5 +85,13 @@ class GeneratedExternalPowerBindings {
                     throw new IllegalStateException("Power binding is not owned by generated board: " + powerInputId);
             }
         }
+    }
+
+    /** Clears only this exact private candidate owner after failed construction. */
+    void clearForAbortedConstruction(TroubleshootBoard expectedBoard) {
+        if (expectedBoard == null || board != expectedBoard)
+            throw new IllegalArgumentException("Foreign construction binding owner");
+        constructionAborted = true;
+        powerBindings.clear();
     }
 }

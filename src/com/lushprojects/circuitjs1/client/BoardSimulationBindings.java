@@ -5,6 +5,7 @@ import java.util.Vector;
 
 class BoardSimulationBindings {
     private final TroubleshootBoard board;
+    private boolean constructionAborted;
     private final HashMap<String, CircuitMeasurementEndpoint> padEndpoints =
         new HashMap<String, CircuitMeasurementEndpoint>();
     private boolean developerVerificationReady;
@@ -14,6 +15,8 @@ class BoardSimulationBindings {
     }
 
     void bindPad(String padId, CircuitMeasurementEndpoint endpoint) {
+        if (constructionAborted)
+            throw new IllegalStateException("Construction bindings were revoked");
         if (board.getPad(padId) == null)
             throw new IllegalArgumentException("Unknown board pad: " + padId);
         if (endpoint == null)
@@ -46,6 +49,8 @@ class BoardSimulationBindings {
 
     /** Marks the end of board composition for the developer-only verifier seam. */
     void markDeveloperVerificationReady() {
+        if (constructionAborted)
+            throw new IllegalStateException("Construction bindings were revoked");
         developerVerificationReady = true;
     }
 
@@ -94,4 +99,15 @@ class BoardSimulationBindings {
         return first.getElement() == second.getElement() &&
             first.getPostIndex() == second.getPostIndex();
     }
+
+    /** Clears only this exact private candidate owner after failed construction. */
+    void clearForAbortedConstruction(TroubleshootBoard expectedBoard) {
+        if (expectedBoard == null || board != expectedBoard)
+            throw new IllegalArgumentException("Foreign construction binding owner");
+        constructionAborted = true;
+        padEndpoints.clear();
+        developerVerificationReady = false;
+    }
+
+    boolean isConstructionAborted() { return constructionAborted; }
 }

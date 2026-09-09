@@ -5,6 +5,7 @@ import java.util.Vector;
 
 class GeneratedComponentConnectionBindings {
     private final TroubleshootBoard board;
+    private boolean constructionAborted;
     private final HashMap<String, GeneratedComponentConnectionBinding> bindings =
         new HashMap<String, GeneratedComponentConnectionBinding>();
 
@@ -16,6 +17,8 @@ class GeneratedComponentConnectionBindings {
 
     void bind(String componentId, String padId, CircuitMeasurementEndpoint boardEndpoint,
             CircuitMeasurementEndpoint componentEndpoint, CircuitElm connectionElement) {
+        if (constructionAborted)
+            throw new IllegalStateException("Construction bindings were revoked");
         BoardComponent component = board.getComponent(componentId);
         BoardPad pad = board.getPad(padId);
         if (component == null || pad == null || !componentId.equals(pad.getComponentId()))
@@ -178,5 +181,13 @@ class GeneratedComponentConnectionBindings {
         CircuitPostMeasurementEndpoint secondPost = (CircuitPostMeasurementEndpoint) second;
         return firstPost.getElement() == secondPost.getElement() &&
             firstPost.getPostIndex() == secondPost.getPostIndex();
+    }
+
+    /** Clears only this exact private candidate owner after failed construction. */
+    void clearForAbortedConstruction(TroubleshootBoard expectedBoard) {
+        if (expectedBoard == null || board != expectedBoard)
+            throw new IllegalArgumentException("Foreign construction binding owner");
+        constructionAborted = true;
+        bindings.clear();
     }
 }

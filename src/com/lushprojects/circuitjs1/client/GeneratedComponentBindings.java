@@ -5,6 +5,7 @@ import java.util.Vector;
 
 class GeneratedComponentBindings {
     private final TroubleshootBoard board;
+    private boolean constructionAborted;
     private final HashMap<String, Vector<CircuitElm>> componentElements =
         new HashMap<String, Vector<CircuitElm>>();
     private final HashMap<String, Vector<CircuitElm>> auxiliaryComponentElements =
@@ -21,6 +22,8 @@ class GeneratedComponentBindings {
     }
 
     void bindComponentElements(String componentId, Vector<CircuitElm> elements) {
+        if (constructionAborted)
+            throw new IllegalStateException("Construction bindings were revoked");
         if (board.getComponent(componentId) == null)
             throw new IllegalArgumentException("Unknown board component: " + componentId);
         if (componentElements.containsKey(componentId))
@@ -74,6 +77,8 @@ class GeneratedComponentBindings {
     }
 
     void bindAuxiliaryComponentElement(String componentId, CircuitElm element) {
+        if (constructionAborted)
+            throw new IllegalStateException("Construction bindings were revoked");
         if (board.getComponent(componentId) == null || element == null)
             throw new IllegalArgumentException("Invalid auxiliary component binding: " + componentId);
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
@@ -129,5 +134,14 @@ class GeneratedComponentBindings {
                     throw new IllegalStateException("Auxiliary component binding is not owned by generated board: " + componentId);
             }
         }
+    }
+
+    /** Clears only this exact private candidate owner after failed construction. */
+    void clearForAbortedConstruction(TroubleshootBoard expectedBoard) {
+        if (expectedBoard == null || board != expectedBoard)
+            throw new IllegalArgumentException("Foreign construction binding owner");
+        constructionAborted = true;
+        componentElements.clear();
+        auxiliaryComponentElements.clear();
     }
 }
