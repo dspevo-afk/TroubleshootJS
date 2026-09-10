@@ -274,7 +274,13 @@ $runtimeNames=@('accepted-state-source-and-time-identity','exclusive-private-gra
     'real-finite-event-feedback','real-stale-owner-callback-and-restore-refusal',
     'real-injected-cleanup-failure-and-explicit-recovery','real-browser-yield-and-accepted-publication',
     'cancel-0-and-obsolete-callback','cancel-1-and-obsolete-callback','cancel-2-and-obsolete-callback',
-    'cancel-3-and-obsolete-callback','cancel-4-and-obsolete-callback')
+    'cancel-3-and-obsolete-callback', 'cancel-4-and-obsolete-callback',
+            'schematic-reload-empty-event-clock',
+            'schematic-reload-discards-old-events',
+            'schematic-reanalysis-preserves-events',
+            'schematic-retaining-import-preserves-events',
+            'schematic-undo-retires-event-clock',
+            'schematic-redo-retires-event-clock')
 $modelValues=[ordered]@{'relay-energize'=0.04966;'relay-release'=0.00002;
     'transformer-loaded'=.499;'transformer-load-step'=.493;'diode-forward'=.62;
     'diode-reverse-current'=-1e-10;'converter-20ohm-mean'=5.6;'converter-20ohm-ripple'=.03;
@@ -301,7 +307,7 @@ $scaleRows=@(foreach ($n in @(20,40,60,100)) { foreach ($seed in @(0,1)) { forea
         sourceVoltage=10;totalResistance=$total;observedCurrent=$amps;nodeVoltages=$nodes}
 } } })
 $execution=[ordered]@{version='TSJ-A07-SOLVER-1';status='PASS';cleanup='PASS';pureAssertions=38;
-    runtimeAssertions=53;wallMs=100;runtimeCases=@($runtimeNames | ForEach-Object { @{case=$_;status='PASS'} });
+    runtimeAssertions=71;wallMs=100;runtimeCases=@($runtimeNames | ForEach-Object { @{case=$_;status='PASS'} });
     models=@{assertions=59;physicalPackages=$null;playableQualification=$false;
         limits=@('synthetic fixtures only','current-based relay','linear transformer','open-loop converter');rows=$modelRows};
     scale=$scaleRows;latencies=@(
@@ -327,6 +333,20 @@ $bad=Copy-Report $execution;$bad.runtimeCases[0]=$bad.runtimeCases[1]
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Duplicate A07 runtime case accepted.'
 $bad=Copy-Report $execution;$bad.runtimeCases[0].status='FAIL'
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Failed execution canary accepted.'
+foreach ($name in @(
+    'schematic-reload-empty-event-clock',
+    'schematic-reload-discards-old-events',
+    'schematic-reanalysis-preserves-events',
+    'schematic-retaining-import-preserves-events',
+    'schematic-undo-retires-event-clock',
+    'schematic-redo-retires-event-clock')) {
+    $bad=Copy-Report $execution
+    $bad.runtimeCases=@($bad.runtimeCases | Where-Object case -cne $name)
+    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Missing schematic lifecycle case accepted: $name"
+    $bad=Copy-Report $execution
+    ($bad.runtimeCases | Where-Object case -ceq $name).status='FAIL'
+    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Failed schematic lifecycle case accepted: $name"
+}
 $bad=Copy-Report $execution;$bad.models.rows[0].value=0
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Broken relay physics accepted behind PASS.'
 $bad=Copy-Report $execution;$bad.models.rows[0]=$bad.models.rows[1]

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "routes": 9,
+  "readerResults": "All nine actual compiled routes accepted by maintained strict readers.",
+  "errors": "No page errors on ordinary positive/debug-off routes. Exactly one expected A06 forced AssertionError, named L6 by the OBF compiler.",
+  "evidence": {
+    "source": "A06PowerDeveloperVerifier.java:14 throws AssertionError with the exact forced marker; CirSim.java:5145-5147 publishes that marker and rethrows the same Error.",
+    "compiledMappings": [
+      "0CB9F7C4076B339789E98E4141B43FE3.cache.js",
+      "D5781BFBCAE5C5C282D1ADF77DCAED6B.cache.js"
+    ]
+  },
+  "limitation": "The scratch-only textual error classifier initially expected the unminified class name. This classification correction changes no product source, assertions or raw browser evidence."
+}

@@ -1,0 +1,43 @@
+{
+  "base": "5a60d66cd054aa9902f199d33c1bcf7a137dda25",
+  "branch": "codex/task43p-final-recovery",
+  "candidate": "Containing correction commit; hashes identify the tested code and readers before documentation-only closure.",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "12a370eb7e59715b6da64ca175b36493b48cfc1e0521acef4bfb62298499bf0f",
+    "src/com/lushprojects/circuitjs1/client/A07SolverDeveloperVerifier.java": "ed965bfebc15d8ccf3e3a3fa3219e78ff78b82bf65cd97cc077ca7d10e14afef",
+    "scripts/verify-a03-browser.ps1": "bc1b6d5e3245869fbd548d260aaf013b4e054478058781040dcd02dbb6850bc7",
+    "tests/contracts/a04-report-contract.ps1": "e465c64cd113cb3c9f72425064bf5e9e1b8d83be8b787a53a74f195c360f643d"
+  },
+  "executionDigests": {
+    "source": "9e5e02d9ecdc7af38c4c5d52e42d9ef9222ae95589fe28fa8a12fab42c740962",
+    "scripts": "91f6c0043809e0a1bf1062558b60d865d6ae67aafb306e4c2e689c7a1200949f",
+    "web": "67219af648e8a5baf199ada7bbd1d6ca0bc0d9b98b65ac730e335e43691cf370",
+    "execution": "d086ac0233a8bc3ede328cee171cbc0c955875b7a039d8fd1010910cc7759730"
+  },
+  "commands": {
+    "native": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-current-contracts.ps1 -JavaHome $JDK8 -PythonExe $PYTHON -ReceiptOutputPath $TASK_TEMP/native-receipt.txt",
+    "build": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -JavaHome $JDK8",
+    "compiled": "scripts/preview.ps1 with unique run identity, nonce and loopback port; fresh Playwright contexts; exact maintained Get-RouteDefinitions/Get-RouteReports/Test-RouteReady functions from scripts/verify-a03-browser.ps1"
+  },
+  "toolchain": {
+    "java": "Temurin JDK 8u502-b07",
+    "gwt": "2.7.0",
+    "style": "OBF",
+    "nativePython": "CPython 3.12.8",
+    "browser": "Installed Playwright Chromium"
+  },
+  "outcomes": {
+    "red": "Expected FAIL:a07:Invalid accepted-state event boundary",
+    "nativeExit": 0,
+    "buildExit": 0,
+    "compiled": "PASS: 9/9 maintained-reader results",
+    "reviewExit": 0,
+    "review": "PASS; fresh gpt-reserve MAX read-only review; independent reviewer did not run browser/build"
+  },
+  "limits": [
+    "No fresh manual/OS-input player run.",
+    "Equivalent compiled behavior and strict report-reader checks do not certify the CLI ownership wrapper.",
+    "Original A07 broader historical player qualification is not relabeled as fresh evidence."
+  ],
+  "normalization": "Personal repository/task paths and ephemeral local preview origin are normalized in retained text artifacts. Trailing horizontal whitespace in readable text artifacts is trimmed."
+}

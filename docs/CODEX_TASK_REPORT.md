@@ -1,6 +1,41 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A07 COMPLETE - QUALIFIED
+## Current checkpoint - A07 reload lifecycle correction COMPLETE - QUALIFIED
+
+- **Scope/base:** Focused correction above `5a60d66cd054aa9902f199d33c1bcf7a137dda25`
+  on `codex/task43p-final-recovery`. A08 remains **unstarted**.
+- **Candidate:** The containing correction commit; exact tested code/reader hashes
+  and compiled digests: [provenance](task-evidence/A07-reload-fix/candidate-provenance.json).
+- **Delivered:** Non-retaining `readCircuit` retires the old execution context
+  when it resets time, even when the element-list object is reused. Reload/import,
+  undo and redo discard the old clock/callbacks. Ordinary reanalysis and retaining
+  imports keep legitimate current events. No guard weakening or solver rewrite.
+- **Red/green:** New compiled regression fails on unchanged base production with
+  `Invalid accepted-state event boundary`; the corrected candidate passes.
+- **Native/build:** PASS, exit 0: maintained 17 Java suites, independent seed/value/
+  role oracles and 271 report-protocol assertions. JDK 8/GWT OBF: five permutations
+  PASS. Native scratch cleanup PASS.
+- **Compiled:** Nine actual production routes accepted by the maintained strict
+  readers. A07 has 38 pure / 71 runtime / 59 model assertions; all six new lifecycle
+  cases are required. First reloaded/undone/redone steps accept before the old
+  clock, and obsolete events remain discarded after their old due time.
+- **Review:** One fresh read-only gpt-reserve MAX reviewer, PASS/no blockers.
+  Root inspected the integrated result. Reviewer did not run browser/build; its
+  constrained PowerShell limitation does not replace root's passing native run.
+- **Limits:** No fresh manual/OS-input player run and no CLI ownership-wrapper
+  certification. Original A07 player evidence below remains historical. A06's
+  forced route retains one deliberate AssertionError, OBF name `L6`; every
+  ordinary route has no page errors. No A08 implementation was undertaken.
+- **Evidence:** [Correction acceptance and results](task-evidence/A07-reload-fix/README.md).
+  Source/reader inputs remain unchanged by documentation-only closure. The stale
+  roadmap summary now agrees with its A07-complete/A08-unstarted catalog.
+- **Resources/publication:** Owned review/build/native jobs and browser/preview
+  resources are closed. Root terminal/evidence scratch remain only for publication
+  and scoped final cleanup. Pre-existing `tests/contracts/__pycache__/` is
+  preserved and excluded. Commit/push/email outcomes are reported only after
+  their actual completion, not inferred by this pre-commit checkpoint.
+
+## Historical checkpoint - A07 original implementation COMPLETE - QUALIFIED
 
 - **Scope/base:** A07 only, above `6ffeb91aa4cf5a234ffaeaa1255a1791d239b4dd`,
   branch `codex/task43p-final-recovery`. A08 is next eligible and **unstarted**.

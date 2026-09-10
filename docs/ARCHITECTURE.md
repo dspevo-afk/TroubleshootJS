@@ -54,6 +54,14 @@ and finite same-time feedback. An event between steps is delivered at the next
 accepted boundary; this does not implement sub-step event localization, an MCU,
 a display clock, or parallel live contexts.
 
+Non-retaining schematic replacement explicitly retires the solver execution
+context when resetting simulation time, even though `readCircuit` reuses the
+same element-list object. Reload/import, undo and redo therefore cannot retain
+the previous accepted-event clock or scheduled callbacks. Ordinary reanalysis
+and `RC_RETAIN` imports preserve the current clock and event queue. The
+[compiled lifecycle regression](task-evidence/A07-reload-fix/README.md) exercises
+those actual entrypoints; the backwards-time guard is not weakened.
+
 [The A07 evidence](task-evidence/A07/README.md) records real relay, transformer,
 diode and switched-converter probes, differential numerical-reference checks,
 20/40/60/100-resistor synthetic scaling and current instrument/player regressions.

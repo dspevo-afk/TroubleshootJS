@@ -1,0 +1,83 @@
+[
+    {
+        "name":  "a07",
+        "kind":  "a07",
+        "pass":  true,
+        "verification":  "PASS:a07",
+        "errors":  [
+
+                   ]
+    },
+    {
+        "name":  "a07-forcedfailure",
+        "kind":  "a07-forced",
+        "pass":  true,
+        "verification":  "FAIL:a07:a07-explicit-failure-canary",
+        "errors":  [
+
+                   ]
+    },
+    {
+        "name":  "a07-debugoff",
+        "kind":  "a07-debugoff",
+        "pass":  true,
+        "verification":  "",
+        "errors":  [
+
+                   ]
+    },
+    {
+        "name":  "a06",
+        "kind":  "a06",
+        "pass":  true,
+        "verification":  "PASS:a06",
+        "errors":  [
+
+                   ]
+    },
+    {
+        "name":  "a06-forcedfailure",
+        "kind":  "a06-forced",
+        "pass":  true,
+        "verification":  "FAIL:a06:a06-explicit-failure-canary",
+        "errors":  [
+                       "L6"
+                   ]
+    },
+    {
+        "name":  "a06-debugoff",
+        "kind":  "a06-debugoff",
+        "pass":  true,
+        "verification":  "",
+        "errors":  [
+
+                   ]
+    },
+    {
+        "name":  "a03",
+        "kind":  "a03",
+        "pass":  true,
+        "verification":  "PASS:a03",
+        "errors":  [
+
+                   ]
+    },
+    {
+        "name":  "task49",
+        "kind":  "task49",
+        "pass":  true,
+        "verification":  "PASS:task49",
+        "errors":  [
+
+                   ]
+    },
+    {
+        "name":  "stored-energy",
+        "kind":  "stored-energy",
+        "pass":  true,
+        "verification":  "PASS:stored-energy",
+        "errors":  [
+
+                   ]
+    }
+]

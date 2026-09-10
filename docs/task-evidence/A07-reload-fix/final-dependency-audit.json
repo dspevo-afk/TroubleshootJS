@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "method": "Maintained Get-VerifierExecutionTreeProvenance recomputed after documentation closure",
+  "executionFiles": 1336,
+  "matches": {
+    "source": true,
+    "scripts": true,
+    "web": true,
+    "execution": true,
+    "codeAndReaderFiles": true
+  },
+  "conclusion": "Documentation closure changed no qualified source, script, web, code or reader/test input. Final-source build, native, compiled checks and integrated code review remain applicable."
+}

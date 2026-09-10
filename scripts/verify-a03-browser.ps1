@@ -380,7 +380,7 @@ function Test-A07Report([object]$Value) {
         $p = (Get-ExactReportText $Value) | ConvertFrom-Json -ErrorAction Stop
         if ($p.version -cne 'TSJ-A07-SOLVER-1' -or $p.status -cne 'PASS' -or $p.cleanup -cne 'PASS' -or
                 -not (Test-VerifierStrictIntegralValue $p.pureAssertions 38L ([long]::MaxValue)) -or
-                -not (Test-VerifierStrictIntegralValue $p.runtimeAssertions 53L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $p.runtimeAssertions 71L ([long]::MaxValue)) -or
                 -not (Test-A07FiniteNumber $p.wallMs 0 ([double]::MaxValue))) { return $false }
         if ($p.latencies -isnot [array] -or $p.latencies.Count -ne 6) { return $false }
         foreach ($kind in @('completed','cancel-0','cancel-1','cancel-2','cancel-3','cancel-4')) {
@@ -402,7 +402,13 @@ function Test-A07Report([object]$Value) {
             'real-stale-owner-callback-and-restore-refusal', 'real-injected-cleanup-failure-and-explicit-recovery',
             'real-browser-yield-and-accepted-publication', 'cancel-0-and-obsolete-callback',
             'cancel-1-and-obsolete-callback', 'cancel-2-and-obsolete-callback',
-            'cancel-3-and-obsolete-callback', 'cancel-4-and-obsolete-callback')
+            'cancel-3-and-obsolete-callback', 'cancel-4-and-obsolete-callback',
+            'schematic-reload-empty-event-clock',
+            'schematic-reload-discards-old-events',
+            'schematic-reanalysis-preserves-events',
+            'schematic-retaining-import-preserves-events',
+            'schematic-undo-retires-event-clock',
+            'schematic-redo-retires-event-clock')
         if ($p.runtimeCases -isnot [array] -or $p.runtimeCases.Count -ne $cases.Count) { return $false }
         foreach ($name in $cases) {
             $found = @($p.runtimeCases | Where-Object { $_.case -ceq $name -and $_.status -ceq 'PASS' })

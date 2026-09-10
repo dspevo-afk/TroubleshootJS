@@ -4102,6 +4102,9 @@ MouseOutHandler, MouseWheelHandler {
 		ce.delete();
 	    }
 	    t = timeStepAccum = 0;
+            // A replacement reuses elmList but must not retain the previous
+            // circuit's accepted event time or scheduled callbacks.
+            solverExecutor.retire();
 	    elmList.removeAllElements();
 	    hintType = -1;
 	    maxTimeStep = 5e-6;

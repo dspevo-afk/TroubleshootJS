@@ -261,8 +261,113 @@ final class A07SolverDeveloperVerifier {
             else run.execute();
         } catch (Throwable failure) { fail(proof, failure); }
     }
+    // Terminal developer-only cases deliberately replace the disposable route's
+    // board through public schematic entrypoints, after all private-owner proofs.
+    private void schematicLifecycles() {
+        sim.setSimRunning(false);
+        Fixture fixture = new Fixture("normal");
+        String schematic = fixture.source.dump() + "\n" + fixture.resistor.dump() + "\n" +
+            fixture.elements.get(2).dump() + "\n";
+        sim.readCircuit(schematic, CirSim.RC_NO_CENTER);
+        schematicSteps(10);
+        Vector<CircuitElm> sameList = sim.elmList;
+        SolverEventQueue oldQueue = sim.solverExecutor.events(null);
+        double previousTime = sim.t;
+        require(oldQueue.nextTime() == Double.POSITIVE_INFINITY, "reload starts with an empty event queue");
+        sim.readCircuit(schematic, CirSim.RC_NO_CENTER);
+        require(sim.elmList == sameList && sim.t == 0, "reload reuses the list but restarts the circuit clock");
+        schematicSteps(1);
+        require(sim.t > 0 && sim.t < previousTime, "first reloaded step accepts before the old clock catches up");
+        require(sim.solverExecutor.events(null) != oldQueue, "replacement retires even an empty old queue");
+        record("schematic-reload-empty-event-clock");
+
+        schematicSteps(9);
+        final int[] staleCallbacks = {0};
+        SolverEventQueue.Action stale = new SolverEventQueue.Action() {
+            public void fire(double due, double accepted) { staleCallbacks[0]++; }
+        };
+        oldQueue = sim.solverExecutor.events(null);
+        double oldDue = sim.t + sim.timeStep;
+        oldQueue.schedule(oldDue, stale);
+        sim.readCircuit(schematic, CirSim.RC_NO_CENTER);
+        schematicSteps(20);
+        require(sim.t > oldDue && staleCallbacks[0] == 0, "old scheduled callbacks never enter the replacement circuit");
+        require(sim.elmList == sameList && sim.solverExecutor.events(null) != oldQueue,
+            "same-list replacement gets a distinct execution queue");
+        record("schematic-reload-discards-old-events");
+
+        final int[] retainedCallbacks = {0};
+        SolverEventQueue.Action retained = new SolverEventQueue.Action() {
+            public void fire(double due, double accepted) { retainedCallbacks[0]++; }
+        };
+        SolverEventQueue currentQueue = sim.solverExecutor.events(null);
+        currentQueue.schedule(sim.t, retained);
+        previousTime = sim.t;
+        sim.needAnalyze();
+        require(sim.t == previousTime && sim.solverExecutor.events(null) == currentQueue,
+            "ordinary reanalysis keeps the event phase and queue");
+        schematicSteps(1);
+        require(retainedCallbacks[0] == 1 && sim.t > previousTime, "pending events survive ordinary reanalysis");
+        record("schematic-reanalysis-preserves-events");
+
+        currentQueue.schedule(sim.t, retained);
+        previousTime = sim.t;
+        CircuitElm retainedElement = sim.getElm(1);
+        int elementCount = sim.elmList.size();
+        sim.readCircuit(fixture.resistor.dump() + "\n", CirSim.RC_RETAIN | CirSim.RC_NO_CENTER);
+        require(sim.elmList == sameList && sim.elmList.size() == elementCount + 1 && sim.getElm(1) == retainedElement,
+            "retaining import appends without replacing the current elements");
+        require(sim.t == previousTime && sim.solverExecutor.events(null) == currentQueue,
+            "retaining import preserves the existing clock and queue");
+        schematicSteps(1);
+        require(retainedCallbacks[0] == 2 && sim.t > previousTime, "pending events survive retaining import");
+        record("schematic-retaining-import-preserves-events");
+
+        sim.readCircuit(schematic, CirSim.RC_NO_CENTER);
+        schematicSteps(10);
+        sim.undoStack.clear(); sim.redoStack.clear();
+        sim.pushUndo();
+        fixture.resistor.setResistance(2000);
+        String changed = fixture.source.dump() + "\n" + fixture.resistor.dump() + "\n" +
+            fixture.elements.get(2).dump() + "\n";
+        sim.readCircuit(changed, CirSim.RC_NO_CENTER);
+        schematicSteps(10);
+        oldQueue = sim.solverExecutor.events(null);
+        oldDue = sim.t + sim.timeStep;
+        oldQueue.schedule(oldDue, stale);
+        sim.doUndo();
+        require(sim.elmList == sameList && sim.t == 0 && ((ResistorElm)sim.getElm(1)).getResistance() == 1000,
+            "actual undo restores its schematic and restarts the reused-list clock");
+        schematicSteps(1);
+        require(sim.t > 0 && sim.t < oldDue && sim.solverExecutor.events(null) != oldQueue,
+            "first undo step is accepted with a fresh queue");
+        sim.solverExecutor.advanceSteps(19);
+        require(sim.t > oldDue && staleCallbacks[0] == 0, "undo discards the prior schematic's callbacks");
+        record("schematic-undo-retires-event-clock");
+
+        oldQueue = sim.solverExecutor.events(null);
+        oldDue = sim.t + sim.timeStep;
+        oldQueue.schedule(oldDue, stale);
+        sim.doRedo();
+        require(sim.elmList == sameList && sim.t == 0 && ((ResistorElm)sim.getElm(1)).getResistance() == 2000,
+            "actual redo restores its schematic and restarts the reused-list clock");
+        schematicSteps(1);
+        require(sim.t > 0 && sim.t < oldDue && sim.solverExecutor.events(null) != oldQueue,
+            "first redo step is accepted with a fresh queue");
+        sim.solverExecutor.advanceSteps(39);
+        require(sim.t > oldDue && staleCallbacks[0] == 0, "redo discards the prior schematic's callbacks");
+        require(!sim.solverExecutor.isUnavailable(), "schematic lifecycle probes release every solver lease");
+        record("schematic-redo-retires-event-clock");
+    }
+    private void schematicSteps(int count) {
+        sim.timeStep = sim.maxTimeStep = sim.minTimeStep = .0001;
+        sim.adjustTimeStep = false;
+        sim.analyzeCircuit(); sim.analyzeFlag = false; sim.dcAnalysisFlag = false;
+        sim.solverExecutor.advanceSteps(count);
+    }
     private void complete() {
         require(!sim.solverExecutor.isUnavailable() && sim.isGeneratedRuntimeSettled(), "all proof leases were released");
+        schematicLifecycles();
         cases.append("]"); latencies.append("]");
         String report = "{\"version\":\"TSJ-A07-SOLVER-1\",\"status\":\"PASS\"," +
             "\"pureAssertions\":" + pureAssertions + ",\"runtimeAssertions\":" + assertions +

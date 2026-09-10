@@ -1,0 +1,5 @@
+{
+  "candidate": "base production plus new lifecycle regression",
+  "verification": "FAIL:a07:Invalid accepted-state event boundary",
+  "errors": []
+}
