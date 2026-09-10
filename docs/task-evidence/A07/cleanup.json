@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "nativeScratch": "maintained runner cleanup PASS",
+  "buildChildren": "all terminal; retained-identity canary PASS",
+  "isolatedRouteBrowser": "worker closed every task context and browser",
+  "visiblePlayerBrowser": "closed after final OS-input repair/retest",
+  "persistentTaskBrowserAndDriver": "closed",
+  "previewProcessExited": 1,
+  "ownedPreviewListenerClosed": true,
+  "reserveReviewerAndDeltas": "all terminal exit 0",
+  "publicationREPL": "only remaining task process; retained for commit/push/email receipt",
+  "unrelatedUserResources": "untouched"
+}

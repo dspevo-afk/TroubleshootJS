@@ -406,6 +406,9 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA03Verification;
 	boolean troubleshootA03VerificationComplete;
 	boolean troubleshootA03ForcedFailure;
+	boolean troubleshootA07Verification;
+	boolean troubleshootA07VerificationComplete;
+	boolean troubleshootA07ForcedFailure;
 	boolean troubleshootA06Verification;
 	boolean troubleshootA06VerificationComplete;
 	boolean troubleshootA06ForcedFailure;
@@ -578,6 +581,8 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjVerifyA03", false);
 	    troubleshootA03ForcedFailure = troubleshootA03Verification &&
 		qp.getBooleanValue("tsjA03Fail", false);
+	    troubleshootA07Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA07", false);
+	    troubleshootA07ForcedFailure = troubleshootA07Verification && qp.getBooleanValue("tsjA07Fail", false);
 	    troubleshootA06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA06", false);
 	    troubleshootA06ForcedFailure = troubleshootA06Verification && qp.getBooleanValue("tsjA06Fail", false);
 	    troubleshootA04Verification = troubleshootDebug &&
@@ -1669,6 +1674,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     void invalidateGeneratedOwnerWork() {
+        solverExecutor.retire();
 	pendingGeneratedRepaint = null;
 	needsRepaint = false;
 	pendingBoardPowerState = null;
@@ -1679,6 +1685,7 @@ MouseOutHandler, MouseWheelHandler {
 //                     UPDATE CIRCUIT
     
     public void updateCircuit() {
+    if (solverExecutor.isUnavailable()) return;
     if (failedGeneratedRuntimeOwner != null &&
             failedGeneratedRuntimeOwner == generatedBoardInstance)
         return;
@@ -2116,6 +2123,7 @@ MouseOutHandler, MouseWheelHandler {
 //    }
     
     void needAnalyze() {
+        if (elmList != null && CircuitElm.sim == this) solverExecutor.invalidate();
 	analyzeFlag = true;
 	if (instrumentController != null && !activeMeasurementOverlay &&
 		observationalValidationDepth == 0)
@@ -2558,7 +2566,12 @@ MouseOutHandler, MouseWheelHandler {
     }
     
     // analyze the circuit when something changes, so it can be simulated
-    void analyzeCircuit() {
+    final CircuitSolverExecutor solverExecutor = new CircuitSolverExecutor(this);
+
+    void analyzeCircuit() { solverExecutor.analyze(); }
+
+    void analyzeCircuitOwned(SolverExecutionBoundary.Operation operation) {
+        solverExecutor.check(operation);
 	analysisCountForDeveloperVerification++;
 	if (a01MeasurementRunning)
 	    a01AnalysisCount++;
@@ -3078,7 +3091,7 @@ MouseOutHandler, MouseWheelHandler {
     int subIterations;
     
     void runCircuit(boolean didAnalyze) {
-	runCircuit(didAnalyze, 0);
+        solverExecutor.advanceUi(didAnalyze);
     }
 
     /**
@@ -3087,7 +3100,9 @@ MouseOutHandler, MouseWheelHandler {
      * iterations instead; its observable duration still comes solely from
      * {@link #t} and the element companion models.
      */
-    private void runCircuit(boolean didAnalyze, int iterationLimit) {
+    void runCircuitOwned(SolverExecutionBoundary.Operation operation, boolean didAnalyze, int iterationLimit) {
+        solverExecutor.check(operation);
+        int acceptedAtStart = operation.acceptedSteps;
 	if (circuitMatrix == null || elmList.size() == 0) {
 	    circuitMatrix = null;
 	    return;
@@ -3101,7 +3116,8 @@ MouseOutHandler, MouseWheelHandler {
 	long lit = lastIterTime;
 	if (lit == 0) {
 	    lastIterTime = tm;
-	    return;
+	    if (iterationLimit == 0) return;
+            lit = tm;
 	}
 	
 	// Check if we don't need to run simulation (for very slow simulation speeds).
@@ -3114,18 +3130,18 @@ MouseOutHandler, MouseWheelHandler {
 	int timeStepCountAtFrameStart = timeStepCount;
 	
 	// keep track of iterations completed without convergence issues
-	int goodIterations = 100;
-	boolean goodIteration = true;
+	// Adaptive history belongs to the context, not the render/yield batch.
 	
 	for (iter = 1; ; iter++) {
+            solverExecutor.check(operation);
 	    if (a01MeasurementRunning)
 		a01IterationCount++;
-	    if (goodIterations >= 3 && timeStep < maxTimeStep && goodIteration) {
+	    if (solverExecutor.goodIterations >= 3 && timeStep < maxTimeStep && solverExecutor.goodIteration) {
 		// things are going well, double the time step
 		timeStep = Math.min(timeStep*2, maxTimeStep);
 		console("timestep up = " + timeStep + " at " + t);
 		stampCircuit();
-		goodIterations = 0;
+		solverExecutor.goodIterations = 0;
 	    }
 	    
 	    int i, j, subiter;
@@ -3136,6 +3152,7 @@ MouseOutHandler, MouseWheelHandler {
 	    steps++;
 	    int subiterCount = (adjustTimeStep && timeStep/2 > minTimeStep) ? 100 : 5000;
 	    for (subiter = 0; subiter != subiterCount; subiter++) {
+                solverExecutor.beginTrial(operation);
 		if (a01MeasurementRunning)
 		    a01SubIterationCount++;
 		converged = true;
@@ -3193,13 +3210,15 @@ MouseOutHandler, MouseWheelHandler {
 		    a01SolveCount++;
 		lu_solve(circuitMatrix, circuitMatrixSize, circuitPermute,
 			 circuitRightSide);
+                solverExecutor.requireFinite(circuitRightSide);
 		applySolvedRightSide(circuitRightSide);
+                solverExecutor.requireFinite(nodeVoltages);
 		if (!circuitNonLinear)
 		    break;
 	    }
 	    if (subiter == subiterCount) {
 		// convergence failed
-		goodIterations = 0;
+		solverExecutor.goodIterations = 0;
 		if (adjustTimeStep) {
 		    timeStep /= 2;
 		    console("timestep down to " + timeStep + " at " + t);
@@ -3216,15 +3235,20 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	    if (subiter > 5 || timeStep < maxTimeStep)
 		console("converged after " + subiter + " iterations, timeStep = " + timeStep);
-	    if (subiter < 3 && goodIteration)
-		goodIterations++;
+	    if (subiter < 3 && solverExecutor.goodIteration)
+		solverExecutor.goodIterations++;
 	    else
-		goodIterations = 0;
+		solverExecutor.goodIterations = 0;
+            solverExecutor.check(operation);
+            if (!SolverExecutionBoundary.finite(timeStep) || timeStep <= 0 ||
+                    !SolverExecutionBoundary.finite(t + timeStep) || t + timeStep <= t)
+                throw new SolverExecutionBoundary.Failure(SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE,
+                    "Nonadvancing or nonfinite CircuitJS timestep");
 	    t += timeStep;
 	    if (a01MeasurementRunning)
 		a01AcceptedStepCount++;
 	    timeStepAccum += timeStep;
-	    goodIteration = true;
+	    solverExecutor.goodIteration = true;
 	    if (timeStepAccum >= maxTimeStep) {
 		timeStepAccum -= maxTimeStep;
 		timeStepCount++;
@@ -3243,10 +3267,13 @@ MouseOutHandler, MouseWheelHandler {
 		lastNodeVoltages[i] = nodeVoltages[i];
 //	    console("set lastrightside at " + t + " " + lastNodeVoltages);
 		
-	    if (iterationLimit > 0 && iter >= iterationLimit)
+            solverExecutor.accepted(operation);
+	    if (iterationLimit > 0 && operation.acceptedSteps - acceptedAtStart >= iterationLimit)
 		break;
 	    tm = System.currentTimeMillis();
 	    lit = tm;
+            // Render batches yield normally; the larger deadline guards a stuck individual solve.
+            if (iterationLimit == 0 && tm - operation.startedAt >= 8) break;
 	    // Check whether enough time has elapsed to perform an *additional* iteration after
 	    // those we have already completed.
 	    if ((timeStepCount-timeStepCountAtFrameStart)*1000 >= steprate*(tm-lastIterTime) || (tm-lastFrameTime > 500))
@@ -3262,7 +3289,15 @@ MouseOutHandler, MouseWheelHandler {
 
     // set node voltages given right side found by solving matrix
     void applySolvedRightSide(double rs[]) {
-//	console("setvoltages " + rs);
+        // Matrix reduction can move a nonfinite RHS into a constant row. Validate
+        // every full result before mutating model currents or retaining old nodes.
+        for (int row = 0; row < circuitMatrixFullSize; row++) {
+            RowInfo info = circuitRowInfo[row];
+            double value = info.type == RowInfo.ROW_CONST ? info.value : rs[info.mapCol];
+            if (!SolverExecutionBoundary.finite(value))
+                throw new SolverExecutionBoundary.Failure(SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE,
+                    "Nonfinite CircuitJS solution at full row " + row);
+        }
 	int j;
 	for (j = 0; j != circuitMatrixFullSize; j++) {
 	    RowInfo ri = circuitRowInfo[j];
@@ -3271,10 +3306,6 @@ MouseOutHandler, MouseWheelHandler {
 		res = ri.value;
 	    else
 		res = rs[ri.mapCol];
-	    if (Double.isNaN(res)) {
-		converged = false;
-		break;
-	    }
 	    if (j < nodeList.size()-1) {
 		nodeVoltages[j] = res;
 	    } else {
@@ -3330,6 +3361,7 @@ MouseOutHandler, MouseWheelHandler {
     int max(int a, int b) { return (a > b) ? a : b; }
     
     public void resetAction(){
+        if (solverExecutor.isUnavailable()) return;
         if (generatedBoardInstance != null && !isGeneratedRuntimeSettled())
             return;
         if (generatedBoardInstance != null) {
@@ -3343,6 +3375,7 @@ MouseOutHandler, MouseWheelHandler {
     	if (t == 0)
     	    setSimRunning(true);
     	t = timeStepAccum = 0;
+        solverExecutor.retire();
     	timeStepCount = 0;
     	for (i = 0; i != elmList.size(); i++)
 		getElm(i).reset();
@@ -4048,6 +4081,7 @@ MouseOutHandler, MouseWheelHandler {
     static final int RC_KEEP_TITLE = 8;
 
     void readCircuit(byte b[], int flags) {
+        solverExecutor.requirePublicAccess();
 	int i;
 	int len = b.length;
 	if ((flags & RC_RETAIN) == 0) {
@@ -4590,24 +4624,6 @@ MouseOutHandler, MouseWheelHandler {
 	return elmList.contains(element);
     }
 
-    /** One ordinary, bounded CircuitJS solver iteration for temporal profiles. */
-    private void runGeneratedTemporalSolverStep() {
-	if (lastIterTime == 0)
-	    lastIterTime = System.currentTimeMillis();
-	runCircuit(true, 1);
-	// Restore only CircuitJS's UI scheduling bookkeeping.  The profile's
-	// duration is still controlled by solver time t, never this timestamp.
-	lastIterTime = System.currentTimeMillis();
-    }
-
-    /** One bounded real CircuitJS step for the opt-in A01 measurement route. */
-    void runA01SolverStepForDeveloperVerification() {
-	if (lastIterTime == 0)
-	    lastIterTime = System.currentTimeMillis();
-	runCircuit(true, 1);
-	lastIterTime = System.currentTimeMillis();
-    }
-
     GeneratedBoardInstance generatedBoardInstance;
 	GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
@@ -4701,7 +4717,7 @@ MouseOutHandler, MouseWheelHandler {
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -4730,6 +4746,7 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 
     void installGeneratedChallengeForDeveloperVerification(GeneratedBoardInstance instance) {
+        solverExecutor.requirePublicAccess();
 	installGeneratedBoardForDeveloperVerification(instance);
 	installGeneratedChallengeController(instance);
 	    }
@@ -5103,6 +5120,14 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+            if (!developerVerifierRunning && troubleshootA07Verification && !troubleshootA07VerificationComplete &&
+                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                    generatedChallengeController != null && generatedChallengeController.isReady() &&
+                    isGeneratedRuntimeSettled()) {
+                developerVerifierRunning = true; troubleshootA07VerificationComplete = true;
+                publishBrowserVerificationResult("RUNNING:a07");
+                A07SolverDeveloperVerifier.start(this, troubleshootA07ForcedFailure);
+            }
 	    if (!developerVerifierRunning && troubleshootA06Verification &&
                 !troubleshootA06VerificationComplete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5278,7 +5303,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5353,6 +5378,19 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishA03Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-a03-report", evidence);
+    }-*/;
+
+    void finishA07Verification(String evidence, Throwable failure) {
+        developerVerifierRunning = false;
+        if (failure == null) {
+            publishA07Evidence(evidence); publishBrowserVerificationResult("PASS:a07");
+        } else {
+            publishBrowserVerificationResult("FAIL:a07:" + failure.getMessage());
+            console("A07 failure: " + failure);
+        }
+    }
+    private static native void publishA07Evidence(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-a07-report", evidence);
     }-*/;
 
     private static native void publishA06Evidence(String evidence) /*-{
@@ -5552,6 +5590,7 @@ MouseOutHandler, MouseWheelHandler {
 	}
 
 	boolean isGeneratedRuntimeSettled() {
+        if (solverExecutor.isUnavailable()) return false;
 	if (generatedBoardInstance == null)
 	    return !generatedRuntimeInstallationInProgress && !activeMeasurementOverlay &&
 		pendingBoardPowerState == null;
@@ -5654,6 +5693,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     void setBoardPowerState(BoardPowerState state) {
+        solverExecutor.requirePublicAccess();
 	if (generatedBoardInstance == null)
 	    return;
 	if (activeMeasurementOverlay) {
@@ -5715,20 +5755,9 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void advanceGeneratedTemporalSolver(double durationSeconds) {
-	if (durationSeconds <= 0 || Double.isNaN(durationSeconds) ||
-		Double.isInfinite(durationSeconds))
-	    throw new IllegalArgumentException("Invalid generated temporal duration");
-	final double target = t + durationSeconds;
-	int iterations = 0;
-	while (t + 1e-12 < target) {
-	    runGeneratedTemporalSolverStep();
-	    if (stopMessage != null)
-		throw new IllegalStateException("Generated temporal profile stopped: " + stopMessage);
-	    if (++iterations > 200000)
-		throw new IllegalStateException("Generated temporal profile did not settle");
-	}
-	if (generatedBoardInstance != null)
-	    generatedBoardInstance.getPhysicalBoardRuntime().synchronizeSimulationTime(t);
+        solverExecutor.advanceFor(durationSeconds);
+        if (generatedBoardInstance != null)
+            generatedBoardInstance.getPhysicalBoardRuntime().observeSimulationTime(t);
     }
 
     private void updateBoardPowerButton() {

@@ -25,6 +25,7 @@ final class Task41SimulationSnapshot {
 
     private static int injectedRestoreFailureStage;
 
+    private final CircuitSolverExecutor.PrivateState solverState;
     private final GeneratedBoardInstance board;
     private final GeneratedChallengeController challenge;
     private final BoardModificationController modifications;
@@ -140,6 +141,7 @@ final class Task41SimulationSnapshot {
     private final boolean dcAnalysisFlag;
     private final boolean simRunning;
     private final boolean circuitNonLinear;
+    private final boolean adjustTimeStep;
     private final int voltageSourceCount;
     private final int circuitMatrixSize;
     private final int circuitMatrixFullSize;
@@ -185,6 +187,7 @@ final class Task41SimulationSnapshot {
     private final Color staticLightGrayColor;
 
     private Task41SimulationSnapshot(CirSim sim) {
+        solverState = sim.solverExecutor.snapshotState();
         board = sim.generatedBoardInstance;
         challenge = sim.generatedChallengeController;
         modifications = sim.boardModificationController;
@@ -302,6 +305,7 @@ final class Task41SimulationSnapshot {
         dcAnalysisFlag = sim.dcAnalysisFlag;
         simRunning = sim.simRunning;
         circuitNonLinear = sim.circuitNonLinear;
+        adjustTimeStep = sim.adjustTimeStep;
         voltageSourceCount = sim.voltageSourceCount;
         circuitMatrixSize = sim.circuitMatrixSize;
         circuitMatrixFullSize = sim.circuitMatrixFullSize;
@@ -448,6 +452,8 @@ final class Task41SimulationSnapshot {
         } catch (Error failure) {
             bestEffortRestore(sim);
             throw failure;
+        } finally {
+            sim.solverExecutor.snapshotRestored(solverState);
         }
     }
 
@@ -659,6 +665,7 @@ final class Task41SimulationSnapshot {
         sim.dcAnalysisFlag = dcAnalysisFlag;
         sim.simRunning = simRunning;
         sim.circuitNonLinear = circuitNonLinear;
+        sim.adjustTimeStep = adjustTimeStep;
         sim.voltageSourceCount = voltageSourceCount;
         sim.circuitMatrixSize = circuitMatrixSize;
         sim.circuitMatrixFullSize = circuitMatrixFullSize;

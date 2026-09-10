@@ -871,7 +871,11 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A07 · Bounded solver execution, observation and high-risk model pilots
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE as the bounded execution/observation foundation.
+
+**Evidence:** [A07 qualification](task-evidence/A07/README.md): native 17 suites, production GWT 5/5, maintained-reader compiled 9/9, final visible player repair/retest, and independent read-only review/deltas PASS.
+
+**Qualification limits:** The A06 CLI attempt failed ownership preflight before app execution. The authorized isolated browser proved the maintained A07 route selection, not that wrapper. Scale rows are fresh-context replicates, not cached-context warm benchmarks or physical Q60/Q100 qualification. A08 remains unstarted.
 
 **Hard prerequisites:** [A01](#m-a01), [A06](#m-a06)
 

@@ -1,0 +1,62 @@
+{
+    "status":  "PASS",
+    "routeCount":  9,
+    "results":  [
+                    {
+                        "name":  "a07",
+                        "kind":  "a07",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a07-forcedfailure",
+                        "kind":  "a07-forced",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a07-debugoff",
+                        "kind":  "a07-debugoff",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a06",
+                        "kind":  "a06",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a06-forcedfailure",
+                        "kind":  "a06-forced",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a06-debugoff",
+                        "kind":  "a06-debugoff",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a03",
+                        "kind":  "a03",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "task49",
+                        "kind":  "task49",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "stored-energy",
+                        "kind":  "stored-energy",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    }
+                ],
+    "readerSha256":  "5e1d429b1ad753a8b41eb95d012a7f440ddfe7a17cc6b8e44fec1893634fdde0",
+    "warning":  "Direct isolated-browser behavior and maintained report-reader proof; does not certify the failed CLI preflight."
+}

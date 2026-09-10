@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('Current', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
+    [ValidateSet('Current', 'A07', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
     [string]$Gate = 'Current',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
@@ -309,7 +309,7 @@ function Get-RouteReports($Socket, [DateTime]$Deadline) {
 (()=>{const d=document.documentElement;const get=n=>d.getAttribute(n)||'';return {
   url:location.href,ready:document.readyState,
   verification:get('data-tsj-verification'),
-  a06:get('data-tsj-a06-report'),a04:get('data-tsj-a04-report'),a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
+  a07:get('data-tsj-a07-report'),a06:get('data-tsj-a06-report'),a04:get('data-tsj-a04-report'),a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
   task46Parity:get('data-tsj-task46-parity'),
   task46Descriptor:get('data-tsj-task46-descriptor'),
   task46Snapshot:get('data-tsj-task46-snapshot'),
@@ -365,6 +365,129 @@ function Test-Task41Report([object]$Value) {
     return $text -match '(?m)(?:^|;)retest=(?:true|1)(?:;|$)' -and
         $text -match '(?m)(?:^|;)sampleToleranceEvidence=[^;\r\n]+' -and
         $text -match '(?m);result=PASS$'
+}
+
+function Test-A07FiniteNumber($Value, [double]$Minimum, [double]$Maximum) {
+    if ($Value -isnot [int] -and $Value -isnot [long] -and $Value -isnot [double] -and
+            $Value -isnot [decimal]) { return $false }
+    $n = [double]$Value
+    return -not [double]::IsNaN($n) -and -not [double]::IsInfinity($n) -and
+        $n -ge $Minimum -and $n -le $Maximum
+}
+
+function Test-A07Report([object]$Value) {
+    try {
+        $p = (Get-ExactReportText $Value) | ConvertFrom-Json -ErrorAction Stop
+        if ($p.version -cne 'TSJ-A07-SOLVER-1' -or $p.status -cne 'PASS' -or $p.cleanup -cne 'PASS' -or
+                -not (Test-VerifierStrictIntegralValue $p.pureAssertions 38L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $p.runtimeAssertions 53L ([long]::MaxValue)) -or
+                -not (Test-A07FiniteNumber $p.wallMs 0 ([double]::MaxValue))) { return $false }
+        if ($p.latencies -isnot [array] -or $p.latencies.Count -ne 6) { return $false }
+        foreach ($kind in @('completed','cancel-0','cancel-1','cancel-2','cancel-3','cancel-4')) {
+            $rows=@($p.latencies | Where-Object case -ceq $kind)
+            if ($rows.Count -ne 1) { return $false }
+            $row=$rows[0]
+            foreach ($field in @('slices','acceptedSteps','wallMs','maxSliceMs','maxYieldMs')) {
+                if (-not (Test-VerifierStrictIntegralValue $row.$field 0L ([long]::MaxValue))) { return $false }
+            }
+            if ($kind -ceq 'completed') {
+                if ($row.slices -lt 2 -or $row.acceptedSteps -ne 200 -or $null -ne $row.cancelToTerminalMs) { return $false }
+            } elseif (-not (Test-VerifierStrictIntegralValue $row.cancelToTerminalMs 0L ([long]::MaxValue))) { return $false }
+            if ($row.maxSliceMs -gt $row.wallMs -or $row.maxYieldMs -gt $row.wallMs -or
+                    $row.cancelToTerminalMs -gt $row.wallMs) { return $false }
+        }
+        $cases = @('accepted-state-source-and-time-identity',
+            'exclusive-private-graph-and-reentrant-model', 'real-nonfinite', 'real-singular',
+            'real-nonconvergent', 'real-accepted-step-scheduling', 'real-finite-event-feedback',
+            'real-stale-owner-callback-and-restore-refusal', 'real-injected-cleanup-failure-and-explicit-recovery',
+            'real-browser-yield-and-accepted-publication', 'cancel-0-and-obsolete-callback',
+            'cancel-1-and-obsolete-callback', 'cancel-2-and-obsolete-callback',
+            'cancel-3-and-obsolete-callback', 'cancel-4-and-obsolete-callback')
+        if ($p.runtimeCases -isnot [array] -or $p.runtimeCases.Count -ne $cases.Count) { return $false }
+        foreach ($name in $cases) {
+            $found = @($p.runtimeCases | Where-Object { $_.case -ceq $name -and $_.status -ceq 'PASS' })
+            if ($found.Count -ne 1) { return $false }
+        }
+        if ($p.models.rows -isnot [array] -or $p.models.rows.Count -ne 21 -or
+                -not (Test-VerifierStrictIntegralValue $p.models.assertions 59L ([long]::MaxValue)) -or
+                $null -ne $p.models.physicalPackages -or $p.models.playableQualification -isnot [bool] -or
+                $p.models.playableQualification -or $p.models.limits -isnot [array] -or
+                $p.models.limits.Count -lt 4) { return $false }
+        foreach ($limit in $p.models.limits) {
+            if ($limit -isnot [string] -or [String]::IsNullOrWhiteSpace($limit)) { return $false }
+        }
+        $rl = 0.05 * (1 - [Math]::Exp(-5))
+        # Reader-side physical envelopes, not a report-provided tolerance or success counter.
+        $models = @(
+            @{name='relay-energize';dt=@(.0001,.00005);lo=$rl-.0001;hi=$rl+.0001},
+            @{name='relay-release';dt=@(.0001,.00005);lo=-.0001;hi=.0001},
+            @{name='transformer-loaded';dt=@(.0001,.00005);lo=.48;hi=.52},
+            @{name='transformer-load-step';dt=@(.0001,.00005);lo=.48;hi=.52},
+            @{name='diode-forward';dt=@(.000005,.0000025);lo=.3;hi=1.0},
+            @{name='diode-reverse-current';dt=@(.000005,.0000025);lo=-.000005;hi=.000005},
+            @{name='converter-20ohm-mean';dt=@(.000005,.0000025);lo=4.8;hi=6.5},
+            @{name='converter-20ohm-ripple';dt=@(.000005,.0000025);lo=0;hi=.5},
+            @{name='converter-10ohm-mean';dt=@(.000005,.0000025);lo=4.8;hi=6.5},
+            @{name='reference-0';dt=@(.000005);lo=2.499999;hi=2.500001},
+            @{name='reference-1';dt=@(.000005);lo=2.499999;hi=2.500001},
+            @{name='reference-2';dt=@(.000005);lo=2.499999;hi=2.500001})
+        foreach ($model in $models) {
+            foreach ($dt in $model.dt) {
+                $found = @($p.models.rows | Where-Object { $_.model -ceq $model.name -and
+                    (Test-A07FiniteNumber $_.timeStep $dt $dt) })
+                if ($found.Count -ne 1) { return $false }
+                $row = $found[0]
+                if (-not (Test-A07FiniteNumber $row.value $model.lo $model.hi) -or
+                        -not (Test-A07FiniteNumber $row.simulatedSeconds $dt ([double]::MaxValue)) -or
+                        -not (Test-A07FiniteNumber $row.wallMs 0 ([double]::MaxValue))) { return $false }
+                foreach ($metric in @('solverElements','matrixFull','acceptedSteps','nonlinearTrials',
+                        'analyses','restamps','factorizations','solves')) {
+                    if (-not (Test-VerifierStrictIntegralValue $row.$metric 1L ([long]::MaxValue))) { return $false }
+                }
+                if (-not (Test-VerifierStrictIntegralValue $row.matrixReduced 0L $row.matrixFull) -or
+                        $row.nonlinearTrials -lt $row.acceptedSteps) { return $false }
+            }
+        }
+        if ($p.scale -isnot [array] -or $p.scale.Count -ne 16) { return $false }
+        foreach ($size in @(20,40,60,100)) { foreach ($seed in @(0,1)) { foreach ($replicate in @(1,2)) {
+            $found = @($p.scale | Where-Object {
+                (Test-VerifierStrictIntegralValue $_.size $size $size) -and
+                (Test-VerifierStrictIntegralValue $_.seed $seed $seed) -and
+                (Test-VerifierStrictIntegralValue $_.replicate $replicate $replicate) })
+            if ($found.Count -ne 1) { return $false }
+            $row = $found[0]
+            if ($row.status -cne 'PASS' -or $row.stageStatus -cne 'SOLVER_PASS' -or
+                    $row.corpus -cne 'a07' -or $row.contextReuse -isnot [bool] -or $row.contextReuse -or
+                    $row.fixtureVersion -cne 'a01-series-ladder-v1' -or $null -ne $row.physicalPackages -or
+                    $row.identityIndependentOfTiming -isnot [bool] -or -not $row.identityIndependentOfTiming -or
+                    -not (Test-VerifierStrictIntegralValue $row.solverElements ($size+2) ($size+2)) -or
+                    -not (Test-VerifierStrictIntegralValue $row.matrixFullSize ($size+3) ($size+3)) -or
+                    -not (Test-VerifierStrictIntegralValue $row.matrixReducedSize 0L ($size+3)) -or
+                    -not (Test-VerifierStrictIntegralValue $row.acceptedStepCount 2L 2L) -or
+                    -not (Test-A07FiniteNumber $row.elapsedMs 0 ([double]::MaxValue)) -or
+                    -not (Test-A07FiniteNumber $row.simulatedSeconds .000000001 ([double]::MaxValue)) -or
+                    -not (Test-VerifierStrictIntegralValue $row.matrixDoubleStorageProxyBytes 1L ([long]::MaxValue))) {
+                return $false
+            }
+            foreach ($metric in @('analysisCount','stampCount','factorizationCount','solveCount','iterationCount','subIterationCount')) {
+                if (-not (Test-VerifierStrictIntegralValue $row.$metric 1L ([long]::MaxValue))) { return $false }
+            }
+            # Independent series-ladder equations, including every node, for both seeds.
+            $resistances = @(for ($i=0; $i -lt $size; $i++) { 100.0 + 10.0 * (($i + $seed) % 7) })
+            $total = ($resistances | Measure-Object -Sum).Sum
+            $current = 10.0 / $total
+            if (-not (Test-A07FiniteNumber $row.sourceVoltage 10 10) -or
+                    -not (Test-A07FiniteNumber $row.totalResistance $total $total) -or
+                    -not (Test-A07FiniteNumber $row.observedCurrent ($current-1e-9) ($current+1e-9)) -or
+                    $row.nodeVoltages -isnot [array] -or $row.nodeVoltages.Count -ne $size+1) { return $false }
+            $voltage=10.0
+            for ($i=0; $i -le $size; $i++) {
+                if (-not (Test-A07FiniteNumber $row.nodeVoltages[$i] ($voltage-1e-6) ($voltage+1e-6))) { return $false }
+                if ($i -lt $size) { $voltage -= $current * $resistances[$i] }
+            }
+        } } }
+        return $true
+    } catch { return $false }
 }
 
 function Test-A06Report([object]$Value) {
@@ -551,6 +674,13 @@ function Test-ControlledReport([object]$Value, [string]$Protocol) {
 function Test-RouteReady($Kind, $Reports) {
     $verification = Get-ExactReportText $Reports.verification
     switch ($Kind) {
+        'a07' { return $verification -ceq 'PASS:a07' -and (Test-A07Report $Reports.a07) }
+        'a07-forced' { return $verification -ceq 'FAIL:a07:a07-explicit-failure-canary' -and
+            [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a07)) }
+        'a07-debugoff' { return [bool]$Reports.normalReady.programReady -and
+            [bool]$Reports.normalReady.retestCustomerReady -and
+            $verification -notmatch '(?i)(?:^|:)a07(?:$|:)' -and
+            [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a07)) }
         'a06' { return $verification -ceq 'PASS:a06' -and (Test-A06Report $Reports.a06) }
         'a06-forced' { return $verification -ceq 'FAIL:a06:a06-explicit-failure-canary' -and
             [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a06)) }
@@ -698,6 +828,16 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
                 reportNames = @('a04') }
         )
     }
+    if ($SelectedGate -ceq 'A07') {
+        return @(
+            [pscustomobject]@{name='a07';kind='a07';
+                query='tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true';reportNames=@('a07')},
+            [pscustomobject]@{name='a07-forcedfailure';kind='a07-forced';
+                query='tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjA07Fail=true&tsjDebug=true&running=true';reportNames=@('a07')},
+            [pscustomobject]@{name='a07-debugoff';kind='a07-debugoff';
+                query='tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjA07Fail=true&running=true';reportNames=@('a07')}
+        ) + @(Get-RouteDefinitions 'A06' $false)
+    }
     if ($SelectedGate -ceq 'A06') {
         return @(
             [pscustomobject]@{ name='a06'; kind='a06';
@@ -762,6 +902,8 @@ try {
         switch ($Gate) {
             'Current' { 9 }
             'A05' { 6 }
+            'A06' { 6 }
+            'A07' { 9 }
             'A03' { 3 }
             'A04' { 3 }
             default { 1 }
@@ -804,7 +946,7 @@ try {
             $reports = Get-RouteReports $session.Socket $routeDeadline
             if (Test-RouteReady $definition.kind $reports) { break }
             if ((Get-ExactReportText $reports.verification) -like 'FAIL:*' -and
-                    $definition.kind -notin @('a03-forced', 'a04-forced')) {
+                    $definition.kind -notin @('a03-forced', 'a04-forced', 'a06-forced', 'a07-forced')) {
                 Throw-AppFailure ("$($definition.name) reported " +
                     (Get-ExactReportText $reports.verification))
             }

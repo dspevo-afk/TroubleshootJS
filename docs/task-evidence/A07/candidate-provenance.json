@@ -1,0 +1,60 @@
+{
+  "baselineCommit": "6ffeb91aa4cf5a234ffaeaa1255a1791d239b4dd",
+  "branch": "codex/task43p-final-recovery",
+  "qualifiedCodeAndTestHashes": {
+    "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java": "fabd860c68c7d5b9a0b3afda71dad1c7480f43aaaaa7771e54087e294a7a1fdb",
+    "src/com/lushprojects/circuitjs1/client/SolverEventQueue.java": "b0f34d46a7a550611ed6a44c97cf4a5377af88d00d62eedc4e92c8f54d66f969",
+    "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java": "c99aa9e42b7b292dbff72d30fd94161a6a0475cbf73ef9cdbaab40670fb9f723",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "cf3ccd1910b01b484e7a7c9bf21b78c7c3b146d201ee203d9e9de96710868d8f",
+    "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java": "f75406445a631318c284efff351689871eec136402183b7d3b89fa6ddaa3e0c8",
+    "src/com/lushprojects/circuitjs1/client/A01MeasurementVerifier.java": "7a419f6fc0f3ce422c572c56446c8244dd30b50ec2ca74614af13aec90bcbc57",
+    "src/com/lushprojects/circuitjs1/client/PowerDomainRuntimeCapability.java": "2594168729ee6c58fc4537a22a72381f27270f946c9fe8496c585bfc270155f1",
+    "src/com/lushprojects/circuitjs1/client/StoredEnergyMeasurementReadinessCapability.java": "d4668b13c1e822ccceeaa65766f11b7767134ab32a561dbea228452cfe5288c6",
+    "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java": "e8b802ad0599c3fb1dbc7bb2db510e8dec7531a18f0fe57f8bba842549dd4b40",
+    "src/com/lushprojects/circuitjs1/client/PrivateSolverContext.java": "c1d1b66d84298464d85ceac6ae53e54c592c2a0226ea5d025af1a5aca9a634d6",
+    "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java": "30a191d51b37fd9c7b72808091803b90dde3ae2afb2982cc8f20383c26d8ad2e",
+    "tests/contracts/A07ExecutionContractTest.java": "ad95e26ce44b1531c0a3c910fbe0dd0bc9795b072c3e679f667bac34162add18",
+    "scripts/verify-current-contracts.ps1": "ba481023e6ca49225852f2ae4da816ee3593ee20c097cbafcf75629977f2dffd",
+    "scripts/build.ps1": "eeec30d89638eb10f82bcd023a2cc1e69dc3707e0dc5fe81ceb91d385c6043f8",
+    "scripts/VerifierIsolation.psm1": "bf21b959dfc96e04219a6f828819c58023c364fb869e902adcd65deded94436e",
+    "src/com/lushprojects/circuitjs1/client/GeneratedExternalPowerBindings.java": "d5c5790290536617ef37ffb6f6017d9cdaf7d4b3b0aa86815fb95354581a0481",
+    "src/com/lushprojects/circuitjs1/client/A07ModelPilots.java": "d2a0daf1e0066c804ea173dcd6df83be9e53fa27b790bc9b7972eb606e3cb8c3",
+    "src/com/lushprojects/circuitjs1/client/A07SolverDeveloperVerifier.java": "236d70cb797a95a6dac513acb486da1000a313fabdd32d768c1a663978385e61",
+    "scripts/verify-a03-browser.ps1": "5e1d429b1ad753a8b41eb95d012a7f440ddfe7a17cc6b8e44fec1893634fdde0",
+    "tests/contracts/a04-report-contract.ps1": "b1b9cd73d5a5eb7bec45af42b67b3eda43b01d48528bb2ce556162d5117c9e55"
+  },
+  "compiledIdentity": {
+    "protocol": "troubleshootjs-preview-identity-v1",
+    "sourceDigest": "76529c646a6f22bb538a70132c1a667622422a0be5454895e6bf4838eba84085",
+    "scriptDigest": "ea95de1b6f6bf898b8868188effa8a74d32995407fae7595153be74c1fba0e7f",
+    "webDigest": "7e458420a77f0c85657f9666f6db6e62dd184173c1d9b5ed92d0dc6a6510da39",
+    "executionDigest": "d8fa1e7a264616c526831de74cbe919cd48c3996ef02ca3cfbfd4f71e79f70e0",
+    "executionFileCount": 1336
+  },
+  "nativeExit": 0,
+  "nativeJavaSuites": 17,
+  "reportAssertions": 259,
+  "productionBuildExit": 0,
+  "gwtPermutations": 5,
+  "browserRoutes": 9,
+  "readerExit": 0,
+  "normalPlayerErrors": [],
+  "normalPlayerOSActions": 26,
+  "review": {
+    "requestedModel": "gpt-reserve",
+    "requestedReasoning": "max",
+    "independentReviewerSessions": 1,
+    "reviewRounds": 3,
+    "initial": "BLOCKED: runner summary variable, fixed",
+    "delta": "PASS",
+    "timerDelta": "PASS"
+  },
+  "browserVersion": "143.0.7499.4",
+  "qualificationLimits": [
+    "A06 CLI failed process-ownership preflight before app execution; it is not certified.",
+    "The authorized isolated browser executed the maintained nine-route extraction and strict readers.",
+    "Scale rows are fresh-context replicates, not cached-context warm comparisons.",
+    "Small solver probes are not physical playable boards or mains qualification.",
+    "Zero milliseconds means clock resolution, not zero physical cancellation latency."
+  ]
+}

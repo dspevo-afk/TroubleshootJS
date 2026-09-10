@@ -1,6 +1,45 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A06 COMPLETE - QUALIFIED - 2026-09-09
+## Current checkpoint - A07 COMPLETE - QUALIFIED
+
+- **Scope/base:** A07 only, above `6ffeb91aa4cf5a234ffaeaa1255a1791d239b4dd`,
+  branch `codex/task43p-final-recovery`. A08 is next eligible and **unstarted**.
+- **Candidate:** Exact qualified code/test hashes and compiled digests are in
+  [A07 provenance](task-evidence/A07/candidate-provenance.json).
+- **Delivered:** One enforced CircuitJS execution owner; exact accepted-state
+  observations shared by power/storage readiness; bounded work and wall budgets;
+  isolated private proof graphs, stale-callback rejection and exact restoration;
+  deterministic accepted-boundary events and actual browser-turn cancellation.
+  No replacement solver, parallel live CirSim, universal rollback or A08 work.
+- **Models:** Relay, transformer, diode and switched-converter/reference probes:
+  59 assertions / 21 rows. Synthetic scaling covers 20/40/60/100 resistors, two
+  seeds and two fresh contexts each. No cached-context warm, physical Q60/Q100,
+  mains or new playable provider qualification is claimed.
+- **Native/build:** Final-source PASS, exit 0: 17 Java suites, A07 pure 38, A06
+  140, independent seed/value/role oracles, 259 report assertions. Native scratch
+  cleanup PASS. JDK8/GWT production OBF: all five permutations PASS.
+- **Compiled:** Nine expected outcomes through the exact maintained readers;
+  A07 38 pure / 53 runtime / 59 model assertions. Fifteen runtime cases, six
+  measured latency cases, 21 model rows and 16 scaling rows.
+- **Player:** Final production, real Win32 mouse/keyboard input: repeated loaded
+  DC and isolated OHM, powered-OHM blocking, ordinary R1 replacement and customer
+  retest PASS. Zero normal-play errors. Four final screenshots and the OS action
+  receipt are in [A07 evidence](task-evidence/A07/README.md).
+- **Review:** One independent read-only gpt-reserve MAX session, initial review
+  plus two bounded deltas. Initial runner-variable/benchmark-label corrections
+  reconciled; final deltas PASS. Timer heartbeat/cancellation tests prove real
+  browser yielding, not GWT incremental-command batching.
+- **Limits:** A06 CLI failed process-ownership preflight before app execution.
+  Authorized isolated execution proves behavior/readers, not that wrapper. A06
+  forced negative retains its one deliberate AssertionError after the exact
+  marker; this is not a normal-play success. Raw reports and framed native
+  receipt are retained compressed, with readable summaries.
+- **Resources/publication:** Owned workers, browser contexts/drivers and preview
+  listener are closed; only root publication terminal remains. Pre-existing
+  `tests/contracts/__pycache__/` is preserved and excluded. Actual commit, push
+  and email outcomes will be reported only after publication, not inferred here.
+
+## Historical checkpoint - A06 COMPLETE - QUALIFIED - 2026-09-09
 
 - **Scope/base:** A06 only, above `0acb8f95a2573a98f84a93ece030e3f366d40051`
   on `codex/task43p-final-recovery`, upstream `origin/codex/task43p-final-recovery`.

@@ -32,6 +32,18 @@ final class A01MeasurementVerifier {
 
     private A01MeasurementVerifier() { }
 
+    static String measureSolverScaleForA07(CirSim sim) {
+        Task41SimulationSnapshot original = Task41SimulationSnapshot.capture(sim);
+        StringBuilder result = new StringBuilder("[");
+        int[] sizes = {20, 40, 60, 100};
+        for (int size : sizes) for (int seed = 0; seed < 2; seed++) for (int replicate = 1; replicate <= 2; replicate++) {
+            if (result.length() > 1) result.append(",");
+            result.append(runAttempt(sim, original, "a07", replicate, size, seed, "fresh"));
+        }
+        original.assertRestored(sim);
+        return result.append("]").toString();
+    }
+
     static String verify(CirSim sim, String corpus, int round, String sourceFingerprint,
             String buildFingerprint, boolean forcedFailure) {
         require(sim != null && sim.troubleshootDebug && sim.developerVerifierRunning &&
@@ -190,9 +202,11 @@ final class A01MeasurementVerifier {
 
     private static void runForcedFailureCanary(CirSim sim, Task41SimulationSnapshot original) {
         Fixture fixture = null;
+        PrivateSolverContext proof = null;
         try {
-            original.beginProof(sim);
-            fixture = installFixture(sim, 20, 0L);
+            proof = PrivateSolverContext.open(sim);
+            fixture = createFixture(20, 0L);
+            proof.install(fixture.elements);
             sim.a01MeasurementRunning = true;
             sim.a01AnalysisCount = 0;
             sim.a01StampCount = 0;
@@ -204,14 +218,14 @@ final class A01MeasurementVerifier {
             sim.t = 0;
             sim.lastIterTime = 0;
             sim.stopMessage = null;
-            sim.analyzeCircuit();
+            proof.analyze();
             require(sim.circuitMatrix != null && sim.stopMessage == null,
                 "forced-failure fixture did not install");
             throw new AssertionError("a01-explicit-forced-failure");
         } finally {
             sim.a01MeasurementRunning = false;
-            if (fixture != null)
-                fixture.dispose(sim);
+            if (proof != null)
+                proof.close();
             original.restore(sim);
             original.assertRestored(sim);
         }
@@ -219,17 +233,20 @@ final class A01MeasurementVerifier {
 
     private static String runAttempt(CirSim sim, Task41SimulationSnapshot original,
             String corpus, int round, int size, long seed, String temperature) {
-        require("cold".equals(temperature) || "warm".equals(temperature),
+        require("cold".equals(temperature) || "warm".equals(temperature) ||
+            ("a07".equals(corpus) && "fresh".equals(temperature)),
             "invalid A01 temperature");
         Fixture fixture = null;
+        PrivateSolverContext proof = null;
         long start = System.currentTimeMillis();
         StringBuilder trace = new StringBuilder("[");
         boolean firstTrace = true;
         String result = null;
         Throwable primary = null;
         try {
-            original.beginProof(sim);
-            fixture = installFixture(sim, size, seed);
+            proof = PrivateSolverContext.open(sim);
+            fixture = createFixture(size, seed);
+            proof.install(fixture.elements);
             firstTrace = traceEvent(trace, firstTrace, "constructed", start);
             sim.a01MeasurementRunning = true;
             sim.a01AnalysisCount = 0;
@@ -244,12 +261,12 @@ final class A01MeasurementVerifier {
             sim.timeStepCount = 0;
             sim.lastIterTime = 0;
             sim.stopMessage = null;
-            sim.analyzeCircuit();
+            proof.analyze();
             require(sim.stopMessage == null && sim.circuitMatrix != null,
                 "A01 fixture analysis stopped");
             firstTrace = traceEvent(trace, firstTrace, "analyzed", start);
             for (int step = 0; step < STEPS_PER_ATTEMPT; step++) {
-                sim.runA01SolverStepForDeveloperVerification();
+                proof.advanceSteps(1);
                 require(sim.stopMessage == null, "A01 solver step stopped: " + sim.stopMessage);
                 firstTrace = traceEvent(trace, firstTrace, "step" + (step + 1), start);
             }
@@ -263,8 +280,8 @@ final class A01MeasurementVerifier {
         Throwable cleanupFailure = null;
         try {
             sim.a01MeasurementRunning = false;
-            if (fixture != null)
-                fixture.dispose(sim);
+            if (proof != null)
+                proof.close();
         } catch (Throwable cleanup) {
             cleanupFailure = cleanup;
         }
@@ -280,10 +297,9 @@ final class A01MeasurementVerifier {
         return result;
     }
 
-    private static Fixture installFixture(CirSim sim, int size, long seed) {
+    private static Fixture createFixture(int size, long seed) {
         require(size == 20 || size == 40 || size == 60 || size == 100,
             "unsupported A01 fixture size");
-        sim.elmList.removeAllElements();
         int top = 64;
         int spacing = 32;
         int bottom = top + spacing * size;
@@ -304,8 +320,6 @@ final class A01MeasurementVerifier {
             resistors.add(resistor);
             elements.add(resistor);
         }
-        for (CircuitElm element : elements)
-            sim.elmList.add(element);
         return new Fixture(size, seed, source, ground, resistors, elements);
     }
 
@@ -361,7 +375,10 @@ final class A01MeasurementVerifier {
             temperature + "-" + size + "-" + seed));
         json.append(",\"corpus\":").append(q(corpus));
         json.append(",\"round\":").append(round);
-        json.append(",\"temperature\":").append(q(temperature));
+        if ("a07".equals(corpus))
+            json.append(",\"replicate\":").append(round).append(",\"contextReuse\":false");
+        else
+            json.append(",\"temperature\":").append(q(temperature));
         json.append(",\"size\":").append(size);
         json.append(",\"seed\":").append(seed);
         json.append(",\"status\":\"PASS\"");
@@ -400,10 +417,21 @@ final class A01MeasurementVerifier {
         json.append(",\"expectedNodeVoltages\":").append(values(expectedNodes));
         json.append(",\"nodeVoltages\":").append(values(observedNodes));
         json.append(",\"elapsedMs\":").append(elapsed);
+        json.append(",\"simulatedSeconds\":").append(sim.t);
+        json.append(",\"matrixDoubleStorageProxyBytes\":").append(matrixDoubleStorageProxy(sim));
         json.append(",\"timingTrace\":").append(trace);
         json.append(",\"stageStatus\":\"SOLVER_PASS\"");
         json.append("}");
         return json.toString();
+    }
+
+    private static long matrixDoubleStorageProxy(CirSim sim) {
+        long values = 0;
+        if (sim.circuitMatrix != null)
+            for (double[] row : sim.circuitMatrix) if (row != null) values += row.length;
+        if (sim.origMatrix != null && sim.origMatrix != sim.circuitMatrix)
+            for (double[] row : sim.origMatrix) if (row != null) values += row.length;
+        return values * 8; // Matrix numeric slots only, not a browser heap measurement.
     }
 
     private static String reportJson(String corpus, int round, String sourceFingerprint,
@@ -751,10 +779,5 @@ final class A01MeasurementVerifier {
             this.elements = elements;
         }
 
-        void dispose(CirSim sim) {
-            for (CircuitElm element : elements)
-                element.delete();
-            sim.elmList.removeAllElements();
-        }
     }
 }

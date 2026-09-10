@@ -8,13 +8,15 @@ import java.util.Vector;
  */
 final class StoredEnergyMeasurementReadinessCapability implements
         ActiveMeasurementReadinessCapability, PhysicalBoardRuntimePowerLifecycle,
-        PhysicalBoardRuntimeLifecycle {
+        PhysicalBoardRuntimeLifecycle, PhysicalBoardInstallationProvider {
     static final String CAPABILITY_ID = "STORED_ENERGY_MEASUREMENT_READINESS";
     private final ReplaceableCapacitorBoardCapability replaceable;
     private final PhysicalCapacitorPart fixedCapacitor;
     private final BoardSimulationBindings boardBindings;
     private boolean awaitingSolverSample;
-    private double lastObservedSimulationTime = Double.NaN;
+    private CirSim sim;
+    private GeneratedBoardInstance instance;
+    private SolverExecutionBoundary.Observation observed, invalidated;
 
     StoredEnergyMeasurementReadinessCapability(
             ReplaceableCapacitorBoardCapability replaceable,
@@ -28,26 +30,32 @@ final class StoredEnergyMeasurementReadinessCapability implements
 
     public String getCapabilityId() { return CAPABILITY_ID; }
 
+    public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,
+            BoardModificationController modifications, double time) {
+        if (sim == null || instance == null || instance.getSimulationBindings() != boardBindings ||
+                instance.getPhysicalBoardRuntime().getCapability(CAPABILITY_ID) != this)
+            throw new IllegalArgumentException("Foreign stored-energy installation");
+        this.sim = sim; this.instance = instance; resetForBoardReset(); return null;
+    }
     public void onBoardPowerStateChanged(BoardPowerState state) {
-        awaitingSolverSample = true;
+        awaitingSolverSample = true; invalidated = observed;
     }
-
     public void observeSimulationTime(double simulationTime) {
-        if (!PowerDomainContract.finite(simulationTime)) {
-            awaitingSolverSample = true;
-            lastObservedSimulationTime = Double.NaN;
-            return;
+        if (sim == null || sim.getGeneratedBoardInstance() != instance ||
+                !PowerDomainContract.finite(simulationTime) || simulationTime != sim.t) {
+            resetForBoardReset(); return;
         }
-        if (simulationTime != lastObservedSimulationTime) {
-            lastObservedSimulationTime = simulationTime;
-            awaitingSolverSample = false;
+        SolverExecutionBoundary.Observation sample = sim.solverExecutor.observation(instance);
+        if (sample != null && sample != invalidated) {
+            observed = sample; awaitingSolverSample = false;
         }
     }
-
-    public void synchronizeSimulationTime(double simulationTime) { observeSimulationTime(simulationTime); }
+    public void synchronizeSimulationTime(double simulationTime) {
+        observeSimulationTime(simulationTime);
+    }
     public void resetForBoardReset() {
-        awaitingSolverSample = true;
-        lastObservedSimulationTime = Double.NaN;
+        invalidated = sim == null ? observed : sim.solverExecutor.observation(instance);
+        observed = null; awaitingSolverSample = true;
     }
 
     public ActiveMeasurementReadiness getActiveMeasurementReadiness(
@@ -57,9 +65,9 @@ final class StoredEnergyMeasurementReadinessCapability implements
             return ActiveMeasurementReadiness.READY;
         if (powerState != BoardPowerState.UNPOWERED || !electricallyUnpowered)
             return ActiveMeasurementReadiness.POWER_OFF;
-        if (!PowerDomainContract.finite(lastObservedSimulationTime))
+        if (sim == null || sim.getGeneratedBoardInstance() != instance)
             return ActiveMeasurementReadiness.UNKNOWN;
-        if (awaitingSolverSample)
+        if (awaitingSolverSample || !sim.solverExecutor.isCurrent(observed, instance))
             return ActiveMeasurementReadiness.WAITING;
         return storageReadiness(red, black);
     }

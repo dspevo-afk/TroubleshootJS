@@ -1,0 +1,207 @@
+[
+  {
+    "utc": "2026-09-10T05:22:11.271722+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 500,
+    "y": 50,
+    "button": "left",
+    "note": "Activate nonce-titled qualified simulation window"
+  },
+  {
+    "utc": "2026-09-10T05:22:11.438646+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1218,
+    "y": 290,
+    "button": "left",
+    "note": "Enter simulated loaded DC meter"
+  },
+  {
+    "utc": "2026-09-10T05:22:11.605436+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 188,
+    "y": 491,
+    "button": "left",
+    "note": "Red voltage probe"
+  },
+  {
+    "utc": "2026-09-10T05:22:11.756585+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 354,
+    "y": 491,
+    "button": "right",
+    "note": "Black voltage probe"
+  },
+  {
+    "utc": "2026-09-10T05:22:11.970548+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1218,
+    "y": 290,
+    "button": "left",
+    "note": "Exit simulated DC meter"
+  },
+  {
+    "utc": "2026-09-10T05:22:12.121655+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1218,
+    "y": 290,
+    "button": "left",
+    "note": "Repeat simulated DC meter entry"
+  },
+  {
+    "utc": "2026-09-10T05:22:12.272981+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 188,
+    "y": 491,
+    "button": "left",
+    "note": "Repeat red voltage probe"
+  },
+  {
+    "utc": "2026-09-10T05:22:12.424362+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 354,
+    "y": 491,
+    "button": "right",
+    "note": "Repeat black voltage probe"
+  },
+  {
+    "utc": "2026-09-10T05:22:12.575469+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1218,
+    "y": 290,
+    "button": "left",
+    "note": "Exit simulated DC meter again"
+  },
+  {
+    "utc": "2026-09-10T05:22:12.726641+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1310,
+    "y": 290,
+    "button": "left",
+    "note": "Verify virtual OHM gate while board is ON"
+  },
+  {
+    "utc": "2026-09-10T05:22:12.938858+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1268,
+    "y": 485,
+    "button": "left",
+    "note": "Turn simulated board power OFF using visible UI"
+  },
+  {
+    "utc": "2026-09-10T05:22:13.090471+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 188,
+    "y": 491,
+    "button": "left",
+    "note": "Red virtual resistance probe"
+  },
+  {
+    "utc": "2026-09-10T05:22:13.242080+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 354,
+    "y": 491,
+    "button": "right",
+    "note": "Black virtual resistance probe"
+  },
+  {
+    "utc": "2026-09-10T05:22:34.355109+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1310,
+    "y": 290,
+    "button": "left",
+    "note": "Exit simulated OHM mode"
+  },
+  {
+    "utc": "2026-09-10T05:22:34.522184+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1310,
+    "y": 290,
+    "button": "left",
+    "note": "Repeat simulated OHM mode entry"
+  },
+  {
+    "utc": "2026-09-10T05:22:34.673178+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 188,
+    "y": 491,
+    "button": "left",
+    "note": "Repeat red resistance probe"
+  },
+  {
+    "utc": "2026-09-10T05:22:34.824639+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 354,
+    "y": 491,
+    "button": "right",
+    "note": "Repeat black resistance probe"
+  },
+  {
+    "utc": "2026-09-10T05:22:34.976079+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1310,
+    "y": 290,
+    "button": "left",
+    "note": "Exit OHM mode before virtual component repair"
+  },
+  {
+    "utc": "2026-09-10T05:22:35.127466+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 988,
+    "y": 617,
+    "button": "left",
+    "note": "Clear virtual board selection"
+  },
+  {
+    "utc": "2026-09-10T05:22:35.278663+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 272,
+    "y": 496,
+    "button": "left",
+    "note": "Inspect R1 in virtual board"
+  },
+  {
+    "utc": "2026-09-10T05:22:35.454028+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1265,
+    "y": 900,
+    "button": "left",
+    "note": "Remove virtual R1 using the normal component action"
+  },
+  {
+    "utc": "2026-09-10T05:22:35.611654+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1265,
+    "y": 775,
+    "button": "left",
+    "note": "Open visible virtual resistor catalog"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "keys": "Home, Down x24, Enter",
+    "note": "Select the visible 1 kOhm virtual replacement"
+  },
+  {
+    "utc": "2026-09-10T05:22:52.294396+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1265,
+    "y": 813,
+    "button": "left",
+    "note": "Install selected 1 kOhm part in the simulation"
+  },
+  {
+    "utc": "2026-09-10T05:22:52.461284+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1268,
+    "y": 485,
+    "button": "left",
+    "note": "Turn virtual board ON after normal repair"
+  },
+  {
+    "utc": "2026-09-10T05:22:52.617499+00:00",
+    "kind": "Win32 OS mouse",
+    "x": 1265,
+    "y": 629,
+    "button": "left",
+    "note": "Run normal simulated customer retest"
+  }
+]

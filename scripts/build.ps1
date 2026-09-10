@@ -279,7 +279,9 @@ function Invoke-BuildBoundedProcess([string]$FilePath, [string[]]$Arguments,
         $process.BeginOutputReadLine()
         $process.BeginErrorReadLine()
         try {
-            $startTicks = [long](Get-VerifierProcessStartTicks $process)
+            # The retained launch handle also identifies children that already exited naturally.
+            # Live-process lookup remains required for any later exact termination.
+            $startTicks = [long](Get-VerifierLaunchedProcessStartTicks $process)
         } catch {
             if (-not $process.WaitForExit($TimeoutMilliseconds)) {
                 Throw-BuildInfrastructure "Could not capture build process identity and PID $processId did not exit within the bound."

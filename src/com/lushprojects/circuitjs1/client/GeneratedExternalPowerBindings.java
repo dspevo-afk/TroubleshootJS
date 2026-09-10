@@ -94,6 +94,37 @@ class GeneratedExternalPowerBindings {
         return out.toString();
     }
 
+    /** Allocation-free validation of the exact control states captured at operation entry. */
+    final class ControlObservation {
+        private final String[] ids;
+        private final ExternalPowerSimulationBinding[] bindings;
+        private final long[] revisions;
+        private final boolean[] connected, controlled;
+        private ControlObservation() {
+            Vector<String> inputIds = board.getPowerInputIds();
+            ids = new String[inputIds.size()]; bindings = new ExternalPowerSimulationBinding[ids.length];
+            revisions = new long[ids.length]; connected = new boolean[ids.length]; controlled = new boolean[ids.length];
+            for (int i = 0; i < ids.length; i++) {
+                ids[i] = inputIds.get(i); bindings[i] = powerBindings.get(ids[i]);
+                ExternalPowerSimulationBinding binding = bindings[i];
+                if (binding != null) {
+                    revisions[i] = binding.getConnectionRevision();
+                    controlled[i] = binding.hasControl(); connected[i] = binding.isConnected();
+                }
+            }
+        }
+        boolean isCurrent() {
+            if (constructionAborted || powerBindings.size() != ids.length) return false;
+            for (int i = 0; i < ids.length; i++) {
+                ExternalPowerSimulationBinding binding = powerBindings.get(ids[i]);
+                if (binding != bindings[i] || binding == null || binding.getConnectionRevision() != revisions[i] ||
+                        binding.hasControl() != controlled[i] || binding.isConnected() != connected[i]) return false;
+            }
+            return true;
+        }
+    }
+    ControlObservation observeControls() { return new ControlObservation(); }
+
     boolean isBackingElement(CircuitElm element) {
         for (ExternalPowerSimulationBinding binding : powerBindings.values()) {
             if (binding.getBackingElements().contains(element))

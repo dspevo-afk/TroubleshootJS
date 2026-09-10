@@ -11,7 +11,7 @@ $ast = [Management.Automation.Language.Parser]::ParseFile($source, [ref]$tokens,
 if ($parseErrors.Count -ne 0) { throw 'Browser report reader has syntax errors.' }
 # Load only pure report/route functions; never execute preview/browser setup.
 foreach ($name in @('Get-ExactReportText', 'Test-JsonReport', 'Test-A04Report', 'Test-A06Report', 'Test-ControlledReport',
-        'Test-RouteReady', 'Get-RouteDefinitions')) {
+        'Test-A07FiniteNumber', 'Test-A07Report', 'Test-RouteReady', 'Get-RouteDefinitions')) {
     $found = @($ast.FindAll({ param($node)
         $node -is [Management.Automation.Language.FunctionDefinitionAst] -and
             $node.Name -ceq $name
@@ -268,5 +268,112 @@ Assert-ReportContract (-not (Test-A06Report (Encode-Report $bad))) 'Uncleaned A0
 $powerReports=[pscustomobject]@{verification='RUNNING:a06';a06=(Encode-Report $power)}
 Assert-ReportContract (-not (Test-RouteReady 'a06' $powerReports)) 'Unfinished A06 accepted.'
 Assert-ReportContract (@(Get-RouteDefinitions 'A06' $false).Count -eq 6) 'A06 selected corpus changed.'
+# A07 has independently constructed report vectors, not a copied runtime receipt.
+$runtimeNames=@('accepted-state-source-and-time-identity','exclusive-private-graph-and-reentrant-model',
+    'real-nonfinite','real-singular','real-nonconvergent','real-accepted-step-scheduling',
+    'real-finite-event-feedback','real-stale-owner-callback-and-restore-refusal',
+    'real-injected-cleanup-failure-and-explicit-recovery','real-browser-yield-and-accepted-publication',
+    'cancel-0-and-obsolete-callback','cancel-1-and-obsolete-callback','cancel-2-and-obsolete-callback',
+    'cancel-3-and-obsolete-callback','cancel-4-and-obsolete-callback')
+$modelValues=[ordered]@{'relay-energize'=0.04966;'relay-release'=0.00002;
+    'transformer-loaded'=.499;'transformer-load-step'=.493;'diode-forward'=.62;
+    'diode-reverse-current'=-1e-10;'converter-20ohm-mean'=5.6;'converter-20ohm-ripple'=.03;
+    'converter-10ohm-mean'=5.5;'reference-0'=2.5;'reference-1'=2.5;'reference-2'=2.5}
+$modelRows=@(foreach ($entry in $modelValues.GetEnumerator()) {
+    $steps=if ($entry.Key -like 'relay-*' -or $entry.Key -like 'transformer-*') { @(.0001,.00005) }
+        elseif ($entry.Key -like 'reference-*') { @(.000005) } else { @(.000005,.0000025) }
+    foreach ($dt in $steps) {
+        @{model=$entry.Key;timeStep=$dt;value=$entry.Value;reference=$entry.Value;tolerance=.01;
+            simulatedSeconds=.1;wallMs=2;solverElements=10;matrixFull=12;matrixReduced=8;
+            acceptedSteps=100;nonlinearTrials=200;analyses=1;restamps=1;factorizations=100;solves=100}
+    }
+})
+$scaleRows=@(foreach ($n in @(20,40,60,100)) { foreach ($seed in @(0,1)) { foreach ($replicate in @(1,2)) {
+    $values=@(for ($j=0; $j -lt $n; $j++) { 100 + (($j+$seed)%7)*10 })
+    $total=($values | Measure-Object -Sum).Sum
+    $amps=10.0/$total; $volts=10.0
+    $nodes=@(10.0; foreach ($ohms in $values) { $volts-=$amps*$ohms; $volts })
+    @{size=$n;seed=$seed;replicate=$replicate;corpus='a07';contextReuse=$false;status='PASS';stageStatus='SOLVER_PASS';
+        fixtureVersion='a01-series-ladder-v1';physicalPackages=$null;identityIndependentOfTiming=$true;
+        solverElements=$n+2;matrixFullSize=$n+3;matrixReducedSize=$n+1;acceptedStepCount=2;
+        elapsedMs=1;simulatedSeconds=.00001;matrixDoubleStorageProxyBytes=4096;
+        analysisCount=1;stampCount=1;factorizationCount=1;solveCount=2;iterationCount=2;subIterationCount=2;
+        sourceVoltage=10;totalResistance=$total;observedCurrent=$amps;nodeVoltages=$nodes}
+} } })
+$execution=[ordered]@{version='TSJ-A07-SOLVER-1';status='PASS';cleanup='PASS';pureAssertions=38;
+    runtimeAssertions=53;wallMs=100;runtimeCases=@($runtimeNames | ForEach-Object { @{case=$_;status='PASS'} });
+    models=@{assertions=59;physicalPackages=$null;playableQualification=$false;
+        limits=@('synthetic fixtures only','current-based relay','linear transformer','open-loop converter');rows=$modelRows};
+    scale=$scaleRows;latencies=@(
+        @{case='completed';slices=13;acceptedSteps=200;wallMs=100;maxSliceMs=2;maxYieldMs=8;cancelToTerminalMs=$null},
+        @{case='cancel-0';slices=0;acceptedSteps=0;wallMs=1;maxSliceMs=0;maxYieldMs=0;cancelToTerminalMs=0},
+        @{case='cancel-1';slices=1;acceptedSteps=16;wallMs=2;maxSliceMs=1;maxYieldMs=0;cancelToTerminalMs=0},
+        @{case='cancel-2';slices=1;acceptedSteps=0;wallMs=2;maxSliceMs=1;maxYieldMs=0;cancelToTerminalMs=0},
+        @{case='cancel-3';slices=1;acceptedSteps=2;wallMs=2;maxSliceMs=1;maxYieldMs=0;cancelToTerminalMs=1},
+        @{case='cancel-4';slices=0;acceptedSteps=0;wallMs=1;maxSliceMs=0;maxYieldMs=0;cancelToTerminalMs=0})}
+
+Assert-ReportContract (Test-A07Report (Encode-Report $execution)) 'Independent valid A07 report rejected.'
+foreach ($field in @('version','cleanup','status')) {
+    $bad=Copy-Report $execution; $bad.$field='FAIL'
+    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Invalid A07 $field accepted."
+}
+foreach ($field in @('pureAssertions','runtimeAssertions','wallMs')) {
+    foreach ($value in @($null,'9999',-1,$true)) {
+        $bad=Copy-Report $execution; $bad.$field=$value
+        Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Untyped A07 $field accepted."
+    }
+}
+$bad=Copy-Report $execution;$bad.runtimeCases[0]=$bad.runtimeCases[1]
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Duplicate A07 runtime case accepted.'
+$bad=Copy-Report $execution;$bad.runtimeCases[0].status='FAIL'
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Failed execution canary accepted.'
+$bad=Copy-Report $execution;$bad.models.rows[0].value=0
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Broken relay physics accepted behind PASS.'
+$bad=Copy-Report $execution;$bad.models.rows[0]=$bad.models.rows[1]
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Missing timestep comparison accepted.'
+foreach ($value in @('0.04966',$null,[double]::NaN,[double]::PositiveInfinity)) {
+    $bad=Copy-Report $execution;$bad.models.rows[0].value=$value
+    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Nonfinite/untyped model sample accepted.'
+}
+$bad=Copy-Report $execution;$bad.models.playableQualification=$true
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Synthetic solver pilot certified gameplay.'
+$bad=Copy-Report $execution;$bad.models.physicalPackages=20
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Synthetic model pilot invented PCB package count.'
+$bad=Copy-Report $execution;$bad.models.limits=@('','','','')
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Blank model limitations accepted.'
+$bad=Copy-Report $execution;$bad.scale[0]=$bad.scale[1]
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Duplicate scaling attempt hides a missing fresh-context replicate.'
+$bad=Copy-Report $execution;$bad.scale[0].nodeVoltages[1]=0
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Incorrect scaling node voltage accepted.'
+$bad=Copy-Report $execution;$bad.scale[0].observedCurrent=0
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Incorrect scaling current accepted.'
+$bad=Copy-Report $execution;$bad.scale[0].matrixFullSize=0
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Missing actual scaling matrix accepted.'
+$bad=Copy-Report $execution;$bad.scale[0].physicalPackages=20
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Synthetic scaling promoted to physical qualification.'
+$executionReports=[pscustomobject]@{verification='PASS:a07';a07=(Encode-Report $execution);
+    normalReady=@{programReady=$true;retestCustomerReady=$true}}
+Assert-ReportContract (Test-RouteReady 'a07' $executionReports) 'Valid actual A07 route rejected.'
+$executionReports.verification='RUNNING:a07'
+Assert-ReportContract (-not (Test-RouteReady 'a07' $executionReports)) 'Unfinished A07 route accepted.'
+$executionReports.a07=$null;$executionReports.verification='FAIL:a07:a07-explicit-failure-canary'
+Assert-ReportContract (Test-RouteReady 'a07-forced' $executionReports) 'Explicit A07 failure canary rejected.'
+$executionReports.verification='FAIL:a07:unexpected-failure'
+Assert-ReportContract (-not (Test-RouteReady 'a07-forced' $executionReports)) 'Unrelated failure credited as the expected canary.'
+$executionReports.verification=$null
+Assert-ReportContract (Test-RouteReady 'a07-debugoff' $executionReports) 'Ready debug-off player route rejected.'
+$executionReports.a07=Encode-Report $execution
+Assert-ReportContract (-not (Test-RouteReady 'a07-debugoff' $executionReports)) 'Debug-off route leaked solver evidence.'
+Assert-ReportContract (@(Get-RouteDefinitions 'A07' $false).Count -eq 9) 'A07 affected route selection changed.'
+$bad=Copy-Report $execution;$bad.latencies=@()
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Missing measured execution latency accepted.'
+$bad=Copy-Report $execution;$bad.latencies[1]=$bad.latencies[0]
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Duplicated execution latency scenario accepted.'
+$bad=Copy-Report $execution;$bad.latencies[0].maxSliceMs='2'
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Untyped latency accepted.'
+$bad=Copy-Report $execution;$bad.latencies[3].cancelToTerminalMs=999
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Impossible cancellation latency accepted.'
+$bad=Copy-Report $execution;$bad.scale[0].contextReuse=$true
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Fresh replicate misrepresented as cached context reuse.'
 Write-Output ('PASS: A04 report contracts assertions=' + $script:assertions)
 exit 0

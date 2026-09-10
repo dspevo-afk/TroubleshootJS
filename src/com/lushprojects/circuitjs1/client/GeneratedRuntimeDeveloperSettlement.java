@@ -32,7 +32,7 @@ final class GeneratedRuntimeDeveloperSettlement {
                 // solver once; the next ordinary update must still complete
                 // verification and satisfy the authoritative settled predicate.
                 if (canAdvanceAwaitedSolverStep(sim, expectedOwner, challenge))
-                    sim.runCircuit(true);
+                    sim.solverExecutor.advanceSteps(1);
             }
             GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
             throw new IllegalStateException("Generated runtime did not settle after " +

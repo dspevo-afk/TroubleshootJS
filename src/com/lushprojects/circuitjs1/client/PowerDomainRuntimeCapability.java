@@ -15,7 +15,8 @@ final class PowerDomainRuntimeCapability implements ActiveMeasurementReadinessCa
     private CirSim sim;
     private GeneratedBoardInstance instance;
     private String observedSignature;
-    private double observedTime = Double.NaN;
+    private SolverExecutionBoundary.Observation observed;
+    private SolverExecutionBoundary.Observation invalidated;
     private boolean awaitingSample = true;
     PowerDomainRuntimeCapability(PowerDomainContract contract, TroubleshootBoard board,
             GeneratedExternalPowerBindings bindings) {
@@ -45,26 +46,30 @@ final class PowerDomainRuntimeCapability implements ActiveMeasurementReadinessCa
             sim.getBoardPowerController().getBindingsForDeveloperVerification() == bindings &&
             instance.getPhysicalBoardRuntime().getCapability(CAPABILITY_ID) == this;
     }
-    public void onBoardPowerStateChanged(BoardPowerState state) { awaitingSample = true; }
+    public void onBoardPowerStateChanged(BoardPowerState state) {
+        awaitingSample = true; invalidated = observed;
+    }
     public void resetForBoardReset() {
-        awaitingSample = true; observedTime = Double.NaN; observedSignature = null;
+        invalidated = sim == null ? observed : sim.solverExecutor.observation(instance);
+        awaitingSample = true; observed = null; observedSignature = null;
     }
     public void observeSimulationTime(double time) {
-        if (!isCurrentOwner() || !PowerDomainContract.finite(time)) { resetForBoardReset(); return; }
-        if (time != observedTime) {
-            observedSignature = bindings.controlSignature(); observedTime = time; awaitingSample = false;
+        if (!isCurrentOwner() || !PowerDomainContract.finite(time) || time != sim.t) {
+            resetForBoardReset(); return;
+        }
+        SolverExecutionBoundary.Observation sample = sim.solverExecutor.observation(instance);
+        if (sample != null && sample != invalidated) {
+            observed = sample; observedSignature = bindings.controlSignature(); awaitingSample = false;
         }
     }
     public void synchronizeSimulationTime(double time) {
-        // Restore can rebase a valid observation but cannot satisfy a pending power/reset sample.
-        if (!isCurrentOwner() || !PowerDomainContract.finite(time) ||
-                !bindings.controlSignature().equals(observedSignature)) { resetForBoardReset(); return; }
-        if (!awaitingSample) observedTime = time;
+        // Only an existing accepted solver receipt can qualify. A time rebase cannot mint one.
+        observeSimulationTime(time);
     }
     PowerOperatingAssessment assessPower() {
         Map<String,Double> volts = new TreeMap<String,Double>();
         boolean current = isCurrentOwner() && sim.isGeneratedRuntimeSettled() &&
-            !awaitingSample && PowerDomainContract.finite(observedTime) && sim.t == observedTime &&
+            !awaitingSample && sim.solverExecutor.isCurrent(observed, instance) &&
             bindings.controlSignature().equals(observedSignature);
         if (current)
             for (PowerDomainContract.Rail rail : contract.getRails().values())

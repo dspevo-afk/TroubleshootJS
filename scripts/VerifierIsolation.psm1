@@ -15357,7 +15357,7 @@ Export-ModuleMember -Function @(
     'ConvertTo-VerifierWindowsArgument', 'ConvertTo-VerifierArgumentString',
     'Assert-VerifierArgumentArray', 'Assert-VerifierProcessInvocationBoundary',
     'Start-VerifierProcess', 'Complete-VerifierProcessOutputCapture',
-    'Invoke-VerifierBoundedProcess',
+    'Invoke-VerifierBoundedProcess', 'Get-VerifierLaunchedProcessStartTicks',
     'New-VerifierRunContext', 'New-VerifierPortLease',
     'Release-VerifierPortLease', 'Confirm-VerifierPortLeaseBound',
     'Test-VerifierChildPath',

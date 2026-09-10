@@ -77,6 +77,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'Task49ValueSynthesisContractTest'; Marker = 'current value synthesis ' },
         @{ Name = 'A05RoleContractTest'; Marker = 'A05 role providers ' },
         @{ Name = 'A06PowerContractTest'; Marker = 'A06 power contracts ' },
+        @{ Name = 'A07ExecutionContractTest'; Marker = 'A07 execution contracts ' },
         @{ Name = 'A03IdentityContractTest'; Marker = 'A03IdentityContractTest ' },
         @{ Name = 'A02CandidateContractTest'; Marker = 'A02CandidateContractTest' },
         @{ Name = 'A02GeometryContractTest'; Marker = 'A02GeometryContractTest ' },
@@ -185,7 +186,7 @@ final class PhysicalSpecificationDeveloperVerifier {
             [String]::Join([Environment]::NewLine, $receipts),
             (New-Object Text.UTF8Encoding($false)))
     }
-    Write-Host 'PASS: current contracts; 16 Java suites, independent seed/value/role oracles and report protocol.'
+    Write-Host ('PASS: current contracts; ' + $testDefinitions.Count + ' Java suites, independent seed/value/role oracles and report protocol.')
     $resultCode = 0
 } catch {
     Write-Host ('CURRENT_CONTRACT_FAILURE: ' + $_.Exception.Message)

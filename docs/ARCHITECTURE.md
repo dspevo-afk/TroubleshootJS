@@ -12,12 +12,64 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## A07 serialized execution, observations and model probes
+
+`CircuitSolverExecutor` is the current entry to CircuitJS analysis and stepping.
+Normal UI execution, generated temporal/settlement work, A01 measurement fixtures
+and A07 model probes use that boundary. CircuitJS remains the electrical solver;
+there is no second live `CirSim`, independent voltage model or worker migration.
+The underlying owned methods validate the lease; recursive use of even the same
+asynchronous lease is rejected. Adaptive iteration history belongs to the context,
+not to the repaint or incremental callback batch.
+
+`SolverExecutionBoundary` identifies owner, graph, generation, mutation revision,
+operation and accepted step. A no-work tick may retain an existing sample but
+cannot mint a new one. Source connection revisions, graph/reset changes, clock
+rebases and failed/nonfinite solves invalidate observations. Full reduced-matrix
+results are validated before applying node/current values, including constant
+rows. Power-domain and stored-energy readiness share these accepted observations;
+a restored timestamp, disabled switch or missing reading cannot prove discharge.
+
+Private proofs detach the player's original element instances under one exclusive
+permit. `PrivateSolverContext` uses the existing snapshot for scoped restoration;
+it never advances the protected original elements. Cancellation retires publication
+and deferred callbacks. Cleanup refuses to restore over a successor graph; cleanup
+failure is typed and quarantines only the exact original owner. This is not A08's
+universal mutation/rollback mechanism.
+
+Execution distinguishes simulation duration, accepted steps, nonlinear trial work
+and wall time. UI slices yield after 8 ms. Short operations and individual step
+attempts have a 500 ms wall bound; existing synchronous temporal consumers retain
+200,000 accepted-step work and a separate 5,000 ms total bound. Checks occur at
+bounded solver boundaries, not by preempting an individual native/matrix call.
+The asynchronous path uses a distinct browser timer turn after up to 16 steps/8 ms
+and cancels its exact continuation on termination. GWT incremental-command batching
+is not mistaken for a browser yield. It exposes measured slice,
+yield and cancellation-to-terminal timing. Millisecond-resolution zero is not a
+claim of zero physical latency.
+
+`SolverEventQueue` commits ordered events at accepted-step boundaries: ascending
+scheduled time, FIFO simultaneous events, explicit startup/reset phase, cancellation
+and finite same-time feedback. An event between steps is delivered at the next
+accepted boundary; this does not implement sub-step event localization, an MCU,
+a display clock, or parallel live contexts.
+
+[The A07 evidence](task-evidence/A07/README.md) records real relay, transformer,
+diode and switched-converter probes, differential numerical-reference checks,
+20/40/60/100-resistor synthetic scaling and current instrument/player regressions.
+Scale rows are two fresh-context replicates per size/seed, not cached-context
+cold/warm comparisons. Matrix numeric-slot bytes are an allocation proxy, not heap
+usage. These probes establish a bounded execution foundation, not playable relay/
+converter families, physical Q60/Q100 boards, saturation/thermal fidelity or mains
+qualification. A08 remains unstarted.
+
 ## A06 power/reference and operating-state contracts
 
 A06 is implemented and qualified under the owner's direct/solo continuation.
 [Evidence](task-evidence/A06/README.md) separates current native, final GWT,
 actual compiled and visible-input checks from same-task self-review. No new
-independent-model review is claimed. A07 remains unstarted.
+independent-model review is claimed for that A06 baseline. The A07 extension is
+described above and has its own evidence/review record.
 
 `PowerDomainContract` contains immutable rails, source IDs, resolved reference
 IDs, isolation IDs, optional earth/bond permissions, source envelopes, declared
@@ -38,8 +90,9 @@ backfeed are reported. Capacity metadata never claims an implemented limiter.
 
 `PowerDomainRuntimeCapability` belongs to the one installed physical runtime.
 It validates exact owner, board and power-binding identities, samples actual
-owned solver posts, and uses source connection revisions and observation time
-to reject stale results after commands, reset, meter work or owner succession.
+owned solver posts, and now consumes the A07 accepted-state identity together
+with source connection revisions to reject stale results after commands, reset,
+meter work or owner succession.
 `GeneratedExternalPowerBindings` exposes per-source observations; the existing
 power controller remains the actual command owner. The capability does not
 cache a second live graph or replace inventory/installation state.
@@ -70,12 +123,13 @@ The stored-energy developer proof now establishes actual powered entry and runs
 only after its outer temporal verification has returned; production settlement
 requirements and attempt bounds were not relaxed.
 
-The maintained native runner now covers 16 suites. Gate A06 selects six compiled
+The A06 baseline used 16 native suites; A07 extends the maintained runner to 17.
+Gate A06 selects six compiled
 routes: A06 positive/forced-failure/debug-off, current A03 reconstruction, current
 Task49 repairs and stored-energy. Actual source/backfeed behavior is tested by
 an isolated two-source 1 kohm/1 kohm solver fixture, not by invented meter values.
-Further solver-time execution, numerical-reference sensitivity and new model
-qualification belong to A07 and later consumers.
+A07 adds bounded solver-time execution and small numerical-reference/model
+probes above; broader model and playable-provider qualification remains future work.
 
 ## A05 qualification and current limits
 
