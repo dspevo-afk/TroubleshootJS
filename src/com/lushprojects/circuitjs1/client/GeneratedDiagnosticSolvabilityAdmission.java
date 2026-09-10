@@ -84,7 +84,7 @@ final class GeneratedDiagnosticSolvabilityAdmission {
             throw new IllegalArgumentException("Missing diagnostic plan");
         validateAllowed(plan.getMeterModeIds(), new String[] { "DC_VOLTAGE", "RESISTANCE",
             "CONTINUITY", "DIODE" }, "meter mode");
-        validateAllowed(plan.getInputPowerTransitions(), new String[] { "BOARD_POWER_ON",
+        validateAllowedOrChannelInput(plan.getInputPowerTransitions(), new String[] { "BOARD_POWER_ON",
             "BOARD_POWER_ON_INITIAL", "BOARD_POWER_ON_RETEST", "BOARD_POWER_OFF",
             "BOARD_POWER_OFF_INITIAL",
             "BOARD_POWER_OFF_FINAL", "RC_POWER_ON", "CONTROL_INPUT_HIGH",
@@ -94,11 +94,11 @@ final class GeneratedDiagnosticSolvabilityAdmission {
         validateIsolationActions(plan.getIsolationActionIds());
         validateFaultClearingRepairActions(plan.getRepairActionIds());
         validateWorkflowActions(plan.getWorkflowActionIds());
-        validateAllowed(plan.getPlayerOperationIds(), new String[] {
+        validateAllowedOrChannelOperation(plan.getPlayerOperationIds(), new String[] {
             GeneratedBoardOperationIds.CONTROL_INPUT_HIGH,
             GeneratedBoardOperationIds.CONTROL_INPUT_LOW,
             GeneratedBoardOperationIds.CUSTOMER_RETEST }, "player operation");
-        validateAllowed(plan.getTemporalWaitSampleIds(), new String[] { "STEADY_STATE_SAMPLE",
+        validateAllowedOrChannelSample(plan.getTemporalWaitSampleIds(), new String[] { "STEADY_STATE_SAMPLE",
             "FORWARD_DROP_SAMPLE", "BRANCH1_SAMPLE", "BRANCH2_SAMPLE", "RC_RESIDUAL_SAMPLE",
             "RC_EARLY_SAMPLE", "RC_LATE_SAMPLE", "CONTROL_HIGH_SAMPLE", "CONTROL_LOW_SAMPLE" },
             "temporal wait/sample");
@@ -155,6 +155,51 @@ final class GeneratedDiagnosticSolvabilityAdmission {
 
     static int getAdmittedCandidateCount(Vector<GeneratedFaultCandidate> candidates) {
         return getAdmittedCandidates(candidates).size();
+    }
+
+    private static void validateAllowedOrChannelInput(Vector<String> actual,
+            String[] allowed, String category) {
+        for (String value : actual) {
+            if (isAllowed(value, allowed) || isChannelInput(value)) continue;
+            throw new IllegalArgumentException("Diagnostic plan contains unsupported " +
+                category + ": " + value);
+        }
+    }
+
+    private static void validateAllowedOrChannelOperation(Vector<String> actual,
+            String[] allowed, String category) {
+        for (String value : actual) {
+            if (isAllowed(value, allowed) || isChannelOperation(value)) continue;
+            throw new IllegalArgumentException("Diagnostic plan contains unsupported " +
+                category + ": " + value);
+        }
+    }
+
+    private static void validateAllowedOrChannelSample(Vector<String> actual,
+            String[] allowed, String category) {
+        for (String value : actual) {
+            if (isAllowed(value, allowed) || isChannelSample(value)) continue;
+            throw new IllegalArgumentException("Diagnostic plan contains unsupported " +
+                category + ": " + value);
+        }
+    }
+
+    private static boolean isAllowed(String value, String[] allowed) {
+        for (String candidate : allowed)
+            if (candidate.equals(value)) return true;
+        return false;
+    }
+
+    private static boolean isChannelInput(String value) {
+        return value != null && value.matches("CHANNEL_[A-Z0-9]+_(HIGH|LOW)");
+    }
+
+    private static boolean isChannelOperation(String value) {
+        return isChannelInput(value);
+    }
+
+    private static boolean isChannelSample(String value) {
+        return value != null && value.matches("CHANNEL_[A-Z0-9]+_(HIGH|LOW)_SAMPLE");
     }
 
     static boolean isAdmitted(GeneratedFaultCandidate candidate) {

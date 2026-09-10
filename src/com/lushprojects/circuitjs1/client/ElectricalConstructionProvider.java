@@ -9,6 +9,10 @@ interface ElectricalConstructionProvider {
     String getProviderId();
     int getVersion();
 
+    /** Local declarations are resolved once before any mutable allocation. */
+    void declare(ElectricalRealizationSpec.ContributionBuilder builder,
+            ComposedBlockContribution contribution);
+
     ContributionConstructionReceipt construct(
             ElectricalRealizationSpec.ProviderDeclaration declaration,
             ElectricalConstructionContext.Scope scope);

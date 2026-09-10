@@ -75,6 +75,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'ControlledIndicatorAssemblyContractTest'; Marker = 'current controlled-indicator contracts ' },
         @{ Name = 'SwitchedLowSideCompatibilityContractTest'; Marker = 'current switched-low-side compatibility ' },
         @{ Name = 'Task49ValueSynthesisContractTest'; Marker = 'current value synthesis ' },
+        @{ Name = 'A05RoleContractTest'; Marker = 'A05 role providers ' },
         @{ Name = 'A03IdentityContractTest'; Marker = 'A03IdentityContractTest ' },
         @{ Name = 'A02CandidateContractTest'; Marker = 'A02CandidateContractTest' },
         @{ Name = 'A02GeometryContractTest'; Marker = 'A02GeometryContractTest ' },
@@ -136,9 +137,12 @@ final class PhysicalSpecificationDeveloperVerifier {
     $valuePath = Join-Path $taskRoot 'current-values.txt'
     [IO.File]::WriteAllText($valuePath, $valueMatch.Groups[1].Value,
         (New-Object Text.UTF8Encoding($false)))
+    $rolesPath = Join-Path $taskRoot 'a05-roles.txt'
+    [IO.File]::WriteAllText($rolesPath, $outputs['A05RoleContractTest'],
+        (New-Object Text.UTF8Encoding($false)))
     $oracles = @(
         @{ File = 'task46_seed_reference.py'; Arguments = @(); Marker = 'Task46 independent seed oracle ' },
-        @{ File = 'task49_value_synthesis_reference.py'; Arguments = @($valuePath); Marker = 'current value synthesis oracle ' })
+        @{ File = 'task49_value_synthesis_reference.py'; Arguments = @($valuePath, $rolesPath); Marker = 'current value synthesis oracle ' })
     foreach ($oracle in $oracles) {
         $oracleArguments = @((Join-Path $repositoryRoot ('tests/contracts/' + $oracle.File))) + $oracle.Arguments
         $checked = Invoke-VerifierBoundedProcess $python $oracleArguments 60000
@@ -161,7 +165,7 @@ final class PhysicalSpecificationDeveloperVerifier {
     }
     $receipts.Add($protocol.Stdout)
     if ($ReceiptOutputPath) {
-        foreach ($parityName in @('vectors', 'manifest-resistive', 'manifest-controlled')) {
+        foreach ($parityName in @('vectors', 'manifest-resistive', 'manifest-controlled', 'manifest-controlled-npn')) {
             $paritySource = Join-Path $taskRoot ('parity.' + $parityName + '.txt')
             if (-not (Test-Path -LiteralPath $paritySource -PathType Leaf)) {
                 throw ('Missing exact JVM parity artifact: ' + $parityName)
@@ -172,13 +176,15 @@ final class PhysicalSpecificationDeveloperVerifier {
         }
         [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath + '.seeds.txt'),
             $seedMatch.Groups[1].Value, (New-Object Text.UTF8Encoding($false)))
+        [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath + '.roles.txt'),
+            $outputs['A05RoleContractTest'], (New-Object Text.UTF8Encoding($false)))
         [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath + '.values.txt'),
             $valueMatch.Groups[1].Value, (New-Object Text.UTF8Encoding($false)))
         [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath),
             [String]::Join([Environment]::NewLine, $receipts),
             (New-Object Text.UTF8Encoding($false)))
     }
-    Write-Host 'PASS: current contracts; 14 Java suites, independent seed/value oracles and report protocol.'
+    Write-Host 'PASS: current contracts; 15 Java suites, independent seed/value/role oracles and report protocol.'
     $resultCode = 0
 } catch {
     Write-Host ('CURRENT_CONTRACT_FAILURE: ' + $_.Exception.Message)

@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('Current', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
+    [ValidateSet('Current', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
     [string]$Gate = 'Current',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
@@ -395,7 +395,7 @@ function Test-A04Report([object]$Value) {
                 -not $case.PSObject.Properties['seed'] -or $case.seed -isnot [string] -or
                 $case.seed -notin @('1', '2', '3') -or
                 -not $case.PSObject.Properties['generatorVersion'] -or
-                -not (Test-VerifierStrictIntegralValue $case.generatorVersion 4L 4L)) {
+                -not (Test-VerifierStrictIntegralValue $case.generatorVersion 5L 5L)) {
             return $false
         }
         foreach ($name in @('replayVerified', 'ownerRestored')) {
@@ -414,6 +414,120 @@ function Test-A04Report([object]$Value) {
     }
     return (($caseKeys | Sort-Object -Unique) -join ',') -ceq
         'controlled:1,controlled:2,controlled:3,resistive:1,resistive:2,resistive:3'
+}
+
+function Test-ControlledReport([object]$Value, [string]$Protocol) {
+    if (-not (Test-JsonReport $Value $Protocol)) { return $false }
+    # This reader checks the executed coverage, not only a top-level PASS word.
+    # Pure selection, actual solver cases, repair outcomes and cleanup are
+    # separate fields so a partial run cannot masquerade as qualification.
+    try {
+        $parsed = (Get-ExactReportText $Value) | ConvertFrom-Json -ErrorAction Stop
+        $requestedSeedValue = 0L
+        if ($parsed.requestedSeed -isnot [string] -or
+                -not [long]::TryParse($parsed.requestedSeed, [ref]$requestedSeedValue) -or
+                $requestedSeedValue.ToString([Globalization.CultureInfo]::InvariantCulture) -cne
+                    $parsed.requestedSeed) { return $false }
+        $hasTrueFlags = { param($Object, [string[]]$Fields)
+            if ($null -eq $Object) { return $false }
+            foreach ($field in $Fields) {
+                if (-not $Object.PSObject.Properties[$field] -or
+                        $Object.$field -isnot [bool] -or -not $Object.$field) { return $false }
+            }
+            return $true
+        }
+        if (-not (& $hasTrueFlags $parsed @('originalOwnerRestored')) -or
+                $parsed.candidateCleanup -cne 'PASS' -or
+                -not (Test-VerifierStrictIntegralValue $parsed.assertions 1L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $parsed.measurementCases 4L ([long]::MaxValue))) {
+            return $false
+        }
+        $valueSeeds = @('-1','0','1','2','3','-9223372036854775808','9223372036854775807',
+            '9007199254740993','-9007199254740993')
+        $solvedSeeds = @('-1','0','1','-9223372036854775808')
+        $roleSeeds = @('-1','0','1','2','-9223372036854775808','9223372036854775807')
+        if ($parsed.valueCases -isnot [array] -or $parsed.valueCases.Count -ne 9 -or
+                $parsed.cases -isnot [array] -or $parsed.cases.Count -ne 4 -or
+                $parsed.roleSelectionVectors -isnot [array] -or
+                $parsed.roleSelectionVectors.Count -ne 6) { return $false }
+        $actualValueSeeds = @()
+        foreach ($case in $parsed.valueCases) {
+            if ($case.seed -isnot [string] -or $case.seed -cnotin $valueSeeds -or
+                    $case.descriptor -isnot [string] -or
+                    [String]::IsNullOrWhiteSpace($case.descriptor) -or
+                    $case.faultDecision -isnot [string] -or
+                    [String]::IsNullOrWhiteSpace($case.faultDecision) -or
+                    $case.channels -isnot [array] -or $case.channels.Count -ne 2) { return $false }
+            $actualValueSeeds += $case.seed
+            $channelIds = @()
+            foreach ($channel in $case.channels) {
+                if ($channel.channel -isnot [string] -or
+                        $channel.channel -cnotin @('channel-a','channel-b') -or
+                        $channel.provider -cnotin @('nmos-low-side-driver','npn-low-side-driver') -or
+                        $channel.catalog -isnot [string] -or
+                        [String]::IsNullOrWhiteSpace($channel.catalog) -or
+                        -not (Test-VerifierStrictIntegralValue $channel.resistanceOhms 270L 330L) -or
+                        $channel.resistanceOhms -notin @(270,330) -or
+                        -not (Test-VerifierStrictIntegralValue $channel.tolerancePercent 5L 5L)) {
+                    return $false
+                }
+                $channelIds += $channel.channel
+            }
+            if (($channelIds | Sort-Object -Unique) -join ',' -cne 'channel-a,channel-b') { return $false }
+        }
+        if (($actualValueSeeds -join ',') -cne ($valueSeeds -join ',')) { return $false }
+        for ($i = 0; $i -lt $roleSeeds.Count; $i++) {
+            $vector = $parsed.roleSelectionVectors[$i]
+            if ($vector -isnot [string] -or
+                    $vector -cnotmatch ('^seed=' + [regex]::Escape($roleSeeds[$i]) +
+                        ';a=(nmos|npn)-low-side-driver;b=(nmos|npn)-low-side-driver;fault=[A-Za-z0-9_.-]+$')) {
+                return $false
+            }
+        }
+        $actualSolvedSeeds = @()
+        foreach ($case in $parsed.cases) {
+            if ($case.seed -isnot [string] -or $case.seed -cnotin $solvedSeeds -or
+                    -not (& $hasTrueFlags $case @('freshReplay','inputOrderIndependent',
+                        'independentControls','repairReachable')) -or
+                    -not (Test-VerifierStrictIntegralValue $case.assertions 1L ([long]::MaxValue)) -or
+                    $case.physicalCorrespondence.status -cne 'PASS' -or
+                    $case.normalAdmission.status -cne 'EXECUTED' -or
+                    $case.normalAdmission.routes -isnot [array] -or
+                    $case.normalAdmission.routes.Count -ne 4 -or
+                    $case.faultRepairs -isnot [array] -or $case.faultRepairs.Count -ne 4 -or
+                    -not (& $hasTrueFlags $case.support @('brokenHealthyRejected',
+                        'brokenRetestRejected','restoredPassed'))) { return $false }
+            $actualSolvedSeeds += $case.seed
+            $owners = @()
+            foreach ($repair in $case.faultRepairs) {
+                if ($repair.owner -isnot [string] -or [String]::IsNullOrWhiteSpace($repair.owner) -or
+                        -not (& $hasTrueFlags $repair @('wrongRejected','correctPassed',
+                            'alternativePassed','otherOwnersUnchanged'))) { return $false }
+                $owners += $repair.owner
+                $matched = @($case.normalAdmission.routes | Where-Object {
+                    $_.route -is [string] -and $_.route.EndsWith('/' + $repair.owner,
+                        [StringComparison]::Ordinal)
+                })
+                if ($matched.Count -ne 1) { return $false }
+            }
+            if ((@($owners | Sort-Object -Unique)).Count -ne 4 -or
+                    $case.faultOwner -cnotin $owners) { return $false }
+            foreach ($route in $case.normalAdmission.routes) {
+                if (-not (& $hasTrueFlags $route @('repair','retest')) -or
+                        -not (Test-VerifierStrictIntegralValue $route.measuredDepth 1L ([long]::MaxValue)) -or
+                        -not (Test-VerifierStrictIntegralValue $route.samples 1L ([long]::MaxValue))) {
+                    return $false
+                }
+            }
+            if ($case.mutations.status -cne 'PASS' -or
+                    -not (Test-VerifierStrictIntegralValue $case.mutations.owners 4L 4L)) { return $false }
+        }
+        return ($actualSolvedSeeds -join ',') -ceq ($solvedSeeds -join ',') -and
+            (& $hasTrueFlags $parsed.construction @('originalOwnerPreserved')) -and
+            $parsed.construction.failedStages -is [array] -and
+            ($parsed.construction.failedStages -join ',') -ceq 'MAPPING,ELECTRICAL,LAYOUT,REGISTRATION,VALIDATION' -and
+            (& $hasTrueFlags $parsed.succession @('boardReplacement','staleCompletion'))
+    } catch { return $false }
 }
 
 function Test-RouteReady($Kind, $Reports) {
@@ -469,11 +583,11 @@ function Test-RouteReady($Kind, $Reports) {
         }
         'task48' {
             return $verification -ceq 'PASS:task48' -and
-                (Test-JsonReport $Reports.task48 'TSJ-TASK48-1')
+                (Test-ControlledReport $Reports.task48 'TSJ-TASK48-2')
         }
         'task49' {
             return $verification -ceq 'PASS:task49' -and
-                (Test-JsonReport $Reports.task49 'TSJ-TASK49-1')
+                (Test-ControlledReport $Reports.task49 'TSJ-TASK49-2')
         }
         'a02' {
             return $verification -ceq 'PASS:a02' -and
@@ -520,8 +634,10 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
     # Current is the one maintained browser corpus.  It selects the affected
     # identity/seed, assembly, geometry and physical routes and adds the A04
     # forced-failure/debug-off canaries.
-    if ($SelectedGate -ceq 'Current') {
-        $currentNames = @('a03', 'task46', 'task47', 'task48', 'task49', 'a02')
+    if ($SelectedGate -ceq 'Current' -or $SelectedGate -ceq 'A05') {
+        $currentNames = if ($SelectedGate -ceq 'A05') {
+            @('a03', 'task46', 'task49')
+        } else { @('a03', 'task46', 'task47', 'task48', 'task49', 'a02') }
         $current = New-Object Collections.Generic.List[object]
         foreach ($currentName in $currentNames) {
             $matches = @($all | Where-Object { $_.name -ceq $currentName })
@@ -604,6 +720,7 @@ try {
     $expectedRouteCount = if ($Smoke) { 1 } else {
         switch ($Gate) {
             'Current' { 9 }
+            'A05' { 6 }
             'A03' { 3 }
             'A04' { 3 }
             default { 1 }

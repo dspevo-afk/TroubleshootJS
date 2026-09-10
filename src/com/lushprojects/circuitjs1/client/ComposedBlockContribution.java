@@ -290,10 +290,10 @@ final class ComposedBlockContribution {
                 : this.resistorRecipes.values().iterator().next();
         this.nmosRecipes = immutableNmos(nmosRecipes);
         this.ledRecipes = immutableLeds(ledRecipes);
-        this.faultSpec = required(faultSpec, "faultSpec");
-        requireDeclared(descriptor, faultSpec.getTargetComponentLocalId());
-        this.faultLocalId = faultSpec.getTargetComponentLocalId();
-        this.faultEffectiveOhms = faultSpec.getEffectiveResistanceOhms();
+        this.faultSpec = faultSpec;
+        if (faultSpec != null) requireDeclared(descriptor, faultSpec.getTargetComponentLocalId());
+        this.faultLocalId = faultSpec == null ? null : faultSpec.getTargetComponentLocalId();
+        this.faultEffectiveOhms = faultSpec == null ? 0.0 : faultSpec.getEffectiveResistanceOhms();
         if (this.resistorRecipes.isEmpty() &&
                 this.nmosRecipes.isEmpty() && this.ledRecipes.isEmpty())
             throw new IllegalArgumentException("At least one local recipe is required");
@@ -303,12 +303,14 @@ final class ComposedBlockContribution {
             requireDeclared(descriptor, recipe.getComponentLocalId());
         for (LedRecipe recipe : this.ledRecipes.values())
             requireDeclared(descriptor, recipe.getComponentLocalId());
-        this.repairLocalComponentId = FunctionalBlockDescriptor.requireId(
-                repairLocalComponentId, "repairLocalComponentId");
-        if (!descriptor.getComponents().containsKey(repairLocalComponentId)) {
+        this.repairLocalComponentId = faultSpec == null ? null :
+                FunctionalBlockDescriptor.requireId(repairLocalComponentId, "repairLocalComponentId");
+        if (faultSpec == null && repairLocalComponentId != null)
+            throw new IllegalArgumentException("A nonfaultable contribution cannot declare a repair target");
+        if (faultSpec != null && !descriptor.getComponents().containsKey(repairLocalComponentId)) {
             throw new IllegalArgumentException("Repair component is undeclared");
         }
-        if (!repairLocalComponentId.equals(faultSpec.getTargetComponentLocalId()))
+        if (faultSpec != null && !repairLocalComponentId.equals(faultSpec.getTargetComponentLocalId()))
             throw new IllegalArgumentException("Fault and repair must name the same component");
         this.inputRequirements = immutableRequirements(inputRequirements,
                 "inputRequirements");
@@ -326,6 +328,10 @@ final class ComposedBlockContribution {
 
     String getProviderTypeId() { return providerTypeId; }
     int getProviderVersion() { return providerVersion; }
+    String getRoleId() {
+        FunctionalBlockDescriptor.Parameter role = descriptor.getParameters().get("functional-role");
+        return role == null ? providerTypeId : role.getValue().getText();
+    }
     FunctionalBlockDescriptor getDescriptor() { return descriptor; }
     ElectricalBlockContract getElectricalContract() { return electricalContract; }
     ResistorRecipe getResistorRecipe() { return resistorRecipe; }
@@ -419,7 +425,7 @@ final class ComposedBlockContribution {
                 .append("|resistors=").append(resistorRecipes)
                 .append("|nmos=").append(nmosRecipes)
                 .append("|leds=").append(ledRecipes)
-                .append("|fault=").append(faultSpec.getKind()).append(':')
+                .append("|fault=").append(faultSpec == null ? "NONE" : faultSpec.getKind()).append(':')
                 .append(faultLocalId).append(':')
                 .append(Double.toString(faultEffectiveOhms))
                 .append("|repair=").append(repairLocalComponentId)

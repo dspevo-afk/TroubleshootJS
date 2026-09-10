@@ -4,17 +4,17 @@
 **Prepared:** September 9, 2026<br>
 **Repository:** `dspevo-afk/TroubleshootJS`<br>
 **Drop-in destination:** `docs/ROADMAP.md`<br>
-**Reviewed implementation baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
-**Commit:** `Complete A04 provider-owned electrical construction`<br>
+**Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
+**Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **R00: Current-only development baseline and provider-boundary cleanup**<br>
-**Immediate next task:** **A05**, unstarted; begin only when authorized.
+**Latest completed task:** **A05: Functional-role variants, repeated channels and genuine healthy support**<br>
+**Current checkpoint:** **A05 COMPLETE - QUALIFIED**. Normal publication follows final Git reconciliation. **A06** is the recommended next unstarted task and requires separate authorization.
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
-This is a self-contained replacement roadmap, not an amendment to apply over the old one. No companion dependency file, old task report, Library attachment, external roadmap or historical appendix is required to interpret its future scope. Repository source/evidence paths in Section 10 establish the review basis, not mandatory frozen outputs. The roadmap does not itself execute changes; the separately supplied next prompt authorizes R00 implementation and adoption.
+This is a self-contained replacement roadmap, not an amendment to apply over the old one. No companion dependency file, old task report, Library attachment, external roadmap or historical appendix is required to interpret its future scope. Repository source/evidence paths in Section 10 establish the review basis, not mandatory frozen outputs. The roadmap does not itself execute changes; R00 was separately authorized and completed; A05 was separately authorized and is now qualified. Future tasks require their own authorization.
 
-The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. Seven are delivered entries including the qualified R00 correction, and the other 66 are unstarted feature/qualification nodes. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
+The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. Eight are completed baseline entries, including A05, and 65 are unstarted feature/qualification nodes. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
 
 ## Navigation
 
@@ -74,7 +74,7 @@ A failed applicable correctness test must be repaired or replaced with a reviewe
 <a id="baseline"></a>
 # 2. Reviewed baseline and R00 exit conditions
 
-## 2.1 What the reviewed commit establishes
+## 2.1 Historical A04 review basis for Edition 3.0
 
 A04 at `cc3532e8d138424ce986aa8f9b76688ec315f0a0` is the starting implementation, not something to revert. Its recorded evidence reports passing native checks, the five-permutation JDK8/GWT build, compiled A04 conformance, the then-selected electrical/repair regressions, cleanup and independent static review. The recorded review is not represented as having run the browser gates; the implementation root ran those separately.
 
@@ -82,7 +82,7 @@ The new scoped construction and physical declaration boundaries are useful. Mate
 
 This planning review read the exact commit, targeted implementation/callers and the recorded evidence. It did not independently rerun a full production build or browser playthrough. An attempted independent native test invocation was blocked by the execution interface and supplied no result; recorded passing receipts remain attributed to the A04 implementation run. Document checks for this edition do not certify the application.
 
-The committed Edition 2.1 roadmap has contradictory status text: its A04 card says complete/qualified, while Section 7.1 still calls A04 validation-blocked and directs qualification closure. This edition removes that contradiction. The new next task is a deliberate policy/consolidation correction, not a claim that the delivered A04 is still unfinished.
+The committed Edition 2.1 roadmap has contradictory status text: its A04 card says complete/qualified, while Section 7.1 still calls A04 validation-blocked and directs qualification closure. This edition removes that contradiction. At preparation, R00 was the deliberate next policy/consolidation correction, not a claim that A04 was unfinished. R00 is now accepted; the current checkpoint above and milestone cards govern later authorized work.
 
 ## 2.2 Concrete cleanup findings
 
@@ -118,7 +118,7 @@ A composed fixture may use an existing developer launch solely to select/install
 4. Tests assert current game contracts. No test is required solely to reproduce old report bytes, historical ID strings, incidental solver node numbering or stage counts. Current JVM/GWT parity and tolerated electrical checks remain when actually relevant.
 5. The actual production build, focused compiled electrical/physical checks, ordinary workbench behavior and affected lifecycle/cleanup gates pass on the integrated candidate. Unsupported or blocked gates are reported honestly, never marked passed.
 6. One fresh independent read-only review checks the integrated diff, original revised requirement and relevant tests, with a focused delta review after any repairs.
-7. AGENTS.md, ARCHITECTURE.md and this roadmap agree: R00 complete only after qualification, A05 next/unstarted. The current task report has a compact checkpoint; old checkpoints do not remain active instructions.
+7. AGENTS.md, ARCHITECTURE.md and this roadmap agree: R00 complete only after qualification and, at that closure, A05 next/unstarted. Later separately authorized work updates the active checkpoint rather than reopening this historical exit condition. The current task report has a compact checkpoint; old checkpoints do not remain active instructions.
 
 R00 is one corrective task with these checkpoints. Do not freeze a new series of R00-era replay versions or create another long historical certification campaign.
 
@@ -803,7 +803,9 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A05 · Functional-role families, alternate implementations and repeated instances
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE - QUALIFIED. Final source/native/build/compiled/player evidence and independent closure review pass. Publication outcomes are recorded in the final handoff.
+
+**Implementation:** Current generator 5 selects NMOS/NPN drivers for two independently commanded channels with genuine supply-present support. Current construction, physical mapping, solver reservations and reconstruction consume provider-owned declarations. The accepted bounded corpus and remaining limits are in [A05 evidence](task-evidence/A05/README.md). Full source review, native/build/compiled/ordinary-player checks are recorded separately; this does not qualify A06, Q15 or larger-board work.
 
 **Hard prerequisites:** [R00](#m-r00)
 

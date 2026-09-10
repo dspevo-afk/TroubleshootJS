@@ -1,0 +1,49 @@
+{
+  "protocol": "A05-ENVIRONMENT-AND-SUPERSEDED-RESULTS-1",
+  "strictCliWrapper": "NOT CERTIFIED. Unchanged ownership-deadline limitation recorded at R00; separate actual product evidence uses owned visible browser. No timeout/ownership weakening.",
+  "workerExecutionLimits": "Reserve validation worker reported unavailable/inaccessible host dependencies and no completed native/build/browser gates. Root used the verified existing JDK8, CPython and visible Chrome through authorized Desktop Commander. Worker limitations were not reclassified as PASS.",
+  "supersededInvocations": [
+    {
+      "name": "final-native",
+      "exitCode": 2,
+      "disposition": "Superseded failing invocation; not acceptance evidence"
+    },
+    {
+      "name": "preview-stop-prebuild",
+      "exitCode": 1,
+      "disposition": "Superseded failing invocation; not acceptance evidence"
+    },
+    {
+      "name": "final-native-4",
+      "exitCode": 2,
+      "disposition": "Superseded failing invocation; not acceptance evidence"
+    },
+    {
+      "name": "accepted-report-parity",
+      "exitCode": 1,
+      "disposition": "Superseded failing invocation; not acceptance evidence"
+    },
+    {
+      "name": "accepted-report-parity-2",
+      "exitCode": 1,
+      "disposition": "Superseded failing invocation; not acceptance evidence"
+    }
+  ],
+  "compiledCorrections": [
+    "Preserve declared support element and model finite high resistance for broken-function negative",
+    "Settle explicit command/power/fault changes before dependent instrumentation",
+    "Use exact mutable component, distinct electrical backing and selected channel fault-switch in negative fixtures",
+    "Test revoked receipt rejection rather than read revoked registry",
+    "Use private candidate installation while verifier intends further mutation"
+  ],
+  "collectorCorrections": [
+    "Retain JSON array shape for one-item arrays",
+    "Decode each numeric token by actual integer/floating kind before exact binary64 comparison"
+  ],
+  "finalAcceptedGates": {
+    "native": "final-native-5 exit 0",
+    "build": "accepted-production-build exit 0",
+    "compiled": "All six current route predicates pass against one final source/execution identity",
+    "parity": "accepted-report-parity-3 exit 0"
+  }
+}

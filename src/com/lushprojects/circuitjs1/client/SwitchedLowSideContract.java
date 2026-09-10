@@ -13,7 +13,7 @@ import java.util.List;
  * evidence required to admit it.
  */
 final class SwitchedLowSideContract {
-    static final int VERSION = 1;
+    static final int VERSION = 2;
     static final double SUPPLY_GUARANTEED_MIN_VOLTS = 4.75;
     static final double SUPPLY_GUARANTEED_MAX_VOLTS = 5.25;
     static final double LOAD_ALLOWED_MIN_VOLTS = 4.5;
@@ -33,6 +33,8 @@ final class SwitchedLowSideContract {
     private final ElectricalConnection.PortRef loadPort;
     private final ElectricalConnection.PortRef supplyPort;
     private final ElectricalConnection.PortRef controlPort;
+    private final ElectricalConnection.PortRef driverControlPort;
+    private final ElectricalConnection.PortRef loadSupplyPort;
     private final List<ElectricalConnection.PortRef> returnPorts;
     private final String referenceNetId;
     private final String isolationId;
@@ -44,8 +46,11 @@ final class SwitchedLowSideContract {
             ElectricalConnection.PortRef loadPort,
             ElectricalConnection.PortRef supplyPort,
             ElectricalConnection.PortRef controlPort,
+            ElectricalConnection.PortRef driverControlPort,
+            ElectricalConnection.PortRef loadSupplyPort,
             Collection<ElectricalConnection.PortRef> returnPorts) {
-        this(sinkPort, loadPort, supplyPort, controlPort, returnPorts,
+        this(sinkPort, loadPort, supplyPort, controlPort,
+                driverControlPort, loadSupplyPort, returnPorts,
                 "RETURN", "shared-return", true, MIN_SINK_CAPACITY_AMPS,
                 MAX_LOAD_DEMAND_AMPS);
     }
@@ -54,6 +59,8 @@ final class SwitchedLowSideContract {
             ElectricalConnection.PortRef loadPort,
             ElectricalConnection.PortRef supplyPort,
             ElectricalConnection.PortRef controlPort,
+            ElectricalConnection.PortRef driverControlPort,
+            ElectricalConnection.PortRef loadSupplyPort,
             Collection<ElectricalConnection.PortRef> returnPorts,
             String referenceNetId, String isolationId, boolean activeHigh,
             double sinkCapacityAmps, double loadDemandAmps) {
@@ -61,6 +68,8 @@ final class SwitchedLowSideContract {
         this.loadPort = required(loadPort, "loadPort");
         this.supplyPort = required(supplyPort, "supplyPort");
         this.controlPort = required(controlPort, "controlPort");
+        this.driverControlPort = required(driverControlPort, "driverControlPort");
+        this.loadSupplyPort = required(loadSupplyPort, "loadSupplyPort");
         if (returnPorts == null || returnPorts.isEmpty())
             throw new IllegalArgumentException("returnPorts are required");
         ArrayList<ElectricalConnection.PortRef> returns =
@@ -91,6 +100,8 @@ final class SwitchedLowSideContract {
                         "power-adapter", "POWER_OUT"),
                 new ElectricalConnection.PortRef(
                         "control-adapter", "CONTROL_OUT"),
+                new ElectricalConnection.PortRef("driver", "CONTROL"),
+                new ElectricalConnection.PortRef("load", "SUPPLY"),
                 Arrays.asList(
                         new ElectricalConnection.PortRef(
                                 "driver", "RETURN"),
@@ -109,6 +120,8 @@ final class SwitchedLowSideContract {
     ElectricalConnection.PortRef getSwitchedLoadPort() { return loadPort; }
     ElectricalConnection.PortRef getSupplyPort() { return supplyPort; }
     ElectricalConnection.PortRef getControlPort() { return controlPort; }
+    ElectricalConnection.PortRef getDriverControlPort() { return driverControlPort; }
+    ElectricalConnection.PortRef getLoadSupplyPort() { return loadSupplyPort; }
     List<ElectricalConnection.PortRef> getReturnPorts() { return returnPorts; }
     String getReferenceNetId() { return referenceNetId; }
     String getIsolationId() { return isolationId; }

@@ -563,29 +563,52 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             "task48-resistor-semantics-active-measurement");
 
         BoundedAssemblyPlan plan = controlledPlan(instance);
-        final String[] components = {
-            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RG"),
-            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD")
-        };
-        final String[][] pads = {
-            { plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.1"),
-                plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.2") },
-            { plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.1"),
-                plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.2") }
-        };
+        Vector<String> components = new Vector<String>();
+        Vector<String[]> pads = new Vector<String[]>();
+        for (String targetId : plan.getDecisionOwners().values()) {
+            String ownerKey = null;
+            String localId = null;
+            for (java.util.Map.Entry<String, ComposedBlockContribution> entry :
+                    plan.getBlocks().entrySet()) {
+                for (String resistorId : entry.getValue().getResistors().keySet()) {
+                    String candidate = plan.idFor(entry.getKey(),
+                        FunctionalBlockDescriptor.EntityKind.COMPONENT, resistorId);
+                    if (targetId.equals(candidate)) {
+                        if (ownerKey != null)
+                            throw new IllegalStateException(
+                                "task48-resistor-semantics-duplicate-owner:" + targetId);
+                        ownerKey = entry.getKey();
+                        localId = resistorId;
+                    }
+                }
+            }
+            require(ownerKey != null && localId != null,
+                "task48-resistor-semantics-owner-missing:" + targetId);
+            ComposedBlockContribution.ResistorRecipe recipe =
+                plan.getBlocks().get(ownerKey).getResistor(localId);
+            String componentId = targetId;
+            String first = plan.idFor(ownerKey,
+                FunctionalBlockDescriptor.EntityKind.PAD, recipe.getFirstPadLocalId());
+            String second = plan.idFor(ownerKey,
+                FunctionalBlockDescriptor.EntityKind.PAD, recipe.getSecondPadLocalId());
+            components.add(componentId);
+            pads.add(new String[] { first, second });
+        }
+        require(!components.isEmpty(), "task48-resistor-semantics-no-owners");
         HashMap<String, Boolean> initialStates = new HashMap<String, Boolean>();
-        for (int component = 0; component < components.length; component++) {
-            require(instance.getBoard().getComponent(components[component]) != null,
-                "task48-resistor-semantics-component-missing:" + components[component]);
-            require(modifications.getComponentState(components[component]) ==
+        for (int index = 0; index < components.size(); index++) {
+            String componentId = components.get(index);
+            require(instance.getBoard().getComponent(componentId) != null,
+                "task48-resistor-semantics-component-missing:" + componentId);
+            require(modifications.getComponentState(componentId) ==
                 ComponentPhysicalState.INSTALLED,
-                "task48-resistor-semantics-initial-state:" + components[component]);
-            for (String pad : pads[component]) {
+                "task48-resistor-semantics-initial-state:" + componentId);
+            for (String pad : pads.get(index)) {
                 require(instance.getBoard().getPad(pad) != null,
                     "task48-resistor-semantics-pad-missing:" + pad);
-                boolean connected = modifications.isLeadConnected(components[component], pad);
-                require(connected, "task48-resistor-semantics-initial-lead:" + pad);
-                initialStates.put(pad, Boolean.valueOf(connected));
+                require(modifications.isLeadConnected(componentId, pad),
+                    "task48-resistor-semantics-initial-lead:" + pad);
+                initialStates.put(pad, Boolean.TRUE);
             }
         }
 
@@ -598,18 +621,20 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         RuntimeException primary = null;
         try {
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-            GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-isolate");
+            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                "task48-physical-isolate");
             require(sim.getBoardPowerController().isElectricallyUnpowered(),
                 "task48-resistor-semantics-power-isolation-failed");
-            for (int component = 0; component < components.length; component++) {
-                String componentId = components[component];
-                for (String pad : pads[component]) {
+            for (int index = 0; index < components.size(); index++) {
+                String componentId = components.get(index);
+                for (String pad : pads.get(index)) {
                     GeneratedComponentConnectionBinding binding = instance
                         .getConnectionBindings().get(componentId, pad);
                     CircuitElm connection = binding.getConnectionElement();
                     require(modifications.liftLead(componentId, pad),
                         "task48-resistor-semantics-lift-noop:" + pad);
-                    GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-lift");
+                    GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                        "task48-physical-lift");
                     require(!modifications.isLeadConnected(componentId, pad) &&
                         modifications.getComponentState(componentId) ==
                             ComponentPhysicalState.LEAD_LIFTED &&
@@ -620,7 +645,8 @@ final class Task43PPhysicalTruthDeveloperVerifier {
 
                     require(modifications.reconnectLead(componentId, pad),
                         "task48-resistor-semantics-reconnect-noop:" + pad);
-                    GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-reconnect");
+                    GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                        "task48-physical-reconnect");
                     require(modifications.isLeadConnected(componentId, pad) &&
                         modifications.getComponentState(componentId) ==
                             ComponentPhysicalState.INSTALLED &&
@@ -632,22 +658,24 @@ final class Task43PPhysicalTruthDeveloperVerifier {
 
                 require(modifications.removeComponent(componentId),
                     "task48-resistor-semantics-remove-noop:" + componentId);
-                GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-remove");
+                GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                    "task48-physical-remove");
                 require(modifications.getComponentState(componentId) ==
                         ComponentPhysicalState.REMOVED &&
-                        !modifications.isLeadConnected(componentId, pads[component][0]) &&
-                        !modifications.isLeadConnected(componentId, pads[component][1]),
+                        !modifications.isLeadConnected(componentId, pads.get(index)[0]) &&
+                        !modifications.isLeadConnected(componentId, pads.get(index)[1]),
                     "task48-resistor-semantics-remove-mismatch:" + componentId);
                 modifications.verifyStructuralState();
                 removeChecks++;
 
                 require(modifications.restoreComponent(componentId),
                     "task48-resistor-semantics-restore-noop:" + componentId);
-                GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-restore");
+                GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                    "task48-physical-restore");
                 require(modifications.getComponentState(componentId) ==
                         ComponentPhysicalState.INSTALLED &&
-                        modifications.isLeadConnected(componentId, pads[component][0]) &&
-                        modifications.isLeadConnected(componentId, pads[component][1]),
+                        modifications.isLeadConnected(componentId, pads.get(index)[0]) &&
+                        modifications.isLeadConnected(componentId, pads.get(index)[1]),
                     "task48-resistor-semantics-restore-mismatch:" + componentId);
                 modifications.verifyStructuralState();
                 restoreChecks++;
@@ -657,42 +685,40 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             throw failure;
         } finally {
             try {
-                /* Restore the exact captured connection state before power. */
-                for (int component = 0; component < components.length; component++) {
-                    String componentId = components[component];
-                    if (modifications.getComponentState(componentId) == ComponentPhysicalState.REMOVED) {
+                for (int index = 0; index < components.size(); index++) {
+                    String componentId = components.get(index);
+                    if (modifications.getComponentState(componentId) ==
+                            ComponentPhysicalState.REMOVED) {
                         require(modifications.restoreComponent(componentId),
                             "task48-resistor-semantics-cleanup-restore-noop:" + componentId);
-                        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-cleanup-part");
+                        GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                            "task48-physical-cleanup-part");
                     }
-                    for (String pad : pads[component]) {
+                    for (String pad : pads.get(index)) {
                         boolean expected = initialStates.get(pad).booleanValue();
-                        boolean actual = modifications.isLeadConnected(componentId, pad);
-                        if (actual != expected) {
-                            if (expected)
-                                modifications.reconnectLead(componentId, pad);
-                            else
-                                modifications.liftLead(componentId, pad);
-                            GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-cleanup-lead");
-                            require(modifications.isLeadConnected(componentId, pad) == expected,
-                                "task48-resistor-semantics-cleanup-lead-mismatch:" + pad);
+                        if (modifications.isLeadConnected(componentId, pad) != expected) {
+                            if (expected) modifications.reconnectLead(componentId, pad);
+                            else modifications.liftLead(componentId, pad);
+                            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                                "task48-physical-cleanup-lead");
                         }
+                        require(modifications.isLeadConnected(componentId, pad) == expected,
+                            "task48-resistor-semantics-cleanup-lead-mismatch:" + pad);
                     }
                 }
                 modifications.verifyStructuralState();
                 sim.setBoardPowerState(savedPower);
-                GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "task48-physical-restore-power");
+                GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
+                    "task48-physical-restore-power");
                 require(sim.getBoardPowerController().getState() == savedPower,
                     "task48-resistor-semantics-power-restore-failed");
             } catch (RuntimeException cleanup) {
-                if (primary != null)
-                    primary.addSuppressed(cleanup);
-                else
-                    throw cleanup;
+                if (primary != null) primary.addSuppressed(cleanup);
+                else throw cleanup;
             }
         }
-        return "{\"status\":\"PASS\",\"components\":[\"RG\",\"RLOAD\"]," +
-            "\"liftedLeadChecks\":" + liftChecks +
+        return "{\"status\":\"PASS\",\"components\":" + components.size() +
+            ",\"liftedLeadChecks\":" + liftChecks +
             ",\"reconnectedLeadChecks\":" + reconnectChecks +
             ",\"removedComponentChecks\":" + removeChecks +
             ",\"restoredComponentChecks\":" + restoreChecks +
@@ -1890,102 +1916,95 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         return result;
     }
 
-    /** Literal Task 48 identity/terminal oracle.  Keep this independent of
-     * any assembler plan or mapping receipt so a wrong mapping cannot teach
-     * the verifier its own expected answer. */
+    /** Literal identity/terminal oracle for every resolved channel.  The
+     * manifest is authored from the typed provider vocabulary and the stable
+     * local declarations; it never learns expected geometry from bindings. */
     private static Manifest controlledIndicatorManifest(BoundedAssemblyPlan plan) {
-        final String driver = plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT,
-            "RG").substring(0, plan.idFor("driver",
-                FunctionalBlockDescriptor.EntityKind.COMPONENT, "RG").lastIndexOf("/RG")) + "/";
-        final String load = plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT,
-            "RLOAD").substring(0, plan.idFor("load",
-                FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD").lastIndexOf("/RLOAD")) + "/";
-        final String powerAdapter = plan.idFor("power-adapter",
-            FunctionalBlockDescriptor.EntityKind.COMPONENT, "J1").substring(0,
-                plan.idFor("power-adapter", FunctionalBlockDescriptor.EntityKind.COMPONENT,
-                    "J1").lastIndexOf("/J1")) + "/";
-        final String controlAdapter = plan.idFor("control-adapter",
-            FunctionalBlockDescriptor.EntityKind.COMPONENT, "J2").substring(0,
-                plan.idFor("control-adapter", FunctionalBlockDescriptor.EntityKind.COMPONENT,
-                    "J2").lastIndexOf("/J2")) + "/";
-        final String output = plan.netFor("control-adapter", "OUTPUT");
-        final String gate = plan.netFor("driver", "GATE");
-        final String switchedSink = plan.netFor("driver", "SWITCHED_SINK");
-        final String returned = plan.netFor("control-adapter", "RETURN");
-        final String supply = plan.netFor("load", "SUPPLY");
-        final String ledNode = plan.netFor("load", "LED_NODE");
-
         Manifest result = new Manifest();
         result.canonicalSeedText = true;
-        addPackage(result, powerAdapter + "J1", "THROUGH_HOLE_CONNECTOR_2", true);
-        addPackage(result, controlAdapter + "J2", "THROUGH_HOLE_CONNECTOR_2", true);
-        addPackage(result, driver + "RG", "AXIAL_RESISTOR", false,
-            "SPAN_220", "SPAN_240", "SPAN_260");
-        addPackage(result, driver + "RPD", "AXIAL_RESISTOR", false,
-            "SPAN_220", "SPAN_240", "SPAN_260");
-        addPackage(result, driver + "Q1", "TO92_NMOS", false);
-        addPackage(result, load + "RLOAD", "AXIAL_RESISTOR", false,
-            "SPAN_220", "SPAN_240", "SPAN_260");
-        addPackage(result, load + "LED1", "THROUGH_HOLE_LED", false);
-
-        /* Adapters: their board-facing positive is the real SwitchElm post 1;
-         * each external return is the real GroundElm post 0. */
-        addTerminal(result, plan.idFor("power-adapter", FunctionalBlockDescriptor.EntityKind.PAD,
-            "J1.1"), plan.idFor("power-adapter",
-                FunctionalBlockDescriptor.EntityKind.COMPONENT, "J1"), "1",
-            supply, "SwitchElm", 1);
-        addTerminal(result, plan.idFor("power-adapter", FunctionalBlockDescriptor.EntityKind.PAD,
-            "J1.2"), plan.idFor("power-adapter",
-                FunctionalBlockDescriptor.EntityKind.COMPONENT, "J1"), "2",
-            returned, "GroundElm", 0);
-        addTerminal(result, plan.idFor("control-adapter", FunctionalBlockDescriptor.EntityKind.PAD,
-            "J2.1"), plan.idFor("control-adapter",
-                FunctionalBlockDescriptor.EntityKind.COMPONENT, "J2"), "1",
-            output, "SwitchElm", 1);
-        addTerminal(result, plan.idFor("control-adapter", FunctionalBlockDescriptor.EntityKind.PAD,
-            "J2.2"), plan.idFor("control-adapter",
-                FunctionalBlockDescriptor.EntityKind.COMPONENT, "J2"), "2",
-            returned, "GroundElm", 0);
-
-        /* RG and RLOAD are the only detachable parts.  The public board
-         * endpoint is intentionally the surrounding WireElm (1 then 0),
-         * while terminal 2's component-side endpoint is the retained fault
-         * switch post 1.  resolveRetainedSolverEndpoint cross-checks both. */
-        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.1"),
-            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RG"), "1",
-            output, "WireElm", 1);
-        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.2"),
-            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RG"), "2",
-            gate, "WireElm", 0);
-        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RPD.1"),
-            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RPD"), "1",
-            gate, "ResistorElm", 0);
-        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RPD.2"),
-            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RPD"), "2",
-            returned, "ResistorElm", 1);
-        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.G"),
-            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "Q1"), "G",
-            gate, "NMosfetElm", 0);
-        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.D"),
-            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "Q1"), "D",
-            switchedSink, "NMosfetElm", 2);
-        addTerminal(result, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.S"),
-            plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "Q1"), "S",
-            returned, "NMosfetElm", 1);
-
-        addTerminal(result, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.1"),
-            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD"), "1",
-            supply, "WireElm", 1);
-        addTerminal(result, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.2"),
-            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD"), "2",
-            ledNode, "WireElm", 0);
-        addTerminal(result, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "LED1.A"),
-            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "LED1"), "A",
-            ledNode, "LEDElm", 0);
-        addTerminal(result, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "LED1.K"),
-            plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "LED1"), "K",
-            switchedSink, "LEDElm", 1);
+        for (DeviceAdapterContract adapter : plan.getDeviceAdapters()) {
+            addControlledPackages(result, plan, adapter.getKey(),
+                adapter.getDescriptor(), null);
+        }
+        for (java.util.Map.Entry<String, ComposedBlockContribution> entry :
+                plan.getBlocks().entrySet()) {
+            addControlledPackages(result, plan, entry.getKey(),
+                entry.getValue().getDescriptor(), entry.getValue());
+        }
         return result;
+    }
+
+    private static void addControlledPackages(Manifest manifest,
+            BoundedAssemblyPlan plan, String ownerKey,
+            FunctionalBlockDescriptor descriptor,
+            ComposedBlockContribution contribution) {
+        for (FunctionalBlockDescriptor.Component component :
+                descriptor.getComponents().values()) {
+            String componentId = plan.idFor(ownerKey,
+                FunctionalBlockDescriptor.EntityKind.COMPONENT, component.getId());
+            String packageId = controlledPackageId(component.getTypeId());
+            boolean connector = "CONNECTOR_2".equals(component.getTypeId());
+            if ("RESISTOR".equals(component.getTypeId()))
+                addPackage(manifest, componentId, packageId, false,
+                    "SPAN_220", "SPAN_240", "SPAN_260");
+            else
+                addPackage(manifest, componentId, packageId, connector);
+        }
+        for (FunctionalBlockDescriptor.Pad pad : descriptor.getPads().values()) {
+            FunctionalBlockDescriptor.Endpoint endpoint =
+                descriptor.getEndpoints().get(pad.getEndpointId());
+            if (endpoint == null)
+                throw new IllegalStateException("Manifest endpoint missing " + ownerKey + "/" +
+                    pad.getId());
+            String componentId = plan.idFor(ownerKey,
+                FunctionalBlockDescriptor.EntityKind.COMPONENT, endpoint.getComponentId());
+            boolean mutable = contribution != null &&
+                plan.getDecisionOwners().containsValue(componentId);
+            String[] solver = controlledSolverEndpoint(
+                descriptor.getComponents().get(endpoint.getComponentId()).getTypeId(),
+                endpoint.getTerminalId(), mutable);
+            addTerminal(manifest, plan.idFor(ownerKey,
+                FunctionalBlockDescriptor.EntityKind.PAD, pad.getId()), componentId,
+                endpoint.getTerminalId(), plan.netFor(ownerKey, pad.getNetId()),
+                solver[0], Integer.parseInt(solver[1]));
+        }
+    }
+
+    private static String controlledPackageId(String typeId) {
+        if ("RESISTOR".equals(typeId)) return "AXIAL_RESISTOR";
+        if ("LED".equals(typeId)) return "THROUGH_HOLE_LED";
+        if ("NMOS".equals(typeId)) return "TO92_NMOS";
+        if ("NPN".equals(typeId)) return "TO92_NPN";
+        if ("CONNECTOR_2".equals(typeId)) return "THROUGH_HOLE_CONNECTOR_2";
+        throw new IllegalStateException("Unknown controlled package type " + typeId);
+    }
+
+    private static String[] controlledSolverEndpoint(String typeId,
+            String terminalId, boolean mutable) {
+        if ("CONNECTOR_2".equals(typeId))
+            return "1".equals(terminalId) ? new String[] { "SwitchElm", "1" } :
+                new String[] { "GroundElm", "0" };
+        if ("RESISTOR".equals(typeId)) {
+            if (mutable)
+                return "1".equals(terminalId) ? new String[] { "WireElm", "1" } :
+                    new String[] { "WireElm", "0" };
+            return "1".equals(terminalId) ? new String[] { "ResistorElm", "0" } :
+                new String[] { "ResistorElm", "1" };
+        }
+        if ("LED".equals(typeId))
+            return "A".equals(terminalId) ? new String[] { "LEDElm", "0" } :
+                new String[] { "LEDElm", "1" };
+        if ("NMOS".equals(typeId)) {
+            if ("G".equals(terminalId)) return new String[] { "NMosfetElm", "0" };
+            if ("D".equals(terminalId)) return new String[] { "NMosfetElm", "2" };
+            return new String[] { "NMosfetElm", "1" };
+        }
+        if ("NPN".equals(typeId)) {
+            if ("B".equals(terminalId)) return new String[] { "NTransistorElm", "0" };
+            if ("C".equals(terminalId)) return new String[] { "NTransistorElm", "1" };
+            return new String[] { "NTransistorElm", "2" };
+        }
+        throw new IllegalStateException("Unknown controlled solver type " + typeId);
     }
 
     private static BoundedAssemblyPlan resistivePlan(GeneratedBoardInstance instance) {

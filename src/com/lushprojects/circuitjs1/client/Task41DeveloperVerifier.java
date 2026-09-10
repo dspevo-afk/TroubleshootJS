@@ -2,6 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 import java.util.Collections;
+import java.util.Map;
 
 /** Focused developer proof for Task 41 diagnostic solvability and complexity. */
 final class Task41DeveloperVerifier {
@@ -197,8 +198,9 @@ final class Task41DeveloperVerifier {
                 sim.getGeneratedBoardInstance() == owner &&
                 sim.getGeneratedChallengeController() == ownerController,
             "Task 41 admission proof lost its current challenge owner");
-        boolean controlledAdmission = isControlledIndicatorFamily(
-            owner.getCircuitFamilyId());
+        GeneratedDiagnosticExecutionProvider executionProvider =
+            executionProvider(owner);
+        boolean controlledAdmission = executionProvider != null;
         lastEvidence = null;
         if (controlledAdmission)
             lastControlledAdmissionEvidence = new Vector<GeneratedDiagnosticSolvabilityEvidence>();
@@ -213,13 +215,8 @@ final class Task41DeveloperVerifier {
             require(sim.getAttachedPcbWorkbenchCountForDeveloperVerification() == 0,
                 "Task 41 admission proof attached a player workbench before candidate evaluation");
             BoundedAssemblyRequest preservedRequest = null;
-            if (controlledAdmission) {
-                require(owner.getBehaviorContract() instanceof
-                        ControlledIndicatorDeviceBehavior,
-                    "controlled admission owner lost its versioned request");
-                preservedRequest = ((ControlledIndicatorDeviceBehavior)
-                        owner.getBehaviorContract()).getPlan().getRequest();
-            }
+            if (executionProvider != null)
+                preservedRequest = executionProvider.getAssemblyPlan().getRequest();
             Route route = new Route(owner.getCircuitFamilyId(), owner.getSeed(), null,
                 null, preservedRequest, null);
             Vector<CandidateEvaluation> evaluations = evaluateCandidateGroup(sim, route, owner);
@@ -326,8 +323,7 @@ final class Task41DeveloperVerifier {
         Vector<CandidateEvaluation> result = new Vector<CandidateEvaluation>();
         Vector<Route> candidateRoutes = candidateRoutes(route, owner);
         for (Route candidateRoute : candidateRoutes) {
-            CandidateEvaluation evaluation = verifyCandidate(sim, candidateRoute,
-                planFor(route.familyId));
+            CandidateEvaluation evaluation = verifyCandidate(sim, candidateRoute);
             if (!result.isEmpty()) {
                 CandidateEvaluation first = result.firstElement();
                 require(first.topologyVariantId.equals(evaluation.topologyVariantId) &&
@@ -342,36 +338,26 @@ final class Task41DeveloperVerifier {
 
     private static Vector<Route> candidateRoutes(Route route, GeneratedBoardInstance owner) {
         Vector<Route> result = new Vector<Route>();
-        if (isControlledIndicatorFamily(route.familyId)) {
+        if (route.request != null || executionProvider(owner) != null) {
             if (route.targetComponentId != null) {
                 result.add(route);
                 return result;
             }
-            if (owner != null) {
-                Vector<GeneratedFaultCandidate> admitted =
-                    GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(
-                        owner.getFaultCandidates());
-                if (admitted.isEmpty())
-                    throw new IllegalStateException(
-                        "Task 41 live owner has no admitted diagnostic hypotheses: " +
-                        route.familyId + "/" + route.seed);
-                for (GeneratedFaultCandidate candidate : admitted)
-                    result.add(new Route(route.familyId, route.seed,
-                        candidate.getFault().getType(),
-                        candidate.getFault().getTargetComponentId(), route.request,
-                        candidate.getHypothesisKey()));
-            }
-            if (result.isEmpty()) {
-                // The fallback is only for the detached verifier route.  A
-                // live owner must expose an admitted population; the branch
-                // above fails explicitly when it does not.
+            if (owner == null)
+                throw new IllegalStateException("Provider-owned route has no fault owner: " +
+                    route.familyId + "/" + route.seed);
+            Vector<GeneratedFaultCandidate> admitted =
+                GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(
+                    owner.getFaultCandidates());
+            if (admitted.isEmpty())
+                throw new IllegalStateException(
+                    "Task 41 live owner has no admitted diagnostic hypotheses: " +
+                    route.familyId + "/" + route.seed);
+            for (GeneratedFaultCandidate candidate : admitted)
                 result.add(new Route(route.familyId, route.seed,
-                    GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("driver", "RG"),
-                    route.request, null));
-                result.add(new Route(route.familyId, route.seed,
-                    GeneratedFaultType.RESISTOR_OPEN, controlledComponentId("load", "RLOAD"),
-                    route.request, null));
-            }
+                    candidate.getFault().getType(),
+                    candidate.getFault().getTargetComponentId(), route.request,
+                    candidate.getHypothesisKey()));
             return result;
         }
         Vector<GeneratedFaultCandidate> admitted;
@@ -402,8 +388,7 @@ final class Task41DeveloperVerifier {
         return result;
     }
 
-    private static CandidateEvaluation verifyCandidate(CirSim sim, Route route,
-            GeneratedDiagnosticPlan plan) {
+    private static CandidateEvaluation verifyCandidate(CirSim sim, Route route) {
         GeneratedBoardInstance evaluated = null;
         try {
             evaluated = route.generate();
@@ -425,6 +410,7 @@ final class Task41DeveloperVerifier {
                 "Task 41 candidate install attached a player workbench");
             settleReady(sim, evaluated);
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, evaluated);
+            GeneratedDiagnosticPlan plan = planFor(evaluated);
             GeneratedDiagnosticExecutionTrace.Builder trace =
                 GeneratedDiagnosticExecutionTrace.builder();
             DiagnosticSignature signature = collectSolverSignature(sim, evaluated, plan, trace);
@@ -617,19 +603,21 @@ final class Task41DeveloperVerifier {
             return collectRcTemporalSignature(sim, instance, plan, trace);
 
         Vector<GeneratedDiagnosticSample> samples = new Vector<GeneratedDiagnosticSample>();
-        if (isControlledIndicatorFamily(instance.getCircuitFamilyId())) {
-            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
-            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
-                "task41-controlled-indicator-high");
-            trace.recordInputPowerTransition(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH);
-            trace.recordTemporalWaitSample("CONTROL_HIGH_SAMPLE", 0.0);
-            appendDcSamples(sim, instance, plan, samples, "CONTROL_HIGH", trace);
-            instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
-            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
-                "task41-controlled-indicator-low");
-            trace.recordInputPowerTransition(GeneratedBoardOperationIds.CONTROL_INPUT_LOW);
-            trace.recordTemporalWaitSample("CONTROL_LOW_SAMPLE", 0.0);
-            appendDcSamples(sim, instance, plan, samples, "CONTROL_LOW", trace);
+        GeneratedDiagnosticExecutionProvider executionProvider = executionProvider(instance);
+        if (executionProvider != null) {
+            executionProvider.collectDcSamples(sim, instance, plan, samples, trace,
+                new GeneratedDiagnosticSampleSink() {
+                    public double measureDc(CirSim owner, GeneratedBoardInstance board,
+                            String redId, String blackId,
+                            GeneratedDiagnosticExecutionTrace.Builder executionTrace) {
+                        return Task41DeveloperVerifier.measureDc(owner, board, redId, blackId,
+                            executionTrace);
+                    }
+                    public void addSample(Vector<GeneratedDiagnosticSample> destination,
+                            String sampleId, double value) {
+                        Task41DeveloperVerifier.addSample(destination, sampleId, value);
+                    }
+                });
         } else if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) ||
                 QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId())) {
             instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
@@ -651,7 +639,8 @@ final class Task41DeveloperVerifier {
         trace.recordInputPowerTransition("BOARD_POWER_OFF");
         GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
             "task41-signature-unpowered");
-        String[][] pairs = isolationPairs(instance.getCircuitFamilyId());
+        String[][] pairs = executionProvider == null ?
+            isolationPairs(instance.getCircuitFamilyId()) : executionProvider.getIsolationPairs();
         ProbeTarget lastFirst = null;
         ProbeTarget lastSecond = null;
         for (String[] pair : pairs) {
@@ -660,16 +649,18 @@ final class Task41DeveloperVerifier {
             lastFirst = first;
             lastSecond = second;
             sim.instrumentController.setResistanceProbesForDeveloperVerification(first, second);
-            String resistanceSampleId = isControlledIndicatorFamily(instance.getCircuitFamilyId()) ?
-                controlledIsolationSampleId(pair, "OHM") :
-                "OHM_" + pair[0] + "_" + pair[1];
+            String resistanceSampleId = executionProvider == null ?
+                "OHM_" + pair[0] + "_" + pair[1] :
+                "OHM_" + executionProvider.getProbeLabel(pair[0]) + "_" +
+                    executionProvider.getProbeLabel(pair[1]);
             addResistanceSample(sim, samples, resistanceSampleId,
                 sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), trace);
             sim.instrumentController.setContinuityProbesForDeveloperVerification(first, second);
             trace.recordMeterMode("CONTINUITY");
-            String continuitySampleId = isControlledIndicatorFamily(instance.getCircuitFamilyId()) ?
-                controlledIsolationSampleId(pair, "CONTINUITY") :
-                "CONTINUITY_" + pair[0] + "_" + pair[1];
+            String continuitySampleId = executionProvider == null ?
+                "CONTINUITY_" + pair[0] + "_" + pair[1] :
+                "CONTINUITY_" + executionProvider.getProbeLabel(pair[0]) + "_" +
+                    executionProvider.getProbeLabel(pair[1]);
             addSample(samples, continuitySampleId,
                 sim.instrumentController.isContinuityDetectedForDeveloperVerification() ? 1 : 0);
         }
@@ -738,63 +729,9 @@ final class Task41DeveloperVerifier {
             String prefix, GeneratedDiagnosticExecutionTrace.Builder trace) {
         for (String targetId : plan.getProbeTargetIds()) {
             if (targetId.equals(plan.getReferenceTargetId())) continue;
-            String sampleTargetId = isControlledIndicatorFamily(instance.getCircuitFamilyId()) ?
-                controlledSampleTargetLabel(targetId) : targetId;
-            addSample(samples, prefix + "_DC_" + sampleTargetId,
+            addSample(samples, prefix + "_DC_" + targetId,
                 measureDc(sim, instance, targetId, plan.getReferenceTargetId(), trace));
         }
-    }
-
-    /**
-     * Controlled board probe IDs intentionally retain their qualified public
-     * namespace at the measurement boundary.  Evidence sample IDs have a
-     * separate compact vocabulary because the immutable sample contract does
-     * not permit slash or at-sign characters.  Keep this mapping explicit so
-     * labels cannot be reconstructed by rewriting a public target ID.
-     */
-    private static String controlledSampleTargetLabel(String targetId) {
-        if (targetId.equals(controlledPadId("power-adapter", "J1.1")))
-            return "POWER_ADAPTER_J1_1";
-        if (targetId.equals(controlledPadId("control-adapter", "J2.1")))
-            return "CONTROL_ADAPTER_J2_1";
-        if (targetId.equals(controlledPadId("control-adapter", "J2.2")))
-            return "CONTROL_ADAPTER_J2_2";
-        if (targetId.equals(controlledPadId("driver", "RG.1")))
-            return "DRIVER_RG_1";
-        if (targetId.equals(controlledPadId("driver", "RG.2")))
-            return "DRIVER_RG_2";
-        if (targetId.equals(controlledPadId("driver", "RPD.1")))
-            return "DRIVER_RPD_1";
-        if (targetId.equals(controlledPadId("driver", "RPD.2")))
-            return "DRIVER_RPD_2";
-        if (targetId.equals(controlledPadId("driver", "Q1.G")))
-            return "DRIVER_Q1_G";
-        if (targetId.equals(controlledPadId("driver", "Q1.D")))
-            return "DRIVER_Q1_D";
-        if (targetId.equals(controlledPadId("driver", "Q1.S")))
-            return "DRIVER_Q1_S";
-        if (targetId.equals(controlledPadId("load", "RLOAD.1")))
-            return "LOAD_RLOAD_1";
-        if (targetId.equals(controlledPadId("load", "RLOAD.2")))
-            return "LOAD_RLOAD_2";
-        if (targetId.equals(controlledPadId("load", "LED1.A")))
-            return "LOAD_LED1_A";
-        if (targetId.equals(controlledPadId("load", "LED1.K")))
-            return "LOAD_LED1_K";
-        throw new IllegalStateException("No stable controlled sample label for public probe: " +
-            targetId);
-    }
-
-    private static String controlledIsolationSampleId(String[] pair, String meter) {
-        if (pair == null || pair.length != 2 || meter == null)
-            throw new IllegalArgumentException("Incomplete controlled isolation sample");
-        if (pair[0].equals(controlledPadId("driver", "RG.1")) &&
-                pair[1].equals(controlledPadId("driver", "RG.2")))
-            return meter + "_CONTROLLED_DRIVER_RG";
-        if (pair[0].equals(controlledPadId("load", "RLOAD.1")) &&
-                pair[1].equals(controlledPadId("load", "RLOAD.2")))
-            return meter + "_CONTROLLED_LOAD_RLOAD";
-        throw new IllegalStateException("No stable controlled isolation sample for public pair");
     }
 
     private static void addSample(Vector<GeneratedDiagnosticSample> samples, String sampleId,
@@ -834,6 +771,8 @@ final class Task41DeveloperVerifier {
             String redId, String blackId, GeneratedDiagnosticExecutionTrace.Builder trace) {
         ProbeTarget red = boardProbe(sim, instance, redId);
         ProbeTarget black = boardProbe(sim, instance, blackId);
+        require(sim.isChallengeInteractionEnabled(),
+            "Task 41 DC sample requires settled player interaction: " + redId);
         sim.instrumentController.setDcVoltageProbesForDeveloperVerification(red, black);
         trace.recordMeterMode("DC_VOLTAGE");
         double reading = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
@@ -865,13 +804,6 @@ final class Task41DeveloperVerifier {
     }
 
     private static String[][] isolationPairs(String familyId) {
-        if (isControlledIndicatorFamily(familyId))
-            return new String[][] {
-                { controlledPadId("driver", "RG.1"),
-                    controlledPadId("driver", "RG.2") },
-                { controlledPadId("load", "RLOAD.1"),
-                    controlledPadId("load", "RLOAD.2") }
-            };
         return new String[][] { isolationPair(familyId) };
     }
 
@@ -881,7 +813,7 @@ final class Task41DeveloperVerifier {
         PhysicalPart<?> original = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
         require(original != null && original.isInstalled(),
             "Task 41 physical fault owner is not installed: " + componentId);
-        if (isControlledIndicatorFamily(instance.getCircuitFamilyId()))
+        if (executionProvider(instance) != null)
             trace.recordIsolationAction(WorkbenchOperation.REMOVE);
         dispatch(sim, WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original));
         trace.recordRepairAction(WorkbenchOperation.REMOVE);
@@ -931,20 +863,15 @@ final class Task41DeveloperVerifier {
     }
 
     private static String correctCatalogId(GeneratedBoardInstance instance, String componentId) {
+        GeneratedDiagnosticExecutionProvider provider = executionProvider(instance);
+        if (provider != null)
+            return provider.getCorrectCatalogId(instance, componentId);
         if ("C1".equals(componentId)) return CapacitorReplacementCatalog.CORRECT;
         if ("D1".equals(componentId)) return DiodeReplacementCatalog.CORRECT;
         if ("LED1".equals(componentId)) return LedReplacementCatalog.CORRECT;
         if ("Q1".equals(componentId))
             return QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()) ?
                 NmosReplacementCatalog.CORRECT : NpnReplacementCatalog.CORRECT;
-        if (isControlledIndicatorFamily(instance.getCircuitFamilyId()) &&
-                ("RLOAD".equals(componentId) || componentId.endsWith("/component/RLOAD")) &&
-                instance.getBehaviorContract() instanceof ControlledIndicatorDeviceBehavior) {
-            ControlledIndicatorDeviceBehavior behavior =
-                (ControlledIndicatorDeviceBehavior) instance.getBehaviorContract();
-            BoundedAssemblyPlan plan = behavior.getPlan();
-            return plan.getResolvedLoadRecipe().getSelectedCatalogEntryId();
-        }
         PhysicalSpecification specification = instance.getPhysicalSpecifications()
             .getSpecification(componentId);
         require(specification instanceof ResistorNameplate,
@@ -1270,6 +1197,19 @@ final class Task41DeveloperVerifier {
         }
     }
 
+    private static GeneratedDiagnosticExecutionProvider executionProvider(
+            GeneratedBoardInstance instance) {
+        if (instance == null) throw new IllegalArgumentException("Diagnostic board is required");
+        GeneratedChallengeBehaviorContract behavior = instance.getBehaviorContract();
+        return behavior instanceof GeneratedDiagnosticExecutionProvider ?
+            (GeneratedDiagnosticExecutionProvider) behavior : null;
+    }
+
+    private static GeneratedDiagnosticPlan planFor(GeneratedBoardInstance instance) {
+        GeneratedDiagnosticExecutionProvider provider = executionProvider(instance);
+        return provider == null ? planFor(instance.getCircuitFamilyId()) : provider.getDiagnosticPlan();
+    }
+
     private static GeneratedDiagnosticPlan planFor(String familyId) {
         Vector<GeneratedDiagnosticPlan> plans = GeneratedDiagnosticPlanCatalog.forFamily(familyId);
         require(plans.size() == 1, "Task 41 plan catalog is not deterministic for " + familyId);
@@ -1505,22 +1445,7 @@ final class Task41DeveloperVerifier {
                         behavior.getPlan().getRequest().getDescriptor().getGenerator()
                             .getVersion() == request.getDescriptor().getGenerator().getVersion(),
                         "Task 41 controlled proof lost the versioned request/recipe");
-                    {
-                        String loadComponentId = behavior.getPlan().idFor("load",
-                            FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD");
-                        PhysicalSpecification loadSpecification = result.getPhysicalSpecifications()
-                            .getSpecification(loadComponentId);
-                        ControlledIndicatorValueSynthesis.ResolvedRecipe recipe =
-                            behavior.getPlan().getResolvedLoadRecipe();
-                        require(recipe != null && loadSpecification instanceof ResistorNameplate,
-                            "Task 41 current proof lost selected recipe/physical specification");
-                        ResistorNameplate loadNameplate = (ResistorNameplate) loadSpecification;
-                        require(loadComponentId.equals(loadNameplate.getSpecificationId()) &&
-                            loadNameplate.getNominalResistanceOhms() == recipe.getResistanceOhms() &&
-                            loadNameplate.getTolerancePercent() == recipe.getTolerancePercent() &&
-                            loadNameplate.getRatedWattage() == recipe.getRatedWatts(),
-                            "Task 41 current proof lost physical recipe correspondence");
-                    }
+                    validateControlledReplay(result, behavior, targetComponentId);
                 }
                 return result;
             }
@@ -1539,6 +1464,48 @@ final class Task41DeveloperVerifier {
             if (QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId))
                 return new NmosLowSideSwitchGenerator().generateForFaultVerification(seed, type);
             throw new IllegalArgumentException("Unknown Task 41 route family: " + familyId);
+        }
+    }
+
+    /** Validate every provider-declared mutable resistor after a diagnostic replay. */
+    private static void validateControlledReplay(GeneratedBoardInstance result,
+            ControlledIndicatorDeviceBehavior behavior, String targetComponentId) {
+        BoundedAssemblyPlan plan = behavior.getPlan();
+        require(plan.getDecisionOwners().containsValue(targetComponentId),
+            "Task 41 controlled proof selected an undeclared serviceable owner");
+        for (Map.Entry<String, String> owner : plan.getDecisionOwners().entrySet()) {
+            String componentId = owner.getValue();
+            PhysicalSpecification specification = result.getPhysicalSpecifications()
+                .getSpecification(componentId);
+            require(specification instanceof ResistorNameplate,
+                "Task 41 provider replay lost resistor specification: " + componentId);
+            ComposedBlockContribution.ResistorRecipe recipe = null;
+            for (Map.Entry<String, ComposedBlockContribution> block : plan.getBlocks().entrySet()) {
+                for (Map.Entry<String, ComposedBlockContribution.ResistorRecipe> resistor :
+                        block.getValue().getResistors().entrySet()) {
+                    if (componentId.equals(plan.idFor(block.getKey(),
+                            FunctionalBlockDescriptor.EntityKind.COMPONENT, resistor.getKey()))) {
+                        require(recipe == null,
+                            "Task 41 provider replay duplicated resistor owner: " + componentId);
+                        recipe = resistor.getValue();
+                    }
+                }
+            }
+            require(recipe != null && recipe.isMutable(),
+                "Task 41 provider replay owner is not a mutable resistor: " + componentId);
+            ResistorNameplate nameplate = (ResistorNameplate) specification;
+            require(componentId.equals(nameplate.getSpecificationId()) &&
+                    nameplate.getNominalResistanceOhms() == recipe.getResistanceOhms() &&
+                    nameplate.getTolerancePercent() == recipe.getTolerancePercent() &&
+                    nameplate.getRatedWattage() == recipe.getRatedWatts(),
+                "Task 41 provider replay lost physical recipe correspondence: " + componentId);
+            ControlledIndicatorValueSynthesis.ResolvedRecipe resolved =
+                recipe.getResolvedRecipe();
+            if (resolved != null)
+                require(nameplate.getNominalResistanceOhms() == resolved.getResistanceOhms() &&
+                        nameplate.getTolerancePercent() == resolved.getTolerancePercent() &&
+                        nameplate.getRatedWattage() == resolved.getRatedWatts(),
+                    "Task 41 provider replay lost resolved load recipe: " + componentId);
         }
     }
 

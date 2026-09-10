@@ -148,7 +148,9 @@ class GeneratedBoardInstance {
         this.developerOnlyFaultRoute = developerOnlyFaultRoute;
         this.diagnosticSolvabilityContract = suppliedDiagnosticSolvabilityContract == null ?
             GeneratedDiagnosticSolvabilityContract.forGeneratedBoard(
-                circuitFamilyId, topologyVariantId, seed, this.faultCandidates) :
+                circuitFamilyId, topologyVariantId, seed, this.faultCandidates,
+                behaviorContract instanceof GeneratedDiagnosticExecutionProvider ?
+                    (GeneratedDiagnosticExecutionProvider) behaviorContract : null) :
             suppliedDiagnosticSolvabilityContract;
         connectionBindings.validateAgainst(board, this.simulationElements, componentBindings,
             externalPowerBindings, faultBinding);

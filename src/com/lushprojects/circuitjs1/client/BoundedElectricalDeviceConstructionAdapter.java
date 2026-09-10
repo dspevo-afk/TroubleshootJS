@@ -16,8 +16,7 @@ final class BoundedElectricalDeviceConstructionAdapter {
             ElectricalConstructionContext context,
             Map<String, ContributionConstructionReceipt> contributions) {
         if (plan.isControlledIndicator())
-            return constructControlled(plan, context, contributions.get("driver"),
-                contributions.get("load"));
+            return constructControlled(plan, context, contributions);
         return constructResistive(context, contributions.get("source"),
             contributions.get("load"));
     }
@@ -77,102 +76,78 @@ final class BoundedElectricalDeviceConstructionAdapter {
 
     private static DeviceJoinReceipt constructControlled(BoundedAssemblyPlan plan,
             ElectricalConstructionContext context,
-            ContributionConstructionReceipt driver,
-            ContributionConstructionReceipt load) {
+            Map<String, ContributionConstructionReceipt> contributions) {
+        ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
         ElectricalConstructionContext.DeviceScope device = context.deviceScope("device");
-        ElectricalConstructionContext.ElementHandle loadSupply = device.voltageSource(
-                "LOAD_SUPPLY", 112, 416, 112, 176, SUPPLY_VOLTAGE);
-        ElectricalConstructionContext.ElementHandle loadIsolation = device.switchElement(
-                "LOAD_ISOLATION", 112, 176, 192, 176);
-        ElectricalConstructionContext.ElementHandle loadConnector = device.switchElement(
-                "LOAD_CONNECTOR", 192, 176, 224, 176);
-        ElectricalConstructionContext.ElementHandle controlSupply = device.voltageSource(
-                "CONTROL_SUPPLY", 112, 496, 112, 96, SUPPLY_VOLTAGE);
-        ElectricalConstructionContext.ElementHandle controlIsolation = device.switchElement(
-                "CONTROL_ISOLATION", 112, 96, 192, 96);
-        ElectricalConstructionContext.ElementHandle controlInputTrace = device.wire(
-                "CONTROL_INPUT_TRACE", 192, 96, 240, 96);
-        ElectricalConstructionContext.ElementHandle controlCommand = device.switchElement(
-                "CONTROL_COMMAND", 240, 96, 272, 96);
-        ElectricalConstructionContext.ElementHandle ground = device.ground(
-                "GROUND", 900, 416, 900, 448);
-        device.wire("LOAD_RETURN", 112, 416, 900, 416);
-        device.wire("CONTROL_RETURN", 112, 496, 112, 416);
-
-        ElectricalConstructionContext.TerminalHandle rg1 = device.terminal(
-                driver.getElement("RG"), "1");
-        ElectricalConstructionContext.TerminalHandle rg2 = device.terminal(
-                driver.getElement("RG_SECONDARY"), "2");
-        ElectricalConstructionContext.TerminalHandle rpd1 = device.terminal(
-                driver.getElement("RPD"), "1");
-        ElectricalConstructionContext.TerminalHandle rpd2 = device.terminal(
-                driver.getElement("RPD"), "2");
-        ElectricalConstructionContext.TerminalHandle q1g = device.terminal(
-                driver.getElement("Q1"), "G");
-        ElectricalConstructionContext.TerminalHandle q1d = device.terminal(
-                driver.getElement("Q1"), "D");
-        ElectricalConstructionContext.TerminalHandle q1s = device.terminal(
-                driver.getElement("Q1"), "S");
-        ElectricalConstructionContext.TerminalHandle rload1 = device.terminal(
-                load.getElement("RLOAD"), "1");
-        ElectricalConstructionContext.TerminalHandle rloadPublic = device.terminal(
-                load.getElement("RLOAD_SECONDARY"), "2");
-        ElectricalConstructionContext.TerminalHandle ledA = device.terminal(
-                load.getElement("LED1"), "A");
-        ElectricalConstructionContext.TerminalHandle ledK = device.terminal(
-                load.getElement("LED1"), "K");
-
-        // Pads stay on the persistent device copper when an attachment is removed.
-        ElectricalConstructionContext.ElementHandle loadInputTrace = device.join(
-                "LOAD_INPUT_TRACE", device.terminal(loadConnector, "2"),
-                device.terminal(load.getElement("RLOAD_FIRST_ATTACHMENT"), "1"));
-        ElectricalConstructionContext.ElementHandle controlBoardTrace = device.join(
-                "CONTROL_BOARD_TRACE", device.terminal(controlCommand, "2"),
-                device.terminal(driver.getElement("RG_FIRST_ATTACHMENT"), "1"));
-        device.bindComponent("power-adapter", "J1", loadConnector, null);
-        device.bindComponent("control-adapter", "J2", controlCommand, null);
-        device.bindPad("power-adapter", "J1.1", device.terminal(loadConnector, "2"));
-        device.bindPad("power-adapter", "J1.2", device.terminal(ground, "1"));
-        device.bindPad("control-adapter", "J2.1", device.terminal(controlCommand, "2"));
-        device.bindPad("control-adapter", "J2.2", device.terminal(ground, "1"));
-        device.bindPad("driver", "RG.1", device.terminal(controlBoardTrace, "2"));
-        device.bindPad("driver", "RG.2", device.terminal(driver.getElement("GATE_NODE_TRACE"), "1"));
-        device.bindPad("driver", "RPD.1", rpd1);
-        device.bindPad("driver", "RPD.2", rpd2);
-        device.bindPad("driver", "Q1.G", q1g);
-        device.bindPad("driver", "Q1.D", q1d);
-        device.bindPad("driver", "Q1.S", q1s);
-        device.bindPad("load", "RLOAD.1", device.terminal(loadInputTrace, "2"));
-        device.bindPad("load", "RLOAD.2", device.terminal(load.getElement("LOAD_NODE_TRACE"), "1"));
-        device.bindPad("load", "LED1.A", ledA);
-        device.bindPad("load", "LED1.K", ledK);
-
-        device.bindPower(ControlledIndicatorDeviceBehavior.LOAD_POWER_INPUT_ID,
-                loadSupply, loadIsolation);
-        device.bindPower(ControlledIndicatorDeviceBehavior.CONTROL_POWER_INPUT_ID,
-                controlSupply, controlIsolation);
-        device.bindComponentConnection("driver", "RG", "RG.1",
-                device.terminal(controlBoardTrace, "2"),
-                rg1,
-                driver.getElement("RG_FIRST_ATTACHMENT"));
-        device.bindComponentConnection("driver", "RG", "RG.2",
-                device.terminal(driver.getElement("GATE_NODE_TRACE"), "1"), rg2,
-                driver.getElement("RG_SECOND_ATTACHMENT"));
-        device.bindComponentConnection("load", "RLOAD", "RLOAD.1",
-                device.terminal(loadInputTrace, "2"),
-                rload1,
-                load.getElement("RLOAD_FIRST_ATTACHMENT"));
-        device.bindComponentConnection("load", "RLOAD", "RLOAD.2",
-                device.terminal(load.getElement("LOAD_NODE_TRACE"), "1"),
-                rloadPublic, load.getElement("RLOAD_SECOND_ATTACHMENT"));
-
-
-        device.join("DRAIN_TRACE", ledK, q1d);
-        device.join("PULLDOWN_RETURN", rpd2, device.terminal(ground, "1"));
-        device.join("SOURCE_RETURN", q1s, device.terminal(ground, "1"));
-        device.command(ControlledIndicatorBlockContributions.CONTROL_CONNECTION_ID,
-                controlCommand);
+        java.util.TreeMap<String, ElectricalConstructionContext.ElementHandle> infrastructure =
+                new java.util.TreeMap<String, ElectricalConstructionContext.ElementHandle>();
+        ElectricalConstructionContext.ElementHandle ground = device.ground("GROUND", 880, 704, 880, 736);
+        infrastructure.put("GROUND", ground);
+        int row = 0;
+        for (DeviceAdapterContract adapter : plan.getDeviceAdapters()) {
+            String key = adapter.getKey();
+            int y = 96 + row++ * 192;
+            ElectricalConstructionContext.ElementHandle source = device.voltageSource(
+                    key + ".SUPPLY", 96, y + 80, 96, y,
+                    spec.getElementDeclaration("device", key + ".SUPPLY").getParameter("voltage"));
+            ElectricalConstructionContext.ElementHandle isolation = device.switchElement(
+                    key + ".ISOLATION", 96, y, 160, y);
+            ElectricalConstructionContext.ElementHandle connector = device.switchElement(
+                    key + ".CONNECTOR", 160, y, 224, y);
+            ElectricalConstructionContext.ElementHandle returned = device.wire(
+                    key + ".RETURN", 96, y + 80, 880, 704);
+            infrastructure.put(key + ".SUPPLY", source);
+            infrastructure.put(key + ".ISOLATION", isolation);
+            infrastructure.put(key + ".CONNECTOR", connector);
+            infrastructure.put(key + ".RETURN", returned);
+            device.bindComponent(key, adapter.getComponentLocalId(), connector, null);
+            device.bindPower(adapter.getExternalInputId(), source, isolation);
+            if (adapter.isControl()) {
+                String commandJoin = null;
+                for (ElectricalConnection connection : plan.getRequest().getConnections())
+                    for (ElectricalConnection.PortRef port : connection.getPorts())
+                        if (key.equals(port.getBlockKey()) && adapter.getOutputPortId().equals(port.getPortId()))
+                            commandJoin = connection.getId();
+                if (commandJoin == null) throw new IllegalStateException("Control has no declared device join");
+                device.command(commandJoin, source);
+            }
+        }
+        for (ElectricalRealizationSpec.BridgeSpec bridge : spec.getBridgeSpecs().values()) {
+            ElectricalConstructionContext.ElementHandle wire = device.join(bridge.getBridgeElementId(),
+                    terminal(device, bridge.getFirst(), infrastructure, contributions),
+                    terminal(device, bridge.getSecond(), infrastructure, contributions));
+            infrastructure.put(bridge.getBridgeElementId(), wire);
+        }
+        for (Map.Entry<String, ElectricalRealizationSpec.BoardEndpointSpec> entry : spec.getBoardEndpoints().entrySet()) {
+            ElectricalRealizationSpec.BoardEndpointSpec pad = entry.getValue();
+            ElectricalConstructionContext.TerminalHandle boardEndpoint = terminal(device,
+                    pad.getEndpoint(), infrastructure, contributions);
+            device.bindPad(pad.getOwnerKey(), pad.getLocalPadId(), boardEndpoint);
+            if (pad.getAttachmentElementId() != null) {
+                ElectricalRealizationSpec.PadBindingSpec binding = spec.getPadBinding(entry.getKey());
+                ElectricalRealizationSpec.TerminalMapping mapping = spec.getTerminalMapping(
+                        binding.getOwnerKey(), binding.getLocalId(), binding.getTerminalId());
+                ElectricalConstructionContext.ElementHandle attachment = contributions.get(pad.getOwnerKey())
+                        .getElement(pad.getAttachmentElementId());
+                device.bindComponentConnection(binding.getOwnerKey(), binding.getLocalId(), pad.getLocalPadId(),
+                        boardEndpoint, terminal(device, mapping.getComponentEndpoint(), infrastructure, contributions), attachment);
+            }
+        }
         return device.finish();
     }
 
+    private static ElectricalConstructionContext.TerminalHandle terminal(
+            ElectricalConstructionContext.DeviceScope device, ElectricalRealizationSpec.EndpointRef ref,
+            Map<String, ElectricalConstructionContext.ElementHandle> infrastructure,
+            Map<String, ContributionConstructionReceipt> contributions) {
+        ElectricalConstructionContext.ElementHandle element;
+        if ("device".equals(ref.getOwnerKey())) element = infrastructure.get(ref.getElementId());
+        else {
+            ContributionConstructionReceipt receipt = contributions.get(ref.getOwnerKey());
+            if (receipt == null) throw new IllegalArgumentException("Missing local construction owner");
+            element = receipt.getElement(ref.getElementId());
+        }
+        if (element == null) throw new IllegalArgumentException("Missing declared endpoint element");
+        return device.terminal(element, ref.getTerminalId());
+    }
 }

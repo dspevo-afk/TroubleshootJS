@@ -453,11 +453,29 @@ final class PhysicalConstructionMaterializer {
             PhysicalConstructionPartDeclaration part) {
         ElectricalRealizationSpec.ElementDeclaration primary =
             spec.getElementDeclaration(part.getBackingOwnerKey(), part.getBackingElementId());
-        String expectedKind = "RESISTOR".equals(part.getPublicType()) ? "RESISTOR" :
-            "NMOS_TRANSISTOR".equals(part.getPublicType()) ? "NMOS" :
-            "LED".equals(part.getPublicType()) ? "LED" : "SWITCH";
+        String publicType = part.getPublicType();
+        String expectedKind = null;
+        if ("RESISTOR".equals(publicType))
+            expectedKind = "RESISTOR";
+        else if ("NMOS_TRANSISTOR".equals(publicType))
+            expectedKind = "NMOS";
+        else if ("NPN_TRANSISTOR".equals(publicType))
+            expectedKind = "NPN";
+        else if ("LED".equals(publicType))
+            expectedKind = "LED";
+        else if ("CONNECTOR".equals(publicType)) {
+            /* Device connectors are declared physical adapters.  Their
+             * backing may be a source or a control element, but it must
+             * remain one of the explicit current device kinds. */
+            if (primary == null || !part.getComponentId().equals(primary.getComponentId()) ||
+                    !("VOLTAGE".equals(primary.getKind()) ||
+                        "SWITCH".equals(primary.getKind())))
+                throw new IllegalStateException("Foreign connector physical backing: " +
+                    part.getComponentId());
+        } else
+            throw new IllegalStateException("Unknown physical public type: " + publicType);
         if (primary == null || !part.getComponentId().equals(primary.getComponentId()) ||
-                !expectedKind.equals(primary.getKind()))
+                (expectedKind != null && !expectedKind.equals(primary.getKind())))
             throw new IllegalStateException("Foreign primary physical backing: " +
                 part.getComponentId());
 

@@ -219,26 +219,33 @@ final class A04ConstructionContextCanaries {
     private void multiTerminalAllocationOrder() {
         final BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(
             BoundedAssemblyRequest.forControlledIndicator(2L));
+        final ControlledIndicatorChannel channel = plan.getChannels().get(0);
+        final String driverOwner = channel.getDriverKey();
+        final ComposedBlockContribution driverContribution = plan.getBlocks().get(driverOwner);
+        final ElectricalRealizationSpec.ElementDeclaration q1Declaration =
+            plan.getElectricalRealizationSpec().getElementDeclaration(driverOwner, "Q1");
+        final String unconfiguredTerminal = driverContribution.getDescriptor().getComponents()
+            .get("Q1").getTerminalIds().get(1);
         final ElectricalConstructionContext context = begin(plan, null);
-        final ElectricalConstructionContext.Scope driver = context.scope("driver",
-            ControlledIndicatorBlockContributions.DRIVER_TYPE_ID, 1);
-        final ElectricalConstructionContext.ElementHandle q1 = driver.nmos(
-            "Q1", 720, 288, 800, 288, 1.5, 10.0);
-        Point gate = driver.point(q1, 0);
-        Point source = driver.point(q1, 1);
-        Point drain = driver.point(q1, 2);
-        check(!gate.equals(source) && !gate.equals(drain) && !source.equals(drain),
-            "owned NMOS configuration did not produce three distinct posts");
+        final ElectricalConstructionContext.Scope driver = context.scope(driverOwner,
+            driverContribution.getProviderTypeId(), driverContribution.getProviderVersion());
+        final ElectricalConstructionContext.ElementHandle q1 = allocateDriver(driver,
+            driverContribution, q1Declaration);
+        Point first = driver.point(q1, 0);
+        Point second = driver.point(q1, 1);
+        Point third = driver.point(q1, 2);
+        check(!first.equals(second) && !first.equals(third) && !second.equals(third),
+            "owned multi-terminal configuration did not produce three distinct posts");
         check(context.getAllocatedElementCount() == 1,
-            "NMOS was not tracked exactly once before configuration");
+            "multi-terminal device was not tracked exactly once before configuration");
         close(context);
         final ElectricalConstructionContext raw = begin(plan, null);
-        final ElectricalConstructionContext.Scope rawDriver = raw.scope("driver",
-            ControlledIndicatorBlockContributions.DRIVER_TYPE_ID, 1);
+        final ElectricalConstructionContext.Scope rawDriver = raw.scope(driverOwner,
+            driverContribution.getProviderTypeId(), driverContribution.getProviderVersion());
         final ElectricalConstructionContext.ElementHandle rawQ1 = rawDriver.allocate("Q1");
         reject(new Runnable() { public void run() { rawDriver.point(rawQ1, 1); } },
             "reading an unconfigured multi-terminal post");
-        reject(new Runnable() { public void run() { rawDriver.terminal("Q1", "S"); } },
+        reject(new Runnable() { public void run() { rawDriver.terminal("Q1", unconfiguredTerminal); } },
             "binding an unconfigured multi-terminal post");
         close(raw);
         final IllegalStateException injected = new IllegalStateException("A04 NMOS allocation failure");
@@ -249,15 +256,25 @@ final class A04ConstructionContextCanaries {
                         throw injected;
                 }
             });
-        final ElectricalConstructionContext.Scope interruptedDriver = interrupted.scope("driver",
-            ControlledIndicatorBlockContributions.DRIVER_TYPE_ID, 1);
+        final ElectricalConstructionContext.Scope interruptedDriver = interrupted.scope(driverOwner,
+            driverContribution.getProviderTypeId(), driverContribution.getProviderVersion());
         Throwable observed = null;
-        try { interruptedDriver.nmos("Q1", 720, 288, 800, 288, 1.5, 10.0); }
+        try { allocateDriver(interruptedDriver, driverContribution, q1Declaration); }
         catch (Throwable problem) { observed = problem; }
         check(observed == injected && interrupted.getAllocatedElementCount() == 1,
-            "NMOS allocation failure escaped ownership or was masked by uninitialized posts");
+            "multi-terminal allocation failure escaped ownership or was masked by uninitialized posts");
         close(interrupted);
         original.assertRestored(sim);
+    }
+
+    private static ElectricalConstructionContext.ElementHandle allocateDriver(
+            ElectricalConstructionContext.Scope scope, ComposedBlockContribution contribution,
+            ElectricalRealizationSpec.ElementDeclaration declaration) {
+        if (ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID.equals(
+                contribution.getProviderTypeId()))
+            return scope.npn("Q1", 720, 288, 800, 288, declaration.getParameter("beta"));
+        return scope.nmos("Q1", 720, 288, 800, 288,
+            declaration.getParameter("threshold"), declaration.getParameter("beta"));
     }
 
     /** Identical local inputs, one context, actual CircuitJS node analysis. */

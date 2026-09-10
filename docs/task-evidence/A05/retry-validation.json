@@ -1,0 +1,55 @@
+{
+  "protocol": "A05-DEEPSEEK-RETRY-1",
+  "baseCommit": "bcf2bf8b8a3a995eaba76daefaf759e06918f4da",
+  "sourceChanged": false,
+  "sourceInventoryFiles": 915,
+  "executionFiles": 1320,
+  "native": {
+    "status": "PASS",
+    "exitCode": 0,
+    "javaSuites": 15,
+    "physicalAssertions": 5270,
+    "reportAssertions": 195,
+    "seedVectors": 22,
+    "valueCases": 9,
+    "roleVectors": 6,
+    "cleanup": "PASS"
+  },
+  "readerParity": {
+    "status": "PASS",
+    "exitCode": 0,
+    "capturedRoutes": 6,
+    "freshBrowserRun": false,
+    "currentNativeReceipts": true
+  },
+  "reviews": [
+    {
+      "assignment": "source-final",
+      "threadId": "01a088be-465a-73c3-a14b-7fb18e795b9f",
+      "requestedModel": "deepseek-v4-flash",
+      "requestedEffort": "max",
+      "mode": "read-only",
+      "observedProvider": "deepseek",
+      "observedModel": "deepseek-v4-flash",
+      "observedEffort": "max"
+    },
+    {
+      "assignment": "evidence-final",
+      "threadId": "01a088be-460b-71b2-8b74-721dfb80a222",
+      "requestedModel": "deepseek-v4-flash",
+      "requestedEffort": "max",
+      "mode": "read-only",
+      "observedProvider": "deepseek",
+      "observedModel": "deepseek-v4-flash",
+      "observedEffort": "max"
+    }
+  ],
+  "closureReview": {
+    "model": "deepseek-v4-flash",
+    "provider": "deepseek",
+    "effort": "max",
+    "status": "PASS",
+    "rawResultSha256": "c7d04324176ee4367ee93cfdc0bd711a5f60d3c7ed407dcf3c81351c3e95b246"
+  },
+  "publication": "Outcome recorded after normal commit and remote verification"
+}

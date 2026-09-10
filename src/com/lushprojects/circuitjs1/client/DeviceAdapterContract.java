@@ -41,12 +41,13 @@ final class DeviceAdapterContract {
     private final String componentLocalId;
     private final String externalInputId;
     private final String outputPortId;
+    private final boolean control;
 
     private DeviceAdapterContract(String key,
             FunctionalBlockDescriptor descriptor,
             ElectricalBlockContract electricalContract,
             String componentLocalId, String externalInputId,
-            String outputPortId) {
+            String outputPortId, boolean control) {
         this.key = FunctionalBlockDescriptor.requireId(key, "adapter.key");
         this.descriptor = descriptor;
         this.electricalContract = electricalContract;
@@ -56,6 +57,7 @@ final class DeviceAdapterContract {
                 externalInputId, "adapter.externalInputId");
         this.outputPortId = FunctionalBlockDescriptor.requireId(outputPortId,
                 "adapter.outputPortId");
+        this.control = control;
     }
 
     static DeviceAdapterContract power() {
@@ -64,16 +66,19 @@ final class DeviceAdapterContract {
                 POWER_EXTERNAL_INPUT_ID);
         return new DeviceAdapterContract(POWER_ADAPTER_KEY, descriptor,
                 electrical(descriptor, false), POWER_COMPONENT_ID,
-                POWER_EXTERNAL_INPUT_ID, POWER_OUTPUT_PORT_ID);
+                POWER_EXTERNAL_INPUT_ID, POWER_OUTPUT_PORT_ID, false);
     }
 
     static DeviceAdapterContract control() {
+        return control(CONTROL_ADAPTER_KEY, CONTROL_COMPONENT_ID, CONTROL_EXTERNAL_INPUT_ID);
+    }
+
+    static DeviceAdapterContract control(String key, String componentId, String inputId) {
         FunctionalBlockDescriptor descriptor = descriptor(
-                CONTROL_ADAPTER_KEY, CONTROL_COMPONENT_ID,
-                CONTROL_OUTPUT_PORT_ID, CONTROL_EXTERNAL_INPUT_ID);
-        return new DeviceAdapterContract(CONTROL_ADAPTER_KEY, descriptor,
-                electrical(descriptor, true), CONTROL_COMPONENT_ID,
-                CONTROL_EXTERNAL_INPUT_ID, CONTROL_OUTPUT_PORT_ID);
+                key, componentId, CONTROL_OUTPUT_PORT_ID, inputId);
+        return new DeviceAdapterContract(key, descriptor,
+                electrical(descriptor, true), componentId,
+                inputId, CONTROL_OUTPUT_PORT_ID, true);
     }
 
     static DeviceAdapterContract resolve(String key, int version) {
@@ -95,6 +100,8 @@ final class DeviceAdapterContract {
     String getExternalInputId() { return externalInputId; }
     String getOutputPortId() { return outputPortId; }
     String getReturnPortId() { return RETURN_PORT_ID; }
+    boolean isControl() { return control; }
+    String getRoleId() { return control ? "control-input" : "power-input"; }
 
     /** Stable namespace address for a local adapter component. */
     String componentId(BlockNamespace namespace) {
@@ -162,7 +169,7 @@ final class DeviceAdapterContract {
                     Role.CONTROL, Direction.OUTPUT, Behavior.SOURCE,
                     Drive.PUSH_PULL, domain, Scalar.known(5.0),
                     Range.known(0.0, 5.0), Range.known(0.0, 5.0),
-                    Loading.NONE, Scalar.known(0.001), Scalar.notApplicable(),
+                    Loading.NONE, Scalar.known(0.002), Scalar.notApplicable(),
                     new ElectricalPortContract.Digital(
                             ElectricalPortContract.ActiveLevel.HIGH,
                             Scalar.known(0.1), Scalar.known(4.75),
@@ -174,7 +181,7 @@ final class DeviceAdapterContract {
                     Role.RAIL, Direction.OUTPUT, Behavior.SOURCE,
                     Drive.STIFF_VOLTAGE, domain, Scalar.known(5.0),
                     Range.known(4.75, 5.25), Range.known(4.5, 5.5),
-                    Loading.NONE, Scalar.known(0.020), Scalar.notApplicable(),
+                    Loading.NONE, Scalar.known(0.050), Scalar.notApplicable(),
                     ElectricalPortContract.Digital.notApplicable(),
                     MergePolicy.ALLOW, AccessRequirement.CONNECTABLE,
                     AccessProvision.CONNECTABLE);

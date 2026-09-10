@@ -10,7 +10,7 @@ $parseErrors = $null
 $ast = [Management.Automation.Language.Parser]::ParseFile($source, [ref]$tokens, [ref]$parseErrors)
 if ($parseErrors.Count -ne 0) { throw 'Browser report reader has syntax errors.' }
 # Load only pure report/route functions; never execute preview/browser setup.
-foreach ($name in @('Get-ExactReportText', 'Test-JsonReport', 'Test-A04Report',
+foreach ($name in @('Get-ExactReportText', 'Test-JsonReport', 'Test-A04Report', 'Test-ControlledReport',
         'Test-RouteReady', 'Get-RouteDefinitions')) {
     $found = @($ast.FindAll({ param($node)
         $node -is [Management.Automation.Language.FunctionDefinitionAst] -and
@@ -35,17 +35,17 @@ $valid = [ordered]@{
     protocol = 'TSJ-A04-CONSTRUCTION-1'; status = 'PASS'
     contractAssertions = 1; runtimeAssertions = 1; candidateCleanup = 'PASS'
     cases = @(
-        @{ route = 'resistive'; seed = '1'; generatorVersion = 4;
+        @{ route = 'resistive'; seed = '1'; generatorVersion = 5;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 1; assemblyMs = 0 },
-        @{ route = 'resistive'; seed = '2'; generatorVersion = 4;
+        @{ route = 'resistive'; seed = '2'; generatorVersion = 5;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 2; assemblyMs = 1 },
-        @{ route = 'resistive'; seed = '3'; generatorVersion = 4;
+        @{ route = 'resistive'; seed = '3'; generatorVersion = 5;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 3; assemblyMs = 2 },
-        @{ route = 'controlled'; seed = '1'; generatorVersion = 4;
+        @{ route = 'controlled'; seed = '1'; generatorVersion = 5;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 4; assemblyMs = 2 },
-        @{ route = 'controlled'; seed = '2'; generatorVersion = 4;
+        @{ route = 'controlled'; seed = '2'; generatorVersion = 5;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 5; assemblyMs = 3 },
-        @{ route = 'controlled'; seed = '3'; generatorVersion = 4;
+        @{ route = 'controlled'; seed = '3'; generatorVersion = 5;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 6; assemblyMs = 3 })
 }
 foreach ($flag in $flags) { $valid[$flag] = $true }
@@ -97,7 +97,7 @@ $copy = Copy-Report $valid; $copy.cases[0].replayVerified = $false
 Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Unverified replay was accepted.'
 $copy = Copy-Report $valid; $copy.cases[0].ownerRestored = $false
 Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Unrestored owner was accepted.'
-foreach ($value in @(0, 3, 5, '4', 1.5, $null)) {
+foreach ($value in @(0, 3, 4, 6, '5', 1.5, $null)) {
     $copy = Copy-Report $valid; $copy.cases[0].generatorVersion = $value
     Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Invalid generator version was accepted.'
 }
@@ -150,5 +150,100 @@ Assert-ReportContract (-not (Test-RouteReady 'a02' $a02Reports)) 'Failed A02 rep
 $a02Report.status = 'PASS'; $a02Reports.a02 = Encode-Report $a02Report
 $a02Reports.verification = 'RUNNING:a02'
 Assert-ReportContract (-not (Test-RouteReady 'a02' $a02Reports)) 'Unfinished A02 execution was accepted.'
+$a05Routes = @(Get-RouteDefinitions 'A05' $false)
+Assert-ReportContract (($a05Routes.name -join ',') -ceq
+    'a03,task46,task49,a04,a04-forcedfailure,a04-debugoff') 'A05 bounded route set changed.'
+# Synthetic protocol fixtures exercise fail-closed parsing only. They are not
+# CircuitJS or browser evidence and are never emitted by the product verifier.
+$valueSeeds = @('-1','0','1','2','3','-9223372036854775808','9223372036854775807',
+    '9007199254740993','-9007199254740993')
+$solverSeeds = @('-1','0','1','-9223372036854775808')
+$roleSeeds = @('-1','0','1','2','-9223372036854775808','9223372036854775807')
+$controlled = [ordered]@{
+    protocol='TSJ-TASK49-2'; status='PASS'; requestedSeed='3'; assertions=1; measurementCases=4
+    originalOwnerRestored=$true; candidateCleanup='PASS'
+    construction=@{ originalOwnerPreserved=$true;
+        failedStages=@('MAPPING','ELECTRICAL','LAYOUT','REGISTRATION','VALIDATION') }
+    succession=@{ boardReplacement=$true; staleCompletion=$true }
+    roleSelectionVectors=@($roleSeeds | ForEach-Object {
+        'seed=' + $_ + ';a=nmos-low-side-driver;b=npn-low-side-driver;fault=channel-a-load-RLOAD-OPEN'
+    })
+    valueCases=@($valueSeeds | ForEach-Object {
+        @{ seed=$_; descriptor='current-fixture'; faultDecision='channel-a-load-RLOAD-OPEN'; channels=@(
+            @{channel='channel-a';provider='nmos-low-side-driver';catalog='r330';resistanceOhms=330;tolerancePercent=5},
+            @{channel='channel-b';provider='npn-low-side-driver';catalog='r270';resistanceOhms=270;tolerancePercent=5}) }
+    })
+    cases=@($solverSeeds | ForEach-Object {
+        @{ seed=$_; faultOwner='owner-a-driver'; freshReplay=$true; inputOrderIndependent=$true
+            independentControls=$true; repairReachable=$true; assertions=1
+            physicalCorrespondence=@{status='PASS'}; mutations=@{status='PASS'; owners=4}
+            support=@{brokenHealthyRejected=$true;brokenRetestRejected=$true;restoredPassed=$true}
+            normalAdmission=@{status='EXECUTED'; routes=@(
+                @('owner-a-driver','owner-a-load','owner-b-driver','owner-b-load') | ForEach-Object {
+                    @{route=('fixture/' + $_); measuredDepth=1; samples=1; repair=$true; retest=$true}
+                })}
+            faultRepairs=@(@('owner-a-driver','owner-a-load','owner-b-driver','owner-b-load') | ForEach-Object {
+                @{owner=$_;wrongRejected=$true;correctPassed=$true;alternativePassed=$true;otherOwnersUnchanged=$true}
+            }) }
+    })
+}
+function Test-ControlledFixture($Value) { return Test-ControlledReport (Encode-Report $Value) 'TSJ-TASK49-2' }
+Assert-ReportContract (Test-ControlledFixture $controlled) 'Complete controlled fixture rejected.'
+foreach ($field in @($controlled.Keys)) {
+    $copy=Copy-Report $controlled; $copy.PSObject.Properties.Remove($field)
+    Assert-ReportContract (-not (Test-ControlledFixture $copy)) "Missing controlled $field accepted."
+}
+foreach ($protocol in @('TSJ-TASK49-1','TSJ-TASK49-3')) {
+    $copy=Copy-Report $controlled; $copy.protocol=$protocol
+    Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Retired/unknown controlled report accepted.'
+}
+foreach ($field in @('freshReplay','inputOrderIndependent','independentControls','repairReachable')) {
+    foreach ($value in @($false,'true',1,$null)) {
+        $copy=Copy-Report $controlled; $copy.cases[0].$field=$value
+        Assert-ReportContract (-not (Test-ControlledFixture $copy)) "Malformed case $field accepted."
+    }
+}
+foreach ($field in @('wrongRejected','correctPassed','alternativePassed','otherOwnersUnchanged')) {
+    foreach ($value in @($false,'true',1,$null)) {
+        $copy=Copy-Report $controlled; $copy.cases[1].faultRepairs[2].$field=$value
+        Assert-ReportContract (-not (Test-ControlledFixture $copy)) "Malformed repair $field accepted."
+    }
+}
+foreach ($field in @('brokenHealthyRejected','brokenRetestRejected','restoredPassed')) {
+    foreach ($value in @($false,'true',1,$null)) {
+        $copy=Copy-Report $controlled; $copy.cases[2].support.$field=$value
+        Assert-ReportContract (-not (Test-ControlledFixture $copy)) "Malformed support $field accepted."
+    }
+}
+foreach ($field in @('cases','valueCases','roleSelectionVectors')) {
+    $copy=Copy-Report $controlled; $copy.$field=@($copy.$field[0])
+    Assert-ReportContract (-not (Test-ControlledFixture $copy)) "Missing $field coverage accepted."
+    $copy=Copy-Report $controlled; $copy.$field[1]=$copy.$field[0]
+    Assert-ReportContract (-not (Test-ControlledFixture $copy)) "Duplicate $field accepted."
+}
+$copy=Copy-Report $controlled; $copy.cases[0].faultRepairs[1]=$copy.cases[0].faultRepairs[0]
+Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Duplicate repaired owner accepted.'
+$copy=Copy-Report $controlled; $copy.cases[0].normalAdmission.routes[0].route='fixture/foreign'
+Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Foreign admission repair owner accepted.'
+$copy=Copy-Report $controlled; $copy.cases[0].normalAdmission.routes[0].samples=0
+Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Unexecuted admission route accepted.'
+$copy=Copy-Report $controlled; $copy.valueCases[0].channels[1]=$copy.valueCases[0].channels[0]
+Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Duplicate physical channel accepted.'
+$copy=Copy-Report $controlled; $copy.valueCases[0].channels[1].provider='switch-fallback'
+Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Unknown role provider accepted.'
+$copy=Copy-Report $controlled; $copy.valueCases[0].channels[1].resistanceOhms='330'
+Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'String recipe value accepted.'
+$copy=Copy-Report $controlled; $copy.construction.failedStages=@('MAPPING')
+Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Missing late construction failure accepted.'
+$copy=Copy-Report $controlled; $copy.succession.staleCompletion=$false
+Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Unproven stale cleanup accepted.'
+foreach ($seed in @('03','9223372036854775808',3,$null)) {
+    $copy=Copy-Report $controlled; $copy.requestedSeed=$seed
+    Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Noncanonical requested seed accepted.'
+}
+$controlledReports=[pscustomobject]@{ verification='PASS:task49';task49=(Encode-Report $controlled) }
+Assert-ReportContract (Test-RouteReady 'task49' $controlledReports) 'Current controlled route rejected.'
+$controlledReports.verification='RUNNING:task49'
+Assert-ReportContract (-not (Test-RouteReady 'task49' $controlledReports)) 'Unfinished controlled route accepted.'
 Write-Output ('PASS: A04 report contracts assertions=' + $script:assertions)
 exit 0

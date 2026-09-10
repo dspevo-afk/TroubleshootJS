@@ -1,0 +1,63 @@
+{
+  "protocol": "A05-NATIVE-BUILD-1",
+  "sourceDigest": "48541648277a27ee8974f9d9093a2c1281b99b8be85d7ea97a6060f84d698f2d",
+  "scriptDigest": "654917ac4fee28901a6f79697c1037044fb82233c9b87d15359a3c16caf1e221",
+  "native": {
+    "command": "scripts/verify-current-contracts.ps1 -JavaHome <verified repository JDK8> -PythonExe <verified CPython> -ReceiptOutputPath <owned temp>/native-receipt.txt",
+    "status": "PASS",
+    "exitCode": 0,
+    "results": [
+      "PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus",
+      "PASS: Task44 9 groups, 247 assertions; no simulator dependency",
+      "PASS: Task45 202 assertions",
+      "PASS: current resistive assembly contracts 241 assertions",
+      "PASS: current controlled-indicator contracts 201 assertions",
+      "PASS: current switched-low-side compatibility 16 assertions",
+      "PASS: current value synthesis 188 assertions",
+      "PASS: A05 role providers 246 assertions",
+      "PASS: A03IdentityContractTest assertions=30",
+      "PASS: A02CandidateContractTest",
+      "PASS: A02GeometryContractTest 32 assertions",
+      "PASS: A02ReplayContractTest assertions=148",
+      "PASS: ElectricalUnitPackageMapContractTest assertions=37",
+      "PASS: A04ConstructionContractTest assertions=592",
+      "PASS: A04PhysicalDeclarationContractTest assertions=5270",
+      "PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact",
+      "PASS: current value synthesis oracle 9 seeds; bounded5/schema2 repeated-channel equations exact",
+      "PASS: A05 independent role selection oracle 6 seeds",
+      "PASS: A04 report contracts assertions=195",
+      "PASS: current contracts; 15 Java suites, independent seed/value/role oracles and report protocol.",
+      "CLEANUP: current JVM contract classes and task-owned scratch removed."
+    ],
+    "cleanup": "PASS",
+    "interpreter": "CPython 3.12.8, explicit verified uv installation"
+  },
+  "build": {
+    "command": "scripts/build.ps1 -JavaHome <verified repository JDK8> -Style OBF -Target Compile",
+    "status": "PASS",
+    "exitCode": 0,
+    "host": "Windows PowerShell 5.1; JDK 8u502; GWT 2.7.0",
+    "permutations": 5,
+    "compileSeconds": 58.307,
+    "linkSeconds": 1.306,
+    "cleanup": "PASS"
+  },
+  "limits": "The native Task35 fail-closed stub does not qualify that developer verifier. Actual GWT production source was compiled separately. No earlier A05/R00 build certifies later source.",
+  "retryNativeConfirmation": {
+    "status": "PASS",
+    "exitCode": 0,
+    "javaSuites": 15,
+    "physicalAssertions": 5270,
+    "reportAssertions": 195,
+    "seedVectors": 22,
+    "valueCases": 9,
+    "roleVectors": 6,
+    "cleanup": "PASS",
+    "scope": "fresh maintained native runner; no production source changed"
+  },
+  "retryReaderParity": {
+    "status": "PASS",
+    "exitCode": 0,
+    "scope": "six recovered compiled reports versus fresh current native receipts and recomputed current execution identity; not a fresh browser run"
+  }
+}

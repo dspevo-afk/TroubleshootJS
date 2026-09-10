@@ -20,12 +20,9 @@ import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
  * resolved recipe are passed through by identity from the plan.</p>
  */
 final class ElectricalRealizationSpec {
-    static final int VERSION = 1;
+    static final int VERSION = 2;
     static final String LEGACY_POWER_INPUT_ID = "VIN_INPUT";
-    // Frozen choices of the accepted bounded generator versions, not CURRENT defaults.
-    static final String CONTROLLED_LED_MODEL = "default-led";
-    static final double CONTROLLED_NMOS_THRESHOLD_VOLTS = 1.5;
-    static final double CONTROLLED_NMOS_BETA = 10.0;
+    // Bounded source envelope. Local models are declared by their providers.
     static final double EXTERNAL_SUPPLY_VOLTS = 5.0;
 
     private final int version;
@@ -37,12 +34,12 @@ final class ElectricalRealizationSpec {
     private final Map<String, BridgeSpec> bridgeSpecs;
     private final Map<String, SolverReservation> solverReservations;
     private final ElectricalUnitPackageMap packageMap;
-    private final ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe;
     private final Map<String, String> componentIds;
     private final Map<String, String> padIds;
     private final Map<String, PadBindingSpec> padBindings;
     private final Map<String, PowerInputSpec> powerInputs;
     private final Set<String> requiredConnectionPadIds;
+    private final Map<String, BoardEndpointSpec> boardEndpoints;
 
     private ElectricalRealizationSpec(int version,
             Map<String, ProviderDeclaration> providerDeclarations,
@@ -53,11 +50,11 @@ final class ElectricalRealizationSpec {
             Map<String, BridgeSpec> bridgeSpecs,
             Map<String, SolverReservation> solverReservations,
             ElectricalUnitPackageMap packageMap,
-            ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe,
             Map<String, String> componentIds, Map<String, String> padIds,
             Map<String, PadBindingSpec> padBindings,
             Map<String, PowerInputSpec> powerInputs,
-            Collection<String> requiredConnectionPadIds) {
+            Collection<String> requiredConnectionPadIds,
+            Map<String, BoardEndpointSpec> boardEndpoints) {
         if (version != VERSION)
             throw new IllegalArgumentException("Unsupported electrical spec version");
         if (packageMap == null)
@@ -71,11 +68,11 @@ final class ElectricalRealizationSpec {
         this.bridgeSpecs = immutable(bridgeSpecs);
         this.solverReservations = immutable(solverReservations);
         this.packageMap = packageMap;
-        this.resolvedLoadRecipe = resolvedLoadRecipe;
         this.componentIds = immutable(componentIds);
         this.padIds = immutable(padIds);
         this.padBindings = immutable(padBindings);
         this.powerInputs = immutable(powerInputs);
+        this.boardEndpoints = immutable(boardEndpoints);
         this.requiredConnectionPadIds = immutableSet(requiredConnectionPadIds,
                 "required connection pads");
     }
@@ -101,9 +98,6 @@ final class ElectricalRealizationSpec {
         return solverReservations;
     }
     ElectricalUnitPackageMap getPackageMap() { return packageMap; }
-    ControlledIndicatorValueSynthesis.ResolvedRecipe getResolvedLoadRecipe() {
-        return resolvedLoadRecipe;
-    }
 
     ProviderDeclaration getProviderDeclaration(String ownerKey) {
         return providerDeclarations.get(ownerKey);
@@ -134,6 +128,7 @@ final class ElectricalRealizationSpec {
     Map<String, PowerInputSpec> getPowerInputs() { return powerInputs; }
 
     Set<String> getRequiredConnectionPadIds() { return requiredConnectionPadIds; }
+    Map<String, BoardEndpointSpec> getBoardEndpoints() { return boardEndpoints; }
 
     Set<String> getExpectedNetIds() {
         TreeSet<String> result = new TreeSet<String>();
@@ -182,11 +177,34 @@ final class ElectricalRealizationSpec {
         private final List<String> terminalIds;
         private final List<String> joinIds;
         private final boolean deviceOwner;
+        private final Map<String, ElementDeclaration> elements;
+        private final Map<String, FunctionalBlockDescriptor.Value> choices;
 
         ProviderDeclaration(String ownerKey, String providerId, int providerVersion,
                 ComposedBlockContribution contribution, Collection<String> elementIds,
                 Collection<String> unitIds, Collection<String> terminalIds,
                 Collection<String> joinIds, boolean deviceOwner) {
+            this(ownerKey, providerId, providerVersion, contribution, elementIds, unitIds,
+                    terminalIds, joinIds, deviceOwner, Collections.<String, ElementDeclaration>emptyMap());
+        }
+
+        ProviderDeclaration(String ownerKey, String providerId, int providerVersion,
+                ComposedBlockContribution contribution, Collection<String> elementIds,
+                Collection<String> unitIds, Collection<String> terminalIds,
+                Collection<String> joinIds, boolean deviceOwner,
+                Map<String, ElementDeclaration> allElements) {
+            this(ownerKey, providerId, providerVersion, contribution, elementIds, unitIds,
+                    terminalIds, joinIds, deviceOwner, allElements,
+                    Collections.<String, FunctionalBlockDescriptor.Value>emptyMap());
+        }
+
+        ProviderDeclaration(String ownerKey, String providerId, int providerVersion,
+                ComposedBlockContribution contribution, Collection<String> elementIds,
+                Collection<String> unitIds, Collection<String> terminalIds,
+                Collection<String> joinIds, boolean deviceOwner,
+                Map<String, ElementDeclaration> allElements,
+                Map<String, FunctionalBlockDescriptor.Value> choices) {
+            this.choices = immutable(choices);
             this.ownerKey = required(ownerKey, "provider.ownerKey");
             this.providerId = required(providerId, "provider.providerId");
             if (providerVersion < 1)
@@ -198,6 +216,10 @@ final class ElectricalRealizationSpec {
             this.terminalIds = immutableList(terminalIds, "provider.terminalIds");
             this.joinIds = immutableList(joinIds, "provider.joinIds");
             this.deviceOwner = deviceOwner;
+            TreeMap<String, ElementDeclaration> local = new TreeMap<String, ElementDeclaration>();
+            for (ElementDeclaration element : allElements.values())
+                if (ownerKey.equals(element.getOwnerKey())) local.put(element.getElementId(), element);
+            this.elements = Collections.unmodifiableMap(local);
         }
 
         String getOwnerKey() { return ownerKey; }
@@ -211,6 +233,13 @@ final class ElectricalRealizationSpec {
         List<String> getTerminalIds() { return terminalIds; }
         List<String> getJoinIds() { return joinIds; }
         boolean isDeviceOwner() { return deviceOwner; }
+        ElementDeclaration getElement(String id) {
+            ElementDeclaration result = elements.get(id);
+            if (result == null) throw new IllegalArgumentException("Undeclared provider element " + ownerKey + "/" + id);
+            return result;
+        }
+        Map<String, ElementDeclaration> getElements() { return elements; }
+        Map<String, FunctionalBlockDescriptor.Value> getChoices() { return choices; }
 
         private static List<String> immutableList(Collection<String> values, String field) {
             if (values == null)
@@ -231,9 +260,27 @@ final class ElectricalRealizationSpec {
         private final String kind;
         private final String componentId;
         private final Map<String, Integer> postIndexByTerminal;
+        private final String modelId;
+        private final Map<String, Double> parameters;
 
         ElementDeclaration(String ownerKey, String elementId, String kind,
                 String componentId, Map<String, Integer> postIndexByTerminal) {
+            this(ownerKey, elementId, kind, componentId, postIndexByTerminal, null,
+                    Collections.<String, Double>emptyMap());
+        }
+
+        ElementDeclaration(String ownerKey, String elementId, String kind,
+                String componentId, Map<String, Integer> postIndexByTerminal,
+                String modelId, Map<String, Double> parameters) {
+            this.modelId = modelId;
+            if (parameters == null) throw new IllegalArgumentException("Element choices are required");
+            TreeMap<String, Double> choices = new TreeMap<String, Double>();
+            for (Map.Entry<String, Double> entry : parameters.entrySet()) {
+                if (entry.getValue() == null || !ComposedBlockContribution.finite(entry.getValue()))
+                    throw new IllegalArgumentException("Element choice must be finite");
+                choices.put(required(entry.getKey(), "element.parameter"), entry.getValue());
+            }
+            this.parameters = Collections.unmodifiableMap(choices);
             this.ownerKey = required(ownerKey, "element.ownerKey");
             this.elementId = required(elementId, "element.elementId");
             this.kind = required(kind, "element.kind");
@@ -248,11 +295,51 @@ final class ElectricalRealizationSpec {
                     throw new IllegalArgumentException("Invalid element terminal declaration");
             }
             this.postIndexByTerminal = Collections.unmodifiableMap(posts);
+            validatePrimitive();
+        }
+
+        // These are CircuitJS primitive categories, independent of device families.
+        private void validatePrimitive() {
+            Map<String, Integer> expected;
+            if ("NMOS".equals(kind)) expected = posts("G", 0, "D", 2, "S", 1);
+            else if ("NPN".equals(kind)) expected = posts("B", 0, "C", 1, "E", 2);
+            else if ("LED".equals(kind)) expected = posts("A", 0, "K", 1);
+            else if ("VOLTAGE".equals(kind)) expected = posts("+", 1, "-", 0);
+            else if ("GROUND".equals(kind)) expected = posts("1", 0);
+            else if ("RESISTOR".equals(kind) || "WIRE".equals(kind) ||
+                    "SWITCH".equals(kind) || "FAULT_HELPER".equals(kind))
+                expected = posts("1", 0, "2", 1);
+            else throw new IllegalArgumentException("Unknown electrical primitive " + kind);
+            if (!expected.equals(postIndexByTerminal))
+                throw new IllegalArgumentException("Incorrect CircuitJS terminal mapping for " + kind);
+            if ("RESISTOR".equals(kind)) positiveParameter("resistance");
+            if ("VOLTAGE".equals(kind)) getParameter("voltage");
+            if ("NMOS".equals(kind)) {
+                positiveParameter("threshold");
+                positiveParameter("beta");
+            }
+            if ("NPN".equals(kind)) positiveParameter("beta");
+            if ("NMOS".equals(kind) || "NPN".equals(kind) || "LED".equals(kind))
+                required(modelId, "primitive.model");
+            else if (modelId != null)
+                throw new IllegalArgumentException("Model is not applicable to " + kind);
+        }
+
+        private void positiveParameter(String name) {
+            if (getParameter(name) <= 0)
+                throw new IllegalArgumentException("Invalid primitive parameter " + name);
         }
 
         String getOwnerKey() { return ownerKey; }
         String getElementId() { return elementId; }
         String getKind() { return kind; }
+        String getModelId() { return modelId; }
+        Map<String, Double> getParameters() { return parameters; }
+        double getParameter(String name) {
+            Double value = parameters.get(name);
+            if (value == null) throw new IllegalArgumentException("Missing element choice " + name);
+            return value.doubleValue();
+        }
         String getComponentId() { return componentId; }
         Collection<String> getTerminalIds() { return postIndexByTerminal.keySet(); }
         Map<String, Integer> getPostIndexByTerminal() { return postIndexByTerminal; }
@@ -464,6 +551,27 @@ final class ElectricalRealizationSpec {
         String getReturnNetId() { return returnNetId; }
     }
 
+    static final class BoardEndpointSpec {
+        private final String ownerKey, localPadId;
+        private final EndpointRef endpoint;
+        private final String attachmentElementId;
+        BoardEndpointSpec(String ownerKey, String localPadId, EndpointRef endpoint,
+                String attachmentElementId) {
+            this.ownerKey = required(ownerKey, "boardEndpoint.owner");
+            this.localPadId = required(localPadId, "boardEndpoint.pad");
+            if (endpoint == null) throw new IllegalArgumentException("Board endpoint is required");
+            if (attachmentElementId != null && ownerKey.equals(endpoint.getOwnerKey()) &&
+                    attachmentElementId.equals(endpoint.getElementId()))
+                throw new IllegalArgumentException("Board endpoint cannot be its detachable attachment");
+            this.endpoint = endpoint;
+            this.attachmentElementId = attachmentElementId;
+        }
+        String getOwnerKey() { return ownerKey; }
+        String getLocalPadId() { return localPadId; }
+        EndpointRef getEndpoint() { return endpoint; }
+        String getAttachmentElementId() { return attachmentElementId; }
+    }
+
     /** Bounded private solver witness reservation, independent of PCB geometry. */
     static final class SolverReservation {
         private final String ownerKey;
@@ -501,19 +609,151 @@ final class ElectricalRealizationSpec {
     static ElectricalRealizationSpec fromResolved(BoundedAssemblyRequest request,
             BlockNamespace namespace, Map<String, ComposedBlockContribution> blocks,
             Collection<DeviceAdapterContract> adapters, Map<String, String> netAliases,
-            ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe,
             boolean controlled) {
         if (request == null || namespace == null || blocks == null || adapters == null ||
                 netAliases == null)
             throw new IllegalArgumentException("Electrical spec inputs are required");
 
-        Builder builder = new Builder(request, namespace, netAliases, controlled,
-                resolvedLoadRecipe);
-        for (Map.Entry<String, ComposedBlockContribution> entry : blocks.entrySet())
+        Builder builder = new Builder(request, namespace, netAliases, controlled);
+        for (Map.Entry<String, ComposedBlockContribution> entry : new TreeMap<String, ComposedBlockContribution>(blocks).entrySet())
             builder.addContribution(entry.getKey(), entry.getValue());
         builder.addJoins(request.getConnections());
         builder.addDeviceDeclarations(adapters);
         return builder.finish();
+    }
+
+    /** Restricted pure declaration scope; local names acquire exactly one owner. */
+    static final class ContributionBuilder {
+        private final Builder parent;
+        private final String owner;
+        private final ComposedBlockContribution contribution;
+        private final List<String> elementIds = new ArrayList<String>();
+        private final List<String> unitIds = new ArrayList<String>();
+        private final List<String> terminalIds = new ArrayList<String>();
+        private final Map<String, FunctionalBlockDescriptor.Value> choices =
+                new TreeMap<String, FunctionalBlockDescriptor.Value>();
+        private boolean finished;
+
+        private ContributionBuilder(Builder parent, String owner,
+                ComposedBlockContribution contribution) {
+            this.parent = parent;
+            this.owner = owner;
+            this.contribution = contribution;
+        }
+
+        void resistor(ComposedBlockContribution.ResistorRecipe recipe) {
+            open();
+            if (recipe == null) throw new IllegalArgumentException("Resistor recipe is required");
+            String local = recipe.getComponentLocalId();
+            choice(local + ".rated-watts", FunctionalBlockDescriptor.Value.ofDecimal(recipe.getRatedWatts()));
+            choice(local + ".tolerance-percent", FunctionalBlockDescriptor.Value.ofDecimal(recipe.getTolerancePercent()));
+            choice(local + ".mutable", FunctionalBlockDescriptor.Value.ofBoolean(recipe.isMutable()));
+            if (recipe.getCatalogEntryId() != null)
+                choice(local + ".catalog", FunctionalBlockDescriptor.Value.ofText(recipe.getCatalogEntryId()));
+            component(local, "RESISTOR", parent.packageFor(recipe), null,
+                    numbers("resistance", recipe.getResistanceOhms()), posts("1", 0, "2", 1));
+            if (recipe.isMutable())
+                helper(local + "_SECONDARY", "FAULT_HELPER", local, posts("1", 0, "2", 1));
+        }
+
+        void choice(String id, FunctionalBlockDescriptor.Value value) {
+            open();
+            if (value == null || choices.put(required(id, "local.choice"), value) != null)
+                throw new IllegalArgumentException("Missing or duplicate local choice");
+        }
+
+        void component(String local, String kind, PhysicalPackage physicalPackage,
+                String model, Map<String, Double> parameters, Map<String, Integer> posts) {
+            open();
+            FunctionalBlockDescriptor descriptor = contribution.getDescriptor();
+            FunctionalBlockDescriptor.Component component = descriptor.getComponents().get(local);
+            if (component == null || physicalPackage == null ||
+                    !new TreeSet<String>(component.getTerminalIds()).equals(posts.keySet()) ||
+                    !new TreeSet<String>(physicalPackage.getTerminalIds()).equals(posts.keySet()) ||
+                    unitIds.contains(local))
+                throw new IllegalArgumentException("Component/package/terminal declaration mismatch " + owner + "/" + local);
+            if (!kind.equals(component.getTypeId()))
+                throw new IllegalArgumentException("Primitive does not match public component category");
+            String componentId = parent.namespace.idFor(owner, EntityKind.COMPONENT, local);
+            parent.componentIds.put(elementKey(owner, local), componentId);
+            parent.addElement(owner, local, kind, componentId, posts, model, parameters);
+            elementIds.add(local);
+            List<String> names = new ArrayList<String>(posts.keySet());
+            parent.addUnit(owner, local, componentId, physicalPackage, names, names);
+            unitIds.add(local);
+            TreeSet<String> mapped = new TreeSet<String>();
+            for (Map.Entry<String, FunctionalBlockDescriptor.Pad> entry : descriptor.getPads().entrySet()) {
+                FunctionalBlockDescriptor.Pad pad = entry.getValue();
+                FunctionalBlockDescriptor.Endpoint endpoint = descriptor.getEndpoints().get(pad.getEndpointId());
+                if (!local.equals(endpoint.getComponentId())) continue;
+                String terminal = endpoint.getTerminalId();
+                if (!mapped.add(terminal))
+                    throw new IllegalArgumentException("Duplicate physical terminal pad");
+                String padLocal = entry.getKey();
+                String padId = parent.namespace.idFor(owner, EntityKind.PAD, padLocal);
+                parent.padIds.put(elementKey(owner, padLocal), padId);
+                String net = parent.padNet(owner, padLocal);
+                ComposedBlockContribution.ResistorRecipe resistor = contribution.getResistor(local);
+                boolean detachable = resistor != null && resistor.isMutable();
+                EndpointRef componentEndpoint = new EndpointRef(owner,
+                        detachable && "2".equals(terminal) ? local + "_SECONDARY" : local, terminal);
+                parent.terminals.put(terminalKey(owner, local, terminal), new TerminalMapping(
+                        owner, local, terminal, componentId, physicalPackage.getId(), terminal, net, componentEndpoint));
+                parent.addPadBindingForLocalPad(owner, local, padLocal, componentId, terminal, net);
+                if (detachable) parent.requiredConnectionPadIds.add(padId);
+                terminalIds.add(padLocal);
+            }
+            if (!mapped.equals(posts.keySet()))
+                throw new IllegalArgumentException("Component physical pads are incomplete " + owner + "/" + local);
+        }
+
+        void helper(String local, String kind, String componentLocal,
+                Map<String, Integer> posts) {
+            open();
+            String componentId = componentLocal == null ? null :
+                    parent.componentIds.get(elementKey(owner, componentLocal));
+            if (componentLocal != null && componentId == null)
+                throw new IllegalArgumentException("Helper component is undeclared");
+            parent.addElement(owner, local, kind, componentId, posts);
+            elementIds.add(local);
+        }
+
+        void boardPad(String localPad, String element, String terminal, String attachment) {
+            open();
+            String padId = parent.requiredPadId(owner, localPad);
+            if (parent.boardEndpoints.put(padId, new BoardEndpointSpec(owner, localPad,
+                    new EndpointRef(owner, element, terminal), attachment)) != null)
+                throw new IllegalArgumentException("Duplicate board endpoint " + padId);
+        }
+
+        private void open() {
+            if (finished) throw new IllegalStateException("Local declaration scope is closed");
+        }
+
+        private void finish() {
+            open();
+            if (!new TreeSet<String>(unitIds).equals(contribution.getDescriptor().getComponents().keySet()) ||
+                    !new TreeSet<String>(terminalIds).equals(contribution.getDescriptor().getPads().keySet()) ||
+                    elementIds.size() > 32)
+                throw new IllegalArgumentException("Local declaration is incomplete or exceeds its bounded envelope");
+            finished = true;
+        }
+    }
+
+    static Map<String, Integer> posts(Object... entries) {
+        TreeMap<String, Integer> result = new TreeMap<String, Integer>();
+        for (int i = 0; i < entries.length; i += 2)
+            if (result.put((String) entries[i], (Integer) entries[i + 1]) != null)
+                throw new IllegalArgumentException("Duplicate terminal post");
+        return result;
+    }
+
+    static Map<String, Double> numbers(Object... entries) {
+        TreeMap<String, Double> result = new TreeMap<String, Double>();
+        for (int i = 0; i < entries.length; i += 2)
+            if (result.put((String) entries[i], Double.valueOf(((Number) entries[i + 1]).doubleValue())) != null)
+                throw new IllegalArgumentException("Duplicate element parameter");
+        return result;
     }
 
     private static final class Builder {
@@ -521,7 +761,6 @@ final class ElectricalRealizationSpec {
         private final BlockNamespace namespace;
         private final Map<String, String> netAliases;
         private final boolean controlled;
-        private final ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedRecipe;
         private final TreeMap<String, ProviderDeclaration> providers =
                 new TreeMap<String, ProviderDeclaration>();
         private final TreeMap<String, ElementDeclaration> elements =
@@ -543,6 +782,8 @@ final class ElectricalRealizationSpec {
         private final TreeMap<String, PowerInputSpec> powerInputs =
                 new TreeMap<String, PowerInputSpec>();
         private final TreeSet<String> requiredConnectionPadIds = new TreeSet<String>();
+        private final TreeMap<String, BoardEndpointSpec> boardEndpoints =
+                new TreeMap<String, BoardEndpointSpec>();
         private final TreeMap<String, PhysicalPackage> packages =
                 new TreeMap<String, PhysicalPackage>();
         private final TreeMap<String, String> packageOwners =
@@ -553,120 +794,28 @@ final class ElectricalRealizationSpec {
                 new TreeMap<String, ComposedBlockContribution>();
 
         Builder(BoundedAssemblyRequest request, BlockNamespace namespace,
-                Map<String, String> netAliases, boolean controlled,
-                ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedRecipe) {
+                Map<String, String> netAliases, boolean controlled) {
             this.request = request;
             this.namespace = namespace;
             this.netAliases = netAliases;
             this.controlled = controlled;
-            this.resolvedRecipe = resolvedRecipe;
         }
 
         void addContribution(String ownerKey, ComposedBlockContribution contribution) {
-            if (contribution == null)
-                throw new IllegalArgumentException("Missing contribution " + ownerKey);
-            contributionByOwner.put(ownerKey, contribution);
-            String providerId = contribution.getProviderTypeId();
-            int providerVersion = contribution.getProviderVersion();
-            ArrayList<String> declaredElements = new ArrayList<String>();
-            ArrayList<String> declaredUnits = new ArrayList<String>();
-            ArrayList<String> declaredTerminals = new ArrayList<String>();
-            for (ComposedBlockContribution.ResistorRecipe recipe :
-                    contribution.getResistors().values()) {
-                String local = recipe.getComponentLocalId();
-                String componentId = namespace.idFor(ownerKey, EntityKind.COMPONENT, local);
-                componentIds.put(elementKey(ownerKey, local), componentId);
-                addElement(ownerKey, local, "RESISTOR", componentId,
-                        map("1", 0, "2", 1));
-                declaredElements.add(local);
-                boolean declaresSecondary = recipe.isMutable();
-                if (declaresSecondary) {
-                    addHelper(ownerKey, local + "_SECONDARY", "FAULT_HELPER", componentId,
-                            map("1", 0, "2", 1), declaredElements);
-                }
-                addUnit(ownerKey, local, componentId, packageFor(recipe),
-                        Arrays.asList("1", "2"), Arrays.asList("1", "2"));
-                declaredUnits.add(local);
-                addRecipeTerminals(ownerKey, local, recipe.getFirstPadLocalId(),
-                        recipe.getSecondPadLocalId(), componentId, packageFor(recipe),
-                        padNet(ownerKey, recipe.getFirstPadLocalId()),
-                        padNet(ownerKey, recipe.getSecondPadLocalId()), declaredTerminals);
-            }
-            for (ComposedBlockContribution.NmosRecipe recipe :
-                    contribution.getNmosRecipes().values()) {
-                String local = recipe.getComponentLocalId();
-                String componentId = namespace.idFor(ownerKey, EntityKind.COMPONENT, local);
-                componentIds.put(elementKey(ownerKey, local), componentId);
-                addElement(ownerKey, local, "NMOS", componentId,
-                        map("G", 0, "D", 2, "S", 1));
-                declaredElements.add(local);
-                addUnit(ownerKey, local, componentId, PhysicalPackages.TO92_NMOS,
-                        Arrays.asList("G", "D", "S"), Arrays.asList("G", "D", "S"));
-                declaredUnits.add(local);
-                addRecipeTerminals(ownerKey, local, recipe.getGatePadLocalId(),
-                        recipe.getDrainPadLocalId(), componentId, PhysicalPackages.TO92_NMOS,
-                        padNet(ownerKey, recipe.getGatePadLocalId()),
-                        padNet(ownerKey, recipe.getDrainPadLocalId()), declaredTerminals);
-                padIds.put(elementKey(ownerKey, recipe.getSourcePadLocalId()),
-                        namespace.idFor(ownerKey, EntityKind.PAD, recipe.getSourcePadLocalId()));
-                addTerminal(ownerKey, local, recipe.getSourcePadLocalId(), componentId,
-                        PhysicalPackages.TO92_NMOS, "S", padNet(ownerKey,
-                                recipe.getSourcePadLocalId()), declaredTerminals);
-                addPadBindingForLocalPad(ownerKey, local, recipe.getSourcePadLocalId(), componentId,
-                         "S", padNet(ownerKey, recipe.getSourcePadLocalId()));
-            }
-            for (ComposedBlockContribution.LedRecipe recipe :
-                    contribution.getLedRecipes().values()) {
-                String local = recipe.getComponentLocalId();
-                String componentId = namespace.idFor(ownerKey, EntityKind.COMPONENT, local);
-                componentIds.put(elementKey(ownerKey, local), componentId);
-                addElement(ownerKey, local, "LED", componentId, map("A", 0, "K", 1));
-                declaredElements.add(local);
-                addUnit(ownerKey, local, componentId, PhysicalPackages.THROUGH_HOLE_LED,
-                        Arrays.asList("A", "K"), Arrays.asList("A", "K"));
-                declaredUnits.add(local);
-                addRecipeTerminals(ownerKey, local, recipe.getAnodePadLocalId(),
-                        recipe.getCathodePadLocalId(), componentId,
-                        PhysicalPackages.THROUGH_HOLE_LED,
-                        padNet(ownerKey, recipe.getAnodePadLocalId()),
-                        padNet(ownerKey, recipe.getCathodePadLocalId()), declaredTerminals);
-            }
-            if (ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(ownerKey)) {
-                addHelper(ownerKey, "RG_FAULT_SWITCH", "SWITCH",
-                        namespace.idFor(ownerKey, EntityKind.COMPONENT, "RG"),
-                        map("1", 0, "2", 1), declaredElements);
-                addHelper(ownerKey, "RG_FIRST_ATTACHMENT", "WIRE", null,
-                        map("1", 0, "2", 1), declaredElements);
-                addHelper(ownerKey, "RG_SECOND_ATTACHMENT", "WIRE", null,
-                        map("1", 0, "2", 1), declaredElements);
-                addHelper(ownerKey, "GATE_NODE_TRACE", "WIRE", null,
-                        map("1", 0, "2", 1), declaredElements);
-            } else if (ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(ownerKey)
-                    && controlled) {
-                addHelper(ownerKey, "RLOAD_FAULT_SWITCH", "SWITCH",
-                        namespace.idFor(ownerKey, EntityKind.COMPONENT, "RLOAD"),
-                        map("1", 0, "2", 1), declaredElements);
-                addHelper(ownerKey, "RLOAD_FIRST_ATTACHMENT", "WIRE", null,
-                        map("1", 0, "2", 1), declaredElements);
-                addHelper(ownerKey, "RLOAD_SECOND_ATTACHMENT", "WIRE", null,
-                        map("1", 0, "2", 1), declaredElements);
-                addHelper(ownerKey, "LOAD_NODE_TRACE", "WIRE", null,
-                        map("1", 0, "2", 1), declaredElements);
-            }
-            addReservation(ownerKey, "local", reservationIndex(ownerKey));
-            providers.put(ownerKey, new ProviderDeclaration(ownerKey, providerId,
-                    providerVersion, contribution, declaredElements, declaredUnits,
-                    declaredTerminals, Collections.<String>emptyList(), false));
-        }
-
-        private int reservationIndex(String ownerKey) {
-            if (ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY.equals(ownerKey))
-                return 1;
-            if (ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(ownerKey))
-                return 2;
-            if (ResistiveBlockContributions.SOURCE_BLOCK_KEY.equals(ownerKey))
-                return 3;
-            return 4;
+            if (contribution == null || !ownerKey.equals(contribution.getDescriptor().getInstanceKey()) ||
+                    contributionByOwner.put(ownerKey, contribution) != null)
+                throw new IllegalArgumentException("Missing or duplicate contribution " + ownerKey);
+            ElectricalConstructionProvider provider = StandardElectricalConstructionProviders.provider(
+                    contribution.getProviderTypeId(), contribution.getProviderVersion());
+            ContributionBuilder local = new ContributionBuilder(this, ownerKey, contribution);
+            provider.declare(local, contribution);
+            local.finish();
+            // These are private solver witnesses, not durable identities. Canonical
+            // packing uses one bounded reservation for every actual declared owner.
+            addReservation(ownerKey, "local", providers.size() + 1);
+            providers.put(ownerKey, new ProviderDeclaration(ownerKey, provider.getProviderId(),
+                    provider.getVersion(), contribution, local.elementIds, local.unitIds,
+                    local.terminalIds, Collections.<String>emptyList(), false, elements, local.choices));
         }
 
         void addDeviceDeclarations(Collection<DeviceAdapterContract> adapters) {
@@ -707,64 +856,44 @@ final class ElectricalRealizationSpec {
                         contributionNet("source", "SUPPLY"), contributionNet("load", "RETURN"));
                 addReservation("device", "infrastructure", 0);
             } else {
-                addControlledDeviceElement("LOAD_SUPPLY", "VOLTAGE", map("+", 1, "-", 0), declaredElements);
-                addControlledDeviceElement("LOAD_ISOLATION", "SWITCH", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("LOAD_CONNECTOR", "SWITCH", map("1", 0, "2", 1),
-                        namespace.idFor(DeviceAdapterContract.POWER_ADAPTER_KEY,
-                                EntityKind.COMPONENT, "J1"), declaredElements);
-                addControlledDeviceElement("LOAD_INPUT_TRACE", "WIRE", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("CONTROL_SUPPLY", "VOLTAGE", map("+", 1, "-", 0), declaredElements);
-                addControlledDeviceElement("CONTROL_ISOLATION", "SWITCH", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("CONTROL_INPUT_TRACE", "WIRE", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("CONTROL_COMMAND", "SWITCH", map("1", 0, "2", 1),
-                        namespace.idFor(DeviceAdapterContract.CONTROL_ADAPTER_KEY,
-                                EntityKind.COMPONENT, "J2"), declaredElements);
-                addControlledDeviceElement("CONTROL_BOARD_TRACE", "WIRE", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("DRAIN_TRACE", "WIRE", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("GROUND", "GROUND", map("1", 0), declaredElements);
-                addControlledDeviceElement("LOAD_RETURN", "WIRE", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("CONTROL_RETURN", "WIRE", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("PULLDOWN_RETURN", "WIRE", map("1", 0, "2", 1), declaredElements);
-                addControlledDeviceElement("SOURCE_RETURN", "WIRE", map("1", 0, "2", 1), declaredElements);
-                addDeviceComponent("J1", PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
-                        "power-adapter", declaredUnits);
-                addDeviceComponent("J2", PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
-                        "control-adapter", declaredUnits);
-                addControlledBridges();
+                addDeviceElement("GROUND", "GROUND", map("1", 0), declaredElements);
+                for (DeviceAdapterContract adapter : adapters) {
+                    String owner = adapter.getKey();
+                    String local = adapter.getComponentLocalId();
+                    String componentId = namespace.idFor(owner, EntityKind.COMPONENT, local);
+                    addDeviceComponent(local, PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, owner, declaredUnits);
+                    addDeviceElement(owner + ".SUPPLY", "VOLTAGE", map("+", 1, "-", 0), declaredElements);
+                    addDeviceElement(owner + ".ISOLATION", "SWITCH", map("1", 0, "2", 1), declaredElements);
+                    addDeviceElement(owner + ".CONNECTOR", "SWITCH", map("1", 0, "2", 1), componentId, declaredElements);
+                    addDeviceElement(owner + ".RETURN", "WIRE", map("1", 0, "2", 1), declaredElements);
+                    componentIds.put(elementKey(owner, local), componentId);
+                    String outputNet = adapterNet(owner, "OUTPUT");
+                    String returnNet = adapterNet(owner, "RETURN");
+                    for (String terminal : Arrays.asList("1", "2")) {
+                        String localPad = local + "." + terminal;
+                        String padId = namespace.idFor(owner, EntityKind.PAD, localPad);
+                        padIds.put(elementKey(owner, localPad), padId);
+                        String net = "1".equals(terminal) ? outputNet : returnNet;
+                        EndpointRef endpoint = "1".equals(terminal) ?
+                                new EndpointRef("device", owner + ".CONNECTOR", "2") :
+                                new EndpointRef("device", "GROUND", "1");
+                        addPadBinding(owner, local, terminal, componentId, terminal, net);
+                        terminals.put(terminalKey(owner, local, terminal), new TerminalMapping(owner,
+                                local, terminal, componentId, PhysicalPackages.THROUGH_HOLE_CONNECTOR_2.getId(),
+                                terminal, net, endpoint));
+                        boardEndpoints.put(padId, new BoardEndpointSpec(owner, localPad, endpoint, null));
+                    }
+                    addPowerInput(adapter.getExternalInputId(), requiredPadId(owner, local + ".1"),
+                            requiredPadId(owner, local + ".2"), outputNet, returnNet);
+                }
+                addControlledBridges(declaredElements);
                 addReservation("device", "infrastructure", 0);
-            }
-            for (DeviceAdapterContract adapter : adapters) {
-                if (adapter == null)
-                    throw new IllegalArgumentException("Null device adapter");
-                String owner = adapter.getKey();
-                String local = adapter.getComponentLocalId();
-                String componentId = namespace.idFor(owner, EntityKind.COMPONENT, local);
-                componentIds.put(elementKey(owner, local), componentId);
-                padIds.put(elementKey(owner, local + ".1"),
-                        namespace.idFor(owner, EntityKind.PAD, local + ".1"));
-                padIds.put(elementKey(owner, local + ".2"),
-                        namespace.idFor(owner, EntityKind.PAD, local + ".2"));
-                String outputNet = adapterNet(owner, "OUTPUT");
-                String returnNet = adapterNet(owner, "RETURN");
-                addPadBinding(owner, local, "1", componentId, "1", outputNet);
-                addPadBinding(owner, local, "2", componentId, "2", returnNet);
-                String adapterBacking = DeviceAdapterContract.POWER_ADAPTER_KEY.equals(owner) ?
-                        "LOAD_CONNECTOR" : "CONTROL_COMMAND";
-                addDeviceTerminal(owner, local, componentId,
-                        PhysicalPackages.THROUGH_HOLE_CONNECTOR_2.getId(), adapterBacking,
-                        "1", outputNet);
-                addDeviceTerminal(owner, local, componentId,
-                        PhysicalPackages.THROUGH_HOLE_CONNECTOR_2.getId(), adapterBacking,
-                        "2", returnNet);
-                addPowerInput(adapter.getExternalInputId(),
-                        requiredPadId(owner, local + ".1"), requiredPadId(owner, local + ".2"),
-                        outputNet, returnNet);
             }
             String deviceProviderId = controlled ? "controlled-device-join" :
                     "resistive-device-join";
             providers.put("device", new ProviderDeclaration("device", deviceProviderId,
                     1, null, declaredElements, declaredUnits, declaredTerminals,
-                    new ArrayList<String>(joins.keySet()), true));
+                    new ArrayList<String>(joins.keySet()), true, elements));
         }
 
         private void addDeviceComponent(String local, PhysicalPackage physicalPackage,
@@ -832,20 +961,47 @@ final class ElectricalRealizationSpec {
             // All public package terminals are represented by the same frozen
             // map consumed by layout/runtime code.  A missing package or owner
             // therefore fails while the plan is still pure.
+            if (controlled && !boardEndpoints.keySet().equals(padBindings.keySet()))
+                throw new IllegalArgumentException("Provider board endpoints do not cover the physical pads");
+            for (Map.Entry<String, BoardEndpointSpec> entry : boardEndpoints.entrySet()) {
+                BoardEndpointSpec board = entry.getValue();
+                EndpointRef endpoint = board.getEndpoint();
+                ElementDeclaration backing = elements.get(elementKey(endpoint.getOwnerKey(), endpoint.getElementId()));
+                if (backing == null || !backing.getTerminalIds().contains(endpoint.getTerminalId()))
+                    throw new IllegalArgumentException("Provider declared a missing board endpoint");
+                boolean detachable = requiredConnectionPadIds.contains(entry.getKey());
+                if (detachable != (board.getAttachmentElementId() != null))
+                    throw new IllegalArgumentException("Detachable pad/attachment mismatch");
+                if (detachable) {
+                    ElementDeclaration wire = elements.get(elementKey(board.getOwnerKey(), board.getAttachmentElementId()));
+                    if (wire == null || !"WIRE".equals(wire.getKind()))
+                        throw new IllegalArgumentException("Missing provider attachment backing");
+                    if (padBindings.get(entry.getKey()).getComponentId().equals(backing.getComponentId()))
+                        throw new IllegalArgumentException("Board endpoint cannot belong to the removable component");
+                }
+            }
             ElectricalUnitPackageMap packageMap = new ElectricalUnitPackageMap(
                     ElectricalUnitPackageMap.VERSION, packages, packageOwners,
                     packageUnits);
             return new ElectricalRealizationSpec(VERSION, providers, elements, units,
-                    terminals, joins, bridges, reservations, packageMap, resolvedRecipe,
+                    terminals, joins, bridges, reservations, packageMap,
                     componentIds, padIds, padBindings, powerInputs,
-                    requiredConnectionPadIds);
+                    requiredConnectionPadIds, boardEndpoints);
         }
 
         private void addElement(String owner, String local, String kind,
                 String componentId, Map<String, Integer> posts) {
+            addElement(owner, local, kind, componentId, posts, null,
+                    "VOLTAGE".equals(kind) ? numbers("voltage", EXTERNAL_SUPPLY_VOLTS) :
+                    Collections.<String, Double>emptyMap());
+        }
+
+        private void addElement(String owner, String local, String kind,
+                String componentId, Map<String, Integer> posts, String model,
+                Map<String, Double> parameters) {
             String key = elementKey(owner, local);
             if (elements.put(key, new ElementDeclaration(owner, local, kind,
-                    componentId, posts)) != null)
+                    componentId, posts, model, parameters)) != null)
                 throw new IllegalArgumentException("Duplicate electrical element " + key);
         }
 
@@ -878,56 +1034,6 @@ final class ElectricalRealizationSpec {
             packageUnits.add(new ElectricalUnitPackageMap.Unit(owner,
                     owner + "/" + local,
                     componentId, unitTerminals, mapping));
-        }
-
-        private void addRecipeTerminals(String owner, String local, String firstPad,
-                String secondPad, String componentId, PhysicalPackage physicalPackage,
-                String firstNet, String secondNet, Collection<String> declared) {
-            padIds.put(elementKey(owner, firstPad), namespace.idFor(owner,
-                    EntityKind.PAD, firstPad));
-            padIds.put(elementKey(owner, secondPad), namespace.idFor(owner,
-                    EntityKind.PAD, secondPad));
-            String firstTerminal = terminalForPad(local, firstPad, "1");
-            String secondTerminal = terminalForPad(local, secondPad, "2");
-            addTerminal(owner, local, firstPad, componentId, physicalPackage,
-                    firstTerminal, firstNet, declared);
-            addTerminal(owner, local, secondPad, componentId, physicalPackage,
-                    secondTerminal, secondNet, declared);
-            addPadBindingForLocalPad(owner, local, firstPad, componentId, firstTerminal, firstNet);
-            addPadBindingForLocalPad(owner, local, secondPad, componentId, secondTerminal, secondNet);
-            if (contributionByOwner.get(owner).getResistor(local) != null &&
-                    contributionByOwner.get(owner).getResistor(local).isMutable()) {
-                requiredConnectionPadIds.add(padIds.get(elementKey(owner, firstPad)));
-                requiredConnectionPadIds.add(padIds.get(elementKey(owner, secondPad)));
-            }
-        }
-
-        private void addTerminal(String owner, String local, String padId,
-                String componentId, PhysicalPackage physicalPackage, String terminal,
-                String net, Collection<String> declared) {
-            ComposedBlockContribution.ResistorRecipe resistor =
-                    contributionByOwner.get(owner).getResistor(local);
-            EndpointRef componentEndpoint = new EndpointRef(owner, local, terminal);
-            if (resistor != null && resistor.isMutable() && "2".equals(terminal))
-                componentEndpoint = new EndpointRef(owner, local + "_SECONDARY", "2");
-            terminals.put(terminalKey(owner, local, terminal), new TerminalMapping(owner,
-                    local, terminal, componentId, physicalPackage.getId(),
-                    terminal, net, componentEndpoint));
-            // Provider terminal declarations are pad-scoped.  Bare terminal
-            // names such as "1" and "2" repeat across components, while
-            // the physical pad identity is unique within the provider.
-            declared.add(padId);
-        }
-
-        private String terminalForPad(String local, String padId, String fallback) {
-            if (padId.endsWith(".1") || padId.endsWith("_1") || padId.endsWith(".A"))
-                return padId.endsWith(".A") ? "A" : "1";
-            if (padId.endsWith(".2") || padId.endsWith("_2") || padId.endsWith(".K"))
-                return padId.endsWith(".K") ? "K" : "2";
-            if (padId.endsWith(".G")) return "G";
-            if (padId.endsWith(".D")) return "D";
-            if (padId.endsWith(".S")) return "S";
-            return fallback;
         }
 
         private String padNet(String owner, String padId) {
@@ -1011,22 +1117,46 @@ final class ElectricalRealizationSpec {
                     "device", "RETURN_TRACE", "1", ResistiveBlockContributions.RETURN_CONNECTION_ID);
         }
 
-        private void addControlledBridges() {
-            addBridge("LOAD_INPUT_TRACE", "device", "LOAD_CONNECTOR", "2",
-                    "load", "RLOAD_FIRST_ATTACHMENT", "1",
-                    ControlledIndicatorBlockContributions.POWER_CONNECTION_ID);
-            addBridge("CONTROL_BOARD_TRACE", "device", "CONTROL_COMMAND", "2",
-                    "driver", "RG_FIRST_ATTACHMENT", "1",
-                    ControlledIndicatorBlockContributions.CONTROL_CONNECTION_ID);
-            addBridge("DRAIN_TRACE", "load", "LED1", "K",
-                    "driver", "Q1", "D",
-                    ControlledIndicatorBlockContributions.SWITCHED_CONNECTION_ID);
-            addBridge("PULLDOWN_RETURN", "driver", "RPD", "2",
-                    "device", "GROUND", "1",
-                    ControlledIndicatorBlockContributions.RETURN_CONNECTION_ID);
-            addBridge("SOURCE_RETURN", "driver", "Q1", "S",
-                    "device", "GROUND", "1",
-                    ControlledIndicatorBlockContributions.RETURN_CONNECTION_ID);
+        private void addControlledBridges(Collection<String> declaredElements) {
+            for (ElectricalConnection connection : request.getConnections()) {
+                EndpointRef first = null;
+                for (ElectricalConnection.PortRef ref : connection.getPorts()) {
+                    EndpointRef endpoint = portEndpoint(ref);
+                    if (endpoint == null) continue; // A logical reference port need not expose a physical pad.
+                    if (first == null) first = endpoint;
+                    else if (!first.equals(endpoint)) {
+                        String bridge = connection.getId() + "." + ref.getBlockKey();
+                        addDeviceElement(bridge, "WIRE", map("1", 0, "2", 1), declaredElements);
+                        addBridge(bridge, first.getOwnerKey(), first.getElementId(), first.getTerminalId(),
+                                endpoint.getOwnerKey(), endpoint.getElementId(), endpoint.getTerminalId(), connection.getId());
+                    }
+                }
+            }
+        }
+
+        private EndpointRef portEndpoint(ElectricalConnection.PortRef ref) {
+            ElectricalBlockContract contract = null;
+            for (ElectricalBlockContract candidate : request.getAllElectricalContracts())
+                if (candidate.getDescriptor().getInstanceKey().equals(ref.getBlockKey())) contract = candidate;
+            if (contract == null) throw new IllegalArgumentException("Unknown device join owner");
+            FunctionalBlockDescriptor descriptor = contract.getDescriptor();
+            FunctionalBlockDescriptor.Port port = descriptor.getPorts().get(ref.getPortId());
+            if (port == null) throw new IllegalArgumentException("Unknown device join port");
+            FunctionalBlockDescriptor.LocalRef attachment = port.getAttachment();
+            for (Map.Entry<String, FunctionalBlockDescriptor.Pad> entry : descriptor.getPads().entrySet()) {
+                FunctionalBlockDescriptor.Pad pad = entry.getValue();
+                boolean matches = attachment.getKind() == EntityKind.PAD ? attachment.getId().equals(entry.getKey()) :
+                        attachment.getKind() == EntityKind.NET ? attachment.getId().equals(pad.getNetId()) :
+                        attachment.getKind() == EntityKind.ENDPOINT && attachment.getId().equals(pad.getEndpointId());
+                if (!matches) continue;
+                String padId = requiredPadId(ref.getBlockKey(), entry.getKey());
+                BoardEndpointSpec backing = boardEndpoints.get(padId);
+                if (backing == null) throw new IllegalArgumentException("Local provider omitted persistent pad backing");
+                return backing.getEndpoint();
+            }
+            if (attachment.getKind() != EntityKind.NET)
+                throw new IllegalArgumentException("Device join does not identify a physical endpoint");
+            return null;
         }
 
         private void addBridge(String bridgeId, String firstOwner, String firstElement,
@@ -1059,8 +1189,9 @@ final class ElectricalRealizationSpec {
         private void addReservation(String owner, String role, int index) {
             int originX = 64 + index * 1200;
             int originY = 64;
-            reservations.put(owner + "/" + role,
-                    new SolverReservation(owner, role, originX, originY, 1024, 768));
+            if (index < 0 || index > 16 || reservations.put(owner + "/" + role,
+                    new SolverReservation(owner, role, originX, originY, 1024, 768)) != null)
+                throw new IllegalArgumentException("Duplicate or excessive solver reservation");
         }
 
         private static Map<String, Integer> map(String first, int firstIndex,

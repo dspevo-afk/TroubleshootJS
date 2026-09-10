@@ -17,6 +17,8 @@ import com.lushprojects.circuitjs1.client.ElectricalPortContract.Scalar;
 /** Direct preflight matrix for the bounded typed switched-low-side relation. */
 public final class SwitchedLowSideCompatibilityContractTest {
     private static int assertions;
+    private static final ControlledIndicatorChannel CHANNEL =
+        BoundedAssemblyRequest.controlledChannels().get(0);
 
     private SwitchedLowSideCompatibilityContractTest() { }
 
@@ -26,7 +28,7 @@ public final class SwitchedLowSideCompatibilityContractTest {
         require(result(request).getDecision()
                 == PortCompatibilityPreflight.Decision.COMPATIBLE,
                 "bounded switched relation is compatible");
-        verifyMissingJoin(request, ControlledIndicatorBlockContributions.CONTROL_CONNECTION_ID,
+        verifyMissingJoin(request, CHANNEL.getControlJoinId(),
                 "missing control join");
         verifyMissingJoin(request, ControlledIndicatorBlockContributions.POWER_CONNECTION_ID,
                 "missing supply join");
@@ -40,6 +42,9 @@ public final class SwitchedLowSideCompatibilityContractTest {
         verifyUnsafeOffVoltage(request);
         verifyBroadSupplyGuarantee(request);
         verifyUntypedOpenDrain(request);
+        verifyForeignParticipantReferences(request);
+        verifyIncompleteParticipantReturns(request);
+        verifyReturnSupplyShort(request);
         System.out.println("PASS: current switched-low-side compatibility "
                 + assertions + " assertions");
     }
@@ -61,12 +66,56 @@ public final class SwitchedLowSideCompatibilityContractTest {
                 message + " is rejected closed");
     }
 
+    private static void verifyForeignParticipantReferences(BoundedAssemblyRequest request) {
+        ElectricalConnection original = switched(request);
+        SwitchedLowSideContract value = original.getSwitchedLowSideContract();
+        ControlledIndicatorChannel other = BoundedAssemblyRequest.controlledChannels().get(1);
+        for (boolean foreignControl : new boolean[] { true, false }) {
+            SwitchedLowSideContract changed = new SwitchedLowSideContract(
+                value.getSinkPort(), value.getLoadPort(), value.getSupplyPort(), value.getControlPort(),
+                foreignControl ? ref(other.getDriverKey(), "CONTROL") : value.getDriverControlPort(),
+                foreignControl ? value.getLoadSupplyPort() : ref(other.getLoadKey(), "SUPPLY"),
+                value.getReturnPorts());
+            PortCompatibilityPreflight.Result checked = result(request,
+                request.getAllElectricalContracts(), replaceConnection(request.getConnections(), original,
+                    new ElectricalConnection(original.getId(), original.getPorts(), changed)));
+            require(checked.getDecision() == PortCompatibilityPreflight.Decision.INCOMPATIBLE,
+                "foreign participant reference rejects even on a shared supply bus");
+        }
+    }
+
+    private static void verifyIncompleteParticipantReturns(BoundedAssemblyRequest request) {
+        ElectricalConnection original = switched(request);
+        SwitchedLowSideContract value = original.getSwitchedLowSideContract();
+        ArrayList<ElectricalConnection.PortRef> returns =
+            new ArrayList<ElectricalConnection.PortRef>(value.getReturnPorts());
+        returns.remove(0);
+        SwitchedLowSideContract changed = new SwitchedLowSideContract(
+            value.getSinkPort(), value.getLoadPort(), value.getSupplyPort(), value.getControlPort(),
+            value.getDriverControlPort(), value.getLoadSupplyPort(), returns);
+        require(result(request, request.getAllElectricalContracts(),
+                replaceConnection(request.getConnections(), original,
+                    new ElectricalConnection(original.getId(), original.getPorts(), changed)))
+                .getDecision() == PortCompatibilityPreflight.Decision.MALFORMED,
+            "relationship must declare every participant's return");
+    }
+
+    private static void verifyReturnSupplyShort(BoundedAssemblyRequest request) {
+        ArrayList<ElectricalConnection> connections =
+            new ArrayList<ElectricalConnection>(request.getConnections());
+        connections.add(new ElectricalConnection("supply-return-short",
+            Arrays.asList(ref("power-adapter", "RETURN"), ref("power-adapter", "POWER_OUT"))));
+        require(result(request, request.getAllElectricalContracts(), connections).getDecision()
+                != PortCompatibilityPreflight.Decision.COMPATIBLE,
+            "shared return membership never admits a supply short");
+    }
+
     private static void verifyExtraTransitivePort(BoundedAssemblyRequest request) {
         ArrayList<ElectricalConnection> connections =
                 new ArrayList<ElectricalConnection>(request.getConnections());
         connections.add(new ElectricalConnection("extra-switched-port",
-                Arrays.asList(ref("driver", "SWITCHED_SINK"),
-                        ref("load", "SUPPLY"))));
+                Arrays.asList(ref(CHANNEL.getDriverKey(), "SWITCHED_SINK"),
+                        ref(CHANNEL.getLoadKey(), "SUPPLY"))));
         PortCompatibilityPreflight.Result result = result(request,
                 request.getAllElectricalContracts(), connections);
         require(result.getDecision() == PortCompatibilityPreflight.Decision.INCOMPATIBLE,
@@ -92,7 +141,7 @@ public final class SwitchedLowSideCompatibilityContractTest {
     }
 
     private static void verifyOvercurrent(BoundedAssemblyRequest request) {
-        ElectricalBlockContract driver = block(request, "driver");
+        ElectricalBlockContract driver = block(request, CHANNEL.getDriverKey());
         ElectricalPortContract sink = driver.getPorts().get("SWITCHED_SINK");
         ElectricalPortContract undersized = copy(sink, sink.getRole(),
                 sink.getDirection(), sink.getBehavior(), sink.getDrive(),
@@ -112,7 +161,8 @@ public final class SwitchedLowSideCompatibilityContractTest {
         SwitchedLowSideContract value = original.getSwitchedLowSideContract();
         SwitchedLowSideContract activeLow = new SwitchedLowSideContract(
                 value.getSinkPort(), value.getLoadPort(), value.getSupplyPort(),
-                value.getControlPort(), value.getReturnPorts(),
+                value.getControlPort(), value.getDriverControlPort(),
+                value.getLoadSupplyPort(), value.getReturnPorts(),
                 value.getReferenceNetId(), value.getIsolationId(), false,
                 value.getSinkCapacityAmps(), value.getLoadDemandAmps());
         PortCompatibilityPreflight.Result result = result(request,
@@ -125,7 +175,7 @@ public final class SwitchedLowSideCompatibilityContractTest {
     }
 
     private static void verifyActiveLowSource(BoundedAssemblyRequest request) {
-        ElectricalBlockContract control = block(request, "control-adapter");
+        ElectricalBlockContract control = block(request, CHANNEL.getControlAdapterKey());
         ElectricalPortContract output = control.getPorts().get("CONTROL_OUT");
         ElectricalPortContract activeLow = copy(output, output.getRole(),
                 output.getDirection(), output.getBehavior(), output.getDrive(),
@@ -146,7 +196,7 @@ public final class SwitchedLowSideCompatibilityContractTest {
     }
 
     private static void verifyUnsafeOffVoltage(BoundedAssemblyRequest request) {
-        ElectricalBlockContract driver = block(request, "driver");
+        ElectricalBlockContract driver = block(request, CHANNEL.getDriverKey());
         ElectricalPortContract sink = driver.getPorts().get("SWITCHED_SINK");
         ElectricalPortContract unsafe = copy(sink, sink.getRole(),
                 sink.getDirection(), sink.getBehavior(), sink.getDrive(),
@@ -204,7 +254,7 @@ public final class SwitchedLowSideCompatibilityContractTest {
 
     private static ElectricalConnection switched(BoundedAssemblyRequest request) {
         for (ElectricalConnection connection : request.getConnections())
-            if (ControlledIndicatorBlockContributions.SWITCHED_CONNECTION_ID
+            if (CHANNEL.getSwitchedJoinId()
                     .equals(connection.getId())) return connection;
         throw new AssertionError("missing typed switched connection");
     }

@@ -1,14 +1,14 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
 
 /**
- * Maintained pure acceptance checks for the resolved controlled-indicator
- * composition. The request has one current generator epoch and always carries
- * the resolved load recipe.
+ * Maintained pure acceptance checks for the current repeated
+ * controlled-indicator composition. Two stable channel instances and one
+ * fixed supply-present contribution are part of the current contract.
  */
 public final class ControlledIndicatorAssemblyContractTest {
     private static int assertions;
@@ -38,83 +38,121 @@ public final class ControlledIndicatorAssemblyContractTest {
                 descriptor.getGenerator().getVersion() ==
                     BoundedAssemblyRequest.GENERATOR_VERSION,
                 "controlled request uses the current schema and generator");
-        require(request.getBlocks().size() >= 2 &&
-                request.getDeviceAdapters().size() >= 2 &&
-                request.getConnections().size() >= 4,
-                "controlled request retains its typed composition shape");
+        require(request.getBlocks().size() == 5 &&
+                request.getDeviceAdapters().size() == 3 &&
+                request.getConnections().size() == 6,
+                "controlled request retains both channels and support wiring");
 
         PortCompatibilityPreflight.Result preflight =
                 BoundedAssemblyPlan.preflight(request);
         require(preflight.getDecision() == PortCompatibilityPreflight.Decision.COMPATIBLE,
-                "typed controlled relation preflights");
+                "typed controlled relations preflight");
         BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
-        require(plan.isControlledIndicator(),
-                "controlled route resolves");
-        require(plan.getResolvedLoadRecipe() != null &&
-                plan.getLoad().getResolvedValueRecipe() == plan.getResolvedLoadRecipe(),
-                "controlled route resolves one immutable load recipe");
-        require(plan.getDriver().getProviderVersion() ==
-                ControlledIndicatorBlockContributions.VERSION &&
-                plan.getLoad().getProviderVersion() ==
-                ControlledIndicatorBlockContributions.LOAD_VERSION,
-                "driver and load retain their declared provider versions");
+        require(plan.isControlledIndicator() && plan.getChannels().size() == 2,
+                "controlled route resolves its stable channel set");
+        ComposedBlockContribution support =
+                plan.getBlocks().get(plan.getSupportBlockKey());
+        require(support != null && support.getProviderTypeId().equals(
+                SupplyPresentBlockContributions.TYPE_ID) &&
+                support.getFaultSpec() == null,
+                "support route is a fixed nonfaultable contribution");
 
-        ControlledIndicatorValueSynthesis.ResolvedRecipe recipe =
-                plan.getResolvedLoadRecipe();
-        require(recipe.getResistanceOhms() > 0.0 &&
-                recipe.getResistanceMinimumOhms() < recipe.getResistanceOhms() &&
-                recipe.getResistanceMaximumOhms() > recipe.getResistanceOhms() &&
-                recipe.getMinimumCurrentAmps() >=
-                    recipe.getIntent().getTargetMinimumCurrentAmps() &&
-                recipe.getMaximumCurrentAmps() <=
-                    recipe.getIntent().getTypedDemandAmps() &&
-                recipe.getGuardedPowerWatts() > 0.0,
-                "resolved recipe satisfies electrical bounds");
-        require(recipe.getPackageId() != null &&
-                !recipe.getPackageId().isEmpty() &&
-                recipe.getTolerancePercent() > 0.0,
-                "resolved recipe retains truthful package and tolerance");
+        for (ControlledIndicatorChannel channel : plan.getChannels()) {
+            ComposedBlockContribution driver =
+                    plan.getBlocks().get(channel.getDriverKey());
+            ComposedBlockContribution load =
+                    plan.getBlocks().get(channel.getLoadKey());
+            require(driver != null && load != null &&
+                    (driver.getProviderTypeId().equals(
+                        ControlledIndicatorBlockContributions.DRIVER_TYPE_ID) ||
+                     driver.getProviderTypeId().equals(
+                        ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID)) &&
+                    load.getProviderTypeId().equals(
+                        ControlledIndicatorBlockContributions.LOAD_TYPE_ID),
+                    "each channel resolves an admitted driver and load provider");
+            require(load.getProviderVersion() ==
+                    ControlledIndicatorBlockContributions.LOAD_VERSION &&
+                    load.getResolvedValueRecipe() != null,
+                    "each load retains its declared version and recipe");
+            ControlledIndicatorValueSynthesis.ResolvedRecipe recipe =
+                    load.getResolvedValueRecipe();
+            require(recipe.getResistanceOhms() > 0.0 &&
+                    recipe.getResistanceMinimumOhms() < recipe.getResistanceOhms() &&
+                    recipe.getResistanceMaximumOhms() > recipe.getResistanceOhms() &&
+                    recipe.getMinimumCurrentAmps() >=
+                        recipe.getIntent().getTargetMinimumCurrentAmps() &&
+                    recipe.getMaximumCurrentAmps() <=
+                        recipe.getIntent().getTypedDemandAmps() &&
+                    recipe.getGuardedPowerWatts() > 0.0,
+                    "resolved channel recipe satisfies electrical bounds");
+            require(plan.netForPort(channel.getLoadKey(), "SUPPLY").equals(
+                    plan.netForPort(DeviceAdapterContract.POWER_ADAPTER_KEY,
+                            "POWER_OUT")) &&
+                    plan.netForPort(channel.getDriverKey(), "CONTROL").equals(
+                    plan.netForPort(channel.getControlAdapterKey(), "CONTROL_OUT")) &&
+                    plan.netForPort(channel.getDriverKey(), "SWITCHED_SINK").equals(
+                    plan.netForPort(channel.getLoadKey(), "SWITCHED_LOAD")) &&
+                    plan.netForPort(channel.getDriverKey(), "RETURN").equals(
+                    plan.netForPort(DeviceAdapterContract.POWER_ADAPTER_KEY,
+                            "RETURN")),
+                    "channel joins retain explicit supply/control/switch/return nets");
 
-        require(plan.netForPort("load", "SUPPLY").equals(
-                plan.netForPort("power-adapter", "POWER_OUT")),
-                "power adapter supply join is explicit");
-        require(plan.netForPort("driver", "CONTROL").equals(
-                plan.netForPort("control-adapter", "CONTROL_OUT")),
-                "control adapter join is explicit");
-        require(plan.netForPort("driver", "SWITCHED_SINK").equals(
-                plan.netForPort("load", "SWITCHED_LOAD")),
-                "typed switched join is explicit");
-        require(plan.netForPort("driver", "RETURN").equals(
-                plan.netForPort("power-adapter", "RETURN")),
-                "common return join is explicit");
+            String driverComponent = plan.idFor(channel.getDriverKey(),
+                    EntityKind.COMPONENT, "Q1");
+            String loadPad = plan.idFor(channel.getLoadKey(), EntityKind.PAD,
+                    "LED1.K");
+            require(nonEmpty(driverComponent) && nonEmpty(loadPad) &&
+                    driverComponent.contains(channel.getDriverKey()) &&
+                    loadPad.contains(channel.getLoadKey()) &&
+                    !driverComponent.equals(loadPad),
+                    "repeated semantic identities retain owner and local identity");
+            require(driver.getFaultSpec() != null &&
+                    load.getFaultSpec() != null &&
+                    driver.getResistor("RPD") != null &&
+                    !driver.getResistor("RPD").isMutable() &&
+                    load.getResistor("RLOAD") != null &&
+                    load.getResistor("RLOAD").isMutable(),
+                    "channel fault declarations retain repairable boundaries");
+            if (ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID.equals(
+                    driver.getProviderTypeId())) {
+                require(driver.getResistor("RB") != null &&
+                        driver.getResistor("RB").isMutable() &&
+                        driver.getNmosRecipes().isEmpty(),
+                        "NPN driver retains a mutable base resistor");
+            } else {
+                require(driver.getResistor("RG") != null &&
+                        driver.getResistor("RG").isMutable() &&
+                        driver.getNmosRecipes().size() == 1,
+                        "NMOS driver retains a mutable gate resistor and Q1 recipe");
+            }
+            require(load.getLedRecipes().size() == 1,
+                    "channel load retains its LED physical recipe");
+        }
 
-        String driverComponent = plan.idFor("driver", EntityKind.COMPONENT, "Q1");
-        String adapterPad = plan.idFor("power-adapter", EntityKind.PAD, "J1.1");
-        require(nonEmpty(driverComponent) && nonEmpty(adapterPad) &&
-                driverComponent.contains("driver") &&
-                adapterPad.contains("power-adapter"),
-                "semantic identity retains owner and local identity");
-        require(!driverComponent.equals(adapterPad),
-                "different entity kinds and owners remain distinct");
-        require(plan.getFaultDecisionKey().equals(
-                ControlledIndicatorBlockContributions.chooseFaultDecision(seed)),
-                "only the current fault stream selects the initial owner");
-        require(!plan.getDecisionOwners().isEmpty(),
-                "both current fault owners remain represented");
-        require(plan.getDriver().getFaultSpec() != null &&
-                plan.getLoad().getFaultSpec() != null,
-                "fault declarations are explicit");
-        require(plan.getDriver().getResistors().get("RG").isMutable() &&
-                !plan.getDriver().getResistors().get("RPD").isMutable() &&
-                plan.getLoad().getResistors().get("RLOAD").isMutable(),
-                "only repairable resistors are mutable");
-        require(plan.getDriver().getNmosRecipes().size() == 1 &&
-                plan.getLoad().getLedRecipes().size() == 1,
-                "NMOS and LED physical recipes are declared");
-
+        require(plan.getDecisionOwners().containsKey(plan.getFaultDecisionKey()) &&
+                everyDecisionOwnerIsActual(plan),
+                "selected fault and every advertised owner resolve to actual targets");
         System.out.println("seed=" + Long.toString(seed) + ";fault=" +
-                plan.getFaultDecisionKey() + ";catalog=" +
-                recipe.getCatalogEntryId());
+                plan.getFaultDecisionKey() + ";a=" + plan.getBlocks().get(
+                    plan.getChannels().get(0).getDriverKey()).getProviderTypeId() +
+                ";b=" + plan.getBlocks().get(
+                    plan.getChannels().get(1).getDriverKey()).getProviderTypeId());
+    }
+
+    private static boolean everyDecisionOwnerIsActual(BoundedAssemblyPlan plan) {
+        for (Map.Entry<String, String> entry : plan.getDecisionOwners().entrySet()) {
+            boolean found = false;
+            for (ComposedBlockContribution block : plan.getBlocks().values()) {
+                ComposedBlockContribution.FaultSpec fault = block.getFaultSpec();
+                if (fault != null && entry.getValue().equals(plan.idFor(block,
+                        EntityKind.COMPONENT, fault.getTargetComponentLocalId()))) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+        return true;
     }
 
     private static void verifyReorderInvariance() {
@@ -141,11 +179,16 @@ public final class ControlledIndicatorAssemblyContractTest {
         require(first.getSemanticSignature().equals(second.getSemanticSignature()) &&
                 first.getSemanticSignature().equals(replay.getSemanticSignature()),
                 "reordered and canonical replay preserve current semantics");
-        require(first.getResolvedLoadRecipe().getCatalogEntryId().equals(
-                second.getResolvedLoadRecipe().getCatalogEntryId()) &&
-                first.getResolvedLoadRecipe().getCatalogEntryId().equals(
-                replay.getResolvedLoadRecipe().getCatalogEntryId()),
-                "reordered and replayed requests preserve selected value");
+        for (ControlledIndicatorChannel channel : first.getChannels()) {
+            String key = channel.getLoadKey();
+            require(first.getBlocks().get(key).getResolvedValueRecipe()
+                    .getCatalogEntryId().equals(second.getBlocks().get(key)
+                    .getResolvedValueRecipe().getCatalogEntryId()) &&
+                    first.getBlocks().get(key).getResolvedValueRecipe()
+                    .getCatalogEntryId().equals(replay.getBlocks().get(key)
+                    .getResolvedValueRecipe().getCatalogEntryId()),
+                    "reordered and replayed requests preserve each channel value");
+        }
     }
 
     private static void verifyUntypedOpenDrainRejected() {
@@ -153,12 +196,14 @@ public final class ControlledIndicatorAssemblyContractTest {
                 BoundedAssemblyRequest.forControlledIndicator(0L);
         ArrayList<ElectricalConnection> connections =
                 new ArrayList<ElectricalConnection>(request.getConnections());
+        String switchedId = BoundedAssemblyRequest.controlledChannels().get(0)
+                .getSwitchedJoinId();
         for (int index = 0; index < connections.size(); index++) {
             ElectricalConnection connection = connections.get(index);
-            if (ControlledIndicatorBlockContributions.SWITCHED_CONNECTION_ID
-                    .equals(connection.getId())) {
+            if (switchedId.equals(connection.getId())) {
                 connections.set(index, new ElectricalConnection(connection.getId(),
                         connection.getPorts()));
+                break;
             }
         }
         BoundedAssemblyRequest untyped = BoundedAssemblyRequest.reorderedInputs(
@@ -173,7 +218,9 @@ public final class ControlledIndicatorAssemblyContractTest {
         BoundedAssemblyRequest request =
                 BoundedAssemblyRequest.forControlledIndicator(0L);
         BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
-        String wrongTarget = plan.idFor("driver", EntityKind.COMPONENT, "RPD");
+        ControlledIndicatorChannel channel = plan.getChannels().get(0);
+        String wrongTarget = plan.idFor(channel.getDriverKey(),
+                EntityKind.COMPONENT, "RPD");
         boolean rejected = false;
         try {
             BoundedAssemblyPlan.resolveForDiagnosticFault(request, wrongTarget);
@@ -222,8 +269,8 @@ public final class ControlledIndicatorAssemblyContractTest {
             { profile, "difficulty-profile=controlled-indicator@2" },
             { "geometry=" + BoundedAssemblyRequest.GEOMETRY_VERSION,
                 "geometry=" + (BoundedAssemblyRequest.GEOMETRY_VERSION + 1) },
-            { "blocks=~", "blocks=3:3" },
-            { "components=~", "components=6:6" },
+            { "blocks=~", "blocks=6:6" },
+            { "components=~", "components=16:16" },
             { "domains=~", "domains=2:2" },
             { "diagnostic-depth=~", "diagnostic-depth=1:1" },
             { "instruments=~", "instruments=[DC_VOLTAGE]" },
@@ -243,8 +290,8 @@ public final class ControlledIndicatorAssemblyContractTest {
             require(rejected, "unsupported current input rejected: " + change[1]);
         }
         ChallengeDescriptor exact = ChallengeDescriptor.parse(canonical
-                .replace("blocks=~", "blocks=2:2")
-                .replace("components=~", "components=7:7")
+                .replace("blocks=~", "blocks=5:5")
+                .replace("components=~", "components=15:15")
                 .replace("domains=~", "domains=1:1"));
         require(BoundedAssemblyPlan.resolve(
                 BoundedAssemblyRequest.forControlledIndicator(exact))
@@ -254,14 +301,17 @@ public final class ControlledIndicatorAssemblyContractTest {
     private static void verifyDiagnosticPadIdentity() {
         BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(
                 BoundedAssemblyRequest.forControlledIndicator(0L));
-        String pad = plan.idFor("driver", EntityKind.PAD, "Q1.G");
+        ControlledIndicatorChannel channel = plan.getChannels().get(0);
+        String terminal = plan.getBlocks().get(channel.getDriverKey()).getDescriptor()
+                .getComponents().get("Q1").getTerminalIds().get(0);
+        String pad = plan.idFor(channel.getDriverKey(), EntityKind.PAD,
+                "Q1." + terminal);
         require(diagnosticPlan("CHECK", pad, pad).getReferenceTargetId().equals(pad),
                 "qualified semantic pad survives diagnostic construction");
-        require(diagnosticPlan("CHECK", "J1.2", "Q1.G").getReferenceTargetId()
-                .equals("J1.2"), "local diagnostic pad remains supported");
-        String[] invalid = {
-            pad + "/extra", "PRIVATE_Q1.G"
-        };
+        require(diagnosticPlan("CHECK", "J1.2", "Q1." + terminal)
+                .getReferenceTargetId().equals("J1.2"),
+                "local diagnostic pad remains supported");
+        String[] invalid = { pad + "/extra", "PRIVATE_Q1." + terminal };
         for (String value : invalid) {
             boolean rejected = false;
             try { diagnosticPlan("CHECK", value, pad); }

@@ -50,9 +50,13 @@ final class StandardPhysicalConstructionProviders {
     private static final PhysicalConstructionProvider RESISTIVE_LOAD =
         new ResistivePhysicalProvider(ResistiveBlockContributions.LOAD_TYPE_ID);
     private static final PhysicalConstructionProvider CONTROLLED_DRIVER =
-        new ControlledDriverPhysicalProvider();
+        new NmosControlledDriverPhysicalProvider();
+    private static final PhysicalConstructionProvider CONTROLLED_NPN_DRIVER =
+        new NpnControlledDriverPhysicalProvider();
     private static final PhysicalConstructionProvider CONTROLLED_LOAD =
         new ControlledLoadPhysicalProvider(ControlledIndicatorBlockContributions.LOAD_VERSION);
+    private static final PhysicalConstructionProvider SUPPLY_PRESENT =
+        new SupplyPresentPhysicalProvider();
     private static final PhysicalConstructionProvider CONTROLLED_DEVICE =
         new DevicePhysicalProvider(true);
     private static final PhysicalConstructionProvider RESISTIVE_DEVICE =
@@ -70,9 +74,15 @@ final class StandardPhysicalConstructionProviders {
         if (ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(providerId) &&
                 version == ControlledIndicatorBlockContributions.VERSION)
             return CONTROLLED_DRIVER;
+        if (ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID.equals(providerId) &&
+                version == ControlledIndicatorBlockContributions.NPN_VERSION)
+            return CONTROLLED_NPN_DRIVER;
         if (ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
                 version == ControlledIndicatorBlockContributions.LOAD_VERSION)
             return CONTROLLED_LOAD;
+        if (SupplyPresentBlockContributions.TYPE_ID.equals(providerId) &&
+                version == SupplyPresentBlockContributions.VERSION)
+            return SUPPLY_PRESENT;
         if ("resistive-device-join".equals(providerId) && version == 1)
             return RESISTIVE_DEVICE;
         if ("controlled-device-join".equals(providerId) && version == 1)
@@ -235,6 +245,8 @@ final class PhysicalConstructionProviderSupport {
             ComposedBlockContribution contribution,
             ComposedBlockContribution.ResistorRecipe recipe,
             PhysicalConstructionPartDeclaration.Builder builder, String faultFamilyId) {
+        if (contribution == null || contribution.getFaultSpec() == null)
+            return;
         ComposedBlockContribution.FaultSpec fault = contribution.getFaultSpec();
         String targetLocalId = fault.getTargetComponentLocalId();
         if (!recipe.getComponentLocalId().equals(targetLocalId))
@@ -262,18 +274,6 @@ final class PhysicalConstructionProviderSupport {
         if (recipe.getResolvedRecipe() != null)
             return recipe.getResolvedRecipe().getPlayerVisibleNameplate()
                 .forPhysicalPartId(localId);
-        if (!plan.isControlledIndicator())
-            return new PhysicalNameplate(componentId, "Physical resistor markings",
-                "Markings", "Color bands");
-        if ("RG".equals(localId))
-            return new PhysicalNameplate("RG", "Gate drive resistor markings",
-                "Markings", "Color bands");
-        if ("RPD".equals(localId))
-            return new PhysicalNameplate("RPD", "Gate pull-down resistor markings",
-                "Markings", "Color bands");
-        if ("RLOAD".equals(localId))
-            return new PhysicalNameplate("RLOAD", "Load resistor markings",
-                "Markings", "Color bands");
         return new PhysicalNameplate(localId, "Physical resistor markings",
             "Markings", "Color bands");
     }
@@ -332,22 +332,24 @@ final class ResistivePhysicalProvider implements PhysicalConstructionProvider {
                 recipe.getComponentLocalId(), recipe.isMutable() ?
                     PhysicalConstructionPartDeclaration.PartPolicy.MUTABLE_RESISTOR :
                     PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
-        String secondary = recipe.getComponentLocalId() + "_SECONDARY";
-        String secondaryOwner = recipe.isMutable() ?
-            PhysicalConstructionProviderSupport.requireElementOwner(spec, owner, secondary) : null;
-        if (secondaryOwner != null) builder.secondary(secondaryOwner, secondary);
-        String firstId = PhysicalConstructionProviderSupport.attachmentId(spec, owner,
-            recipe.getComponentLocalId(), true);
-        String secondId = PhysicalConstructionProviderSupport.attachmentId(spec, owner,
-            recipe.getComponentLocalId(), false);
-        String firstOwner = PhysicalConstructionProviderSupport.findAttachmentOwner(spec,
-            owner, recipe.getComponentLocalId(), true);
-        String secondOwner = PhysicalConstructionProviderSupport.findAttachmentOwner(spec,
-            owner, recipe.getComponentLocalId(), false);
-        if (firstOwner == null || secondOwner == null)
-            throw new IllegalArgumentException("Mutable resistor attachments are missing: " +
-                componentId);
-        builder.attachments(firstOwner, firstId, secondOwner, secondId);
+        if (recipe.isMutable()) {
+            String secondary = recipe.getComponentLocalId() + "_SECONDARY";
+            String secondaryOwner = PhysicalConstructionProviderSupport.requireElementOwner(
+                spec, owner, secondary);
+            builder.secondary(secondaryOwner, secondary);
+            String firstId = PhysicalConstructionProviderSupport.attachmentId(spec, owner,
+                recipe.getComponentLocalId(), true);
+            String secondId = PhysicalConstructionProviderSupport.attachmentId(spec, owner,
+                recipe.getComponentLocalId(), false);
+            String firstOwner = PhysicalConstructionProviderSupport.findAttachmentOwner(spec,
+                owner, recipe.getComponentLocalId(), true);
+            String secondOwner = PhysicalConstructionProviderSupport.findAttachmentOwner(spec,
+                owner, recipe.getComponentLocalId(), false);
+            if (firstOwner == null || secondOwner == null)
+                throw new IllegalArgumentException("Mutable resistor attachments are missing: " +
+                    componentId);
+            builder.attachments(firstOwner, firstId, secondOwner, secondId);
+        }
         PhysicalConstructionProviderSupport.addResistorFault(plan, spec, declaration,
             contribution, recipe, builder, getFaultFamilyId());
         builder.countInMappedIdentity(true)
@@ -361,31 +363,36 @@ final class ResistivePhysicalProvider implements PhysicalConstructionProvider {
     }
 }
 
-/** Physical provider for the controlled low-side driver contribution. */
-final class ControlledDriverPhysicalProvider implements PhysicalConstructionProvider {
-    public String getProviderId() { return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID; }
-    public int getVersion() { return ControlledIndicatorBlockContributions.VERSION; }
+/** Shared physical materialization for the controlled driver resistor category. */
+abstract class ControlledDriverPhysicalProvider implements PhysicalConstructionProvider {
     public String getBoardFamilyId() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
     public String getBoardName() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
     public String getFaultFamilyId() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
 
-    public PhysicalConstructionContribution declare(BoundedAssemblyPlan plan,
+    public final PhysicalConstructionContribution declare(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec,
             ElectricalRealizationSpec.ProviderDeclaration declaration) {
         PhysicalConstructionProviderSupport.requireDeclaration(declaration, getProviderId(),
-            getVersion(), ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY);
+            getVersion(), null);
         ComposedBlockContribution contribution = declaration.getContribution();
+        if (contribution == null)
+            throw new IllegalArgumentException("Controlled driver contribution is missing");
         ArrayList<PhysicalConstructionPartDeclaration> parts =
             new ArrayList<PhysicalConstructionPartDeclaration>();
         for (ComposedBlockContribution.ResistorRecipe recipe : contribution.getResistors().values())
             parts.add(resistor(plan, spec, declaration, contribution, recipe));
-        for (ComposedBlockContribution.NmosRecipe recipe : contribution.getNmosRecipes().values())
-            parts.add(nmos(plan, spec, declaration, recipe));
+        addTransistorParts(parts, plan, spec, declaration, contribution);
         return new PhysicalConstructionContribution(parts,
             Collections.<PhysicalExternalInputDeclaration>emptyList());
     }
 
-    private PhysicalConstructionPartDeclaration resistor(BoundedAssemblyPlan plan,
+    protected abstract void addTransistorParts(
+            ArrayList<PhysicalConstructionPartDeclaration> parts,
+            BoundedAssemblyPlan plan, ElectricalRealizationSpec spec,
+            ElectricalRealizationSpec.ProviderDeclaration declaration,
+            ComposedBlockContribution contribution);
+
+    protected final PhysicalConstructionPartDeclaration resistor(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec,
             ElectricalRealizationSpec.ProviderDeclaration declaration,
             ComposedBlockContribution contribution,
@@ -405,19 +412,17 @@ final class ControlledDriverPhysicalProvider implements PhysicalConstructionProv
                 recipe.getComponentLocalId(), recipe.isMutable() ?
                     PhysicalConstructionPartDeclaration.PartPolicy.MUTABLE_RESISTOR :
                     PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
-        String secondary = recipe.getComponentLocalId() + "_SECONDARY";
-        String secondaryOwner = recipe.isMutable() ?
-            PhysicalConstructionProviderSupport.requireElementOwner(spec, owner, secondary) : null;
         if (recipe.isMutable()) {
-            if (secondaryOwner == null)
-                throw new IllegalArgumentException("Mutable driver resistor secondary is missing: " +
-                    componentId);
-            builder.secondary(secondaryOwner, secondary);
-        }
-        if (recipe.isMutable()) {
-            String first = recipe.getComponentLocalId() + "_FIRST_ATTACHMENT";
-            String second = recipe.getComponentLocalId() + "_SECOND_ATTACHMENT";
-            builder.attachments(owner, first, owner, second);
+            String secondary = recipe.getComponentLocalId() + "_SECONDARY";
+            builder.secondary(PhysicalConstructionProviderSupport.requireElementOwner(
+                spec, owner, secondary), secondary);
+            String firstId = recipe.getComponentLocalId() + "_FIRST_ATTACHMENT";
+            String secondId = recipe.getComponentLocalId() + "_SECOND_ATTACHMENT";
+            builder.attachments(
+                PhysicalConstructionProviderSupport.requireElementOwner(spec, owner, firstId),
+                firstId,
+                PhysicalConstructionProviderSupport.requireElementOwner(spec, owner, secondId),
+                secondId);
         }
         PhysicalConstructionProviderSupport.addResistorFault(plan, spec, declaration,
             contribution, recipe, builder, getFaultFamilyId());
@@ -431,18 +436,19 @@ final class ControlledDriverPhysicalProvider implements PhysicalConstructionProv
         return builder.build();
     }
 
-    private PhysicalConstructionPartDeclaration nmos(BoundedAssemblyPlan plan,
+    protected final PhysicalConstructionPartDeclaration nmos(BoundedAssemblyPlan plan,
             ElectricalRealizationSpec spec,
             ElectricalRealizationSpec.ProviderDeclaration declaration,
             ComposedBlockContribution.NmosRecipe recipe) {
         String owner = declaration.getOwnerKey();
         String componentId = PhysicalConstructionProviderSupport.componentId(plan, owner,
             recipe.getComponentLocalId());
+        ElectricalRealizationSpec.ElementDeclaration element = declaration.getElement(
+            recipe.getComponentLocalId());
         PhysicalPackage physicalPackage = PhysicalConstructionProviderSupport.physicalPackage(
             spec, componentId);
         NmosSpecification specification = new NmosSpecification(componentId,
-            ElectricalRealizationSpec.CONTROLLED_NMOS_THRESHOLD_VOLTS,
-            ElectricalRealizationSpec.CONTROLLED_NMOS_BETA);
+            element.getParameter("threshold"), element.getParameter("beta"));
         PhysicalConstructionPartDeclaration.Builder builder =
             PhysicalConstructionProviderSupport.base(plan, spec, declaration, owner, componentId,
                 physicalPackage, "NMOS_TRANSISTOR", recipe.getComponentLocalId(), specification,
@@ -461,6 +467,64 @@ final class ControlledDriverPhysicalProvider implements PhysicalConstructionProv
                 recipe.getSourceEndpointLocalId()));
         return builder.build();
     }
+
+    protected final PhysicalConstructionPartDeclaration npn(BoundedAssemblyPlan plan,
+            ElectricalRealizationSpec spec,
+            ElectricalRealizationSpec.ProviderDeclaration declaration) {
+        String owner = declaration.getOwnerKey();
+        String componentId = PhysicalConstructionProviderSupport.componentId(plan, owner, "Q1");
+        ElectricalRealizationSpec.ElementDeclaration element = declaration.getElement("Q1");
+        PhysicalPackage physicalPackage = PhysicalConstructionProviderSupport.physicalPackage(
+            spec, componentId);
+        NpnSpecification specification = new NpnSpecification(componentId,
+            element.getParameter("beta"));
+        PhysicalConstructionPartDeclaration.Builder builder =
+            PhysicalConstructionProviderSupport.base(plan, spec, declaration, owner, componentId,
+                physicalPackage, "NPN_TRANSISTOR", "Q1", specification,
+                new PhysicalNameplate("Q1", "NPN transistor", "Part", "NPN transistor"),
+                owner, "Q1", PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
+        builder.countInMappedIdentity(true)
+            .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner, "Q1",
+                "Q1.B", "B", "Q1_B"))
+            .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner, "Q1",
+                "Q1.C", "C", "Q1_C"))
+            .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner, "Q1",
+                "Q1.E", "E", "Q1_E"));
+        return builder.build();
+    }
+}
+
+/** Physical provider for the explicit NMOS controlled driver contribution. */
+final class NmosControlledDriverPhysicalProvider extends ControlledDriverPhysicalProvider {
+    public String getProviderId() {
+        return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID;
+    }
+    public int getVersion() {
+        return ControlledIndicatorBlockContributions.VERSION;
+    }
+    protected void addTransistorParts(ArrayList<PhysicalConstructionPartDeclaration> parts,
+            BoundedAssemblyPlan plan, ElectricalRealizationSpec spec,
+            ElectricalRealizationSpec.ProviderDeclaration declaration,
+            ComposedBlockContribution contribution) {
+        for (ComposedBlockContribution.NmosRecipe recipe : contribution.getNmosRecipes().values())
+            parts.add(nmos(plan, spec, declaration, recipe));
+    }
+}
+
+/** Physical provider for the explicit NPN controlled driver contribution. */
+final class NpnControlledDriverPhysicalProvider extends ControlledDriverPhysicalProvider {
+    public String getProviderId() {
+        return ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID;
+    }
+    public int getVersion() {
+        return ControlledIndicatorBlockContributions.NPN_VERSION;
+    }
+    protected void addTransistorParts(ArrayList<PhysicalConstructionPartDeclaration> parts,
+            BoundedAssemblyPlan plan, ElectricalRealizationSpec spec,
+            ElectricalRealizationSpec.ProviderDeclaration declaration,
+            ComposedBlockContribution contribution) {
+        parts.add(npn(plan, spec, declaration));
+    }
 }
 
 /** Physical provider for the controlled resistor/LED load contribution. */
@@ -477,7 +541,7 @@ final class ControlledLoadPhysicalProvider implements PhysicalConstructionProvid
             ElectricalRealizationSpec spec,
             ElectricalRealizationSpec.ProviderDeclaration declaration) {
         PhysicalConstructionProviderSupport.requireDeclaration(declaration, getProviderId(),
-            version, ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY);
+            version, null);
         ComposedBlockContribution contribution = declaration.getContribution();
         ArrayList<PhysicalConstructionPartDeclaration> parts =
             new ArrayList<PhysicalConstructionPartDeclaration>();
@@ -509,11 +573,18 @@ final class ControlledLoadPhysicalProvider implements PhysicalConstructionProvid
                 recipe.getComponentLocalId(), recipe.isMutable() ?
                     PhysicalConstructionPartDeclaration.PartPolicy.MUTABLE_RESISTOR :
                     PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
-        String secondary = recipe.getComponentLocalId() + "_SECONDARY";
-        builder.secondary(PhysicalConstructionProviderSupport.requireElementOwner(spec, owner,
-            secondary), secondary);
-        builder.attachments(owner, recipe.getComponentLocalId() + "_FIRST_ATTACHMENT",
-            owner, recipe.getComponentLocalId() + "_SECOND_ATTACHMENT");
+        if (recipe.isMutable()) {
+            String secondary = recipe.getComponentLocalId() + "_SECONDARY";
+            builder.secondary(PhysicalConstructionProviderSupport.requireElementOwner(spec, owner,
+                secondary), secondary);
+            String first = recipe.getComponentLocalId() + "_FIRST_ATTACHMENT";
+            String second = recipe.getComponentLocalId() + "_SECOND_ATTACHMENT";
+            builder.attachments(
+                PhysicalConstructionProviderSupport.requireElementOwner(spec, owner, first),
+                first,
+                PhysicalConstructionProviderSupport.requireElementOwner(spec, owner, second),
+                second);
+        }
         PhysicalConstructionProviderSupport.addResistorFault(plan, spec, declaration,
             contribution, recipe, builder, getFaultFamilyId());
         builder.countInMappedIdentity(true)
@@ -535,14 +606,104 @@ final class ControlledLoadPhysicalProvider implements PhysicalConstructionProvid
             recipe.getComponentLocalId());
         PhysicalPackage physicalPackage = PhysicalConstructionProviderSupport.physicalPackage(
             spec, componentId);
-        /* The contribution's LED token is logical; the pinned CircuitJS model is explicit. */
+        ElectricalRealizationSpec.ElementDeclaration element = declaration.getElement(
+            recipe.getComponentLocalId());
+        String model = element.getModelId();
         LedNameplate specification = new LedNameplate(componentId, "Generic red LED",
-            ElectricalRealizationSpec.CONTROLLED_LED_MODEL, 1, 0, 0);
+            model, element.getParameter("red"), element.getParameter("green"),
+            element.getParameter("blue"));
         PhysicalConstructionPartDeclaration.Builder builder =
             PhysicalConstructionProviderSupport.base(plan, spec, declaration, owner, componentId,
                 physicalPackage, "LED", recipe.getComponentLocalId(), specification,
                 new PhysicalNameplate(recipe.getComponentLocalId(), "Generic red LED"), owner,
                 recipe.getComponentLocalId(), PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
+        builder.countInMappedIdentity(true)
+            .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner,
+                recipe.getComponentLocalId(), recipe.getAnodePadLocalId(), "A",
+                recipe.getAnodeEndpointLocalId()))
+            .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner,
+                recipe.getComponentLocalId(), recipe.getCathodePadLocalId(), "K",
+                recipe.getCathodeEndpointLocalId()));
+        return builder.build();
+    }
+}
+
+/** Physical provider for the fixed supply-present support contribution. */
+final class SupplyPresentPhysicalProvider implements PhysicalConstructionProvider {
+    public String getProviderId() { return SupplyPresentBlockContributions.TYPE_ID; }
+    public int getVersion() { return SupplyPresentBlockContributions.VERSION; }
+    public String getBoardFamilyId() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
+    public String getBoardName() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
+    public String getFaultFamilyId() { return ControlledIndicatorDeviceBehavior.FAMILY_ID; }
+
+    public PhysicalConstructionContribution declare(BoundedAssemblyPlan plan,
+            ElectricalRealizationSpec spec,
+            ElectricalRealizationSpec.ProviderDeclaration declaration) {
+        PhysicalConstructionProviderSupport.requireDeclaration(declaration, getProviderId(),
+            getVersion(), null);
+        ComposedBlockContribution contribution = declaration.getContribution();
+        if (contribution == null || contribution.getFaultSpec() != null)
+            throw new IllegalArgumentException("Supply indicator must be fixed and healthy");
+        ArrayList<PhysicalConstructionPartDeclaration> parts =
+            new ArrayList<PhysicalConstructionPartDeclaration>();
+        ComposedBlockContribution.ResistorRecipe resistor = contribution.getResistor(
+            SupplyPresentBlockContributions.RSUP_COMPONENT_ID);
+        ComposedBlockContribution.LedRecipe led = contribution.getLedRecipes().get(
+            SupplyPresentBlockContributions.LED_COMPONENT_ID);
+        if (resistor == null || led == null || resistor.isMutable())
+            throw new IllegalArgumentException("Supply indicator physical declaration is incomplete");
+        parts.add(resistor(plan, spec, declaration, resistor));
+        parts.add(led(plan, spec, declaration, led));
+        return new PhysicalConstructionContribution(parts,
+            Collections.<PhysicalExternalInputDeclaration>emptyList());
+    }
+
+    private PhysicalConstructionPartDeclaration resistor(BoundedAssemblyPlan plan,
+            ElectricalRealizationSpec spec,
+            ElectricalRealizationSpec.ProviderDeclaration declaration,
+            ComposedBlockContribution.ResistorRecipe recipe) {
+        String owner = declaration.getOwnerKey();
+        String componentId = PhysicalConstructionProviderSupport.componentId(plan, owner,
+            recipe.getComponentLocalId());
+        PhysicalPackage physicalPackage = PhysicalConstructionProviderSupport.physicalPackage(
+            spec, componentId);
+        ResistorNameplate specification = new ResistorNameplate(componentId,
+            recipe.getResistanceOhms(), recipe.getTolerancePercent(), recipe.getRatedWatts());
+        PhysicalConstructionPartDeclaration.Builder builder =
+            PhysicalConstructionProviderSupport.base(plan, spec, declaration, owner, componentId,
+                physicalPackage, "RESISTOR", recipe.getComponentLocalId(), specification,
+                PhysicalConstructionProviderSupport.resistorNameplate(plan, componentId,
+                    recipe.getComponentLocalId(), recipe), owner,
+                recipe.getComponentLocalId(), PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
+        builder.countInMappedIdentity(true)
+            .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner,
+                recipe.getComponentLocalId(), recipe.getFirstPadLocalId(), "1",
+                recipe.getFirstEndpointLocalId()))
+            .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner,
+                recipe.getComponentLocalId(), recipe.getSecondPadLocalId(), "2",
+                recipe.getSecondEndpointLocalId()));
+        return builder.build();
+    }
+
+    private PhysicalConstructionPartDeclaration led(BoundedAssemblyPlan plan,
+            ElectricalRealizationSpec spec,
+            ElectricalRealizationSpec.ProviderDeclaration declaration,
+            ComposedBlockContribution.LedRecipe recipe) {
+        String owner = declaration.getOwnerKey();
+        String componentId = PhysicalConstructionProviderSupport.componentId(plan, owner,
+            recipe.getComponentLocalId());
+        ElectricalRealizationSpec.ElementDeclaration element = declaration.getElement(
+            recipe.getComponentLocalId());
+        PhysicalPackage physicalPackage = PhysicalConstructionProviderSupport.physicalPackage(
+            spec, componentId);
+        LedNameplate specification = new LedNameplate(componentId, "Supply-present LED",
+            element.getModelId(), element.getParameter("red"),
+            element.getParameter("green"), element.getParameter("blue"));
+        PhysicalConstructionPartDeclaration.Builder builder =
+            PhysicalConstructionProviderSupport.base(plan, spec, declaration, owner, componentId,
+                physicalPackage, "LED", recipe.getComponentLocalId(), specification,
+                new PhysicalNameplate(recipe.getComponentLocalId(), "Supply-present LED"),
+                owner, recipe.getComponentLocalId(), PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
         builder.countInMappedIdentity(true)
             .terminal(PhysicalConstructionProviderSupport.terminal(plan, spec, owner,
                 recipe.getComponentLocalId(), recipe.getAnodePadLocalId(), "A",
@@ -614,12 +775,8 @@ final class DevicePhysicalProvider implements PhysicalConstructionProvider {
             new ArrayList<PhysicalConstructionPartDeclaration>();
         ArrayList<PhysicalExternalInputDeclaration> inputs =
             new ArrayList<PhysicalExternalInputDeclaration>();
-        String[] keys = new String[] {
-            DeviceAdapterContract.POWER_ADAPTER_KEY,
-            DeviceAdapterContract.CONTROL_ADAPTER_KEY
-        };
-        for (String key : keys) {
-            DeviceAdapterContract adapter = adapter(plan, key);
+        for (DeviceAdapterContract adapter : plan.getDeviceAdapters()) {
+            String key = adapter.getKey();
             String componentId = plan.idFor(key,
                 FunctionalBlockDescriptor.EntityKind.COMPONENT,
                 adapter.getComponentLocalId());
@@ -632,15 +789,19 @@ final class DevicePhysicalProvider implements PhysicalConstructionProvider {
                 adapter.getComponentLocalId() + ".2");
             String outputNet = plan.netFor(key, "OUTPUT");
             String returnNet = plan.netFor(key, "RETURN");
-            String backing = DeviceAdapterContract.POWER_ADAPTER_KEY.equals(key) ?
-                "LOAD_CONNECTOR" : "CONTROL_COMMAND";
+            String backing = key + ".CONNECTOR";
+            ElectricalRealizationSpec.ElementDeclaration supply = spec.getElementDeclaration(
+                "device", key + ".SUPPLY");
+            if (supply == null)
+                throw new IllegalArgumentException("Missing adapter supply declaration " + key);
+            double nominalVoltage = supply.getParameter("voltage");
             PhysicalConstructionPartDeclaration.Builder builder =
                 PhysicalConstructionProviderSupport.base(plan, spec, declaration, key,
                     componentId, physicalPackage, "CONNECTOR", adapter.getComponentLocalId(),
                     new BasicPhysicalSpecification(adapter.getComponentLocalId() + "_CONNECTOR"),
                     new PhysicalNameplate(adapter.getComponentLocalId(),
-                        DeviceAdapterContract.POWER_ADAPTER_KEY.equals(key) ?
-                            "Load supply connector" : "Control input connector"),
+                        adapter.isControl() ? "Control input connector" :
+                            "Load supply connector"),
                     "device", backing, PhysicalConstructionPartDeclaration.PartPolicy.FIXED);
             builder.countInMappedIdentity(true)
                 .terminal(PhysicalConstructionProviderSupport.deviceTerminal(pad1, "1", "1",
@@ -653,14 +814,8 @@ final class DevicePhysicalProvider implements PhysicalConstructionProvider {
                     key, adapter.getComponentLocalId(), componentId));
             parts.add(builder.build());
             inputs.add(new PhysicalExternalInputDeclaration("device", inputId, pad1, pad2,
-                outputNet, returnNet, 5.0));
+                outputNet, returnNet, nominalVoltage));
         }
         return new PhysicalConstructionContribution(parts, inputs);
-    }
-
-    private static DeviceAdapterContract adapter(BoundedAssemblyPlan plan, String key) {
-        for (DeviceAdapterContract adapter : plan.getDeviceAdapters())
-            if (key.equals(adapter.getKey())) return adapter;
-        throw new IllegalArgumentException("Missing device adapter " + key);
     }
 }

@@ -207,37 +207,47 @@ final class A04ConstructionDeveloperVerifier {
             contract(plan.netFor("source", "RETURN").equals(plan.netFor("load", "RETURN")),
                 "resistive return is not the explicit common net");
         } else {
-            provider(spec, "driver", ControlledIndicatorBlockContributions.DRIVER_TYPE_ID, 1);
-            provider(spec, "load", ControlledIndicatorBlockContributions.LOAD_TYPE_ID,
-                ControlledIndicatorBlockContributions.LOAD_VERSION);
-            element(spec, "driver", "RG", "RESISTOR", "1", 0, "2", 1);
-            element(spec, "driver", "RPD", "RESISTOR", "1", 0, "2", 1);
-            element(spec, "driver", "Q1", "NMOS", "G", 0, "S", 1, "D", 2);
-            element(spec, "load", "RLOAD", "RESISTOR", "1", 0, "2", 1);
-            element(spec, "load", "LED1", "LED", "A", 0, "K", 1);
-            mapping(spec, plan, "driver", "RG", "1", "1", plan.netFor("driver", "CONTROL"));
-            mapping(spec, plan, "driver", "RG", "2", "2", plan.netFor("driver", "GATE"));
-            mapping(spec, plan, "driver", "RPD", "1", "1", plan.netFor("driver", "GATE"));
-            mapping(spec, plan, "driver", "RPD", "2", "2", plan.netFor("driver", "RETURN"));
-            mapping(spec, plan, "driver", "Q1", "G", "G", plan.netFor("driver", "GATE"));
-            mapping(spec, plan, "driver", "Q1", "D", "D", plan.netFor("driver", "SWITCHED_SINK"));
-            mapping(spec, plan, "driver", "Q1", "S", "S", plan.netFor("driver", "RETURN"));
-            mapping(spec, plan, "load", "RLOAD", "1", "1", plan.netFor("load", "SUPPLY"));
-            mapping(spec, plan, "load", "RLOAD", "2", "2", plan.netFor("load", "LED_NODE"));
-            mapping(spec, plan, "load", "LED1", "A", "A", plan.netFor("load", "LED_NODE"));
-            mapping(spec, plan, "load", "LED1", "K", "K", plan.netFor("load", "SWITCHED_LOAD"));
-            contract(plan.netFor("load", "SWITCHED_LOAD").equals(
-                plan.netFor("driver", "SWITCHED_SINK")), "controlled drain join changed");
-            contract(spec.getElementDeclaration("driver", "Q1").getPostIndex("G") == 0 &&
-                spec.getElementDeclaration("driver", "Q1").getPostIndex("S") == 1 &&
-                spec.getElementDeclaration("driver", "Q1").getPostIndex("D") == 2,
-                "NMOS post order changed");
-            contract(spec.getElementDeclaration("load", "LED1").getPostIndex("A") == 0 &&
-                spec.getElementDeclaration("load", "LED1").getPostIndex("K") == 1,
-                "LED polarity changed");
-            contract(plan.getResolvedLoadRecipe() != null &&
-                spec.getResolvedLoadRecipe() == plan.getResolvedLoadRecipe(),
-                "resolved recipe identity was not preserved");
+            for (ControlledIndicatorChannel channel : plan.getChannels()) {
+                String driverOwner = channel.getDriverKey();
+                String loadOwner = channel.getLoadKey();
+                ComposedBlockContribution driver = plan.getBlocks().get(driverOwner);
+                ComposedBlockContribution load = plan.getBlocks().get(loadOwner);
+                ElectricalRealizationSpec.ProviderDeclaration driverDeclaration =
+                    spec.getProviderDeclaration(driverOwner);
+                ElectricalRealizationSpec.ProviderDeclaration loadDeclaration =
+                    spec.getProviderDeclaration(loadOwner);
+                contract(driver != null && load != null && driverDeclaration != null &&
+                    loadDeclaration != null && driverDeclaration.getContribution() == driver &&
+                    loadDeclaration.getContribution() == load,
+                    "controlled channel contribution identity changed: " + channel.getKey());
+                provider(spec, driverOwner, driver.getProviderTypeId(),
+                    driver.getProviderVersion());
+                provider(spec, loadOwner, ControlledIndicatorBlockContributions.LOAD_TYPE_ID,
+                    ControlledIndicatorBlockContributions.LOAD_VERSION);
+                verifyDeclaredElements(spec, driverOwner, driverDeclaration);
+                verifyDeclaredElements(spec, loadOwner, loadDeclaration);
+                verifyDeclaredMappings(spec, plan, driverOwner);
+                verifyDeclaredMappings(spec, plan, loadOwner);
+                contract(plan.netForPort(loadOwner, "SUPPLY").equals(
+                    plan.netForPort(DeviceAdapterContract.POWER_ADAPTER_KEY, "POWER_OUT")) &&
+                    plan.netForPort(driverOwner, "CONTROL").equals(
+                        plan.netForPort(channel.getControlAdapterKey(), "CONTROL_OUT")) &&
+                    plan.netForPort(driverOwner, "SWITCHED_SINK").equals(
+                        plan.netForPort(loadOwner, "SWITCHED_LOAD")) &&
+                    plan.netForPort(driverOwner, "RETURN").equals(
+                        plan.netForPort(DeviceAdapterContract.POWER_ADAPTER_KEY, "RETURN")),
+                    "controlled channel joins changed: " + channel.getKey());
+                contract(load.getResolvedValueRecipe() != null &&
+                    loadDeclaration.getContribution().getResolvedValueRecipe() ==
+                        load.getResolvedValueRecipe(),
+                    "resolved channel value identity changed: " + channel.getKey());
+            }
+            ElectricalRealizationSpec.ProviderDeclaration support =
+                spec.getProviderDeclaration(plan.getSupportBlockKey());
+            contract(support != null &&
+                SupplyPresentBlockContributions.TYPE_ID.equals(support.getProviderId()) &&
+                support.getContribution() == plan.getBlocks().get(plan.getSupportBlockKey()),
+                "controlled support provider declaration changed");
             recipeIdentityProof = true;
         }
         contract(seed == plan.getRequest().getDescriptor().getRootSeed(),
@@ -285,72 +295,144 @@ final class A04ConstructionDeveloperVerifier {
             verifyComponentEndpoint(instance, plan, "load", "R1", "1", 0, false);
             verifyComponentEndpoint(instance, plan, "load", "R1", "2", 1, true);
         } else {
-            String q1Id = plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.COMPONENT, "Q1");
-            String ledId = plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "LED1");
-            NMosfetElm q1 = (NMosfetElm) instance.getComponentBindings().getSingleElement(q1Id);
-            LEDElm led = (LEDElm) instance.getComponentBindings().getSingleElement(ledId);
-            runtime(q1.getPostCount() == 3 && led.getPostCount() == 2,
-                "controlled component terminal cardinality changed");
-            int rgControl = node(board, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.1"));
-            int rgGate = node(board, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RG.2"));
-            int qGate = node(board, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.G"));
-            int qDrain = node(board, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.D"));
-            int qSource = node(board, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "Q1.S"));
-            int loadSupply = node(board, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.1"));
-            int ledAnode = node(board, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "LED1.A"));
-            int ledCathode = node(board, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "LED1.K"));
-            int loadNode = node(board, plan.idFor("load", FunctionalBlockDescriptor.EntityKind.PAD, "RLOAD.2"));
-            int inputSupply = node(board, plan.idFor("power-adapter", FunctionalBlockDescriptor.EntityKind.PAD, "J1.1"));
-            int inputReturn = node(board, plan.idFor("power-adapter", FunctionalBlockDescriptor.EntityKind.PAD, "J1.2"));
-            int controlInput = node(board, plan.idFor("control-adapter", FunctionalBlockDescriptor.EntityKind.PAD, "J2.1"));
-            int controlReturn = node(board, plan.idFor("control-adapter", FunctionalBlockDescriptor.EntityKind.PAD, "J2.2"));
-            int pullDownGate = node(board, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RPD.1"));
-            int pullDownReturn = node(board, plan.idFor("driver", FunctionalBlockDescriptor.EntityKind.PAD, "RPD.2"));
-            runtime(inputSupply == loadSupply && controlInput == rgControl,
-                "device input bridges do not reach their declared local loads");
-            runtime(inputReturn == controlReturn && inputReturn == qSource &&
-                inputReturn == pullDownReturn, "explicit common-return wiring changed");
-            runtime(pullDownGate == rgGate, "pull-down is not on the driver gate net");
-            int[] distinct = { loadSupply, rgControl, rgGate, ledAnode, qDrain, qSource };
-            for (int first = 0; first < distinct.length; first++)
-                for (int second = first + 1; second < distinct.length; second++)
-                    runtime(distinct[first] != distinct[second],
-                        "controlled construction shorted distinct declared nets");
-            runtime("default-led".equals(led.modelName) && q1.vt == 1.5 && q1.beta == 10.0,
-                "constructed model choices differ from the pinned bounded realization");
-            ResistorElm actualLoad = (ResistorElm) instance.getComponentBindings().getSingleElement(
-                plan.idFor("load", FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD"));
-            runtime(actualLoad.getResistance() == plan.getLoad().getResistor("RLOAD").getResistanceOhms(),
-                "constructed resistor does not consume the resolved value recipe");
-            runtime(rgGate == qGate, "controlled gate endpoints are not one solver node");
-            runtime(ledCathode == qDrain, "controlled LED cathode is not on Q1 drain");
-            runtime(loadNode == ledAnode, "controlled RLOAD/LED anode are not one solver node");
-            runtime(rgControl != rgGate && qGate != qSource && qDrain != qSource,
-                "controlled local nodes were shorted");
-            runtime(q1.getPost(0) != null && q1.getPost(1) != null && q1.getPost(2) != null,
-                "NMOS G/S/D posts are not present");
-            runtime(led.getPost(0) != null && led.getPost(1) != null,
-                "LED A/K posts are not present");
-            verifyComponentEndpoint(instance, plan, "driver", "RG", "1", 0, false);
-            verifyComponentEndpoint(instance, plan, "driver", "RG", "2", 1, true);
-            verifyComponentEndpoint(instance, plan, "driver", "RPD", "1", 0, false);
-            verifyComponentEndpoint(instance, plan, "driver", "RPD", "2", 1, false);
-            verifyComponentEndpoint(instance, plan, "driver", "Q1", "G", 0, false);
-            verifyComponentEndpoint(instance, plan, "driver", "Q1", "D", 2, false);
-            verifyComponentEndpoint(instance, plan, "driver", "Q1", "S", 1, false);
-            verifyComponentEndpoint(instance, plan, "load", "RLOAD", "1", 0, false);
-            verifyComponentEndpoint(instance, plan, "load", "RLOAD", "2", 1, true);
-            verifyComponentEndpoint(instance, plan, "load", "LED1", "A", 0, false);
-            verifyComponentEndpoint(instance, plan, "load", "LED1", "K", 1, false);
-            runtime(spec.getElementDeclaration("driver", "Q1").getPostIndex("G") == 0 &&
-                spec.getElementDeclaration("driver", "Q1").getPostIndex("S") == 1 &&
-                spec.getElementDeclaration("driver", "Q1").getPostIndex("D") == 2,
-                "settled Q1 post correspondence changed");
-            runtime(spec.getElementDeclaration("load", "LED1").getPostIndex("A") == 0 &&
-                spec.getElementDeclaration("load", "LED1").getPostIndex("K") == 1,
-                "settled LED post correspondence changed");
+            for (ControlledIndicatorChannel channel : plan.getChannels())
+                verifyControlledChannelRuntime(instance, board, plan, spec, channel);
         }
         terminalCorrespondenceProof = true;
+    }
+
+    private static void verifyControlledChannelRuntime(GeneratedBoardInstance instance,
+            TroubleshootBoard board, BoundedAssemblyPlan plan,
+            ElectricalRealizationSpec spec, ControlledIndicatorChannel channel) {
+        String driverOwner = channel.getDriverKey();
+        String loadOwner = channel.getLoadKey();
+        ComposedBlockContribution driver = plan.getBlocks().get(driverOwner);
+        ComposedBlockContribution load = plan.getBlocks().get(loadOwner);
+        ElectricalRealizationSpec.ElementDeclaration q1Declaration =
+            spec.getElementDeclaration(driverOwner, "Q1");
+        ElectricalRealizationSpec.ElementDeclaration ledDeclaration =
+            spec.getElementDeclaration(loadOwner, "LED1");
+        CircuitElm q1 = instance.getComponentBindings().getSingleElement(
+            plan.idFor(driverOwner, FunctionalBlockDescriptor.EntityKind.COMPONENT, "Q1"));
+        LEDElm led = (LEDElm) instance.getComponentBindings().getSingleElement(
+            plan.idFor(loadOwner, FunctionalBlockDescriptor.EntityKind.COMPONENT, "LED1"));
+        runtime(q1.getPostCount() == 3 && led.getPostCount() == 2,
+            "controlled component terminal cardinality changed: " + channel.getKey());
+        for (Map.Entry<String, Integer> terminal : q1Declaration.getPostIndexByTerminal().entrySet())
+            verifyComponentEndpoint(instance, plan, driverOwner, "Q1", terminal.getKey(),
+                terminal.getValue().intValue(), false);
+        verifyComponentEndpoint(instance, plan, loadOwner, "LED1", "A",
+            ledDeclaration.getPostIndex("A"), false);
+        verifyComponentEndpoint(instance, plan, loadOwner, "LED1", "K",
+            ledDeclaration.getPostIndex("K"), false);
+        for (ComposedBlockContribution.ResistorRecipe recipe : driver.getResistors().values()) {
+            verifyComponentEndpoint(instance, plan, driverOwner,
+                recipe.getComponentLocalId(), "1", 0, false);
+            verifyComponentEndpoint(instance, plan, driverOwner,
+                recipe.getComponentLocalId(), "2", 1, recipe.isMutable());
+        }
+        ComposedBlockContribution.ResistorRecipe loadRecipe = load.getResistor("RLOAD");
+        verifyComponentEndpoint(instance, plan, loadOwner, "RLOAD", "1", 0, false);
+        verifyComponentEndpoint(instance, plan, loadOwner, "RLOAD", "2", 1,
+            loadRecipe.isMutable());
+
+        int control = node(board, plan.idFor(driverOwner,
+            FunctionalBlockDescriptor.EntityKind.PAD,
+            driver.getResistors().containsKey("RG") ? "RG.1" : "RB.1"));
+        DeviceAdapterContract controlAdapter = channel.controlAdapter();
+        int controlInput = node(board, plan.idFor(channel.getControlAdapterKey(),
+            FunctionalBlockDescriptor.EntityKind.PAD,
+            controlAdapter.getComponentLocalId() + ".1"));
+        int commonReturn = node(board, plan.idFor(DeviceAdapterContract.POWER_ADAPTER_KEY,
+            FunctionalBlockDescriptor.EntityKind.PAD, "J1.2"));
+        int driverReturn = node(board, padForNet(spec, plan, driverOwner, "RETURN"));
+        int controlReturn = node(board, padForNet(spec, plan,
+            channel.getControlAdapterKey(), "RETURN"));
+        int supportReturn = node(board, padForNet(spec, plan,
+            plan.getSupportBlockKey(), "RETURN"));
+        verifyControlledReturnAlias(plan, channel);
+        String declaredReturn = plan.netForPort(driverOwner, "RETURN");
+        String loadDeclaredReturn = plan.netForPort(loadOwner, "RETURN");
+        int supply = node(board, plan.idFor(DeviceAdapterContract.POWER_ADAPTER_KEY,
+            FunctionalBlockDescriptor.EntityKind.PAD, "J1.1"));
+        int loadSupply = node(board, padForNet(spec, plan, loadOwner, "SUPPLY"));
+        int switched = node(board, padForNet(spec, plan, driverOwner, "SWITCHED_SINK"));
+        int switchedLoad = node(board, padForNet(spec, plan, loadOwner, "SWITCHED_LOAD"));
+        runtime(control == controlInput && commonReturn == driverReturn &&
+            commonReturn == controlReturn && commonReturn == supportReturn &&
+            declaredReturn.equals(loadDeclaredReturn) &&
+            supply == loadSupply && switched == switchedLoad,
+            "controlled channel joins do not match declared nets: " + channel.getKey());
+        boolean nmosKind = "NMOS".equals(q1Declaration.getKind());
+        int controlTerminal = q1.getNode(q1Declaration.getPostIndex(nmosKind ? "G" : "B"));
+        int outputTerminal = q1.getNode(q1Declaration.getPostIndex(nmosKind ? "D" : "C"));
+        int returnTerminal = q1.getNode(q1Declaration.getPostIndex(nmosKind ? "S" : "E"));
+        int ledAnode = led.getNode(ledDeclaration.getPostIndex("A"));
+        int ledCathode = led.getNode(ledDeclaration.getPostIndex("K"));
+        runtime(outputTerminal == switched && returnTerminal == commonReturn &&
+            ledCathode == switched,
+            "driver/load terminals lost their electrical joins: " + channel.getKey());
+        verifyDistinctChannelNodes(new int[] { supply, control, controlTerminal,
+            ledAnode, outputTerminal, returnTerminal }, channel.getKey());
+
+        CircuitElm driverElement = q1;
+        ElectricalRealizationSpec.ElementDeclaration driverElementSpec = q1Declaration;
+        if (driverElement instanceof NMosfetElm) {
+            NMosfetElm nmos = (NMosfetElm) driverElement;
+            runtime(nmos.vt == driverElementSpec.getParameter("threshold") &&
+                nmos.beta == driverElementSpec.getParameter("beta"),
+                "constructed NMOS model choices changed: " + channel.getKey());
+        } else {
+            runtime(driverElement instanceof NTransistorElm &&
+                ((NTransistorElm) driverElement).beta == driverElementSpec.getParameter("beta") &&
+                driverElementSpec.getModelId().equals(((NTransistorElm) driverElement).modelName),
+                "constructed NPN model choices changed: " + channel.getKey());
+        }
+        runtime(ledDeclaration.getModelId().equals(led.modelName),
+            "constructed LED model choice changed: " + channel.getKey());
+        ResistorElm actualLoad = (ResistorElm) instance.getComponentBindings().getSingleElement(
+            plan.idFor(loadOwner, FunctionalBlockDescriptor.EntityKind.COMPONENT, "RLOAD"));
+        runtime(actualLoad.getResistance() == loadRecipe.getResistanceOhms(),
+            "constructed resistor does not consume the resolved channel value recipe: " +
+                channel.getKey());
+    }
+
+    /** Independent solver-node oracle, also exercised with deliberate shorts natively. */
+    static void verifyDistinctChannelNodes(int[] nodes, String channel) {
+        runtime(nodes != null && nodes.length == 6, "incomplete channel node oracle");
+        for (int i = 0; i < nodes.length; i++)
+            for (int j = 0; j < i; j++)
+                runtime(nodes[i] != nodes[j],
+                    "controlled channel shorted distinct nodes " + j + "/" + i + ": " + channel);
+    }
+
+    private static String padForNet(ElectricalRealizationSpec spec, BoundedAssemblyPlan plan,
+            String owner, String localNet) {
+        String net = plan.netFor(owner, localNet);
+        for (ElectricalRealizationSpec.TerminalMapping mapping : spec.getTerminalMappings().values())
+            if (owner.equals(mapping.getOwnerKey()) && net.equals(mapping.getNetId()))
+                return spec.getPadId(owner, mapping.getLocalId() + "." + mapping.getTerminalId());
+        throw new IllegalStateException("No pad for declared net " + owner + "/" + localNet);
+    }
+
+    /**
+     * The controlled load's RETURN is a logical port, not a load-local pad.
+     * Keep that alias tied to the same declared bus used by the physical
+     * driver return (and reject a fictitious load RETURN pad).
+     */
+    static void verifyControlledReturnAlias(BoundedAssemblyPlan plan,
+            ControlledIndicatorChannel channel) {
+        if (plan == null || channel == null)
+            throw new IllegalArgumentException("Controlled return inputs are required");
+        ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
+        String driverReturn = plan.netForPort(channel.getDriverKey(), "RETURN");
+        String loadReturn = plan.netForPort(channel.getLoadKey(), "RETURN");
+        String powerReturn = plan.netForPort(DeviceAdapterContract.POWER_ADAPTER_KEY,
+            "RETURN");
+        runtime(driverReturn.equals(powerReturn) && loadReturn.equals(powerReturn) &&
+            !spec.hasPad(channel.getLoadKey(), "RETURN"),
+            "controlled load RETURN must alias the shared bus without a physical pad: " +
+                channel.getKey());
     }
 
     /**
@@ -403,54 +485,30 @@ final class A04ConstructionDeveloperVerifier {
     }
 
     static TroubleshootBoard contextBoard(ElectricalRealizationSpec spec) {
-        TroubleshootBoard board = new TroubleshootBoard(spec.getProviderDeclaration("source") != null ?
-            "RESISTIVE_COUPLING" : ControlledIndicatorDeviceBehavior.FAMILY_ID);
+        if (spec == null) throw new IllegalArgumentException("Electrical spec is required");
+        TroubleshootBoard board = new TroubleshootBoard(
+            spec.getProviderDeclaration("source") != null
+                ? BoundedGeneratedBoardAssembler.FAMILY_ID
+                : ControlledIndicatorDeviceBehavior.FAMILY_ID);
         for (Map.Entry<String, PhysicalPackage> entry : spec.getPackageMap().getPackages().entrySet())
             board.addComponent(new BoardComponent(entry.getKey(), "A04_CONTEXT",
                 entry.getValue(), entry.getKey()));
-
-        Map<String, PadDefinition> definitions = new HashMap<String, PadDefinition>();
         Set<String> netIds = new HashSet<String>();
-        for (ElectricalRealizationSpec.TerminalMapping mapping :
-                spec.getTerminalMappings().values()) {
-            String local = mapping.getLocalId() + "." + mapping.getTerminalId();
-            if (!spec.hasPad(mapping.getOwnerKey(), local)) continue;
-            String padId = spec.getPadId(mapping.getOwnerKey(), local);
-            addPadDefinition(definitions, netIds, padId,
-                spec.getComponentId(mapping.getOwnerKey(), mapping.getLocalId()),
-                mapping.getTerminalId(), mapping.getNetId());
+        for (ElectricalRealizationSpec.PadBindingSpec binding :
+                spec.getPadBindings().values()) {
+            netIds.add(binding.getNetId());
         }
-        addDevicePad(spec, definitions, netIds, "device", "J1", "1");
-        addDevicePad(spec, definitions, netIds, "device", "J1", "2");
-        addDevicePad(spec, definitions, netIds, "power-adapter", "J1", "1");
-        addDevicePad(spec, definitions, netIds, "power-adapter", "J1", "2");
-        addDevicePad(spec, definitions, netIds, "control-adapter", "J2", "1");
-        addDevicePad(spec, definitions, netIds, "control-adapter", "J2", "2");
         for (String netId : netIds) board.addNet(new BoardNet(netId));
-        for (PadDefinition definition : definitions.values())
-            board.addPad(new BoardPad(definition.padId, definition.componentId,
-                definition.terminalId, definition.netId));
-
-        if (spec.hasPad("device", "J1.1")) {
-            String positive = spec.getPadId("device", "J1.1");
-            String returned = spec.getPadId("device", "J1.2");
-            board.addPowerInput(new ExternalBoardPowerInput(
-                BoundedGeneratedBoardAssembler.POWER_INPUT_ID, positive, returned,
-                definitions.get(positive).netId, definitions.get(returned).netId));
+        for (ElectricalRealizationSpec.PadBindingSpec binding :
+                spec.getPadBindings().values()) {
+            board.addPad(new BoardPad(binding.getPadId(), binding.getComponentId(),
+                binding.getTerminalId(), binding.getNetId()));
         }
-        if (spec.hasPad("power-adapter", "J1.1")) {
-            String loadPositive = spec.getPadId("power-adapter", "J1.1");
-            String loadReturn = spec.getPadId("power-adapter", "J1.2");
-            board.addPowerInput(new ExternalBoardPowerInput(
-                ControlledIndicatorDeviceBehavior.LOAD_POWER_INPUT_ID,
-                loadPositive, loadReturn, definitions.get(loadPositive).netId,
-                definitions.get(loadReturn).netId));
-            String controlPositive = spec.getPadId("control-adapter", "J2.1");
-            String controlReturn = spec.getPadId("control-adapter", "J2.2");
-            board.addPowerInput(new ExternalBoardPowerInput(
-                ControlledIndicatorDeviceBehavior.CONTROL_POWER_INPUT_ID,
-                controlPositive, controlReturn, definitions.get(controlPositive).netId,
-                definitions.get(controlReturn).netId));
+        for (ElectricalRealizationSpec.PowerInputSpec input :
+                spec.getPowerInputs().values()) {
+            board.addPowerInput(new ExternalBoardPowerInput(input.getInputId(),
+                input.getPositivePadId(), input.getReturnPadId(),
+                input.getPositiveNetId(), input.getReturnNetId()));
         }
         board.validate();
         return board;
@@ -583,6 +641,127 @@ final class A04ConstructionDeveloperVerifier {
             net.equals(mapping.getNetId()) && mapping.getComponentId().equals(
                 spec.getComponentId(owner, local)),
             "terminal/package/net mapping changed: " + owner + "/" + local + "." + terminal);
+    }
+
+    static void verifyDeclaredElements(ElectricalRealizationSpec spec, String owner,
+            ElectricalRealizationSpec.ProviderDeclaration provider) {
+        contract(spec != null && owner != null && provider != null,
+            "element declaration inputs are incomplete");
+        contract(owner.equals(provider.getOwnerKey()),
+            "provider declaration owner changed: " + owner);
+
+        Set<String> providerIds = new HashSet<String>(provider.getElementIds());
+        Set<String> providerElementIds = new HashSet<String>(provider.getElements().keySet());
+        Set<String> specElementIds = new HashSet<String>();
+        for (ElectricalRealizationSpec.ElementDeclaration element :
+                spec.getElementDeclarations().values()) {
+            if (owner.equals(element.getOwnerKey()))
+                specElementIds.add(element.getElementId());
+        }
+        contract(providerIds.equals(providerElementIds) && providerIds.equals(specElementIds),
+            "provider/spec element membership changed: " + owner);
+
+        for (ElectricalRealizationSpec.ElementDeclaration element : provider.getElements().values()) {
+            String elementId = element.getElementId();
+            ElectricalRealizationSpec.ElementDeclaration declared =
+                spec.getElementDeclaration(owner, elementId);
+            contract(owner.equals(element.getOwnerKey()) && declared == element,
+                "element ownership changed: " + owner + "/" + elementId);
+            verifyElementShapeAssociation(spec, owner, provider, element);
+        }
+    }
+
+    /** Pure changed predicate; caller separately establishes exact declaration identity. */
+    static void verifyElementShapeAssociation(ElectricalRealizationSpec spec, String owner,
+            ElectricalRealizationSpec.ProviderDeclaration provider,
+            ElectricalRealizationSpec.ElementDeclaration element) {
+        contract(element != null && owner.equals(element.getOwnerKey()),
+            "element shape owner changed");
+        String elementId = element.getElementId();
+        verifyPrimitivePostShape(element.getKind(), element.getPostIndexByTerminal());
+        String componentId = element.getComponentId();
+        if (componentId != null)
+            verifyDeclaredComponentAssociation(spec, owner, provider, elementId, componentId);
+    }
+
+    static void verifyPrimitivePostShape(String kind, Map<String, Integer> actualPosts) {
+        contract(expectedPrimitivePosts(kind).equals(actualPosts),
+            "primitive post declaration changed: " + kind);
+    }
+
+    private static Map<String, Integer> posts(String first, int firstPost) {
+        Map<String, Integer> result = new java.util.TreeMap<String, Integer>();
+        result.put(first, firstPost);
+        return result;
+    }
+
+    private static Map<String, Integer> posts(String first, int firstPost,
+            String second, int secondPost) {
+        Map<String, Integer> result = posts(first, firstPost);
+        result.put(second, secondPost);
+        return result;
+    }
+
+    private static Map<String, Integer> posts(String first, int firstPost,
+            String second, int secondPost, String third, int thirdPost) {
+        Map<String, Integer> result = posts(first, firstPost, second, secondPost);
+        result.put(third, thirdPost);
+        return result;
+    }
+
+    private static Map<String, Integer> expectedPrimitivePosts(String kind) {
+        if ("NMOS".equals(kind)) return posts("G", 0, "D", 2, "S", 1);
+        if ("NPN".equals(kind)) return posts("B", 0, "C", 1, "E", 2);
+        if ("LED".equals(kind)) return posts("A", 0, "K", 1);
+        if ("VOLTAGE".equals(kind)) return posts("+", 1, "-", 0);
+        if ("GROUND".equals(kind)) return posts("1", 0);
+        if ("RESISTOR".equals(kind) || "WIRE".equals(kind) ||
+                "SWITCH".equals(kind) || "FAULT_HELPER".equals(kind))
+            return posts("1", 0, "2", 1);
+        throw new IllegalStateException("Unknown declared primitive " + kind);
+    }
+
+    private static void verifyDeclaredComponentAssociation(ElectricalRealizationSpec spec,
+            String owner, ElectricalRealizationSpec.ProviderDeclaration provider,
+            String elementId, String componentId) {
+        PhysicalPackage physicalPackage = spec.getPackageMap().getPackages().get(componentId);
+        String packageOwner = spec.getPackageMap().getPackageOwners().get(componentId);
+        contract(physicalPackage != null && packageOwner != null,
+            "element component has no declared package owner: " + owner + "/" + elementId);
+        if (!provider.isDeviceOwner())
+            contract(owner.equals(packageOwner),
+                "element component belongs to a foreign provider: " + owner + "/" + elementId);
+
+        boolean packageUnitFound = false;
+        for (ElectricalUnitPackageMap.Unit unit : spec.getPackageMap().getUnits().values()) {
+            if (!componentId.equals(unit.getComponentId())) continue;
+            packageUnitFound = true;
+            contract(packageOwner.equals(unit.getOwnerKey()),
+                "element component package/unit owner changed: " + owner + "/" + elementId);
+        }
+        contract(packageUnitFound,
+            "element component has no declared package unit: " + owner + "/" + elementId);
+
+        boolean physicalUnitFound = false;
+        for (ElectricalRealizationSpec.PhysicalUnitSpec unit :
+                spec.getPhysicalUnits().values()) {
+            if (!componentId.equals(unit.getComponentId())) continue;
+            physicalUnitFound = true;
+            contract(packageOwner.equals(unit.getOwnerKey()) &&
+                physicalPackage.getId().equals(unit.getPackageId()),
+                "element component physical unit changed: " + owner + "/" + elementId);
+        }
+        contract(physicalUnitFound,
+            "element component has no declared physical unit: " + owner + "/" + elementId);
+    }
+
+    private static void verifyDeclaredMappings(ElectricalRealizationSpec spec,
+            BoundedAssemblyPlan plan, String owner) {
+        for (ElectricalRealizationSpec.TerminalMapping terminal : spec.getTerminalMappings().values()) {
+            if (!owner.equals(terminal.getOwnerKey())) continue;
+            mapping(spec, plan, owner, terminal.getLocalId(), terminal.getTerminalId(),
+                terminal.getPackageTerminalId(), terminal.getNetId());
+        }
     }
 
     private static void dispose(CirSim sim, GeneratedBoardInstance candidate,

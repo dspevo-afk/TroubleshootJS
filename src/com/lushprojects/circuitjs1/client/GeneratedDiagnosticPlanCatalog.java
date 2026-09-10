@@ -1,13 +1,14 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.TreeSet;
 import java.util.Vector;
+import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
 
 /** Deterministic, family-neutral v1 plan catalog. */
 final class GeneratedDiagnosticPlanCatalog {
-    /** Normal composed Task 48 family; kept local until the player registry publishes it. */
-    private static final String COMPOSED_CONTROLLED_INDICATOR =
-        "COMPOSED_CONTROLLED_INDICATOR";
-
     private GeneratedDiagnosticPlanCatalog() { }
 
     static Vector<GeneratedDiagnosticPlan> forFamily(String familyId) {
@@ -81,46 +82,74 @@ final class GeneratedDiagnosticPlanCatalog {
                     GeneratedBoardOperationIds.CUSTOMER_RETEST },
                 new String[] { "CONTROL_HIGH_SAMPLE", "CONTROL_LOW_SAMPLE" },
                 new String[] { "LOAD_SUPPLY", "CONTROL_INPUT", "DRAIN", "GND" }, 6, false));
-        else if (COMPOSED_CONTROLLED_INDICATOR.equals(familyId))
-            result.add(controlledIndicatorPlan());
         else
             throw new IllegalArgumentException("No diagnostic plan catalog for family: " + familyId);
         return result;
     }
 
     /**
-     * The plan deliberately names the assembled public pads, rather than a
-     * solver element, node number, fault effect, or selected candidate.  The
-     * controlled board uses the same block namespace authority as assembly.
+     * Build the plan from the resolved device contribution.  This is the only
+     * composed-device plan source: repeated channel keys, selected provider
+     * pads, and support pads all come from the immutable plan namespace.
      */
-    private static GeneratedDiagnosticPlan controlledIndicatorPlan() {
-        return simple("CONTROLLED_INDICATOR_TWO_STATE_PATH", pad("power-adapter", "J1.2"),
-            new String[] {
-                pad("power-adapter", "J1.1"), pad("power-adapter", "J1.2"),
-                pad("control-adapter", "J2.1"), pad("control-adapter", "J2.2"),
-                pad("driver", "RG.1"), pad("driver", "RG.2"),
-                pad("driver", "RPD.1"), pad("driver", "RPD.2"),
-                pad("driver", "Q1.G"), pad("driver", "Q1.D"),
-                pad("driver", "Q1.S"), pad("load", "RLOAD.1"),
-                pad("load", "RLOAD.2"), pad("load", "LED1.A"),
-                pad("load", "LED1.K")
-            },
+    static GeneratedDiagnosticPlan forAssembly(BoundedAssemblyPlan plan) {
+        if (plan == null || !plan.isControlledIndicator())
+            throw new IllegalArgumentException("Controlled assembly plan is required");
+        List<String> probes = new ArrayList<String>();
+        String reference = null;
+        for (FunctionalBlockDescriptor descriptor : plan.getRequest().getNamespaceDescriptors()) {
+            TreeSet<String> localPads = new TreeSet<String>(descriptor.getPads().keySet());
+            for (String localPad : localPads) {
+                String qualified = plan.getNamespace().idFor(descriptor.getInstanceKey(),
+                    EntityKind.PAD, localPad);
+                probes.add(qualified);
+                if (reference == null && descriptor.getInstanceKey().equals(
+                        DeviceAdapterContract.POWER_ADAPTER_KEY) && localPad.endsWith(".2"))
+                    reference = qualified;
+            }
+        }
+        if (reference == null)
+            throw new IllegalArgumentException("Controlled plan has no power reference pad");
+
+        ArrayList<String> transitions = new ArrayList<String>();
+        ArrayList<String> operations = new ArrayList<String>();
+        ArrayList<String> temporal = new ArrayList<String>();
+        ArrayList<String> domains = new ArrayList<String>();
+        transitions.add("BOARD_POWER_ON");
+        transitions.add("BOARD_POWER_OFF");
+        domains.add("SUPPLY");
+        domains.add("CONTROL");
+        domains.add("SHARED_RETURN");
+        domains.add("SUPPORT_PRESENT");
+        for (ControlledIndicatorChannel channel : plan.getChannels()) {
+            String high = channel.getHighOperationId();
+            String low = channel.getLowOperationId();
+            transitions.add(high);
+            transitions.add(low);
+            operations.add(high);
+            operations.add(low);
+            temporal.add(channel.getSampleId(true));
+            temporal.add(channel.getSampleId(false));
+            domains.add("CHANNEL_" + channel.getLabel().toUpperCase() + "_SWITCHED");
+        }
+        operations.add(GeneratedBoardOperationIds.CUSTOMER_RETEST);
+        Collections.sort(probes);
+        Collections.sort(transitions);
+        Collections.sort(operations);
+        Collections.sort(temporal);
+        Collections.sort(domains);
+        return new GeneratedDiagnosticPlan(
+            "LOW_SIDE_INDICATOR_CHANNEL_PATH", reference,
+            probes.toArray(new String[probes.size()]),
             new String[] { "DC_VOLTAGE", "RESISTANCE", "CONTINUITY" },
-            new String[] { "CONTROL_INPUT_HIGH", "CONTROL_INPUT_LOW",
-                "BOARD_POWER_OFF", "BOARD_POWER_ON" },
+            transitions.toArray(new String[transitions.size()]),
             new String[] { WorkbenchOperation.REMOVE },
             new String[] { WorkbenchOperation.CATALOG_INSTALL },
-            new String[] { GeneratedBoardOperationIds.CONTROL_INPUT_HIGH,
-                GeneratedBoardOperationIds.CONTROL_INPUT_LOW,
-                GeneratedBoardOperationIds.CUSTOMER_RETEST },
-            new String[] { "CONTROL_HIGH_SAMPLE", "CONTROL_LOW_SAMPLE" },
-            new String[] { "LOAD_SUPPLY", "CONTROL_INPUT", "GATE",
-                "DRAIN_SWITCHED_LOAD", "GND" }, 9, false);
-    }
-
-    private static String pad(String block, String localId) {
-        return ControlledIndicatorBlockContributions.padId(
-            ControlledIndicatorBlockContributions.namespace(), block, localId);
+            new String[0],
+            operations.toArray(new String[operations.size()]),
+            temporal.toArray(new String[temporal.size()]),
+            domains.toArray(new String[domains.size()]),
+            8 + (plan.getChannels().size() * 3), true, true, "NONE");
     }
 
     private static GeneratedDiagnosticPlan simple(String template, String reference,

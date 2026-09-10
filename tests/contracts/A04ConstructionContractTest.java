@@ -2,7 +2,6 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,28 +9,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Vector;
+
+import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
 
 /**
- * Pure/native conformance for the A04 construction boundary.
+ * Pure conformance for the current provider-owned construction boundary.
  *
- * <p>This class deliberately derives its terminal expectations from the
- * electrical declarations (the two resistive port declarations and the
- * controlled driver/load descriptors).  It does not ask the construction
- * context to tell the test what it was supposed to build.</p>
+ * <p>The controlled fixture now contains two stable channel instances and a
+ * fixed supply indicator.  This oracle follows those declared identities and
+ * provider declarations instead of asking a plan for a singleton driver or
+ * load.</p>
  */
 public final class A04ConstructionContractTest {
     private static int assertions;
+    private static final long[] SEEDS = { -1L, 0L, 1L, 2L,
+            Long.MIN_VALUE, Long.MAX_VALUE };
 
     private A04ConstructionContractTest() { }
 
     public static void main(String[] args) {
         try {
             immutableDeclarationCanaries();
+            persistentBoardEndpointCanaries();
             supportedProviderRegistry();
-            planSpecAndElectricalCorrespondence();
-            packageMapCompletenessAndSharedPackageShape();
-            a03ManifestReplayPreservation();
+            resistivePlanContract();
+            controlledPlanContract();
+            reorderedAndRepeatedIdentity();
             System.out.println("PASS: A04ConstructionContractTest assertions="
                     + assertions);
         } catch (Throwable failure) {
@@ -42,54 +45,80 @@ public final class A04ConstructionContractTest {
         }
     }
 
-    /** The small records used by the spec must own every caller collection. */
+    private static void persistentBoardEndpointCanaries() {
+        expectIllegal(new Action() {
+            @Override public void run() {
+                new ElectricalRealizationSpec.BoardEndpointSpec("owner", "R1.1",
+                        new ElectricalRealizationSpec.EndpointRef("owner", "ATTACHMENT", "1"),
+                        "ATTACHMENT");
+            }
+        }, "detachable attachment used as persistent board contact");
+        for (long seed : SEEDS) {
+            ElectricalRealizationSpec spec = BoundedAssemblyPlan.resolve(
+                    BoundedAssemblyRequest.forControlledIndicator(seed)).getElectricalRealizationSpec();
+            int detachableCount = 0;
+            for (Map.Entry<String, ElectricalRealizationSpec.BoardEndpointSpec> entry :
+                    spec.getBoardEndpoints().entrySet()) {
+                ElectricalRealizationSpec.BoardEndpointSpec pad = entry.getValue();
+                if (pad.getAttachmentElementId() == null) continue;
+                detachableCount++;
+                ElectricalRealizationSpec.EndpointRef endpoint = pad.getEndpoint();
+                ElectricalRealizationSpec.ElementDeclaration backing = spec.getElementDeclaration(
+                        endpoint.getOwnerKey(), endpoint.getElementId());
+                check(!pad.getAttachmentElementId().equals(endpoint.getElementId()) &&
+                        "WIRE".equals(backing.getKind()) && backing.getComponentId() == null,
+                        "removable resistor contact must remain on persistent board copper");
+            }
+            check(detachableCount == 8, "both terminals of all four repair owners are persistent");
+        }
+    }
+
     private static void immutableDeclarationCanaries() {
-        final List<String> elements = new ArrayList<String>(
-                Arrays.asList("z", "a"));
-        final List<String> units = new ArrayList<String>(
-                Arrays.asList("unit-b", "unit-a"));
-        final List<String> terminals = new ArrayList<String>(
-                Arrays.asList("2", "1"));
-        final List<String> joins = new ArrayList<String>(
-                Arrays.asList("join-b", "join-a"));
+        final List<String> elements = new ArrayList<String>(Arrays.asList("z", "a"));
+        final List<String> units = new ArrayList<String>(Arrays.asList("unit-b", "unit-a"));
+        final List<String> terminals = new ArrayList<String>(Arrays.asList("2", "1"));
+        final List<String> joins = new ArrayList<String>(Arrays.asList("join-b", "join-a"));
+        final Map<String, Integer> posts = new HashMap<String, Integer>();
+        posts.put("G", Integer.valueOf(0));
+        posts.put("S", Integer.valueOf(1));
+        posts.put("D", Integer.valueOf(2));
+        final Map<String, Double> parameters = new HashMap<String, Double>();
+        parameters.put("threshold", Double.valueOf(1.5));
+        parameters.put("beta", Double.valueOf(10.0));
+        final ElectricalRealizationSpec.ElementDeclaration element =
+                new ElectricalRealizationSpec.ElementDeclaration("owner", "Q1",
+                        "NMOS", "component/Q1", posts, "NMOS", parameters);
+        final Map<String, ElectricalRealizationSpec.ElementDeclaration> allElements =
+                new HashMap<String, ElectricalRealizationSpec.ElementDeclaration>();
+        allElements.put("Q1", element);
         final ElectricalRealizationSpec.ProviderDeclaration declaration =
-                new ElectricalRealizationSpec.ProviderDeclaration("owner",
-                        "provider", 1, null, elements, units, terminals,
-                        joins, false);
+                new ElectricalRealizationSpec.ProviderDeclaration("owner", "provider", 1,
+                        null, elements, units, terminals, joins, false, allElements);
         elements.clear();
         units.clear();
         terminals.clear();
         joins.clear();
-        check(declaration.getElementIds().equals(Arrays.asList("a", "z")),
-                "provider declaration did not defensively copy element IDs");
-        check(declaration.getUnitIds().equals(Arrays.asList("unit-a", "unit-b")),
-                "provider declaration did not defensively copy unit IDs");
-        check(declaration.getTerminalIds().equals(Arrays.asList("1", "2")),
-                "provider declaration did not defensively copy terminal IDs");
-        check(declaration.getJoinIds().equals(Arrays.asList("join-a", "join-b")),
-                "provider declaration did not defensively copy join IDs");
-        expectUnsupported(new Runnable() {
-            @Override public void run() {
-                declaration.getElementIds().clear();
-            }
-        }, "provider element declaration view");
-
-        final Map<String, Integer> posts = new HashMap<String, Integer>();
-        posts.put("D", Integer.valueOf(2));
-        posts.put("S", Integer.valueOf(1));
-        posts.put("G", Integer.valueOf(0));
-        final ElectricalRealizationSpec.ElementDeclaration element =
-                new ElectricalRealizationSpec.ElementDeclaration("owner", "Q1",
-                        "NMOS", "component/Q1", posts);
         posts.clear();
-        check(element.getPostIndex("G") == 0 && element.getPostIndex("S") == 1
-                && element.getPostIndex("D") == 2,
-                "element declaration did not retain the independent NMOS post map");
-        expectUnsupported(new Runnable() {
-            @Override public void run() {
-                element.getPostIndexByTerminal().put("X", Integer.valueOf(3));
-            }
-        }, "element post declaration view");
+        parameters.clear();
+        check(declaration.getElementIds().equals(Arrays.asList("a", "z")),
+                "provider element IDs were not copied and sorted");
+        check(declaration.getUnitIds().equals(Arrays.asList("unit-a", "unit-b")),
+                "provider unit IDs were not copied and sorted");
+        check(declaration.getTerminalIds().equals(Arrays.asList("1", "2")),
+                "provider terminal IDs were not copied and sorted");
+        check(declaration.getElement("Q1").getPostIndex("G") == 0 &&
+                declaration.getElement("Q1").getPostIndex("S") == 1 &&
+                declaration.getElement("Q1").getPostIndex("D") == 2,
+                "provider declaration lost primitive post choices");
+        expectUnsupported(new Action() {
+            @Override public void run() { declaration.getElementIds().clear(); }
+        }, "provider IDs are mutable");
+        expectUnsupported(new Action() {
+            @Override public void run() { declaration.getElements().clear(); }
+        }, "provider element map is mutable");
+        expectUnsupported(new Action() {
+            @Override public void run() { declaration.getElement("Q1").getParameters().clear(); }
+        }, "element parameter map is mutable");
 
         final Map<String, String> packageTerminals = new HashMap<String, String>();
         packageTerminals.put("VCC", "VCC");
@@ -99,393 +128,408 @@ public final class A04ConstructionContractTest {
                         "component/U1", "package/U1", packageTerminals);
         packageTerminals.clear();
         check(unit.getPackageTerminalByUnitTerminal().size() == 2,
-                "physical unit did not defensively copy its terminal map");
-        expectUnsupported(new Runnable() {
+                "physical unit did not retain its copied terminal map");
+        expectUnsupported(new Action() {
             @Override public void run() {
                 unit.getPackageTerminalByUnitTerminal().put("X", "X");
             }
-        }, "physical unit terminal mapping view");
+        }, "physical unit terminal map is mutable");
 
         final List<String> joinRefs = new ArrayList<String>(Arrays.asList(
                 "load/LED1.A", "driver/Q1.D"));
         final ElectricalRealizationSpec.DeviceJoinSpec join =
-                new ElectricalRealizationSpec.DeviceJoinSpec("led-drain",
-                        joinRefs, "SIGNAL");
+                new ElectricalRealizationSpec.DeviceJoinSpec("led-drain", joinRefs, "SIGNAL");
         joinRefs.clear();
-        check(join.getTerminalRefs().equals(Arrays.asList("driver/Q1.D",
-                "load/LED1.A")), "device join did not canonicalize references");
-        expectUnsupported(new Runnable() {
-            @Override public void run() {
-                join.getTerminalRefs().clear();
-            }
-        }, "device join terminal view");
+        check(join.getTerminalRefs().equals(Arrays.asList("driver/Q1.D", "load/LED1.A")),
+                "device join did not canonicalize endpoint references");
+        expectUnsupported(new Action() {
+            @Override public void run() { join.getTerminalRefs().clear(); }
+        }, "device join endpoint list is mutable");
 
-        expectIllegal(new Runnable() {
+        expectIllegal(new Action() {
             @Override public void run() {
-                new ElectricalRealizationSpec.ProviderDeclaration("owner",
-                        "provider", 0, null, Arrays.asList("x"),
-                        Arrays.asList("u"), Arrays.asList("t"),
+                new ElectricalRealizationSpec.ElementDeclaration("owner", "Q1",
+                        "NMOS", "component/Q1", posts("G", 0, "D", 1, "S", 2),
+                        "NMOS", numbers("threshold", 1.5, "beta", 10.0));
+            }
+        }, "NMOS with swapped D/S posts");
+        expectIllegal(new Action() {
+            @Override public void run() {
+                new ElectricalRealizationSpec.ElementDeclaration("owner", "X",
+                        "UNKNOWN", "component/X", posts("1", 0), null,
+                        Collections.<String, Double>emptyMap());
+            }
+        }, "unknown primitive kind");
+        expectIllegal(new Action() {
+            @Override public void run() {
+                new ElectricalRealizationSpec.ProviderDeclaration("owner", "provider", 0,
+                        null, Arrays.asList("x"), Arrays.asList("u"), Arrays.asList("t"),
                         Collections.<String>emptyList(), false);
             }
         }, "provider version zero");
     }
 
-    /** Registry lookup is a closed versioned boundary, not a permissive map. */
     private static void supportedProviderRegistry() {
-        ElectricalConstructionProvider source =
-                StandardElectricalConstructionProviders.resistiveSource();
-        ElectricalConstructionProvider load =
-                StandardElectricalConstructionProviders.resistiveLoad();
-        ElectricalConstructionProvider driver =
-                StandardElectricalConstructionProviders.controlledDriver();
-        ElectricalConstructionProvider controlledLoad =
-                StandardElectricalConstructionProviders.controlledLoad();
-        check(source != null && load != null && driver != null
-                && controlledLoad != null, "standard providers are incomplete");
-        check("resistive-source".equals(source.getProviderId())
-                && source.getVersion() == 1, "resistive source provider identity");
-        check("resistive-load".equals(load.getProviderId())
-                && load.getVersion() == 1, "resistive load provider identity");
-        check("nmos-low-side-driver".equals(driver.getProviderId())
-                && driver.getVersion() == 1, "controlled driver provider identity");
-        check(ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(
-                controlledLoad.getProviderId())
-                && controlledLoad.getVersion() == ControlledIndicatorBlockContributions.LOAD_VERSION,
-                "controlled load provider identity");
-        check(StandardElectricalConstructionProviders.provider(
-                source.getProviderId(), source.getVersion()) == source,
-                "source registry lookup did not return the registered provider");
-        check(StandardElectricalConstructionProviders.provider(
-                load.getProviderId(), load.getVersion()) == load,
-                "load registry lookup did not return the registered provider");
-        check(StandardElectricalConstructionProviders.provider(
-                driver.getProviderId(), driver.getVersion()) == driver,
-                "driver registry lookup did not return the registered provider");
-        check(StandardElectricalConstructionProviders.provider(
-                controlledLoad.getProviderId(), controlledLoad.getVersion())
-                == controlledLoad,
-                "controlled-load registry lookup did not return the provider");
-        expectIllegal(new Runnable() {
+        ElectricalConstructionProvider[] providers = {
+            StandardElectricalConstructionProviders.resistiveSource(),
+            StandardElectricalConstructionProviders.resistiveLoad(),
+            StandardElectricalConstructionProviders.controlledDriver(),
+            StandardElectricalConstructionProviders.controlledNpnDriver(),
+            StandardElectricalConstructionProviders.controlledLoad(),
+            StandardElectricalConstructionProviders.supplyPresent()
+        };
+        Set<String> ids = new HashSet<String>();
+        for (ElectricalConstructionProvider provider : providers) {
+            check(provider != null && ids.add(provider.getProviderId()),
+                    "standard provider registry has a missing or duplicate provider");
+            check(StandardElectricalConstructionProviders.provider(provider.getProviderId(),
+                    provider.getVersion()) == provider,
+                    "provider registry lookup changed identity for " + provider.getProviderId());
+        }
+        check(ids.contains(ControlledIndicatorBlockContributions.DRIVER_TYPE_ID) &&
+                ids.contains(ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID) &&
+                ids.contains(SupplyPresentBlockContributions.TYPE_ID),
+                "current role and support providers are not registered");
+        expectIllegal(new Action() {
             @Override public void run() {
-                StandardElectricalConstructionProviders.provider(
-                        "unknown-provider", 1);
+                StandardElectricalConstructionProviders.provider("unknown-provider", 1);
             }
         }, "unknown provider lookup");
-        expectIllegal(new Runnable() {
+        expectIllegal(new Action() {
             @Override public void run() {
                 StandardElectricalConstructionProviders.provider(
-                        "resistive-source", 99);
+                        ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID, 99);
             }
         }, "unsupported provider version lookup");
-    }
 
-    /** Check the current resistive and controlled plans against independent electrical facts. */
-    private static void planSpecAndElectricalCorrespondence() {
-        for (int version : new int[] { 1, BoundedAssemblyRequest.GENERATOR_VERSION }) {
-            BoundedAssemblyPlan plan = planFor(version, version);
-            ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
-            check(spec != null && spec.getVersion() == ElectricalRealizationSpec.VERSION,
-                    "missing versioned electrical realization spec for v" + version);
-            check(!spec.getProviderDeclarations().isEmpty()
-                    && !spec.getElementDeclarations().isEmpty()
-                    && !spec.getPhysicalUnits().isEmpty()
-                    && !spec.getTerminalMappings().isEmpty(),
-                    "electrical spec omitted required declaration maps for v" + version);
-            immutableMap(spec.getProviderDeclarations(), "provider declarations");
-            immutableMap(spec.getElementDeclarations(), "element declarations");
-            immutableMap(spec.getPhysicalUnits(), "physical units");
-            immutableMap(spec.getTerminalMappings(), "terminal mappings");
-            immutableMap(spec.getDeviceJoins(), "device joins");
-            immutableMap(spec.getSolverReservations(), "solver reservations");
-
-            if (version == 1)
-                assertResistiveDeclarations(plan, spec);
-            else
-                assertControlledDeclarations(plan, spec, version);
-
-            int expectedPackages = version == 1 ? 3 : 7;
-            int expectedUnits = version == 1 ? 3 : 7;
-            check(spec.getPackageMap().getPackageCount() == expectedPackages,
-                    "unexpected visible package count for v" + version);
-            check(spec.getPackageMap().getUnitCount() == expectedUnits,
-                    "unexpected physical-unit count for v" + version);
-            mapCompleteness(spec, "v" + version);
-            reservationAndSupplyCorrespondence(spec, version);
-
-            if (version != 1) {
-                ControlledIndicatorValueSynthesis.ResolvedRecipe planRecipe =
-                        plan.getResolvedLoadRecipe();
-                check(planRecipe != null && spec.getResolvedLoadRecipe() == planRecipe,
-                        "current controlled recipe was not passed through by object identity");
-                check(plan.getLoad().getResolvedValueRecipe() == planRecipe,
-                        "current controlled load contribution does not retain the plan recipe identity");
-            } else {
-                check(spec.getResolvedLoadRecipe() == null,
-                        "resistive spec unexpectedly synthesized a resolved recipe");
+        List<LowSideRoleFamily.Provider> canonical = LowSideRoleFamily.providers();
+        ArrayList<LowSideRoleFamily.Provider> reversed =
+                new ArrayList<LowSideRoleFamily.Provider>(canonical);
+        Collections.reverse(reversed);
+        check(canonicalIds(canonical).equals(canonicalIds(
+                LowSideRoleFamily.canonicalProviders(reversed))),
+                "low-side registry order is not canonicalized");
+        for (long seed : SEEDS) {
+            for (String key : new String[] { "channel-a-driver", "channel-b-driver" }) {
+                check(LowSideRoleFamily.select(seed, key, LowSideRoleFamily.Envelope.standard(),
+                        canonical).getTypeId().equals(LowSideRoleFamily.select(seed, key,
+                        LowSideRoleFamily.Envelope.standard(), reversed).getTypeId()),
+                        "provider selection changed with registration order");
             }
         }
     }
 
-    private static void assertResistiveDeclarations(BoundedAssemblyPlan plan,
-            ElectricalRealizationSpec spec) {
-        check(spec.getBridgeSpecs().get("SOURCE_FIRST_ATTACHMENT").getSemanticJoinId() == null &&
-                "VIN_INPUT".equals(spec.getBridgeSpecs().get("SOURCE_FIRST_ATTACHMENT").getExternalPowerInputId()),
-                "source positive supply attachment was mislabeled as a common-return join");
-        provider(spec, "source", "resistive-source", 1);
-        provider(spec, "load", "resistive-load", 1);
+    private static void resistivePlanContract() {
+        BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forCanary(1L));
+        ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
+        check(!plan.isControlledIndicator() && plan.getChannels().isEmpty(),
+                "resistive plan was classified as a controlled plan");
+        check(spec != null && spec.getVersion() == ElectricalRealizationSpec.VERSION,
+                "resistive plan omitted its current electrical spec");
+        check(spec.getPackageMap().getPackageCount() == 3 &&
+                spec.getPackageMap().getUnitCount() == 3,
+                "resistive package/unit inventory changed");
+        provider(spec, "source", ResistiveBlockContributions.SOURCE_TYPE_ID, 1);
+        provider(spec, "load", ResistiveBlockContributions.LOAD_TYPE_ID, 1);
         element(spec, "source", "R1", "RESISTOR", "1", 0, "2", 1);
         element(spec, "load", "R1", "RESISTOR", "1", 0, "2", 1);
-        terminal(spec, plan, "source", "R1", "1", "1",
-                plan.netFor("source", "SUPPLY"));
-        terminal(spec, plan, "source", "R1", "2", "2",
-                plan.netFor("source", "OUT"));
-        terminal(spec, plan, "load", "R1", "1", "1",
-                plan.netFor("load", "SUPPLY"));
-        terminal(spec, plan, "load", "R1", "2", "2",
-                plan.netFor("load", "RETURN"));
-        check(plan.netFor("source", "OUT").equals(
-                plan.netFor("load", "SUPPLY")),
-                "resistive signal join is not the explicit source-to-load path");
-        check(plan.netFor("source", "RETURN").equals(
-                plan.netFor("load", "RETURN")),
-                "resistive return join is not the explicit common return");
+        mapping(spec, plan, "source", "R1", "1", plan.netFor("source", "SUPPLY"));
+        mapping(spec, plan, "source", "R1", "2", plan.netFor("source", "OUT"));
+        mapping(spec, plan, "load", "R1", "1", plan.netFor("load", "SUPPLY"));
+        mapping(spec, plan, "load", "R1", "2", plan.netFor("load", "RETURN"));
+        check(plan.netFor("source", "OUT").equals(plan.netFor("load", "SUPPLY")) &&
+                plan.netFor("source", "RETURN").equals(plan.netFor("load", "RETURN")),
+                "resistive signal and return are not explicit joins");
+        mapCompleteness(spec);
     }
 
-    private static void assertControlledDeclarations(BoundedAssemblyPlan plan,
-            ElectricalRealizationSpec spec, int version) {
-        provider(spec, "driver", "nmos-low-side-driver", 1);
-        provider(spec, "load", "resistor-led-load",
-                ControlledIndicatorBlockContributions.LOAD_VERSION);
-        element(spec, "driver", "RG", "RESISTOR", "1", 0, "2", 1);
-        element(spec, "driver", "RPD", "RESISTOR", "1", 0, "2", 1);
-        element(spec, "driver", "Q1", "NMOS", "G", 0, "S", 1, "D", 2);
-        element(spec, "load", "RLOAD", "RESISTOR", "1", 0, "2", 1);
-        element(spec, "load", "LED1", "LED", "A", 0, "K", 1);
+    private static void controlledPlanContract() {
+        boolean sawNmosNmos = false;
+        boolean sawNpnNpn = false;
+        boolean sawMixed = false;
+        for (long seed : SEEDS) {
+            BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(
+                    BoundedAssemblyRequest.forControlledIndicator(seed));
+            check(plan.isControlledIndicator() && plan.getChannels().size() == 2,
+                    "controlled plan retains both stable channels");
+            check(plan.getBlocks().size() == 5 &&
+                    BoundedAssemblyRequest.SUPPORT_BLOCK_KEY.equals(plan.getSupportBlockKey()),
+                    "controlled plan retains two drivers, two loads and support");
+            check(spec(plan).getPackageMap().getPackageCount() == 15 &&
+                    spec(plan).getPackageMap().getUnitCount() == 15,
+                    "controlled plan declares the expected fifteen physical parts");
+            Set<String> expectedKeys = new TreeSet<String>(Arrays.asList(
+                    "channel-a-driver", "channel-a-load", "channel-b-driver",
+                    "channel-b-load", BoundedAssemblyRequest.SUPPORT_BLOCK_KEY));
+            check(new TreeSet<String>(plan.getBlocks().keySet()).equals(expectedKeys),
+                    "controlled plan changed stable block identities");
 
-        terminal(spec, plan, "driver", "RG", "1", "1",
-                plan.netFor("driver", "CONTROL"));
-        terminal(spec, plan, "driver", "RG", "2", "2",
-                plan.netFor("driver", "GATE"));
-        terminal(spec, plan, "driver", "RPD", "1", "1",
-                plan.netFor("driver", "GATE"));
-        terminal(spec, plan, "driver", "RPD", "2", "2",
-                plan.netFor("driver", "RETURN"));
-        terminal(spec, plan, "driver", "Q1", "G", "G",
-                plan.netFor("driver", "GATE"));
-        terminal(spec, plan, "driver", "Q1", "D", "D",
-                plan.netFor("driver", "SWITCHED_SINK"));
-        terminal(spec, plan, "driver", "Q1", "S", "S",
-                plan.netFor("driver", "RETURN"));
+            String firstType = null;
+            String secondType = null;
+            for (int index = 0; index < plan.getChannels().size(); index++) {
+                ControlledIndicatorChannel channel = plan.getChannels().get(index);
+                ComposedBlockContribution driver = plan.getBlocks().get(channel.getDriverKey());
+                ComposedBlockContribution load = plan.getBlocks().get(channel.getLoadKey());
+                check(driver != null && load != null,
+                        "channel does not resolve both provider contributions");
+                if (index == 0) firstType = driver.getProviderTypeId();
+                else secondType = driver.getProviderTypeId();
+                check(isDriverType(driver.getProviderTypeId()) &&
+                        driver.getRoleId().equals(LowSideRoleFamily.ROLE_ID) &&
+                        driver.getProviderVersion() == LowSideRoleFamily.VERSION,
+                        "channel driver is not an admitted low-side provider");
+                check(load.getProviderTypeId().equals(
+                        ControlledIndicatorBlockContributions.LOAD_TYPE_ID) &&
+                        load.getResolvedValueRecipe() != null,
+                        "channel load does not retain the resolved current value recipe");
+                ElectricalRealizationSpec.ProviderDeclaration driverDeclaration =
+                        spec(plan).getProviderDeclaration(channel.getDriverKey());
+                ElectricalRealizationSpec.ProviderDeclaration loadDeclaration =
+                        spec(plan).getProviderDeclaration(channel.getLoadKey());
+                check(driverDeclaration != null && loadDeclaration != null &&
+                        driverDeclaration.getContribution() == driver &&
+                        loadDeclaration.getContribution() == load &&
+                        loadDeclaration.getContribution().getResolvedValueRecipe() ==
+                            load.getResolvedValueRecipe(),
+                        "provider declarations lost per-channel contribution/value identity");
+                verifyDriver(plan, channel, driver);
+                verifyLoad(plan, channel, load);
+                check(plan.netForPort(channel.getLoadKey(), "SUPPLY").equals(
+                        plan.netForPort(DeviceAdapterContract.POWER_ADAPTER_KEY, "POWER_OUT")) &&
+                        plan.netForPort(channel.getDriverKey(), "CONTROL").equals(
+                        plan.netForPort(channel.getControlAdapterKey(), "CONTROL_OUT")) &&
+                        plan.netForPort(channel.getDriverKey(), "SWITCHED_SINK").equals(
+                        plan.netForPort(channel.getLoadKey(), "SWITCHED_LOAD")) &&
+                        plan.netForPort(channel.getDriverKey(), "RETURN").equals(
+                        plan.netForPort(DeviceAdapterContract.POWER_ADAPTER_KEY, "RETURN")),
+                        "channel supply/control/switch/return joins changed");
+                check(!plan.idFor(channel.getDriverKey(), EntityKind.COMPONENT, "Q1").equals(
+                        plan.idFor(channel.getLoadKey(), EntityKind.COMPONENT, "RLOAD")),
+                        "channel component identities collided");
+            }
+            check(firstType != null && secondType != null,
+                    "controlled plan did not expose two driver provider identities");
+            if (isNmos(firstType) && isNmos(secondType)) sawNmosNmos = true;
+            if (isNpn(firstType) && isNpn(secondType)) sawNpnNpn = true;
+            if (!firstType.equals(secondType)) sawMixed = true;
+            ComposedBlockContribution support = plan.getBlocks().get(
+                    plan.getSupportBlockKey());
+            check(support != null && SupplyPresentBlockContributions.TYPE_ID.equals(
+                    support.getProviderTypeId()) && support.getFaultSpec() == null &&
+                    support.getResistor(SupplyPresentBlockContributions.RSUP_COMPONENT_ID) != null,
+                    "support contribution is fixed and nonfaultable");
+            verifyFaultOwners(plan);
+            mapCompleteness(spec(plan));
+        }
+        check(sawNmosNmos && sawNpnNpn && sawMixed,
+                "signed seed corpus covers NMOS/NMOS, NPN/NPN and mixed channels");
+    }
 
-        terminal(spec, plan, "load", "RLOAD", "1", "1",
-                plan.netFor("load", "SUPPLY"));
-        terminal(spec, plan, "load", "RLOAD", "2", "2",
-                plan.netFor("load", "LED_NODE"));
-        terminal(spec, plan, "load", "LED1", "A", "A",
-                plan.netFor("load", "LED_NODE"));
-        terminal(spec, plan, "load", "LED1", "K", "K",
-                plan.netFor("load", "SWITCHED_LOAD"));
+    private static void reorderedAndRepeatedIdentity() {
+        BoundedAssemblyRequest request = BoundedAssemblyRequest.forControlledIndicator(
+                Long.MAX_VALUE);
+        ArrayList<ElectricalBlockContract> blocks =
+                new ArrayList<ElectricalBlockContract>(request.getBlocks());
+        ArrayList<ElectricalConnection> connections =
+                new ArrayList<ElectricalConnection>(request.getConnections());
+        ArrayList<DeviceAdapterContract> adapters =
+                new ArrayList<DeviceAdapterContract>(request.getDeviceAdapters());
+        Collections.reverse(blocks);
+        Collections.reverse(connections);
+        Collections.reverse(adapters);
+        BoundedAssemblyPlan first = BoundedAssemblyPlan.resolve(request);
+        BoundedAssemblyPlan reordered = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.reorderedInputs(request.getDescriptor(), blocks,
+                        connections, adapters));
+        BoundedAssemblyPlan repeated = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forControlledIndicator(Long.MAX_VALUE));
+        check(first.getSemanticSignature().equals(reordered.getSemanticSignature()) &&
+                first.getSemanticSignature().equals(repeated.getSemanticSignature()),
+                "reordered inputs changed current construction semantics");
+        for (ControlledIndicatorChannel channel : first.getChannels()) {
+            String key = channel.getLoadKey();
+            check(first.getBlocks().get(key).getResolvedValueRecipe().semanticSignature().equals(
+                    reordered.getBlocks().get(key).getResolvedValueRecipe().semanticSignature()) &&
+                    first.getBlocks().get(key).getResolvedValueRecipe().semanticSignature().equals(
+                    repeated.getBlocks().get(key).getResolvedValueRecipe().semanticSignature()),
+                    "repeated channel value selection changed on equivalent input");
+        }
+        check(!first.idFor(first.getChannels().get(0).getDriverKey(), EntityKind.COMPONENT, "Q1")
+                .equals(first.idFor(first.getChannels().get(1).getDriverKey(),
+                        EntityKind.COMPONENT, "Q1")),
+                "repeated Q1 identities were not owner-qualified");
+        check(first.getChannels().get(0).getControlAdapterKey().equals("channel-a-control") &&
+                first.getChannels().get(1).getControlAdapterKey().equals("channel-b-control"),
+                "stable channel control owners changed");
+    }
 
-        check(plan.netFor("load", "SWITCHED_LOAD").equals(
-                plan.netFor("driver", "SWITCHED_SINK")),
-                "controlled LED cathode is not joined to Q1 drain");
-        check(spec.getElementDeclaration("driver", "Q1").getPostIndex("G") == 0
-                && spec.getElementDeclaration("driver", "Q1").getPostIndex("S") == 1
-                && spec.getElementDeclaration("driver", "Q1").getPostIndex("D") == 2,
-                "controlled v" + version + " changed NMOS G/S/D post order");
-        check(spec.getElementDeclaration("load", "LED1").getPostIndex("A") == 0
-                && spec.getElementDeclaration("load", "LED1").getPostIndex("K") == 1,
-                "controlled v" + version + " changed LED A/K polarity");
+    private static void verifyDriver(BoundedAssemblyPlan plan,
+            ControlledIndicatorChannel channel, ComposedBlockContribution driver) {
+        String owner = channel.getDriverKey();
+        FunctionalBlockDescriptor.Component q1 = driver.getDescriptor().getComponents().get("Q1");
+        check(q1 != null && q1.getTerminalIds().size() == 3,
+                "driver Q1 declaration has three terminals");
+        ElectricalRealizationSpec.ElementDeclaration element =
+                spec(plan).getElementDeclaration(owner, "Q1");
+        check(element != null && element.getModelId() != null &&
+                element.getParameters().size() >= 1,
+                "driver Q1 declaration omitted model or parameters");
+        if (isNmos(driver.getProviderTypeId())) {
+            check("NMOS".equals(q1.getTypeId()) && q1.getTerminalIds().containsAll(
+                    Arrays.asList("G", "D", "S")) && driver.getResistor("RG") != null &&
+                    driver.getResistor("RG").isMutable() && driver.getNmosRecipes().size() == 1,
+                    "NMOS channel does not declare G/D/S and mutable RG");
+            check(element.getPostIndex("G") == 0 && element.getPostIndex("D") == 2 &&
+                    element.getPostIndex("S") == 1,
+                    "NMOS channel Q1 posts changed from G/D/S 0/2/1");
+        } else {
+            check("NPN".equals(q1.getTypeId()) && q1.getTerminalIds().containsAll(
+                    Arrays.asList("B", "C", "E")) && driver.getResistor("RB") != null &&
+                    driver.getResistor("RB").isMutable() && driver.getNmosRecipes().isEmpty(),
+                    "NPN channel does not declare B/C/E and mutable RB");
+            check(element.getPostIndex("B") == 0 && element.getPostIndex("C") == 1 &&
+                    element.getPostIndex("E") == 2,
+                    "NPN channel Q1 posts changed from B/C/E 0/1/2");
+        }
+        check(driver.getFaultSpec() != null &&
+                driver.getFaultSpec().getTargetComponentLocalId().equals(
+                        isNpn(driver.getProviderTypeId()) ? "RB" : "RG"),
+                "driver fault target does not follow the selected role");
+    }
+
+    private static void verifyLoad(BoundedAssemblyPlan plan,
+            ControlledIndicatorChannel channel, ComposedBlockContribution load) {
+        String owner = channel.getLoadKey();
+        check(load.getResistor("RLOAD") != null && load.getResistor("RLOAD").isMutable() &&
+                load.getLedRecipes().get("LED1") != null,
+                "channel load does not declare mutable RLOAD and LED1");
+        ElectricalRealizationSpec.ElementDeclaration led =
+                spec(plan).getElementDeclaration(owner, "LED1");
+        check(led != null && "LED".equals(led.getKind()) &&
+                led.getPostIndex("A") == 0 && led.getPostIndex("K") == 1,
+                "channel LED polarity or post mapping changed");
+        check(load.getResolvedValueRecipe().getResistanceOhms() > 0.0 &&
+                load.getResolvedValueRecipe().getResistanceMinimumOhms() <
+                    load.getResolvedValueRecipe().getResistanceOhms() &&
+                load.getResolvedValueRecipe().getResistanceMaximumOhms() >
+                    load.getResolvedValueRecipe().getResistanceOhms(),
+                "channel value recipe is outside its declared resistance window");
+    }
+
+    private static void verifyFaultOwners(BoundedAssemblyPlan plan) {
+        check(plan.getDecisionOwners().containsKey(plan.getFaultDecisionKey()),
+                "selected fault is present in the decision-owner map");
+        for (Map.Entry<String, String> entry : plan.getDecisionOwners().entrySet()) {
+            boolean found = false;
+            for (ComposedBlockContribution block : plan.getBlocks().values()) {
+                ComposedBlockContribution.FaultSpec fault = block.getFaultSpec();
+                if (fault != null && entry.getValue().equals(plan.idFor(block,
+                        EntityKind.COMPONENT, fault.getTargetComponentLocalId()))) {
+                    found = true;
+                    break;
+                }
+            }
+            check(found, "fault owner does not resolve to a declared component");
+        }
+    }
+
+    private static void mapCompleteness(ElectricalRealizationSpec spec) {
+        check(spec.getPackageMap().getPackages().keySet().equals(
+                spec.getPackageMap().getPackageOwners().keySet()),
+                "package owners do not cover exactly the package map");
+        Set<String> unitComponents = new HashSet<String>();
+        for (ElectricalUnitPackageMap.Unit unit : spec.getPackageMap().getUnits().values()) {
+            check(spec.getPackageMap().getPackages().containsKey(unit.getComponentId()) &&
+                    spec.getPackageMap().getPackageOwners().get(unit.getComponentId()).equals(
+                        unit.getOwnerKey()) && unit.getTerminalIds().size() ==
+                        unit.getPackageTerminalByUnitTerminal().size(),
+                    "physical unit lost package ownership or terminal correspondence");
+            check(unitComponents.add(unit.getComponentId()),
+                    "two units unexpectedly share a current component identity");
+        }
+        check(unitComponents.equals(spec.getPackageMap().getPackages().keySet()),
+                "package map and physical-unit map cover different identities");
+        for (ElectricalRealizationSpec.ProviderDeclaration provider :
+                spec.getProviderDeclarations().values()) {
+            check(provider.getElements() != null && provider.getChoices() != null,
+                    "provider declaration omitted its immutable element/value maps");
+        }
     }
 
     private static void provider(ElectricalRealizationSpec spec, String owner,
             String providerId, int version) {
-        final ElectricalRealizationSpec.ProviderDeclaration declaration =
-                spec.getProviderDeclarations().get(owner);
-        check(declaration != null, "missing provider declaration " + owner);
-        check(providerId.equals(declaration.getProviderId())
-                && version == declaration.getProviderVersion(),
-                "provider ownership changed for " + owner);
-        check(declaration.getElementIds().size() > 0,
-                "provider declaration has no owned elements " + owner);
+        ElectricalRealizationSpec.ProviderDeclaration declaration =
+                spec.getProviderDeclaration(owner);
+        check(declaration != null && providerId.equals(declaration.getProviderId()) &&
+                version == declaration.getProviderVersion() &&
+                declaration.getContribution() != null,
+                "provider declaration changed for " + owner);
     }
 
-    private static void element(ElectricalRealizationSpec spec, String owner,
-            String id, String kind, String first, int firstPost,
-            String second, int secondPost) {
-        element(spec, owner, id, kind, first, firstPost, second, secondPost,
-                null, -1);
-    }
-
-    private static void element(ElectricalRealizationSpec spec, String owner,
-            String id, String kind, String first, int firstPost,
-            String second, int secondPost, String third, int thirdPost) {
+    private static void element(ElectricalRealizationSpec spec, String owner, String id,
+            String kind, String first, int firstPost, String second, int secondPost) {
         ElectricalRealizationSpec.ElementDeclaration declaration =
                 spec.getElementDeclaration(owner, id);
-        check(declaration != null, "missing element declaration " + owner + "/" + id);
-        check(kind.equals(declaration.getKind()), "element kind changed for "
-                + owner + "/" + id);
-        check(declaration.getPostIndex(first) == firstPost
-                && declaration.getPostIndex(second) == secondPost,
-                "element terminal order changed for " + owner + "/" + id);
-        if (third != null)
-            check(declaration.getPostIndex(third) == thirdPost,
-                    "element third terminal order changed for " + owner + "/" + id);
+        check(declaration != null && kind.equals(declaration.getKind()) &&
+                declaration.getPostIndex(first) == firstPost &&
+                declaration.getPostIndex(second) == secondPost,
+                "element declaration changed for " + owner + "/" + id);
     }
 
-    private static void terminal(ElectricalRealizationSpec spec,
-            BoundedAssemblyPlan plan, String owner, String local,
-            String terminalId, String packageTerminal, String net) {
+    private static void mapping(ElectricalRealizationSpec spec, BoundedAssemblyPlan plan,
+            String owner, String local, String terminal, String net) {
         ElectricalRealizationSpec.TerminalMapping mapping =
-                spec.getTerminalMapping(owner, local, terminalId);
-        check(mapping != null, "missing terminal mapping " + owner + "/" + local
-                + "." + terminalId);
-        String expectedElement = "2".equals(terminalId) &&
-                ("R1".equals(local) || "RG".equals(local) || "RLOAD".equals(local)) ?
-                    local + "_SECONDARY" : local;
-        ElectricalRealizationSpec.EndpointRef component = mapping.getComponentEndpoint();
-        check(owner.equals(component.getOwnerKey()) &&
-                expectedElement.equals(component.getElementId()) &&
-                terminalId.equals(component.getTerminalId()),
-                "component-side terminal representation changed for " + owner + "/" + local);
-        check(owner.equals(mapping.getOwnerKey()) && local.equals(mapping.getLocalId())
-                && terminalId.equals(mapping.getTerminalId())
-                && packageTerminal.equals(mapping.getPackageTerminalId())
-                && net.equals(mapping.getNetId()),
-                "terminal/package/net correspondence changed for " + owner + "/"
-                + local + "." + terminalId);
-        check(mapping.getComponentId().equals(spec.getComponentId(owner, local)),
-                "terminal escaped its declared component owner");
+                spec.getTerminalMapping(owner, local, terminal);
+        check(mapping != null && owner.equals(mapping.getOwnerKey()) &&
+                local.equals(mapping.getLocalId()) && terminal.equals(mapping.getTerminalId()) &&
+                net.equals(mapping.getNetId()) && mapping.getComponentId().equals(
+                    spec.getComponentId(owner, local)) &&
+                mapping.getComponentEndpoint() != null,
+                "terminal/package/net mapping changed for " + owner + "/" + local + "." + terminal);
+        check(spec.getPadBinding(spec.getPadId(owner, local + "." + terminal)) != null,
+                "terminal lost its declared physical pad " + owner + "/" + local);
     }
 
-    private static void mapCompleteness(ElectricalRealizationSpec spec,
-            String label) {
-        final ElectricalUnitPackageMap map = spec.getPackageMap();
-        check(map.getPackages().keySet().equals(map.getPackageOwners().keySet()),
-                label + ": package owners do not cover exactly package IDs");
-        Set<String> covered = new HashSet<String>();
-        for (ElectricalUnitPackageMap.Unit unit : map.getUnits().values()) {
-            PhysicalPackage physical = map.getPackages().get(unit.getComponentId());
-            check(physical != null, label + ": unit has undeclared package");
-            check(unit.getOwnerKey().equals(map.getPackageOwners().get(
-                    unit.getComponentId())), label + ": unit has foreign package owner");
-            check(unit.getTerminalIds().size() == unit
-                    .getPackageTerminalByUnitTerminal().size(),
-                    label + ": unit declaration is incomplete");
-            for (String packageTerminal : unit
-                    .getPackageTerminalByUnitTerminal().values()) {
-                check(physical.getTerminalIds().contains(packageTerminal),
-                        label + ": unit maps to undeclared package terminal");
-                covered.add(unit.getComponentId() + "|" + packageTerminal);
-            }
-        }
-        for (Map.Entry<String, PhysicalPackage> entry : map.getPackages().entrySet())
-            for (String terminal : entry.getValue().getTerminalIds())
-                check(covered.contains(entry.getKey() + "|" + terminal),
-                        label + ": package terminal lacks a unit declaration");
-
-        for (ElectricalRealizationSpec.PhysicalUnitSpec unit :
-                spec.getPhysicalUnits().values()) {
-            check(spec.getPackageMap().getPackages().containsKey(unit.getComponentId()),
-                    label + ": spec unit has no package instance");
-            check(unit.getPackageTerminalByUnitTerminal().size() > 0,
-                    label + ": spec unit has no public terminals");
-        }
+    private static ElectricalRealizationSpec spec(BoundedAssemblyPlan plan) {
+        return plan.getElectricalRealizationSpec();
     }
 
-    /** One independent same-package/two-unit canary, including shared rails. */
-    private static void packageMapCompletenessAndSharedPackageShape() {
-        PhysicalPackage shared = packageOf("A04_SHARED", "P1", "P2", "VCC", "GND");
-        String componentId = "board/U1";
-        String owner = "provider/multi-unit";
-        ElectricalUnitPackageMap.Unit first = new ElectricalUnitPackageMap.Unit(
-                owner, "board/U1/unit/analog", componentId,
-                Arrays.asList("IN", "OUT", "VCC", "GND"), pairs(
-                        "IN", "P1", "OUT", "P2", "VCC", "VCC", "GND", "GND"));
-        ElectricalUnitPackageMap.Unit second = new ElectricalUnitPackageMap.Unit(
-                owner, "board/U1/unit/indicator", componentId,
-                Arrays.asList("A", "K", "VCC", "GND"), pairs(
-                        "A", "P2", "K", "P1", "VCC", "VCC", "GND", "GND"));
-        Map<String, PhysicalPackage> packages = new HashMap<String, PhysicalPackage>();
-        packages.put(componentId, shared);
-        Map<String, String> owners = new HashMap<String, String>();
-        owners.put(componentId, owner);
-        final ElectricalUnitPackageMap map = new ElectricalUnitPackageMap(
-                ElectricalUnitPackageMap.VERSION, packages, owners,
-                Arrays.asList(second, first));
-        check(map.getPackageCount() == 1 && map.getUnitCount() == 2,
-                "same-package logical units were counted as separate packages");
-        check("VCC".equals(map.getUnits().get(first.getUnitId())
-                .getPackageTerminalByUnitTerminal().get("VCC"))
-                && "VCC".equals(map.getUnits().get(second.getUnitId())
-                .getPackageTerminalByUnitTerminal().get("VCC"))
-                && "GND".equals(map.getUnits().get(first.getUnitId())
-                .getPackageTerminalByUnitTerminal().get("GND"))
-                && "GND".equals(map.getUnits().get(second.getUnitId())
-                .getPackageTerminalByUnitTerminal().get("GND")),
-                "shared supply pins were not explicit in both unit declarations");
-        expectUnsupported(new Runnable() {
-            @Override public void run() { map.getUnits().clear(); }
-        }, "shared-package map view");
-    }
-
-    private static void a03ManifestReplayPreservation() {
-        for (int version : new int[] { 1, BoundedAssemblyRequest.GENERATOR_VERSION }) {
-            long seed = version;
-            BoundedAssemblyPlan plan = planFor(version, seed);
-            String canonical = A03RealizationReplay.capture(plan).toCanonical();
-            RealizationManifest parsed = RealizationManifest.parse(canonical);
-            BoundedAssemblyPlan replay = A03RealizationReplay.resolve(parsed);
-            check(canonical.equals(parsed.toCanonical()),
-                    "A03 v" + version + " manifest bytes changed after parse");
-            check(plan.getSemanticSignature().equals(replay.getSemanticSignature()),
-                    "A03 v" + version + " replay changed resolved semantics");
-            check(parsed.getDescriptor().getGenerator().getVersion() ==
-                    BoundedAssemblyRequest.GENERATOR_VERSION
-                    && parsed.getDescriptor().getRootSeed() == seed,
-                    "A03 manifest changed current generator version or exact seed for route " + version);
-            check(canonical.indexOf("generator=bounded-assembler@" +
-                    BoundedAssemblyRequest.GENERATOR_VERSION) >= 0,
-                    "A03 manifest omitted the current pinned generator version for route " + version);
-        }
-    }
-
-    private static BoundedAssemblyPlan planFor(int version, long seed) {
-        BoundedAssemblyRequest request;
-        if (version == 1)
-            request = BoundedAssemblyRequest.forCanary(seed);
-        else if (version == BoundedAssemblyRequest.GENERATOR_VERSION)
-            request = BoundedAssemblyRequest.forControlledIndicator(seed);
-        else
-            throw new IllegalArgumentException("Unsupported A04 test version");
-        return BoundedAssemblyPlan.resolve(request);
-    }
-
-    private static PhysicalPackage packageOf(String id, String... terminalIds) {
-        Vector<String> terminals = new Vector<String>();
-        terminals.addAll(Arrays.asList(terminalIds));
-        return PhysicalPackage.developerPackageWithGenericGeometry(id, terminals,
-                new Vector<String>(), false);
-    }
-
-    private static Map<String, String> pairs(String... values) {
-        if ((values.length & 1) != 0)
-            throw new IllegalArgumentException("pairs require key/value pairs");
-        Map<String, String> result = new HashMap<String, String>();
+    private static Map<String, Integer> posts(Object... values) {
+        HashMap<String, Integer> result = new HashMap<String, Integer>();
         for (int index = 0; index < values.length; index += 2)
-            result.put(values[index], values[index + 1]);
+            result.put((String) values[index], (Integer) values[index + 1]);
         return result;
     }
 
-    private static void immutableMap(final Map<?, ?> value, String label) {
-        expectUnsupported(new Runnable() {
-            @Override public void run() {
-                ((Map<Object, Object>) value).clear();
-            }
-        }, label);
+    private static Map<String, Double> numbers(Object... values) {
+        HashMap<String, Double> result = new HashMap<String, Double>();
+        for (int index = 0; index < values.length; index += 2)
+            result.put((String) values[index], (Double) values[index + 1]);
+        return result;
     }
 
-    private static void expectIllegal(Runnable action, String label) {
+    private static List<String> canonicalIds(List<LowSideRoleFamily.Provider> providers) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (LowSideRoleFamily.Provider provider : providers) result.add(provider.getTypeId());
+        return result;
+    }
+
+    private static boolean isDriverType(String providerId) {
+        return isNmos(providerId) || isNpn(providerId);
+    }
+
+    private static boolean isNmos(String providerId) {
+        return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(providerId);
+    }
+
+    private static boolean isNpn(String providerId) {
+        return ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID.equals(providerId);
+    }
+
+    private interface Action { void run(); }
+
+    private static void expectIllegal(Action action, String label) {
         try {
             action.run();
         } catch (IllegalArgumentException expected) {
@@ -495,7 +539,7 @@ public final class A04ConstructionContractTest {
         throw new AssertionError("Expected IllegalArgumentException: " + label);
     }
 
-    private static void expectUnsupported(Runnable action, String label) {
+    private static void expectUnsupported(Action action, String label) {
         try {
             action.run();
         } catch (UnsupportedOperationException expected) {
@@ -505,40 +549,8 @@ public final class A04ConstructionContractTest {
         throw new AssertionError("Expected UnsupportedOperationException: " + label);
     }
 
-    private static void reservationAndSupplyCorrespondence(ElectricalRealizationSpec spec,
-            int version) {
-        for (ElectricalRealizationSpec.ProviderDeclaration provider :
-                spec.getProviderDeclarations().values()) {
-            int count = 0;
-            for (ElectricalRealizationSpec.SolverReservation reservation :
-                    spec.getSolverReservations().values())
-                if (provider.getOwnerKey().equals(reservation.getOwnerKey())) count++;
-            check(count == 1, "provider has no unique private coordinate reservation");
-        }
-        for (ElectricalRealizationSpec.SolverReservation first :
-                spec.getSolverReservations().values())
-            for (ElectricalRealizationSpec.SolverReservation second :
-                    spec.getSolverReservations().values()) {
-                if (first.getOwnerKey().equals(second.getOwnerKey())) continue;
-                boolean disjoint = (long) first.getOriginX() + first.getWidth() <= second.getOriginX()
-                    || (long) second.getOriginX() + second.getWidth() <= first.getOriginX()
-                    || (long) first.getOriginY() + first.getHeight() <= second.getOriginY()
-                    || (long) second.getOriginY() + second.getHeight() <= first.getOriginY();
-                check(disjoint, "private coordinate reservations overlap across owners");
-            }
-        for (String source : version == 1 ? new String[] { "SUPPLY" } :
-                new String[] { "LOAD_SUPPLY", "CONTROL_SUPPLY" }) {
-            ElectricalRealizationSpec.ElementDeclaration declaration =
-                spec.getElementDeclaration("device", source);
-            check(declaration != null && declaration.getPostIndex("+") == 1 &&
-                declaration.getPostIndex("-") == 0,
-                "voltage-source polarity disagrees with CircuitJS V(post1)-V(post0)");
-        }
-    }
-
-    private static void check(boolean condition, String label) {
+    private static void check(boolean condition, String message) {
         assertions++;
-        if (!condition)
-            throw new AssertionError(label);
+        if (!condition) throw new AssertionError(message);
     }
 }

@@ -59,7 +59,6 @@ final class A03RealizationReplay {
         captureContributions(plan, namespace, choices);
         captureFaults(plan, namespace, choices);
         capturePhysicalChoices(plan, physicalChoices, namespace, choices, targets);
-        captureModelChoices(plan, choices);
 
         return new RealizationManifest(RealizationManifest.VERSION,
                 plan.getRequest().getDescriptor(),
@@ -543,6 +542,7 @@ final class A03RealizationReplay {
         if (contract == null)
             return;
         String base = "connection." + connection.getId() + ".switched.";
+        addInteger(choices, base + "version", SwitchedLowSideContract.VERSION);
         addToken(choices, base + "active-high",
                 Boolean.toString(contract.getActiveHigh()));
         addToken(choices, base + "reference-net", contract.getReferenceNetId());
@@ -583,6 +583,10 @@ final class A03RealizationReplay {
                 contract.getSupplyPort(), namespace);
         addPortRef(choices, base + "control-port",
                 contract.getControlPort(), namespace);
+        addPortRef(choices, base + "driver-control-port",
+                contract.getDriverControlPort(), namespace);
+        addPortRef(choices, base + "load-supply-port",
+                contract.getLoadSupplyPort(), namespace);
         ArrayList<String> returns = new ArrayList<String>();
         for (ElectricalConnection.PortRef ref : contract.getReturnPorts())
             returns.add(namespace.idFor(ref.getBlockKey(),
@@ -616,109 +620,74 @@ final class A03RealizationReplay {
         }
     }
     private static void captureContributions(BoundedAssemblyPlan plan,
-            BlockNamespace namespace,
-            List<RealizationManifest.Choice> choices) {
-        for (Map.Entry<String, ComposedBlockContribution> entry
-                : plan.getBlocks().entrySet()) {
-            String block = entry.getKey();
-            ComposedBlockContribution contribution = entry.getValue();
-            for (Map.Entry<String, ComposedBlockContribution.ResistorRecipe> recipe
-                    : contribution.getResistors().entrySet()) {
-                String base = "recipe." + block + "."
-                        + recipe.getKey() + ".";
-                captureResistorRecipe(namespace, block, recipe.getValue(),
-                        base, choices);
+            BlockNamespace namespace, List<RealizationManifest.Choice> choices) {
+        ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
+        addInteger(choices, "construction.version", spec.getVersion());
+        for (ElectricalRealizationSpec.ProviderDeclaration provider
+                : spec.getProviderDeclarations().values()) {
+            String base = "recipe." + provider.getOwnerKey() + ".";
+            addToken(choices, base + "provider", provider.getProviderId() + "@"
+                    + provider.getProviderVersion());
+            for (Map.Entry<String, Value> choice : provider.getChoices().entrySet())
+                addValue(choices, base + "choice." + choice.getKey(), choice.getValue());
+            ComposedBlockContribution contribution = provider.getContribution();
+            if (contribution != null) {
+                ComposedBlockContribution.FaultSpec fault = contribution.getFaultSpec();
+                if (fault != null) {
+                    addToken(choices, base + "fault-kind", fault.getKind().name());
+                    addToken(choices, base + "fault-target", namespace.idFor(provider.getOwnerKey(),
+                            EntityKind.COMPONENT, fault.getTargetComponentLocalId()));
+                    addNumber(choices, base + "fault-effective", fault.getEffectiveResistanceOhms());
+                    addToken(choices, base + "repair", namespace.idFor(provider.getOwnerKey(),
+                            EntityKind.COMPONENT, contribution.getRepairLocalComponentId()));
+                }
+                addIds(choices, base + "inputs", contribution.getInputRequirements());
+                addIds(choices, base + "retests", contribution.getRetestRequirements());
             }
-            for (Map.Entry<String, ComposedBlockContribution.NmosRecipe> recipe
-                    : contribution.getNmosRecipes().entrySet())
-                captureNmosRecipe(namespace, block, recipe.getValue(), choices);
-            for (Map.Entry<String, ComposedBlockContribution.LedRecipe> recipe
-                    : contribution.getLedRecipes().entrySet())
-                captureLedRecipe(namespace, block, recipe.getValue(), choices);
-            addToken(choices, "recipe." + block + ".provider",
-                    contribution.getProviderTypeId() + "@"
-                            + contribution.getProviderVersion());
-            addToken(choices, "recipe." + block + ".fault-kind",
-                    contribution.getFaultSpec().getKind().name());
-            addToken(choices, "recipe." + block + ".fault-target",
-                    namespace.idFor(block, EntityKind.COMPONENT,
-                            contribution.getFaultSpec().getTargetComponentLocalId()));
-            addNumber(choices, "recipe." + block + ".fault-effective",
-                    contribution.getFaultSpec().getEffectiveResistanceOhms());
-            addToken(choices, "recipe." + block + ".repair",
-                    namespace.idFor(block, EntityKind.COMPONENT,
-                            contribution.getRepairLocalComponentId()));
-            addIds(choices, "recipe." + block + ".inputs",
-                    contribution.getInputRequirements());
-            addIds(choices, "recipe." + block + ".retests",
-                    contribution.getRetestRequirements());
-            captureResolvedRecipe(block, contribution.getResolvedValueRecipe(),
-                    choices);
+            for (ElectricalRealizationSpec.ElementDeclaration element : provider.getElements().values()) {
+                String local = base + "element." + element.getElementId() + ".";
+                addToken(choices, local + "kind", element.getKind());
+                if (element.getComponentId() != null)
+                    addToken(choices, local + "component", element.getComponentId());
+                if (element.getModelId() != null)
+                    addToken(choices, local + "model", element.getModelId());
+                for (Map.Entry<String, Integer> post : element.getPostIndexByTerminal().entrySet())
+                    addInteger(choices, local + "post." + post.getKey(), post.getValue());
+                for (Map.Entry<String, Double> parameter : element.getParameters().entrySet())
+                    addNumber(choices, local + "parameter." + parameter.getKey(), parameter.getValue());
+            }
+        }
+        for (Map.Entry<String, ElectricalRealizationSpec.PhysicalUnitSpec> entry : spec.getPhysicalUnits().entrySet()) {
+            ElectricalRealizationSpec.PhysicalUnitSpec unit = entry.getValue();
+            String base = "construction.unit." + entry.getKey() + ".";
+            addToken(choices, base + "component", unit.getComponentId());
+            addToken(choices, base + "package", unit.getPackageId());
+            for (Map.Entry<String, String> terminal : unit.getPackageTerminalByUnitTerminal().entrySet())
+                addToken(choices, base + "terminal." + terminal.getKey(), terminal.getValue());
+        }
+        for (Map.Entry<String, ElectricalRealizationSpec.TerminalMapping> entry : spec.getTerminalMappings().entrySet()) {
+            String base = "construction.terminal." + entry.getKey() + ".";
+            ElectricalRealizationSpec.TerminalMapping terminal = entry.getValue();
+            addToken(choices, base + "backing", terminal.getComponentEndpoint().toString());
+            addToken(choices, base + "net", terminal.getNetId());
+        }
+        for (Map.Entry<String, ElectricalRealizationSpec.BoardEndpointSpec> entry : spec.getBoardEndpoints().entrySet()) {
+            String base = "construction.pad." + entry.getKey() + ".";
+            addToken(choices, base + "backing", entry.getValue().getEndpoint().toString());
+            if (entry.getValue().getAttachmentElementId() != null)
+                addToken(choices, base + "attachment", entry.getValue().getAttachmentElementId());
+        }
+        for (ElectricalRealizationSpec.BridgeSpec bridge : spec.getBridgeSpecs().values()) {
+            String base = "construction.bridge." + bridge.getBridgeElementId() + ".";
+            addToken(choices, base + "first", bridge.getFirst().toString());
+            addToken(choices, base + "second", bridge.getSecond().toString());
+            if (bridge.getSemanticJoinId() != null)
+                addToken(choices, base + "join", bridge.getSemanticJoinId());
+            if (bridge.getExternalPowerInputId() != null)
+                addToken(choices, base + "input", bridge.getExternalPowerInputId());
         }
     }
-    private static void captureResistorRecipe(BlockNamespace namespace,
-            String block, ComposedBlockContribution.ResistorRecipe recipe,
-            String base, List<RealizationManifest.Choice> choices) {
-        addToken(choices, base + "component", namespace.idFor(block,
-                EntityKind.COMPONENT, recipe.getComponentLocalId()));
-        addToken(choices, base + "endpoint-1", namespace.idFor(block,
-                EntityKind.ENDPOINT, recipe.getFirstEndpointLocalId()));
-        addToken(choices, base + "endpoint-2", namespace.idFor(block,
-                EntityKind.ENDPOINT, recipe.getSecondEndpointLocalId()));
-        addToken(choices, base + "pad-1", namespace.idFor(block,
-                EntityKind.PAD, recipe.getFirstPadLocalId()));
-        addToken(choices, base + "pad-2", namespace.idFor(block,
-                EntityKind.PAD, recipe.getSecondPadLocalId()));
-        addNumber(choices, base + "resistance", recipe.getResistanceOhms());
-        addNumber(choices, base + "rated-watts", recipe.getRatedWatts());
-        addNumber(choices, base + "tolerance-percent",
-                recipe.getTolerancePercent());
-        addToken(choices, base + "mutable",
-                Boolean.toString(recipe.isMutable()));
-        if (recipe.getCatalogEntryId() != null)
-            addToken(choices, base + "catalog", recipe.getCatalogEntryId());
-        if (recipe.getPackageId() != null)
-            addToken(choices, base + "package", recipe.getPackageId());
-    }
 
-    private static void captureNmosRecipe(BlockNamespace namespace, String block,
-            ComposedBlockContribution.NmosRecipe recipe,
-            List<RealizationManifest.Choice> choices) {
-        String base = "recipe." + block + ".nmos."
-                + recipe.getComponentLocalId() + ".";
-        addToken(choices, base + "component", namespace.idFor(block,
-                EntityKind.COMPONENT, recipe.getComponentLocalId()));
-        addToken(choices, base + "model", recipe.getModelId());
-        addToken(choices, base + "gate-endpoint", namespace.idFor(block,
-                EntityKind.ENDPOINT, recipe.getGateEndpointLocalId()));
-        addToken(choices, base + "drain-endpoint", namespace.idFor(block,
-                EntityKind.ENDPOINT, recipe.getDrainEndpointLocalId()));
-        addToken(choices, base + "source-endpoint", namespace.idFor(block,
-                EntityKind.ENDPOINT, recipe.getSourceEndpointLocalId()));
-        addToken(choices, base + "gate-pad", namespace.idFor(block,
-                EntityKind.PAD, recipe.getGatePadLocalId()));
-        addToken(choices, base + "drain-pad", namespace.idFor(block,
-                EntityKind.PAD, recipe.getDrainPadLocalId()));
-        addToken(choices, base + "source-pad", namespace.idFor(block,
-                EntityKind.PAD, recipe.getSourcePadLocalId()));
-    }
-    private static void captureLedRecipe(BlockNamespace namespace, String block,
-            ComposedBlockContribution.LedRecipe recipe,
-            List<RealizationManifest.Choice> choices) {
-        String base = "recipe." + block + ".led."
-                + recipe.getComponentLocalId() + ".";
-        addToken(choices, base + "component", namespace.idFor(block,
-                EntityKind.COMPONENT, recipe.getComponentLocalId()));
-        addToken(choices, base + "model", recipe.getModelId());
-        addToken(choices, base + "anode-endpoint", namespace.idFor(block,
-                EntityKind.ENDPOINT, recipe.getAnodeEndpointLocalId()));
-        addToken(choices, base + "cathode-endpoint", namespace.idFor(block,
-                EntityKind.ENDPOINT, recipe.getCathodeEndpointLocalId()));
-        addToken(choices, base + "anode-pad", namespace.idFor(block,
-                EntityKind.PAD, recipe.getAnodePadLocalId()));
-        addToken(choices, base + "cathode-pad", namespace.idFor(block,
-                EntityKind.PAD, recipe.getCathodePadLocalId()));
-    }
     private static void captureFaults(BoundedAssemblyPlan plan,
             BlockNamespace namespace,
             List<RealizationManifest.Choice> choices) {
@@ -731,53 +700,6 @@ final class A03RealizationReplay {
         }
     }
 
-    private static void captureResolvedRecipe(String block,
-            ControlledIndicatorValueSynthesis.ResolvedRecipe recipe,
-            List<RealizationManifest.Choice> choices) {
-        if (recipe == null)
-            return;
-        String base = "value." + block + ".";
-        addToken(choices, base + "policy", recipe.getPolicyId());
-        addToken(choices, base + "catalog", recipe.getCatalogEntryId());
-        addToken(choices, base + "package", recipe.getPackageId());
-        addNumber(choices, base + "nominal-resistance",
-                recipe.getNominalResistanceOhms());
-        addNumber(choices, base + "tolerance-percent",
-                recipe.getTolerancePercent());
-        addNumber(choices, base + "rated-watts", recipe.getRatedWatts());
-        addNumber(choices, base + "power-headroom",
-                recipe.getPowerHeadroomFactor());
-        addNumber(choices, base + "sink-headroom",
-                recipe.getSinkHeadroomFactor());
-        captureIntent(block, recipe.getIntent(), choices);
-    }
-    private static void captureIntent(String block,
-            ControlledIndicatorValueSynthesis.Intent intent,
-            List<RealizationManifest.Choice> choices) {
-        String base = "value." + block + ".intent.";
-        addNumber(choices, base + "source-min", intent.getSourceMinimumVolts());
-        addNumber(choices, base + "source-max", intent.getSourceMaximumVolts());
-        addNumber(choices, base + "load-min",
-                intent.getLoadAcceptanceMinimumVolts());
-        addNumber(choices, base + "load-max",
-                intent.getLoadAcceptanceMaximumVolts());
-        addNumber(choices, base + "sink-min", intent.getSinkMinimumVolts());
-        addNumber(choices, base + "sink-max", intent.getSinkMaximumVolts());
-        addNumber(choices, base + "sink-capacity", intent.getSinkCapacityAmps());
-        addNumber(choices, base + "typed-demand", intent.getTypedDemandAmps());
-        addNumber(choices, base + "target-minimum-current",
-                intent.getTargetMinimumCurrentAmps());
-        addNumber(choices, base + "led-min", intent.getLedMinimumForwardVolts());
-        addNumber(choices, base + "led-max", intent.getLedMaximumForwardVolts());
-        addNumber(choices, base + "model-tolerance",
-                intent.getModelToleranceFraction());
-        addNumber(choices, base + "power-headroom",
-                intent.getPowerHeadroomFactor());
-        addNumber(choices, base + "sink-headroom",
-                intent.getSinkHeadroomFactor());
-        addToken(choices, base + "model", intent.getModelId());
-        addToken(choices, base + "package", intent.getPackageId());
-    }
     private static void capturePhysicalChoices(BoundedAssemblyPlan plan,
             BoundedGeneratedBoardAssembler.PlanPhysicalChoices physical,
             BlockNamespace namespace,
@@ -811,35 +733,6 @@ final class A03RealizationReplay {
                     + ".voltage", entry.getValue().doubleValue());
             addTarget(targets, durableInput);
         }
-    }
-
-    private static void captureModelChoices(BoundedAssemblyPlan plan,
-            List<RealizationManifest.Choice> choices) {
-        if (!plan.isControlledIndicator())
-            return;
-        addToken(choices, "model.nmos.id", "NMOS_TRANSISTOR");
-        addNumber(choices, "model.nmos.threshold-volts",
-                ElectricalRealizationSpec.CONTROLLED_NMOS_THRESHOLD_VOLTS);
-        addNumber(choices, "model.nmos.beta",
-                ElectricalRealizationSpec.CONTROLLED_NMOS_BETA);
-
-        DiodeModel.createModelMap();
-        DiodeModel model = DiodeModel.modelMap.get(
-                ElectricalRealizationSpec.CONTROLLED_LED_MODEL);
-        if (model == null)
-            throw mismatch("model.led", "Missing default-led model");
-        String base = "model.led." + ElectricalRealizationSpec.CONTROLLED_LED_MODEL
-                + ".";
-        addToken(choices, base + "id", model.name);
-        addInteger(choices, base + "flags", model.flags);
-        addNumber(choices, base + "saturation-current", model.saturationCurrent);
-        addNumber(choices, base + "series-resistance", model.seriesResistance);
-        addNumber(choices, base + "emission-coefficient", model.emissionCoefficient);
-        addNumber(choices, base + "breakdown-voltage", model.breakdownVoltage);
-        addNumber(choices, base + "thermal-voltage", DiodeModel.vt);
-        addNumber(choices, base + "vscale", model.vscale);
-        addNumber(choices, base + "vdcoef", model.vdcoef);
-        addNumber(choices, base + "forward-drop", model.fwdrop);
     }
 
     /** Accept only the current declared component or device-owned envelope. */

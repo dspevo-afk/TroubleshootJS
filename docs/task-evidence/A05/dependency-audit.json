@@ -1,0 +1,27 @@
+{
+  "protocol": "A05-EVIDENCE-DEPENDENCY-AUDIT-1",
+  "finalSourceDigest": "48541648277a27ee8974f9d9093a2c1281b99b8be85d7ea97a6060f84d698f2d",
+  "finalScriptDigest": "654917ac4fee28901a6f79697c1037044fb82233c9b87d15359a3c16caf1e221",
+  "finalWebDigest": "1688868e99bff4ee1ce0e35b67867ad922088395a46b5aa39898130325636ba3",
+  "finalExecutionDigest": "2a542ae42a2e89b486091c080443eb4cda27d62098ef75a65e89c16f03b0d9c3",
+  "finalFileCount": 1320,
+  "sourceChangesDuringReserveTakeover": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/A04ConstructionDeveloperVerifier.java",
+      "entrySha256": "0d5922289c3c40b7947deec698a46acb026fc8dbaa1b9612601825af76053a47",
+      "finalSha256": "58388a6de803305922b9c0f3828cf56d73666a41ee5271b8b1dc5277df48be91"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task48MutationDeveloperVerifier.java",
+      "entrySha256": "305032e9610fee013011f1a19f56f424ff30f2d1b24428f35015b0bea1e64191",
+      "finalSha256": "a95e51ae291f0d96eb785237b4f11f2f1b0a91a0efe117e4cefd1af3be44a4c4"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task49DeveloperVerifier.java",
+      "entrySha256": "52eb162620a308afea3c345f720b73a86ff752f4249ddbf17afc835f71437eb7",
+      "finalSha256": "5c3ffa5ff75c9274ea209b5843f20ecaa061dcdbe7744cb6875e292a4fd0bbec"
+    }
+  ],
+  "ordinaryPlayerEvidenceReuse": "Accepted for unchanged ordinary source; no non-debug path executes these developer verifiers. No earlier failed compiled result is reused. Final source/native/build/current compiled proof are fresh.",
+  "isolationInfrastructure": "AGENTS, build, preview, stop and core isolation implementation not changed by A05; no wrapper certification claim."
+}

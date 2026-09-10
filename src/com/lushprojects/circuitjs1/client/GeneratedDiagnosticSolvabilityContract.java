@@ -43,9 +43,29 @@ final class GeneratedDiagnosticSolvabilityContract {
 
     static GeneratedDiagnosticSolvabilityContract forGeneratedBoard(String familyId,
             String topologyVariantId, long seed, Vector<GeneratedFaultCandidate> candidates) {
+        return forGeneratedBoard(familyId, topologyVariantId, seed, candidates, null);
+    }
+
+    /**
+     * Normal contract construction for a device-owned diagnostic provider.
+     * The provider supplies the plan after assembly resolution; family strings
+     * remain a display identity and cannot select the composed topology.
+     */
+    static GeneratedDiagnosticSolvabilityContract forGeneratedBoard(String familyId,
+            String topologyVariantId, long seed, Vector<GeneratedFaultCandidate> candidates,
+            GeneratedDiagnosticExecutionProvider provider) {
         if (familyId == null || topologyVariantId == null || candidates == null)
             throw new IllegalArgumentException("Incomplete diagnostic solvability contract");
-        Vector<GeneratedDiagnosticPlan> plans = GeneratedDiagnosticPlanCatalog.forFamily(familyId);
+        Vector<GeneratedDiagnosticPlan> plans;
+        if (provider == null) {
+            plans = GeneratedDiagnosticPlanCatalog.forFamily(familyId);
+        } else {
+            GeneratedDiagnosticPlan plan = provider.getDiagnosticPlan();
+            if (plan == null)
+                throw new IllegalArgumentException("Diagnostic provider supplied no plan");
+            plans = new Vector<GeneratedDiagnosticPlan>();
+            plans.add(plan);
+        }
         Vector<String> hypothesisKeys = GeneratedDiagnosticSolvabilityAdmission
             .getHypothesisKeys(candidates);
         GeneratedDiagnosticOwnerDiversity ownerDiversity =

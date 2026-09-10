@@ -1,0 +1,16 @@
+{
+  "protocol": "A05-RESOURCE-CLOSURE-1",
+  "taskBrowser": "CLOSED; captured root PID absent and task window absent",
+  "taskPreview": "CLOSED; standard exact stop exit 0 and owned preview PID absent",
+  "previewLauncher": "EXITED 0; retained parent exited only after preview cleanup",
+  "previewPort": 58321,
+  "resourceChecks": [
+    "ABSENT:152400",
+    "ABSENT:184296",
+    "ABSENT:203620"
+  ],
+  "sourceAndGateWorkers": "Completed and exited; no active source writer or competing gate",
+  "publicationRoot": "Active only for final documentation, closure review and publication",
+  "unrelatedResources": "Unrelated processes and historical preview resources, including ambiguous old 8899 ownership, left untouched",
+  "executionScratch": "Original and takeover evidence retained until completed review/publication, then exact owned cleanup; no broad temp cleanup"
+}

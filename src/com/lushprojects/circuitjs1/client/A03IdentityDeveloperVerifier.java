@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 final class A03IdentityDeveloperVerifier {
     private static final String PROTOCOL = "TSJ-A03-IDENTITY-1";
-    private static final long[] SEEDS = { 1L, 2L, 3L };
+    private static final long[] SEEDS = { 1L, 2L, -1L };
 
     private A03IdentityDeveloperVerifier() { }
 
@@ -408,7 +408,7 @@ final class A03IdentityDeveloperVerifier {
     private static BoundedAssemblyRequest requestFor(long seed) {
         if (seed == 1L) return BoundedAssemblyRequest.forCanary(seed);
         if (seed == 2L) return BoundedAssemblyRequest.forControlledIndicator(seed);
-        if (seed == 3L) return BoundedAssemblyRequest.forControlledIndicator(seed);
+        if (seed == -1L) return BoundedAssemblyRequest.forControlledIndicator(seed);
         throw new IllegalArgumentException("Unsupported A03 bounded sample seed: " + seed);
     }
 

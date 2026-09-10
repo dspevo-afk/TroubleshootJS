@@ -1,0 +1,502 @@
+{
+  "status": "PASS",
+  "routeCount": 6,
+  "sourceDigest": "48541648277a27ee8974f9d9093a2c1281b99b8be85d7ea97a6060f84d698f2d",
+  "scriptDigest": "654917ac4fee28901a6f79697c1037044fb82233c9b87d15359a3c16caf1e221",
+  "webDigest": "1688868e99bff4ee1ce0e35b67867ad922088395a46b5aa39898130325636ba3",
+  "executionDigest": "2a542ae42a2e89b486091c080443eb4cda27d62098ef75a65e89c16f03b0d9c3",
+  "fileCount": 1320,
+  "routes": [
+    {
+      "route": "a03",
+      "status": "PASS",
+      "verification": "PASS:a03",
+      "reportSha256": {
+        "a03": "8070a58954a23a843785532590d88cd91e6fb565c1c245f54de47b0675f88fdc"
+      }
+    },
+    {
+      "route": "task46",
+      "status": "PASS",
+      "verification": "PASS:task46",
+      "reportSha256": {
+        "task46Parity": "7bbf6739c314c6d9e9229d626ab0d7f7354a75e1e52a40660c67b23a9bcaa705",
+        "task46Descriptor": "caff293c3dc5a214399ce7198db57d47322057fb8b1e6be2464d915193a1eff6",
+        "task46Snapshot": "49e7afed45e23e564973b463adf4975d8a8249d9485abb3d66c821a65b5ef1b3",
+        "task46Replay": "f0d44be4995f2f00af7e7896510e8b6903239227af3cdfb38fed4ef09f957444"
+      }
+    },
+    {
+      "route": "task49",
+      "status": "PASS",
+      "verification": "PASS:task49",
+      "reportSha256": {
+        "task49": "bc59a452c2e00067e3f1e2d3c98039dab41cfcefdaea68ee37f99b277023b474"
+      }
+    },
+    {
+      "route": "a04",
+      "status": "PASS",
+      "verification": "PASS:a04",
+      "reportSha256": {
+        "a04": "3e56664c7ace0a38358f126d877bfd494f139bbefcd4be206d5dcf4fecf398c9"
+      }
+    },
+    {
+      "route": "a04-forcedfailure",
+      "status": "PASS",
+      "verification": "FAIL:a04:a04-explicit-failure-canary",
+      "reportSha256": {
+        "a04": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "route": "a04-debugoff",
+      "status": "PASS",
+      "verification": "",
+      "reportSha256": {
+        "a04": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "parity": {
+    "identityVectors": "EXACT",
+    "manifestCases": 3,
+    "seedVectors": "EXACT",
+    "roleVectors": 6,
+    "valueCases": 9,
+    "valueNumericComparison": "exact binary64"
+  },
+  "a04": {
+    "protocol": "TSJ-A04-CONSTRUCTION-1",
+    "status": "PASS",
+    "contractAssertions": 1098,
+    "runtimeAssertions": 650,
+    "coordinateIsolation": true,
+    "explicitJoins": true,
+    "terminalCorrespondence": true,
+    "failureIsolation": true,
+    "recipeIdentity": true,
+    "multiUnitPackage": true,
+    "originalOwnerRestored": true,
+    "candidateCleanup": "PASS",
+    "cases": [
+      {
+        "route": "resistive",
+        "seed": "1",
+        "generatorVersion": 5,
+        "replayVerified": true,
+        "ownerRestored": true,
+        "elapsedMs": 1070,
+        "assemblyMs": 371
+      },
+      {
+        "route": "controlled",
+        "seed": "1",
+        "generatorVersion": 5,
+        "replayVerified": true,
+        "ownerRestored": true,
+        "elapsedMs": 143,
+        "assemblyMs": 24
+      },
+      {
+        "route": "resistive",
+        "seed": "2",
+        "generatorVersion": 5,
+        "replayVerified": true,
+        "ownerRestored": true,
+        "elapsedMs": 783,
+        "assemblyMs": 256
+      },
+      {
+        "route": "controlled",
+        "seed": "2",
+        "generatorVersion": 5,
+        "replayVerified": true,
+        "ownerRestored": true,
+        "elapsedMs": 124,
+        "assemblyMs": 20
+      },
+      {
+        "route": "resistive",
+        "seed": "3",
+        "generatorVersion": 5,
+        "replayVerified": true,
+        "ownerRestored": true,
+        "elapsedMs": 508,
+        "assemblyMs": 166
+      },
+      {
+        "route": "controlled",
+        "seed": "3",
+        "generatorVersion": 5,
+        "replayVerified": true,
+        "ownerRestored": true,
+        "elapsedMs": 125,
+        "assemblyMs": 20
+      }
+    ],
+    "elapsedMs": 2806
+  },
+  "protocol": "A05-CURRENT-QUALIFICATION-1",
+  "method": "Visible task-owned Chrome, Playwright read-only report extraction, maintained route predicates and exact JVM/GWT comparisons; not strict CLI wrapper certification",
+  "controlled": {
+    "assertions": 397,
+    "measurementCases": 4,
+    "solvedCases": [
+      {
+        "seed": "-1",
+        "channels": [
+          {
+            "channel": "channel-a",
+            "provider": "npn-low-side-driver",
+            "catalog": "R_CATALOG_330",
+            "resistanceOhms": 330,
+            "resistanceMinimumOhms": 313.5,
+            "resistanceMaximumOhms": 346.5,
+            "minimumCurrentAmps": 0.005627705627705627,
+            "maximumCurrentAmps": 0.01164274322169059,
+            "guardedPowerWatts": 0.08791866028708134,
+            "tolerancePercent": 5
+          },
+          {
+            "channel": "channel-b",
+            "provider": "npn-low-side-driver",
+            "catalog": "R_CATALOG_270",
+            "resistanceOhms": 270,
+            "resistanceMinimumOhms": 256.5,
+            "resistanceMaximumOhms": 283.5,
+            "minimumCurrentAmps": 0.0068783068783068784,
+            "maximumCurrentAmps": 0.014230019493177388,
+            "guardedPowerWatts": 0.1074561403508772,
+            "tolerancePercent": 5
+          }
+        ],
+        "faultDecision": "channel-a-load-RLOAD-OPEN",
+        "independentControls": true,
+        "repairReachable": true,
+        "support": {
+          "brokenHealthyRejected": true,
+          "brokenRetestRejected": true,
+          "restoredPassed": true,
+          "brokenResistanceOhms": 1000000000,
+          "brokenCurrentAmps": 4.621431277531395e-09,
+          "brokenLedCurrentAmps": 4.622710430065211e-09
+        },
+        "normalAdmissionRoutes": 4,
+        "repairs": [
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 2700,
+            "correctPassed": true,
+            "alternativeOhms": 3300,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 330,
+            "correctPassed": true,
+            "alternativeOhms": 270,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-b-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 2700,
+            "correctPassed": true,
+            "alternativeOhms": 3300,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 270,
+            "correctPassed": true,
+            "alternativeOhms": 330,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          }
+        ],
+        "mutationAssertions": 464
+      },
+      {
+        "seed": "0",
+        "channels": [
+          {
+            "channel": "channel-a",
+            "provider": "npn-low-side-driver",
+            "catalog": "R_CATALOG_330",
+            "resistanceOhms": 330,
+            "resistanceMinimumOhms": 313.5,
+            "resistanceMaximumOhms": 346.5,
+            "minimumCurrentAmps": 0.005627705627705627,
+            "maximumCurrentAmps": 0.01164274322169059,
+            "guardedPowerWatts": 0.08791866028708134,
+            "tolerancePercent": 5
+          },
+          {
+            "channel": "channel-b",
+            "provider": "nmos-low-side-driver",
+            "catalog": "R_CATALOG_330",
+            "resistanceOhms": 330,
+            "resistanceMinimumOhms": 313.5,
+            "resistanceMaximumOhms": 346.5,
+            "minimumCurrentAmps": 0.005627705627705627,
+            "maximumCurrentAmps": 0.01164274322169059,
+            "guardedPowerWatts": 0.08791866028708134,
+            "tolerancePercent": 5
+          }
+        ],
+        "faultDecision": "channel-a-load-RLOAD-OPEN",
+        "independentControls": true,
+        "repairReachable": true,
+        "support": {
+          "brokenHealthyRejected": true,
+          "brokenRetestRejected": true,
+          "restoredPassed": true,
+          "brokenResistanceOhms": 1000000000,
+          "brokenCurrentAmps": 4.6214569247151506e-09,
+          "brokenLedCurrentAmps": 4.621456924715153e-09
+        },
+        "normalAdmissionRoutes": 4,
+        "repairs": [
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 2700,
+            "correctPassed": true,
+            "alternativeOhms": 3300,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 330,
+            "correctPassed": true,
+            "alternativeOhms": 270,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 1000,
+            "correctPassed": true,
+            "alternativeOhms": 1500,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 330,
+            "correctPassed": true,
+            "alternativeOhms": 270,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          }
+        ],
+        "mutationAssertions": 464
+      },
+      {
+        "seed": "1",
+        "channels": [
+          {
+            "channel": "channel-a",
+            "provider": "nmos-low-side-driver",
+            "catalog": "R_CATALOG_330",
+            "resistanceOhms": 330,
+            "resistanceMinimumOhms": 313.5,
+            "resistanceMaximumOhms": 346.5,
+            "minimumCurrentAmps": 0.005627705627705627,
+            "maximumCurrentAmps": 0.01164274322169059,
+            "guardedPowerWatts": 0.08791866028708134,
+            "tolerancePercent": 5
+          },
+          {
+            "channel": "channel-b",
+            "provider": "nmos-low-side-driver",
+            "catalog": "R_CATALOG_330",
+            "resistanceOhms": 330,
+            "resistanceMinimumOhms": 313.5,
+            "resistanceMaximumOhms": 346.5,
+            "minimumCurrentAmps": 0.005627705627705627,
+            "maximumCurrentAmps": 0.01164274322169059,
+            "guardedPowerWatts": 0.08791866028708134,
+            "tolerancePercent": 5
+          }
+        ],
+        "faultDecision": "channel-b-driver-RG-OPEN",
+        "independentControls": true,
+        "repairReachable": true,
+        "support": {
+          "brokenHealthyRejected": true,
+          "brokenRetestRejected": true,
+          "restoredPassed": true,
+          "brokenResistanceOhms": 1000000000,
+          "brokenCurrentAmps": 4.6214569247151506e-09,
+          "brokenLedCurrentAmps": 4.621456924715153e-09
+        },
+        "normalAdmissionRoutes": 4,
+        "repairs": [
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 1000,
+            "correctPassed": true,
+            "alternativeOhms": 1500,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 330,
+            "correctPassed": true,
+            "alternativeOhms": 270,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 1000,
+            "correctPassed": true,
+            "alternativeOhms": 1500,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 330,
+            "correctPassed": true,
+            "alternativeOhms": 270,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          }
+        ],
+        "mutationAssertions": 464
+      },
+      {
+        "seed": "-9223372036854775808",
+        "channels": [
+          {
+            "channel": "channel-a",
+            "provider": "nmos-low-side-driver",
+            "catalog": "R_CATALOG_270",
+            "resistanceOhms": 270,
+            "resistanceMinimumOhms": 256.5,
+            "resistanceMaximumOhms": 283.5,
+            "minimumCurrentAmps": 0.0068783068783068784,
+            "maximumCurrentAmps": 0.014230019493177388,
+            "guardedPowerWatts": 0.1074561403508772,
+            "tolerancePercent": 5
+          },
+          {
+            "channel": "channel-b",
+            "provider": "npn-low-side-driver",
+            "catalog": "R_CATALOG_330",
+            "resistanceOhms": 330,
+            "resistanceMinimumOhms": 313.5,
+            "resistanceMaximumOhms": 346.5,
+            "minimumCurrentAmps": 0.005627705627705627,
+            "maximumCurrentAmps": 0.01164274322169059,
+            "guardedPowerWatts": 0.08791866028708134,
+            "tolerancePercent": 5
+          }
+        ],
+        "faultDecision": "channel-b-driver-RB-OPEN",
+        "independentControls": true,
+        "repairReachable": true,
+        "support": {
+          "brokenHealthyRejected": true,
+          "brokenRetestRejected": true,
+          "restoredPassed": true,
+          "brokenResistanceOhms": 1000000000,
+          "brokenCurrentAmps": 4.6214569247151506e-09,
+          "brokenLedCurrentAmps": 4.621456924715153e-09
+        },
+        "normalAdmissionRoutes": 4,
+        "repairs": [
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 1000,
+            "correctPassed": true,
+            "alternativeOhms": 1500,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 270,
+            "correctPassed": true,
+            "alternativeOhms": 330,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-b-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 2700,
+            "correctPassed": true,
+            "alternativeOhms": 3300,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          },
+          {
+            "owner": "tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+            "wrongOhms": 10000000,
+            "wrongRejected": true,
+            "correctOhms": 330,
+            "correctPassed": true,
+            "alternativeOhms": 270,
+            "alternativePassed": true,
+            "otherOwnersUnchanged": true,
+            "baselineRestored": true
+          }
+        ],
+        "mutationAssertions": 464
+      }
+    ],
+    "faultOwnerCases": 16
+  }
+}

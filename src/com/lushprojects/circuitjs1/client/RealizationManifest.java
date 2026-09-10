@@ -25,7 +25,10 @@ final class RealizationManifest {
     private static final int MAX_FIELD_LENGTH = 32768;
     private static final int MAX_ID_LENGTH = 512;
     private static final int MAX_BLOCKS = 256;
-    private static final int MAX_CHOICES = 1024;
+    // The current two-channel composition captures both providers' local
+    // declarations and complete physical choices. Encoding remains bounded
+    // independently, even when individual choice records are short.
+    private static final int MAX_CHOICES = 2048;
     private static final int MAX_NETS = 4096;
     private static final int MAX_TARGETS = 8192;
     private static final int REQUIRED_PIN_COUNT = 8;
@@ -106,7 +109,7 @@ final class RealizationManifest {
         if (result.length() > MAX_ENCODING_LENGTH) {
             throw new ChallengeContractException(
                     ChallengeContractException.Code.INVALID_ENCODING,
-                    "manifest", "Canonical manifest exceeds bound");
+                    "manifest", "Canonical manifest exceeds bound: " + result.length());
         }
         return result.toString();
     }
@@ -174,7 +177,7 @@ final class RealizationManifest {
     private static List<Choice> freezeChoices(Collection<Choice> source) {
         requireCollection(source, "choices");
         if (source.size() > MAX_CHOICES)
-            throw invalid("choices", "Too many resolved choices");
+            throw invalid("choices", "Too many resolved choices: " + source.size());
         TreeMap<String, Choice> sorted = new TreeMap<String, Choice>();
         for (Choice choice : source) {
             if (choice == null)

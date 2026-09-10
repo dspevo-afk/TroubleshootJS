@@ -1,6 +1,68 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - R00 COMPLETE - QUALIFIED - 2026-09-09
+## Current checkpoint - A05 COMPLETE - QUALIFIED - 2026-09-09
+
+- **Scope/base:** Complete the already authorized A05 implementation above
+  `bcf2bf8b8a3a995eaba76daefaf759e06918f4da` on
+  `codex/task43p-final-recovery`, upstream
+  `origin/codex/task43p-final-recovery`. R00 remains accepted. The owner's
+  unfinished implementation and prior results were recovered without reset.
+- **Delivered:** Two independently commanded NMOS/NPN low-side channels and
+  genuine supply-present support through the current provider declarations,
+  disjoint solver reservations, one runtime, explicit buses and normal player
+  launch. Current generator 5; electrical/low-side declarations 2. Four OPEN
+  resistor fault owners. No historical replay interpretation retained.
+- **Candidate:** Final source-tree digest
+  `48541648277a27ee8974f9d9093a2c1281b99b8be85d7ea97a6060f84d698f2d`;
+  final script digest
+  `654917ac4fee28901a6f79697c1037044fb82233c9b87d15359a3c16caf1e221`.
+  The containing commit identifies the complete candidate. Current evidence
+  and bounded expectations are in [A05 evidence](task-evidence/A05/README.md).
+- **Recovered/corrected:** Persistent detachable-pad copper and provider
+  readiness fixes were already integrated. Reserve takeover resolved remaining
+  developer-verifier setup: correct selected channel/fault backing, genuinely
+  foreign pad, exact mutable IDs, power/fault settlement, private mutation
+  candidate installation and revoked-receipt rejection. Production guards and
+  current physical/electrical invariants were not disabled.
+- **Native/build:** Final maintained runner PASS, exit 0: 15 Java suites,
+  independent 22 seed / 9 value / 6 role vectors and 195 report assertions;
+  cleanup PASS. Actual JDK 8u502/GWT2.7 production build PASS, five OBF
+  permutations, 58.307 s compile / 1.306 s link. No prior build certifies
+  later Java edits.
+- **Compiled:** All six selected Gate A05 routes PASS, including expected
+  forced failure and debug-off. Exact current JVM/GWT identity/three-manifest,
+  seed/role/value binary64 parity PASS. A04: 1,098 context / 650 runtime
+  assertions, six cases and cleanup. Four solved compositions cover all 16
+  admitted fault-owner cases with wrong/correct/alternative repairs and
+  peer-owner preservation; support failure and restoration both tested.
+- **Player:** Normal visible launch and real mouse/keyboard diagnosis,
+  power-off resistance, wrong repair rejection and valid alternatives PASS
+  for repeated NMOS and NPN boards. Independent controls, support, active-meter
+  cleanup, power/reset and board succession PASS. Five screenshots inspected.
+  Player evidence reuse is confined to subsequent developer-only verifier
+  changes; final compiled source was exercised afresh.
+- **Review:** Initial non-author Reserve review found a verifier blocker, resolved
+  by targeted repairs and later reviews. Fresh DeepSeek V4 Flash MAX source and
+  evidence reviews PASS. Final documentation delta review PASS. Worker-side runtime limitations were resolved through authorized
+  root execution, not sandbox or ownership weakening.
+- **Limits:** Two-channel bounded geometry and four resistor fault owners;
+  no arbitrary multi-unit runtime, transistor mutation, save UI, full router,
+  large-board/Q15 or A06 qualification. Strict CLI wrapper certification is
+  not claimed by the separate owned visible-browser route.
+- **Resources/publication:** The task browser, preview and launcher are
+  closed; standard exact stop released the owned preview port. Source/review
+  workers and validation subprocesses exited. Final documentation and review are closed. The root alone owns normal
+  publication; exact commit, remote confirmation and email outcome are recorded
+  in the post-publication handoff rather than invented inside this commit.
+  Unrelated old resources were not touched.
+- **Retry validation:** Fresh current native runner and exact reader/parity
+  confirmation PASS; source/script/web/execution hashes match recovered final
+  evidence. New workers used DeepSeek V4 Flash as explicitly requested. No
+  production source changed during this retry.
+- **Next:** Complete normal commit/push/email handoff after final Git reconciliation.
+  A06 is the recommended next unstarted task; do not begin it here.
+
+## Historical checkpoint - R00 COMPLETE - QUALIFIED - 2026-09-09
 
 - **Scope/base:** Implement the authorized current-only baseline and all three
   A04 physical-provider hardening follow-ups. Branch

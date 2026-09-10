@@ -363,8 +363,8 @@ final class PortCompatibilityPreflight {
         Node load = nodes.get(relation.getLoadPort().key());
         Node supply = nodes.get(relation.getSupplyPort().key());
         Node control = nodes.get(relation.getControlPort().key());
-        Node loadSupply = nodes.get("load/SUPPLY");
-        Node driverControl = nodes.get("driver/CONTROL");
+        Node loadSupply = nodes.get(relation.getLoadSupplyPort().key());
+        Node driverControl = nodes.get(relation.getDriverControlPort().key());
         if (sink == null || load == null || supply == null || control == null
                 || loadSupply == null || driverControl == null) {
             add(group, issues, Decision.MALFORMED, Reason.UNKNOWN_PORT,
@@ -380,12 +380,12 @@ final class PortCompatibilityPreflight {
                     "connection.switchedLowSide.transitivePorts", group.ids());
             return;
         }
-        if (!"driver".equals(relation.getSinkPort().getBlockKey())
-                || !"SWITCHED_SINK".equals(relation.getSinkPort().getPortId())
-                || !"load".equals(relation.getLoadPort().getBlockKey())
-                || !"SWITCHED_LOAD".equals(relation.getLoadPort().getPortId())) {
+        if (!relation.getSinkPort().getBlockKey().equals(
+                    relation.getDriverControlPort().getBlockKey())
+                || !relation.getLoadPort().getBlockKey().equals(
+                    relation.getLoadSupplyPort().getBlockKey())) {
             add(group, issues, Decision.INCOMPATIBLE, Reason.UNSUPPORTED_ROLE_PAIR,
-                    "connection.switchedLowSide.fixedPorts", group.ids());
+                    "connection.switchedLowSide.participantPorts", group.ids());
             return;
         }
         ElectricalPortContract sinkPort = sink.port, loadPort = load.port;
@@ -396,7 +396,11 @@ final class PortCompatibilityPreflight {
                 || loadPort.getRole() != Role.LOAD
                 || loadPort.getDirection() == Direction.OUTPUT
                 || loadPort.getBehavior() != Behavior.SINK
-                || loadPort.getDrive() != Drive.NONE) {
+                || loadPort.getDrive() != Drive.NONE
+                || driverControl.port.getRole() != Role.CONTROL
+                || driverControl.port.getDirection() != Direction.INPUT
+                || driverControl.port.getBehavior() != Behavior.SINK
+                || driverControl.port.getDrive() != Drive.NONE) {
             add(group, issues, Decision.INCOMPATIBLE,
                     Reason.INVALID_DIRECTION_DRIVE, "connection.switchedLowSide.shape", group.ids());
             return;
@@ -538,12 +542,14 @@ final class PortCompatibilityPreflight {
             }
         }
         TreeSet<String> expected = new TreeSet<String>();
+        TreeSet<String> returnOwners = new TreeSet<String>();
         boolean duplicate = false;
         String returnRoot = null;
         for (ElectricalConnection.PortRef ref : relation.getReturnPorts()) {
             Node node = ref == null ? null : allNodes.get(ref.key());
             if (node == null) continue;
             if (!expected.add(node.key)) duplicate = true;
+            returnOwners.add(node.block.getDescriptor().getInstanceKey());
             String root = conductors.find(node.key);
             if (returnRoot == null) returnRoot = root;
             else if (!returnRoot.equals(root)) {
@@ -557,15 +563,18 @@ final class PortCompatibilityPreflight {
                     "connection.switchedLowSide.returnList", group.ids());
             return;
         }
+        for (Node participant : nodes) {
+            if (!returnOwners.contains(participant.block.getDescriptor().getInstanceKey()))
+                add(group, issues, Decision.MALFORMED, Reason.INVALID_CONNECTION,
+                        "connection.switchedLowSide.participantReturn", participant);
+        }
         if (returnRoot != null) {
             TreeSet<String> actual = new TreeSet<String>();
             for (Node node : allNodes.values())
                 if (returnRoot.equals(conductors.find(node.key))) actual.add(node.key);
-            if (!expected.containsAll(actual)) {
-                add(group, issues, Decision.INCOMPATIBLE,
-                        Reason.INVALID_CONNECTION,
-                        "connection.switchedLowSide.returnList", group.ids());
-            }
+            // A declared device return bus may also serve other independent
+            // channels and support blocks. Every additional member must still
+            // be an explicit, compatible return, never a supply/control short.
             if (!actual.containsAll(expected)) {
                 add(group, issues, Decision.INSUFFICIENT_INFORMATION,
                         Reason.REFERENCE_UNPROVEN,
@@ -575,14 +584,15 @@ final class PortCompatibilityPreflight {
             for (ElectricalConnection connection : proposals.values()) {
                 if (connection.getKind() != ElectricalConnection.Kind.CONDUCTIVE
                         || connection.getPorts().size() < 2) continue;
-                boolean touches = false, allExpected = true;
+                boolean touches = false, allReturns = true;
                 for (ElectricalConnection.PortRef ref : connection.getPorts()) {
                     Node node = allNodes.get(ref.key());
-                    if (node == null) { allExpected = false; break; }
-                    if (returnRoot.equals(conductors.find(node.key))) touches = true;
-                    if (!expected.contains(node.key)) allExpected = false;
+                    if (node == null) { allReturns = false; break; }
+                    if (expected.contains(node.key)) touches = true;
+                    if (!actual.contains(node.key) || node.port.getRole() != Role.RETURN)
+                        allReturns = false;
                 }
-                if (touches && allExpected) explicitJoin = true;
+                if (touches && allReturns) explicitJoin = true;
             }
             if (!explicitJoin) {
                 add(group, issues, Decision.INSUFFICIENT_INFORMATION,
@@ -590,8 +600,12 @@ final class PortCompatibilityPreflight {
                         "connection.switchedLowSide.returnJoin", group.ids());
             }
             for (Node node : allNodes.values()) {
-                if (!expected.contains(node.key)) continue;
-                if (node.port.getRole() != Role.RETURN) {
+                if (!actual.contains(node.key)) continue;
+                if (node.port.getRole() != Role.RETURN
+                        || !relation.getReferenceNetId().equals(
+                            node.port.getDomain().getReferenceNetId())
+                        || !relation.getIsolationId().equals(
+                            node.port.getDomain().getIsolationId())) {
                     add(group, issues, Decision.INCOMPATIBLE,
                             Reason.REFERENCE_MISMATCH,
                             "connection.switchedLowSide.returnRole", node);
@@ -602,7 +616,7 @@ final class PortCompatibilityPreflight {
                 for (Node node : Arrays.asList(sink, load, supply, control))
                     checkReferenceUnion(group, first, node, references,
                             attemptedReferences, issues);
-                for (String key : expected) {
+                for (String key : actual) {
                     Node node = allNodes.get(key);
                     if (node != null) checkReferenceUnion(group, first, node,
                             references, attemptedReferences, issues);

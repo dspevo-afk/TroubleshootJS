@@ -531,9 +531,8 @@ final class BoundedGeneratedBoardAssembler {
         }
 
         private void buildControlledInstance() {
-            SwitchElm controlledControlCommand = switchElement("device", "CONTROL_COMMAND");
             ControlledIndicatorDeviceBehavior behavior =
-                new ControlledIndicatorDeviceBehavior(plan, controlledControlCommand);
+                new ControlledIndicatorDeviceBehavior(plan, constructionReceipt);
             GeneratedBoardFamilyState familyState = behavior.createFamilyState();
             GeneratedScenarioCatalog<GeneratedObservedBehavior> scenarios =
                 behavior.createScenarioCatalog();

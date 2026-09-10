@@ -15,7 +15,7 @@ import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.Parameter;
  */
 final class BoundedAssemblyRequest {
     static final String GENERATOR_ID = "bounded-assembler";
-    static final int GENERATOR_VERSION = 4;
+    static final int GENERATOR_VERSION = 5;
     static final String INTENT_ID = "resistive-coupling";
     static final int INTENT_VERSION = 1;
     static final String PROFILE_ID = "developer-canary";
@@ -29,8 +29,8 @@ final class BoundedAssemblyRequest {
     static final int CONTROLLED_INTENT_VERSION = 1;
     static final String CONTROLLED_PROFILE_ID = "controlled-indicator";
     static final int CONTROLLED_PROFILE_VERSION = 1;
-    static final int CONTROLLED_SUPPORTED_BLOCK_COUNT = 2;
-    static final int CONTROLLED_SUPPORTED_COMPONENT_COUNT = 7;
+    static final int CONTROLLED_SUPPORTED_BLOCK_COUNT = 5;
+    static final int CONTROLLED_SUPPORTED_COMPONENT_COUNT = 15;
     static final int CONTROLLED_SUPPORTED_DOMAIN_COUNT = 1;
 
     private final ChallengeDescriptor descriptor;
@@ -196,61 +196,47 @@ final class BoundedAssemblyRequest {
             ChallengeDescriptor descriptor) {
         if (descriptor == null)
             throw new IllegalArgumentException("Assembly descriptor is required");
-        ComposedBlockContribution driver = ControlledIndicatorBlockContributions
-                .driver().create(ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY);
-        ComposedBlockContribution load = ControlledIndicatorBlockContributions
-                .load().create(ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY);
-        ArrayList<ElectricalBlockContract> blocks =
-                new ArrayList<ElectricalBlockContract>();
-        blocks.add(driver.getElectricalContract());
-        blocks.add(load.getElectricalContract());
-        ArrayList<DeviceAdapterContract> adapters =
-                new ArrayList<DeviceAdapterContract>();
+        ArrayList<ElectricalBlockContract> blocks = new ArrayList<ElectricalBlockContract>();
+        ArrayList<DeviceAdapterContract> adapters = new ArrayList<DeviceAdapterContract>();
+        ArrayList<ElectricalConnection> connections = new ArrayList<ElectricalConnection>();
         adapters.add(DeviceAdapterContract.power());
-        adapters.add(DeviceAdapterContract.control());
-        ArrayList<ElectricalConnection> connections =
-                new ArrayList<ElectricalConnection>();
-        connections.add(new ElectricalConnection(
-                ControlledIndicatorBlockContributions.POWER_CONNECTION_ID,
-                Arrays.asList(new ElectricalConnection.PortRef(
-                                DeviceAdapterContract.POWER_ADAPTER_KEY,
-                                DeviceAdapterContract.POWER_OUTPUT_PORT_ID),
-                        new ElectricalConnection.PortRef(
-                                ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
-                                "SUPPLY"))));
-        connections.add(new ElectricalConnection(
-                ControlledIndicatorBlockContributions.CONTROL_CONNECTION_ID,
-                Arrays.asList(new ElectricalConnection.PortRef(
-                                DeviceAdapterContract.CONTROL_ADAPTER_KEY,
-                                DeviceAdapterContract.CONTROL_OUTPUT_PORT_ID),
-                        new ElectricalConnection.PortRef(
-                                ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
-                                "CONTROL"))));
-        connections.add(new ElectricalConnection(
-                ControlledIndicatorBlockContributions.SWITCHED_CONNECTION_ID,
-                Arrays.asList(new ElectricalConnection.PortRef(
-                                ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
-                                "SWITCHED_SINK"),
-                        new ElectricalConnection.PortRef(
-                                ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
-                                "SWITCHED_LOAD")),
-                SwitchedLowSideContract.forControlledIndicator()));
-        connections.add(new ElectricalConnection(
-                ControlledIndicatorBlockContributions.RETURN_CONNECTION_ID,
-                Arrays.asList(new ElectricalConnection.PortRef(
-                                DeviceAdapterContract.CONTROL_ADAPTER_KEY,
-                                DeviceAdapterContract.RETURN_PORT_ID),
-                        new ElectricalConnection.PortRef(
-                                DeviceAdapterContract.POWER_ADAPTER_KEY,
-                                DeviceAdapterContract.RETURN_PORT_ID),
-                        new ElectricalConnection.PortRef(
-                                ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
-                                "RETURN"),
-                        new ElectricalConnection.PortRef(
-                                ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
-                                "RETURN"))));
+        ArrayList<ElectricalConnection.PortRef> supply = new ArrayList<ElectricalConnection.PortRef>();
+        ArrayList<ElectricalConnection.PortRef> returned = new ArrayList<ElectricalConnection.PortRef>();
+        supply.add(new ElectricalConnection.PortRef(DeviceAdapterContract.POWER_ADAPTER_KEY, "POWER_OUT"));
+        returned.add(new ElectricalConnection.PortRef(DeviceAdapterContract.POWER_ADAPTER_KEY, "RETURN"));
+        for (ControlledIndicatorChannel channel : controlledChannels()) {
+            ComposedBlockContribution driver = LowSideRoleFamily.select(
+                    descriptor.getRootSeed(), channel.getDriverKey(),
+                    LowSideRoleFamily.Envelope.standard(), LowSideRoleFamily.providers())
+                    .create(channel.getDriverKey());
+            ComposedBlockContribution load = ControlledIndicatorBlockContributions.load().create(channel.getLoadKey());
+            blocks.add(driver.getElectricalContract());
+            blocks.add(load.getElectricalContract());
+            adapters.add(channel.controlAdapter());
+            supply.add(new ElectricalConnection.PortRef(channel.getLoadKey(), "SUPPLY"));
+            returned.add(new ElectricalConnection.PortRef(channel.getDriverKey(), "RETURN"));
+            returned.add(new ElectricalConnection.PortRef(channel.getLoadKey(), "RETURN"));
+            returned.add(new ElectricalConnection.PortRef(channel.getControlAdapterKey(), "RETURN"));
+            connections.add(new ElectricalConnection(channel.getControlJoinId(), Arrays.asList(
+                    new ElectricalConnection.PortRef(channel.getControlAdapterKey(), "CONTROL_OUT"),
+                    new ElectricalConnection.PortRef(channel.getDriverKey(), "CONTROL"))));
+            connections.add(new ElectricalConnection(channel.getSwitchedJoinId(), Arrays.asList(
+                    new ElectricalConnection.PortRef(channel.getDriverKey(), "SWITCHED_SINK"),
+                    new ElectricalConnection.PortRef(channel.getLoadKey(), "SWITCHED_LOAD")), channel.switched()));
+        }
+        blocks.add(SupplyPresentBlockContributions.create(SUPPORT_BLOCK_KEY).getElectricalContract());
+        supply.add(new ElectricalConnection.PortRef(SUPPORT_BLOCK_KEY, "SUPPLY"));
+        returned.add(new ElectricalConnection.PortRef(SUPPORT_BLOCK_KEY, "RETURN"));
+        connections.add(new ElectricalConnection(ControlledIndicatorBlockContributions.POWER_CONNECTION_ID, supply));
+        connections.add(new ElectricalConnection(ControlledIndicatorBlockContributions.RETURN_CONNECTION_ID, returned));
         return new BoundedAssemblyRequest(descriptor, blocks, connections, adapters);
     }
+
+    static final String SUPPORT_BLOCK_KEY = "supply-indicator";
+    private static final List<ControlledIndicatorChannel> CHANNELS = Collections.unmodifiableList(
+            Arrays.asList(new ControlledIndicatorChannel("channel-a", "A", "J2"),
+                    new ControlledIndicatorChannel("channel-b", "B", "J3")));
+    static List<ControlledIndicatorChannel> controlledChannels() { return CHANNELS; }
 
     private static List<ElectricalBlockContract> immutableBlocks(
             Collection<ElectricalBlockContract> values) {

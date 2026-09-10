@@ -38,7 +38,8 @@ public final class A03IdentityContractTest {
     private static void boundedReplayCanaries() {
         BoundedAssemblyRequest[] requests = {
             BoundedAssemblyRequest.forCanary(1L),
-            BoundedAssemblyRequest.forControlledIndicator(2L)
+            BoundedAssemblyRequest.forControlledIndicator(2L),
+            BoundedAssemblyRequest.forControlledIndicator(-1L)
         };
         List<RealizationManifest> manifests =
                 new ArrayList<RealizationManifest>();
@@ -142,6 +143,56 @@ public final class A03IdentityContractTest {
                 "unknown choice");
 
         modelMutationCanary(values);
+        npnModelMutationCanary(manifests.get(2));
+        choiceCapacityCanaries(base);
+    }
+
+    private static void choiceCapacityCanaries(final RealizationManifest base) {
+        final ArrayList<RealizationManifest.Choice> choices =
+                new ArrayList<RealizationManifest.Choice>();
+        for (int index = 0; index < 2048; index++)
+            choices.add(RealizationManifest.Choice.integer("bounded.choice." + index, index));
+        RealizationManifest boundary = new RealizationManifest(base.getSchemaVersion(),
+                base.getDescriptor(), base.getBlocks(), base.getVersionPins(), choices,
+                base.getNetBindings(), base.getTargets());
+        require(RealizationManifest.parse(boundary.toCanonical()).identityCanonical()
+                .equals(boundary.identityCanonical()),
+                "current maximum choice population did not round-trip");
+        final RealizationManifest.Choice overflow =
+                RealizationManifest.Choice.integer("bounded.choice.overflow", 2048);
+        choices.add(overflow);
+        expectContractFailure(new Action() {
+            @Override public void run() {
+                new RealizationManifest(base.getSchemaVersion(), base.getDescriptor(),
+                        base.getBlocks(), base.getVersionPins(), choices,
+                        base.getNetBindings(), base.getTargets());
+            }
+        }, ChallengeContractException.Code.INVALID_ENCODING, "choices", null,
+                "over-bound choice construction was accepted");
+        String payload = overflow.toCanonical();
+        final String oversized = boundary.toCanonical() + "\nchoice=" +
+                payload.length() + ":" + payload;
+        expectContractFailure(new Action() {
+            @Override public void run() { RealizationManifest.parse(oversized); }
+        }, ChallengeContractException.Code.INVALID_ENCODING, "choices", null,
+                "over-bound encoded choice population was accepted");
+    }
+
+    private static void npnModelMutationCanary(RealizationManifest manifest) {
+        TransistorModel.createModelMap();
+        final TransistorModel model = TransistorModel.modelMap.get("default");
+        require(model != null, "default NPN model is not registered");
+        final long saturation = Double.doubleToLongBits(model.satCur);
+        final String key = findChoiceKeyContaining(manifest,
+                RealizationManifest.Choice.Kind.NUMBER, "element.Q1.parameter.", "model-saturation-current");
+        try {
+            model.satCur = Double.longBitsToDouble(saturation ^ 1L);
+            expectReplayMismatch(manifest, "choice." + key, "NPN primitive model mutation");
+        } finally {
+            model.satCur = Double.longBitsToDouble(saturation);
+        }
+        require(Double.doubleToLongBits(model.satCur) == saturation,
+                "NPN primitive model was not restored exactly");
     }
 
     private static void modelMutationCanary(RealizationManifest manifest) {
@@ -156,7 +207,7 @@ public final class A03IdentityContractTest {
         final long vdcoef = Double.doubleToLongBits(model.vdcoef);
         final long fwdrop = Double.doubleToLongBits(model.fwdrop);
         final String key = findChoiceKeyContaining(manifest,
-                RealizationManifest.Choice.Kind.NUMBER, "default-led", "saturation");
+                RealizationManifest.Choice.Kind.NUMBER, "element.LED1.parameter.", "saturation-current");
         try {
             model.saturationCurrent = Double.longBitsToDouble(saturation ^ 1L);
             model.updateModel();
@@ -190,7 +241,8 @@ public final class A03IdentityContractTest {
         System.out.println(canonical);
         String artifact = BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
                 manifest.getDescriptor().getDeviceIntent().getId())
-                ? "manifest-controlled" : "manifest-resistive";
+                ? (manifest.getDescriptor().getRootSeed() == -1L ?
+                    "manifest-controlled-npn" : "manifest-controlled") : "manifest-resistive";
         writeParity(artifact, canonical);
     }
 

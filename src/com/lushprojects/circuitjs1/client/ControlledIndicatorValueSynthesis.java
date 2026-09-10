@@ -284,8 +284,7 @@ final class ControlledIndicatorValueSynthesis {
             throw new IllegalArgumentException("Assembly request is required");
         ElectricalConnection switchedConnection = null;
         for (ElectricalConnection connection : request.getConnections()) {
-            if (ControlledIndicatorBlockContributions.SWITCHED_CONNECTION_ID
-                    .equals(connection.getId())) {
+            if (connection.getKind() == ElectricalConnection.Kind.LOW_SIDE_SWITCHED) {
                 if (switchedConnection != null)
                     throw new IllegalArgumentException("Duplicate switched relation");
                 switchedConnection = connection;
@@ -295,31 +294,29 @@ final class ControlledIndicatorValueSynthesis {
                 ElectricalConnection.Kind.LOW_SIDE_SWITCHED ||
                 switchedConnection.getSwitchedLowSideContract() == null)
             throw new IllegalArgumentException("Typed switched relation is required");
-        SwitchedLowSideContract switched =
-                switchedConnection.getSwitchedLowSideContract();
-        requireRef(switched.getSinkPort(), ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
-                "SWITCHED_SINK");
-        requireRef(switched.getLoadPort(), ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
-                "SWITCHED_LOAD");
-        requireRef(switched.getSupplyPort(), DeviceAdapterContract.POWER_ADAPTER_KEY,
-                DeviceAdapterContract.POWER_OUTPUT_PORT_ID);
-        requireRef(switched.getControlPort(), DeviceAdapterContract.CONTROL_ADAPTER_KEY,
-                DeviceAdapterContract.CONTROL_OUTPUT_PORT_ID);
-        requireReturnRefs(switched);
+        return fromRequest(request,
+                switchedConnection.getSwitchedLowSideContract());
+    }
 
-        ElectricalBlockContract driver = findContract(request,
-                ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY);
-        ElectricalBlockContract load = findContract(request,
-                ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY);
-        ElectricalBlockContract power = findContract(request,
-                DeviceAdapterContract.POWER_ADAPTER_KEY);
-        if (driver == null || load == null || power == null)
-            throw new IllegalArgumentException("Controlled typed interfaces are incomplete");
-        ElectricalPortContract sourcePort = requirePort(power,
-                DeviceAdapterContract.POWER_OUTPUT_PORT_ID);
-        ElectricalPortContract loadSupply = requirePort(load, "SUPPLY");
-        ElectricalPortContract loadSwitch = requirePort(load, "SWITCHED_LOAD");
-        ElectricalPortContract sink = requirePort(driver, "SWITCHED_SINK");
+    /**
+     * Derive value-synthesis facts from the ports named by one switched
+     * relationship.  No driver/load instance key is assumed here; repeated
+     * compositions can therefore resolve each load independently.
+     */
+    static Intent fromRequest(BoundedAssemblyRequest request,
+            SwitchedLowSideContract switched) {
+        if (request == null || switched == null)
+            throw new IllegalArgumentException("Request and switched relation are required");
+        ElectricalPortContract sink = referencedPort(request, switched.getSinkPort());
+        ElectricalPortContract loadSwitch = referencedPort(request, switched.getLoadPort());
+        ElectricalPortContract sourcePort = referencedPort(request, switched.getSupplyPort());
+        ElectricalPortContract controlPort = referencedPort(request, switched.getControlPort());
+        if (!switched.getLoadPort().getBlockKey().equals(switched.getLoadSupplyPort().getBlockKey())
+                || !switched.getSinkPort().getBlockKey().equals(switched.getDriverControlPort().getBlockKey()))
+            throw new IllegalArgumentException("Switched participant references have foreign owners");
+        ElectricalPortContract loadSupply = referencedPort(request, switched.getLoadSupplyPort());
+        referencedPort(request, switched.getDriverControlPort());
+        requireReturnRefs(request, switched);
         requireKnown(sourcePort.getGuaranteedVoltage(), "source guaranteed voltage");
         requireKnown(sourcePort.getAllowedVoltage(), "source allowed voltage");
         requireKnown(loadSupply.getAllowedVoltage(), "load accepted voltage");
@@ -327,6 +324,8 @@ final class ControlledIndicatorValueSynthesis {
         requireKnown(sink.getCapacityAmps(), "sink capacity");
         requireKnown(loadSupply.getDemandAmps(), "load demand");
         requireKnown(loadSwitch.getDemandAmps(), "switched load demand");
+        requireKnown(controlPort.getGuaranteedVoltage(), "control guaranteed voltage");
+        requireKnown(controlPort.getAllowedVoltage(), "control allowed voltage");
 
         double sourceMinimum = sourcePort.getGuaranteedVoltage().getMinimum();
         double sourceMaximum = sourcePort.getGuaranteedVoltage().getMaximum();
@@ -399,26 +398,32 @@ final class ControlledIndicatorValueSynthesis {
         return contract.getPorts().get(id);
     }
 
-    private static void requireRef(ElectricalConnection.PortRef ref,
-            String block, String port) {
-        if (ref == null || !block.equals(ref.getBlockKey()) ||
-                !port.equals(ref.getPortId()))
-            throw new IllegalArgumentException("Switched relation references an unexpected port");
+    private static ElectricalPortContract referencedPort(BoundedAssemblyRequest request,
+            ElectricalConnection.PortRef ref) {
+        if (ref == null)
+            throw new IllegalArgumentException("Switched relation has a missing port reference");
+        ElectricalBlockContract contract = findContract(request, ref.getBlockKey());
+        if (contract == null)
+            throw new IllegalArgumentException("Switched relation references a missing block "
+                    + ref.getBlockKey());
+        return requirePort(contract, ref.getPortId());
     }
 
-    private static void requireReturnRefs(SwitchedLowSideContract switched) {
-        List<String> expected = new ArrayList<String>();
-        expected.add(ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY + "/RETURN");
-        expected.add(ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY + "/RETURN");
-        expected.add(DeviceAdapterContract.POWER_ADAPTER_KEY + "/" + DeviceAdapterContract.RETURN_PORT_ID);
-        expected.add(DeviceAdapterContract.CONTROL_ADAPTER_KEY + "/" + DeviceAdapterContract.RETURN_PORT_ID);
+    private static void requireReturnRefs(BoundedAssemblyRequest request,
+            SwitchedLowSideContract switched) {
+        if (switched.getReturnPorts() == null || switched.getReturnPorts().isEmpty())
+            throw new IllegalArgumentException("Switched relation return references are required");
         ArrayList<String> actual = new ArrayList<String>();
-        for (ElectricalConnection.PortRef ref : switched.getReturnPorts())
+        for (ElectricalConnection.PortRef ref : switched.getReturnPorts()) {
+            ElectricalPortContract port = referencedPort(request, ref);
+            if (port.getRole() != ElectricalPortContract.Role.RETURN)
+                throw new IllegalArgumentException("Return relation references a non-return port");
             actual.add(ref.getBlockKey() + "/" + ref.getPortId());
-        Collections.sort(expected);
+        }
         Collections.sort(actual);
-        if (!expected.equals(actual))
-            throw new IllegalArgumentException("Switched relation return references are incomplete");
+        for (int index = 1; index < actual.size(); index++)
+            if (actual.get(index - 1).equals(actual.get(index)))
+                throw new IllegalArgumentException("Duplicate switched return reference");
     }
 
     private static void requireKnown(ElectricalPortContract.Range range, String field) {
@@ -441,12 +446,25 @@ final class ControlledIndicatorValueSynthesis {
     }
 
     static ResolvedRecipe resolve(long seed, Intent intent) {
-        return resolve(seed, new ResistorReplacementCatalog().getEntries(), intent);
+        return resolve(seed, BLOCK_KEY, intent);
+    }
+
+    /** Resolve one load using the stable instance key as its VALUES scope. */
+    static ResolvedRecipe resolve(long seed, String instanceKey, Intent intent) {
+        return resolve(seed, instanceKey,
+                new ResistorReplacementCatalog().getEntries(), intent);
     }
 
     static ResolvedRecipe resolve(long seed,
             Collection<ResistorCatalogEntry> entries, Intent intent) {
+        return resolve(seed, BLOCK_KEY, entries, intent);
+    }
+
+    static ResolvedRecipe resolve(long seed, String instanceKey,
+            Collection<ResistorCatalogEntry> entries, Intent intent) {
         Intent validated = requireIntent(intent);
+        String key = FunctionalBlockDescriptor.requireId(instanceKey,
+                "values.instanceKey");
         List<Candidate> valid = validCandidates(entries, validated);
         if (valid.isEmpty())
             throw new IllegalArgumentException("Controlled LED intent has no valid catalog candidate");
@@ -455,7 +473,7 @@ final class ControlledIndicatorValueSynthesis {
         NamedRandomStreams streams = new NamedRandomStreams(1, seed,
                 BoundedAssemblyRequest.CONTROLLED_INTENT_ID,
                 BoundedAssemblyRequest.CONTROLLED_INTENT_VERSION);
-        String selectedId = NamedRandomStreams.select(streams.blockSeed(BLOCK_KEY,
+        String selectedId = NamedRandomStreams.select(streams.blockSeed(key,
                 NamedRandomStreams.Concern.VALUES, VALUES_REVISION, VALUES_KEY), ids);
         for (Candidate candidate : valid)
             if (selectedId.equals(candidate.getId()))

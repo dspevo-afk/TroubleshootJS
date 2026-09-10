@@ -42,7 +42,6 @@ final class BoundedAssemblyPlan {
     private final Map<String, String> decisionOwners;
     private final String semanticSignature;
     private final DeviceBusBindings deviceBuses;
-    private final ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe;
     private final ElectricalRealizationSpec electricalRealizationSpec;
 
     private BoundedAssemblyPlan(BoundedAssemblyRequest request,
@@ -54,8 +53,7 @@ final class BoundedAssemblyPlan {
             String faultDecisionKey, String faultBlockKey,
             Map<String, String> decisionOwners, String semanticSignature,
             Collection<DeviceAdapterContract> deviceAdapters,
-            boolean controlledIndicator, DeviceBusBindings deviceBuses,
-            ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe) {
+            boolean controlledIndicator, DeviceBusBindings deviceBuses) {
         this.request = request;
         this.namespace = namespace;
         this.blocks = Collections.unmodifiableMap(
@@ -78,10 +76,9 @@ final class BoundedAssemblyPlan {
             throw new IllegalArgumentException("Device bus bindings are required");
         }
         this.deviceBuses = deviceBuses;
-        this.resolvedLoadRecipe = resolvedLoadRecipe;
         this.electricalRealizationSpec = ElectricalRealizationSpec.fromResolved(
                 request, namespace, this.blocks, this.deviceAdapters, this.netAliases,
-                resolvedLoadRecipe, controlledIndicator);
+                controlledIndicator);
     }
 
     /** Resolve the supplied request using only the typed local registry. */
@@ -141,10 +138,10 @@ final class BoundedAssemblyPlan {
                 nets.aliases, nets.portNets, nets.provenance, faultDecisionKey,
                 faultBlockKey, owners, signature,
                 Collections.<DeviceAdapterContract>emptyList(), false,
-                deviceBuses, null);
+                deviceBuses);
     }
 
-    /** Resolve one of the two normal diagnostic fault targets explicitly. */
+    /** Resolve one of the current physically serviceable diagnostic targets explicitly. */
     static BoundedAssemblyPlan resolveForDiagnosticFault(
             BoundedAssemblyRequest request, String qualifiedTargetComponentId) {
         if (request == null)
@@ -164,73 +161,60 @@ final class BoundedAssemblyPlan {
         validateControlledConstraints(request.getDescriptor().getConstraints());
         validateControlledWiring(request);
 
-        TreeMap<String, ComposedBlockContribution> contributions =
-                new TreeMap<String, ComposedBlockContribution>();
-        ComposedBlockContribution driver = ControlledIndicatorBlockContributions
-                .driver().create(ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
-                        ControlledIndicatorBlockContributions.faultForDecision(
-                                ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY));
-        ControlledIndicatorBlockContributions.FaultSpec loadFault =
-                ControlledIndicatorBlockContributions.faultForDecision(
-                    ControlledIndicatorBlockContributions.LOAD_FAULT_DECISION_KEY);
-        // Resolve exactly once from this request's typed electrical interfaces.
-        ControlledIndicatorValueSynthesis.Intent intent =
-                ControlledIndicatorValueSynthesis.fromRequest(request);
-        ControlledIndicatorValueSynthesis.ResolvedRecipe resolvedLoadRecipe =
-                ControlledIndicatorValueSynthesis.resolve(
-                        request.getDescriptor().getRootSeed(), intent);
-        ComposedBlockContribution load =
-                ControlledIndicatorBlockContributions.createResolvedValueLoad(
-                        ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
-                        loadFault, resolvedLoadRecipe);
-        contributions.put(driver.getDescriptor().getInstanceKey(), driver);
-        contributions.put(load.getDescriptor().getInstanceKey(), load);
-        validateControlledContributions(request, contributions);
+        TreeMap<String, ComposedBlockContribution> contributions = new TreeMap<String, ComposedBlockContribution>();
+        for (ControlledIndicatorChannel channel : BoundedAssemblyRequest.controlledChannels()) {
+            ElectricalBlockContract declaredDriver = requestBlock(request, channel.getDriverKey());
+            ComposedBlockContribution driver = LowSideRoleFamily.resolve(
+                    declaredDriver.getDescriptor().getTypeId(), declaredDriver.getDescriptor().getSchemaVersion())
+                    .create(channel.getDriverKey());
+            SwitchedLowSideContract switched = requestConnection(request, channel.getSwitchedJoinId())
+                    .getSwitchedLowSideContract();
+            ControlledIndicatorValueSynthesis.Intent intent = ControlledIndicatorValueSynthesis.fromRequest(request, switched);
+            ControlledIndicatorValueSynthesis.ResolvedRecipe recipe = ControlledIndicatorValueSynthesis.resolve(
+                    request.getDescriptor().getRootSeed(), channel.getLoadKey(), intent);
+            ComposedBlockContribution load = ControlledIndicatorBlockContributions.createResolvedValueLoad(
+                    channel.getLoadKey(), ControlledIndicatorBlockContributions.FaultSpec.open("RLOAD"), recipe);
+            contributions.put(channel.getDriverKey(), driver);
+            contributions.put(channel.getLoadKey(), load);
+        }
+        contributions.put(BoundedAssemblyRequest.SUPPORT_BLOCK_KEY,
+                SupplyPresentBlockContributions.create(BoundedAssemblyRequest.SUPPORT_BLOCK_KEY));
         BlockNamespace namespace = new BlockNamespace(
                 BoundedAssemblyRequest.CONTROLLED_INTENT_ID,
                 BoundedAssemblyRequest.CONTROLLED_INTENT_VERSION,
                 request.getNamespaceDescriptors(),
-                realizationIdentities(contributions.values(),
-                        request.getDeviceAdapters()));
-
-        String driverOwner = namespace.idFor(
-                ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY, EntityKind.COMPONENT, "RG");
-        String loadOwner = namespace.idFor(
-                ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY, EntityKind.COMPONENT, "RLOAD");
-        String decision;
-        if (qualifiedTargetComponentId == null) {
-            decision = ControlledIndicatorBlockContributions.chooseFaultDecision(
-                    request.getDescriptor().getRootSeed());
-        } else if (driverOwner.equals(qualifiedTargetComponentId)) {
-            decision = ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY;
-        } else if (loadOwner.equals(qualifiedTargetComponentId)) {
-            decision = ControlledIndicatorBlockContributions.LOAD_FAULT_DECISION_KEY;
-        } else {
-            throw new IllegalArgumentException("Unsupported controlled fault target "
-                    + qualifiedTargetComponentId);
-        }
-
-        NetResolution nets = resolveNets(request, namespace, contributions);
-        DeviceBusBindings deviceBuses = deviceBusBindings(request, namespace,
-                contributions, nets, true);
-        nets = bindDeviceNets(nets, deviceBuses);
-        String faultBlockKey = ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY
-                .equals(decision)
-                ? ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY
-                : ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY;
+                realizationIdentities(contributions.values(), request.getDeviceAdapters()));
         TreeMap<String, String> owners = new TreeMap<String, String>();
-        owners.put(ControlledIndicatorBlockContributions.DRIVER_FAULT_DECISION_KEY,
-                namespace.idFor(ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
-                        EntityKind.COMPONENT, "RG"));
-        owners.put(ControlledIndicatorBlockContributions.LOAD_FAULT_DECISION_KEY,
-                namespace.idFor(ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY,
-                        EntityKind.COMPONENT, "RLOAD"));
-        String signature = semanticSignature(request, contributions, nets,
-                decision, owners, request.getDeviceAdapters());
+        TreeMap<String, String> ownerBlocks = new TreeMap<String, String>();
+        for (ComposedBlockContribution contribution : contributions.values()) {
+            ComposedBlockContribution.FaultSpec fault = contribution.getFaultSpec();
+            if (fault == null) continue;
+            String owner = contribution.getDescriptor().getInstanceKey();
+            String decisionKey = owner + "-" + fault.getTargetComponentLocalId() + "-" + fault.getKind().name();
+            owners.put(decisionKey, namespace.idFor(owner, EntityKind.COMPONENT, fault.getTargetComponentLocalId()));
+            ownerBlocks.put(decisionKey, owner);
+        }
+        if (owners.isEmpty()) throw new IllegalArgumentException("No serviceable fault candidates");
+        String decision = null;
+        if (qualifiedTargetComponentId != null) {
+            for (Map.Entry<String, String> entry : owners.entrySet())
+                if (entry.getValue().equals(qualifiedTargetComponentId)) decision = entry.getKey();
+            if (decision == null) throw new IllegalArgumentException("Unsupported composed fault target");
+        } else {
+            NamedRandomStreams streams = new NamedRandomStreams(NamedRandomStreams.DERIVATION_VERSION,
+                    request.getDescriptor().getRootSeed(), BoundedAssemblyRequest.CONTROLLED_INTENT_ID,
+                    BoundedAssemblyRequest.CONTROLLED_INTENT_VERSION);
+            decision = NamedRandomStreams.select(streams.deviceSeed(NamedRandomStreams.Concern.FAULT,
+                    1, "selected-fault"), owners.keySet());
+        }
+        NetResolution nets = resolveNets(request, namespace, contributions);
+        DeviceBusBindings deviceBuses = deviceBusBindings(request, namespace, contributions, nets, true);
+        nets = bindDeviceNets(nets, deviceBuses);
+        String signature = semanticSignature(request, contributions, nets, decision, owners, request.getDeviceAdapters());
         return new BoundedAssemblyPlan(request, namespace, contributions,
                 nets.aliases, nets.portNets, nets.provenance, decision,
-                faultBlockKey, owners, signature, request.getDeviceAdapters(), true,
-                deviceBuses, resolvedLoadRecipe);
+                ownerBlocks.get(decision), owners, signature, request.getDeviceAdapters(), true,
+                deviceBuses);
     }
 
     /** Return the declared-policy preflight result without allocating anything. */
@@ -271,11 +255,14 @@ final class BoundedAssemblyPlan {
     Map<String, ComposedBlockContribution> getBlocks() { return blocks; }
     List<DeviceAdapterContract> getDeviceAdapters() { return deviceAdapters; }
     boolean isControlledIndicator() { return controlledIndicator; }
-    ControlledIndicatorValueSynthesis.ResolvedRecipe getResolvedLoadRecipe() {
-        return resolvedLoadRecipe;
+    List<ControlledIndicatorChannel> getChannels() {
+        return controlledIndicator ? BoundedAssemblyRequest.controlledChannels() :
+                Collections.<ControlledIndicatorChannel>emptyList();
     }
-    ComposedBlockContribution getDriver() { return blocks.get("driver"); }
-    ComposedBlockContribution getLoad() { return blocks.get("load"); }
+    String getSupportBlockKey() {
+        if (!controlledIndicator) throw new IllegalStateException("This device has no support contribution");
+        return BoundedAssemblyRequest.SUPPORT_BLOCK_KEY;
+    }
     Map<String, String> getNetAliases() { return netAliases; }
     List<String> getMergeProvenance() { return mergeProvenance; }
     String getFaultDecisionKey() { return faultDecisionKey; }
@@ -554,69 +541,50 @@ final class BoundedAssemblyPlan {
     }
 
     private static void validateControlledWiring(BoundedAssemblyRequest request) {
-        if (request.getBlocks().size() != BoundedAssemblyRequest.CONTROLLED_SUPPORTED_BLOCK_COUNT
-                || request.getDeviceAdapters().size() != 2
-                || request.getConnections().size() != 4)
-            throw new IllegalArgumentException("Controlled indicator requires two blocks, two adapters and four connections");
-        TreeSet<String> blockKeys = new TreeSet<String>();
-        for (ElectricalBlockContract block : request.getBlocks())
-            blockKeys.add(block.getDescriptor().getInstanceKey());
-        if (!blockKeys.equals(new TreeSet<String>(Arrays.asList(
-                ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY,
-                ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY))))
-            throw new IllegalArgumentException("Controlled block keys were changed");
-        TreeSet<String> adapterKeys = new TreeSet<String>();
-        for (DeviceAdapterContract adapter : request.getDeviceAdapters())
-            adapterKeys.add(adapter.getKey());
-        if (!adapterKeys.equals(new TreeSet<String>(Arrays.asList(
-                DeviceAdapterContract.POWER_ADAPTER_KEY,
-                DeviceAdapterContract.CONTROL_ADAPTER_KEY))))
-            throw new IllegalArgumentException("Controlled adapter keys were changed");
-        TreeMap<String, ElectricalConnection> byId = new TreeMap<String, ElectricalConnection>();
-        for (ElectricalConnection connection : request.getConnections())
-            byId.put(connection.getId(), connection);
-        if (byId.size() != 4
-                || !portSet(byId.get(ControlledIndicatorBlockContributions.POWER_CONNECTION_ID)).equals(
-                        new TreeSet<String>(Arrays.asList("load/SUPPLY", "power-adapter/POWER_OUT")))
-                || !portSet(byId.get(ControlledIndicatorBlockContributions.CONTROL_CONNECTION_ID)).equals(
-                        new TreeSet<String>(Arrays.asList("control-adapter/CONTROL_OUT", "driver/CONTROL")))
-                || !portSet(byId.get(ControlledIndicatorBlockContributions.SWITCHED_CONNECTION_ID)).equals(
-                        new TreeSet<String>(Arrays.asList("driver/SWITCHED_SINK", "load/SWITCHED_LOAD")))
-                || !portSet(byId.get(ControlledIndicatorBlockContributions.RETURN_CONNECTION_ID)).equals(
-                        new TreeSet<String>(Arrays.asList("control-adapter/RETURN", "driver/RETURN",
-                                "load/RETURN", "power-adapter/RETURN"))))
-            throw new IllegalArgumentException("Controlled indicator wiring was changed");
-        ElectricalConnection switched = byId.get(
-                ControlledIndicatorBlockContributions.SWITCHED_CONNECTION_ID);
-        if (switched.getKind() != ElectricalConnection.Kind.LOW_SIDE_SWITCHED
-                || switched.getSwitchedLowSideContract() == null)
-            throw new IllegalArgumentException("Controlled switched relation is required");
+        BoundedAssemblyRequest expected = BoundedAssemblyRequest.forControlledIndicator(request.getDescriptor());
+        if (request.getBlocks().size() != expected.getBlocks().size() ||
+                request.getDeviceAdapters().size() != expected.getDeviceAdapters().size() ||
+                request.getConnections().size() != expected.getConnections().size())
+            throw new IllegalArgumentException("Controlled device population changed");
+        for (int i = 0; i < expected.getBlocks().size(); i++)
+            if (!ComposedBlockContribution.sameContract(request.getBlocks().get(i), expected.getBlocks().get(i)))
+                throw new IllegalArgumentException("Block differs from the selected compatible provider");
+        for (int i = 0; i < expected.getDeviceAdapters().size(); i++)
+            if (!ComposedBlockContribution.sameContract(request.getDeviceAdapters().get(i).getElectricalContract(),
+                    expected.getDeviceAdapters().get(i).getElectricalContract()))
+                throw new IllegalArgumentException("Device source declaration changed");
+        for (int i = 0; i < expected.getConnections().size(); i++) {
+            ElectricalConnection actual = request.getConnections().get(i);
+            ElectricalConnection wanted = expected.getConnections().get(i);
+            if (!actual.getId().equals(wanted.getId()) || actual.getKind() != wanted.getKind() ||
+                    !portSet(actual).equals(portSet(wanted)) ||
+                    !switchedSignature(actual.getSwitchedLowSideContract()).equals(
+                            switchedSignature(wanted.getSwitchedLowSideContract())))
+                throw new IllegalArgumentException("Undeclared or mismatched device join");
+        }
     }
 
-    private static void validateControlledContributions(
-            BoundedAssemblyRequest request,
-            Map<String, ComposedBlockContribution> contributions) {
-        for (ElectricalBlockContract declaration : request.getBlocks()) {
-            String key = declaration.getDescriptor().getInstanceKey();
-            ComposedBlockContribution expected = contributions.get(key);
-            if (ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY.equals(key)) {
-                expected = ControlledIndicatorBlockContributions.load().create(
-                        ControlledIndicatorBlockContributions.LOAD_BLOCK_KEY);
-            }
-            if (expected == null || !ComposedBlockContribution.sameContract(
-                    declaration, expected.getElectricalContract()))
-                throw new IllegalArgumentException("Block declaration does not match controlled provider " + key);
-        }
-        DeviceAdapterContract expectedPower = DeviceAdapterContract.power();
-        DeviceAdapterContract expectedControl = DeviceAdapterContract.control();
-        for (DeviceAdapterContract adapter : request.getDeviceAdapters()) {
-            DeviceAdapterContract expected = DeviceAdapterContract.POWER_ADAPTER_KEY
-                    .equals(adapter.getKey()) ? expectedPower : expectedControl;
-            if (!ComposedBlockContribution.sameContract(adapter.getElectricalContract(),
-                    expected.getElectricalContract()))
-                throw new IllegalArgumentException("Adapter declaration does not match typed provider "
-                        + adapter.getKey());
-        }
+    private static String switchedSignature(SwitchedLowSideContract value) {
+        if (value == null) return "none";
+        TreeSet<String> returns = new TreeSet<String>();
+        for (ElectricalConnection.PortRef ref : value.getReturnPorts()) returns.add(ref.key());
+        return value.getSinkPort().key() + "|" + value.getLoadPort().key() + "|" +
+                value.getSupplyPort().key() + "|" + value.getControlPort().key() + "|" +
+                value.getDriverControlPort().key() + "|" + value.getLoadSupplyPort().key() + "|" + returns + "|" +
+                value.getReferenceNetId() + "|" + value.getIsolationId() + "|" + value.isActiveHigh() + "|" +
+                Double.toString(value.getSinkCapacityAmps()) + "|" + Double.toString(value.getLoadDemandAmps());
+    }
+
+    private static ElectricalBlockContract requestBlock(BoundedAssemblyRequest request, String key) {
+        for (ElectricalBlockContract block : request.getAllElectricalContracts())
+            if (block.getDescriptor().getInstanceKey().equals(key)) return block;
+        throw new IllegalArgumentException("Missing block " + key);
+    }
+
+    private static ElectricalConnection requestConnection(BoundedAssemblyRequest request, String id) {
+        for (ElectricalConnection connection : request.getConnections())
+            if (connection.getId().equals(id)) return connection;
+        throw new IllegalArgumentException("Missing device join " + id);
     }
 
     private static TreeSet<String> portSet(ElectricalConnection connection) {
@@ -646,7 +614,7 @@ final class BoundedAssemblyPlan {
             result.add(new BlockRealizationIdentity(
                     descriptor.getInstanceKey(),
                     new ChallengeDescriptor.VersionedId(
-                            realizationRole(descriptor.getInstanceKey()), 1),
+                            contribution.getRoleId(), 1),
                     new ChallengeDescriptor.VersionedId(
                             contribution.getProviderTypeId(),
                             contribution.getProviderVersion()),
@@ -663,34 +631,13 @@ final class BoundedAssemblyPlan {
             result.add(new BlockRealizationIdentity(
                     descriptor.getInstanceKey(),
                     new ChallengeDescriptor.VersionedId(
-                            realizationRole(descriptor.getInstanceKey()), 1),
+                            adapter.getRoleId(), 1),
                     new ChallengeDescriptor.VersionedId(
                             descriptor.getTypeId(), descriptor.getSchemaVersion()),
                     new ChallengeDescriptor.VersionedId(
                             descriptor.getTypeId(), descriptor.getSchemaVersion())));
         }
         return result;
-    }
-
-    private static String realizationRole(String instanceKey) {
-        if (ResistiveBlockContributions.SOURCE_BLOCK_KEY.equals(instanceKey)) {
-            return "source";
-        }
-        if (ResistiveBlockContributions.LOAD_BLOCK_KEY.equals(instanceKey)) {
-            return "load";
-        }
-        if (ControlledIndicatorBlockContributions.DRIVER_BLOCK_KEY
-                .equals(instanceKey)) {
-            return "driver";
-        }
-        if (DeviceAdapterContract.POWER_ADAPTER_KEY.equals(instanceKey)) {
-            return "power-input";
-        }
-        if (DeviceAdapterContract.CONTROL_ADAPTER_KEY.equals(instanceKey)) {
-            return "control-input";
-        }
-        throw new IllegalArgumentException(
-                "Unknown realization role for " + instanceKey);
     }
 
     private static DeviceBusBindings deviceBusBindings(
@@ -703,11 +650,11 @@ final class BoundedAssemblyPlan {
                     "Device bus binding inputs are required");
         }
         return new DeviceBusBindings(namespace,
-                deviceBusDeclarations(namespace, controlled), nets.aliases);
+                deviceBusDeclarations(request, namespace, controlled), nets.aliases);
     }
 
     private static Collection<DeviceBusBindings.Declaration>
-            deviceBusDeclarations(BlockNamespace namespace, boolean controlled) {
+            deviceBusDeclarations(BoundedAssemblyRequest request, BlockNamespace namespace, boolean controlled) {
         ArrayList<DeviceBusBindings.Declaration> result =
                 new ArrayList<DeviceBusBindings.Declaration>();
         if (!controlled) {
@@ -723,25 +670,19 @@ final class BoundedAssemblyPlan {
                             net(namespace, "load", "RETURN")),
                     Collections.singletonList("VIN_INPUT/return")));
         } else {
-            result.add(new DeviceBusBindings.Declaration("load-power",
-                    Arrays.asList(net(namespace, "power-adapter", "OUTPUT"),
-                            net(namespace, "load", "SUPPLY")),
-                    Collections.singletonList("LOAD_VIN_INPUT/positive")));
-            result.add(new DeviceBusBindings.Declaration("control-input",
-                    Arrays.asList(net(namespace, "control-adapter", "OUTPUT"),
-                            net(namespace, "driver", "CONTROL")),
-                    Collections.singletonList("CONTROL_VIN_INPUT/positive")));
-            result.add(new DeviceBusBindings.Declaration("switched-low-side",
-                    Arrays.asList(net(namespace, "driver", "SWITCHED_SINK"),
-                            net(namespace, "load", "SWITCHED_LOAD")),
-                    Collections.<String>emptyList()));
-            result.add(new DeviceBusBindings.Declaration("common-return",
-                    Arrays.asList(net(namespace, "power-adapter", "RETURN"),
-                            net(namespace, "control-adapter", "RETURN"),
-                            net(namespace, "driver", "RETURN"),
-                            net(namespace, "load", "RETURN")),
-                    Arrays.asList("LOAD_VIN_INPUT/return",
-                            "CONTROL_VIN_INPUT/return")));
+            for (ElectricalConnection connection : request.getConnections()) {
+                ArrayList<String> anchors = new ArrayList<String>();
+                ArrayList<String> external = new ArrayList<String>();
+                for (ElectricalConnection.PortRef ref : connection.getPorts()) {
+                    ElectricalBlockContract contract = requestBlock(request, ref.getBlockKey());
+                    anchors.add(qualifiedAttachmentNet(namespace, contract, ref.getBlockKey(), ref.getPortId()));
+                    for (DeviceAdapterContract adapter : request.getDeviceAdapters())
+                        if (adapter.getKey().equals(ref.getBlockKey()))
+                            external.add(adapter.getExternalInputId() +
+                                    (adapter.getReturnPortId().equals(ref.getPortId()) ? "/return" : "/positive"));
+                }
+                result.add(new DeviceBusBindings.Declaration(connection.getId(), anchors, external));
+            }
         }
         return result;
     }

@@ -33,6 +33,8 @@ final class ElectricalConstructionContext {
         ElementHandle ground(String elementId, int x, int y, int x2, int y2);
         ElementHandle nmos(String elementId, int x, int y, int x2, int y2,
                 double threshold, double beta);
+        ElementHandle npn(String elementId, int x, int y, int x2, int y2,
+                double beta);
         ElementHandle led(String elementId, int x, int y, int x2, int y2,
                 String model, int red, int green, int blue);
         Point point(ElementHandle handle, int postIndex);
@@ -68,7 +70,7 @@ final class ElectricalConstructionContext {
                 ElementHandle control);
         ElementHandle join(String bridgeElementId, TerminalHandle first,
                 TerminalHandle second);
-        ControlCommandHandle command(String joinId, ElementHandle switchElement);
+        ControlCommandHandle command(String joinId, ElementHandle voltageSource);
         ControlCommandHandle command(String joinId);
         DeviceJoinReceipt finish();
     }
@@ -374,61 +376,109 @@ final class ElectricalConstructionContext {
     /** A raw allocation path cannot bypass the resolved electrical choices. */
     private void validateResolvedElementChoices() {
         for (ElementHandle handle : handles.values()) {
-            ElectricalRealizationSpec.ProviderDeclaration provider =
-                spec.getProviderDeclaration(handle.ownerKey);
+            ElectricalRealizationSpec.ElementDeclaration declaration = handle.declaration;
+            validateElementRuntimeType(handle);
             if ("RESISTOR".equals(handle.getKind())) {
-                requireRecipeResistance(provider, handle.elementId,
+                requireParameter(declaration, "resistance",
                     ((ResistorElm) handle.element).getResistance());
             } else if ("NMOS".equals(handle.getKind())) {
-                requireNmosChoice(provider, handle.elementId,
-                    ((NMosfetElm) handle.element).vt, ((NMosfetElm) handle.element).beta);
+                NMosfetElm nmos = (NMosfetElm) handle.element;
+                requireParameter(declaration, "threshold", nmos.vt);
+                requireParameter(declaration, "beta", nmos.beta);
+            } else if ("NPN".equals(handle.getKind())) {
+                TransistorElm npn = (TransistorElm) handle.element;
+                requireParameter(declaration, "beta", npn.beta);
+                requireModel(declaration, npn.modelName);
+                validateNpnModel(declaration, npn.model);
             } else if ("LED".equals(handle.getKind())) {
                 LEDElm led = (LEDElm) handle.element;
-                requireLedChoice(provider, handle.elementId, led.modelName,
-                    led.colorR, led.colorG, led.colorB);
-            } else if ("VOLTAGE".equals(handle.getKind()) &&
-                    ((DCVoltageElm) handle.element).maxVoltage !=
-                        ElectricalRealizationSpec.EXTERNAL_SUPPLY_VOLTS) {
-                throw new IllegalArgumentException("Construction substituted its external supply value");
+                requireModel(declaration, led.modelName);
+                requireParameter(declaration, "red", led.colorR);
+                requireParameter(declaration, "green", led.colorG);
+                requireParameter(declaration, "blue", led.colorB);
+                validateLedModel(declaration, led.model);
+            } else if ("VOLTAGE".equals(handle.getKind())) {
+                requireParameter(declaration, "voltage",
+                    ((DCVoltageElm) handle.element).maxVoltage);
             }
         }
     }
 
-    private void requireNmosChoice(ElectricalRealizationSpec.ProviderDeclaration provider,
-            String elementId, double threshold, double beta) {
-        ComposedBlockContribution contribution = provider.getContribution();
-        ComposedBlockContribution.NmosRecipe recipe = contribution == null ? null :
-            contribution.getNmosRecipes().get(elementId);
-        if (recipe == null || !"NMOS".equals(recipe.getModelId()) ||
-                threshold != ElectricalRealizationSpec.CONTROLLED_NMOS_THRESHOLD_VOLTS ||
-                beta != ElectricalRealizationSpec.CONTROLLED_NMOS_BETA)
-            throw new IllegalArgumentException("Construction substituted its resolved NMOS model");
+    private void validateNpnModel(ElectricalRealizationSpec.ElementDeclaration declaration,
+            TransistorModel model) {
+        if (model == null) throw new IllegalArgumentException("Missing allocated NPN model");
+        requireParameter(declaration, "model-flags", model.flags);
+        requireParameter(declaration, "model-saturation-current", model.satCur);
+        requireParameter(declaration, "model-inv-rolloff-forward", model.invRollOffF);
+        requireParameter(declaration, "model-be-leakage-current", model.BEleakCur);
+        requireParameter(declaration, "model-be-leakage-emission", model.leakBEemissionCoeff);
+        requireParameter(declaration, "model-inv-rolloff-reverse", model.invRollOffR);
+        requireParameter(declaration, "model-bc-leakage-current", model.BCleakCur);
+        requireParameter(declaration, "model-bc-leakage-emission", model.leakBCemissionCoeff);
+        requireParameter(declaration, "model-emission-forward", model.emissionCoeffF);
+        requireParameter(declaration, "model-emission-reverse", model.emissionCoeffR);
+        requireParameter(declaration, "model-inv-early-forward", model.invEarlyVoltF);
+        requireParameter(declaration, "model-inv-early-reverse", model.invEarlyVoltR);
+        requireParameter(declaration, "model-reverse-beta", model.betaR);
+        requireParameter(declaration, "model-thermal-voltage", TransistorElm.vt);
     }
 
-    private void requireLedChoice(ElectricalRealizationSpec.ProviderDeclaration provider,
-            String elementId, String model, double red, double green, double blue) {
-        ComposedBlockContribution contribution = provider.getContribution();
-        ComposedBlockContribution.LedRecipe recipe = contribution == null ? null :
-            contribution.getLedRecipes().get(elementId);
-        if (recipe == null || (!"LED".equals(recipe.getModelId()) &&
-                !ElectricalRealizationSpec.CONTROLLED_LED_MODEL.equals(recipe.getModelId())) ||
-                !ElectricalRealizationSpec.CONTROLLED_LED_MODEL.equals(model) ||
-                red != 1.0 || green != 0.0 || blue != 0.0)
-            throw new IllegalArgumentException("Construction substituted its resolved LED model");
+    private void validateLedModel(ElectricalRealizationSpec.ElementDeclaration declaration,
+            DiodeModel model) {
+        if (model == null) throw new IllegalArgumentException("Missing allocated LED model");
+        requireParameter(declaration, "flags", model.flags);
+        requireParameter(declaration, "saturation-current", model.saturationCurrent);
+        requireParameter(declaration, "series-resistance", model.seriesResistance);
+        requireParameter(declaration, "emission-coefficient", model.emissionCoefficient);
+        requireParameter(declaration, "breakdown-voltage", model.breakdownVoltage);
+        requireParameter(declaration, "thermal-voltage", DiodeModel.vt);
+        requireParameter(declaration, "vscale", model.vscale);
+        requireParameter(declaration, "vdcoef", model.vdcoef);
+        requireParameter(declaration, "forward-drop", model.fwdrop);
     }
 
+    private void validateElementRuntimeType(ElementHandle handle) {
+        String kind = handle.getKind();
+        boolean matches = ("RESISTOR".equals(kind) && handle.element instanceof ResistorElm) ||
+                ("WIRE".equals(kind) && handle.element instanceof WireElm) ||
+                ("SWITCH".equals(kind) && handle.element instanceof SwitchElm) ||
+                ("VOLTAGE".equals(kind) && handle.element instanceof DCVoltageElm) ||
+                ("GROUND".equals(kind) && handle.element instanceof GroundElm) ||
+                ("NMOS".equals(kind) && handle.element instanceof NMosfetElm) ||
+                ("NPN".equals(kind) && handle.element instanceof NTransistorElm &&
+                    ((NTransistorElm) handle.element).pnp == 1) ||
+                ("LED".equals(kind) && handle.element instanceof LEDElm) ||
+                ("FAULT_HELPER".equals(kind) && handle.element instanceof SwitchElm);
+        if (!matches)
+            throw new IllegalStateException("Electrical element runtime type does not match declaration: " +
+                handle.key());
+    }
 
-    private void requireRecipeResistance(
-            ElectricalRealizationSpec.ProviderDeclaration declaration, String elementId,
-            double resistance) {
-        if (declaration.getContribution() == null)
-            throw new IllegalArgumentException("Provider has no resistor recipe");
-        ComposedBlockContribution.ResistorRecipe recipe =
-                declaration.getContribution().getResistor(elementId);
-        if (recipe == null || Double.isNaN(resistance) || Double.isInfinite(resistance) ||
-                recipe.getResistanceOhms() != resistance)
-            throw new IllegalArgumentException("Construction substituted resolved resistor value: " +
-                    declaration.getOwnerKey() + "/" + elementId);
+    private void requireParameter(ElectricalRealizationSpec.ElementDeclaration declaration,
+            String name, double actual) {
+        double expected = declaration.getParameter(name);
+        if (!ComposedBlockContribution.finite(actual) || actual != expected)
+            throw new IllegalArgumentException("Construction substituted resolved element choice " +
+                declaration.getOwnerKey() + "/" + declaration.getElementId() + "/" + name);
+    }
+
+    private void requireModel(ElectricalRealizationSpec.ElementDeclaration declaration,
+            String actual) {
+        String expected = declaration.getModelId();
+        if (expected == null || expected.length() == 0 || actual == null ||
+                !expected.equals(actual))
+            throw new IllegalArgumentException("Construction substituted resolved element model " +
+                declaration.getOwnerKey() + "/" + declaration.getElementId());
+    }
+
+    private ElectricalRealizationSpec.ElementDeclaration requireElementKind(
+            String ownerKey, String elementId, String expectedKind) {
+        ElectricalRealizationSpec.ElementDeclaration declaration =
+            spec.getElementDeclaration(ownerKey, elementId);
+        if (declaration == null || !expectedKind.equals(declaration.getKind()))
+            throw new IllegalArgumentException("Undeclared or mismatched element " +
+                ownerKey + "/" + elementId);
+        return declaration;
     }
 
     private Point localPoint(ElementHandle handle, int postIndex) {
@@ -538,6 +588,8 @@ final class ElectricalConstructionContext {
             handle = new ElementHandle(this, ownerKey, elementId, new GroundElm(0, 0));
         else if ("NMOS".equals(declaration.getKind()))
             handle = new ElementHandle(this, ownerKey, elementId, new NMosfetElm(0, 0));
+        else if ("NPN".equals(declaration.getKind()))
+            handle = new ElementHandle(this, ownerKey, elementId, new NTransistorElm(0, 0));
         else if ("LED".equals(declaration.getKind()))
             handle = new ElementHandle(this, ownerKey, elementId, new LEDElm(0, 0));
         else if ("FAULT_HELPER".equals(declaration.getKind()))
@@ -1102,13 +1154,21 @@ final class ElectricalConstructionContext {
 
     private ControlCommandHandle command(String joinId, ElementHandle element) {
         if (element == null || element.context != this || !"device".equals(element.ownerKey) ||
-                !(element.element instanceof SwitchElm))
-            throw new IllegalArgumentException("Command switch is not device-owned");
+                !(element.element instanceof DCVoltageElm) || !"VOLTAGE".equals(element.getKind()))
+            throw new IllegalArgumentException("Command source is not a device-owned DC voltage source");
         if (!spec.getDeviceJoins().containsKey(joinId))
             throw new IllegalArgumentException("Undeclared command join " + joinId);
         if (commands.containsKey(joinId))
             throw new IllegalStateException("Duplicate command handle " + joinId);
-        ControlCommandHandle result = new ControlCommandHandle(this, joinId, element);
+        ElectricalRealizationSpec.ElementDeclaration declaration = requireElementKind(
+                "device", element.elementId, "VOLTAGE");
+        double highVoltage = declaration.getParameter("voltage");
+        if (!ComposedBlockContribution.finite(highVoltage) || highVoltage <= 0.0)
+            throw new IllegalArgumentException("Command source voltage must be finite and positive");
+        DCVoltageElm source = (DCVoltageElm) element.element;
+        source.maxVoltage = highVoltage;
+        ControlCommandHandle result = new ControlCommandHandle(this, joinId, element,
+                highVoltage);
         commands.put(joinId, result);
         return result;
     }
@@ -1149,7 +1209,9 @@ final class ElectricalConstructionContext {
         public ElementHandle resistor(String id, int x, int y, int x2, int y2,
                 double resistance) {
             open();
-            requireRecipeResistance(declaration, id, resistance);
+            ElectricalRealizationSpec.ElementDeclaration choice = requireElementKind(
+                    declaration.getOwnerKey(), id, "RESISTOR");
+            requireParameter(choice, "resistance", resistance);
             ElementHandle result = allocateTyped(declaration.getOwnerKey(), id, "RESISTOR", false,
                     x, y);
             ResistorElm resistor = (ResistorElm) result.element;
@@ -1179,6 +1241,9 @@ final class ElectricalConstructionContext {
         public ElementHandle voltageSource(String id, int x, int y, int x2, int y2,
                 double voltage) {
             open();
+            ElectricalRealizationSpec.ElementDeclaration choice = requireElementKind(
+                    declaration.getOwnerKey(), id, "VOLTAGE");
+            requireParameter(choice, "voltage", voltage);
             ElementHandle result = allocateTyped(declaration.getOwnerKey(), id, "VOLTAGE", false,
                     x, y);
             DCVoltageElm source = (DCVoltageElm) result.element;
@@ -1198,7 +1263,10 @@ final class ElectricalConstructionContext {
         public ElementHandle nmos(String id, int x, int y, int x2, int y2,
                 double threshold, double beta) {
             open();
-            requireNmosChoice(declaration, id, threshold, beta);
+            ElectricalRealizationSpec.ElementDeclaration choice = requireElementKind(
+                    declaration.getOwnerKey(), id, "NMOS");
+            requireParameter(choice, "threshold", threshold);
+            requireParameter(choice, "beta", beta);
             ElementHandle result = allocateTyped(declaration.getOwnerKey(), id, "NMOS", false,
                     x, y);
             NMosfetElm nmos = (NMosfetElm) result.element;
@@ -1209,10 +1277,35 @@ final class ElectricalConstructionContext {
             updateCoordinates(result, false);
             return result;
         }
+        public ElementHandle npn(String id, int x, int y, int x2, int y2,
+                double beta) {
+            open();
+            ElectricalRealizationSpec.ElementDeclaration choice = requireElementKind(
+                    declaration.getOwnerKey(), id, "NPN");
+            requireParameter(choice, "beta", beta);
+            String model = choice.getModelId();
+            if (model == null || model.length() == 0)
+                throw new IllegalArgumentException("NPN model is missing: " + id);
+            ElementHandle result = allocateTyped(declaration.getOwnerKey(), id, "NPN", false,
+                    x, y);
+            NTransistorElm transistor = (NTransistorElm) result.element;
+            transistor.drag(worldX(declaration.getOwnerKey(), x2),
+                    worldY(declaration.getOwnerKey(), y2));
+            transistor.setBeta(beta);
+            transistor.modelName = model;
+            transistor.setup();
+            updateCoordinates(result, false);
+            return result;
+        }
         public ElementHandle led(String id, int x, int y, int x2, int y2,
                 String model, int red, int green, int blue) {
             open();
-            requireLedChoice(declaration, id, model, red, green, blue);
+            ElectricalRealizationSpec.ElementDeclaration choice = requireElementKind(
+                    declaration.getOwnerKey(), id, "LED");
+            requireModel(choice, model);
+            requireParameter(choice, "red", red);
+            requireParameter(choice, "green", green);
+            requireParameter(choice, "blue", blue);
             ElementHandle result = allocateTyped(declaration.getOwnerKey(), id, "LED", false,
                     x, y);
             LEDElm led = (LEDElm) result.element;
@@ -1311,6 +1404,9 @@ final class ElectricalConstructionContext {
         public ElementHandle resistor(String id, int x, int y, int x2, int y2,
                 double resistance) {
             open();
+            ElectricalRealizationSpec.ElementDeclaration choice = requireElementKind(
+                    "device", id, "RESISTOR");
+            requireParameter(choice, "resistance", resistance);
             ElementHandle result = allocateTyped("device", id, "RESISTOR", false, x, y);
             ResistorElm resistor = (ResistorElm) result.element;
             resistor.drag(worldX("device", x2), worldY("device", y2));
@@ -1335,6 +1431,9 @@ final class ElectricalConstructionContext {
         public ElementHandle voltageSource(String id, int x, int y, int x2, int y2,
                 double voltage) {
             open();
+            ElectricalRealizationSpec.ElementDeclaration choice = requireElementKind(
+                    "device", id, "VOLTAGE");
+            requireParameter(choice, "voltage", voltage);
             ElementHandle result = allocateTyped("device", id, "VOLTAGE", false, x, y);
             DCVoltageElm source = (DCVoltageElm) result.element;
             source.drag(worldX("device", x2), worldY("device", y2));
@@ -1389,9 +1488,9 @@ final class ElectricalConstructionContext {
             open();
             return ElectricalConstructionContext.this.join(joinId, first, second);
         }
-        public ControlCommandHandle command(String joinId, ElementHandle switchElement) {
+        public ControlCommandHandle command(String joinId, ElementHandle voltageSource) {
             open();
-            return ElectricalConstructionContext.this.command(joinId, switchElement);
+            return ElectricalConstructionContext.this.command(joinId, voltageSource);
         }
         public ControlCommandHandle command(String joinId) {
             open();
@@ -1469,6 +1568,7 @@ final class ElectricalConstructionContext {
         else if ("VOLTAGE".equals(kind)) element = new DCVoltageElm(originX, originY);
         else if ("GROUND".equals(kind)) element = new GroundElm(originX, originY);
         else if ("NMOS".equals(kind)) element = new NMosfetElm(originX, originY);
+        else if ("NPN".equals(kind)) element = new NTransistorElm(originX, originY);
         else if ("LED".equals(kind)) element = new LEDElm(originX, originY);
         else if ("FAULT_HELPER".equals(kind)) element = new SwitchElm(originX, originY);
         else throw new IllegalArgumentException("Unsupported electrical kind " + kind);
@@ -1592,15 +1692,30 @@ final class ElectricalConstructionContext {
         private final ElectricalConstructionContext context;
         private final String joinId;
         private final ElementHandle element;
+        private final double highVoltage;
         private ControlCommandHandle(ElectricalConstructionContext context, String joinId,
-                ElementHandle element) {
+                ElementHandle element, double highVoltage) {
             this.context = context;
             this.joinId = joinId;
             this.element = element;
+            this.highVoltage = highVoltage;
         }
         String getJoinId() { return joinId; }
-        SwitchElm getSwitch() { context.ensureFinished(); return (SwitchElm) element.element; }
-        CircuitElm getElement() { context.ensureFinished(); return element.element; }
+        boolean isHigh() {
+            context.ensureFinished();
+            return ((DCVoltageElm) element.element).maxVoltage == highVoltage;
+        }
+        void setHigh(boolean high) {
+            context.ensureFinished();
+            DCVoltageElm source = (DCVoltageElm) element.element;
+            source.maxVoltage = high ? highVoltage : 0.0;
+            if (CircuitElm.sim != null)
+                CircuitElm.sim.needAnalyze();
+        }
+        DCVoltageElm getElement() {
+            context.ensureFinished();
+            return (DCVoltageElm) element.element;
+        }
     }
 }
 

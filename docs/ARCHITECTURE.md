@@ -12,6 +12,12 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## A05 qualification and current limits
+
+A05 current qualification is recorded in [A05 evidence](task-evidence/A05/README.md): two independently controlled NMOS/NPN channels, supply-present support, current generator 5, exact repeated-instance ownership and solver-backed diagnosis/repair/retest. The normal URL and visible launch control reach this implementation. The layout and four OPEN resistor fault owners remain bounded; no arbitrary composition, transistor mutation, persistence or Q15/Q60 qualification is implied.
+
+All six selected current Gate A05 routes pass on the final production source; the maintained native suite has 15 Java suites plus independent seed/value/role oracles. Three manifest cases and current numeric choices agree exactly between JVM and GWT. The strict CLI launcher is not certified by the separate owned visible-browser evidence. Final closure/publication status is in the current report.
+
 ## Current design identity and reconstruction
 
 `BlockNamespace.idFor()` is the semantic encoder for the resolved composition.
@@ -38,8 +44,10 @@ actual target identities. Records use deterministic framing and ordering;
 seeds retain exact signed-long decimal transport and finite numeric choices
 retain exact binary64 encoding. There are no live CircuitElm references,
 mutable graphs, solver-node numbers or future saved-program/state envelopes.
+The bounded manifest permits 2,048 resolved choices within the unchanged
+262,144-character encoding limit; both construction and parsing reject excess.
 
-`A03RealizationReplay` resolves only `bounded-assembler@4`, validates its exact
+`A03RealizationReplay` resolves only `bounded-assembler@5`, validates its exact
 current recipe and physical choices before mutable assembly, and checks the
 captured result again afterward. Retired or unknown schemas, algorithms,
 packages or choices reject. The six current leaf families use
@@ -52,7 +60,9 @@ adapter is implemented. Package geometry remains independently at contract 3.
 declarations, resolved values, physical units, packages, terminals and explicit
 joins. `ElectricalConstructionContext` is the single private allocation and
 binding owner. Local providers allocate declared elements within their own
-solver reservations; `BoundedElectricalDeviceConstructionAdapter` owns external
+solver reservations. Canonically ordered declared owners receive distinct bounded
+coordinate envelopes; allocation order never supplies semantic identity.
+`BoundedElectricalDeviceConstructionAdapter` owns external
 supplies, connectors, command control and exact cross-provider bridges.
 
 `BoundedGeneratedBoardAssembler` resolves the plan, describes the board, iterates
@@ -61,7 +71,8 @@ materializes one runtime. Its failure boundaries are mapping, electrical
 construction, layout, registration and validation. It has no historical source-
 half stage, fixed-versus-resolved load branch or provider-specific physical part
 registration. The current resistive and controlled compositions remain bounded
-device recipes; A05's new provider/variant selection is unstarted.
+device recipes. The controlled intent selects compatible NMOS/NPN role providers
+for two stable channel instances and includes one supply-present contribution.
 
 `PhysicalConstructionProvider` declares nets, package-backed parts, terminals,
 nameplates, runtime backing and fault/repair policy. The generic materializer
@@ -86,7 +97,7 @@ clears the private registries without touching an unrelated active owner.
 Persistent board pads remain on device copper during lead removal; connection
 bindings retain their exact canonical endpoint objects. The resistive recipe
 names incorrect resistance at R1 with a 100000-ohm effect directly; controlled
-RG/RLOAD faults name their real open-switch backing.
+RG, RB and RLOAD faults name their real open-switch backing.
 
 ## Functional block descriptions and namespaces — Task 44
 
@@ -126,7 +137,7 @@ block or board. Task 45 adds separate electrical metadata at the immutable port
 ID/attachment seam used by current bounded composition.
 
 `scripts/verify-current-contracts.ps1` compiles current client sources once and
-exercises 14 Java contract suites plus independent seed/value equations and
+exercises 15 Java contract suites plus independent seed/value/role equations and
 the browser report protocol. Its native tests do not establish solved behavior;
 the five-permutation JDK8/GWT build and `verify-a03-browser.ps1 -Gate Current`
 remain separate production gates. Explicit generic packages serve developer
@@ -380,115 +391,91 @@ correspondence verifier, including its wrong-mapping negatives. The route adds n
 player menu or composed challenge admission. Current qualification and limits are
 recorded in the [Task 47 packet](task-evidence/task-47/README.md); Task 48 is separate.
 
-## Controlled-indicator composition — Task 48
+## Repeated controlled-indicator composition - A05
 
-`BoundedAssemblyRequest.forControlledIndicator` selects `bounded-assembler@4`,
-`controlled-indicator@1` intent/profile and geometry 3. The same current generator
-also serves the distinct resistive intent. Two immutable contributions and two
-device adapters produce one board, CircuitJS graph and runtime. Named VALUES
-selects the resolved load recipe and named FAULT selects the initial fault.
-Signed-long seeds remain canonical decimal strings throughout reconstruction.
+`BoundedAssemblyRequest.forControlledIndicator` uses current
+`bounded-assembler@5`, the `controlled-indicator@1` intent and geometry 3.
+`LowSideRoleFamily` admits compatible implementations, sorts registration IDs,
+and selects independently for `channel-a-driver` and `channel-b-driver` through
+instance-scoped TOPOLOGY streams. The bounded device has five contributions:
+two drivers, two resolved resistor/LED loads and a supply-present indicator.
+Device adapters provide J1 board supply and J2/J3 independent control inputs.
+They share one board, one physical inventory and one active CircuitJS graph.
 
-The driver contributes mutable RG (1 kOhm), fixed RPD (100 kOhm) and the existing
-NMOS model. The load contributes mutable RLOAD from its resolved catalog recipe and the
-existing LED model. Device adapters own J1 supply and J2 control, their external sources and
-isolation switches. Seven components, fifteen pads and six conductive nets are
-resolved through `BlockNamespace`, including all contribution/adaptor aliases.
-`SwitchedLowSideContract` is a bounded typed sinking relation with actual supply,
-control and common-return joins, active-high thresholds, ON/OFF voltage limits
-and current/loading bounds. Preflight rejects missing or extra group members,
-unjoined support ports, incompatible ranges and unsupported generic open-drain
-connections. CircuitJS remains responsible for final electrical behavior.
+The role supports a 4.75-5.25 V supply, active-high control of at least 4.75 V,
+LOW at most 0.1 V, a 2 mA control capacity and a 20 mA sinking capacity for a
+5-16 mA indicator load. These declarations bound admission of ideal voltage
+sources; they do not implement dynamic current limiting. High-side operation
+and insufficient base-drive proposals reject before construction.
 
-`ControlledIndicatorDeviceBehavior` executes real LOW/HIGH input operations and
-checks both states before fault application and during customer retest. An RG
-open leaves the gate pulled low; an RLOAD open leaves high gate drive with no LED
-current. These are different physical owners with the same symptom-only ticket.
-The normal diagnostic contract executes both candidates through Task41 voltage,
-resistance, continuity, physical replacement and customer-retest paths. Receipts
-retain qualified owner IDs only inside developer evidence. Diagnostic reference
-and probe IDs accept canonical qualified PAD identities; other plan categories
-retain their existing grammar and forbidden-identity checks.
+The NMOS provider uses an actual `NMosfetElm`, 1 kohm RG, 100 kohm gate pulldown,
+threshold 1.5 V and beta 10. The NPN provider uses an actual `NTransistorElm`,
+2.7 kohm RB, 100 kohm base pulldown and beta 100. NPN drive admission accounts
+for worst-case base current and pulldown current. Provider observations check
+actual gate versus base behavior, ON current, OFF leakage and the NPN voltage
+and current envelope. NMOS G/D/S maps to CircuitJS posts 0/2/1; NPN B/C/E maps
+to 0/1/2 through explicit package-terminal declarations.
 
-RG and RLOAD use separate capabilities over the same global inventory and
-existing `ResistorMutationScope` prepare/commit/abort boundary, including actions
-on the healthy owner. RPD, Q1, LED1 and connectors are fixed physical parts;
-unsupported mutable providers remain rejected. Fixed-part endpoint registration
-resolves package terminals through the actual slot and board bindings. LED
-appearance observes the same live `LEDElm` used by the solver. A device-level
-bounded layout uses authoritative packages, copper validation, renderer and
-probe infrastructure. The independent physical manifest supplies literal
-copper/render/solver expectations and negative mappings.
+`ElectricalConstructionProvider.declare` owns the local immutable element,
+helper, model parameter, package, terminal and board-endpoint description.
+The matching provider constructs from that declaration. Explicit electrical,
+physical and observation registrations are the bounded extension points.
+`ElectricalRealizationSpec` validates known primitive post maps, model/value
+requirements and complete package/pad coverage. The device adapter iterates
+declared inter-instance joins and external inputs. The generic materializer
+checks exact kind and provenance; an unknown kind cannot become a switch.
+Removable resistor pads bind to persistent local copper separately from their
+detachable attachment wires. Declarations reject a contact backed by its own
+attachment or removable component before allocation; runtime validation also
+checks the actual separate endpoints and continued backing ownership.
+`A03RealizationReplay` captures provider declarations, numeric/model choices,
+units, backings, bridge endpoints and actual physical geometry without separate
+NMOS/NPN capture methods. Generator 4 artifacts reject before installation.
 
-The sidebar's **Open controlled indicator** and ordinary
-`tsjChallenge=controlled-indicator&seed=<canonical-long>` route call
-`installNormalComposition`. This requires supported providers and a nonempty
-diagnostic contract, settles a fresh disjoint candidate, executes normal live
-diagnostic admission, then attaches its workbench. Initial schematic entry uses
-the narrowly validated detached-owner snapshot variant. Failure restores the
-untouched prior owner or preserves the existing isolated failure state; it does
-not create a same-owner transaction. Existing stale callback, pending-work,
-completion and cleanup guards still apply. Power isolation disconnects both
-declared external inputs before active measurement. Player-facing labels use
-physical markings while stable internal identities remain private.
-The ordinary CircuitJS update refreshes cached control state when the same
-generated owner changes from pending to settled, including the PCB rendering
-return path; it does not clear readiness flags to enable a control.
+Each load resolves one immutable catalog recipe from its own VALUES stream.
+`ControlledIndicatorValueSynthesis` consumes the actual request's supply,
+control, load and sinking relationship. The catalog permits 270 ohms/0.25 W or
+330 ohms/0.22 W at 5% tolerance in the current axial package. Worst-case current
+must remain within 5-16 mA, sink capacity has 1.25x headroom, and a 2x power
+guard assigns the full maximum supply voltage to the minimum resistance.
+The LED model envelope is 1.6-2.0 V. Electrical allocation, physical nameplates,
+reconstruction and behavior consume the same resolved values. Catalog
+replacement remains available for wrong and electrically valid alternatives.
 
-Current compiled checks exercise implementation, solver behavior and lifecycle;
-visible normal-player diagnosis/repair/retest remains a separate gate. Historical
-Task48/49 packets describe the earlier accepted candidates, not required current
-outputs.
+The support provider contains a fixed 1 kohm resistor and a real LED between
+board supply and return. Its powered expectation is 2-4 mA and its unpowered
+expectation is at most 1 microamp. It has no selected fault or repair target.
+Healthy verification and customer retest include support current and LED
+current during all-off, all-on and each independently commanded channel state.
+A disconnected support branch fails the device contract.
 
-## Resolved controlled-indicator load recipe
+Named FAULT selection occurs after the healthy composition. The four admitted
+owners are each channel's RG or RB and each load's RLOAD, all with a real OPEN
+fault backing. Each has its own mutable resistor capability and isolation pair.
+RPD, Q1, LEDs, support and connectors remain fixed parts. Provider observations
+and `GeneratedDiagnosticExecutionProvider` let the maintained Task41 proof
+execute every admitted candidate, ordinary measurements, physical replacement
+and retest without adding variant dispatch to admission. The aggregate retest
+checks customer behavior and installed part ratings rather than the original
+fault answer. Other channels and support must continue operating.
 
-The load provider is `resistor-led-load@2`: the request declares a functional
-intent and the plan resolves one immutable recipe before any CircuitJS element
-is allocated. There is no separate supported fixed-value generator or values URL.
-The retired `controlled-indicator-values` URL reports unsupported input before
-installing a challenge. The ordinary controlled-indicator entry uses the recipe.
+The ordinary `tsjChallenge=controlled-indicator&seed=<canonical-long>` URL and
+**Open controlled indicator** button use `installNormalComposition`. Admission
+settles a fresh disjoint candidate and completes the real diagnostic contract
+before publishing the owner to the workbench. Failure preserves the prior
+owner. Shared player controls expose HIGH/LOW for both channels, measurements,
+resistor service and customer retest. Power isolation disconnects all three
+external inputs; existing stale-work, measurement, reset and replacement
+ownership guards remain in force. Labels contain physical markings, while
+provider/fault identities remain developer information.
 
-`ControlledIndicatorValueSynthesis` owns the bounded design policy. It reads the
-actual request's typed supply/load/sink ports and low-side relationship, rejects
-unknown or contradictory facts, and combines them with the policy's indicator
-current target, LED model envelope, tolerance and engineering margins. The
-existing `ResistorReplacementCatalog` is the sole standard-value/rating source.
-A candidate is one immutable canonical catalog entry plus the supported axial
-package identity; collection order cannot affect selection. Geometry lead spans
-do not imply different ratings or packages.
-
-The current policy admits 270 ohms/0.25 W and 330 ohms/0.22 W, both 5% axial
-parts. Worst-case current must remain within 5–16 mA over the typed supply and
-sink bounds; sink capacity has 1.25x headroom. A 2x power guard conservatively
-assigns the entire maximum supply voltage to the resistor at minimum resistance.
-The 1.6–2.0 V LED envelope is an explicit constraint for CircuitJS's existing
-`default-led` model, not a manufacturer nameplate rating. Invalid or empty
-candidate sets fail before graph allocation.
-
-Selection uses named-stream derivation1, the exact signed root seed,
-`controlled-indicator@1`, block `load`, VALUES concern, revision1 and key
-`resistance`, under policy `controlled-led-load-e12@1`. The resolved recipe
-retains the selected catalog identity, intent, resistance/tolerance/rating/package
-and margin receipt. The contribution delegates to that same object. The
-assembler reads it for CircuitJS construction and physical specifications; it
-contains no candidate search or design equations. Color bands, workbench detail,
-and diagnostic repair metadata consume the selected part. The unrestricted
-replacement catalog still permits incorrect and alternative repairs.
-
-`ControlledIndicatorDeviceBehavior` reads the resolved recipe envelope and checks
-settled CircuitJS currents/voltages, branch consistency, LED operation and the
-installed part's rating. Healthy LOW/HIGH verification precedes fault injection;
-customer OFF/ON retest remains solver-backed and judges function. Task41's
-diagnostic candidate routes carry the original immutable versioned request, so
-both fault owners are evaluated with the same selected value. Their bounds and
-physical markings come from that same current recipe.
-
-The separate `tsjDebug=true&tsjVerifyTask49=true` verifier exercises replay,
-physical correspondence, real diagnostic admission, value corners, repairs,
-mutation and owner succession. Pure equations propose a design; only the actual
-solver and normal player evidence establish operation. The
-[Task49 packet](task-evidence/task-49/README.md) records qualification status,
-exact gates and limits. No support blocks or Task50 implementation are included.
+The package-backed layout supports this bounded two-channel population through
+the existing board, copper, renderer and probe pipeline, using the current
+default axial `SPAN_220` geometry in a repeated placement pattern. It is not a general
+router, large-board, multi-layer or arbitrary multi-unit implementation.
+Current native, compiled, player and independent-review evidence is recorded
+in the [A05 packet](task-evidence/A05/README.md). The retained Task48/49 class
+names and historical packets do not define a second supported generator.
 
 ## Reference manifests and measurement harness — A01
 

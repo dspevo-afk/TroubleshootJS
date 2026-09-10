@@ -1,0 +1,74 @@
+{
+  "protocol": "A05-PLAYER-1",
+  "status": "PASS",
+  "method": "Visible task-owned Chrome with Win32 SendInput mouse/keyboard; Playwright used for read-only inspection, report extraction and screenshots, not injected player/controller actions",
+  "results": {
+    "npn-repeated": {
+      "seed": "-1",
+      "normalLaunch": true,
+      "inputMethod": "actual Windows mouse/keyboard in exact task-owned window; DOM read-only bounds",
+      "j1Voltage": "5 V",
+      "poweredResistance": "POWER OFF",
+      "faultedResistance": "OL",
+      "wrong100000OhmRepair": "customer retest rejected",
+      "alternative270OhmRepair": "customer retest passed",
+      "screenshots": [
+        "npn-fault-diagnosis.png",
+        "npn-wrong-repair.png",
+        "npn-valid-alternative-repair.png",
+        "npn-A-low-B-high-support-on.png",
+        "npn-A-high-B-low-support-on.png"
+      ],
+      "sourceBoundary": "root production build, before developer-only A04 verifier correction"
+    },
+    "normal-visible-launch": {
+      "status": "PASS",
+      "action": "Open controlled indicator button after completed NPN repair",
+      "developerReport": null,
+      "newTicketUnrepaired": true
+    },
+    "nmos-repeated": {
+      "seed": "1",
+      "normalLaunch": true,
+      "unrepairedRetest": "FAIL",
+      "gateResistance": "OL",
+      "alternative1500OhmGateRepair": "PASS",
+      "inputMethod": "actual Windows OS mouse and keyboard",
+      "screenshot": "nmos-valid-alternative-repair.png",
+      "sourceBoundary": "before developer-only A04 verifier changes"
+    },
+    "lifecycle": {
+      "status": "PASS",
+      "completedBoardVisibleLaunch": "fresh unrepaired ticket",
+      "activeResistanceBeforeReplacement": "330 Ohm, board OFF",
+      "afterReplacement": "--- Ohm; new board default ON; old reading cleared",
+      "explicitOffAfterReplacement": "stable OFF; current-board resistance usable",
+      "inputMethod": "Windows OS clicks, no controller injection",
+      "screenshot": "active-meter-new-owner.png"
+    }
+  },
+  "osActionCount": 159,
+  "screenshots": [
+    {
+      "file": "01-npn-diagnosis.png",
+      "sha256": "bfb66d29cd72848fcecbb2308710f40af1c7f9c19e04f1feef8b3b104813342f"
+    },
+    {
+      "file": "02-wrong-repair-rejected.png",
+      "sha256": "ae844f8802902a4e995dfc1a3a41569ca5a06b2176d934dc3250695f40b57758"
+    },
+    {
+      "file": "03-npn-alternative-repair.png",
+      "sha256": "747096cb23d2df2da987289c54bde871d86d6686185845e74a2477d05507c938"
+    },
+    {
+      "file": "04-nmos-alternative-repair.png",
+      "sha256": "84cadffe9c5fd596923c22fd99058f71f849baf22fc1c12635c2e3ad8218b63a"
+    },
+    {
+      "file": "05-independent-channels-support.png",
+      "sha256": "a31cb0f0560926eabf87d2b0c2b0fffb5d60d3b7973f80c8e09d6c7979c06ab3"
+    }
+  ],
+  "evidenceReuse": "Ordinary player checks precede final developer-verifier-only corrections. Compared takeover input hashes with final source: only A04ConstructionDeveloperVerifier.java, Task48MutationDeveloperVerifier.java and Task49DeveloperVerifier.java changed in src during takeover. Ordinary non-debug generation, solver, physical, meter, control and UI code is unchanged. Final compiled checks were rerun from the final source. Screenshots are not independent whole-build fingerprints."
+}

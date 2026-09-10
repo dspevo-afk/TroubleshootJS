@@ -5,13 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Pure acceptance checks for the current resolved controlled load. This keeps
- * the useful value/equation and seed-isolation coverage without preserving a
- * separate historical provider or generator interpretation.
+ * Pure acceptance checks for the current repeated controlled-indicator load.
+ *
+ * <p>The receipt emitted by {@link #verifySeed(long)} is consumed by the
+ * independent Python oracle. Every load has its own instance-scoped VALUES
+ * stream, while the selected fault remains a separate device-scoped stream.</p>
  */
 public final class Task49ValueSynthesisContractTest {
     private static int assertions;
-    private static final long[] SEEDS = { 0L, 1L, 2L, 3L,
+    private static final long[] SEEDS = { -1L, 0L, 1L, 2L, 3L,
             Long.MIN_VALUE, Long.MAX_VALUE, 9007199254740993L,
             -9007199254740993L };
 
@@ -42,24 +44,72 @@ public final class Task49ValueSynthesisContractTest {
                     BoundedAssemblyRequest.GENERATOR_VERSION &&
                 ChallengeDescriptor.parse(descriptor.toCanonical()).equals(descriptor),
                 "current descriptor retains signed seed and canonical round trip");
-        require(request.getBlocks().size() == 2 &&
-                request.getConnections().size() == 4 &&
-                request.getDeviceAdapters().size() == 2,
-                "typed controlled composition shape is retained");
-
-        ComposedBlockContribution declaredLoad =
-                ControlledIndicatorBlockContributions.load().create("load");
-        require(declaredLoad.getProviderVersion() ==
-                ControlledIndicatorBlockContributions.LOAD_VERSION &&
-                declaredLoad.getResistors().isEmpty() &&
-                declaredLoad.getLedRecipes().size() == 1,
-                "load declaration carries its typed intent before pure resolution");
+        require(request.getBlocks().size() == 5 &&
+                request.getConnections().size() == 6 &&
+                request.getDeviceAdapters().size() == 3,
+                "repeated typed controlled composition shape is retained");
 
         BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
-        ControlledIndicatorValueSynthesis.ResolvedRecipe recipe =
-                plan.getResolvedLoadRecipe();
-        require(plan.isControlledIndicator() && recipe != null,
-                "current plan resolves one catalog-backed recipe");
+        require(plan.isControlledIndicator() && plan.getChannels().size() == 2,
+                "current plan resolves two controlled channels");
+        ComposedBlockContribution support =
+                plan.getBlocks().get(plan.getSupportBlockKey());
+        require(support != null && support.getFaultSpec() == null,
+                "support contribution is present and nonfaultable");
+
+        ControlledIndicatorChannel first = plan.getChannels().get(0);
+        ControlledIndicatorChannel second = plan.getChannels().get(1);
+        ComposedBlockContribution firstLoad =
+                plan.getBlocks().get(first.getLoadKey());
+        ComposedBlockContribution secondLoad =
+                plan.getBlocks().get(second.getLoadKey());
+        require(firstLoad != null && secondLoad != null &&
+                firstLoad.getResolvedValueRecipe() != null &&
+                secondLoad.getResolvedValueRecipe() != null,
+                "each channel carries one catalog-backed recipe");
+
+        ControlledIndicatorValueSynthesis.ResolvedRecipe firstRecipe =
+                firstLoad.getResolvedValueRecipe();
+        ControlledIndicatorValueSynthesis.ResolvedRecipe secondRecipe =
+                secondLoad.getResolvedValueRecipe();
+        verifyRecipe(firstRecipe, first.getLoadKey());
+        verifyRecipe(secondRecipe, second.getLoadKey());
+        require(firstLoad.getResistor("RLOAD") != null &&
+                firstLoad.getResistor("RLOAD").getResolvedRecipe() == firstRecipe &&
+                secondLoad.getResistor("RLOAD") != null &&
+                secondLoad.getResistor("RLOAD").getResolvedRecipe() == secondRecipe,
+                "each resolved recipe owns its channel RLOAD contribution");
+
+        /*
+         * Keep one compact, independently checkable observation stream. The
+         * descriptor is last because its constraints field contains semicolons;
+         * the oracle splits the first sixteen separators and treats the rest as
+         * the descriptor value.
+         */
+        System.out.println("seed=" + Long.toString(seed) +
+                ";catalog-a=" + firstRecipe.getCatalogEntryId() +
+                ";resistance-a=" + Double.toString(firstRecipe.getResistanceOhms()) +
+                ";rmin-a=" + Double.toString(firstRecipe.getResistanceMinimumOhms()) +
+                ";rmax-a=" + Double.toString(firstRecipe.getResistanceMaximumOhms()) +
+                ";imin-a=" + Double.toString(firstRecipe.getMinimumCurrentAmps()) +
+                ";imax-a=" + Double.toString(firstRecipe.getMaximumCurrentAmps()) +
+                ";pguard-a=" + Double.toString(firstRecipe.getGuardedPowerWatts()) +
+                ";catalog-b=" + secondRecipe.getCatalogEntryId() +
+                ";resistance-b=" + Double.toString(secondRecipe.getResistanceOhms()) +
+                ";rmin-b=" + Double.toString(secondRecipe.getResistanceMinimumOhms()) +
+                ";rmax-b=" + Double.toString(secondRecipe.getResistanceMaximumOhms()) +
+                ";imin-b=" + Double.toString(secondRecipe.getMinimumCurrentAmps()) +
+                ";imax-b=" + Double.toString(secondRecipe.getMaximumCurrentAmps()) +
+                ";pguard-b=" + Double.toString(secondRecipe.getGuardedPowerWatts()) +
+                ";fault=" + plan.getFaultDecisionKey() +
+                ";descriptor=" + descriptor.toCanonical().replace('\n', '|'));
+    }
+
+    private static void verifyRecipe(
+            ControlledIndicatorValueSynthesis.ResolvedRecipe recipe,
+            String instanceKey) {
+        require(recipe != null && instanceKey != null && !instanceKey.isEmpty(),
+                "resolved recipe is associated with an instance-scoped VALUES key");
         require(containsCandidate(recipe.getCatalogEntryId()),
                 "selected recipe belongs to the admissible catalog");
         require(recipe.getCandidate().getCatalogEntry() != null &&
@@ -77,30 +127,6 @@ public final class Task49ValueSynthesisContractTest {
                     recipe.getIntent().getTypedDemandAmps() &&
                 recipe.getGuardedPowerWatts() > 0.0,
                 "recipe receipt satisfies bounded electrical equations");
-        ComposedBlockContribution.ResistorRecipe load =
-                plan.getLoad().getResistor("RLOAD");
-        require(load != null && load.getResolvedRecipe() == recipe &&
-                load.getResistanceOhms() == recipe.getResistanceOhms() &&
-                load.isMutable(),
-                "resolved recipe owns the mutable RLOAD contribution");
-        /*
-         * Keep one compact, independently checkable observation stream.  The
-         * Python oracle consumes only these rows; it does not import the Java
-         * resolver or use the plan's candidate list as its expected answer.
-         * The descriptor is last because its constraints field contains
-         * semicolons.  Replace its line separators with the canonical report
-         * separator before writing the row.
-         */
-        System.out.println("seed=" + Long.toString(seed) +
-                ";catalog=" + recipe.getCatalogEntryId() +
-                ";resistance=" + Double.toString(recipe.getResistanceOhms()) +
-                ";rmin=" + Double.toString(recipe.getResistanceMinimumOhms()) +
-                ";rmax=" + Double.toString(recipe.getResistanceMaximumOhms()) +
-                ";imin=" + Double.toString(recipe.getMinimumCurrentAmps()) +
-                ";imax=" + Double.toString(recipe.getMaximumCurrentAmps()) +
-                ";pguard=" + Double.toString(recipe.getGuardedPowerWatts()) +
-                ";fault=" + plan.getFaultDecisionKey() +
-                ";descriptor=" + descriptor.toCanonical().replace('\n', '|'));
     }
 
     private static void verifyReorderAndReplay() {
@@ -127,11 +153,16 @@ public final class Task49ValueSynthesisContractTest {
         require(first.getSemanticSignature().equals(reordered.getSemanticSignature()) &&
                 first.getSemanticSignature().equals(replay.getSemanticSignature()),
                 "reordered and canonical replay preserve current semantics");
-        require(first.getResolvedLoadRecipe().getCatalogEntryId().equals(
-                reordered.getResolvedLoadRecipe().getCatalogEntryId()) &&
-                first.getResolvedLoadRecipe().getCatalogEntryId().equals(
-                replay.getResolvedLoadRecipe().getCatalogEntryId()),
-                "reordered and replayed requests preserve selected value");
+        for (ControlledIndicatorChannel channel : first.getChannels()) {
+            String key = channel.getLoadKey();
+            require(first.getBlocks().get(key).getResolvedValueRecipe().getCatalogEntryId()
+                    .equals(reordered.getBlocks().get(key).getResolvedValueRecipe()
+                            .getCatalogEntryId()) &&
+                    first.getBlocks().get(key).getResolvedValueRecipe().getCatalogEntryId()
+                    .equals(replay.getBlocks().get(key).getResolvedValueRecipe()
+                            .getCatalogEntryId()),
+                    "reordered and replayed requests preserve each channel value");
+        }
     }
 
     private static void verifyCatalogBoundary() {
@@ -165,46 +196,52 @@ public final class Task49ValueSynthesisContractTest {
     private static void verifyIntentBoundary() {
         final ControlledIndicatorValueSynthesis.Intent baseline =
                 ControlledIndicatorValueSynthesis.defaultIntent();
-        boolean rejected = false;
-        try {
-            new ControlledIndicatorValueSynthesis.Intent(
-                    baseline.getSourceMinimumVolts(), baseline.getSourceMaximumVolts(),
-                    baseline.getLoadAcceptanceMinimumVolts(),
-                    baseline.getLoadAcceptanceMaximumVolts(), baseline.getSinkMinimumVolts(),
-                    baseline.getSinkMaximumVolts(), baseline.getSinkCapacityAmps(),
-                    baseline.getTypedDemandAmps(), baseline.getTypedDemandAmps() + .001,
-                    baseline.getLedMinimumForwardVolts(), baseline.getLedMaximumForwardVolts(),
-                    baseline.getModelToleranceFraction(), baseline.getPowerHeadroomFactor(),
-                    baseline.getSinkHeadroomFactor(), baseline.getModelId(),
-                    baseline.getPackageId());
-        } catch (IllegalArgumentException expected) {
-            rejected = true;
-        }
-        require(rejected, "typed demand below target is rejected");
-        rejected = false;
-        try {
-            ControlledIndicatorValueSynthesis.resolve(0L, null);
-        } catch (IllegalArgumentException expected) {
-            rejected = true;
-        }
-        require(rejected, "missing controlled intent is rejected");
-        final double[] invalidTolerances = { Double.NaN, Double.POSITIVE_INFINITY,
-                Double.NEGATIVE_INFINITY, 0.0, -0.01, 1.0, 1.01 };
+        expectRejected(new Rejection() {
+            public void run() {
+                new ControlledIndicatorValueSynthesis.Intent(
+                        baseline.getSourceMinimumVolts(), baseline.getSourceMaximumVolts(),
+                        baseline.getLoadAcceptanceMinimumVolts(),
+                        baseline.getLoadAcceptanceMaximumVolts(),
+                        baseline.getSinkMinimumVolts(), baseline.getSinkMaximumVolts(),
+                        baseline.getSinkCapacityAmps(), baseline.getTypedDemandAmps(),
+                        baseline.getTypedDemandAmps() + .001,
+                        baseline.getLedMinimumForwardVolts(),
+                        baseline.getLedMaximumForwardVolts(),
+                        baseline.getModelToleranceFraction(),
+                        baseline.getPowerHeadroomFactor(),
+                        baseline.getSinkHeadroomFactor(), baseline.getModelId(),
+                        baseline.getPackageId());
+            }
+        }, "typed demand below target is rejected");
+        expectRejected(new Rejection() {
+            public void run() {
+                ControlledIndicatorValueSynthesis.resolve(0L,
+                        "channel-a-load",
+                        (ControlledIndicatorValueSynthesis.Intent) null);
+            }
+        }, "missing controlled intent is rejected");
+
+        final double[] invalidTolerances = { Double.NaN,
+                Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, 0.0,
+                -0.01, 1.0, 1.01 };
         for (final double tolerance : invalidTolerances) {
             expectRejected(new Rejection() {
                 public void run() {
                     new ControlledIndicatorValueSynthesis.Intent(
-                            baseline.getSourceMinimumVolts(), baseline.getSourceMaximumVolts(),
+                            baseline.getSourceMinimumVolts(),
+                            baseline.getSourceMaximumVolts(),
                             baseline.getLoadAcceptanceMinimumVolts(),
                             baseline.getLoadAcceptanceMaximumVolts(),
-                            baseline.getSinkMinimumVolts(), baseline.getSinkMaximumVolts(),
-                            baseline.getSinkCapacityAmps(), baseline.getTypedDemandAmps(),
+                            baseline.getSinkMinimumVolts(),
+                            baseline.getSinkMaximumVolts(),
+                            baseline.getSinkCapacityAmps(),
+                            baseline.getTypedDemandAmps(),
                             baseline.getTargetMinimumCurrentAmps(),
                             baseline.getLedMinimumForwardVolts(),
                             baseline.getLedMaximumForwardVolts(), tolerance,
                             baseline.getPowerHeadroomFactor(),
-                            baseline.getSinkHeadroomFactor(), baseline.getModelId(),
-                            baseline.getPackageId());
+                            baseline.getSinkHeadroomFactor(),
+                            baseline.getModelId(), baseline.getPackageId());
                 }
             }, "invalid tolerance input");
         }
@@ -243,11 +280,11 @@ public final class Task49ValueSynthesisContractTest {
                 "power-headroom equation rejects every catalog value");
         expectRejected(new Rejection() {
             public void run() {
-                ControlledIndicatorValueSynthesis.resolve(0L,
+                ControlledIndicatorValueSynthesis.resolve(0L, "channel-a-load",
                         new ControlledIndicatorValueSynthesis.Intent(4.75, 5.25,
-                            4.5, 5.5, 0.0, 0.8, 0.020, 0.010, 0.005,
-                            1.6, 2.0, 0.05, 2.0, 1.25, "default-led",
-                            "AXIAL_RESISTOR"));
+                                4.5, 5.5, 0.0, 0.8, 0.020, 0.010, 0.005,
+                                1.6, 2.0, 0.05, 2.0, 1.25, "default-led",
+                                "AXIAL_RESISTOR"));
             }
         }, "empty candidate pool fails before selection");
     }
@@ -255,16 +292,19 @@ public final class Task49ValueSynthesisContractTest {
     private static void verifyCandidatePermutationAndImmutability() {
         ControlledIndicatorValueSynthesis.Intent intent =
                 ControlledIndicatorValueSynthesis.defaultIntent();
-        ArrayList<ResistorCatalogEntry> canonical = new ArrayList<ResistorCatalogEntry>(
-                new ResistorReplacementCatalog().getEntries());
+        ArrayList<ResistorCatalogEntry> canonical =
+                new ArrayList<ResistorCatalogEntry>(
+                        new ResistorReplacementCatalog().getEntries());
         ArrayList<ResistorCatalogEntry> reversed =
                 new ArrayList<ResistorCatalogEntry>(canonical);
         Collections.reverse(reversed);
         for (long seed : SEEDS) {
             ControlledIndicatorValueSynthesis.ResolvedRecipe first =
-                    ControlledIndicatorValueSynthesis.resolve(seed, canonical, intent);
+                    ControlledIndicatorValueSynthesis.resolve(seed,
+                            "channel-a-load", canonical, intent);
             ControlledIndicatorValueSynthesis.ResolvedRecipe second =
-                    ControlledIndicatorValueSynthesis.resolve(seed, reversed, intent);
+                    ControlledIndicatorValueSynthesis.resolve(seed,
+                            "channel-a-load", reversed, intent);
             require(first.getCatalogEntryId().equals(second.getCatalogEntryId()),
                     "candidate permutation changed selection");
         }
@@ -278,7 +318,7 @@ public final class Task49ValueSynthesisContractTest {
         }
         require(immutable, "candidate collection is immutable");
         ControlledIndicatorValueSynthesis.ResolvedRecipe recipe =
-                ControlledIndicatorValueSynthesis.resolve(2L, intent);
+                ControlledIndicatorValueSynthesis.resolve(2L, "channel-a-load", intent);
         double resistance = recipe.getResistanceOhms();
         canonical.clear();
         require(recipe.getResistanceOhms() == resistance &&
@@ -289,7 +329,6 @@ public final class Task49ValueSynthesisContractTest {
                     intent.getSourceMinimumVolts(),
                 "resolved candidate and intent remain immutable");
         require(ControlledIndicatorValueSynthesis.VALUES_REVISION == 1 &&
-                ControlledIndicatorValueSynthesis.BLOCK_KEY.equals("load") &&
                 ControlledIndicatorValueSynthesis.VALUES_KEY.equals("resistance"),
                 "current value stream tuple remains named and versioned");
     }
@@ -308,30 +347,32 @@ public final class Task49ValueSynthesisContractTest {
             ids.add(candidate.getId());
         NamedRandomStreams streams = new NamedRandomStreams(1, 2L, intentId,
                 intentVersion);
-        long loadSeedRevision1 = streams.blockSeed("load",
+        long firstSeed = streams.blockSeed("channel-a-load",
                 NamedRandomStreams.Concern.VALUES,
                 ControlledIndicatorValueSynthesis.VALUES_REVISION,
                 ControlledIndicatorValueSynthesis.VALUES_KEY);
-        long loadSeedRevision2 = streams.blockSeed("load",
-                NamedRandomStreams.Concern.VALUES, 2,
+        long secondSeed = streams.blockSeed("channel-b-load",
+                NamedRandomStreams.Concern.VALUES,
+                ControlledIndicatorValueSynthesis.VALUES_REVISION,
                 ControlledIndicatorValueSynthesis.VALUES_KEY);
-        String selectedBefore = NamedRandomStreams.select(loadSeedRevision1, ids);
-        String selectedRevision2 = NamedRandomStreams.select(loadSeedRevision2, ids);
-        require(loadSeedRevision1 != loadSeedRevision2 &&
-                ids.contains(selectedRevision2) &&
-                selectedBefore.equals(ControlledIndicatorValueSynthesis.resolve(2L, intent)
-                    .getCatalogEntryId()),
-                "load values stream remains independently seeded");
+        String selectedFirst = NamedRandomStreams.select(firstSeed, ids);
+        String selectedSecond = NamedRandomStreams.select(secondSeed, ids);
+        require(firstSeed != secondSeed && ids.contains(selectedSecond) &&
+                selectedFirst.equals(ControlledIndicatorValueSynthesis.resolve(2L,
+                        "channel-a-load", intent).getCatalogEntryId()),
+                "repeated load values use independent instance streams");
         String unrelatedBefore = unrelatedConcernFingerprint(streams);
-        streams.openBlock("load", NamedRandomStreams.Concern.VALUES, 2,
+        streams.openBlock("unrelated-load", NamedRandomStreams.Concern.VALUES,
+                ControlledIndicatorValueSynthesis.VALUES_REVISION,
                 ControlledIndicatorValueSynthesis.VALUES_KEY).nextLong();
-        streams.blockSeed("optional-support", NamedRandomStreams.Concern.VALUES,
-                ControlledIndicatorValueSynthesis.VALUES_REVISION, "resistance");
+        streams.blockSeed("optional-support", NamedRandomStreams.Concern.SUPPORT,
+                1, "supply-present");
         String unrelatedAfter = unrelatedConcernFingerprint(streams);
         require(unrelatedBefore.equals(unrelatedAfter),
                 "load value stream insertion does not shift unrelated concerns");
         require(ControlledIndicatorValueSynthesis.POLICY_ID.equals(
-                ControlledIndicatorValueSynthesis.resolve(2L, intent).getPolicyId()),
+                ControlledIndicatorValueSynthesis.resolve(2L,
+                        "channel-a-load", intent).getPolicyId()),
                 "current selection retains its policy revision");
     }
 
@@ -357,11 +398,16 @@ public final class Task49ValueSynthesisContractTest {
     private static void verifyTypedRequestFacts() {
         final BoundedAssemblyRequest original =
                 BoundedAssemblyRequest.forControlledIndicator(2L);
-        require(ControlledIndicatorValueSynthesis.fromRequest(original)
+        final ControlledIndicatorChannel channel =
+                BoundedAssemblyRequest.controlledChannels().get(0);
+        ElectricalConnection switchedConnection = findConnection(original,
+                channel.getSwitchedJoinId());
+        require(ControlledIndicatorValueSynthesis.fromRequest(original,
+                switchedConnection.getSwitchedLowSideContract())
                 .getSinkMaximumVolts() == 0.8,
                 "production resolver consumes typed sink clamp");
 
-        ElectricalBlockContract driver = findBlock(original, "driver");
+        ElectricalBlockContract driver = findBlock(original, channel.getDriverKey());
         ElectricalPortContract switched = driver.getPorts().get("SWITCHED_SINK");
         ElectricalPortContract malformedSink = copyPort(switched,
                 ElectricalPortContract.Range.known(0.0, 0.7),
@@ -369,10 +415,14 @@ public final class Task49ValueSynthesisContractTest {
         final BoundedAssemblyRequest changedSink = replaceBlock(original,
                 copyBlockWithPort(driver, malformedSink));
         expectRejected(new Rejection() {
-            public void run() { ControlledIndicatorValueSynthesis.fromRequest(changedSink); }
+            public void run() {
+                ControlledIndicatorValueSynthesis.fromRequest(changedSink,
+                        findConnection(changedSink, channel.getSwitchedJoinId())
+                                .getSwitchedLowSideContract());
+            }
         }, "contradictory typed sink facts");
 
-        ElectricalBlockContract load = findBlock(original, "load");
+        ElectricalBlockContract load = findBlock(original, channel.getLoadKey());
         ElectricalPortContract supply = load.getPorts().get("SUPPLY");
         ElectricalPortContract unknownDemand = copyPort(supply,
                 supply.getGuaranteedVoltage(), supply.getAllowedVoltage(),
@@ -380,16 +430,20 @@ public final class Task49ValueSynthesisContractTest {
         final BoundedAssemblyRequest changedDemand = replaceBlock(original,
                 copyBlockWithPort(load, unknownDemand));
         expectRejected(new Rejection() {
-            public void run() { ControlledIndicatorValueSynthesis.fromRequest(changedDemand); }
+            public void run() {
+                ControlledIndicatorValueSynthesis.fromRequest(changedDemand,
+                        findConnection(changedDemand, channel.getSwitchedJoinId())
+                                .getSwitchedLowSideContract());
+            }
         }, "unknown typed load demand");
 
-        ElectricalConnection switchedConnection = findConnection(original,
-                ControlledIndicatorBlockContributions.SWITCHED_CONNECTION_ID);
         SwitchedLowSideContract contradictory = new SwitchedLowSideContract(
                 switchedConnection.getSwitchedLowSideContract().getSinkPort(),
                 switchedConnection.getSwitchedLowSideContract().getLoadPort(),
                 switchedConnection.getSwitchedLowSideContract().getSupplyPort(),
                 switchedConnection.getSwitchedLowSideContract().getControlPort(),
+                switchedConnection.getSwitchedLowSideContract().getDriverControlPort(),
+                switchedConnection.getSwitchedLowSideContract().getLoadSupplyPort(),
                 switchedConnection.getSwitchedLowSideContract().getReturnPorts(),
                 "RETURN", "shared-return", true, 0.019, 0.016);
         ArrayList<ElectricalConnection> connections =
@@ -401,11 +455,20 @@ public final class Task49ValueSynthesisContractTest {
                 original.getDescriptor(), original.getBlocks(), connections,
                 original.getDeviceAdapters());
         expectRejected(new Rejection() {
-            public void run() { ControlledIndicatorValueSynthesis.fromRequest(changedRelation); }
+            public void run() {
+                ControlledIndicatorValueSynthesis.fromRequest(changedRelation,
+                        findConnection(changedRelation, channel.getSwitchedJoinId())
+                                .getSwitchedLowSideContract());
+            }
         }, "contradictory switched relation capacity");
     }
 
     private static void verifyProviderDeclarationBoundary() {
+        require(ControlledIndicatorBlockContributions.resolve(
+                ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID,
+                ControlledIndicatorBlockContributions.NPN_VERSION) ==
+                ControlledIndicatorBlockContributions.npnDriver(),
+                "NPN provider resolves through its declared identity");
         expectRejected(new Rejection() {
             public void run() {
                 ControlledIndicatorBlockContributions.resolve(
