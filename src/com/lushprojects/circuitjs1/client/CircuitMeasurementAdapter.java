@@ -19,6 +19,10 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
         if (!(red instanceof CircuitPostMeasurementEndpoint) ||
                 !(black instanceof CircuitPostMeasurementEndpoint))
             return Double.NaN;
+        MeasurementReferencePolicy.Result reference = sim.assessMeasurementReference(
+            (CircuitPostMeasurementEndpoint) red, (CircuitPostMeasurementEndpoint) black);
+        if (!reference.admitsReading() && reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
+            return Double.NaN;
         return sim.measureDcVoltage((CircuitPostMeasurementEndpoint) red,
             (CircuitPostMeasurementEndpoint) black);
     }

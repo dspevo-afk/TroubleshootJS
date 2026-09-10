@@ -1,6 +1,78 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A05 COMPLETE - QUALIFIED - 2026-09-09
+## Current checkpoint - A06 COMPLETE - QUALIFIED - 2026-09-09
+
+- **Scope/base:** A06 only, above `0acb8f95a2573a98f84a93ece030e3f366d40051`
+  on `codex/task43p-final-recovery`, upstream `origin/codex/task43p-final-recovery`.
+  Earlier Flash investigations were recovered; failed implementation launches
+  delivered no source. The latest user explicitly requested direct completion.
+- **Delivered:** Immutable power/reference/source/backfeed and powered-provider
+  requirements; partial/isolation versus residual/backfeed assessments; exact
+  current-owner solved observations; conservative meter readiness and distinct
+  differential/Earth connection policy. Existing current consumers and
+  reconstruction use the contracts; no historical resolver or second live graph.
+- **Candidate:** Final source digest `0ca528d1cca6aed4ca6fc18a0bc04db8b019360e055d942f2730beb1aa35678a`;
+  script digest `a21eb1ee123aff689b937b20673af54e2f17f7e45cdedb6cf38cc28a565a0f97`. The maintained complete input tuple is
+  recorded in [A06 evidence](task-evidence/A06/candidate-provenance.json).
+- **Native/build:** PASS, exit 0: 16 Java suites; A06 140 assertions;
+  independent 22 seed / 9 value / 6 role checks; 215 report assertions.
+  Final JDK 8u502/GWT 2.7 all five OBF permutations PASS:
+  49.695 s compile / 1.160 s link. Scratch cleanup PASS.
+- **Compiled:** All six Gate A06 routes PASS: A06 positive, expected forced
+  failure, debug-off, A03 reconstruction, current Task49 repair and actual RC
+  charge/discharge/repair proof. Current identity/three-manifest, power decision,
+  role and binary64 value parity exact. A06 has 82 shared pure and
+  44 runtime assertions; actual backfeed 2.5 V. Loaded DC/OHM
+  repetition and stale-owner rejection pass. Native seed proof is separate;
+  no fresh compiled Task46 route is claimed in this six-route selection.
+- **Player:** Real Windows input in exact owned browser: 5 V DC, powered OHM
+  blocked, repeated isolated same-net 0 Ohm, mode reentry and new-owner reading
+  clearance. Three real screenshots inspected. Hidden normal-UI Reset was NOT
+  clicked; compiled reset/restore checks are separate. No injected player repair
+  or independent OS-input telemetry claim.
+- **Corrections/review:** Same-task handwritten falsifiers reproduced unknown
+  isolation, source-envelope and brownout mistakes; fixed with final native/GWT
+  negatives. RC fixture entry/state corrected without weakening production
+  settlement or power assertions. Direct self-review completed. Independent
+  model review NOT RUN under the explicit solo instruction.
+- **Limits:** Current bounded joined-return and known primitive projection;
+  no Earth-connected scope, dynamic current limiter, mains/large-board
+  qualification, MCU or A07 solver/reference-sensitivity implementation.
+  Strict CLI preview wrapper not certified by alternate browser evidence.
+- **Resources/publication:** Final owned browser closed; standard exact preview
+  stop released port 58408 and its launcher exited 0. Initial lost-parent preview
+  cleanup is disclosed separately. Scoped raw evidence retained; unrelated
+  processes and pre-existing Python caches untouched. Final commit/push/email
+  outcomes are recorded only after actual publication by direct root67884.
+- **Next:** A07 remains unstarted and requires separate authorization. Complete
+  the normal A06 publication handoff; do not start another milestone here.
+
+## Historical checkpoint - A06 blocked worker route before direct takeover
+
+- User authorized A06 with DeepSeek V4 Flash MAX workers. Base remains
+  `0acb8f95a2573a98f84a93ece030e3f366d40051` on
+  `codex/task43p-final-recovery`. A05 is published and remains accepted.
+- Four read-only Flash investigations completed. Root reconciled the power,
+  reference, readiness and acceptance contracts into the
+  [A06 implementation/API plan](task-evidence/A06/IMPLEMENTATION_PLAN.md).
+- Initial implementation workers could not read the owner-only OS-temp plan.
+  Root supplied a workspace copy and prepared full inline-spec resumption,
+  without changing ACLs. No source files were written by those attempts.
+- The resumed CLI invocation then failed before model execution with
+  `Model provider deepseek not found`. Current user configuration selects Astra
+  and contains no named custom providers. Root did not change global config,
+  inspect/copy credentials or substitute another model.
+- A06 production, tests, native/build/browser qualification and final review:
+  NOT IMPLEMENTED / NOT RUN. Root modified planning/checkpoint documentation
+  only. No A06 commit, push or completion email.
+- Recovery evidence and original worker threads are retained in the uniquely
+  owned A06 OS-temp directory. Read-only investigations must not be repeated.
+  Resume the authors with the full approved plan in their prompt or the
+  workspace copy once the user restores the DeepSeek provider.
+- Pre-existing Python cache files remain untouched and excluded. A07 is
+  unstarted. No background execution or automatic resume is promised.
+
+## Historical checkpoint - A05 COMPLETE - QUALIFIED - 2026-09-09
 
 - **Scope/base:** Complete the already authorized A05 implementation above
   `bcf2bf8b8a3a995eaba76daefaf759e06918f4da` on

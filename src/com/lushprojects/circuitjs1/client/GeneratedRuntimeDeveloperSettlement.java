@@ -39,7 +39,19 @@ final class GeneratedRuntimeDeveloperSettlement {
                     MAX_UPDATE_ATTEMPTS + " updateCircuit attempts: " + label +
                     ", owner=" + (sim.getGeneratedBoardInstance() == expectedOwner) +
                     ", ready=" + (challenge != null && challenge.isReady()) +
-                    ", settled=" + sim.isGeneratedRuntimeSettled());
+                    ", settled=" + sim.isGeneratedRuntimeSettled() +
+                    ", pending=" + sim.generatedBoardVerificationPending +
+                    ", analyzed=" + sim.generatedBoardVerificationAnalyzed +
+                    ", analyze=" + sim.analyzeFlag + ", dc=" + sim.dcAnalysisFlag +
+                    ", verificationRunning=" + sim.generatedVerificationRunning +
+                    ", installation=" + sim.generatedRuntimeInstallationInProgress +
+                    ", overlay=" + sim.activeMeasurementOverlay + ", pendingPower=" + sim.pendingBoardPowerState +
+                    ", observationalDepth=" + sim.observationalValidationDepth +
+                    ", operation=" + (challenge != null && challenge.isOperationInProgress()) +
+                    ", mutation=" + (expectedOwner != null && expectedOwner.getPhysicalBoardRuntime().isMutationInProgress()) +
+                    ", failedOwner=" + (sim.failedGeneratedRuntimeOwner == expectedOwner) +
+                    ", stop=" + sim.stopMessage + ", time=" + sim.t +
+                    ", requestedAt=" + sim.generatedBoardVerificationStartTime);
         } finally {
             if (!wasRunning)
                 sim.setSimRunning(false);

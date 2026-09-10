@@ -12,11 +12,76 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## A06 power/reference and operating-state contracts
+
+A06 is implemented and qualified under the owner's direct/solo continuation.
+[Evidence](task-evidence/A06/README.md) separates current native, final GWT,
+actual compiled and visible-input checks from same-task self-review. No new
+independent-model review is claimed. A07 remains unstarted.
+
+`PowerDomainContract` contains immutable rails, source IDs, resolved reference
+IDs, isolation IDs, optional earth/bond permissions, source envelopes, declared
+capacity, actual modeled resistance/current-limit declarations, directed backfeed
+paths and storage obligations. It is a data contract, not an electrical solver.
+`BoundedPowerDomainContracts` projects the current device's already validated
+nets, actual source ports and known non-storage primitive set into that contract.
+The current family has one explicit joined return; adding unknown physics must
+supply its actual storage/reference policy rather than inheriting NONE.
+
+`PowerOperatingAssessment` evaluates control/drive observations and solved rail
+voltages. It distinguishes PARTIAL from ALL_SOURCES_ISOLATED and distinguishes
+BACKFED or RESIDUAL from DISCHARGED. A disabled source is not necessarily isolated;
+all isolated switches do not prove the board discharged. Unknown references,
+unknown envelopes/storage, nonfinite or absent samples, stale observation and
+unexpected energization fail closed. Source contention and forbidden/unbounded
+backfeed are reported. Capacity metadata never claims an implemented limiter.
+
+`PowerDomainRuntimeCapability` belongs to the one installed physical runtime.
+It validates exact owner, board and power-binding identities, samples actual
+owned solver posts, and uses source connection revisions and observation time
+to reject stale results after commands, reset, meter work or owner succession.
+`GeneratedExternalPowerBindings` exposes per-source observations; the existing
+power controller remains the actual command owner. The capability does not
+cache a second live graph or replace inventory/installation state.
+
+`MeasurementReferencePolicy` separates differential admission from physical
+Earth connection. Matching text does not join returns; separate isolation
+boundaries reject unsupported cross-domain readings. A permitted Earth request
+returns CONNECTION_REQUIRED rather than pretending a ground was installed.
+`GroundElm` numerical stabilization is not physical earth. The current DC meter
+consults the policy through the existing adapter and retains its real loading.
+No new scope, arbitrary floating-reference measurement or mains certification
+is introduced.
+
+`PoweredProviderOperatingContract` represents supported supply range, brownout,
+input thresholds, drive/load bounds and reset/clock requirements. UNKNOWN differs
+from NOT_APPLICABLE. Current low-side role selection consumes the applicable
+supply and drive requirements; it does not emulate an MCU or synthesize an
+unlimited source. Source/rail declarations are captured by current realization
+reconstruction. Artifacts missing the new required choices reject before live
+allocation; no obsolete reconstruction implementation remains.
+
+`ActiveMeasurementReadiness.combine` is conservative and order independent.
+Stored-energy measurements return UNKNOWN for nonfinite voltage/time rather
+than silently treating it as discharged. Existing discharge thresholds, physical
+capacitor behavior and overlay ownership remain. Real consecutive loaded-DC and
+resistance measurements, stale-owner checks and the RC energy/repair corpus pass.
+The stored-energy developer proof now establishes actual powered entry and runs
+only after its outer temporal verification has returned; production settlement
+requirements and attempt bounds were not relaxed.
+
+The maintained native runner now covers 16 suites. Gate A06 selects six compiled
+routes: A06 positive/forced-failure/debug-off, current A03 reconstruction, current
+Task49 repairs and stored-energy. Actual source/backfeed behavior is tested by
+an isolated two-source 1 kohm/1 kohm solver fixture, not by invented meter values.
+Further solver-time execution, numerical-reference sensitivity and new model
+qualification belong to A07 and later consumers.
+
 ## A05 qualification and current limits
 
 A05 current qualification is recorded in [A05 evidence](task-evidence/A05/README.md): two independently controlled NMOS/NPN channels, supply-present support, current generator 5, exact repeated-instance ownership and solver-backed diagnosis/repair/retest. The normal URL and visible launch control reach this implementation. The layout and four OPEN resistor fault owners remain bounded; no arbitrary composition, transistor mutation, persistence or Q15/Q60 qualification is implied.
 
-All six selected current Gate A05 routes pass on the final production source; the maintained native suite has 15 Java suites plus independent seed/value/role oracles. Three manifest cases and current numeric choices agree exactly between JVM and GWT. The strict CLI launcher is not certified by the separate owned visible-browser evidence. Final closure/publication status is in the current report.
+All six selected current Gate A05 routes pass on the final production source; the A05 baseline used 15 Java suites plus independent seed/value/role oracles; A06 extends the current runner to 16 suites. Three manifest cases and current numeric choices agree exactly between JVM and GWT. The strict CLI launcher is not certified by the separate owned visible-browser evidence. Final closure/publication status is in the current report.
 
 ## Current design identity and reconstruction
 
@@ -137,7 +202,7 @@ block or board. Task 45 adds separate electrical metadata at the immutable port
 ID/attachment seam used by current bounded composition.
 
 `scripts/verify-current-contracts.ps1` compiles current client sources once and
-exercises 15 Java contract suites plus independent seed/value/role equations and
+exercises 16 Java contract suites plus independent seed/value/role equations and
 the browser report protocol. Its native tests do not establish solved behavior;
 the five-permutation JDK8/GWT build and `verify-a03-browser.ps1 -Gate Current`
 remain separate production gates. Explicit generic packages serve developer

@@ -1,0 +1,12 @@
+{
+  "protocol": "A06-RESOURCE-CLOSURE-1",
+  "browser": "task-owned headed Chromium context and Playwright closed normally",
+  "preview": "standard stop exit0; PID93896 stopped and port58408 positively released",
+  "launcherExit": 0,
+  "nativeScratch": "maintained native runner cleanup PASS",
+  "initialPreview": "first noninteractive launcher lost parent; failed standard stop retained; exact task-child handle and matching HTTP identity cleanup recorded",
+  "unrelatedProcesses": "not touched; old8899 untouched",
+  "retainedScratch": "scoped A06 recovery/evidence directory retained for audit",
+  "coordinator": "direct67884 closes after publication handoff",
+  "agents": "No agents launched by the direct implementation; previous Flash attempts not claimed as review"
+}

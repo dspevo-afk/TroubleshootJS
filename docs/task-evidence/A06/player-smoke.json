@@ -1,0 +1,35 @@
+{
+  "protocol": "A06-PLAYER-SMOKE-1",
+  "status": "PASS",
+  "method": "Actual Win32 SendInput in exact task-owned renderer window; Playwright read-only inspection and screenshots",
+  "dcSupplyVolts": 5,
+  "poweredOhm": "POWER OFF",
+  "isolatedSameNetOhms": 0,
+  "repeatedOhmAfterExitReentry": 0,
+  "newOwnerOldReading": "--- Ohm",
+  "newOwnerExplicitPowerOff": "stable OFF and usable 0 Ohm same-net reading",
+  "newOwnerLaunch": "ordinary Open controlled indicator button during active OHM mode",
+  "resetUi": "NOT RUN: Reset exists in DOM but is not exposed in the normal-player accessible UI; unsuccessful locator calls did not dispatch reset",
+  "compiledResetAndStoredEnergy": "Separate final stored-energy and lifecycle routes PASS",
+  "debugFlags": false,
+  "journalActions": 18,
+  "screenshots": [
+    {
+      "file": "01-dc-supply-reading.png",
+      "sha256": "9dac424598f14520fc98b70f0fbfd18595bba2743dc6f06da4cc1a5eb1e8f7cc",
+      "visuallyInspectedBy": "direct root"
+    },
+    {
+      "file": "02-powered-ohm-blocked.png",
+      "sha256": "33b2149cbda28c9f743ea3aa1f81a697563460b115aa2407e174b94926a135d3",
+      "visuallyInspectedBy": "direct root"
+    },
+    {
+      "file": "03-isolated-ohm-reading.png",
+      "sha256": "52864fbe5f16e31005c0a47bc7c20334f62a87e7c0906c2d97f15b2ded9f3aaa",
+      "visuallyInspectedBy": "direct root"
+    }
+  ],
+  "sourceDigest": "0ca528d1cca6aed4ca6fc18a0bc04db8b019360e055d942f2730beb1aa35678a",
+  "limits": "Operator-recorded OS interaction, not independent physical-input telemetry. Hidden Reset was not clicked; reset/restore behavior is covered separately by compiled lifecycle and stored-energy checks."
+}

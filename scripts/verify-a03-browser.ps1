@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('Current', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
+    [ValidateSet('Current', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
     [string]$Gate = 'Current',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
@@ -309,7 +309,7 @@ function Get-RouteReports($Socket, [DateTime]$Deadline) {
 (()=>{const d=document.documentElement;const get=n=>d.getAttribute(n)||'';return {
   url:location.href,ready:document.readyState,
   verification:get('data-tsj-verification'),
-  a04:get('data-tsj-a04-report'),a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
+  a06:get('data-tsj-a06-report'),a04:get('data-tsj-a04-report'),a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
   task46Parity:get('data-tsj-task46-parity'),
   task46Descriptor:get('data-tsj-task46-descriptor'),
   task46Snapshot:get('data-tsj-task46-snapshot'),
@@ -365,6 +365,24 @@ function Test-Task41Report([object]$Value) {
     return $text -match '(?m)(?:^|;)retest=(?:true|1)(?:;|$)' -and
         $text -match '(?m)(?:^|;)sampleToleranceEvidence=[^;\r\n]+' -and
         $text -match '(?m);result=PASS$'
+}
+
+function Test-A06Report([object]$Value) {
+    if (-not (Test-JsonReport $Value 'TSJ-A06-POWER-1')) { return $false }
+    try {
+        $p = $Value | ConvertFrom-Json -ErrorAction Stop
+        if (-not (Test-VerifierStrictIntegralValue $p.pureAssertions 60L ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $p.runtimeAssertions 20L ([long]::MaxValue))) { return $false }
+        foreach ($name in @('originalOwnerRestored','sourceIsolation','staleOwnerRejected',
+                'differentialReference','earthConnectionNotInvented')) {
+            if ($p.$name -isnot [bool] -or -not $p.$name) { return $false }
+        }
+        if ($p.candidateCleanup -cne 'PASS' -or $p.vectors -isnot [string] -or
+                -not $p.vectors.StartsWith('A06-POWER-VECTORS-1;')) { return $false }
+        if ($p.backfeedVolts -isnot [double] -and $p.backfeedVolts -isnot [decimal]) { return $false }
+        return -not [double]::IsNaN($p.backfeedVolts) -and -not [double]::IsInfinity($p.backfeedVolts) -and
+            [Math]::Abs([double]$p.backfeedVolts - 2.5) -lt 0.000001
+    } catch { return $false }
 }
 
 function Test-A04Report([object]$Value) {
@@ -533,6 +551,15 @@ function Test-ControlledReport([object]$Value, [string]$Protocol) {
 function Test-RouteReady($Kind, $Reports) {
     $verification = Get-ExactReportText $Reports.verification
     switch ($Kind) {
+        'a06' { return $verification -ceq 'PASS:a06' -and (Test-A06Report $Reports.a06) }
+        'a06-forced' { return $verification -ceq 'FAIL:a06:a06-explicit-failure-canary' -and
+            [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a06)) }
+        'a06-debugoff' { return [bool]$Reports.normalReady.programReady -and
+            [bool]$Reports.normalReady.retestCustomerReady -and
+            $verification -notmatch '(?i)(?:^|:)a06(?:$|:)' -and
+            [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a06)) }
+        'stored-energy' { return $verification -ceq 'PASS:stored-energy' }
+
         'a03' {
             $report = Get-ExactReportText $Reports.a03
             return $verification -ceq 'PASS:a03' -and
@@ -669,6 +696,20 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
             [pscustomobject]@{ name = 'a04-debugoff'; kind = 'a04-debugoff';
                 query = 'tsjChallenge=led&seed=3&tsjVerifyA04=true&tsjA04Fail=true&running=true';
                 reportNames = @('a04') }
+        )
+    }
+    if ($SelectedGate -ceq 'A06') {
+        return @(
+            [pscustomobject]@{ name='a06'; kind='a06';
+                query='tsjChallenge=led&seed=3&tsjVerifyA06=true&tsjDebug=true&running=true'; reportNames=@('a06') },
+            [pscustomobject]@{ name='a06-forcedfailure'; kind='a06-forced';
+                query='tsjChallenge=led&seed=3&tsjVerifyA06=true&tsjA06Fail=true&tsjDebug=true&running=true'; reportNames=@('a06') },
+            [pscustomobject]@{ name='a06-debugoff'; kind='a06-debugoff';
+                query='tsjChallenge=led&seed=3&tsjVerifyA06=true&tsjA06Fail=true&running=true'; reportNames=@('a06') },
+            @($all | Where-Object name -CEQ 'a03')[0],
+            @($all | Where-Object name -CEQ 'task49')[0],
+            [pscustomobject]@{ name='stored-energy'; kind='stored-energy';
+                query='tsjChallenge=rc&seed=3&tsjVerifyStoredEnergy=true&running=true'; reportNames=@() }
         )
     }
     if ($SelectedGate -ceq 'A03') { return $all[0..2] }

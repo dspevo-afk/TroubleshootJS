@@ -44,6 +44,11 @@ class BoardPowerController {
     state = BoardPowerState.POWERED;
     }
 
+    java.util.Map<String,PowerOperatingAssessment.SourceState> getSourceStates() {
+        return powerBindings == null ?
+            java.util.Collections.<String,PowerOperatingAssessment.SourceState>emptyMap() : powerBindings.getSourceStates();
+    }
+
     boolean isElectricallyUnpowered() {
     return state == BoardPowerState.UNPOWERED && powerBindings != null &&
         powerBindings.hasControlsForAllInputs() && powerBindings.areAllDisconnected();

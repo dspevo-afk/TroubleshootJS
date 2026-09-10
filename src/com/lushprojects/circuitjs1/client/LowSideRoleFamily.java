@@ -169,7 +169,10 @@ final class LowSideRoleFamily {
         ArrayList<Provider> compatible = new ArrayList<Provider>();
         ArrayList<String> compatibleIds = new ArrayList<String>();
         for (Provider provider : registered) {
-            if (provider.isCompatible(envelope)) {
+            PoweredProviderOperatingContract operating = operatingContract(provider);
+            if (provider.isCompatible(envelope) && operating.acceptsSupplyRange(
+                    ElectricalPortContract.Range.known(envelope.getSupplyMinimumVolts(), envelope.getSupplyMaximumVolts())) &&
+                    operating.acceptsDriveCapacity(ElectricalPortContract.Scalar.known(envelope.getControlCapacityAmps()))) {
                 compatible.add(provider);
                 compatibleIds.add(provider.getTypeId());
             }
@@ -185,6 +188,16 @@ final class LowSideRoleFamily {
         for (Provider provider : compatible)
             if (selected.equals(provider.getTypeId())) return provider;
         throw new IllegalStateException("Selected low-side provider disappeared");
+    }
+
+    static PoweredProviderOperatingContract operatingContract(Provider provider) {
+        return new PoweredProviderOperatingContract(
+            ElectricalPortContract.Range.known(provider.getSupplyMinimumVolts(), provider.getSupplyMaximumVolts()),
+            ElectricalPortContract.Scalar.notApplicable(),
+            ElectricalPortContract.Scalar.known(provider.getControlLowMaximumVolts()),
+            ElectricalPortContract.Scalar.known(provider.getControlHighMinimumVolts()),
+            ElectricalPortContract.Scalar.known(provider.getControlDemandAmps()),
+            ElectricalPortContract.Scalar.known(provider.getLoadDemandAmps()), false, false);
     }
 
     private static void requireFinite(double value, String field) {

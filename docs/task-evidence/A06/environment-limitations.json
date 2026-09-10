@@ -1,0 +1,21 @@
+{
+  "protocol": "A06-FAILED-AND-SUPERSEDED-ATTEMPTS-1",
+  "agentRoute": "Previous DeepSeek implementation attempts failed before source delivery because provider was not configured; no credential/global config repair or substituted agent. Latest user requested direct implementation.",
+  "independentModelReview": "NOT RUN; explicit solo takeover. Same-task handwritten falsifiers and self-review are not a separate reviewer.",
+  "supersededSourceChecks": "First native/build/A06 live passes preceded confirmed uncertainty and RC verifier corrections; only native04/build03/round03 qualify final source.",
+  "rcFailures": [
+    {
+      "signature": "Powered RC board allowed an active meter",
+      "cause": "Verifier assumed powered entry although prior admission could leave sources isolated.",
+      "correction": "Establish actual powered control state and settle before asserting powered rejection; existing assertion retained."
+    },
+    {
+      "signature": "Stored-energy initial powered settlement failed while outer verification running",
+      "cause": "Temporal admission reentered update before the owning verification call completed.",
+      "correction": "Defer stored-energy proof until actual settled outer boundary; do not weaken settlement or power rules."
+    }
+  ],
+  "preview": "Initial noninteractive launcher lost its parent. Standard stop failed; exact owned child handle with matching command/creation/executable/HTTP identity was stopped. Later two previews stopped normally; no kernel/user-wide kill.",
+  "playerAttempts": "Initial screen/client transform used wrong offsets, corrected to exact renderer child window. Those diagnostic clicks were not used as evidence. Hidden Reset lookup did not click; no normal-UI Reset success claimed.",
+  "strictCliWrapper": "NOT CERTIFIED: actual equivalent product checks used the task-owned headed browser with maintained report predicates."
+}

@@ -33,7 +33,12 @@ final class StoredEnergyMeasurementReadinessCapability implements
     }
 
     public void observeSimulationTime(double simulationTime) {
-        if (!Double.isNaN(simulationTime) && simulationTime != lastObservedSimulationTime) {
+        if (!PowerDomainContract.finite(simulationTime)) {
+            awaitingSolverSample = true;
+            lastObservedSimulationTime = Double.NaN;
+            return;
+        }
+        if (simulationTime != lastObservedSimulationTime) {
             lastObservedSimulationTime = simulationTime;
             awaitingSolverSample = false;
         }
@@ -52,10 +57,11 @@ final class StoredEnergyMeasurementReadinessCapability implements
             return ActiveMeasurementReadiness.READY;
         if (powerState != BoardPowerState.UNPOWERED || !electricallyUnpowered)
             return ActiveMeasurementReadiness.POWER_OFF;
+        if (!PowerDomainContract.finite(lastObservedSimulationTime))
+            return ActiveMeasurementReadiness.UNKNOWN;
         if (awaitingSolverSample)
             return ActiveMeasurementReadiness.WAITING;
-        return hasResidualEnergy(red, black) ? ActiveMeasurementReadiness.DISCHARGE :
-            ActiveMeasurementReadiness.READY;
+        return storageReadiness(red, black);
     }
 
     public boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red,
@@ -102,26 +108,30 @@ final class StoredEnergyMeasurementReadinessCapability implements
         return false;
     }
 
-    private boolean hasResidualEnergy(CircuitPostMeasurementEndpoint red,
+    private ActiveMeasurementReadiness storageReadiness(CircuitPostMeasurementEndpoint red,
             CircuitPostMeasurementEndpoint black) {
         boolean boardMeasurement = isBoardEndpoint(red) || isBoardEndpoint(black);
+        ActiveMeasurementReadiness result = ActiveMeasurementReadiness.READY;
         PhysicalCapacitorPart installed = replaceable.getSlot().getInstalledPart();
-        if (hasResidual(installed) && (boardMeasurement || isPartTerminal(installed, red) ||
-                isPartTerminal(installed, black)))
-            return true;
-        if (hasResidual(fixedCapacitor) && (boardMeasurement || isPartTerminal(fixedCapacitor, red) ||
-                isPartTerminal(fixedCapacitor, black)))
-            return true;
+        if (boardMeasurement || isPartTerminal(installed, red) || isPartTerminal(installed, black))
+            result = ActiveMeasurementReadiness.combine(result, partReadiness(installed));
+        if (boardMeasurement || isPartTerminal(fixedCapacitor, red) || isPartTerminal(fixedCapacitor, black))
+            result = ActiveMeasurementReadiness.combine(result, partReadiness(fixedCapacitor));
         for (PhysicalCapacitorPart part : replaceable.getInventory().getLooseParts())
-            if ((isPartTerminal(part, red) || isPartTerminal(part, black)) && hasResidual(part))
-                return true;
-        return false;
+            if (isPartTerminal(part, red) || isPartTerminal(part, black))
+                result = ActiveMeasurementReadiness.combine(result, partReadiness(part));
+        return result;
     }
 
-    private boolean hasResidual(PhysicalCapacitorPart part) {
-        return part != null && part.hasAccessibleStoredEnergyTerminals() &&
-            Math.abs(part.getElement().getVoltageDiff()) >
-            ActiveMeasurementReadiness.RESIDUAL_VOLTAGE_THRESHOLD_VOLTS;
+    private ActiveMeasurementReadiness partReadiness(PhysicalCapacitorPart part) {
+        if (part == null || !part.hasAccessibleStoredEnergyTerminals()) return ActiveMeasurementReadiness.READY;
+        return voltageReadiness(part.getElement().getVoltageDiff());
+    }
+
+    static ActiveMeasurementReadiness voltageReadiness(double volts) {
+        if (!PowerDomainContract.finite(volts)) return ActiveMeasurementReadiness.UNKNOWN;
+        return Math.abs(volts) > ActiveMeasurementReadiness.RESIDUAL_VOLTAGE_THRESHOLD_VOLTS ?
+            ActiveMeasurementReadiness.DISCHARGE : ActiveMeasurementReadiness.READY;
     }
 
     private boolean isPartTerminal(PhysicalCapacitorPart part,

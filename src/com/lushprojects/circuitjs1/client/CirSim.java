@@ -406,6 +406,9 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA03Verification;
 	boolean troubleshootA03VerificationComplete;
 	boolean troubleshootA03ForcedFailure;
+	boolean troubleshootA06Verification;
+	boolean troubleshootA06VerificationComplete;
+	boolean troubleshootA06ForcedFailure;
 	boolean troubleshootA04Verification;
 	boolean troubleshootA04VerificationComplete;
 	boolean troubleshootA04ForcedFailure;
@@ -575,6 +578,8 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjVerifyA03", false);
 	    troubleshootA03ForcedFailure = troubleshootA03Verification &&
 		qp.getBooleanValue("tsjA03Fail", false);
+	    troubleshootA06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA06", false);
+	    troubleshootA06ForcedFailure = troubleshootA06Verification && qp.getBooleanValue("tsjA06Fail", false);
 	    troubleshootA04Verification = troubleshootDebug &&
 		qp.getBooleanValue("tsjVerifyA04", false);
 	    troubleshootA04ForcedFailure = troubleshootA04Verification &&
@@ -4696,7 +4701,7 @@ MouseOutHandler, MouseWheelHandler {
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -4965,8 +4970,11 @@ MouseOutHandler, MouseWheelHandler {
 			publishBrowserVerificationResult(quickPlayActive ?
 			    "PASS:quick-play" : "PASS:quick-play-explicit");
 		    }
+		    // Temporal admission recursively updates while its outer verification
+		    // still owns generatedVerificationRunning. The physical meter proof
+		    // must start only after that outer operation has fully returned.
 		    if (troubleshootStoredEnergyVerification &&
-			    !troubleshootStoredEnergyVerificationComplete) {
+			    !troubleshootStoredEnergyVerificationComplete && isGeneratedRuntimeSettled()) {
 			troubleshootStoredEnergyVerificationComplete = true;
 			StoredEnergyDeveloperVerifier.verify(this);
 			publishBrowserVerificationResult("PASS:stored-energy");
@@ -5095,6 +5103,24 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+	    if (!developerVerifierRunning && troubleshootA06Verification &&
+                !troubleshootA06VerificationComplete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                generatedChallengeController != null && generatedChallengeController.isReady() &&
+                isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true;
+            troubleshootA06VerificationComplete = true;
+            publishBrowserVerificationResult("RUNNING:a06");
+            try {
+                publishA06Evidence(A06PowerDeveloperVerifier.verify(this,troubleshootA06ForcedFailure));
+                publishBrowserVerificationResult("PASS:a06");
+            } catch (Throwable failure) {
+                publishBrowserVerificationResult("FAIL:a06:" + failure.getMessage());
+                if (failure instanceof Error) throw (Error)failure;
+                if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+                throw new IllegalStateException("A06 verification failed",failure);
+            } finally { developerVerifierRunning = false; }
+        }
 	    if (!developerVerifierRunning && troubleshootA04Verification &&
 		!troubleshootA04VerificationComplete &&
 		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5252,7 +5278,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5327,6 +5353,10 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishA03Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-a03-report", evidence);
+    }-*/;
+
+    private static native void publishA06Evidence(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-a06-report", evidence);
     }-*/;
 
     private static native void publishA04Evidence(String evidence) /*-{
@@ -5784,11 +5814,21 @@ MouseOutHandler, MouseWheelHandler {
 	});
     }
 
+    MeasurementReferencePolicy.Result assessMeasurementReference(CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black) {
+        return generatedBoardInstance == null ? MeasurementReferencePolicy.notApplicable() :
+            generatedBoardInstance.getPhysicalBoardRuntime().assessMeasurementReference(
+                MeasurementReferencePolicy.Mode.DIFFERENTIAL, red, black);
+    }
+
     double measureDcVoltage(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black) {
 	if (!isGeneratedRuntimeSettled())
 	    return Double.NaN;
 	if (!containsElement(red.getElement()) || !containsElement(black.getElement()))
+	    return Double.NaN;
+	MeasurementReferencePolicy.Result reference = assessMeasurementReference(red, black);
+	if (!reference.admitsReading() && reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
 	    return Double.NaN;
 	if (usesLiveDcVoltage(red, black))
 	    return red.getElement().getPostVoltage(red.getPostIndex()) -

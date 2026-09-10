@@ -363,9 +363,18 @@ final class PhysicalBoardRuntime {
             ActiveMeasurementReadiness readiness =
                 ((ActiveMeasurementReadinessCapability) capability).getActiveMeasurementReadiness(
                     red, black, powerState, electricallyUnpowered);
-            if (!readiness.isReady())
-                result = readiness;
+            result = ActiveMeasurementReadiness.combine(result, readiness);
         }
+        return result;
+    }
+
+    MeasurementReferencePolicy.Result assessMeasurementReference(MeasurementReferencePolicy.Mode mode,
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+        MeasurementReferencePolicy.Result result = MeasurementReferencePolicy.notApplicable();
+        for (PhysicalBoardRuntimeCapability capability : getCapabilities())
+            if (capability instanceof MeasurementReferenceCapability)
+                result = MeasurementReferencePolicy.combine(result,
+                    ((MeasurementReferenceCapability) capability).assessReference(mode, red, black));
         return result;
     }
 

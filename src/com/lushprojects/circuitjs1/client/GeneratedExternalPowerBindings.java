@@ -70,6 +70,30 @@ class GeneratedExternalPowerBindings {
     return true;
     }
 
+    /** Current control observations; the aggregate OFF command is not an energy assessment. */
+    java.util.Map<String, PowerOperatingAssessment.SourceState> getSourceStates() {
+        java.util.TreeMap<String, PowerOperatingAssessment.SourceState> result =
+            new java.util.TreeMap<String, PowerOperatingAssessment.SourceState>();
+        for (String id : board.getPowerInputIds()) {
+            ExternalPowerSimulationBinding binding = powerBindings.get(id);
+            result.put(id, constructionAborted || binding == null || !binding.hasControl() ?
+                PowerOperatingAssessment.SourceState.unknown() : binding.isConnected() ?
+                PowerOperatingAssessment.SourceState.connected() : PowerOperatingAssessment.SourceState.isolated());
+        }
+        return java.util.Collections.unmodifiableMap(result);
+    }
+
+    String controlSignature() {
+        StringBuilder out = new StringBuilder();
+        for (String id : new java.util.TreeSet<String>(board.getPowerInputIds())) {
+            ExternalPowerSimulationBinding binding = powerBindings.get(id);
+            PowerDomainContract.token(out, id);
+            PowerDomainContract.token(out, constructionAborted || binding == null || !binding.hasControl() ?
+                "UNKNOWN" : (binding.isConnected() ? "CONNECTED:" : "ISOLATED:") + binding.getConnectionRevision());
+        }
+        return out.toString();
+    }
+
     boolean isBackingElement(CircuitElm element) {
         for (ExternalPowerSimulationBinding binding : powerBindings.values()) {
             if (binding.getBackingElements().contains(element))

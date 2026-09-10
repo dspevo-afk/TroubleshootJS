@@ -59,12 +59,46 @@ final class A03RealizationReplay {
         captureContributions(plan, namespace, choices);
         captureFaults(plan, namespace, choices);
         capturePhysicalChoices(plan, physicalChoices, namespace, choices, targets);
+        capturePowerContract(plan.getPowerDomainContract(), choices);
 
         return new RealizationManifest(RealizationManifest.VERSION,
                 plan.getRequest().getDescriptor(),
                 namespace.getRealizations().values(),
                 versionPins(plan, physicalChoices),
                 choices, nets, targets);
+    }
+
+    private static void capturePowerContract(PowerDomainContract contract, List<RealizationManifest.Choice> choices) {
+        addInteger(choices, "power.contract-version", PowerDomainContract.VERSION);
+        addToken(choices, "power.design", contract.getDesignId());
+        for (PowerDomainContract.Reference reference : contract.getReferences().values()) {
+            String key = "power.reference." + reference.getId();
+            addToken(choices, key + ".isolation", reference.getIsolationId() == null ? "UNKNOWN" : reference.getIsolationId());
+            addToken(choices, key + ".earth-declared", Boolean.toString(reference.getEarthId() != null));
+            if (reference.getEarthId() != null) addToken(choices, key + ".earth", reference.getEarthId());
+            addToken(choices, key + ".bond-permitted", Boolean.toString(reference.isEarthBondPermitted()));
+        }
+        for (PowerDomainContract.Rail rail : contract.getRails().values()) {
+            String key = "power.rail." + rail.getId();
+            addToken(choices, key + ".reference", rail.getReferenceId());
+            addToken(choices, key + ".storage", rail.getStorageRequirement().name());
+        }
+        for (PowerDomainContract.Source source : contract.getSources().values()) {
+            String key = "power.source." + source.getId();
+            addToken(choices, key + ".rail", source.getRailId());
+            addToken(choices, key + ".voltage", PowerDomainContract.range(source.getVoltageEnvelope()));
+            addToken(choices, key + ".capacity", PowerDomainContract.scalar(source.getDeclaredCapacityAmps()));
+            addToken(choices, key + ".resistance", PowerDomainContract.scalar(source.getSeriesResistanceOhms()));
+            addToken(choices, key + ".implemented-limit", PowerDomainContract.scalar(source.getImplementedCurrentLimitAmps()));
+            addToken(choices, key + ".drive", source.getDrive().name());
+        }
+        for (PowerDomainContract.BackfeedPath path : contract.getBackfeedPaths().values()) {
+            String key = "power.backfeed." + path.getId();
+            addToken(choices, key + ".from", path.getFromRailId());
+            addToken(choices, key + ".to", path.getToRailId());
+            addToken(choices, key + ".maximum", PowerDomainContract.scalar(path.getMaximumCurrentAmps()));
+            addToken(choices, key + ".permitted", Boolean.toString(path.isPermitted()));
+        }
     }
 
     static BoundedAssemblyPlan decodeAndResolve(String encoded) {

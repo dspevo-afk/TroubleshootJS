@@ -5,6 +5,7 @@ import java.util.Vector;
 class ExternalPowerSimulationBinding {
     private final Vector<CircuitElm> backingElements;
     private final ExternalPowerControl control;
+    private long connectionRevision;
 
     ExternalPowerSimulationBinding(CircuitElm backingElement) {
 	Vector<CircuitElm> elements = new Vector<CircuitElm>();
@@ -37,8 +38,12 @@ class ExternalPowerSimulationBinding {
     void setConnected(boolean connected) {
 	if (control == null)
 	    throw new IllegalStateException("External power input has no control");
+	boolean changed = control.isConnected() != connected;
 	control.setConnected(connected);
+	if (changed) connectionRevision++;
     }
+
+    long getConnectionRevision() { return connectionRevision; }
 
     boolean isConnected() {
 	return control != null && control.isConnected();

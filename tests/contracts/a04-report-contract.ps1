@@ -10,7 +10,7 @@ $parseErrors = $null
 $ast = [Management.Automation.Language.Parser]::ParseFile($source, [ref]$tokens, [ref]$parseErrors)
 if ($parseErrors.Count -ne 0) { throw 'Browser report reader has syntax errors.' }
 # Load only pure report/route functions; never execute preview/browser setup.
-foreach ($name in @('Get-ExactReportText', 'Test-JsonReport', 'Test-A04Report', 'Test-ControlledReport',
+foreach ($name in @('Get-ExactReportText', 'Test-JsonReport', 'Test-A04Report', 'Test-A06Report', 'Test-ControlledReport',
         'Test-RouteReady', 'Get-RouteDefinitions')) {
     $found = @($ast.FindAll({ param($node)
         $node -is [Management.Automation.Language.FunctionDefinitionAst] -and
@@ -245,5 +245,28 @@ $controlledReports=[pscustomobject]@{ verification='PASS:task49';task49=(Encode-
 Assert-ReportContract (Test-RouteReady 'task49' $controlledReports) 'Current controlled route rejected.'
 $controlledReports.verification='RUNNING:task49'
 Assert-ReportContract (-not (Test-RouteReady 'task49' $controlledReports)) 'Unfinished controlled route accepted.'
+$power = [ordered]@{protocol='TSJ-A06-POWER-1';status='PASS';pureAssertions=80;runtimeAssertions=30;
+    backfeedVolts=2.5;originalOwnerRestored=$true;sourceIsolation=$true;staleOwnerRejected=$true;
+    differentialReference=$true;earthConnectionNotInvented=$true;candidateCleanup='PASS';vectors='A06-POWER-VECTORS-1;'}
+Assert-ReportContract (Test-A06Report (Encode-Report $power)) 'Valid A06 report rejected.'
+foreach ($field in @('originalOwnerRestored','sourceIsolation','staleOwnerRejected','differentialReference','earthConnectionNotInvented')) {
+    $bad=Copy-Report $power; $bad.$field=$false
+    Assert-ReportContract (-not (Test-A06Report (Encode-Report $bad))) "A06 false $field accepted."
+    $bad=Copy-Report $power; $bad.$field='true'
+    Assert-ReportContract (-not (Test-A06Report (Encode-Report $bad))) "A06 string $field accepted."
+}
+foreach ($v in @('2.5',0.0,5.0,$null)) {
+    $bad=Copy-Report $power;$bad.backfeedVolts=$v
+    Assert-ReportContract (-not (Test-A06Report (Encode-Report $bad))) 'Invalid backfeed reading accepted.'
+}
+$bad=Copy-Report $power;$bad.status='FAIL'
+Assert-ReportContract (-not (Test-A06Report (Encode-Report $bad))) 'Failed A06 accepted.'
+$bad=Copy-Report $power;$bad.protocol='TSJ-A06-POWER-0'
+Assert-ReportContract (-not (Test-A06Report (Encode-Report $bad))) 'Retired A06 protocol accepted.'
+$bad=Copy-Report $power;$bad.candidateCleanup='FAIL'
+Assert-ReportContract (-not (Test-A06Report (Encode-Report $bad))) 'Uncleaned A06 accepted.'
+$powerReports=[pscustomobject]@{verification='RUNNING:a06';a06=(Encode-Report $power)}
+Assert-ReportContract (-not (Test-RouteReady 'a06' $powerReports)) 'Unfinished A06 accepted.'
+Assert-ReportContract (@(Get-RouteDefinitions 'A06' $false).Count -eq 6) 'A06 selected corpus changed.'
 Write-Output ('PASS: A04 report contracts assertions=' + $script:assertions)
 exit 0

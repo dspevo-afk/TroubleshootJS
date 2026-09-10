@@ -5,6 +5,8 @@ final class StoredEnergyDeveloperVerifier {
     private StoredEnergyDeveloperVerifier() { }
 
     static void verify(CirSim sim) {
+        require(sim.isGeneratedRuntimeSettled() && !sim.generatedVerificationRunning,
+            "Stored-energy proof requires the settled outer verification boundary");
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
         require(instance != null && RcDelayGenerator.FAMILY_ID.equals(instance.getCircuitFamilyId()),
             "Stored-energy verifier requires RC board");
@@ -26,6 +28,14 @@ final class StoredEnergyDeveloperVerifier {
         ProbeTarget r1OutputProbe = probe(sim, r1Output);
         CircuitMeasurementAdapter adapter = new CircuitMeasurementAdapter(sim);
 
+        // Admission/other proof clients may leave this otherwise valid RC owner OFF.
+        // Establish the powered fixture through the real control seam before asserting it.
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "stored-energy-initial-powered");
+        require(sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
+            instance.getExternalPowerBindings().areAllConnected(),
+            "Stored-energy powered fixture did not connect its real supplies");
         require(sim.getActiveMeasurementReadiness(output, ground) ==
             ActiveMeasurementReadiness.POWER_OFF, "Powered RC board allowed an active meter");
         sim.instrumentController.setResistanceProbesForDeveloperVerification(outputProbe,

@@ -7,14 +7,14 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **A05: Functional-role variants, repeated channels and genuine healthy support**<br>
-**Current checkpoint:** **A05 COMPLETE - QUALIFIED**. Normal publication follows final Git reconciliation. **A06** is the recommended next unstarted task and requires separate authorization.
+**Latest completed task:** **A06: Power, reference, isolation and operating-state contracts**<br>
+**Current checkpoint:** **A06 COMPLETE - QUALIFIED** under the owner's direct/solo instruction. Normal publication follows final reconciliation. **A07** is the recommended next unstarted task and requires separate authorization.
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
-This is a self-contained replacement roadmap, not an amendment to apply over the old one. No companion dependency file, old task report, Library attachment, external roadmap or historical appendix is required to interpret its future scope. Repository source/evidence paths in Section 10 establish the review basis, not mandatory frozen outputs. The roadmap does not itself execute changes; R00 was separately authorized and completed; A05 was separately authorized and is now qualified. Future tasks require their own authorization.
+This is a self-contained replacement roadmap, not an amendment to apply over the old one. No companion dependency file, old task report, Library attachment, external roadmap or historical appendix is required to interpret its future scope. Repository source/evidence paths in Section 10 establish the review basis, not mandatory frozen outputs. The roadmap does not itself execute changes; R00 was separately authorized and completed; A05 and A06 were separately authorized and are now qualified. Future tasks require their own authorization.
 
-The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. Eight are completed baseline entries, including A05, and 65 are unstarted feature/qualification nodes. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
+The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. Nine are completed baseline entries, including A06, and 64 are unstarted feature/qualification nodes. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
 
 ## Navigation
 
@@ -837,7 +837,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A06 · Power, reference, isolation and operating-state contracts
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE - QUALIFIED. Current power/reference/provider contracts, real backfeed and meter lifecycle proof, affected repair/RC regressions, final JDK8/GWT build and ordinary player smoke pass. Direct self-review only, per the user's solo override; no independent-model review claimed.
 
 **Hard prerequisites:** [R00](#m-r00)
 
@@ -862,6 +862,8 @@ The shared current-only policy and validation rules apply to every card. There i
 **Expected extension and scale effects:** Pluggability: source and instrument providers declare contracts. Scale: typed multi-domain composition.
 
 **Future provider contract:** Keep power/reset/clock/brownout, thresholds, finite drive, loading and partial-power assumptions representable. Unknown or out-of-envelope state is explicit. Use a small current consumer/canary, not an unused MCU framework.
+
+**Delivered scope/evidence:** See [A06 evidence](task-evidence/A06/README.md). Native A06 140 assertions; 82 shared compiled decisions and 44 runtime assertions. Current family retains one declared joined return; Earth scope, physical current limiter, arbitrary source/storage models and A07 numerical-reference sensitivity are not claimed. Unknown state fails closed.
 
 **Direct hard dependents:** [A07](#m-a07), [A09](#m-a09), [P03](#m-p03), [U02](#m-u02), [E01](#m-e01), [E05](#m-e05), [E09](#m-e09), [E12](#m-e12), [MCU-1](#m-mcu-1).
 

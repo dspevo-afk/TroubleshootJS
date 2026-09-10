@@ -1,0 +1,50 @@
+{
+  "protocol": "A06-NATIVE-BUILD-1",
+  "baseCommit": "0acb8f95a2573a98f84a93ece030e3f366d40051",
+  "sourceDigest": "0ca528d1cca6aed4ca6fc18a0bc04db8b019360e055d942f2730beb1aa35678a",
+  "scriptDigest": "a21eb1ee123aff689b937b20673af54e2f17f7e45cdedb6cf38cc28a565a0f97",
+  "native": {
+    "status": "PASS",
+    "exitCode": 0,
+    "command": "scripts/verify-current-contracts.ps1 -JavaHome <repository JDK8> -PythonExe <verified CPython> -ReceiptOutputPath <owned temp>/native-04.txt",
+    "javaSuites": 16,
+    "a06Assertions": 140,
+    "reportAssertions": 215,
+    "results": [
+      "PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus",
+      "PASS: Task44 9 groups, 247 assertions; no simulator dependency",
+      "PASS: Task45 202 assertions",
+      "PASS: current resistive assembly contracts 241 assertions",
+      "PASS: current controlled-indicator contracts 201 assertions",
+      "PASS: current switched-low-side compatibility 16 assertions",
+      "PASS: current value synthesis 188 assertions",
+      "PASS: A05 role providers 246 assertions",
+      "PASS: A06 power contracts assertions=140",
+      "PASS: A03IdentityContractTest assertions=30",
+      "PASS: A02CandidateContractTest",
+      "PASS: A02GeometryContractTest 32 assertions",
+      "PASS: A02ReplayContractTest assertions=148",
+      "PASS: ElectricalUnitPackageMapContractTest assertions=37",
+      "PASS: A04ConstructionContractTest assertions=592",
+      "PASS: A04PhysicalDeclarationContractTest assertions=5270",
+      "PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact",
+      "PASS: current value synthesis oracle 9 seeds; bounded5/schema2 repeated-channel equations exact",
+      "PASS: A05 independent role selection oracle 6 seeds",
+      "PASS: A04 report contracts assertions=215",
+      "PASS: current contracts; 16 Java suites, independent seed/value/role oracles and report protocol."
+    ],
+    "cleanup": "PASS",
+    "limitation": "Existing unrelated Task35 fail-closed JVM stub does not qualify actual GWT runtime."
+  },
+  "build": {
+    "status": "PASS",
+    "exitCode": 0,
+    "command": "scripts/build.ps1 -JavaHome <repository JDK8> -Style OBF -Target Compile",
+    "jdk": "8u502",
+    "gwt": "2.7.0",
+    "permutations": 5,
+    "compileSeconds": 49.695,
+    "linkSeconds": 1.16,
+    "sourceFilesChecked": 924
+  }
+}

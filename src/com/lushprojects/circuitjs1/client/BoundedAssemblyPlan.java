@@ -43,6 +43,7 @@ final class BoundedAssemblyPlan {
     private final String semanticSignature;
     private final DeviceBusBindings deviceBuses;
     private final ElectricalRealizationSpec electricalRealizationSpec;
+    private final PowerDomainContract powerDomainContract;
 
     private BoundedAssemblyPlan(BoundedAssemblyRequest request,
             BlockNamespace namespace,
@@ -79,7 +80,10 @@ final class BoundedAssemblyPlan {
         this.electricalRealizationSpec = ElectricalRealizationSpec.fromResolved(
                 request, namespace, this.blocks, this.deviceAdapters, this.netAliases,
                 controlledIndicator);
+        this.powerDomainContract = BoundedPowerDomainContracts.fromPlan(this);
     }
+
+    PowerDomainContract getPowerDomainContract() { return powerDomainContract; }
 
     /** Resolve the supplied request using only the typed local registry. */
     static BoundedAssemblyPlan resolve(BoundedAssemblyRequest request) {

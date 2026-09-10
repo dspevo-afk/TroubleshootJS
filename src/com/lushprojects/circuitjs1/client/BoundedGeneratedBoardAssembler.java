@@ -462,6 +462,8 @@ final class BoundedGeneratedBoardAssembler {
             candidates = new Vector<GeneratedFaultCandidate>(
                 physicalReceipt.getCandidates());
             selectedCandidate = physicalReceipt.getSelectedCandidate();
+            runtime.registerCapability(new PowerDomainRuntimeCapability(
+                plan.getPowerDomainContract(), board, powerBindings));
         }
 
         private void validateContributionRequirements(
