@@ -16,6 +16,8 @@ class GeneratedChallengeController {
     private GeneratedCustomerRetestResult customerRetestResult;
     private Object currentRetestRequest = new Object();
     private boolean operationInProgress;
+    private Object diagnosticAdmissionAttempt;
+    private GeneratedDiagnosticProofReceipt diagnosticProof;
     interface RetestCompletionDispatch { void dispatch(Runnable completion); }
     private RetestCompletionDispatch retestCompletionDispatch;
 
@@ -33,6 +35,39 @@ class GeneratedChallengeController {
         definition = instance.getChallengeDefinition();
         validateDefinition();
         faults = new GeneratedFaultController(sim, instance, definition.getFaultBinding());
+    }
+
+    Object beginDiagnosticAdmission() {
+        if (!isCurrentOwner() || instance.isDeveloperOnlyFaultRoute() ||
+                diagnosticAdmissionAttempt != null || operationInProgress)
+            throw new IllegalStateException("Diagnostic admission requires an idle current normal owner");
+        diagnosticProof = null;
+        diagnosticAdmissionAttempt = new Object();
+        return diagnosticAdmissionAttempt;
+    }
+
+    void completeDiagnosticAdmission(GeneratedDiagnosticProofReceipt receipt, Object attempt) {
+        if (receipt == null || attempt == null || diagnosticAdmissionAttempt != attempt)
+            throw new IllegalStateException("Stale, empty or already consumed diagnostic admission attempt");
+        receipt.validateForAdmission(sim, instance, this, attempt);
+        diagnosticProof = receipt;
+        diagnosticAdmissionAttempt = null;
+    }
+
+    void abortDiagnosticAdmission(Object attempt) {
+        if (attempt != null && diagnosticAdmissionAttempt == attempt) {
+            diagnosticAdmissionAttempt = null;
+            diagnosticProof = null;
+        }
+    }
+
+    /** Historical evidence for THIS controller, not authority for a later admission. */
+    GeneratedDiagnosticProofReceipt getDiagnosticProofReceipt() { return diagnosticProof; }
+
+    Vector<GeneratedDiagnosticSolvabilityEvidence> getDiagnosticProofEvidence() {
+        if (diagnosticProof == null)
+            throw new IllegalStateException("This owner has no completed production diagnostic proof");
+        return diagnosticProof.getEvidence();
     }
 
     void begin() {

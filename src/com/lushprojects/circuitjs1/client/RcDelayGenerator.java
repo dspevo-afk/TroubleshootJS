@@ -190,7 +190,7 @@ final class RcDelayGenerator {
             new GeneratedChallengeDefinition("RC_DELAY_STARTUP", FAMILY_ID, CHARGE_DELAY_VARIANT,
                 seed, scenarios, "Repair verified. The controller delay is operating normally.",
             fault, faultBinding, behavior), new RcDelayFamilyState(temporal), runtime, temporal,
-            false, faults);
+            false, faults, null, new RcDelayDiagnosticProvider(seed));
     }
 
     private BoardPhysicalSpecifications createSpecifications(RcValues values) {

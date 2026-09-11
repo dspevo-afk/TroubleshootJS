@@ -235,7 +235,7 @@ class LedIndicatorGenerator {
             operationalStates, new GeneratedChallengeDefinition("LED_INDICATOR_NO_LIGHT",
                 "LED_INDICATOR", DIRECT_SERIES_VARIANT, seed, scenarios, fault,
                 faultBinding, behaviorContract), new LedIndicatorFamilyState(),
-            physicalRuntime, null, false, faultCandidates);
+            physicalRuntime, null, false, faultCandidates, null, new LedIndicatorDiagnosticProvider(seed));
     }
 
     private TroubleshootBoard createBoard() {

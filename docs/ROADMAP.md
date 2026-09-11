@@ -8,7 +8,7 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
 **Latest completed task:** **A08: Multi-provider mutation and failure-isolated physical lifecycle**<br>
-**Current checkpoint:** **A08 COMPLETE - QUALIFIED**. See [A08 acceptance](task-evidence/A08/README.md) for final native/build/compiled/player checks, ownership corrections and explicit limits. **A09** is the next unstarted task and requires separate authorization.
+**Current checkpoint:** **A09 IMPLEMENTED - PUBLICATION AUTHORIZED / POST-PUSH REVIEW PENDING**. The player-visible OL correction and real native diagnosis/repair/retest gate pass. The owner explicitly authorized publishing this candidate before independent review and will review it afterward. A10 remains unstarted; this is not milestone acceptance.
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -945,7 +945,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A09 · Production fault hypotheses and executable diagnostic providers
 
-**Status:** UNSTARTED.
+**Status:** IMPLEMENTED - PUBLICATION AUTHORIZED / POST-PUSH REVIEW PENDING. Native contracts, five-permutation GWT build, compiled A09 proof, affected A08/Task49 routes, and real native player diagnosis/repair/retest pass. Normal/Reserve independent review attempts exhausted quota; the owner explicitly authorized publication first and post-push review afterward. A10 remains unstarted; this is not milestone acceptance.
 
 **Hard prerequisites:** [A02](#m-a02), [A04](#m-a04), [A06](#m-a06), [A07](#m-a07)
 

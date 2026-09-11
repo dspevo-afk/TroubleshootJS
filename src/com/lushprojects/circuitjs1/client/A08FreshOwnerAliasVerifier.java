@@ -149,7 +149,7 @@ final class A08FreshOwnerAliasVerifier {
             source.getComponentBindings(), source.getExternalPowerBindings(), source.getConnectionBindings(),
             source.getBehaviorContract(), source.getPcbLayout(), source.getPhysicalSpecifications(), source.getFaultBinding(),
             source.getOperationalStates(), source.getChallengeDefinition(), family, source.getPhysicalBoardRuntime(),
-            temporal, source.isDeveloperOnlyFaultRoute(), source.getFaultCandidates());
+            temporal, source.isDeveloperOnlyFaultRoute(), source.getFaultCandidates(), null, source.getDiagnosticProvider());
     }
 
     private static GeneratedBoardInstance controlled() {
@@ -168,7 +168,9 @@ final class A08FreshOwnerAliasVerifier {
             source.getComponentBindings(), source.getExternalPowerBindings(), source.getConnectionBindings(),
             boardBehavior, source.getPcbLayout(), source.getPhysicalSpecifications(), source.getFaultBinding(),
             source.getOperationalStates(), definition, source.getFamilyState(), source.getPhysicalBoardRuntime(),
-            source.getTemporalBehavior(), source.isDeveloperOnlyFaultRoute(), source.getFaultCandidates());
+            source.getTemporalBehavior(), source.isDeveloperOnlyFaultRoute(), source.getFaultCandidates(), null,
+            boardBehavior instanceof GeneratedDiagnosticProvider ?
+                (GeneratedDiagnosticProvider)boardBehavior : source.getDiagnosticProvider());
     }
 
     private GeneratedBoardInstance diode(long seed) { return new DiodeProtectedIndicatorGenerator().generate(seed); }
@@ -198,7 +200,7 @@ final class A08FreshOwnerAliasVerifier {
             source.getComponentBindings(), source.getExternalPowerBindings(), source.getConnectionBindings(),
             source.getBehaviorContract(), layout, source.getPhysicalSpecifications(), source.getFaultBinding(),
             states, source.getChallengeDefinition(), source.getFamilyState(), source.getPhysicalBoardRuntime(),
-            temporal, source.isDeveloperOnlyFaultRoute(), source.getFaultCandidates());
+            temporal, source.isDeveloperOnlyFaultRoute(), source.getFaultCandidates(), null, source.getDiagnosticProvider());
     }
 
     private static PcbBoardLayout copyLayout(PcbBoardLayout source, boolean sharedOutline, boolean sharedTrace) {

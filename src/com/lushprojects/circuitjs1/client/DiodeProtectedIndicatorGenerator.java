@@ -173,7 +173,7 @@ class DiodeProtectedIndicatorGenerator {
             new GeneratedChallengeDefinition("DIODE_INDICATOR_NO_LIGHT", FAMILY_ID,
                 DIRECT_SERIES_VARIANT, seed, scenarios, fault, faultBinding, behaviorContract),
             new DiodeProtectedIndicatorFamilyState(), physicalRuntime, null, includeDeveloperShort,
-            faultCandidates);
+            faultCandidates, null, new DiodeProtectedIndicatorDiagnosticProvider(seed));
     }
 
     private DiodeElm createDefaultDiode(int x, int y, int x2, int y2) {

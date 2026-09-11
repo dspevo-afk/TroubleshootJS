@@ -250,25 +250,10 @@ public final class A02CandidateContractTest {
 
     private static GeneratedBoardInstance regenerate(GeneratedBoardInstance owner,
             GeneratedFaultCandidate candidate) {
-        try {
-            Class<?> routeClass = Class.forName(
-                "com.lushprojects.circuitjs1.client.Task41DeveloperVerifier$Route");
-            java.lang.reflect.Constructor<?> constructor = routeClass.getDeclaredConstructor(
-                String.class, long.class, GeneratedFaultType.class, String.class,
-                BoundedAssemblyRequest.class, String.class);
-            constructor.setAccessible(true);
-            Object route = constructor.newInstance(owner.getCircuitFamilyId(), owner.getSeed(),
-                candidate.getFault().getType(), candidate.getFault().getTargetComponentId(),
-                null, candidate.getHypothesisKey());
-            java.lang.reflect.Method generate = routeClass.getDeclaredMethod("generate");
-            generate.setAccessible(true);
-            return (GeneratedBoardInstance) generate.invoke(route);
-        } catch (Exception failure) {
-            throw new AssertionError("actual Task41 route regeneration: " + failure);
-        }
+        return owner.getDiagnosticProvider().generateHypothesis(candidate);
     }
 
-    /** Exercise Task41's actual non-null-owner branch with a disposable catalog. */
+    /** Exercise the production service actual non-null-owner enumeration with a disposable catalog. */
     @SuppressWarnings("unchecked")
     private static void testActualOwnerEnumeration(GeneratedBoardInstance owner) {
         Vector<GeneratedFaultCandidate> catalog = null;
@@ -279,17 +264,6 @@ public final class A02CandidateContractTest {
             catalogField.setAccessible(true);
             catalog = (Vector<GeneratedFaultCandidate>) catalogField.get(owner);
             saved = new Vector<GeneratedFaultCandidate>(catalog);
-            Class<?> routeClass = Class.forName(
-                "com.lushprojects.circuitjs1.client.Task41DeveloperVerifier$Route");
-            java.lang.reflect.Constructor<?> constructor = routeClass.getDeclaredConstructor(
-                String.class, long.class, GeneratedFaultType.class);
-            constructor.setAccessible(true);
-            Object route = constructor.newInstance(owner.getCircuitFamilyId(), owner.getSeed(), null);
-            java.lang.reflect.Method enumerate = Task41DeveloperVerifier.class.getDeclaredMethod(
-                "candidateRoutes", routeClass, GeneratedBoardInstance.class);
-            enumerate.setAccessible(true);
-            java.lang.reflect.Field keyField = routeClass.getDeclaredField("hypothesisKey");
-            keyField.setAccessible(true);
             catalog.clear();
             for (GeneratedFaultCandidate candidate : saved)
                 if ("R1".equals(candidate.getFault().getTargetComponentId()) && candidate.isAdmitted())
@@ -301,20 +275,19 @@ public final class A02CandidateContractTest {
                 GeneratedFaultType.RESISTOR_OPEN, "R1", owner.getCircuitFamilyId(), owner.getSeed()),
                 nonAdmissibleServiceability("R1"), true);
             catalog.add(0, bad);
-            Vector<?> routes = (Vector<?>) enumerate.invoke(null, route, owner);
+            Vector<GeneratedFaultCandidate> routes = GeneratedDiagnosticProofService.hypothesesFor(owner);
             Vector<String> actualKeys = new Vector<String>();
-            for (Object candidateRoute : routes) actualKeys.add((String) keyField.get(candidateRoute));
+            for (GeneratedFaultCandidate candidateRoute : routes) actualKeys.add(candidateRoute.getHypothesisKey());
             java.util.Collections.sort(actualKeys);
             require(actualKeys.equals(GeneratedFaultServiceabilityAdmission.getHypothesisKeys(catalog)) &&
                 actualKeys.size() == 2, "actual proof enumeration lost same-owner hypotheses or admitted bad open");
             catalog.clear();
             catalog.add(bad);
             try {
-                enumerate.invoke(null, route, owner);
+                GeneratedDiagnosticProofService.hypothesesFor(owner);
                 throw new AssertionError("empty admitted owner received a detached fallback");
-            } catch (java.lang.reflect.InvocationTargetException expected) {
-                require(expected.getCause() instanceof IllegalStateException &&
-                    expected.getCause().getMessage().contains("live owner has no admitted"),
+            } catch (IllegalStateException expected) {
+                require(expected.getMessage().contains("live owner has no admitted"),
                     "empty live population failed at the wrong boundary");
             }
         } catch (Exception failure) {

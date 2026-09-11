@@ -205,7 +205,7 @@ final class Task49DeveloperVerifier {
         String support = verifyBrokenSupport(sim, board);
 
         Vector<GeneratedDiagnosticSolvabilityEvidence> evidence =
-            Task41DeveloperVerifier.getLastControlledAdmissionEvidenceForDeveloperVerification();
+            sim.getGeneratedChallengeController().getDiagnosticProofEvidence();
         String role = roleVector(plan, seed);
         String values = channelValues(plan);
         String valueCase = pureValueCase(request, plan);
@@ -292,7 +292,7 @@ final class Task49DeveloperVerifier {
             !FreshGeneratedRuntimeInstallation.isInProgress(sim),
             "private admission guard leaked");
         Vector<GeneratedDiagnosticSolvabilityEvidence> executed =
-            Task41DeveloperVerifier.getLastControlledAdmissionEvidenceForDeveloperVerification();
+            sim.getGeneratedChallengeController().getDiagnosticProofEvidence();
         require(executed.size() == plan.getDecisionOwners().size(),
             "normal admission did not execute every declared owner hypothesis");
         for (GeneratedDiagnosticSolvabilityEvidence proof : executed) {

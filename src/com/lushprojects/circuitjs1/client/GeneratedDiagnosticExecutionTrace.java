@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 import java.util.Collections;
 import java.util.Vector;
 
-/** Stable physical repair semantics used only for developer evidence. */
+/** Stable physical repair semantics used by production proof and developer falsifiers. */
 final class GeneratedDiagnosticRepairSemantics {
     private final String ownerId;
     private final String locusTypeId;
@@ -80,7 +80,7 @@ final class GeneratedDiagnosticRepairSemantics {
     }
 }
 
-/** Immutable record of operations actually exercised by the live verifier. */
+/** Immutable record of operations actually exercised by the diagnostic executor. */
 final class GeneratedDiagnosticExecutionTrace {
     private final Vector<String> executedActionIds;
     private final Vector<String> executedRepairActionIds;

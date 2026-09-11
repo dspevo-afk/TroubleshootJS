@@ -78,6 +78,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'A05RoleContractTest'; Marker = 'A05 role providers ' },
         @{ Name = 'A06PowerContractTest'; Marker = 'A06 power contracts ' },
         @{ Name = 'A07ExecutionContractTest'; Marker = 'A07 execution contracts ' },
+        @{ Name = 'A09DiagnosticContractTest'; Marker = 'A09 diagnostic contracts ' },
         @{ Name = 'A03IdentityContractTest'; Marker = 'A03IdentityContractTest ' },
         @{ Name = 'A02CandidateContractTest'; Marker = 'A02CandidateContractTest' },
         @{ Name = 'A02GeometryContractTest'; Marker = 'A02GeometryContractTest ' },
@@ -144,6 +145,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         (New-Object Text.UTF8Encoding($false)))
     $oracles = @(
         @{ File = 'task46_seed_reference.py'; Arguments = @(); Marker = 'Task46 independent seed oracle ' },
+        @{ File = 'a09_diagnostic_contract.py'; Arguments = @(); Marker = 'A09 independent diagnostic contracts ' },
         @{ File = 'task49_value_synthesis_reference.py'; Arguments = @($valuePath, $rolesPath); Marker = 'current value synthesis oracle ' })
     foreach ($oracle in $oracles) {
         $oracleArguments = @((Join-Path $repositoryRoot ('tests/contracts/' + $oracle.File))) + $oracle.Arguments

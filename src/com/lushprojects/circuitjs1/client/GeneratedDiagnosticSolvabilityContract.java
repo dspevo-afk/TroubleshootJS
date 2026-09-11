@@ -41,11 +41,6 @@ final class GeneratedDiagnosticSolvabilityContract {
         this.admissionMode = admissionMode;
     }
 
-    static GeneratedDiagnosticSolvabilityContract forGeneratedBoard(String familyId,
-            String topologyVariantId, long seed, Vector<GeneratedFaultCandidate> candidates) {
-        return forGeneratedBoard(familyId, topologyVariantId, seed, candidates, null);
-    }
-
     /**
      * Normal contract construction for a device-owned diagnostic provider.
      * The provider supplies the plan after assembly resolution; family strings
@@ -53,19 +48,16 @@ final class GeneratedDiagnosticSolvabilityContract {
      */
     static GeneratedDiagnosticSolvabilityContract forGeneratedBoard(String familyId,
             String topologyVariantId, long seed, Vector<GeneratedFaultCandidate> candidates,
-            GeneratedDiagnosticExecutionProvider provider) {
+            GeneratedDiagnosticProvider provider) {
         if (familyId == null || topologyVariantId == null || candidates == null)
             throw new IllegalArgumentException("Incomplete diagnostic solvability contract");
-        Vector<GeneratedDiagnosticPlan> plans;
-        if (provider == null) {
-            plans = GeneratedDiagnosticPlanCatalog.forFamily(familyId);
-        } else {
-            GeneratedDiagnosticPlan plan = provider.getDiagnosticPlan();
-            if (plan == null)
-                throw new IllegalArgumentException("Diagnostic provider supplied no plan");
-            plans = new Vector<GeneratedDiagnosticPlan>();
-            plans.add(plan);
-        }
+        if (provider == null)
+            throw new IllegalArgumentException("Generated challenge has no production diagnostic provider");
+        GeneratedDiagnosticPlan plan = provider.getDiagnosticPlan();
+        if (plan == null)
+            throw new IllegalArgumentException("Diagnostic provider supplied no plan");
+        Vector<GeneratedDiagnosticPlan> plans = new Vector<GeneratedDiagnosticPlan>();
+        plans.add(plan);
         Vector<String> hypothesisKeys = GeneratedDiagnosticSolvabilityAdmission
             .getHypothesisKeys(candidates);
         GeneratedDiagnosticOwnerDiversity ownerDiversity =
@@ -120,8 +112,12 @@ final class GeneratedDiagnosticSolvabilityContract {
         if (GeneratedDiagnosticSolvabilityAdmission.getAdmittedCandidateCount(
                 instance.getFaultCandidates()) == 0 || plans.isEmpty())
             throw new IllegalArgumentException("Generated challenge has no diagnostic solvability proof");
-        for (GeneratedDiagnosticPlan plan : plans)
+        for (GeneratedDiagnosticPlan plan : plans) {
             GeneratedDiagnosticSolvabilityAdmission.validatePlan(plan);
+            for (String operation : plan.getPlayerOperationIds())
+                if (instance.getOperationCatalog().find(operation) == null)
+                    throw new IllegalArgumentException("Unavailable diagnostic input/player operation: " + operation);
+        }
     }
 
     /**

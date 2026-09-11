@@ -1,6 +1,58 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A08 COMPLETE - QUALIFIED
+## Current checkpoint - A09 CORRECTED - PUBLICATION AUTHORIZED / POST-PUSH REVIEW PENDING
+
+- **Scope:** Authorized player-visible resistance/OL correction and roadmap reconciliation. The prior correction is present and preserved; no new production source edits were required on resumption. A10 remains unstarted.
+- **Base:** `667cfd16da0272ae736cd0df6961e8cb313e0f1f`, branch `codex/task43p-final-recovery`. Owner explicitly authorized commit/push before independent review; publication is pending this handoff. No independent PASS is claimed.
+- **Fix:** Explicit nonnumeric OL outcomes unify finite over-range and genuine open resistance. Invalid/incomplete measurements fail closed; the inclusive 10 MOhm boundary and in-range tolerances are unchanged.
+- **Fresh resumption tests:** PASS, exit 0: 18 Java suites; A09 302 assertions / 40 replays, independent A09 contracts 143, existing report contracts 466. Actual A09 report reader PASS 144; maintained A08/Task49 report readers PASS; git diff --check PASS.
+- **Retained final-code evidence:** JDK 8u502/GWT five-permutation OBF build; compiled A09 positive and forced-negative; A08 and Task49 browser passes. All 610 Java sources, five readers/tests and five compiled permutation hashes were rechecked with zero mismatches. These build/browser executions were not rerun during resumption.
+- **Compiled A09:** 97 assertions, eleven rejection cases, five actual OL observations; no page errors.
+- **Review:** DEFERRED BY OWNER. Normal Luna and Reserve attempts hit usage limits. On 2026-09-11 the owner explicitly authorized publication first and will review the published candidate afterward. No independent PASS is claimed.
+- **Native player:** PASS on the normal LED seed-0 production route using guarded Win32 mouse/keyboard input. The unrepaired customer retest failed as expected, R1 measured OL with board power OFF, the failed resistor was removed, the player-visible catalog selected 330 Ohm +/-5%, the replacement measured 330 Ohm, board power was restored, and the customer retest passed. Nineteen native input records executed with zero page errors.
+- **Screenshots:** Inspected `task-evidence/A09/player-fault-ol.png`, `player-repaired-ohms.png`, and `player-retest-pass.png`. Exact actions/results: `task-evidence/A09/player-workflow.json`.
+- **Resources:** Retry browser exit and loopback server-thread termination verified. Temporary evidence is retained outside the repository; pre-existing Python caches and all prior uncommitted A09 work are preserved.
+- **Evidence:** [A09 checkpoint and acceptance](task-evidence/A09/README.md). Successful native retry evidence is under `native-retry-20260911` within the correction scratch recorded in `acceptance.json`.
+- **Next:** Commit and push the qualified A09 candidate as explicitly authorized, verify the remote SHA, then perform post-push review. A10 remains unstarted until that review is reconciled.
+
+## Historical checkpoint - A09 IMPLEMENTED - VALIDATION BLOCKED
+
+- **Authorization/base:** Owner requested A09 directly through Desktop Commander.
+  Work is on `codex/task43p-final-recovery`, above
+  `667cfd16da0272ae736cd0df6961e8cb313e0f1f`. No commit, push or success email.
+- **Delivered locally:** Production diagnostic proof service; six leaf provider
+  contributions and composed NPN/NMOS channel provider; immutable answer-blind
+  observation programs; deterministic canonical hypothesis replay; actual
+  measurement/physical-repair/customer-retest execution; controller-local single-use
+  proof receipts; independent equivalence/schema and provider-failure falsifiers.
+  Task41 is a developer client, not the normal production admission dispatcher.
+- **Native:** Fresh PASS, exit 0: 18 Java suites, A09 285 assertions / 40 replays,
+  independent A09 contracts 136 assertions, existing report contracts 466 assertions,
+  and maintained independent seed/value/role oracles.
+- **GWT:** Fresh PASS, exit 0, JDK 8u502, all five production permutations.
+- **Compiled A09:** PASS with zero page errors: 83 assertions, ten rejection cases,
+  fourteen retained leaf hypotheses / 128 samples, eight composed hypotheses /
+  1,056 samples across both supported driver variants. Maintained strict A09 reader
+  accepted the actual report (137 assertions). Real serial timings are in the report.
+- **Affected regressions:** Fresh explicit-debug A08 and Task49 browser routes PASS
+  with zero page errors. Strict-reader results and forced-negative status are recorded
+  in `task-evidence/A09/acceptance.json`; do not infer wrapper certification.
+- **Independent review:** BLOCKED. Normal Luna allowance was exhausted; the approved
+  Reserve reviewer inspected source but also exhausted its quota before returning
+  a final review. No independent PASS exists. Do not relabel the root's testing or
+  review as independent acceptance.
+- **Native player:** NOT RUN. The task-owned window could not be established as
+  foreground; exact-window safety withheld input. No native diagnosis/repair/retest
+  actions were performed. Developer execution is not a substitute for this gate.
+- **Current boundary:** A09 is not accepted; A10 remains unstarted. Preserve all
+  uncommitted changes and the pre-existing `tests/contracts/__pycache__/`. Complete
+  independent review and native player evidence, reconcile any findings, then run
+  affected final gates before closure/publication.
+- **Evidence/handoff:** [Actual reports, source hashes and limitations](task-evidence/A09/README.md).
+  External execution logs and `checkpoint.json` are under
+  `<OS temp>/troubleshootjs-a09-direct-0p9_ir7y`.
+
+## Historical checkpoint - A08 COMPLETE - QUALIFIED
 
 - **Scope/base:** A08 above `c5a0d5e31ce9848b0e06b7c04c25866034d3d090` on
   `codex/task43p-final-recovery`. A09 remains unstarted.
@@ -2528,7 +2580,7 @@ the child process as generic nonzero.
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Target Compile -Style OBF` — exit `0`; JDK `1.8.0_502`; all five GWT permutations compiled and linked.
 - PowerShell parser for `scripts/verify-browser.ps1` and `scripts/verify-task43p-source-experiments.ps1` — exit `0` (`PASS:verify-browser-parser`; source harness parser PASS).
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-renderer-boundary.ps1` — exit `0`.
-- `git -c safe.directory=C:/Users/david/Desktop/TroubleshootJS diff --check` — exit `0`.
+- `git diff --check` — exit `0`.
 - Final wrapper-owned repository-state audit — HEAD remained the published
   repair baseline; source/verifier SHA-256 is
   `2b3b5419ad75f6ecad8aabcd4ec0647a80dfb40b74339302aead380343a21296`, file

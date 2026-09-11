@@ -545,39 +545,94 @@ final class ControlledIndicatorDeviceBehavior
     }
 
     @Override
-    public void collectDcSamples(CirSim sim, GeneratedBoardInstance instance,
-            GeneratedDiagnosticPlan diagnosticPlan, Vector<GeneratedDiagnosticSample> samples,
-            GeneratedDiagnosticExecutionTrace.Builder trace,
-            GeneratedDiagnosticSampleSink sink) {
-        if (diagnosticPlan == null || samples == null || trace == null || sink == null)
-            throw new IllegalArgumentException("Incomplete controlled diagnostic sample context");
-        setAllChannels(sim, false);
+    public String getProviderId() { return "controlled-indicator-diagnostic@1"; }
+
+    @Override
+    public GeneratedDiagnosticProgram getObservationProgram() {
+        GeneratedDiagnosticPlan diagnostic = getDiagnosticPlan();
+        GeneratedDiagnosticProgram.Builder program = GeneratedDiagnosticProgram.builder(diagnostic);
+        // Establish each public input independently, without inspecting the fault decision.
+        for (ControlledIndicatorChannel channel : plan.getChannels())
+            program.input(channel.getLowOperationId());
         for (ControlledIndicatorChannel channel : plan.getChannels()) {
-            String highId = channel.getHighOperationId();
-            instance.invokeOperation(highId, sim);
-            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
-                "controlled-signature-" + highId);
-            trace.recordInputPowerTransition(highId);
-            trace.recordTemporalWaitSample(channel.getSampleId(true), 0.0);
-            appendSamples(sim, instance, diagnosticPlan, samples, trace, sink, highId + "_DC_");
-            String lowId = channel.getLowOperationId();
-            instance.invokeOperation(lowId, sim);
-            GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
-                "controlled-signature-" + lowId);
-            trace.recordInputPowerTransition(lowId);
-            trace.recordTemporalWaitSample(channel.getSampleId(false), 0.0);
-            appendSamples(sim, instance, diagnosticPlan, samples, trace, sink, lowId + "_DC_");
+            program.input(channel.getHighOperationId()).waitSample(channel.getSampleId(true), 0);
+            appendProgramSamples(program, diagnostic, channel.getHighOperationId() + "_DC_");
+            program.input(channel.getLowOperationId()).waitSample(channel.getSampleId(false), 0);
+            appendProgramSamples(program, diagnostic, channel.getLowOperationId() + "_DC_");
         }
+        program.power("BOARD_POWER_OFF", BoardPowerState.UNPOWERED).settle();
+        for (String[] pair : getIsolationPairs()) {
+            String suffix = getProbeLabel(pair[0]) + "_" + getProbeLabel(pair[1]);
+            program.measure(GeneratedDiagnosticProgram.Kind.RESISTANCE, "OHM_" + suffix, pair[0], pair[1]);
+            program.measure(GeneratedDiagnosticProgram.Kind.CONTINUITY, "CONTINUITY_" + suffix, pair[0], pair[1]);
+        }
+        return program.build();
     }
 
-    private void appendSamples(CirSim sim, GeneratedBoardInstance instance,
-            GeneratedDiagnosticPlan diagnosticPlan, Vector<GeneratedDiagnosticSample> samples,
-            GeneratedDiagnosticExecutionTrace.Builder trace, GeneratedDiagnosticSampleSink sink,
-            String prefix) {
-        for (String targetId : diagnosticPlan.getProbeTargetIds()) {
-            if (targetId.equals(diagnosticPlan.getReferenceTargetId())) continue;
-            sink.addSample(samples, prefix + getProbeLabel(targetId), sink.measureDc(
-                sim, instance, targetId, diagnosticPlan.getReferenceTargetId(), trace));
+    private void appendProgramSamples(GeneratedDiagnosticProgram.Builder program,
+            GeneratedDiagnosticPlan diagnostic, String prefix) {
+        for (String pad : diagnostic.getProbeTargetIds())
+            if (!pad.equals(diagnostic.getReferenceTargetId()))
+                program.measure(GeneratedDiagnosticProgram.Kind.DC_VOLTAGE,
+                    prefix + getProbeLabel(pad), pad, diagnostic.getReferenceTargetId());
+    }
+
+    @Override
+    public GeneratedBoardInstance generateHypothesis(GeneratedFaultCandidate hypothesis) {
+        if (hypothesis == null || !hypothesis.isAdmitted() ||
+                hypothesis.getFault().getType() != GeneratedFaultType.RESISTOR_OPEN ||
+                !plan.getDecisionOwners().containsValue(hypothesis.getFault().getTargetComponentId()))
+            throw new IllegalArgumentException("Diagnostic hypothesis is outside this composed recipe");
+        GeneratedBoardInstance result = BoundedGeneratedBoardAssembler.assembleForDiagnosticProof(
+            plan.getRequest(), hypothesis.getFault().getTargetComponentId()).getInstance();
+        require(result.getBehaviorContract() instanceof ControlledIndicatorDeviceBehavior,
+            "Diagnostic replay changed the composed behavior owner");
+        ControlledIndicatorDeviceBehavior replay =
+            (ControlledIndicatorDeviceBehavior)result.getBehaviorContract();
+        require(replay.getPlan().getRequest() == plan.getRequest(),
+            "Diagnostic replay lost its immutable versioned recipe");
+        validateDiagnosticReplay(result, replay, hypothesis.getFault().getTargetComponentId());
+        return result;
+    }
+
+    private static void validateDiagnosticReplay(GeneratedBoardInstance result,
+            ControlledIndicatorDeviceBehavior behavior, String targetComponentId) {
+        BoundedAssemblyPlan plan = behavior.getPlan();
+        require(plan.getDecisionOwners().containsValue(targetComponentId),
+            "Production diagnostic controlled proof selected an undeclared serviceable owner");
+        for (Map.Entry<String, String> owner : plan.getDecisionOwners().entrySet()) {
+            String componentId = owner.getValue();
+            PhysicalSpecification specification = result.getPhysicalSpecifications()
+                .getSpecification(componentId);
+            require(specification instanceof ResistorNameplate,
+                "Production diagnostic provider replay lost resistor specification: " + componentId);
+            ComposedBlockContribution.ResistorRecipe recipe = null;
+            for (Map.Entry<String, ComposedBlockContribution> block : plan.getBlocks().entrySet()) {
+                for (Map.Entry<String, ComposedBlockContribution.ResistorRecipe> resistor :
+                        block.getValue().getResistors().entrySet()) {
+                    if (componentId.equals(plan.idFor(block.getKey(),
+                            FunctionalBlockDescriptor.EntityKind.COMPONENT, resistor.getKey()))) {
+                        require(recipe == null,
+                            "Production diagnostic provider replay duplicated resistor owner: " + componentId);
+                        recipe = resistor.getValue();
+                    }
+                }
+            }
+            require(recipe != null && recipe.isMutable(),
+                "Production diagnostic provider replay owner is not a mutable resistor: " + componentId);
+            ResistorNameplate nameplate = (ResistorNameplate) specification;
+            require(componentId.equals(nameplate.getSpecificationId()) &&
+                    nameplate.getNominalResistanceOhms() == recipe.getResistanceOhms() &&
+                    nameplate.getTolerancePercent() == recipe.getTolerancePercent() &&
+                    nameplate.getRatedWattage() == recipe.getRatedWatts(),
+                "Production diagnostic provider replay lost physical recipe correspondence: " + componentId);
+            ControlledIndicatorValueSynthesis.ResolvedRecipe resolved =
+                recipe.getResolvedRecipe();
+            if (resolved != null)
+                require(nameplate.getNominalResistanceOhms() == resolved.getResistanceOhms() &&
+                        nameplate.getTolerancePercent() == resolved.getTolerancePercent() &&
+                        nameplate.getRatedWattage() == resolved.getRatedWatts(),
+                    "Production diagnostic provider replay lost resolved load recipe: " + componentId);
         }
     }
 

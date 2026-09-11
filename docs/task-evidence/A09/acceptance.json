@@ -1,0 +1,121 @@
+{
+  "status": "IMPLEMENTED - POST-PUSH REVIEW PENDING",
+  "base": "667cfd16da0272ae736cd0df6961e8cb313e0f1f",
+  "branch": "codex/task43p-final-recovery",
+  "native": {
+    "status": "PASS",
+    "exitCode": 0,
+    "javaSuites": 18,
+    "a09Assertions": 302,
+    "a09Replays": 40,
+    "independentA09ReaderAssertions": 143,
+    "existingReportAssertions": 466,
+    "lastRun": "Resumed correction; fresh exit 0, 18 suites",
+    "log": "continue-s_a6b6ox/native.log (under scratch)"
+  },
+  "gwt": {
+    "status": "PASS",
+    "exitCode": 0,
+    "permutations": 5,
+    "jdk": "8u502"
+  },
+  "a09Browser": {
+    "status": "PASS",
+    "report": "diagnostic-report.json",
+    "pageErrors": [],
+    "strictReaderAssertions": 144,
+    "assertions": 97,
+    "rejectedCases": 11,
+    "overRangeSamples": 5
+  },
+  "independentReview": {
+    "status": "DEFERRED BY OWNER",
+    "reason": "Normal Luna and Reserve review attempts hit usage limits. On 2026-09-11 the owner explicitly authorized commit/push before independent review and will review the published candidate afterward. No independent PASS is claimed."
+  },
+  "nativePlayerWorkflow": {
+    "status": "PASS",
+    "route": "circuitjs.html?tsjChallenge=led&seed=0&running=true",
+    "nativeActionRecords": 19,
+    "unrepairedRetest": "FAIL_AS_EXPECTED",
+    "faultResistance": "OL",
+    "replacementChoice": "330 Ohm +/-5%",
+    "repairedResistance": "330 Ohm",
+    "postRepairRetest": "PASS",
+    "pageErrors": [],
+    "screenshots": [
+      "player-fault-ol.png",
+      "player-repaired-ohms.png",
+      "player-retest-pass.png"
+    ],
+    "evidence": "player-workflow.json",
+    "cleanup": {
+      "browserClosed": true,
+      "serverThreadAlive": false
+    }
+  },
+  "regressions": {
+    "status": "PASS",
+    "a08": {
+      "verification": "PASS:a08",
+      "assertions": 1108,
+      "compensatedWrites": 90,
+      "freshFailures": 5,
+      "pageErrors": []
+    },
+    "task49": {
+      "verification": "PASS:task49",
+      "pageErrors": []
+    },
+    "strictMaintainedReaders": {
+      "status": "PASS",
+      "exitCode": 0
+    },
+    "a09ForcedNegative": {
+      "status": "PASS",
+      "expected": "FAIL:a09-explicit-failure-canary",
+      "actual": "FAIL:a09-explicit-failure-canary",
+      "positiveReportAbsent": true,
+      "pageErrors": []
+    }
+  },
+  "publication": {
+    "authorization": "OWNER AUTHORIZED PUSH BEFORE INDEPENDENT REVIEW",
+    "commit": "PENDING",
+    "push": "PENDING",
+    "completionEmail": "AFTER VERIFIED PUSH"
+  },
+  "notCertified": [
+    "CLI/CDP process-listener ownership wrapper",
+    "A10 staging/cancellation/caching",
+    "arbitrary hostile executable providers"
+  ],
+  "scratch": "<OS temp>/troubleshootjs-a09-fix-vifulr34",
+  "regressionHarnessNotes": "All four current explicit-debug routes executed successfully. Actual A09, A08 and Task49 reports passed maintained readers. No CLI ownership-wrapper certification or native player actions are claimed.",
+  "correction": {
+    "status": "IMPLEMENTED",
+    "summary": "Explicit OL outcome shared by finite over-range and open resistance; invalid readings rejected; numeric range unchanged; roadmap status reconciled.",
+    "addedNativeAssertions": 17,
+    "baselineCounterexample": "Reproduced using actual old encoder/classifier before correction",
+    "sourceDigest": "1bb70ddaf6a20152e75fb086eefaf9ea8e062dde0776675ae1a8973be236d80b"
+  },
+  "resources": {
+    "testBrowsers": "CLOSED",
+    "loopbackServers": "CLOSED",
+    "scratch": "Retained for evidence; not a running resource"
+  },
+  "evidenceReuse": {
+    "sourceFiles": 610,
+    "readerFiles": 5,
+    "compiledPermutations": 5,
+    "hashMismatches": 0,
+    "gwtAndBrowserRuns": "Retained final-code runs from the correction pass; unchanged exact fingerprints verified on resumption",
+    "freshOnResume": [
+      "18 native suites",
+      "A09 report reader: 144 assertions",
+      "A08/Task49 maintained report readers",
+      "git diff --check"
+    ]
+  },
+  "resumptionScratch": "<OS temp>/troubleshootjs-a09-fix-vifulr34/native-retry-20260911",
+  "remainingAcceptanceGate": "Post-push owner/independent review only; native player workflow and technical validation are PASS."
+}

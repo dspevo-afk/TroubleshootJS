@@ -1,0 +1,250 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:50485/circuitjs.html?tsjChallenge=led&seed=0&running=true",
+  "pageErrors": [],
+  "actions": [
+    {
+      "kind": "activation",
+      "note": "initial owned-window activation"
+    },
+    {
+      "kind": "application",
+      "note": "Unrepaired customer retest"
+    },
+    {
+      "kind": "application",
+      "note": "Disconnect board power"
+    },
+    {
+      "kind": "application",
+      "note": "Select resistance meter"
+    },
+    {
+      "kind": "application",
+      "note": "Red probe R1.1"
+    },
+    {
+      "kind": "application",
+      "note": "Black probe R1.2"
+    },
+    {
+      "kind": "application",
+      "note": "Exit resistance meter"
+    },
+    {
+      "kind": "application",
+      "note": "Select R1 body"
+    },
+    {
+      "kind": "application",
+      "note": "Remove failed R1"
+    },
+    {
+      "kind": "application",
+      "note": "Open resistor catalog"
+    },
+    {
+      "kind": "application",
+      "note": "Catalog Home"
+    },
+    {
+      "kind": "application",
+      "note": "Catalog Down x18"
+    },
+    {
+      "kind": "application",
+      "note": "Catalog Enter"
+    },
+    {
+      "kind": "application",
+      "note": "Install player-selected 330 Ohm resistor"
+    },
+    {
+      "kind": "application",
+      "note": "Verify replacement resistance"
+    },
+    {
+      "kind": "application",
+      "note": "Red probe repaired R1.1"
+    },
+    {
+      "kind": "application",
+      "note": "Black probe repaired R1.2"
+    },
+    {
+      "kind": "application",
+      "note": "Exit resistance meter after verification"
+    },
+    {
+      "kind": "application",
+      "note": "Restore board power"
+    },
+    {
+      "kind": "application",
+      "note": "Post-repair customer retest"
+    }
+  ],
+  "checks": {
+    "unrepairedRetest": "FAIL_AS_EXPECTED",
+    "faultResistance": "OL",
+    "selectedPanel": "Service Ticket\n\n\nIndicator does not light.\n\n\nCustomer retest: Observe the indicator after repair.\n\nRetest Customer\nR1\n\n\nType: resistor\n\n\nMarkings: Color bands\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component\nResistor Replacement Catalog\n\n\n10 Ohm +/-5%\n12 Ohm +/-5%\n15 Ohm +/-5%\n18 Ohm +/-5%\n22 Ohm +/-5%\n27 Ohm +/-5%\n33 Ohm +/-5%\n39 Ohm +/-5%\n47 Ohm +/-5%\n56 Ohm +/-5%\n68 Ohm +/-5%\n82 Ohm +/-5%\n100 Ohm +/-5%\n120 Ohm +/-5%\n150 Ohm +/-5%\n180 Ohm +/-5%\n220 Ohm +/-5%\n270 Ohm +/-5%\n330 Ohm +/-5%\n390 Ohm +/-5%\n470 Ohm +/-5%\n560 Ohm +/-5%\n680 Ohm +/-5%\n820 Ohm +/-5%\n1000 Ohm +/-5%\n1200 Ohm +/-5%\n1500 Ohm +/-5%\n1800 Ohm +/-5%\n2200 Ohm +/-5%\n2700 Ohm +/-5%\n3300 Ohm +/-5%\n3900 Ohm +/-5%\n4700 Ohm +/-5%\n5600 Ohm +/-5%\n6800 Ohm +/-5%\n8200 Ohm +/-5%\n10000 Ohm +/-5%\n12000 Ohm +/-5%\n15000 Ohm +/-5%\n18000 Ohm +/-5%\n22000 Ohm +/-5%\n27000 Ohm +/-5%\n33000 Ohm +/-5%\n39000 Ohm +/-5%\n47000 Ohm +/-5%\n56000 Ohm +/-5%\n68000 Ohm +/-5%\n82000 Ohm +/-5%\n100000 Ohm +/-5%\n120000 Ohm +/-5%\n150000 Ohm +/-5%\n180000 Ohm +/-5%\n220000 Ohm +/-5%\n270000 Ohm +/-5%\n330000 Ohm +/-5%\n390000 Ohm +/-5%\n470000 Ohm +/-5%\n560000 Ohm +/-5%\n680000 Ohm +/-5%\n820000 Ohm +/-5%\n1000000 Ohm +/-5%\n1200000 Ohm +/-5%\n1500000 Ohm +/-5%\n1800000 Ohm +/-5%\n2200000 Ohm +/-5%\n2700000 Ohm +/-5%\n3300000 Ohm +/-5%\n3900000 Ohm +/-5%\n4700000 Ohm +/-5%\n5600000 Ohm +/-5%\n6800000 Ohm +/-5%\n8200000 Ohm +/-5%\n10000000 Ohm +/-5%\n\nInstall new resistor\n\nRemove R1 before installing a replacement.\n\n\nLED Replacement Catalog\n\n\nGeneric red LED\nGeneric red LED (reversed)\n\nInstall new LED\n\nRemove LED1 before installing a replacement.\n\n\nParts Tray\n\n\nNo removed parts.",
+    "replacementChoice": "330 Ohm +/-5%",
+    "repairedResistance": "330 Ohm",
+    "postRepairRetest": "PASS"
+  },
+  "nativeActionLog": [
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 629,
+      "button": "left",
+      "note": "Unrepaired customer retest",
+      "utc": "2026-09-11T06:16:34.928764+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 485,
+      "button": "left",
+      "note": "Disconnect board power",
+      "utc": "2026-09-11T06:16:35.356908+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1415,
+      "y": 290,
+      "button": "left",
+      "note": "Select resistance meter",
+      "utc": "2026-09-11T06:16:35.738650+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 167,
+      "y": 491,
+      "button": "left",
+      "note": "Red probe on R1 left pad",
+      "utc": "2026-09-11T06:16:36.098826+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 395,
+      "y": 491,
+      "button": "right",
+      "note": "Black probe on R1 right pad",
+      "utc": "2026-09-11T06:16:36.462032+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1415,
+      "y": 290,
+      "button": "left",
+      "note": "Exit resistance meter",
+      "utc": "2026-09-11T06:16:36.901073+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 280,
+      "y": 497,
+      "button": "left",
+      "note": "Select visible R1 body",
+      "utc": "2026-09-11T06:16:37.268338+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 900,
+      "button": "left",
+      "note": "Remove failed R1",
+      "utc": "2026-09-11T06:16:37.999095+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 775,
+      "button": "left",
+      "note": "Open resistor replacement catalog",
+      "utc": "2026-09-11T06:16:38.444021+00:00"
+    },
+    {
+      "kind": "Win32 OS keyboard",
+      "virtualKey": 36,
+      "repetitions": 1,
+      "note": "Catalog Home",
+      "utc": "2026-09-11T06:16:38.626004+00:00"
+    },
+    {
+      "kind": "Win32 OS keyboard",
+      "virtualKey": 40,
+      "repetitions": 18,
+      "note": "Select 330 Ohm catalog entry",
+      "utc": "2026-09-11T06:16:38.812717+00:00"
+    },
+    {
+      "kind": "Win32 OS keyboard",
+      "virtualKey": 13,
+      "repetitions": 1,
+      "note": "Confirm 330 Ohm catalog entry",
+      "utc": "2026-09-11T06:16:39.000520+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 813,
+      "button": "left",
+      "note": "Install player-selected 330 Ohm resistor",
+      "utc": "2026-09-11T06:16:39.645242+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1415,
+      "y": 290,
+      "button": "left",
+      "note": "Verify replacement resistance",
+      "utc": "2026-09-11T06:16:40.599264+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 167,
+      "y": 491,
+      "button": "left",
+      "note": "Red probe on repaired R1 left pad",
+      "utc": "2026-09-11T06:16:40.967946+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 395,
+      "y": 491,
+      "button": "right",
+      "note": "Black probe on repaired R1 right pad",
+      "utc": "2026-09-11T06:16:41.329215+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1415,
+      "y": 290,
+      "button": "left",
+      "note": "Exit resistance meter after verification",
+      "utc": "2026-09-11T06:16:41.755998+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 485,
+      "button": "left",
+      "note": "Restore board power",
+      "utc": "2026-09-11T06:16:42.136931+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 629,
+      "button": "left",
+      "note": "Post-repair customer retest",
+      "utc": "2026-09-11T06:16:42.512014+00:00"
+    }
+  ],
+  "cleanup": {
+    "browserClosed": true,
+    "serverThreadAlive": false
+  }
+}

@@ -4723,7 +4723,7 @@ MouseOutHandler, MouseWheelHandler {
 	FreshGeneratedRuntimeInstallation.reached(this, FreshGeneratedRuntimeInstallation.Stage.CAPABILITIES);
 	// Task 46's explicit debug route retains the real workbench so its
 	// initial legacy challenge goes through unchanged diagnostic admission.
-	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
+	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask41Verification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
 	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification ||
 	    troubleshootA01Measurement ||

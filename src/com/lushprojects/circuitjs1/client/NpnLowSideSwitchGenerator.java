@@ -339,7 +339,7 @@ final class NpnLowSideSwitchGenerator {
             "Generated NPN low-side switch, seed " + seed, componentBindings, powerBindings,
             connectionBindings, behaviorContract, layout, specifications, faultBinding,
             operationalStates, challenge, familyState, runtime, null, developerOnlyFaultRoute,
-            candidates);
+            candidates, null, new NpnLowSideSwitchDiagnosticProvider(seed));
     }
 
     private GeneratedFaultBinding targetBinding(GeneratedFault fault, GeneratedFaultBinding binding,

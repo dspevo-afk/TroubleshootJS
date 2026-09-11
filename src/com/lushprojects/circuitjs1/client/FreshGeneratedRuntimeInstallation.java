@@ -214,8 +214,8 @@ final class FreshGeneratedRuntimeInstallation {
             for (Object old : prior)
                 if (shares(current, old))
                     throw new IllegalArgumentException("Fresh installation reused a behavior callback owner");
-        if (candidate.getBehaviorContract() instanceof GeneratedDiagnosticExecutionProvider) {
-            ConstructionReceipt receipt = ((GeneratedDiagnosticExecutionProvider)candidate.getBehaviorContract())
+        if (candidate.getDiagnosticProvider() instanceof GeneratedDiagnosticExecutionProvider) {
+            ConstructionReceipt receipt = ((GeneratedDiagnosticExecutionProvider)candidate.getDiagnosticProvider())
                 .getConstructionReceipt();
             if (receipt == null || !receipt.belongsToFinishedContext(receipt.getSpec(), candidate.getBoard()) ||
                     receipt.getComponentBindings() != candidate.getComponentBindings() ||
@@ -228,7 +228,7 @@ final class FreshGeneratedRuntimeInstallation {
     /** Current executable entrypoints, not immutable diagnostic plans or descriptive metadata. */
     private static Vector<Object> executionOwners(GeneratedBoardInstance board) {
         Vector<Object> owners = new Vector<Object>();
-        owners.add(board.getBehaviorContract());
+        owners.add(board.getBehaviorContract()); owners.add(board.getDiagnosticProvider());
         GeneratedChallengeDefinition definition = board.getChallengeDefinition();
         if (definition != null) {
             owners.add(definition); owners.add(definition.getBehaviorContract());
@@ -241,8 +241,8 @@ final class FreshGeneratedRuntimeInstallation {
         }
         GeneratedCustomerRetestProfile retest = board.getCustomerRetestProfile();
         if (retest != null) retest.appendExecutionOwners(owners);
-        if (board.getBehaviorContract() instanceof GeneratedDiagnosticExecutionProvider)
-            owners.add(((GeneratedDiagnosticExecutionProvider)board.getBehaviorContract()).getConstructionReceipt());
+        if (board.getDiagnosticProvider() instanceof GeneratedDiagnosticExecutionProvider)
+            owners.add(((GeneratedDiagnosticExecutionProvider)board.getDiagnosticProvider()).getConstructionReceipt());
         return owners;
     }
 

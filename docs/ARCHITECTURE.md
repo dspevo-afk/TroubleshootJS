@@ -3329,3 +3329,55 @@ the unsupported `System.Net.HttpListener` preview boundary, and every case
 records exact restoration, unchanged HEAD/status/source digest/file count,
 stopped preview cleanup, and zero cleanup errors. No runtime or visible
 `@Browser` acceptance is claimed.
+
+
+## A09 production diagnostic providers (local candidate; acceptance pending)
+
+Normal admission now calls `GeneratedDiagnosticProofService`, not
+`Task41DeveloperVerifier`. Historical Task41 descriptions above refer to the
+retained proof corpus and isolation substrate, not the current production family
+dispatch. Final independent review and native player workflow gates are open;
+see `task-evidence/A09/README.md`.
+
+Each leaf generator explicitly contributes a `GeneratedDiagnosticProvider`.
+The composed controlled-indicator provider derives its program from the resolved
+channel namespace and owns exact immutable-request replay. Providers declare
+public observations, legal replacement recipes and hypothesis reconstruction.
+The production coordinator contains no family registry/generator fallback.
+
+`GeneratedDiagnosticProgram` is bounded immutable data, not live callbacks.
+It is frozen before hypothesis enumeration and contains semantic probes, public
+inputs, instrument modes, power transitions and bounded waits, without a selected
+fault, hidden answer, solver node identity or runtime handle. Every replay must
+preserve the canonical program, recipe realization, physical layout, full
+hypothesis population and reachable repair semantics. Actual owner catalogs and
+bindings reject unavailable declared inputs/probes instead of silently skipping them.
+
+The executor uses real player operations, electrical meters and CircuitJS
+settlement. The service physically removes/replaces the part while unpowered,
+repowers and performs device-level customer retest. Existing bounded snapshot
+infrastructure restores the exact original owner. Private proof graphs must be
+disjoint from that player owner and all previous private graphs. Failed cleanup
+cannot produce an admission success receipt.
+
+Resistance observations now distinguish NUMERIC from explicit OVER_RANGE (OL)
+outcomes. Finite readings above the player meter's 10 MOhm range and genuine
+open circuits are the same nonnumeric result; no hidden current or resistance
+value can establish diagnostic separation. NaN, negative readings and incomplete
+measurements fail closed rather than becoming OL. In-range values and tolerances,
+the player display and CircuitJS physics are unchanged. Task41's independent
+comparison and evidence serialization preserve the same outcome distinction.
+
+`GeneratedDiagnosticEquivalence` compares actual sample schemas and observations.
+Identical observations require equivalent reachable physical repair. Missing or
+unexecuted repairs, empty/foreign/duplicate proofs, answer-dependent observation
+schemas and non-transitive tolerance chains are rejected. Different mechanisms
+on the same physical owner retain distinct canonical hypothesis identities.
+
+`GeneratedDiagnosticProofReceipt` records one completed, restored admission
+attempt. The originating controller consumes its token once and checks exact
+owner/controller, provider/program and contract identities. Stored evidence is
+historical evidence for that owner, not acceptance authority for a later board.
+This is a trusted compiled-provider boundary, not an arbitrary executable-plugin
+sandbox. A10 scheduling, cancellation, deterministic budgets and caching remain
+unimplemented.

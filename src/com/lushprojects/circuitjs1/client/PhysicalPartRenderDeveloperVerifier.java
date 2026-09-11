@@ -1013,7 +1013,10 @@ final class PhysicalPartRenderDeveloperVerifier {
                     43L, QuickPlayFamilyRegistry.LED_INDICATOR, "TASK43_LOOSE_LIFECYCLE",
                     "Task 43 loose lifecycle canary", componentBindings, powerBindings,
                     connectionBindings, behavior, null, specifications, null, null, null, null,
-                    runtime, null, false, new Vector<GeneratedFaultCandidate>());
+                    runtime, null, true, new Vector<GeneratedFaultCandidate>(),
+                    GeneratedDiagnosticSolvabilityContract.forDeveloperFixture(
+                        QuickPlayFamilyRegistry.LED_INDICATOR, "TASK43_LOOSE_LIFECYCLE",
+                        43L, new Vector<GeneratedFaultCandidate>()));
                 BoardModificationController modifications = new BoardModificationController(sim,
                     instance);
                 controller = new PcbWorkbenchController(sim, instance, modifications, layout,
@@ -1897,8 +1900,11 @@ final class PhysicalPartRenderDeveloperVerifier {
                 simulationElements, 43L, QuickPlayFamilyRegistry.LED_INDICATOR,
                 componentId, "Installed render negative canary", componentBindings,
                 powerBindings, connectionBindings, behavior, layout, specifications, null,
-                null, null, null, runtime, null, false,
-                new Vector<GeneratedFaultCandidate>());
+                null, null, null, runtime, null, true,
+                new Vector<GeneratedFaultCandidate>(),
+                GeneratedDiagnosticSolvabilityContract.forDeveloperFixture(
+                    QuickPlayFamilyRegistry.LED_INDICATOR, componentId, 43L,
+                    new Vector<GeneratedFaultCandidate>()));
             BoardModificationController modifications = new InstalledNegativeModificationController(
                 sim, instance, componentId, liftedPadId);
             return new InstalledRenderNegativeFixture(componentId, liftedPadId, physicalPackage,

@@ -32,11 +32,11 @@ final class A02CorrectnessDeveloperVerifier {
         Throwable primary = null;
         try {
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, owner);
-            Task41DeveloperVerifier.verifyAdmissionRoute(sim, owner,
+            GeneratedDiagnosticProofService.prove(sim, owner,
                 sim.getGeneratedChallengeController());
             original.assertRestored(sim);
             Vector<GeneratedDiagnosticSolvabilityEvidence> proof =
-                Task41DeveloperVerifier.getLastAdmissionEvidenceForDeveloperVerification();
+                sim.getGeneratedChallengeController().getDiagnosticProofEvidence();
             Vector<String> provedKeys = new Vector<String>();
             for (GeneratedDiagnosticSolvabilityEvidence item : proof) {
                 require(item.isRepairReachable() && item.isCustomerRetestPassed() &&
@@ -68,9 +68,9 @@ final class A02CorrectnessDeveloperVerifier {
                 "current replay changed the retained fault selection");
             sim.installGeneratedChallengeForDeveloperVerification(replay);
             GeneratedRuntimeDeveloperSettlement.settle(sim, replay, "a02-current-replay");
-            Task41DeveloperVerifier.verifyAdmissionRoute(sim, replay,
+            GeneratedDiagnosticProofService.prove(sim, replay,
                 sim.getGeneratedChallengeController());
-            require(Task41DeveloperVerifier.getLastAdmissionEvidenceForDeveloperVerification()
+            require(sim.getGeneratedChallengeController().getDiagnosticProofEvidence()
                 .size() == admittedKeys.size(), "current replay lost admitted hypotheses");
             original.restore(sim);
             original.assertRestored(sim);

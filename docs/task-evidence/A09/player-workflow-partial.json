@@ -1,0 +1,69 @@
+{
+  "status": "BLOCKED",
+  "route": "circuitjs.html?tsjChallenge=led&seed=0&running=true",
+  "sourceDigest": "1bb70ddaf6a20152e75fb086eefaf9ea8e062dde0776675ae1a8973be236d80b",
+  "nativeActions": 5,
+  "actions": [
+    {
+      "kind": "Win32 OS mouse",
+      "x": 992,
+      "y": 48,
+      "button": "left",
+      "note": "Activate verified owned title bar, not application input",
+      "utc": "2026-09-11T05:57:38.479044+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 629,
+      "button": "left",
+      "note": "Run customer retest before repair",
+      "utc": "2026-09-11T05:57:38.980704+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 992,
+      "y": 48,
+      "button": "left",
+      "note": "Activate verified owned title bar",
+      "utc": "2026-09-11T05:58:27.146998+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 1370,
+      "y": 485,
+      "button": "left",
+      "note": "Disconnect board power before resistance test",
+      "utc": "2026-09-11T05:58:27.549376+00:00"
+    },
+    {
+      "kind": "Win32 OS mouse",
+      "x": 992,
+      "y": 48,
+      "button": "left",
+      "note": "Activate verified owned title bar",
+      "utc": "2026-09-11T05:59:33.531181+00:00"
+    }
+  ],
+  "pageErrors": [],
+  "observed": [
+    "Unrepaired customer retest failed through native input",
+    "Board power disconnected through native input"
+  ],
+  "notPerformed": [
+    "Resistance diagnosis",
+    "Physical replacement",
+    "Successful post-repair retest"
+  ],
+  "reason": "Native cursor-position guard stopped measurement-mode click twice; no guarded input was sent at those stops. Required player workflow is partial, not passed.",
+  "cleanup": {
+    "browserExited": true,
+    "serverThreadStopped": true
+  },
+  "applicationActions": 2,
+  "activationActions": 3,
+  "screenshots": [
+    "player-unrepaired.png",
+    "player-power-off-partial.png"
+  ]
+}
