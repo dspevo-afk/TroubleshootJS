@@ -26,24 +26,24 @@ final class CompositionMutationGateDeveloperVerifier {
             final PhysicalResistorPart faultedOriginal = capability.getSlot().getInstalledPart();
             power(sim, BoardPowerState.UNPOWERED);
             invariant(sim);
-            injected(sim, capability, ResistorMutationScope.FailureStage.AFTER_GRAPH_DISCONNECT,
+            injected(sim, capability, PhysicalMutationScope.FailureStage.AFTER_GRAPH_DISCONNECT,
                 new Runnable() { public void run() { modifications.liftLead(component, pad); }});
             require(modifications.liftLead(component, pad), "positive lift");
             settle(sim);
             invariant(sim);
-            injected(sim, capability, ResistorMutationScope.FailureStage.AFTER_GRAPH_CONNECT,
+            injected(sim, capability, PhysicalMutationScope.FailureStage.AFTER_GRAPH_CONNECT,
                 new Runnable() { public void run() { modifications.reconnectLead(component, pad); }});
             require(modifications.reconnectLead(component, pad), "positive reconnect");
             settle(sim);
-            injected(sim, capability, ResistorMutationScope.FailureStage.AFTER_GRAPH_DISCONNECT,
+            injected(sim, capability, PhysicalMutationScope.FailureStage.AFTER_GRAPH_DISCONNECT,
                 new Runnable() { public void run() { modifications.removeComponent(component); }});
             require(modifications.removeComponent(component), "positive graph removal");
             settle(sim);
-            injected(sim, capability, ResistorMutationScope.FailureStage.AFTER_GRAPH_CONNECT,
+            injected(sim, capability, PhysicalMutationScope.FailureStage.AFTER_GRAPH_CONNECT,
                 new Runnable() { public void run() { modifications.restoreComponent(component); }});
             require(modifications.restoreComponent(component), "positive graph restoration");
             settle(sim);
-            injected(sim, capability, ResistorMutationScope.FailureStage.AFTER_SLOT_CLEAR,
+            injected(sim, capability, PhysicalMutationScope.FailureStage.AFTER_SLOT_CLEAR,
                 new Runnable() { public void run() { slots.removeInstalledPart(); }});
             require(slots.removeInstalledPart(), "remove original");
             settle(sim);
@@ -62,26 +62,26 @@ final class CompositionMutationGateDeveloperVerifier {
             require(damaged.getFaultBinding() == null && faultedOriginal.getFaultBinding() ==
                 board.getFaultBinding() && board.getFaultBinding().isApplied(), "distinct fault causality");
             power(sim, BoardPowerState.UNPOWERED);
-            injected(sim, capability, ResistorMutationScope.FailureStage.AFTER_SLOT_CLEAR,
+            injected(sim, capability, PhysicalMutationScope.FailureStage.AFTER_SLOT_CLEAR,
                 new Runnable() { public void run() { slots.removeInstalledPart(); }});
             require(slots.removeInstalledPart(), "remove damaged part");
             settle(sim);
 
-            ResistorMutationScope.FailureStage[] catalogStages = {
-                ResistorMutationScope.FailureStage.AFTER_INVENTORY_ACQUIRE,
-                ResistorMutationScope.FailureStage.AFTER_CANONICAL_REGISTER,
-                ResistorMutationScope.FailureStage.AFTER_STRESS_REGISTER,
-                ResistorMutationScope.FailureStage.AFTER_GRAPH_APPEND,
-                ResistorMutationScope.FailureStage.AFTER_PRIMARY_BINDING,
-                ResistorMutationScope.FailureStage.AFTER_AUXILIARY_BINDING,
-                ResistorMutationScope.FailureStage.AFTER_ENDPOINT_RETARGET,
-                ResistorMutationScope.FailureStage.AFTER_ATTACHMENT,
-                ResistorMutationScope.FailureStage.AFTER_SLOT_MOUNT,
-                ResistorMutationScope.FailureStage.AFTER_GRAPH_CONNECT,
-                ResistorMutationScope.FailureStage.AFTER_GRAPH_RESTORE,
-                ResistorMutationScope.FailureStage.AFTER_COMMIT
+            PhysicalMutationScope.FailureStage[] catalogStages = {
+                PhysicalMutationScope.FailureStage.AFTER_INVENTORY_ACQUIRE,
+                PhysicalMutationScope.FailureStage.AFTER_CANONICAL_REGISTER,
+                PhysicalMutationScope.FailureStage.AFTER_STRESS_REGISTER,
+                PhysicalMutationScope.FailureStage.AFTER_GRAPH_APPEND,
+                PhysicalMutationScope.FailureStage.AFTER_PRIMARY_BINDING,
+                PhysicalMutationScope.FailureStage.AFTER_AUXILIARY_BINDING,
+                PhysicalMutationScope.FailureStage.AFTER_ENDPOINT_RETARGET,
+                PhysicalMutationScope.FailureStage.AFTER_ATTACHMENT,
+                PhysicalMutationScope.FailureStage.AFTER_SLOT_MOUNT,
+                PhysicalMutationScope.FailureStage.AFTER_GRAPH_CONNECT,
+                PhysicalMutationScope.FailureStage.AFTER_GRAPH_RESTORE,
+                PhysicalMutationScope.FailureStage.AFTER_COMMIT
             };
-            for (ResistorMutationScope.FailureStage stage : catalogStages)
+            for (PhysicalMutationScope.FailureStage stage : catalogStages)
                 injected(sim, capability, stage, new Runnable() {
                     public void run() { slots.installNewFromCatalog("R_CATALOG_470"); }
                 });
@@ -103,19 +103,19 @@ final class CompositionMutationGateDeveloperVerifier {
                 "\nreal-overload-damage-preserved=true\noriginal-fault-preserved=true" +
                 "\nreference-and-committed-state-negatives=PASS\nfailed-recovery-isolated=PASS";
         } finally {
-            ResistorMutationScope.clearFailureHookForDeveloperVerification();
-            ResistorMutationScope.clearAbortFailureHookForDeveloperVerification();
+            PhysicalMutationScope.clearFailureHookForDeveloperVerification();
+            PhysicalMutationScope.clearAbortFailureHookForDeveloperVerification();
             original.restore(sim);
             original.assertRestored(sim);
         }
     }
 
     private static void injected(final CirSim sim, final ReplaceableResistorBoardCapability capability,
-            final ResistorMutationScope.FailureStage stage, Runnable operation) {
+            final PhysicalMutationScope.FailureStage stage, Runnable operation) {
         final Observation before = new Observation(sim, capability);
         final boolean[] reached = { false };
-        ResistorMutationScope.setFailureHookForDeveloperVerification(new ResistorMutationScope.FailureHook() {
-            public void afterStage(ResistorMutationScope.FailureStage actual) {
+        PhysicalMutationScope.setFailureHookForDeveloperVerification(new PhysicalMutationScope.FailureHook() {
+            public void afterStage(PhysicalMutationScope.FailureStage actual) {
                 if (actual != stage) return;
                 reached[0] = true;
                 require(!before.state.equals(new Observation(sim, capability).state),
@@ -130,7 +130,7 @@ final class CompositionMutationGateDeveloperVerifier {
                 "original failure reporting: " + stage + ": " + expected.getMessage());
             require(expected.getSuppressed().length == 0, "abort cleanup failed: " + stage);
             rejected = true;
-        } finally { ResistorMutationScope.clearFailureHookForDeveloperVerification(); }
+        } finally { PhysicalMutationScope.clearFailureHookForDeveloperVerification(); }
         require(reached[0] && rejected, "required partial failure was not exercised: " + stage);
         before.assertSame(sim, capability, stage.toString());
         invariant(sim);
@@ -176,7 +176,7 @@ final class CompositionMutationGateDeveloperVerifier {
                 board.getExternalPowerBindings(), board.getFaultBinding());
             require(true, "coherent wrong-terminal fixture passes legacy geometry");
             rejectsInvariantReason(sim, "owned but wrong resistor terminal",
-                "Resistor connection disagrees with installed terminal:");
+                "Physical connection disagrees with installed terminal:");
         } finally {
             lead.setComponentEndpoint(endpoint);
             wire.x = wireX; wire.y = wireY; wire.x2 = wireX2; wire.y2 = wireY2;
@@ -233,13 +233,13 @@ final class CompositionMutationGateDeveloperVerifier {
             BoardModificationController modifications, String component, String pad,
             GeneratedBoardInstance board) {
         final boolean[] cleared = { false };
-        ResistorMutationScope.setFailureHookForDeveloperVerification(new ResistorMutationScope.FailureHook() {
-            public void afterStage(ResistorMutationScope.FailureStage stage) {
-                if (stage == ResistorMutationScope.FailureStage.AFTER_GRAPH_DISCONNECT)
+        PhysicalMutationScope.setFailureHookForDeveloperVerification(new PhysicalMutationScope.FailureHook() {
+            public void afterStage(PhysicalMutationScope.FailureStage stage) {
+                if (stage == PhysicalMutationScope.FailureStage.AFTER_GRAPH_DISCONNECT)
                     throw new IllegalStateException("primary-mutation-failure");
             }
         });
-        ResistorMutationScope.setAbortFailureHookForDeveloperVerification(new ResistorMutationScope.AbortFailureHook() {
+        PhysicalMutationScope.setAbortFailureHookForDeveloperVerification(new PhysicalMutationScope.AbortFailureHook() {
             public void afterActiveGraphClear() {
                 cleared[0] = sim.elmList.isEmpty();
                 throw new IllegalStateException("active-graph-reconstruction-failure");
@@ -255,8 +255,8 @@ final class CompositionMutationGateDeveloperVerifier {
             require(cleanupFound, "cleanup error retained separately");
             rejected = true;
         } finally {
-            ResistorMutationScope.clearFailureHookForDeveloperVerification();
-            ResistorMutationScope.clearAbortFailureHookForDeveloperVerification();
+            PhysicalMutationScope.clearFailureHookForDeveloperVerification();
+            PhysicalMutationScope.clearAbortFailureHookForDeveloperVerification();
         }
         require(rejected && cleared[0] && sim.failedGeneratedRuntimeOwner == board &&
             !sim.simIsRunning() && !sim.isGeneratedRuntimeSettled() &&

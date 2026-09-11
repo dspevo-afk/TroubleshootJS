@@ -1,0 +1,29 @@
+{
+  "pageError": "n7",
+  "route": "a06-forcedfailure",
+  "verification": "FAIL:a06:a06-explicit-failure-canary",
+  "interpretation": "One deliberate A06 AssertionError, consistent with the forced-failure source and GWT mappings; ordinary routes have no page errors.",
+  "symbolMappings": [
+    {
+      "permutation": "0858BE8752DB28CDFE8D337756BAC375",
+      "entry": "n7,java.lang.AssertionError::AssertionError() <init>,java.lang.AssertionError,AssertionError,com/google/gwt/emul/java/lang/AssertionError.java,23,0"
+    },
+    {
+      "permutation": "15537EECCA7665ABD10AC3526313D6CE",
+      "entry": "n7,com.lushprojects.circuitjs1.client.A03RealizationReplay::captureConnections(Lcom/lushprojects/circuitjs1/client/BoundedAssemblyPlan;Lcom/lushprojects/circuitjs1/client/BlockNamespace;Ljava/util/List;)V,com.lushprojects.circuitjs1.client.A03RealizationReplay,captureConnections,com/lushprojects/circuitjs1/client/A03RealizationReplay.java,555,0"
+    },
+    {
+      "permutation": "93DA3BFD9D8C9D3FC6EAED8C7599AB42",
+      "entry": "n7,java.lang.AssertionError::AssertionError(Ljava/lang/Object;) <init>,java.lang.AssertionError,AssertionError,com/google/gwt/emul/java/lang/AssertionError.java,50,0"
+    },
+    {
+      "permutation": "A2C25B30AB58263FC08DFEB6457828DE",
+      "entry": "n7,com.lushprojects.circuitjs1.client.A01MeasurementVerifier::PILOT_SEEDS,com.lushprojects.circuitjs1.client.A01MeasurementVerifier,PILOT_SEEDS,com/lushprojects/circuitjs1/client/A01MeasurementVerifier.java,20,-1"
+    },
+    {
+      "permutation": "B4FE818E8D3A46B5D86EC66D2479D414",
+      "entry": "n7,java.lang.AssertionError::AssertionError(Ljava/lang/Object;) <init>,java.lang.AssertionError,AssertionError,com/google/gwt/emul/java/lang/AssertionError.java,50,0"
+    }
+  ],
+  "limit": "Strong-name selection was not separately captured; mappings are listed per permutation, not assumed identical."
+}

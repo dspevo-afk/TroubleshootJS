@@ -185,7 +185,7 @@ final class ControlledIndicatorDeviceBehavior
                         setAllChannels(sim, true);
                     }
                 }));
-        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(scenarios);
+        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(scenarios, this);
     }
 
     /** Aggregate query for device validation. */
@@ -653,6 +653,11 @@ final class ControlledIndicatorDeviceBehavior
                         throw new IllegalStateException("Customer retest changed physical board state");
                 }
             }
+        }
+
+        public void requireOwnedBy(GeneratedBoardInstance instance) {
+            if (behavior != instance.getBehaviorContract())
+                throw new IllegalArgumentException("Fresh family state captures a foreign behavior owner");
         }
 
         public boolean isFaultedTargetInstalled(GeneratedBoardInstance instance, String componentId) {

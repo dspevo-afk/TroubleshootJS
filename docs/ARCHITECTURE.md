@@ -34,8 +34,9 @@ Private proofs detach the player's original element instances under one exclusiv
 permit. `PrivateSolverContext` uses the existing snapshot for scoped restoration;
 it never advances the protected original elements. Cancellation retires publication
 and deferred callbacks. Cleanup refuses to restore over a successor graph; cleanup
-failure is typed and quarantines only the exact original owner. This is not A08's
-universal mutation/rollback mechanism.
+failure is typed and quarantines only the exact original owner. Same-owner
+physical mutations use the separate bounded provider transaction below, not this
+private solver snapshot.
 
 Execution distinguishes simulation duration, accepted steps, nonlinear trial work
 and wall time. UI slices yield after 8 ms. Short operations and individual step
@@ -69,7 +70,7 @@ Scale rows are two fresh-context replicates per size/seed, not cached-context
 cold/warm comparisons. Matrix numeric-slot bytes are an allocation proxy, not heap
 usage. These probes establish a bounded execution foundation, not playable relay/
 converter families, physical Q60/Q100 boards, saturation/thermal fidelity or mains
-qualification. A08 remains unstarted.
+qualification. A08 physical lifecycle qualification is recorded separately below.
 
 ## A06 power/reference and operating-state contracts
 
@@ -417,18 +418,74 @@ check the workbench and challenge references. Customer retest publication checks
 the originating challenge and request identity, including after reset. The
 periodic simulator timer remains simulator-owned.
 
-`ResistorMutationScope` covers one replaceable resistor's lead, removal,
-reinstallation and catalog operations. It prepares the touched graph,
-connection flags, slot attachment, binding and append-only registration state,
-validates committed ownership, and compensates those writes on failure.
-Original physical fault and secondary damage objects are retained. A failed
-compensator retains the primary and suppressed cleanup errors, isolates power,
-stops the runtime and disables actions. This is a bounded resistor transaction;
-other mutable part providers are rejected by the composition provider boundary.
-Typed inventory views share the single `PhysicalBoardRuntime` registry.
+`PhysicalMutationScope` is the bounded transaction for one mutable physical slot.
+`PhysicalMutationIntent` captures its exact board, runtime, slot, installed part,
+requested loose part, operation and optional pad/catalog selection before any
+write. Admission also requires the current controller, public solver access,
+settled interaction and actual external source isolation. `PhysicalBoardRuntime`
+owns one exact scope permit; a second provider cannot enter while it is held.
+
+Resistor and diode providers implement the same `PhysicalMutationSlot` contract.
+They retain their electrical details: resistor public terminals and secondary
+open/stress backing, and diode orientation-aware terminal selection and attachment.
+The shared scope does not branch on either part type. Provider installation
+capabilities declare their slot and inventory before installation; composition
+admission and the structural invariant inspect these declarations rather than
+maintaining a resistor/diode dispatch table. Installed controller registration must
+match that exact declaration. Intent preparation requires that declared, installed
+provider, not an interchangeable wrapper around the same slot. Separate typed
+inventory views cannot claim the same mutable storage ID. Other mutable provider categories remain outside
+this qualified transaction boundary and are not implicitly admitted.
+
+The ledger covers active graph identity/order, selected primary/auxiliary and
+endpoint bindings, connection flags, mounting and attachment geometry, one catalog
+acquisition with its registry/serial delta, appended canonical backing elements,
+and at most one provider-owned compensator (currently resistor stress registration).
+It is not a universal undo log or deep simulator snapshot. Existing loose parts
+must already carry compatible geometry before mutation; newly allocated catalog
+parts bind their geometry before becoming inventory-owned. Wrong but compatible
+resistance values and reversed healthy diodes remain legal repairs with their real
+electrical consequences. Original physical faults and secondary damage are not
+rewritten by compensation.
+
+Commit validates actual runtime ownership and provider-declared board-pad terminal
+mapping. Abort independently attempts the owned compensators, preserves the primary
+error and suppressed cleanup failures, and validates the recovered structure. A
+stale scope never clears or repopulates a successor graph, including a different
+graph object under the same board identity. Incomplete or ambiguous recovery
+quarantines the original runtime and cannot publish a successful compensation.
+`PhysicalMutationReceipt` contains immutable operation/identity/diagnostic values
+and the outcome `COMMITTED`, `COMPENSATED` or `ISOLATED`; no executable callback is
+retained. Its validation flag records preparation/structural validation, not an
+independent electrical repair verdict. Structural commit precedes normal solver
+settlement; a receipt alone does not establish customer function or readiness.
+
+Both providers invalidate customer retest when a committed mutation is published,
+then request normal analysis/verification. The double-gated `tsjVerifyA08` route
+checks actual resistor and diode operations, partial writes, exact state recovery,
+foreign/stale ownership, retained probes, wrong and correct repairs, failed cleanup
+and fresh installation. `verify-a03-browser.ps1 -Gate A08` requires the maintained
+A08 report reader and its affected routes. Protocol fixtures independently reject
+missing/duplicate write-stage evidence and leaked developer results. Qualification
+status and evidence live in `docs/CODEX_TASK_REPORT.md` and `docs/ROADMAP.md`.
 
 `FreshGeneratedRuntimeInstallation` requires a distinct candidate with disjoint
-mutable owners. It detaches the original workbench, supplies private graph and
+mutable owners, including layout/operational/temporal holders, exposed layout
+rectangles and trace arrays, and the backing solver elements of operational
+indicators. Immutable placement and package geometry may be shared. Challenge
+fault bindings must reference the candidate rather than an old board. These
+checks precede live installation and cleanup. The fresh boundary also checks
+executable behavior, scenario predicates/presentation, operation and retest
+callbacks. Capturing scenario factories declare their exact behavior owner;
+reordered catalogs preserve that declaration. Board/definition behavior must
+agree and diagnostic construction receipts must belong to the candidate board
+and bindings. New wrappers cannot launder existing callback identities into a
+fresh owner; immutable diagnostic plans and descriptions remain shareable.
+Family-state providers also validate their captured behavior, control switch, or
+temporal owner against the candidate. Temporal providers validate their actual
+endpoint elements and post indices; wrapping a retired element does not make it
+fresh. Stateless observation families explicitly capture no board-specific state.
+The installation then detaches the original workbench, supplies private graph and
 UI containers to the existing installation path, runs the actual solver and
 challenge validation, then exposes the settled candidate. On failure Task 41
 restores the untouched original owner. Task 41 remains Option A and does not
@@ -447,7 +504,7 @@ mutation or fresh installation owns its guard. Immutable package definitions
 and established board-side endpoint aliases retain their existing authority.
 Component, power and detachable-element owning claims share one identity check.
 Installed primary/auxiliary bindings must belong to the exact physical part,
-and resistor pad terminal names must match that installed part's exact endpoint.
+and provider-declared pad terminal names must match that installed part's exact endpoint.
 
 The double-gated developer route `tsjDebug=true&tsjVerifyCompositionGate=true`
 executes the compiled lifecycle, partial-mutation and attachment failure corpus.

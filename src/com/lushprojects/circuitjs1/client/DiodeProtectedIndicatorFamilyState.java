@@ -19,6 +19,10 @@ class DiodeProtectedIndicatorFamilyState implements GeneratedBoardFamilyState {
         }));
     }
 
+    public void requireOwnedBy(GeneratedBoardInstance instance) {
+        // Observation callbacks capture no board-specific element or behavior.
+    }
+
     public boolean isFaultedTargetInstalled(GeneratedBoardInstance instance,
             String componentId) {
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, componentId);

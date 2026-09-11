@@ -7,4 +7,9 @@ interface PhysicalSlotMutationProvider extends WorkbenchCapabilityStrategy {
     boolean removeInstalledPart();
     boolean install(String partId);
     boolean installNewFromCatalog(String catalogEntryId);
+
+    /** Optional seam for providers whose slot actions use the bounded core. */
+    interface Scoped {
+        PhysicalMutationSlot getMutationSlot();
+    }
 }

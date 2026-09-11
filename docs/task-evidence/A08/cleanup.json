@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "nativeExit": 0,
+  "buildExit": 0,
+  "compiledExit": 0,
+  "strictReadersExit": 0,
+  "playerContextAndBrowser": "closed through owned handles",
+  "preview": "exact retained Popen handle; identity revalidated immediately before termination; process exited",
+  "previewTerminationExit": 1,
+  "previewExitNote": "Intentional server termination, not an application verification exit code.",
+  "review": "final independent read-only worker exited 0",
+  "root": "publication terminal only; closed after final git/email verification",
+  "preExistingUntracked": "tests/contracts/__pycache__/ preserved",
+  "scratch": "task-owned diagnostic logs outside repository; retained for handoff"
+}

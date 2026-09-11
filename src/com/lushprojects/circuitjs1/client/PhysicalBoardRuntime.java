@@ -26,13 +26,12 @@ final class PhysicalBoardRuntime {
         new HashMap<String, PhysicalSlotMutationProvider>();
     private final WorkbenchCapabilityRegistry workbenchCapabilityRegistry =
         new WorkbenchCapabilityRegistry();
-    /**
-     * A resistor mutation is the only mutable composition transaction currently
-     * admitted by the composed developer route.  The flag is deliberately
-     * runtime-owned so every public provider can reject a re-entrant operation
-     * without introducing a second global transaction owner.
-     */
-    private boolean mutationInProgress;
+    /** Exact transaction permit; the runtime, not a provider, owns re-entry. */
+    private PhysicalMutationScope activeMutation;
+    private PhysicalMutationReceipt lastMutationReceipt;
+    private boolean mutationQuarantined;
+    private String mutationQuarantineComponentId;
+    private String mutationQuarantineDiagnostic;
 
     PhysicalBoardRuntime(TroubleshootBoard board) {
         if (board == null)
@@ -62,19 +61,49 @@ final class PhysicalBoardRuntime {
 
     TroubleshootBoard getBoard() { return board; }
 
-    boolean isMutationInProgress() { return mutationInProgress; }
+    boolean isMutationInProgress() { return activeMutation != null; }
 
-    void beginMutation() {
-        if (mutationInProgress)
+    void beginMutation(PhysicalMutationScope scope) {
+        if (scope == null)
+            throw new IllegalArgumentException("Missing physical mutation permit");
+        if (activeMutation != null)
             throw new BoardModificationRejectedException("A physical board mutation is already in progress");
-        mutationInProgress = true;
+        if (mutationQuarantined)
+            throw new BoardModificationRejectedException(
+                "Physical board runtime is quarantined after failed mutation cleanup");
+        activeMutation = scope;
     }
 
-    void endMutation() {
-        if (!mutationInProgress)
-            throw new IllegalStateException("No physical board mutation is in progress");
-        mutationInProgress = false;
+    void endMutation(PhysicalMutationScope scope) {
+        if (activeMutation != scope)
+            throw new IllegalStateException("No matching physical board mutation is in progress");
+        activeMutation = null;
     }
+
+    boolean ownsMutation(PhysicalMutationScope scope) { return activeMutation == scope; }
+
+    void recordMutationReceipt(PhysicalMutationReceipt receipt) {
+        if (receipt == null)
+            throw new IllegalArgumentException("Missing physical mutation receipt");
+        lastMutationReceipt = receipt;
+    }
+
+    PhysicalMutationReceipt getLastMutationReceipt() { return lastMutationReceipt; }
+
+    void quarantineMutationOwner(String componentId, Throwable failure) {
+        mutationQuarantined = true;
+        mutationQuarantineComponentId = componentId;
+        mutationQuarantineDiagnostic = failure == null ? null :
+            failure.getClass().getName() + ": " + String.valueOf(failure.getMessage());
+    }
+
+    boolean isMutationQuarantined() { return mutationQuarantined; }
+    boolean isMutationOwnerQuarantined(String componentId) {
+        return mutationQuarantined && (mutationQuarantineComponentId == null ||
+            mutationQuarantineComponentId.equals(componentId));
+    }
+    String getMutationQuarantineComponentId() { return mutationQuarantineComponentId; }
+    String getMutationQuarantineDiagnostic() { return mutationQuarantineDiagnostic; }
 
     /** Binds each package-backed board slot to its already-selected layout realization. */
     void bindGeometryRealizations(PcbBoardLayout layout) {
@@ -411,6 +440,17 @@ final class PhysicalBoardRuntime {
                 getSlot(provider.getComponentId()) == null ||
                 mutationProviders.containsKey(provider.getComponentId()))
             throw new IllegalArgumentException("Duplicate or invalid physical mutation provider");
+        if (provider instanceof PhysicalSlotMutationProvider.Scoped) {
+            PhysicalMutationSlot mutationSlot =
+                ((PhysicalSlotMutationProvider.Scoped) provider).getMutationSlot();
+            PhysicalBoardSlot slot = getSlot(provider.getComponentId());
+            PhysicalBoardInstallationProvider.Scoped declaration = getScopedMutationCapability(provider.getComponentId());
+            if (mutationSlot == null || declaration == null || declaration.getMutationSlot() != mutationSlot ||
+                    mutationSlot.getPhysicalSlot() != slot ||
+                    !provider.getComponentId().equals(mutationSlot.getComponentId()))
+                throw new IllegalArgumentException("Mutation provider has a foreign scoped slot: " +
+                    provider.getComponentId());
+        }
         mutationProviders.put(provider.getComponentId(), provider);
         workbenchCapabilityRegistry.register(provider);
     }
@@ -439,28 +479,37 @@ final class PhysicalBoardRuntime {
         return result;
     }
 
-    /**
-     * Admission check for the bounded composed consumer.  Fixed physical
-     * parts and resistor slot providers are supported.  Other mutable
-     * workbench providers remain valid for their historical leaf routes but
-     * are rejected before this runtime is assembled into the selected
-     * two-block composition.  Each resistor slot needs its own typed view;
-     * the underlying runtime registry is intentionally shared.
-     */
+    PhysicalBoardInstallationProvider.Scoped getScopedMutationCapability(String componentId) {
+        PhysicalBoardInstallationProvider.Scoped found = null;
+        for (PhysicalBoardRuntimeCapability capability : getCapabilities()) {
+            if (!(capability instanceof PhysicalBoardInstallationProvider.Scoped)) continue;
+            PhysicalBoardInstallationProvider.Scoped scoped = (PhysicalBoardInstallationProvider.Scoped) capability;
+            PhysicalMutationSlot slot = scoped.getMutationSlot();
+            if (slot == null || !componentId.equals(slot.getComponentId())) continue;
+            if (found != null) throw new IllegalStateException("Duplicate bounded mutation slot: " + componentId);
+            found = scoped;
+        }
+        return found;
+    }
+
+    /** Admission check for the bounded composed consumer. */
     void validateSupportedCompositionProviders() {
-        Vector<PhysicalPartInventory<?>> resistorInventories =
+        Vector<PhysicalPartInventory<?>> mutableInventories =
             new Vector<PhysicalPartInventory<?>>();
         for (PhysicalBoardRuntimeCapability capability : getCapabilities()) {
-            if (capability instanceof ReplaceableResistorBoardCapability) {
-                ReplaceableResistorBoardCapability resistor =
-                    (ReplaceableResistorBoardCapability) capability;
-                if (resistor.getSlot() == null || resistor.getSlot().getPhysicalSlot() == null ||
-                        resistor.getSlot().getPhysicalSlot().getRuntime() != this ||
-                        resistor.getInventory() == null || resistor.getInventory().getRuntime() != this)
-                    throw new IllegalStateException("Resistor provider is not owned by physical runtime");
-                if (containsIdentity(resistorInventories, resistor.getInventory()))
-                    throw new IllegalStateException("Resistor providers share an ambiguous inventory view");
-                resistorInventories.add(resistor.getInventory());
+            if (capability instanceof PhysicalBoardInstallationProvider.Scoped) {
+                PhysicalBoardInstallationProvider.Scoped declaration =
+                    (PhysicalBoardInstallationProvider.Scoped) capability;
+                PhysicalMutationSlot scopedSlot = declaration.getMutationSlot();
+                PhysicalPartInventory<?> inventory = declaration.getMutationInventory();
+                if (scopedSlot == null || scopedSlot.getPhysicalSlot() == null ||
+                        scopedSlot.getPhysicalSlot().getRuntime() != this ||
+                        inventory == null || inventory.getRuntime() != this)
+                    throw new IllegalStateException("Mutable provider is not owned by physical runtime");
+                for (PhysicalPartInventory<?> prior : mutableInventories)
+                    if (prior == inventory || prior.getInventoryId().equals(inventory.getInventoryId()))
+                        throw new IllegalStateException("Mutable providers share ambiguous inventory storage");
+                mutableInventories.add(inventory);
                 continue;
             }
             if (capability instanceof WorkbenchPartsProvider)
@@ -468,12 +517,20 @@ final class PhysicalBoardRuntime {
                     capability.getCapabilityId());
         }
         for (PhysicalSlotMutationProvider provider : mutationProviders.values()) {
-            if (!(provider instanceof ResistorSlotController))
+            if (!(provider instanceof PhysicalSlotMutationProvider.Scoped))
                 throw new IllegalStateException("Composition does not support mutation provider: " +
                     provider.getComponentId());
             PhysicalBoardSlot slot = getSlot(provider.getComponentId());
             if (slot == null || slot.getRuntime() != this)
                 throw new IllegalStateException("Mutation provider is not owned by physical slot: " +
+                    provider.getComponentId());
+            PhysicalMutationSlot mutationSlot =
+                ((PhysicalSlotMutationProvider.Scoped) provider).getMutationSlot();
+            PhysicalBoardInstallationProvider.Scoped declaration = getScopedMutationCapability(provider.getComponentId());
+            if (mutationSlot == null || declaration == null || declaration.getMutationSlot() != mutationSlot ||
+                    mutationSlot.getPhysicalSlot() != slot ||
+                    !provider.getComponentId().equals(mutationSlot.getComponentId()))
+                throw new IllegalStateException("Mutation provider has a foreign scoped slot: " +
                     provider.getComponentId());
         }
     }

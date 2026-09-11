@@ -1,6 +1,61 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A07 reload lifecycle correction COMPLETE - QUALIFIED
+## Current checkpoint - A08 COMPLETE - QUALIFIED
+
+- **Scope/base:** A08 above `c5a0d5e31ce9848b0e06b7c04c25866034d3d090` on
+  `codex/task43p-final-recovery`. A09 remains unstarted.
+- **Delivered:** Shared bounded resistor/diode prepare/commit/abort lifecycle;
+  immutable intent, validation and compensation receipts; exact installed-provider,
+  slot/part/inventory guards; wrong compatible replacements retained; failed cleanup
+  isolates owned state. Old resistor-only scope removed. Fresh layouts, executable
+  callbacks, family controls and temporal endpoints cannot alias retired owners.
+- **Final candidate:** Containing commit, identified by [tested source/reader hashes](task-evidence/A08/candidate-provenance.json).
+- **Native:** PASS, exit 0: 17 Java suites, independent seed/value/role oracles,
+  466 report-contract assertions. JDK 8u502 and CPython 3.13.14.
+- **GWT:** PASS, exit 0: final production OBF build, all five permutations.
+- **Compiled:** PASS: 14 maintained-reader routes; A08 1,108 assertions,
+  90 compensated diode partial writes and five fresh-install failure stages.
+- **Visible player:** PASS: native mouse/keyboard diagnosis, removal, wrong diode
+  orientation/100 kOhm resistor rejection, correct 496.051 mV diode/1 kOhm resistor
+  measurements, and successful customer retests. Five inspected screenshots retained.
+- **Review:** Fresh independent read-only Reserve MAX delta PASS for supported
+  production paths. Earlier owner/callback/captured-control defects were corrected;
+  full native/build/compiled gates rerun and root reconciled final player evidence.
+- **Limits:** Bounded current resistor/diode ownership, not universal deep rollback
+  or arbitrary hostile Java providers. Compiled behavior and strict readers do not
+  certify the CLI ownership/CDP wrapper. No A09 content was implemented.
+- **Resources/publication:** Native, build, browser, preview and worker processes
+  closed. Root publication terminal and scoped diagnostic scratch remain until
+  handoff. Pre-existing `tests/contracts/__pycache__/` is preserved and excluded.
+  Actual commit/push/email outcomes are reported only after successful publication.
+- **Evidence:** [Acceptance, raw reports, player screenshots and limits](task-evidence/A08/README.md).
+
+## Historical checkpoint - A08 implementation in progress - NOT QUALIFIED
+
+- **Authorization/base:** Owner requested A08 through Remote Desktop Commander,
+  above `c5a0d5e31ce9848b0e06b7c04c25866034d3d090` on
+  `codex/task43p-final-recovery`. A09 remains unstarted.
+- **Scope:** Generalize bounded resistor mutation compensation through the real
+  diode provider. One runtime permit, immutable intent, truthful validation and
+  compensation receipts, retained identity/fault semantics and fresh-owner isolation.
+  No universal undo engine, solver replacement, capacitor/LED/FET lifecycle migration,
+  persistence format or new composed diode content is authorized by this change.
+- **Ownership:** One Reserve MAX implementation worker owns the bounded production
+  core after ordinary Luna returned its usage-limit error. Chat root owns compiled
+  behavioral oracles, strict readers, integration, build/browser/player qualification,
+  independent review and publication. No worker is authorized to commit or push.
+- **Validation so far:** Maintained report-contract script passes 444 assertions,
+  including independent A08 vectors rejecting incomplete write-stage evidence.
+  This is protocol validation, not a production build or runtime acceptance.
+- **Still required:** Final integrated native contracts; production JDK8/GWT build;
+  A08 actual provider failure matrix, affected compiled routes and player repair/
+  measurement flows; independent read-only review; cleanup and source identity audit.
+- **Git/resources:** Changes remain uncommitted. Pre-existing
+  `tests/contracts/__pycache__/` is preserved and excluded. No A08 commit, push or
+  completion notification has been made. Task-only resources are tracked in the
+  unique external A08 scratch checkpoint, not inferred clean from this report.
+
+## Historical checkpoint - A07 reload lifecycle correction COMPLETE - QUALIFIED
 
 - **Scope/base:** Focused correction above `5a60d66cd054aa9902f199d33c1bcf7a137dda25`
   on `codex/task43p-final-recovery`. A08 remains **unstarted**.

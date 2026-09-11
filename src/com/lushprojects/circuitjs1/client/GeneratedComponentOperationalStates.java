@@ -18,6 +18,12 @@ class GeneratedComponentOperationalStates {
         leds.put(componentId, led);
     }
 
+    void requireOwnedBy(java.util.Vector<CircuitElm> elements) {
+        for (LEDElm led : leds.values())
+            if (!elements.contains(led))
+                throw new IllegalArgumentException("Operational state references a foreign solver element");
+    }
+
     boolean isIlluminated(String componentId) {
         LEDElm led = leds.get(componentId);
         return led != null && led.getCurrent() >= LED_ILLUMINATED_CURRENT;

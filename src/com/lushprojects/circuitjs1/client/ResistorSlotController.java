@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
-class ResistorSlotController implements PhysicalSlotMutationProvider {
+class ResistorSlotController implements PhysicalSlotMutationProvider,
+        PhysicalSlotMutationProvider.Scoped {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
@@ -53,12 +54,12 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
     public boolean isAvailable(WorkbenchOperation operation, WorkbenchCapabilityContext context) {
         if (!supports(operation) || !isSafeMutationAvailable())
             return false;
-        ReplaceableComponentSlot slot = capability.getSlot();
+        final ReplaceableComponentSlot slot = capability.getSlot();
         String id = operation.getId();
         if (WorkbenchOperation.CATALOG_INSTALL.equals(id))
             return slot.isEmpty() && hasCatalogEntry(operation.getCatalogEntryId());
         if (WorkbenchOperation.INSTALL.equals(id))
-            return operation.getPart() != null && ownsPart(operation.getPart().getId()) &&
+            return operation.getPart() != null && ownsPartIdentity(operation.getPart()) &&
                 !operation.getPart().isInstalled() && slot.isEmpty();
         if (WorkbenchOperation.REMOVE.equals(id))
             return !slot.isEmpty() && matchesInstalledPart(operation);
@@ -95,21 +96,21 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
 
     public String getComponentId() { return capability.getSlot().getComponentId(); }
     public boolean ownsPart(String partId) { return capability.getInventory().contains(partId); }
+    public PhysicalMutationSlot getMutationSlot() { return capability.getSlot(); }
 
     public boolean removeInstalledPart() {
         requireSafeMutation();
         ReplaceableComponentSlot slot = capability.getSlot();
         if (slot.isEmpty())
             return false;
-        ResistorMutationScope scope = new ResistorMutationScope(sim, instance, modifications,
-            slot, "remove");
+        PhysicalMutationScope scope = newScope("remove", null);
         try {
             modifications.disconnectComponentForMutation(scope, slot.getComponentId());
             scope.clearPart();
             scope.commit();
         } catch (Throwable failure) {
             scope.abort(failure);
-            ResistorMutationScope.rethrow(failure);
+            PhysicalMutationScope.rethrow(failure);
             return false;
         }
         scope.closeAfterCommit();
@@ -125,8 +126,7 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
         PhysicalResistorPart part = capability.getInventory().get(partId);
         if (part.isInstalled())
             return false;
-        ResistorMutationScope scope = new ResistorMutationScope(sim, instance, modifications,
-            slot, "install");
+        PhysicalMutationScope scope = newScope("install", part);
         try {
             scope.replacePrimaryBinding(part.getElement());
 	    scope.replaceAuxiliaryBinding(part.getSecondaryOpenPath().getSimulationElement());
@@ -136,7 +136,7 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
             scope.commit();
         } catch (Throwable failure) {
             scope.abort(failure);
-            ResistorMutationScope.rethrow(failure);
+            PhysicalMutationScope.rethrow(failure);
             return false;
         }
         scope.closeAfterCommit();
@@ -146,7 +146,7 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
 
     public boolean installNewFromCatalog(String catalogEntryId) {
         requireSafeMutation();
-        ReplaceableComponentSlot slot = capability.getSlot();
+        final ReplaceableComponentSlot slot = capability.getSlot();
         if (!slot.isEmpty())
             return false;
         final ResistorCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
@@ -157,22 +157,23 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
         final ResistorSecondaryOpenPath openPath = ResistorSecondaryOpenPath.create(
             new CircuitPostMeasurementEndpoint(element, 1));
         final String componentId = slot.getComponentId();
-        ResistorMutationScope scope = new ResistorMutationScope(sim, instance, modifications,
-            slot, "catalog");
+        PhysicalMutationScope scope = newScope("catalog", null, null, catalogEntryId);
         try {
         PhysicalResistorPart part = scope.acquire(capability.getInventory(),
             componentId + "_CATALOG_PART",
             new PhysicalPartIdentityFactory<PhysicalResistorPart>() {
                 public PhysicalResistorPart create(String partId) {
-                    return new PhysicalResistorPart(partId, specification, specification,
+                    PhysicalResistorPart part = new PhysicalResistorPart(partId, specification, specification,
                         playerNameplate.forPhysicalPartId(partId), element, null, openPath,
                         ResistorPartLocation.INSTALLED, new PhysicalPartProvenance(
                         PhysicalPartProvenance.CATALOG_ACQUIRED, partId));
+                    slot.getPhysicalSlot().bindGeometryForAcquisition(part);
+                    return part;
                 }
             });
         scope.registerCanonicalElement(element);
         scope.registerCanonicalElement(openPath.getSimulationElement());
-        scope.registerStress(capability.getStressDamageSystem(), part);
+        registerStress(scope, part);
         scope.appendActiveElement(element);
         scope.appendActiveElement(openPath.getSimulationElement());
         scope.replacePrimaryBinding(element);
@@ -183,7 +184,7 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
         scope.commit();
         } catch (Throwable failure) {
             scope.abort(failure);
-            ResistorMutationScope.rethrow(failure);
+            PhysicalMutationScope.rethrow(failure);
             return false;
         }
         scope.closeAfterCommit();
@@ -195,7 +196,8 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
         if (sim.getGeneratedBoardInstance() != instance || sim.activeMeasurementOverlay ||
                 !sim.isChallengeInteractionEnabled() ||
                 !sim.getBoardPowerController().isElectricallyUnpowered() ||
-                instance.getPhysicalBoardRuntime().isMutationInProgress())
+                instance.getPhysicalBoardRuntime().isMutationInProgress() ||
+                instance.getPhysicalBoardRuntime().isMutationQuarantined())
             throw new BoardModificationRejectedException(
                 "Resistor replacement requires electrically unpowered generated board");
     }
@@ -209,12 +211,12 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
             sim.refreshBoardModificationControls();
         } catch (Throwable failure) {
             sim.markGeneratedRuntimeFailure(instance, failure);
-            ResistorMutationScope.rethrow(failure);
+            PhysicalMutationScope.rethrow(failure);
         }
     }
 
     private void retargetComponentLeadBindings(PhysicalResistorPart part,
-            ResistorMutationScope scope) {
+            PhysicalMutationScope scope) {
         String componentId = capability.getSlot().getComponentId();
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
                 .getForComponent(componentId)) {
@@ -235,11 +237,42 @@ class ResistorSlotController implements PhysicalSlotMutationProvider {
         return sim.getGeneratedBoardInstance() == instance && !sim.activeMeasurementOverlay &&
             sim.isChallengeInteractionEnabled() &&
             sim.getBoardPowerController().isElectricallyUnpowered() &&
-            !instance.getPhysicalBoardRuntime().isMutationInProgress();
+            !instance.getPhysicalBoardRuntime().isMutationInProgress() &&
+            !instance.getPhysicalBoardRuntime().isMutationOwnerQuarantined(getComponentId());
     }
 
     private boolean matchesInstalledPart(WorkbenchOperation operation) {
         return operation.getPart() == null || operation.getPart() == capability.getSlot().getInstalledPart();
+    }
+
+    private boolean ownsPartIdentity(PhysicalPart<?> part) {
+        return part != null && part.getId() != null &&
+            capability.getInventory().contains(part.getId()) &&
+            capability.getInventory().get(part.getId()) == part;
+    }
+
+    private void registerStress(final PhysicalMutationScope scope,
+            final PhysicalResistorPart part) {
+        final ResistorStressDamageSystem stress = capability.getStressDamageSystem();
+        stress.register(part);
+        scope.setProviderCompensation(new PhysicalMutationScope.ProviderCompensation() {
+            public void compensate() {
+                stress.unregister(part);
+            }
+        });
+        scope.afterStressRegister();
+    }
+
+    private PhysicalMutationScope newScope(String operation, PhysicalPart<?> requestedPart) {
+        return newScope(operation, requestedPart, null, null);
+    }
+
+    private PhysicalMutationScope newScope(String operation, PhysicalPart<?> requestedPart,
+            String padId, String catalogEntryId) {
+        PhysicalMutationIntent intent = PhysicalMutationIntent.prepare(
+            instance.getPhysicalBoardRuntime(), instance, modifications,
+            capability.getSlot(), operation, padId, catalogEntryId, requestedPart);
+        return new PhysicalMutationScope(sim, instance, modifications, intent);
     }
 
     private boolean hasConnectedPad(String padId) {

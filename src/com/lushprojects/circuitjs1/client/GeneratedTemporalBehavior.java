@@ -6,6 +6,9 @@ package com.lushprojects.circuitjs1.client;
  * circuit; it never needs to know a family or component name.
  */
 interface GeneratedTemporalBehavior {
+    /** Validate captured observation endpoints before any temporal callback runs. */
+    void requireOwnedBy(GeneratedBoardInstance instance);
+
     /** Exercises the installed healthy graph before the generated fault is applied. */
     void prepareHealthyProfile(CirSim sim, GeneratedBoardInstance instance);
 

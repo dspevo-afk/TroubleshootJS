@@ -89,6 +89,11 @@ final class NpnLowSideSwitchFamilyState implements GeneratedBoardFamilyState {
         }
     }
 
+    public void requireOwnedBy(GeneratedBoardInstance instance) {
+        if (!instance.getSimulationElements().contains(controlCommandSwitch))
+            throw new IllegalArgumentException("Fresh family state captures a foreign control element");
+    }
+
     public boolean isFaultedTargetInstalled(GeneratedBoardInstance instance,
             String componentId) {
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, componentId);

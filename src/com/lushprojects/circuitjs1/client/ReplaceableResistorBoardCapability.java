@@ -4,7 +4,7 @@ import java.util.Vector;
 
 /** Typed runtime adapter for a board's replaceable resistor position. */
 final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCapability,
-        PhysicalBoardInstallationProvider, PhysicalBoardRuntimeLifecycle, WorkbenchPartsProvider {
+        PhysicalBoardInstallationProvider.Scoped, PhysicalBoardRuntimeLifecycle, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_RESISTOR";
 
     private final ReplaceableComponentSlot slot;
@@ -45,6 +45,9 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
     ReplaceableComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalResistorPart> getInventory() { return inventory; }
     ResistorReplacementCatalog getCatalog() { return catalog; }
+
+    public PhysicalMutationSlot getMutationSlot() { return slot; }
+    public PhysicalPartInventory<?> getMutationInventory() { return inventory; }
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, double initialSimulationTime) {

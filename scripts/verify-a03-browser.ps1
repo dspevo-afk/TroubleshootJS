@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('Current', 'A07', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
+    [ValidateSet('Current', 'A08', 'A07', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
     [string]$Gate = 'Current',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
@@ -309,7 +309,7 @@ function Get-RouteReports($Socket, [DateTime]$Deadline) {
 (()=>{const d=document.documentElement;const get=n=>d.getAttribute(n)||'';return {
   url:location.href,ready:document.readyState,
   verification:get('data-tsj-verification'),
-  a07:get('data-tsj-a07-report'),a06:get('data-tsj-a06-report'),a04:get('data-tsj-a04-report'),a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
+  a08:get('data-tsj-a08-report'),a07:get('data-tsj-a07-report'),a06:get('data-tsj-a06-report'),a04:get('data-tsj-a04-report'),a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
   task46Parity:get('data-tsj-task46-parity'),
   task46Descriptor:get('data-tsj-task46-descriptor'),
   task46Snapshot:get('data-tsj-task46-snapshot'),
@@ -373,6 +373,55 @@ function Test-A07FiniteNumber($Value, [double]$Minimum, [double]$Maximum) {
     $n = [double]$Value
     return -not [double]::IsNaN($n) -and -not [double]::IsInfinity($n) -and
         $n -ge $Minimum -and $n -le $Maximum
+}
+
+function Test-A08Report([object]$Value) {
+    try {
+        $p = (Get-ExactReportText $Value) | ConvertFrom-Json -ErrorAction Stop
+        if ($p.version -cne 'TSJ-A08-MUTATION-1' -or $p.status -cne 'PASS' -or $p.cleanup -cne 'PASS' -or
+                -not (Test-VerifierStrictIntegralValue $p.assertions 600L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $p.diodeScenarios 3L 3L) -or
+                -not (Test-VerifierStrictIntegralValue $p.compensatedWrites 90L 90L) -or
+                -not (Test-VerifierStrictIntegralValue $p.freshFailures 5L 5L)) { return $false }
+        foreach ($field in @('wallMs','maxSettlementMs','maxFailedMutationMs')) {
+            if (-not (Test-VerifierStrictIntegralValue $p.$field 0L ([long]::MaxValue))) { return $false }
+        }
+        if ($p.maxSettlementMs -gt $p.wallMs -or $p.maxFailedMutationMs -gt $p.wallMs) { return $false }
+        $cases = @('resistor-compensation-and-damage','diode-open-0','diode-open-3','diode-short-0',
+            'diode-failed-compensation-isolated','stale-scope-successor-preserved','same-owner-graph-replacement-preserved','fresh-owner-no-alias',
+            'fresh-install-failure-matrix','restricted-scope-write-guards','fresh-mutable-holder-aliases','fresh-callback-owner-aliases','fresh-family-captured-owner-aliases','scoped-admission-identity','proof-owner-restored')
+        if ($p.cases -isnot [array] -or $p.cases.Count -ne $cases.Count) { return $false }
+        foreach ($name in $cases) {
+            $found = @($p.cases | Where-Object { $_.case -ceq $name -and $_.status -ceq 'PASS' })
+            if ($found.Count -ne 1) { return $false }
+        }
+        # Independently enumerate each actual write and repeated endpoint/conductor write.
+        $operations = [ordered]@{
+            remove=@('GRAPH_DISCONNECT:1','GRAPH_DISCONNECT:2','SLOT_CLEAR:1','COMMIT:1')
+            lift=@('GRAPH_DISCONNECT:1')
+            reconnect=@('GRAPH_CONNECT:1')
+            restore=@('GRAPH_CONNECT:1','GRAPH_CONNECT:2','GRAPH_RESTORE:1')
+            catalog=@('INVENTORY_ACQUIRE:1','CANONICAL_REGISTER:1','GRAPH_APPEND:1','PRIMARY_BINDING:1',
+                'ENDPOINT_RETARGET:1','ENDPOINT_RETARGET:2','ATTACHMENT:1','SLOT_MOUNT:1',
+                'GRAPH_CONNECT:1','GRAPH_CONNECT:2','GRAPH_RESTORE:1','COMMIT:1')
+            install=@('PRIMARY_BINDING:1','ENDPOINT_RETARGET:1','ENDPOINT_RETARGET:2','ATTACHMENT:1',
+                'SLOT_MOUNT:1','GRAPH_CONNECT:1','GRAPH_CONNECT:2','GRAPH_RESTORE:1','COMMIT:1')
+        }
+        if ($p.failures -isnot [array] -or $p.failures.Count -ne 90) { return $false }
+        foreach ($scenario in @('diode-open-0','diode-open-3','diode-short-0')) {
+            foreach ($operation in $operations.Keys) {
+                foreach ($write in $operations[$operation]) {
+                    $parts = $write.Split(':'); $stage = 'AFTER_' + $parts[0]; $occurrence = [long]$parts[1]
+                    $rows = @($p.failures | Where-Object { $_.scenario -ceq $scenario -and
+                        $_.operation -ceq $operation -and $_.stage -ceq $stage -and
+                        (Test-VerifierStrictIntegralValue $_.occurrence $occurrence $occurrence) -and
+                        $_.status -ceq 'COMPENSATED' })
+                    if ($rows.Count -ne 1) { return $false }
+                }
+            }
+        }
+        return $true
+    } catch { return $false }
 }
 
 function Test-A07Report([object]$Value) {
@@ -680,6 +729,15 @@ function Test-ControlledReport([object]$Value, [string]$Protocol) {
 function Test-RouteReady($Kind, $Reports) {
     $verification = Get-ExactReportText $Reports.verification
     switch ($Kind) {
+        'a08' { return $verification -ceq 'PASS:a08' -and (Test-A08Report $Reports.a08) }
+        'a08-forced' { return $verification -ceq 'FAIL:a08:a08-explicit-failure-canary' -and
+            [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a08)) }
+        'a08-debugoff' { return $Reports.normalReady.programReady -is [bool] -and
+            $Reports.normalReady.programReady -and $Reports.normalReady.retestCustomerReady -is [bool] -and
+            $Reports.normalReady.retestCustomerReady -and
+            $verification -notmatch '(?i)(?:^|:)a08(?:$|:)' -and
+            [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a08)) }
+        'diode-lifecycle' { return $verification -ceq 'PASS:diode' }
         'a07' { return $verification -ceq 'PASS:a07' -and (Test-A07Report $Reports.a07) }
         'a07-forced' { return $verification -ceq 'FAIL:a07:a07-explicit-failure-canary' -and
             [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a07)) }
@@ -834,6 +892,20 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
                 reportNames = @('a04') }
         )
     }
+    if ($SelectedGate -ceq 'A08') {
+        return @(
+            [pscustomobject]@{name='a08';kind='a08';
+                query='tsjChallenge=led&seed=3&tsjVerifyA08=true&tsjDebug=true&running=true';reportNames=@('a08')},
+            [pscustomobject]@{name='a08-forcedfailure';kind='a08-forced';
+                query='tsjChallenge=led&seed=3&tsjVerifyA08=true&tsjA08Fail=true&tsjDebug=true&running=true';reportNames=@('a08')},
+            [pscustomobject]@{name='a08-debugoff';kind='a08-debugoff';
+                query='tsjChallenge=led&seed=3&tsjVerifyA08=true&tsjA08Fail=true&running=true';reportNames=@('a08')},
+            [pscustomobject]@{name='a08-diode-open';kind='diode-lifecycle';
+                query='tsjChallenge=diode&seed=3&tsjVerifyDiode=true&running=true';reportNames=@()},
+            [pscustomobject]@{name='a08-diode-short';kind='diode-lifecycle';
+                query='tsjChallenge=diode&seed=0&tsjVerifyDiode=true&tsjDiodeShort=true&running=true';reportNames=@()}
+        ) + @(Get-RouteDefinitions 'A07' $false)
+    }
     if ($SelectedGate -ceq 'A07') {
         return @(
             [pscustomobject]@{name='a07';kind='a07';
@@ -909,6 +981,7 @@ try {
             'Current' { 9 }
             'A05' { 6 }
             'A06' { 6 }
+            'A08' { 14 }
             'A07' { 9 }
             'A03' { 3 }
             'A04' { 3 }
@@ -952,7 +1025,7 @@ try {
             $reports = Get-RouteReports $session.Socket $routeDeadline
             if (Test-RouteReady $definition.kind $reports) { break }
             if ((Get-ExactReportText $reports.verification) -like 'FAIL:*' -and
-                    $definition.kind -notin @('a03-forced', 'a04-forced', 'a06-forced', 'a07-forced')) {
+                    $definition.kind -notin @('a03-forced', 'a04-forced', 'a06-forced', 'a07-forced', 'a08-forced')) {
                 Throw-AppFailure ("$($definition.name) reported " +
                     (Get-ExactReportText $reports.verification))
             }

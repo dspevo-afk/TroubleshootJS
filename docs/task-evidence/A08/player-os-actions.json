@@ -1,0 +1,533 @@
+[
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 639,
+    "button": "left",
+    "note": "Retest faulty unmodified diode board",
+    "utc": "2026-09-11T00:46:21.739396+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 495,
+    "button": "left",
+    "note": "Electrically isolate diode board",
+    "utc": "2026-09-11T00:46:22.122728+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1536,
+    "y": 338,
+    "button": "left",
+    "note": "Select diode meter",
+    "utc": "2026-09-11T00:46:22.497851+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 248,
+    "y": 518,
+    "button": "left",
+    "note": "Place red probe on D1 anode pad",
+    "utc": "2026-09-11T00:46:22.873092+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 483,
+    "y": 518,
+    "button": "right",
+    "note": "Place black probe on D1 cathode pad",
+    "utc": "2026-09-11T00:46:23.237378+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1536,
+    "y": 338,
+    "button": "left",
+    "note": "Exit diode mode before physical removal",
+    "utc": "2026-09-11T00:47:10.472888+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 364,
+    "y": 522,
+    "button": "right",
+    "note": "Open normal D1 action menu",
+    "utc": "2026-09-11T00:47:10.834042+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 27,
+    "repetitions": 1,
+    "note": "Dismiss schematic context menu",
+    "utc": "2026-09-11T00:47:34.045280+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 364,
+    "y": 522,
+    "button": "left",
+    "note": "Select visible D1 physical body",
+    "utc": "2026-09-11T00:47:34.407086+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 843,
+    "y": 862,
+    "button": "left",
+    "note": "Dismiss popup by clicking empty bench",
+    "utc": "2026-09-11T00:48:42.608451+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 329,
+    "y": 526,
+    "button": "left",
+    "note": "Select D1 body through physical workbench",
+    "utc": "2026-09-11T00:48:42.969058+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 910,
+    "button": "left",
+    "note": "Remove faulted D1 using physical action",
+    "utc": "2026-09-11T00:49:09.274960+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 745,
+    "button": "left",
+    "note": "Open diode replacement catalog",
+    "utc": "2026-09-11T00:49:31.058856+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 40,
+    "repetitions": 1,
+    "note": "Choose reversed compatible diode",
+    "utc": "2026-09-11T00:49:31.245383+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 13,
+    "repetitions": 1,
+    "note": "Confirm reversed diode selection",
+    "utc": "2026-09-11T00:49:31.435682+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 783,
+    "button": "left",
+    "note": "Install backwards compatible diode",
+    "utc": "2026-09-11T00:49:31.808362+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 495,
+    "button": "left",
+    "note": "Power board with wrong compatible diode",
+    "utc": "2026-09-11T00:49:32.177338+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 639,
+    "button": "left",
+    "note": "Verify backwards replacement fails customer retest",
+    "utc": "2026-09-11T00:49:33.258900+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 495,
+    "button": "left",
+    "note": "Power off before correcting diode orientation",
+    "utc": "2026-09-11T00:50:05.642781+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 328,
+    "y": 525,
+    "button": "left",
+    "note": "Select reversed replacement D1",
+    "utc": "2026-09-11T00:50:06.009255+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 925,
+    "button": "left",
+    "note": "Remove reversed replacement",
+    "utc": "2026-09-11T00:50:06.375697+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 745,
+    "button": "left",
+    "note": "Choose correct diode catalog entry",
+    "utc": "2026-09-11T00:50:06.746290+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 36,
+    "repetitions": 1,
+    "note": "Select first normal-polarity diode",
+    "utc": "2026-09-11T00:50:06.942472+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 13,
+    "repetitions": 1,
+    "note": "Confirm correct diode entry",
+    "utc": "2026-09-11T00:50:07.130508+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 783,
+    "button": "left",
+    "note": "Install normal-polarity replacement diode",
+    "utc": "2026-09-11T00:50:07.509594+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1536,
+    "y": 338,
+    "button": "left",
+    "note": "Select diode measurement after actual replacement",
+    "utc": "2026-09-11T00:50:07.886135+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 248,
+    "y": 518,
+    "button": "left",
+    "note": "Red probe on replacement D1 anode",
+    "utc": "2026-09-11T00:50:08.241077+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 483,
+    "y": 518,
+    "button": "right",
+    "note": "Black probe on replacement D1 cathode",
+    "utc": "2026-09-11T00:50:08.602160+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1536,
+    "y": 338,
+    "button": "left",
+    "note": "Exit meter after correct diode measurement",
+    "utc": "2026-09-11T00:51:01.059937+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 495,
+    "button": "left",
+    "note": "Energize correctly repaired diode board",
+    "utc": "2026-09-11T00:51:01.434276+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1487,
+    "y": 639,
+    "button": "left",
+    "note": "Retest correctly repaired diode board",
+    "utc": "2026-09-11T00:51:02.343282+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 460,
+    "button": "left",
+    "note": "Open current controlled-indicator resistor workbench through normal UI",
+    "utc": "2026-09-11T00:51:32.543662+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 821,
+    "button": "left",
+    "note": "Retest initial controlled-indicator complaint",
+    "utc": "2026-09-11T00:52:23.177844+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 495,
+    "button": "left",
+    "note": "Power off controlled board before resistance tests",
+    "utc": "2026-09-11T00:52:23.855266+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1525,
+    "y": 300,
+    "button": "left",
+    "note": "Select ohmmeter",
+    "utc": "2026-09-11T00:52:24.231865+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 349,
+    "y": 687,
+    "button": "left",
+    "note": "Red probe on Channel B RLOAD first pad",
+    "utc": "2026-09-11T00:52:24.611510+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 461,
+    "y": 687,
+    "button": "right",
+    "note": "Black probe on Channel B RLOAD second pad",
+    "utc": "2026-09-11T00:52:24.975494+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 573,
+    "y": 603,
+    "button": "left",
+    "note": "Red probe on Channel B RB first pad",
+    "utc": "2026-09-11T00:52:25.336130+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 685,
+    "y": 603,
+    "button": "right",
+    "note": "Black probe on Channel B RB second pad",
+    "utc": "2026-09-11T00:52:25.692596+00:00"
+  },
+  {
+    "kind": "Navigate production page",
+    "route": "circuitjs.html?tsjChallenge=led&seed=3&running=true",
+    "note": "Representative current resistor-repair challenge, no debug route",
+    "utc": "2026-09-11T00:53:16.377036+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 495,
+    "button": "left",
+    "note": "Power off resistor challenge",
+    "utc": "2026-09-11T00:53:59.496001+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1525,
+    "y": 300,
+    "button": "left",
+    "note": "Diagnose R1 with real ohmmeter",
+    "utc": "2026-09-11T00:53:59.862533+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 224,
+    "y": 495,
+    "button": "left",
+    "note": "Red probe on R1 first pad",
+    "utc": "2026-09-11T00:54:00.231493+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 421,
+    "y": 495,
+    "button": "right",
+    "note": "Black probe on R1 second pad",
+    "utc": "2026-09-11T00:54:00.591892+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1525,
+    "y": 300,
+    "button": "left",
+    "note": "Exit ohmmeter for resistor removal",
+    "utc": "2026-09-11T00:54:01.029676+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 323,
+    "y": 502,
+    "button": "left",
+    "note": "Select R1 body",
+    "utc": "2026-09-11T00:54:01.385735+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 910,
+    "button": "left",
+    "note": "Remove original failed resistor",
+    "utc": "2026-09-11T00:54:01.753268+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 785,
+    "button": "left",
+    "note": "Choose a compatible but electrically wrong high-value resistor",
+    "utc": "2026-09-11T00:54:31.046244+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 36,
+    "repetitions": 1,
+    "note": "Go to first resistor option",
+    "utc": "2026-09-11T00:54:31.234979+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 40,
+    "repetitions": 48,
+    "note": "Select 100kOhm catalog entry",
+    "utc": "2026-09-11T00:54:31.427686+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 13,
+    "repetitions": 1,
+    "note": "Confirm 100kOhm selection",
+    "utc": "2026-09-11T00:54:31.613216+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 823,
+    "button": "left",
+    "note": "Install wrong high-value resistor",
+    "utc": "2026-09-11T00:54:31.997476+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 495,
+    "button": "left",
+    "note": "Power wrong resistor repair",
+    "utc": "2026-09-11T00:54:32.380517+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 639,
+    "button": "left",
+    "note": "Confirm wrong resistor remains a failed repair",
+    "utc": "2026-09-11T00:54:33.210236+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 495,
+    "button": "left",
+    "note": "Power off before correcting R1",
+    "utc": "2026-09-11T00:54:50.530022+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 323,
+    "y": 502,
+    "button": "left",
+    "note": "Select wrong R1 replacement",
+    "utc": "2026-09-11T00:54:50.897886+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 910,
+    "button": "left",
+    "note": "Remove wrong R1 replacement",
+    "utc": "2026-09-11T00:54:51.262984+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 785,
+    "button": "left",
+    "note": "Select correct 1kOhm resistor",
+    "utc": "2026-09-11T00:54:51.646988+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 36,
+    "repetitions": 1,
+    "note": "Start at first resistor option",
+    "utc": "2026-09-11T00:54:51.833814+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 40,
+    "repetitions": 24,
+    "note": "Choose 1kOhm replacement",
+    "utc": "2026-09-11T00:54:52.023301+00:00"
+  },
+  {
+    "kind": "Win32 OS keyboard",
+    "virtualKey": 13,
+    "repetitions": 1,
+    "note": "Confirm 1kOhm catalog selection",
+    "utc": "2026-09-11T00:54:52.206665+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 823,
+    "button": "left",
+    "note": "Install correct 1kOhm resistor",
+    "utc": "2026-09-11T00:54:52.580042+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1525,
+    "y": 300,
+    "button": "left",
+    "note": "Measure correctly replaced R1",
+    "utc": "2026-09-11T00:54:52.947889+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 224,
+    "y": 495,
+    "button": "left",
+    "note": "Red probe replacement R1 first pad",
+    "utc": "2026-09-11T00:54:53.317746+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 421,
+    "y": 495,
+    "button": "right",
+    "note": "Black probe replacement R1 second pad",
+    "utc": "2026-09-11T00:54:53.677328+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1525,
+    "y": 300,
+    "button": "left",
+    "note": "Exit ohmmeter after 1kOhm confirmation",
+    "utc": "2026-09-11T00:55:10.247465+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 495,
+    "button": "left",
+    "note": "Power correctly repaired resistor board",
+    "utc": "2026-09-11T00:55:10.621804+00:00"
+  },
+  {
+    "kind": "Win32 OS mouse",
+    "x": 1480,
+    "y": 639,
+    "button": "left",
+    "note": "Retest correct resistor repair",
+    "utc": "2026-09-11T00:55:11.464022+00:00"
+  }
+]

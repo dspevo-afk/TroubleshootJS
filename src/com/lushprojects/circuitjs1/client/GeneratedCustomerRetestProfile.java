@@ -50,6 +50,10 @@ final class GeneratedCustomerRetestProfile {
     String getTimingAndRepetition() { return timingAndRepetition; }
     String getUnaffectedFunctions() { return unaffectedFunctions; }
 
+    void appendExecutionOwners(java.util.Vector<Object> owners) {
+        owners.add(this); owners.add(executor);
+    }
+
     GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance instance) {
         return executor.execute(sim, instance);
     }

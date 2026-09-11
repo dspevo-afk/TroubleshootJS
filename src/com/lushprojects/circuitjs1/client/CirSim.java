@@ -406,6 +406,9 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA03Verification;
 	boolean troubleshootA03VerificationComplete;
 	boolean troubleshootA03ForcedFailure;
+	boolean troubleshootA08Verification;
+	boolean troubleshootA08VerificationComplete;
+	boolean troubleshootA08ForcedFailure;
 	boolean troubleshootA07Verification;
 	boolean troubleshootA07VerificationComplete;
 	boolean troubleshootA07ForcedFailure;
@@ -581,6 +584,8 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjVerifyA03", false);
 	    troubleshootA03ForcedFailure = troubleshootA03Verification &&
 		qp.getBooleanValue("tsjA03Fail", false);
+	    troubleshootA08Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA08", false);
+	    troubleshootA08ForcedFailure = troubleshootA08Verification && qp.getBooleanValue("tsjA08Fail", false);
 	    troubleshootA07Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA07", false);
 	    troubleshootA07ForcedFailure = troubleshootA07Verification && qp.getBooleanValue("tsjA07Fail", false);
 	    troubleshootA06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA06", false);
@@ -4720,7 +4725,7 @@ MouseOutHandler, MouseWheelHandler {
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5123,6 +5128,14 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+            if (!developerVerifierRunning && troubleshootA08Verification && !troubleshootA08VerificationComplete &&
+                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                    generatedChallengeController != null && generatedChallengeController.isReady() &&
+                    isGeneratedRuntimeSettled()) {
+                developerVerifierRunning = true; troubleshootA08VerificationComplete = true;
+                publishBrowserVerificationResult("RUNNING:a08");
+                A08MutationDeveloperVerifier.start(this, troubleshootA08ForcedFailure);
+            }
             if (!developerVerifierRunning && troubleshootA07Verification && !troubleshootA07VerificationComplete &&
                     !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                     generatedChallengeController != null && generatedChallengeController.isReady() &&
@@ -5306,7 +5319,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5381,6 +5394,19 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishA03Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-a03-report", evidence);
+    }-*/;
+
+    void finishA08Verification(String evidence, Throwable failure) {
+        developerVerifierRunning = false;
+        if (failure == null) {
+            publishA08Evidence(evidence); publishBrowserVerificationResult("PASS:a08");
+        } else {
+            publishBrowserVerificationResult("FAIL:a08:" + failure.getMessage());
+            console("A08 failure: " + failure);
+        }
+    }
+    private static native void publishA08Evidence(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-a08-report", evidence);
     }-*/;
 
     void finishA07Verification(String evidence, Throwable failure) {

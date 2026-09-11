@@ -1,0 +1,218 @@
+{
+  "base": "c5a0d5e31ce9848b0e06b7c04c25866034d3d090",
+  "branch": "codex/task43p-final-recovery",
+  "candidate": "Containing A08 completion commit. Tested-byte and LF-normalized hashes identify final source before documentation-only closure.",
+  "behaviorFiles": {
+    "scripts/verify-a03-browser.ps1": {
+      "testedBytesSHA256": "b5c88f8dd54e0a87e8dc1ae55cc2af30f6f4cc9e1cb83950df71a8884b4dac10",
+      "lfNormalizedSHA256": "b5c88f8dd54e0a87e8dc1ae55cc2af30f6f4cc9e1cb83950df71a8884b4dac10"
+    },
+    "src/com/lushprojects/circuitjs1/client/A08FreshOwnerAliasVerifier.java": {
+      "testedBytesSHA256": "127c7be3b8de59a698e2415c230cfbb572818dc58c3ca8beda0edeb4ea93131e",
+      "lfNormalizedSHA256": "127c7be3b8de59a698e2415c230cfbb572818dc58c3ca8beda0edeb4ea93131e"
+    },
+    "src/com/lushprojects/circuitjs1/client/A08MutationDeveloperVerifier.java": {
+      "testedBytesSHA256": "2615dd8803190d23b9a5e66264e9f6a851e3ceccc0d626c17cf82c928ddadc8c",
+      "lfNormalizedSHA256": "2615dd8803190d23b9a5e66264e9f6a851e3ceccc0d626c17cf82c928ddadc8c"
+    },
+    "src/com/lushprojects/circuitjs1/client/A08ScopedAdmissionVerifier.java": {
+      "testedBytesSHA256": "f8a6e14563996c92101dd548895165c86681ede4c212c3a8ca887011236a8a8b",
+      "lfNormalizedSHA256": "f8a6e14563996c92101dd548895165c86681ede4c212c3a8ca887011236a8a8b"
+    },
+    "src/com/lushprojects/circuitjs1/client/BoardModificationController.java": {
+      "testedBytesSHA256": "cc1880c142be4fbe966007ff839edee58052cbceb9b98b12779fcf340909762e",
+      "lfNormalizedSHA256": "cc1880c142be4fbe966007ff839edee58052cbceb9b98b12779fcf340909762e"
+    },
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+      "testedBytesSHA256": "68e87efe7d304c37dfe078200cd0fe93e9de312c7a355f662a17b9e6141bff44",
+      "lfNormalizedSHA256": "68e87efe7d304c37dfe078200cd0fe93e9de312c7a355f662a17b9e6141bff44"
+    },
+    "src/com/lushprojects/circuitjs1/client/ComposedResistiveDeviceBehavior.java": {
+      "testedBytesSHA256": "d10ec04662589b7c5f71259253aede7cfea9babf42c27f72795763e731bf550b",
+      "lfNormalizedSHA256": "d10ec04662589b7c5f71259253aede7cfea9babf42c27f72795763e731bf550b"
+    },
+    "src/com/lushprojects/circuitjs1/client/CompositionMutationGateDeveloperVerifier.java": {
+      "testedBytesSHA256": "b6ec35912c81bd8e514d874dfe0aa056a3350bbb55e4f5b6613b35659714958d",
+      "lfNormalizedSHA256": "b6ec35912c81bd8e514d874dfe0aa056a3350bbb55e4f5b6613b35659714958d"
+    },
+    "src/com/lushprojects/circuitjs1/client/ControlledIndicatorDeviceBehavior.java": {
+      "testedBytesSHA256": "8a872ae1754fec2aa55a35b4902853a677d6cab584c2637394d63bb7a4470e89",
+      "lfNormalizedSHA256": "8a872ae1754fec2aa55a35b4902853a677d6cab584c2637394d63bb7a4470e89"
+    },
+    "src/com/lushprojects/circuitjs1/client/DiodeComponentSlot.java": {
+      "testedBytesSHA256": "785090a9a7ec583371b7f7d3b2fe2591d1f2fea086384835550b6c5b18478dc0",
+      "lfNormalizedSHA256": "785090a9a7ec583371b7f7d3b2fe2591d1f2fea086384835550b6c5b18478dc0"
+    },
+    "src/com/lushprojects/circuitjs1/client/DiodeFamilyDeveloperVerifier.java": {
+      "testedBytesSHA256": "b9ebde1e8846eb4d644c847dcc19649dfef8eab7c902b51ab71c886303f50ae6",
+      "lfNormalizedSHA256": "b9ebde1e8846eb4d644c847dcc19649dfef8eab7c902b51ab71c886303f50ae6"
+    },
+    "src/com/lushprojects/circuitjs1/client/DiodeProtectedIndicatorFamilyState.java": {
+      "testedBytesSHA256": "8cd26862a8d0e7eb350fe450cb893da6d2b27d678cf65a0268495aa084cb3237",
+      "lfNormalizedSHA256": "8cd26862a8d0e7eb350fe450cb893da6d2b27d678cf65a0268495aa084cb3237"
+    },
+    "src/com/lushprojects/circuitjs1/client/DiodeSlotController.java": {
+      "testedBytesSHA256": "cf7e9d2c6b12222561eb08f7979fb3e97e256e5679e4f0cd79ec94ee4af010c9",
+      "lfNormalizedSHA256": "cf7e9d2c6b12222561eb08f7979fb3e97e256e5679e4f0cd79ec94ee4af010c9"
+    },
+    "src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java": {
+      "testedBytesSHA256": "f4d7fdb1454222ee10ce13e9d70064c2a09d88eedd3c64a39182384df88ae545",
+      "lfNormalizedSHA256": "f4d7fdb1454222ee10ce13e9d70064c2a09d88eedd3c64a39182384df88ae545"
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedBoardFamilyState.java": {
+      "testedBytesSHA256": "30e02194db31f5233aee3f1ceb66f3f07a1e223a09687f243d84c71b1f7677e4",
+      "lfNormalizedSHA256": "30e02194db31f5233aee3f1ceb66f3f07a1e223a09687f243d84c71b1f7677e4"
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedBoardOperation.java": {
+      "testedBytesSHA256": "aae47711eef5c5bf9ee87a7f4da262d79b21e7b8dbe1ed0799b3695b210d3a08",
+      "lfNormalizedSHA256": "aae47711eef5c5bf9ee87a7f4da262d79b21e7b8dbe1ed0799b3695b210d3a08"
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedComponentOperationalStates.java": {
+      "testedBytesSHA256": "8b18e536542e0124a1fe7dc7b1ea55c4425e66242f075aa9c2554da75daf3984",
+      "lfNormalizedSHA256": "8b18e536542e0124a1fe7dc7b1ea55c4425e66242f075aa9c2554da75daf3984"
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedCustomerRetestProfile.java": {
+      "testedBytesSHA256": "1914069623bafe30aeaf8aedc6fe96cf131a1e5247e73e1801444428aa3a69f2",
+      "lfNormalizedSHA256": "1914069623bafe30aeaf8aedc6fe96cf131a1e5247e73e1801444428aa3a69f2"
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeInvariant.java": {
+      "testedBytesSHA256": "e0337f7cc71b64217f789c0452a6a1746231b9bbccd59684e457a7a6c84be824",
+      "lfNormalizedSHA256": "e0337f7cc71b64217f789c0452a6a1746231b9bbccd59684e457a7a6c84be824"
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedScenario.java": {
+      "testedBytesSHA256": "34a51fe8f2006906dabd443fc1f23e402295f5bc44f500291a93363e13e3d080",
+      "lfNormalizedSHA256": "34a51fe8f2006906dabd443fc1f23e402295f5bc44f500291a93363e13e3d080"
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedTemporalBehavior.java": {
+      "testedBytesSHA256": "832f5b4fd2a63749b4c04332174e5bc6ac43182a1e44690c8ee55ca6bc8bf0fb",
+      "lfNormalizedSHA256": "832f5b4fd2a63749b4c04332174e5bc6ac43182a1e44690c8ee55ca6bc8bf0fb"
+    },
+    "src/com/lushprojects/circuitjs1/client/LedIndicatorFamilyState.java": {
+      "testedBytesSHA256": "db83cbaa2df1e499f83132ef88e14692f63e2f0d8236e42050e5188351b469fd",
+      "lfNormalizedSHA256": "db83cbaa2df1e499f83132ef88e14692f63e2f0d8236e42050e5188351b469fd"
+    },
+    "src/com/lushprojects/circuitjs1/client/NmosLowSideSwitchFamilyState.java": {
+      "testedBytesSHA256": "d7bd2b668a8f4f85da55f1418374868b3ce07c3b51dc37f2339032375e2ec8e5",
+      "lfNormalizedSHA256": "d7bd2b668a8f4f85da55f1418374868b3ce07c3b51dc37f2339032375e2ec8e5"
+    },
+    "src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchFamilyState.java": {
+      "testedBytesSHA256": "7692a9b029cf81a6327b947c435b3b41c667a69c60d1f77c99c27ea17d1bc225",
+      "lfNormalizedSHA256": "7692a9b029cf81a6327b947c435b3b41c667a69c60d1f77c99c27ea17d1bc225"
+    },
+    "src/com/lushprojects/circuitjs1/client/ParallelDualIndicatorFamilyState.java": {
+      "testedBytesSHA256": "611d1deda5e64e98b3c25d27bada4bda90a03d2f13d6aff3a2f51e4d0bb69d62",
+      "lfNormalizedSHA256": "611d1deda5e64e98b3c25d27bada4bda90a03d2f13d6aff3a2f51e4d0bb69d62"
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalBoardInstallationProvider.java": {
+      "testedBytesSHA256": "47f97e89afb95585c07b6f002ccd41225384b8cd47ba1699292b22fb4798717f",
+      "lfNormalizedSHA256": "47f97e89afb95585c07b6f002ccd41225384b8cd47ba1699292b22fb4798717f"
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalBoardRuntime.java": {
+      "testedBytesSHA256": "974c2e14f8ecfb14e5ab330a239d28aa01e1491ce276f7bf089d8548a074c1e6",
+      "lfNormalizedSHA256": "974c2e14f8ecfb14e5ab330a239d28aa01e1491ce276f7bf089d8548a074c1e6"
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalBoardSlot.java": {
+      "testedBytesSHA256": "d390ea750a79202931386d4ef5bb36e54a94a90db818a30132323a9fd3f1224f",
+      "lfNormalizedSHA256": "d390ea750a79202931386d4ef5bb36e54a94a90db818a30132323a9fd3f1224f"
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalMutationIntent.java": {
+      "testedBytesSHA256": "ee4f553311a61183d741188b70e64e96e39834e8621838fe986fca09934545ff",
+      "lfNormalizedSHA256": "ee4f553311a61183d741188b70e64e96e39834e8621838fe986fca09934545ff"
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalMutationReceipt.java": {
+      "testedBytesSHA256": "b1929ce6a7e4e75f814b2d1799f1b8bd4781012fc4cc5eecb5203514e39cb910",
+      "lfNormalizedSHA256": "b1929ce6a7e4e75f814b2d1799f1b8bd4781012fc4cc5eecb5203514e39cb910"
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalMutationScope.java": {
+      "testedBytesSHA256": "c5f8ca837d9ddbef7bd8a4ad9323ff3bac9120e6bbbcc2284d2291a114240a23",
+      "lfNormalizedSHA256": "c5f8ca837d9ddbef7bd8a4ad9323ff3bac9120e6bbbcc2284d2291a114240a23"
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalMutationSlot.java": {
+      "testedBytesSHA256": "14fdfa59274b7dd1a950d37f20381027a40bbdfe6482a0439cc8b7c10401af6c",
+      "lfNormalizedSHA256": "14fdfa59274b7dd1a950d37f20381027a40bbdfe6482a0439cc8b7c10401af6c"
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalSlotMutationProvider.java": {
+      "testedBytesSHA256": "0be22ba640eb06dbb275ad097fe8f295b98c64063b07dad68aaeb70f446bd0bc",
+      "lfNormalizedSHA256": "0be22ba640eb06dbb275ad097fe8f295b98c64063b07dad68aaeb70f446bd0bc"
+    },
+    "src/com/lushprojects/circuitjs1/client/RcDelayFamilyState.java": {
+      "testedBytesSHA256": "bb8e5d492b8634917deeef01dfa79ad523de3ed418bae2837bbb9d03f5162081",
+      "lfNormalizedSHA256": "bb8e5d492b8634917deeef01dfa79ad523de3ed418bae2837bbb9d03f5162081"
+    },
+    "src/com/lushprojects/circuitjs1/client/RcDelayTemporalBehavior.java": {
+      "testedBytesSHA256": "8d10dbeaa026ccbaf95c06d79d9d069c00fe2f1d3375226eff644d987570035e",
+      "lfNormalizedSHA256": "8d10dbeaa026ccbaf95c06d79d9d069c00fe2f1d3375226eff644d987570035e"
+    },
+    "src/com/lushprojects/circuitjs1/client/ReplaceableComponentSlot.java": {
+      "testedBytesSHA256": "475360d91253bf504003795da1b451686813a45989363dc504b4895b78c95c4e",
+      "lfNormalizedSHA256": "475360d91253bf504003795da1b451686813a45989363dc504b4895b78c95c4e"
+    },
+    "src/com/lushprojects/circuitjs1/client/ReplaceableDiodeBoardCapability.java": {
+      "testedBytesSHA256": "20801f12533b1ae72752e54944e9fe2bd30430b5e272f1a2dca439386c42477a",
+      "lfNormalizedSHA256": "20801f12533b1ae72752e54944e9fe2bd30430b5e272f1a2dca439386c42477a"
+    },
+    "src/com/lushprojects/circuitjs1/client/ReplaceableResistorBoardCapability.java": {
+      "testedBytesSHA256": "f6305f061e0d1103b2870e03da965dae527d1f7d4446ef381cf89e8b71a0d79f",
+      "lfNormalizedSHA256": "f6305f061e0d1103b2870e03da965dae527d1f7d4446ef381cf89e8b71a0d79f"
+    },
+    "src/com/lushprojects/circuitjs1/client/ResistorSlotController.java": {
+      "testedBytesSHA256": "a0e8ec8b77a9672e16686ad9a8234fe9e03343b792d92391c8a872475e9325b7",
+      "lfNormalizedSHA256": "1be2c6ddb9f05fe9d65f39186455d3e3693b05119bf5a1a261d6b4fc02e04c2e"
+    },
+    "src/com/lushprojects/circuitjs1/client/Task49DeveloperVerifier.java": {
+      "testedBytesSHA256": "15263ad13d5822b83508f8a1f8f14d2818fcb07644c39d86b51cb09fcea6d9da",
+      "lfNormalizedSHA256": "93bb1771ca4316817ae93ec5a4879038b0dc356f617a0c5a04c22a3671e60646"
+    },
+    "tests/contracts/a04-report-contract.ps1": {
+      "testedBytesSHA256": "917221fee9b86e6b607f9bcbf7b87a9b3c3f8f8e15bda745716a6abf621b5b88",
+      "lfNormalizedSHA256": "917221fee9b86e6b607f9bcbf7b87a9b3c3f8f8e15bda745716a6abf621b5b88"
+    }
+  },
+  "removedBehaviorFiles": [
+    "src/com/lushprojects/circuitjs1/client/ResistorMutationScope.java"
+  ],
+  "executionDigests": {
+    "sourceDigest": "81d2857c6596bb8a31f45371a71637f52e146fe3acbb2802ebfb18432eecb198",
+    "scriptDigest": "cb0acc3a9c196ba1f7681ac2d7a57ae557c54f1da1de5e94a9c410befa7de4b7",
+    "webDigest": "de9dce87fbaffe62f420c88a47b1bfc36d68c0e071bf78e61eaf64ccf5a56742",
+    "executionDigest": "b4a9ae30ab65f4a3c4c659a00e6acf3c2d31de65598e31a5dd31407838556757",
+    "executionFileCount": 1342
+  },
+  "toolchain": {
+    "java": "Temurin JDK 8u502",
+    "gwt": "2.7.0 OBF, five permutations",
+    "python": "3.13.14",
+    "browser": "Installed Playwright Chromium"
+  },
+  "nativeCommand": [
+    "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "$REPO\\scripts\\verify-current-contracts.ps1",
+    "-JavaHome",
+    "$REPO\\.tools\\jdk8-download\\jdk8u502-b07",
+    "-PythonExe",
+    "$USER_HOME\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+    "-ReceiptOutputPath",
+    "$TASK_TEMP\\native-family-receipt.txt"
+  ],
+  "buildCommand": [
+    "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "scripts/build.ps1",
+    "-JavaHome",
+    "$REPO\\.tools\\jdk8-download\\jdk8u502-b07"
+  ],
+  "compiled": "Maintained A08 route definitions and report extraction in fresh Chromium contexts, then maintained Test-RouteReady readers. Dedicated identity-verified preview.",
+  "limits": [
+    "No certification of CLI ownership/CDP wrapper.",
+    "Restricted current resistor/diode transaction ownership, not arbitrary deep rollback.",
+    "Supported production factories and declared captures; arbitrary hostile Java providers are not qualified.",
+    "No A09 implementation."
+  ]
+}

@@ -171,7 +171,7 @@ final class ComposedResistiveDeviceBehavior implements GeneratedChallengeBehavio
                         loadCurrentIsLow(instance);
                 }
             }));
-        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(scenarios);
+        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(scenarios, this);
     }
 
     private void verifyHealthyDivider(GeneratedBoardInstance instance) {
@@ -350,6 +350,11 @@ final class ComposedResistiveDeviceBehavior implements GeneratedChallengeBehavio
                     return retestProfile.execute(sim, instance);
                 }
             }));
+        }
+
+        public void requireOwnedBy(GeneratedBoardInstance instance) {
+            if (behavior != instance.getBehaviorContract())
+                throw new IllegalArgumentException("Fresh family state captures a foreign behavior owner");
         }
 
         public boolean isFaultedTargetInstalled(GeneratedBoardInstance instance,

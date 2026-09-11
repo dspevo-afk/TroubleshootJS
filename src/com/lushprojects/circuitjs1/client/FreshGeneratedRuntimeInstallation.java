@@ -169,8 +169,21 @@ final class FreshGeneratedRuntimeInstallation {
                 original.getConnectionBindings() == candidate.getConnectionBindings() ||
                 original.getExternalPowerBindings() == candidate.getExternalPowerBindings() ||
                 original.getFaultBinding() == candidate.getFaultBinding() ||
-                original.getFamilyState() == candidate.getFamilyState())
+                original.getFamilyState() == candidate.getFamilyState() ||
+                shares(original.getPcbLayout(), candidate.getPcbLayout()) ||
+                shares(original.getOperationalStates(), candidate.getOperationalStates()) ||
+                shares(original.getTemporalBehavior(), candidate.getTemporalBehavior()) ||
+                shares(original.getChallengeDefinition(), candidate.getChallengeDefinition()))
             throw new IllegalArgumentException("Fresh installation cannot reuse mutable owners");
+        if (candidate.getOperationalStates() != null)
+            candidate.getOperationalStates().requireOwnedBy(candidate.getSimulationElements());
+        if (candidate.getChallengeDefinition() != null &&
+                candidate.getChallengeDefinition().getFaultBinding() != candidate.getFaultBinding())
+            throw new IllegalArgumentException("Fresh challenge references a foreign fault owner");
+        requireSeparateExecutionOwners(original, candidate);
+        if (candidate.getFamilyState() != null) candidate.getFamilyState().requireOwnedBy(candidate);
+        if (candidate.getTemporalBehavior() != null) candidate.getTemporalBehavior().requireOwnedBy(candidate);
+        requireSeparateLayoutStorage(original.getPcbLayout(), candidate.getPcbLayout());
         for (CircuitElm element : candidate.getSimulationElements())
             if (original.getSimulationElements().contains(element))
                 throw new IllegalArgumentException("Fresh installation reused a solver element");
@@ -186,6 +199,74 @@ final class FreshGeneratedRuntimeInstallation {
         for (PhysicalBoardRuntimeCapability capability : candidate.getPhysicalBoardRuntime().getCapabilities())
             if (original.getPhysicalBoardRuntime().getCapabilities().contains(capability))
                 throw new IllegalArgumentException("Fresh installation reused a mutable capability");
+    }
+
+    private static void requireSeparateExecutionOwners(GeneratedBoardInstance original,
+            GeneratedBoardInstance candidate) {
+        GeneratedChallengeDefinition definition = candidate.getChallengeDefinition();
+        if (definition != null) {
+            if (definition.getBehaviorContract() != candidate.getBehaviorContract())
+                throw new IllegalArgumentException("Fresh definition references a foreign behavior owner");
+            definition.getScenarioCatalog().requireExecutionOwner(candidate.getBehaviorContract());
+        }
+        Vector<Object> prior = executionOwners(original);
+        for (Object current : executionOwners(candidate))
+            for (Object old : prior)
+                if (shares(current, old))
+                    throw new IllegalArgumentException("Fresh installation reused a behavior callback owner");
+        if (candidate.getBehaviorContract() instanceof GeneratedDiagnosticExecutionProvider) {
+            ConstructionReceipt receipt = ((GeneratedDiagnosticExecutionProvider)candidate.getBehaviorContract())
+                .getConstructionReceipt();
+            if (receipt == null || !receipt.belongsToFinishedContext(receipt.getSpec(), candidate.getBoard()) ||
+                    receipt.getComponentBindings() != candidate.getComponentBindings() ||
+                    receipt.getPowerBindings() != candidate.getExternalPowerBindings() ||
+                    receipt.getConnectionBindings() != candidate.getConnectionBindings())
+                throw new IllegalArgumentException("Fresh diagnostic behavior references foreign construction");
+        }
+    }
+
+    /** Current executable entrypoints, not immutable diagnostic plans or descriptive metadata. */
+    private static Vector<Object> executionOwners(GeneratedBoardInstance board) {
+        Vector<Object> owners = new Vector<Object>();
+        owners.add(board.getBehaviorContract());
+        GeneratedChallengeDefinition definition = board.getChallengeDefinition();
+        if (definition != null) {
+            owners.add(definition); owners.add(definition.getBehaviorContract());
+            definition.getScenarioCatalog().appendExecutionOwners(owners);
+        }
+        GeneratedBoardOperationCatalog operations = board.getOperationCatalog();
+        if (operations != null) {
+            owners.add(operations);
+            for (GeneratedBoardOperation operation : operations.getAll()) operation.appendExecutionOwners(owners);
+        }
+        GeneratedCustomerRetestProfile retest = board.getCustomerRetestProfile();
+        if (retest != null) retest.appendExecutionOwners(owners);
+        if (board.getBehaviorContract() instanceof GeneratedDiagnosticExecutionProvider)
+            owners.add(((GeneratedDiagnosticExecutionProvider)board.getBehaviorContract()).getConstructionReceipt());
+        return owners;
+    }
+
+    private static boolean shares(Object first, Object second) {
+        return first != null && first == second;
+    }
+
+    /** Only exposed mutable layout storage is owned; immutable placements/packages may be shared. */
+    private static void requireSeparateLayoutStorage(PcbBoardLayout original, PcbBoardLayout candidate) {
+        if (original == null || candidate == null) return;
+        Vector<Object> prior = layoutStorage(original);
+        for (Object value : layoutStorage(candidate))
+            for (Object old : prior)
+                if (shares(value, old))
+                    throw new IllegalArgumentException("Fresh layout reused mutable geometry storage");
+    }
+
+    private static Vector<Object> layoutStorage(PcbBoardLayout layout) {
+        Vector<Object> result = new Vector<Object>();
+        result.add(layout.getBoardOutline()); result.add(layout.getPartsTray());
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            result.add(trace.getXPoints()); result.add(trace.getYPoints());
+        }
+        return result;
     }
 
     private static Throwable retain(Throwable original, Throwable cleanup) {

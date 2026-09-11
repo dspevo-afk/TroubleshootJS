@@ -11,7 +11,7 @@ $ast = [Management.Automation.Language.Parser]::ParseFile($source, [ref]$tokens,
 if ($parseErrors.Count -ne 0) { throw 'Browser report reader has syntax errors.' }
 # Load only pure report/route functions; never execute preview/browser setup.
 foreach ($name in @('Get-ExactReportText', 'Test-JsonReport', 'Test-A04Report', 'Test-A06Report', 'Test-ControlledReport',
-        'Test-A07FiniteNumber', 'Test-A07Report', 'Test-RouteReady', 'Get-RouteDefinitions')) {
+        'Test-A07FiniteNumber', 'Test-A07Report', 'Test-A08Report', 'Test-RouteReady', 'Get-RouteDefinitions')) {
     $found = @($ast.FindAll({ param($node)
         $node -is [Management.Automation.Language.FunctionDefinitionAst] -and
             $node.Name -ceq $name
@@ -395,5 +395,86 @@ $bad=Copy-Report $execution;$bad.latencies[3].cancelToTerminalMs=999
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Impossible cancellation latency accepted.'
 $bad=Copy-Report $execution;$bad.scale[0].contextReuse=$true
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Fresh replicate misrepresented as cached context reuse.'
+# A08 vectors are constructed independently of the compiled provider receipts.
+$mutationCases=@('resistor-compensation-and-damage','diode-open-0','diode-open-3','diode-short-0',
+    'diode-failed-compensation-isolated','stale-scope-successor-preserved','same-owner-graph-replacement-preserved','fresh-owner-no-alias',
+    'fresh-install-failure-matrix','restricted-scope-write-guards','fresh-mutable-holder-aliases','fresh-callback-owner-aliases','fresh-family-captured-owner-aliases','scoped-admission-identity','proof-owner-restored')
+$mutationRows=@(foreach ($scenario in @('diode-open-0','diode-open-3','diode-short-0')) {
+    foreach ($spec in @(
+        'remove/GRAPH_DISCONNECT/1','remove/GRAPH_DISCONNECT/2','remove/SLOT_CLEAR/1','remove/COMMIT/1',
+        'lift/GRAPH_DISCONNECT/1','reconnect/GRAPH_CONNECT/1',
+        'restore/GRAPH_CONNECT/1','restore/GRAPH_CONNECT/2','restore/GRAPH_RESTORE/1',
+        'catalog/INVENTORY_ACQUIRE/1','catalog/CANONICAL_REGISTER/1','catalog/GRAPH_APPEND/1',
+        'catalog/PRIMARY_BINDING/1','catalog/ENDPOINT_RETARGET/1','catalog/ENDPOINT_RETARGET/2',
+        'catalog/ATTACHMENT/1','catalog/SLOT_MOUNT/1','catalog/GRAPH_CONNECT/1','catalog/GRAPH_CONNECT/2',
+        'catalog/GRAPH_RESTORE/1','catalog/COMMIT/1',
+        'install/PRIMARY_BINDING/1','install/ENDPOINT_RETARGET/1','install/ENDPOINT_RETARGET/2',
+        'install/ATTACHMENT/1','install/SLOT_MOUNT/1','install/GRAPH_CONNECT/1','install/GRAPH_CONNECT/2',
+        'install/GRAPH_RESTORE/1','install/COMMIT/1')) {
+        $pieces=$spec.Split('/')
+        @{scenario=$scenario;operation=$pieces[0];stage=('AFTER_'+$pieces[1]);occurrence=[int]$pieces[2];status='COMPENSATED'}
+    }
+})
+$mutation=[ordered]@{version='TSJ-A08-MUTATION-1';status='PASS';cleanup='PASS';assertions=1000;
+    diodeScenarios=3;compensatedWrites=90;freshFailures=5;wallMs=1000;maxSettlementMs=25;maxFailedMutationMs=10;
+    cases=@($mutationCases | ForEach-Object { @{case=$_;status='PASS'} });failures=$mutationRows}
+Assert-ReportContract (Test-A08Report (Encode-Report $mutation)) 'Independent complete A08 report rejected.'
+foreach ($key in @($mutation.Keys)) {
+    $bad=Copy-Report $mutation;$bad.PSObject.Properties.Remove($key)
+    Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) "Missing A08 field accepted: $key"
+}
+foreach ($field in @('version','status','cleanup')) {
+    $bad=Copy-Report $mutation;$bad.$field='FAIL'
+    Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) "A08 false success accepted: $field"
+}
+foreach ($field in @('assertions','diodeScenarios','compensatedWrites','freshFailures','wallMs','maxSettlementMs','maxFailedMutationMs')) {
+    foreach ($value in @($null,'1000',-1,$true,1.5)) {
+        $bad=Copy-Report $mutation;$bad.$field=$value
+        Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) "Malformed A08 numeric field accepted: $field"
+    }
+}
+foreach ($name in $mutationCases) {
+    $bad=Copy-Report $mutation;$bad.cases=@($bad.cases | Where-Object case -cne $name)
+    Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) "Missing A08 lifecycle case accepted: $name"
+    $bad=Copy-Report $mutation;($bad.cases | Where-Object case -ceq $name).status='FAIL'
+    Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) "Failed A08 lifecycle case accepted: $name"
+}
+# Cardinality alone must not permit duplicate or missing individual stage proofs.
+foreach ($index in 0..89) {
+    $bad=Copy-Report $mutation;$bad.failures[$index]=$bad.failures[($index+1)%90]
+    Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) "Missing/duplicate A08 write proof accepted: $index"
+}
+foreach ($value in @('PASS','ISOLATED','FAILED',$null)) {
+    $bad=Copy-Report $mutation;$bad.failures[0].status=$value
+    Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) 'A08 noncompensated write counted as compensation.'
+}
+$bad=Copy-Report $mutation;$bad.failures[0].occurrence='1'
+Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) 'Untyped A08 stage occurrence accepted.'
+$bad=Copy-Report $mutation;$bad.maxSettlementMs=1001
+Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) 'Impossible A08 settlement duration accepted.'
+$bad=Copy-Report $mutation;$bad.maxFailedMutationMs=1001
+Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) 'Impossible A08 failed-operation duration accepted.'
+$mutationReports=[pscustomobject]@{verification='PASS:a08';a08=(Encode-Report $mutation);
+    normalReady=[pscustomobject]@{programReady=$true;retestCustomerReady=$true}}
+Assert-ReportContract (Test-RouteReady 'a08' $mutationReports) 'Valid A08 route rejected.'
+$mutationReports.verification='RUNNING:a08'
+Assert-ReportContract (-not (Test-RouteReady 'a08' $mutationReports)) 'Unfinished A08 route accepted.'
+$mutationReports.verification='FAIL:a08:a08-explicit-failure-canary';$mutationReports.a08=$null
+Assert-ReportContract (Test-RouteReady 'a08-forced' $mutationReports) 'Expected A08 negative rejected.'
+$mutationReports.verification='FAIL:a08:unexpected'
+Assert-ReportContract (-not (Test-RouteReady 'a08-forced' $mutationReports)) 'Unexpected A08 failure credited as negative proof.'
+$mutationReports.verification=''
+Assert-ReportContract (Test-RouteReady 'a08-debugoff' $mutationReports) 'Ready A08 debug-off player route rejected.'
+foreach ($field in @('programReady','retestCustomerReady')) {
+    foreach ($value in @('false','true',1,$null,$false)) {
+        $mutationReports.normalReady.$field=$value
+        Assert-ReportContract (-not (Test-RouteReady 'a08-debugoff' $mutationReports)) "Untyped/false A08 readiness accepted: $field"
+    }
+    $mutationReports.normalReady.$field=$true
+}
+$mutationReports.a08=Encode-Report $mutation
+Assert-ReportContract (-not (Test-RouteReady 'a08-debugoff' $mutationReports)) 'A08 private developer evidence leaked to player route.'
+Assert-ReportContract (@(Get-RouteDefinitions 'A08' $false).Count -eq 14) 'A08 affected route selection changed.'
+
 Write-Output ('PASS: A04 report contracts assertions=' + $script:assertions)
 exit 0

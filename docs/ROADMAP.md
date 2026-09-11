@@ -7,14 +7,14 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **A07: Bounded solver execution, observation and high-risk model pilots**, including the schematic-replacement lifecycle correction<br>
-**Current checkpoint:** **A07 COMPLETE - QUALIFIED**, with the reviewed reload/import and undo/redo event-clock regression corrected. See [correction evidence](task-evidence/A07-reload-fix/README.md) for fresh checks and explicit limits. **A08** is the recommended next unstarted task and requires separate authorization.
+**Latest completed task:** **A08: Multi-provider mutation and failure-isolated physical lifecycle**<br>
+**Current checkpoint:** **A08 COMPLETE - QUALIFIED**. See [A08 acceptance](task-evidence/A08/README.md) for final native/build/compiled/player checks, ownership corrections and explicit limits. **A09** is the next unstarted task and requires separate authorization.
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
-This is a self-contained replacement roadmap, not an amendment to apply over the old one. No companion dependency file, old task report, Library attachment, external roadmap or historical appendix is required to interpret its future scope. Repository source/evidence paths in Section 10 establish the review basis, not mandatory frozen outputs. The roadmap does not itself execute changes; R00 was separately authorized and completed; A05, A06 and A07 were separately authorized and are now qualified. Future tasks require their own authorization.
+This is a self-contained replacement roadmap, not an amendment to apply over the old one. No companion dependency file, old task report, Library attachment, external roadmap or historical appendix is required to interpret its future scope. Repository source/evidence paths in Section 10 establish the review basis, not mandatory frozen outputs. The roadmap does not itself execute changes; R00 was separately authorized and completed; A05, A06, A07 and A08 were separately authorized and are now qualified. Future tasks require their own authorization.
 
-The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. Ten are delivered/completed baseline entries, including A07, and 63 are unstarted feature/qualification nodes. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
+The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. Eleven are delivered/completed baseline entries, including A08, and 62 are unstarted feature/qualification nodes. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
 
 ## Navigation
 
@@ -909,7 +909,11 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A08 · Multi-provider mutation and failure-isolated physical lifecycle
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE - QUALIFIED for the bounded current resistor/diode lifecycle.
+
+**Delivered/evidence:** [A08 acceptance](task-evidence/A08/README.md): restricted intent/scope/receipts; actual resistor and diode compensation; fresh-owner/callback/captured-control rejection; native 17 suites/466 report assertions, production GWT 5/5, compiled routes 14/14, A08 1,108 assertions with 90 diode partial writes and five installation failures, native-input diagnosis/wrong repair/correction/retest, and independent final delta review PASS.
+
+**Qualification limits:** Current supported provider ownership, not universal rollback or an arbitrary Java plugin sandbox. Compiled application/reader checks are separate from CLI ownership/CDP-wrapper certification. A09 remains unstarted.
 
 **Hard prerequisites:** [A04](#m-a04), [A07](#m-a07)
 

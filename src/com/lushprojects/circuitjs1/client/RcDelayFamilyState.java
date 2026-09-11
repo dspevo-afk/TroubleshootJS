@@ -5,10 +5,12 @@ final class RcDelayFamilyState implements GeneratedBoardFamilyState {
     private final GeneratedBoardOperationCatalog operations =
         new GeneratedBoardOperationCatalog();
     private final GeneratedCustomerRetestProfile retestProfile;
+    private final RcDelayTemporalBehavior temporal;
 
     RcDelayFamilyState(final RcDelayTemporalBehavior temporal) {
         if (temporal == null)
             throw new IllegalArgumentException("Missing RC temporal behavior");
+        this.temporal = temporal;
         retestProfile = new GeneratedCustomerRetestProfile(
             "RC_DELAY_CUSTOMER_RETEST", "Power the board ON, then power-cycle and observe the delayed output.",
             "Board Power OFF, then ON; stored energy must be safely discharged first.",
@@ -48,6 +50,11 @@ final class RcDelayFamilyState implements GeneratedBoardFamilyState {
                 return retestProfile.execute(sim, instance);
             }
         }));
+    }
+
+    public void requireOwnedBy(GeneratedBoardInstance instance) {
+        if (temporal != instance.getTemporalBehavior())
+            throw new IllegalArgumentException("Fresh family state captures a foreign temporal owner");
     }
 
     public boolean isFaultedTargetInstalled(GeneratedBoardInstance instance,

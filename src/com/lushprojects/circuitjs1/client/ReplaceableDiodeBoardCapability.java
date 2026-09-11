@@ -4,7 +4,7 @@ import java.util.Vector;
 
 /** Typed runtime adapter for a board's replaceable diode position. */
 final class ReplaceableDiodeBoardCapability implements PhysicalBoardRuntimeCapability,
-        PhysicalBoardInstallationProvider, WorkbenchPartsProvider {
+        PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_DIODE";
 
     private final DiodeComponentSlot slot;
@@ -26,6 +26,9 @@ final class ReplaceableDiodeBoardCapability implements PhysicalBoardRuntimeCapab
     DiodeComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalDiodePart> getInventory() { return inventory; }
     DiodeReplacementCatalog getCatalog() { return catalog; }
+
+    public PhysicalMutationSlot getMutationSlot() { return slot; }
+    public PhysicalPartInventory<?> getMutationInventory() { return inventory; }
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, double initialSimulationTime) {

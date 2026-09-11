@@ -1,6 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
-class ReplaceableComponentSlot {
+class ReplaceableComponentSlot implements PhysicalMutationSlot {
     private final String componentId;
     private final ResistorNameplate intendedNameplate;
     private final WireElm firstAttachment;
@@ -23,13 +23,23 @@ class ReplaceableComponentSlot {
         physicalSlot.install(installedPart);
     }
 
-    String getComponentId() { return componentId; }
+    public String getComponentId() { return componentId; }
     ResistorNameplate getIntendedNameplate() { return intendedNameplate; }
-    PhysicalBoardSlot getPhysicalSlot() { return physicalSlot; }
-    PhysicalResistorPart getInstalledPart() {
+    public PhysicalBoardSlot getPhysicalSlot() { return physicalSlot; }
+    public PhysicalResistorPart getInstalledPart() {
         return (PhysicalResistorPart) physicalSlot.getInstalledPart();
     }
-    boolean isEmpty() { return !physicalSlot.isOccupied(); }
+    public boolean isEmpty() { return !physicalSlot.isOccupied(); }
+    public boolean acceptsPart(PhysicalPart<?> part) {
+        return part instanceof PhysicalResistorPart;
+    }
+    public CircuitMeasurementEndpoint getExpectedEndpoint(PhysicalPart<?> part, BoardPad pad) {
+        if (!acceptsPart(part) || pad == null || !componentId.equals(pad.getComponentId()))
+            throw new IllegalArgumentException("Foreign resistor terminal mapping");
+        int terminal = "1".equals(pad.getTerminalId()) ? 0 : "2".equals(pad.getTerminalId()) ? 1 : -1;
+        if (terminal < 0) throw new IllegalArgumentException("Unknown resistor terminal");
+        return ((PhysicalResistorPart) part).getPublicTerminal(terminal);
+    }
     void clear() { physicalSlot.remove(); }
     void install(PhysicalResistorPart part) {
         if (part == null) throw new IllegalArgumentException("Missing resistor part");
@@ -37,34 +47,36 @@ class ReplaceableComponentSlot {
         physicalSlot.install(part);
     }
 
-    void installForMutation(PhysicalResistorPart part, ResistorMutationScope scope) {
-        if (part == null || scope == null)
+    public void installForMutation(PhysicalPart<?> candidate, PhysicalMutationScope scope) {
+        if (!(candidate instanceof PhysicalResistorPart) || scope == null)
             throw new IllegalArgumentException("Missing resistor mutation install context");
         if (!scope.owns(this))
-            throw new IllegalStateException("Resistor mutation scope does not own slot");
+            throw new IllegalStateException("Physical mutation scope does not own resistor slot");
+        PhysicalResistorPart part = (PhysicalResistorPart) candidate;
         attach(part);
         scope.afterAttachmentWrite();
         physicalSlot.install(part);
         scope.afterSlotMountWrite();
     }
 
-    PhysicalPart<?> clearForMutation(ResistorMutationScope scope) {
+    public PhysicalPart<?> clearForMutation(PhysicalMutationScope scope) {
         if (scope == null || !scope.owns(this))
-            throw new IllegalStateException("Resistor mutation scope does not own slot");
+            throw new IllegalStateException("Physical mutation scope does not own resistor slot");
         PhysicalPart<?> removed = physicalSlot.remove();
         scope.afterSlotClearWrite();
         return removed;
     }
 
-    AttachmentState captureAttachmentState() {
-        return new AttachmentState(firstAttachment.x, firstAttachment.y,
+    public PhysicalMutationSlot.AttachmentState captureAttachmentState() {
+        return new ResistorAttachmentState(firstAttachment.x, firstAttachment.y,
             firstAttachment.x2, firstAttachment.y2, secondAttachment.x,
             secondAttachment.y, secondAttachment.x2, secondAttachment.y2);
     }
 
-    void restoreAttachmentState(AttachmentState state) {
-        if (state == null)
+    public void restoreAttachmentState(PhysicalMutationSlot.AttachmentState captured) {
+        if (!(captured instanceof ResistorAttachmentState))
             throw new IllegalArgumentException("Missing resistor attachment state");
+        ResistorAttachmentState state = (ResistorAttachmentState) captured;
         firstAttachment.x = state.firstX;
         firstAttachment.y = state.firstY;
         firstAttachment.x2 = state.firstX2;
@@ -77,7 +89,7 @@ class ReplaceableComponentSlot {
         secondAttachment.setPoints();
     }
 
-    static final class AttachmentState {
+    private static final class ResistorAttachmentState implements PhysicalMutationSlot.AttachmentState {
         private final int firstX;
         private final int firstY;
         private final int firstX2;
@@ -87,7 +99,7 @@ class ReplaceableComponentSlot {
         private final int secondX2;
         private final int secondY2;
 
-        private AttachmentState(int firstX, int firstY, int firstX2, int firstY2,
+        private ResistorAttachmentState(int firstX, int firstY, int firstX2, int firstY2,
                 int secondX, int secondY, int secondX2, int secondY2) {
             this.firstX = firstX;
             this.firstY = firstY;

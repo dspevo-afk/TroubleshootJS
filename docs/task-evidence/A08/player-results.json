@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "input": "Win32 native mouse and keyboard, exact task HWND",
+  "routes": [
+    "tsjChallenge=diode&seed=3&running=true",
+    "controlled indicator via normal UI, observations only",
+    "tsjChallenge=led&seed=3&running=true"
+  ],
+  "cases": [
+    {
+      "case": "diode-initial-forward-measurement",
+      "result": "OL",
+      "screenshot": "player-diode-faulty-measurement.png"
+    },
+    {
+      "case": "diode-backwards-compatible-replacement",
+      "result": "Customer retest did not pass. Continue troubleshooting.",
+      "screenshot": "player-diode-wrong-repair.png"
+    },
+    {
+      "case": "diode-correct-replacement-forward",
+      "result": "496.051 mV"
+    },
+    {
+      "case": "diode-correct-replacement-customer-retest",
+      "result": "PASS",
+      "screenshot": "player-diode-repaired-retest.png"
+    },
+    {
+      "case": "resistor-compatible-wrong-value",
+      "value": "100000 Ohm",
+      "result": "customer retest FAIL",
+      "screenshot": "player-resistor-wrong-repair.png"
+    },
+    {
+      "case": "resistor-correct-value-measurement-retest",
+      "reading": "1 kOhm",
+      "result": "PASS",
+      "screenshot": "player-resistor-repaired-retest.png"
+    }
+  ],
+  "errors": [],
+  "nativeActions": 68
+}

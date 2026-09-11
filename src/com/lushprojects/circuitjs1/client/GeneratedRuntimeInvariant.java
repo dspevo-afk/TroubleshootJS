@@ -179,13 +179,13 @@ final class GeneratedRuntimeInvariant {
             verifyEndpoint(binding.getComponentEndpoint(), canonical, padId);
             PhysicalPart<?> installed = instance.getPhysicalBoardRuntime().getInstalledPart(
                 pad.getComponentId());
-            if (installed instanceof PhysicalResistorPart) {
-                PhysicalPartTerminal terminal = null;
-                for (PhysicalPartTerminal candidate : installed.getTerminals())
-                    if (pad.getTerminalId().equals(candidate.getTerminalName())) terminal = candidate;
-                require(terminal != null && GeneratedComponentConnectionBindings.sameEndpoint(
-                        terminal.getEndpoint(), binding.getComponentEndpoint()),
-                    "Resistor connection disagrees with installed terminal: " + padId);
+            PhysicalBoardInstallationProvider.Scoped scoped = instance.getPhysicalBoardRuntime()
+                .getScopedMutationCapability(pad.getComponentId());
+            if (installed != null && scoped != null) {
+                CircuitMeasurementEndpoint expected = scoped.getMutationSlot().getExpectedEndpoint(installed, pad);
+                require(expected != null && GeneratedComponentConnectionBindings.sameEndpoint(
+                        expected, binding.getComponentEndpoint()),
+                    "Physical connection disagrees with installed terminal: " + padId);
             }
             require(containsIdentity(canonical, binding.getConnectionElement()),
                 "Connection element is outside generated canonical elements: " + padId);

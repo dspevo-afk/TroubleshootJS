@@ -1,0 +1,92 @@
+{
+    "status":  "PASS",
+    "routeCount":  14,
+    "results":  [
+                    {
+                        "name":  "a08",
+                        "kind":  "a08",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a08-forcedfailure",
+                        "kind":  "a08-forced",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a08-debugoff",
+                        "kind":  "a08-debugoff",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a08-diode-open",
+                        "kind":  "diode-lifecycle",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a08-diode-short",
+                        "kind":  "diode-lifecycle",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a07",
+                        "kind":  "a07",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a07-forcedfailure",
+                        "kind":  "a07-forced",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a07-debugoff",
+                        "kind":  "a07-debugoff",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a06",
+                        "kind":  "a06",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a06-forcedfailure",
+                        "kind":  "a06-forced",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a06-debugoff",
+                        "kind":  "a06-debugoff",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "a03",
+                        "kind":  "a03",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "task49",
+                        "kind":  "task49",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    },
+                    {
+                        "name":  "stored-energy",
+                        "kind":  "stored-energy",
+                        "status":  "PASS",
+                        "reader":  "scripts/verify-a03-browser.ps1::Test-RouteReady"
+                    }
+                ],
+    "readerSha256":  "b5c88f8dd54e0a87e8dc1ae55cc2af30f6f4cc9e1cb83950df71a8884b4dac10",
+    "warning":  "Direct isolated-browser behavior and maintained report-reader proof; does not certify the failed CLI preflight."
+}

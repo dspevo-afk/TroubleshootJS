@@ -41,6 +41,11 @@ final class GeneratedScenario<T> {
     String getComplaintText() { return complaintText; }
     T getObservedBehavior() { return observedBehavior; }
 
+    void appendExecutionOwners(Vector<Object> owners) {
+        owners.add(this); owners.add(compatibility);
+        if (presentation != null) owners.add(presentation);
+    }
+
     boolean isCompatible(GeneratedBoardInstance instance,
             BoardModificationController modifications, BoardPowerState powerState) {
         return compatibility.matches(instance, modifications, powerState, observedBehavior);
@@ -74,14 +79,31 @@ interface GeneratedScenarioPresentation<T> {
 /** Immutable candidate set; selection never consumes topology randomness. */
 final class GeneratedScenarioCatalog<T> {
     private final Vector<GeneratedScenario<T>> candidates;
+    private final GeneratedChallengeBehaviorContract executionOwner;
 
-    GeneratedScenarioCatalog(Vector<GeneratedScenario<T>> candidates) {
+    GeneratedScenarioCatalog(Vector<GeneratedScenario<T>> candidates) { this(candidates, null); }
+
+    /** Stateful factories declare their captured behavior; stateless library predicates do not. */
+    GeneratedScenarioCatalog(Vector<GeneratedScenario<T>> candidates,
+            GeneratedChallengeBehaviorContract executionOwner) {
+        this.executionOwner = executionOwner;
         if (candidates == null || candidates.isEmpty())
             throw new IllegalArgumentException("Scenario catalog requires candidates");
         this.candidates = new Vector<GeneratedScenario<T>>(candidates);
         for (GeneratedScenario<T> candidate : this.candidates)
             if (candidate == null)
                 throw new IllegalArgumentException("Scenario catalog contains a null candidate");
+    }
+
+    void requireExecutionOwner(GeneratedChallengeBehaviorContract expected) {
+        if (executionOwner != null && executionOwner != expected)
+            throw new IllegalArgumentException("Fresh scenario captures a foreign behavior owner");
+    }
+
+    void appendExecutionOwners(Vector<Object> owners) {
+        owners.add(this);
+        if (executionOwner != null) owners.add(executionOwner);
+        for (GeneratedScenario<T> scenario : candidates) scenario.appendExecutionOwners(owners);
     }
 
     GeneratedScenario<T> select(long seed, GeneratedBoardInstance instance,
@@ -121,7 +143,7 @@ final class GeneratedScenarioCatalog<T> {
         Vector<GeneratedScenario<T>> reversed = new Vector<GeneratedScenario<T>>();
         for (int index = candidates.size() - 1; index >= 0; index--)
             reversed.add(candidates.elementAt(index));
-        return new GeneratedScenarioCatalog<T>(reversed);
+        return new GeneratedScenarioCatalog<T>(reversed, executionOwner);
     }
 
     private void addStableId(Vector<String> ids, String id) {

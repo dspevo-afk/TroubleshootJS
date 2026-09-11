@@ -26,6 +26,7 @@ class DiodeFamilyDeveloperVerifier {
             "Faulted original D1 is not installed");
 
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        settleAfterMutation(sim);
         sim.updateCircuit();
         if (isOpen(instance))
             verifyOpen(sim, boardProbe(sim, instance, "D1.A"), boardProbe(sim, instance, "D1.K"),
@@ -34,6 +35,7 @@ class DiodeFamilyDeveloperVerifier {
             verifyShort(sim, boardProbe(sim, instance, "D1.A"), boardProbe(sim, instance, "D1.K"),
                 "installed faulted D1");
         require(sim.getDiodeSlotController().removeInstalledPart(), "Could not remove original D1");
+        settleAfterMutation(sim);
         verifyTopology(sim, instance);
         if (isOpen(instance))
             verifyOpen(sim, looseProbe(sim, instance, original, 0),
@@ -45,6 +47,7 @@ class DiodeFamilyDeveloperVerifier {
         DiodeCatalogEntry reversedCatalog = state.getCatalog().get(DiodeReplacementCatalog.REVERSED);
         require(sim.getDiodeSlotController().installNewFromCatalog(reversedCatalog.getId()),
             "Could not install reversed diode");
+        settleAfterMutation(sim);
         PhysicalDiodePart reversed = state.getSlot().getInstalledPart();
         verifyCatalogAcquisition(reversed, reversedCatalog);
         require(reversed.isReversedInstallation(), "Reversed catalog diode lost orientation");
@@ -57,13 +60,16 @@ class DiodeFamilyDeveloperVerifier {
                 sim.getBoardModificationController(), BoardPowerState.POWERED, false),
             "Reversed diode conducted or completed the challenge");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        settleAfterMutation(sim);
         require(sim.getDiodeSlotController().removeInstalledPart(), "Could not remove reversed diode");
+        settleAfterMutation(sim);
         settleAfterMutation(sim);
         verifyHealthy(sim, instance, reversed);
 
         DiodeCatalogEntry correctCatalog = state.getCatalog().get(DiodeReplacementCatalog.CORRECT);
         require(sim.getDiodeSlotController().installNewFromCatalog(correctCatalog.getId()),
             "Could not install healthy diode");
+        settleAfterMutation(sim);
         PhysicalDiodePart healthy = state.getSlot().getInstalledPart();
         verifyCatalogAcquisition(healthy, correctCatalog);
         require(healthy != original && healthy != reversed &&
@@ -72,6 +78,7 @@ class DiodeFamilyDeveloperVerifier {
         verifyLiftedHealthy(sim, instance, healthy);
         require(sim.getDiodeSlotController().removeInstalledPart(),
             "Could not isolate healthy diode for meter test");
+        settleAfterMutation(sim);
         settleAfterMutation(sim);
         verifyHealthy(sim, instance, healthy);
         if (isOpen(instance))
@@ -82,20 +89,25 @@ class DiodeFamilyDeveloperVerifier {
                 looseProbe(sim, instance, original, 1), "original after healthy acquisition");
         require(sim.getDiodeSlotController().install(healthy.getId()),
             "Could not reinstall measured healthy diode");
+        settleAfterMutation(sim);
         verifyCatalogAcquisition(healthy, correctCatalog);
         require(sim.getDiodeSlotController().removeInstalledPart(),
             "Could not remove healthy diode before repeated catalog acquisition");
+        settleAfterMutation(sim);
         require(sim.getDiodeSlotController().installNewFromCatalog(correctCatalog.getId()),
             "Could not acquire the healthy diode catalog entry twice");
+        settleAfterMutation(sim);
         PhysicalDiodePart secondHealthy = state.getSlot().getInstalledPart();
         verifyCatalogAcquisition(secondHealthy, correctCatalog);
         PhysicalCatalogAcquisitionDeveloperVerifier.verifySameSpecification(healthy, secondHealthy);
         require(sim.getDiodeSlotController().removeInstalledPart(),
             "Could not remove second healthy diode acquisition");
         settleAfterMutation(sim);
+        settleAfterMutation(sim);
         verifyHealthy(sim, instance, secondHealthy);
         require(sim.getDiodeSlotController().install(secondHealthy.getId()),
             "Could not reinstall second healthy diode acquisition");
+        settleAfterMutation(sim);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         settle(sim);
         double diodeCurrent = Math.abs(current(instance, "D1"));
@@ -128,6 +140,7 @@ class DiodeFamilyDeveloperVerifier {
         require(sim.getBoardModificationController().liftLead("D1", "D1.K"),
             "Could not lift healthy D1 cathode");
         settleAfterMutation(sim);
+        settleAfterMutation(sim);
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
         ProbeTarget anode = boardProbe(sim, instance, "D1.A");
         ProbeTarget cathode = new ComponentLeadProbeTarget(sim, instance, "D1", "D1.K", renderer);
@@ -141,16 +154,20 @@ class DiodeFamilyDeveloperVerifier {
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Lifted healthy D1 reverse response was not OL");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        settleAfterMutation(sim);
         require(sim.getBoardModificationController().reconnectLead("D1", "D1.K"),
             "Could not reconnect healthy D1 cathode");
+        settleAfterMutation(sim);
     }
 
     private static void verifyReversedInstalledComponentTargets(CirSim sim,
             GeneratedBoardInstance instance) {
         require(sim.getBoardModificationController().liftLead("D1", "D1.A"),
             "Could not lift reversed D1 anode lead");
+        settleAfterMutation(sim);
         require(sim.getBoardModificationController().liftLead("D1", "D1.K"),
             "Could not lift reversed D1 cathode lead");
+        settleAfterMutation(sim);
         settleAfterMutation(sim);
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
         ProbeTarget boardAnode = new ComponentLeadProbeTarget(sim, instance, "D1", "D1.A",
@@ -163,8 +180,10 @@ class DiodeFamilyDeveloperVerifier {
             "reversed installed component-side D1");
         require(sim.getBoardModificationController().reconnectLead("D1", "D1.A"),
             "Could not reconnect reversed D1 anode lead");
+        settleAfterMutation(sim);
         require(sim.getBoardModificationController().reconnectLead("D1", "D1.K"),
             "Could not reconnect reversed D1 cathode lead");
+        settleAfterMutation(sim);
     }
 
     private static void verifyHealthy(CirSim sim, GeneratedBoardInstance instance,
@@ -187,6 +206,7 @@ class DiodeFamilyDeveloperVerifier {
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             label + " reverse test was not OL");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        settleAfterMutation(sim);
     }
 
     private static void requireDiodeMeasurementReady(CirSim sim, ProbeTarget red,
@@ -216,8 +236,9 @@ class DiodeFamilyDeveloperVerifier {
         String forward = sim.instrumentController.getReadingForDeveloperVerification();
         sim.instrumentController.setDiodeProbesForDeveloperVerification(second, first);
         String reverse = sim.instrumentController.getReadingForDeveloperVerification();
-        require("OL".equals(forward) && "OL".equals(reverse), label + " was not OL both ways");
+        require("OL".equals(forward) && "OL".equals(reverse), label + " was not OL both ways: " + forward + " / " + reverse);
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        settleAfterMutation(sim);
     }
 
     private static void verifyShort(CirSim sim, ProbeTarget first, ProbeTarget second, String label) {
@@ -229,8 +250,10 @@ class DiodeFamilyDeveloperVerifier {
         double reverseVoltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
         require(!"OL".equals(forward) && !"OL".equals(reverse) &&
             forwardVoltage <= .05 && reverseVoltage <= .05,
-            label + " was not a solver-backed short in both directions");
+            label + " was not a solver-backed short in both directions: " + forward + " / " + reverse +
+                "; " + forwardVoltage + " V / " + reverseVoltage + " V");
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        settleAfterMutation(sim);
     }
 
     private static boolean isOpen(GeneratedBoardInstance instance) {
@@ -353,16 +376,17 @@ class DiodeFamilyDeveloperVerifier {
     }
 
     private static void settle(CirSim sim) {
-        sim.analyzeCircuit();
-        for (int index = 0; index < 8; index++)
-            sim.runCircuit(true);
-        sim.verifyGeneratedBoard();
+        // Follow the same readiness boundary as a player's next input. Merely
+        // solving a matrix does not clear pending verification or publish readiness.
+        sim.setSimRunning(true);
+        for (int attempt = 0; attempt < 20; attempt++) {
+            sim.updateCircuit();
+            if (sim.isGeneratedRuntimeSettled()) return;
+        }
+        throw new IllegalStateException("Diode lifecycle did not settle through the production update path");
     }
 
-    private static void settleAfterMutation(CirSim sim) {
-        sim.updateCircuit();
-        settle(sim);
-    }
+    private static void settleAfterMutation(CirSim sim) { settle(sim); }
 
     private static void require(boolean condition, String message) {
         if (!condition)

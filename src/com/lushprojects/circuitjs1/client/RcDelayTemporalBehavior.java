@@ -46,6 +46,18 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
         this.nominalSupply = nominalSupply;
     }
 
+    public void requireOwnedBy(GeneratedBoardInstance instance) {
+        requireEndpointOwner(instance, output);
+        requireEndpointOwner(instance, ground);
+    }
+
+    private static void requireEndpointOwner(GeneratedBoardInstance instance,
+            CircuitPostMeasurementEndpoint endpoint) {
+        if (!instance.getSimulationElements().contains(endpoint.getElement()) ||
+                endpoint.getPostIndex() < 0 || endpoint.getPostIndex() >= endpoint.getElement().getPostCount())
+            throw new IllegalArgumentException("Fresh temporal state captures a foreign endpoint");
+    }
+
     public String getCapabilityId() { return CAPABILITY_ID; }
 
     public double getLiveSolverAdvanceSeconds() {

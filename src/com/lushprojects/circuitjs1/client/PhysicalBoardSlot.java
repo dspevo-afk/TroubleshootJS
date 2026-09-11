@@ -102,13 +102,9 @@ final class PhysicalBoardSlot {
     void install(PhysicalPart<?> part) {
         if (part == null || installedPart != null)
             throw new IllegalStateException("Physical slot is already occupied");
-        if (part.getPackage() == null || !physicalPackage.isEquivalentTo(part.getPackage()) ||
-                part.getTerminalCount() != padIds.size())
-            throw new IllegalArgumentException("Physical part does not fit board slot: " + componentId);
+        validatePartFit(part);
         if (part.getMountState().isInstalled())
             throw new IllegalStateException("Physical part is already installed in a slot");
-        for (String terminalId : terminalIds)
-            findTerminal(part, terminalId);
         if (runtime != null)
             runtime.validatePartIdentity(part);
         if (geometryRealization != null)
@@ -117,6 +113,24 @@ final class PhysicalBoardSlot {
         installedPart = part;
         if (runtime != null)
             runtime.registerPart(part);
+    }
+
+    /**
+     * Binds a newly acquired loose part before it enters an append-only
+     * inventory transaction.  If the slot already has geometry, mutation
+     * preparation can then reject a foreign or unbound candidate without
+     * leaving a partially installed provider state.
+     */
+    void bindGeometryForAcquisition(PhysicalPart<?> part) {
+        validatePartFit(part);
+        if (geometryRealization == null)
+            return;
+        PhysicalGeometryRealization actual = part.getGeometryRealization();
+        if (actual == null)
+            part.bindGeometryRealization(geometryRealization);
+        else if (!geometryRealization.isEquivalentTo(actual))
+            throw new IllegalArgumentException("Physical part geometry does not fit board slot: " +
+                componentId);
     }
 
     PhysicalPart<?> remove() {
@@ -129,13 +143,26 @@ final class PhysicalBoardSlot {
     }
 
     /**
-     * Restores the slot association captured by a bounded resistor mutation.
+     * Restores the slot association captured by a bounded physical mutation.
      * This method intentionally uses the ordinary mount operations so a
      * foreign or inconsistent part fails closed instead of being silently
      * detached.
      */
     void restoreInstalledPartForMutation(PhysicalPart<?> expected) {
+        restoreInstalledPartForMutation(expected, null);
+    }
+
+    /**
+     * Restores a captured owner while permitting only the transaction's own
+     * replacement to be detached.  A foreign occupant fails closed instead
+     * of being silently removed during compensation.
+     */
+    void restoreInstalledPartForMutation(PhysicalPart<?> expected,
+            PhysicalPart<?> transactionPart) {
         if (installedPart != null && installedPart != expected) {
+            if (installedPart != transactionPart)
+                throw new IllegalStateException("Cannot remove a foreign physical slot occupant: " +
+                    componentId);
             if (installedPart.getBoardSlot() != this || !installedPart.isInstalled())
                 throw new IllegalStateException("Cannot restore an inconsistent physical slot: " +
                     componentId);
@@ -156,5 +183,16 @@ final class PhysicalBoardSlot {
             if (terminalId.equals(terminal.getTerminalName()))
                 return terminal;
         throw new IllegalArgumentException("Part terminal does not match board pad: " + terminalId);
+    }
+
+    private void validatePartFit(PhysicalPart<?> part) {
+        if (part == null || part.getPackage() == null ||
+                !physicalPackage.isEquivalentTo(part.getPackage()) ||
+                part.getTerminalCount() != padIds.size())
+            throw new IllegalArgumentException("Physical part does not fit board slot: " + componentId);
+        for (String terminalId : terminalIds)
+            findTerminal(part, terminalId);
+        if (runtime != null)
+            runtime.validatePartIdentity(part);
     }
 }

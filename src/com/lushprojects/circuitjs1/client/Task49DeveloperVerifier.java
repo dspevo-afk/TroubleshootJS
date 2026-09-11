@@ -110,8 +110,8 @@ final class Task49DeveloperVerifier {
             return null;
         } finally {
             FreshGeneratedRuntimeInstallation.setFailureForDeveloperVerification(null);
-            ResistorMutationScope.clearFailureHookForDeveloperVerification();
-            ResistorMutationScope.clearAbortFailureHookForDeveloperVerification();
+            PhysicalMutationScope.clearFailureHookForDeveloperVerification();
+            PhysicalMutationScope.clearAbortFailureHookForDeveloperVerification();
             try {
                 restore(sim, original, originalOwner, priorQuickPlay, priorSession);
                 for (GeneratedBoardInstance candidate : candidates)

@@ -22,6 +22,10 @@ final class GeneratedBoardOperation {
     String getStableId() { return stableId; }
     String getPlayerLabel() { return playerLabel; }
 
+    void appendExecutionOwners(java.util.Vector<Object> owners) {
+        owners.add(this); owners.add(executor);
+    }
+
     GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance instance) {
         return executor.execute(sim, instance);
     }
