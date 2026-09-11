@@ -7,8 +7,8 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **A08: Multi-provider mutation and failure-isolated physical lifecycle**<br>
-**Current checkpoint:** **A09 IMPLEMENTED - PUBLICATION AUTHORIZED / POST-PUSH REVIEW PENDING**. The player-visible OL correction and real native diagnosis/repair/retest gate pass. The owner explicitly authorized publishing this candidate before independent review and will review it afterward. A10 remains unstarted; this is not milestone acceptance.
+**Latest completed task:** **A09: Production fault hypotheses and executable diagnostic providers**<br>
+**Current checkpoint:** **A09 COMPLETE - OWNER ACCEPTED AFTER POST-PUSH CHAT REVIEW**. Implementation `eee65df0e4fd45bc4547ee9639d6a05be1ba6d06` is published; the native player gate and retained technical evidence pass. The owner accepted the post-push review and its documentation-only follow-up is reconciled. **A10 is requested but UNSTARTED - DEPENDENCY BLOCKED:** P02 is a hard prerequisite and depends on unstarted P01. Complete P01, then P02, before A10; milestone numbering is not execution order.
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -913,7 +913,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 **Delivered/evidence:** [A08 acceptance](task-evidence/A08/README.md): restricted intent/scope/receipts; actual resistor and diode compensation; fresh-owner/callback/captured-control rejection; native 17 suites/466 report assertions, production GWT 5/5, compiled routes 14/14, A08 1,108 assertions with 90 diode partial writes and five installation failures, native-input diagnosis/wrong repair/correction/retest, and independent final delta review PASS.
 
-**Qualification limits:** Current supported provider ownership, not universal rollback or an arbitrary Java plugin sandbox. Compiled application/reader checks are separate from CLI ownership/CDP-wrapper certification. A09 remains unstarted.
+**Qualification limits:** Current supported provider ownership, not universal rollback or an arbitrary Java plugin sandbox. Compiled application/reader checks are separate from CLI ownership/CDP-wrapper certification. A09 admission qualification is recorded separately below.
 
 **Hard prerequisites:** [A04](#m-a04), [A07](#m-a07)
 
@@ -945,7 +945,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A09 · Production fault hypotheses and executable diagnostic providers
 
-**Status:** IMPLEMENTED - PUBLICATION AUTHORIZED / POST-PUSH REVIEW PENDING. Native contracts, five-permutation GWT build, compiled A09 proof, affected A08/Task49 routes, and real native player diagnosis/repair/retest pass. Normal/Reserve independent review attempts exhausted quota; the owner explicitly authorized publication first and post-push review afterward. A10 remains unstarted; this is not milestone acceptance.
+**Status:** COMPLETE - OWNER ACCEPTED AFTER POST-PUSH CHAT REVIEW. Published implementation `eee65df0e4fd45bc4547ee9639d6a05be1ba6d06`; native contracts, five-permutation GWT build, compiled A09 proof, affected A08/Task49 routes, and real native player diagnosis/repair/retest are retained PASS evidence. The owner accepted the subsequent chat review (no blocking code findings; documentation follow-up reconciled). Earlier quota-limited Luna/Reserve attempts remain incomplete, not successful reviews. Documentation closure reverified the unchanged fingerprints without rerunning production gates. See [A09 acceptance](task-evidence/A09/README.md).
 
 **Hard prerequisites:** [A02](#m-a02), [A04](#m-a04), [A06](#m-a06), [A07](#m-a07)
 
@@ -979,7 +979,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A10 · Staged generation jobs, deterministic budgets and proof receipts
 
-**Status:** UNSTARTED.
+**Status:** UNSTARTED - DEPENDENCY BLOCKED. Requested by the owner on 2026-09-11 after A09 acceptance. P02 and its prerequisite P01 remain unimplemented/unaccepted; their hard edges are unchanged. Current trace geometry still exposes mutable coordinate arrays and the one-layer connectivity validator does not implement durable layer-aware conductor identity. No A10 staging, caching, cancellation or publication code is claimed. The prerequisite execution order is P01, then P02, then this requested milestone.
 
 **Hard prerequisites:** [A05](#m-a05), [A07](#m-a07), [A09](#m-a09), [P02](#m-p02)
 

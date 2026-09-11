@@ -1,5 +1,5 @@
 {
-  "status": "IMPLEMENTED - POST-PUSH REVIEW PENDING",
+  "status": "COMPLETE - OWNER ACCEPTED AFTER POST-PUSH CHAT REVIEW",
   "base": "667cfd16da0272ae736cd0df6961e8cb313e0f1f",
   "branch": "codex/task43p-final-recovery",
   "native": {
@@ -29,8 +29,8 @@
     "overRangeSamples": 5
   },
   "independentReview": {
-    "status": "DEFERRED BY OWNER",
-    "reason": "Normal Luna and Reserve review attempts hit usage limits. On 2026-09-11 the owner explicitly authorized commit/push before independent review and will review the published candidate afterward. No independent PASS is claimed."
+    "status": "NOT COMPLETED - PRE-PUBLICATION QUOTA LIMITS",
+    "reason": "Normal Luna and Reserve attempts hit usage limits. The owner authorized publication first. These attempts remain incomplete; the later chat review and owner acceptance are recorded separately."
   },
   "nativePlayerWorkflow": {
     "status": "PASS",
@@ -80,9 +80,11 @@
   },
   "publication": {
     "authorization": "OWNER AUTHORIZED PUSH BEFORE INDEPENDENT REVIEW",
-    "commit": "PENDING",
-    "push": "PENDING",
-    "completionEmail": "AFTER VERIFIED PUSH"
+    "commit": "eee65df0e4fd45bc4547ee9639d6a05be1ba6d06",
+    "push": "VERIFIED",
+    "completionEmail": "SENT - original A09 notification confirmed in connected Gmail on 2026-09-11; not resent",
+    "remoteRef": "origin/codex/task43p-final-recovery",
+    "verifiedDate": "2026-09-11"
   },
   "notCertified": [
     "CLI/CDP process-listener ownership wrapper",
@@ -90,7 +92,7 @@
     "arbitrary hostile executable providers"
   ],
   "scratch": "<OS temp>/troubleshootjs-a09-fix-vifulr34",
-  "regressionHarnessNotes": "All four current explicit-debug routes executed successfully. Actual A09, A08 and Task49 reports passed maintained readers. No CLI ownership-wrapper certification or native player actions are claimed.",
+  "regressionHarnessNotes": "Compiled explicit-debug A09, A08 and Task49 routes and their maintained readers pass in retained evidence. Those harness runs do not claim native input or CLI ownership-wrapper certification. The separate nativePlayerWorkflow records the completed real player interaction.",
   "correction": {
     "status": "IMPLEMENTED",
     "summary": "Explicit OL outcome shared by finite over-range and open resistance; invalid readings rejected; numeric range unchanged; roadmap status reconciled.",
@@ -117,5 +119,25 @@
     ]
   },
   "resumptionScratch": "<OS temp>/troubleshootjs-a09-fix-vifulr34/native-retry-20260911",
-  "remainingAcceptanceGate": "Post-push owner/independent review only; native player workflow and technical validation are PASS."
+  "remainingAcceptanceGate": "NONE for A09 after owner acceptance. Requested A10 is unstarted and dependency-blocked by P02 and its prerequisite P01.",
+  "postPushReview": {
+    "status": "PASS WITH NONBLOCKING DOCUMENTATION FINDING",
+    "date": "2026-09-11",
+    "candidate": "eee65df0e4fd45bc4547ee9639d6a05be1ba6d06",
+    "basis": "Post-push review reported in the owner conversation, followed by explicit owner acceptance and request to correct documentation and implement A10. This is not a newly completed Luna/Reserve review.",
+    "finding": "Stale acceptance, native-player and publication documentation; reconciled by the documentation-only closure.",
+    "ownerAcceptance": "ACCEPTED"
+  },
+  "documentationClosure": {
+    "date": "2026-09-11",
+    "scope": "Documentation only; no production source/test/build changes",
+    "fingerprintAudit": {
+      "sourceFiles": 610,
+      "readerFiles": 5,
+      "compiledPermutations": 5,
+      "hashMismatches": 0
+    },
+    "productionGates": "Retained evidence, not rerun for this documentation correction",
+    "a10": "UNSTARTED - DEPENDENCY BLOCKED; prerequisite edges retained"
+  }
 }

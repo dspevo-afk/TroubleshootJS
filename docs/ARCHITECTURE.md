@@ -3331,13 +3331,16 @@ stopped preview cleanup, and zero cleanup errors. No runtime or visible
 `@Browser` acceptance is claimed.
 
 
-## A09 production diagnostic providers (local candidate; acceptance pending)
+## A09 production diagnostic providers (accepted after post-push review)
 
 Normal admission now calls `GeneratedDiagnosticProofService`, not
 `Task41DeveloperVerifier`. Historical Task41 descriptions above refer to the
 retained proof corpus and isolation substrate, not the current production family
-dispatch. Final independent review and native player workflow gates are open;
-see `task-evidence/A09/README.md`.
+dispatch. Implementation commit `eee65df0e4fd45bc4547ee9639d6a05be1ba6d06`
+was published and accepted by the owner after the post-push chat review on
+2026-09-11. Native player diagnosis/repair/retest is complete. Earlier quota-limited
+Luna/Reserve attempts remain historical, not successful independent reviews; see
+`task-evidence/A09/README.md` for the acceptance record and retained evidence.
 
 Each leaf generator explicitly contributes a `GeneratedDiagnosticProvider`.
 The composed controlled-indicator provider derives its program from the resolved

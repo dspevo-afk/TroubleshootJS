@@ -1,6 +1,17 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A09 CORRECTED - PUBLICATION AUTHORIZED / POST-PUSH REVIEW PENDING
+## Current checkpoint - A09 documentation reconciled; A10 dependency blocked - 2026-09-11
+
+- **Requested scope:** Reconcile A09 documentation and implement A10 through Desktop Commander. Documentation is corrected; A10 is BLOCKED before implementation by its existing P02 prerequisite and P02's P01 prerequisite. No production source changes or prerequisite waivers.
+- **Accepted A09:** `eee65df0e4fd45bc4547ee9639d6a05be1ba6d06` on `codex/task43p-final-recovery`; live origin branch verified at that SHA. Original A09 completion email confirmed in connected Gmail. The owner accepted the preceding post-push chat review (no blocking code findings, one documentation follow-up). Earlier quota-limited Luna/Reserve attempts remain incomplete, not successful reviews.
+- **Corrected records:** Architecture, roadmap, A09 evidence README and acceptance now distinguish completed native player work, published implementation, post-push acceptance and historical failed review attempts. Original raw execution evidence/provenance is preserved.
+- **Fresh evidence audit:** All 610 Java source, five reader/test and five compiled-permutation SHA-256 fingerprints match the retained A09 candidate: 620 checked, zero mismatches. No GWT, native contract suite, browser route or native player workflow was rerun for this documentation-only correction.
+- **A10 prerequisite finding:** `PcbTraceGeometry.java:22-30` retains caller arrays and exposes them through getters. A task-local JDK8 probe against the actual production class reproduced all four constructor/getter X/Y aliases (compile/run exit 0). `PcbBoardLayout.java` still derives one-layer segment connectivity from transient trace/segment positions, not P02's durable layer-aware conductor graph. This is a missing future prerequisite, not a reopened A09 defect.
+- **Document validation:** PASS: JSON parses; all 73 milestone anchors and hard/reverse dependency declarations are preserved; P01/P02 cards and historical handoff text are unchanged; retained technical evidence is unchanged; only five intended documentation paths differ; `git diff --check` passes. No independent worker is required for this documentation-only change.
+- **Git/resources:** This documentation-only successor to the accepted A09 SHA changes only the five named documentation files. The pre-existing `tests/contracts/__pycache__/` is preserved and excluded. The prerequisite probe and compiler exited; no task browser/server was launched. Scoped diagnostic scratch is outside the repository at `<OS temp>/troubleshootjs-a10-direct-lgomfh_9`.
+- **Next:** P01, then P02, must be implemented and accepted before resuming the requested A10; neither is marked complete and no A10 code is claimed. Exact publication results for the containing documentation commit belong to its completion handoff, not the original A09 publication record.
+
+## Historical pre-publication checkpoint - A09 CORRECTED - PUBLICATION AUTHORIZED / POST-PUSH REVIEW PENDING
 
 - **Scope:** Authorized player-visible resistance/OL correction and roadmap reconciliation. The prior correction is present and preserved; no new production source edits were required on resumption. A10 remains unstarted.
 - **Base:** `667cfd16da0272ae736cd0df6961e8cb313e0f1f`, branch `codex/task43p-final-recovery`. Owner explicitly authorized commit/push before independent review; publication is pending this handoff. No independent PASS is claimed.
