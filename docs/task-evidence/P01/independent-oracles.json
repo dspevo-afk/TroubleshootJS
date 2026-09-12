@@ -1,0 +1,23 @@
+[
+  {
+    "name": "task46_seed_reference.py",
+    "exit": 0,
+    "seconds": 0.05403110000770539,
+    "stdout": "PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact\n",
+    "stderr": ""
+  },
+  {
+    "name": "a09_diagnostic_contract.py",
+    "exit": 0,
+    "seconds": 0.054388800024753436,
+    "stdout": "PASS: A09 independent diagnostic contracts assertions=143\n",
+    "stderr": ""
+  },
+  {
+    "name": "task49_value_synthesis_reference.py",
+    "exit": 0,
+    "seconds": 0.05710830001044087,
+    "stdout": "PASS: current value synthesis oracle 9 seeds; bounded5/schema2 repeated-channel equations exact\nPASS: A05 independent role selection oracle 6 seeds\n",
+    "stderr": ""
+  }
+]

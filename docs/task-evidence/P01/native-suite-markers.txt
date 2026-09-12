@@ -1,0 +1,19 @@
+PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus
+PASS: Task44 9 groups, 247 assertions; no simulator dependency
+PASS: Task45 202 assertions
+PASS: current resistive assembly contracts 241 assertions
+PASS: current controlled-indicator contracts 201 assertions
+PASS: current switched-low-side compatibility 16 assertions
+PASS: current value synthesis 188 assertions
+PASS: A05 role providers 246 assertions
+PASS: A06 power contracts assertions=140
+PASS: A07 execution contracts assertions=38
+PASS: A09 diagnostic contracts assertions=302 replays=40
+PASS: A03IdentityContractTest assertions=30
+PASS: A02CandidateContractTest
+PASS: A02GeometryContractTest 32 assertions
+PASS: P01 physical pose contracts assertions=8357 poses=43
+PASS: A02ReplayContractTest assertions=148
+PASS: ElectricalUnitPackageMapContractTest assertions=37
+PASS: A04ConstructionContractTest assertions=592
+PASS: A04PhysicalDeclarationContractTest assertions=5270

@@ -1,6 +1,39 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A09 documentation reconciled; A10 dependency blocked - 2026-09-11
+## Current checkpoint - P01 accepted; publication authorized
+
+- **Scope:** Publish the independently reviewed P01 candidate, then implement P02 as explicitly requested. Branch `codex/task43p-final-recovery`; P01 base `6b7e66a1edbfb8ef3d6e95967e7f7edbbc9506cf`. P02/A10 remain unstarted at this P01 handoff.
+- **Review:** PASS, fresh independent chat review accepted by the owner. No blocking findings. Earlier quota-limited Luna/Reserve attempts remain historical failures. [Review summary](task-evidence/P01/independent-review.json).
+- **Validation reuse:** The independent reviewer freshly passed 19 maintained Java suites; P01 8,357 assertions/43 poses; original probe 14 checks; additional independent probe 2,288 assertions; three Python oracles; report protocol 466 assertions; actual five-permutation JDK8/GWT build; compiled P01 16 SMD poses/316 assertions, negative/privacy and A08/Task49 with strict readers. Closeout audited all 36 candidate files and 634 source/test/runner hashes with no drift; only acceptance documentation changed afterward.
+- **Limits:** The Windows Python-launch wrapper remains BLOCKED (exit 2), not PASS. Additional native mouse/keyboard smoke was NOT RUN (foreground guard withheld input). Compiled checks do not claim native player-input certification. No SMD gameplay or P02/A10 acceptance.
+- **Follow-ups:** Corrected stale A10/P01 status prose. Pre-existing shared-route-score aggregate overflow remains nonblocking, not silently fixed in this accepted source candidate.
+- **Publication/resources:** Pre-publication checkpoint; commit/push/notification outcomes are recorded in the publication handoff. Pre-existing `tests/contracts/__pycache__/` is preserved and excluded. No new build/browser launched for this documentation-only reconciliation.
+- **Next:** Normal P01 commit/push and remote verification, then P02 implementation. Do not start A10.
+
+## Historical checkpoint - P01 corrected; independent review blocked
+
+- **Scope/base:** Implement the three P01 review corrections and close P01 only. Branch `codex/task43p-final-recovery`; unchanged HEAD `6b7e66a1edbfb8ef3d6e95967e7f7edbbc9506cf`. All implementation remains uncommitted. P02 and A10 are UNSTARTED.
+- **Delivered:** Bottom mounting now reflects local X before cardinal rotation, independently from the underside view. Whole-footprint cross-origin translations use a displacement domain instead of rejecting valid endpoint coordinates. Trace/pad/package/outline/label/view construction and transforms enforce bounded absolute coordinates and extrema with widened arithmetic. Compaction validates all translated objects and the final outline before publication; invalid input preserves the complete old fingerprint.
+- **Fresh behavior evidence:** 19 actual Java suites PASS; P01 8,357 assertions / 43 declared package poses on JVM and GWT; unchanged prior independent review probe 14/14 PASS. All three maintained Python oracles PASS when executed directly against the fresh Java receipts; actual report-protocol script PASS 466 assertions.
+- **Native-wrapper limit:** Overall wrapper exit 2 is NOT PASS. Store alias timeout, direct Store executable access denial and later full-run task-local-venv timeout are retained. A small actual bounded-process venv preflight passed. Native Java behavior, direct Python oracles and separate report protocol are not claims that this failing Windows wrapper is certified. Reported JVM scratch cleanup passed.
+- **Final build/compiled:** Actual repository JDK 8u502/GWT OBF build PASS, all five permutations. P01 production canaries PASS 16 SMD mount/rotation poses / 316 actual render-hit-endpoint assertions with the live graph unchanged. Fresh forced-negative and no-debug isolation PASS. Actual A08 and Task49 compiled reports and their maintained strict readers PASS with zero ordinary page errors. Initial negative harness incorrectly required an uncaught page error; the fresh qualified rerun checks the exact controlled failure and absent success report.
+- **Review:** BLOCKED. Ordinary Luna MAX/default speed and authorized Reserve both returned usage-limit errors before substantive review. No independent PASS is claimed. Root inspected the integrated behavior and source; that is not independent review. P01 acceptance and publication remain withheld.
+- **Additional native player smoke:** NOT RUN. The task window was identified, but its foreground guard withheld OS input; zero native events. The initial screenshot is not diagnosis/repair proof. This patch does not introduce normal-player rotation/side UI; actual compiled physical/probe behavior is recorded separately.
+- **Evidence/identity:** [P01 acceptance and raw reports](task-evidence/P01/README.md); all final-source/native-test/runner hashes and five compiled permutation hashes in `task-evidence/P01/candidate-provenance.json`. Zero code-input drift after validation; documentation-only closure preparation does not invalidate that unchanged candidate.
+- **Resources/git:** Task-owned browser contexts and preview listener closed. Native/build/report/review jobs exited; their nonzero results remain limitations. Pre-existing `tests/contracts/__pycache__/` is retained and excluded. External scoped scratch/checkpoint: `<OS temp>/troubleshootjs-p01-fix-qoyldrmn/`. No staging, commit, push, or completion email.
+- **Next:** Obtain a fresh independent integrated-candidate review. Reconcile findings and affected final gates, then accept/publish P01 through the established workflow. P02 is next but was not started.
+
+## Historical checkpoint - P01 implementation in progress; P02 unstarted - 2026-09-11
+
+- **Scope/base:** Owner-authorized P01 then P02 through Desktop Commander; branch `codex/task43p-final-recovery`, unchanged HEAD `6b7e66a1edbfb8ef3d6e95967e7f7edbbc9506cf`. All implementation remains uncommitted. A10 remains unstarted.
+- **Local candidate:** Defensive trace/envelope copies; bounded board-space package poses, declared rotation/mounting sides, shared placement/probe projections and developer-only 0805/SOT-23 surface-pad fixtures. This is not yet full P01 acceptance.
+- **Fresh native validation:** `verify-current-contracts.ps1` with repository JDK 8u502 exited 0: 19 Java suites, P01 143 assertions, independent seed/value/role and A09 checks, report protocol 466 assertions; owned test scratch cleanup PASS. Final production GWT build, compiled browser/probe behavior and fresh independent review are NOT RUN.
+- **P02:** UNSTARTED. No durable layer-aware conductor graph, current conductor-mutation or solver-projection acceptance is claimed.
+- **Preservation/resources:** Pre-existing `tests/contracts/__pycache__/` is untouched and excluded. Native runner exited; root Python REPL 95236 is retained. No browser/server was launched for these new gates. External continuation checkpoint: `<OS temp>/troubleshootjs-p01-p02-checkpoint-f80ozumn/checkpoint.json`.
+- **Next:** Review P01 completeness and independent geometric/overflow/frozen-snapshot coverage, qualify the final source/build/affected physical behavior and independent review, then implement P02. No commit, push or completion email has occurred.
+
+
+## Historical checkpoint - A09 documentation reconciled; A10 dependency blocked - 2026-09-11
 
 - **Requested scope:** Reconcile A09 documentation and implement A10 through Desktop Commander. Documentation is corrected; A10 is BLOCKED before implementation by its existing P02 prerequisite and P02's P01 prerequisite. No production source changes or prerequisite waivers.
 - **Accepted A09:** `eee65df0e4fd45bc4547ee9639d6a05be1ba6d06` on `codex/task43p-final-recovery`; live origin branch verified at that SHA. Original A09 completion email confirmed in connected Gmail. The owner accepted the preceding post-push chat review (no blocking code findings, one documentation follow-up). Earlier quota-limited Luna/Reserve attempts remain incomplete, not successful reviews.

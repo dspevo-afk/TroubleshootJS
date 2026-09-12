@@ -1,0 +1,15 @@
+PASS literal-top-rotation-DEG_0: Point(720,972)
+DEFECT mount-handedness-DEG_0: top=-3240, bottom=-3240
+PASS literal-top-rotation-DEG_90: Point(718,920)
+DEFECT mount-handedness-DEG_90: top=-3240, bottom=-3240
+PASS literal-top-rotation-DEG_180: Point(780,918)
+DEFECT mount-handedness-DEG_180: top=-3240, bottom=-3240
+PASS literal-top-rotation-DEG_270: Point(772,980)
+DEFECT mount-handedness-DEG_270: top=-3240, bottom=-3240
+PASS placement-legal-cross-origin-translation: source=-75000000, destination=75000000
+DEFECT footprint-legal-cross-origin-translation: PCB board coordinate is out of contract: 150000000
+DEFECT trace-coordinate-bound: out-of-contract X accepted: 100000001
+DEFECT pad-coordinate-bound: out-of-contract X accepted: 100000001
+DEFECT view-coordinate-bound: out-of-contract point returned: Point(2147483647,2147483647)
+PASS trace-defensive-copies: constructor/getter arrays independent
+RESULT correct=6 defects=8

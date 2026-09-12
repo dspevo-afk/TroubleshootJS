@@ -1,0 +1,15 @@
+{
+  "errors": [],
+  "marker": "PASS:p01",
+  "report": {
+    "declaredPoses": 43,
+    "liveGraphUnchanged": true,
+    "pureAssertions": 8357,
+    "renderedSmdPoses": 16,
+    "runtimeAssertions": 316,
+    "schema": 1,
+    "status": "PASS"
+  },
+  "route": "tsjChallenge=led&seed=0&tsjVerifyP01=true&tsjDebug=true",
+  "seconds": 1.4611062000039965
+}

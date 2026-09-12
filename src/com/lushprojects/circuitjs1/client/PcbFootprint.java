@@ -53,7 +53,13 @@ final class PcbFootprint {
 
     static PcbFootprint fromPhysicalPackage(BoardComponent component, int x, int y,
             PhysicalPackageGeometry geometry) {
-        if (component == null || component.getPhysicalPackage() == null || geometry == null)
+        return fromPhysicalPackage(component, PcbPackagePose.top(x, y), geometry);
+    }
+
+    static PcbFootprint fromPhysicalPackage(BoardComponent component, PcbPackagePose pose,
+            PhysicalPackageGeometry geometry) {
+        if (component == null || component.getPhysicalPackage() == null || geometry == null ||
+                pose == null)
             throw new IllegalArgumentException("Missing package for PCB footprint");
         PhysicalPackage physicalPackage = component.getPhysicalPackage();
         if (!physicalPackage.acceptsGeometry(geometry))
@@ -65,15 +71,16 @@ final class PcbFootprint {
                 component.getId());
         requireTerminalOrder(component, ids, geometry);
         PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry(
-            component.getId(), x, y, physicalPackage, geometry);
-        PhysicalPackageGeometry.Placement placed = geometry.placedAt(x, y);
+            component.getId(), pose, physicalPackage, geometry);
+        PhysicalPackageGeometry.Placement placed = geometry.placedAt(pose);
         Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
         for (int index = 0; index < ids.size(); index++) {
             PhysicalPackageGeometry.Terminal terminal = geometry.getTerminal(index);
             Point pad = placed.getPadPoint(index);
-            pads.add(new PcbPadPlacement(ids.get(index), pad.x, pad.y, terminal.getEscapeDx(),
-                terminal.getEscapeDy(), terminal.getEscapeLength(), placed.getPadBounds(index),
-                placed.getBoardPadProbeBounds(index)));
+            pads.add(new PcbPadPlacement(ids.get(index), pad.x, pad.y, placed.getEscapeDx(index),
+                placed.getEscapeDy(index), placed.getEscapeLength(index), placed.getPadBounds(index),
+                placed.getBoardPadProbeBounds(index), terminal.getAttachment(),
+                pose.getMountingSide()));
         }
         return new PcbFootprint(placement, pads);
     }
@@ -100,14 +107,17 @@ final class PcbFootprint {
     }
 
     PcbFootprint translated(int x, int y) {
-        int dx = x - placement.getX();
-        int dy = y - placement.getY();
+        int dx = PcbCoordinateSystem.boardDisplacement(x, placement.getX());
+        int dy = PcbCoordinateSystem.boardDisplacement(y, placement.getY());
         PcbComponentPlacement translatedPlacement = placement.translatedTo(x, y);
         Vector<PcbPadPlacement> translatedPads = new Vector<PcbPadPlacement>();
         for (PcbPadPlacement pad : pads)
-            translatedPads.add(new PcbPadPlacement(pad.getPadId(), pad.getX() + dx,
-                pad.getY() + dy, pad.getEscapeDx(), pad.getEscapeDy(), pad.getEscapeLength(),
-                translate(pad.getPadBounds(), dx, dy), translate(pad.getProbeBounds(), dx, dy)));
+            translatedPads.add(new PcbPadPlacement(pad.getPadId(),
+                PcbCoordinateSystem.checkedAddBoardCoordinate(pad.getX(), dx),
+                PcbCoordinateSystem.checkedAddBoardCoordinate(pad.getY(), dy), pad.getEscapeDx(),
+                pad.getEscapeDy(), pad.getEscapeLength(), translate(pad.getPadBounds(), dx, dy),
+                translate(pad.getProbeBounds(), dx, dy), pad.getAttachment(),
+                pad.getMountingSide()));
         return new PcbFootprint(translatedPlacement, translatedPads);
     }
 
@@ -122,7 +132,8 @@ final class PcbFootprint {
     }
 
     private static Rectangle translate(Rectangle rectangle, int dx, int dy) {
-        return new Rectangle(rectangle.x + dx, rectangle.y + dy, rectangle.width,
+        return new Rectangle(PcbCoordinateSystem.checkedAddBoardCoordinate(rectangle.x, dx),
+            PcbCoordinateSystem.checkedAddBoardCoordinate(rectangle.y, dy), rectangle.width,
             rectangle.height);
     }
 
@@ -155,16 +166,17 @@ final class PcbFootprint {
 
     private static void requirePlacedTerminalGeometry(PcbComponentPlacement placement,
             Vector<PcbPadPlacement> pads, PhysicalPackageGeometry geometry) {
-        PhysicalPackageGeometry.Placement placed = geometry.placedAt(placement.getX(),
-            placement.getY());
+        PhysicalPackageGeometry.Placement placed = geometry.placedAt(placement.getPose());
         for (int index = 0; index < pads.size(); index++) {
             PcbPadPlacement pad = pads.get(index);
             PhysicalPackageGeometry.Terminal terminal = geometry.getTerminal(index);
             Point expectedPad = placed.getPadPoint(index);
             if (terminal == null || expectedPad == null || pad.getX() != expectedPad.x ||
-                    pad.getY() != expectedPad.y || pad.getEscapeDx() != terminal.getEscapeDx() ||
-                    pad.getEscapeDy() != terminal.getEscapeDy() ||
-                    pad.getEscapeLength() != terminal.getEscapeLength() ||
+                    pad.getY() != expectedPad.y || pad.getEscapeDx() != placed.getEscapeDx(index) ||
+                    pad.getEscapeDy() != placed.getEscapeDy(index) ||
+                    pad.getEscapeLength() != placed.getEscapeLength(index) ||
+                    pad.getAttachment() != terminal.getAttachment() ||
+                    pad.getMountingSide() != placement.getMountingSide() ||
                     !pad.getPadBounds().equals(placed.getPadBounds(index)) ||
                     !pad.getProbeBounds().equals(placed.getBoardPadProbeBounds(index)))
                 throw new IllegalArgumentException("Footprint pad diverges from package geometry: " +

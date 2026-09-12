@@ -406,6 +406,9 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA03Verification;
 	boolean troubleshootA03VerificationComplete;
 	boolean troubleshootA03ForcedFailure;
+    boolean troubleshootP01Verification;
+    boolean troubleshootP01VerificationComplete;
+    boolean troubleshootP01ForcedFailure;
 	boolean troubleshootA08Verification;
 	boolean troubleshootA08VerificationComplete;
 	boolean troubleshootA08ForcedFailure;
@@ -584,6 +587,8 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjVerifyA03", false);
 	    troubleshootA03ForcedFailure = troubleshootA03Verification &&
 		qp.getBooleanValue("tsjA03Fail", false);
+            troubleshootP01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyP01", false);
+            troubleshootP01ForcedFailure = troubleshootP01Verification && qp.getBooleanValue("tsjP01Fail", false);
 	    troubleshootA08Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA08", false);
 	    troubleshootA08ForcedFailure = troubleshootA08Verification && qp.getBooleanValue("tsjA08Fail", false);
 	    troubleshootA07Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA07", false);
@@ -4725,7 +4730,7 @@ MouseOutHandler, MouseWheelHandler {
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask41Verification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5128,6 +5133,22 @@ MouseOutHandler, MouseWheelHandler {
 		    developerVerifierRunning = false;
 		}
 	    }
+            if (!developerVerifierRunning && troubleshootP01Verification && !troubleshootP01VerificationComplete &&
+                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                    generatedChallengeController != null && generatedChallengeController.isReady() &&
+                    isGeneratedRuntimeSettled()) {
+                developerVerifierRunning = true; troubleshootP01VerificationComplete = true;
+                publishBrowserVerificationResult("RUNNING:p01");
+                try {
+                    P01PhysicalPoseDeveloperVerifier.verify(this, troubleshootP01ForcedFailure);
+                    publishBrowserVerificationResult("PASS:p01");
+                } catch (Throwable failure) {
+                    publishBrowserVerificationResult("FAIL:p01:" + failure.getMessage());
+                    if (failure instanceof Error) throw (Error)failure;
+                    if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+                    throw new IllegalStateException("P01 verification failed", failure);
+                } finally { developerVerifierRunning = false; }
+            }
             if (!developerVerifierRunning && troubleshootA08Verification && !troubleshootA08VerificationComplete &&
                     !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                     generatedChallengeController != null && generatedChallengeController.isReady() &&
@@ -5319,7 +5340,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&

@@ -9,6 +9,7 @@ class PcbComponentPlacement {
     private final int y;
     private final int width;
     private final int height;
+    private final PcbPackagePose pose;
     private final Rectangle keepOut;
     private final Rectangle routingCourtyard;
     private final PhysicalPackage physicalPackage;
@@ -21,21 +22,26 @@ class PcbComponentPlacement {
     PcbComponentPlacement(String componentId, int x, int y, int width, int height,
             Rectangle keepOut, Rectangle routingCourtyard, PhysicalPackage physicalPackage,
             PhysicalPackageGeometry physicalGeometry) {
-        this(componentId, x, y, width, height, keepOut, routingCourtyard, physicalPackage,
-            physicalGeometry, null);
+        this(componentId, PcbPackagePose.top(x, y), width, height, keepOut, routingCourtyard,
+            physicalPackage, physicalGeometry, null);
     }
 
-    private PcbComponentPlacement(String componentId, int x, int y, int width, int height,
+    private PcbComponentPlacement(String componentId, PcbPackagePose pose, int width, int height,
             Rectangle keepOut, Rectangle routingCourtyard, PhysicalPackage physicalPackage,
             PhysicalPackageGeometry physicalGeometry,
             PhysicalGeometryRealization suppliedGeometryRealization) {
+        int x = pose == null ? 0 : pose.getX();
+        int y = pose == null ? 0 : pose.getY();
         if (componentId == null || componentId.trim().length() == 0 || keepOut == null ||
                 keepOut.width <= 0 || keepOut.height <= 0 || routingCourtyard == null ||
                 routingCourtyard.width <= 0 || routingCourtyard.height <= 0 || width <= 0 ||
                 height <= 0)
             throw new IllegalArgumentException("Invalid PCB component placement: " + componentId);
-        if (physicalPackage == null || physicalGeometry == null)
+        if (physicalPackage == null || physicalGeometry == null || pose == null)
             throw new IllegalArgumentException("Package-backed placement required: " + componentId);
+        if (!physicalPackage.supportsPose(pose))
+            throw new IllegalArgumentException("Package does not declare requested PCB pose: " +
+                componentId + " / " + pose.fingerprint());
         if (!physicalPackage.acceptsGeometry(physicalGeometry))
             throw new IllegalArgumentException("Foreign or undeclared package geometry: " +
                 componentId);
@@ -43,8 +49,10 @@ class PcbComponentPlacement {
                 physicalGeometry.getGeometryContractVersion()))
             throw new IllegalArgumentException("Package geometry contract version mismatch: " +
                 componentId);
-        PhysicalPackageGeometry.Placement placed = physicalGeometry.placedAt(x, y);
-        if (width != physicalGeometry.getWidth() || height != physicalGeometry.getHeight() ||
+        PhysicalPackageGeometry.Placement placed = physicalGeometry.placedAt(pose);
+        if (width != pose.getPlacedWidth(physicalGeometry.getWidth(), physicalGeometry.getHeight()) ||
+                height != pose.getPlacedHeight(physicalGeometry.getWidth(),
+                    physicalGeometry.getHeight()) ||
                 !placed.getBodyKeepOut().equals(keepOut) ||
                 !placed.getRoutingCourtyard().equals(routingCourtyard))
             throw new IllegalArgumentException("Placement diverges from package geometry: " +
@@ -60,6 +68,7 @@ class PcbComponentPlacement {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.pose = pose;
         this.keepOut = new Rectangle(keepOut);
         this.routingCourtyard = new Rectangle(routingCourtyard);
         this.physicalPackage = physicalPackage;
@@ -81,8 +90,9 @@ class PcbComponentPlacement {
 
     /** Safe translation with package-backed identity preservation. */
     PcbComponentPlacement translatedTo(int x, int y) {
-        PhysicalPackageGeometry.Placement placed = physicalGeometry.placedAt(x, y);
-        return new PcbComponentPlacement(componentId, x, y, width, height,
+        PcbPackagePose translatedPose = pose.translatedTo(x, y);
+        PhysicalPackageGeometry.Placement placed = physicalGeometry.placedAt(translatedPose);
+        return new PcbComponentPlacement(componentId, translatedPose, width, height,
             placed.getBodyKeepOut(), placed.getRoutingCourtyard(), physicalPackage,
             physicalGeometry, geometryRealization);
     }
@@ -98,10 +108,21 @@ class PcbComponentPlacement {
             throw new IllegalArgumentException("Package-backed placement required: " + componentId);
         if (geometry == null)
             throw new IllegalArgumentException("Missing package geometry: " + componentId);
-        PhysicalPackageGeometry.Placement placed = geometry.placedAt(x, y);
-        return new PcbComponentPlacement(componentId, x, y, geometry.getWidth(),
-            geometry.getHeight(), placed.getBodyKeepOut(), placed.getRoutingCourtyard(),
-            physicalPackage, geometry);
+        return fromPhysicalGeometry(componentId, PcbPackagePose.top(x, y), physicalPackage,
+            geometry);
+    }
+
+    static PcbComponentPlacement fromPhysicalGeometry(String componentId, PcbPackagePose pose,
+            PhysicalPackage physicalPackage, PhysicalPackageGeometry geometry) {
+        if (physicalPackage == null || pose == null)
+            throw new IllegalArgumentException("Package-backed placement required: " + componentId);
+        if (geometry == null)
+            throw new IllegalArgumentException("Missing package geometry: " + componentId);
+        PhysicalPackageGeometry.Placement placed = geometry.placedAt(pose);
+        return new PcbComponentPlacement(componentId, pose,
+            pose.getPlacedWidth(geometry.getWidth(), geometry.getHeight()),
+            pose.getPlacedHeight(geometry.getWidth(), geometry.getHeight()),
+            placed.getBodyKeepOut(), placed.getRoutingCourtyard(), physicalPackage, geometry, null);
     }
 
     String getComponentId() { return componentId; }
@@ -109,6 +130,9 @@ class PcbComponentPlacement {
     int getY() { return y; }
     int getWidth() { return width; }
     int getHeight() { return height; }
+    PcbPackagePose getPose() { return pose; }
+    PcbRotation getRotation() { return pose.getRotation(); }
+    PcbBoardSide getMountingSide() { return pose.getMountingSide(); }
     Rectangle getBounds() { return new Rectangle(x, y, width, height); }
     Rectangle getBodyBounds() { return placedGeometry().getBodyBounds(); }
     Rectangle getKeepOut() { return new Rectangle(keepOut); }
@@ -174,7 +198,8 @@ class PcbComponentPlacement {
     String geometryFingerprint() {
         StringBuilder result = new StringBuilder();
         result.append("component=").append(componentId).append('@').append(x).append(',')
-            .append(y).append(',').append(width).append(',').append(height).append('|');
+            .append(y).append(',').append(width).append(',').append(height).append('|')
+            .append("pose=").append(pose.fingerprint()).append('|');
         appendRectangle(result, "body", getBodyBounds());
         appendRectangle(result, "keepout", keepOut);
         appendRectangle(result, "courtyard", routingCourtyard);
@@ -218,15 +243,15 @@ class PcbComponentPlacement {
             appendPoint(result, placed.getLeadEndPoint(index, true));
             appendPoint(result, placed.getLeadBodyPoint(index, true));
             appendRectangle(result, "liftedLead", placed.getLeadBounds(index, true));
-            result.append("escape=").append(terminal.getEscapeDx()).append(',')
-                .append(terminal.getEscapeDy()).append(',').append(terminal.getEscapeLength())
-                .append(';');
+            result.append("escape=").append(placed.getEscapeDx(index)).append(',')
+                .append(placed.getEscapeDy(index)).append(',').append(placed.getEscapeLength(index))
+                .append(" attachment=").append(terminal.getAttachment()).append(';');
         }
         return result.toString();
     }
 
     private PhysicalPackageGeometry.Placement placedGeometry() {
-        return physicalGeometry.placedAt(x, y);
+        return physicalGeometry.placedAt(pose);
     }
 
     private static int checkedAdd(int first, int second) {
@@ -283,7 +308,7 @@ class PcbComponentPlacement {
             appendLead(result, "lifted", terminal.getLiftedLead());
             result.append("escape=").append(terminal.getEscapeDx()).append(',')
                 .append(terminal.getEscapeDy()).append(',').append(terminal.getEscapeLength())
-                .append(';');
+                .append(" attachment=").append(terminal.getAttachment()).append(';');
         }
     }
 

@@ -19,11 +19,11 @@ final class A08FreshOwnerAliasVerifier {
             (LEDElm) original.getComponentBindings().getElements("LED1").firstElement());
         reject(sim, clean, "foreign solver element");
         clean = diode(original.getSeed());
-        reject(sim, copy(clean, copyLayout(original.getPcbLayout(), true, false),
-            clean.getOperationalStates(), null), "mutable geometry storage");
-        clean = diode(original.getSeed());
-        reject(sim, copy(clean, copyLayout(original.getPcbLayout(), false, true),
-            clean.getOperationalStates(), null), "mutable geometry storage");
+        // P01 made outlines and trace coordinate storage defensive. Attempts to copy through
+        // exposed getters can no longer construct a shared mutable geometry owner.
+        FreshGeneratedRuntimeInstallation.requireDisjoint(original,
+            copy(clean, copyLayout(original.getPcbLayout(), true, true), clean.getOperationalStates(), null));
+        assertions++;
         clean = diode(original.getSeed());
         // Equal geometry and immutable placement/package reuse are legitimate.
         FreshGeneratedRuntimeInstallation.requireDisjoint(original,

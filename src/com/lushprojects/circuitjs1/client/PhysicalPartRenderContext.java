@@ -157,7 +157,7 @@ final class PhysicalPartRenderContext {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
         return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
-            placement.getX(), placement.getY()).getBodyBounds());
+            placement.getPose()).getBodyBounds());
     }
 
     Point getInstalledLeadBodyPoint(int terminal) {
@@ -214,14 +214,14 @@ final class PhysicalPartRenderContext {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
         return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
-            placement.getX(), placement.getY()).getSelectionEnvelope());
+            placement.getPose()).getSelectionEnvelope());
     }
 
     Rectangle getInstalledDragBounds() {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
         return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
-            placement.getX(), placement.getY()).getDragEnvelope());
+            placement.getPose()).getDragEnvelope());
     }
 
     Rectangle getInstalledProbeBounds(int terminal) {
@@ -373,7 +373,7 @@ final class PhysicalPartRenderContext {
     private PhysicalPackageGeometry.Placement getInstalledPlacedGeometry() {
         if (placement == null)
             return physicalPackage.getGeometry().placedAt(0, 0);
-        return installedPhysicalGeometry().placedAt(placement.getX(), placement.getY());
+        return installedPhysicalGeometry().placedAt(placement.getPose());
     }
 
     private TroubleshootBoard getBoardForProvider() {

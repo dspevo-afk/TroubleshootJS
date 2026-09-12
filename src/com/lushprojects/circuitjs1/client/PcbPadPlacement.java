@@ -7,25 +7,43 @@ class PcbPadPlacement {
     private final int escapeDx;
     private final int escapeDy;
     private final int escapeLength;
+    private final PcbTerminalAttachment attachment;
+    private final PcbBoardSide mountingSide;
     private final Rectangle padBounds;
     private final Rectangle probeBounds;
 
     PcbPadPlacement(String padId, int x, int y, int escapeDx, int escapeDy,
             int escapeLength, Rectangle padBounds, Rectangle probeBounds) {
+        this(padId, x, y, escapeDx, escapeDy, escapeLength, padBounds, probeBounds,
+            PcbTerminalAttachment.PLATED_THROUGH_HOLE, PcbBoardSide.TOP);
+    }
+
+    PcbPadPlacement(String padId, int x, int y, int escapeDx, int escapeDy,
+            int escapeLength, Rectangle padBounds, Rectangle probeBounds,
+            PcbTerminalAttachment attachment, PcbBoardSide mountingSide) {
         if (padId == null || padId.length() == 0 || padBounds == null ||
+                attachment == null || mountingSide == null ||
                 probeBounds == null || padBounds.width <= 0 || padBounds.height <= 0 ||
                 probeBounds.width <= 0 || probeBounds.height <= 0 ||
                 !contains(padBounds, x, y) || !contains(probeBounds, padBounds))
             throw new IllegalArgumentException("Invalid PCB pad geometry: " + padId);
-        if (escapeLength < 0 || Math.abs(escapeDx) + Math.abs(escapeDy) > 1 ||
+        PcbCoordinateSystem.requireBoardCoordinate(x);
+        PcbCoordinateSystem.requireBoardCoordinate(y);
+        PcbCoordinateSystem.requireBoardRectangle(padBounds);
+        PcbCoordinateSystem.requireBoardRectangle(probeBounds);
+        if (escapeLength < 0 || Math.abs((long)escapeDx) + Math.abs((long)escapeDy) > 1 ||
                 (escapeLength > 0 && escapeDx == 0 && escapeDy == 0))
             throw new IllegalArgumentException("Invalid PCB pad escape direction: " + padId);
+        PcbCoordinateSystem.requireBoardCoordinate((long)x + (long)escapeDx * escapeLength);
+        PcbCoordinateSystem.requireBoardCoordinate((long)y + (long)escapeDy * escapeLength);
         this.padId = padId;
         this.x = x;
         this.y = y;
         this.escapeDx = escapeDx;
         this.escapeDy = escapeDy;
         this.escapeLength = escapeLength;
+        this.attachment = attachment;
+        this.mountingSide = mountingSide;
         this.padBounds = new Rectangle(padBounds);
         this.probeBounds = new Rectangle(probeBounds);
     }
@@ -36,12 +54,15 @@ class PcbPadPlacement {
     int getEscapeDx() { return escapeDx; }
     int getEscapeDy() { return escapeDy; }
     int getEscapeLength() { return escapeLength; }
+    PcbTerminalAttachment getAttachment() { return attachment; }
+    PcbBoardSide getMountingSide() { return mountingSide; }
     Rectangle getPadBounds() { return new Rectangle(padBounds); }
     Rectangle getProbeBounds() { return new Rectangle(probeBounds); }
 
     String geometryFingerprint() {
         return padId + '@' + x + ',' + y + " escape=" + escapeDx + ',' + escapeDy + ',' +
-            escapeLength + " pad=" + rectangleFingerprint(padBounds) + " probe=" +
+            escapeLength + " attachment=" + attachment + " mount=" + mountingSide +
+            " pad=" + rectangleFingerprint(padBounds) + " probe=" +
             rectangleFingerprint(probeBounds);
     }
 

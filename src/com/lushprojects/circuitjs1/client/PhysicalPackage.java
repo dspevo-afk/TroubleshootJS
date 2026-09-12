@@ -48,6 +48,8 @@ final class PhysicalPackage {
     private final GeometryVariantSelection geometryVariantSelection;
     private final boolean developerGeneric;
     private final PcbGeometryContractVersion geometryContractVersion;
+    private final Vector<PcbRotation> allowedRotations;
+    private final Vector<PcbBoardSide> allowedMountingSides;
 
     /** Authoritative production constructor; geometry may not be null or generic. */
     PhysicalPackage(String id, Vector<String> terminalIds, Vector<String> internalConnections,
@@ -61,7 +63,8 @@ final class PhysicalPackage {
         this(id, terminalIds, internalConnections, connector, geometry,
             singletonVariants(geometry, developerGeneric),
             developerGeneric ? "DEVELOPER_DEFAULT" : "DEFAULT",
-            GeometryVariantSelection.FIXED_DEFAULT, developerGeneric);
+            GeometryVariantSelection.FIXED_DEFAULT, developerGeneric,
+            singletonRotations(), singletonMountingSides());
     }
 
     /** Authoritative package constructor with an explicit finite variant catalog. */
@@ -70,20 +73,34 @@ final class PhysicalPackage {
             Vector<GeometryVariant> geometryVariants, String defaultLooseGeometryVariantKey,
             GeometryVariantSelection geometryVariantSelection) {
         this(id, terminalIds, internalConnections, connector, geometry, geometryVariants,
-            defaultLooseGeometryVariantKey, geometryVariantSelection, false);
+            defaultLooseGeometryVariantKey, geometryVariantSelection, false,
+            singletonRotations(), singletonMountingSides());
+    }
+
+    PhysicalPackage(String id, Vector<String> terminalIds, Vector<String> internalConnections,
+            boolean connector, PhysicalPackageGeometry geometry,
+            Vector<GeometryVariant> geometryVariants, String defaultLooseGeometryVariantKey,
+            GeometryVariantSelection geometryVariantSelection, Vector<PcbRotation> allowedRotations,
+            Vector<PcbBoardSide> allowedMountingSides) {
+        this(id, terminalIds, internalConnections, connector, geometry, geometryVariants,
+            defaultLooseGeometryVariantKey, geometryVariantSelection, false, allowedRotations,
+            allowedMountingSides);
     }
 
     private PhysicalPackage(String id, Vector<String> terminalIds,
             Vector<String> internalConnections, boolean connector,
             PhysicalPackageGeometry geometry, Vector<GeometryVariant> geometryVariants,
             String defaultLooseGeometryVariantKey,
-            GeometryVariantSelection geometryVariantSelection, boolean developerGeneric) {
+            GeometryVariantSelection geometryVariantSelection, boolean developerGeneric,
+            Vector<PcbRotation> allowedRotations, Vector<PcbBoardSide> allowedMountingSides) {
         if (id == null || id.trim().length() == 0 || terminalIds == null ||
                 terminalIds.size() < 1 || internalConnections == null || geometry == null ||
                 geometryVariants == null || geometryVariants.size() < 1 ||
                 defaultLooseGeometryVariantKey == null ||
                 defaultLooseGeometryVariantKey.trim().length() == 0 ||
-                geometryVariantSelection == null)
+                geometryVariantSelection == null || allowedRotations == null ||
+                allowedRotations.isEmpty() || allowedMountingSides == null ||
+                allowedMountingSides.isEmpty())
             throw new IllegalArgumentException("Invalid physical package");
         if (geometry.isDeveloperGeneric() != developerGeneric)
             throw new IllegalArgumentException("Production package geometry must be authoritative: " +
@@ -159,6 +176,8 @@ final class PhysicalPackage {
         this.geometryVariantSelection = geometryVariantSelection;
         this.developerGeneric = developerGeneric;
         this.geometryContractVersion = geometry.getGeometryContractVersion();
+        this.allowedRotations = copyUniqueRotations(allowedRotations);
+        this.allowedMountingSides = copyUniqueMountingSides(allowedMountingSides);
     }
 
     /** Explicit generic geometry is reserved for developer/future-package canaries. */
@@ -174,7 +193,8 @@ final class PhysicalPackage {
         return new PhysicalPackage(id, terminalIds, internalConnections, connector, geometry,
             variants, connector ? "DEFAULT" : "DEVELOPER_DEFAULT",
             connector ? GeometryVariantSelection.EDGE_ORIENTED :
-            GeometryVariantSelection.FIXED_DEFAULT, true);
+            GeometryVariantSelection.FIXED_DEFAULT, true, singletonRotations(),
+            singletonMountingSides());
     }
 
     String getId() { return id; }
@@ -188,6 +208,14 @@ final class PhysicalPackage {
     boolean isDeveloperGeneric() { return developerGeneric; }
     PcbGeometryContractVersion getGeometryContractVersion() { return geometryContractVersion; }
     int getGeometryContractVersionValue() { return geometryContractVersion.getValue(); }
+    Vector<PcbRotation> getAllowedRotations() { return new Vector<PcbRotation>(allowedRotations); }
+    Vector<PcbBoardSide> getAllowedMountingSides() {
+        return new Vector<PcbBoardSide>(allowedMountingSides);
+    }
+    boolean supportsPose(PcbPackagePose pose) {
+        return pose != null && allowedRotations.contains(pose.getRotation()) &&
+            allowedMountingSides.contains(pose.getMountingSide());
+    }
 
     Vector<GeometryVariant> getGeometryVariants() {
         return new Vector<GeometryVariant>(geometryVariants);
@@ -242,6 +270,8 @@ final class PhysicalPackage {
                 geometryVariantSelection != other.geometryVariantSelection ||
                 developerGeneric != other.developerGeneric ||
                 !geometryContractVersion.equals(other.geometryContractVersion) ||
+                !allowedRotations.equals(other.allowedRotations) ||
+                !allowedMountingSides.equals(other.allowedMountingSides) ||
                 geometryVariants.size() != other.geometryVariants.size())
             return false;
         for (int index = 0; index < geometryVariants.size(); index++)
@@ -274,6 +304,38 @@ final class PhysicalPackage {
             if (variant.getGeometry() == candidate)
                 return variant;
         return null;
+    }
+
+    private static Vector<PcbRotation> singletonRotations() {
+        Vector<PcbRotation> result = new Vector<PcbRotation>();
+        result.add(PcbRotation.DEG_0);
+        return result;
+    }
+
+    private static Vector<PcbBoardSide> singletonMountingSides() {
+        Vector<PcbBoardSide> result = new Vector<PcbBoardSide>();
+        result.add(PcbBoardSide.TOP);
+        return result;
+    }
+
+    private static Vector<PcbRotation> copyUniqueRotations(Vector<PcbRotation> source) {
+        Vector<PcbRotation> result = new Vector<PcbRotation>();
+        for (PcbRotation value : source) {
+            if (value == null || result.contains(value))
+                throw new IllegalArgumentException("Invalid physical package rotation catalog");
+            result.add(value);
+        }
+        return result;
+    }
+
+    private static Vector<PcbBoardSide> copyUniqueMountingSides(Vector<PcbBoardSide> source) {
+        Vector<PcbBoardSide> result = new Vector<PcbBoardSide>();
+        for (PcbBoardSide value : source) {
+            if (value == null || result.contains(value))
+                throw new IllegalArgumentException("Invalid physical package mounting-side catalog");
+            result.add(value);
+        }
+        return result;
     }
 
     private static Vector<GeometryVariant> singletonVariants(PhysicalPackageGeometry geometry,

@@ -52,6 +52,7 @@ final class PhysicalPackageGeometry {
                 selectionEnvelope == null || dragEnvelope == null ||
                 geometryContractVersion == null)
             throw new IllegalArgumentException("Invalid physical package geometry");
+        PcbCoordinateSystem.requireLocalDimensions(width, height);
         this.width = width;
         this.height = height;
         this.terminals = new Vector<Terminal>();
@@ -111,7 +112,8 @@ final class PhysicalPackageGeometry {
     Rectangle getSelectionEnvelope() { return new Rectangle(selectionEnvelope); }
     Rectangle getDragEnvelope() { return new Rectangle(dragEnvelope); }
 
-    Placement placedAt(int x, int y) { return new Placement(this, x, y); }
+    Placement placedAt(int x, int y) { return new Placement(this, PcbPackagePose.top(x, y)); }
+    Placement placedAt(PcbPackagePose pose) { return new Placement(this, pose); }
 
     /**
      * Returns the package-declared mirrored realization. This does not mutate
@@ -126,7 +128,8 @@ final class PhysicalPackageGeometry {
                 mirrorPoint(terminal.boardPadProbeCenter),
                 mirrorRect(terminal.boardPadProbeBounds),
                 mirrorLead(terminal.connectedLead), mirrorLead(terminal.liftedLead),
-                -terminal.escapeDx, terminal.escapeDy, terminal.escapeLength));
+                -terminal.escapeDx, terminal.escapeDy, terminal.escapeLength,
+                terminal.attachment));
         }
         return new PhysicalPackageGeometry(width, height, mirrored,
             mirrorRect(bodyBounds), mirrorRect(bodyKeepOut), mirrorRect(routingCourtyard),
@@ -137,22 +140,32 @@ final class PhysicalPackageGeometry {
     /** Package-local geometry translated into board coordinates. */
     static final class Placement {
         private final PhysicalPackageGeometry source;
-        private final int x;
-        private final int y;
+        private final PcbPackagePose pose;
 
-        private Placement(PhysicalPackageGeometry source, int x, int y) {
-            if (source == null)
+        private Placement(PhysicalPackageGeometry source, PcbPackagePose pose) {
+            if (source == null || pose == null)
                 throw new IllegalArgumentException("Missing package geometry placement source");
             this.source = source;
-            this.x = x;
-            this.y = y;
+            this.pose = pose;
+            // Existing containment validates every body/pad/lead/probe within these bounds.
+            transformed(source.getNominalBounds());
+            transformed(source.routingCourtyard);
+            transformed(source.dragEnvelope);
+            for (Terminal terminal : source.terminals) {
+                Point pad = translate(terminal.padCenter);
+                Point direction = pose.toBoardDirection(terminal.escapeDx, terminal.escapeDy);
+                PcbCoordinateSystem.requireBoardCoordinate((long)pad.x +
+                    (long)direction.x * terminal.escapeLength);
+                PcbCoordinateSystem.requireBoardCoordinate((long)pad.y +
+                    (long)direction.y * terminal.escapeLength);
+            }
         }
 
-        Rectangle getBodyBounds() { return translated(source.bodyBounds); }
-        Rectangle getBodyKeepOut() { return translated(source.bodyKeepOut); }
-        Rectangle getRoutingCourtyard() { return translated(source.routingCourtyard); }
-        Rectangle getSelectionEnvelope() { return translated(source.selectionEnvelope); }
-        Rectangle getDragEnvelope() { return translated(source.dragEnvelope); }
+        Rectangle getBodyBounds() { return transformed(source.bodyBounds); }
+        Rectangle getBodyKeepOut() { return transformed(source.bodyKeepOut); }
+        Rectangle getRoutingCourtyard() { return transformed(source.routingCourtyard); }
+        Rectangle getSelectionEnvelope() { return transformed(source.selectionEnvelope); }
+        Rectangle getDragEnvelope() { return transformed(source.dragEnvelope); }
 
         Point getPadPoint(int index) {
             Terminal terminal = source.getTerminal(index);
@@ -231,13 +244,35 @@ final class PhysicalPackageGeometry {
             return terminal == null ? null : translated(terminal.getLead(lifted).getBounds());
         }
 
-        private Rectangle translated(Rectangle value) {
-            return new Rectangle(checkedAdd(value.x, x), checkedAdd(value.y, y),
-                value.width, value.height);
+        int getEscapeDx(int index) {
+            Terminal terminal = source.getTerminal(index);
+            if (terminal == null) return 0;
+            return pose.toBoardDirection(terminal.getEscapeDx(),
+                terminal.getEscapeDy()).x;
         }
 
+        int getEscapeDy(int index) {
+            Terminal terminal = source.getTerminal(index);
+            if (terminal == null) return 0;
+            return pose.toBoardDirection(terminal.getEscapeDx(),
+                terminal.getEscapeDy()).y;
+        }
+
+        int getEscapeLength(int index) {
+            Terminal terminal = source.getTerminal(index);
+            return terminal == null ? 0 : terminal.getEscapeLength();
+        }
+
+        PcbPackagePose getPose() { return pose; }
+
+        private Rectangle transformed(Rectangle value) {
+            return pose.toBoardRectangle(value, source.width, source.height);
+        }
+
+        private Rectangle translated(Rectangle value) { return transformed(value); }
+
         private Point translate(Point value) {
-            return new Point(checkedAdd(value.x, x), checkedAdd(value.y, y));
+            return pose.toBoardPoint(value, source.width, source.height);
         }
     }
 
@@ -253,14 +288,25 @@ final class PhysicalPackageGeometry {
         private final int escapeDx;
         private final int escapeDy;
         private final int escapeLength;
+        private final PcbTerminalAttachment attachment;
 
         Terminal(String terminalId, Point padCenter, Rectangle padBounds,
                 Point boardPadProbeCenter, Rectangle boardPadProbeBounds,
                 Lead connectedLead, Lead liftedLead, int escapeDx, int escapeDy,
                 int escapeLength) {
+            this(terminalId, padCenter, padBounds, boardPadProbeCenter, boardPadProbeBounds,
+                connectedLead, liftedLead, escapeDx, escapeDy, escapeLength,
+                PcbTerminalAttachment.PLATED_THROUGH_HOLE);
+        }
+
+        Terminal(String terminalId, Point padCenter, Rectangle padBounds,
+                Point boardPadProbeCenter, Rectangle boardPadProbeBounds,
+                Lead connectedLead, Lead liftedLead, int escapeDx, int escapeDy,
+                int escapeLength, PcbTerminalAttachment attachment) {
             if (terminalId == null || terminalId.trim().length() == 0 || padCenter == null ||
                     padBounds == null || boardPadProbeCenter == null ||
-                    boardPadProbeBounds == null || connectedLead == null || liftedLead == null)
+                    boardPadProbeBounds == null || connectedLead == null || liftedLead == null ||
+                    attachment == null)
                 throw new IllegalArgumentException("Invalid package terminal geometry");
             validateEscape(terminalId, escapeDx, escapeDy, escapeLength);
             this.terminalId = terminalId;
@@ -273,6 +319,7 @@ final class PhysicalPackageGeometry {
             this.escapeDx = escapeDx;
             this.escapeDy = escapeDy;
             this.escapeLength = escapeLength;
+            this.attachment = attachment;
         }
 
         /** Compatibility constructor for developer-only geometry canaries. */
@@ -287,7 +334,7 @@ final class PhysicalPackageGeometry {
             this(source.terminalId, source.padCenter, source.padBounds,
                 source.boardPadProbeCenter, source.boardPadProbeBounds,
                 source.connectedLead, source.liftedLead, source.escapeDx, source.escapeDy,
-                source.escapeLength);
+                source.escapeLength, source.attachment);
         }
 
         private Terminal copy() { return new Terminal(this); }
@@ -318,6 +365,7 @@ final class PhysicalPackageGeometry {
         int getEscapeDx() { return escapeDx; }
         int getEscapeDy() { return escapeDy; }
         int getEscapeLength() { return escapeLength; }
+        PcbTerminalAttachment getAttachment() { return attachment; }
     }
 
     /** Immutable straight lead pose and its component-side probe surface. */
@@ -525,7 +573,8 @@ final class PhysicalPackageGeometry {
                     !first.connectedLead.isEquivalentTo(second.connectedLead) ||
                     !first.liftedLead.isEquivalentTo(second.liftedLead) ||
                     first.escapeDx != second.escapeDx || first.escapeDy != second.escapeDy ||
-                    first.escapeLength != second.escapeLength)
+                    first.escapeLength != second.escapeLength ||
+                    first.attachment != second.attachment)
                 return false;
         }
         return true;

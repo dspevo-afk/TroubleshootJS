@@ -1,0 +1,112 @@
+{
+  "base_head": "6b7e66a1edbfb8ef3d6e95967e7f7edbbc9506cf",
+  "branch": "codex/task43p-final-recovery",
+  "candidate_identity": "candidate-provenance.json",
+  "findings": {
+    "R1": "CORRECTED: bottom mounting reflects local X before rotation, inverse and escape directions agree",
+    "R2": "CORRECTED: displacement is separate from bounded absolute board coordinates",
+    "R3": "CORRECTED: trace, pad, package, outline, label and view boundaries validate widened coordinates and envelope extrema"
+  },
+  "gates": {
+    "affected_compiled_regressions": {
+      "limits": "Actual compiled behavior and maintained report readers, not CLI ownership/CDP wrapper certification",
+      "routes": [
+        "A08",
+        "Task49"
+      ],
+      "status": "PASS",
+      "strict_readers": "actual-report-readers.log"
+    },
+    "compiled_forced_negative": {
+      "evidence": "compiled-p01-forced-negative.json",
+      "expected_marker": "FAIL:P01 forced-negative",
+      "initial_harness_correction": "First harness incorrectly required an uncaught page error; application correctly catches the forced error. A fresh bounded rerun checks exact failure marker and absence of success report.",
+      "status": "PASS"
+    },
+    "compiled_p01": {
+      "evidence": "compiled-p01.json",
+      "rendered_smd_poses": 16,
+      "runtime_assertions": 316,
+      "status": "PASS"
+    },
+    "independent_oracles": {
+      "evidence": "independent-oracles.json",
+      "invocation": "Direct installed Python subprocesses; exact maintained oracles and fresh Java receipts",
+      "status": "PASS"
+    },
+    "independent_review": {
+      "status": "PASS",
+      "evidence": "independent-review.json",
+      "route": "Fresh independent chat review, accepted by owner before the explicit P01 push request. Prior quota-limited Luna/Reserve attempts did not complete.",
+      "historical_attempts": "Normal Luna and Reserve returned usage-limit errors; those attempts remain incomplete."
+    },
+    "native_java": {
+      "declared_poses": 43,
+      "evidence": "native-suite-markers.txt",
+      "p01_assertions": 8357,
+      "status": "PASS",
+      "suites": 19
+    },
+    "native_player_input": {
+      "native_events": 0,
+      "reason": "Exact task window could be identified, but foreground guard withheld native input",
+      "scope": "Additional normal-player smoke; no new player-facing side/rotation UI is introduced by P01",
+      "status": "NOT RUN"
+    },
+    "native_wrapper": {
+      "cause": "Windows Python launch boundary: alias timeout, direct Store path access denied, then task-local venv full-run timeout. The small venv bounded-process preflight passed. No wrapper PASS is claimed.",
+      "cleanup": "Runner reports task-owned JVM scratch removed",
+      "exit": 2,
+      "status": "BLOCKED"
+    },
+    "normal_player_privacy": {
+      "evidence": "compiled-p01-no-debug.json",
+      "status": "PASS"
+    },
+    "original_review_probe": {
+      "checks": 14,
+      "defects": 0,
+      "evidence": "review-probe-green.log",
+      "exit": 0,
+      "original_source": "Unchanged independent probe from preceding review",
+      "status": "PASS"
+    },
+    "production_gwt": {
+      "command": "scripts/build.ps1 -JavaHome <repository JDK 8u502> -Style OBF",
+      "exit": 0,
+      "permutations": 5,
+      "status": "PASS"
+    },
+    "report_protocol": {
+      "assertions": 466,
+      "exit": 0,
+      "status": "PASS"
+    },
+    "root_reconciliation": {
+      "limits": "Root implementation review is not independent review",
+      "source_drift": 0,
+      "status": "PASS"
+    },
+    "closeout_hash_audit": {
+      "patch_files_checked": 36,
+      "source_test_runner_files_checked": 634,
+      "drift": [],
+      "reuse": "Tests/build/browser were freshly executed by the independent reviewer; not rerun for documentation-only acceptance reconciliation."
+    }
+  },
+  "next": "Publish P01 normally and verify origin; then implement the separately owner-authorized P02. A10 remains unstarted.",
+  "publication": {
+    "owner_authorized": true,
+    "checkpoint": "Pre-publication reconciliation; exact containing commit/push/email outcomes are recorded in the publication handoff."
+  },
+  "resources": {
+    "headless_browser": "Closed by runner context cleanup",
+    "native_build_report_review_jobs": "Exited; wrapper and initial negative harness nonzero exits retained as limits",
+    "preexisting_cache": "Preserved and excluded",
+    "preview_thread": "Stopped and socket closed",
+    "scratch": "External scoped task directory retained for resumption",
+    "visible_browser": "Owned context/browser closed; is_connected false"
+  },
+  "scope": "P01 only; P02 and A10 remain unstarted",
+  "status": "ACCEPTED - OWNER AUTHORIZED PUBLICATION"
+}

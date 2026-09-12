@@ -93,10 +93,17 @@ class PcbBoardLayout {
         if (layoutAlgorithmVersion != SeededPcbLayoutGenerator.CURRENT_VERSION)
             throw new IllegalArgumentException("Unsupported retired PCB layout algorithm version: " +
                 layoutAlgorithmVersion);
+        if (boardOutline == null || partsTray == null)
+            throw new IllegalArgumentException("Missing PCB layout envelopes");
+        if (width <= 0 || height <= 0 || partsTray.width <= 0 || partsTray.height <= 0)
+            throw new IllegalArgumentException("Invalid PCB workbench envelope");
+        PcbCoordinateSystem.checkedInt((long)partsTray.x + partsTray.width);
+        PcbCoordinateSystem.checkedInt((long)partsTray.y + partsTray.height);
+        PcbCoordinateSystem.requireBoardRectangle(boardOutline);
         this.width = width;
         this.height = height;
-        this.boardOutline = boardOutline;
-        this.partsTray = partsTray;
+        this.boardOutline = new Rectangle(boardOutline);
+        this.partsTray = new Rectangle(partsTray);
         this.layoutAlgorithmVersion = layoutAlgorithmVersion;
     }
 
@@ -357,15 +364,16 @@ class PcbBoardLayout {
         if (padIds.size() != geometry.getTerminals().size())
             throw new IllegalStateException("PCB component terminal count diverged from package: " +
                 component.getId());
-        PhysicalPackageGeometry.Placement placed = geometry.placedAt(placement.getX(),
-            placement.getY());
+        PhysicalPackageGeometry.Placement placed = geometry.placedAt(placement.getPose());
         if (!placed.getBodyBounds().equals(placement.getBodyBounds()) ||
                 !placed.getBodyKeepOut().equals(placement.getKeepOut()) ||
                 !placed.getRoutingCourtyard().equals(placement.getRoutingCourtyard()) ||
                 !placed.getSelectionEnvelope().equals(placement.getSelectionEnvelope()) ||
                 !placed.getDragEnvelope().equals(placement.getDragEnvelope()) ||
-                placement.getWidth() != geometry.getWidth() ||
-                placement.getHeight() != geometry.getHeight())
+                placement.getWidth() != placement.getPose().getPlacedWidth(geometry.getWidth(),
+                    geometry.getHeight()) ||
+                placement.getHeight() != placement.getPose().getPlacedHeight(geometry.getWidth(),
+                    geometry.getHeight()))
             throw new IllegalStateException("PCB component placement diverged from package geometry: " +
                 component.getId());
         for (int index = 0; index < padIds.size(); index++) {
@@ -376,9 +384,11 @@ class PcbBoardLayout {
                     !terminal.getTerminalId().equals(boardPad.getTerminalId()) || pad == null ||
                     pad.getX() != placed.getPadPoint(index).x ||
                     pad.getY() != placed.getPadPoint(index).y ||
-                    pad.getEscapeDx() != terminal.getEscapeDx() ||
-                    pad.getEscapeDy() != terminal.getEscapeDy() ||
-                    pad.getEscapeLength() != terminal.getEscapeLength() ||
+                    pad.getEscapeDx() != placed.getEscapeDx(index) ||
+                    pad.getEscapeDy() != placed.getEscapeDy(index) ||
+                    pad.getEscapeLength() != placed.getEscapeLength(index) ||
+                    pad.getAttachment() != terminal.getAttachment() ||
+                    pad.getMountingSide() != placement.getMountingSide() ||
                     !pad.getPadBounds().equals(placed.getPadBounds(index)) ||
                 !pad.getProbeBounds().equals(placed.getBoardPadProbeBounds(index)))
                 throw new IllegalStateException("PCB pad diverged from package geometry: " +
@@ -904,13 +914,13 @@ class PcbBoardLayout {
     }
 
     int getTraceLength(PcbTraceGeometry trace) {
-        int length = 0;
+        long length = 0;
         int[] xPoints = trace.getXPoints();
         int[] yPoints = trace.getYPoints();
         for (int index = 1; index < xPoints.length; index++)
             length += Math.abs(xPoints[index] - xPoints[index - 1]) +
                 Math.abs(yPoints[index] - yPoints[index - 1]);
-        return length;
+        return PcbCoordinateSystem.checkedInt(length);
     }
 
     int getDirectManhattanDistance(PcbTraceGeometry trace) {
@@ -995,6 +1005,9 @@ class PcbBoardLayout {
      * content.  This is a simulator readability rule, not a manufacturing rule.
      */
     void compactToContent(int boardX, int boardY, int edgeMargin) {
+        PcbCoordinateSystem.requireBoardCoordinate(boardX);
+        PcbCoordinateSystem.requireBoardCoordinate(boardY);
+        if (edgeMargin < 0) throw new IllegalArgumentException("Negative PCB edge margin");
         Rectangle content = getOccupiedContentBounds();
         int dx = checkedSubtract(checkedAdd(boardX, edgeMargin), content.x);
         int dy = checkedSubtract(checkedAdd(boardY, edgeMargin), content.y);
@@ -1004,8 +1017,6 @@ class PcbBoardLayout {
             PcbComponentPlacement placement = components.get(componentId);
             translatedComponents.put(componentId, placement.translatedBy(dx, dy));
         }
-        components.clear();
-        components.putAll(translatedComponents);
 
         HashMap<String, PcbPadPlacement> translatedPads =
             new HashMap<String, PcbPadPlacement>();
@@ -1014,10 +1025,9 @@ class PcbBoardLayout {
             translatedPads.put(padId, new PcbPadPlacement(padId, checkedAdd(pad.getX(), dx),
                 checkedAdd(pad.getY(), dy), pad.getEscapeDx(), pad.getEscapeDy(),
                 pad.getEscapeLength(), translate(pad.getPadBounds(), dx, dy),
-                translate(pad.getProbeBounds(), dx, dy)));
+                translate(pad.getProbeBounds(), dx, dy), pad.getAttachment(),
+                pad.getMountingSide()));
         }
-        pads.clear();
-        pads.putAll(translatedPads);
 
         Vector<PcbTraceGeometry> translatedTraces = new Vector<PcbTraceGeometry>();
         for (PcbTraceGeometry trace : traces) {
@@ -1032,8 +1042,6 @@ class PcbBoardLayout {
             translatedTraces.add(new PcbTraceGeometry(trace.getNetId(), trace.getStartPadId(),
                 trace.getEndPadId(), translatedX, translatedY));
         }
-        traces.clear();
-        traces.addAll(translatedTraces);
 
         HashMap<String, PcbSilkscreenLabel> translatedLabels =
             new HashMap<String, PcbSilkscreenLabel>();
@@ -1043,11 +1051,16 @@ class PcbBoardLayout {
                 translate(label.getBounds(), dx, dy), label.getFontSize(), label.isBold(),
                 label.getTargetPadId()));
         }
-        silkscreenLabels.clear();
-        silkscreenLabels.putAll(translatedLabels);
         int compactedWidth = checkedAdd(content.width, checkedMultiply(edgeMargin, 2));
         int compactedHeight = checkedAdd(content.height, checkedMultiply(edgeMargin, 2));
-        boardOutline = new Rectangle(boardX, boardY, compactedWidth, compactedHeight);
+        Rectangle translatedOutline = new Rectangle(boardX, boardY, compactedWidth, compactedHeight);
+        PcbCoordinateSystem.requireBoardRectangle(translatedOutline);
+        // Publish only after all coordinate checks succeed; rejection leaves the old layout intact.
+        components.clear(); components.putAll(translatedComponents);
+        pads.clear(); pads.putAll(translatedPads);
+        traces.clear(); traces.addAll(translatedTraces);
+        silkscreenLabels.clear(); silkscreenLabels.putAll(translatedLabels);
+        boardOutline = translatedOutline;
     }
 
     Rectangle getOccupiedContentBounds() {
@@ -1397,8 +1410,8 @@ class PcbBoardLayout {
 
     int getWidth() { return width; }
     int getHeight() { return height; }
-    Rectangle getBoardOutline() { return boardOutline; }
-    Rectangle getPartsTray() { return partsTray; }
+    Rectangle getBoardOutline() { return new Rectangle(boardOutline); }
+    Rectangle getPartsTray() { return new Rectangle(partsTray); }
     PcbPadPlacement getPad(String padId) { return pads.get(padId); }
     PcbComponentPlacement getComponent(String componentId) { return components.get(componentId); }
     PcbSilkscreenLabel getSilkscreenLabel(String labelId) { return silkscreenLabels.get(labelId); }

@@ -12,6 +12,42 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## P01 bounded physical coordinates and package poses
+
+P01 is independently reviewed and accepted by the owner.
+[Qualification evidence and limits](task-evidence/P01/README.md) distinguish the
+passing implementation checks from the unqualified Windows test wrapper.
+
+`PcbCoordinateSystem` bounds absolute physical X/Y and rectangle extrema to
+inclusive +/-100,000,000 signed integer logical board units. They are neither
+manufactured millimetres nor screen pixels. Intermediate displacement and local
+extent calculations are distinct from absolute coordinates: a valid movement may
+span the full 200,000,000-unit domain. Widened checked arithmetic prevents wrapping.
+Workbench/tray display bounds retain their separate role.
+
+`PhysicalPackage` declares its finite allowed rotations and mounting faces.
+`PcbPackagePose` owns the common-board-space pose. BOTTOM mounting reflects local X
+about half the package width, then applies the declared clockwise cardinal rotation
+and origin translation. The inverse subtracts the origin, reverses rotation and
+reverses mounting reflection. Terminals keep their names/order. Body, courtyard,
+selection/drag bounds, pads, connected/lifted leads, probe surfaces and escape vectors
+use that same transform. `PcbBoardViewTransform` is a separate read-only outline-X
+reflection for viewing the underside, not an electrical remapping or new player UI.
+
+Trace arrays and layout envelopes are defensively copied in both directions.
+Placed package envelopes, pads/probes/escape tips, traces, outlines, labels and view
+inputs/results reject invalid absolute bounds. Compaction builds a complete checked
+candidate before replacing live layout maps, preserving the prior fingerprint on
+rejection. Aggregate trace lengths use a widened checked accumulator.
+
+Developer-only 0805-style and SOT-23-style packages explicitly declare surface-pad
+attachment and four rotations on two mounting faces. `P01PhysicalPoseChecks` uses
+an independent affine/literal oracle across all declared current package variants;
+`P01PhysicalPoseDeveloperVerifier` tests the maintained render/hit/endpoint seam in
+the compiled workbench. Debug-only routing cannot run from normal-player URL flags.
+These fixtures do not supply SMD gameplay, conductor layers, vias, or probe-access
+policy. P02 must qualify those distinct physical/electrical contracts before A10.
+
 ## A07 serialized execution, observations and model probes
 
 `CircuitSolverExecutor` is the current entry to CircuitJS analysis and stepping.

@@ -48,11 +48,11 @@ public final class A02GeometryContractTest {
         requireBends(layout, new int[] { 0, 10, 10, 10, 25 },
                 new int[] { 0, 0, 0, 20, 20 }, 2,
                 "repeated points around a real turn");
-        requireBends(layout, new int[] { Integer.MAX_VALUE - 100,
-                Integer.MAX_VALUE - 1, Integer.MAX_VALUE },
+        // P01 bounds physical coordinates; full integer extremes now reject at construction.
+        int limit = PcbCoordinateSystem.MAX_ABS_BOARD_COORDINATE;
+        requireBends(layout, new int[] { limit - 100, limit - 1, limit },
                 new int[] { 0, 0, 0 }, 0, "positive boundary coordinates");
-        requireBends(layout, new int[] { Integer.MIN_VALUE,
-                Integer.MIN_VALUE + 1, Integer.MIN_VALUE + 100 },
+        requireBends(layout, new int[] { -limit, -limit + 1, -limit + 100 },
                 new int[] { 0, 0, 0 }, 0, "negative boundary coordinates");
     }
 

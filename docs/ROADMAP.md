@@ -8,7 +8,7 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
 **Latest completed task:** **A09: Production fault hypotheses and executable diagnostic providers**<br>
-**Current checkpoint:** **A09 COMPLETE - OWNER ACCEPTED AFTER POST-PUSH CHAT REVIEW**. Implementation `eee65df0e4fd45bc4547ee9639d6a05be1ba6d06` is published; the native player gate and retained technical evidence pass. The owner accepted the post-push review and its documentation-only follow-up is reconciled. **A10 is requested but UNSTARTED - DEPENDENCY BLOCKED:** P02 is a hard prerequisite and depends on unstarted P01. Complete P01, then P02, before A10; milestone numbering is not execution order.
+**Current checkpoint:** **P01 ACCEPTED; PUBLICATION AUTHORIZED.** The fresh independent review found no blocking P01 defect; the owner accepted it and requested P01 publication followed by P02 implementation. All 36 reviewed candidate files and 634 source/test/runner hashes matched at closeout. The Windows native wrapper remains unqualified; direct maintained suites and compiled behavior pass separately. **P02 and A10 are UNSTARTED at this P01 handoff.** P02 is authorized next; A10 still requires accepted P02. [P01 evidence](task-evidence/P01/README.md).
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -979,7 +979,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A10 · Staged generation jobs, deterministic budgets and proof receipts
 
-**Status:** UNSTARTED - DEPENDENCY BLOCKED. Requested by the owner on 2026-09-11 after A09 acceptance. P02 and its prerequisite P01 remain unimplemented/unaccepted; their hard edges are unchanged. Current trace geometry still exposes mutable coordinate arrays and the one-layer connectivity validator does not implement durable layer-aware conductor identity. No A10 staging, caching, cancellation or publication code is claimed. The prerequisite execution order is P01, then P02, then this requested milestone.
+**Status:** UNSTARTED - DEPENDENCY BLOCKED. P01 is independently reviewed and accepted, including immutable trace arrays and bounded physical poses. P02 remains unimplemented/unaccepted; its hard prerequisite edge is unchanged. The current one-layer validator does not yet implement durable layer-aware conductor identity. No A10 staging, caching, cancellation or publication code is claimed. Implement and accept P02 before returning to A10.
 
 **Hard prerequisites:** [A05](#m-a05), [A07](#m-a07), [A09](#m-a09), [P02](#m-p02)
 
@@ -1045,7 +1045,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### P01 · Physical coordinates, immutable poses and package orientation
 
-**Status:** UNSTARTED.
+**Status:** ACCEPTED. Fresh independent review passed with no blocking findings, and the owner authorized publication. All reviewed code/test hashes match; closeout only reconciles documentation. The Windows native wrapper and optional native-player smoke remain explicitly unqualified, not relabeled PASS. [Evidence and limits](task-evidence/P01/README.md).
 
 **Hard prerequisites:** [A02](#m-a02), [A03](#m-a03), [R00](#m-r00)
 

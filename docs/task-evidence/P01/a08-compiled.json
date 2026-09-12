@@ -1,0 +1,712 @@
+{
+  "errors": [],
+  "marker": "PASS:a08",
+  "report": {
+    "assertions": 1103,
+    "cases": [
+      {
+        "case": "resistor-compensation-and-damage",
+        "status": "PASS"
+      },
+      {
+        "case": "restricted-scope-write-guards",
+        "status": "PASS"
+      },
+      {
+        "case": "diode-open-0",
+        "status": "PASS"
+      },
+      {
+        "case": "diode-open-3",
+        "status": "PASS"
+      },
+      {
+        "case": "diode-short-0",
+        "status": "PASS"
+      },
+      {
+        "case": "diode-failed-compensation-isolated",
+        "status": "PASS"
+      },
+      {
+        "case": "stale-scope-successor-preserved",
+        "status": "PASS"
+      },
+      {
+        "case": "same-owner-graph-replacement-preserved",
+        "status": "PASS"
+      },
+      {
+        "case": "fresh-owner-no-alias",
+        "status": "PASS"
+      },
+      {
+        "case": "fresh-mutable-holder-aliases",
+        "status": "PASS"
+      },
+      {
+        "case": "fresh-callback-owner-aliases",
+        "status": "PASS"
+      },
+      {
+        "case": "fresh-family-captured-owner-aliases",
+        "status": "PASS"
+      },
+      {
+        "case": "scoped-admission-identity",
+        "status": "PASS"
+      },
+      {
+        "case": "fresh-install-failure-matrix",
+        "status": "PASS"
+      },
+      {
+        "case": "proof-owner-restored",
+        "status": "PASS"
+      }
+    ],
+    "cleanup": "PASS",
+    "compensatedWrites": 90,
+    "diodeScenarios": 3,
+    "failures": [
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "remove",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_SLOT_CLEAR",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "lift",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "reconnect",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "restore",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "restore",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "restore",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_INVENTORY_ACQUIRE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_CANONICAL_REGISTER",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_APPEND",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_PRIMARY_BINDING",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_ATTACHMENT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_SLOT_MOUNT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_PRIMARY_BINDING",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_ATTACHMENT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_SLOT_MOUNT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-0",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "remove",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_SLOT_CLEAR",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "lift",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "reconnect",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "restore",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "restore",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "restore",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_INVENTORY_ACQUIRE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_CANONICAL_REGISTER",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_APPEND",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_PRIMARY_BINDING",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_ATTACHMENT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_SLOT_MOUNT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_PRIMARY_BINDING",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_ATTACHMENT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_SLOT_MOUNT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-open-3",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "remove",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_SLOT_CLEAR",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "remove",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "lift",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_DISCONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "reconnect",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "restore",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "restore",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "restore",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_INVENTORY_ACQUIRE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_CANONICAL_REGISTER",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_APPEND",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_PRIMARY_BINDING",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_ATTACHMENT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_SLOT_MOUNT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "catalog",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_PRIMARY_BINDING",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_ENDPOINT_RETARGET",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_ATTACHMENT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_SLOT_MOUNT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 2,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_CONNECT",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_GRAPH_RESTORE",
+        "status": "COMPENSATED"
+      },
+      {
+        "occurrence": 1,
+        "operation": "install",
+        "scenario": "diode-short-0",
+        "stage": "AFTER_COMMIT",
+        "status": "COMPENSATED"
+      }
+    ],
+    "freshFailures": 5,
+    "maxFailedMutationMs": 1,
+    "maxSettlementMs": 12,
+    "status": "PASS",
+    "version": "TSJ-A08-MUTATION-1",
+    "wallMs": 56407
+  },
+  "route": "tsjChallenge=diode&seed=0&tsjVerifyA08=true&tsjDebug=true",
+  "seconds": 59.13052229999448
+}

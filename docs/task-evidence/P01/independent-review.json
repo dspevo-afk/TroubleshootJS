@@ -1,0 +1,64 @@
+{
+  "verdict": "PASS - P01 implementation; nonblocking follow-ups and explicit tooling limits",
+  "base_head": "6b7e66a1edbfb8ef3d6e95967e7f7edbbc9506cf",
+  "candidate_patch_sha256": "5c00890191a892c8b39960904c94852ac3f0b132a511b993139a9a52256dac2b",
+  "blocking_findings": [],
+  "follow_up_findings": [
+    {
+      "id": "F1",
+      "cause": "CODE",
+      "preexisting": true,
+      "location": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java:1136-1163",
+      "summary": "Unchecked int shared-route-length accumulators can wrap at extreme aggregate sizes.",
+      "reproduction": "Synthetic method-level fixture: six same-net 180,000,000-unit traces, each coordinate-bounded. Pairwise shared length expected 2,700,000,000; actual -1,594,967,296. This fixture is not a fully validated playable board.",
+      "classification_reason": "Unchanged route-scoring aggregate, not a regression in the P01 pose/bounds/immutability implementation or a demonstrated current generated-board failure.",
+      "recommendation": "Use widened accumulators with a checked conversion or widen the return contract; add an aggregate-overflow regression before large-scale routing consumes the full domain."
+    },
+    {
+      "id": "F2",
+      "cause": "CODE",
+      "location": "docs/ROADMAP.md:982",
+      "summary": "A10 status prose still calls P01 unimplemented and trace arrays exposed/mutable.",
+      "recommendation": "Correct the stale A10 paragraph during closeout; retain P02 as the remaining dependency."
+    }
+  ],
+  "limits": {
+    "windows_native_wrapper": "Previously recorded exit 2/Python launch timeout remains unqualified; not rerun unchanged. Actual maintained Java suites, three Python oracles and report protocol were freshly run directly. No wrapper PASS claimed.",
+    "native_player_input": "NOT RUN. Fresh headless compiled render/hit/endpoint and privacy checks are not native mouse/keyboard gameplay certification.",
+    "scope": "No SMD gameplay, layer access, vias, P02 or A10 certification."
+  },
+  "candidate_integrity": {
+    "status_unchanged": true,
+    "all_36_patch_file_hashes_unchanged": true,
+    "source_reader_hash_drift": [],
+    "tracked_diff_check_exit": 0,
+    "reverse_patch_check_exit": 0,
+    "staged_by_review": false
+  },
+  "review_route": "Fresh independent chat review, accepted by owner before the explicit P01 push request. Prior quota-limited Luna/Reserve attempts did not complete.",
+  "validation_summary": {
+    "maintained_java_suites": 19,
+    "p01_assertions": 8357,
+    "declared_poses": 43,
+    "original_probe_checks": 14,
+    "independent_boundary_assertions": 2288,
+    "python_oracles": 3,
+    "report_protocol_assertions": 466,
+    "gwt_permutations": 5,
+    "smd_rendered_poses": 16,
+    "runtime_assertions": 316,
+    "compiled_regressions": [
+      "A08",
+      "Task49"
+    ],
+    "status": "PASS"
+  },
+  "closure_audit": {
+    "patch_files_checked": 36,
+    "source_test_runner_files_checked": 634,
+    "drift": [],
+    "reuse": "Tests/build/browser were freshly executed by the independent reviewer; not rerun for documentation-only acceptance reconciliation.",
+    "log_normalization": "Only trailing whitespace stripped from actual-report-readers.log for git diff --cached --check; original retained in task scratch. Test results unchanged."
+  },
+  "documentation_followup": "CORRECTED in the P01 closeout documentation; P02 remains an A10 prerequisite."
+}

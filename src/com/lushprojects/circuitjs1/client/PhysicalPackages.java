@@ -26,6 +26,12 @@ final class PhysicalPackages {
     static final PhysicalPackage THROUGH_HOLE_OUTPUT_HEADER_2 = fixedPackage(
         "THROUGH_HOLE_OUTPUT_HEADER_2", new String[] { "1", "2" }, false, outputHeader());
 
+    /** P01/P02 developer-only architecture canaries; not part of generated gameplay. */
+    static final PhysicalPackage DEV_SMD_0805 = smdPackage("DEV_SMD_0805",
+        new String[] { "1", "2" }, smd0805());
+    static final PhysicalPackage DEV_SMD_SOT23 = smdPackage("DEV_SMD_SOT23",
+        new String[] { "1", "2", "3" }, smdSot23());
+
     static final PhysicalPackage MULTI_TERMINAL = developerCanaryPackageOf("MULTI_TERMINAL",
         new String[] { "1", "2", "3", "4", "5", "6" }, false);
     static final PhysicalPackage DEV_CANARY_3 = developerCanaryPackageOf("DEV_CANARY_3",
@@ -64,6 +70,29 @@ final class PhysicalPackages {
         variants.add(new PhysicalPackage.GeometryVariant("DEFAULT", "IDENTITY", geometry));
         return packageWithCatalog(id, terminalIds, connector, variants, "DEFAULT",
             PhysicalPackage.GeometryVariantSelection.FIXED_DEFAULT);
+    }
+
+    private static PhysicalPackage smdPackage(String id, String[] terminalIds,
+            PhysicalPackageGeometry geometry) {
+        Vector<PhysicalPackage.GeometryVariant> variants =
+            new Vector<PhysicalPackage.GeometryVariant>();
+        variants.add(new PhysicalPackage.GeometryVariant("DEFAULT", "IDENTITY", geometry));
+        return new PhysicalPackage(id, toVector(terminalIds), new Vector<String>(), false, geometry,
+            variants, "DEFAULT", PhysicalPackage.GeometryVariantSelection.FIXED_DEFAULT,
+            allCardinalRotations(), bothBoardSides());
+    }
+
+    private static Vector<PcbRotation> allCardinalRotations() {
+        Vector<PcbRotation> result = new Vector<PcbRotation>();
+        result.add(PcbRotation.DEG_0); result.add(PcbRotation.DEG_90);
+        result.add(PcbRotation.DEG_180); result.add(PcbRotation.DEG_270);
+        return result;
+    }
+
+    private static Vector<PcbBoardSide> bothBoardSides() {
+        Vector<PcbBoardSide> result = new Vector<PcbBoardSide>();
+        result.add(PcbBoardSide.TOP); result.add(PcbBoardSide.BOTTOM);
+        return result;
     }
 
     private static PhysicalPackage connectorPackage(String id, String[] terminalIds) {
@@ -205,6 +234,39 @@ final class PhysicalPackages {
         terminals.add(terminal("2", 70, 30, 70, 10, 70, 6, 0, -1, 35));
         return geometry(100, 70, terminals, new Rectangle(8, 8, 84, 54),
             new Rectangle(8, 8, 84, 54), new Rectangle(-6, 0, 112, 70));
+    }
+
+    private static PhysicalPackageGeometry smd0805() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals =
+            new Vector<PhysicalPackageGeometry.Terminal>();
+        terminals.add(smdTerminal("1", 15, 30, 35, 30, 35, 8, -1, 0, 24));
+        terminals.add(smdTerminal("2", 85, 30, 65, 30, 65, 8, 1, 0, 24));
+        return geometry(100, 60, terminals, new Rectangle(30, 15, 40, 30),
+            new Rectangle(25, 10, 50, 40), new Rectangle(2, 4, 96, 52));
+    }
+
+    private static PhysicalPackageGeometry smdSot23() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals =
+            new Vector<PhysicalPackageGeometry.Terminal>();
+        terminals.add(smdTerminal("1", 20, 72, 40, 48, 10, 42, 0, 1, 22));
+        terminals.add(smdTerminal("2", 80, 72, 60, 48, 90, 42, 0, 1, 22));
+        terminals.add(smdTerminal("3", 50, 18, 50, 42, 50, 52, 0, -1, 22));
+        return geometry(100, 90, terminals, new Rectangle(30, 30, 40, 32),
+            new Rectangle(25, 25, 50, 42), new Rectangle(3, 2, 94, 86));
+    }
+
+    private static PhysicalPackageGeometry.Terminal smdTerminal(String id, int padX, int padY,
+            int connectedBodyX, int connectedBodyY, int liftedEndX, int liftedEndY,
+            int escapeDx, int escapeDy, int escapeLength) {
+        Point pad = new Point(padX, padY);
+        Rectangle padBounds = centered(pad, 24, 28);
+        Point connectedBody = new Point(connectedBodyX, connectedBodyY);
+        Point liftedEnd = new Point(liftedEndX, liftedEndY);
+        PhysicalPackageGeometry.Lead connected = lead(pad, connectedBody, connectedBody);
+        PhysicalPackageGeometry.Lead lifted = lead(liftedEnd, connectedBody, liftedEnd);
+        return new PhysicalPackageGeometry.Terminal(id, pad, padBounds, pad,
+            new Rectangle(padBounds), connected, lifted, escapeDx, escapeDy, escapeLength,
+            PcbTerminalAttachment.SURFACE_PAD);
     }
 
     private static PhysicalPackageGeometry geometry(int width, int height,

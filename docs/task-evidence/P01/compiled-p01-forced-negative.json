@@ -1,0 +1,9 @@
+{
+  "accepted": true,
+  "attributes": {
+    "data-tsj-verification": "FAIL:P01 forced-negative"
+  },
+  "errors": [],
+  "note": "Application catches the expected failure; no uncaught browser page error is required.",
+  "route": "p01-negative"
+}
