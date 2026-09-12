@@ -12,6 +12,57 @@ final class GeneratedRuntimeDeveloperSettlement {
     private GeneratedRuntimeDeveloperSettlement() {
     }
 
+    /**
+     * Runs the ordinary CircuitJS update path through the healthy temporal
+     * callback only.  Applying the generated fault queues a second verification
+     * request; the caller's next full settlement owns that faulted callback.
+     */
+    static void settleHealthy(CirSim sim, GeneratedBoardInstance expectedOwner, String label) {
+        if (sim == null)
+            throw new IllegalArgumentException("Cannot settle a null simulator: " + label);
+        boolean wasRunning = sim.simIsRunning();
+        if (!wasRunning)
+            sim.setSimRunning(true);
+        int attempts = 0;
+        try {
+            for (; attempts < MAX_UPDATE_ATTEMPTS; attempts++) {
+                GenerationWorkScope.check();
+                sim.updateCircuit();
+                GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+                GeneratedChallengeLifecycleEvidence lifecycle = challenge == null ? null :
+                    challenge.getLifecycleEvidence();
+                if (sim.getGeneratedBoardInstance() == expectedOwner &&
+                        challenge != null && challenge.getInstanceForRuntimeValidation() == expectedOwner &&
+                        !challenge.isHealthyValidationExpected() && lifecycle != null &&
+                        lifecycle.healthyFamilyValidated && !sim.activeMeasurementOverlay &&
+                        sim.failedGeneratedRuntimeOwner != expectedOwner && sim.stopMessage == null)
+                    return;
+                // Match settle()'s bounded solver nudge when CircuitJS's UI
+                // throttle has not advanced the awaited verification yet.
+                if (canAdvanceAwaitedSolverStep(sim, expectedOwner, challenge))
+                    sim.solverExecutor.advanceSteps(1);
+            }
+            GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+            GeneratedChallengeLifecycleEvidence lifecycle = challenge == null ? null :
+                challenge.getLifecycleEvidence();
+            throw new IllegalStateException("Generated runtime did not settle its healthy profile after " +
+                MAX_UPDATE_ATTEMPTS + " updateCircuit attempts: " + label +
+                ", owner=" + (sim.getGeneratedBoardInstance() == expectedOwner) +
+                ", healthyExpected=" + (challenge != null && challenge.isHealthyValidationExpected()) +
+                ", healthy=" + (lifecycle != null && lifecycle.healthyFamilyValidated) +
+                ", state=" + (challenge == null ? "null" : challenge.getState()) +
+                ", pending=" + sim.generatedBoardVerificationPending +
+                ", analyzed=" + sim.generatedBoardVerificationAnalyzed +
+                ", analyze=" + sim.analyzeFlag + ", dc=" + sim.dcAnalysisFlag +
+                ", verificationRunning=" + sim.generatedVerificationRunning +
+                ", installation=" + sim.generatedRuntimeInstallationInProgress +
+                ", overlay=" + sim.activeMeasurementOverlay + ", stop=" + sim.stopMessage);
+        } finally {
+            if (!wasRunning)
+                sim.setSimRunning(false);
+        }
+    }
+
     static void settle(CirSim sim, GeneratedBoardInstance expectedOwner, String label) {
         if (sim == null)
             throw new IllegalArgumentException("Cannot settle a null simulator: " + label);
@@ -21,6 +72,7 @@ final class GeneratedRuntimeDeveloperSettlement {
         int attempts = 0;
         try {
             for (; attempts < MAX_UPDATE_ATTEMPTS; attempts++) {
+                GenerationWorkScope.check();
                 sim.updateCircuit();
                 GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
                 if (sim.getGeneratedBoardInstance() == expectedOwner &&

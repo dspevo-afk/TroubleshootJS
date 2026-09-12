@@ -18,6 +18,7 @@ class GeneratedChallengeController {
     private boolean operationInProgress;
     private Object diagnosticAdmissionAttempt;
     private GeneratedDiagnosticProofReceipt diagnosticProof;
+    private boolean stagedGenerationPresentation;
     interface RetestCompletionDispatch { void dispatch(Runnable completion); }
     private RetestCompletionDispatch retestCompletionDispatch;
 
@@ -75,25 +76,67 @@ class GeneratedChallengeController {
         sim.requestGeneratedBoardVerification();
     }
 
+    /** A10 qualifies the detached candidate before presenting its complaint. */
+    void deferGenerationPresentation() {
+        if (state != GeneratedChallengeState.PREPARING_HEALTHY)
+            throw new IllegalStateException("Generation presentation must be deferred before solving");
+        stagedGenerationPresentation = true;
+    }
+
+    void completeGenerationPresentation() {
+        if (!stagedGenerationPresentation || !isCurrentOwner() || !isReady() ||
+                diagnosticProof == null || scenario == null || !lifecycleEvidence.selectedFaultValidated)
+            throw new IllegalStateException("Generation presentation requires complete current proof");
+        markScenarioPresented();
+        stagedGenerationPresentation = false;
+    }
+
+    /** Configure the scenario's real input before capturing proof dependencies. */
+    void prepareGenerationInputState() {
+        if (!stagedGenerationPresentation || !isCurrentOwner() || !isReady() || scenario != null)
+            throw new IllegalStateException("Generation input preparation requires its private faulted owner");
+        chooseScenarioAndInputs();
+    }
+
+    private void presentScenario() {
+        chooseScenarioAndInputs();
+        markScenarioPresented();
+    }
+
+    private void chooseScenarioAndInputs() {
+        scenario = definition.getScenarioCatalog().select(definition.getSelectionSeed(), instance,
+            sim.getBoardModificationController(), sim.getBoardPowerController().getState());
+        scenario.present(sim, instance);
+    }
+
+    private void markScenarioPresented() {
+        lifecycleEvidence.scenarioCompatibilityValidated = true;
+        state = GeneratedChallengeState.READY;
+        lifecycleEvidence.readyAfterValidation = true;
+        sim.refreshBoardModificationControls();
+        sim.repaint();
+    }
+
     void afterGeneratedVerification() {
         if (state == GeneratedChallengeState.PREPARING_HEALTHY) {
-            if (instance.getTemporalBehavior() != null)
+            boolean temporal = instance.getTemporalBehavior() != null;
+            if (temporal)
                 instance.getTemporalBehavior().prepareHealthyProfile(sim, instance);
             lifecycleEvidence.healthyGraphAnalyzedAfterTimeAdvance = true;
             lifecycleEvidence.healthyFamilyValidated = true;
             state = GeneratedChallengeState.PREPARING_FAULTED;
             faults.apply();
-            if (instance.getTemporalBehavior() != null)
-                instance.getTemporalBehavior().prepareFaultedProfile(sim, instance);
-            // A temporal family has already advanced its real solver profile.
-            // Complete the second (faulted) validation pass immediately so its
-            // deterministic profile does not depend on a later paint tick.
-            if (instance.getTemporalBehavior() != null || sim.isQuickPlayMode())
+            // The fault controller has queued the next ordinary verification
+            // callback.  A temporal healthy settlement must return here so the
+            // next bounded operation owns fault-profile preparation.
+            if (!temporal && sim.isQuickPlayMode())
                 sim.updateCircuit();
             lifecycleEvidence.selectedFaultApplied = faults.isApplied();
             return;
         }
         if (state == GeneratedChallengeState.PREPARING_FAULTED) {
+            if (instance.getTemporalBehavior() != null)
+                instance.getTemporalBehavior().prepareFaultedProfile(sim, instance);
             lifecycleEvidence.faultedGraphAnalyzedAfterTimeAdvance = true;
             if (instance.getTemporalBehavior() != null)
                 instance.getTemporalBehavior().verifyFaultedProfile(sim, instance,
@@ -106,14 +149,13 @@ class GeneratedChallengeController {
                     !sim.developerVerifierRunning &&
                     !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning())
                 GeneratedDiagnosticSolvabilityAdmission.validateLive(sim, instance, this);
-            scenario = definition.getScenarioCatalog().select(definition.getSelectionSeed(), instance,
-                sim.getBoardModificationController(), sim.getBoardPowerController().getState());
-            scenario.present(sim, instance);
-            lifecycleEvidence.scenarioCompatibilityValidated = true;
-            state = GeneratedChallengeState.READY;
-            lifecycleEvidence.readyAfterValidation = true;
-            sim.refreshBoardModificationControls();
-            sim.repaint();
+            if (stagedGenerationPresentation) {
+                // Internal READY permits guarded proof operations. The A10 owner lock
+                // and detached workbench prevent player access until publication.
+                state = GeneratedChallengeState.READY;
+            } else {
+                presentScenario();
+            }
         }
     }
 
@@ -135,6 +177,11 @@ class GeneratedChallengeController {
     GeneratedChallengeDefinition getDefinition() { return definition; }
     GeneratedChallengeLifecycleEvidence getLifecycleEvidence() { return lifecycleEvidence; }
     GeneratedScenario<GeneratedObservedBehavior> getScenario() { return scenario; }
+
+    void perturbScenarioForDeveloperVerification() {
+        if (scenario == null) throw new IllegalStateException("No selected scenario");
+        scenario = scenario.withComplaintText(scenario.getComplaintText() + " changed");
+    }
     GeneratedCustomerRetestProfile getCustomerRetestProfile() {
         return instance.getCustomerRetestProfile();
     }
@@ -146,6 +193,10 @@ class GeneratedChallengeController {
 
     void setRetestCompletionDispatchForDeveloperVerification(RetestCompletionDispatch dispatch) {
         retestCompletionDispatch = dispatch;
+    }
+
+    RetestCompletionDispatch getRetestCompletionDispatchForDeveloperVerification() {
+        return retestCompletionDispatch;
     }
 
     private boolean isCurrentOwner() {

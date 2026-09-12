@@ -90,6 +90,12 @@ final class BoundedGeneratedBoardAssembler {
         return assemble(request, null);
     }
 
+    /** A10 may reuse only the immutable resolved plan, never a runtime owner. */
+    static Result assemblePreparedPlan(BoundedAssemblyPlan plan) {
+        if (plan == null) throw new IllegalArgumentException("Missing prepared generation plan");
+        return assemblePlan(plan, null, null);
+    }
+
     /**
      * Assemble a normal diagnostic candidate with an explicit physical fault
      * owner.  Task 41 uses this route to evaluate each admitted owner while
@@ -155,11 +161,25 @@ final class BoundedGeneratedBoardAssembler {
             context.after(Stage.VALIDATION);
             return context.result(expectedManifest);
         } catch (Throwable failure) {
+            Throwable normalizedFailure = normalizeFailure(plan, failure);
             boolean cleanupSucceeded = context.dispose(failure);
+            if (cleanupSucceeded && failure instanceof GenerationJob.Failure)
+                throw (GenerationJob.Failure) failure;
+            if (cleanupSucceeded && normalizedFailure instanceof PcbRoutingRejectedException)
+                throw (PcbRoutingRejectedException) normalizedFailure;
             throw new AssemblyFailure(context.getCurrentStage(), context.allocatedElementCount(),
                 context.registeredPartCount(), context.mappedIdentityCount,
-                context.mergeCount(), cleanupSucceeded, failure);
+                context.mergeCount(), cleanupSucceeded, normalizedFailure);
         }
+    }
+
+    /** Only declared route-quality limits are expected assembly rejections. */
+    private static Throwable normalizeFailure(BoundedAssemblyPlan plan, Throwable failure) {
+        if (plan != null && failure instanceof PcbBoardLayout.RouteQualityRejectedException)
+            return PcbRoutingRejectedException.routeQualityRejected(
+                plan.getRequest().getDescriptor().getRootSeed(),
+                (PcbBoardLayout.RouteQualityRejectedException) failure);
+        return failure;
     }
 
     /** Publish a prepared candidate through the accepted fresh-owner seam. */

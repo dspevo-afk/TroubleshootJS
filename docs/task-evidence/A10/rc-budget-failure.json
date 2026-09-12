@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "route": "tsjChallenge=rc&seed=0&tsjVerifyP02=true&tsjDebug=true",
+  "reason": "Generation wall budget exhausted",
+  "stage": "HYPOTHESES",
+  "elapsedMs": 9606,
+  "work": 4,
+  "budgetMs": 5000
+}

@@ -14,6 +14,7 @@ final class CircuitSolverExecutor {
     static final long TEMPORAL_WALL_LIMIT_MS = 5000;
     static final int STEP_LIMIT = 200000;
     static final int TRIAL_LIMIT = 1000000;
+    private static final int TEMPORAL_BATCH_STEPS = 128;
     private final CirSim sim;
     private final SolverExecutionBoundary boundary = new SolverExecutionBoundary();
     private Object boundOwner, boundGraph, privateOwner;
@@ -103,7 +104,7 @@ final class CircuitSolverExecutor {
         Operation operation = begin(null, STEP_LIMIT);
         Outcome result = Outcome.COMPLETE;
         try {
-            sim.runCircuitOwned(operation, didAnalyze, 0);
+            sim.runCircuitOwned(operation, didAnalyze, 0, Double.NaN);
             check(operation); requireSolvedMatrix();
         } catch (RuntimeException failure) {
             result = outcome(failure); throw failure;
@@ -128,7 +129,17 @@ final class CircuitSolverExecutor {
         Operation operation = begin(permit, STEP_LIMIT, false, TEMPORAL_WALL_LIMIT_MS);
         Outcome result = Outcome.COMPLETE;
         try {
-            while (sim.t + 1e-12 < target) advanceOne(operation);
+            while (sim.t + 1e-12 < target) {
+                check(operation);
+                int before = operation.acceptedSteps;
+                sim.runCircuitOwned(operation, true, TEMPORAL_BATCH_STEPS, target);
+                check(operation); requireSolvedMatrix();
+                int accepted = operation.acceptedSteps - before;
+                if (accepted < 1 || accepted > TEMPORAL_BATCH_STEPS ||
+                        (accepted < TEMPORAL_BATCH_STEPS && sim.t + 1e-12 < target))
+                    throw new Failure(Outcome.NONCONVERGENCE,
+                        "CircuitJS did not complete the bounded temporal batch");
+            }
             check(operation);
         } catch (RuntimeException failure) {
             result = outcome(failure); throw failure;
@@ -147,15 +158,18 @@ final class CircuitSolverExecutor {
         return boundary.begin(count, TRIAL_LIMIT, System.currentTimeMillis(), wallLimit, sim.t);
     }
     void check(Operation operation) {
-        boundary.check(operation, System.currentTimeMillis());
+        check(operation, System.currentTimeMillis());
+    }
+    private void check(Operation operation, long now) {
+        boundary.check(operation, now);
         if (CircuitElm.sim != sim || operation.owner != currentOwner() || operation.graph != sim.elmList ||
                 !controlsCurrent() ||
                 (privateOwner != null && (sim.elmList != privateGraph || sim.generatedBoardInstance != null)))
             throw new Failure(Outcome.STALE_OWNER, "Solver state changed during an owned operation");
     }
     void beginTrial(Operation operation) {
-        check(operation);
         long now = System.currentTimeMillis();
+        check(operation, now);
         if (stepOperation != operation || stepAcceptedCount != operation.acceptedSteps) {
             stepOperation = operation; stepAcceptedCount = operation.acceptedSteps; stepStartedAt = now;
         } else if (now < stepStartedAt || now - stepStartedAt >= WALL_LIMIT_MS) {
@@ -185,7 +199,7 @@ final class CircuitSolverExecutor {
     private void advanceOne(Operation operation) {
         check(operation);
         int before = operation.acceptedSteps;
-        sim.runCircuitOwned(operation, true, 1);
+        sim.runCircuitOwned(operation, true, 1, Double.NaN);
         check(operation); requireSolvedMatrix();
         if (operation.acceptedSteps != before + 1)
             throw new Failure(Outcome.NONCONVERGENCE, "CircuitJS did not accept the requested step");

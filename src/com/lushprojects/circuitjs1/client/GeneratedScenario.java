@@ -40,6 +40,12 @@ final class GeneratedScenario<T> {
     String getComplaintId() { return complaintId; }
     String getComplaintText() { return complaintText; }
     T getObservedBehavior() { return observedBehavior; }
+    boolean hasPresentation() { return presentation != null; }
+
+    GeneratedScenario<T> withComplaintText(String text) {
+        return new GeneratedScenario<T>(scenarioId, complaintId, text,
+            observedBehavior, compatibility, presentation);
+    }
 
     void appendExecutionOwners(Vector<Object> owners) {
         owners.add(this); owners.add(compatibility);
@@ -98,6 +104,10 @@ final class GeneratedScenarioCatalog<T> {
     void requireExecutionOwner(GeneratedChallengeBehaviorContract expected) {
         if (executionOwner != null && executionOwner != expected)
             throw new IllegalArgumentException("Fresh scenario captures a foreign behavior owner");
+    }
+
+    Vector<GeneratedScenario<T>> getCandidates() {
+        return new Vector<GeneratedScenario<T>>(candidates);
     }
 
     void appendExecutionOwners(Vector<Object> owners) {

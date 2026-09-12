@@ -12,6 +12,81 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## A10 staged generation and publication
+
+The accepted A10 implementation's gates and limits are
+recorded in [A10 evidence](task-evidence/A10/README.md).
+
+`GenerationRequest` freezes current native descriptors and caches only immutable
+resolved plans in a bounded page-lifetime cache. Every attempt constructs fresh
+electrical and physical owners. `GenerationJob` owns canonical candidate ordering,
+deterministic work limits, elapsed deadlines, typed outcomes and six-stage receipt
+lineage. `GenerationCoordinator` adapts those stages to the existing generators,
+CircuitJS settlement, copper/access validators and diagnostic provider boundary.
+Current constructors materialize layout alongside the healthy graph; the physical
+stage separately qualifies that realization before diagnostic proof begins.
+Scenario selection configures and settles its real initial input while the candidate
+is private, before dependency capture. The final symptom stage presents that selected
+complaint without changing a proved input or leaving analysis pending.
+Receipts include the canonical scenario catalog and selected complaint/behavior
+metadata, alongside an explicit epoch for selection, predicates and presentation.
+Reordering a catalog preserves identity; changing a selected complaint invalidates
+publication even when the physical graph remains unchanged.
+
+`FreshGeneratedRuntimeInstallation.Staged` reuses the exact Task41 snapshot boundary
+to preserve the original graph while a disjoint candidate is private. Browser turns
+yield between bounded observation and repair operations. `GeneratedDiagnosticProofService.Session`
+retains only its exact private hypothesis owner between those operations, restores
+the main candidate after each hypothesis, and publishes diagnostic evidence only
+after the entire admitted population is classified. The global internal-proof guard
+is released before yielding; the generation coordinator freezes ordinary simulation
+and player input while the private owner is retained. Cancellation restores the
+saved player graph and workbench. A separate exclusive production-session lease
+persists across yields and incomplete cleanup; ambient verifier proof scopes do
+not count as competing production sessions. Each private hypothesis gets separate graph,
+adjustable and history containers; cleanup disconnects its actual external source
+bindings and deletes its elements before restoring the protected owner.
+Temporal healthy and faulted profiles run in separate units; the real customer
+retest and its guarded completion callback also run separately. Each still uses
+the existing CircuitJS temporal model and all ordinary completion checks.
+An incomplete cleanup retains its exact owner and blocks a successor job. Snapshot
+restoration cannot detach a private graph whose disposal has failed; guarded retries
+skip elements already disposed successfully.
+
+Runtime budgets distinguish a 90-second cumulative job from a five-second active
+operation and 640 deterministic work units. CircuitJS retains its separate 500 ms
+accepted-step and five-second temporal-operation ceilings. The coordinator batches
+at most 16 cheap units or 8 ms per turn; an existing synchronous operation completes
+within its own bound. The frozen 24-attempt performance corpus still requires each
+complete serial-reference attempt to finish within five seconds. Active operation
+duration and cancellation-handler cleanup are reported separately from queued input
+delay; these are not a universal 500 ms UI-response guarantee.
+Temporal executor calls group up to 128 accepted CircuitJS steps to amortize UI
+batch bookkeeping. They stop on the same first accepted solver time and retain
+every trial/accepted-step ownership, source, finite-value, deadline and event check.
+Wire currents refresh at the same point between accepted steps. The one-step API
+remains the comparison path for fixed and adaptive timestep regression checks.
+
+`GenerationWorkScope` connects synchronous routing/settlement checkpoints to the
+active job and is cleared in `finally`. Routing retries only declared placement or
+route-quality exhaustion; registry, invariant and programming exceptions propagate.
+Elapsed deadlines stop a job rather than selecting another candidate. Serial execution
+uses the same stages and remains available to bounded developer clients.
+
+`GenerationDependencyContext` captures canonical model/source/load parameters, actual
+electrical endpoints, power/reference/storage declarations, physical realization,
+access, hypothesis and repair inputs. A temporal behavior contributes its typed
+identity, fresh-owner initial-state contract, endpoint identities, timing and
+classification recipe, and retained healthy references. Current solver time,
+capacitor/node voltages and latest transient samples are excluded.
+The final publication comparison rejects changed inputs. `GenerationReceipt` binds
+all stages to an opaque issuing token and retains values rather than live owners.
+Only immutable plans are cached; electrical/diagnostic PASS receipts are never reused
+across jobs. Publication requires the scenario and complete proof, attaches the
+candidate once, reversibly isolates the retired owner's sources before commit,
+and releases the saved original and proof-session references. Quick Play session
+validation is inside that transaction; failure restores the previous session too.
+
 ## P02 physical copper, surface access and current connectivity
 
 P02 and its F1 shared-copper repair are independently reviewed and accepted.
@@ -3464,5 +3539,6 @@ attempt. The originating controller consumes its token once and checks exact
 owner/controller, provider/program and contract identities. Stored evidence is
 historical evidence for that owner, not acceptance authority for a later board.
 This is a trusted compiled-provider boundary, not an arbitrary executable-plugin
-sandbox. A10 scheduling, cancellation, deterministic budgets and caching remain
-unimplemented.
+sandbox. A10 adds resumable scheduling, cancellation, deterministic budgets and
+immutable-plan caching above this boundary; its current qualification is recorded
+at the top of this document. Proof receipts remain specific to their issuing owner.

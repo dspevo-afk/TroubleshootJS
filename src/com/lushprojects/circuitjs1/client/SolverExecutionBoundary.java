@@ -113,8 +113,8 @@ final class SolverExecutionBoundary {
         }
         acceptedSerial = increment(acceptedSerial); operation.acceptedSteps++;
         operation.lastAcceptedTime = time; operation.trialInProgress = false;
-        operation.candidate = new Observation(owner, graph, generation, revision,
-            acceptedSerial, operation.id, time);
+        // An in-flight operation cannot expose an observation. Keep the
+        // accepted identity/time, and allocate its one final value at finish.
     }
     void cancel(Operation operation) {
         if (operation != null && operation == active && operation.outcome == Outcome.RUNNING)
@@ -126,6 +126,9 @@ final class SolverExecutionBoundary {
             throw new IllegalArgumentException("Solver completion requires a terminal outcome");
         Outcome result = operation.outcome == Outcome.RUNNING ? requested : operation.outcome;
         if (result == Outcome.COMPLETE && operation.trialInProgress) result = Outcome.NONCONVERGENCE;
+        if (result == Outcome.COMPLETE && operation.acceptedSteps > 0)
+            operation.candidate = new Observation(owner, graph, generation, revision,
+                acceptedSerial, operation.id, operation.lastAcceptedTime);
         operation.outcome = result; active = null;
         latest = result == Outcome.COMPLETE ? operation.candidate : null;
         return result;

@@ -1,0 +1,22 @@
+{
+  "status": "REVIEW ONLY",
+  "blockingFindings": [],
+  "reviewer": "a10_independent_review, Luna MAX, read-only",
+  "candidate": "Final scenario-context v3 source; inputs recorded in candidate-provenance.json",
+  "scope": "Generation jobs, proof lifecycle, exact ownership, retained cleanup and retry, dependency receipts, temporal execution, atomic publication, QuickPlay and verifier dispatch.",
+  "resolved": "Missing consumed scenario/catalog dependency: v3 captures canonical metadata and the selected complaint under an explicit semantic epoch; native and compiled changed-complaint rejection pass.",
+  "evidence": "Reviewer inspected actual source and compiled A10 report (1273 assertions, 24 attempts, five dependency/publication rejections). Full native/build/browser gates are root evidence, not independently rerun by this reviewer.",
+  "followUps": [
+    {
+      "id": "D1",
+      "classification": "FOLLOW-UP / CODE",
+      "source": "a10_boundaries read-only lifetime audit",
+      "file": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "line": 1671,
+      "finding": "Fixed-delay repaint closures retain captured prior owners until the browser drains its queue. invalidateGeneratedOwnerWork clears the field but cannot cancel queued callbacks, causing a bounded retention burst during synchronous verifier replacements.",
+      "impact": "Performance/resource risk in large developer runs. No unbounded recursion was found; isolated Task41/A09 passed. This does not establish the cause of the earlier long-lived-tab crash.",
+      "next": "Investigate cancellable repaint scheduling under the later performance work; no A10 acceptance blocker."
+    }
+  ],
+  "limits": "Source review is distinct from overall acceptance, which also requires root final strict readers, real player input and candidate reconciliation."
+}

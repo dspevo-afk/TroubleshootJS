@@ -1,0 +1,10 @@
+{
+  "cpu": "AMD Ryzen 7 7700 8-Core Processor              ",
+  "cores": 8,
+  "logicalProcessors": 16,
+  "ramBytes": 34081759232,
+  "os": "Microsoft Windows 11 Home",
+  "version": "10.0.26200",
+  "referenceHost": "current desktop, not modest hardware",
+  "background": "Other user processes preserved; no controlled idle claim"
+}

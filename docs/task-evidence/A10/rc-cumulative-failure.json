@@ -1,0 +1,13 @@
+{
+  "route": "rc-seed-0",
+  "result": [
+    {
+      "level": "log",
+      "message": "generation_failure:TIMEOUT:stage=HYPOTHESES:elapsedMs=31108:work=26:Generation wall budget exhausted",
+      "timestamp": "2026-09-12T17:11:40.328Z",
+      "url": "circuitjs1-0.js"
+    }
+  ],
+  "source": "a10-restore-source-freeze",
+  "status": "FAIL"
+}

@@ -128,7 +128,8 @@ final class A08FreshOwnerAliasVerifier {
                 CircuitElm ownCapacitor = clean.getComponentBindings().getSingleElement("C1");
                 RcDelayTemporalBehavior temporal = new RcDelayTemporalBehavior(
                     new CircuitPostMeasurementEndpoint(endpoint == 0 ? retiredCapacitor : ownCapacitor, 0),
-                    new CircuitPostMeasurementEndpoint(endpoint == 1 ? retiredCapacitor : ownCapacitor, 1), 5);
+                    new CircuitPostMeasurementEndpoint(endpoint == 1 ? retiredCapacitor : ownCapacitor, 1),
+                    "J2.1", "J2.2", 5);
                 reject(sim, copyFamily(clean, new RcDelayFamilyState(temporal), temporal),
                     "temporal state captures a foreign endpoint");
             }

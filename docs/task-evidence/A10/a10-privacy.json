@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "query": "tsjVerifyA10=true&tsjA10Fail=true without tsjDebug",
+  "verification": null,
+  "report": null,
+  "visibleTicket": "Indicator does not light.",
+  "developerAnswerTextAbsent": true
+}

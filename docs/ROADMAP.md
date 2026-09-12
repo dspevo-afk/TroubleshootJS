@@ -7,8 +7,8 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **P02: Durable layer-aware copper and conductive-surface model**<br>
-**Current checkpoint:** **P02 ACCEPTED; A10 THEN A11 AUTHORIZED.** The owner supplied the fresh independent delta-review PASS for the exact P02 candidate; F1 is resolved with no blocking findings. P02 passes 20 native suites, 3,209 P02 assertions, the five-permutation GWT build and twelve compiled routes. Closeout revalidated all 46 candidate files, 642 source/test inputs, eight runners/readers and five compiled permutations without drift. The Windows wrapper remains separately unqualified. A10 follows P02 publication; A11 follows A10. [P02 evidence and limits](task-evidence/P02/README.md).
+**Latest completed task:** **A10: Staged generation jobs, deterministic budgets and proof receipts**<br>
+**Current checkpoint:** **A10 ACCEPTED; A11 NEXT AND AUTHORIZED.** P02 is published at `66a62b7`. A10 passes 23 native suites, the final five-permutation JDK8/GWT build, 1,273 compiled assertions, all 24 frozen performance attempts, affected strict regressions and real cancellation/measurement/repair/retest. RC admission still takes 48–56 seconds on this desktop; the historical Windows browser wrapper remains separately unqualified. One repaint-retention performance follow-up is recorded. [A10 evidence and limits](task-evidence/A10/README.md).
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -661,7 +661,7 @@ The hard prerequisites on the cards are authoritative. The phase map is a readab
 
 | Lane | Order and boundary |
 |---|---|
-| Current authorized sequence | Close accepted P02 publication, then A10 and A11. |
+| Current authorized sequence | P02 is published and A10 is accepted; finish A10 publication, then A11. |
 | Early foundations | A05, A06/A07 and P01/P02, after their actual prerequisites; shared code has one owner. |
 | Working small-board platform | A08/A09/A11, U01, P03/P04, E01/E03, A10, Q15, U04/U05 and REL-A when its scope is ready. |
 | Normal boards | P05-P09, U02/U03, E02/E04, D01, Q30, U06/U07. |
@@ -670,6 +670,28 @@ The hard prerequisites on the cards are authoritative. The phase map is a readab
 | Later vocabulary | E09-E14, U09-U12, MCU-1/2 and IMPORT-1..5 at their actual dependencies and chosen content priority, not as blanket native-release blockers. |
 
 A01/A07 investigate 60/100-part structural/solver costs long before final playable qualification. Q30 and physical-layer investigation do not wait for an alpha announcement when their prerequisites are available. Later optional lanes may be prioritized explicitly without claiming that all are required for the base game.
+
+### Preferred Execution Order
+
+This compact queue incorporates the supplied September 11 execution-order document.
+Milestone cards remain authoritative for hard prerequisites and acceptance. Completed
+work is not repeated. The owner explicitly selected **A10 then A11** for the current
+task; A10 is eligible after accepted P02 and is intentionally earlier than its
+default position below. Resume the remaining queue after this authorized work.
+
+| Wave | Preferred sequence |
+|---|---|
+| Small-board platform after P02 | A11 → U01 → P03 → P04 → E01 → E03 → A10 → Q15 → U04 → U05 → REL-A |
+| Normal-board scaling | P05 → P06 → P07 → P08 → P09 → U02 → U03 → E02 → E04 → D01 → Q30 → U06 → U07 |
+| Advanced boards | E05 → E06 → Q60 → HARD calibration through U05 → REL-B |
+| Mature target | Q100 → selected advanced X capabilities → X05 → X09 → REL-1 |
+
+Insert E07–E14, U08–U12, MCU, import and other advanced X capabilities only when
+selected content consumes them and their prerequisites are accepted. In particular,
+E08 must precede content that requires copper cuts/jumpers; it is not a blanket Q60
+prerequisite. P04 proves the first playable generated-PCB canary; Q15/Q30/Q60/Q100
+qualify progressively larger procedural game envelopes. Record deliberate ordering
+changes and verify their hard prerequisites before starting new work.
 
 ## 7.3 Milestone cards
 
@@ -979,7 +1001,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A10 · Staged generation jobs, deterministic budgets and proof receipts
 
-**Status:** AUTHORIZED - UNSTARTED. P01 and P02 are accepted; close P02 publication before implementation. No A10 staging, caching, cancellation or publication code is claimed yet.
+**Status:** ACCEPTED. Six-stage bounded generation, immutable dependency receipts/plan caching, complete resumable hypothesis proof and transactional publication pass native/build/compiled and normal-player qualification. All 24 frozen attempts finish within five seconds. RC's explicit 90-second whole-job guard preserves five-second work units and existing solver limits; measured admission remains slow. [Evidence, reviewed follow-up and limits](task-evidence/A10/README.md). A11 follows publication.
 
 **Hard prerequisites:** [A05](#m-a05), [A07](#m-a07), [A09](#m-a09), [P02](#m-p02)
 

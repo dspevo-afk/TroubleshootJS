@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "expected": "FAIL:a10-explicit-failure-canary",
+  "actual": {
+    "report": null,
+    "verification": "FAIL:a10-explicit-failure-canary"
+  }
+}

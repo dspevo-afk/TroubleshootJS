@@ -18,38 +18,73 @@ class SeededPcbLayoutGenerator {
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;
+    private static final int ROUTING_CHECK_INTERVAL = 128;
     private static final Rectangle WORKING_OUTLINE = new Rectangle(70, 50, 720, 400);
     private static final int FINAL_BOARD_X = 40;
     private static final int FINAL_BOARD_Y = 40;
     private static final int FINAL_EDGE_MARGIN = 26;
     private final PcbFootprintRegistry footprintRegistry;
+    private final AttemptObserver attemptObserver;
     private final int layoutAlgorithmVersion;
 
     SeededPcbLayoutGenerator() {
-        this(StandardPcbFootprintProviders.createRegistry());
+        this(StandardPcbFootprintProviders.createRegistry(), null);
     }
 
     SeededPcbLayoutGenerator(PcbFootprintRegistry footprintRegistry) {
+        this(footprintRegistry, null);
+    }
+
+    SeededPcbLayoutGenerator(PcbFootprintRegistry footprintRegistry,
+            AttemptObserver attemptObserver) {
         if (footprintRegistry == null)
             throw new IllegalArgumentException("Missing PCB footprint registry");
         this.footprintRegistry = footprintRegistry;
+        this.attemptObserver = attemptObserver == null ? DEFAULT_ATTEMPT_OBSERVER :
+            attemptObserver;
         this.layoutAlgorithmVersion = CURRENT_VERSION;
     }
 
     int getLayoutAlgorithmVersion() { return layoutAlgorithmVersion; }
 
+    /**
+     * Receives one deterministic checkpoint immediately before each generation
+     * attempt.  An observer exception propagates to the caller and is never
+     * interpreted as a candidate rejection.
+     */
+    interface AttemptObserver {
+        void check(int attempt);
+    }
+
+    private static final AttemptObserver DEFAULT_ATTEMPT_OBSERVER =
+        new AttemptObserver() {
+            public void check(int attempt) { GenerationWorkScope.check(); }
+        };
+
     PcbBoardLayout generate(TroubleshootBoard board, long seed) {
+        return generate(board, seed, attemptObserver);
+    }
+
+    /**
+     * Generates with a per-call checkpoint owner.  The overload lets a staged
+     * coordinator attach a synchronous budget without sharing mutable state
+     * through this reusable layout generator.
+     */
+    PcbBoardLayout generate(TroubleshootBoard board, long seed,
+            AttemptObserver observer) {
         if (board == null)
             throw new IllegalArgumentException("Missing logical board for PCB generation");
-        RuntimeException lastFailure = null;
+        AttemptObserver effectiveObserver = observer == null ? attemptObserver : observer;
+        PcbRoutingRejectedException lastFailure = null;
         PcbBoardLayout bestLayout = null;
         double bestScore = Double.POSITIVE_INFINITY;
         int viableCandidates = 0;
         for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+            effectiveObserver.check(attempt);
             try {
                 int variationMode = (int) ((seed % 4 + 4) % 4);
                 PcbBoardLayout candidate = generateAttempt(board, attemptRandom(seed, attempt),
-                    variationMode);
+                    variationMode, attempt, effectiveObserver);
                 double score = candidate.getRouteQualityScore(board);
                 if (bestLayout == null || score < bestScore) {
                     bestLayout = candidate;
@@ -58,20 +93,25 @@ class SeededPcbLayoutGenerator {
                 viableCandidates++;
                 if (viableCandidates >= TARGET_VIABLE_CANDIDATES)
                     break;
-            } catch (RuntimeException failure) {
-                lastFailure = failure;
+            } catch (CandidateRejected failure) {
+                lastFailure = PcbRoutingRejectedException.attemptRejected(
+                    failure.getKind(), attempt, seed, failure.getMessage());
+            } catch (PcbBoardLayout.RouteQualityRejectedException failure) {
+                lastFailure = PcbRoutingRejectedException.attemptRejected(
+                    PcbRoutingRejectedException.Kind.ROUTING, attempt, seed,
+                    failure.getMessage());
             }
         }
         if (bestLayout != null)
             return bestLayout;
-        String message = "Unable to generate a routed PCB after " + MAX_ATTEMPTS +
-            " deterministic attempts for seed " + seed + ": " +
-            (lastFailure == null ? "unknown failure" : lastFailure.getMessage());
-        throw new IllegalStateException(message);
+        if (lastFailure == null)
+            throw new IllegalStateException("PCB generation stopped without a viable layout or " +
+                "an expected rejection");
+        throw PcbRoutingRejectedException.exhausted(seed, MAX_ATTEMPTS, lastFailure);
     }
 
     private PcbBoardLayout generateAttempt(TroubleshootBoard board, Random random,
-            int variationMode) {
+            int variationMode, int attempt, AttemptObserver observer) {
         Rectangle outline = new Rectangle(WORKING_OUTLINE);
         PcbBoardLayout layout = new PcbBoardLayout(CANVAS_WIDTH, CANVAS_HEIGHT, outline,
             new Rectangle(850, 125, 150, 255), layoutAlgorithmVersion);
@@ -83,7 +123,7 @@ class SeededPcbLayoutGenerator {
             for (PcbPadPlacement pad : footprint.getPads())
                 layout.addPad(pad);
         }
-        routeNets(layout, board, outline);
+        routeNets(layout, board, outline, attempt, observer);
         placeSilkscreen(layout, board, outline);
         layout.validateGeometry(board);
         layout.compactToContent(FINAL_BOARD_X + variationMode * 10,
@@ -154,7 +194,8 @@ class SeededPcbLayoutGenerator {
             if (fits(candidate, outline, placed))
                 return candidate;
         }
-        throw new IllegalStateException("Unable to place board connector");
+        throw reject(PcbRoutingRejectedException.Kind.PLACEMENT,
+            "Unable to place board connector");
     }
 
     private PcbFootprint placeTopologyComponent(BoardComponent component,
@@ -217,7 +258,8 @@ class SeededPcbLayoutGenerator {
             }
         }
         if (best == null)
-            throw new IllegalStateException("Unable to place board component: " + component.getId());
+            throw reject(PcbRoutingRejectedException.Kind.PLACEMENT,
+                "Unable to place board component: " + component.getId());
         return best;
     }
 
@@ -396,9 +438,17 @@ class SeededPcbLayoutGenerator {
             componentTop = Math.min(componentTop, component.getRoutingCourtyard().y);
         }
         int titleY = Math.max(outline.y + 15, componentTop - 34);
+        Vector<Rectangle> titleCandidates = new Vector<Rectangle>();
+        titleCandidates.add(new Rectangle(componentLeft, titleY,
+            textWidth(title, 14), 18));
+        // The leftmost component and the topmost component can be different
+        // placements.  If their independently derived title corner collides
+        // with a body, scan the same bounded board envelope used for other
+        // labels before rejecting this candidate.
+        Rectangle titleBounds = chooseLabelPosition(layout, board, outline,
+            titleCandidates);
         addLabel(layout, board, outline, "board-title", title,
-            new Rectangle(componentLeft, titleY, textWidth(title, 14), 18),
-            14, true, null);
+            titleBounds, 14, true, null);
 
         Vector<String> componentIds = board.getComponentIds();
         Collections.sort(componentIds);
@@ -462,9 +512,9 @@ class SeededPcbLayoutGenerator {
             if (isLabelPositionFree(layout, board, outline, candidate))
                 return candidate;
         }
-        // Compact multi-terminal packages can consume all four conventional
-        // reference-label positions.  Keep labels collision-free by using a
-        // deterministic board scan before rejecting an otherwise valid route.
+        // A derived or conventional label position can be occupied by another
+        // body.  Keep labels collision-free by using a deterministic board
+        // scan before rejecting an otherwise valid route.
         Rectangle sample = candidates.isEmpty() ? null : candidates.get(0);
         if (sample != null) {
             for (int y = outline.y + 4; y + sample.height <= outline.y + outline.height;
@@ -477,7 +527,8 @@ class SeededPcbLayoutGenerator {
                 }
             }
         }
-        throw new IllegalStateException("Unable to place collision-free PCB silkscreen label");
+        throw reject(PcbRoutingRejectedException.Kind.PLACEMENT,
+            "Unable to place collision-free PCB silkscreen label");
     }
 
     private boolean isLabelPositionFree(PcbBoardLayout layout, TroubleshootBoard board,
@@ -544,10 +595,11 @@ class SeededPcbLayoutGenerator {
             rectangle.height + PcbTraceRules.TRACE_WIDTH);
     }
 
-    private void routeNets(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline) {
+    private void routeNets(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline,
+            int attempt, AttemptObserver observer) {
         Vector<String> netIds = board.getNetIds();
         Collections.sort(netIds);
-        Router router = new Router(layout, board, outline);
+        Router router = new Router(layout, board, outline, attempt, observer);
         for (String netId : netIds) {
             Vector<String> padIds = board.getNet(netId).getPadIds();
             Collections.sort(padIds);
@@ -593,6 +645,26 @@ class SeededPcbLayoutGenerator {
 
     private static int align(int value) { return (value / GRID) * GRID; }
 
+    private static CandidateRejected reject(PcbRoutingRejectedException.Kind kind,
+            String message) {
+        return new CandidateRejected(kind, message);
+    }
+
+    /** Private marker keeps provider and validator RuntimeExceptions fail-fast. */
+    private static final class CandidateRejected extends RuntimeException {
+        private static final long serialVersionUID = 1L;
+        private final PcbRoutingRejectedException.Kind kind;
+
+        CandidateRejected(PcbRoutingRejectedException.Kind kind, String message) {
+            super(message);
+            if (kind == null)
+                throw new IllegalArgumentException("Missing PCB candidate rejection kind");
+            this.kind = kind;
+        }
+
+        PcbRoutingRejectedException.Kind getKind() { return kind; }
+    }
+
     private static class Router {
         private final PcbBoardLayout layout;
         private final TroubleshootBoard board;
@@ -603,11 +675,16 @@ class SeededPcbLayoutGenerator {
         private final int gridHeight;
         private final String[][] occupiedNet;
         private final String[][] clearanceNet;
+        private final int attempt;
+        private final AttemptObserver observer;
 
-        Router(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline) {
+        Router(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline,
+                int attempt, AttemptObserver observer) {
             this.layout = layout;
             this.board = board;
             this.outline = outline;
+            this.attempt = attempt;
+            this.observer = observer;
             minX = outline.x + GRID;
             minY = outline.y + GRID;
             gridWidth = (outline.width - 2 * GRID) / GRID + 1;
@@ -655,7 +732,10 @@ class SeededPcbLayoutGenerator {
             open.add(new SearchNode(startX, startY, noneDirection, 0,
                 manhattan(startX, startY, endX, endY) * GRID, sequence++));
             SearchNode goal = null;
+            int expanded = 0;
             while (!open.isEmpty()) {
+                if ((expanded++ % ROUTING_CHECK_INTERVAL) == 0)
+                    observer.check(attempt);
                 SearchNode current = open.poll();
                 if (current.cost != bestCost[current.x][current.y][current.direction])
                     continue;
@@ -691,7 +771,8 @@ class SeededPcbLayoutGenerator {
                 }
             }
             if (goal == null)
-                throw new IllegalStateException("Unable to route net " + netId + " from " +
+                throw reject(PcbRoutingRejectedException.Kind.ROUTING,
+                    "Unable to route net " + netId + " from " +
                     startPadId + "@" + startPad.getX() + "," + startPad.getY() + " to " +
                     endPadId + "@" + endPad.getX() + "," + endPad.getY());
 

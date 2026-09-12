@@ -1,0 +1,6 @@
+{
+  "status": "FAIL",
+  "candidate": "a10-executor-source-freeze.json",
+  "route": "?tsjChallenge=npn&seed=0&tsjVerifyTask41=true&tsjVerifyA09=true&tsjDebug=true&running=true",
+  "verification": "FAIL:Production proof cannot begin inside another proof"
+}

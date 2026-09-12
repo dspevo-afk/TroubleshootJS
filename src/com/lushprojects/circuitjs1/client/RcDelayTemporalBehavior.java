@@ -24,11 +24,22 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
      * through ordinary player frames without inventing a wall-clock waveform.
      */
     private static final double LIVE_SOLVER_ADVANCE_SECONDS = .005;
+    private static final double HEALTHY_RISE_MINIMUM_FRACTION = .20;
+    private static final double HEALTHY_LATE_MINIMUM_FRACTION = .25;
+    private static final double HEALTHY_EARLY_MAXIMUM_FRACTION = .65;
+    private static final double CLASSIFICATION_RISE_MINIMUM_FRACTION = .15;
+    private static final double CLASSIFICATION_LATE_MAXIMUM_FRACTION = .85;
+    private static final double CLASSIFICATION_EARLY_DIFFERENCE_FRACTION = .45;
+    private static final double CLASSIFICATION_HEALTHY_EARLY_DIFFERENCE_FRACTION = .30;
+    private static final double CLASSIFICATION_HEALTHY_LATE_DIFFERENCE_FRACTION = .15;
 
     private final CircuitPostMeasurementEndpoint output;
     private final CircuitPostMeasurementEndpoint ground;
+    private final String outputEndpointId;
+    private final String groundEndpointId;
     private final double nominalSupply;
     private GeneratedObservedBehavior observedBehavior;
+    private boolean healthyReferenceCaptured;
     private double healthyResidualVoltage;
     private double healthyEarlyVoltage;
     private double healthyLateVoltage;
@@ -37,12 +48,17 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
     private double lateVoltage;
 
     RcDelayTemporalBehavior(CircuitPostMeasurementEndpoint output,
-            CircuitPostMeasurementEndpoint ground, double nominalSupply) {
-        if (output == null || ground == null || nominalSupply <= 0 ||
+            CircuitPostMeasurementEndpoint ground, String outputEndpointId,
+            String groundEndpointId, double nominalSupply) {
+        if (output == null || ground == null || outputEndpointId == null ||
+                outputEndpointId.length() == 0 || groundEndpointId == null ||
+                groundEndpointId.length() == 0 || nominalSupply <= 0 ||
                 Double.isNaN(nominalSupply) || Double.isInfinite(nominalSupply))
             throw new IllegalArgumentException("Invalid RC temporal behavior");
         this.output = output;
         this.ground = ground;
+        this.outputEndpointId = outputEndpointId;
+        this.groundEndpointId = groundEndpointId;
         this.nominalSupply = nominalSupply;
     }
 
@@ -53,9 +69,51 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
 
     private static void requireEndpointOwner(GeneratedBoardInstance instance,
             CircuitPostMeasurementEndpoint endpoint) {
-        if (!instance.getSimulationElements().contains(endpoint.getElement()) ||
+        if (instance == null || !instance.getSimulationElements().contains(endpoint.getElement()) ||
                 endpoint.getPostIndex() < 0 || endpoint.getPostIndex() >= endpoint.getElement().getPostCount())
             throw new IllegalArgumentException("Fresh temporal state captures a foreign endpoint");
+    }
+
+    public GeneratedTemporalDependency getDependency(GeneratedBoardInstance instance) {
+        requireOwnedBy(instance);
+        requireExactEndpointBinding(instance, outputEndpointId, output);
+        requireExactEndpointBinding(instance, groundEndpointId, ground);
+        if (!healthyReferenceCaptured)
+            throw new IllegalStateException("RC temporal healthy reference is unavailable");
+        return new GeneratedTemporalDependency(CAPABILITY_ID,
+            GeneratedTemporalDependency.CURRENT_VERSION,
+            GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1,
+            outputEndpointId, groundEndpointId, nominalSupply,
+            PLAYER_RESELECT_SECONDS, NATURAL_DISCHARGE_SECONDS,
+            EARLY_SAMPLE_SECONDS, LATE_SAMPLE_SECONDS,
+            MAX_SOLVER_ADVANCE_SECONDS, LIVE_SOLVER_ADVANCE_SECONDS,
+            ActiveMeasurementReadiness.RESIDUAL_VOLTAGE_THRESHOLD_VOLTS,
+            HEALTHY_RISE_MINIMUM_FRACTION, HEALTHY_LATE_MINIMUM_FRACTION,
+            HEALTHY_EARLY_MAXIMUM_FRACTION,
+            CLASSIFICATION_RISE_MINIMUM_FRACTION,
+            CLASSIFICATION_LATE_MAXIMUM_FRACTION,
+            CLASSIFICATION_EARLY_DIFFERENCE_FRACTION,
+            CLASSIFICATION_HEALTHY_EARLY_DIFFERENCE_FRACTION,
+            CLASSIFICATION_HEALTHY_LATE_DIFFERENCE_FRACTION,
+            healthyResidualVoltage, healthyEarlyVoltage, healthyLateVoltage);
+    }
+
+    /**
+     * Stable endpoint names are only useful when they resolve to the exact
+     * post consumed by this behavior.  Ownership of an element vector alone
+     * would allow a wrong post or a stale semantic label to pass capture.
+     */
+    private static void requireExactEndpointBinding(GeneratedBoardInstance instance,
+            String endpointId, CircuitPostMeasurementEndpoint expected) {
+        BoardSimulationBindings bindings = instance.getSimulationBindings();
+        CircuitMeasurementEndpoint actual = bindings == null ? null :
+            bindings.getEndpoint(endpointId);
+        if (!(actual instanceof CircuitPostMeasurementEndpoint))
+            throw new IllegalStateException("Missing temporal endpoint binding: " + endpointId);
+        CircuitPostMeasurementEndpoint bound = (CircuitPostMeasurementEndpoint) actual;
+        if (bound.getElement() != expected.getElement() ||
+                bound.getPostIndex() != expected.getPostIndex())
+            throw new IllegalStateException("Temporal endpoint binding changed: " + endpointId);
     }
 
     public String getCapabilityId() { return CAPABILITY_ID; }
@@ -71,6 +129,7 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
         healthyLateVoltage = lateVoltage;
         if (!isHealthyDelay())
             throw new IllegalStateException("Healthy RC graph did not produce a visible delay");
+        healthyReferenceCaptured = true;
         observedBehavior = GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY;
     }
 
@@ -107,6 +166,17 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
     double getEarlyVoltageForDeveloperVerification() { return earlyVoltage; }
     double getLateVoltageForDeveloperVerification() { return lateVoltage; }
     double getNominalSupplyForDeveloperVerification() { return nominalSupply; }
+
+    /** Developer-only canary seam; normal gameplay never changes this state. */
+    void perturbHealthyReferenceForDeveloperVerification() {
+        if (!healthyReferenceCaptured)
+            throw new IllegalStateException("RC healthy reference is unavailable");
+        double delta = Math.max(1e-6, Math.abs(healthyLateVoltage) * 1e-6);
+        double perturbed = healthyLateVoltage + delta;
+        if (!finite(perturbed))
+            throw new IllegalStateException("RC healthy reference canary overflowed");
+        healthyLateVoltage = perturbed;
+    }
 
     void advanceForDeveloperVerification(CirSim sim, double seconds) {
         advanceSolverTime(sim, seconds);
@@ -148,14 +218,17 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
                 !finite(healthyEarlyVoltage) || !finite(healthyLateVoltage))
             throw new IllegalStateException("RC temporal profile produced a non-finite sample");
         double healthyRise = healthyLateVoltage - healthyEarlyVoltage;
-        if (healthyRise <= nominalSupply * .15)
+        if (healthyRise <= nominalSupply * CLASSIFICATION_RISE_MINIMUM_FRACTION)
             throw new IllegalStateException("Healthy RC reference has no measurable rise");
-        if (lateVoltage < healthyLateVoltage * .85)
+        if (lateVoltage < healthyLateVoltage * CLASSIFICATION_LATE_MAXIMUM_FRACTION)
             return GeneratedObservedBehavior.RC_DELAY_STUCK_LOW;
-        if (earlyVoltage > healthyEarlyVoltage + healthyRise * .45)
+        if (earlyVoltage > healthyEarlyVoltage + healthyRise *
+                CLASSIFICATION_EARLY_DIFFERENCE_FRACTION)
             return GeneratedObservedBehavior.RC_DELAY_TOO_FAST;
-        if (Math.abs(earlyVoltage - healthyEarlyVoltage) <= healthyRise * .30 &&
-                Math.abs(lateVoltage - healthyLateVoltage) <= healthyRise * .15)
+        if (Math.abs(earlyVoltage - healthyEarlyVoltage) <= healthyRise *
+                CLASSIFICATION_HEALTHY_EARLY_DIFFERENCE_FRACTION &&
+                Math.abs(lateVoltage - healthyLateVoltage) <= healthyRise *
+                CLASSIFICATION_HEALTHY_LATE_DIFFERENCE_FRACTION)
             return GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY;
         return GeneratedObservedBehavior.RC_DELAY_STUCK_LOW;
     }
@@ -163,8 +236,9 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
     private boolean isHealthyDelay() {
         return finite(residualVoltage) && finite(earlyVoltage) && finite(lateVoltage) &&
             residualVoltage < ActiveMeasurementReadiness.RESIDUAL_VOLTAGE_THRESHOLD_VOLTS &&
-            lateVoltage > nominalSupply * .25 && earlyVoltage < lateVoltage * .65 &&
-            lateVoltage - earlyVoltage > nominalSupply * .20;
+            lateVoltage > nominalSupply * HEALTHY_LATE_MINIMUM_FRACTION &&
+            earlyVoltage < lateVoltage * HEALTHY_EARLY_MAXIMUM_FRACTION &&
+            lateVoltage - earlyVoltage > nominalSupply * HEALTHY_RISE_MINIMUM_FRACTION;
     }
 
     private static void advanceSolverTime(CirSim sim, double seconds) {

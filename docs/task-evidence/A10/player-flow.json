@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "route": "Built-in Browser, normal production preview, no tsjDebug",
+  "viewport": {
+    "width": 1098,
+    "height": 1272
+  },
+  "cancel": {
+    "fixture": "RC seed 0, running=true",
+    "input": "Visible Cancel board preparation button click",
+    "observation": "Board preparation cancelled.; preparation button absent and normal controls restored",
+    "screenshot": "01-cancelled.png",
+    "limits": "First attempts hit Browser three-second CDP command deadlines; one coordinate retry after completion opened the visible controlled-board button and is not cancellation evidence. The final fresh route used a successful exact visible-button click."
+  },
+  "repair": {
+    "fixture": "LED seed 0",
+    "steps": [
+      "Retest Customer: did not pass",
+      "Board Power ON -> OFF",
+      "OHM: left click R1 first pad red, right click second pad black; OL",
+      "Select active OHM to exit; select R1 body; Remove component",
+      "Catalog 330 Ohm +/-5%; Install new resistor",
+      "OHM: 330 Ohm across retained physical pad targets",
+      "Exit OHM; Board Power OFF -> ON; Retest Customer: passed"
+    ],
+    "screenshots": [
+      "02-unrepaired.png",
+      "03-open-resistance.png",
+      "04-replacement-measured.png",
+      "05-repaired.png"
+    ],
+    "finalMessage": "Repair verified. Indicator operating normally."
+  },
+  "limitations": "Real visible input is separate from compiled canaries and does not certify the isolated Windows CDP wrapper."
+}

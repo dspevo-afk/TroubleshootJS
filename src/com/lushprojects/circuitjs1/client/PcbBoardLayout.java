@@ -495,6 +495,41 @@ class PcbBoardLayout {
         }
     }
 
+    /** Expected rejection for a routed candidate that exceeds a declared quality bound. */
+    static final class RouteQualityRejectedException extends IllegalStateException {
+        private static final long serialVersionUID = 1L;
+
+        enum Kind {
+            BENDS,
+            DETOUR
+        }
+
+        private final Kind kind;
+
+        private RouteQualityRejectedException(Kind kind, String message) {
+            super(message);
+            if (kind == null)
+                throw new IllegalArgumentException("Missing PCB route quality rejection kind");
+            this.kind = kind;
+        }
+
+        static RouteQualityRejectedException excessiveBends(PcbTraceGeometry trace,
+                int bends) {
+            return new RouteQualityRejectedException(Kind.BENDS,
+                "PCB trace has excessive bends: " + trace.getNetId() +
+                " bends=" + bends + " limit=16");
+        }
+
+        static RouteQualityRejectedException excessiveDetour(PcbTraceGeometry trace,
+                int length, int direct) {
+            return new RouteQualityRejectedException(Kind.DETOUR,
+                "PCB trace has excessive detour: " + trace.getNetId() +
+                " length=" + length + " direct=" + direct + " limit=3x");
+        }
+
+        Kind getKind() { return kind; }
+    }
+
     void validateRouteQuality() {
         for (PcbTraceGeometry trace : traces) {
             int length = getTraceLength(trace);
@@ -504,11 +539,9 @@ class PcbBoardLayout {
                 throw new IllegalStateException("PCB trace has invalid route length: " +
                     trace.getNetId());
             if (bends > 16)
-                throw new IllegalStateException("PCB trace has excessive bends: " +
-                    trace.getNetId());
+                throw RouteQualityRejectedException.excessiveBends(trace, bends);
             if (length > direct * 3)
-                throw new IllegalStateException("PCB trace has excessive detour: " +
-                    trace.getNetId());
+                throw RouteQualityRejectedException.excessiveDetour(trace, length, direct);
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 1; index < xPoints.length; index++) {

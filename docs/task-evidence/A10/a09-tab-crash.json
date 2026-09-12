@@ -1,0 +1,10 @@
+{
+  "status": "FAIL",
+  "phase": "Task41/A09 compiled regression",
+  "candidate": "a10-scenario-source-freeze.json",
+  "startedUtc": "2026-09-12T18:07:48Z",
+  "observation": "Browser reported This page crashed before a result was collected; browser policy rejected inspection of its data: crash page.",
+  "cause": "UNDETERMINED",
+  "cleanup": "NOT COMPLETED: Browser URL policy also rejected closing the owned crashed tab; it remains retained. No OS/process bypass attempted.",
+  "next": "Isolated retry completed PASS:task41; A09 report PASS97/11 negatives, maintained independent reader PASS144; Task41 maintained strict reader PASS. First failed attempt and retained crash tab remain distinct."
+}

@@ -1,0 +1,14 @@
+{
+  "route": "tsjChallenge=rc&seed=0&tsjDebug=true",
+  "qualification": "FAIL",
+  "build": "a10-lifecycle-build",
+  "result": "FAIL:generation:TIMEOUT",
+  "logs": [
+    {
+      "level": "log",
+      "message": "generation_failure:TIMEOUT:stage=HEALTHY:elapsedMs=5909:work=2:Generation work-unit budget exhausted",
+      "timestamp": "2026-09-12T16:32:45.227Z",
+      "url": "circuitjs1-0.js"
+    }
+  ]
+}

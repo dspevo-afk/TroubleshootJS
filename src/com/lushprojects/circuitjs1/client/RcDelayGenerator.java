@@ -174,7 +174,8 @@ final class RcDelayGenerator {
 
         RcDelayTemporalBehavior temporal = new RcDelayTemporalBehavior(
             (CircuitPostMeasurementEndpoint) bindings.getEndpoint("J2.1"),
-            (CircuitPostMeasurementEndpoint) bindings.getEndpoint("J2.2"), values.supplyVoltage);
+            (CircuitPostMeasurementEndpoint) bindings.getEndpoint("J2.2"),
+            "J2.1", "J2.2", values.supplyVoltage);
         runtime.registerCapability(temporal);
         runtime.registerCapability(new StoredEnergyMeasurementReadinessCapability(
             replaceableCapacitor, fixedC2, bindings));
