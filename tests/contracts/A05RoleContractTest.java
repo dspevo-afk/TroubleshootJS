@@ -37,6 +37,13 @@ public final class A05RoleContractTest {
                     ";a=" + first + ";b=" + second + ";fault=" +
                     plan.getFaultDecisionKey());
         }
+        // The three-provider population needs a separate explicit NPN/NPN seed.
+        BoundedAssemblyPlan repeatedNpn = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forControlledIndicator(9L));
+        String repeatedFirst = verifyPlan(9L, repeatedNpn);
+        String repeatedSecond = repeatedNpn.getBlocks().get(repeatedNpn.getChannels().get(1)
+                .getDriverKey()).getProviderTypeId();
+        sawNpnNpn |= isNpn(repeatedFirst) && isNpn(repeatedSecond);
         require(sawNmosNmos && sawNpnNpn && sawMixed,
                 "signed seed corpus covers NMOS/NMOS, NPN/NPN and mixed pairs");
         verifyRegistry();
@@ -166,12 +173,13 @@ public final class A05RoleContractTest {
     private static void verifyRegistry() {
         List<LowSideRoleFamily.Provider> canonical =
                 LowSideRoleFamily.providers();
-        require(canonical.size() == 2 &&
+        require(canonical.size() == 3 &&
                 canonical.get(0).getTypeId().equals(
                     ControlledIndicatorBlockContributions.DRIVER_TYPE_ID) &&
-                canonical.get(1).getTypeId().equals(
+                canonical.get(1).getTypeId().equals("nmos-low-side-driver-alt") &&
+                canonical.get(2).getTypeId().equals(
                     ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID),
-                "canonical registry orders NMOS before NPN by provider ID");
+                "canonical registry orders all three providers by ID");
         ArrayList<LowSideRoleFamily.Provider> reversed =
                 new ArrayList<LowSideRoleFamily.Provider>(canonical);
         Collections.reverse(reversed);
@@ -322,7 +330,8 @@ public final class A05RoleContractTest {
     }
 
     private static boolean isNmos(String typeId) {
-        return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(typeId);
+        return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(typeId) ||
+                "nmos-low-side-driver-alt".equals(typeId);
     }
 
     private static boolean isNpn(String typeId) {

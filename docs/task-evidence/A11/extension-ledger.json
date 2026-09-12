@@ -1,0 +1,124 @@
+{
+  "changedCodeTestScriptFiles": 29,
+  "scope": "Actual A11 setup plus ordinary extension exercise; file count is descriptive, not an acceptance limit",
+  "ordinaryVariantKnowledge": "Provider-local immutable profile/contribution plus one declared registry entry; existing NMOS adapters reused",
+  "genericNewIndividualDeviceBranches": 0,
+  "files": [
+    {
+      "path": "scripts/verify-a03-browser.ps1",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/A09DiagnosticDeveloperVerifier.java",
+      "category": "compiledQualification"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/A11ProviderConformanceChecks.java",
+      "category": "compiledQualification"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/AlternateNmosDriverProvider.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/BoundedAssemblyRequest.java",
+      "category": "registryAndInterpretation"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ConstructionProviderRegistry.java",
+      "category": "registryAndInterpretation"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ControlledIndicatorBlockContributions.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ControlledIndicatorDeviceBehavior.java",
+      "category": "genericConsumersAndSafety"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ControlledIndicatorDriverObservation.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ElectricalRealizationSpec.java",
+      "category": "genericConsumersAndSafety"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+      "category": "registryAndInterpretation"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/LowSideRoleFamily.java",
+      "category": "registryAndInterpretation"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/NmosDriverProfile.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PhysicalConstructionMaterializer.java",
+      "category": "genericConsumersAndSafety"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PhysicalConstructionProvider.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/StandardElectricalConstructionProviders.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task48MutationDeveloperVerifier.java",
+      "category": "compiledQualification"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task49DeveloperVerifier.java",
+      "category": "compiledQualification"
+    },
+    {
+      "path": "tests/contracts/A03IdentityContractTest.java",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/a04-report-contract.ps1",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/A04ConstructionContractTest.java",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/A04PhysicalDeclarationContractTest.java",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/A05RoleContractTest.java",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/a09_diagnostic_contract.py",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/a11_provider_contract.py",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/A11ProviderConformanceTest.java",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/ControlledIndicatorAssemblyContractTest.java",
+      "category": "nativeOrOracleOrReaderContract"
+    },
+    {
+      "path": "tests/contracts/task49_value_synthesis_reference.py",
+      "category": "nativeOrOracleOrReaderContract"
+    }
+  ]
+}

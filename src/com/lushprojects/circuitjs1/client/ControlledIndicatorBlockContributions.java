@@ -112,7 +112,7 @@ final class ControlledIndicatorBlockContributions {
         ComposedBlockContribution create(String blockKey, FaultSpec fault);
     }
 
-    private static final Provider DRIVER = new ProviderImpl(Kind.NMOS_DRIVER);
+    private static final Provider DRIVER = new ProviderImpl(NmosDriverProfile.standard());
     private static final Provider NPN_DRIVER = new ProviderImpl(Kind.NPN_DRIVER);
     private static final Provider LOAD = new ProviderImpl(Kind.LOAD);
 
@@ -120,6 +120,14 @@ final class ControlledIndicatorBlockContributions {
 
     static Provider driver() { return DRIVER; }
     static Provider nmosDriver() { return DRIVER; }
+    static Provider nmosDriver(NmosDriverProfile profile) {
+        return createNmosDriver(profile);
+    }
+    static Provider createNmosDriver(NmosDriverProfile profile) {
+        if (profile == null)
+            throw new IllegalArgumentException("NMOS driver profile is required");
+        return profile == NmosDriverProfile.standard() ? DRIVER : new ProviderImpl(profile);
+    }
     static Provider npnDriver() { return NPN_DRIVER; }
     static Provider load() { return LOAD; }
 
@@ -134,12 +142,8 @@ final class ControlledIndicatorBlockContributions {
     }
 
     static Provider resolve(String typeId, int version) {
-        if (DRIVER_TYPE_ID.equals(typeId) && version == VERSION) return DRIVER;
-        if (NPN_DRIVER_TYPE_ID.equals(typeId) && version == NPN_VERSION)
-            return NPN_DRIVER;
-        if (LOAD_TYPE_ID.equals(typeId) && version == LOAD_VERSION) return LOAD;
-        throw new IllegalArgumentException("Unsupported controlled provider "
-                + typeId + "@" + version);
+        return ConstructionProviderRegistry.standard().get(typeId, version)
+            .requireControlledContribution();
     }
 
     static String componentId(BlockNamespace namespace, String blockKey,
@@ -181,16 +185,32 @@ final class ControlledIndicatorBlockContributions {
     private static final class ProviderImpl implements Provider,
             LowSideRoleFamily.Provider {
         private final Kind kind;
-        ProviderImpl(Kind kind) { this.kind = kind; }
+        private final NmosDriverProfile nmosProfile;
+
+        ProviderImpl(Kind kind) {
+            if (kind == null || kind == Kind.NMOS_DRIVER)
+                throw new IllegalArgumentException("NMOS providers require a profile");
+            this.kind = kind;
+            this.nmosProfile = null;
+        }
+
+        ProviderImpl(NmosDriverProfile profile) {
+            if (profile == null)
+                throw new IllegalArgumentException("NMOS driver profile is required");
+            this.kind = Kind.NMOS_DRIVER;
+            this.nmosProfile = profile;
+        }
+
         private boolean isDriver() { return kind != Kind.LOAD; }
         private boolean isNpn() { return kind == Kind.NPN_DRIVER; }
+        private boolean isNmos() { return kind == Kind.NMOS_DRIVER; }
         @Override public String getTypeId() {
             if (kind == Kind.NPN_DRIVER) return NPN_DRIVER_TYPE_ID;
-            return kind == Kind.NMOS_DRIVER ? DRIVER_TYPE_ID : LOAD_TYPE_ID;
+            return isNmos() ? nmosProfile.getProviderId() : LOAD_TYPE_ID;
         }
         @Override public int getVersion() {
             if (kind == Kind.NPN_DRIVER) return NPN_VERSION;
-            return kind == Kind.NMOS_DRIVER ? VERSION : LOAD_VERSION;
+            return isNmos() ? nmosProfile.getVersion() : LOAD_VERSION;
         }
         @Override public String getRoleId() {
             return isDriver() ? LowSideRoleFamily.ROLE_ID : "indicator-load";
@@ -222,7 +242,7 @@ final class ControlledIndicatorBlockContributions {
         }
         @Override public double getControlDemandAmps() {
             if (!isDriver()) return 0.0;
-            return isNpn() ? NPN_CONTROL_DEMAND_AMPS : NMOS_CONTROL_DEMAND_AMPS;
+            return isNpn() ? NPN_CONTROL_DEMAND_AMPS : nmosProfile.getControlDemandAmps();
         }
         @Override public double getRequiredBaseDriveAmps() {
             return isNpn() ? NPN_REQUIRED_BASE_DRIVE_AMPS : 0.0;
@@ -244,13 +264,14 @@ final class ControlledIndicatorBlockContributions {
         }
         @Override public String getModelId() {
             if (kind == Kind.NPN_DRIVER) return "NPN";
-            if (kind == Kind.NMOS_DRIVER) return "NMOS";
+            if (isNmos()) return nmosProfile.getModelId();
             return ControlledIndicatorValueSynthesis.MODEL_ID;
         }
 
         @Override public ComposedBlockContribution create(String blockKey) {
             if (!isDriver()) return createIntent(blockKey, FaultSpec.open("RLOAD"));
-            return create(blockKey, FaultSpec.open(isNpn() ? "RB" : "RG"));
+            return create(blockKey, FaultSpec.open(isNpn() ? "RB" :
+                nmosProfile.getControlResistorId()));
         }
 
         @Override public ComposedBlockContribution create(String blockKey,
@@ -260,12 +281,14 @@ final class ControlledIndicatorBlockContributions {
                         "Controlled load requires a resolved catalog recipe");
             FunctionalBlockDescriptor.requireId(blockKey, "driver.instanceKey");
             if (fault == null) throw new IllegalArgumentException("Fault is required");
-            String expectedTarget = isNpn() ? "RB" : "RG";
+            String expectedTarget = isNpn() ? "RB" : nmosProfile.getControlResistorId();
             if (!expectedTarget.equals(fault.getTargetComponentLocalId()))
                 throw new IllegalArgumentException("Controlled fault target must be "
                         + expectedTarget);
-            FunctionalBlockDescriptor descriptor = driverDescriptor(blockKey, isNpn());
-            ElectricalBlockContract electrical = driverElectrical(descriptor, isNpn());
+            FunctionalBlockDescriptor descriptor = driverDescriptor(blockKey, isNpn(),
+                nmosProfile);
+            ElectricalBlockContract electrical = driverElectrical(descriptor, isNpn(),
+                nmosProfile);
             TreeMap<String, ComposedBlockContribution.ResistorRecipe> resistors =
                     new TreeMap<String, ComposedBlockContribution.ResistorRecipe>();
             Collection<ComposedBlockContribution.NmosRecipe> nmos =
@@ -278,19 +301,23 @@ final class ControlledIndicatorBlockContributions {
                         ComposedBlockContribution.RATED_WATTS,
                         PhysicalPackages.AXIAL_RESISTOR.getId(), true));
             } else {
-                resistors.put("RG", new ComposedBlockContribution.ResistorRecipe(
-                        "RG", "RG_1", "RG_2", "RG.1", "RG.2", RG_OHMS,
+                String controlResistor = nmosProfile.getControlResistorId();
+                resistors.put(controlResistor, new ComposedBlockContribution.ResistorRecipe(
+                        controlResistor, controlResistor + "_1", controlResistor + "_2",
+                        controlResistor + ".1", controlResistor + ".2",
+                        nmosProfile.getGateResistanceOhms(),
                         ComposedBlockContribution.RATED_WATTS,
                         PhysicalPackages.AXIAL_RESISTOR.getId(), true));
             }
             resistors.put("RPD", new ComposedBlockContribution.ResistorRecipe(
-                    "RPD", "RPD_1", "RPD_2", "RPD.1", "RPD.2", RPD_OHMS,
+                    "RPD", "RPD_1", "RPD_2", "RPD.1", "RPD.2",
+                    isNpn() ? RPD_OHMS : nmosProfile.getPullDownOhms(),
                     ComposedBlockContribution.RATED_WATTS,
                     PhysicalPackages.AXIAL_RESISTOR.getId(), false));
             if (!isNpn()) {
                 nmos = Arrays.asList(new ComposedBlockContribution.NmosRecipe(
                         "Q1", "Q1_G", "Q1_D", "Q1_S", "Q1.G", "Q1.D",
-                        "Q1.S", "NMOS"));
+                        "Q1.S", nmosProfile.getModelId()));
             }
             return new ComposedBlockContribution(getTypeId(), getVersion(), descriptor,
                     electrical, resistors, nmos, leds, fault, fault.getTargetComponentLocalId(),
@@ -346,19 +373,21 @@ final class ControlledIndicatorBlockContributions {
     }
 
     private static FunctionalBlockDescriptor driverDescriptor(String key,
-            boolean npn) {
-        String typeId = npn ? NPN_DRIVER_TYPE_ID : DRIVER_TYPE_ID;
-        int version = npn ? NPN_VERSION : VERSION;
-        String resistor = npn ? "RB" : "RG";
+            boolean npn, NmosDriverProfile nmosProfile) {
+        if (!npn && nmosProfile == null)
+            throw new IllegalArgumentException("NMOS driver profile is required");
+        String typeId = npn ? NPN_DRIVER_TYPE_ID : nmosProfile.getProviderId();
+        int version = npn ? NPN_VERSION : nmosProfile.getVersion();
+        String resistor = npn ? "RB" : nmosProfile.getControlResistorId();
         String resistorFirst = resistor + "_1";
         String resistorSecond = resistor + "_2";
         String resistorPadFirst = resistor + ".1";
         String resistorPadSecond = resistor + ".2";
-        String controlNode = npn ? "BASE" : "GATE";
-        String transistorType = npn ? "NPN" : "NMOS";
-        String transistorFirst = npn ? "B" : "G";
-        String transistorSecond = npn ? "C" : "D";
-        String transistorThird = npn ? "E" : "S";
+        String controlNode = npn ? "BASE" : nmosProfile.getControlNodeId();
+        String transistorType = npn ? "NPN" : nmosProfile.getPrimitiveType();
+        String transistorFirst = npn ? "B" : nmosProfile.getControlTerminal();
+        String transistorSecond = npn ? "C" : nmosProfile.getSwitchedTerminal();
+        String transistorThird = npn ? "E" : nmosProfile.getReturnTerminal();
         String transistorEndpointFirst = "Q1_" + transistorFirst;
         String transistorEndpointSecond = "Q1_" + transistorSecond;
         String transistorEndpointThird = "Q1_" + transistorThird;
@@ -369,10 +398,17 @@ final class ControlledIndicatorBlockContributions {
                 new ArrayList<FunctionalBlockDescriptor.Parameter>();
         parameters.add(parameter("functional-role", LowSideRoleFamily.ROLE_ID));
         parameters.add(parameter(npn ? "base-resistance-ohms" :
-                "gate-resistance-ohms", npn ? RB_OHMS : RG_OHMS));
-        parameters.add(parameter("pull-down-ohms", RPD_OHMS));
-        parameters.add(parameter("model", transistorType));
-        parameters.add(parameter("beta", npn ? 100 : 10));
+                "gate-resistance-ohms", npn ? RB_OHMS :
+                nmosProfile.getGateResistanceOhms()));
+        parameters.add(parameter("pull-down-ohms", npn ? RPD_OHMS :
+                nmosProfile.getPullDownOhms()));
+        parameters.add(parameter("model", npn ? transistorType : nmosProfile.getModelId()));
+        if (npn)
+            parameters.add(parameter("beta", 100));
+        else if (nmosProfile == NmosDriverProfile.standard())
+            parameters.add(parameter("beta", 10));
+        else
+            parameters.add(parameter("beta", nmosProfile.getBeta()));
         if (npn) {
             parameters.add(parameter("forced-beta", NPN_FORCED_BETA));
             parameters.add(parameter("vbe-min-volts", NPN_VBE_MIN_VOLTS));
@@ -382,10 +418,10 @@ final class ControlledIndicatorBlockContributions {
             parameters.add(parameter("available-base-drive-amps",
                     NPN_AVAILABLE_BASE_DRIVE_AMPS));
         } else {
-            parameters.add(parameter("threshold-volts", NMOS_THRESHOLD_VOLTS));
+            parameters.add(parameter("threshold-volts", nmosProfile.getThresholdVolts()));
         }
         parameters.add(parameter("control-demand-amps",
-                npn ? NPN_CONTROL_DEMAND_AMPS : NMOS_CONTROL_DEMAND_AMPS));
+                npn ? NPN_CONTROL_DEMAND_AMPS : nmosProfile.getControlDemandAmps()));
         parameters.add(parameter("sink-capacity-amps",
                 LowSideRoleFamily.SINK_CAPACITY_AMPS));
         parameters.add(parameter("load-demand-amps",
@@ -482,13 +518,16 @@ final class ControlledIndicatorBlockContributions {
     }
 
     private static ElectricalBlockContract driverElectrical(
-            FunctionalBlockDescriptor descriptor, boolean npn) {
+            FunctionalBlockDescriptor descriptor, boolean npn,
+            NmosDriverProfile nmosProfile) {
+        if (!npn && nmosProfile == null)
+            throw new IllegalArgumentException("NMOS driver profile is required");
         Domain domain = Domain.known("RETURN", "shared-return");
         ElectricalPortContract control = new ElectricalPortContract("CONTROL", Role.CONTROL,
                 Direction.INPUT, Behavior.SINK, Drive.NONE, domain, Scalar.known(5.0),
                 Range.known(0.0, 5.0), Range.known(0.0, 5.0), Loading.BOUNDED_CURRENT,
                 Scalar.notApplicable(), Scalar.known(npn ? NPN_CONTROL_DEMAND_AMPS :
-                        NMOS_CONTROL_DEMAND_AMPS),
+                        nmosProfile.getControlDemandAmps()),
                 new ElectricalPortContract.Digital(ActiveLevel.HIGH,
                         Scalar.known(LowSideRoleFamily.CONTROL_LOW_MAXIMUM_VOLTS),
                         Scalar.known(LowSideRoleFamily.CONTROL_HIGH_MINIMUM_VOLTS),

@@ -318,6 +318,8 @@ final class PhysicalConstructionMaterializer {
                     part.getProviderVersion() != provider.getProviderVersion())
                 throw new IllegalStateException("Physical provider identity changed: " +
                     part.getComponentId());
+            ConstructionProviderRegistry.standard().get(provider.getProviderId(),
+                provider.getProviderVersion()).requirePackage(part.getPhysicalPackage());
             List<ElectricalUnitPackageMap.Unit> units = unitsFor(spec, part.getComponentId());
             if (units.isEmpty())
                 throw new IllegalStateException("Physical component has no electrical unit: " +

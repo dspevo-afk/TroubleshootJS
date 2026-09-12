@@ -87,6 +87,31 @@ candidate once, reversibly isolates the retired owner's sources before commit,
 and releases the saved original and proof-session references. Quick Play session
 validation is inside that transaction; failure restores the previous session too.
 
+## A11 construction-provider registration
+
+`ConstructionProviderRegistry` is the immutable type/version authority for seven
+electrical/physical construction pairs and two explicit physical device joins.
+Its lazily initialized standard entry list also binds controlled contributions,
+low-side roles and versioned driver observations. Factories assemble entries
+without looking up the registry during bootstrap. Existing lookup facades delegate
+to this one surface; entries and package claims are immutable.
+
+Bootstrap rejects duplicate keys, mismatched or missing capabilities, and missing
+footprint/render providers. Physical contribution validation and the final
+materializer check each consumed package against the registered definition before
+mutation. Existing CircuitJS primitive contracts retain exact post maps and model
+parameter validation; an unsupported NMOS model label cannot silently select the
+fixed NMOS primitive. The registry fingerprint is included in generation dependency
+interpretation v4, alongside the selected recipe and actual electrical state inputs.
+
+The alternate NMOS provider reuses the same primitive, TO92_NMOS package and
+G/D/S adapter with provider-local 680 Ohm RG, 1.2 V threshold and beta 6.
+Generic assembly, routing, materialization, diagnosis, replay and UI add no branch
+for that individual provider. Generator epoch 6 identifies the three-provider
+selection population. Shared native/compiled conformance checks qualify declaration
+consistency; Task49 separately exercises real solver, mutation, proof and customer
+retest behavior. Current qualification is recorded in [A11 evidence](task-evidence/A11/README.md).
+
 ## P02 physical copper, surface access and current connectivity
 
 P02 and its F1 shared-copper repair are independently reviewed and accepted.
@@ -299,7 +324,7 @@ probes above; broader model and playable-provider qualification remains future w
 
 ## A05 qualification and current limits
 
-A05 current qualification is recorded in [A05 evidence](task-evidence/A05/README.md): two independently controlled NMOS/NPN channels, supply-present support, current generator 5, exact repeated-instance ownership and solver-backed diagnosis/repair/retest. The normal URL and visible launch control reach this implementation. The layout and four OPEN resistor fault owners remain bounded; no arbitrary composition, transistor mutation, persistence or Q15/Q60 qualification is implied.
+A05 established two independently controlled channels, supply-present support and exact repeated-instance ownership; its historical generator-5 qualification is in [A05 evidence](task-evidence/A05/README.md). A11 advances the current generator to 6 with three selectable low-side providers. The normal URL and visible launch control reach this implementation. The layout and four OPEN resistor fault owners remain bounded; no arbitrary composition, transistor mutation, persistence or Q15/Q60 qualification is implied.
 
 All six selected current Gate A05 routes pass on the final production source; the A05 baseline used 15 Java suites plus independent seed/value/role oracles; A06 extends the current runner to 16 suites. Three manifest cases and current numeric choices agree exactly between JVM and GWT. The strict CLI launcher is not certified by the separate owned visible-browser evidence. Final closure/publication status is in the current report.
 
@@ -332,7 +357,7 @@ mutable graphs, solver-node numbers or future saved-program/state envelopes.
 The bounded manifest permits 2,048 resolved choices within the unchanged
 262,144-character encoding limit; both construction and parsing reject excess.
 
-`A03RealizationReplay` resolves only `bounded-assembler@5`, validates its exact
+`A03RealizationReplay` resolves only `bounded-assembler@6`, validates its exact
 current recipe and physical choices before mutable assembly, and checks the
 captured result again afterward. Retired or unknown schemas, algorithms,
 packages or choices reject. The six current leaf families use
@@ -356,7 +381,7 @@ materializes one runtime. Its failure boundaries are mapping, electrical
 construction, layout, registration and validation. It has no historical source-
 half stage, fixed-versus-resolved load branch or provider-specific physical part
 registration. The current resistive and controlled compositions remain bounded
-device recipes. The controlled intent selects compatible NMOS/NPN role providers
+device recipes. The controlled intent selects compatible NMOS variants or NPN role providers
 for two stable channel instances and includes one supply-present contribution.
 
 `PhysicalConstructionProvider` declares nets, package-backed parts, terminals,
@@ -672,7 +697,7 @@ adds a player menu entry. Qualification status and exact evidence remain in the
 
 ## Bounded assembly and executable contributions — Task 47
 
-`BoundedAssemblyRequest` binds `bounded-assembler@4`, the `resistive-coupling@1`
+`BoundedAssemblyRequest` binds the current `bounded-assembler@6`, the `resistive-coupling@1`
 intent, `developer-canary@1`, geometry 3 and an exact signed 64-bit seed to
 explicit block declarations and device wiring. `BoundedAssemblyPlan` resolves
 the typed resistor-source/load providers and requires Task 45 COMPATIBLE before
@@ -735,7 +760,7 @@ recorded in the [Task 47 packet](task-evidence/task-47/README.md); Task 48 is se
 ## Repeated controlled-indicator composition - A05
 
 `BoundedAssemblyRequest.forControlledIndicator` uses current
-`bounded-assembler@5`, the `controlled-indicator@1` intent and geometry 3.
+`bounded-assembler@6`, the `controlled-indicator@1` intent and geometry 3.
 `LowSideRoleFamily` admits compatible implementations, sorts registration IDs,
 and selects independently for `channel-a-driver` and `channel-b-driver` through
 instance-scoped TOPOLOGY streams. The bounded device has five contributions:
@@ -760,7 +785,7 @@ to 0/1/2 through explicit package-terminal declarations.
 `ElectricalConstructionProvider.declare` owns the local immutable element,
 helper, model parameter, package, terminal and board-endpoint description.
 The matching provider constructs from that declaration. Explicit electrical,
-physical and observation registrations are the bounded extension points.
+physical and observation capabilities are paired in `ConstructionProviderRegistry`.
 `ElectricalRealizationSpec` validates known primitive post maps, model/value
 requirements and complete package/pad coverage. The device adapter iterates
 declared inter-instance joins and external inputs. The generic materializer
@@ -771,7 +796,7 @@ attachment or removable component before allocation; runtime validation also
 checks the actual separate endpoints and continued backing ownership.
 `A03RealizationReplay` captures provider declarations, numeric/model choices,
 units, backings, bridge endpoints and actual physical geometry without separate
-NMOS/NPN capture methods. Generator 4 artifacts reject before installation.
+NMOS/NPN capture methods. Noncurrent generator epochs reject before installation.
 
 Each load resolves one immutable catalog recipe from its own VALUES stream.
 `ControlledIndicatorValueSynthesis` consumes the actual request's supply,

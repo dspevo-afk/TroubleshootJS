@@ -7,14 +7,14 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **A10: Staged generation jobs, deterministic budgets and proof receipts**<br>
-**Current checkpoint:** **A10 ACCEPTED; A11 NEXT AND AUTHORIZED.** P02 is published at `66a62b7`. A10 passes 23 native suites, the final five-permutation JDK8/GWT build, 1,273 compiled assertions, all 24 frozen performance attempts, affected strict regressions and real cancellation/measurement/repair/retest. RC admission still takes 48–56 seconds on this desktop; the historical Windows browser wrapper remains separately unqualified. One repaint-retention performance follow-up is recorded. [A10 evidence and limits](task-evidence/A10/README.md).
+**Latest completed task:** **A11: Provider conformance, registry consistency and extension-cost proof**<br>
+**Current checkpoint:** **A10 AND A11 ACCEPTED; REQUESTED SEQUENCE COMPLETE.** P02 and A10 are published at `66a62b7` and `d5b9b6f`. A11 qualifies one exact provider registration surface and an ordinary alternate NMOS implementation: 24 native suites, final five-permutation JDK8/GWT build, compiled provider/solver/diagnostic/generation reports, independent oracles, and real OL → 680 Ohm replacement → successful customer retest. Optional source review found no blocker. **U01 is next and unstarted.** RC admission remains about 48 seconds on this desktop; the historical Windows browser wrapper remains unqualified. [A11 evidence and limits](task-evidence/A11/README.md).
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
 This is a self-contained replacement roadmap, not an amendment to apply over the old one. No companion dependency file, old task report, Library attachment, external roadmap or historical appendix is required to interpret its future scope. Repository source/evidence paths in Section 10 establish the review basis, not mandatory frozen outputs. The roadmap does not itself execute changes; R00 was separately authorized and completed; A05, A06, A07 and A08 were separately authorized and are now qualified. Future tasks require their own authorization.
 
-The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. Eleven are delivered/completed baseline entries, including A08, and 62 are unstarted feature/qualification nodes. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
+The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. At the Edition 3.0 baseline, eleven entries were delivered/completed, including A08, and 62 were unstarted. Current completion is recorded on the cards and in the checkpoint above. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
 
 ## Navigation
 
@@ -661,7 +661,7 @@ The hard prerequisites on the cards are authoritative. The phase map is a readab
 
 | Lane | Order and boundary |
 |---|---|
-| Current authorized sequence | P02 is published and A10 is accepted; finish A10 publication, then A11. |
+| Current authorized sequence | A10 then A11 is complete. U01 is the next unstarted item. |
 | Early foundations | A05, A06/A07 and P01/P02, after their actual prerequisites; shared code has one owner. |
 | Working small-board platform | A08/A09/A11, U01, P03/P04, E01/E03, A10, Q15, U04/U05 and REL-A when its scope is ready. |
 | Normal boards | P05-P09, U02/U03, E02/E04, D01, Q30, U06/U07. |
@@ -675,9 +675,9 @@ A01/A07 investigate 60/100-part structural/solver costs long before final playab
 
 This compact queue incorporates the supplied September 11 execution-order document.
 Milestone cards remain authoritative for hard prerequisites and acceptance. Completed
-work is not repeated. The owner explicitly selected **A10 then A11** for the current
-task; A10 is eligible after accepted P02 and is intentionally earlier than its
-default position below. Resume the remaining queue after this authorized work.
+work is not repeated. The owner's **A10 then A11** override is complete: A10 ran
+after accepted P02, earlier than its default position below. The remaining queue
+resumes at **U01**; future milestones need their own authorization.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -1035,7 +1035,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A11 · Provider conformance, registry consistency and extension-cost proof
 
-**Status:** UNSTARTED.
+**Status:** ACCEPTED. One immutable type/version registry owns seven construction pairs, two physical-only joins and three low-side variants. The provider-local alternate NMOS uses 680 Ohm / 1.2 V / beta 6 without an individual-device branch in generic owners. Native/compiled declarations pass 427 assertions and 19 negatives; final build, actual solver/repair/diagnostic/generation reports, independent oracles and real player diagnosis/repair/retest pass. Optional source review has no blocker; one coverage follow-up remains. [Evidence and extension-cost ledger](task-evidence/A11/README.md).
 
 **Hard prerequisites:** [A04](#m-a04), [A08](#m-a08), [A09](#m-a09)
 

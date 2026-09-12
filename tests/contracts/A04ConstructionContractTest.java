@@ -22,7 +22,7 @@ import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
  */
 public final class A04ConstructionContractTest {
     private static int assertions;
-    private static final long[] SEEDS = { -1L, 0L, 1L, 2L,
+    private static final long[] SEEDS = { -1L, 0L, 1L, 2L, 9L,
             Long.MIN_VALUE, Long.MAX_VALUE };
 
     private A04ConstructionContractTest() { }
@@ -520,7 +520,8 @@ public final class A04ConstructionContractTest {
     }
 
     private static boolean isNmos(String providerId) {
-        return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(providerId);
+        return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(providerId) ||
+                "nmos-low-side-driver-alt".equals(providerId);
     }
 
     private static boolean isNpn(String providerId) {

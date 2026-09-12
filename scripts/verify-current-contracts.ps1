@@ -82,6 +82,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'A10GenerationContractTest'; Marker = 'A10 generation contracts ' },
         @{ Name = 'A10RoutingContractTest'; Marker = 'A10 routing rejection contracts ' },
         @{ Name = 'A10DependencyContractTest'; Marker = 'A10 dependency contracts ' },
+        @{ Name = 'A11ProviderConformanceTest'; Marker = 'A11 provider conformance' },
         @{ Name = 'A03IdentityContractTest'; Marker = 'A03IdentityContractTest ' },
         @{ Name = 'A02CandidateContractTest'; Marker = 'A02CandidateContractTest' },
         @{ Name = 'A02GeometryContractTest'; Marker = 'A02GeometryContractTest ' },
@@ -148,8 +149,15 @@ final class PhysicalSpecificationDeveloperVerifier {
     $rolesPath = Join-Path $taskRoot 'a05-roles.txt'
     [IO.File]::WriteAllText($rolesPath, $outputs['A05RoleContractTest'],
         (New-Object Text.UTF8Encoding($false)))
+    $providerMatch = [regex]::Match($outputs['A11ProviderConformanceTest'],
+        '(?m)^A11_PROVIDER_REPORT (.+)\r?$')
+    if (-not $providerMatch.Success) { throw 'Missing actual A11 declaration report.' }
+    $providerPath = Join-Path $taskRoot 'a11-providers.json'
+    [IO.File]::WriteAllText($providerPath, $providerMatch.Groups[1].Value.Trim(),
+        (New-Object Text.UTF8Encoding($false)))
     $oracles = @(
         @{ File = 'task46_seed_reference.py'; Arguments = @(); Marker = 'Task46 independent seed oracle ' },
+        @{ File = 'a11_provider_contract.py'; Arguments = @('--report', $providerPath); Marker = 'A11 provider boundaries/report ' },
         @{ File = 'a09_diagnostic_contract.py'; Arguments = @(); Marker = 'A09 independent diagnostic contracts ' },
         @{ File = 'task49_value_synthesis_reference.py'; Arguments = @($valuePath, $rolesPath); Marker = 'current value synthesis oracle ' })
     foreach ($oracle in $oracles) {
@@ -174,7 +182,7 @@ final class PhysicalSpecificationDeveloperVerifier {
     }
     $receipts.Add($protocol.Stdout)
     if ($ReceiptOutputPath) {
-        foreach ($parityName in @('vectors', 'manifest-resistive', 'manifest-controlled', 'manifest-controlled-npn')) {
+        foreach ($parityName in @('vectors', 'manifest-resistive', 'manifest-controlled', 'manifest-controlled-alt')) {
             $paritySource = Join-Path $taskRoot ('parity.' + $parityName + '.txt')
             if (-not (Test-Path -LiteralPath $paritySource -PathType Leaf)) {
                 throw ('Missing exact JVM parity artifact: ' + $parityName)

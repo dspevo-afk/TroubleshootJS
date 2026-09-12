@@ -1,6 +1,15 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - A10 accepted; A11 follows publication - 2026-09-12
+## Current checkpoint - A10 and A11 complete - 2026-09-12
+
+- **Scope/base:** Requested A10 then A11, Preferred Execution Order and compact optional-agent guidance are complete. Branch `codex/task43p-final-recovery`; A10 is published at `d5b9b6f2ba1c751a43d13b960ea5c5a4e56b0ecf` (A11 base), Gmail `1a096e6ee54bdf16`. A10 includes the roadmap queue and AGENTS.md reduction from 4,120 to 1,271 words; every use of subagents is optional. The A11 publication commit contains this checkpoint; use Git history for its final SHA.
+- **A11 candidate:** One immutable exact type/version registry, seven construction pairs/two physical joins/three driver variants. Provider-local alternate NMOS: RG680 Ohm, threshold1.2 V, beta6; no individual variant branch in generic owners. Current generator6/dependency-v4. Final 1,061-input fingerprint: `8c6962279aa5b09eddfa2b668d80d96bcf6d54b5f2261137913d0ed802e802a4`; five final GWT outputs audited unchanged.
+- **Gates:** PASS:24 native suites; declarations427/19 negatives in native and compiled runs; independent provider reader125 and report470; final actual JDK8/GWT five permutations/exit0; Task49397 and strict reader; nine-seed value/six-seed role oracles; Task41/A09 strict readers, A0997/11 negatives/three variants; A101,273/24 attempts/strict reader. Native proof reuse covers only audited unchanged paths; later compiled-fixture and report-reader deltas have fresh gates. [Results and retained failures](task-evidence/A11/README.md).
+- **Player/review:** Normal controlled-indicator seed4: failed customer retest, unpowered RG measured OL, installed catalog680 Ohm measured680, independent channel controls and powered customer retest PASS. Five inspected screenshots; final page errors/private reports absent. Optional read-only A11 review PASS, no blocker; A11-D1 is nonblocking derived-parameter coverage debt.
+- **Resources/limits:** Owned preview and tabs closed; no active test/review process. Pre-existing `tests/contracts/__pycache__/` preserved/excluded. External raw evidence retained; earlier routing scratch remains after automatic approval review blocked guarded deletion. RC admission/repeat48,198/48,030 ms and repaint-retention follow-up remain. One transient Task49 navigation/MutationObserver diagnostic is recorded; isolated regressions and normal player page had no errors. Historical Windows browser wrapper remains unqualified.
+- **Next:** Authorized milestone sequence is complete. U01 is the next unstarted roadmap item; do not start it without new scope.
+
+## Historical checkpoint - A10 accepted; A11 follows publication - 2026-09-12
 
 - **Scope/base:** Complete A10 then A11; add Preferred Execution Order and simplify AGENTS.md. P02 is published at `66a62b7f49d53464b8ada4ef02abf598373aba82`, branch `codex/task43p-final-recovery`. A10 is accepted and ready for normal commit/push; no publication result is asserted before execution. A11 production is unstarted.
 - **Documentation:** Preferred queue includes the owner's A10-first override. AGENTS.md is 69% shorter (4,120 to 1,271 words); subagents and independent agent review are optional for all ongoing work.

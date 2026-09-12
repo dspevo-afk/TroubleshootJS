@@ -65,6 +65,7 @@ public final class ControlledIndicatorAssemblyContractTest {
             require(driver != null && load != null &&
                     (driver.getProviderTypeId().equals(
                         ControlledIndicatorBlockContributions.DRIVER_TYPE_ID) ||
+                     driver.getProviderTypeId().equals("nmos-low-side-driver-alt") ||
                      driver.getProviderTypeId().equals(
                         ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID)) &&
                     load.getProviderTypeId().equals(

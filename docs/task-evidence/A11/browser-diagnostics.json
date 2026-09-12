@@ -1,0 +1,18 @@
+{
+  "observations": [
+    {
+      "route": "Final Task49",
+      "message": "target closed while handling command",
+      "recovery": "Rebound existing tab4 after confirming it remained open; exact Task49 PASS report collected."
+    },
+    {
+      "route": "Final Task49 navigation",
+      "level": "error",
+      "message": "Uncaught TypeError: Failed to execute 'observe' on 'MutationObserver': parameter 1 is not of type 'Node'.",
+      "timestamp": "2026-09-12T19:11:14.710Z",
+      "source": "Not established; do not attribute to application or Browser without evidence."
+    }
+  ],
+  "isolatedTask41A09PageErrors": [],
+  "priorA10CrashTab": "Tab2 no longer listed; no root cleanup claim."
+}

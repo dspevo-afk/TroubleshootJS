@@ -14,7 +14,7 @@ import java.util.TreeSet;
  * Native contract for the provider-owned physical declaration boundary.
  *
  * <p>The controlled fixture has two independently addressed channels, two
- * possible low-side provider families, and one fixed supply indicator.  The
+ * low-side primitive families with three providers, and one fixed supply indicator. The
  * oracle follows the resolved electrical spec and the provider declarations;
  * it does not duplicate a singleton board shape.</p>
  */
@@ -62,6 +62,7 @@ public final class A04PhysicalDeclarationContractTest {
         long[] seeds = { -1L, 0L, 1L, 2L, 49L, Long.MAX_VALUE };
         boolean sawNmos = false;
         boolean sawNpn = false;
+        boolean sawAlternate = false;
         for (long seed : seeds) {
             BoundedAssemblyRequest request =
                     BoundedAssemblyRequest.forControlledIndicator(seed);
@@ -72,12 +73,13 @@ public final class A04PhysicalDeclarationContractTest {
                         .getProviderTypeId();
                 sawNmos |= ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(type);
                 sawNpn |= ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID.equals(type);
+                sawAlternate |= "nmos-low-side-driver-alt".equals(type);
             }
             for (String target : normal.getDecisionOwners().values())
                 assertPhysical(BoundedAssemblyPlan.resolveForDiagnosticFault(request, target));
         }
-        check(sawNmos && sawNpn,
-                "controlled physical corpus did not cover both low-side families");
+        check(sawNmos && sawNpn && sawAlternate,
+                "controlled physical corpus did not cover all three low-side providers");
     }
 
     private static void assertPhysical(BoundedAssemblyPlan plan) {

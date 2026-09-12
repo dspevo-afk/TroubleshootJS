@@ -143,7 +143,8 @@ public final class A03IdentityContractTest {
                 "unknown choice");
 
         modelMutationCanary(values);
-        npnModelMutationCanary(manifests.get(2));
+        // Current epoch 6: seed 2 contains NPN; seed -1 contains alternate NMOS.
+        npnModelMutationCanary(manifests.get(1));
         choiceCapacityCanaries(base);
     }
 
@@ -242,7 +243,7 @@ public final class A03IdentityContractTest {
         String artifact = BoundedAssemblyRequest.CONTROLLED_INTENT_ID.equals(
                 manifest.getDescriptor().getDeviceIntent().getId())
                 ? (manifest.getDescriptor().getRootSeed() == -1L ?
-                    "manifest-controlled-npn" : "manifest-controlled") : "manifest-resistive";
+                    "manifest-controlled-alt" : "manifest-controlled") : "manifest-resistive";
         writeParity(artifact, canonical);
     }
 

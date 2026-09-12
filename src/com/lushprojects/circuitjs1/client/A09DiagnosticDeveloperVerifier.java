@@ -72,7 +72,7 @@ final class A09DiagnosticDeveloperVerifier {
             try { entry.restore(sim); entry.assertRestored(sim); }
             finally { GeneratedDiagnosticSolvabilityAdmission.endInternalProof(); }
         }
-        require(variants.size() >= 2, "both NPN and NMOS production composition paths exercised");
+        require(variants.size() == 3, "all three registered production composition variants exercised");
         require(sim.getGeneratedBoardInstance() != null && !sim.activeMeasurementOverlay &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning(), "A09 restored its entry graph and proof guard");
         publish("{\"protocol\":\"TSJ-A09-DIAGNOSTIC-1\",\"status\":\"PASS\",\"cleanup\":\"PASS\","

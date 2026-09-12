@@ -44,6 +44,7 @@ final class Task49DeveloperVerifier {
             "explicit developer route is required");
         if (forcedFailure)
             throw new AssertionError("task49-explicit-assertion-canary");
+        A11ProviderConformanceChecks.publish(A11ProviderConformanceChecks.verify());
         assertions = 0;
         measurements = 0;
         phase = "entry";
@@ -337,7 +338,7 @@ final class Task49DeveloperVerifier {
                 ControlledIndicatorChannelObservation observation =
                     new ControlledIndicatorChannelObservation(board, plan, channel);
                 ControlledIndicatorDriverObservation driver =
-                    ControlledIndicatorDriverObservations.forProvider(provider.getTypeId());
+                    ControlledIndicatorDriverObservations.forProvider(provider.getTypeId(), provider.getVersion());
                 if (selected.getKey().equals(channel.getKey()))
                     require(driver.isHealthyOn(observation),
                         "selected channel did not respond to its own HIGH operation");

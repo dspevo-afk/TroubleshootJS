@@ -11,10 +11,10 @@ import java.util.Vector;
  */
 final class Task48MutationDeveloperVerifier {
     private static final double[] ALTERNATIVE_FROM_OHMS = {
-        270.0, 330.0, 1000.0, 2700.0
+        270.0, 330.0, 680.0, 1000.0, 2700.0
     };
     private static final double[] ALTERNATIVE_TO_OHMS = {
-        330.0, 270.0, 1500.0, 3300.0
+        330.0, 270.0, 1000.0, 1500.0, 3300.0
     };
     private static int assertions;
 
@@ -117,7 +117,7 @@ final class Task48MutationDeveloperVerifier {
             String faultRepairs = "[" + repairs + "]";
             String json = "{\"status\":\"PASS\",\"owners\":" +
                 originalPlan.getDecisionOwners().size() + ",\"freshFaultBoards\":true" +
-                ",\"alternativeMap\":\"270->330,330->270,1000->1500,2700->3300\"" +
+                ",\"alternativeMap\":\"270->330,330->270,680->1000,1000->1500,2700->3300\"" +
                 ",\"faultRepairs\":" + faultRepairs +
                 ",\"liftChecks\":" + liftChecks +
                 ",\"reconnectChecks\":" + reconnectChecks +

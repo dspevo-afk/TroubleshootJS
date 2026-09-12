@@ -1,0 +1,10 @@
+{
+  "status": "PARTIAL: A11 active resources closed; earlier policy-blocked scratch retained",
+  "preview": "Stopped after exact PID/start/executable revalidation",
+  "browser": "Owned tabs closed; Browser list empty",
+  "native": "All current-contract scratch cleaned",
+  "reviewers": "Completed; no worker-owned processes",
+  "retainedEvidence": "<OS temp>/troubleshootjs-a10-a11-67333b42a74d44b089f27158daf1eecb",
+  "retainedPolicyBlockedScratch": "<OS temp>/troubleshootjs-a10-routing-final-5b4a70e466af43ddbaec4ffaadf1d883",
+  "cleanupLimit": "Earlier automatic approval review rejected guarded deletion as blocked by policy; no bypass or further attempts."
+}

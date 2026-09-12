@@ -51,7 +51,7 @@ final class ControlledIndicatorDeviceBehavior
             if (driver == null)
                 throw new IllegalArgumentException("Missing driver contribution " + channel.getDriverKey());
             providerMap.put(channel.getKey(), ControlledIndicatorDriverObservations
-                .forProvider(driver.getProviderTypeId()));
+                .forProvider(driver.getProviderTypeId(), driver.getProviderVersion()));
         }
         if (commandMap.size() != plan.getChannels().size())
             throw new IllegalArgumentException("Controlled channel command population changed");

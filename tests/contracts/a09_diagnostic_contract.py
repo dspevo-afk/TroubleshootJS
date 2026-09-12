@@ -32,7 +32,7 @@ def validate_report(report: object) -> dict:
     _integer(report.get('leafSamples'), 50)
     if _integer(report.get('overRangeSamples'), 1) > report['leafSamples']:
         raise ValueError('over-range outcomes exceed actual sample count')
-    _integer(report.get('blockVariants'), 2)
+    _integer(report.get('blockVariants'), 3)
     _integer(report.get('wallMs'))
     rows = report.get('serialProofs')
     if not isinstance(rows, list) or len(rows) != 2:
@@ -88,7 +88,7 @@ def self_test() -> int:
     # Synthetic input is ONLY a report-reader fixture, never browser evidence.
     fixture = dict(protocol='TSJ-A09-DIAGNOSTIC-1', status='PASS', cleanup='PASS',
                    assertions=100, rejectedCases=11, leafHypotheses=14, leafSamples=100, overRangeSamples=10,
-                   composedHypotheses=6, composedSamples=120, blockVariants=2, wallMs=1000,
+                   composedHypotheses=6, composedSamples=120, blockVariants=3, wallMs=1000,
                    serialProofs=[dict(seed=s, hypotheses=3, samples=60, serialProofMs=100,
                                      ownerRestored=True, repairRetestPassed=True) for s in (0, 3)])
     fixture.update({key: True for key in TRUE_FIELDS})

@@ -189,6 +189,15 @@ $controlled = [ordered]@{
 }
 function Test-ControlledFixture($Value) { return Test-ControlledReport (Encode-Report $Value) 'TSJ-TASK49-2' }
 Assert-ReportContract (Test-ControlledFixture $controlled) 'Complete controlled fixture rejected.'
+$alternate=Copy-Report $controlled
+$alternate.valueCases[0].channels[0].provider='nmos-low-side-driver-alt'
+$alternate.roleSelectionVectors[0]='seed=-1;a=nmos-low-side-driver-alt;b=nmos-low-side-driver-alt;fault=channel-a-load-RLOAD-OPEN'
+Assert-ReportContract (Test-ControlledFixture $alternate) 'Declared alternate NMOS role rejected.'
+foreach ($unknown in @('nmos-low-side-driver-alt2','npn-low-side-driver-alt','nmos-low-side-driver-alt-alt')) {
+    $copy=Copy-Report $alternate
+    $copy.roleSelectionVectors[0]='seed=-1;a=' + $unknown + ';b=nmos-low-side-driver-alt;fault=channel-a-load-RLOAD-OPEN'
+    Assert-ReportContract (-not (Test-ControlledFixture $copy)) 'Unknown role vector provider accepted.'
+}
 foreach ($field in @($controlled.Keys)) {
     $copy=Copy-Report $controlled; $copy.PSObject.Properties.Remove($field)
     Assert-ReportContract (-not (Test-ControlledFixture $copy)) "Missing controlled $field accepted."

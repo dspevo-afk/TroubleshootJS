@@ -659,7 +659,7 @@ function Test-ControlledReport([object]$Value, [string]$Protocol) {
             foreach ($channel in $case.channels) {
                 if ($channel.channel -isnot [string] -or
                         $channel.channel -cnotin @('channel-a','channel-b') -or
-                        $channel.provider -cnotin @('nmos-low-side-driver','npn-low-side-driver') -or
+                        $channel.provider -cnotin @('nmos-low-side-driver','nmos-low-side-driver-alt','npn-low-side-driver') -or
                         $channel.catalog -isnot [string] -or
                         [String]::IsNullOrWhiteSpace($channel.catalog) -or
                         -not (Test-VerifierStrictIntegralValue $channel.resistanceOhms 270L 330L) -or
@@ -676,7 +676,7 @@ function Test-ControlledReport([object]$Value, [string]$Protocol) {
             $vector = $parsed.roleSelectionVectors[$i]
             if ($vector -isnot [string] -or
                     $vector -cnotmatch ('^seed=' + [regex]::Escape($roleSeeds[$i]) +
-                        ';a=(nmos|npn)-low-side-driver;b=(nmos|npn)-low-side-driver;fault=[A-Za-z0-9_.-]+$')) {
+                        ';a=(nmos-low-side-driver(?:-alt)?|npn-low-side-driver);b=(nmos-low-side-driver(?:-alt)?|npn-low-side-driver);fault=[A-Za-z0-9_.-]+$')) {
                 return $false
             }
         }

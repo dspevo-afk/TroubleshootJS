@@ -1,0 +1,23 @@
+{
+  "status": "FAIL",
+  "phase": "compiled physical alternative-repair oracle",
+  "verification": "FAIL:Task49: seed -1 per-owner mutation and restore: Task48 mutation: no frozen alternative mapping for nominal resistance 680",
+  "provider": {
+    "protocol": "TSJ-A11-PROVIDERS-1",
+    "status": "PASS",
+    "scope": "provider-declarations",
+    "entries": 9,
+    "paired": 7,
+    "joins": 2,
+    "roleVariants": 3,
+    "plans": 6,
+    "parts": 78,
+    "negativeCases": 19,
+    "assertions": 427,
+    "generatorVersion": 6,
+    "solverEvidence": "separate-current-Task49-report"
+  },
+  "task49ReportPresent": false,
+  "cause": "Frozen verifier alternative map omitted new 680 Ohm nominal.",
+  "repair": "Add explicit 680->1000 Ohm alternative; actual solver and customer retest still required."
+}

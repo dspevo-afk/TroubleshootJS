@@ -5,6 +5,7 @@ import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.EntityKind;
 /** Provider-owned live observation of one low-side driver implementation. */
 interface ControlledIndicatorDriverObservation {
     String getProviderId();
+    int getVersion();
 
     boolean isHealthyOn(ControlledIndicatorChannelObservation context);
     boolean isHealthyOff(ControlledIndicatorChannelObservation context);
@@ -139,27 +140,44 @@ final class ControlledIndicatorChannelObservation {
 
 /** Explicit registry: provider IDs select implementation classes. */
 final class ControlledIndicatorDriverObservations {
-    private static final ControlledIndicatorDriverObservation NMOS =
-        new NmosControlledIndicatorDriverObservation();
-    private static final ControlledIndicatorDriverObservation NPN =
-        new NpnControlledIndicatorDriverObservation();
-
     private ControlledIndicatorDriverObservations() { }
 
-    static ControlledIndicatorDriverObservation forProvider(String providerId) {
-        if (ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(providerId))
-            return NMOS;
-        if (ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID.equals(providerId))
-            return NPN;
-        throw new IllegalArgumentException("Unsupported controlled driver provider " + providerId);
+    static ControlledIndicatorDriverObservation forProvider(String providerId, int version) {
+        return ConstructionProviderRegistry.standard().get(providerId, version)
+            .requireDriverObservation();
+    }
+
+    /* These constructors are used only while the standard registry is being
+     * assembled.  They intentionally do not resolve the registry. */
+    static ControlledIndicatorDriverObservation createNmos(String providerId, int version) {
+        return new NmosControlledIndicatorDriverObservation(providerId, version);
+    }
+
+    static ControlledIndicatorDriverObservation createNpn(String providerId, int version) {
+        return new NpnControlledIndicatorDriverObservation(providerId, version);
     }
 }
 
 /** Actual NMOS low-side observation rules. */
 final class NmosControlledIndicatorDriverObservation
         implements ControlledIndicatorDriverObservation {
+    private final String providerId;
+    private final int version;
+
+    NmosControlledIndicatorDriverObservation(String providerId, int version) {
+        this.providerId = FunctionalBlockDescriptor.requireId(providerId,
+            "observation.providerId");
+        if (version < 1)
+            throw new IllegalArgumentException("Invalid observation version");
+        this.version = version;
+    }
+
     public String getProviderId() {
-        return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID;
+        return providerId;
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     public boolean isHealthyOn(ControlledIndicatorChannelObservation context) {
@@ -257,16 +275,31 @@ final class NmosControlledIndicatorDriverObservation
         if (driver == null)
             throw new IllegalStateException("Controlled channel has no driver contribution: " +
                 context.getChannel().getKey());
-        return ControlledIndicatorBlockContributions.resolve(driver.getProviderTypeId(),
-            driver.getProviderVersion());
+        return ConstructionProviderRegistry.standard().get(driver.getProviderTypeId(),
+            driver.getProviderVersion()).requireControlledContribution();
     }
 }
 
 /** Actual NPN low-side observation rules. */
 final class NpnControlledIndicatorDriverObservation
         implements ControlledIndicatorDriverObservation {
+    private final String providerId;
+    private final int version;
+
+    NpnControlledIndicatorDriverObservation(String providerId, int version) {
+        this.providerId = FunctionalBlockDescriptor.requireId(providerId,
+            "observation.providerId");
+        if (version < 1)
+            throw new IllegalArgumentException("Invalid observation version");
+        this.version = version;
+    }
+
     public String getProviderId() {
-        return ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID;
+        return providerId;
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     public boolean isHealthyOn(ControlledIndicatorChannelObservation context) {
@@ -370,8 +403,8 @@ final class NpnControlledIndicatorDriverObservation
         if (driver == null)
             throw new IllegalStateException("Controlled channel has no driver contribution: " +
                 context.getChannel().getKey());
-        return ControlledIndicatorBlockContributions.resolve(driver.getProviderTypeId(),
-            driver.getProviderVersion());
+        return ConstructionProviderRegistry.standard().get(driver.getProviderTypeId(),
+            driver.getProviderVersion()).requireControlledContribution();
     }
 
     private static double parameter(ControlledIndicatorChannelObservation context,

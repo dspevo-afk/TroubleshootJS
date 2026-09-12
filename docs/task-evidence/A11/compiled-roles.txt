@@ -1,0 +1,6 @@
+A05_ROLE_VECTOR seed=-1;a=nmos-low-side-driver-alt;b=nmos-low-side-driver-alt;fault=channel-a-load-RLOAD-OPEN
+A05_ROLE_VECTOR seed=0;a=nmos-low-side-driver-alt;b=nmos-low-side-driver-alt;fault=channel-a-load-RLOAD-OPEN
+A05_ROLE_VECTOR seed=1;a=nmos-low-side-driver;b=nmos-low-side-driver;fault=channel-b-driver-RG-OPEN
+A05_ROLE_VECTOR seed=2;a=npn-low-side-driver;b=nmos-low-side-driver;fault=channel-a-load-RLOAD-OPEN
+A05_ROLE_VECTOR seed=-9223372036854775808;a=nmos-low-side-driver;b=npn-low-side-driver;fault=channel-b-driver-RB-OPEN
+A05_ROLE_VECTOR seed=9223372036854775807;a=nmos-low-side-driver;b=npn-low-side-driver;fault=channel-b-driver-RB-OPEN

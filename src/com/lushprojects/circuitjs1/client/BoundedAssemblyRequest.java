@@ -15,7 +15,7 @@ import com.lushprojects.circuitjs1.client.FunctionalBlockDescriptor.Parameter;
  */
 final class BoundedAssemblyRequest {
     static final String GENERATOR_ID = "bounded-assembler";
-    static final int GENERATOR_VERSION = 5;
+    static final int GENERATOR_VERSION = 6;
     static final String INTENT_ID = "resistive-coupling";
     static final int INTENT_VERSION = 1;
     static final String PROFILE_ID = "developer-canary";

@@ -317,6 +317,8 @@ final class ElectricalRealizationSpec {
             if ("NMOS".equals(kind)) {
                 positiveParameter("threshold");
                 positiveParameter("beta");
+                if (!"NMOS".equals(modelId))
+                    throw new IllegalArgumentException("Unsupported NMOS primitive model " + modelId);
             }
             if ("NPN".equals(kind)) positiveParameter("beta");
             if ("NMOS".equals(kind) || "NPN".equals(kind) || "LED".equals(kind))

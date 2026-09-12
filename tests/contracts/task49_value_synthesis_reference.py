@@ -56,8 +56,8 @@ def expected_driver(seed, block_key, reference):
     derived = reference.fnv_seed(seed, "controlled-indicator", 1, "block",
                                  block_key, "topology", 1,
                                  "low-side-implementation")
-    return ["nmos-low-side-driver", "npn-low-side-driver"][
-        reference.next_int(reference.splitmix(derived), 2)]
+    return ["nmos-low-side-driver", "nmos-low-side-driver-alt", "npn-low-side-driver"][
+        reference.next_int(reference.splitmix(derived), 3)]
 
 
 def expected_fault(seed, reference):
@@ -80,7 +80,7 @@ def expected_descriptor(seed):
                    "temporal-evidence=~;temporal-samples=~")
     return ("tsj-challenge/2|constraints=" + constraints +
             "|device-intent=controlled-indicator@1|difficulty-profile=controlled-indicator@1"
-            "|generator=bounded-assembler@5|geometry=3|root-seed=" + str(seed))
+            "|generator=bounded-assembler@6|geometry=3|root-seed=" + str(seed))
 
 
 def expected_row(seed, block_key, reference):
@@ -153,9 +153,9 @@ def verify(path):
             raise AssertionError("seed %d selected %s, expected the independent fault decision" %
                                  (seed, observed["fault"]))
         if observed["descriptor"] != expected_descriptor(seed):
-            raise AssertionError("seed %d descriptor is not the complete canonical bounded5/schema2 descriptor" %
+            raise AssertionError("seed %d descriptor is not the complete canonical bounded6/schema2 descriptor" %
                                  seed)
-    print("PASS: current value synthesis oracle %d seeds; bounded5/schema2 repeated-channel equations exact" % len(SEEDS))
+    print("PASS: current value synthesis oracle %d seeds; bounded6/schema2 repeated-channel equations exact" % len(SEEDS))
 
 
 def verify_roles(path):

@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "route": "/?tsjChallenge=controlled-indicator&seed=4&running=true",
+  "inputRoute": "Built-in Browser visible buttons, native select options and canvas pointer input",
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "dpr": 1
+  },
+  "fixture": {
+    "seed": "4",
+    "generatorVersion": 6,
+    "providers": [
+      "nmos-low-side-driver-alt",
+      "nmos-low-side-driver-alt"
+    ],
+    "fault": "channel-b-driver-RG-OPEN",
+    "provenance": "Explicit independent selection/fault oracle; conformance checks use seed4"
+  },
+  "steps": [
+    {
+      "action": "Retest Customer before repair",
+      "result": "Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "action": "Power OFF; OHM; red left-click (405,398), black right-click (498,398)",
+      "result": "OL across channel B RG pads"
+    },
+    {
+      "action": "Select active OHM again to exit; select RG body; Remove component",
+      "result": "Removed resistor moved to parts tray"
+    },
+    {
+      "action": "Choose 680 Ohm +/-5% in channel B RG catalog; Install new resistor in RG",
+      "result": "Replacement installed; original remains in parts tray"
+    },
+    {
+      "action": "OHM with retained probe pads",
+      "result": "680 Ohm"
+    },
+    {
+      "action": "Exit OHM; power ON; A LOW/HIGH and B LOW/HIGH",
+      "result": "Independent channels respond; B LOW screenshot shows A and supply lit while B is off"
+    },
+    {
+      "action": "Retest Customer",
+      "result": "Repair verified. The controlled indicator switches normally. Customer retest passed. The reported behavior is resolved."
+    }
+  ],
+  "screenshots": [
+    "01-unrepaired.png",
+    "02-open-resistance.png",
+    "03-replacement-measured.png",
+    "04-channel-b-low.png",
+    "05-repaired.png"
+  ],
+  "screenshotsInspected": true,
+  "finalPageErrors": [],
+  "debugOffReports": {
+    "verification": null,
+    "provider": null,
+    "task49": null
+  },
+  "navigationCorrection": "Initial unsupported tsjChallenge=controlled showed an empty simulator; corrected to documented controlled-indicator before any qualified player action."
+}

@@ -50,7 +50,7 @@ final class StandardPhysicalConstructionProviders {
     private static final PhysicalConstructionProvider RESISTIVE_LOAD =
         new ResistivePhysicalProvider(ResistiveBlockContributions.LOAD_TYPE_ID);
     private static final PhysicalConstructionProvider CONTROLLED_DRIVER =
-        new NmosControlledDriverPhysicalProvider();
+        new NmosControlledDriverPhysicalProvider(NmosDriverProfile.standard());
     private static final PhysicalConstructionProvider CONTROLLED_NPN_DRIVER =
         new NpnControlledDriverPhysicalProvider();
     private static final PhysicalConstructionProvider CONTROLLED_LOAD =
@@ -65,30 +65,38 @@ final class StandardPhysicalConstructionProviders {
     private StandardPhysicalConstructionProviders() { }
 
     static PhysicalConstructionProvider provider(String providerId, int version) {
-        if (ResistiveBlockContributions.SOURCE_TYPE_ID.equals(providerId) &&
-                version == ResistiveBlockContributions.VERSION)
-            return RESISTIVE_SOURCE;
-        if (ResistiveBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
-                version == ResistiveBlockContributions.VERSION)
-            return RESISTIVE_LOAD;
-        if (ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.VERSION)
-            return CONTROLLED_DRIVER;
-        if (ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.NPN_VERSION)
-            return CONTROLLED_NPN_DRIVER;
-        if (ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.LOAD_VERSION)
-            return CONTROLLED_LOAD;
-        if (SupplyPresentBlockContributions.TYPE_ID.equals(providerId) &&
-                version == SupplyPresentBlockContributions.VERSION)
-            return SUPPLY_PRESENT;
-        if ("resistive-device-join".equals(providerId) && version == 1)
-            return RESISTIVE_DEVICE;
-        if ("controlled-device-join".equals(providerId) && version == 1)
-            return CONTROLLED_DEVICE;
-        throw new IllegalArgumentException("Unknown physical construction provider " +
-            providerId + "@" + version);
+        return ConstructionProviderRegistry.standard().get(providerId, version)
+            .getPhysical();
+    }
+
+    /* Registry bootstrap calls these local factories directly; none resolves
+     * the construction registry. */
+    static PhysicalConstructionProvider createResistiveSource() {
+        return RESISTIVE_SOURCE;
+    }
+    static PhysicalConstructionProvider createResistiveLoad() {
+        return RESISTIVE_LOAD;
+    }
+    static PhysicalConstructionProvider createNmosDriver(NmosDriverProfile profile) {
+        if (profile == null)
+            throw new IllegalArgumentException("NMOS physical profile is required");
+        return profile == NmosDriverProfile.standard() ? CONTROLLED_DRIVER :
+            new NmosControlledDriverPhysicalProvider(profile);
+    }
+    static PhysicalConstructionProvider createNpnDriver() {
+        return CONTROLLED_NPN_DRIVER;
+    }
+    static PhysicalConstructionProvider createControlledLoad() {
+        return CONTROLLED_LOAD;
+    }
+    static PhysicalConstructionProvider createSupplyPresent() {
+        return SUPPLY_PRESENT;
+    }
+    static PhysicalConstructionProvider createResistiveDevice() {
+        return RESISTIVE_DEVICE;
+    }
+    static PhysicalConstructionProvider createControlledDevice() {
+        return CONTROLLED_DEVICE;
     }
 
     static PhysicalConstructionDeclarations describe(BoundedAssemblyPlan plan) {
@@ -104,10 +112,12 @@ final class StandardPhysicalConstructionProviders {
 
         String boardFamilyId = null;
         String boardName = null;
+        ConstructionProviderRegistry registry = ConstructionProviderRegistry.standard();
         for (ElectricalRealizationSpec.ProviderDeclaration declaration :
                 spec.getProviderDeclarations().values()) {
-            PhysicalConstructionProvider provider = provider(declaration.getProviderId(),
+            ConstructionProviderRegistry.Entry entry = registry.get(declaration.getProviderId(),
                 declaration.getProviderVersion());
+            PhysicalConstructionProvider provider = entry.getPhysical();
             if (boardFamilyId == null) {
                 boardFamilyId = provider.getBoardFamilyId();
                 boardName = provider.getBoardName();
@@ -120,6 +130,7 @@ final class StandardPhysicalConstructionProviders {
             if (contribution == null)
                 throw new IllegalStateException("Physical provider returned no contribution: " +
                     declaration.getOwnerKey());
+            registry.validatePhysicalContribution(entry, contribution);
             if (declaration.isDeviceOwner()) {
                 device.addAll(contribution.getParts());
             } else {
@@ -496,11 +507,19 @@ abstract class ControlledDriverPhysicalProvider implements PhysicalConstructionP
 
 /** Physical provider for the explicit NMOS controlled driver contribution. */
 final class NmosControlledDriverPhysicalProvider extends ControlledDriverPhysicalProvider {
+    private final NmosDriverProfile profile;
+
+    NmosControlledDriverPhysicalProvider(NmosDriverProfile profile) {
+        if (profile == null)
+            throw new IllegalArgumentException("NMOS physical profile is required");
+        this.profile = profile;
+    }
+
     public String getProviderId() {
-        return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID;
+        return profile.getProviderId();
     }
     public int getVersion() {
-        return ControlledIndicatorBlockContributions.VERSION;
+        return profile.getVersion();
     }
     protected void addTransistorParts(ArrayList<PhysicalConstructionPartDeclaration> parts,
             BoundedAssemblyPlan plan, ElectricalRealizationSpec spec,

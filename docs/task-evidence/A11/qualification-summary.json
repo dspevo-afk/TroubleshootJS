@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "task49": {
+    "outerStatus": "PASS:task49",
+    "assertions": 397,
+    "measurementCases": 4,
+    "strictReader": "PASS",
+    "seedValueOracle": "PASS:9 signed seeds and complete descriptors",
+    "roleOracle": "PASS:6 signed seeds",
+    "cases": [
+      {
+        "seed": "-1",
+        "providers": [
+          "nmos-low-side-driver-alt",
+          "nmos-low-side-driver-alt"
+        ],
+        "faultRepairs": 4,
+        "assertions": 82,
+        "mutationAssertions": 464,
+        "liftChecks": 4,
+        "reconnectChecks": 4,
+        "removeChecks": 12,
+        "restoreChecks": 4,
+        "alternativeMap": "270->330,330->270,680->1000,1000->1500,2700->3300",
+        "alternativeRepairs": 2
+      },
+      {
+        "seed": "0",
+        "providers": [
+          "nmos-low-side-driver-alt",
+          "nmos-low-side-driver-alt"
+        ],
+        "faultRepairs": 4,
+        "assertions": 109,
+        "mutationAssertions": 464,
+        "liftChecks": 4,
+        "reconnectChecks": 4,
+        "removeChecks": 12,
+        "restoreChecks": 4,
+        "alternativeMap": "270->330,330->270,680->1000,1000->1500,2700->3300",
+        "alternativeRepairs": 2
+      },
+      {
+        "seed": "1",
+        "providers": [
+          "nmos-low-side-driver",
+          "nmos-low-side-driver"
+        ],
+        "faultRepairs": 4,
+        "assertions": 82,
+        "mutationAssertions": 464,
+        "liftChecks": 4,
+        "reconnectChecks": 4,
+        "removeChecks": 12,
+        "restoreChecks": 4,
+        "alternativeMap": "270->330,330->270,680->1000,1000->1500,2700->3300",
+        "alternativeRepairs": 0
+      },
+      {
+        "seed": "-9223372036854775808",
+        "providers": [
+          "nmos-low-side-driver",
+          "npn-low-side-driver"
+        ],
+        "faultRepairs": 4,
+        "assertions": 82,
+        "mutationAssertions": 464,
+        "liftChecks": 4,
+        "reconnectChecks": 4,
+        "removeChecks": 12,
+        "restoreChecks": 4,
+        "alternativeMap": "270->330,330->270,680->1000,1000->1500,2700->3300",
+        "alternativeRepairs": 0
+      }
+    ]
+  },
+  "providerDeclarations": {
+    "native": 427,
+    "compiled": 427,
+    "negativeCases": 19,
+    "strictReader": 125,
+    "entries": 9,
+    "roles": 3
+  },
+  "reportProtocol": "PASS:470 assertions including alternate positive and three near-miss role negatives",
+  "a09": {
+    "status": "PASS",
+    "assertions": 97,
+    "negativeCases": 11,
+    "blockVariants": 3,
+    "hypotheses": 8,
+    "samples": 1056,
+    "strictReader": 144
+  },
+  "task41": "PASS:actual maintained strict reader",
+  "forcedFailure": "PASS:exact Task49 assertion canary with null Task49/provider reports",
+  "debugOff": "PASS:verification and both reports null",
+  "a10": "PASS:1273 assertions,24 attempts,strict reader,worst3094ms,cancel4ms",
+  "player": "PASS:visible initial failure,OL,680 Ohm replacement,independent channels,successful customer retest;5 inspected screenshots;no page errors",
+  "review": "PASS:optional read-only source review;no blockers;one TEST/TOOL coverage follow-up"
+}

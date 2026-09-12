@@ -15,7 +15,7 @@ final class StandardElectricalConstructionProviders {
     private static final ElectricalConstructionProvider RESISTIVE_LOAD =
             new ResistiveProvider(ResistiveBlockContributions.LOAD_TYPE_ID);
     private static final ElectricalConstructionProvider CONTROLLED_DRIVER =
-            new NmosControlledDriverProvider();
+            new NmosControlledDriverProvider(NmosDriverProfile.standard());
     private static final ElectricalConstructionProvider CONTROLLED_NPN_DRIVER =
             new NpnControlledDriverProvider();
     private static final ElectricalConstructionProvider CONTROLLED_LOAD =
@@ -26,26 +26,33 @@ final class StandardElectricalConstructionProviders {
     private StandardElectricalConstructionProviders() { }
 
     static ElectricalConstructionProvider provider(String providerId, int version) {
-        if (ResistiveBlockContributions.SOURCE_TYPE_ID.equals(providerId) &&
-                version == ResistiveBlockContributions.VERSION)
-            return RESISTIVE_SOURCE;
-        if (ResistiveBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
-                version == ResistiveBlockContributions.VERSION)
-            return RESISTIVE_LOAD;
-        if (ControlledIndicatorBlockContributions.DRIVER_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.VERSION)
-            return CONTROLLED_DRIVER;
-        if (ControlledIndicatorBlockContributions.NPN_DRIVER_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.NPN_VERSION)
-            return CONTROLLED_NPN_DRIVER;
-        if (ControlledIndicatorBlockContributions.LOAD_TYPE_ID.equals(providerId) &&
-                version == ControlledIndicatorBlockContributions.LOAD_VERSION)
-            return CONTROLLED_LOAD;
-        if (SupplyPresentBlockContributions.TYPE_ID.equals(providerId) &&
-                version == SupplyPresentBlockContributions.VERSION)
-            return SUPPLY_PRESENT;
-        throw new IllegalArgumentException("Unknown electrical construction provider " +
-                providerId + "@" + version);
+        return ConstructionProviderRegistry.standard().get(providerId, version)
+                .requireElectrical();
+    }
+
+    /* These factories are deliberately registry-free.  Standard registry
+     * bootstrap uses them to assemble entries without resolving the registry
+     * recursively. */
+    static ElectricalConstructionProvider createResistiveSource() {
+        return RESISTIVE_SOURCE;
+    }
+    static ElectricalConstructionProvider createResistiveLoad() {
+        return RESISTIVE_LOAD;
+    }
+    static ElectricalConstructionProvider createNmosDriver(NmosDriverProfile profile) {
+        if (profile == null)
+            throw new IllegalArgumentException("NMOS driver profile is required");
+        return profile == NmosDriverProfile.standard() ? CONTROLLED_DRIVER :
+            new NmosControlledDriverProvider(profile);
+    }
+    static ElectricalConstructionProvider createNpnDriver() {
+        return CONTROLLED_NPN_DRIVER;
+    }
+    static ElectricalConstructionProvider createControlledLoad() {
+        return CONTROLLED_LOAD;
+    }
+    static ElectricalConstructionProvider createSupplyPresent() {
+        return SUPPLY_PRESENT;
     }
 
     static ElectricalConstructionProvider resistiveSource() { return RESISTIVE_SOURCE; }
@@ -384,17 +391,25 @@ final class StandardElectricalConstructionProviders {
     }
 
     private static final class NmosControlledDriverProvider extends ControlledDriverProvider {
+        private final NmosDriverProfile profile;
+
+        NmosControlledDriverProvider(NmosDriverProfile profile) {
+            if (profile == null)
+                throw new IllegalArgumentException("NMOS driver profile is required");
+            this.profile = profile;
+        }
+
         public String getProviderId() {
-            return ControlledIndicatorBlockContributions.DRIVER_TYPE_ID;
+            return profile.getProviderId();
         }
         public int getVersion() {
-            return ControlledIndicatorBlockContributions.VERSION;
+            return profile.getVersion();
         }
-        protected String controlResistorId() { return "RG"; }
-        protected int transistorReturnPostIndex() { return 1; }
-        protected String transistorControlTerminal() { return "G"; }
-        protected String transistorSwitchedTerminal() { return "D"; }
-        protected String transistorReturnTerminal() { return "S"; }
+        protected String controlResistorId() { return profile.getControlResistorId(); }
+        protected int transistorReturnPostIndex() { return profile.getReturnPostIndex(); }
+        protected String transistorControlTerminal() { return profile.getControlTerminal(); }
+        protected String transistorSwitchedTerminal() { return profile.getSwitchedTerminal(); }
+        protected String transistorReturnTerminal() { return profile.getReturnTerminal(); }
 
         protected void declareTransistor(ElectricalRealizationSpec.ContributionBuilder builder,
                 ComposedBlockContribution contribution) {
@@ -404,11 +419,13 @@ final class StandardElectricalConstructionProviders {
                     contribution.getNmosRecipes().get("Q1");
             if (recipe == null)
                 throw new IllegalArgumentException("NMOS driver Q1 recipe is missing");
-            builder.component("Q1", "NMOS", PhysicalPackages.TO92_NMOS,
+            builder.component("Q1", profile.getPrimitiveType(), profile.getPhysicalPackage(),
                     recipe.getModelId(), ElectricalRealizationSpec.numbers(
                             "threshold", parameter(contribution, "threshold-volts"),
                             "beta", parameter(contribution, "beta")),
-                    ElectricalRealizationSpec.posts("G", 0, "D", 2, "S", 1));
+                    ElectricalRealizationSpec.posts(profile.getControlTerminal(), 0,
+                            profile.getSwitchedTerminal(), 2,
+                            profile.getReturnTerminal(), profile.getReturnPostIndex()));
         }
 
         protected ElectricalConstructionContext.ElementHandle allocateTransistor(

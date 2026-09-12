@@ -1,7 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -112,9 +111,7 @@ final class LowSideRoleFamily {
 
     /** Canonically registered role implementations. */
     static List<Provider> providers() {
-        return canonicalProviders(Arrays.asList(
-                ControlledIndicatorBlockContributions.nmosDriver(),
-                ControlledIndicatorBlockContributions.npnDriver()));
+        return ConstructionProviderRegistry.standard().lowSideProviders();
     }
 
     /** Validate and canonically order a caller-supplied registration set. */
@@ -142,12 +139,14 @@ final class LowSideRoleFamily {
 
     static Provider resolve(String typeId, int version) {
         FunctionalBlockDescriptor.requireId(typeId, "provider.typeId");
-        for (Provider provider : providers()) {
-            if (typeId.equals(provider.getTypeId()) &&
-                    version == provider.getVersion()) return provider;
-        }
-        throw new IllegalArgumentException("Unsupported low-side provider "
+        ConstructionProviderRegistry.Entry entry = ConstructionProviderRegistry.standard()
+            .get(typeId, version);
+        ControlledIndicatorBlockContributions.Provider provider =
+            entry.getControlledContribution();
+        if (provider == null || !provider.isLowSide())
+            throw new IllegalArgumentException("Unsupported low-side provider "
                 + typeId + "@" + version);
+        return provider;
     }
 
     static Provider select(long seed, String instanceKey, Envelope envelope) {

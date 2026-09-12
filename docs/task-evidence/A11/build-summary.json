@@ -1,0 +1,15 @@
+{
+  "final": {
+    "status": "PASS",
+    "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF",
+    "exitCode": 0,
+    "compileSeconds": 82.971,
+    "linkSeconds": 1.574,
+    "permutations": 5
+  },
+  "earlier": {
+    "initialBuild": "PASS;superseded by one developer mutation-oracle change",
+    "callerFailure": "Subsequent compile/link succeeded but caller returned stale LASTEXITCODE=1 from an earlier no-match rg audit. Preserved as unqualified caller run; final standalone invocation exited0."
+  },
+  "nativeBuildBoundary": "Native runtime paths unchanged after developer-only alternative-map correction; final production build recompiles the delta."
+}

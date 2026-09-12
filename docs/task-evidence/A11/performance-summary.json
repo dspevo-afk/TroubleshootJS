@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "attempts": 24,
+  "cancellationMaxMs": 4,
+  "first": {
+    "p50Ms": 529,
+    "p95Ms": 3025,
+    "worstMs": 3025
+  },
+  "immediateRepeat": {
+    "p50Ms": 519,
+    "p95Ms": 3094,
+    "worstMs": 3094
+  }
+}
