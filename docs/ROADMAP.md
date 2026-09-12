@@ -7,8 +7,8 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **A09: Production fault hypotheses and executable diagnostic providers**<br>
-**Current checkpoint:** **P01 ACCEPTED; PUBLICATION AUTHORIZED.** The fresh independent review found no blocking P01 defect; the owner accepted it and requested P01 publication followed by P02 implementation. All 36 reviewed candidate files and 634 source/test/runner hashes matched at closeout. The Windows native wrapper remains unqualified; direct maintained suites and compiled behavior pass separately. **P02 and A10 are UNSTARTED at this P01 handoff.** P02 is authorized next; A10 still requires accepted P02. [P01 evidence](task-evidence/P01/README.md).
+**Latest completed task:** **P02: Durable layer-aware copper and conductive-surface model**<br>
+**Current checkpoint:** **P02 ACCEPTED; A10 THEN A11 AUTHORIZED.** The owner supplied the fresh independent delta-review PASS for the exact P02 candidate; F1 is resolved with no blocking findings. P02 passes 20 native suites, 3,209 P02 assertions, the five-permutation GWT build and twelve compiled routes. Closeout revalidated all 46 candidate files, 642 source/test inputs, eight runners/readers and five compiled permutations without drift. The Windows wrapper remains separately unqualified. A10 follows P02 publication; A11 follows A10. [P02 evidence and limits](task-evidence/P02/README.md).
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -651,7 +651,7 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00 and A01-A04 are delivered baseline entries. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. R00 is COMPLETE and QUALIFIED under the owner's implementation request; current evidence is indexed in [the R00 packet](task-evidence/R00/README.md). A05 is next and unstarted, as is every remaining feature node. Qualification uses the built-in Browser for current compiled and player checks; the unchanged isolated CLI launcher's ownership deadline remains a separately reported infrastructure limitation.
+T49, N00, A01-A09, R00 and P01/P02 are accepted baseline entries. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. A10 then A11 are the current authorized sequence. Qualification prefers the built-in Browser for current compiled and player checks; the unchanged isolated CLI launcher's ownership deadline remains a separately reported infrastructure limitation.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
@@ -661,7 +661,7 @@ The hard prerequisites on the cards are authoritative. The phase map is a readab
 
 | Lane | Order and boundary |
 |---|---|
-| Completed correction / next | R00-A/B/C/D qualified as one task; separately authorize A05 next. |
+| Current authorized sequence | Close accepted P02 publication, then A10 and A11. |
 | Early foundations | A05, A06/A07 and P01/P02, after their actual prerequisites; shared code has one owner. |
 | Working small-board platform | A08/A09/A11, U01, P03/P04, E01/E03, A10, Q15, U04/U05 and REL-A when its scope is ready. |
 | Normal boards | P05-P09, U02/U03, E02/E04, D01, Q30, U06/U07. |
@@ -979,7 +979,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### A10 · Staged generation jobs, deterministic budgets and proof receipts
 
-**Status:** UNSTARTED - DEPENDENCY BLOCKED. P01 is independently reviewed and accepted, including immutable trace arrays and bounded physical poses. P02 remains unimplemented/unaccepted; its hard prerequisite edge is unchanged. The current one-layer validator does not yet implement durable layer-aware conductor identity. No A10 staging, caching, cancellation or publication code is claimed. Implement and accept P02 before returning to A10.
+**Status:** AUTHORIZED - UNSTARTED. P01 and P02 are accepted; close P02 publication before implementation. No A10 staging, caching, cancellation or publication code is claimed yet.
 
 **Hard prerequisites:** [A05](#m-a05), [A07](#m-a07), [A09](#m-a09), [P02](#m-p02)
 
@@ -1077,7 +1077,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### P02 · Durable layer-aware copper and conductive-surface model
 
-**Status:** UNSTARTED.
+**Status:** ACCEPTED. The owner supplied a fresh independent delta-review PASS for candidate `0326cdb8a09ae8ee2cd309d178cad29fa09a9340e81bb075be3ea1303796f5b8`. F1 is resolved with no blocking findings; the stale checkpoint count is corrected. Fresh review passed 20 native suites, 3,209 P02 assertions, the original 500-fixture probe, 96 additional fixtures/four rejection cases and all 12 compiled routes. The five-permutation build and unchanged dependencies were hash-revalidated. Earlier quota failures remain historical evidence. Physical cut/restore snapshots and projection contracts do not enable E08 gameplay. [Evidence and limits](task-evidence/P02/README.md).
 
 **Hard prerequisites:** [P01](#m-p01), [A03](#m-a03)
 

@@ -53,6 +53,7 @@ final class P01PhysicalPoseDeveloperVerifier {
             PhysicalPackageGeometry g=p.getGeometry();
             for (PcbRotation rotation : p.getAllowedRotations()) {
                 for (PcbBoardSide side : p.getAllowedMountingSides()) {
+                    renderer.setViewingFace(side);
                     PcbPackagePose pose=new PcbPackagePose(x,y,rotation,side);
                     PcbFootprint footprint=PcbFootprint.fromPhysicalPackage(component,pose,g);
                     PcbComponentPlacement placement=footprint.getPlacement();
@@ -107,7 +108,7 @@ final class P01PhysicalPoseDeveloperVerifier {
     }-*/;
 
     /** Geometry and hit testing use the maintained provider; only canary pad artwork is surface-specific. */
-    private static final class SurfaceRenderer implements PhysicalPartRenderer {
+    static final class SurfaceRenderer implements PhysicalPartRenderer {
         private final PhysicalPartRenderer delegate;
         SurfaceRenderer(PhysicalPartRenderer delegate) { this.delegate=delegate; }
         public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext c) { return delegate.getInstalledGeometry(c); }

@@ -68,6 +68,7 @@ final class GeneratedRuntimeInvariant {
         if (!sim.isGeneratedRuntimeSettled())
             throw new IllegalStateException("Generated runtime invariant requires settled generated runtime");
         verify(instance, modifications, activeElements);
+        PcbConductorProjection.audit(instance, activeElements);
     }
 
     private static void verifyComponentBindings(GeneratedBoardInstance instance,

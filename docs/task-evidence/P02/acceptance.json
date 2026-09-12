@@ -1,0 +1,118 @@
+{
+  "base_head": "79be5ac5687aa3ad8552dc063a0434838ff1bf1d",
+  "branch": "codex/task43p-final-recovery",
+  "candidate_identity": "candidate-provenance.json",
+  "corrected_failures": [
+    "Initial P02 NPN/NMOS/composed dispatch timed out before test entry; fixed regular-update dispatch retained readiness guards; final routes passed.",
+    "Intermediate report JSONString module dependency failed actual GWT compilation; removed dependency; final five-permutation build passed.",
+    "Independent review F1: partially overlapping route descriptions retained duplicate physical TRACE edges after late finite-width contact. Repaired by global per-layer supporting-line breakpoint normalization; new old-builder regression fails and repaired candidate passes."
+  ],
+  "gates": {
+    "compiled": {
+      "debug_off_privacy": true,
+      "evidence": "browser-results.json",
+      "forced_negative": true,
+      "limits": "Actual compiled solver/render/hit/endpoint behavior in isolated headless Chromium; not native player input or CLI isolation certification",
+      "p02_current_families": 7,
+      "page_errors": 0,
+      "routes": 12,
+      "status": "PASS"
+    },
+    "independent_review": {
+      "status": "PASS",
+      "original_full_review": "CHANGES_REQUIRED, F1 code blocker identified",
+      "repair_validation": "PASS maintained regressions and unchanged independent-authored probes",
+      "normal_luna": "Fresh delta-review request exited 1 at usage limit before substantive review",
+      "reserve": "Fresh delta-review request exited 1 at usage limit before substantive review",
+      "root_review_is_independent": false,
+      "completed_review": "Independent separate-session review supplied by owner; exact candidate approved, F1 resolved; independent-review.json"
+    },
+    "native": {
+      "evidence": "native-results.json",
+      "independent_lattice_cases": 40,
+      "limits": "Real JDK8 production sources, except the maintained fail-closed Task35 native verifier stub; not Windows wrapper certification",
+      "p02_assertions": 3209,
+      "smd_poses": 16,
+      "status": "PASS",
+      "suites": 20,
+      "shared_copper_permutations": 48
+    },
+    "native_player_input": {
+      "note": "No player-facing side/loupe/cut UI introduced; future U01/E08 flows not certified.",
+      "status": "NOT RUN"
+    },
+    "oracles_and_strict_readers": {
+      "evidence": "oracle-results.json",
+      "note": "All three maintained Python oracles executed directly on final Java receipts; actual report protocol 466 assertions; actual A08 and Task49 report readers passed",
+      "status": "PASS"
+    },
+    "production_gwt": {
+      "command": "scripts/build.ps1 -JavaHome <repository JDK 8u502> -Style OBF",
+      "evidence": "production-build.log",
+      "exit": 0,
+      "permutations": 5,
+      "status": "PASS"
+    },
+    "windows_wrapper": {
+      "exit": 2,
+      "note": "Previously recorded Windows Python-launch failure; not rerun unchanged or relabeled PASS. Direct maintained checks are separately qualified.",
+      "status": "BLOCKED"
+    },
+    "f1_repair": {
+      "finding": "F1",
+      "severity": "P1",
+      "cause": "CODE",
+      "prior_review": "CHANGES_REQUIRED",
+      "prior_candidate_sha256": "ba0053b02d11a21df7924fc65dff5210b7978edbf9cbe1e3bb7ac21796e347d3",
+      "repair": "Collect all contact and pad breakpoints by physical layer/supporting line, then distribute inside each segment before TRACE emission; coincident intervals merge provenance.",
+      "baseline": {
+        "status": "EXPECTED_FAIL",
+        "gate": "maintained new P02 regression on original builder",
+        "other_native_suites_passed": 19,
+        "evidence": "repair-baseline.log"
+      },
+      "maintained_regressions": {
+        "fixtures": 48,
+        "dimensions": "TOP/BOTTOM; horizontal/vertical; six source orders; original/reversed-and-subdivided",
+        "checks": "unique shared physical interval; both provenances; one cut disconnects; pristine immutability; cut/save/restore; no positive-length same-layer collinear duplicate edges"
+      },
+      "independent_probe_sources_sha256": {
+        "IndependentP02ReviewTest.java": "960f81de57641390e1eb33767af96d6e2af137840cfecc35794fc8cfc9207dd1",
+        "IndependentP02MinimalRepro.java": "87c338bac191ee97cdcb148a0782d8878273ff5098ccc7bf0f9f43a0cab39e0b"
+      },
+      "independent_probes": {
+        "minimal_original_unchanged": "PASS exit 0; cutting one shared interval disconnects A/B",
+        "offgrid_original_unchanged": "PASS exit 0; 500 fixtures / 198987 assertions",
+        "evidence": "repair-independent-probes.log",
+        "scope": "Independent-authored probes rerun by implementer; NOT a fresh independent delta review"
+      },
+      "independent_delta_review": {
+        "status": "PASS",
+        "luna": "usage limit before substantive review; exit 1",
+        "reserve": "usage limit before substantive review; exit 1",
+        "note": "Earlier worker quota failures preserved; later independent separate-session PASS accepted by owner. See independent-review.json."
+      }
+    }
+  },
+  "limitations": {
+    "live_copper_mutation": "No player-facing copper adapter installed; metadata-only live cuts fail closed. Graph cut/restore and transactional projection-double tests are not E08 gameplay.",
+    "normal_player_screenshot": "Final debug-off LED rendering smoke only; no native player-input certification",
+    "scale": "Bounded current families and independent small geometric oracle; no Q60/Q100 routing scalability claim"
+  },
+  "next": "Normal P02 commit/push, verify remote SHA and notify; then implement authorized A10 and A11.",
+  "publication": {
+    "committed": false,
+    "email_sent": false,
+    "pushed": false,
+    "staged": false
+  },
+  "resources": {
+    "final_browser_contexts": "CLOSED",
+    "final_preview_server": "STOPPED; thread joined",
+    "independent_review_processes": "Exited 1 at quota before substantive work",
+    "preexisting_cache": "Preserved and excluded",
+    "scratch": "External P02 repair directory; runners, raw receipts and final native classes retained for independent revalidation"
+  },
+  "scope": "P02 foundation only; P01 already published; A10 and E08 unstarted",
+  "status": "ACCEPTED - PUBLICATION PENDING"
+}

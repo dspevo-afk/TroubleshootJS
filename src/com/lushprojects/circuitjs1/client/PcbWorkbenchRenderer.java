@@ -12,6 +12,23 @@ class PcbWorkbenchRenderer {
     private final BoardModificationController modifications;
     private final PcbBoardLayout layout;
     private final PhysicalPartRenderRegistry renderRegistry;
+    private PcbBoardSide viewingFace = PcbBoardSide.TOP;
+    private PcbBoardViewTransform boardView;
+
+    PcbBoardSide getViewingFace() { return viewingFace; }
+    void setViewingFace(PcbBoardSide face) {
+        if (face == null) throw new IllegalArgumentException("Missing viewing face");
+        if (viewingFace != face) {
+            viewingFace = face;
+            boardView = new PcbBoardViewTransform(layout.getBoardOutline(), face);
+            installedObservations.clear(); selectedComponentId = null;
+        }
+    }
+    boolean canProbePad(String padId) { return PcbCopperAccess.canProbe(layout.getPad(padId), viewingFace); }
+    boolean canProbeInstalledContext(PhysicalPartRenderContext context) {
+        return context != null && context.getPlacement() != null &&
+            context.getPlacement().getMountingSide() == viewingFace;
+    }
     private Rectangle canvasArea = new Rectangle(0, 0, 1, 1);
     private double scale = 1;
     private int offsetX;
@@ -64,6 +81,7 @@ class PcbWorkbenchRenderer {
         this.instance = instance;
         this.modifications = modifications;
         this.layout = layout;
+        this.boardView = new PcbBoardViewTransform(layout.getBoardOutline(), viewingFace);
         this.renderRegistry = renderRegistry;
     }
 
@@ -95,30 +113,55 @@ class PcbWorkbenchRenderer {
         graphics.drawRect(outline.x, outline.y, outline.width, outline.height);
         graphics.setColor("#b56c2f");
         graphics.setLineWidth(Math.max(5, scaleInt(PcbTraceRules.TRACE_WIDTH)));
-        for (PcbTraceGeometry trace : layout.getTraces()) {
-            int[] sourceX = trace.getXPoints();
-            int[] sourceY = trace.getYPoints();
-            for (int index = 1; index < sourceX.length; index++)
-                graphics.drawLine(screenX(sourceX[index - 1]), screenY(sourceY[index - 1]),
-                    screenX(sourceX[index]), screenY(sourceY[index]));
+        PcbConductorGraph.Snapshot copper = instance.getCurrentConductorSnapshot();
+        for (PcbConductorGraph.Surface surface : copper.getGraph().getSurfaces()) {
+            if (surface.edgeId == null || !copper.hasEdge(surface.edgeId) || !surface.canProbe(viewingFace)) continue;
+            PcbConductorGraph.Edge edge = copper.getGraph().getEdges().get(surface.edgeId);
+            PcbConductorGraph.Junction a = copper.getGraph().getJunctions().get(edge.first);
+            PcbConductorGraph.Junction b = copper.getGraph().getJunctions().get(edge.second);
+            Point first = screenPointForProvider(new Point(a.x,a.y));
+            Point second = screenPointForProvider(new Point(b.x,b.y));
+            graphics.drawLine(first.x,first.y,second.x,second.y);
         }
         graphics.setLineWidth(1);
         for (PcbPadPlacement pad : layout.getPads())
             drawPad(graphics, pad);
+        for (PcbBoardHole hole : layout.getHoles()) drawHole(graphics,hole);
         for (PcbComponentPlacement component : layout.getComponents())
             drawComponent(graphics, component);
         drawSilkscreenLabels(graphics);
     }
 
-    private void drawPad(Graphics graphics, PcbPadPlacement pad) {
-        Point point = getPadPoint(pad.getPadId());
-        Rectangle padBounds = screenRect(pad.getPadBounds());
-        int radius = Math.max(8, Math.min(padBounds.width, padBounds.height) / 2);
-        int drill = Math.max(4, scaleInt(DRILL_RADIUS));
-        graphics.setColor("#d79a43");
-        graphics.fillOval(point.x - radius, point.y - radius, radius * 2, radius * 2);
+    private void drawHole(Graphics graphics, PcbBoardHole hole) {
+        Point point = screenPointForProvider(new Point(hole.x,hole.y));
+        int land = Math.max(1,scaleInt(hole.landRadius));
+        if (hole.kind != PcbBoardHole.Kind.NON_PLATED && hole.exposure == PcbCopperAccess.Exposure.EXPOSED) {
+            graphics.setColor("#d79a43");
+            graphics.fillOval(point.x-land,point.y-land,land*2,land*2);
+        }
+        int drill = Math.max(1,scaleInt(hole.drillRadius));
         graphics.setColor("#26312e");
-        graphics.fillOval(point.x - drill, point.y - drill, drill * 2, drill * 2);
+        graphics.fillOval(point.x-drill,point.y-drill,drill*2,drill*2);
+    }
+
+    private void drawPad(Graphics graphics, PcbPadPlacement pad) {
+        if (!PcbCopperAccess.hasCopper(pad,PcbCopperLayer.forFace(viewingFace))) return;
+        Point point = getPadPoint(pad.getPadId());
+        Rectangle bounds = screenRectForProvider(pad.getPadBounds());
+        if (pad.getExposure() == PcbCopperAccess.Exposure.EXPOSED) {
+            graphics.setColor("#d79a43");
+            if (pad.getAttachment() == PcbTerminalAttachment.SURFACE_PAD)
+                graphics.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
+            else {
+                int radius = Math.max(8,Math.min(bounds.width,bounds.height)/2);
+                graphics.fillOval(point.x-radius,point.y-radius,radius*2,radius*2);
+            }
+        }
+        if (pad.getAttachment() == PcbTerminalAttachment.PLATED_THROUGH_HOLE) {
+            int drill=Math.max(4,scaleInt(DRILL_RADIUS));
+            graphics.setColor("#26312e");
+            graphics.fillOval(point.x-drill,point.y-drill,drill*2,drill*2);
+        }
     }
 
     private void drawComponent(Graphics graphics, PcbComponentPlacement placement) {
@@ -140,6 +183,7 @@ class PcbWorkbenchRenderer {
             return null;
         PhysicalPartRenderer renderer = requireRenderer(component.getPhysicalPackage(), part);
         PhysicalPartRenderGeometry geometry = renderer.getInstalledGeometry(context);
+        if (placement.getMountingSide() != viewingFace) return geometry;
         if (selected)
             drawSelection(graphics, geometry);
         renderer.drawInstalled(graphics, context, geometry, selected);
@@ -155,6 +199,7 @@ class PcbWorkbenchRenderer {
     }
 
     private void drawSilkscreenLabels(Graphics graphics) {
+        if (viewingFace != PcbBoardSide.TOP) return; // Current labels declare the top face only.
         for (PcbSilkscreenLabel label : layout.getSilkscreenLabels()) {
             graphics.setFont(new Font("sans-serif", label.isBold() ? Font.BOLD : 0,
                 Math.max(10, scaleInt(label.getFontSize()))));
@@ -198,11 +243,14 @@ class PcbWorkbenchRenderer {
     }
 
     ProbeTarget findProbeTarget(CirSim sim, int screenX, int screenY) {
+        for (PcbBoardHole hole : layout.getHoles())
+            if (PcbCopperAccess.blocksProbeAt(hole,screenRectForProvider(hole.getBounds()),screenX,screenY)) return null;
         // Board pads own the board-side probe envelope.  Resolve them before
         // any component-side or tray target so an overlap at a pad can never
         // be stolen by an installed-part renderer.
         for (PcbPadPlacement pad : layout.getPads()) {
-            Rectangle probeBounds = screenRect(pad.getProbeBounds());
+            if (!canProbePad(pad.getPadId())) continue;
+            Rectangle probeBounds = screenRectForProvider(pad.getProbeBounds());
             if (probeBounds.contains(screenX, screenY))
                 return new BoardPadProbeTarget(sim, instance, pad.getPadId(), this);
         }
@@ -276,13 +324,13 @@ class PcbWorkbenchRenderer {
 
     Point getPadPoint(String padId) {
         PcbPadPlacement pad = layout.getPad(padId);
-        return pad == null ? null : new Point(screenX(pad.getX()), screenY(pad.getY()));
+        return pad == null ? null : screenPointForProvider(new Point(pad.getX(),pad.getY()));
     }
 
     Point getComponentLeadPoint(String componentId, String padId) {
         PcbComponentPlacement placement = layout.getComponent(componentId);
         BoardComponent component = instance.getBoard().getComponent(componentId);
-        if (placement == null || component == null)
+        if (placement == null || component == null || placement.getMountingSide() != viewingFace)
             return null;
         PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
         if (part == null || !part.isInstalled())
@@ -525,14 +573,14 @@ class PcbWorkbenchRenderer {
     private boolean findComponentIdForPlacement(PcbComponentPlacement placement,
             BoardComponent component, PhysicalPart<?> part, PhysicalPartRenderContext context,
             int screenX, int screenY) {
-        return requireRenderer(component.getPhysicalPackage(), part)
+        return placement.getMountingSide() == viewingFace && requireRenderer(component.getPhysicalPackage(), part)
             .getInstalledGeometry(context).contains(screenX, screenY);
     }
 
     private ProbeTarget findInstalledProbeTarget(CirSim sim, PcbComponentPlacement placement,
             BoardComponent component, PhysicalPart<?> part, PhysicalPartRenderContext context,
             int screenX, int screenY) {
-        if (part == null)
+        if (part == null || !canProbeInstalledContext(context))
             return null;
         if (!context.isDeveloperCanary() && !context.isInstalledPartMounted())
             return null;
@@ -651,6 +699,7 @@ class PcbWorkbenchRenderer {
 
     ProbeTarget createInstalledProbeTargetForProvider(CirSim sim,
             PhysicalPartRenderContext context, int terminal) {
+        if (!canProbeInstalledContext(context)) return null;
         if (context.isDeveloperCanary())
             return new PhysicalPartRenderCanaryProbeTarget(sim, context, terminal);
         if (!context.isInstalledPartMounted() || context.isLeadConnected(terminal))
@@ -676,7 +725,12 @@ class PcbWorkbenchRenderer {
     Point getProviderTerminalPoint(PhysicalPartRenderContext context, int terminal) {
         return context.getProviderTerminalPoint(terminal);
     }
-    int screenXForProvider(int value) { return screenX(value); }
+    int screenXForProvider(int value) { return screenX(boardView.boardToView(new Point(value,0)).x); }
+    int screenWorkbenchXForProvider(int value) { return screenX(value); }
+    Point screenWorkbenchPointForProvider(Point value) {
+        return value == null ? null : new Point(screenX(value.x),screenY(value.y));
+    }
+    Rectangle screenWorkbenchRectForProvider(Rectangle value) { return screenRect(value); }
     int screenYForProvider(int value) { return screenY(value); }
     int scaleIntForProvider(int value) { return scaleInt(value); }
     int scaleLengthForProvider(double value) {
@@ -685,9 +739,9 @@ class PcbWorkbenchRenderer {
         return (int) Math.round(value * scale);
     }
     Point screenPointForProvider(Point value) {
-        return value == null ? null : new Point(screenX(value.x), screenY(value.y));
+        return screenWorkbenchPointForProvider(boardView.boardToView(value));
     }
-    Rectangle screenRectForProvider(Rectangle value) { return screenRect(value); }
+    Rectangle screenRectForProvider(Rectangle value) { return screenRect(boardView.boardToView(value)); }
     Rectangle getPadProbeBoundsForDeveloperVerification(String padId) {
         return getPadProbeBounds(padId);
     }
@@ -741,13 +795,12 @@ class PcbWorkbenchRenderer {
             slot.getInstalledPart() == part && part.getBoardSlot() == slot;
     }
     Rectangle screenRectForProvider(PcbComponentPlacement value) {
-        return new Rectangle(screenX(value.getX()), screenY(value.getY()),
-            scaleInt(value.getWidth()), scaleInt(value.getHeight()));
+        return screenRectForProvider(new Rectangle(value.getX(),value.getY(),value.getWidth(),value.getHeight()));
     }
 
     Point getProviderCanaryPadPoint(String padId, HashMap<String, Point> padPoints) {
         Point logical = padPoints.get(padId);
-        return logical == null ? null : new Point(screenX(logical.x), screenY(logical.y));
+        return screenPointForProvider(logical);
     }
 
     private void updateTransform(Rectangle area) {
@@ -775,6 +828,6 @@ class PcbWorkbenchRenderer {
 
     private Rectangle getPadProbeBounds(String padId) {
         PcbPadPlacement pad = layout.getPad(padId);
-        return pad == null ? null : screenRect(pad.getProbeBounds());
+        return pad == null || !canProbePad(padId) ? null : screenRectForProvider(pad.getProbeBounds());
     }
 }

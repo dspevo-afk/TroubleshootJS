@@ -16,7 +16,7 @@ class BoardPadProbeTarget implements ProbeTarget {
 
     public boolean isValid() {
         return sim.getGeneratedBoardInstance() == instance &&
-            instance.getBoard().getPad(padId) != null && renderer.hasPad(padId) &&
+            instance.getBoard().getPad(padId) != null && renderer.hasPad(padId) && renderer.canProbePad(padId) &&
             instance.getSimulationBindings().getEndpoint(padId) != null;
     }
 
@@ -27,9 +27,9 @@ class BoardPadProbeTarget implements ProbeTarget {
         return instance == target.instance && padId.equals(target.padId);
     }
 
-    public Point getMarkerPoint() { return renderer.getPadPoint(padId); }
+    public Point getMarkerPoint() { return renderer.canProbePad(padId) ? renderer.getPadPoint(padId) : null; }
     public CircuitMeasurementEndpoint getMeasurementEndpoint() {
-        return instance.getSimulationBindings().getEndpoint(padId);
+        return renderer.canProbePad(padId) ? instance.getSimulationBindings().getEndpoint(padId) : null;
     }
 
     String getPadId() { return padId; }

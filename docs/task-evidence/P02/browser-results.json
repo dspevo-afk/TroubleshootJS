@@ -1,0 +1,314 @@
+{
+  "results": [
+    {
+      "name": "p02-npn",
+      "query": "tsjChallenge=npn&seed=0&tsjVerifyP02=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 1.21,
+      "verification": "PASS:p02",
+      "report_sha256": {
+        "data-tsj-p02-report": "77ad74773fbd16ae92f521d257be8124c6454da52b41a2b3c97f83643076a0c9"
+      },
+      "p02_report": {
+        "schema": 1,
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "status": "PASS",
+        "pureAssertions": 3209,
+        "runtimeAssertions": 220,
+        "smdPoses": 16,
+        "projectionPads": 15,
+        "sharedPostAliases": 5,
+        "modeledComponentElements": 5,
+        "rejectedMetadataCuts": 44,
+        "liveGraphUnchanged": true
+      }
+    },
+    {
+      "name": "p02-nmos",
+      "query": "tsjChallenge=nmos&seed=0&tsjVerifyP02=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 0.696,
+      "verification": "PASS:p02",
+      "report_sha256": {
+        "data-tsj-p02-report": "bfe802d8f4065664df99480285531c525ba0016b17b914a35f68e1e067a03647"
+      },
+      "p02_report": {
+        "schema": 1,
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "status": "PASS",
+        "pureAssertions": 3209,
+        "runtimeAssertions": 209,
+        "smdPoses": 16,
+        "projectionPads": 13,
+        "sharedPostAliases": 3,
+        "modeledComponentElements": 4,
+        "rejectedMetadataCuts": 33,
+        "liveGraphUnchanged": true
+      }
+    },
+    {
+      "name": "p02-controlled-indicator",
+      "query": "tsjChallenge=controlled-indicator&seed=0&tsjVerifyP02=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 2.611,
+      "verification": "PASS:p02",
+      "report_sha256": {
+        "data-tsj-p02-report": "7d5e6cb16e2091677cb8996ac1c7bf622d6fc0315d45ee6514eb1504eb1956a3"
+      },
+      "p02_report": {
+        "schema": 1,
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "status": "PASS",
+        "pureAssertions": 3209,
+        "runtimeAssertions": 256,
+        "smdPoses": 16,
+        "projectionPads": 32,
+        "sharedPostAliases": 3,
+        "modeledComponentElements": 15,
+        "rejectedMetadataCuts": 80,
+        "liveGraphUnchanged": true
+      }
+    },
+    {
+      "name": "p02-led",
+      "query": "tsjChallenge=led&seed=0&tsjVerifyP02=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 0.939,
+      "verification": "PASS:p02",
+      "report_sha256": {
+        "data-tsj-p02-report": "5e6c212aaf28a2a2a04bf84c7f29111393fcbacd97868b6d40b21bbb4209ad42"
+      },
+      "p02_report": {
+        "schema": 1,
+        "family": "LED_INDICATOR",
+        "status": "PASS",
+        "pureAssertions": 3209,
+        "runtimeAssertions": 189,
+        "smdPoses": 16,
+        "projectionPads": 6,
+        "sharedPostAliases": 1,
+        "modeledComponentElements": 2,
+        "rejectedMetadataCuts": 13,
+        "liveGraphUnchanged": true
+      }
+    },
+    {
+      "name": "p02-diode",
+      "query": "tsjChallenge=diode&seed=0&tsjVerifyP02=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 2.917,
+      "verification": "PASS:p02",
+      "report_sha256": {
+        "data-tsj-p02-report": "d807d0aae73398d77358eb029c8029d62689bd77ee2b1fd040b14d8ff617dff6"
+      },
+      "p02_report": {
+        "schema": 1,
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "status": "PASS",
+        "pureAssertions": 3209,
+        "runtimeAssertions": 192,
+        "smdPoses": 16,
+        "projectionPads": 8,
+        "sharedPostAliases": 0,
+        "modeledComponentElements": 3,
+        "rejectedMetadataCuts": 16,
+        "liveGraphUnchanged": true
+      }
+    },
+    {
+      "name": "p02-rc",
+      "query": "tsjChallenge=rc&seed=0&tsjVerifyP02=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 45.611,
+      "verification": "PASS:p02",
+      "report_sha256": {
+        "data-tsj-p02-report": "89b555996e1f3ba54e2f3e30d66221f10b47e6203ba12a027abc5530f2a0c033"
+      },
+      "p02_report": {
+        "schema": 1,
+        "family": "RC_DELAY",
+        "status": "PASS",
+        "pureAssertions": 3209,
+        "runtimeAssertions": 210,
+        "smdPoses": 16,
+        "projectionPads": 12,
+        "sharedPostAliases": 6,
+        "modeledComponentElements": 4,
+        "rejectedMetadataCuts": 34,
+        "liveGraphUnchanged": true
+      }
+    },
+    {
+      "name": "p02-parallel",
+      "query": "tsjChallenge=parallel&seed=0&tsjVerifyP02=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 2.194,
+      "verification": "PASS:p02",
+      "report_sha256": {
+        "data-tsj-p02-report": "cb5369fcd62508421a636b8c43d19b8a7ef9442a2e0781b59acf05535e6a0669"
+      },
+      "p02_report": {
+        "schema": 1,
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "status": "PASS",
+        "pureAssertions": 3209,
+        "runtimeAssertions": 199,
+        "smdPoses": 16,
+        "projectionPads": 10,
+        "sharedPostAliases": 2,
+        "modeledComponentElements": 4,
+        "rejectedMetadataCuts": 23,
+        "liveGraphUnchanged": true
+      }
+    },
+    {
+      "name": "p02-negative",
+      "query": "tsjChallenge=led&seed=0&tsjVerifyP02=true&tsjP02Fail=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 0.934,
+      "verification": "FAIL:P02 forced-negative",
+      "report_sha256": {},
+      "p02_report": null
+    },
+    {
+      "name": "p01",
+      "query": "tsjChallenge=led&seed=0&tsjVerifyP01=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 0.837,
+      "verification": "PASS:p01",
+      "report_sha256": {
+        "data-tsj-p01-report": "07b17b27f5b01f978eeebc183c04468f827e0c67a09b7b1b5ab82c4a961264f8"
+      },
+      "p02_report": null
+    },
+    {
+      "name": "a08",
+      "query": "tsjChallenge=diode&seed=0&tsjVerifyA08=true&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 70.946,
+      "verification": "PASS:a08",
+      "report_sha256": {
+        "data-tsj-a08-report": "4386721a7c51d91c42ddcb810afb71f22cb65b842d3a1181f3df43fdd6a9565d"
+      },
+      "p02_report": null
+    },
+    {
+      "name": "task49",
+      "query": "tsjChallenge=led&seed=3&tsjVerifyTask49=true&tsjTask49Seed=3&tsjDebug=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 24.596,
+      "verification": "PASS:task49",
+      "report_sha256": {
+        "data-tsj-task49-report": "bc5bb87477a6fd1d6169b1d488dc3e238a2093c549576272528bbbb91515fb45"
+      },
+      "p02_report": null
+    },
+    {
+      "name": "p02-no-debug",
+      "query": "tsjChallenge=led&seed=0&tsjVerifyP02=true&tsjP02Fail=true",
+      "errors": [],
+      "loaded_permutations": [
+        {
+          "filename": "425DFE489ACBFDB70A1099ADBC8692A3.cache.js",
+          "status": 200,
+          "sha256": "05c6bb2be6078b494ad9c40bf7701f123d3674ddf36bfce35e52e32ce3095513"
+        }
+      ],
+      "passed": true,
+      "seconds": 5.915,
+      "verification": null,
+      "report_sha256": {},
+      "p02_report": null
+    }
+  ],
+  "server_thread_stopped": true,
+  "raw_receipts": "Retained with run-browser.py in the external P02 repair handoff"
+}

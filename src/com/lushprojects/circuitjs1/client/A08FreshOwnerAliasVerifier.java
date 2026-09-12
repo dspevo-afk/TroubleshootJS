@@ -207,12 +207,13 @@ final class A08FreshOwnerAliasVerifier {
         PcbBoardLayout result = new PcbBoardLayout(source.getWidth(), source.getHeight(),
             sharedOutline ? source.getBoardOutline() : new Rectangle(source.getBoardOutline()),
             new Rectangle(source.getPartsTray()), source.getLayoutAlgorithmVersion());
+        for (PcbBoardHole hole : source.getHoles()) result.addHole(hole);
         for (PcbPadPlacement pad : source.getPads()) result.addPad(pad);
         for (PcbComponentPlacement part : source.getComponents()) result.addComponent(part);
         for (PcbSilkscreenLabel label : source.getSilkscreenLabels()) result.addSilkscreenLabel(label);
         for (PcbTraceGeometry trace : source.getTraces()) {
-            result.addTrace(new PcbTraceGeometry(trace.getNetId(), trace.getStartPadId(), trace.getEndPadId(),
-                sharedTrace ? trace.getXPoints() : copyCoordinates(trace.getXPoints()), copyCoordinates(trace.getYPoints())));
+            result.addTrace(trace.withPath(sharedTrace ? trace.getXPoints() : copyCoordinates(trace.getXPoints()),
+                copyCoordinates(trace.getYPoints())));
         }
         return result;
     }

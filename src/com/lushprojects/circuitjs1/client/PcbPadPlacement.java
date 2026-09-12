@@ -9,6 +9,7 @@ class PcbPadPlacement {
     private final int escapeLength;
     private final PcbTerminalAttachment attachment;
     private final PcbBoardSide mountingSide;
+    private final PcbCopperAccess.Exposure exposure;
     private final Rectangle padBounds;
     private final Rectangle probeBounds;
 
@@ -21,6 +22,15 @@ class PcbPadPlacement {
     PcbPadPlacement(String padId, int x, int y, int escapeDx, int escapeDy,
             int escapeLength, Rectangle padBounds, Rectangle probeBounds,
             PcbTerminalAttachment attachment, PcbBoardSide mountingSide) {
+        this(padId, x, y, escapeDx, escapeDy, escapeLength, padBounds, probeBounds,
+            attachment, mountingSide, PcbCopperAccess.Exposure.EXPOSED);
+    }
+
+    PcbPadPlacement(String padId, int x, int y, int escapeDx, int escapeDy,
+            int escapeLength, Rectangle padBounds, Rectangle probeBounds,
+            PcbTerminalAttachment attachment, PcbBoardSide mountingSide,
+            PcbCopperAccess.Exposure exposure) {
+        if (exposure == null) throw new IllegalArgumentException("Missing pad exposure policy");
         if (padId == null || padId.length() == 0 || padBounds == null ||
                 attachment == null || mountingSide == null ||
                 probeBounds == null || padBounds.width <= 0 || padBounds.height <= 0 ||
@@ -44,6 +54,7 @@ class PcbPadPlacement {
         this.escapeLength = escapeLength;
         this.attachment = attachment;
         this.mountingSide = mountingSide;
+        this.exposure = exposure;
         this.padBounds = new Rectangle(padBounds);
         this.probeBounds = new Rectangle(probeBounds);
     }
@@ -56,13 +67,14 @@ class PcbPadPlacement {
     int getEscapeLength() { return escapeLength; }
     PcbTerminalAttachment getAttachment() { return attachment; }
     PcbBoardSide getMountingSide() { return mountingSide; }
+    PcbCopperAccess.Exposure getExposure() { return exposure; }
     Rectangle getPadBounds() { return new Rectangle(padBounds); }
     Rectangle getProbeBounds() { return new Rectangle(probeBounds); }
 
     String geometryFingerprint() {
         return padId + '@' + x + ',' + y + " escape=" + escapeDx + ',' + escapeDy + ',' +
             escapeLength + " attachment=" + attachment + " mount=" + mountingSide +
-            " pad=" + rectangleFingerprint(padBounds) + " probe=" +
+            " exposure=" + exposure + " pad=" + rectangleFingerprint(padBounds) + " probe=" +
             rectangleFingerprint(probeBounds);
     }
 

@@ -16,6 +16,7 @@ class GeneratedBoardInstance {
     private final GeneratedBoardEndpointOracle developerBoardEndpointOracle;
     private final GeneratedChallengeBehaviorContract behaviorContract;
     private final PcbBoardLayout pcbLayout;
+    private final PcbConductorState conductorState;
     private final BoardPhysicalSpecifications physicalSpecifications;
     private final PhysicalBoardRuntime physicalRuntime;
     private final GeneratedFaultBinding faultBinding;
@@ -150,6 +151,10 @@ class GeneratedBoardInstance {
             throw new IllegalArgumentException("Missing generated challenge behavior contract");
         this.behaviorContract = behaviorContract;
         this.pcbLayout = pcbLayout;
+        // Current gameplay has no copper-cut action. Refuse metadata-only live edits until
+        // its consuming capability supplies the transactional solver projection adapter.
+        this.conductorState = pcbLayout == null ? null : new PcbConductorState(
+            pcbLayout.captureConductorGraph(board), null);
         if (physicalSpecifications == null)
             throw new IllegalArgumentException("Missing generated physical specifications");
         this.physicalSpecifications = physicalSpecifications;
@@ -179,6 +184,7 @@ class GeneratedBoardInstance {
             externalPowerBindings, faultBinding);
         if (suppliedDiagnosticSolvabilityContract != null)
             suppliedDiagnosticSolvabilityContract.validateDeveloperFixture(this);
+        if (pcbLayout != null) pcbLayout.seal();
         board.getSimulationBindings().markDeveloperVerificationReady();
     }
 
@@ -308,5 +314,11 @@ class GeneratedBoardInstance {
 
     PcbBoardLayout getPcbLayout() {
         return pcbLayout;
+    }
+    PcbConductorGraph getPristineConductorGraph() {
+        return conductorState == null ? null : conductorState.getPristine();
+    }
+    PcbConductorGraph.Snapshot getCurrentConductorSnapshot() {
+        return conductorState == null ? null : conductorState.getCurrent();
     }
 }

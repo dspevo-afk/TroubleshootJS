@@ -12,6 +12,51 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## P02 physical copper, surface access and current connectivity
+
+P02 and its F1 shared-copper repair are independently reviewed and accepted.
+[Qualification and review evidence](task-evidence/P02/README.md) retain the
+historical failed attempts and distinguish implementation from publication.
+
+`PcbConductorBuilder` is the physical connectivity authority. It normalizes
+Manhattan routes, same-layer contact, shared copper provenance, pad lands and
+explicit plating into `PcbConductorGraph`. A logical net label never joins islands.
+After all route and pad contacts are collected, supporting-line breakpoint sets
+are shared within each segment's coverage on its physical layer. Thus overlapping
+source routes emit the same intervals with merged provenance, including when a
+late finite-width contact split only one route during contact collection.
+
+Surface pads exist only on their mounting layer; a plated pad joins its two lands.
+Vias require contacted layer endpoints. Non-plated holes contribute no conductor.
+
+Immutable graph IDs identify the normalized current realization, not raw polyline
+indices or CircuitJS node numbers. Supported subdivision, route insertion order
+and view changes preserve identity. Exact canonical realization binding rejects
+old cut artifacts after a genuine reroute. Published `PcbBoardLayout` instances
+are sealed; construction compaction preserves layer, exposure and hole metadata.
+
+`PcbConductorState` owns immutable current snapshots and a transactional projection
+contract. Only verified apply/rollback may publish a new electrical state; stale
+and foreign writes reject, and unverified compensation quarantines. Current game
+instances deliberately have no live copper-cut adapter and reject metadata-only
+cuts. E08 remains responsible for user trace-cut/repair actions and their adapter.
+The P02 mutation double is not claimed as real CircuitJS trace-cut gameplay.
+
+At settled runtime boundaries `PcbConductorProjection` audits actual CircuitJS
+post/wire islands against physical pad connectivity. Existing component, private
+fault, detachable connection and external-supply owners remain separate. Exact
+post aliases are allowed only for physically connected pads. Transient solver
+node numbers are observations, never durable correspondence keys.
+
+`PcbWorkbenchRenderer` consumes the current copper snapshot and the shared
+`PcbCopperAccess` face/exposure policy. Mounted geometry uses the board-view
+transform; tray geometry does not. Covered conductors are not probeable, and
+NPTH bounds cannot inherit a neighboring pad's probe halo. The developer-only
+P01 SMD fixtures exercise both faces without enabling a player SMD catalog or
+new viewing controls. The P02 verifier dispatch runs from the regular update
+cycle after admission is ready, not only from a consumed verification callback.
+All diagnostic dispatch and readiness attributes require explicit debug flags.
+
 ## P01 bounded physical coordinates and package poses
 
 P01 is independently reviewed and accepted by the owner.
@@ -45,8 +90,9 @@ attachment and four rotations on two mounting faces. `P01PhysicalPoseChecks` use
 an independent affine/literal oracle across all declared current package variants;
 `P01PhysicalPoseDeveloperVerifier` tests the maintained render/hit/endpoint seam in
 the compiled workbench. Debug-only routing cannot run from normal-player URL flags.
-These fixtures do not supply SMD gameplay, conductor layers, vias, or probe-access
-policy. P02 must qualify those distinct physical/electrical contracts before A10.
+P01 alone does not supply SMD gameplay or layer-aware copper. The local P02
+implementation above supplies the accepted conductor/access contracts required
+by A10.
 
 ## A07 serialized execution, observations and model probes
 

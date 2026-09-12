@@ -7,69 +7,12 @@ import java.util.Comparator;
 import java.util.Vector;
 
 class PcbBoardLayout {
-    private static final class TraceSegment {
-        final int node;
-        final int traceIndex;
-        final int segmentIndex;
-        final String netId;
-        final Rectangle stroke;
-
-        TraceSegment(int node, int traceIndex, int segmentIndex, String netId, Rectangle stroke) {
-            this.node = node;
-            this.traceIndex = traceIndex;
-            this.segmentIndex = segmentIndex;
-            this.netId = netId;
-            this.stroke = stroke;
-        }
+    private boolean sealed;
+    void seal() { sealed = true; }
+    boolean isSealed() { return sealed; }
+    private void requireMutable() {
+        if (sealed) throw new IllegalStateException("Pristine PCB realization is sealed");
     }
-
-    private static final class TraceNodeDisjointSet {
-        private final int[] parent;
-        private final byte[] rank;
-
-        TraceNodeDisjointSet(int size) {
-            if (size <= 0)
-                throw new IllegalStateException("PCB connectivity graph has invalid size: " + size);
-            parent = new int[size];
-            rank = new byte[size];
-            for (int index = 0; index < size; index++)
-                parent[index] = index;
-        }
-
-        int find(int node) {
-            if (node < 0 || node >= parent.length)
-                throw new IllegalStateException("PCB connectivity node out of range: " + node);
-            int current = node;
-            while (parent[current] != current)
-                current = parent[current];
-            while (parent[node] != node) {
-                int next = parent[node];
-                parent[node] = current;
-                node = next;
-            }
-            return current;
-        }
-
-        void union(int first, int second) {
-            int firstRoot = find(first);
-            int secondRoot = find(second);
-            if (firstRoot == secondRoot)
-                return;
-            if (rank[firstRoot] > rank[secondRoot]) {
-                parent[secondRoot] = firstRoot;
-            } else if (rank[firstRoot] < rank[secondRoot]) {
-                parent[firstRoot] = secondRoot;
-            } else {
-                parent[secondRoot] = firstRoot;
-                rank[firstRoot]++;
-            }
-        }
-
-        boolean connected(int first, int second) {
-            return find(first) == find(second);
-        }
-    }
-
     private final int width;
     private final int height;
     private Rectangle boardOutline;
@@ -82,6 +25,18 @@ class PcbBoardLayout {
     private final HashMap<String, PcbSilkscreenLabel> silkscreenLabels =
         new HashMap<String, PcbSilkscreenLabel>();
     private final Vector<PcbTraceGeometry> traces = new Vector<PcbTraceGeometry>();
+    private final java.util.TreeMap<String,PcbBoardHole> holes = new java.util.TreeMap<String,PcbBoardHole>();
+
+    void addHole(PcbBoardHole hole) {
+        requireMutable();
+        if (hole == null || holes.containsKey(hole.id))
+            throw new IllegalArgumentException("Duplicate or missing board hole");
+        holes.put(hole.id,hole);
+    }
+    Vector<PcbBoardHole> getHoles() { return new Vector<PcbBoardHole>(holes.values()); }
+    PcbConductorGraph captureConductorGraph(TroubleshootBoard board) {
+        return PcbConductorBuilder.capture(board,this);
+    }
 
     PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray) {
         this(width, height, boardOutline, partsTray,
@@ -110,22 +65,31 @@ class PcbBoardLayout {
     int getLayoutAlgorithmVersion() { return layoutAlgorithmVersion; }
 
     void addPad(PcbPadPlacement pad) {
-        if (pads.put(pad.getPadId(), pad) != null)
-            throw new IllegalArgumentException("Duplicate PCB pad placement: " + pad.getPadId());
+        requireMutable();
+        if (pad == null || pads.containsKey(pad.getPadId()))
+            throw new IllegalArgumentException("Duplicate or missing PCB pad placement");
+        pads.put(pad.getPadId(),pad);
     }
 
     void addComponent(PcbComponentPlacement component) {
-        if (components.put(component.getComponentId(), component) != null)
-            throw new IllegalArgumentException("Duplicate PCB component placement: " +
-                component.getComponentId());
+        requireMutable();
+        if (component == null || components.containsKey(component.getComponentId()))
+            throw new IllegalArgumentException("Duplicate or missing PCB component placement");
+        components.put(component.getComponentId(),component);
     }
 
     void addSilkscreenLabel(PcbSilkscreenLabel label) {
-        if (silkscreenLabels.put(label.getId(), label) != null)
-            throw new IllegalArgumentException("Duplicate PCB silkscreen label: " + label.getId());
+        requireMutable();
+        if (label == null || silkscreenLabels.containsKey(label.getId()))
+            throw new IllegalArgumentException("Duplicate or missing PCB silkscreen label");
+        silkscreenLabels.put(label.getId(),label);
     }
 
-    void addTrace(PcbTraceGeometry trace) { traces.add(trace); }
+    void addTrace(PcbTraceGeometry trace) {
+        requireMutable();
+        if (trace == null) throw new IllegalArgumentException("Missing PCB trace");
+        traces.add(trace);
+    }
 
     void validateAgainst(TroubleshootBoard board) {
         for (String padId : pads.keySet()) {
@@ -148,6 +112,7 @@ class PcbBoardLayout {
     }
 
     void validateGeometry(TroubleshootBoard board) {
+        board.validate();
         validateAgainst(board);
         for (String componentId : board.getComponentIds()) {
             if (!components.containsKey(componentId))
@@ -176,6 +141,7 @@ class PcbBoardLayout {
             validatePackageGeometry(board, boardComponent, firstPlacement);
             validateComponentSurfaces(firstPlacement, boardComponent);
             for (int second = first + 1; second < componentList.size(); second++) {
+                if (firstPlacement.getMountingSide() != componentList.get(second).getMountingSide()) continue;
                 if (firstPlacement.getBodyBounds().intersects(
                         componentList.get(second).getBodyBounds()))
                     throw new IllegalStateException("PCB component bodies overlap: " +
@@ -197,34 +163,22 @@ class PcbBoardLayout {
             for (PcbPadPlacement other : padList) {
                 if (pad == other)
                     continue;
-                if (pad.getPadBounds().intersects(other.getPadBounds()))
+                if ((PcbCopperAccess.hasCopper(pad,PcbCopperLayer.TOP) && PcbCopperAccess.hasCopper(other,PcbCopperLayer.TOP) ||
+                        PcbCopperAccess.hasCopper(pad,PcbCopperLayer.BOTTOM) && PcbCopperAccess.hasCopper(other,PcbCopperLayer.BOTTOM)) &&
+                        pad.getPadBounds().intersects(other.getPadBounds()))
                     throw new IllegalStateException("PCB pads overlap: " + pad.getPadId() +
                         " and " + other.getPadId());
             }
         }
 
-        HashMap<String, Boolean> representedNets = new HashMap<String, Boolean>();
         for (PcbTraceGeometry trace : traces) {
-            if (trace.getStartPadId() == null || trace.getEndPadId() == null)
-                throw new IllegalStateException("PCB trace has no pad endpoints: " +
-                    trace.getNetId());
+            PcbConductorGraph.requireId(trace.getSourceId());
             BoardPad startPad = board.getPad(trace.getStartPadId());
             BoardPad endPad = board.getPad(trace.getEndPadId());
-            if (startPad == null || endPad == null ||
-                    !trace.getNetId().equals(startPad.getNetId()) ||
-                    !trace.getNetId().equals(endPad.getNetId()))
-                throw new IllegalStateException("PCB trace endpoints do not match net: " +
-                    trace.getNetId());
-            PcbPadPlacement start = pads.get(trace.getStartPadId());
-            PcbPadPlacement end = pads.get(trace.getEndPadId());
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
-            if (xPoints[0] != start.getX() || yPoints[0] != start.getY() ||
-                    xPoints[xPoints.length - 1] != end.getX() ||
-                    yPoints[yPoints.length - 1] != end.getY())
-                throw new IllegalStateException("PCB trace does not land on its pads: " +
-                    trace.getNetId());
-            representedNets.put(trace.getNetId(), Boolean.TRUE);
+            validateDeclaredRoutePad(board,trace,trace.getStartPadId(),xPoints[0],yPoints[0]);
+            validateDeclaredRoutePad(board,trace,trace.getEndPadId(),xPoints[xPoints.length-1],yPoints[yPoints.length-1]);
             for (int index = 0; index < xPoints.length; index++) {
                 if (index > 0 && xPoints[index] != xPoints[index - 1] &&
                         yPoints[index] != yPoints[index - 1])
@@ -243,18 +197,26 @@ class PcbBoardLayout {
             }
             validateTraceCourtyards(board, trace, startPad, endPad);
         }
+        for (PcbBoardHole hole : holes.values()) requireInside(hole.getBounds(),boardOutline,"hole " + hole.id);
         validatePhysicalConnectivity(board);
-        for (String netId : board.getNetIds()) {
-            if (!representedNets.containsKey(netId))
-                throw new IllegalStateException("PCB net has no copper trace: " + netId);
-        }
         validateTraceClearance();
         validateSilkscreen(board);
         validateRouteQuality();
     }
 
+    private void validateDeclaredRoutePad(TroubleshootBoard board, PcbTraceGeometry trace,
+            String id, int x, int y) {
+        if (id == null) return; // Explicit source identity permits physical via/junction endpoints.
+        BoardPad logical = board.getPad(id);
+        PcbPadPlacement placed = pads.get(id);
+        if (logical == null || !trace.getNetId().equals(logical.getNetId()) ||
+                !PcbCopperAccess.hasCopper(placed,trace.getLayer()) || placed.getX()!=x || placed.getY()!=y)
+            throw new IllegalStateException("PCB trace endpoint has no matching layer land: " + id);
+    }
+
     /** Places workbench chrome outside the board while preserving both sizes. */
     void positionPartsTrayDisjointFromBoard() {
+        requireMutable();
         int gap = 24;
         Rectangle[] candidates = new Rectangle[] {
             new Rectangle(checkedAdd(checkedAdd(boardOutline.x, boardOutline.width), gap),
@@ -285,6 +247,7 @@ class PcbBoardLayout {
     private void validateTraceCourtyards(TroubleshootBoard board, PcbTraceGeometry trace,
             BoardPad startPad, BoardPad endPad) {
         for (PcbComponentPlacement component : components.values()) {
+            if (trace.getLayer().getFace() != component.getMountingSide()) continue;
             Rectangle keepOut = component.getRoutingCourtyard();
             PcbPadPlacement traceStartPlacement = pads.get(trace.getStartPadId());
             PcbPadPlacement traceEndPlacement = pads.get(trace.getEndPadId());
@@ -300,9 +263,7 @@ class PcbBoardLayout {
                         trace.getNetId() + " / " + component.getComponentId() + " segment " +
                         xPoints[index - 1] + "," + yPoints[index - 1] + " -> " +
                         xPoints[index] + "," + yPoints[index] + " keepOut=" + keepOut +
-                        " startPad=" + trace.getStartPadId() + "@" + traceStartPlacement.getX() +
-                        "," + traceStartPlacement.getY() + " endPad=" + trace.getEndPadId() +
-                        "@" + traceEndPlacement.getX() + "," + traceEndPlacement.getY());
+                        " startPad=" + trace.getStartPadId() + " endPad=" + trace.getEndPadId());
             }
         }
     }
@@ -313,11 +274,13 @@ class PcbBoardLayout {
         PcbPadPlacement escapePad = null;
         PcbPadPlacement startPlacement = pads.get(trace.getStartPadId());
         PcbPadPlacement endPlacement = pads.get(trace.getEndPadId());
-        boolean startEscape = component.getComponentId().equals(startPad.getComponentId()) &&
+        boolean startEscape = startPad != null && startPlacement != null &&
+            component.getComponentId().equals(startPad.getComponentId()) &&
             (touches(x1, y1, startPlacement) || touches(x2, y2, startPlacement) ||
                 startPlacement.isInEscapeCorridor(x1, y1) ||
                 startPlacement.isInEscapeCorridor(x2, y2));
-        boolean endEscape = component.getComponentId().equals(endPad.getComponentId()) &&
+        boolean endEscape = endPad != null && endPlacement != null &&
+            component.getComponentId().equals(endPad.getComponentId()) &&
             (touches(x1, y1, endPlacement) || touches(x2, y2, endPlacement) ||
                 endPlacement.isInEscapeCorridor(x1, y1) ||
                 endPlacement.isInEscapeCorridor(x2, y2));
@@ -478,263 +441,7 @@ class PcbBoardLayout {
     }
 
     private void validatePhysicalConnectivity(TroubleshootBoard board) {
-        Vector<PcbTraceGeometry> traceList = getTraces();
-        HashMap<String, Integer> padNodes = new HashMap<String, Integer>();
-        for (String padId : pads.keySet())
-            padNodes.put(padId, Integer.valueOf(padNodes.size()));
-
-        int segmentNodeOffset = padNodes.size();
-        int[] segmentBase = new int[traceList.size()];
-        Vector<TraceSegment> segmentLookup = new Vector<TraceSegment>();
-        for (int traceIndex = 0; traceIndex < traceList.size(); traceIndex++) {
-            PcbTraceGeometry trace = traceList.get(traceIndex);
-            int[] xPoints = trace.getXPoints();
-            int[] yPoints = trace.getYPoints();
-            if (xPoints.length < 2 || yPoints.length != xPoints.length)
-                throw new IllegalStateException("PCB trace has invalid segment list: " +
-                    trace.getNetId());
-            segmentBase[traceIndex] = segmentLookup.size();
-            for (int segmentIndex = 0; segmentIndex < xPoints.length - 1; segmentIndex++) {
-                Rectangle segment = getTraceSegmentBounds(
-                    xPoints[segmentIndex], yPoints[segmentIndex], xPoints[segmentIndex + 1],
-                    yPoints[segmentIndex + 1]);
-                segmentLookup.add(new TraceSegment(segmentNodeId(traceIndex, segmentIndex,
-                    segmentBase, segmentNodeOffset), traceIndex, segmentIndex,
-                    trace.getNetId(), segment));
-            }
-        }
-
-        TraceNodeDisjointSet connectivity = new TraceNodeDisjointSet(
-            checkedAdd(segmentNodeOffset, segmentLookup.size()));
-
-        for (int traceIndex = 0; traceIndex < traceList.size(); traceIndex++) {
-            PcbTraceGeometry trace = traceList.get(traceIndex);
-            int[] xPoints = trace.getXPoints();
-            int[] yPoints = trace.getYPoints();
-            int segmentCount = xPoints.length - 1;
-            Integer startNode = padNodes.get(trace.getStartPadId());
-            Integer endNode = padNodes.get(trace.getEndPadId());
-            if (startNode == null || endNode == null)
-                throw new IllegalStateException("PCB trace endpoints do not reference board pads: " +
-                    trace.getNetId());
-            TraceSegment firstSegment = segmentLookup.get(segmentBase[traceIndex]);
-            TraceSegment lastSegment = segmentLookup.get(checkedAdd(segmentBase[traceIndex],
-                segmentCount - 1));
-            connectivity.union(startNode.intValue(), firstSegment.node);
-            connectivity.union(endNode.intValue(), lastSegment.node);
-            for (int segmentIndex = 1; segmentIndex < segmentCount; segmentIndex++) {
-                TraceSegment previous = segmentLookup.get(checkedAdd(segmentBase[traceIndex],
-                    segmentIndex - 1));
-                TraceSegment current = segmentLookup.get(checkedAdd(segmentBase[traceIndex],
-                    segmentIndex));
-                connectivity.union(previous.node, current.node);
-            }
-            String netId = trace.getNetId();
-            for (int segmentIndex = 0; segmentIndex < segmentCount; segmentIndex++) {
-                TraceSegment segment = segmentLookup.get(checkedAdd(segmentBase[traceIndex],
-                    segmentIndex));
-                Rectangle segmentBounds = segment.stroke;
-                for (String padId : pads.keySet()) {
-                    PcbPadPlacement pad = pads.get(padId);
-                    BoardPad boardPad = board.getPad(padId);
-                    if (!rectanglesTouch(segmentBounds, pad.getPadBounds()))
-                        continue;
-                    if (boardPad == null)
-                        throw new IllegalStateException(
-                            "PCB layout references unknown pad during connectivity check: " +
-                            padId);
-                    Integer padNode = padNodes.get(padId);
-                    if (padNode == null)
-                        throw new IllegalStateException(
-                            "PCB pad is missing from connectivity graph: " + padId);
-                    if (netId.equals(boardPad.getNetId()))
-                        connectivity.union(segment.node, padNode.intValue());
-                    else
-                        throw new IllegalStateException(
-                            "Unrelated PCB trace and pad share copper: " + netId + " / " +
-                            boardPad.getNetId() + " segment=" +
-                            xPoints[segmentIndex] + "," + yPoints[segmentIndex] + " -> " +
-                            xPoints[segmentIndex + 1] + "," + yPoints[segmentIndex + 1] +
-                            " pad=" + padId);
-                }
-            }
-        }
-
-        for (int first = 0; first < segmentLookup.size(); first++) {
-            TraceSegment firstSegment = segmentLookup.get(first);
-            PcbTraceGeometry firstTrace = traceList.get(firstSegment.traceIndex);
-            for (int second = first + 1; second < segmentLookup.size(); second++) {
-                TraceSegment secondSegment = segmentLookup.get(second);
-                if (!rectanglesTouch(firstSegment.stroke, secondSegment.stroke))
-                    continue;
-                PcbTraceGeometry secondTrace = traceList.get(secondSegment.traceIndex);
-                if (!firstTrace.getNetId().equals(secondTrace.getNetId()))
-                    throw new IllegalStateException(
-                        "Unrelated PCB traces share copper: " + firstTrace.getNetId() + " and " +
-                        secondTrace.getNetId() + " " +
-                        "segmentDescription=" + crossingSegmentDescription(firstTrace, secondTrace));
-                connectivity.union(firstSegment.node, secondSegment.node);
-            }
-        }
-
-        Vector<String> padIds = new Vector<String>(pads.keySet());
-        for (int first = 0; first < padIds.size(); first++) {
-            String firstPadId = padIds.get(first);
-            PcbPadPlacement firstPad = pads.get(firstPadId);
-            BoardPad firstBoardPad = board.getPad(firstPadId);
-            if (firstBoardPad == null)
-                throw new IllegalStateException(
-                    "PCB layout references unknown pad during pad contact check: " +
-                    firstPadId);
-            for (int second = first + 1; second < padIds.size(); second++) {
-                String secondPadId = padIds.get(second);
-                PcbPadPlacement secondPad = pads.get(secondPadId);
-                if (!rectanglesTouch(firstPad.getPadBounds(), secondPad.getPadBounds()))
-                    continue;
-                BoardPad secondBoardPad = board.getPad(secondPadId);
-                if (secondBoardPad == null)
-                    throw new IllegalStateException(
-                        "PCB layout references unknown pad during pad contact check: " +
-                        secondPadId);
-                Integer firstNode = padNodes.get(firstPadId);
-                Integer secondNode = padNodes.get(secondPadId);
-                if (!firstBoardPad.getNetId().equals(secondBoardPad.getNetId()))
-                    throw new IllegalStateException("Unrelated PCB pads share copper: " +
-                        firstBoardPad.getNetId() + " / " + secondBoardPad.getNetId() +
-                        " pads=" + firstPadId + " / " + secondPadId);
-                connectivity.union(firstNode.intValue(), secondNode.intValue());
-            }
-        }
-
-        for (String componentId : board.getComponentIds()) {
-            BoardComponent boardComponent = board.getComponent(componentId);
-            PcbComponentPlacement placement = this.components.get(componentId);
-            if (placement == null || boardComponent == null)
-                throw new IllegalStateException("PCB component mismatch during connectivity check: " +
-                    componentId);
-            validateInternalConnectivityForComponent(board, boardComponent, placement,
-                connectivity, padNodes);
-        }
-        for (String netId : board.getNetIds()) {
-            Vector<String> netPadIds = board.getNet(netId).getPadIds();
-            if (netPadIds.size() <= 1)
-                continue;
-            Integer representative = padNodes.get(netPadIds.get(0));
-            if (representative == null)
-                throw new IllegalStateException("PCB net references unknown representative pad: " +
-                    netId + " pad=" + netPadIds.get(0));
-            int root = connectivity.find(representative.intValue());
-            for (int index = 1; index < netPadIds.size(); index++) {
-                Integer node = padNodes.get(netPadIds.get(index));
-                if (node == null || !connectivity.connected(root, node.intValue()))
-                    throw new IllegalStateException("PCB net is electrically disconnected: " +
-                        netId + " pad=" + netPadIds.get(0) + " / " + netPadIds.get(index));
-            }
-        }
-    }
-
-    private int segmentNodeId(int traceIndex, int segmentIndex, int[] segmentBase,
-            int segmentNodeOffset) {
-        if (traceIndex < 0 || traceIndex >= segmentBase.length || segmentIndex < 0)
-            throw new IllegalStateException("PCB trace segment index is invalid: " +
-                traceIndex + "/" + segmentIndex);
-        int result = checkedAdd(segmentNodeOffset,
-            checkedAdd(segmentBase[traceIndex], segmentIndex));
-        if (result < segmentNodeOffset)
-            throw new IllegalStateException("PCB trace segment index is out of bounds: " +
-                traceIndex + "/" + segmentIndex);
-        return result;
-    }
-
-    private void validateInternalConnectivityForComponent(TroubleshootBoard board,
-            BoardComponent component, PcbComponentPlacement placement,
-            TraceNodeDisjointSet components, HashMap<String, Integer> padNodes) {
-        PhysicalPackage componentPackage = placement.getPhysicalPackage();
-        if (componentPackage == null)
-            throw new IllegalStateException("PCB component missing physical package: " +
-                placement.getComponentId());
-        Vector<String> terminalIds = componentPackage.getTerminalIds();
-        Vector<String> componentPadIds = component.getPadIds();
-        if (terminalIds.size() != componentPadIds.size())
-            throw new IllegalStateException("PCB component terminal count mismatch: " +
-                placement.getComponentId());
-        HashMap<String, String> terminalToPad = new HashMap<String, String>();
-        for (int terminalIndex = 0; terminalIndex < terminalIds.size(); terminalIndex++) {
-            String terminalId = terminalIds.get(terminalIndex);
-            String padId = componentPadIds.get(terminalIndex);
-            BoardPad pad = board.getPad(padId);
-            if (pad == null)
-                throw new IllegalStateException("PCB component references unknown pad: " +
-                    placement.getComponentId() + " / " + padId);
-            if (!terminalId.equals(pad.getTerminalId()))
-                throw new IllegalStateException(
-                    "PCB component terminal order diverged from package geometry: " +
-                    placement.getComponentId() + " terminal=" + terminalId + " pad=" + padId);
-            terminalToPad.put(terminalId, padId);
-        }
-        HashSet<String> visited = new HashSet<String>();
-        Vector<String> queue = new Vector<String>();
-        for (String terminalId : terminalIds) {
-            if (visited.contains(terminalId))
-                continue;
-            String rootPadId = terminalToPad.get(terminalId);
-            if (rootPadId == null)
-                throw new IllegalStateException(
-                    "PCB component has unplaced terminal: " + placement.getComponentId() +
-                        " / " + terminalId);
-            BoardPad rootPad = board.getPad(rootPadId);
-            if (rootPad == null)
-                throw new IllegalStateException("PCB component terminal has unknown pad: " +
-                    placement.getComponentId() + " / " + terminalId);
-            visited.add(terminalId);
-            queue.clear();
-            queue.add(terminalId);
-            String groupNet = rootPad.getNetId();
-            Vector<String> groupTerminals = new Vector<String>();
-            for (int headIndex = 0; headIndex < queue.size(); headIndex++) {
-                String current = queue.get(headIndex);
-                String currentPadId = terminalToPad.get(current);
-                if (currentPadId == null)
-                    throw new IllegalStateException(
-                        "PCB component terminal has unplaced terminal: " +
-                        placement.getComponentId() + " / " + current);
-                BoardPad pad = board.getPad(currentPadId);
-                if (pad == null)
-                    throw new IllegalStateException("PCB component terminal has unknown pad: " +
-                        placement.getComponentId() + " / " + current);
-                if (!groupNet.equals(pad.getNetId()))
-                    throw new IllegalStateException(
-                        "PCB component internal connectivity spans nets: " +
-                        placement.getComponentId() + " terminal=" + current + " net=" +
-                        pad.getNetId());
-                groupTerminals.add(current);
-                for (int terminalIndex = 0; terminalIndex < terminalIds.size(); terminalIndex++) {
-                    String other = terminalIds.get(terminalIndex);
-                    if (visited.contains(other) || !componentPackage.isInternallyConnected(current,
-                            other))
-                        continue;
-                    visited.add(other);
-                    queue.add(other);
-                }
-            }
-            for (int first = 0; first < groupTerminals.size(); first++) {
-                String firstTerminal = groupTerminals.get(first);
-                String firstPadId = terminalToPad.get(firstTerminal);
-                Integer firstNode = padNodes.get(firstPadId);
-                if (firstNode == null)
-                    throw new IllegalStateException("PCB component internal pad missing from layout: " +
-                        placement.getComponentId() + " / " + firstPadId);
-                for (int second = first + 1; second < groupTerminals.size(); second++) {
-                    String secondTerminal = groupTerminals.get(second);
-                    String secondPadId = terminalToPad.get(secondTerminal);
-                    Integer secondNode = padNodes.get(secondPadId);
-                    if (secondNode == null)
-                        throw new IllegalStateException("PCB component internal pad missing from " +
-                            "layout: " + placement.getComponentId() + " / " + secondPadId);
-                    components.union(firstNode.intValue(), secondNode.intValue());
-                }
-            }
-        }
+        captureConductorGraph(board).pristine().requirePristineNetConnectivity(board);
     }
 
     private boolean touches(int x, int y, PcbPadPlacement pad) {
@@ -754,16 +461,19 @@ class PcbBoardLayout {
                 throw new IllegalStateException("Silkscreen label references unknown pad: " +
                     label.getTargetPadId());
             for (PcbComponentPlacement component : components.values()) {
+                if (component.getMountingSide() != PcbBoardSide.TOP) continue;
                 if (bounds.intersects(component.getBodyBounds()))
                     throw new IllegalStateException("Silkscreen label overlaps component: " +
                         label.getId() + " / " + component.getComponentId());
             }
             for (PcbPadPlacement pad : pads.values()) {
+                if (!PcbCopperAccess.hasCopper(pad,PcbCopperLayer.TOP)) continue;
                 if (bounds.intersects(pad.getPadBounds()))
                     throw new IllegalStateException("Silkscreen label overlaps pad: " +
                         label.getId() + " / " + pad.getPadId());
             }
             for (PcbTraceGeometry trace : traces) {
+                if (trace.getLayer() != PcbCopperLayer.TOP) continue;
                 int[] xPoints = trace.getXPoints();
                 int[] yPoints = trace.getYPoints();
                 for (int index = 1; index < xPoints.length; index++) {
@@ -858,7 +568,8 @@ class PcbBoardLayout {
             for (int second = first + 1; second < traces.size(); second++) {
                 PcbTraceGeometry firstTrace = traces.get(first);
                 PcbTraceGeometry secondTrace = traces.get(second);
-                if (firstTrace.getNetId().equals(secondTrace.getNetId()))
+                if (firstTrace.getLayer() != secondTrace.getLayer() ||
+                        firstTrace.getNetId().equals(secondTrace.getNetId()))
                     continue;
                 int[] firstX = firstTrace.getXPoints();
                 int[] firstY = firstTrace.getYPoints();
@@ -1005,6 +716,7 @@ class PcbBoardLayout {
      * content.  This is a simulator readability rule, not a manufacturing rule.
      */
     void compactToContent(int boardX, int boardY, int edgeMargin) {
+        requireMutable();
         PcbCoordinateSystem.requireBoardCoordinate(boardX);
         PcbCoordinateSystem.requireBoardCoordinate(boardY);
         if (edgeMargin < 0) throw new IllegalArgumentException("Negative PCB edge margin");
@@ -1026,7 +738,7 @@ class PcbBoardLayout {
                 checkedAdd(pad.getY(), dy), pad.getEscapeDx(), pad.getEscapeDy(),
                 pad.getEscapeLength(), translate(pad.getPadBounds(), dx, dy),
                 translate(pad.getProbeBounds(), dx, dy), pad.getAttachment(),
-                pad.getMountingSide()));
+                pad.getMountingSide(), pad.getExposure()));
         }
 
         Vector<PcbTraceGeometry> translatedTraces = new Vector<PcbTraceGeometry>();
@@ -1039,8 +751,7 @@ class PcbBoardLayout {
                 translatedX[index] = checkedAdd(xPoints[index], dx);
                 translatedY[index] = checkedAdd(yPoints[index], dy);
             }
-            translatedTraces.add(new PcbTraceGeometry(trace.getNetId(), trace.getStartPadId(),
-                trace.getEndPadId(), translatedX, translatedY));
+            translatedTraces.add(trace.withPath(translatedX, translatedY));
         }
 
         HashMap<String, PcbSilkscreenLabel> translatedLabels =
@@ -1051,6 +762,8 @@ class PcbBoardLayout {
                 translate(label.getBounds(), dx, dy), label.getFontSize(), label.isBold(),
                 label.getTargetPadId()));
         }
+        java.util.TreeMap<String,PcbBoardHole> translatedHoles = new java.util.TreeMap<String,PcbBoardHole>();
+        for (PcbBoardHole hole : holes.values()) translatedHoles.put(hole.id,hole.translatedBy(dx,dy));
         int compactedWidth = checkedAdd(content.width, checkedMultiply(edgeMargin, 2));
         int compactedHeight = checkedAdd(content.height, checkedMultiply(edgeMargin, 2));
         Rectangle translatedOutline = new Rectangle(boardX, boardY, compactedWidth, compactedHeight);
@@ -1059,12 +772,14 @@ class PcbBoardLayout {
         components.clear(); components.putAll(translatedComponents);
         pads.clear(); pads.putAll(translatedPads);
         traces.clear(); traces.addAll(translatedTraces);
+        holes.clear(); holes.putAll(translatedHoles);
         silkscreenLabels.clear(); silkscreenLabels.putAll(translatedLabels);
         boardOutline = translatedOutline;
     }
 
     Rectangle getOccupiedContentBounds() {
         Rectangle result = null;
+        for (PcbBoardHole hole : holes.values()) result = union(result,hole.getBounds());
         for (PcbComponentPlacement component : components.values()) {
             result = union(result, component.getBodyBounds());
             result = union(result, component.getKeepOut());
@@ -1351,18 +1066,23 @@ class PcbBoardLayout {
                     String.valueOf(second.getStartPadId()));
                 if (result != 0)
                     return result;
-                return String.valueOf(first.getEndPadId()).compareTo(
-                    String.valueOf(second.getEndPadId()));
+                result = String.valueOf(first.getEndPadId()).compareTo(String.valueOf(second.getEndPadId()));
+                if (result != 0) return result;
+                result = first.getLayer().compareTo(second.getLayer());
+                return result != 0 ? result : String.valueOf(first.getSourceId()).compareTo(String.valueOf(second.getSourceId()));
             }
         });
         for (PcbTraceGeometry trace : orderedTraces) {
-            result.append("T:").append(trace.getNetId()).append(':')
+            result.append("T:").append(PcbConductorGraph.field(trace.getSourceId()))
+                .append(trace.getLayer()).append(':').append(trace.getExposure()).append(':')
+                .append(trace.getNetId()).append(':')
                 .append(trace.getStartPadId()).append('-').append(trace.getEndPadId()).append('@');
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 0; index < xPoints.length; index++)
                 result.append(xPoints[index]).append(',').append(yPoints[index]).append(';');
         }
+        for (PcbBoardHole hole : holes.values()) result.append("H:").append(hole.fingerprint());
         return result.toString();
     }
 
@@ -1382,11 +1102,15 @@ class PcbBoardLayout {
         Vector<PcbTraceGeometry> orderedTraces = new Vector<PcbTraceGeometry>(traces);
         Collections.sort(orderedTraces, new Comparator<PcbTraceGeometry>() {
             public int compare(PcbTraceGeometry first, PcbTraceGeometry second) {
-                return first.getNetId().compareTo(second.getNetId());
+                int result = first.getNetId().compareTo(second.getNetId());
+                if (result != 0) return result;
+                result = first.getLayer().compareTo(second.getLayer());
+                return result != 0 ? result : String.valueOf(first.getSourceId()).compareTo(String.valueOf(second.getSourceId()));
             }
         });
         for (PcbTraceGeometry trace : orderedTraces) {
-            result.append(trace.getNetId()).append(':');
+            result.append(PcbConductorGraph.field(trace.getSourceId())).append(trace.getLayer()).append(':')
+                .append(trace.getExposure()).append(':').append(trace.getNetId()).append(':');
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 0; index < xPoints.length; index++)

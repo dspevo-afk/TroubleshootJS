@@ -1,0 +1,61 @@
+{
+  "verdict": "PASS",
+  "scope": "Fresh independent targeted delta review of repaired P02 candidate with integrated regression validation",
+  "reviewer": "Fresh independent separate session supplied and accepted by the owner; not a quota-blocked Luna attempt",
+  "base": "79be5ac5687aa3ad8552dc063a0434838ff1bf1d",
+  "branch": "codex/task43p-final-recovery",
+  "candidate_sha256": "0326cdb8a09ae8ee2cd309d178cad29fa09a9340e81bb075be3ea1303796f5b8",
+  "repair_sha256": "b4cda63aa96f88989a51716ee6047af8027483f8a1706869a2884c823b9658bd",
+  "resolved_findings": [
+    {
+      "id": "F1",
+      "previous_severity": "P1",
+      "status": "RESOLVED",
+      "reason": "Shared physical intervals now retain one cut identity and complete source provenance"
+    }
+  ],
+  "blocking_findings": [],
+  "followup": "D1 corrected at closeout: roadmap now records 3209 assertions and completed independent review",
+  "native": {
+    "passed": 20,
+    "total": 20,
+    "p02_assertions": 3209,
+    "p01_assertions": 8357
+  },
+  "independent_original": {
+    "fixtures": 500,
+    "assertions": 198987,
+    "minimal": "PASS"
+  },
+  "independent_new": {
+    "fixtures": 96,
+    "short_rejection_cases": 4,
+    "assertions": 405796
+  },
+  "negative_controls": {
+    "expected_exit": 1,
+    "passed": 3
+  },
+  "browser": {
+    "passed": 12,
+    "total": 12,
+    "page_errors": 0,
+    "server_thread_stopped": true
+  },
+  "production_gwt": "Previously built five-permutation output inspected and hash-revalidated; not rebuilt in this review",
+  "review_report_sha256": "6de8dd89971077c43b94fba128f9de742b27874d02b5439e76b2a3695dc70ab7",
+  "review_probe_sources_sha256": {
+    "IndependentP02DeltaTest.java": "bc826dfd28acbe309366276a4bd517b5f9536f17a5b1acb8ee6ac06497ccb69c",
+    "IndependentP02MinimalRepro.java": "87c338bac191ee97cdcb148a0782d8878273ff5098ccc7bf0f9f43a0cab39e0b",
+    "IndependentP02ReviewTest.java": "960f81de57641390e1eb33767af96d6e2af137840cfecc35794fc8cfc9207dd1"
+  },
+  "closeout_audit": {
+    "drift": [],
+    "readers_runners": 8,
+    "compiled_permutations": 5,
+    "subsequent_changes": "Documentation only",
+    "reverse_patch_check": "PASS",
+    "candidate_files": 46,
+    "source_test_inputs": 642
+  }
+}

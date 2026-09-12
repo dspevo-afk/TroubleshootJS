@@ -83,6 +83,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'A02CandidateContractTest'; Marker = 'A02CandidateContractTest' },
         @{ Name = 'A02GeometryContractTest'; Marker = 'A02GeometryContractTest ' },
         @{ Name = 'P01PhysicalPoseContractTest'; Marker = 'P01 physical pose contracts ' },
+        @{ Name = 'P02ConductorContractTest'; Marker = 'P02 conductor contracts ' },
         @{ Name = 'A02ReplayContractTest'; Marker = 'A02ReplayContractTest ' },
         @{ Name = 'ElectricalUnitPackageMapContractTest'; Marker = 'ElectricalUnitPackageMapContractTest ' },
         @{ Name = 'A04ConstructionContractTest'; Marker = 'A04ConstructionContractTest ' },

@@ -246,7 +246,7 @@ final class PhysicalPartRenderContext {
     }
 
     Point getLooseTerminalPoint(int terminal, boolean reversed) {
-        return renderer.screenPointForProvider(getLoosePose().getTerminalPoint(terminal));
+        return renderer.screenWorkbenchPointForProvider(getLoosePose().getTerminalPoint(terminal));
     }
 
     Rectangle getComponentBounds() {
@@ -267,50 +267,50 @@ final class PhysicalPartRenderContext {
     }
 
     Rectangle getLooseSelectionBounds(boolean reversed) {
-        return renderer.screenRectForProvider(getLoosePose().getSelectionEnvelope());
+        return renderer.screenWorkbenchRectForProvider(getLoosePose().getSelectionEnvelope());
     }
 
     Rectangle getLooseBodyBounds(boolean reversed) {
-        return renderer.screenRectForProvider(getLoosePose().getBodyBounds());
+        return renderer.screenWorkbenchRectForProvider(getLoosePose().getBodyBounds());
     }
 
     Rectangle getLooseDragBounds(boolean reversed) {
-        return renderer.screenRectForProvider(getLoosePose().getDragEnvelope());
+        return renderer.screenWorkbenchRectForProvider(getLoosePose().getDragEnvelope());
     }
 
     Rectangle getLooseProbeBounds(int terminal, boolean reversed) {
-        return renderer.screenRectForProvider(getLoosePose().getProbeBounds(terminal));
+        return renderer.screenWorkbenchRectForProvider(getLoosePose().getProbeBounds(terminal));
     }
 
     Rectangle getLoosePadBounds(int terminal, boolean reversed) {
-        return renderer.screenRectForProvider(getLoosePose().getPadBounds(terminal));
+        return renderer.screenWorkbenchRectForProvider(getLoosePose().getPadBounds(terminal));
     }
 
     Rectangle getLooseLeadBounds(int terminal, boolean reversed) {
-        return renderer.screenRectForProvider(getLoosePose().getLeadBounds(terminal));
+        return renderer.screenWorkbenchRectForProvider(getLoosePose().getLeadBounds(terminal));
     }
 
     Point getLooseComponentLeadPoint(int terminal) {
-        return renderer.screenPointForProvider(getLoosePose().getComponentLeadPoint(terminal));
+        return renderer.screenWorkbenchPointForProvider(getLoosePose().getComponentLeadPoint(terminal));
     }
 
     Rectangle getLooseComponentLeadProbeBounds(int terminal) {
-        return renderer.screenRectForProvider(getLoosePose()
+        return renderer.screenWorkbenchRectForProvider(getLoosePose()
             .getComponentLeadProbeBounds(terminal));
     }
 
     Point getLooseLeadBodyPoint(int terminal) {
-        return renderer.screenPointForProvider(getLoosePose().getLeadBodyPoint(terminal));
+        return renderer.screenWorkbenchPointForProvider(getLoosePose().getLeadBodyPoint(terminal));
     }
 
     Point getLooseLeadEndPoint(int terminal) {
-        return renderer.screenPointForProvider(getLoosePose().getLeadEndPoint(terminal));
+        return renderer.screenWorkbenchPointForProvider(getLoosePose().getLeadEndPoint(terminal));
     }
 
     Vector<Rectangle> getLooseProbeSurfaces(int terminal) {
         Vector<Rectangle> result = new Vector<Rectangle>();
         for (Rectangle surface : getLoosePose().getProbeSurfaces(terminal))
-            result.add(renderer.screenRectForProvider(surface));
+            result.add(renderer.screenWorkbenchRectForProvider(surface));
         return result;
     }
 
@@ -351,7 +351,7 @@ final class PhysicalPartRenderContext {
         return placement != null && getInstance().getOperationalStates().isIlluminated(getComponentId());
     }
 
-    int screenX(int value) { return renderer.screenXForProvider(value); }
+    int screenX(int value) { return loose ? renderer.screenWorkbenchXForProvider(value) : renderer.screenXForProvider(value); }
     int screenY(int value) { return renderer.screenYForProvider(value); }
     int scale(int value) { return renderer.scaleIntForProvider(value); }
 

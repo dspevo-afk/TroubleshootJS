@@ -334,6 +334,7 @@ final class A03IdentityDeveloperVerifier {
             translateRectangle(source.getBoardOutline(), dx, dy),
             translateRectangle(source.getPartsTray(), dx, dy),
             source.getLayoutAlgorithmVersion());
+        for (PcbBoardHole hole : source.getHoles()) translated.addHole(hole.translatedBy(dx,dy));
         for (PcbComponentPlacement component : source.getComponents())
             translated.addComponent(component.translatedBy(dx, dy));
         for (PcbPadPlacement pad : source.getPads())
@@ -341,10 +342,10 @@ final class A03IdentityDeveloperVerifier {
                 translateCoordinate(pad.getX(), dx), translateCoordinate(pad.getY(), dy),
                 pad.getEscapeDx(), pad.getEscapeDy(), pad.getEscapeLength(),
                 translateRectangle(pad.getPadBounds(), dx, dy),
-                translateRectangle(pad.getProbeBounds(), dx, dy)));
+                translateRectangle(pad.getProbeBounds(), dx, dy), pad.getAttachment(),
+                pad.getMountingSide(), pad.getExposure()));
         for (PcbTraceGeometry trace : source.getTraces())
-            translated.addTrace(new PcbTraceGeometry(trace.getNetId(),
-                trace.getStartPadId(), trace.getEndPadId(),
+            translated.addTrace(trace.withPath(
                 translateCoordinates(trace.getXPoints(), dx),
                 translateCoordinates(trace.getYPoints(), dy)));
         for (PcbSilkscreenLabel label : source.getSilkscreenLabels())

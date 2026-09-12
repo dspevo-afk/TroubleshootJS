@@ -1,0 +1,32 @@
+[
+  {
+    "name": "seed-oracle",
+    "exit": 0,
+    "passed": true,
+    "log": "seed-oracle.log"
+  },
+  {
+    "name": "diagnostic-oracle",
+    "exit": 0,
+    "passed": true,
+    "log": "diagnostic-oracle.log"
+  },
+  {
+    "name": "value-role-oracle",
+    "exit": 0,
+    "passed": true,
+    "log": "value-role-oracle.log"
+  },
+  {
+    "name": "report-protocol",
+    "exit": 0,
+    "passed": true,
+    "log": "report-protocol.log"
+  },
+  {
+    "name": "actual-report-readers",
+    "exit": 0,
+    "passed": true,
+    "log": "actual-report-readers.log"
+  }
+]

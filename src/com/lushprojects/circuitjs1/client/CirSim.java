@@ -409,6 +409,9 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootP01Verification;
     boolean troubleshootP01VerificationComplete;
     boolean troubleshootP01ForcedFailure;
+    boolean troubleshootP02Verification;
+    boolean troubleshootP02VerificationComplete;
+    boolean troubleshootP02ForcedFailure;
 	boolean troubleshootA08Verification;
 	boolean troubleshootA08VerificationComplete;
 	boolean troubleshootA08ForcedFailure;
@@ -589,6 +592,8 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getBooleanValue("tsjA03Fail", false);
             troubleshootP01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyP01", false);
             troubleshootP01ForcedFailure = troubleshootP01Verification && qp.getBooleanValue("tsjP01Fail", false);
+            troubleshootP02Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyP02", false);
+            troubleshootP02ForcedFailure = troubleshootP02Verification && qp.getBooleanValue("tsjP02Fail", false);
 	    troubleshootA08Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA08", false);
 	    troubleshootA08ForcedFailure = troubleshootA08Verification && qp.getBooleanValue("tsjA08Fail", false);
 	    troubleshootA07Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA07", false);
@@ -1747,6 +1752,7 @@ MouseOutHandler, MouseWheelHandler {
 			if (generatedBoardInstance != null)
 			    generatedBoardInstance.getPhysicalBoardRuntime().observeSimulationTime(t);
 			runGeneratedBoardVerificationIfReady(didAnalyze);
+            runP02ConductorVerificationIfReady();
 			// Deferred meter work may consume this analysis only after the
 			// generated verification has made its current owner actionable.
 			instrumentController.onSimulationStepComplete(didAnalyze);
@@ -4730,7 +4736,7 @@ MouseOutHandler, MouseWheelHandler {
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || troubleshootTask41Verification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -4864,6 +4870,30 @@ MouseOutHandler, MouseWheelHandler {
 	updateCircuit();
 	if (activeMeasurementOverlay)
 	    throw new IllegalStateException("Instrument measurement overlay was not cleaned up");
+    }
+
+    /** A late admission must not strand the P02 verifier behind a consumed callback. */
+    private void runP02ConductorVerificationIfReady() {
+        if (troubleshootP02Verification && !troubleshootP02VerificationComplete)
+            P02ConductorDeveloperVerifier.publishReadiness(
+                generatedChallengeController != null && generatedChallengeController.isReady(),
+                isGeneratedRuntimeSettled(), GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning());
+            if (!developerVerifierRunning && troubleshootP02Verification && !troubleshootP02VerificationComplete &&
+                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                    generatedChallengeController != null && generatedChallengeController.isReady() &&
+                    isGeneratedRuntimeSettled()) {
+                developerVerifierRunning = true; troubleshootP02VerificationComplete = true;
+                publishBrowserVerificationResult("RUNNING:p02");
+                try {
+                    P02ConductorDeveloperVerifier.verify(this, troubleshootP02ForcedFailure);
+                    publishBrowserVerificationResult("PASS:p02");
+                } catch (Throwable failure) {
+                    publishBrowserVerificationResult("FAIL:" + failure.getMessage());
+                    if (failure instanceof Error) throw (Error)failure;
+                    if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+                    throw new IllegalStateException("P02 verification failed", failure);
+                } finally { developerVerifierRunning = false; }
+            }
     }
 
     private void runGeneratedBoardVerificationIfReady(boolean didAnalyze) {
@@ -5340,7 +5370,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&

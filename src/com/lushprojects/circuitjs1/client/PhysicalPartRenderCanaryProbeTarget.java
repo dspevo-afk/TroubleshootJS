@@ -15,7 +15,7 @@ final class PhysicalPartRenderCanaryProbeTarget implements ProbeTarget {
 
     public boolean isValid() {
         return sim != null && context.isDeveloperCanary() && context.getPart() != null &&
-            context.getPart().isInstalled() && terminal >= 0 &&
+            context.getPart().isInstalled() && context.getRenderer().canProbeInstalledContext(context) && terminal >= 0 &&
             terminal < context.getPart().getTerminalCount();
     }
 
@@ -29,7 +29,7 @@ final class PhysicalPartRenderCanaryProbeTarget implements ProbeTarget {
 
     public Point getMarkerPoint() { return context.getProviderTerminalPoint(terminal); }
     public CircuitMeasurementEndpoint getMeasurementEndpoint() {
-        return context.getPart().getTerminal(terminal).getEndpoint();
+        return isValid() ? context.getPart().getTerminal(terminal).getEndpoint() : null;
     }
 
     String getPartIdForDeveloperVerification() { return context.getPart().getId(); }

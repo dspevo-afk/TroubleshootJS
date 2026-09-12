@@ -1,0 +1,35 @@
+{
+  "finding": "F1",
+  "severity": "P1",
+  "cause": "CODE",
+  "prior_review": "CHANGES_REQUIRED",
+  "prior_candidate_sha256": "ba0053b02d11a21df7924fc65dff5210b7978edbf9cbe1e3bb7ac21796e347d3",
+  "repair": "Collect all contact and pad breakpoints by physical layer/supporting line, then distribute inside each segment before TRACE emission; coincident intervals merge provenance.",
+  "baseline": {
+    "status": "EXPECTED_FAIL",
+    "gate": "maintained new P02 regression on original builder",
+    "other_native_suites_passed": 19,
+    "evidence": "repair-baseline.log"
+  },
+  "maintained_regressions": {
+    "fixtures": 48,
+    "dimensions": "TOP/BOTTOM; horizontal/vertical; six source orders; original/reversed-and-subdivided",
+    "checks": "unique shared physical interval; both provenances; one cut disconnects; pristine immutability; cut/save/restore; no positive-length same-layer collinear duplicate edges"
+  },
+  "independent_probe_sources_sha256": {
+    "IndependentP02ReviewTest.java": "960f81de57641390e1eb33767af96d6e2af137840cfecc35794fc8cfc9207dd1",
+    "IndependentP02MinimalRepro.java": "87c338bac191ee97cdcb148a0782d8878273ff5098ccc7bf0f9f43a0cab39e0b"
+  },
+  "independent_probes": {
+    "minimal_original_unchanged": "PASS exit 0; cutting one shared interval disconnects A/B",
+    "offgrid_original_unchanged": "PASS exit 0; 500 fixtures / 198987 assertions",
+    "evidence": "repair-independent-probes.log",
+    "scope": "Independent-authored probes rerun by implementer; NOT a fresh independent delta review"
+  },
+  "independent_delta_review": {
+    "status": "BLOCKED",
+    "luna": "usage limit before substantive review; exit 1",
+    "reserve": "usage limit before substantive review; exit 1",
+    "note": "No fresh review PASS. No acceptance, publication or success email."
+  }
+}

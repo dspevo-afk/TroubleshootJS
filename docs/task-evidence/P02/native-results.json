@@ -1,0 +1,102 @@
+[
+  {
+    "name": "ChallengeDescriptorContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "FunctionalBlockContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "ElectricalPortContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "BoundedAssemblyContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "ControlledIndicatorAssemblyContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "SwitchedLowSideCompatibilityContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "Task49ValueSynthesisContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A05RoleContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A06PowerContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A07ExecutionContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A09DiagnosticContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A03IdentityContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A02CandidateContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A02GeometryContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "P01PhysicalPoseContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "P02ConductorContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A02ReplayContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "ElectricalUnitPackageMapContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A04ConstructionContractTest",
+    "exit": 0,
+    "passed": true
+  },
+  {
+    "name": "A04PhysicalDeclarationContractTest",
+    "exit": 0,
+    "passed": true
+  }
+]

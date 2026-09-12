@@ -1,6 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
-/** Physical terminal attachment. Copper-layer semantics are added by P02. */
+/** Declares whether a pad owns a plated barrel or only its mounting-face land. */
 enum PcbTerminalAttachment {
     PLATED_THROUGH_HOLE,
     SURFACE_PAD

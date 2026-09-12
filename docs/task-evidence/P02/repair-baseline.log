@@ -1,0 +1,8 @@
+Exception in thread "main" java.lang.IllegalStateException: P02 no duplicate horizontal copper intervals
+	at com.lushprojects.circuitjs1.client.P02ConductorChecks.check(P02ConductorChecks.java:21)
+	at com.lushprojects.circuitjs1.client.P02ConductorChecks.noOverlappingTraceEdges(P02ConductorChecks.java:140)
+	at com.lushprojects.circuitjs1.client.P02ConductorChecks.access$100(P02ConductorChecks.java:12)
+	at com.lushprojects.circuitjs1.client.P02ConductorChecks$Fixture.graph(P02ConductorChecks.java:51)
+	at com.lushprojects.circuitjs1.client.P02ConductorChecks.partialSharedTrunks(P02ConductorChecks.java:150)
+	at com.lushprojects.circuitjs1.client.P02ConductorChecks.verify(P02ConductorChecks.java:16)
+	at com.lushprojects.circuitjs1.client.P02ConductorContractTest.main(P02ConductorContractTest.java:5)

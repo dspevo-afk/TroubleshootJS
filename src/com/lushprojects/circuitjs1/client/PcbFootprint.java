@@ -117,7 +117,7 @@ final class PcbFootprint {
                 PcbCoordinateSystem.checkedAddBoardCoordinate(pad.getY(), dy), pad.getEscapeDx(),
                 pad.getEscapeDy(), pad.getEscapeLength(), translate(pad.getPadBounds(), dx, dy),
                 translate(pad.getProbeBounds(), dx, dy), pad.getAttachment(),
-                pad.getMountingSide()));
+                pad.getMountingSide(), pad.getExposure()));
         return new PcbFootprint(translatedPlacement, translatedPads);
     }
 

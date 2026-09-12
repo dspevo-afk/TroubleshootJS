@@ -1,0 +1,4 @@
+WARNING: The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might
+make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the
+Verbose parameter. For a list of approved verbs, type Get-Verb.
+PASS: actual final compiled A08 and Task49 reports accepted by maintained strict readers

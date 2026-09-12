@@ -1,0 +1,13 @@
+edge/10 153,100 -> 200,100 sources=[main]
+edge/11 153,105 -> 153,180 sources=[branch]
+edge/3 153,40 -> 153,96 sources=[branch]
+edge/4 100,100 -> 50,100 sources=[main]
+edge/5 100,100 -> 149,100 sources=[main, shared]
+edge/6 149,100 -> 150,100 sources=[main, shared]
+edge/7 150,100 -> 153,100 sources=[main]
+edge/8 153,100 -> 153,96 sources=[branch]
+edge/9 153,100 -> 153,105 sources=[branch]
+CUT edge/5 (100,100)-(149,100); A/B still connected=false
+CUT all representations of shared physical region; A/B connected=false
+
+PASS: independent P02 review 198987 assertions; 500 off-grid two-layer fixtures; all junction pairs, overlap normalization, reversal/subdivision, cut/save/restore
