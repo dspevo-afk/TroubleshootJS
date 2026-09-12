@@ -1,0 +1,101 @@
+{
+  "started": "2026-09-12T21:48:33.722Z",
+  "observed": "2026-09-12T21:53:21.193Z",
+  "report": {
+    "assertions": 276,
+    "attempts": [
+      {
+        "corpus": "pilot",
+        "elapsedMs": 6816,
+        "family": "LED_INDICATOR",
+        "maxAdvanceMs": 1728,
+        "outcome": "PASS",
+        "planCacheHit": true,
+        "proofCacheHit": false,
+        "repeat": 0,
+        "seed": "0",
+        "stages": [
+          {
+            "elapsedMs": 0,
+            "stage": "RESOLVE",
+            "work": 1
+          },
+          {
+            "elapsedMs": 1651,
+            "stage": "HEALTHY",
+            "work": 1
+          },
+          {
+            "elapsedMs": 3,
+            "stage": "PHYSICAL",
+            "work": 1
+          },
+          {
+            "elapsedMs": 5158,
+            "stage": "HYPOTHESES",
+            "work": 54
+          },
+          {
+            "elapsedMs": 0,
+            "stage": "SYMPTOM",
+            "work": 1
+          },
+          {
+            "elapsedMs": 3,
+            "stage": "PUBLISH",
+            "work": 1
+          }
+        ],
+        "work": 59
+      }
+    ],
+    "benchmarkAttemptMillis": 5000,
+    "browser": {
+      "devicePixelRatio": 1,
+      "memory": {
+        "jsHeapSizeLimit": 4395630592,
+        "status": "AVAILABLE",
+        "totalJSHeapSize": 235083340,
+        "usedJSHeapSize": 67320244
+      },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    "cancellationMaxMs": 5,
+    "cancellations": 6,
+    "cleanup": "PENDING",
+    "lifecycleFailures": 12,
+    "maxJobMillis": 90000,
+    "maxStepMillis": 5000,
+    "maxWork": 640,
+    "protocol": "TSJ-A10-GENERATION-1",
+    "rejected": 5,
+    "retiredUiReferences": true,
+    "sessionExclusivity": true,
+    "status": "RUNNING",
+    "temporalBatch": {
+      "exactStateAndEvents": true,
+      "fixedAndAdaptive": true,
+      "measurementCounters": true,
+      "rcOracle": true,
+      "stoppedStep": true
+    },
+    "temporalRegression": {
+      "changedReferenceRejected": true,
+      "dependenciesEqual": true,
+      "family": "RC_DELAY",
+      "firstMaxAdvanceMs": 3597,
+      "firstMs": 47060,
+      "firstOutcome": "PASS",
+      "profileBoundaryCancelled": true,
+      "repeatMaxAdvanceMs": 3589,
+      "repeatMs": 47360,
+      "seed": "0"
+    },
+    "unitCancellations": 18
+  },
+  "status": "FAIL:A10: frozen five-second benchmark ceiling"
+}

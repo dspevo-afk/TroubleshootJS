@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "Nine LED/diode/parallel seed cases; nine rejected candidates plus nine accepted candidates. Exact raw geometry/conductor SHA-256, priority-queue polls and congestion counts compared before/after the attempt-local geometry snapshot. Independent physics/clearance/canonicalization oracles remain in the maintained P04 suite.",
+  "outcomes": [
+    "led/0/0 PASS 77a90163d5e4a82f0ed8e1c097ee479ec8073692e21e61fab9b186ed69e9c234 expansions=17771 congestion=290",
+    "led/3/0 PASS 3c103a7509fe377e09f23c1c9b1f2d635cad9ba1bfa4ba9d133765f2f44eeb7a expansions=17565 congestion=293",
+    "led/-17/0 PASS bf101820a7867a56c387f3b4ee2cf29b1a5ac1fcfea3e76a73df44ef9742ef67 expansions=17465 congestion=364",
+    "diode/0/0 REJECT PCB trace has excessive detour: LED_NODE length=1740 direct=500 limit=3x",
+    "diode/0/1 REJECT PCB trace has excessive detour: LED_NODE length=1380 direct=280 limit=3x",
+    "diode/0/2 PASS d91e7dd3d1ffb91aec42873f19c5965086e8152ef0505097906967592220ad5b expansions=34006 congestion=806",
+    "diode/3/0 REJECT PCB trace has excessive detour: LED_NODE length=1720 direct=540 limit=3x",
+    "diode/3/1 REJECT PCB trace has excessive detour: LED_NODE length=1400 direct=260 limit=3x",
+    "diode/3/2 PASS f9289bd7691c97641ffa9d22d9d9d06de59358fc2d1879bb4d5dd5871967801d expansions=33562 congestion=794",
+    "diode/-17/0 REJECT PCB trace has excessive detour: LED_NODE length=1590 direct=350 limit=3x",
+    "diode/-17/1 PASS a45df0e02e81b5bb479f5d79d2de550c61e382430a07172b92e8c9853c0d1295 expansions=18115 congestion=390",
+    "parallel/0/0 REJECT Unable to route net BRANCH1_NODE from R1.2@310,140 to LED1.A@100,310",
+    "parallel/0/1 PASS 717fd70aac54c50d01b73f5d09aff1a767b77d4ada3eeaedd720919b1f77fbd9 expansions=16047 congestion=185",
+    "parallel/3/0 PASS 7780296740652511ecc3b96fd1fcc7e56eb6b9fa6a44d34f55e2df1c8b1d2a5f expansions=23087 congestion=407",
+    "parallel/-17/0 REJECT Unable to route net BRANCH1_NODE from R1.2@430,140 to LED1.A@100,140",
+    "parallel/-17/1 REJECT Unable to route net BRANCH1_NODE from R1.2@470,350 to LED1.A@100,350",
+    "parallel/-17/2 REJECT Unable to route net BRANCH1_NODE from R1.2@310,310 to LED1.A@100,180",
+    "parallel/-17/3 PASS c6fe9d1c2d7154078e1ae150141b0e9844b382f5581a2a6f7c67f907426026e4 expansions=19347 congestion=240"
+  ]
+}

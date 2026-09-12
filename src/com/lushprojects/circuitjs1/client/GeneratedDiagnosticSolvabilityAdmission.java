@@ -63,10 +63,7 @@ final class GeneratedDiagnosticSolvabilityAdmission {
                 if (!renderer.hasPad(targetId))
                     throw new IllegalArgumentException("Diagnostic plan target is not rendered: " +
                         targetId);
-                Point point = renderer.getPadPoint(targetId);
-                ProbeTarget target = sim.pcbWorkbenchController.findProbeTarget(point.x, point.y);
-                if (!(target instanceof BoardPadProbeTarget) || !target.isValid() ||
-                        !targetId.equals(((BoardPadProbeTarget) target).getPadId()))
+                if (!renderer.canInspectPad(sim, targetId))
                     throw new IllegalArgumentException("Diagnostic plan target is not player probeable: " +
                         targetId);
             }

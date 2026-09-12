@@ -1,0 +1,1 @@
+{"schema":1,"family":"PARALLEL_DUAL_INDICATOR","status":"PASS","pureAssertions":3209,"runtimeAssertions":199,"smdPoses":16,"projectionPads":10,"sharedPostAliases":2,"modeledComponentElements":4,"rejectedMetadataCuts":23,"liveGraphUnchanged":true}

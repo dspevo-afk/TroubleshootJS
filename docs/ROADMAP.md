@@ -7,8 +7,8 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **A11: Provider conformance, registry consistency and extension-cost proof**<br>
-**Current checkpoint:** **A10 AND A11 ACCEPTED; REQUESTED SEQUENCE COMPLETE.** P02 and A10 are published at `66a62b7` and `d5b9b6f`. A11 qualifies one exact provider registration surface and an ordinary alternate NMOS implementation: 24 native suites, final five-permutation JDK8/GWT build, compiled provider/solver/diagnostic/generation reports, independent oracles, and real OL → 680 Ohm replacement → successful customer retest. Optional source review found no blocker. **U01 is next and unstarted.** RC admission remains about 48 seconds on this desktop; the historical Windows browser wrapper remains unqualified. [A11 evidence and limits](task-evidence/A11/README.md).
+**Latest completed task:** **P04: Canonical multi-terminal routing and escape planning**<br>
+**Current checkpoint:** **U01, P03 AND P04 COMPLETE; A11-R1 CLOSED.** The shared viewport/loupe, demand-based placement and canonical multi-terminal routing are accepted on base `0487555`. Full native and compiled generation/diagnostic qualification passed before the bounded R1 repair; the final five-permutation JDK8/GWT build, affected native/provider/surface/solver checks and real diagnosis/repair/retest passed after it. The owner authorized focused post-R1 qualification. A11-D1 remains nonblocking physical NMOS parameter-comparison coverage debt. **E01 is next and unstarted.** RC admission remains about 49 seconds; the historical Windows browser wrapper remains unqualified. [U01](task-evidence/U01/README.md), [P03](task-evidence/P03/README.md), [P04](task-evidence/P04/README.md), [R1 evidence and reuse boundary](task-evidence/A11-R1/README.md).
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -651,47 +651,50 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A09, R00 and P01/P02 are accepted baseline entries. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. A10 then A11 are the current authorized sequence. Qualification prefers the built-in Browser for current compiled and player checks; the unchanged isolated CLI launcher's ownership deadline remains a separately reported infrastructure limitation.
+T49, N00, A01-A11, R00, P01-P04 and U01 are accepted/completed: 19 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. E01 is the next unstarted milestone. Qualification prefers the built-in Browser for current compiled and player checks; the unchanged isolated CLI launcher's ownership deadline remains a separately reported infrastructure limitation.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
 The hard prerequisites on the cards are authoritative. The phase map is a readable sequence, not a second conflicting dependency system. Conditional capabilities are resolved per Section 8. All future foundation expansion descends from R00; this prevents another active writer from extending the old contract while it is being retired.
 
-## 7.2 Preferred work order
+## 7.2 Preferred Execution Order
 
-| Lane | Order and boundary |
-|---|---|
-| Current authorized sequence | A10 then A11 is complete. U01 is the next unstarted item. |
-| Early foundations | A05, A06/A07 and P01/P02, after their actual prerequisites; shared code has one owner. |
-| Working small-board platform | A08/A09/A11, U01, P03/P04, E01/E03, A10, Q15, U04/U05 and REL-A when its scope is ready. |
-| Normal boards | P05-P09, U02/U03, E02/E04, D01, Q30, U06/U07. |
-| Advanced boards | Early E06 feasibility through A07; full E05/E06, Q60 and HARD calibration, REL-B. E08 only for consuming trace-repair content. |
-| Mature target | Q100, separately selected advanced X work, X05 expert calibration, X09 and REL-1. |
-| Later vocabulary | E09-E14, U09-U12, MCU-1/2 and IMPORT-1..5 at their actual dependencies and chosen content priority, not as blanket native-release blockers. |
+Reconciled on **2026-09-12** against implementation base
+`0487555d6bd2e5e8ed4b01652b847d0fffcb900c` and the supplied
+`TroubleshootJS_Preferred_Execution_Order_UPDATED.md`. This replaces the prior
+preferred queue. The milestone cards remain authoritative for scope, hard
+prerequisites, acceptance and conditional capabilities; this section chooses the
+preferred next eligible milestone. Future implementation needs its own authorization.
 
-A01/A07 investigate 60/100-part structural/solver costs long before final playable qualification. Q30 and physical-layer investigation do not wait for an alpha announcement when their prerequisites are available. Later optional lanes may be prioritized explicitly without claiming that all are required for the base game.
-
-### Preferred Execution Order
-
-This compact queue incorporates the supplied September 11 execution-order document.
-Milestone cards remain authoritative for hard prerequisites and acceptance. Completed
-work is not repeated. The owner's **A10 then A11** override is complete: A10 ran
-after accepted P02, earlier than its default position below. The remaining queue
-resumes at **U01**; future milestones need their own authorization.
+**Already complete:** T49, N00, A01-A11, R00, P01-P04 and U01. A10 and A11 ran earlier
+than the old preferred order while satisfying their hard prerequisites: A10
+required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
+not require rollback or reimplementation. U01 → P03 → P04 is now complete. **Next: E01.**
 
 | Wave | Preferred sequence |
 |---|---|
-| Small-board platform after P02 | A11 → U01 → P03 → P04 → E01 → E03 → A10 → Q15 → U04 → U05 → REL-A |
+| Small-board platform | E01 → E03 → Q15 → U04 → U05 → REL-A |
 | Normal-board scaling | P05 → P06 → P07 → P08 → P09 → U02 → U03 → E02 → E04 → D01 → Q30 → U06 → U07 |
-| Advanced boards | E05 → E06 → Q60 → HARD calibration through U05 → REL-B |
+| Advanced boards | E05 → E06 → conditional E08 → Q60 → HARD calibration through U05 → REL-B |
 | Mature target | Q100 → selected advanced X capabilities → X05 → X09 → REL-1 |
 
-Insert E07–E14, U08–U12, MCU, import and other advanced X capabilities only when
-selected content consumes them and their prerequisites are accepted. In particular,
-E08 must precede content that requires copper cuts/jumpers; it is not a blanket Q60
-prerequisite. P04 proves the first playable generated-PCB canary; Q15/Q30/Q60/Q100
-qualify progressively larger procedural game envelopes. Record deliberate ordering
-changes and verify their hard prerequisites before starting new work.
+**Player/product landmarks:** P04 proves the first playable procedurally placed
+and routed PCB canary, including probing, diagnosis, repair and retest. Q15
+qualifies the first heterogeneous small procedural troubleshooting board and
+repeated New Board experience. REL-A is the limited desktop alpha checkpoint.
+
+E08 precedes a consuming board family's qualification when that family requires
+player jumpers, trace cuts or physical restoration; it is not a blanket Q60
+prerequisite. E09-E14, U09-U12, MCU-1/2, IMPORT-1 through IMPORT-5 and selected
+advanced X capabilities enter through actual consuming content and their hard
+prerequisites. Other capability lanes retain their existing card/Section 8 rules.
+
+Before starting a milestone, check its hard prerequisites and confirm their
+accepted state. Use this queue when several milestones are eligible; prefixes
+and numeric suffixes name capability lanes, not chronology. Reconcile completion
+and deliberate ordering changes against the live repository after each milestone.
+The normal-board wave is a preferred progression after REL-A/Q15, not an added
+alpha prerequisite for otherwise eligible physical or Q30 investigation.
 
 ## 7.3 Milestone cards
 
@@ -1037,6 +1040,8 @@ The shared current-only policy and validation rules apply to every card. There i
 
 **Status:** ACCEPTED. One immutable type/version registry owns seven construction pairs, two physical-only joins and three low-side variants. The provider-local alternate NMOS uses 680 Ohm / 1.2 V / beta 6 without an individual-device branch in generic owners. Native/compiled declarations pass 427 assertions and 19 negatives; final build, actual solver/repair/diagnostic/generation reports, independent oracles and real player diagnosis/repair/retest pass. Optional source review has no blocker; one coverage follow-up remains. [Evidence and extension-cost ledger](task-evidence/A11/README.md).
 
+**Follow-up:** A11-R1 is closed without restarting A11: registration checks no longer call a part-aware renderer with null, and actual materialized parts fail clearly before workbench publication when no renderer is available. Full package equivalence remains enforced. Native/compiled declarations now pass 429 assertions/20 negatives and compiled admission covers 15 actual parts. A11-D1 remains explicit nonblocking coverage debt. [Repair and focused qualification](task-evidence/A11-R1/README.md).
+
 **Hard prerequisites:** [A04](#m-a04), [A08](#m-a08), [A09](#m-a09)
 
 **Priority / applicability:** Required foundation
@@ -1133,7 +1138,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### P03 · Demand-based board sizing and hierarchical placement
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE. Bounded physical-demand, region/domain/anchor placement and common escape-channel access replace the fixed generic outline. The frozen flat/authored/hierarchical comparison retains 201 original inventory rows; all 12 hierarchical cases fit. Native 864,267 assertions cover six variants, exact repetition and explicit access/isolation/budget negatives. Structural scale fixtures do not certify larger playable electrical circuits. [Evidence and comparison](task-evidence/P03/README.md).
 
 **Hard prerequisites:** [A05](#m-a05), [A06](#m-a06), [P01](#m-p01), [P02](#m-p02)
 
@@ -1163,7 +1168,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### P04 · Canonical multi-terminal routing and escape planning
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE. Typed net trees, reserved escapes, contact-preserving canonical paths and unique-copper scoring pass 6,408 native assertions and nine current generated routing cases. Raw 176–373 segments reduce to 15–31 while independent conductor/raster checks agree. Bounded geometry snapshot optimization preserves 18 exact accepted/rejected outcomes and restores the unchanged A10 benchmark. Final compiled solver/surface checks and real 100 kOhm diagnosis → marked 1 kOhm replacement → successful customer retest pass. [Evidence and limits](task-evidence/P04/README.md).
 
 **Hard prerequisites:** [P02](#m-p02), [P03](#m-p03)
 
@@ -1345,7 +1350,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U01 · Coherent large-board viewport and side-aware targeting
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE. One composed view serves rendering, targeting, markers and accessible navigation; permanent pan/zoom/fit, separate tray, face selection and held-Space inspection are qualified. Native 1,233 and compiled 1,237 assertions/six live targets pass. Real 15/30/56/100 surface/input trials, 52 trusted held moves with exact restoration, SMD top/bottom probes and generated diagnosis/repair/retest pass within the documented reuse boundary. The cursor remains free; canvas exit dismisses inspection. [Evidence and limits](task-evidence/U01/README.md).
 
 **Hard prerequisites:** [P01](#m-p01), [P02](#m-p02), [A03](#m-a03)
 

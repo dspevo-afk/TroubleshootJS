@@ -230,8 +230,7 @@ final class ConstructionProviderRegistry {
                     throw new IllegalArgumentException("Missing PCB footprint provider for " +
                         physicalPackage.getId() + " in " + this);
                 if (!containsEquivalent(renderers.getRegisteredPackages(), physicalPackage) ||
-                        renderers.getProvider(physicalPackage) == null ||
-                        renderers.getRenderer(physicalPackage, null) == null)
+                        !renderers.hasProvider(physicalPackage))
                     throw new IllegalArgumentException("Missing physical renderer for " +
                         physicalPackage.getId() + " in " + this);
             }

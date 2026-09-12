@@ -1,0 +1,13 @@
+{
+  "verification": "FAIL:A10: bounded actual stage reached PUBLISH",
+  "started": "2026-09-12T21:34:53.106Z",
+  "observed": "2026-09-12T21:41:08.942Z",
+  "logs": [
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: A10: bounded actual stage reached PUBLISH",
+      "timestamp": "2026-09-12T21:40:45.224Z",
+      "url": "circuitjs1-0.js"
+    }
+  ]
+}

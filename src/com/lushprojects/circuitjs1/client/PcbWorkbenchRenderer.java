@@ -13,15 +13,20 @@ class PcbWorkbenchRenderer {
     private final PcbBoardLayout layout;
     private final PhysicalPartRenderRegistry renderRegistry;
     private PcbBoardSide viewingFace = PcbBoardSide.TOP;
-    private PcbBoardViewTransform boardView;
+    private PcbViewport viewport;
+    private U01ViewportFixture viewportFixture;
+    private PcbViewport.Transform projection;
+    private PcbViewport.Transform trayProjection;
+    private Rectangle trayArea = new Rectangle(0, 0, 1, 1);
+    private boolean ambiguousTarget;
 
     PcbBoardSide getViewingFace() { return viewingFace; }
     void setViewingFace(PcbBoardSide face) {
         if (face == null) throw new IllegalArgumentException("Missing viewing face");
         if (viewingFace != face) {
             viewingFace = face;
-            boardView = new PcbBoardViewTransform(layout.getBoardOutline(), face);
-            installedObservations.clear(); selectedComponentId = null;
+            viewport.setFace(face);
+            updateProjection();
         }
     }
     boolean canProbePad(String padId) { return PcbCopperAccess.canProbe(layout.getPad(padId), viewingFace); }
@@ -30,9 +35,6 @@ class PcbWorkbenchRenderer {
             context.getPlacement().getMountingSide() == viewingFace;
     }
     private Rectangle canvasArea = new Rectangle(0, 0, 1, 1);
-    private double scale = 1;
-    private int offsetX;
-    private int offsetY;
     private String selectedComponentId;
     private String selectedPartId;
     private int trayPage;
@@ -78,10 +80,16 @@ class PcbWorkbenchRenderer {
             PhysicalPartRenderRegistry renderRegistry) {
         if (instance == null || modifications == null || layout == null || renderRegistry == null)
             throw new IllegalArgumentException("Missing PCB workbench renderer dependency");
+        // The candidate already owns real parts. Reject an unusable provider
+        // before its workbench can be attached or its generation published.
+        for (PhysicalPart<?> part : instance.getPhysicalBoardRuntime().getPhysicalParts())
+            renderRegistry.requireRenderer(part.getPackage(), part);
         this.instance = instance;
         this.modifications = modifications;
         this.layout = layout;
-        this.boardView = new PcbBoardViewTransform(layout.getBoardOutline(), viewingFace);
+        this.viewport = new PcbViewport(layout.getBoardOutline());
+        this.projection = viewport.current();
+        this.trayProjection = new PcbViewport.Transform(1, 0, 0, 0, false);
         this.renderRegistry = renderRegistry;
     }
 
@@ -98,21 +106,31 @@ class PcbWorkbenchRenderer {
             graphics.drawLine(x, 0, x, area.height);
         for (int y = 0; y < area.height; y += 32)
             graphics.drawLine(0, y, area.width, y);
-        drawBoard(graphics);
+        graphics.context.save();
+        Rectangle boardArea = viewport.getArea();
+        graphics.clipRect(boardArea.x, boardArea.y, boardArea.width, boardArea.height);
+        if (viewportFixture == null) drawBoard(graphics); else viewportFixture.draw(graphics);
+        graphics.restore();
         drawTray(graphics);
+        if (viewport.isInspecting()) {
+            graphics.setColor("#233b34"); graphics.fillRect(0, 0, boardArea.width, 24);
+            graphics.setColor("#ffffff"); graphics.setFont(new Font("sans-serif", 0, 12));
+            graphics.drawString("Inspection loupe " + Math.round(viewport.getMagnification() * 10) / 10.0 +
+                "x - release Space to restore view", 12, 17);
+        }
         if (CirSim.theSim != null && CirSim.theSim.isGeometryVerificationEnabled())
             publishDeveloperGeometry();
     }
 
     private void drawBoard(Graphics graphics) {
-        Rectangle outline = screenRect(layout.getBoardOutline());
+        Rectangle outline = screenRectForProvider(layout.getBoardOutline());
         graphics.setColor("#0d5b3d");
         graphics.fillRect(outline.x, outline.y, outline.width, outline.height);
         graphics.setColor("#b5dfc8");
         graphics.setLineWidth(2);
         graphics.drawRect(outline.x, outline.y, outline.width, outline.height);
         graphics.setColor("#b56c2f");
-        graphics.setLineWidth(Math.max(5, scaleInt(PcbTraceRules.TRACE_WIDTH)));
+        graphics.setLineWidth(Math.max(1, scaleInt(PcbTraceRules.TRACE_WIDTH)));
         PcbConductorGraph.Snapshot copper = instance.getCurrentConductorSnapshot();
         for (PcbConductorGraph.Surface surface : copper.getGraph().getSurfaces()) {
             if (surface.edgeId == null || !copper.hasEdge(surface.edgeId) || !surface.canProbe(viewingFace)) continue;
@@ -153,12 +171,12 @@ class PcbWorkbenchRenderer {
             if (pad.getAttachment() == PcbTerminalAttachment.SURFACE_PAD)
                 graphics.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
             else {
-                int radius = Math.max(8,Math.min(bounds.width,bounds.height)/2);
+                int radius = Math.max(1,Math.min(bounds.width,bounds.height)/2);
                 graphics.fillOval(point.x-radius,point.y-radius,radius*2,radius*2);
             }
         }
         if (pad.getAttachment() == PcbTerminalAttachment.PLATED_THROUGH_HOLE) {
-            int drill=Math.max(4,scaleInt(DRILL_RADIUS));
+            int drill=Math.max(1,scaleInt(DRILL_RADIUS));
             graphics.setColor("#26312e");
             graphics.fillOval(point.x-drill,point.y-drill,drill*2,drill*2);
         }
@@ -205,55 +223,63 @@ class PcbWorkbenchRenderer {
                 Math.max(10, scaleInt(label.getFontSize()))));
             graphics.setColor(label.getId().startsWith("net:") ? "#f2f5e9" : "#d9f1e3");
             String text = getPowerInputLabel(label.getTargetPadId(), label.getText());
-            graphics.drawString(text, screenX(label.getBaselineX()), screenY(label.getBaselineY()));
+            Rectangle bounds = screenRectForProvider(label.getBounds());
+            graphics.drawString(text, bounds.x, screenY(label.getBaselineY()));
         }
     }
 
     private void drawTray(Graphics graphics) {
-        Rectangle tray = screenRect(layout.getPartsTray());
+        Rectangle tray = trayArea;
         graphics.setColor("#c9ced0");
         graphics.fillRect(tray.x, tray.y, tray.width, tray.height);
         graphics.setColor("#778084");
         graphics.drawRect(tray.x, tray.y, tray.width, tray.height);
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, scaleInt(13))));
+        graphics.setFont(new Font("sans-serif", Font.BOLD, 13));
         graphics.setColor("#3d484c");
-        graphics.drawString("PARTS TRAY", tray.x + scaleInt(20), tray.y + scaleInt(30));
+        graphics.drawString("PARTS TRAY", tray.x + 20, tray.y + 30);
         Vector<PhysicalPart<?>> parts = getVisibleLoosePhysicalParts();
         if (parts.isEmpty()) {
-            graphics.setFont(new Font("sans-serif", 0, Math.max(11, scaleInt(12))));
-            graphics.drawString("No removed parts", tray.x + scaleInt(20), tray.y + scaleInt(70));
+            graphics.setFont(new Font("sans-serif", 0, 12));
+            graphics.drawString("No removed parts", tray.x + 20, tray.y + 70);
         }
         for (int index = 0; index < parts.size(); index++) {
             PhysicalPart<?> part = parts.get(index);
-            PhysicalPartRenderProvider provider = renderRegistry.getProvider(part.getPackage());
-            if (provider == null)
-                throw new IllegalStateException("No physical render provider for part package: " +
-                    part.getPackage().getId());
             PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, null, part,
                 part.getPackage(), index, true);
-            PhysicalPartRenderer renderer = provider.getRenderer(part);
+            PhysicalPartRenderer renderer = requireRenderer(part.getPackage(), part);
             PhysicalPartRenderGeometry geometry = renderer.getLooseGeometry(context);
             renderer.drawLoose(graphics, context, geometry, part.getId().equals(selectedPartId));
         }
         if (getTrayPageCount() > 1) {
-            graphics.setFont(new Font("sans-serif", 0, Math.max(10, scaleInt(11))));
+            graphics.setFont(new Font("sans-serif", 0, 11));
             graphics.drawString("Page " + (trayPage + 1) + " of " + getTrayPageCount(),
-                tray.x + scaleInt(20), tray.y + tray.height - scaleInt(15));
+                tray.x + 20, tray.y + tray.height - 15);
         }
     }
 
     ProbeTarget findProbeTarget(CirSim sim, int screenX, int screenY) {
+        ambiguousTarget = false;
+        if (viewportFixture != null) return viewport.contains(screenX, screenY) ? viewportFixture.target(screenX, screenY) : null;
+        if (!viewport.contains(screenX, screenY) && !trayArea.contains(screenX, screenY)) return null;
+        if (viewport.contains(screenX, screenY)) {
         for (PcbBoardHole hole : layout.getHoles())
             if (PcbCopperAccess.blocksProbeAt(hole,screenRectForProvider(hole.getBounds()),screenX,screenY)) return null;
         // Board pads own the board-side probe envelope.  Resolve them before
         // any component-side or tray target so an overlap at a pad can never
         // be stolen by an installed-part renderer.
+        String candidatePad = null;
         for (PcbPadPlacement pad : layout.getPads()) {
             if (!canProbePad(pad.getPadId())) continue;
             Rectangle probeBounds = screenRectForProvider(pad.getProbeBounds());
-            if (probeBounds.contains(screenX, screenY))
-                return new BoardPadProbeTarget(sim, instance, pad.getPadId(), this);
+            if (probeBounds.contains(screenX, screenY) && !isOccluded(screenX, screenY,
+                    instance.getBoard().getPad(pad.getPadId()).getComponentId())) {
+                if (candidatePad != null) { ambiguousTarget = true; return null; }
+                candidatePad = pad.getPadId();
+            }
         }
+        if (candidatePad != null) return new BoardPadProbeTarget(sim, instance, candidatePad, this);
+        }
+        if (trayArea.contains(screenX, screenY)) {
         Vector<PhysicalPart<?>> looseParts = getVisibleLoosePhysicalParts();
         for (int index = 0; index < looseParts.size(); index++) {
             PhysicalPart<?> part = looseParts.get(index);
@@ -266,6 +292,8 @@ class PcbWorkbenchRenderer {
                     return renderer.createLooseProbeTarget(sim, context,
                         terminal.getTerminalIndex());
             }
+        }
+        return null;
         }
         for (PcbComponentPlacement placement : layout.getComponents()) {
             BoardComponent component = instance.getBoard().getComponent(placement.getComponentId());
@@ -291,6 +319,8 @@ class PcbWorkbenchRenderer {
     }
 
     String findComponentId(int screenX, int screenY) {
+        if (viewportFixture != null) return null;
+        if (!viewport.contains(screenX, screenY)) return null;
         for (PcbComponentPlacement placement : layout.getComponents()) {
             if (isReplaceableSlotEmpty(placement.getComponentId()))
                 continue;
@@ -310,6 +340,7 @@ class PcbWorkbenchRenderer {
     }
 
     String findPartId(int screenX, int screenY) {
+        if (!trayArea.contains(screenX, screenY)) return null;
         Vector<PhysicalPart<?>> parts = getVisibleLoosePhysicalParts();
         for (int index = 0; index < parts.size(); index++) {
             PhysicalPart<?> part = parts.get(index);
@@ -456,6 +487,7 @@ class PcbWorkbenchRenderer {
         if (placement == null || component == null)
             return null;
         PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+        if (part == null) return null;
         PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
             component.getPhysicalPackage(), 0, false);
         return requireRenderer(component.getPhysicalPackage(), part).getInstalledGeometry(context);
@@ -559,15 +591,7 @@ class PcbWorkbenchRenderer {
 
     private PhysicalPartRenderer requireRenderer(PhysicalPackage physicalPackage,
             PhysicalPart<?> part) {
-        PhysicalPartRenderProvider provider = renderRegistry.getProvider(physicalPackage);
-        if (provider == null)
-            throw new IllegalStateException("No physical render provider for package: " +
-                (physicalPackage == null ? "null" : physicalPackage.getId()));
-        PhysicalPartRenderer renderer = provider.getRenderer(part);
-        if (renderer == null)
-            throw new IllegalStateException("Physical render provider returned no renderer: " +
-                physicalPackage.getId());
-        return renderer;
+        return renderRegistry.requireRenderer(physicalPackage, part);
     }
 
     private boolean findComponentIdForPlacement(PcbComponentPlacement placement,
@@ -652,7 +676,7 @@ class PcbWorkbenchRenderer {
         StringBuilder json = new StringBuilder("{\"points\":{");
         boolean first = true;
         for (PcbComponentPlacement component : layout.getComponents()) {
-            Rectangle bounds = screenRect(component);
+            Rectangle bounds = screenRectForProvider(component);
             first = appendDeveloperPoint(json, first, "component:" + component.getComponentId(),
                 bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
         }
@@ -725,23 +749,25 @@ class PcbWorkbenchRenderer {
     Point getProviderTerminalPoint(PhysicalPartRenderContext context, int terminal) {
         return context.getProviderTerminalPoint(terminal);
     }
-    int screenXForProvider(int value) { return screenX(boardView.boardToView(new Point(value,0)).x); }
-    int screenWorkbenchXForProvider(int value) { return screenX(value); }
+    int screenXForProvider(int value) { return screenX(value); }
+    int screenWorkbenchXForProvider(int value) { return (int)Math.round(trayProjection.screenX(value)); }
+    int screenWorkbenchYForProvider(int value) { return (int)Math.round(trayProjection.screenY(value)); }
     Point screenWorkbenchPointForProvider(Point value) {
-        return value == null ? null : new Point(screenX(value.x),screenY(value.y));
+        return trayProjection.project(value);
     }
-    Rectangle screenWorkbenchRectForProvider(Rectangle value) { return screenRect(value); }
+    Rectangle screenWorkbenchRectForProvider(Rectangle value) { return trayProjection.project(value); }
     int screenYForProvider(int value) { return screenY(value); }
     int scaleIntForProvider(int value) { return scaleInt(value); }
+    int scaleWorkbenchIntForProvider(int value) { return (int)Math.round(value * trayProjection.scale); }
     int scaleLengthForProvider(double value) {
         if (Double.isNaN(value) || Double.isInfinite(value) || value < 0.0)
             throw new IllegalArgumentException("Invalid provider length: " + value);
-        return (int) Math.round(value * scale);
+        return (int) Math.round(value * trayProjection.scale);
     }
     Point screenPointForProvider(Point value) {
-        return screenWorkbenchPointForProvider(boardView.boardToView(value));
+        return projection.project(value);
     }
-    Rectangle screenRectForProvider(Rectangle value) { return screenRect(boardView.boardToView(value)); }
+    Rectangle screenRectForProvider(Rectangle value) { return projection.project(value); }
     Rectangle getPadProbeBoundsForDeveloperVerification(String padId) {
         return getPadProbeBounds(padId);
     }
@@ -805,25 +831,52 @@ class PcbWorkbenchRenderer {
 
     private void updateTransform(Rectangle area) {
         canvasArea = area;
-        scale = Math.min((area.width - 30) / (double) layout.getWidth(),
-            (area.height - 30) / (double) layout.getHeight());
-        if (scale > 1.35)
-            scale = 1.35;
-        offsetX = (area.width - scaleInt(layout.getWidth())) / 2;
-        offsetY = (area.height - scaleInt(layout.getHeight())) / 2;
+        int trayWidth = Math.min(190, Math.max(120, area.width / 5));
+        viewport.resize(new Rectangle(0, 0, Math.max(1, area.width - trayWidth - 14), Math.max(1, area.height)));
+        Rectangle source = layout.getPartsTray();
+        trayArea = new Rectangle(Math.max(0, area.width - trayWidth), 12, trayWidth - 8, Math.max(1, area.height - 24));
+        // Keep the fixed-size heading clear of scaled loose-part labels.
+        int trayContentTop = 36;
+        double trayScale = Math.min(trayArea.width / (double)source.width,
+            Math.min(1.2, Math.max(1, trayArea.height - trayContentTop) / (double)source.height));
+        trayProjection = new PcbViewport.Transform(trayScale, trayArea.x - source.x * trayScale,
+            trayArea.y + trayContentTop - source.y * trayScale, 0, false);
+        updateProjection();
     }
 
-    private int screenX(int x) { return offsetX + scaleInt(x); }
-    private int screenY(int y) { return offsetY + scaleInt(y); }
-    private int scaleInt(int value) { return (int) Math.round(value * scale); }
-    private Rectangle screenRect(Rectangle rectangle) {
-        return new Rectangle(screenX(rectangle.x), screenY(rectangle.y),
-            scaleInt(rectangle.width), scaleInt(rectangle.height));
+    private int screenX(int x) { return (int)Math.round(projection.screenX(x)); }
+    private int screenY(int y) { return (int)Math.round(projection.screenY(y)); }
+    private int scaleInt(int value) { return (int)Math.round(value * projection.scale); }
+    PcbViewport getViewport() { return viewport; }
+    void showViewportFixture(CirSim sim, int count) {
+        viewport.dismiss();
+        viewportFixture = new U01ViewportFixture(sim, this, count);
+        viewport = new PcbViewport(viewportFixture.outline);
+        viewport.setFace(viewingFace); updateTransform(canvasArea);
     }
-
-    private Rectangle screenRect(PcbComponentPlacement component) {
-        return new Rectangle(screenX(component.getX()), screenY(component.getY()),
-            scaleInt(component.getWidth()), scaleInt(component.getHeight()));
+    void updateProjection() { projection = viewport.current(); }
+    boolean wasTargetAmbiguous() { return ambiguousTarget; }
+    boolean isBoardPointVisible(Point point) { return point != null && viewport.contains(point.x, point.y); }
+    private boolean isOccluded(int sx, int sy, String padOwner) {
+        for (PcbComponentPlacement placement : layout.getComponents())
+            if (!placement.getComponentId().equals(padOwner) && placement.getMountingSide() == viewingFace && isInstalledComponentMounted(placement.getComponentId()) &&
+                    screenRectForProvider(placement.getPhysicalGeometry().placedAt(placement.getPose()).getBodyBounds()).contains(sx, sy))
+                return true;
+        return false;
+    }
+    /** Admission follows the supported fit/side path; overview scale is not a probeability requirement. */
+    boolean canInspectPad(CirSim sim, String id) {
+        if (sim.circuitArea != null) updateTransform(sim.circuitArea);
+        PcbViewport.State saved = viewport.capture(); PcbBoardSide savedFace = viewingFace;
+        try {
+            PcbPadPlacement pad = layout.getPad(id);
+            if (pad == null) return false;
+            if (!canProbePad(id)) setViewingFace(viewingFace.opposite());
+            viewport.fit(new Rectangle(pad.getX()-80, pad.getY()-80, 160, 160)); updateProjection();
+            Point point = getPadPoint(id); ProbeTarget target = findProbeTarget(sim, point.x, point.y);
+            return target instanceof BoardPadProbeTarget && id.equals(((BoardPadProbeTarget)target).getPadId()) &&
+                target.isValid() && target.getMeasurementEndpoint() == instance.getSimulationBindings().getEndpoint(id);
+        } finally { viewingFace = savedFace; viewport.restore(saved); updateProjection(); }
     }
 
     private Rectangle getPadProbeBounds(String padId) {

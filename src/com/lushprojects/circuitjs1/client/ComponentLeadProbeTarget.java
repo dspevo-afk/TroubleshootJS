@@ -84,7 +84,10 @@ class ComponentLeadProbeTarget implements ProbeTarget {
                 lifecycleIdentity == target.lifecycleIdentity);
     }
 
-    public Point getMarkerPoint() { return renderer.getComponentLeadPoint(componentId, padId); }
+    public Point getMarkerPoint() {
+        Point point = renderer.getComponentLeadPoint(componentId, padId);
+        return renderer.isBoardPointVisible(point) ? point : null;
+    }
     public CircuitMeasurementEndpoint getMeasurementEndpoint() {
         return endpoint;
     }

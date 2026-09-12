@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "candidateFingerprint": "5157451312ae9d2eb828b2a73008251e4986ecdb3ebdd15f77b734d98f42fc18",
+  "family": "LED_INDICATOR",
+  "seed": "3",
+  "input": "fresh final6 real Browser buttons, lists and accessible terminal/probe controls; no injected controller calls",
+  "initialRetest": "Customer retest did not pass. Continue troubleshooting.",
+  "diagnosis": {
+    "power": "OFF",
+    "accessibleControlsOhms": 100000,
+    "nameplate": "brown black red gold = 1000 ohms +/-5%"
+  },
+  "repair": [
+    "Remove component R1",
+    "Catalog 1000 Ohm +/-5%",
+    "Install new resistor",
+    "Fit board",
+    "Board Power ON",
+    "Retest Customer"
+  ],
+  "result": "Customer retest passed. The reported behavior is resolved.",
+  "views": [
+    "Fit board",
+    "accessible component and terminal selection",
+    "red/black probe markers",
+    "R1_ORIGINAL removed resistor in separate tray"
+  ],
+  "boundary": "Complete failed-retest, unpowered measurement, marking inspection, removal, catalog replacement and successful powered customer retest repeated after R1 on the final built candidate. Both screenshots were captured and inspected after that repair. Earlier ordinary-canvas and held-Space evidence is retained under the documented reuse audit.",
+  "priorOrdinaryCanvasEvidence": {
+    "candidateFingerprint": "edf14bb4f882d205dab6561498bb64b37da29305794f14d093673a908dd47ccb",
+    "ordinaryLeftRightClicksOhms": 100000,
+    "boundary": "Earlier ordinary canvas diagnosis and package surface trials; not represented as a new final6 ordinary-canvas repeat."
+  },
+  "screenshots": [
+    "unrepaired.png",
+    "repaired.png"
+  ]
+}

@@ -13,8 +13,8 @@ class PcbBoardLayout {
     private void requireMutable() {
         if (sealed) throw new IllegalStateException("Pristine PCB realization is sealed");
     }
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
     private Rectangle boardOutline;
     private final Rectangle partsTray;
     private final int layoutAlgorithmVersion;
@@ -25,6 +25,27 @@ class PcbBoardLayout {
     private final HashMap<String, PcbSilkscreenLabel> silkscreenLabels =
         new HashMap<String, PcbSilkscreenLabel>();
     private final Vector<PcbTraceGeometry> traces = new Vector<PcbTraceGeometry>();
+    private int routingExpansions,rawRoutingSegments,routingCongestionRejections;
+    void setRoutingStatistics(int expansions,int rawSegments,int congestionRejections) {
+        requireMutable(); routingExpansions=expansions; rawRoutingSegments=rawSegments;
+        routingCongestionRejections=congestionRejections;
+    }
+    int getRoutingExpansions() { return routingExpansions; }
+    int getRawRoutingSegments() { return rawRoutingSegments; }
+    int getRoutingCongestionRejections() { return routingCongestionRejections; }
+    void replaceTraces(Vector<PcbTraceGeometry> candidates) {
+        requireMutable();
+        if(candidates==null) throw new IllegalArgumentException("Missing routes");
+        for(PcbTraceGeometry trace:candidates) if(trace==null) throw new IllegalArgumentException("Missing route");
+        traces.clear();traces.addAll(candidates);
+    }
+    private final java.util.TreeMap<String,PcbLayoutRegion> regions = new java.util.TreeMap<String,PcbLayoutRegion>();
+    void addRegion(PcbLayoutRegion region) {
+        requireMutable();
+        if (region == null || regions.containsKey(region.id)) throw new IllegalArgumentException("Duplicate physical region");
+        region.bounds(this); regions.put(region.id, region);
+    }
+    Vector<PcbLayoutRegion> getRegions() { return new Vector<PcbLayoutRegion>(regions.values()); }
     private final java.util.TreeMap<String,PcbBoardHole> holes = new java.util.TreeMap<String,PcbBoardHole>();
 
     void addHole(PcbBoardHole hole) {
@@ -241,7 +262,13 @@ class PcbBoardLayout {
                 return;
             }
         }
-        throw new IllegalStateException("Unable to place parts tray outside board outline");
+        // The tray is separate workbench chrome. A demand-sized board must not
+        // become electrically invalid because its old display envelope was small.
+        Rectangle right=candidates[0];
+        width=Math.max(width,checkedAdd(checkedAdd(right.x,right.width),gap));
+        height=Math.max(height,checkedAdd(Math.max(checkedAdd(right.y,right.height),
+            checkedAdd(boardOutline.y,boardOutline.height)),gap));
+        partsTray.setBounds(right.x,right.y,right.width,right.height);
     }
 
     private void validateTraceCourtyards(TroubleshootBoard board, PcbTraceGeometry trace,
@@ -709,12 +736,15 @@ class PcbBoardLayout {
     }
 
     double getRouteQualityScore(TroubleshootBoard board) {
-        double score = 0;
+        double score = PcbRouteMetrics.measure(traces).uniqueLength;
         for (PcbTraceGeometry trace : traces)
-            score += getTraceLength(trace) + getRouteQualityBendCount(trace) * 35 +
+            score += getRouteQualityBendCount(trace) * 35 +
                 getTraceDetourRatio(trace) * 60;
-        for (String netId : board.getNetIds()) {
+        Vector<String> scoreNetIds = board.getNetIds();
+        Collections.sort(scoreNetIds);
+        for (String netId : scoreNetIds) {
             Vector<String> padIds = board.getNet(netId).getPadIds();
+            Collections.sort(padIds);
             if (padIds.size() < 2)
                 continue;
             PcbPadPlacement first = pads.get(padIds.get(0));
@@ -739,7 +769,7 @@ class PcbBoardLayout {
                 score += Math.max(0, gap - 55) * .08;
             }
         }
-        score -= getSameNetReuseLength() * .35;
+        // Reuse is reported, never rewarded a second time; union length already accounts for shared copper.
         return score;
     }
 
@@ -882,40 +912,7 @@ class PcbBoardLayout {
     }
 
     int getSameNetReuseLength() {
-        int reused = 0;
-        for (int first = 0; first < traces.size(); first++) {
-            for (int second = first + 1; second < traces.size(); second++) {
-                if (traces.get(first).getNetId().equals(traces.get(second).getNetId()))
-                    reused += sharedCenterlineLength(traces.get(first), traces.get(second));
-            }
-        }
-        return reused;
-    }
-
-    private static int sharedCenterlineLength(PcbTraceGeometry first, PcbTraceGeometry second) {
-        int shared = 0;
-        int[] firstX = first.getXPoints();
-        int[] firstY = first.getYPoints();
-        int[] secondX = second.getXPoints();
-        int[] secondY = second.getYPoints();
-        for (int firstIndex = 1; firstIndex < firstX.length; firstIndex++) {
-            for (int secondIndex = 1; secondIndex < secondX.length; secondIndex++)
-                shared += collinearOverlap(firstX[firstIndex - 1], firstY[firstIndex - 1],
-                    firstX[firstIndex], firstY[firstIndex], secondX[secondIndex - 1],
-                    secondY[secondIndex - 1], secondX[secondIndex], secondY[secondIndex]);
-        }
-        return shared;
-    }
-
-    private static int collinearOverlap(int ax1, int ay1, int ax2, int ay2,
-            int bx1, int by1, int bx2, int by2) {
-        if (ay1 == ay2 && by1 == by2 && ay1 == by1)
-            return Math.max(0, Math.min(Math.max(ax1, ax2), Math.max(bx1, bx2)) -
-                Math.max(Math.min(ax1, ax2), Math.min(bx1, bx2)));
-        if (ax1 == ax2 && bx1 == bx2 && ax1 == bx1)
-            return Math.max(0, Math.min(Math.max(ay1, ay2), Math.max(by1, by2)) -
-                Math.max(Math.min(ay1, ay2), Math.min(by1, by2)));
-        return 0;
+        return PcbCoordinateSystem.checkedInt(PcbRouteMetrics.measure(traces).reusedLength);
     }
 
     private static int rectangleGap(Rectangle first, Rectangle second) {
@@ -928,6 +925,14 @@ class PcbBoardLayout {
         int dy = firstBottom < second.y ? checkedSubtract(second.y, firstBottom) :
             secondBottom < first.y ? checkedSubtract(first.y, secondBottom) : 0;
         return Math.max(dx, dy);
+    }
+
+    private static int collinearOverlap(int ax1,int ay1,int ax2,int ay2,int bx1,int by1,int bx2,int by2) {
+        if(ay1==ay2 && by1==by2 && ay1==by1)
+            return Math.max(0,Math.min(Math.max(ax1,ax2),Math.max(bx1,bx2))-Math.max(Math.min(ax1,ax2),Math.min(bx1,bx2)));
+        if(ax1==ax2 && bx1==bx2 && ax1==bx1)
+            return Math.max(0,Math.min(Math.max(ay1,ay2),Math.max(by1,by2))-Math.max(Math.min(ay1,ay2),Math.min(by1,by2)));
+        return 0;
     }
 
     private static Rectangle union(Rectangle first, Rectangle second) {
@@ -1063,6 +1068,11 @@ class PcbBoardLayout {
 
     String geometryFingerprint() {
         StringBuilder result = new StringBuilder();
+        result.append("layout=").append(layoutAlgorithmVersion).append('|').append(PcbRouteMetrics.SCORE_VERSION).append('|');
+        for(PcbLayoutRegion region:regions.values()) {
+            result.append("region:").append(PcbConductorGraph.field(region.id)).append(PcbConductorGraph.field(region.label));
+            for(String id:region.getComponentIds())result.append(PcbConductorGraph.field(id));
+        }
         result.append(width).append('x').append(height).append('|');
         result.append(boardOutline.x).append(',').append(boardOutline.y).append(',')
             .append(boardOutline.width).append(',').append(boardOutline.height).append('|');

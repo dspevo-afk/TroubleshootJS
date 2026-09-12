@@ -6,6 +6,9 @@ import java.util.Vector;
 final class StandardPhysicalPartRenderProviders {
     private StandardPhysicalPartRenderProviders() { }
 
+    /** Explicit fixed renderer used by developer surface fixtures without a provider probe. */
+    static PhysicalPartRenderer createMultiTerminalRenderer() { return new MultiTerminalRenderer(); }
+
     static PhysicalPartRenderRegistry createRegistry() {
         PhysicalPartRenderRegistry registry = new PhysicalPartRenderRegistry();
         registry.register(PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,

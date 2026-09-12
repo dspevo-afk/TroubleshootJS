@@ -1,0 +1,129 @@
+{
+  "resolved": [
+    {
+      "phase": "initial browser admission",
+      "status": "FAIL",
+      "reason": "Overview-only target admission could miss a visible pad; admission now navigates the same resolver and excludes its own package body from pad occlusion."
+    },
+    {
+      "phase": "initial viewport UI",
+      "status": "FAIL",
+      "reason": "Horizontal sidebar groups clipped controls; groups now fit the scrolling sidebar."
+    },
+    {
+      "phase": "P03 fixture construction",
+      "status": "FAIL",
+      "reason": "Invalid lifted-lead or overlapping probe geometry in structural negatives; corrected fixture contracts before qualification."
+    },
+    {
+      "phase": "P03 routing-grid alignment",
+      "status": "FAIL",
+      "reason": "Connector reservation width produced off-grid origins; aligned before packing."
+    },
+    {
+      "phase": "P04 development",
+      "status": "FAIL",
+      "reason": "Earlier nets occupied later terminal escapes; all escapes are now reserved. Bounded candidate placement ordering also needed connectivity feedback."
+    },
+    {
+      "phase": "A10 regression fixture",
+      "status": "FAIL",
+      "reason": "Old fixed-edge routing failure is now rejected during placement; replaced with a real distinct-net escape-clearance impossibility, retaining typed 80-attempt exhaustion."
+    },
+    {
+      "phase": "native final gate first attempts",
+      "status": "FAIL",
+      "reason": "Negative wall fixture missed logical pads, then overlapped component probes; corrected the explicit fixtures."
+    },
+    {
+      "phase": "native final gate tray regression",
+      "status": "FAIL",
+      "reason": "Preserving final access margins exposed a fixed workbench-envelope limit. Tray placement now expands its separate chrome envelope when needed."
+    },
+    {
+      "phase": "preview restart identity canary",
+      "status": "FAIL",
+      "reason": "Checked incorrect identity field names. No process was terminated; corrected to documented processId/verifierRunId/processStartTicks, revalidated, and restarted only the owned preview."
+    },
+    {
+      "phase": "narrow player tray",
+      "status": "FAIL",
+      "reason": "Scaled loose-part labels overlapped the fixed tray heading; final tray projection reserves 36 pixels above content."
+    },
+    {
+      "phase": "56/100-part overview",
+      "status": "FAIL",
+      "reason": "Positive thin physical features rounded to zero raster extent. Final shared projection preserves one raster pixel; independent literal top/bottom checks and all four final rendered fixtures pass. Fixture publication now follows an actual successful draw."
+    },
+    {
+      "phase": "56-part timing first capture",
+      "status": "NOT RUN",
+      "reason": "The first start metrics were null; no timing was accepted from that trial. Replaced by a complete final-source start/end trial."
+    },
+    {
+      "phase": "normal final-source preparation after repeated fixture navigation",
+      "status": "FAIL then isolated PASS",
+      "reason": "One preparation displayed a generic failure. Fresh final-source seed3 completed generation, 100 kOhm diagnosis, marked 1 kOhm replacement and customer retest. No production source changed between attempts; original cause is not established."
+    },
+    {
+      "phase": "earlier Task41/A09 tab",
+      "status": "PASS after initial CDP deadlines",
+      "reason": "Recovered actual completed reports; maintained Task41 strict reader and independent A09 reader 144 pass. The tab closed successfully."
+    }
+  ],
+  "limits": [
+    "Existing Windows CLI browser-wrapper qualification remains separate and unclaimed.",
+    "Structural fixtures do not certify complete larger playable circuits.",
+    "No new physics, two-layer autorouting, planes, recovery optimizer or player SMD catalog is claimed.",
+    "A11-D1 remains explicit nonblocking physical NMOS parameter comparison coverage debt.",
+    "A10/Task41 and the full native matrix are not claimed as post-R1 reruns; owner authorized focused requalification.",
+    "Combined process/directory cleanup was rejected by automatic approval review with blocked by policy. Narrow verified preview shutdown passed; scratch including classes remains. Two startup error tabs remain after supported close attempts."
+  ],
+  "pending": [],
+  "retainedQualificationAttempts": [
+    {
+      "phase": "first final3 A10 private operation",
+      "status": "FAIL",
+      "evidence": "../P04/a10-final-failure.json",
+      "reason": "Coarse private-operation assertion failed; this individual cause is not established. Retained separately from the later measured benchmark failure."
+    },
+    {
+      "phase": "isolated final3 A10 PUBLISH operation",
+      "status": "FAIL",
+      "evidence": "../P04/a10-isolated-failure.json",
+      "reason": "Coarse publication assertion failed. No missing completion is a PASS."
+    },
+    {
+      "phase": "final4 A10 benchmark after diagnostic improvement",
+      "status": "FAIL",
+      "evidence": "../P04/a10-diagnostic-failure.json",
+      "reason": "LED seed0 first admission was 6816 ms against the unchanged 5000 ms benchmark ceiling. Routing repeatedly copied geometry in its search loop."
+    },
+    {
+      "phase": "final5 complete A10 regression",
+      "status": "PASS",
+      "evidence": "../P04/generation-report.json",
+      "reason": "Attempt-local immutable routing geometry snapshot preserves 18 exact outcomes. Actual compiled regression passes 1273 assertions/24 attempts; LED seed0 first admission 1042 ms. Benchmark, work, active-unit and whole-job limits unchanged."
+    },
+    {
+      "phase": "two preview startup navigations",
+      "status": "NOT RUN",
+      "reason": "Navigation preceded listener readiness and produced startup error pages 6/8. No verifier ran there. Subsequent ready-preview runs completed."
+    },
+    {
+      "phase": "Browser transport while synchronous verifier occupied page",
+      "status": "NOT RUN for timed-out observations",
+      "reason": "CDP deadlines and one short dev.logs timeout/kernel reset are observation failures, not passing tests. The eventual completed reports and strict-reader results supply the evidence."
+    },
+    {
+      "phase": "first focused native shell invocation",
+      "status": "NOT RUN",
+      "reason": "Module import lacked the relative-path prefix and failed before tests. Corrected invocation ran A04/P01/U01 successfully."
+    },
+    {
+      "phase": "first compiled value receipt extraction",
+      "status": "FAIL: receipt shape",
+      "reason": "Embedded descriptor newlines were not serialized as the maintained pipe format. Corrected extraction passed the unchanged independent nine-seed value and six-seed role oracles."
+    }
+  ]
+}

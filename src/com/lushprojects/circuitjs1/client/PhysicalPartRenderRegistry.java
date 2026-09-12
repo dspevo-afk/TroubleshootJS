@@ -36,9 +36,19 @@ final class PhysicalPartRenderRegistry {
         return providers.get(physicalPackage.getId());
     }
 
-    PhysicalPartRenderer getRenderer(PhysicalPackage physicalPackage, PhysicalPart<?> part) {
+    /** Materialized-part admission, also used for every later rendering dispatch. */
+    PhysicalPartRenderer requireRenderer(PhysicalPackage physicalPackage, PhysicalPart<?> part) {
+        if (physicalPackage == null || part == null)
+            throw new IllegalArgumentException("Physical renderer requires an actual package and part");
+        if (!physicalPackage.isEquivalentTo(part.getPackage()))
+            throw new IllegalArgumentException("Physical render part package mismatch: " + part.getId());
         PhysicalPartRenderProvider provider = getProvider(physicalPackage);
-        return provider == null ? null : provider.getRenderer(part);
+        if (provider == null)
+            throw new IllegalStateException("No physical render provider for package: " + physicalPackage.getId());
+        PhysicalPartRenderer renderer = provider.getRenderer(part);
+        if (renderer == null)
+            throw new IllegalStateException("Physical render provider returned no renderer: " + physicalPackage.getId());
+        return renderer;
     }
 
     boolean hasProvider(PhysicalPackage physicalPackage) {

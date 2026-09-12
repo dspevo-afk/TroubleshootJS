@@ -59,6 +59,7 @@ final class Task49DeveloperVerifier {
         require(originalOwner != null && sim.getGeneratedChallengeController() != null &&
             sim.getGeneratedChallengeController().isReady() &&
             sim.isGeneratedRuntimeSettled(), "settled original owner is required");
+        A11ProviderConformanceChecks.verifyRenderParts(sim);
         Task41SimulationSnapshot original = Task41SimulationSnapshot.capture(sim);
         boolean priorQuickPlay = sim.quickPlayActive;
         QuickPlaySession priorSession = sim.quickPlaySession;

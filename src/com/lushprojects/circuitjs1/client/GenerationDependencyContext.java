@@ -21,7 +21,7 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    static final String INTERPRETATION_EPOCH = "tsj-a10-generation-dependencies-v4";
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v5";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v2";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";
@@ -222,10 +222,21 @@ final class GenerationDependencyContext {
         }
 
         appendStringList(out, "board.nets", netIds, false);
+        appendField(out,"routing.score",PcbRouteMetrics.SCORE_VERSION);
+        for(PcbPlacementConstraints.Part demand:board.getPlacementConstraints().getParts()) {
+            frame(out,"placement"); frame(out,demand.componentId); frame(out,demand.regionId);
+            frame(out,demand.regionLabel); frame(out,demand.domainId);
+            frame(out,demand.anchor.toString()); frame(out,Integer.toString(demand.accessMargin));
+        }
+        for(PcbPlacementConstraints.Barrier barrier:board.getPlacementConstraints().getBarriers()) {
+            frame(out,"barrier"); frame(out,barrier.firstDomain); frame(out,barrier.secondDomain);
+            frame(out,Integer.toString(barrier.clearance));
+        }
         for (String netId : netIds) {
             BoardNet net = board.getNet(netId);
             require(net != null, "Missing board net: " + netId);
             appendStringList(out, "net." + netId + ".pads", sorted(net.getPadIds()), false);
+            appendField(out,"net."+netId+".routing-role",net.getRoutingRole().toString());
         }
 
         appendStringList(out, "board.power-inputs", powerInputIds, false);

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "permutations": 5,
+  "compileSeconds": 82.499,
+  "linkSeconds": 1.622,
+  "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -JavaHome .tools/jdk8-download/jdk8u502-b07 -Style OBF"
+}

@@ -149,11 +149,22 @@ final class A11ProviderConformanceChecks {
                 new PhysicalPartRenderRegistry());
         } }, "missing renderer");
         reject(new Action() { public void run() {
-            PhysicalPartRenderRegistry renderers = new PhysicalPartRenderRegistry();
-            for (PhysicalPackage physical : nmos.getPackages()) renderers.register(physical,
-                new PhysicalPartRenderProvider() { public PhysicalPartRenderer getRenderer(PhysicalPart<?> part) { return null; } });
-            new ConstructionProviderRegistry(Arrays.asList(nmos), StandardPcbFootprintProviders.createRegistry(), renderers);
-        } }, "registered null renderer");
+            PhysicalPartRenderRegistry renderers = StandardPhysicalPartRenderProviders.createRegistry();
+            PhysicalPackage original = PhysicalPackages.AXIAL_RESISTOR;
+            PhysicalPackage conflicting = new PhysicalPackage(original.getId(), original.getTerminalIds(),
+                new java.util.Vector<String>(), !original.isConnector(), original.getGeometry());
+            renderers.hasProvider(conflicting);
+        } }, "same ID with inequivalent render package");
+        reject(new Action() { public void run() {
+            PhysicalPartRenderRegistry partial = new PhysicalPartRenderRegistry();
+            partial.register(PhysicalPackages.AXIAL_RESISTOR,
+                StandardPhysicalPartRenderProviders.createRegistry().getProvider(PhysicalPackages.AXIAL_RESISTOR));
+            new ConstructionProviderRegistry(Arrays.asList(nmos), StandardPcbFootprintProviders.createRegistry(), partial);
+        } }, "one declared package lacks a renderer registration");
+        final int[] rendererCalls = { 0 };
+        new ConstructionProviderRegistry(Arrays.asList(nmos), StandardPcbFootprintProviders.createRegistry(),
+            partAwareRenderers(rendererCalls, null));
+        check(rendererCalls[0] == 0, "bootstrap checks registration without asking for a nonexistent part");
         reject(new Action() { public void run() {
             copy(nmos.getElectrical(), nmos.getPhysical(), nmos.getControlledContribution(), nmos.getDriverObservation(),
                 Collections.<PhysicalPackage>emptyList());
@@ -208,6 +219,73 @@ final class A11ProviderConformanceChecks {
         assertions++;
         if (!condition) throw new AssertionError("A11 " + label);
     }
+
+    /** Real-part conformance at the same constructor boundary used before publication. */
+    static void verifyRenderParts(final CirSim sim) {
+        final GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
+        final Object graph = sim.elmList;
+        final PcbWorkbenchController owner = sim.pcbWorkbenchController;
+        final PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getPhysicalParts().get(0);
+        final int[] calls = { 0 };
+        final PhysicalPartRenderRegistry aware = partAwareRenderers(calls, null);
+        new ConstructionProviderRegistry(ConstructionProviderRegistry.standard().entries(),
+            StandardPcbFootprintProviders.createRegistry(), aware);
+        check(calls[0] == 0, "part-aware registration does not call a provider");
+        new PcbWorkbenchRenderer(instance, sim.getBoardModificationController(), instance.getPcbLayout(), aware);
+        check(calls[0] == instance.getPhysicalBoardRuntime().getPhysicalParts().size(),
+            "workbench admission supplies every actual materialized part");
+        check(aware.requireRenderer(part.getPackage(), part) != null, "actual part-aware dispatch succeeds");
+
+        final int[] failedCalls = { 0 };
+        final PhysicalPartRenderRegistry emptyRenderer = partAwareRenderers(failedCalls, part.getPackage().getId());
+        new ConstructionProviderRegistry(ConstructionProviderRegistry.standard().entries(),
+            StandardPcbFootprintProviders.createRegistry(), emptyRenderer);
+        check(failedCalls[0] == 0, "registration cannot decide an instance-dependent renderer result");
+        rendererFailure(new Action() { public void run() {
+            new PcbWorkbenchRenderer(instance, sim.getBoardModificationController(), instance.getPcbLayout(), emptyRenderer);
+        } }, "Physical render provider returned no renderer: " + part.getPackage().getId());
+        check(failedCalls[0] > 0, "no-renderer failure exercised a real supported part");
+        rendererFailure(new Action() { public void run() {
+            new PcbWorkbenchRenderer(instance, sim.getBoardModificationController(), instance.getPcbLayout(),
+                new PhysicalPartRenderRegistry());
+        } }, "No physical render provider for package: ");
+        final PhysicalPackage wrong = part.getPackage().isEquivalentTo(PhysicalPackages.AXIAL_RESISTOR) ?
+            PhysicalPackages.TO92_NPN : PhysicalPackages.AXIAL_RESISTOR;
+        rendererFailure(new Action() { public void run() {
+            aware.requireRenderer(wrong, part);
+        } }, "Physical render part package mismatch: ");
+        check(sim.elmList == graph && sim.getGeneratedBoardInstance() == instance && sim.pcbWorkbenchController == owner,
+            "renderer admission failures do not replace the live player owner");
+        publishRenderParts(calls[0] - 1);
+    }
+
+    private static PhysicalPartRenderRegistry partAwareRenderers(final int[] calls, final String missingRenderer) {
+        final PhysicalPartRenderRegistry standard = StandardPhysicalPartRenderProviders.createRegistry();
+        PhysicalPartRenderRegistry result = new PhysicalPartRenderRegistry();
+        for (final PhysicalPackage physical : standard.getRegisteredPackages()) result.register(physical,
+            new PhysicalPartRenderProvider() { public PhysicalPartRenderer getRenderer(PhysicalPart<?> part) {
+                if (part == null) throw new AssertionError("A11-R1 provider was called with a nonexistent part");
+                calls[0]++;
+                return physical.getId().equals(missingRenderer) ? null : standard.requireRenderer(physical, part);
+            } });
+        return result;
+    }
+    private static void rendererFailure(Action action, String message) {
+        try { action.run(); }
+        catch (IllegalArgumentException expected) {
+            check(expected.getMessage().startsWith(message), "renderer failure identifies its boundary"); return;
+        }
+        catch (IllegalStateException expected) {
+            check(expected.getMessage().startsWith(message), "renderer failure identifies its boundary"); return;
+        }
+        throw new AssertionError("A11-R1 accepted " + message);
+    }
+    private static native void publishRenderParts(int parts) /*-{
+        $doc.documentElement.setAttribute('data-tsj-a11-r1-report', JSON.stringify({status:'PASS',
+            schema:1,materializedParts:parts,nullPartCalls:0,partAwareBootstrap:true,
+            missingRegistrationRejected:true,inequivalentPartRejected:true,
+            nullRendererRejectedBeforeWorkbench:true,liveOwnerUnchanged:true}));
+    }-*/;
     static native void publish(String report) /*-{
         $doc.documentElement.setAttribute("data-tsj-a11-report", report);
     }-*/;

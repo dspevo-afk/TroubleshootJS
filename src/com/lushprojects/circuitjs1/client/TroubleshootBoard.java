@@ -12,6 +12,14 @@ class TroubleshootBoard {
     private final HashMap<String, ExternalBoardPowerInput> powerInputs =
         new HashMap<String, ExternalBoardPowerInput>();
     private final BoardSimulationBindings simulationBindings = new BoardSimulationBindings(this);
+    private PcbPlacementConstraints placementConstraints;
+    void setPlacementConstraints(PcbPlacementConstraints constraints) {
+        if (constraints == null || placementConstraints != null) throw new IllegalArgumentException("Physical demand already declared");
+        constraints.validate(this); placementConstraints=constraints;
+    }
+    PcbPlacementConstraints getPlacementConstraints() {
+        return placementConstraints == null ? PcbPlacementConstraints.standard(this) : placementConstraints;
+    }
 
     TroubleshootBoard(String id) {
         requireId(id, "board");

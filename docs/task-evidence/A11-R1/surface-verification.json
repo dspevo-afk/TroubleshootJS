@@ -1,0 +1,7 @@
+{
+  "data-tsj-p01-report": "{\"schema\":1,\"status\":\"PASS\",\"pureAssertions\":8357,\"declaredPoses\":43,\"renderedSmdPoses\":16,\"runtimeAssertions\":316,\"liveGraphUnchanged\":true}",
+  "data-tsj-p02-report": "{\"schema\":1,\"family\":\"LED_INDICATOR\",\"status\":\"PASS\",\"pureAssertions\":3209,\"runtimeAssertions\":189,\"smdPoses\":16,\"projectionPads\":6,\"sharedPostAliases\":1,\"modeledComponentElements\":2,\"rejectedMetadataCuts\":13,\"liveGraphUnchanged\":true}",
+  "data-tsj-u01-fixture": "{\"count\":100,\"frames\":1118,\"frameMs\":7812,\"inputs\":0,\"inputMs\":0,\"loupe\":false,\"scope\":\"structural surface rendering; live endpoint observations\"}",
+  "data-tsj-u01-report": "{\"status\":\"PASS\",\"schema\":1,\"assertions\":1237,\"liveTargets\":6,\"identityUnchanged\":true}",
+  "data-tsj-verification": "PASS:u01"
+}

@@ -88,6 +88,9 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'A02GeometryContractTest'; Marker = 'A02GeometryContractTest ' },
         @{ Name = 'P01PhysicalPoseContractTest'; Marker = 'P01 physical pose contracts ' },
         @{ Name = 'P02ConductorContractTest'; Marker = 'P02 conductor contracts ' },
+        @{ Name = 'U01ViewportContractTest'; Marker = 'U01 viewport contracts ' },
+        @{ Name = 'P03PlacementContractTest'; Marker = 'P03 placement contracts ' },
+        @{ Name = 'P04RoutingContractTest'; Marker = 'P04 routing contracts ' },
         @{ Name = 'A02ReplayContractTest'; Marker = 'A02ReplayContractTest ' },
         @{ Name = 'ElectricalUnitPackageMapContractTest'; Marker = 'ElectricalUnitPackageMapContractTest ' },
         @{ Name = 'A04ConstructionContractTest'; Marker = 'A04ConstructionContractTest ' },
@@ -101,6 +104,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $sourcePaths += $testSource
     }
     $argumentsFile = Join-Path $taskRoot 'sources.txt'
+    $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P03StructuralFixtures.java')
     [IO.File]::WriteAllLines($argumentsFile, @($sourcePaths | ForEach-Object {
         '"' + $_.Replace('\', '/') + '"'
     }), (New-Object Text.UTF8Encoding($false)))

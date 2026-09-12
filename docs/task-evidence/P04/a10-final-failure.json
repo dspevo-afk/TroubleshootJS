@@ -1,0 +1,365 @@
+{
+  "verification": "FAIL:A10: private operation yielded without an overlay or global proof guard",
+  "logs": [
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 7 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 8 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 7 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 8 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 7 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 8 unconnected",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.331Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 5 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 10 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 5 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 10 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 5 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 10 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 16 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 5 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 5 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 5 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.332Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 3 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 7 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 8 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 7 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 8 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 7 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 8 unconnected",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 7 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: A10: private operation yielded without an overlay or global proof guard",
+      "timestamp": "2026-09-12T21:32:00.333Z",
+      "url": "circuitjs1-0.js"
+    }
+  ]
+}

@@ -94,7 +94,7 @@ public final class A02GeometryContractTest {
         TopologyPlacementGraph.PadLink resistorLink = linkTo(allLinks, "R1");
         final Vector<PcbFootprint> onePlaced = new Vector<PcbFootprint>();
         onePlaced.add(connector);
-        Point one = SeededPcbLayoutGenerator.weightedConnectedTarget(prototype,
+        Point one = PcbPlacementPlanner.weightedConnectedTarget(prototype,
                 onePlaced, allLinks, 321, -77);
         PcbPadPlacement oneSource = prototype.getPad(connectorLink.getPadId());
         PcbPadPlacement oneWorld = connector.getPad(connectorLink.getOtherPadId());
@@ -105,7 +105,7 @@ public final class A02GeometryContractTest {
         Vector<PcbFootprint> twoPlaced = new Vector<PcbFootprint>();
         twoPlaced.add(connector);
         twoPlaced.add(resistor);
-        Point two = SeededPcbLayoutGenerator.weightedConnectedTarget(prototype,
+        Point two = PcbPlacementPlanner.weightedConnectedTarget(prototype,
                 twoPlaced, allLinks, 321, -77);
         PcbPadPlacement twoSourceA = prototype.getPad(connectorLink.getPadId());
         PcbPadPlacement twoWorldA = connector.getPad(connectorLink.getOtherPadId());
@@ -123,7 +123,7 @@ public final class A02GeometryContractTest {
                 "multiple neighbors use unequal topology weights");
 
         Vector<PcbFootprint> noPlaced = new Vector<PcbFootprint>();
-        Point fallback = SeededPcbLayoutGenerator.weightedConnectedTarget(prototype,
+        Point fallback = PcbPlacementPlanner.weightedConnectedTarget(prototype,
                 noPlaced, allLinks, 321, -77);
         require(fallback.x == 321 && fallback.y == -77,
                 "no placed connected neighbor uses fallback");
@@ -134,7 +134,7 @@ public final class A02GeometryContractTest {
                         new Vector<TopologyPlacementGraph.PadLink>();
                 invalid.add(new TopologyPlacementGraph.PadLink("LED1", "LED1.A",
                         "J1", "J1.1", "VIN", -1.0));
-                SeededPcbLayoutGenerator.weightedConnectedTarget(prototype,
+                PcbPlacementPlanner.weightedConnectedTarget(prototype,
                         onePlaced, invalid, 0, 0);
             }
         }, "negative placement weight");
@@ -143,7 +143,7 @@ public final class A02GeometryContractTest {
                 Vector<TopologyPlacementGraph.PadLink> invalid =
                         new Vector<TopologyPlacementGraph.PadLink>();
                 invalid.add(null);
-                SeededPcbLayoutGenerator.weightedConnectedTarget(prototype,
+                PcbPlacementPlanner.weightedConnectedTarget(prototype,
                         onePlaced, invalid, 0, 0);
             }
         }, "null placement link");

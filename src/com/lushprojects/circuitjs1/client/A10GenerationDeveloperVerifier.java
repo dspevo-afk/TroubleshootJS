@@ -66,7 +66,8 @@ final class A10GenerationDeveloperVerifier {
                     coordinator.advanceForDeveloperVerification();
                 require(coordinator.isRunning() && !sim.activeMeasurementOverlay &&
                     !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning(),
-                    "private operation yielded without an overlay or global proof guard");
+                    "private operation " + boundary + " yielded without an overlay or global proof guard; " +
+                    jobDiagnostic(coordinator));
                 require(original.getExternalPowerBindings().areAllDisconnected(),
                     "private proof keeps the saved player source isolated");
                 if (boundary == 1) requireOverlappingProofRejected(sim);
@@ -512,7 +513,15 @@ final class A10GenerationDeveloperVerifier {
         for (int i = 0; i < GenerationCoordinator.MAX_JOB_STEPS && coordinator.isRunning() &&
                 coordinator.getJob().getStage() != stage; i++) coordinator.advanceForDeveloperVerification();
         require(coordinator.isRunning() && coordinator.getJob().getStage() == stage,
-            "bounded actual stage reached " + stage);
+            "bounded actual stage reached " + stage + "; " + jobDiagnostic(coordinator));
+    }
+    private static String jobDiagnostic(GenerationCoordinator coordinator) {
+        GenerationJob job = coordinator.getJob();
+        if (job == null) return "no-job";
+        Throwable failure = job.getFailure();
+        return "outcome=" + job.getOutcome() + ";stage=" + job.getStage() +
+            ";work=" + job.getStepCount() + ";elapsedMs=" + job.getElapsedMillis() +
+            ";failure=" + (failure == null ? "none" : failure.getMessage());
     }
     private static void requireOriginal(CirSim sim, GeneratedBoardInstance original,
             GeneratedChallengeController controller, Object graph, int attached, String copper) {

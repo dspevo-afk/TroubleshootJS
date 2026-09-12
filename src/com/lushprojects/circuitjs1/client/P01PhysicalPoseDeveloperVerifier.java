@@ -15,7 +15,7 @@ final class P01PhysicalPoseDeveloperVerifier {
         Vector<CircuitElm> original = new Vector<CircuitElm>(sim.elmList);
         GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
         PhysicalPartRenderRegistry registry = StandardPhysicalPartRenderProviders.createRegistry();
-        final PhysicalPartRenderer surface = new SurfaceRenderer(registry.getRenderer(PhysicalPackages.MULTI_TERMINAL, null));
+        final PhysicalPartRenderer surface = new SurfaceRenderer(StandardPhysicalPartRenderProviders.createMultiTerminalRenderer());
         PhysicalPartRenderProvider provider = new PhysicalPartRenderProvider() {
             public PhysicalPartRenderer getRenderer(PhysicalPart<?> part) { return surface; }
         };

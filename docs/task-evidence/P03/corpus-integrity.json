@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "boards": {
+    "RB15": 15,
+    "RB30": 30,
+    "RB56": 56,
+    "RB100": 100
+  },
+  "components": 201,
+  "seeds": [
+    "0",
+    "3",
+    "-17"
+  ],
+  "frozenCorpusSha256": "f8f0a8b5e11662ae559ccd8fbc16375b85e19c955be499755a10419c71528435",
+  "referenceSha256": "dd3b1db77f4bf7c97edfa2f713f6e23a2a40eabeb5093d2795b29736c9ac0297",
+  "checks": "Exact original inventory IDs/regions/domains/package requirements and literal physical dimension/terminal TSV correspondence; no post-optimization corpus substitution."
+}

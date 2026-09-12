@@ -1,0 +1,106 @@
+- iframe
+- iframe
+- menubar:
+  - textbox
+  - table:
+    - rowgroup:
+      - row "File Edit Draw Scopes Options Circuits":
+        - menuitem "File"
+        - menuitem "Edit"
+        - menuitem "Draw"
+        - menuitem "Scopes"
+        - menuitem "Options"
+        - menuitem "Circuits"
+- table:
+  - rowgroup:
+    - row "Reset RUN / Stop":
+      - cell "Reset RUN / Stop":
+        - table:
+          - rowgroup:
+            - row "Reset":
+              - cell "Reset":
+                - button "Reset"
+            - row "RUN / Stop":
+              - cell "RUN / Stop":
+                - button "RUN / Stop":
+                  - strong: RUN
+                  - text: / Stop
+    - row "Workbench navigation MULTIMETER DC V OHM CONT DIODE --- V":
+      - cell "Workbench navigation MULTIMETER DC V OHM CONT DIODE --- V":
+        - tablist "Workbench navigation":
+          - tab "TOOLS" [selected]
+          - tab "SHOP"
+          - tab "RESOURCES"
+          - tab "SETTINGS"
+        - table:
+          - rowgroup:
+            - row "MULTIMETER":
+              - cell "MULTIMETER":
+                - generic: MULTIMETER
+            - row "DC V OHM CONT DIODE":
+              - cell "DC V OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V OHM":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "--- V":
+              - cell "--- V":
+                - generic: "--- V"
+            - row:
+              - cell
+    - row "The board could not be prepared.":
+      - cell "The board could not be prepared.":
+        - generic: The board could not be prepared.
+    - row:
+      - cell
+    - row "Open controlled indicator":
+      - cell "Open controlled indicator":
+        - button "Open controlled indicator"
+    - row:
+      - cell
+    - row "Choose File":
+      - cell "Choose File":
+        - button "Choose File"
+    - row "Simulation Speed":
+      - cell "Simulation Speed":
+        - generic: Simulation Speed
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell
+    - row "Current Speed":
+      - cell "Current Speed":
+        - generic: Current Speed
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell
+    - row "Power Brightness":
+      - cell "Power Brightness":
+        - generic: Power Brightness
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell
+    - row "Current Circuit:":
+      - cell "Current Circuit:":
+        - generic: "Current Circuit:"
+    - row:
+      - cell
+    - row:
+      - cell:
+        - iframe

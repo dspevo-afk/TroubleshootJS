@@ -1,0 +1,127 @@
+{
+  "status": "PASS",
+  "scope": "Production provider draw and hit-test timers; structural fixtures backed by live CircuitJS endpoints, not 100 independent electrical circuits",
+  "resolution": "System.currentTimeMillis; sums and means only, no percentile or end-to-end latency claim",
+  "rows": [
+    {
+      "count": 15,
+      "start": {
+        "count": 15,
+        "frames": 612,
+        "frameMs": 726,
+        "inputs": 0,
+        "inputMs": 0,
+        "loupe": false,
+        "scope": "structural surface rendering; live endpoint observations"
+      },
+      "end": {
+        "count": 15,
+        "frames": 2584,
+        "frameMs": 2884,
+        "inputs": 10,
+        "inputMs": 6,
+        "loupe": false,
+        "scope": "structural surface rendering; live endpoint observations"
+      },
+      "interactions": "top and bottom 0805/SOT-23 left/right probes, wheel zoom, Shift pan, Space tap, flip, fit",
+      "measured": {
+        "frames": 1972,
+        "frameMs": 2158,
+        "inputs": 10,
+        "inputMs": 6,
+        "meanFrameMs": 1.0943204868154157,
+        "meanTargetMs": 0.6
+      }
+    },
+    {
+      "count": 30,
+      "start": {
+        "count": 30,
+        "frames": 1420,
+        "frameMs": 3111,
+        "inputs": 0,
+        "inputMs": 0,
+        "loupe": false,
+        "scope": "structural surface rendering; live endpoint observations"
+      },
+      "end": {
+        "count": 30,
+        "frames": 1719,
+        "frameMs": 3683,
+        "inputs": 13,
+        "inputMs": 24,
+        "loupe": false,
+        "scope": "structural surface rendering; live endpoint observations"
+      },
+      "interactions": "12 alternating clicks, pointer sweep, wheel zoom, Shift drag, flip, fit",
+      "measured": {
+        "frames": 299,
+        "frameMs": 572,
+        "inputs": 13,
+        "inputMs": 24,
+        "meanFrameMs": 1.9130434782608696,
+        "meanTargetMs": 1.8461538461538463
+      }
+    },
+    {
+      "count": 56,
+      "start": {
+        "count": 56,
+        "frames": 1148,
+        "frameMs": 4195,
+        "inputs": 0,
+        "inputMs": 0,
+        "loupe": false,
+        "scope": "structural surface rendering; live endpoint observations"
+      },
+      "end": {
+        "count": 56,
+        "frames": 1452,
+        "frameMs": 5226,
+        "inputs": 13,
+        "inputMs": 49,
+        "loupe": false,
+        "scope": "structural surface rendering; live endpoint observations"
+      },
+      "interactions": "12 alternating clicks, pointer sweep, wheel zoom, Shift drag, flip, fit",
+      "measured": {
+        "frames": 304,
+        "frameMs": 1031,
+        "inputs": 13,
+        "inputMs": 49,
+        "meanFrameMs": 3.3914473684210527,
+        "meanTargetMs": 3.769230769230769
+      }
+    },
+    {
+      "count": 100,
+      "start": {
+        "count": 100,
+        "frames": 2268,
+        "frameMs": 18041,
+        "inputs": 0,
+        "inputMs": 0,
+        "loupe": false,
+        "scope": "structural surface rendering; live endpoint observations"
+      },
+      "end": {
+        "count": 100,
+        "frames": 2581,
+        "frameMs": 19955,
+        "inputs": 13,
+        "inputMs": 82,
+        "loupe": false,
+        "scope": "structural surface rendering; live endpoint observations"
+      },
+      "interactions": "12 alternating clicks, pointer sweep, wheel zoom, Shift drag, flip, fit",
+      "measured": {
+        "frames": 313,
+        "frameMs": 1914,
+        "inputs": 13,
+        "inputMs": 82,
+        "meanFrameMs": 6.115015974440895,
+        "meanTargetMs": 6.3076923076923075
+      }
+    }
+  ]
+}

@@ -11,6 +11,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.user.client.Window;
 
 class PcbWorkbenchController implements WorkbenchCapabilityContext {
@@ -22,6 +24,11 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final VerticalPanel ticketPanel = new VerticalPanel();
     private final VerticalPanel partsPanel = new VerticalPanel();
     private final Label feedback = new Label();
+    private final VerticalPanel viewPanel = new VerticalPanel();
+    private final Label viewFeedback = new Label();
+    private JavaScriptObject viewListeners;
+    private boolean panning;
+    private int panX, panY;
     private final boolean quickPlay;
     private VerticalPanel sidebar;
     private boolean attachedToSidebar;
@@ -122,6 +129,10 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         panel.setStyleName("tsj-component-panel");
         panel.setVisible(false);
         partsPanel.setStyleName("tsj-component-panel");
+        viewPanel.setStyleName("tsj-component-panel");
+        viewPanel.getElement().setAttribute("aria-label", "Board view");
+        viewFeedback.getElement().setAttribute("role", "status");
+        rebuildViewPanel();
         if (attachToSidebar)
             attachToSidebar(sidebar);
     }
@@ -135,19 +146,24 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (targetSidebar == null)
             throw new IllegalArgumentException("Missing workbench sidebar");
         sidebar = targetSidebar;
+        sidebar.add(viewPanel);
         sidebar.add(ticketPanel);
         sidebar.add(panel);
         sidebar.add(partsPanel);
         attachedToSidebar = true;
+        viewListeners = installViewListeners(this, sim.cv.getElement());
         sim.registerAttachedPcbWorkbenchForDeveloperVerification(this);
     }
 
     void detachFromSidebar() {
+        cancelViewGesture();
+        removeViewListeners(viewListeners); viewListeners = null;
         if (!attachedToSidebar)
             return;
         sidebar.remove(ticketPanel);
         sidebar.remove(panel);
         sidebar.remove(partsPanel);
+        sidebar.remove(viewPanel);
         attachedToSidebar = false;
         sim.unregisterAttachedPcbWorkbenchForDeveloperVerification(this);
         sidebar = null;
@@ -163,13 +179,174 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     boolean isAttachedToSidebarForDeveloperVerification() { return attachedToSidebar; }
 
     void draw(Graphics graphics, Rectangle area) {
-        if (isCurrentOwner())
+        if (isCurrentOwner()) {
+            if (sim.dialogIsShowing() || !sim.isChallengeInteractionEnabled()) cancelViewGesture();
             renderer.draw(graphics, area);
+        }
     }
 
     ProbeTarget findProbeTarget(int x, int y) {
-        return isCurrentOwner() ? renderer.findProbeTarget(sim, x, y) : null;
+        ProbeTarget target = isCurrentOwner() ? renderer.findProbeTarget(sim, x, y) : null;
+        if (renderer.wasTargetAmbiguous()) viewFeedback.setText("Several terminals overlap. Zoom in to choose one.");
+        return target;
     }
+
+    void cancelViewGesture() {
+        panning = false; renderer.getViewport().dismiss(); renderer.updateProjection();
+    }
+    void pointerMove(int x, int y) {
+        if (!isCurrentOwner()) return;
+        if (panning) { renderer.getViewport().pan(x - panX, y - panY); panX = x; panY = y; }
+        renderer.getViewport().moveCursor(x, y); renderer.updateProjection(); sim.repaint();
+    }
+    boolean beginPan(int button, boolean shift, int x, int y) {
+        if (!isCurrentPhysicalActionable() || !renderer.getViewport().contains(x, y) ||
+                renderer.getViewport().isInspecting()) return false;
+        if (button != NativeEvent.BUTTON_MIDDLE && !(button == NativeEvent.BUTTON_LEFT && shift)) return false;
+        panning = true; panX = x; panY = y; return true;
+    }
+    void endPan() { panning = false; }
+    void wheel(int delta, int x, int y) {
+        if (!isCurrentPhysicalActionable() || sim.dialogIsShowing()) return;
+        renderer.getViewport().zoom(Math.pow(1.12, Math.max(-3, Math.min(3, -delta))), x, y);
+        renderer.updateProjection(); sim.repaint();
+    }
+    boolean space(boolean down, int x, int y) {
+        if (!down) { cancelViewGesture(); sim.repaint(); return true; }
+        if (!isCurrentPhysicalActionable() || sim.dialogIsShowing()) return false;
+        boolean handled = renderer.getViewport().inspect(x, y);
+        renderer.updateProjection(); sim.repaint(); return handled;
+    }
+    private void viewChanged() { renderer.updateProjection(); sim.repaint(); }
+    void auditViewEvent(NativeEvent event) {
+        if (!sim.troubleshootU01Verification) return;
+        if ("mousemove".equals(event.getType()) && !panning && !renderer.getViewport().isInspecting()) return;
+        PcbViewport.Transform permanent=renderer.getViewport().permanent(), current=renderer.getViewport().current();
+        publishViewEvent(event, permanent.scale, permanent.x, permanent.y, current.scale, current.x, current.y,
+            current.flipped, renderer.getViewport().isInspecting());
+    }
+    /** Developer-only observation of the actual native input path; never drives the controller. */
+    private static native void publishViewEvent(NativeEvent event, double scale, double x, double y,
+            double currentScale, double currentX, double currentY, boolean flipped, boolean inspecting) /*-{
+        var root=$doc.documentElement;
+        var events=JSON.parse(root.getAttribute('data-tsj-u01-input-events') || '[]');
+        events.push({type:event.type,key:event.key || '',trusted:event.isTrusted===true,
+            clientX:event.clientX,clientY:event.clientY,permanent:[scale,x,y],
+            current:[currentScale,currentX,currentY],flipped:flipped,loupe:inspecting});
+        if(events.length>128) events.shift();
+        root.setAttribute('data-tsj-u01-input-events',JSON.stringify(events));
+    }-*/;
+    private Button viewButton(String text, final Runnable action) {
+        Button button = new Button(text);
+        button.addClickHandler(new ClickHandler() { public void onClick(ClickEvent event) {
+            if (!isCurrentOwner()) return;
+            cancelViewGesture(); action.run(); viewChanged();
+        }});
+        return button;
+    }
+    private void rebuildViewPanel() {
+        viewPanel.clear();
+        viewPanel.add(new Label("BOARD VIEW"));
+        VerticalPanel controls = new VerticalPanel();
+        controls.add(viewButton("Fit board", new Runnable() { public void run() { renderer.getViewport().fitBoard(); }}));
+        controls.add(viewButton("Fit selection", new Runnable() { public void run() {
+            PcbComponentPlacement selected = renderer.getLayoutForProvider().getComponent(renderer.getSelectedComponentId());
+            if (selected != null) renderer.getViewport().fit(selected.getRoutingCourtyard());
+            else viewFeedback.setText("Select a component first.");
+        }}));
+        viewPanel.add(controls);
+        VerticalPanel zoom = new VerticalPanel();
+        zoom.add(viewButton("Zoom +", new Runnable() { public void run() { zoomFromButton(1.5); }}));
+        zoom.add(viewButton("Zoom -", new Runnable() { public void run() { zoomFromButton(1 / 1.5); }}));
+        zoom.add(viewButton(renderer.getViewingFace() == PcbBoardSide.TOP ? "View bottom copper" : "View top copper",
+            new Runnable() { public void run() {
+                renderer.setViewingFace(renderer.getViewingFace().opposite()); rebuildViewPanel();
+            }}));
+        viewPanel.add(zoom);
+        viewPanel.add(new Label("Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe."));
+        viewPanel.add(new Label(renderer.getViewingFace() == PcbBoardSide.TOP ? "Top side / top copper" : "Bottom side / bottom copper"));
+        final Vector<PcbLayoutRegion> regions = renderer.getLayoutForProvider().getRegions();
+        if (!regions.isEmpty()) {
+            final ListBox regionChoice = new ListBox();
+            regionChoice.getElement().setAttribute("aria-label", "Inspect functional region");
+            regionChoice.addItem("Inspect functional region");
+            for (PcbLayoutRegion region : regions) regionChoice.addItem(region.label);
+            regionChoice.addChangeHandler(new ChangeHandler() { public void onChange(ChangeEvent event) {
+                int index = regionChoice.getSelectedIndex() - 1;
+                if (!isCurrentOwner() || index < 0) return;
+                cancelViewGesture(); renderer.getViewport().fit(regions.get(index).bounds(renderer.getLayoutForProvider()));
+                viewChanged();
+            }});
+            viewPanel.add(regionChoice);
+        }
+        final ListBox components = new ListBox();
+        components.getElement().setAttribute("aria-label", "Inspect component");
+        components.addItem("Inspect component", "");
+        Vector<String> ids = instance.getBoard().getComponentIds(); java.util.Collections.sort(ids);
+        for (String id : ids) components.addItem(instance.getBoard().getComponent(id).getDisplayName(), id);
+        components.addChangeHandler(new ChangeHandler() { public void onChange(ChangeEvent event) {
+            if (!isCurrentOwner()) return;
+            String id = components.getValue(components.getSelectedIndex());
+            PcbComponentPlacement part = renderer.getLayoutForProvider().getComponent(id);
+            if (part == null) return;
+            cancelViewGesture(); renderer.setViewingFace(part.getMountingSide());
+            renderer.setSelectedComponentId(id); renderer.getViewport().fit(part.getRoutingCourtyard());
+            rebuildPanel(); rebuildViewPanel(); viewChanged();
+        }});
+        viewPanel.add(components);
+        final ListBox pads = new ListBox();
+        pads.getElement().setAttribute("aria-label", "Inspect terminal");
+        pads.addItem("Inspect terminal", "");
+        for (String id : ids) {
+            BoardComponent part = instance.getBoard().getComponent(id);
+            for (String padId : part.getPadIds()) if (renderer.canProbePad(padId))
+                pads.addItem(part.getDisplayName() + " terminal " + instance.getBoard().getPad(padId).getTerminalId(), padId);
+        }
+        pads.addChangeHandler(new ChangeHandler() { public void onChange(ChangeEvent event) {
+            if (!isCurrentOwner()) return;
+            PcbPadPlacement pad = renderer.getLayoutForProvider().getPad(pads.getValue(pads.getSelectedIndex()));
+            if (pad == null) return;
+            cancelViewGesture(); renderer.getViewport().fit(new Rectangle(pad.getX() - 80, pad.getY() - 80, 160, 160));
+            viewChanged();
+        }});
+        viewPanel.add(pads);
+        VerticalPanel probes = new VerticalPanel();
+        probes.add(viewButton("Place red probe", new Runnable() { public void run() { probeSelected(pads, NativeEvent.BUTTON_LEFT); }}));
+        probes.add(viewButton("Place black probe", new Runnable() { public void run() { probeSelected(pads, NativeEvent.BUTTON_RIGHT); }}));
+        viewPanel.add(probes); viewPanel.add(viewFeedback);
+    }
+    private void zoomFromButton(double factor) {
+        Rectangle area = renderer.getViewport().getArea();
+        renderer.getViewport().zoom(factor, area.x + area.width / 2, area.y + area.height / 2);
+    }
+    private void probeSelected(ListBox pads, int button) {
+        if (!isCurrentPhysicalActionable() || !sim.instrumentController.isHandlingPointerInput()) {
+            viewFeedback.setText("Select a meter mode first."); return;
+        }
+        renderer.updateProjection();
+        String id = pads.getValue(pads.getSelectedIndex()); Point point = renderer.getPadPoint(id);
+        ProbeTarget target = point == null ? null : findProbeTarget(point.x, point.y);
+        if (!(target instanceof BoardPadProbeTarget) || !id.equals(((BoardPadProbeTarget)target).getPadId())) {
+            viewFeedback.setText("That terminal is outside this view or covered. Inspect it first."); return;
+        }
+        sim.instrumentController.handlePointerInput(button, target); sim.repaint();
+    }
+    private static native JavaScriptObject installViewListeners(PcbWorkbenchController owner,
+            com.google.gwt.dom.client.Element canvas) /*-{
+        var cancel = $entry(function(e) {
+            owner.@com.lushprojects.circuitjs1.client.PcbWorkbenchController::cancelViewGesture()();
+            if(e) owner.@com.lushprojects.circuitjs1.client.PcbWorkbenchController::auditViewEvent(Lcom/google/gwt/dom/client/NativeEvent;)(e);
+        });
+        var focus = $entry(function(e) { if (e.target !== canvas) cancel(); });
+        $wnd.addEventListener('blur', cancel); $doc.addEventListener('visibilitychange', cancel);
+        $doc.addEventListener('pointercancel', cancel); $doc.addEventListener('focusin', focus);
+        return { cancel: cancel, focus: focus };
+    }-*/;
+    private static native void removeViewListeners(JavaScriptObject listeners) /*-{
+        if (!listeners) return;
+        $wnd.removeEventListener('blur', listeners.cancel); $doc.removeEventListener('visibilitychange', listeners.cancel);
+        $doc.removeEventListener('pointercancel', listeners.cancel); $doc.removeEventListener('focusin', listeners.focus);
+    }-*/;
 
     boolean selectComponentAt(int x, int y) {
         if (!isCurrentPhysicalActionable())

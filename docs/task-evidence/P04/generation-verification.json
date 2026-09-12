@@ -1,0 +1,7 @@
+{
+  "status": "PASS:a10",
+  "started": "2026-09-12T22:00:09.113Z",
+  "observed": "2026-09-12T22:04:12.807Z",
+  "candidate": "555c212ceefc6fc415118aef5dde3240b013748e40c86f43ef7a7955ed5e491a",
+  "boundary": "Complete U01/P03/P04 candidate before R1. Not repeated after R1 under the owner-authorized focused qualification boundary."
+}

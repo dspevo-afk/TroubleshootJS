@@ -352,8 +352,8 @@ final class PhysicalPartRenderContext {
     }
 
     int screenX(int value) { return loose ? renderer.screenWorkbenchXForProvider(value) : renderer.screenXForProvider(value); }
-    int screenY(int value) { return renderer.screenYForProvider(value); }
-    int scale(int value) { return renderer.scaleIntForProvider(value); }
+    int screenY(int value) { return loose ? renderer.screenWorkbenchYForProvider(value) : renderer.screenYForProvider(value); }
+    int scale(int value) { return loose ? renderer.scaleWorkbenchIntForProvider(value) : renderer.scaleIntForProvider(value); }
 
     private Point getSyntheticTerminalPoint(int terminal) {
         if (placement == null)

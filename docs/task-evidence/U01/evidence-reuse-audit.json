@@ -1,0 +1,18 @@
+{
+  "previousFingerprint": "edf14bb4f882d205dab6561498bb64b37da29305794f14d093673a908dd47ccb",
+  "currentFingerprint": "555c212ceefc6fc415118aef5dde3240b013748e40c86f43ef7a7955ed5e491a",
+  "changedInputs": [
+    "src/com/lushprojects/circuitjs1/client/A10GenerationDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java"
+  ],
+  "reused": [
+    "Final3 15/30/56/100 viewport input/frame trials and SMD screenshots: fixture, viewport, rendering, target and input owners unchanged. The router snapshot produces identical physical routes, backed by 18 outcome comparisons and fresh compiled gates.",
+    "Final3 LED seed3 diagnosis/repair/retest: instrument, mutation, retest, UI and geometry owners unchanged; routing snapshot has an exact seed3 physical/conductor comparison.",
+    "User-held Space: permanent/temporary camera and native gesture handlers unchanged since the captured trusted gesture; later rasterization/tray changes received final3 and final5 compiled checks."
+  ],
+  "fresh": [
+    "27 native suites",
+    "actual JDK8/GWT production build",
+    "compiled generation, Task41/A09, Task49/A11, U01 and P02 checks are recorded separately after execution"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "events": null,
+  "fixture": null,
+  "labels": [
+    "Workbench navigation",
+    "Board view",
+    "Inspect functional region",
+    "Inspect component",
+    "Inspect terminal"
+  ],
+  "r1": null,
+  "report": null,
+  "verification": null
+}

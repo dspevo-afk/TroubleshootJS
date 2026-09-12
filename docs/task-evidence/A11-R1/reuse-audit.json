@@ -1,0 +1,39 @@
+{
+  "beforeR1Fingerprint": "555c212ceefc6fc415118aef5dde3240b013748e40c86f43ef7a7955ed5e491a",
+  "finalFingerprint": "5157451312ae9d2eb828b2a73008251e4986ecdb3ebdd15f77b734d98f42fc18",
+  "changedInputs": [
+    "src/com/lushprojects/circuitjs1/client/A11ProviderConformanceChecks.java",
+    "src/com/lushprojects/circuitjs1/client/ConstructionProviderRegistry.java",
+    "src/com/lushprojects/circuitjs1/client/P01PhysicalPoseDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/P02ConductorDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderProvider.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderRegistry.java",
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+    "src/com/lushprojects/circuitjs1/client/Task49DeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/U01ViewportFixture.java"
+  ],
+  "authorization": "Owner explicitly requested focused requalification rather than rerunning all gates after A11-R1.",
+  "priorQualification": [
+    "27 native suites and all independent readers",
+    "A10 compiled 1273 assertions/24 attempts and Task41/A09 strict reports on the completed U01/P03/P04 candidate before R1",
+    "15/30/56/100 input/frame fixtures, trusted held-Space gesture and LED seed3 repair/retest"
+  ],
+  "boundary": "R1 changes package-registration/actual-renderer admission and developer fixture acquisition only. PhysicalPackage equivalence implementation, alternate NMOS electrical/physical declarations, population ordering, placement/routing algorithms, viewport arithmetic, native input handlers, instrument/mutation/solver/retest owners are unchanged. Actual part-aware dispatch and no-renderer admission are freshly tested with the compiled Task49 candidate. The explicit fixed renderer factory returns the identical built-in class previously obtained through a null probe.",
+  "notRerun": [
+    "full 27-suite matrix after R1",
+    "A10 and Task41/A09 compiled matrix after R1",
+    "four viewport timing/operator trials after R1"
+  ],
+  "fresh": [
+    "native A11 provider 429 assertions/20 negatives and independent reader125",
+    "native A04 construction680, P01 poses8357, U01 viewport1233",
+    "final-source JDK8/GWT build, five permutations, exit0",
+    "compiled Task49 397 assertions/four solver cases, maintained strict reader and independent nine-seed value/six-seed role oracles",
+    "compiled A11 declarations429/20 and reader125; actual renderer admission on 15 materialized parts, zero null-part calls, all required rejection/ownership checks",
+    "compiled P01 8357 pure/316 runtime/16 rendered SMD poses; P02 LED/diode/parallel exact copper correspondence; U01 1237/six live targets and actual 100-part fixture draw",
+    "fresh U01 forced-negative and normal-player report/accessibility privacy",
+    "final6 normal LED seed3 failed retest, unpowered 100 kOhm diagnosis, marked 1 kOhm replacement, removed original in tray and successful customer retest; two fresh inspected screenshots"
+  ],
+  "playerSupersession": "The earlier normal-player repair evidence is supplemented by a complete fresh post-R1 repeat in P04/player-flow.json. The 100-part overview screenshot was also refreshed after using Fit board; it is not proof of automatic fit during combined verifier activity."
+}

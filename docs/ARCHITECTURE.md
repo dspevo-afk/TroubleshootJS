@@ -12,6 +12,52 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## U01 viewport and P03/P04 physical planning
+
+`PcbViewport` owns the permanent board camera and the temporary cursor-centered
+Space loupe. One immutable forward/inverse projection feeds rendering, target
+bounds, markers and terminal navigation. The loupe composes over the permanent
+camera without modifying it; release, focus loss, pointer cancellation, modal
+entry and controller replacement dismiss it. Tray chrome has its own fixed
+projection. The workbench exposes fit, pan, zoom, face selection and public
+functional-region navigation. Physical visibility still follows `PcbCopperAccess`;
+overlapping pad targets require closer inspection. Diagnostic admission checks
+whether each real pad is inspectable through this same resolver, independently
+of the initial overview scale. Developer surface fixtures remain separate from
+the player catalog and observe existing CircuitJS endpoints.
+
+`PcbPlacementConstraints` carries immutable package access, connector anchors,
+public regions and isolated-domain barriers. `PcbPlacementPlanner` estimates
+actual footprint envelopes, tries six bounded outline/aspect variants, packs
+domain/region groups, and refines placements with weighted pad connectivity.
+`PcbAccessPlanner` requires every terminal escape to reach one connected free
+channel. Final compaction preserves access margins and revalidates the plan.
+The workbench envelope can grow to accommodate separate tray chrome; it is not
+a fixed constraint on physical board feasibility. RB15/RB30/RB56/RB100 fixtures
+are structural qualification inputs, not playable or electrically qualified
+boards. Q15 and later milestones own those content claims.
+
+`PcbNetRouter` owns the current single-layer Manhattan search. Typed net roles
+and declared external supply/return bindings determine priority. Two bounded
+root choices grow trees onto existing same-net copper, preserving explicit
+source and terminal identities. All endpoint escapes are reserved before
+routing. Each attempt snapshots its immutable pads, courtyards and reservations
+once, avoiding geometry copies inside the search loop; no snapshot survives
+the attempt or substitutes for live electrical state. The multi-goal Manhattan
+lower bound uses the actual minimum step
+cost, 2; this is a search lower-bound guarantee, not global tree optimality.
+`PcbRouteCanonicalizer` removes only collinear subdivisions and retains endpoint,
+escape and branch-contact witnesses. `PcbRouteMetrics` measures union length,
+bends and unique shared length; duplicate copper earns no extra score reward.
+Candidate statistics report expansions, raw segments and moves rejected by
+other-net occupancy/clearance. Existing legality and retry limits remain in force.
+
+The current layout epoch is 6 and dependency interpretation is v5. Dependency
+capture includes placement demands, canonical domain barriers, typed net roles
+and the route score version. Historical layout artifacts reject through the
+existing current-version boundary. Circuit topology, values, fault selection,
+measurement physics and repair/retest owners remain separate from planning.
+
 ## A10 staged generation and publication
 
 The accepted A10 implementation's gates and limits are
@@ -89,6 +135,17 @@ validation is inside that transaction; failure restores the previous session too
 
 ## A11 construction-provider registration
 
+Package capability checks use explicit registration and full package equivalence.
+They never call a part-aware render provider with a null part. A workbench checks
+every materialized part through `PhysicalPartRenderRegistry.requireRenderer`
+before attachment/publication. Installed and tray dispatch use that same guard,
+which rejects missing providers, mismatched packages and missing renderer results.
+Developer surface fixtures request the built-in fixed renderer explicitly.
+
+A11-R1 closes this renderer-contract finding. A11-D1 remains nonblocking coverage
+debt: NMOS physical parameters are derived from the validated electrical
+declaration rather than independently compared by the physical backing validator.
+
 `ConstructionProviderRegistry` is the immutable type/version authority for seven
 electrical/physical construction pairs and two explicit physical device joins.
 Its lazily initialized standard entry list also binds controlled contributions,
@@ -102,7 +159,7 @@ materializer check each consumed package against the registered definition befor
 mutation. Existing CircuitJS primitive contracts retain exact post maps and model
 parameter validation; an unsupported NMOS model label cannot silently select the
 fixed NMOS primitive. The registry fingerprint is included in generation dependency
-interpretation v4, alongside the selected recipe and actual electrical state inputs.
+interpretation v5, alongside the selected recipe, placement constraints and actual electrical state inputs.
 
 The alternate NMOS provider reuses the same primitive, TO92_NMOS package and
 G/D/S adapter with provider-local 680 Ohm RG, 1.2 V threshold and beta 6.
@@ -152,8 +209,8 @@ node numbers are observations, never durable correspondence keys.
 `PcbCopperAccess` face/exposure policy. Mounted geometry uses the board-view
 transform; tray geometry does not. Covered conductors are not probeable, and
 NPTH bounds cannot inherit a neighboring pad's probe halo. The developer-only
-P01 SMD fixtures exercise both faces without enabling a player SMD catalog or
-new viewing controls. The P02 verifier dispatch runs from the regular update
+P01 SMD fixtures exercise both faces without enabling a player SMD catalog;
+U01 supplies the current viewing controls. The P02 verifier dispatch runs from the regular update
 cycle after admission is ready, not only from a consumed verification callback.
 All diagnostic dispatch and readiness attributes require explicit debug flags.
 
@@ -177,7 +234,7 @@ and origin translation. The inverse subtracts the origin, reverses rotation and
 reverses mounting reflection. Terminals keep their names/order. Body, courtyard,
 selection/drag bounds, pads, connected/lifted leads, probe surfaces and escape vectors
 use that same transform. `PcbBoardViewTransform` is a separate read-only outline-X
-reflection for viewing the underside, not an electrical remapping or new player UI.
+reflection for viewing the underside without electrical remapping; U01 supplies the public view control.
 
 Trace arrays and layout envelopes are defensively copied in both directions.
 Placed package envelopes, pads/probes/escape tips, traces, outlines, labels and view
@@ -1069,19 +1126,17 @@ validation and produces a simple one-sided layout for the LED indicator,
 diode-protected indicator, and dual-parallel-indicator families. It does not
 choose components, nets, faults, meter readings, or repair outcomes.
 
-The generator uses a deterministic seed stream. Each attempt starts in a
-bounded virtual working area, builds a `TopologyPlacementGraph` from stable
-`BoardComponent`, `BoardPad`, and `BoardNet` relationships, and places connected
-pad targets before routing. Two-pad nets receive a stronger attraction than
-shared rails; connector links remain useful anchors but do not overwhelm
-component-to-component functional links. A bounded set of grid candidates is
-scored for topology distance, component spacing, seeded variation, and fit.
+The generator uses a deterministic seed stream. `PcbPlacementPlanner` derives
+six bounded outline/aspect candidates from actual package, courtyard, escape
+and access demand. It packs declared domains and functional regions, reserves
+inward-facing connector anchors, then refines positions against the existing
+`TopologyPlacementGraph`. Two-pad links retain their stronger attraction.
+`PcbAccessPlanner` requires every escape to reach one shared free channel;
+final compaction preserves access margins and revalidates those constraints.
 Stable IDs such as `R1.1`, `LED1.K`, and `D1.A` are copied into the resulting
-placements regardless of their coordinates. The connector remains an inward-
-escaping board-edge anchor; component candidates are accepted only when their
-practical routing courtyards do not overlap. Orientation is deliberately
-deferred, so this first procedural layer keeps the existing recognizable
-horizontal component presentation.
+placements regardless of their coordinates. Current generated leaf packages
+retain horizontal presentation; declared connector variants select the legal
+inward escape. Physical planning does not consume the selected fault.
 
 `PcbComponentPlacement` now keeps both a body keep-out and a larger routing
 courtyard. The courtyard covers the mounted body, lead span, pad neighborhood,
@@ -1094,15 +1149,17 @@ under a component. Same-net copper may still merge, but a same-net branch that
 does not terminate on a component cannot use that component's courtyard as a
 shortcut.
 
-Task 26 hardens this stage with a deterministic coarse-grid A* Manhattan
-router. It connects only the already-defined pad relationships, applies a
-small bend penalty, blocks component body keep-outs, and records explicit
-start/end pad IDs on every trace. Pads carry narrow escape corridors: the
-router and `PcbBoardLayout.validateGeometry` use the same corridor semantics,
-so copper may leave an exact pad through its legal lead direction while the
-component body remains forbidden. The LED pads escape downward from the body;
-axial pads escape horizontally, and connector pads escape inward from the
-edge.
+`PcbNetRouter` uses deterministic coarse-grid A* with typed net priorities,
+two bounded root choices and successive branches onto existing same-net copper.
+Each branch retains its source identity and starting pad; a branch ending on
+a trunk has a physical contact witness instead of an invented ending pad.
+The actual minimum edge cost of 2 bounds its multi-goal Manhattan heuristic;
+the router makes no claim of globally optimal trees. All endpoint escapes are
+reserved before routing. The router and `PcbBoardLayout.validateGeometry` use
+the same narrow corridor semantics, so copper may leave an exact pad through
+its legal lead direction while the component body remains forbidden.
+`PcbRouteCanonicalizer` removes collinear subdivisions while retaining escape,
+endpoint and branch-contact witnesses.
 
 Copper uses the shared `PcbTraceRules` contract: rendered traces are 9 pixels
 wide, unrelated nets require 6 pixels of visible soldermask, and their
@@ -1121,9 +1178,10 @@ escape edges, body/pad overlap, Manhattan segments, route detour/bend limits,
 silkscreen collisions, unrelated crossings, and minimum copper clearance.
 After routing and silkscreen placement, `PcbBoardLayout.compactToContent` finds
 the bounding rectangle of courtyards, pads, copper, and labels, translates the
-geometry consistently, and derives the final outline with a reusable 26-pixel
-edge margin. The parts tray is excluded from this calculation. Candidate
-quality includes routed length, bends, detour, connected-pad distance,
+geometry consistently, and derives the final outline with at least 26 pixels
+of edge margin, increased to retain declared access demand. The parts tray is
+excluded from this calculation. Candidate quality includes unique copper
+length, bends, detour, connected-pad distance,
 component spacing, board area, unused area, courtyard utilization, silkscreen
 fit, and same-net reuse. `getCompactnessMetric()` is an explicit procedural
 quality signal; the verifier rejects obviously sparse boards without pretending

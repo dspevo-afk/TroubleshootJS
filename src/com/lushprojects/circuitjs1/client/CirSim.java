@@ -415,6 +415,8 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootP02Verification;
     boolean troubleshootP02VerificationComplete;
     boolean troubleshootP02ForcedFailure;
+    boolean troubleshootU01Verification, troubleshootU01Complete, troubleshootU01ForcedFailure;
+    int troubleshootU01Fixture;
     boolean troubleshootA10Verification;
     boolean troubleshootA10VerificationComplete;
     boolean troubleshootA10ForcedFailure;
@@ -600,6 +602,10 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootP01ForcedFailure = troubleshootP01Verification && qp.getBooleanValue("tsjP01Fail", false);
             troubleshootP02Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyP02", false);
             troubleshootP02ForcedFailure = troubleshootP02Verification && qp.getBooleanValue("tsjP02Fail", false);
+            troubleshootU01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyU01", false);
+            troubleshootU01ForcedFailure = troubleshootU01Verification && qp.getBooleanValue("tsjU01Fail", false);
+            if (troubleshootU01Verification && qp.getValue("tsjViewportFixture") != null)
+                troubleshootU01Fixture = Integer.parseInt(qp.getValue("tsjViewportFixture"));
             troubleshootA10Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA10", false);
             troubleshootA10ForcedFailure = troubleshootA10Verification && qp.getBooleanValue("tsjA10Fail", false);
 	    troubleshootA08Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA08", false);
@@ -1771,6 +1777,7 @@ MouseOutHandler, MouseWheelHandler {
 			runGeneratedBoardVerificationIfReady(didAnalyze);
             runDeveloperVerificationIfReady();
             runP02ConductorVerificationIfReady();
+            runU01ViewportVerificationIfReady();
             runA10GenerationVerificationIfReady();
 			// Deferred meter work may consume this analysis only after the
 			// generated verification has made its current owner actionable.
@@ -4644,8 +4651,11 @@ MouseOutHandler, MouseWheelHandler {
     	e.preventDefault();
     	mouseCursorX=e.getX();
     	mouseCursorY=e.getY();
-	if (isPcbWorkbenchVisible())
-	    return;
+        if (isPcbWorkbenchVisible()) {
+            pcbWorkbenchController.pointerMove(e.getX(), e.getY());
+            pcbWorkbenchController.auditViewEvent(e.getNativeEvent());
+            return;
+        }
     	if (mouseDragging) {
     		mouseDragged(e);
     		return;
@@ -4770,7 +4780,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -4949,6 +4959,22 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     /** A late admission must not strand the P02 verifier behind a consumed callback. */
+    private void runU01ViewportVerificationIfReady() {
+        if (!developerVerifierRunning && troubleshootU01Verification && !troubleshootU01Complete &&
+                (generationCoordinator == null || !generationCoordinator.isRunning()) &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                generatedChallengeController != null && generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true; troubleshootU01Complete = true;
+            publishBrowserVerificationResult("RUNNING:u01");
+            try {
+                U01ViewportDeveloperVerifier.verify(this, troubleshootU01Fixture, troubleshootU01ForcedFailure);
+                publishBrowserVerificationResult("PASS:u01");
+            } catch (RuntimeException failure) {
+                publishBrowserVerificationResult("FAIL:" + failure.getMessage()); throw failure;
+            } finally { developerVerifierRunning = false; }
+        }
+    }
+
     private void runP02ConductorVerificationIfReady() {
         if (troubleshootP02Verification && !troubleshootP02VerificationComplete)
             P02ConductorDeveloperVerifier.publishReadiness(
@@ -5462,7 +5488,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootA10Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -6542,6 +6568,7 @@ MouseOutHandler, MouseWheelHandler {
 
     public void onContextMenu(ContextMenuEvent e) {
     	e.preventDefault();
+	if (isPcbWorkbenchVisible()) return;
 	if (instrumentController.isHandlingPointerInput())
 	    return;
     	if (!dialogIsShowing()) {
@@ -6681,6 +6708,7 @@ MouseOutHandler, MouseWheelHandler {
     
     public void onMouseOut(MouseOutEvent e) {
     	mouseCursorX=-1;
+        if (isPcbWorkbenchVisible()) { pcbWorkbenchController.cancelViewGesture(); repaint(); }
     }
 
     void clearMouseElm() {
@@ -6697,6 +6725,10 @@ MouseOutHandler, MouseWheelHandler {
     	e.preventDefault();
 		if (isPcbWorkbenchVisible() && !isChallengeInteractionEnabled())
 		    return;
+        if (isPcbWorkbenchVisible()) {
+            cv.getElement().focus();
+            if (pcbWorkbenchController.beginPan(e.getNativeButton(), e.isShiftKeyDown(), e.getX(), e.getY())) return;
+        }
 	// An active instrument owns the whole gesture so CircuitJS editing never sees probe clicks.
 	if (instrumentController.isHandlingPointerInput()) {
 	    ProbeTarget target = isPcbWorkbenchVisible() ?
@@ -6830,6 +6862,7 @@ MouseOutHandler, MouseWheelHandler {
     public void onMouseUp(MouseUpEvent e) {
     	e.preventDefault();
     	mouseDragging=false;
+        if (isPcbWorkbenchVisible()) { pcbWorkbenchController.endPan(); return; }
 	if (instrumentController.isHandlingPointerInput())
 	    return;
     	
@@ -6877,6 +6910,10 @@ MouseOutHandler, MouseWheelHandler {
     
     public void onMouseWheel(MouseWheelEvent e) {
     	e.preventDefault();
+        if (isPcbWorkbenchVisible()) {
+            pcbWorkbenchController.wheel(e.getDeltaY(), e.getX(), e.getY());
+            pcbWorkbenchController.auditViewEvent(e.getNativeEvent()); return;
+        }
     	
     	// once we start zooming, don't allow other uses of mouse wheel for a while
     	// so we don't accidentally edit a resistor value while zooming
@@ -7286,6 +7323,19 @@ MouseOutHandler, MouseWheelHandler {
     }-*/;
 
     public void onPreviewNativeEvent(NativePreviewEvent e) {
+        if (isPcbWorkbenchVisible()) {
+            if (dialogIsShowing()) pcbWorkbenchController.cancelViewGesture();
+            int type = e.getTypeInt(), key = e.getNativeEvent().getKeyCode();
+            if (key == KEY_SPACE && (type & Event.ONKEYUP) != 0) {
+                pcbWorkbenchController.space(false, mouseCursorX, mouseCursorY);
+                pcbWorkbenchController.auditViewEvent(e.getNativeEvent());
+            } else if (key == KEY_SPACE && (type & Event.ONKEYDOWN) != 0 &&
+                    e.getNativeEvent().getEventTarget().equals(cv.getElement())) {
+                if (pcbWorkbenchController.space(true, mouseCursorX, mouseCursorY)) e.cancel();
+                pcbWorkbenchController.auditViewEvent(e.getNativeEvent());
+            }
+            return;
+        }
         if (dialogIsShowing() && isTsjWorkbenchOverlayOpen())
             return;
     	int cc=e.getNativeEvent().getCharCode();

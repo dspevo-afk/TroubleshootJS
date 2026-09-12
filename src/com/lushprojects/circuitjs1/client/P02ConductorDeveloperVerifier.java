@@ -34,7 +34,7 @@ final class P02ConductorDeveloperVerifier {
         require(rejectedCuts>0,"at least one live solver projection falsifier executed");
         PhysicalPartRenderRegistry registry=StandardPhysicalPartRenderProviders.createRegistry();
         final PhysicalPartRenderer surface=new P01PhysicalPoseDeveloperVerifier.SurfaceRenderer(
-            registry.getRenderer(PhysicalPackages.MULTI_TERMINAL,null));
+            StandardPhysicalPartRenderProviders.createMultiTerminalRenderer());
         PhysicalPartRenderProvider provider=new PhysicalPartRenderProvider() {
             public PhysicalPartRenderer getRenderer(PhysicalPart<?> part) { return surface; }
         };

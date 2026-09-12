@@ -1,0 +1,36 @@
+{
+  "source": "operator-events.json, actual trusted browser events plus user confirmation",
+  "status": "PASS",
+  "gestures": [
+    {
+      "startEvent": 0,
+      "endEvent": 1,
+      "trustedHeldMoves": 0,
+      "restoredExactly": true,
+      "distinctComposedViews": 0
+    },
+    {
+      "startEvent": 2,
+      "endEvent": 3,
+      "trustedHeldMoves": 0,
+      "restoredExactly": true,
+      "distinctComposedViews": 0
+    },
+    {
+      "startEvent": 4,
+      "endEvent": 5,
+      "trustedHeldMoves": 0,
+      "restoredExactly": true,
+      "distinctComposedViews": 0
+    },
+    {
+      "startEvent": 6,
+      "endEvent": 91,
+      "trustedHeldMoves": 52,
+      "restoredExactly": true,
+      "distinctComposedViews": 52
+    }
+  ],
+  "userConfirmation": "Enlarged view follows the pointer and restores the original view exactly. Pointer remains free and can leave the window.",
+  "boundary": "Held-Space movement tested by user. Browser automation supplies taps only. No pointer lock. Blur/modal/pointer-cancellation paths have code/controller checks; no claim that each native event was separately synthesized."
+}

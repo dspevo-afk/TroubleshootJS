@@ -354,7 +354,28 @@ public final class A10RoutingContractTest {
     }
 
     private static TroubleshootBoard routingBoundaryBoard(PhysicalPackage connectorPackage) {
-        return twoComponentBoard(connectorPackage, PhysicalPackages.AXIAL_RESISTOR);
+        // Two legal, distinct probe surfaces have less than the routing clearance.
+        // The demand planner can place their envelopes; no candidate can escape
+        // both nets. This retains a real routing rejection after fixed outlines
+        // and outward-facing connector admission were retired by P03.
+        TroubleshootBoard board = new TroubleshootBoard("A10_ESCAPE_CLEARANCE");
+        board.addNet(new BoardNet("A"));
+        board.addNet(new BoardNet("B"));
+        board.addComponent(new BoardComponent("J1", "CONNECTOR", connectorPackage));
+        board.addComponent(new BoardComponent("R1", "LOAD", PhysicalPackages.AXIAL_RESISTOR));
+        for (String id : new String[] { "J1", "R1" }) {
+            board.addPad(new BoardPad(id + ".1", id, "1", "A"));
+            board.addPad(new BoardPad(id + ".2", id, "2", "B"));
+        }
+        Vector<PcbPlacementConstraints.Part> parts = new Vector<PcbPlacementConstraints.Part>();
+        parts.add(new PcbPlacementConstraints.Part("J1", "input", "Input", "board",
+            PcbPlacementConstraints.Anchor.LEFT, 20));
+        parts.add(new PcbPlacementConstraints.Part("R1", "load", "Load", "board",
+            PcbPlacementConstraints.Anchor.NONE, 20));
+        board.setPlacementConstraints(new PcbPlacementConstraints(parts,
+            new Vector<PcbPlacementConstraints.Barrier>()));
+        board.validate();
+        return board;
     }
 
     private static TroubleshootBoard singleComponentBoard(PhysicalPackage connectorPackage) {
@@ -402,7 +423,7 @@ public final class A10RoutingContractTest {
         Vector<PhysicalPackageGeometry.Terminal> terminals =
             new Vector<PhysicalPackageGeometry.Terminal>();
         terminals.add(boundaryTerminal("1", 30));
-        terminals.add(boundaryTerminal("2", 70));
+        terminals.add(boundaryTerminal("2", 40));
         PhysicalPackageGeometry geometry = new PhysicalPackageGeometry(150, 100, terminals,
             new Rectangle(20, 10, 100, 80), new Rectangle(20, 10, 100, 80),
             new Rectangle(10, 10, 150, 80), new Rectangle(0, 0, 160, 100),

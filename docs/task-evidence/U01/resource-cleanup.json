@@ -1,0 +1,29 @@
+{
+  "preview": {
+    "status": "PASS",
+    "pid": 126856,
+    "processStartTicks": 639248481877497755,
+    "port": 64921,
+    "runId": "u01-p03-p04-final6-ab9d06e6",
+    "evidence": "Exact PID/start/executable/command plus live run/port/nonce identity checked immediately before termination; retained process handle confirmed exit.",
+    "cleanupElapsedMs": 36
+  },
+  "scratchCleanup": {
+    "status": "BLOCKED",
+    "reason": "Automatic approval review rejected the combined process/directory cleanup command with blocked by policy before execution. A narrower process-only command succeeded. No recursive-delete retry.",
+    "retained": "<OS temp>/troubleshootjs-u01-p03-p04-ab9d06e6ab6b45f0a77b8ab6b0aebb16 (raw logs, receipts, scratch scripts and classes)"
+  },
+  "browserTabs": {
+    "successfulTestPages": "all explicitly closed",
+    "remaining": [
+      "6: startup error page; Browser URL policy rejected closure",
+      "8: startup error page; supported close attempt did not remove tab"
+    ]
+  },
+  "activeVerificationProcesses": "none",
+  "preserved": [
+    "pre-existing tests/contracts/__pycache__/",
+    "foreign preview state for PID161740/port8899; untouched",
+    "normal documented production build outputs"
+  ]
+}

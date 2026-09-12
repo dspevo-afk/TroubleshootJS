@@ -67,6 +67,7 @@ final class ControlledIndicatorPcbLayoutFactory {
             SeededPcbLayoutGenerator.CURRENT_VERSION);
 
         addComponents(layout, board, spec, plan, model);
+        addNavigationRegions(layout, plan, model);
         addTraces(layout, model);
         addLabels(layout, board, specifications, plan, model);
 
@@ -142,6 +143,26 @@ final class ControlledIndicatorPcbLayoutFactory {
 
     private static int channelOriginY(ChannelNodes channel) {
         return 80 + channel.index * 380;
+    }
+
+    private static void addNavigationRegions(PcbBoardLayout layout, BoundedAssemblyPlan plan, BoardModel model) {
+        java.util.Vector<String> power = new java.util.Vector<String>();
+        power.add(plan.idFor(POWER_ADAPTER_KEY, EntityKind.COMPONENT, model.power.componentLocalId));
+        layout.addRegion(new PcbLayoutRegion("input", "Power input", power));
+        for (ChannelNodes channel : model.channels) {
+            java.util.Vector<String> ids = new java.util.Vector<String>();
+            ids.add(plan.idFor(channel.load.owner, EntityKind.COMPONENT, channel.load.resistorComponent));
+            ids.add(plan.idFor(channel.load.owner, EntityKind.COMPONENT, channel.load.ledComponent));
+            ids.add(plan.idFor(channel.driver.owner, EntityKind.COMPONENT, channel.driver.controlResistorComponent));
+            ids.add(plan.idFor(channel.driver.owner, EntityKind.COMPONENT, channel.driver.pullDownComponent));
+            ids.add(plan.idFor(channel.driver.owner, EntityKind.COMPONENT, channel.driver.transistorComponent));
+            ids.add(plan.idFor(channel.control.owner, EntityKind.COMPONENT, channel.control.componentLocalId));
+            layout.addRegion(new PcbLayoutRegion("channel-" + channel.index, "Channel " + channel.channel.getLabel(), ids));
+        }
+        java.util.Vector<String> support = new java.util.Vector<String>();
+        support.add(plan.idFor(model.support.owner, EntityKind.COMPONENT, model.support.resistorComponent));
+        support.add(plan.idFor(model.support.owner, EntityKind.COMPONENT, model.support.ledComponent));
+        layout.addRegion(new PcbLayoutRegion("power-indicator", "Power indicator", support));
     }
 
     private static void addComponent(PcbBoardLayout layout, TroubleshootBoard board,

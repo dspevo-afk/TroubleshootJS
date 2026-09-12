@@ -27,7 +27,10 @@ class BoardPadProbeTarget implements ProbeTarget {
         return instance == target.instance && padId.equals(target.padId);
     }
 
-    public Point getMarkerPoint() { return renderer.canProbePad(padId) ? renderer.getPadPoint(padId) : null; }
+    public Point getMarkerPoint() {
+        Point point = renderer.canProbePad(padId) ? renderer.getPadPoint(padId) : null;
+        return renderer.isBoardPointVisible(point) ? point : null;
+    }
     public CircuitMeasurementEndpoint getMeasurementEndpoint() {
         return renderer.canProbePad(padId) ? instance.getSimulationBindings().getEndpoint(padId) : null;
     }

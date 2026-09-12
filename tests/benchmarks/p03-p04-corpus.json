@@ -1,0 +1,1538 @@
+{
+  "schema": 1,
+  "frozenBefore": "P03/P04 optimization",
+  "baselineHead": "0487555d6bd2e5e8ed4b01652b847d0fffcb900c",
+  "referenceSha256": "dd3b1db77f4bf7c97edfa2f713f6e23a2a40eabeb5093d2795b29736c9ac0297",
+  "scope": "Structural package and routing fixtures only. Counts and roles follow A01; electrical/playable qualification remains Q15/Q30/Q60/Q100. Envelope dimensions are explicit simulation geometry, not manufacturer millimetres.",
+  "seeds": [
+    "0",
+    "3",
+    "-17"
+  ],
+  "shapes": {
+    "connector": {
+      "width": 120,
+      "height": 160,
+      "terminals": 2
+    },
+    "relay": {
+      "width": 260,
+      "height": 210,
+      "terminals": 4
+    },
+    "transformer": {
+      "width": 320,
+      "height": 270,
+      "terminals": 6
+    },
+    "ic": {
+      "width": 220,
+      "height": 160,
+      "terminals": 8
+    },
+    "switch": {
+      "width": 130,
+      "height": 130,
+      "terminals": 3
+    },
+    "capacitor": {
+      "width": 130,
+      "height": 150,
+      "terminals": 2
+    },
+    "bulk": {
+      "width": 210,
+      "height": 230,
+      "terminals": 2
+    },
+    "resistor": {
+      "width": 240,
+      "height": 100,
+      "terminals": 2
+    },
+    "diode": {
+      "width": 240,
+      "height": 100,
+      "terminals": 2
+    },
+    "led": {
+      "width": 100,
+      "height": 110,
+      "terminals": 2
+    },
+    "magnetic": {
+      "width": 210,
+      "height": 180,
+      "terminals": 2
+    },
+    "bridge": {
+      "width": 180,
+      "height": 150,
+      "terminals": 4
+    },
+    "coupler": {
+      "width": 240,
+      "height": 160,
+      "terminals": 4
+    }
+  },
+  "routingCanaries": [
+    {
+      "family": "led",
+      "seeds": [
+        "0",
+        "3",
+        "-17"
+      ]
+    },
+    {
+      "family": "diode",
+      "seeds": [
+        "0",
+        "3",
+        "-17"
+      ]
+    },
+    {
+      "family": "parallel",
+      "seeds": [
+        "0",
+        "3",
+        "-17"
+      ]
+    }
+  ],
+  "boards": [
+    {
+      "id": "RB15",
+      "count": 15,
+      "components": [
+        {
+          "id": "rb15-input-connector",
+          "functionalRegion": "input-protection",
+          "domain": "LOW_VOLTAGE_INPUT",
+          "packageRequirement": "low-voltage-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb15-input-fuse",
+          "functionalRegion": "input-protection",
+          "domain": "LOW_VOLTAGE_INPUT",
+          "packageRequirement": "fuse-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb15-reverse-protection",
+          "functionalRegion": "input-protection",
+          "domain": "LOW_VOLTAGE_INPUT",
+          "packageRequirement": "diode-or-qualified-mosfet-protection-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb15-input-capacitor",
+          "functionalRegion": "input-protection",
+          "domain": "LOW_VOLTAGE_INPUT",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb15-driver-switch",
+          "functionalRegion": "relay-driver",
+          "domain": "LOW_VOLTAGE_DRIVER",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb15-driver-resistor",
+          "functionalRegion": "relay-driver",
+          "domain": "LOW_VOLTAGE_DRIVER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb15-driver-bias",
+          "functionalRegion": "relay-driver",
+          "domain": "LOW_VOLTAGE_DRIVER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb15-driver-flyback",
+          "functionalRegion": "relay-driver",
+          "domain": "LOW_VOLTAGE_DRIVER",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb15-relay",
+          "functionalRegion": "relay-driver",
+          "domain": "RELAY_LOAD",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb15-sensor-connector",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_INPUT",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb15-sensor-series-conditioning",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_INPUT",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb15-sensor-filter-conditioning",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_INPUT",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb15-status-led",
+          "functionalRegion": "status-indication",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "shape": "led"
+        },
+        {
+          "id": "rb15-status-limiter",
+          "functionalRegion": "status-indication",
+          "domain": "STATUS",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb15-output-connector",
+          "functionalRegion": "output-interface",
+          "domain": "EXTERNAL_LOAD",
+          "packageRequirement": "load-connector-package",
+          "shape": "connector"
+        }
+      ]
+    },
+    {
+      "id": "RB30",
+      "count": 30,
+      "components": [
+        {
+          "id": "rb30-input-connector",
+          "functionalRegion": "entry-protection",
+          "domain": "LV_ENTRY",
+          "packageRequirement": "low-voltage-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb30-input-fuse",
+          "functionalRegion": "entry-protection",
+          "domain": "LV_ENTRY",
+          "packageRequirement": "fuse-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-reverse-protection",
+          "functionalRegion": "entry-protection",
+          "domain": "LV_ENTRY",
+          "packageRequirement": "diode-or-qualified-mosfet-protection-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb30-input-filter-capacitor",
+          "functionalRegion": "entry-protection",
+          "domain": "LV_ENTRY",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb30-5v-regulator",
+          "functionalRegion": "regulator-filter",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "linear-regulator-or-qualified-rail-provider-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb30-regulator-input-capacitor",
+          "functionalRegion": "regulator-filter",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb30-regulator-output-capacitor",
+          "functionalRegion": "regulator-filter",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb30-control-bypass-capacitor",
+          "functionalRegion": "regulator-filter",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb30-sensor-a-series-resistor",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-sensor-a-filter-capacitor",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_A",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb30-sensor-a-reference-high",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-sensor-a-reference-low",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-sensor-b-series-resistor",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-sensor-b-filter-capacitor",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_B",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb30-sensor-b-reference-high",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-sensor-b-reference-low",
+          "functionalRegion": "sensor-conditioning",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-output-a-switch",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb30-output-a-drive-resistor",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-output-a-bias-resistor",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-output-a-flyback-diode",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb30-output-a-relay",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_A",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb30-output-b-switch",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb30-output-b-drive-resistor",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-output-b-bias-resistor",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb30-output-b-flyback-diode",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb30-output-b-relay",
+          "functionalRegion": "dual-driver-output",
+          "domain": "OUTPUT_B",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb30-status-power",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "shape": "led"
+        },
+        {
+          "id": "rb30-status-interlock",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "shape": "led"
+        },
+        {
+          "id": "rb30-sensor-a-connector",
+          "functionalRegion": "additional-connectors",
+          "domain": "SENSOR_A",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb30-sensor-b-connector",
+          "functionalRegion": "additional-connectors",
+          "domain": "SENSOR_B",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        }
+      ]
+    },
+    {
+      "id": "RB56",
+      "count": 56,
+      "components": [
+        {
+          "id": "rb56-mains-connector",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "mains-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb56-mains-fuse",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "fuse-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-mains-clamp",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "surge-clamp-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb56-mains-inrush",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "inrush-limiter-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-mains-filter",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "filter-component-package",
+          "shape": "magnetic"
+        },
+        {
+          "id": "rb56-bridge-rectifier",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "packaged-bridge-rectifier",
+          "shape": "bridge"
+        },
+        {
+          "id": "rb56-bulk-capacitor",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bulk-capacitor-package",
+          "shape": "bulk"
+        },
+        {
+          "id": "rb56-discharge-resistor",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-hv-bypass-capacitor",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bypass-capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-primary-controller",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "offline-controller-package-or-bounded-behavioral-provider",
+          "shape": "ic"
+        },
+        {
+          "id": "rb56-primary-switch",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "switching-transistor-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb56-primary-magnetic",
+          "functionalRegion": "offline-converter",
+          "domain": "ISOLATION_BOUNDARY",
+          "packageRequirement": "coupled-winding-or-transformer-package",
+          "shape": "transformer"
+        },
+        {
+          "id": "rb56-primary-clamp-diode",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "clamp-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb56-primary-clamp-capacitor",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "clamp-capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-primary-startup-resistor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-primary-bias-resistor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-primary-current-sense",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "current-sense-resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-primary-gate-resistor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-primary-snubber-resistor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-primary-snubber-capacitor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-primary-return-bypass",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bypass-capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-feedback-coupler",
+          "functionalRegion": "isolated-feedback",
+          "domain": "ISOLATION_BOUNDARY",
+          "packageRequirement": "isolation-coupler-package",
+          "shape": "coupler"
+        },
+        {
+          "id": "rb56-secondary-reference",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "reference-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb56-secondary-sense-high",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-secondary-sense-low",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-secondary-rectifier",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "secondary-rectifier-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb56-secondary-filter-inductor",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "filter-inductor-package",
+          "shape": "magnetic"
+        },
+        {
+          "id": "rb56-secondary-filter-capacitor",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "filter-capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-control-regulator",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "linear-regulator-or-qualified-rail-provider-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb56-control-input-storage",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-control-output-storage",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-relay-a-switch",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb56-relay-a-drive",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-relay-a-bias",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-relay-a-flyback",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb56-relay-a-coil",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb56-relay-b-switch",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb56-relay-b-drive",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-relay-b-bias",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-relay-b-flyback",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb56-relay-b-coil",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb56-sensor-a-connector",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb56-sensor-a-limiter",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-sensor-a-filter",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-sensor-a-bias",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-sensor-b-connector",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb56-sensor-b-limiter",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-sensor-b-filter",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb56-sensor-b-bias",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-interlock-comparator",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "comparator-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb56-threshold-reference",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "reference-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb56-hysteresis-feedback",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb56-status-power",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "shape": "led"
+        },
+        {
+          "id": "rb56-status-interlock",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "shape": "led"
+        },
+        {
+          "id": "rb56-load-a-connector",
+          "functionalRegion": "load-interface-a",
+          "domain": "EXTERNAL_LOAD_A",
+          "packageRequirement": "load-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb56-load-b-connector",
+          "functionalRegion": "load-interface-b",
+          "domain": "EXTERNAL_LOAD_B",
+          "packageRequirement": "load-connector-package",
+          "shape": "connector"
+        }
+      ]
+    },
+    {
+      "id": "RB100",
+      "count": 100,
+      "components": [
+        {
+          "id": "rb100-base-mains-connector",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "mains-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb100-base-mains-fuse",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "fuse-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-mains-clamp",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "surge-clamp-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-base-mains-inrush",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "inrush-limiter-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-mains-filter",
+          "functionalRegion": "mains-entry",
+          "domain": "MAINS_ENTRY",
+          "packageRequirement": "filter-component-package",
+          "shape": "magnetic"
+        },
+        {
+          "id": "rb100-base-bridge-rectifier",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "packaged-bridge-rectifier",
+          "shape": "bridge"
+        },
+        {
+          "id": "rb100-base-bulk-capacitor",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bulk-capacitor-package",
+          "shape": "bulk"
+        },
+        {
+          "id": "rb100-base-discharge-resistor",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-hv-bypass-capacitor",
+          "functionalRegion": "rectifier-storage",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bypass-capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-primary-controller",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "offline-controller-package-or-bounded-behavioral-provider",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-base-primary-switch",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "switching-transistor-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-base-primary-magnetic",
+          "functionalRegion": "offline-converter",
+          "domain": "ISOLATION_BOUNDARY",
+          "packageRequirement": "coupled-winding-or-transformer-package",
+          "shape": "transformer"
+        },
+        {
+          "id": "rb100-base-primary-clamp-diode",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "clamp-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb100-base-primary-clamp-capacitor",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "clamp-capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-primary-startup-resistor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-primary-bias-resistor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-primary-current-sense",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "current-sense-resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-primary-gate-resistor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-primary-snubber-resistor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-primary-snubber-capacitor",
+          "functionalRegion": "offline-converter",
+          "domain": "PRIMARY_CONVERTER",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-primary-return-bypass",
+          "functionalRegion": "offline-converter",
+          "domain": "HV_PRIMARY",
+          "packageRequirement": "bypass-capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-feedback-coupler",
+          "functionalRegion": "isolated-feedback",
+          "domain": "ISOLATION_BOUNDARY",
+          "packageRequirement": "isolation-coupler-package",
+          "shape": "coupler"
+        },
+        {
+          "id": "rb100-base-secondary-reference",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "reference-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-base-secondary-sense-high",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-secondary-sense-low",
+          "functionalRegion": "isolated-feedback",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-secondary-rectifier",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "secondary-rectifier-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-base-secondary-filter-inductor",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "filter-inductor-package",
+          "shape": "magnetic"
+        },
+        {
+          "id": "rb100-base-secondary-filter-capacitor",
+          "functionalRegion": "secondary-output",
+          "domain": "SECONDARY_RAIL",
+          "packageRequirement": "filter-capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-control-regulator",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "linear-regulator-or-qualified-rail-provider-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-base-control-input-storage",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-control-output-storage",
+          "functionalRegion": "control-rail",
+          "domain": "CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-relay-a-switch",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-base-relay-a-drive",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-relay-a-bias",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-relay-a-flyback",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb100-base-relay-a-coil",
+          "functionalRegion": "relay-driver-a",
+          "domain": "RELAY_A",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb100-base-relay-b-switch",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-base-relay-b-drive",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-relay-b-bias",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-relay-b-flyback",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb100-base-relay-b-coil",
+          "functionalRegion": "relay-driver-b",
+          "domain": "RELAY_B",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb100-base-sensor-a-connector",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb100-base-sensor-a-limiter",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-sensor-a-filter",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-sensor-a-bias",
+          "functionalRegion": "sensor-interface-a",
+          "domain": "SENSOR_A",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-sensor-b-connector",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb100-base-sensor-b-limiter",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-sensor-b-filter",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-base-sensor-b-bias",
+          "functionalRegion": "sensor-interface-b",
+          "domain": "SENSOR_B",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-interlock-comparator",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "comparator-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-base-threshold-reference",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "reference-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-base-hysteresis-feedback",
+          "functionalRegion": "decision-reference",
+          "domain": "CONTROL_DECISION",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-base-status-power",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "shape": "led"
+        },
+        {
+          "id": "rb100-base-status-interlock",
+          "functionalRegion": "status",
+          "domain": "STATUS",
+          "packageRequirement": "indicator-led-package",
+          "shape": "led"
+        },
+        {
+          "id": "rb100-base-load-a-connector",
+          "functionalRegion": "load-interface-a",
+          "domain": "EXTERNAL_LOAD_A",
+          "packageRequirement": "load-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb100-base-load-b-connector",
+          "functionalRegion": "load-interface-b",
+          "domain": "EXTERNAL_LOAD_B",
+          "packageRequirement": "load-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb100-relay-c-switch",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-relay-c-drive",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-relay-c-bias",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-relay-c-flyback",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb100-relay-c-coil",
+          "functionalRegion": "additional-relay-c",
+          "domain": "RELAY_C",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb100-relay-d-switch",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-relay-d-drive",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-relay-d-bias",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-relay-d-flyback",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "flyback-diode-package",
+          "shape": "diode"
+        },
+        {
+          "id": "rb100-relay-d-coil",
+          "functionalRegion": "additional-relay-d",
+          "domain": "RELAY_D",
+          "packageRequirement": "relay-package",
+          "shape": "relay"
+        },
+        {
+          "id": "rb100-dc-c-switch",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-dc-c-drive",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-dc-c-bias",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-dc-c-protection",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "clamp-or-current-limit-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-dc-c-shunt",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "current-shunt-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-dc-c-storage",
+          "functionalRegion": "dc-output-c",
+          "domain": "DC_OUTPUT_C",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-dc-d-switch",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-dc-d-drive",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-dc-d-bias",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-dc-d-protection",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "clamp-or-current-limit-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-dc-d-shunt",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "current-shunt-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-dc-d-storage",
+          "functionalRegion": "dc-output-d",
+          "domain": "DC_OUTPUT_D",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-sensor-c-connector",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_C",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb100-sensor-c-limiter",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_C",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-sensor-c-filter",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_C",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-sensor-c-bias",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_C",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-sensor-d-connector",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_D",
+          "packageRequirement": "sensor-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb100-sensor-d-limiter",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_D",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-sensor-d-filter",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_D",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-sensor-d-bias",
+          "functionalRegion": "additional-sensor-conditioning",
+          "domain": "SENSOR_D",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-3v3-regulator",
+          "functionalRegion": "3v3-conditioning",
+          "domain": "AUX_CONTROL_RAIL",
+          "packageRequirement": "low-voltage-regulator-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-3v3-input-storage",
+          "functionalRegion": "3v3-conditioning",
+          "domain": "AUX_CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-3v3-output-storage",
+          "functionalRegion": "3v3-conditioning",
+          "domain": "AUX_CONTROL_RAIL",
+          "packageRequirement": "capacitor-package",
+          "shape": "capacitor"
+        },
+        {
+          "id": "rb100-3v3-reference-filter",
+          "functionalRegion": "3v3-conditioning",
+          "domain": "AUX_CONTROL_RAIL",
+          "packageRequirement": "filter-component-package",
+          "shape": "magnetic"
+        },
+        {
+          "id": "rb100-monitor-shunt",
+          "functionalRegion": "current-monitor",
+          "domain": "CURRENT_MONITOR",
+          "packageRequirement": "current-shunt-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-monitor-amplifier",
+          "functionalRegion": "current-monitor",
+          "domain": "CURRENT_MONITOR",
+          "packageRequirement": "differential-monitor-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-monitor-filter",
+          "functionalRegion": "current-monitor",
+          "domain": "CURRENT_MONITOR",
+          "packageRequirement": "filter-component-package",
+          "shape": "magnetic"
+        },
+        {
+          "id": "rb100-monitor-reference",
+          "functionalRegion": "current-monitor",
+          "domain": "CURRENT_MONITOR",
+          "packageRequirement": "reference-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-auxiliary-comparator",
+          "functionalRegion": "auxiliary-interlock",
+          "domain": "AUX_INTERLOCK",
+          "packageRequirement": "comparator-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-auxiliary-reference",
+          "functionalRegion": "auxiliary-interlock",
+          "domain": "AUX_INTERLOCK",
+          "packageRequirement": "reference-package",
+          "shape": "ic"
+        },
+        {
+          "id": "rb100-auxiliary-pullup",
+          "functionalRegion": "auxiliary-interlock",
+          "domain": "AUX_INTERLOCK",
+          "packageRequirement": "resistor-package",
+          "shape": "resistor"
+        },
+        {
+          "id": "rb100-auxiliary-driver",
+          "functionalRegion": "auxiliary-interlock",
+          "domain": "AUX_INTERLOCK",
+          "packageRequirement": "bjt-or-nmos-switch-package",
+          "shape": "switch"
+        },
+        {
+          "id": "rb100-dc-output-c-connector",
+          "functionalRegion": "additional-interfaces",
+          "domain": "EXTERNAL_DC_C",
+          "packageRequirement": "dc-output-connector-package",
+          "shape": "connector"
+        },
+        {
+          "id": "rb100-dc-output-d-connector",
+          "functionalRegion": "additional-interfaces",
+          "domain": "EXTERNAL_DC_D",
+          "packageRequirement": "dc-output-connector-package",
+          "shape": "connector"
+        }
+      ]
+    }
+  ]
+}
