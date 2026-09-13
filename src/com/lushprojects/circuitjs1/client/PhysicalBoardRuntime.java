@@ -382,6 +382,14 @@ final class PhysicalBoardRuntime {
                 ((PhysicalBoardRuntimePowerLifecycle) capability).onBoardPowerStateChanged(state);
     }
 
+    void settleActiveMeasurement(CirSim sim, GeneratedBoardInstance owner, boolean stimulusInstalled) {
+        if (owner.getPhysicalBoardRuntime() != this || sim.getGeneratedBoardInstance() != owner)
+            throw new IllegalStateException("Temporary instrument lost its physical owner");
+        for (PhysicalBoardRuntimeCapability capability : getCapabilities())
+            if (capability instanceof ActiveMeasurementSettlingCapability)
+                ((ActiveMeasurementSettlingCapability) capability).settleMeasurement(sim, owner, stimulusInstalled);
+    }
+
     ActiveMeasurementReadiness getActiveMeasurementReadiness(
             CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,
             BoardPowerState powerState, boolean electricallyUnpowered) {

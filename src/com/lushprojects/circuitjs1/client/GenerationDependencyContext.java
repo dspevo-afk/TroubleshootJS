@@ -21,9 +21,9 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v5";
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v6";
     static final String CIRCUIT_DUMP_EPOCH =
-        "circuitjs-source-load-model-inputs-no-transient-dump-v2";
+        "circuitjs-source-load-model-inputs-no-transient-dump-v3";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";
     private static final String POWER_DYNAMIC_INPUT_POLICY =
         "excluded:SolverExecutionBoundary.Observation,rail-voltage-samples," +
@@ -432,12 +432,15 @@ final class GenerationDependencyContext {
     private static PowerDomainContract capturePowerContract(PhysicalBoardRuntime runtime) {
         PhysicalBoardRuntimeCapability capability = runtime.getCapability(
             PowerDomainRuntimeCapability.CAPABILITY_ID);
-        if (capability == null)
-            return null;
-        if (!(capability instanceof PowerDomainRuntimeCapability))
+        if (capability != null && !(capability instanceof PowerDomainContractProvider))
             throw new IllegalStateException("Power-domain capability has no typed contract seam");
-        PowerDomainContract contract = ((PowerDomainRuntimeCapability) capability).getContract();
-        require(contract != null, "Power-domain capability has no contract");
+        PowerDomainContract contract = null;
+        for (PhysicalBoardRuntimeCapability provider : runtime.getCapabilities()) {
+            if (!(provider instanceof PowerDomainContractProvider)) continue;
+            require(contract == null, "Multiple power-domain declaration owners");
+            contract = ((PowerDomainContractProvider)provider).getContract();
+            require(contract != null, "Power-domain capability has no contract");
+        }
         return contract;
     }
 
@@ -943,9 +946,14 @@ final class GenerationDependencyContext {
         case 'c':
             // CapacitorElm: capacitance, live voltdiff, initialVoltage.
             return joinDumpTokens(tokens, 7);
+        case 452:
+            // Relay: inherited coil-current state at token 8; retain all model/fault inputs.
+            return joinDumpTokens(tokens, 8);
         case 't':
             // TransistorElm: pnp, live VBE, live VCE, beta, model name.
             return joinDumpTokens(tokens, 7, 8);
+        case 453: // External load resistance and persistent stress state.
+        case 450: // DC compliance settings; no transient state.
         case 'd':
         case 'f':
         case 'g':

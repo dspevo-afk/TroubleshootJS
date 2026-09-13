@@ -48,6 +48,8 @@ final class GeneratedFaultServiceabilityCatalog {
                 OBSERVE_COMPONENT, new String[0], new String[0],
                 GeneratedBoardOperationIds.CUSTOMER_RETEST);
         case RESISTOR_OPEN:
+        case RELAY_COIL_OPEN:
+        case RELAY_CONTACT_OPEN:
         case RESISTOR_INCORRECT_VALUE:
         case LED_OPEN:
         case DIODE_OPEN:

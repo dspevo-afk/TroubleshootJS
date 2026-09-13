@@ -4,6 +4,19 @@ import java.util.Vector;
 
 /** Built-in typed package definitions used by the current generated families. */
 final class PhysicalPackages {
+    static final PhysicalPackage RELAY_SPDT = fixedPackage("RELAY_SPDT",
+        RelaySpecification.TERMINALS, false, relaySpdt());
+
+    private static PhysicalPackageGeometry relaySpdt() {
+        Vector<PhysicalPackageGeometry.Terminal> pins = new Vector<PhysicalPackageGeometry.Terminal>();
+        pins.add(terminal("A1",30,120,90,120,70,140,-1,0,50));
+        pins.add(terminal("A2",270,120,210,120,230,140,1,0,50));
+        pins.add(terminal("COM",70,30,100,70,100,54,0,-1,40));
+        pins.add(terminal("NC",150,30,150,70,150,54,0,-1,40));
+        pins.add(terminal("NO",230,30,200,70,200,54,0,-1,40));
+        return geometry(300,210,pins,new Rectangle(90,70,120,100),
+            new Rectangle(85,65,130,110),new Rectangle(10,10,280,180));
+    }
     static final PhysicalPackage AXIAL_RESISTOR = packageWithCatalog("AXIAL_RESISTOR",
         new String[] { "1", "2" }, false, axialResistorVariants(), "SPAN_220",
         PhysicalPackage.GeometryVariantSelection.SEEDED_CATALOG);

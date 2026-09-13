@@ -152,6 +152,7 @@ final class Task41SimulationSnapshot {
     private final boolean unsavedChanges;
 
     private final BoardPowerState powerState;
+    private final GeneratedExternalPowerBindings.SavedControls powerControls;
     private final GeneratedExternalPowerBindings powerBindings;
     private final boolean modificationsFullyRestored;
     private final InstrumentController.DeveloperState instrumentState;
@@ -317,6 +318,7 @@ final class Task41SimulationSnapshot {
 
         powerState = sim.getBoardPowerController().getState();
         powerBindings = sim.getBoardPowerController().getBindingsForDeveloperVerification();
+        powerControls = powerBindings == null ? null : powerBindings.saveControls();
         modificationsFullyRestored = modifications != null && modifications.isFullyRestored();
         instrumentState = sim.instrumentController.captureForDeveloperVerification();
 
@@ -768,10 +770,8 @@ final class Task41SimulationSnapshot {
         if (sim.getBoardPowerController().getBindingsForDeveloperVerification() != powerBindings ||
                 sim.getBoardPowerController().getState() != powerState)
             throw new IllegalStateException("Task 41 restore changed board power ownership");
-        if (powerBindings != null && powerState == BoardPowerState.POWERED && !powerBindings.areAllConnected())
-            throw new IllegalStateException("Task 41 restored a disconnected powered board");
-        if (powerBindings != null && powerState == BoardPowerState.UNPOWERED && !powerBindings.areAllDisconnected())
-            throw new IllegalStateException("Task 41 restored a connected unpowered board");
+        if (powerControls != null && !powerControls.matches())
+            throw new IllegalStateException("Task 41 restore changed individual source commands");
         if (sim.boardModificationController != modifications ||
                 (modifications != null &&
                 sim.boardModificationController.isFullyRestored() != modificationsFullyRestored))
@@ -912,7 +912,7 @@ final class Task41SimulationSnapshot {
         if (powerBindings == null)
             sim.getBoardPowerController().detach();
         else
-            sim.getBoardPowerController().restoreForDeveloperVerification(powerBindings, powerState);
+            sim.getBoardPowerController().restoreForDeveloperVerification(powerBindings, powerState, powerControls);
     }
 
     private static <T> Vector<T> copy(Vector<T> source) {

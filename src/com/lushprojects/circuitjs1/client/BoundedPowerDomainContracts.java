@@ -43,7 +43,7 @@ final class BoundedPowerDomainContracts {
             sources.add(new PowerDomainContract.Source(input.getInputId(), input.getPositiveNetId(),
                 port == null ? Range.known(5, 5) : port.getGuaranteedVoltage(),
                 port == null ? Scalar.unknown() : port.getCapacityAmps(),
-                Scalar.known(0), Scalar.notApplicable(),
+                Scalar.known(LowVoltageSourceModel.OUTPUT_OHMS), Scalar.known(LowVoltageSourceModel.DEFAULT_LIMIT_AMPS),
                 port == null ? Drive.STIFF_VOLTAGE : port.getDrive()));
         }
         // GroundElm fixes numerical potential. It supplies no physical earth bond.

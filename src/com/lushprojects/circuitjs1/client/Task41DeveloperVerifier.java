@@ -721,7 +721,8 @@ final class Task41DeveloperVerifier {
             require(actual == derived,
                 "Task 41 owner-diversity contract is not derived for " + familyId);
             if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId) ||
-                    QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId))
+                    QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ||
+                    QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId))
                 require(actual == GeneratedDiagnosticOwnerDiversity.MULTI_OWNER_DIAGNOSTIC,
                     "Task 41 expected multi-owner family was classified as single-owner: " +
                         familyId);
@@ -753,6 +754,10 @@ final class Task41DeveloperVerifier {
     }
 
     private static long normalFixtureSeed(String familyId, GeneratedFaultType type) {
+        if (QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId)) {
+            if (type == GeneratedFaultType.RELAY_CONTACT_OPEN) return 2;
+            if (type == GeneratedFaultType.BASE_RESISTOR_OPEN) return 4;
+        }
         if (QuickPlayFamilyRegistry.RC_DELAY.equals(familyId) &&
                 type == GeneratedFaultType.CAPACITOR_SHORT) return 2;
         if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId)) {

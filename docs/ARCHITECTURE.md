@@ -311,6 +311,74 @@ usage. These probes establish a bounded execution foundation, not playable relay
 converter families, physical Q60/Q100 boards, saturation/thermal fidelity or mains
 qualification. A08 physical lifecycle qualification is recorded separately below.
 
+## E01 sources, loads and protection
+
+`LimitedDcSupplyElm` puts a nonlinear series compliance branch inside the actual
+CircuitJS voltage source. `LowVoltageSourceModel` declares 0–24 V, 1–500 mA,
+0.05 Ohm output resistance, and finite forward-compliance/reverse-blocking
+leakage. Newton limiting changes trial convergence only; displayed voltage and
+current come from solved terminal values. Generated leaf and composed sources
+use this model. Current realization and power contracts declare the implemented
+0.25 A nominal limit and 0.05 Ohm resistance; capacity is a separate rating.
+
+`BenchPowerPanel` belongs to one workbench and cancels its timer on detachment.
+`CirSim.changeBenchSource` guards the exact owner and settled interaction state.
+Each source has its existing real isolation switch; aggregate OFF requires all
+sources disconnected. Current-limit changes invalidate observations and retest.
+`GeneratedExternalPowerBindings.SavedControls` restores each connection and
+current setting during fresh-owner rollback. A POWERED aggregate can contain
+disconnected sources; snapshot restoration must not reconnect them implicitly.
+
+`ProtectionFuseElm` accumulates its I²t damage only on accepted steps and retains
+a blown state through solver reset. `BoundedExternalLoadElm` is a passive 1–100k
+Ohm load with a 24 V/6 W envelope and persistent open failure. The fuse is a
+qualified foundation model/fixture; the relay family consumes the external load.
+These are bounded approximations, without switching ripple, foldback or a
+four-quadrant supply. [Qualification](task-evidence/E01/README.md).
+
+## E03 isolated switched output
+
+`RelayOutputGenerator` composes three independently isolated supplies, a 5 V
+relay coil, command input, BJT or NMOS low-side driver, flyback diode, and an
+isolated 12 V/180 Ohm load. `RelayDriverProvider` owns device parameters and
+terminal order. Representative seeds 0–5 cover both drivers and coil-open,
+contact-open and drive-resistor-open faults; Quick Play admits this seventh
+family through ordinary healthy/fault/diagnostic qualification.
+
+`ServiceRelayElm` retains CircuitJS's RL coil and approximate contact motion,
+with 0.2 H, 125/720 Ohm catalog windings, 0.2 Ohm on contacts and 1 GOhm off
+contacts. Both contact leakage currents participate in KCL. Coil posts 3/4
+remain electrically separate from COM/NC/NO posts 0/1/2. The model has no contact
+bounce, arcing, welding, mechanical delay calibration, EMC or mains claim.
+The package is a generic qualified five-terminal footprint, not a commercial
+pinout. Normal sources and catalog actions stay within its declared envelope.
+
+`PhysicalRelayPart` retains the original fault in the tray. Its
+`ReplaceableRelayCapability` supplies a five-attachment A08 transaction; rollback
+restores geometry, endpoints, mount, inventory and canonical graph ownership.
+The compatible 12 V coil is a meaningful wrong replacement on the 5 V circuit.
+The fixed flyback part has no player removal/lift action. The bounded single-layer
+layout uses current package providers, canonical copper and geometry validation;
+it does not claim a new general autorouter or larger-board milestone.
+
+`RelayOutputBehavior` owns HIGH/LOW inputs, 25 ms solver sampling and customer
+retest. It never reconnects a user's disconnected source. `RelayEnergyReadiness`
+requires fresh accepted observations and actual coil current below 1 µA before
+active measurements. Through `ActiveMeasurementSettlingCapability`, the meter
+allows 25 ms of actual RL settling before reading and another 25 ms after removing
+its stimulus; cleanup never resets stored energy to manufacture discharge.
+
+`RelayPowerDomains` declares separate control and load references.
+`MeasurementReferencePolicy` rejects DC readings across those domains and does
+not treat CircuitJS numerical stabilization as earth. Within a declared domain,
+the temporal DC meter reads the accepted live solution (high-impedance observation,
+as on existing temporal boards). Unreferenced loose-part DC is unsupported;
+resistance and diode tests use real temporary sources. `PowerDomainContractProvider`
+lets the current dependency identity capture declarations from either the existing
+power assessment or the relay energy/reference owner. The current interpretation
+is dependency-v6/dump-model-v3; transient relay current is excluded, while model
+parameters and persistent faults remain included. [Qualification](task-evidence/E03/README.md).
+
 ## A06 power/reference and operating-state contracts
 
 A06 is implemented and qualified under the owner's direct/solo continuation.

@@ -214,8 +214,9 @@ final class GeneratedDiagnosticObservationExecutor {
         default:
             ProbeTarget red = boardProbe(sim, instance, step.red);
             ProbeTarget black = boardProbe(sim, instance, step.black);
-            require(sim.instrumentController.getActiveMeasurementReadinessForStrategy(red, black).isReady(),
-                "Unavailable active diagnostic measurement: " + step.id);
+            ActiveMeasurementReadiness readiness = sim.instrumentController.getActiveMeasurementReadinessForStrategy(red, black);
+            require(readiness.isReady(),
+                "Unavailable active diagnostic measurement: " + step.id + ":" + readiness);
             if (step.kind == GeneratedDiagnosticProgram.Kind.RESISTANCE) {
                 int count = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
                 sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);

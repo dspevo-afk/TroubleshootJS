@@ -7,12 +7,14 @@ import java.util.Vector;
  * excludes developer-only fault variants and future families.
  */
 final class QuickPlayFamilyRegistry {
+    static final String RELAY_OUTPUT = "RELAY_OUTPUT";
     static final String LED_INDICATOR = "LED_INDICATOR";
     static final String DIODE_PROTECTED_INDICATOR = "DIODE_PROTECTED_INDICATOR";
     static final String PARALLEL_DUAL_INDICATOR = "PARALLEL_DUAL_INDICATOR";
     static final String RC_DELAY = "RC_DELAY";
     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
     static final String NMOS_LOW_SIDE_SWITCH = "NMOS_LOW_SIDE_SWITCH";
+    private static final long[] RELAY_NORMAL_PLAYER_SEEDS = { 0, 1, 2, 3, 4, 5 };
     private static final long[] BASE_NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
     // Keep the established LED seeds 0/2/3 unchanged; seed 4 is the first
     // normal envelope entry for the additional LED-owned fault route.
@@ -30,17 +32,19 @@ final class QuickPlayFamilyRegistry {
         result.add(RC_DELAY);
         result.add(NPN_LOW_SIDE_SWITCH);
         result.add(NMOS_LOW_SIDE_SWITCH);
+        result.add(RELAY_OUTPUT);
         return result;
     }
 
     static boolean isNormalPlayerEligible(String familyId) {
-        return LED_INDICATOR.equals(familyId) ||
+        return RELAY_OUTPUT.equals(familyId) || LED_INDICATOR.equals(familyId) ||
             DIODE_PROTECTED_INDICATOR.equals(familyId) ||
             PARALLEL_DUAL_INDICATOR.equals(familyId) || RC_DELAY.equals(familyId) ||
             NPN_LOW_SIDE_SWITCH.equals(familyId) || NMOS_LOW_SIDE_SWITCH.equals(familyId);
     }
 
     static GeneratedBoardInstance generate(String familyId, long seed) {
+        if (RELAY_OUTPUT.equals(familyId)) return new RelayOutputGenerator().generate(seed);
         if (LED_INDICATOR.equals(familyId))
             return new LedIndicatorGenerator().generate(seed);
         if (DIODE_PROTECTED_INDICATOR.equals(familyId))
@@ -76,6 +80,7 @@ final class QuickPlayFamilyRegistry {
     }
 
     private static long[] seedsFor(String familyId) {
+        if (RELAY_OUTPUT.equals(familyId)) return RELAY_NORMAL_PLAYER_SEEDS;
         if (LED_INDICATOR.equals(familyId)) return LED_NORMAL_PLAYER_SEEDS;
         if (NPN_LOW_SIDE_SWITCH.equals(familyId)) return NPN_NORMAL_PLAYER_SEEDS;
         if (NMOS_LOW_SIDE_SWITCH.equals(familyId)) return NMOS_NORMAL_PLAYER_SEEDS;

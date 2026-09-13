@@ -41,7 +41,7 @@ final class NpnLowSideSwitchGenerator {
         TroubleshootBoard board = createBoard();
         BoardPhysicalSpecifications specifications = createSpecifications(values);
 
-        DCVoltageElm loadSupply = new DCVoltageElm(112, 416);
+        DCVoltageElm loadSupply = new LimitedDcSupplyElm(112, 416);
         loadSupply.drag(112, 176);
         loadSupply.maxVoltage = values.loadSupplyVoltage;
         SwitchElm loadIsolation = new SwitchElm(112, 176);
@@ -65,7 +65,7 @@ final class NpnLowSideSwitchGenerator {
         led.colorG = 0;
         led.colorB = 0;
 
-        DCVoltageElm controlSupply = new DCVoltageElm(112, 496);
+        DCVoltageElm controlSupply = new LimitedDcSupplyElm(112, 496);
         controlSupply.drag(112, 96);
         controlSupply.maxVoltage = values.controlSupplyVoltage;
         SwitchElm controlIsolation = new SwitchElm(112, 96);

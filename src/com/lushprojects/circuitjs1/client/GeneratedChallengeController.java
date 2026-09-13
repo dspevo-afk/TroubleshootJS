@@ -233,6 +233,7 @@ class GeneratedChallengeController {
         if (instance.getFamilyState().isFaultedTargetInstalled(instance, targetComponentId) &&
             targetInstalled &&
             sim.getBoardModificationController().isFullyRestored() &&
+            instance.getExternalPowerBindings().hasNominalBenchSettings() &&
             sim.getBoardPowerController().getState() == BoardPowerState.POWERED)
             verifyFaultedBehavior(BoardPowerState.POWERED);
         if (canLatchCompletionAfterCustomerRetest()) {

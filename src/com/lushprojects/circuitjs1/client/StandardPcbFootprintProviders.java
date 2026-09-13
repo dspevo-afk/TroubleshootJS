@@ -9,6 +9,11 @@ final class StandardPcbFootprintProviders {
 
     static PcbFootprintRegistry createRegistry() {
         PcbFootprintRegistry registry = new PcbFootprintRegistry();
+        registry.register(PhysicalPackages.RELAY_SPDT, new PcbFootprintProvider() {
+            public PcbFootprint create(BoardComponent component,int x,int y,Random random,Rectangle outline) {
+                return PcbFootprint.fromPhysicalPackage(component,x,y);
+            }
+        });
         registry.register(PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, new ConnectorProvider());
         registry.register(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,
             new OutputHeaderProvider());

@@ -213,7 +213,9 @@ public final class A02CandidateContractTest {
             "NPN_LOW_SIDE_SWITCH/1/TRANSISTOR_CE_SHORT",
             "NPN_LOW_SIDE_SWITCH/2/BASE_RESISTOR_OPEN",
             "NMOS_LOW_SIDE_SWITCH/0/NMOS_DS_OPEN",
-            "NMOS_LOW_SIDE_SWITCH/1/NMOS_DS_SHORT", "NMOS_LOW_SIDE_SWITCH/2/NMOS_GATE_OPEN"
+            "NMOS_LOW_SIDE_SWITCH/1/NMOS_DS_SHORT", "NMOS_LOW_SIDE_SWITCH/2/NMOS_GATE_OPEN",
+            "RELAY_OUTPUT/0/RELAY_COIL_OPEN", "RELAY_OUTPUT/2/RELAY_CONTACT_OPEN",
+            "RELAY_OUTPUT/4/BASE_RESISTOR_OPEN"
         };
         try {
             java.lang.reflect.Method normal = Task41DeveloperVerifier.class
@@ -244,7 +246,7 @@ public final class A02CandidateContractTest {
             for (String fixture : expected)
             require(actual.contains(fixture), "missing current corpus fixture: " + fixture);
         } catch (Exception failure) {
-            throw new AssertionError("actual current Task41 corpus: " + failure);
+            throw new AssertionError("actual current Task41 corpus: " + failure, failure);
         }
     }
 

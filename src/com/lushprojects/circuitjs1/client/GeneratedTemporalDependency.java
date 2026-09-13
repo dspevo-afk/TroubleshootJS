@@ -28,25 +28,6 @@ final class GeneratedTemporalDependency {
     private final String initialStateContract;
     private final String outputEndpointId;
     private final String groundEndpointId;
-    private final long nominalSupplyBits;
-    private final long playerReselectBits;
-    private final long naturalDischargeBits;
-    private final long earlySampleBits;
-    private final long lateSampleBits;
-    private final long maxSolverAdvanceBits;
-    private final long liveSolverAdvanceBits;
-    private final long residualThresholdBits;
-    private final long healthyRiseMinimumBits;
-    private final long healthyLateMinimumBits;
-    private final long healthyEarlyMaximumBits;
-    private final long classificationRiseMinimumBits;
-    private final long classificationLateMaximumBits;
-    private final long classificationEarlyDifferenceBits;
-    private final long classificationHealthyEarlyDifferenceBits;
-    private final long classificationHealthyLateDifferenceBits;
-    private final long healthyResidualBits;
-    private final long healthyEarlyBits;
-    private final long healthyLateBits;
     private final String canonical;
     private final int hash;
 
@@ -75,45 +56,45 @@ final class GeneratedTemporalDependency {
             "Missing temporal output endpoint ID");
         this.groundEndpointId = text(groundEndpointId,
             "Missing temporal ground endpoint ID");
-        nominalSupplyBits = positiveBits(nominalSupply,
+        long nominalSupplyBits = positiveBits(nominalSupply,
             "Invalid temporal nominal supply");
-        playerReselectBits = positiveBits(playerReselectSeconds,
+        long playerReselectBits = positiveBits(playerReselectSeconds,
             "Invalid temporal player reselect duration");
-        naturalDischargeBits = positiveBits(naturalDischargeSeconds,
+        long naturalDischargeBits = positiveBits(naturalDischargeSeconds,
             "Invalid temporal natural discharge duration");
-        earlySampleBits = positiveBits(earlySampleSeconds,
+        long earlySampleBits = positiveBits(earlySampleSeconds,
             "Invalid temporal early sample duration");
-        lateSampleBits = positiveBits(lateSampleSeconds,
+        long lateSampleBits = positiveBits(lateSampleSeconds,
             "Invalid temporal late sample duration");
-        maxSolverAdvanceBits = positiveBits(maxSolverAdvanceSeconds,
+        long maxSolverAdvanceBits = positiveBits(maxSolverAdvanceSeconds,
             "Invalid temporal solver segment duration");
-        liveSolverAdvanceBits = positiveBits(liveSolverAdvanceSeconds,
+        long liveSolverAdvanceBits = positiveBits(liveSolverAdvanceSeconds,
             "Invalid temporal live solver duration");
-        residualThresholdBits = positiveBits(residualThresholdVolts,
+        long residualThresholdBits = positiveBits(residualThresholdVolts,
             "Invalid temporal residual threshold");
-        healthyRiseMinimumBits = positiveBits(healthyRiseMinimumFraction,
+        long healthyRiseMinimumBits = positiveBits(healthyRiseMinimumFraction,
             "Invalid temporal healthy rise threshold");
-        healthyLateMinimumBits = positiveBits(healthyLateMinimumFraction,
+        long healthyLateMinimumBits = positiveBits(healthyLateMinimumFraction,
             "Invalid temporal healthy late threshold");
-        healthyEarlyMaximumBits = positiveBits(healthyEarlyMaximumFraction,
+        long healthyEarlyMaximumBits = positiveBits(healthyEarlyMaximumFraction,
             "Invalid temporal healthy early threshold");
-        classificationRiseMinimumBits = positiveBits(classificationRiseMinimumFraction,
+        long classificationRiseMinimumBits = positiveBits(classificationRiseMinimumFraction,
             "Invalid temporal classification rise threshold");
-        classificationLateMaximumBits = positiveBits(classificationLateMaximumFraction,
+        long classificationLateMaximumBits = positiveBits(classificationLateMaximumFraction,
             "Invalid temporal classification late threshold");
-        classificationEarlyDifferenceBits = positiveBits(classificationEarlyDifferenceFraction,
+        long classificationEarlyDifferenceBits = positiveBits(classificationEarlyDifferenceFraction,
             "Invalid temporal classification fast threshold");
-        classificationHealthyEarlyDifferenceBits = positiveBits(
+        long classificationHealthyEarlyDifferenceBits = positiveBits(
             classificationHealthyEarlyDifferenceFraction,
             "Invalid temporal classification early difference threshold");
-        classificationHealthyLateDifferenceBits = positiveBits(
+        long classificationHealthyLateDifferenceBits = positiveBits(
             classificationHealthyLateDifferenceFraction,
             "Invalid temporal classification late difference threshold");
-        healthyResidualBits = bits(healthyResidualVoltage,
+        long healthyResidualBits = bits(healthyResidualVoltage,
             "Invalid temporal healthy residual reference");
-        healthyEarlyBits = bits(healthyEarlyVoltage,
+        long healthyEarlyBits = bits(healthyEarlyVoltage,
             "Invalid temporal healthy early reference");
-        healthyLateBits = bits(healthyLateVoltage,
+        long healthyLateBits = bits(healthyLateVoltage,
             "Invalid temporal healthy late reference");
 
         StringBuilder value = new StringBuilder();
@@ -151,6 +132,30 @@ final class GeneratedTemporalDependency {
             throw new IllegalArgumentException("Temporal dependency exceeds its bound");
         canonical = value.toString();
         hash = canonical.hashCode();
+    }
+
+    /** Extensible data recipe for non-RC temporal owners; ordered and bounded like v1. */
+    GeneratedTemporalDependency(String behaviorId, int behaviorVersion,
+            String initialStateContract, String outputEndpointId, String groundEndpointId,
+            java.util.Map<String,String> parameters) {
+        this.behaviorId = text(behaviorId, "Missing temporal behavior ID");
+        if (behaviorVersion <= 0 || parameters == null || parameters.isEmpty() || parameters.size() > 64)
+            throw new IllegalArgumentException("Invalid temporal recipe");
+        this.behaviorVersion = behaviorVersion;
+        this.initialStateContract = text(initialStateContract, "Missing temporal initial-state contract");
+        this.outputEndpointId = text(outputEndpointId, "Missing temporal output endpoint ID");
+        this.groundEndpointId = text(groundEndpointId, "Missing temporal reference endpoint ID");
+        StringBuilder value = new StringBuilder();
+        frame(value, "generated-temporal-recipe-v1");
+        appendField(value, "behavior.id", behaviorId);
+        appendField(value, "behavior.version", Integer.toString(behaviorVersion));
+        appendField(value, "initial-state.contract", initialStateContract);
+        appendField(value, "endpoint.output", outputEndpointId);
+        appendField(value, "endpoint.ground", groundEndpointId);
+        for (String key : new java.util.TreeSet<String>(parameters.keySet()))
+            appendField(value, "parameter." + text(key, "Invalid temporal parameter key"),
+                text(parameters.get(key), "Invalid temporal parameter value"));
+        canonical = value.toString(); hash = canonical.hashCode();
     }
 
     String getBehaviorId() { return behaviorId; }

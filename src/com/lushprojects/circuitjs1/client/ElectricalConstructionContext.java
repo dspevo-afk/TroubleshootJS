@@ -400,6 +400,10 @@ final class ElectricalConstructionContext {
             } else if ("VOLTAGE".equals(handle.getKind())) {
                 requireParameter(declaration, "voltage",
                     ((DCVoltageElm) handle.element).maxVoltage);
+                if (!(handle.element instanceof LimitedDcSupplyElm))
+                    throw new IllegalArgumentException("Generated source lacks physical compliance");
+                requireParameter(declaration, "current-limit-amps", ((LimitedDcSupplyElm)handle.element).getLimitAmps());
+                requireParameter(declaration, "output-ohms", LowVoltageSourceModel.OUTPUT_OHMS);
             }
         }
     }
@@ -583,7 +587,7 @@ final class ElectricalConstructionContext {
         else if ("SWITCH".equals(declaration.getKind()))
             handle = new ElementHandle(this, ownerKey, elementId, new SwitchElm(0, 0));
         else if ("VOLTAGE".equals(declaration.getKind()))
-            handle = new ElementHandle(this, ownerKey, elementId, new DCVoltageElm(0, 0));
+            handle = new ElementHandle(this, ownerKey, elementId, new LimitedDcSupplyElm(0, 0));
         else if ("GROUND".equals(declaration.getKind()))
             handle = new ElementHandle(this, ownerKey, elementId, new GroundElm(0, 0));
         else if ("NMOS".equals(declaration.getKind()))
@@ -1565,7 +1569,7 @@ final class ElectricalConstructionContext {
         if ("RESISTOR".equals(kind)) element = new ResistorElm(originX, originY);
         else if ("WIRE".equals(kind)) element = new WireElm(originX, originY);
         else if ("SWITCH".equals(kind)) element = new SwitchElm(originX, originY);
-        else if ("VOLTAGE".equals(kind)) element = new DCVoltageElm(originX, originY);
+        else if ("VOLTAGE".equals(kind)) element = new LimitedDcSupplyElm(originX, originY);
         else if ("GROUND".equals(kind)) element = new GroundElm(originX, originY);
         else if ("NMOS".equals(kind)) element = new NMosfetElm(originX, originY);
         else if ("NPN".equals(kind)) element = new NTransistorElm(originX, originY);

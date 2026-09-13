@@ -1,0 +1,25 @@
+{
+  "status": "PASS: exact task preview stopped; native runner scratch cleanup passed",
+  "preview": {
+    "pid": 8456,
+    "creationUtcTicks": 639248515511146017,
+    "executable": "pwsh.exe",
+    "script": "scripts/preview.ps1",
+    "port": 64932,
+    "transport": "ForceTcpListener",
+    "revalidated": "PID, creation time, exact executable and task script/port arguments",
+    "exited": true,
+    "cleanupElapsedMs": 30
+  },
+  "browser": {
+    "successfulTabs": "CLOSED",
+    "oldVerifierTab6": "CLOSED",
+    "crashedTab4": "BLOCKED: supported Browser close rejected the generated data-URL crash page. Left open without alternate control or process termination."
+  },
+  "verificationJobs": "No active task verification job remains; final native and GWT commands completed.",
+  "scratch": "Raw logs, receipts and focused classes retained in task-owned OS-temp directory troubleshootjs-e01-e03-3bb3faff1a9c4aafa56f5b1515a7a556; no recursive cleanup attempted.",
+  "preserved": [
+    "Pre-existing tests/contracts/__pycache__/ (two files)",
+    "Foreign preview metadata for port8899 and all unrelated processes"
+  ]
+}

@@ -68,6 +68,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         Sort-Object Name | ForEach-Object { $_.FullName })
     $sourcePaths += $stub
     $testDefinitions = @(
+        @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
         @{ Name = 'ChallengeDescriptorContractTest'; Marker = 'Task46 ' },
         @{ Name = 'FunctionalBlockContractTest'; Marker = 'Task44 ' },
         @{ Name = 'ElectricalPortContractTest'; Marker = 'Task45 ' },
@@ -76,6 +77,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'SwitchedLowSideCompatibilityContractTest'; Marker = 'current switched-low-side compatibility ' },
         @{ Name = 'Task49ValueSynthesisContractTest'; Marker = 'current value synthesis ' },
         @{ Name = 'A05RoleContractTest'; Marker = 'A05 role providers ' },
+        @{ Name = 'E01SourceContractTest'; Marker = 'E01 source contracts ' },
         @{ Name = 'A06PowerContractTest'; Marker = 'A06 power contracts ' },
         @{ Name = 'A07ExecutionContractTest'; Marker = 'A07 execution contracts ' },
         @{ Name = 'A09DiagnosticContractTest'; Marker = 'A09 diagnostic contracts ' },

@@ -6,6 +6,7 @@ import java.util.Vector;
 
 /** On-demand assessment using the installed owner's real controls and solved posts. */
 final class PowerDomainRuntimeCapability implements ActiveMeasurementReadinessCapability,
+        PowerDomainContractProvider,
         MeasurementReferenceCapability, PhysicalBoardInstallationProvider,
         PhysicalBoardRuntimeLifecycle, PhysicalBoardRuntimePowerLifecycle {
     static final String CAPABILITY_ID = "POWER_DOMAIN_ASSESSMENT";
@@ -30,7 +31,7 @@ final class PowerDomainRuntimeCapability implements ActiveMeasurementReadinessCa
         this.contract = contract; this.board = board; this.bindings = bindings;
     }
     public String getCapabilityId() { return CAPABILITY_ID; }
-    PowerDomainContract getContract() { return contract; }
+    public PowerDomainContract getContract() { return contract; }
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, double time) {
         if (sim == null || instance == null || instance.getBoard() != board ||

@@ -426,6 +426,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA07Verification;
 	boolean troubleshootA07VerificationComplete;
 	boolean troubleshootA07ForcedFailure;
+	boolean troubleshootE03Verification, troubleshootE03ForcedFailure, troubleshootE03VerificationComplete;
+    boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
 	boolean troubleshootA06Verification;
 	boolean troubleshootA06VerificationComplete;
 	boolean troubleshootA06ForcedFailure;
@@ -612,6 +614,10 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootA08ForcedFailure = troubleshootA08Verification && qp.getBooleanValue("tsjA08Fail", false);
 	    troubleshootA07Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA07", false);
 	    troubleshootA07ForcedFailure = troubleshootA07Verification && qp.getBooleanValue("tsjA07Fail", false);
+	    troubleshootE01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE01", false);
+            troubleshootE03Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE03", false);
+            troubleshootE03ForcedFailure = troubleshootE03Verification && qp.getBooleanValue("tsjE03Fail", false);
+        troubleshootE01ForcedFailure = troubleshootE01Verification && qp.getBooleanValue("tsjE01Fail", false);
 	    troubleshootA06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA06", false);
 	    troubleshootA06ForcedFailure = troubleshootA06Verification && qp.getBooleanValue("tsjA06Fail", false);
 	    troubleshootA04Verification = troubleshootDebug &&
@@ -1073,6 +1079,8 @@ MouseOutHandler, MouseWheelHandler {
             startGeneration(GenerationRequest.leaf(QuickPlayFamilyRegistry.RC_DELAY, troubleshootFixtureSeed, false));
 	else if ("npn".equals(troubleshootChallenge))
             startGeneration(GenerationRequest.leaf(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH, troubleshootFixtureSeed, false));
+	else if ("relay".equals(troubleshootChallenge))
+            startGeneration(GenerationRequest.leaf(QuickPlayFamilyRegistry.RELAY_OUTPUT, troubleshootFixtureSeed, false));
 	else if ("nmos".equals(troubleshootChallenge))
             startGeneration(GenerationRequest.leaf(QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH, troubleshootFixtureSeed, false));
 	else if ("controlled-indicator".equals(troubleshootChallenge)) {
@@ -2555,7 +2563,7 @@ MouseOutHandler, MouseWheelHandler {
 	    // look for voltage source or wire loops.  we do this for voltage sources or wire-like elements (not actual wires
 	    // because those are optimized out, so the findPath won't work)
 	    if (ce.getPostCount() == 2) {
-		if (ce instanceof VoltageElm || (ce.isWire() && !(ce instanceof WireElm))) {
+		if ((ce instanceof VoltageElm && ce.getInternalNodeCount() == 0) || (ce.isWire() && !(ce instanceof WireElm))) {
 		    FindPathInfo fpi = new FindPathInfo(FindPathInfo.VOLTAGE, ce,
 						    ce.getNode(1));
 		    if (fpi.findPath(ce.getNode(0))) {
@@ -2922,7 +2930,7 @@ MouseOutHandler, MouseWheelHandler {
 		}
 		if (type == VOLTAGE) {
 		    // when checking for voltage loops, we only care about voltage sources/wires/ground
-		    if (!(ce.isWire() || ce instanceof VoltageElm || ce instanceof GroundElm))
+		    if (!(ce.isWire() || (ce instanceof VoltageElm && ce.getInternalNodeCount() == 0) || ce instanceof GroundElm))
 			continue;
 		}
 		// when checking for shorts, just check wires
@@ -2930,7 +2938,7 @@ MouseOutHandler, MouseWheelHandler {
 		    continue;
 		if (type == CAP_V) {
 		    // checking for capacitor/voltage source loops
-		    if (!(ce.isWire() || ce instanceof CapacitorElm || ce instanceof VoltageElm))
+		    if (!(ce.isWire() || ce instanceof CapacitorElm || (ce instanceof VoltageElm && ce.getInternalNodeCount() == 0)))
 			continue;
 		}
 		if (n1 == 0) {
@@ -4780,7 +4788,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5308,6 +5316,40 @@ MouseOutHandler, MouseWheelHandler {
                 publishBrowserVerificationResult("RUNNING:a07");
                 A07SolverDeveloperVerifier.start(this, troubleshootA07ForcedFailure);
             }
+	    if (!developerVerifierRunning && troubleshootE03Verification &&
+                !troubleshootE03VerificationComplete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                generatedChallengeController != null && generatedChallengeController.isReady() &&
+                isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true;
+            troubleshootE03VerificationComplete = true;
+            publishBrowserVerificationResult("RUNNING:e03");
+            E03RelayDeveloperVerifier.start(this,troubleshootE03ForcedFailure,new E03RelayDeveloperVerifier.Completion() {
+                public void finished(String report,Throwable failure) {
+                    developerVerifierRunning=false;
+                    if(failure==null) {publishE03Evidence(report);publishBrowserVerificationResult("PASS:e03");}
+                    else {publishBrowserVerificationResult("FAIL:e03:"+failure.getMessage());console("E03 failure: "+failure);}
+                }
+            });
+        }
+        if (!developerVerifierRunning && troubleshootE01Verification &&
+                !troubleshootE01VerificationComplete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                generatedChallengeController != null && generatedChallengeController.isReady() &&
+                isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true;
+            troubleshootE01VerificationComplete = true;
+            publishBrowserVerificationResult("RUNNING:e01");
+            try {
+                publishE01Evidence(E01SourceDeveloperVerifier.verify(this,troubleshootE01ForcedFailure));
+                publishBrowserVerificationResult("PASS:e01");
+            } catch (Throwable failure) {
+                publishBrowserVerificationResult("FAIL:e01:" + failure.getMessage());
+                if (failure instanceof Error) throw (Error)failure;
+                if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+                throw new IllegalStateException("E01 verification failed",failure);
+            } finally { developerVerifierRunning = false; }
+        }
 	    if (!developerVerifierRunning && troubleshootA06Verification &&
                 !troubleshootA06VerificationComplete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5488,7 +5530,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5588,6 +5630,14 @@ MouseOutHandler, MouseWheelHandler {
     }
     private static native void publishA07Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-a07-report", evidence);
+    }-*/;
+
+    private static native void publishE03Evidence(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-e03-report", evidence);
+    }-*/;
+
+    private static native void publishE01Evidence(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-e01-report", evidence);
     }-*/;
 
     private static native void publishA06Evidence(String evidence) /*-{
@@ -5914,6 +5964,21 @@ MouseOutHandler, MouseWheelHandler {
 	instrumentController.refreshActiveMeasurement();
     }
 
+    void changeBenchSource(GeneratedBoardInstance owner, String inputId,
+            Boolean connected, Double limitAmps) {
+        solverExecutor.requirePublicAccess();
+        if (owner == null || owner != generatedBoardInstance || !isChallengeInteractionEnabled() ||
+                activeMeasurementOverlay || isActiveMeasurementCleanupBlocked()) return;
+        ExternalPowerSimulationBinding binding = owner.getExternalPowerBindings().getBinding(inputId);
+        if (limitAmps != null) binding.setCurrentLimit(limitAmps);
+        if (connected != null) boardPowerController.setSourceConnected(inputId, connected);
+        owner.getPhysicalBoardRuntime().onBoardPowerStateChanged(boardPowerController.getState());
+        if (generatedChallengeController != null) generatedChallengeController.invalidateCustomerRetest();
+        requestGeneratedBoardVerification();
+        instrumentController.refreshActiveMeasurement();
+        updateBoardPowerButton();
+    }
+
     /**
      * Family-owned solver profiles may use this narrow transition seam before
      * player interaction becomes available.  It changes the ordinary external
@@ -6165,6 +6230,7 @@ MouseOutHandler, MouseWheelHandler {
 	if (!isGeneratedRuntimeSettled())
 	    throw new IllegalStateException("A temporary measurement requires a settled runtime");
 	lastActiveMeasurementStimulus = stimulus;
+	final GeneratedBoardInstance measurementOwner = generatedBoardInstance;
 	activeMeasurementSolverRestored = false;
 	activeMeasurementOverlay = true;
 	double result = Double.NaN;
@@ -6178,6 +6244,8 @@ MouseOutHandler, MouseWheelHandler {
 	    analyzeCircuit();
 	    runCircuit(true);
 	    runCircuit(true);
+	    if (measurementOwner != null)
+	        measurementOwner.getPhysicalBoardRuntime().settleActiveMeasurement(this, measurementOwner, true);
 	    injectTask43PMeasurementFailureForDeveloperVerification(
 		Task43PMeasurementFailureStage.READER);
 	    result = reader.readResult();
@@ -6200,6 +6268,8 @@ MouseOutHandler, MouseWheelHandler {
 		throw new IllegalStateException("Temporary measurement elements remain in the board graph");
 	    analyzeCircuit();
 	    runCircuit(true);
+	    if (measurementOwner != null)
+	        measurementOwner.getPhysicalBoardRuntime().settleActiveMeasurement(this, measurementOwner, false);
 	    restored = stopMessage == null && isStimulusAbsentFromSolver(stimulus);
 	    if (!restored)
 		throw new IllegalStateException("Temporary measurement solver restoration failed: " + stopMessage);
@@ -7626,6 +7696,10 @@ MouseOutHandler, MouseWheelHandler {
     	case 's': return new SwitchElm(x1, y1, x2, y2, f, st);
     	case 't': return new TransistorElm(x1, y1, x2, y2, f, st);
     	case 'v': return new VoltageElm(x1, y1, x2, y2, f, st);
+        case 450: return new LimitedDcSupplyElm(x1, y1, x2, y2, f, st);
+        case 451: return new ProtectionFuseElm(x1, y1, x2, y2, f, st);
+        case 452: return new ServiceRelayElm(x1, y1, x2, y2, f, st);
+        case 453: return new BoundedExternalLoadElm(x1, y1, x2, y2, f, st);
     	case 'w': return new WireElm(x1, y1, x2, y2, f, st);
     	case 'x': return new TextElm(x1, y1, x2, y2, f, st);
     	case 'z': return new ZenerElm(x1, y1, x2, y2, f, st);

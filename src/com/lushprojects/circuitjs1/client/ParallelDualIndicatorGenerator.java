@@ -53,7 +53,7 @@ class ParallelDualIndicatorGenerator {
         StandardPhysicalDefinitionProviders.LED.add(physicalSpecifications, led1Nameplate);
         StandardPhysicalDefinitionProviders.LED.add(physicalSpecifications, led2Nameplate);
 
-        DCVoltageElm supply = new DCVoltageElm(128, 528);
+        DCVoltageElm supply = new LimitedDcSupplyElm(128, 528);
         supply.drag(128, 128);
         supply.maxVoltage = supplyVoltage;
         SwitchElm isolationSwitch = new SwitchElm(128, 128);

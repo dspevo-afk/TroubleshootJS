@@ -22,6 +22,9 @@ package com.lushprojects.circuitjs1.client;
 
 class DCVoltageElm extends VoltageElm {
 	public DCVoltageElm(int xx, int yy) { super(xx, yy, WF_DC); }
+	DCVoltageElm(int x, int y, int x2, int y2, int flags, StringTokenizer st) {
+	    super(x, y, x2, y2, flags, st);
+	}
 	Class getDumpClass() { return VoltageElm.class; }
 	int getShortcut() { return 'v'; }
     }

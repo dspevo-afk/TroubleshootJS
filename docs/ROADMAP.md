@@ -7,8 +7,8 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **P04: Canonical multi-terminal routing and escape planning**<br>
-**Current checkpoint:** **U01, P03 AND P04 COMPLETE; A11-R1 CLOSED.** The shared viewport/loupe, demand-based placement and canonical multi-terminal routing are accepted on base `0487555`. Full native and compiled generation/diagnostic qualification passed before the bounded R1 repair; the final five-permutation JDK8/GWT build, affected native/provider/surface/solver checks and real diagnosis/repair/retest passed after it. The owner authorized focused post-R1 qualification. A11-D1 remains nonblocking physical NMOS parameter-comparison coverage debt. **E01 is next and unstarted.** RC admission remains about 49 seconds; the historical Windows browser wrapper remains unqualified. [U01](task-evidence/U01/README.md), [P03](task-evidence/P03/README.md), [P04](task-evidence/P04/README.md), [R1 evidence and reuse boundary](task-evidence/A11-R1/README.md).
+**Latest completed task:** **E03: Relay and switched-output families with alternate drivers**<br>
+**Current checkpoint:** **E01 AND E03 COMPLETE - QUALIFIED.** Bounded solver-backed supplies, independent bench controls, persistent fuse/load failure and the isolated five-terminal relay family are accepted on base `d2e9d35`. Both BJT and NMOS variants support coil/contact/drive faults, real flyback, physical replacement and HIGH/LOW customer retest. Final native contracts, five-permutation JDK8/GWT build, compiled electrical/mutation/diagnostic regressions and visible player checks pass. Source rollback preserves partial isolation and current settings. **Q15 is next and unstarted.** The relay uses a bounded nine-part layout; larger-board qualification, arcing/EMC/mains and general trace repair are outside this delivery. A11-D1 and the historical Windows browser-wrapper qualification limit remain. [E01 evidence](task-evidence/E01/README.md), [E03 evidence and limits](task-evidence/E03/README.md).
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -666,10 +666,10 @@ preferred queue. The milestone cards remain authoritative for scope, hard
 prerequisites, acceptance and conditional capabilities; this section chooses the
 preferred next eligible milestone. Future implementation needs its own authorization.
 
-**Already complete:** T49, N00, A01-A11, R00, P01-P04 and U01. A10 and A11 ran earlier
+**Already complete:** T49, N00, A01-A11, R00, P01-P04, U01, E01 and E03. A10 and A11 ran earlier
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
-not require rollback or reimplementation. U01 → P03 → P04 is now complete. **Next: E01.**
+not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 is now complete. **Next: Q15.**
 
 | Wave | Preferred sequence |
 |---|---|
@@ -1708,7 +1708,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### E01 · Source limits, external loads and protection foundation
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE - QUALIFIED, 2026-09-12. Real current limiting, backfeed/partial isolation, independent bench controls and persistent fuse/load stress response pass native, compiled solver and visible player checks. [Evidence and envelope](task-evidence/E01/README.md).
 
 **Hard prerequisites:** [A06](#m-a06), [A07](#m-a07), [A08](#m-a08)
 
@@ -1768,7 +1768,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### E03 · Relay and switched-output families with alternate drivers
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE - QUALIFIED, 2026-09-12. Both BJT/NMOS drivers, six fault cases, coil/contact separation, flyback, five-terminal mapping, compensated replacement and HIGH/LOW retest pass. Normal diagnostic admission distinguishes coil/contact/drive failures with supported measurements. [Evidence and model limits](task-evidence/E03/README.md).
 
 **Hard prerequisites:** [E01](#m-e01), [A05](#m-a05), [A08](#m-a08), [P01](#m-p01)
 

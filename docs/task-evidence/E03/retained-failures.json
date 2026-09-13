@@ -1,0 +1,23 @@
+{
+  "policy": "These attempts are not passing evidence. Final reports and input fingerprints identify the accepted candidate; raw logs remain in task-owned OS temp.",
+  "attempts": [
+    {"phase":"Windows resource exhaustion before task edits","status":"FAIL: host event","detail":"The user restarted Windows. Read-only event 2004 identified codex-computer-use.exe at 33,111,257,088 bytes and two qemu processes at approximately 5.7/4.6 GB. This task did not use computer-use. Available memory recovered above 21 GiB."},
+    {"phase":"initial E01 GWT compilation","status":"FAIL","detail":"Java 7 closure capture required final parameters. Corrected before solver qualification."},
+    {"phase":"E01 raw backfeed and load canaries","status":"FAIL","detail":"Newton tangents crossed both compliance knees and oscillated; corrected by visiting the regulating region. A load failure requested public analysis inside private execution; corrected to stamp its changed resistance through its nonlinear model. Final raw canaries pass without changed electrical thresholds."},
+    {"phase":"E03 native setup and layout attempts","status":"FAIL","detail":"Early native setup lacked the selected CircuitJS context. Footprint/courtyard and bounded autorouter attempts rejected coil routing; one explicit layout used an unsupported diode pose, then a label overlap. Final layout uses the existing reversed diode installation, current package geometry and a bounded canonical channel template. Autorouter budgets were not increased or assertions suppressed."},
+    {"phase":"E03 first GWT compilation","status":"FAIL","detail":"GWT 2.7 did not support WireElm array clone. Replaced it with an explicit validated copy."},
+    {"phase":"E03 first raw solver fixture","status":"FAIL","detail":"The load endpoint was read before its geometry was initialized. The independent fixture now positions the load before wiring it."},
+    {"phase":"E03 normal diagnostic admission","status":"FAIL","detail":"First an unsettled power-off transition, then meter-induced coil energy made resistance unavailable/invalid. The diagnostic program now reaches ordinary settlement. A model-owned bounded solver callback settles the real test current and discharges it after source removal, preserving the residual-energy guard."},
+    {"phase":"synchronous E03 browser proof","status":"FAIL: missing completed report","detail":"One tab crashed; other DOM observations exceeded CDP deadlines despite later-stage console messages. Those messages are not a PASS. The final verifier yields between six installed cases and produces a complete strictly read report. The exact earlier renderer-crash cause is not established."},
+    {"phase":"Task41 browser observations","status":"INCOMPLETE: observation timeout","detail":"Early observations timed out while the synchronous corpus occupied the page. Those observations are not PASS. A complete 17-route pre-review report is retained separately. The final-source successor completed PASS with all 17 routes and 155 solver samples, and passes the maintained strict reader."},
+    {"phase":"additional diode mapping test","status":"FAIL: test expectation","detail":"The new test compared a physical diode endpoint to the board's distinct persistent copper endpoint. Corrected it to compare the declared component attachment endpoint to the independent physical cathode expectation; no electrical assertion was removed."},
+    {"phase":"final integrated review","status":"CHANGES REQUIRED, resolved before acceptance","detail":"Corrected stale ideal-source power declarations, rejected unsupported cross-domain live DC readings, validated malformed relay dump fields, and preserved per-source disconnect/current settings through snapshot rollback. Added native and compiled negative checks."},
+    {"phase":"closing crashed Browser tab","status":"BLOCKED: Browser URL policy","detail":"The supported close call was rejected on the generated data-URL crash page. No alternate control surface or process kill was used. Final resource evidence records what remains."}
+  ],
+  "unchanged_limits": [
+    "Historical Windows CLI/CDP wrapper remains unqualified; Browser input does not certify it.",
+    "Existing RC admission cost and synchronous verifier observation delays remain.",
+    "A11-D1 physical NMOS parameter-comparison coverage debt remains nonblocking.",
+    "No independent agent review; root performs integrated review. Q15 is unstarted."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "command": "./scripts/verify-e01-e03-evidence.ps1",
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 0.5504581,
+  "sourceProofAssertions": 21,
+  "relayRawAssertions": 46,
+  "relayMutationAssertions": 113,
+  "relayInstalledCases": 6,
+  "task41Routes": 17,
+  "task41SolverSamples": 155,
+  "task49Assertions": 397,
+  "a08Assertions": 1103,
+  "a08CompensatedWrites": 90,
+  "a08FreshFailures": 5,
+  "forcedDeveloperFailures": "Both E01 and E03 reach their explicit FAIL status with no proof report on the final build.",
+  "readerNegatives": "Five malformed electrical reports are rejected; existing Task41, Task49 and A08 readers are reused unchanged.",
+  "cleanup": "NOT APPLICABLE: parses saved reports only; no browser or persistent process is launched.",
+  "limitation": "This qualifies the application reports and strict readers, not the historical Windows CLI/CDP wrapper."
+}

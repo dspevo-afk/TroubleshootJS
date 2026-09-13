@@ -70,6 +70,51 @@ class GeneratedExternalPowerBindings {
     return true;
     }
 
+    boolean hasNominalBenchSettings() {
+        if (!areAllConnected()) return false;
+        for (ExternalPowerSimulationBinding binding : powerBindings.values()) {
+            LimitedDcSupplyElm supply = binding.getLimitedSupply();
+            if (supply != null && supply.getLimitAmps() != LowVoltageSourceModel.DEFAULT_LIMIT_AMPS)
+                return false;
+        }
+        return true;
+    }
+
+    /** Exact source commands for fresh-owner rollback; observation revisions stay monotonic. */
+    final class SavedControls {
+        private final Vector<String> ids = board.getPowerInputIds();
+        private final ExternalPowerSimulationBinding[] bindings = new ExternalPowerSimulationBinding[ids.size()];
+        private final boolean[] connected = new boolean[ids.size()];
+        private final double[] limits = new double[ids.size()];
+        SavedControls() {
+            for(int i=0;i<ids.size();i++) {
+                bindings[i]=getBinding(ids.get(i)); connected[i]=bindings[i].isConnected();
+                LimitedDcSupplyElm supply=bindings[i].getLimitedSupply();
+                limits[i]=supply==null?Double.NaN:supply.getLimitAmps();
+            }
+        }
+        void restore(GeneratedExternalPowerBindings target) {
+            if(target!=GeneratedExternalPowerBindings.this || target.constructionAborted)
+                throw new IllegalArgumentException("Foreign or retired source snapshot");
+            for(int i=0;i<ids.size();i++)
+                if(target.getBinding(ids.get(i))!=bindings[i]) throw new IllegalStateException("Source binding replaced");
+            for(int i=0;i<ids.size();i++) {
+                LimitedDcSupplyElm supply=bindings[i].getLimitedSupply();
+                if(supply!=null && supply.getLimitAmps()!=limits[i]) bindings[i].setCurrentLimit(limits[i]);
+                bindings[i].setConnected(connected[i]);
+            }
+        }
+        boolean matches() {
+            for(int i=0;i<ids.size();i++) {
+                if(getBinding(ids.get(i))!=bindings[i] || bindings[i].isConnected()!=connected[i]) return false;
+                LimitedDcSupplyElm supply=bindings[i].getLimitedSupply();
+                if(supply!=null && supply.getLimitAmps()!=limits[i]) return false;
+            }
+            return true;
+        }
+    }
+    SavedControls saveControls() { return new SavedControls(); }
+
     /** Current control observations; the aggregate OFF command is not an energy assessment. */
     java.util.Map<String, PowerOperatingAssessment.SourceState> getSourceStates() {
         java.util.TreeMap<String, PowerOperatingAssessment.SourceState> result =

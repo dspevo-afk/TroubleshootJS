@@ -11,6 +11,7 @@ final class StandardPhysicalPartRenderProviders {
 
     static PhysicalPartRenderRegistry createRegistry() {
         PhysicalPartRenderRegistry registry = new PhysicalPartRenderRegistry();
+        registry.register(PhysicalPackages.RELAY_SPDT, new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
             new FixedProvider(new ConnectorRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,

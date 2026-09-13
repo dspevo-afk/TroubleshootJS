@@ -13,12 +13,12 @@ class BoardPowerController {
     }
 
     void restoreForDeveloperVerification(GeneratedExternalPowerBindings bindings,
-            BoardPowerState savedState) {
-        if (bindings == null || savedState == null)
+            BoardPowerState savedState, GeneratedExternalPowerBindings.SavedControls controls) {
+        if (bindings == null || savedState == null || controls == null)
             throw new IllegalArgumentException("Missing board power snapshot");
-        attach(bindings);
-        if (savedState == BoardPowerState.UNPOWERED)
-            setState(savedState);
+        controls.restore(bindings);
+        powerBindings = bindings;
+        state = savedState;
     }
 
     boolean setState(BoardPowerState state) {
@@ -42,6 +42,12 @@ class BoardPowerController {
     void detach() {
     powerBindings = null;
     state = BoardPowerState.POWERED;
+    }
+
+    void setSourceConnected(String inputId, boolean connected) {
+        if (powerBindings == null) throw new IllegalStateException("No current board power owner");
+        powerBindings.getBinding(inputId).setConnected(connected);
+        state = powerBindings.areAllDisconnected() ? BoardPowerState.UNPOWERED : BoardPowerState.POWERED;
     }
 
     java.util.Map<String,PowerOperatingAssessment.SourceState> getSourceStates() {

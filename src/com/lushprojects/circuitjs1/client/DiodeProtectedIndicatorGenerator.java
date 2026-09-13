@@ -41,7 +41,7 @@ class DiodeProtectedIndicatorGenerator {
             1, 0, 0);
         StandardPhysicalDefinitionProviders.LED.add(specs, ledNameplate);
 
-        DCVoltageElm supply = new DCVoltageElm(160, 320); supply.drag(160, 160);
+        DCVoltageElm supply = new LimitedDcSupplyElm(160, 320); supply.drag(160, 160);
         supply.maxVoltage = supplyVoltage;
         SwitchElm powerSwitch = new SwitchElm(160, 160); powerSwitch.drag(240, 160);
         SwitchElm connectorFaultSwitch = new SwitchElm(240, 160);

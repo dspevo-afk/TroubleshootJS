@@ -1,6 +1,8 @@
 package com.lushprojects.circuitjs1.client;
 
 enum GeneratedFaultType {
+    RELAY_COIL_OPEN,
+    RELAY_CONTACT_OPEN,
     RESISTOR_OPEN,
     RESISTOR_INCORRECT_VALUE,
     LED_OPEN,

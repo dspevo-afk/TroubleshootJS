@@ -49,6 +49,23 @@ class ExternalPowerSimulationBinding {
 	return control != null && control.isConnected();
     }
 
+    LimitedDcSupplyElm getLimitedSupply() {
+        LimitedDcSupplyElm found = null;
+        for (CircuitElm element : backingElements) {
+            if (!(element instanceof LimitedDcSupplyElm)) continue;
+            if (found != null) throw new IllegalStateException("Ambiguous bench supply owner");
+            found = (LimitedDcSupplyElm)element;
+        }
+        return found;
+    }
+
+    void setCurrentLimit(double amps) {
+        LimitedDcSupplyElm supply = getLimitedSupply();
+        if (supply == null) throw new IllegalStateException("Input has no adjustable current limit");
+        supply.configure(supply.maxVoltage, amps);
+        connectionRevision++;
+    }
+
     private static Vector<CircuitElm> validateElements(Vector<CircuitElm> elements) {
     if (elements == null || elements.isEmpty())
         throw new IllegalArgumentException("Missing external power simulation elements");

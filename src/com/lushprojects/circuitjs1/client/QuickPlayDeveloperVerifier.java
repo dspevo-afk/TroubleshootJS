@@ -55,13 +55,14 @@ final class QuickPlayDeveloperVerifier {
 
     private static void verifyEligibleFamilies() {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        require(families.size() == 6 &&
+        require(families.size() == 7 &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("LED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_PROTECTED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("PARALLEL_DUAL_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("RC_DELAY") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("NPN_LOW_SIDE_SWITCH") &&
-            QuickPlayFamilyRegistry.isNormalPlayerEligible("NMOS_LOW_SIDE_SWITCH"),
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("NMOS_LOW_SIDE_SWITCH") &&
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("RELAY_OUTPUT"),
             "Quick Play eligible-family registry changed");
         require(!QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_SHORT") &&
             !QuickPlayFamilyRegistry.isNormalPlayerEligible("TASK_37_FUTURE"),
@@ -146,7 +147,8 @@ final class QuickPlayDeveloperVerifier {
             long[] expectedSeeds = QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId) ?
                 ledSeeds : QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ?
                 npnSeeds : QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId) ?
-                nmosSeeds : legacySeeds;
+                nmosSeeds : QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId) ?
+                new long[] {0,1,2,3,4,5} : legacySeeds;
             for (long injectedValue : injectedValues) {
                 QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
                     new long[] { familyIndex, injectedValue }));

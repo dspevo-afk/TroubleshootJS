@@ -2,8 +2,8 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
-/** Fixed, non-replaceable part used for production components outside a mutation workflow. */
-final class FixedPhysicalPart<S extends PhysicalSpecification> implements PhysicalPart<S> {
+/** Physical identity/backing base. Mutation requires an explicitly registered slot capability. */
+class FixedPhysicalPart<S extends PhysicalSpecification> implements PhysicalPart<S> {
     private final String id;
     private final S specification;
     private final PhysicalNameplate nameplate;

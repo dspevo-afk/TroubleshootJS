@@ -24,6 +24,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final VerticalPanel ticketPanel = new VerticalPanel();
     private final VerticalPanel partsPanel = new VerticalPanel();
     private final Label feedback = new Label();
+    private BenchPowerPanel benchPowerPanel;
     private final VerticalPanel viewPanel = new VerticalPanel();
     private final Label viewFeedback = new Label();
     private JavaScriptObject viewListeners;
@@ -146,6 +147,9 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (targetSidebar == null)
             throw new IllegalArgumentException("Missing workbench sidebar");
         sidebar = targetSidebar;
+        if (benchPowerPanel == null) benchPowerPanel = new BenchPowerPanel(sim, instance);
+        sidebar.add(benchPowerPanel);
+        benchPowerPanel.start();
         sidebar.add(viewPanel);
         sidebar.add(ticketPanel);
         sidebar.add(panel);
@@ -164,6 +168,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         sidebar.remove(panel);
         sidebar.remove(partsPanel);
         sidebar.remove(viewPanel);
+        benchPowerPanel.stop(); sidebar.remove(benchPowerPanel);
         attachedToSidebar = false;
         sim.unregisterAttachedPcbWorkbenchForDeveloperVerification(this);
         sidebar = null;
@@ -374,6 +379,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         rebuildTicket();
         rebuildPanel();
         rebuildPartsPanel();
+        if (benchPowerPanel != null) benchPowerPanel.refreshReadings();
     }
 
     void hide() { panel.setVisible(false); }

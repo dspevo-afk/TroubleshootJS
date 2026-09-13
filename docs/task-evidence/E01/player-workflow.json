@@ -1,0 +1,26 @@
+{
+  "route": "tsjChallenge=led&seed=3",
+  "input": "Browser visible controls",
+  "qualification": "Fresh final-source replay; all three screenshots replaced and visually inspected after the final JDK8/GWT build.",
+  "candidate": "26c2575661e67a7aa27a78188e08a918c5629ba51109ae9b6ea3db8d6c8a4407",
+  "unrepairedRetest": "FAIL as expected",
+  "unpoweredResistanceOhms": 100000,
+  "replacementOhms": 1000,
+  "limited": {
+    "setMilliamps": 1,
+    "volts": 2.572,
+    "milliamps": 1.009,
+    "retest": "FAIL as expected"
+  },
+  "restored": {
+    "setMilliamps": 250,
+    "volts": 11.999,
+    "milliamps": 10.213,
+    "retest": "PASS"
+  },
+  "screenshots": [
+    "unrepaired-ohms.png",
+    "limited-output.png",
+    "repaired-output.png"
+  ]
+}

@@ -23,7 +23,7 @@ final class RcDelayGenerator {
         TroubleshootBoard board = createBoard();
         BoardPhysicalSpecifications specs = createSpecifications(values);
 
-        DCVoltageElm supply = new DCVoltageElm(160, 320); supply.drag(160, 160);
+        DCVoltageElm supply = new LimitedDcSupplyElm(160, 320); supply.drag(160, 160);
         supply.maxVoltage = values.supplyVoltage;
         SwitchElm powerSwitch = new SwitchElm(160, 160); powerSwitch.drag(240, 160);
         // A small real source impedance prevents the healthy C2 decoupler

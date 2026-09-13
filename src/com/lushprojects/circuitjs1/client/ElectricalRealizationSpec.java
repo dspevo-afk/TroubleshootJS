@@ -994,7 +994,7 @@ final class ElectricalRealizationSpec {
         private void addElement(String owner, String local, String kind,
                 String componentId, Map<String, Integer> posts) {
             addElement(owner, local, kind, componentId, posts, null,
-                    "VOLTAGE".equals(kind) ? numbers("voltage", EXTERNAL_SUPPLY_VOLTS) :
+                    "VOLTAGE".equals(kind) ? numbers("voltage", EXTERNAL_SUPPLY_VOLTS, "current-limit-amps", LowVoltageSourceModel.DEFAULT_LIMIT_AMPS, "output-ohms", LowVoltageSourceModel.OUTPUT_OHMS) :
                     Collections.<String, Double>emptyMap());
         }
 

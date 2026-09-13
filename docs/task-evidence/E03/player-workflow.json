@@ -1,0 +1,27 @@
+{
+  "input": "Built-in Browser visible controls; no injected application calls",
+  "finalCandidate": "26c2575661e67a7aa27a78188e08a918c5629ba51109ae9b6ea3db8d6c8a4407",
+  "finalReplay": "NMOS seed3 normal admission, unrepaired retest, cross-domain DC, partial isolation, all-off coil OHM, five-terminal replacement, HIGH/LOW measurement and customer retest were repeated on the final build. Four NMOS screenshots were replaced and visually inspected.",
+  "bjt": {
+    "seed": "0",
+    "unrepairedRetest": "FAIL",
+    "coilResistance": "OL",
+    "wrongReplacement": "12 V coil; customer retest FAIL",
+    "correctReplacement": "5 V coil; customer retest PASS",
+    "tray": "original failed relay and wrong 12 V relay retained"
+  },
+  "nmos": {
+    "seed": "3",
+    "unrepairedRetest": "FAIL",
+    "partialIsolation": "Disconnect coil supply only; Board Power remains ON; OHM shows POWER OFF",
+    "allOffCoilResistanceOhms": 124.999,
+    "correctReplacement": "5 V coil",
+    "highLoadVolts": 11.983,
+    "lowLoadVolts": 0.00000216,
+    "customerRetest": "PASS",
+    "normalPlayerDeveloperAttributes": "absent"
+  },
+  "finalCrossDomainDc": "J4 terminal 1 versus J1 terminal 2 displays --- V; no fabricated potential across isolated domains. The final compiled proof independently asserts NaN and reference REJECTED.",
+  "retainedBjtEvidenceBoundary": "The earlier seed0 visible wrong/correct replacement sequence and open-coil image are retained. After that sequence, the final review changed typed reference declarations, cross-domain DC rejection, malformed-dump validation and private snapshot restoration. None changes the installed open-coil OHM stimulus, physical replacement provider, catalog, coil/contact model, layout/rendering or HIGH/LOW retest used by that visible sequence. The final six-case compiled proof freshly covers both drivers, wrong/correct parts and rollback; final NMOS visible replay covers normal admission and reference changes.",
+  "limitation": "After customer completion, established terminal state locks power/instruments/mutations; HIGH/LOW semantic inputs remain available."
+}

@@ -37,7 +37,11 @@ public final class A06PowerContractTest {
             check(domain.getSources().size()==3,"three current controls");
             check(domain.getReferences().size()==1,"one actual joined return");
             for (Reference r : domain.getReferences().values()) check(r.getEarthId()==null && !r.isEarthBondPermitted(),"no earth inferred");
-            for (Source s : domain.getSources().values()) check(s.getImplementedCurrentLimitAmps().getState()==ElectricalPortContract.State.NOT_APPLICABLE,"capacity is not limiter");
+            for (Source s : domain.getSources().values()) {
+                check(s.getImplementedCurrentLimitAmps().getState()==ElectricalPortContract.State.KNOWN &&
+                    s.getImplementedCurrentLimitAmps().getValue()==.25,"E01 implemented source compliance");
+                check(s.getSeriesResistanceOhms().getValue()==.05,"E01 actual source resistance");
+            }
             RealizationManifest manifest = A03RealizationReplay.capture(plan);
             check(A03RealizationReplay.resolve(manifest).getPowerDomainContract().toCanonical().equals(domain.toCanonical()),"domain reconstruction");
             ArrayList<RealizationManifest.Choice> stripped = new ArrayList<RealizationManifest.Choice>();

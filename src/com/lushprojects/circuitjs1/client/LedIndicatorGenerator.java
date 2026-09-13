@@ -44,7 +44,7 @@ class LedIndicatorGenerator {
             1, 0, 0);
         StandardPhysicalDefinitionProviders.LED.add(physicalSpecifications, ledNameplate);
 
-        DCVoltageElm supply = new DCVoltageElm(160, 320);
+        DCVoltageElm supply = new LimitedDcSupplyElm(160, 320);
         supply.drag(160, 160);
         supply.maxVoltage = supplyVoltage;
 
